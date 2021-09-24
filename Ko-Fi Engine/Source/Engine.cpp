@@ -24,8 +24,9 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	window = new Window();
 	input = new Input();
 	camera = new Camera3D(input);
-	sceneIntro = new SceneIntro(camera);
+
 	renderer = new Renderer3D(window,camera);
+	sceneIntro = new SceneIntro(camera, window, renderer);
 	//tex = new Textures(render);
 	//audio = new AudioManager();
 	//entityManager = new EntityManager();

@@ -69,15 +69,18 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\freeglut\include\GL;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\freeglut\lib;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\freeglut\include\GL;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <StructMemberAlignment>Default</StructMemberAlignment>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\freeglut\include\GL;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,6 +146,7 @@
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_tables.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\Input.cpp" />
@@ -163,6 +167,7 @@
     <ClInclude Include="Source\External\imgui\imgui.h" />
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h" />
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="Source\External\imgui\imgui_impl_sdl.h" />
     <ClInclude Include="Source\External\imgui\imgui_internal.h" />
     <ClInclude Include="Source\External\imgui\imstb_rectpack.h" />

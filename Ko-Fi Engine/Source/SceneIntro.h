@@ -8,11 +8,13 @@ struct PhysBody3D;
 struct PhysMotor3D;
 
 class Camera3D;
+class Renderer3D;
+class Window;
 
 class SceneIntro : public Module
 {
 public:
-	SceneIntro(Camera3D* camera);
+	SceneIntro(Camera3D* camera,Window* window,Renderer3D* renderer);
 	~SceneIntro();
 
 	bool Start();
@@ -23,4 +25,6 @@ public:
 
 private:
 	Camera3D* camera;
+	Window* window;
+	Renderer3D* renderer;
 };
