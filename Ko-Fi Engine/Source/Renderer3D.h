@@ -4,7 +4,7 @@
 #include "glmath.h"
 #include "Light.h"
 
-#include "SDL/include/SDL_video.h"
+#include "SDL_video.h"
 #define MAX_LIGHTS 8
 class Window;
 class Camera3D;

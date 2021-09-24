@@ -1,6 +1,6 @@
 #include "Globals.h"
 #include "Input.h"
-#include "SDL/include/SDL.h"
+#include "SDL.h"
 #include "Renderer3D.h"
 #include "Log.h"
 #define MAX_KEYS 300

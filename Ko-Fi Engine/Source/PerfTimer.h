@@ -2,7 +2,7 @@
 #define __PERFTIMER_H__
 
 #include "Defs.h"
-#include "SDL\include\SDL_timer.h"
+#include "SDL_timer.h"
 
 class PerfTimer
 {

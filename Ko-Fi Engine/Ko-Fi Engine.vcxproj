@@ -76,7 +76,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\freeglut\include\GL;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,6 +92,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\freeglut\include\GL;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +137,13 @@
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Light.cpp" />
@@ -150,6 +159,15 @@
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Engine.h" />
     <ClInclude Include="Source\Defs.h" />
+    <ClInclude Include="Source\External\imgui\imconfig.h" />
+    <ClInclude Include="Source\External\imgui\imgui.h" />
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h" />
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Source\External\imgui\imgui_impl_sdl.h" />
+    <ClInclude Include="Source\External\imgui\imgui_internal.h" />
+    <ClInclude Include="Source\External\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Source\External\imgui\imstb_textedit.h" />
+    <ClInclude Include="Source\External\imgui\imstb_truetype.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Input.h" />

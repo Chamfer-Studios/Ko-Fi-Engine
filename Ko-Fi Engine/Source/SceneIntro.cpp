@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "Camera3D.h"
 #include "Primitive.h"
+#include "imgui.h"
 
 SceneIntro::SceneIntro(Camera3D* camera) : Module()
 {

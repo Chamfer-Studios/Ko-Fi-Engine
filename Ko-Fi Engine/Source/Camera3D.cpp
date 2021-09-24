@@ -2,7 +2,7 @@
 #include "Input.h"
 //#include "PhysBody3D.h"
 #include "Camera3D.h"
-#include "SDL/include/SDL.h"
+#include "SDL.h"
 #include "Log.h"
 
 Camera3D::Camera3D(Input* input) : Module()
