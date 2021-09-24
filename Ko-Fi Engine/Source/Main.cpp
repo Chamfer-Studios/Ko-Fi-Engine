@@ -20,7 +20,7 @@ enum MainState
 
 int main(int argc, char* args[])
 {
-	Engine* engine = NULL;
+	KoFiEngine* engine = NULL;
 	LOG("Engine starting ...");
 
 	MainState state = CREATE;
@@ -33,6 +33,7 @@ int main(int argc, char* args[])
 			// Allocate the engine --------------------------------------------
 		case CREATE:
 			LOG("CREATION PHASE ===============================");
+			engine = new KoFiEngine(argc, args);
 			if (engine != NULL)
 				state = AWAKE;
 			else
@@ -79,7 +80,7 @@ int main(int argc, char* args[])
 			LOG("CLEANUP PHASE ===============================");
 			if (engine->CleanUp() == true)
 			{
-				RELEASE(app);
+				RELEASE(engine);
 				result = EXIT_SUCCESS;
 				state = EXIT;
 			}

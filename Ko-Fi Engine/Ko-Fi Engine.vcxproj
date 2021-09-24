@@ -76,12 +76,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\freeglut\lib;$(ProjectDir)Source\External\glew\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;freeglut.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -131,13 +132,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Camera3D.cpp" />
+    <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
+    <ClCompile Include="Source\glmath.cpp" />
+    <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\Light.cpp" />
+    <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Primitive.cpp" />
+    <ClCompile Include="Source\Renderer3D.cpp" />
+    <ClCompile Include="Source\SceneIntro.cpp" />
+    <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Camera3D.h" />
+    <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Engine.h" />
     <ClInclude Include="Source\Defs.h" />
+    <ClInclude Include="Source\glmath.h" />
+    <ClInclude Include="Source\Globals.h" />
+    <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\Light.h" />
+    <ClInclude Include="Source\List.h" />
     <ClInclude Include="Source\Log.h" />
+    <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\Primitive.h" />
+    <ClInclude Include="Source\Renderer3D.h" />
+    <ClInclude Include="Source\SceneIntro.h" />
+    <ClInclude Include="Source\SString.h" />
+    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

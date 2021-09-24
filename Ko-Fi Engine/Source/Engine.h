@@ -9,18 +9,18 @@
 #include "List.h"
 
 // Modules
-class FileSystem
+//class FileSystem;
 class Window;
 class Input;
-class SceneManager;
-
-class Renderer;
-class Camera;
-class Editor;
-class Resources;
-class Shaders;
-
-class GameObject;
+//class SceneManager;
+class SceneIntro;
+class Renderer3D;
+class Camera3D;
+//class Editor;
+//class Resources;
+//class Shaders;
+//
+//class GameObject;
 
 class KoFiEngine
 {
@@ -72,16 +72,16 @@ private:
 
 public:
 	//Modules
-	FileSystem* fileSystem = nullptr;
+	/*FileSystem* fileSystem = nullptr;*/
 	Window* window = nullptr;
 	Input* input = nullptr;
-	SceneManager* sceneManager = nullptr;
-
-	Renderer* renderer = nullptr;
-	Camera* camera = nullptr;
-	Editor* editor = nullptr;
-	Resources* resources = nullptr;
-	Shaders* shaders = nullptr;
+	//SceneManager* sceneManager = nullptr;
+	SceneIntro* sceneIntro = nullptr;
+	Renderer3D* renderer = nullptr;
+	Camera3D* camera = nullptr;
+	//Editor* editor = nullptr;
+	//Resources* resources = nullptr;
+	//Shaders* shaders = nullptr;
 
 private:
 	int argc;
