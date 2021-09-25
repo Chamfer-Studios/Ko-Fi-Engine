@@ -9,6 +9,7 @@
 //#include "Audio.h"
 //#include "EntityManager.h"
 //#include "SceneManager.h"
+#include "ImGUIHandler.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -24,9 +25,9 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	window = new Window();
 	input = new Input();
 	camera = new Camera3D(input);
-
 	renderer = new Renderer3D(window,camera);
-	sceneIntro = new SceneIntro(camera, window, renderer);
+	imGUIHandler = new ImGuiHandler(window, renderer);
+	sceneIntro = new SceneIntro(camera, window, renderer, imGUIHandler);
 	//tex = new Textures(render);
 	//audio = new AudioManager();
 	//entityManager = new EntityManager();
@@ -37,6 +38,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(imGUIHandler);
 	AddModule(sceneIntro);
 	//AddModule(tex);
 	//AddModule(audio);

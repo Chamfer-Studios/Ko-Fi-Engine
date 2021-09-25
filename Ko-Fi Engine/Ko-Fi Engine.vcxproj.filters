@@ -196,6 +196,9 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp">
       <Filter>Libs\MathGeoLib\Time</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ImGuiHandler.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -455,6 +458,9 @@
     </ClInclude>
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\MathGeoLibFwd.h">
       <Filter>Libs\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGuiHandler.h">
+      <Filter>Source\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

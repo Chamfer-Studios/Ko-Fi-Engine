@@ -180,6 +180,7 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
+    <ClCompile Include="Source\ImGuiHandler.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Log.cpp" />
@@ -264,6 +265,7 @@
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
+    <ClInclude Include="Source\ImGuiHandler.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\List.h" />

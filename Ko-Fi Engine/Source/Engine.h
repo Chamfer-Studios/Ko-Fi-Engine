@@ -21,6 +21,7 @@ class Camera3D;
 //class Shaders;
 //
 //class GameObject;
+class ImGuiHandler;
 
 class KoFiEngine
 {
@@ -82,6 +83,7 @@ public:
 	//Editor* editor = nullptr;
 	//Resources* resources = nullptr;
 	//Shaders* shaders = nullptr;
+	ImGuiHandler* imGUIHandler = nullptr;
 
 private:
 	int argc;
@@ -102,8 +104,6 @@ private:
 	float dt = 0.0f;
 
 	int	cappedMs = -1;
-
-
 };
 
 #endif //__ENGINE_H__
