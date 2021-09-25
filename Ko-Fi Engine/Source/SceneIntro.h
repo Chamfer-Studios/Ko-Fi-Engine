@@ -28,4 +28,6 @@ private:
 	Camera3D* camera;
 	Window* window;
 	Renderer3D* renderer;
+	bool check = true;
+	int random = 0;
 };
