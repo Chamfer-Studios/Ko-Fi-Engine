@@ -20,11 +20,11 @@
     <Filter Include="Source\Scenes">
       <UniqueIdentifier>{f9fd1d52-0422-4c98-97a4-40ac402c34ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\libs">
-      <UniqueIdentifier>{ddbeb801-006c-430e-9c99-4e59de80af36}</UniqueIdentifier>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{c7e226c4-70c3-40b5-bf1a-5ff839fb801d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\libs\imgui">
-      <UniqueIdentifier>{431f56da-04ea-4a2f-9984-ed0d3dda9c14}</UniqueIdentifier>
+    <Filter Include="Libs\imgui">
+      <UniqueIdentifier>{9ccdcf26-21a4-4089-8fd5-110e7c6857ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,28 +65,28 @@
       <Filter>Source\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui.cpp">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_demo.cpp">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_draw.cpp">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl3.cpp">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_impl_sdl.cpp">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_tables.cpp">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_widgets.cpp">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,34 +145,34 @@
       <Filter>Source\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imconfig.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl3.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl3_loader.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_impl_sdl.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_internal.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imstb_rectpack.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imstb_textedit.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imstb_truetype.h">
-      <Filter>Source\libs\imgui</Filter>
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

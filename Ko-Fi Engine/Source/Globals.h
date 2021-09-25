@@ -5,7 +5,7 @@
 #pragma warning( disable : 4530 )
 
 #include <windows.h>
-#include <stdio.h>
+//#include <stdio.h>
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
 
