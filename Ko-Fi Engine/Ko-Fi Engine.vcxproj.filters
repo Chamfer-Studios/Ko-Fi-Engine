@@ -468,5 +468,8 @@
     <ClInclude Include="Source\External\JsonParser\json.hpp">
       <Filter>Libs\JsonParser</Filter>
     </ClInclude>
+    <ClInclude Include="Source\RNG.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

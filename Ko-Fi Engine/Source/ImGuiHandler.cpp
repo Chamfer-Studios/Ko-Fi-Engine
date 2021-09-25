@@ -64,9 +64,10 @@ bool ImGuiHandler::CleanUp()
 	return true;
 }
 
-void ImGuiHandler::CreateWin(SString name, SString text)
+void ImGuiHandler::CreateWin(SString name, SString text,float width,float height)
 {
 	ImGui::Begin(name.GetString());
+	ImGui::SetWindowSize(ImVec2(width, height));
 	ImGui::Text(text.GetString());
 	ImGui::End();
 }

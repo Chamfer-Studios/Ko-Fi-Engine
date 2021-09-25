@@ -1,5 +1,4 @@
 #include "ImGUIHandler.h"
-#include "MathGeoLib/Algorithm/Random/LCG.h"
 #include "SceneIntro.h"
 #include "Log.h"
 #include "Camera3D.h"
@@ -9,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include "SDL_assert.h"
+#include "RNG.h"
 
 SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, ImGuiHandler* imGUIHandler) : Module()
 {
@@ -19,7 +19,8 @@ SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, I
 	this->imGUIHandler = imGUIHandler;
 
 	check = true;
-	random = 0;
+	RNG rng;
+	random = rng.GetRandomInt(0,35);
 	std::ifstream stream("EngineConfig/window_test.json");
 
 	SDL_assert(stream.is_open());
@@ -64,13 +65,11 @@ bool SceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
-	/*LCG randomGenerator;
-	if (check) {
-		random = randomGenerator.Int(5, 10);
-		check = false;
-	}*/
 
-	imGUIHandler->CreateWin("Test", j.at("Text").dump(4).c_str());
+	
+	imGUIHandler->CreateWin("Test JSON parser", j.at("Text").dump(4).c_str(),350.0f,450.0f);
+	imGUIHandler->CreateWin("Test Random Number Generator", std::to_string(random).c_str());
+
 
 	return true;
 }

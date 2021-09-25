@@ -275,6 +275,7 @@
     <ClInclude Include="Source\PerfTimer.h" />
     <ClInclude Include="Source\Primitive.h" />
     <ClInclude Include="Source\Renderer3D.h" />
+    <ClInclude Include="Source\RNG.h" />
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\SString.h" />
     <ClInclude Include="Source\Timer.h" />

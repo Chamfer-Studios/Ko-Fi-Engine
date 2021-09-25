@@ -18,7 +18,7 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	void CreateWin(SString name, SString text);
+	void CreateWin(SString name, SString text,float widht = 250.0f,float height=100.0f);
 	void CreateButton();
 
 private:
