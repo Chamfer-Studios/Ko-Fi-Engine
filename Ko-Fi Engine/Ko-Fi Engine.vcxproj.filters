@@ -44,6 +44,9 @@
     <Filter Include="Libs\MathGeoLib\Time">
       <UniqueIdentifier>{aac16b4e-0fa1-4dc0-a723-b570f8e7b396}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\JsonParser">
+      <UniqueIdentifier>{2cd4215b-be2e-4b9f-a8b9-f1946823934a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -461,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="Source\ImGuiHandler.h">
       <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\JsonParser\json.hpp">
+      <Filter>Libs\JsonParser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

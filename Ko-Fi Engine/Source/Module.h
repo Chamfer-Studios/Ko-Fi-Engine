@@ -21,7 +21,6 @@ public:
 	}
 
 	// Called before render is available
-	// L01: DONE 5: Sending config file to all modules
 	virtual bool Awake()
 	{
 		return true;

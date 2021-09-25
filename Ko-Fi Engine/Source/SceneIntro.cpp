@@ -6,6 +6,9 @@
 #include "Renderer3D.h"
 #include "Window.h"
 #include "Primitive.h"
+#include <iostream>
+#include <fstream>
+#include "SDL_assert.h"
 
 SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, ImGuiHandler* imGUIHandler) : Module()
 {
@@ -17,6 +20,19 @@ SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, I
 
 	check = true;
 	random = 0;
+	std::ifstream stream("EngineConfig/window_test.json");
+
+	SDL_assert(stream.is_open());
+	try {
+		j = nlohmann::json::parse(stream);
+	}
+	catch (nlohmann::json::parse_error& e) {
+		LOG("Parse Error while Loading File: %c", e.what());
+	}
+
+	stream.close();
+
+
 }
 
 SceneIntro::~SceneIntro()
@@ -54,7 +70,7 @@ bool SceneIntro::Update(float dt)
 		check = false;
 	}*/
 
-	imGUIHandler->CreateWin("Test", "Alex feka");
+	imGUIHandler->CreateWin("Test", j.at("Text").dump(4).c_str());
 
 	return true;
 }
