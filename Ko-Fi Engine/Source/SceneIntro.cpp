@@ -16,14 +16,9 @@ SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, I
 	this->camera = camera;
 	this->window = window;
 	this->renderer = renderer;
-	this->imGUIHandler = imGUIHandler;
+	this->imGuiHandler = imGUIHandler;
 
-	check = true;
-	RNG rng;
-	random = rng.GetRandomInt(0,35);
 	j = jsonHandler.LoadJson("EngineConfig/window_test.json");
-
-
 }
 
 SceneIntro::~SceneIntro()
@@ -34,7 +29,10 @@ bool SceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-	camera->Move(vec3(1.0f, 1.0f, 0.0f));
+
+	window->SetTitle("Ko-Fi Engine");
+
+	camera->Move(vec3(1.0f, 1.0f, 1.0f));
 	camera->LookAt(vec3(0, 0, 0));
 
 	return ret;
@@ -55,11 +53,12 @@ bool SceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
-
-	
-	//imGUIHandler->CreateWin("Test JSON parser", j.at("Text").dump(4).c_str(),350.0f,450.0f);
-	imGUIHandler->CreateWin("Test Random Number Generator", std::to_string(random).c_str());
-
+	if (imGuiHandler->buttonPressed)
+	{
+		RNG rng;
+		random = rng.GetRandomInt(0, 35);
+	}
+	imGuiHandler->CreateWin("Test Random Number Generator", std::to_string(random).c_str());
 
 	return true;
 }

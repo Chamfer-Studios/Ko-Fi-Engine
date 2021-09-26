@@ -38,7 +38,6 @@ bool Window::Awake()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 	
-
 		bool fullscreen = false;
 		bool borderless = false;
 		bool resizable = false;

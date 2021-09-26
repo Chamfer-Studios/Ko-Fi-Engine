@@ -25,11 +25,15 @@ public:
 	void CreateWin(SString name, SString text,float widht = 250.0f,float height=100.0f);
 	void CreateButton();
 
+	bool buttonPressed = false;
+
 private:
 	// Needed modules
 	Window* window = nullptr;
 	Renderer3D* renderer = nullptr;
 	ImGuiStyleHandler styleHandler;
+
+	bool newWindow = false;
 };
 
 #endif IM_GUI_HANDLER_H

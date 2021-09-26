@@ -1,4 +1,6 @@
 #pragma once
+#ifndef SCENE_INTRO_H
+#define SCENE_INTRO_H
 #include "Module.h"
 #include "Globals.h"
 #include "JsonHandler.h"
@@ -29,10 +31,11 @@ private:
 	Camera3D* camera;
 	Window* window;
 	Renderer3D* renderer;
-	ImGuiHandler* imGUIHandler;
+	ImGuiHandler* imGuiHandler;
 
-	bool check = true;
 	int random = 0;
 	JsonHandler jsonHandler;
 	Json j;
 };
+
+#endif SCENE_INTRO_H

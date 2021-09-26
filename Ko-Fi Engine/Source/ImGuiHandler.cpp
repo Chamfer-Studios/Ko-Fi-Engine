@@ -44,6 +44,24 @@ bool ImGuiHandler::PreUpdate(float dt)
 
 bool ImGuiHandler::Update(float dt)
 {
+	// Window with a button to end the program
+	ImGui::Begin("End the program");
+	ImGui::Text("Press the button to end the program.");
+	if (ImGui::Button("Button") == true) exit(0);
+	ImGui::End();
+
+	// Window with a button to create another window
+	ImGui::Begin("Create window");
+	ImGui::Text("Press the button to create another window.");
+	if (!newWindow && ImGui::Button("Button") == true) newWindow = true;
+	if (newWindow)
+	{
+		ImGui::Begin("New window");
+		ImGui::Text("A new window was created.");
+		ImGui::End();
+	}
+	ImGui::End();
+
 	return true;
 }
 
@@ -64,18 +82,20 @@ bool ImGuiHandler::CleanUp()
 	return true;
 }
 
-void ImGuiHandler::CreateWin(SString name, SString text,float width,float height)
+void ImGuiHandler::CreateWin(SString name, SString text, float width, float height)
 {
-	bool check = true;
-	float slider = 0.0f;
+	static bool check = true;
+	static float slider = 0.0f;
+
 	ImGui::Begin(name.GetString());
 	//ImGui::SetWindowSize(ImVec2(width, height));
 	ImGui::Text(text.GetString());
-	ImGui::Button("Button");
+	if (ImGui::Button("Button")) buttonPressed = true;
+	else buttonPressed = false;
 	ImGui::Checkbox("Checkbox",&check);
 	ImGui::SliderFloat("Slider",&slider,0.0f,10.0f);
-	
 	ImGui::End();
+
 	ImGui::Begin("Triangle Position/Color");
 	static float rotation = 0.0;
 	ImGui::SliderFloat("rotation", &rotation, 0, 2);
@@ -85,7 +105,6 @@ void ImGuiHandler::CreateWin(SString name, SString text,float width,float height
 	// color picker
 	ImGui::ColorEdit3("color", color);
 	ImGui::End();
-
 }
 
 void ImGuiHandler::CreateButton()
