@@ -31,6 +31,12 @@ ImGuiStyle* ImGuiStyleHandler::SetKoFiStyle()
 		styleJson.at("Colors").at("Text").at("z"),
 		styleJson.at("Colors").at("Text").at("w")
 	);
+	style->Colors[ImGuiCol_TextSelectedBg] = ImVec4(
+		styleJson.at("Colors").at("TextSelectedBg").at("x"),
+		styleJson.at("Colors").at("TextSelectedBg").at("y"),
+		styleJson.at("Colors").at("TextSelectedBg").at("z"),
+		styleJson.at("Colors").at("TextSelectedBg").at("w")
+	);
 	style->Colors[ImGuiCol_TextDisabled] = ImVec4(
 		styleJson.at("Colors").at("TextDisabled").at("x"),
 		styleJson.at("Colors").at("TextDisabled").at("y"),
@@ -264,12 +270,6 @@ ImGuiStyle* ImGuiStyleHandler::SetKoFiStyle()
 		styleJson.at("Colors").at("PlotHistogramHovered").at("y"),
 		styleJson.at("Colors").at("PlotHistogramHovered").at("z"),
 		styleJson.at("Colors").at("PlotHistogramHovered").at("w")
-	);
-	style->Colors[ImGuiCol_TextSelectedBg] = ImVec4(
-		styleJson.at("Colors").at("TextSelectedBg").at("x"),
-		styleJson.at("Colors").at("TextSelectedBg").at("y"),
-		styleJson.at("Colors").at("TextSelectedBg").at("z"),
-		styleJson.at("Colors").at("TextSelectedBg").at("w")
 	);
 	style->Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(
 		styleJson.at("Colors").at("ModalWindowDimBg").at("x"),

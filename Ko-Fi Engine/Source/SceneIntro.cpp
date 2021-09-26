@@ -59,7 +59,6 @@ bool SceneIntro::Update(float dt)
 	
 	//imGUIHandler->CreateWin("Test JSON parser", j.at("Text").dump(4).c_str(),350.0f,450.0f);
 	imGUIHandler->CreateWin("Test Random Number Generator", std::to_string(random).c_str());
-	imGUIHandler->CreateWin("Test2 Random Number Generator", std::to_string(random).c_str());
 
 
 	return true;

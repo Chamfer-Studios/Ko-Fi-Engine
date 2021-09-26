@@ -76,6 +76,15 @@ void ImGuiHandler::CreateWin(SString name, SString text,float width,float height
 	ImGui::SliderFloat("Slider",&slider,0.0f,10.0f);
 	
 	ImGui::End();
+	ImGui::Begin("Triangle Position/Color");
+	static float rotation = 0.0;
+	ImGui::SliderFloat("rotation", &rotation, 0, 2);
+	static float translation[] = { 0.0, 0.0 };
+	ImGui::SliderFloat2("position", translation, -1.0, 1.0);
+	static float color[4] = { 1.0f,1.0f,1.0f,1.0f };
+	// color picker
+	ImGui::ColorEdit3("color", color);
+	ImGui::End();
 
 }
 
