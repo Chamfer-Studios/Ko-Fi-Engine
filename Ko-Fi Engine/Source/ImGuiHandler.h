@@ -1,4 +1,7 @@
 #pragma once
+#ifndef IM_GUI_HANDLER_H
+#define IM_GUI_HANDLER_H
+
 #include "Module.h"
 #include "Globals.h"
 #include "ImGuiStyleHandler.h"
@@ -28,3 +31,5 @@ private:
 	Renderer3D* renderer = nullptr;
 	ImGuiStyleHandler styleHandler;
 };
+
+#endif IM_GUI_HANDLER_H
