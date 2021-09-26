@@ -202,6 +202,12 @@
     <ClCompile Include="Source\ImGuiHandler.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source\JsonHandler.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGuiStyleHandler.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -470,6 +476,12 @@
     </ClInclude>
     <ClInclude Include="Source\RNG.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\JsonHandler.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGuiStyleHandler.h">
+      <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

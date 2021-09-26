@@ -26,7 +26,7 @@ bool ImGuiHandler::Start()
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	ImGui::StyleColorsDark();
+	styleHandler.SetKoFiStyle();
 	ImGui_ImplSDL2_InitForOpenGL(window->window, renderer->context);
 	ImGui_ImplOpenGL3_Init();
 
@@ -66,10 +66,17 @@ bool ImGuiHandler::CleanUp()
 
 void ImGuiHandler::CreateWin(SString name, SString text,float width,float height)
 {
+	bool check = true;
+	float slider = 0.0f;
 	ImGui::Begin(name.GetString());
-	ImGui::SetWindowSize(ImVec2(width, height));
+	//ImGui::SetWindowSize(ImVec2(width, height));
 	ImGui::Text(text.GetString());
+	ImGui::Button("Button");
+	ImGui::Checkbox("Checkbox",&check);
+	ImGui::SliderFloat("Slider",&slider,0.0f,10.0f);
+	
 	ImGui::End();
+
 }
 
 void ImGuiHandler::CreateButton()

@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "ImGuiStyleHandler.h"
 
 class Window;
 class Renderer3D;
@@ -25,4 +26,5 @@ private:
 	// Needed modules
 	Window* window = nullptr;
 	Renderer3D* renderer = nullptr;
+	ImGuiStyleHandler styleHandler;
 };

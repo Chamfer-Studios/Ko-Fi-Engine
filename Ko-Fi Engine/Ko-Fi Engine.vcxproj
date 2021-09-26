@@ -181,7 +181,9 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\ImGuiHandler.cpp" />
+    <ClCompile Include="Source\ImGuiStyleHandler.cpp" />
     <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\JsonHandler.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -267,7 +269,9 @@
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\ImGuiHandler.h" />
+    <ClInclude Include="Source\ImGuiStyleHandler.h" />
     <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\JsonHandler.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\List.h" />
     <ClInclude Include="Source\Log.h" />

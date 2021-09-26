@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "json.hpp"
+#include "JsonHandler.h"
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
@@ -33,5 +33,6 @@ private:
 
 	bool check = true;
 	int random = 0;
-	nlohmann::json j;
+	JsonHandler jsonHandler;
+	Json j;
 };

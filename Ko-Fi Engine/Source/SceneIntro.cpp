@@ -21,17 +21,7 @@ SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, I
 	check = true;
 	RNG rng;
 	random = rng.GetRandomInt(0,35);
-	std::ifstream stream("EngineConfig/window_test.json");
-
-	SDL_assert(stream.is_open());
-	try {
-		j = nlohmann::json::parse(stream);
-	}
-	catch (nlohmann::json::parse_error& e) {
-		LOG("Parse Error while Loading File: %c", e.what());
-	}
-
-	stream.close();
+	j = jsonHandler.LoadJson("EngineConfig/window_test.json");
 
 
 }
@@ -67,8 +57,9 @@ bool SceneIntro::Update(float dt)
 
 
 	
-	imGUIHandler->CreateWin("Test JSON parser", j.at("Text").dump(4).c_str(),350.0f,450.0f);
+	//imGUIHandler->CreateWin("Test JSON parser", j.at("Text").dump(4).c_str(),350.0f,450.0f);
 	imGUIHandler->CreateWin("Test Random Number Generator", std::to_string(random).c_str());
+	imGUIHandler->CreateWin("Test2 Random Number Generator", std::to_string(random).c_str());
 
 
 	return true;
