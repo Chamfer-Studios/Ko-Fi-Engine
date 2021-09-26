@@ -1,5 +1,6 @@
 #include "ImGuiStyleHandler.h"
-#include "Imgui.h"
+#include "imgui.h"
+
 ImGuiStyleHandler::ImGuiStyleHandler()
 {
 	styleJson = jsonHandler.LoadJson("EngineConfig/style.json");
