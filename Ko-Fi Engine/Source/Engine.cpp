@@ -91,7 +91,7 @@ bool KoFiEngine::Awake()
 	{
 		std::list<Module*>::iterator item = modules.begin();;
 
-		while ((*item != NULL) && (ret == true))
+		while (item != modules.end() && ret)
 		{
 			ret = (*item)->Awake();
 			item++;
@@ -111,7 +111,7 @@ bool KoFiEngine::Start()
 	bool ret = true;
 	std::list<Module*>::iterator item = modules.begin();;
 
-	while (*item != NULL && ret == true)
+	while (item != modules.end() && ret)
 	{
 		ret = (*item)->Start();
 		item++;
