@@ -208,7 +208,7 @@ bool KoFiEngine::PreUpdate()
 	std::list<Module*>::iterator item;
 	Module* pModule = NULL;
 
-	for (item = modules.begin(); *item != NULL && ret == true; ++item)
+	for (item = modules.begin(); item != modules.end() && ret == true; ++item)
 	{
 		pModule = *item;
 
@@ -229,7 +229,7 @@ bool KoFiEngine::DoUpdate()
 	std::list<Module*>::iterator item = modules.begin();
 	Module* pModule = NULL;
 
-	for (item = modules.begin(); *item != NULL && ret == true; ++item)
+	for (item = modules.begin(); item != modules.end() && ret == true; ++item)
 	{
 		pModule = *item;
 
@@ -252,7 +252,7 @@ bool KoFiEngine::PostUpdate()
 	std::list<Module*>::iterator item;
 	Module* pModule = NULL;
 
-	for (item = modules.begin(); *item != NULL && ret == true; ++item)
+	for (item = modules.begin(); item != modules.end() && ret == true; ++item)
 	{
 		pModule = *item;
 

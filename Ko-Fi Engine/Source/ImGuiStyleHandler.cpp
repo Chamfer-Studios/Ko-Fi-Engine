@@ -50,6 +50,7 @@ ImGuiStyle* ImGuiStyleHandler::SetKoFiStyle()
 		styleJson.at("Colors").at("WindowBg").at("z"),
 		styleJson.at("Colors").at("WindowBg").at("w")
 	);
+	//Window bg when docking
 	style->Colors[ImGuiCol_ChildBg] = ImVec4(
 		styleJson.at("Colors").at("ChildWindowBg").at("x"),
 		styleJson.at("Colors").at("ChildWindowBg").at("y"),
@@ -236,17 +237,33 @@ ImGuiStyle* ImGuiStyleHandler::SetKoFiStyle()
 		styleJson.at("Colors").at("Tab").at("z"),
 		styleJson.at("Colors").at("Tab").at("w")
 	);
+	//Tab label color when hover on label
 	style->Colors[ImGuiCol_TabHovered] = ImVec4(
 		styleJson.at("Colors").at("TabHovered").at("x"),
 		styleJson.at("Colors").at("TabHovered").at("y"),
 		styleJson.at("Colors").at("TabHovered").at("z"),
 		styleJson.at("Colors").at("TabHovered").at("w")
 	);
+	//Tab label color when tab active
 	style->Colors[ImGuiCol_TabActive] = ImVec4(
 		styleJson.at("Colors").at("TabActive").at("x"),
 		styleJson.at("Colors").at("TabActive").at("y"),
 		styleJson.at("Colors").at("TabActive").at("z"),
 		styleJson.at("Colors").at("TabActive").at("w")
+	);
+	//TabLabel color when unfocused on docking
+	style->Colors[ImGuiCol_TabUnfocused] = ImVec4(
+		styleJson.at("Colors").at("TabUnfocused").at("x"),
+		styleJson.at("Colors").at("TabUnfocused").at("y"),
+		styleJson.at("Colors").at("TabUnfocused").at("z"),
+		styleJson.at("Colors").at("TabUnfocused").at("w")
+	);
+	//TabLabel color when unfocused & active on docking
+	style->Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(
+		styleJson.at("Colors").at("TabUnfocusedActive").at("x"),
+		styleJson.at("Colors").at("TabUnfocusedActive").at("y"),
+		styleJson.at("Colors").at("TabUnfocusedActive").at("z"),
+		styleJson.at("Colors").at("TabUnfocusedActive").at("w")
 	);
 	style->Colors[ImGuiCol_PlotLines] = ImVec4(
 		styleJson.at("Colors").at("PlotLines").at("x"),
