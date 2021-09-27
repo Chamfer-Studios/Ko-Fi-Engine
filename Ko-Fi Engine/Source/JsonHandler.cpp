@@ -42,10 +42,10 @@ Json JsonHandler::LoadJson(const char* path) const
 	return json;
 }
 
-std::string JsonHandler::JsonToString(Json file)
+std::string JsonHandler::JsonToString(Json json)
 {
 	std::string ret;
-	ret = file.dump(4);
+	ret = json.dump(4);
 	return ret;
 }
 

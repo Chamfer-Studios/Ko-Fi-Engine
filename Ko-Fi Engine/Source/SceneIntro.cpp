@@ -30,7 +30,7 @@ bool SceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	window->SetTitle("Ko-Fi Engine");
+	window->SetTitle(jsonHandler.JsonToString(j.at("Text")).c_str());
 
 	camera->Move(vec3(1.0f, 1.0f, 1.0f));
 	camera->LookAt(vec3(0, 0, 0));
