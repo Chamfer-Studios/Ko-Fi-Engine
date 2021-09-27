@@ -219,9 +219,6 @@
     <ClInclude Include="Source\Log.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\List.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PerfTimer.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>

@@ -6,7 +6,7 @@
 #include "PerfTimer.h"
 #include "Timer.h"
 
-#include "List.h"
+#include <list>
 
 // Modules
 //class FileSystem;
@@ -91,7 +91,7 @@ private:
 	SString title;
 	SString organization;
 
-	List<Module*> modules;
+	std::list<Module*> modules;
 
 	PerfTimer ptimer;
 	uint64 frameCount = 0;

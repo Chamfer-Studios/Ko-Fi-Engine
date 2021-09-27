@@ -279,7 +279,6 @@
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\JsonHandler.h" />
     <ClInclude Include="Source\Light.h" />
-    <ClInclude Include="Source\List.h" />
     <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\PerfTimer.h" />

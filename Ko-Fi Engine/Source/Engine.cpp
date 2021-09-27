@@ -55,21 +55,18 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 KoFiEngine::~KoFiEngine()
 {
 	// Release modules
-	ListItem<Module*>* item = modules.end;
-
-	while (item != NULL)
+	for (std::list<Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend(); ++item)
 	{
-		RELEASE(item->data);
-		item = item->prev;
+		RELEASE(*item);
 	}
 
-	modules.Clear();
+	modules.clear();
 }
 
 void KoFiEngine::AddModule(Module* module)
 {
 	module->Init();
-	modules.Add(module);
+	modules.push_back(module);
 }
 
 // Called before render is available
@@ -92,13 +89,12 @@ bool KoFiEngine::Awake()
 
 	if (ret == true)
 	{
-		ListItem<Module*>* item;
-		item = modules.start;
+		std::list<Module*>::iterator item = modules.begin();;
 
-		while ((item != NULL) && (ret == true))
+		while ((*item != NULL) && (ret == true))
 		{
-			ret = item->data->Awake();
-			item = item->next;
+			ret = (*item)->Awake();
+			item++;
 		}
 	}
 
@@ -113,13 +109,12 @@ bool KoFiEngine::Start()
 	PERF_START(ptimer);
 
 	bool ret = true;
-	ListItem<Module*>* item;
-	item = modules.start;
+	std::list<Module*>::iterator item = modules.begin();;
 
-	while (item != NULL && ret == true)
+	while (*item != NULL && ret == true)
 	{
-		ret = item->data->Start();
-		item = item->next;
+		ret = (*item)->Start();
+		item++;
 	}
 
 	PERF_PEEK(ptimer);
@@ -210,18 +205,18 @@ bool KoFiEngine::PreUpdate()
 {
 	bool ret = true;
 
-	ListItem<Module*>* item;
+	std::list<Module*>::iterator item;
 	Module* pModule = NULL;
 
-	for (item = modules.start; item != NULL && ret == true; item = item->next)
+	for (item = modules.begin(); *item != NULL && ret == true; ++item)
 	{
-		pModule = item->data;
+		pModule = *item;
 
 		if (pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PreUpdate(dt);
+		ret = (*item)->PreUpdate(dt);
 	}
 
 	return ret;
@@ -231,13 +226,12 @@ bool KoFiEngine::PreUpdate()
 bool KoFiEngine::DoUpdate()
 {
 	bool ret = true;
-	ListItem<Module*>* item;
-	item = modules.start;
+	std::list<Module*>::iterator item = modules.begin();
 	Module* pModule = NULL;
 
-	for (item = modules.start; item != NULL && ret == true; item = item->next)
+	for (item = modules.begin(); *item != NULL && ret == true; ++item)
 	{
-		pModule = item->data;
+		pModule = *item;
 
 		if (pModule->active == false) {
 			continue;
@@ -245,7 +239,7 @@ bool KoFiEngine::DoUpdate()
 
 		// L08: DONE 5: Send dt as an argument to all updates, you need
 		// to update module parent class and all modules that use update
-		ret = item->data->Update(dt);
+		ret = (*item)->Update(dt);
 	}
 
 	return ret;
@@ -255,18 +249,18 @@ bool KoFiEngine::DoUpdate()
 bool KoFiEngine::PostUpdate()
 {
 	bool ret = true;
-	ListItem<Module*>* item;
+	std::list<Module*>::iterator item;
 	Module* pModule = NULL;
 
-	for (item = modules.start; item != NULL && ret == true; item = item->next)
+	for (item = modules.begin(); *item != NULL && ret == true; ++item)
 	{
-		pModule = item->data;
+		pModule = *item;
 
 		if (pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PostUpdate(dt);
+		ret = (*item)->PostUpdate(dt);
 	}
 
 	return ret;
@@ -276,13 +270,10 @@ bool KoFiEngine::PostUpdate()
 bool KoFiEngine::CleanUp()
 {
 	bool ret = true;
-	ListItem<Module*>* item;
-	item = modules.end;
 
-	while (item != NULL && ret == true)
+	for (std::list<Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend() && ret == true; ++item)
 	{
-		ret = item->data->CleanUp();
-		item = item->prev;
+		ret = (*item)->CleanUp();
 	}
 
 	return ret;
