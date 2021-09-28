@@ -1,7 +1,9 @@
 #include "Primitive.h"
-//#include "glew.h"
-#include "freeglut.h"
 #include "Globals.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+//#include "glew.h"
+//#include "freeglut.h"
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
@@ -166,7 +168,7 @@ Sphere::Sphere(float radius) : Primitive(), radius(radius)
 
 void Sphere::InnerRender() const
 {
-	glutSolidSphere(radius, 25, 25);
+	/*glutSolidSphere(radius, 25, 25);*/
 }
 
 
