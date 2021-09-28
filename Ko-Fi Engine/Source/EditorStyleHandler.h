@@ -1,10 +1,10 @@
 #pragma once
 #include "JsonHandler.h"
 class ImGuiStyle;
-class ImGuiStyleHandler {
+class EditorStyleHandler {
 public:
-	ImGuiStyleHandler();
-	~ImGuiStyleHandler();
+	EditorStyleHandler();
+	~EditorStyleHandler();
 	ImGuiStyle* SetKoFiStyle();
 private:
 	JsonHandler jsonHandler;

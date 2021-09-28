@@ -12,12 +12,12 @@ struct PhysMotor3D;
 class Camera3D;
 class Renderer3D;
 class Window;
-class ImGuiHandler;
+class Editor;
 
 class SceneIntro : public Module
 {
 public:
-	SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, ImGuiHandler* imGuiHandler);
+	SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor);
 	~SceneIntro();
 
 	bool Start();
@@ -31,7 +31,7 @@ private:
 	Camera3D* camera;
 	Window* window;
 	Renderer3D* renderer;
-	ImGuiHandler* imGuiHandler;
+	Editor* editor;
 
 	int random = 0;
 	JsonHandler jsonHandler;

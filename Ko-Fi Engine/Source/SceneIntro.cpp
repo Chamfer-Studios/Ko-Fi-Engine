@@ -1,4 +1,4 @@
-#include "ImGUIHandler.h"
+#include "Editor.h"
 #include "SceneIntro.h"
 #include "Log.h"
 #include "Camera3D.h"
@@ -10,13 +10,13 @@
 #include "SDL_assert.h"
 #include "RNG.h"
 
-SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, ImGuiHandler* imGUIHandler) : Module()
+SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor) : Module()
 {
 	// Needed modules
 	this->camera = camera;
 	this->window = window;
 	this->renderer = renderer;
-	this->imGuiHandler = imGUIHandler;
+	this->editor = editor;
 
 	j = jsonHandler.LoadJson("EngineConfig/window_test.json");
 }
@@ -53,12 +53,11 @@ bool SceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
-	if (imGuiHandler->buttonPressed)
+	if (editor->buttonPressed)
 	{
 		RNG rng;
 		random = rng.GetRandomInt(0, 35);
 	}
-	imGuiHandler->CreateWin("Test Random Number Generator", std::to_string(random).c_str());
 
 	return true;
 }

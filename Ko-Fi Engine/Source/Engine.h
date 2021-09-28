@@ -9,19 +9,15 @@
 #include <list>
 
 // Modules
-//class FileSystem;
+
 class Window;
 class Input;
-//class SceneManager;
+
 class SceneIntro;
 class Renderer3D;
 class Camera3D;
-//class Editor;
-//class Resources;
-//class Shaders;
-//
-//class GameObject;
-class ImGuiHandler;
+
+class Editor;
 
 class KoFiEngine
 {
@@ -73,17 +69,13 @@ private:
 
 public:
 	//Modules
-	/*FileSystem* fileSystem = nullptr;*/
 	Window* window = nullptr;
 	Input* input = nullptr;
-	//SceneManager* sceneManager = nullptr;
 	SceneIntro* sceneIntro = nullptr;
 	Renderer3D* renderer = nullptr;
 	Camera3D* camera = nullptr;
-	//Editor* editor = nullptr;
-	//Resources* resources = nullptr;
-	//Shaders* shaders = nullptr;
-	ImGuiHandler* imGUIHandler = nullptr;
+
+	Editor* editor = nullptr;
 
 private:
 	int argc;

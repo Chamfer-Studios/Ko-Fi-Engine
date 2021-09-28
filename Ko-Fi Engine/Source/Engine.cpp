@@ -5,11 +5,7 @@
 #include "Renderer3D.h"
 #include "Camera3D.h"
 #include "SceneIntro.h"
-//#include "Textures.h"
-//#include "Audio.h"
-//#include "EntityManager.h"
-//#include "SceneManager.h"
-#include "ImGUIHandler.h"
+#include "Editor.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -26,24 +22,16 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	input = new Input();
 	camera = new Camera3D(input);
 	renderer = new Renderer3D(window,camera);
-	imGUIHandler = new ImGuiHandler(window, renderer);
-	sceneIntro = new SceneIntro(camera, window, renderer, imGUIHandler);
-	//tex = new Textures(render);
-	//audio = new AudioManager();
-	//entityManager = new EntityManager();
-	//sceneManager = new SceneManager(input, render, tex);
+	editor = new Editor(window, renderer);
+	sceneIntro = new SceneIntro(camera, window, renderer, editor);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(imGUIHandler);
+	AddModule(editor);
 	AddModule(sceneIntro);
-	//AddModule(tex);
-	//AddModule(audio);
-	//AddModule(entityManager);
-	//AddModule(sceneManager);
 
 	// Render last to swap buffer
 	AddModule(renderer);

@@ -4,16 +4,18 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "ImGuiStyleHandler.h"
-
+#include "EditorStyleHandler.h"
+#include "Panel.h"
 class Window;
 class Renderer3D;
 
-class ImGuiHandler : public Module
+//Panels
+class PanelTest;
+class Editor : public Module
 {
 public:
-	ImGuiHandler(Window* window, Renderer3D* renderer);
-	~ImGuiHandler();
+	Editor(Window* window, Renderer3D* renderer);
+	~Editor();
 
 	bool Awake();
 	bool Start();
@@ -22,16 +24,17 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	void CreateWin(SString name, SString text,float widht = 250.0f,float height=100.0f);
-	void CreateButton();
-
+	void AddPanel(Panel* panel);
 	bool buttonPressed = false;
 
+private:
+	PanelTest* panelTest = nullptr;
 private:
 	// Needed modules
 	Window* window = nullptr;
 	Renderer3D* renderer = nullptr;
-	ImGuiStyleHandler styleHandler;
+	EditorStyleHandler styleHandler;
+	std::list<Panel*> panels;
 
 	bool newWindow = false;
 };

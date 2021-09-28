@@ -47,6 +47,18 @@
     <Filter Include="Libs\JsonParser">
       <UniqueIdentifier>{2cd4215b-be2e-4b9f-a8b9-f1946823934a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Editor">
+      <UniqueIdentifier>{6f0f8836-62b6-4d34-b9cd-da4392624186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Editor\Panels">
+      <UniqueIdentifier>{86c369c4-4256-4542-bdba-bbdad68a3144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Editor\Style">
+      <UniqueIdentifier>{c1de32b1-1c7b-40dd-8905-5cea2b9f13d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\mmgr">
+      <UniqueIdentifier>{3e258013-dd79-4d84-9f8d-bc10657f6bf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -199,14 +211,20 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp">
       <Filter>Libs\MathGeoLib\Time</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ImGuiHandler.cpp">
-      <Filter>Source\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\JsonHandler.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ImGuiStyleHandler.cpp">
-      <Filter>Source\Helpers</Filter>
+    <ClCompile Include="Source\EditorStyleHandler.cpp">
+      <Filter>Source\Editor\Style</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelTest.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\mmgr\mmgr.cpp">
+      <Filter>Libs\mmgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,9 +483,6 @@
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\MathGeoLibFwd.h">
       <Filter>Libs\MathGeoLib</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ImGuiHandler.h">
-      <Filter>Source\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\JsonParser\json.hpp">
       <Filter>Libs\JsonParser</Filter>
     </ClInclude>
@@ -477,8 +492,23 @@
     <ClInclude Include="Source\JsonHandler.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ImGuiStyleHandler.h">
-      <Filter>Source\Helpers</Filter>
+    <ClInclude Include="Source\EditorStyleHandler.h">
+      <Filter>Source\Editor\Style</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Panel.h">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelTest.h">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\mmgr\mmgr.h">
+      <Filter>Libs\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\mmgr\nommgr.h">
+      <Filter>Libs\mmgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

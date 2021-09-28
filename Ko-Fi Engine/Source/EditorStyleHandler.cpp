@@ -1,16 +1,16 @@
-#include "ImGuiStyleHandler.h"
+#include "EditorStyleHandler.h"
 #include "imgui.h"
 
-ImGuiStyleHandler::ImGuiStyleHandler()
+EditorStyleHandler::EditorStyleHandler()
 {
 	styleJson = jsonHandler.LoadJson("EngineConfig/style.json");
 }
 
-ImGuiStyleHandler::~ImGuiStyleHandler()
+EditorStyleHandler::~EditorStyleHandler()
 {
 }
 
-ImGuiStyle* ImGuiStyleHandler::SetKoFiStyle()
+ImGuiStyle* EditorStyleHandler::SetKoFiStyle()
 {
 
 	ImGuiStyle* style = &ImGui::GetStyle();
