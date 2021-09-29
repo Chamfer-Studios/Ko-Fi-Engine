@@ -11,6 +11,7 @@ class Renderer3D;
 
 //Panels
 class PanelTest;
+class PanelConfiguration;
 class Editor : public Module
 {
 public:
@@ -29,6 +30,7 @@ public:
 
 private:
 	PanelTest* panelTest = nullptr;
+	PanelConfiguration* panelConfig = nullptr;
 private:
 	// Needed modules
 	Window* window = nullptr;

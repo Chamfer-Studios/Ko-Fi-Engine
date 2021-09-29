@@ -25,7 +25,7 @@ public:
 	virtual bool Update() { return true; }
 	virtual bool PostUpdate(){ return true; }
 	virtual bool CleanUp(){ return true; }
-private:
-	std::string windowName;
+public:
+	std::string panelName;
 	bool active;
 };

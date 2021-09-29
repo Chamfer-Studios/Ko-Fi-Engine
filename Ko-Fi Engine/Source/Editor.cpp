@@ -6,14 +6,17 @@
 #include "Renderer3D.h"
 
 #include "PanelTest.h"
+#include "PanelConfiguration.h"
 Editor::Editor(Window* window, Renderer3D* renderer)
 {
 	this->window = window;
 	this->renderer = renderer;
 
 	panelTest = new PanelTest();
+	panelConfig = new PanelConfiguration();
 
 	AddPanel(panelTest);
+	AddPanel(panelConfig);
 }
 
 Editor::~Editor()

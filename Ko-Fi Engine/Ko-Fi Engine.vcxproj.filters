@@ -226,6 +226,9 @@
     <ClCompile Include="Source\External\mmgr\mmgr.cpp">
       <Filter>Libs\mmgr</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PanelConfiguration.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -509,6 +512,9 @@
     </ClInclude>
     <ClInclude Include="Source\External\mmgr\nommgr.h">
       <Filter>Libs\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelConfiguration.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -184,22 +184,22 @@ ImGuiStyle* EditorStyleHandler::SetKoFiStyle()
 		styleJson.at("Colors").at("Header").at("w")
 	);
 	style->Colors[ImGuiCol_HeaderHovered] = ImVec4(
-		styleJson.at("Colors").at("PopupBg").at("x"),
-		styleJson.at("Colors").at("PopupBg").at("y"),
-		styleJson.at("Colors").at("PopupBg").at("z"),
-		styleJson.at("Colors").at("PopupBg").at("w")
-	);
-	style->Colors[ImGuiCol_HeaderActive] = ImVec4(
 		styleJson.at("Colors").at("HeaderHovered").at("x"),
 		styleJson.at("Colors").at("HeaderHovered").at("y"),
 		styleJson.at("Colors").at("HeaderHovered").at("z"),
 		styleJson.at("Colors").at("HeaderHovered").at("w")
 	);
-	style->Colors[ImGuiCol_Separator] = ImVec4(
+	style->Colors[ImGuiCol_HeaderActive] = ImVec4(
 		styleJson.at("Colors").at("HeaderActive").at("x"),
 		styleJson.at("Colors").at("HeaderActive").at("y"),
 		styleJson.at("Colors").at("HeaderActive").at("z"),
 		styleJson.at("Colors").at("HeaderActive").at("w")
+	);
+	style->Colors[ImGuiCol_Separator] = ImVec4(
+		styleJson.at("Colors").at("Separator").at("x"),
+		styleJson.at("Colors").at("Separator").at("y"),
+		styleJson.at("Colors").at("Separator").at("z"),
+		styleJson.at("Colors").at("Separator").at("w")
 	);
 	style->Colors[ImGuiCol_SeparatorHovered] = ImVec4(
 		styleJson.at("Colors").at("SeparatorHovered").at("x"),

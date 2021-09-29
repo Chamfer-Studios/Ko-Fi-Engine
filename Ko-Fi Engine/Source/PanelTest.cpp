@@ -23,6 +23,7 @@ bool PanelTest::Update()
 	ImGui::Begin("End the program");
 	ImGui::Text("Press the button to end the program.");
 	if (ImGui::Button("Button") == true) exit(0);
+	if (ImGui::Button("Button2") == true) exit(0);
 	ImGui::End();
 	return true;
 }
