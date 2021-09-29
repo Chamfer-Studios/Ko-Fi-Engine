@@ -12,7 +12,7 @@ EditorStyleHandler::~EditorStyleHandler()
 
 ImGuiStyle* EditorStyleHandler::SetKoFiStyle()
 {
-
+	styleJson = jsonHandler.LoadJson("EngineConfig/style.json");
 	ImGuiStyle* style = &ImGui::GetStyle();
 	style->WindowPadding = ImVec2(styleJson.at("Window").at("WindowPadding").at("x"), styleJson.at("Window").at("WindowPadding").at("y"));
 	style->WindowRounding = styleJson.at("Window").at("WindowRounding");

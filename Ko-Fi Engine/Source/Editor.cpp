@@ -109,16 +109,12 @@ bool Editor::Update(float dt)
 	
 
 	//// Window with a button to create another window
-	//ImGui::Begin("Create window");
-	//ImGui::Text("Press the button to create another window.");
-	//if (!newWindow && ImGui::Button("Button") == true) newWindow = true;
-	//if (newWindow)
-	//{
-	//	ImGui::Begin("New window");
-	//	ImGui::Text("A new window was created.");
-	//	ImGui::End();
-	//}
-	//ImGui::End();
+	ImGui::Begin("Create window");
+	ImGui::Text("Press the button to create another window.");
+	if (ImGui::Button("Button"))
+	styleHandler.SetKoFiStyle();
+
+	ImGui::End();
 
 	//Panels Update
 	if (ret == true)
