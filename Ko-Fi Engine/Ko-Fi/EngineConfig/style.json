@@ -56,6 +56,15 @@
     "PlotLinesHovered": {"x":0.25, "y":1.0,"z": 0.0, "w":1.0},
     "PlotHistogram": {"x":0.4, "y":0.39,"z": 0.38, "w":0.63},
     "PlotHistogramHovered": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "TableHeaderBg": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "TableBorderStrong": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "TableBorderLight": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "TableRowBg": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "TableRowBgAlt": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "DragDropTarget": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "NavHighlight": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "NavWindowingHighlight": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
+    "NavWindowingDimBg": {"x":0.25, "y":1.0, "z":0.0, "w":1.0},
     "ModalWindowDimBg": {"x":1.0, "y":0.98,"z": 0.95, "w":0.73}
   }
 }
