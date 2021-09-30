@@ -24,8 +24,15 @@ public:
 	// Changae title
 	void SetTitle(const char* title);
 
+	void AdjustBrightness(float brightness);
+	float GetBrightness();
+
 	// Retrive window size
 	void GetWindowSize(uint& width, uint& height) const;
+	int GetWidth() const;
+	int GetHeight() const;
+	void SetWidth(int width);
+	void SetHeight(int height);
 
 	// Retrieve window scale
 	uint GetScale() const;
@@ -42,6 +49,7 @@ private:
 	uint width;
 	uint height;
 	uint scale;
+	float brightness;
 };
 
 #endif // __WINDOW_H__

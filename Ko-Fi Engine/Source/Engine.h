@@ -47,6 +47,7 @@ public:
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
+	const uint64 GetFps() const;
 
 private:
 	// Add a new module to handle
@@ -67,14 +68,13 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
-public:
+private:
 	//Modules
 	Window* window = nullptr;
 	Input* input = nullptr;
 	SceneIntro* sceneIntro = nullptr;
 	Renderer3D* renderer = nullptr;
 	Camera3D* camera = nullptr;
-
 	Editor* editor = nullptr;
 
 private:

@@ -11,9 +11,10 @@ Editor::Editor(Window* window, Renderer3D* renderer)
 {
 	this->window = window;
 	this->renderer = renderer;
+	this->engine = engine;
 
 	panelTest = new PanelTest();
-	panelConfig = new PanelConfiguration();
+	panelConfig = new PanelConfiguration(window,renderer);
 
 	AddPanel(panelTest);
 	AddPanel(panelConfig);

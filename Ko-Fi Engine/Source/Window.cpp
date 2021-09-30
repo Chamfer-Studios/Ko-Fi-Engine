@@ -53,7 +53,6 @@ bool Window::Awake()
 		if(fullscreen_window == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
 		window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
-
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -64,6 +63,8 @@ bool Window::Awake()
 		{
 			// Get window surface
 			screenSurface = SDL_GetWindowSurface(window);
+			//Get window brightness
+			brightness = SDL_GetWindowBrightness(window);
 		}
 	}
 
@@ -93,10 +94,44 @@ void Window::SetTitle(const char* new_title)
 	SDL_SetWindowTitle(window, new_title);
 }
 
+void Window::AdjustBrightness(float brightness)
+{
+	brightness = brightness < 0 ? 0 : brightness;
+	brightness = brightness > 1 ? 1 : brightness;
+
+	SDL_SetWindowBrightness(window, brightness);
+	this->brightness = SDL_GetWindowBrightness(window);
+}
+
+float Window::GetBrightness()
+{
+	return this->brightness;
+}
+
 void Window::GetWindowSize(uint& width, uint& height) const
 {
 	width = this->width;
 	height = this->height;
+}
+int Window::GetWidth() const
+{
+	return (int)this->width;
+}
+int Window::GetHeight() const
+{
+	return (int)this->height;
+}
+
+void Window::SetWidth(int width)
+{
+	SDL_assert(width >= 0);
+	this->width = (uint)width;
+}
+
+void Window::SetHeight(int height)
+{
+	SDL_assert(height >= 0);
+	this->height = (uint)height;
 }
 
 uint Window::GetScale() const

@@ -24,7 +24,6 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
-
 	void AddPanel(Panel* panel);
 	bool buttonPressed = false;
 
@@ -35,6 +34,7 @@ private:
 	// Needed modules
 	Window* window = nullptr;
 	Renderer3D* renderer = nullptr;
+	KoFiEngine* engine = nullptr;
 	EditorStyleHandler styleHandler;
 	std::list<Panel*> panels;
 

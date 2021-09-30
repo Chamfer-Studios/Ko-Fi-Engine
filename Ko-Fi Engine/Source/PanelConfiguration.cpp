@@ -1,9 +1,13 @@
 #include "PanelConfiguration.h"
+#include "Window.h"
+#include "Renderer3D.h"
 #include <imgui.h>
-PanelConfiguration::PanelConfiguration()
+PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer)
 {
 	panelName = "Configuration";
 	json = jsonHandler.LoadJson("EngineConfig/config.json");
+	this->window = window;
+	this->renderer = renderer;
 }
 
 PanelConfiguration::~PanelConfiguration()
@@ -56,12 +60,19 @@ bool PanelConfiguration::Update()
 		ImGui::Checkbox("Active",&active);
 
 		ImGui::Text("Icon: default");
-		int brightness = 60;
-		ImGui::SliderInt("Brightness", &brightness, 0, 120);	
-		int width = 60;
-		ImGui::SliderInt("Width", &width, 0, 120);
-		int height = 60;
-		ImGui::SliderInt("Height", &height, 0, 120);
+		float brightness = window->GetBrightness();
+		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
+		{
+			window->AdjustBrightness(brightness);
+		}
+		int width = window->GetWidth();
+		int height = window->GetHeight();
+		if (ImGui::SliderInt("Width", &width, 640, 4096) | ImGui::SliderInt("Height", &height, 480, 2160)) {
+			SDL_SetWindowSize(window->window, width, height);
+			window->SetWidth(width);
+			window->SetHeight(height);
+		}
+		
 	}
 	ImGui::End();
 	return true;

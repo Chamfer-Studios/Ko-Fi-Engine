@@ -293,3 +293,8 @@ const char* KoFiEngine::GetOrganization() const
 {
 	return organization.GetString();
 }
+
+const uint64 KoFiEngine::GetFps() const
+{
+	return frameCount;
+}
