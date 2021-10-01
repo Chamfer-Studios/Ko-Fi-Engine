@@ -106,11 +106,11 @@ bool Editor::PreUpdate(float dt)
 bool Editor::Update(float dt)
 {
 	bool ret = true;
-	//// Window with a button to end the program
-	
-
+	//Creating Main Menu Bar
+	CallMainMenuBar();
 	//// Window with a button to create another window
 	ImGui::Begin("Create window");
+	
 	ImGui::Text("Press the button to create another window.");
 	if (ImGui::Button("Button"))
 	styleHandler.SetKoFiStyle();
@@ -165,4 +165,21 @@ bool Editor::CleanUp()
 	ImGui::DestroyContext();
 
 	return true;
+}
+
+bool Editor::CallMainMenuBar() {
+	bool ret = true;
+	if (ImGui::BeginMainMenuBar()) {
+		if (ImGui::BeginMenu("Info")) {
+			if (ImGui::MenuItem("Repository")) {
+				ShellExecute(NULL, "open", "https://github.com/boscobarberesbert/Ko-Fi-Engine", NULL, NULL, SW_SHOWNORMAL);
+			}
+			if (ImGui::MenuItem("About")) {
+				ShellExecute(NULL, "open", "https://github.com/boscobarberesbert/", NULL, NULL, SW_SHOWNORMAL);
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+	return ret;
 }

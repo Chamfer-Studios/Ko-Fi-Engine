@@ -24,6 +24,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	bool CallMainMenuBar();
 	void AddPanel(Panel* panel);
 	bool buttonPressed = false;
 

@@ -27,21 +27,23 @@ bool PanelConfiguration::PreUpdate()
 bool PanelConfiguration::Update()
 {
 	ImGui::Begin(panelName.c_str());
-	if (ImGui::BeginMenu("Options")) {
-		if (ImGui::MenuItem("Set Defaults")) {
-			printf_s("%s", "Clicked Set Defaults\n");
 
+		if (ImGui::BeginMenu("Options")) {
+			if (ImGui::MenuItem("Set Defaults")) {
+				printf_s("%s", "Clicked Set Defaults\n");
+
+			}
+			if (ImGui::MenuItem("Load"))
+			{
+				printf_s("%s", "Clicked Load\n");
+			}
+			if (ImGui::MenuItem("Save"))
+			{
+				printf_s("%s", "Clicked Save\n");
+			}
+			ImGui::EndMenu();
 		}
-		if (ImGui::MenuItem("Load"))
-		{
-			printf_s("%s", "Clicked Load\n");
-		}
-		if (ImGui::MenuItem("Save"))
-		{
-			printf_s("%s", "Clicked Save\n");
-		}
-		ImGui::EndMenu();
-	}
+
 	if (ImGui::CollapsingHeader("Application")) {
 		static char appName[120];
 		strcpy_s(appName, 120, json.at("Engine").at("Title").dump(4).c_str());
