@@ -12,13 +12,14 @@
 
 SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor) : Module()
 {
+	name = "SceneIntro";
 	// Needed modules
 	this->camera = camera;
 	this->window = window;
 	this->renderer = renderer;
 	this->editor = editor;
 
-	j = jsonHandler.LoadJson("EngineConfig/window_test.json");
+	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 }
 
 SceneIntro::~SceneIntro()

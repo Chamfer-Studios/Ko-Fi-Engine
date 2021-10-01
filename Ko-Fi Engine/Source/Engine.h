@@ -3,10 +3,9 @@
 #define __ENGINE_H__
 
 #include "Module.h"
-#include "PerfTimer.h"
-#include "Timer.h"
-
+#include "EngineConfig.h"
 #include <list>
+#include "JsonHandler.h"
 
 // Modules
 
@@ -16,8 +15,8 @@ class Input;
 class SceneIntro;
 class Renderer3D;
 class Camera3D;
-
 class Editor;
+
 
 class KoFiEngine
 {
@@ -80,22 +79,13 @@ private:
 private:
 	int argc;
 	char** args;
-	SString title;
-	SString organization;
+	
+	PerfTimer ptimer;
 
 	std::list<Module*> modules;
+	EngineConfig* engineConfig;
 
-	PerfTimer ptimer;
-	uint64 frameCount = 0;
-
-	Timer startupTime;
-	Timer frameTime;
-	Timer lastSecFrameTime;
-	uint32 lastSecFrameCount = 0;
-	uint32 prevLastSecFrameCount = 0;
-	float dt = 0.0f;
-
-	int	cappedMs = -1;
+	JsonHandler jsonHandler;
 };
 
 #endif //__ENGINE_H__

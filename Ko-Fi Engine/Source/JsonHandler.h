@@ -9,8 +9,8 @@ public:
 	// Constructor
 	JsonHandler() {};
 
-	bool SaveJson(Json& obj, const char* file) const;
-	Json LoadJson(const char* file) const;
-	std::string JsonToString(Json file);
+	bool SaveJson(Json& json, const char* path) const;
+	bool LoadJson(Json& json, const char* path) const;
+	std::string JsonToString(Json json);
 	Json StringToJson(std::string string);
 };

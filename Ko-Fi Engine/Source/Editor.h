@@ -6,19 +6,21 @@
 #include "Globals.h"
 #include "EditorStyleHandler.h"
 #include "Panel.h"
+
 class Window;
 class Renderer3D;
 
 //Panels
 class PanelTest;
 class PanelConfiguration;
+struct EngineConfig;
 class Editor : public Module
 {
 public:
-	Editor(Window* window, Renderer3D* renderer);
+	Editor(Window* window, Renderer3D* renderer,EngineConfig* engineConfig);
 	~Editor();
 
-	bool Awake();
+	bool Awake(Json configModule);
 	bool Start();
 	bool PreUpdate(float dt);
 	bool Update(float dt);
@@ -39,7 +41,6 @@ private:
 	EditorStyleHandler styleHandler;
 	std::list<Panel*> panels;
 
-	bool newWindow = false;
 };
 
 #endif IM_GUI_HANDLER_H

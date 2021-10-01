@@ -19,7 +19,7 @@ Window::~Window()
 }
 
 // Called before render is available
-bool Window::Awake()
+bool Window::Awake(Json configModule)
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;

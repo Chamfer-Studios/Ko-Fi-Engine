@@ -10,6 +10,8 @@
 
 Renderer3D::Renderer3D(Window* window,Camera3D* camera) : Module()
 {
+	name = "Renderer3D";
+
 	this->window = window;
 	this->camera = camera;
 }
@@ -19,7 +21,7 @@ Renderer3D::~Renderer3D()
 {}
 
 // Called before render is available
-bool Renderer3D::Awake()
+bool Renderer3D::Awake(Json configModule)
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;

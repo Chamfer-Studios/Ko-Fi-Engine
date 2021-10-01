@@ -25,21 +25,22 @@ bool JsonHandler::SaveJson(Json& json, const char* path) const
 	return ret;
 }
 
-Json JsonHandler::LoadJson(const char* path) const
+bool JsonHandler::LoadJson(Json& json,const char* path) const
 {
+	bool ret = true;
 	SDL_assert(path != nullptr);
-	Json json;
 	std::ifstream stream(path);
 	SDL_assert(stream.is_open());
 	try {
 		json = Json::parse(stream);
+		ret = true;
 	}
 	catch (Json::parse_error& e) {
 		LOG("Error while Loading File: %c", e.what());
 	}	
 	stream.close();
 
-	return json;
+	return ret;
 }
 
 std::string JsonHandler::JsonToString(Json json)

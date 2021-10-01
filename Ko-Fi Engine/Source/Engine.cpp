@@ -16,13 +16,14 @@
 // Constructor
 KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 {
+	engineConfig = new EngineConfig();
 	PERF_START(ptimer);
 
 	window = new Window();
 	input = new Input();
 	camera = new Camera3D(input);
 	renderer = new Renderer3D(window,camera);
-	editor = new Editor(window, renderer);
+	editor = new Editor(window, renderer,engineConfig);
 	sceneIntro = new SceneIntro(camera, window, renderer, editor);
 
 	// Ordered for awake / Start / Update
@@ -35,6 +36,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 
 	// Render last to swap buffer
 	AddModule(renderer);
+
 
 	PERF_PEEK(ptimer);
 }
@@ -62,18 +64,31 @@ bool KoFiEngine::Awake()
 {
 	PERF_START(ptimer);
 
+
 	//pugi::xml_document configFile;
 	//pugi::xml_node config;
 	//pugi::xml_node configApp;
-	//TODO: CHANGE TO FALSE AFTER CONFIG LOAD FROM JSON
+	Json jsonConfig;
+	Json jsonConfigEngine;
 	bool ret = true;
 
 	/*config = LoadConfig(configFile);*/
+	ret = jsonHandler.LoadJson(jsonConfig,"EngineConfig/config.json");
 
 	//if (config.empty() == false)
 	//{
 	//	ret = true;
 	//	configApp = config.child("app");
+	if (!jsonConfig.empty())
+	{
+		ret = true;
+		jsonConfigEngine = jsonConfig.at("Engine");
+
+		engineConfig->title.Create(jsonConfigEngine.at("Title").dump(4).c_str());
+		engineConfig->organization.Create(jsonConfigEngine.at("Organization").dump(4).c_str());
+		int cap = jsonConfigEngine.at("MaxFPS");
+		if (cap > 0) engineConfig->cappedMs = 1000 / cap;
+	}
 
 	if (ret == true)
 	{
@@ -81,7 +96,7 @@ bool KoFiEngine::Awake()
 
 		while (item != modules.end() && ret)
 		{
-			ret = (*item)->Awake();
+			ret = (*item)->Awake(jsonConfig.at((*item)->name.GetString()));
 			item++;
 		}
 	}
@@ -132,59 +147,45 @@ bool KoFiEngine::Update()
 	return ret;
 }
 
-// Load config from XML file
-// NOTE: Function has been redesigned to avoid storing additional variables on the class
-//pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
-//{
-//	pugi::xml_node ret;
-//
-//	pugi::xml_parse_result result = configFile.load_file(CONFIG_FILENAME);
-//
-//	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", CONFIG_FILENAME, result.description());
-//	else ret = configFile.child("config");
-//
-//	return ret;
-//}
-
 // ---------------------------------------------
 void KoFiEngine::PrepareUpdate()
 {
-	frameCount++;
-	lastSecFrameCount++;
+	engineConfig->frameCount++;
+	engineConfig->lastSecFrameCount++;
 
 	// L08: DONE 4: Calculate the dt: differential time since last frame
-	dt = frameTime.ReadSec();
-	frameTime.Start();
+	engineConfig->dt = engineConfig->frameTime.ReadSec();
+	engineConfig->frameTime.Start();
 }
 
 // ---------------------------------------------
 void KoFiEngine::FinishUpdate()
 {
-	if (lastSecFrameTime.Read() > 1000)
+	if (engineConfig->lastSecFrameTime.Read() > 1000)
 	{
-		lastSecFrameTime.Start();
-		prevLastSecFrameCount = lastSecFrameCount;
-		lastSecFrameCount = 0;
+		engineConfig->lastSecFrameTime.Start();
+		engineConfig->prevLastSecFrameCount = engineConfig->lastSecFrameCount;
+		engineConfig->lastSecFrameCount = 0;
 	}
 
-	float averageFps = float(frameCount) / startupTime.ReadSec();
-	float secondsSinceStartup = startupTime.ReadSec();
-	uint32 lastFrameMs = frameTime.Read();
-	uint32 framesOnLastUpdate = prevLastSecFrameCount;
+	float averageFps = float(engineConfig->frameCount) / engineConfig->startupTime.ReadSec();
+	float secondsSinceStartup = engineConfig->startupTime.ReadSec();
+	uint32 lastFrameMs = engineConfig->frameTime.Read();
+	uint32 framesOnLastUpdate = engineConfig->prevLastSecFrameCount;
 
 	static char title[256];
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
+		averageFps, lastFrameMs, framesOnLastUpdate, engineConfig->dt, secondsSinceStartup, engineConfig->frameCount);
 
 	//app->win->SetTitle(title);
 
 	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
-	if ((cappedMs > 0) && (lastFrameMs < cappedMs))
+	if ((engineConfig->cappedMs > 0) && (lastFrameMs < engineConfig->cappedMs))
 	{
 		// L08: DONE 3: Measure accurately the amount of time SDL_Delay actually waits compared to what was expected
 		PerfTimer pt;
-		SDL_Delay(cappedMs - lastFrameMs);
-		LOG("We waited for %d milliseconds and got back in %f", cappedMs - lastFrameMs, pt.ReadMs());
+		SDL_Delay(engineConfig->cappedMs - lastFrameMs);
+		LOG("We waited for %d milliseconds and got back in %f", engineConfig->cappedMs - lastFrameMs, pt.ReadMs());
 	}
 }
 
@@ -204,7 +205,7 @@ bool KoFiEngine::PreUpdate()
 			continue;
 		}
 
-		ret = (*item)->PreUpdate(dt);
+		ret = (*item)->PreUpdate(engineConfig->dt);
 	}
 
 	return ret;
@@ -227,7 +228,7 @@ bool KoFiEngine::DoUpdate()
 
 		// L08: DONE 5: Send dt as an argument to all updates, you need
 		// to update module parent class and all modules that use update
-		ret = (*item)->Update(dt);
+		ret = (*item)->Update(engineConfig->dt);
 	}
 
 	return ret;
@@ -248,7 +249,7 @@ bool KoFiEngine::PostUpdate()
 			continue;
 		}
 
-		ret = (*item)->PostUpdate(dt);
+		ret = (*item)->PostUpdate(engineConfig->dt);
 	}
 
 	return ret;
@@ -285,16 +286,16 @@ const char* KoFiEngine::GetArgv(int index) const
 // ---------------------------------------
 const char* KoFiEngine::GetTitle() const
 {
-	return title.GetString();
+	return engineConfig->title.GetString();
 }
 
 // ---------------------------------------
 const char* KoFiEngine::GetOrganization() const
 {
-	return organization.GetString();
+	return engineConfig->organization.GetString();
 }
 
 const uint64 KoFiEngine::GetFps() const
 {
-	return frameCount;
+	return engineConfig->frameCount;
 }

@@ -4,17 +4,18 @@
 #include "Editor.h"
 #include "Window.h"
 #include "Renderer3D.h"
-
+#include "EngineConfig.h"
 #include "PanelTest.h"
 #include "PanelConfiguration.h"
-Editor::Editor(Window* window, Renderer3D* renderer)
+Editor::Editor(Window* window, Renderer3D* renderer, EngineConfig* engineConfig)
 {
+	name = "Editor";
 	this->window = window;
 	this->renderer = renderer;
 	this->engine = engine;
 
 	panelTest = new PanelTest();
-	panelConfig = new PanelConfiguration(window,renderer);
+	panelConfig = new PanelConfiguration(window,renderer,engineConfig);
 
 	AddPanel(panelTest);
 	AddPanel(panelConfig);
@@ -37,7 +38,7 @@ void Editor::AddPanel(Panel* panel)
 	panels.push_back(panel);
 }
 
-bool Editor::Awake()
+bool Editor::Awake(Json configModule)
 {
 	bool ret = true;
 	//Panels Awake

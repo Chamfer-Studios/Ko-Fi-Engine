@@ -1,13 +1,14 @@
 #include "PanelConfiguration.h"
 #include "Window.h"
 #include "Renderer3D.h"
+#include "EngineConfig.h"
 #include <imgui.h>
-PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer)
+PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer,EngineConfig* engineConfig)
 {
 	panelName = "Configuration";
-	json = jsonHandler.LoadJson("EngineConfig/config.json");
 	this->window = window;
 	this->renderer = renderer;
+	this->engineConfig = engineConfig;
 }
 
 PanelConfiguration::~PanelConfiguration()
@@ -46,14 +47,14 @@ bool PanelConfiguration::Update()
 
 	if (ImGui::CollapsingHeader("Application")) {
 		static char appName[120];
-		strcpy_s(appName, 120, json.at("Engine").at("Title").dump(4).c_str());
+		strcpy_s(appName, 120, engineConfig->title.GetString());
 		ImGui::InputText("App Name",appName,120,ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
 		static char organization[120];
-		strcpy_s(organization, 120, json.at("Engine").at("Organization").dump(4).c_str());
+		strcpy_s(organization, 120, engineConfig->organization.GetString());
 		ImGui::InputText("Organization", organization, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
-		int maxFps = 60;
+		int maxFps = 1000/engineConfig->cappedMs;
 		ImGui::SliderInt("Max FPS", &maxFps, 0, 120);
 	}
 

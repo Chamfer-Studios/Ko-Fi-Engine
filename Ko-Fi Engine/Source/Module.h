@@ -3,7 +3,7 @@
 
 #include "SString.h"
 
-//#include "PugiXml/src/pugixml.hpp"
+#include "JsonHandler.h"
 
 class GuiControl;
 enum class GuiControlState;
@@ -21,7 +21,7 @@ public:
 	}
 
 	// Called before render is available
-	virtual bool Awake()
+	virtual bool Awake(Json configModule)
 	{
 		return true;
 	}

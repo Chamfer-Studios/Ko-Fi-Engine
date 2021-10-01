@@ -16,7 +16,7 @@ public:
 	virtual ~Window();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(Json configModule);
 
 	// Called before quitting
 	bool CleanUp();

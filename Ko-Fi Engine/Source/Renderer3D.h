@@ -14,7 +14,7 @@ public:
 	Renderer3D(Window* window,Camera3D* camera);
 	~Renderer3D();
 
-	bool Awake();
+	bool Awake(Json configModule);
 	bool PreUpdate(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
