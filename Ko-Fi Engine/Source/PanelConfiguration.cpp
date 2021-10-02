@@ -54,8 +54,16 @@ bool PanelConfiguration::Update()
 		strcpy_s(organization, 120, engineConfig->organization.GetString());
 		ImGui::InputText("Organization", organization, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
-		int maxFps = 1000/engineConfig->cappedMs;
-		ImGui::SliderInt("Max FPS", &maxFps, 0, 120);
+		
+		if (ImGui::SliderInt("Max FPS", &engineConfig->maxFps, 0, 120)) {
+			engineConfig->cappedMs = 1000 / engineConfig->maxFps;
+		}
+
+		char title[25];
+		sprintf_s(title, 25, "Framerate %.1f", engineConfig->fpsLog[engineConfig->fpsLog.size() - 1]);
+		ImGui::PlotHistogram("##framerate", &engineConfig->fpsLog[0], engineConfig->fpsLog.size(), 0, title, 0.0f, 100, ImVec2(310, 100));
+		sprintf_s(title, 25, "Milliseconds %.1f", engineConfig->msLog[engineConfig->msLog.size() - 1]);
+		ImGui::PlotHistogram("##milliseconds", &engineConfig->msLog[0], engineConfig->msLog.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 	}
 
 	if (ImGui::CollapsingHeader("Window")) {

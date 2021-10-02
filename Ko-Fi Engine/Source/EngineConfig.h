@@ -21,8 +21,11 @@ public:
 	Timer frameTime;
 	Timer lastSecFrameTime;
 
-	uint32 lastSecFrameCount = 0;
-	uint32 prevLastSecFrameCount = 0;
+	float lastSecFrameCount = 0;
+	float prevLastSecFrameCount = 0;
 	float dt = 0.0f;
 	int	cappedMs = -1;
+	int maxFps = 60;
+	std::vector<float> msLog;
+	std::vector<float> fpsLog;
 };

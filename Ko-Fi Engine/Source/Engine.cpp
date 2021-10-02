@@ -86,8 +86,8 @@ bool KoFiEngine::Awake()
 
 		engineConfig->title.Create(jsonConfigEngine.at("Title").dump(4).c_str());
 		engineConfig->organization.Create(jsonConfigEngine.at("Organization").dump(4).c_str());
-		int cap = jsonConfigEngine.at("MaxFPS");
-		if (cap > 0) engineConfig->cappedMs = 1000 / cap;
+		engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
+		if (engineConfig->maxFps > 0) engineConfig->cappedMs = 1000 / engineConfig->maxFps;
 	}
 
 	if (ret == true)
@@ -161,12 +161,17 @@ void KoFiEngine::PrepareUpdate()
 // ---------------------------------------------
 void KoFiEngine::FinishUpdate()
 {
+
 	if (engineConfig->lastSecFrameTime.Read() > 1000)
 	{
 		engineConfig->lastSecFrameTime.Start();
 		engineConfig->prevLastSecFrameCount = engineConfig->lastSecFrameCount;
 		engineConfig->lastSecFrameCount = 0;
 	}
+
+	
+
+	
 
 	float averageFps = float(engineConfig->frameCount) / engineConfig->startupTime.ReadSec();
 	float secondsSinceStartup = engineConfig->startupTime.ReadSec();
@@ -177,16 +182,25 @@ void KoFiEngine::FinishUpdate()
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
 		averageFps, lastFrameMs, framesOnLastUpdate, engineConfig->dt, secondsSinceStartup, engineConfig->frameCount);
 
+	engineConfig->fpsLog.push_back(engineConfig->prevLastSecFrameCount);
+	if (engineConfig->fpsLog.size() > 100)
+		engineConfig->fpsLog.erase(engineConfig->fpsLog.begin());
+
+	engineConfig->msLog.push_back(lastFrameMs);
+	if (engineConfig->msLog.size() > 100)
+		engineConfig->msLog.erase(engineConfig->msLog.begin());
+
 	//app->win->SetTitle(title);
 
-	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
+	//Use SDL_Delay to make sure you get your capped framerate
 	if ((engineConfig->cappedMs > 0) && (lastFrameMs < engineConfig->cappedMs))
 	{
-		// L08: DONE 3: Measure accurately the amount of time SDL_Delay actually waits compared to what was expected
+		// Measure accurately the amount of time SDL_Delay actually waits compared to what was expected
 		PerfTimer pt;
 		SDL_Delay(engineConfig->cappedMs - lastFrameMs);
 		LOG("We waited for %d milliseconds and got back in %f", engineConfig->cappedMs - lastFrameMs, pt.ReadMs());
 	}
+
 }
 
 // Call modules before each loop iteration
