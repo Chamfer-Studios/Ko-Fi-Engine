@@ -282,6 +282,7 @@
     <ClInclude Include="Source\External\mmgr\nommgr.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
+    <ClInclude Include="Source\ImGuiAppLog.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\JsonHandler.h" />
     <ClInclude Include="Source\Light.h" />

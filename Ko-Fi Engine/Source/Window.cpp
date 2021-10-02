@@ -43,9 +43,9 @@ bool Window::Awake(Json configModule)
 		bool resizable = false;
 		bool fullscreen_window = false;
 
-		width = 1024;
-		height = 720;
-		scale = 1;
+		width = configModule.at("Width");
+		height = configModule.at("Height");
+		scale = configModule.at("Scale");
 
 		if(fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;
 		if(borderless == true) flags |= SDL_WINDOW_BORDERLESS;

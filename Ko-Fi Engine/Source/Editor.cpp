@@ -7,6 +7,8 @@
 #include "EngineConfig.h"
 #include "PanelTest.h"
 #include "PanelConfiguration.h"
+#include "ImGuiAppLog.h"
+
 Editor::Editor(Window* window, Renderer3D* renderer, EngineConfig* engineConfig)
 {
 	name = "Editor";
@@ -23,13 +25,11 @@ Editor::Editor(Window* window, Renderer3D* renderer, EngineConfig* engineConfig)
 
 Editor::~Editor()
 {
-
 	for (std::list<Panel*>::reverse_iterator item = panels.rbegin(); item != panels.rend(); ++item)
 	{
 		RELEASE(*item);
 	}
 	panels.clear();
-
 }
 
 void Editor::AddPanel(Panel* panel)
@@ -55,9 +55,13 @@ bool Editor::Awake(Json configModule)
 
 	return ret;
 }
+
 bool Editor::Start()
 {
+	appLog->AddLog("Starting panel editor");
 	bool ret = true;
+
+	// Initializing ImGui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -66,7 +70,7 @@ bool Editor::Start()
 	ImGui_ImplSDL2_InitForOpenGL(window->window, renderer->context);
 	ImGui_ImplOpenGL3_Init();
 
-	//Panels Awake
+	// Panels Awake
 	if (ret == true)
 	{
 		std::list<Panel*>::iterator item = panels.begin();;
@@ -88,8 +92,7 @@ bool Editor::PreUpdate(float dt)
 	ImGui_ImplSDL2_NewFrame(window->window);
 	ImGui::NewFrame();
 
-	
-	//Panels PreUpdate
+	// Panels PreUpdate
 	if (ret == true)
 	{
 		std::list<Panel*>::iterator item = panels.begin();;
@@ -109,16 +112,15 @@ bool Editor::Update(float dt)
 	bool ret = true;
 	//Creating Main Menu Bar
 	CallMainMenuBar();
-	//// Window with a button to create another window
+
+	// Window with a button to create another window
 	ImGui::Begin("Create window");
-	
 	ImGui::Text("Press the button to create another window.");
 	if (ImGui::Button("Button"))
 	styleHandler.SetKoFiStyle();
-
 	ImGui::End();
 
-	//Panels Update
+	// Panels Update
 	if (ret == true)
 	{
 		std::list<Panel*>::iterator item = panels.begin();;
@@ -130,6 +132,9 @@ bool Editor::Update(float dt)
 		}
 	}
 
+	// Drawing log window
+	appLog->Draw("Log");
+
 	return ret;
 }
 
@@ -139,7 +144,7 @@ bool Editor::PostUpdate(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-	//Panels PostUpdate
+	// Panels PostUpdate
 	if (ret == true)
 	{
 		std::list<Panel*>::iterator item = panels.begin();;
@@ -155,6 +160,7 @@ bool Editor::PostUpdate(float dt)
 
 bool Editor::CleanUp()
 {
+	appLog->AddLog("Cleaning panel editor");
 	bool ret = true;
 	for (std::list<Panel*>::reverse_iterator item = panels.rbegin(); item != panels.rend() && ret == true; ++item)
 	{

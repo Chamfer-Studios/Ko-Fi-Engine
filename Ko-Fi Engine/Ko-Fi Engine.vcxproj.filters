@@ -519,5 +519,8 @@
     <ClInclude Include="Source\EngineConfig.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ImGuiAppLog.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

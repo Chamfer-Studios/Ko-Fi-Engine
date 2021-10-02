@@ -5,7 +5,7 @@
 
 #include "Engine.h"
 
-
+#include "ImGuiAppLog.h"
 
 enum MainState
 {
@@ -18,9 +18,12 @@ enum MainState
 	EXIT
 };
 
+ExampleAppLog* appLog = nullptr;
+
 int main(int argc, char* args[])
 {
 	KoFiEngine* engine = NULL;
+	appLog = new ExampleAppLog();
 	LOG("Engine starting ...");
 
 	MainState state = CREATE;

@@ -9,7 +9,7 @@
   "Window": {
     "Width": 1280,
     "Height": 720,
-    "ScreenSize": 1,
+    "Scale": 1,
     "Fullscreen": false,
     "FullscreenDesktop": false,
     "Resizable": true,

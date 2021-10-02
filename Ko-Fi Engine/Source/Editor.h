@@ -10,10 +10,11 @@
 class Window;
 class Renderer3D;
 
-//Panels
+// Panels
 class PanelTest;
 class PanelConfiguration;
 struct EngineConfig;
+
 class Editor : public Module
 {
 public:
@@ -33,14 +34,14 @@ public:
 private:
 	PanelTest* panelTest = nullptr;
 	PanelConfiguration* panelConfig = nullptr;
-private:
+
 	// Needed modules
 	Window* window = nullptr;
 	Renderer3D* renderer = nullptr;
 	KoFiEngine* engine = nullptr;
+
 	EditorStyleHandler styleHandler;
 	std::list<Panel*> panels;
-
 };
 
 #endif IM_GUI_HANDLER_H
