@@ -195,6 +195,7 @@
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\PanelConfiguration.cpp" />
+    <ClCompile Include="Source\PanelLog.cpp" />
     <ClCompile Include="Source\PanelTest.cpp" />
     <ClCompile Include="Source\Primitive.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
@@ -290,6 +291,7 @@
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Panel.h" />
     <ClInclude Include="Source\PanelConfiguration.h" />
+    <ClInclude Include="Source\PanelLog.h" />
     <ClInclude Include="Source\PanelTest.h" />
     <ClInclude Include="Source\PerfTimer.h" />
     <ClInclude Include="Source\Primitive.h" />

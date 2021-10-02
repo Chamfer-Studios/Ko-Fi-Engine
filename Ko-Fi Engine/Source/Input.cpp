@@ -3,6 +3,8 @@
 #include "SDL.h"
 #include "Renderer3D.h"
 #include "Log.h"
+#include "ImGuiAppLog.h"
+
 #define MAX_KEYS 300
 
 Input::Input() : Module()
@@ -24,16 +26,26 @@ Input::~Input()
 bool Input::Init()
 {
 	LOG("Init SDL input event system");
+	appLog->AddLog("Init SDL input event system\n");
 	bool ret = true;
 	SDL_Init(0);
 
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+		appLog->AddLog("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
 	return ret;
+}
+
+bool Input::Start()
+{
+	appLog->AddLog("Init SDL input event system\n");
+	bool ret = true;
+
+	return true;
 }
 
 // Called every draw update
@@ -145,6 +157,7 @@ bool Input::PreUpdate(float dt)
 bool Input::CleanUp()
 {
 	LOG("Quitting SDL input event subsystem");
+	appLog->AddLog("Quitting SDL input event subsystem\n");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }

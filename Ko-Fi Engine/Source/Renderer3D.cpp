@@ -4,6 +4,7 @@
 #include "Log.h"
 #include "Window.h"
 #include "Camera3D.h"
+#include "ImGuiAppLog.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -24,6 +25,7 @@ Renderer3D::~Renderer3D()
 bool Renderer3D::Awake(Json configModule)
 {
 	LOG("Creating 3D Renderer context");
+	appLog->AddLog("Creating 3D Renderer context\n");
 	bool ret = true;
 
 	//Create context
@@ -31,6 +33,7 @@ bool Renderer3D::Awake(Json configModule)
 	if (context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		appLog->AddLog("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
@@ -38,7 +41,10 @@ bool Renderer3D::Awake(Json configModule)
 	{
 		//Use Vsync
 		if (VSYNC && SDL_GL_SetSwapInterval(1) < 0)
+		{
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		}
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -49,6 +55,7 @@ bool Renderer3D::Awake(Json configModule)
 		if (error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -61,6 +68,7 @@ bool Renderer3D::Awake(Json configModule)
 		if (error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -75,6 +83,7 @@ bool Renderer3D::Awake(Json configModule)
 		if (error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -135,6 +144,7 @@ bool Renderer3D::PostUpdate(float dt)
 bool Renderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
+	appLog->AddLog("Destroying 3D Renderer\n");
 
 	SDL_GL_DeleteContext(context);
 

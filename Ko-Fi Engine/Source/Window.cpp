@@ -2,9 +2,9 @@
 #include "Engine.h"
 #include "Defs.h"
 #include "Log.h"
+#include "ImGuiAppLog.h"
 
 #include "SDL.h"
-
 
 Window::Window() : Module()
 {
@@ -22,11 +22,13 @@ Window::~Window()
 bool Window::Awake(Json configModule)
 {
 	LOG("Init SDL window & surface");
+	appLog->AddLog("Init SDL window & surface\n");
 	bool ret = true;
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		appLog->AddLog("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	else
@@ -56,6 +58,7 @@ bool Window::Awake(Json configModule)
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			appLog->AddLog("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			SDL_assert(window != NULL);
 			ret = false;
 		}
@@ -75,6 +78,7 @@ bool Window::Awake(Json configModule)
 bool Window::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
+	appLog->AddLog("Destroying SDL window and quitting all SDL systems\n");
 
 	// Destroy window
 	if(window != NULL)

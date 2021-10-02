@@ -20,6 +20,7 @@ public:
 	~Input();
 
 	bool Init();
+	bool Start();
 	bool PreUpdate(float dt);
 	bool CleanUp();
 

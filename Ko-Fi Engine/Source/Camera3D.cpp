@@ -4,6 +4,7 @@
 #include "Camera3D.h"
 #include "SDL.h"
 #include "Log.h"
+#include "ImGuiAppLog.h"
 
 Camera3D::Camera3D(Input* input) : Module()
 {
@@ -26,6 +27,7 @@ Camera3D::~Camera3D()
 bool Camera3D::Start()
 {
 	LOG("Setting up the camera");
+	appLog->AddLog("Setting up the camera\n");
 	bool ret = true;
 
 	return ret;
@@ -35,6 +37,7 @@ bool Camera3D::Start()
 bool Camera3D::CleanUp()
 {
 	LOG("Cleaning camera");
+	appLog->AddLog("Cleaning camera\n");
 
 	return true;
 }

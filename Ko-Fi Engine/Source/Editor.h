@@ -13,11 +13,13 @@ class Renderer3D;
 // Panels
 class PanelTest;
 class PanelConfiguration;
+class PanelLog;
 struct EngineConfig;
 
 class Editor : public Module
 {
 public:
+
 	Editor(Window* window, Renderer3D* renderer,EngineConfig* engineConfig);
 	~Editor();
 
@@ -32,8 +34,10 @@ public:
 	bool buttonPressed = false;
 
 private:
+
 	PanelTest* panelTest = nullptr;
 	PanelConfiguration* panelConfig = nullptr;
+	PanelLog* panelLog = nullptr;
 
 	// Needed modules
 	Window* window = nullptr;

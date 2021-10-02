@@ -7,6 +7,7 @@
 #include "EngineConfig.h"
 #include "PanelTest.h"
 #include "PanelConfiguration.h"
+#include "PanelLog.h"
 #include "ImGuiAppLog.h"
 
 Editor::Editor(Window* window, Renderer3D* renderer, EngineConfig* engineConfig)
@@ -18,9 +19,11 @@ Editor::Editor(Window* window, Renderer3D* renderer, EngineConfig* engineConfig)
 
 	panelTest = new PanelTest();
 	panelConfig = new PanelConfiguration(window,renderer,engineConfig);
+	panelLog = new PanelLog();
 
 	AddPanel(panelTest);
 	AddPanel(panelConfig);
+	AddPanel(panelLog);
 }
 
 Editor::~Editor()
@@ -58,7 +61,7 @@ bool Editor::Awake(Json configModule)
 
 bool Editor::Start()
 {
-	appLog->AddLog("Starting panel editor");
+	appLog->AddLog("Starting panel editor\n");
 	bool ret = true;
 
 	// Initializing ImGui
@@ -132,9 +135,6 @@ bool Editor::Update(float dt)
 		}
 	}
 
-	// Drawing log window
-	appLog->Draw("Log");
-
 	return ret;
 }
 
@@ -160,8 +160,10 @@ bool Editor::PostUpdate(float dt)
 
 bool Editor::CleanUp()
 {
-	appLog->AddLog("Cleaning panel editor");
+	appLog->AddLog("Cleaning panel editor\n");
 	bool ret = true;
+
+	// Cleaning panels
 	for (std::list<Panel*>::reverse_iterator item = panels.rbegin(); item != panels.rend() && ret == true; ++item)
 	{
 		ret = (*item)->CleanUp();

@@ -229,6 +229,9 @@
     <ClCompile Include="Source\PanelConfiguration.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PanelLog.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -521,6 +524,9 @@
     </ClInclude>
     <ClInclude Include="Source\ImGuiAppLog.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelLog.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
