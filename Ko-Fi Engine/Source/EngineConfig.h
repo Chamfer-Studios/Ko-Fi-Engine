@@ -2,6 +2,7 @@
 #include "PerfTimer.h"
 #include "Timer.h"
 #include "SString.h"
+#include "SDL.h"
 class EngineConfig {
 public:
 	EngineConfig() {
@@ -28,4 +29,13 @@ public:
 	int maxFps = 60;
 	std::vector<float> msLog;
 	std::vector<float> fpsLog;
+
+	//Hardware
+	SDL_version sdlVersion;
+	Uint8 cpuCores = 0;
+	float RAM;
+	float vramBudget, vramUsage, vramAvailable,vramReserved = 0;
+	unsigned char* gpuVendor = nullptr;
+	unsigned char* gpuRenderer = nullptr;
+	unsigned char* gpuVersion = nullptr;
 };

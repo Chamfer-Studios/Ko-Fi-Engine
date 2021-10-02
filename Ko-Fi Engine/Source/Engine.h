@@ -67,6 +67,9 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
+	void SetHardwareInfo();
+	void SetVramStats();
+
 private:
 	//Modules
 	Window* window = nullptr;

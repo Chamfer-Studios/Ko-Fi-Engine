@@ -13,6 +13,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "glew.h"
+
 // Constructor
 KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -112,6 +114,11 @@ bool KoFiEngine::Start()
 	PERF_START(ptimer);
 
 	bool ret = true;
+
+	//Setting hardware info
+	SetHardwareInfo();
+
+
 	std::list<Module*>::iterator item = modules.begin();;
 
 	while (item != modules.end() && ret)
@@ -221,7 +228,7 @@ bool KoFiEngine::PreUpdate()
 
 		ret = (*item)->PreUpdate(engineConfig->dt);
 	}
-
+	SetVramStats();
 	return ret;
 }
 
@@ -312,4 +319,26 @@ const char* KoFiEngine::GetOrganization() const
 const uint64 KoFiEngine::GetFps() const
 {
 	return engineConfig->frameCount;
+}
+
+void KoFiEngine::SetHardwareInfo() {
+	SDL_GetVersion(&engineConfig->sdlVersion);
+	engineConfig->cpuCores = SDL_GetCPUCount();
+	engineConfig->RAM = (float)(SDL_GetSystemRAM()*1024);
+	engineConfig->gpuVendor = (unsigned char*)glGetString(GL_VENDOR);
+	engineConfig->gpuRenderer = (unsigned char*)glGetString(GL_RENDERER);
+	engineConfig->gpuVersion = (unsigned char*)glGetString(GL_VERSION);
+}
+
+void KoFiEngine::SetVramStats() {
+	GLint nTotalMemoryInKb = 0;
+	int temp;
+	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &temp); // Total Available Memory in KB
+	engineConfig->vramAvailable = (float)temp;
+
+	glGetIntegerv(GL_GPU_MEMORY_INFO_EVICTION_COUNT_NVX, &temp); // Dedicated VRAM in KB
+	engineConfig->vramUsage = (float)temp;
+
+	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &temp); // Total VRAM Memory in KB
+	engineConfig->vramBudget = (float)temp;
 }

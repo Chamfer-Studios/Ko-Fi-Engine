@@ -85,6 +85,41 @@ bool PanelConfiguration::Update()
 		}
 		
 	}
+
+	if (ImGui::CollapsingHeader("Hardware")) {
+		ImGui::Text("SDL Version: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%d.%d.%d", engineConfig->sdlVersion.major, engineConfig->sdlVersion.minor, engineConfig->sdlVersion.patch);
+		ImGui::Separator();
+		ImGui::Text("CPU: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0),"%d", engineConfig->cpuCores);
+		ImGui::Text("System RAM: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%d", engineConfig->RAM);
+		ImGui::Text("Caps: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s", "TODO");
+		ImGui::Separator();
+		ImGui::Text("GPU: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s", engineConfig->gpuRenderer);
+		ImGui::Text("Brand: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s", engineConfig->gpuVendor);
+		ImGui::Text("VRAM Budget: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramBudget * (1.0 / 1024.0));
+		ImGui::Text("VRAM Usage: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramUsage * (1.0 / 1024.0));
+		ImGui::Text("VRAM Available: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramAvailable * (1.0 / 1024.0));
+		ImGui::Text("VRAM Reserved: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramReserved * (1.0 / 1024.0));
+	}
 	ImGui::End();
 	return true;
 }
