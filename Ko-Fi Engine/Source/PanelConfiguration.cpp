@@ -87,36 +87,48 @@ bool PanelConfiguration::Update()
 	}
 
 	if (ImGui::CollapsingHeader("Hardware")) {
-		ImGui::Text("SDL Version: ");
+		ImGui::Text("SDL Version:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%d.%d.%d", engineConfig->sdlVersion.major, engineConfig->sdlVersion.minor, engineConfig->sdlVersion.patch);
 		ImGui::Separator();
-		ImGui::Text("CPU: ");
+		ImGui::Text("CPU:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0),"%d", engineConfig->cpuCores);
-		ImGui::Text("System RAM: ");
+		ImGui::Text("System RAM:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%d", engineConfig->RAM);
-		ImGui::Text("Caps: ");
+		ImGui::Text("Caps:");
 		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s", "TODO");
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s%s%s%s%s%s", 
+			engineConfig->hasAVX ?"AVX,":"",
+			engineConfig->hasAVX2 ?"AVX2,":"",
+			engineConfig->hasAltiVec ?"AltiVec,":"",
+			engineConfig->hasMMX ?"MMX,":"",
+			engineConfig->hasRDTSC ?"RDTSC,":"",
+			engineConfig->has3DNow ? "3DNow," : "");
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s%s%s%s%s",
+			engineConfig->hasSSE ? "SSE," : "",
+			engineConfig->hasSSE2 ? "SSE2," : "",
+			engineConfig->hasSSE3 ? "SSE3," : "",
+			engineConfig->hasSSE41 ? "SSE41," : "",
+			engineConfig->hasSSE42 ? "SSE42," : "");
 		ImGui::Separator();
-		ImGui::Text("GPU: ");
+		ImGui::Text("GPU:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s", engineConfig->gpuRenderer);
-		ImGui::Text("Brand: ");
+		ImGui::Text("Brand:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s", engineConfig->gpuVendor);
-		ImGui::Text("VRAM Budget: ");
+		ImGui::Text("VRAM Budget:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramBudget * (1.0 / 1024.0));
-		ImGui::Text("VRAM Usage: ");
+		ImGui::Text("VRAM Usage:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramUsage * (1.0 / 1024.0));
-		ImGui::Text("VRAM Available: ");
+		ImGui::Text("VRAM Available:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramAvailable * (1.0 / 1024.0));
-		ImGui::Text("VRAM Reserved: ");
+		ImGui::Text("VRAM Reserved:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramReserved * (1.0 / 1024.0));
 	}

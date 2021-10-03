@@ -43,4 +43,16 @@ public:
 	unsigned char* gpuVendor = nullptr;
 	unsigned char* gpuRenderer = nullptr;
 	unsigned char* gpuVersion = nullptr;
+	std::vector<std::string> caps;
+	bool has3DNow = false;
+	bool hasAVX = false;
+	bool hasAVX2 = false;
+	bool hasAltiVec = false;
+	bool hasMMX = false;
+	bool hasRDTSC = false;
+	bool hasSSE = false;
+	bool hasSSE2 = false;
+	bool hasSSE3 = false;
+	bool hasSSE41 = false;
+	bool hasSSE42 = false;
 };

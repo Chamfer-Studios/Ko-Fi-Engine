@@ -325,6 +325,18 @@ void KoFiEngine::SetHardwareInfo() {
 	engineConfig->gpuVendor = (unsigned char*)glGetString(GL_VENDOR);
 	engineConfig->gpuRenderer = (unsigned char*)glGetString(GL_RENDERER);
 	engineConfig->gpuVersion = (unsigned char*)glGetString(GL_VERSION);
+
+	engineConfig->has3DNow = SDL_Has3DNow() ? true : false;
+	engineConfig->hasAVX = SDL_HasAVX() ? true : false;
+	engineConfig->hasAVX2 = SDL_HasAVX2() ? true : false;
+	engineConfig->hasAltiVec = SDL_HasAltiVec() ? true : false;
+	engineConfig->hasMMX = SDL_HasMMX() ? true : false;
+	engineConfig->hasRDTSC = SDL_HasRDTSC() ? true : false;
+	engineConfig->hasSSE = SDL_HasSSE() ? true : false;
+	engineConfig->hasSSE2 = SDL_HasSSE2() ? true : false;
+	engineConfig->hasSSE3 = SDL_HasSSE3() ? true : false;
+	engineConfig->hasSSE41 = SDL_HasSSE41() ? true : false;
+	engineConfig->hasSSE42 = SDL_HasSSE42() ? true : false;
 }
 
 void KoFiEngine::SetVramStats() {
@@ -338,4 +350,5 @@ void KoFiEngine::SetVramStats() {
 
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &temp); // Total VRAM Memory in KB
 	engineConfig->vramBudget = (float)temp;
+	//TODO: GET RESERVED VRAM
 }
