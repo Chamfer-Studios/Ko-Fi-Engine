@@ -1,16 +1,18 @@
 #include "PanelConfiguration.h"
 #include "Window.h"
 #include "Renderer3D.h"
+#include "Input.h"
 #include "EngineConfig.h"
 #include "Editor.h"
 #include <imgui.h>
-PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer,EngineConfig* engineConfig,Editor* editor)
+PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer,Input* input,EngineConfig* engineConfig,Editor* editor)
 {
 	panelName = "Configuration";
 	this->window = window;
 	this->renderer = renderer;
 	this->engineConfig = engineConfig;
 	this->editor = editor;
+	this->input = input;
 }
 
 PanelConfiguration::~PanelConfiguration()
@@ -68,6 +70,30 @@ bool PanelConfiguration::Update()
 		ImGui::PlotHistogram("##milliseconds", &engineConfig->msLog[0], engineConfig->msLog.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 	}
 
+	if (ImGui::CollapsingHeader("Renderer")) {
+		bool vsync = renderer->GetVsync();
+		if (ImGui::Checkbox("VSync", &vsync)) {
+			renderer->SetVsync(vsync);
+		}
+	}
+	if (ImGui::CollapsingHeader("Input")) {
+		int mouseX = input->GetMouseX();
+		int mouseY = input->GetMouseY();
+		ImGui::Text("Mouse Position:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i,%i", mouseX, mouseY);
+
+		mouseX = input->GetMouseXMotion();
+		mouseY = input->GetMouseYMotion();
+		ImGui::Text("Mouse Motion:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i,%i", mouseX, mouseY);
+
+		int wheel = input->GetMouseZ();
+		ImGui::Text("Mouse Wheel:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i", wheel);
+	}
 	if (ImGui::CollapsingHeader("Window")) {
 
 		ImGui::Text("Icon:");

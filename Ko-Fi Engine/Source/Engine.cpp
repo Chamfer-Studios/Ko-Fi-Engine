@@ -26,7 +26,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	input = new Input();
 	camera = new Camera3D(input);
 	renderer = new Renderer3D(window,camera);
-	editor = new Editor(window, renderer,engineConfig);
+	editor = new Editor(window, renderer, input,engineConfig);
 	sceneIntro = new SceneIntro(camera, window, renderer, editor);
 
 	// Ordered for awake / Start / Update
@@ -203,7 +203,6 @@ void KoFiEngine::FinishUpdate()
 		PerfTimer pt;
 		SDL_Delay(engineConfig->cappedMs - lastFrameMs);
 		LOG("We waited for %d milliseconds and got back in %f", engineConfig->cappedMs - lastFrameMs, pt.ReadMs());
-		appLog->AddLog("We waited for %d milliseconds and got back in %f\n", engineConfig->cappedMs - lastFrameMs, pt.ReadMs());
 	}
 }
 

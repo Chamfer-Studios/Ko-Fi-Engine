@@ -8,6 +8,7 @@
 #include "Panel.h"
 class Window;
 class Renderer3D;
+class Input;
 
 // Panels
 class PanelTest;
@@ -19,7 +20,7 @@ class Editor : public Module
 {
 public:
 
-	Editor(Window* window, Renderer3D* renderer,EngineConfig* engineConfig);
+	Editor(Window* window, Renderer3D* renderer,Input* input,EngineConfig* engineConfig);
 	~Editor();
 
 	bool Awake(Json configModule);

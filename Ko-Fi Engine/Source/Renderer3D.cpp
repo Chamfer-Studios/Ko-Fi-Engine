@@ -40,11 +40,8 @@ bool Renderer3D::Awake(Json configModule)
 	if (ret == true)
 	{
 		//Use Vsync
-		if (VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-		{
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
-			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
-		}
+		vsync = configModule.at("Vsync");
+		SetVsync(vsync);
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -149,6 +146,27 @@ bool Renderer3D::CleanUp()
 	SDL_GL_DeleteContext(context);
 
 	return true;
+}
+
+bool Renderer3D::GetVsync() const
+{
+	return vsync;
+}
+
+void Renderer3D::SetVsync(bool vsync)
+{
+	if (this->vsync != vsync)
+	{
+		this->vsync = vsync;
+		if (SDL_GL_SetSwapInterval(vsync ? 1 : 0) < 0) {
+			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n",SDL_GetError());
+		}
+		
+			
+		
+		SDL_GL_GetSwapInterval() ? appLog->AddLog("Vsync Started\n") : appLog->AddLog("Vsync Stopped\n");;
+	}
 }
 
 

@@ -18,7 +18,8 @@ public:
 	bool PreUpdate(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
-
+	bool GetVsync() const;
+	void SetVsync(bool vsync);
 	void OnResize(int width, int height);
 
 public:
@@ -29,4 +30,6 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	Window* window = nullptr;
 	Camera3D* camera = nullptr;
+private:
+	bool vsync = false;
 };

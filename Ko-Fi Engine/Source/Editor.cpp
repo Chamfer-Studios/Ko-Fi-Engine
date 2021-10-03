@@ -4,13 +4,14 @@
 #include "Editor.h"
 #include "Window.h"
 #include "Renderer3D.h"
+#include "Input.h"
 #include "EngineConfig.h"
 #include "PanelTest.h"
 #include "PanelConfiguration.h"
 #include "PanelLog.h"
 #include "ImGuiAppLog.h"
 
-Editor::Editor(Window* window, Renderer3D* renderer, EngineConfig* engineConfig)
+Editor::Editor(Window* window, Renderer3D* renderer,Input* input, EngineConfig* engineConfig)
 {
 	name = "Editor";
 	this->window = window;
@@ -18,7 +19,7 @@ Editor::Editor(Window* window, Renderer3D* renderer, EngineConfig* engineConfig)
 	this->engine = engine;
 
 	panelTest = new PanelTest();
-	panelConfig = new PanelConfiguration(window,renderer,engineConfig,this);
+	panelConfig = new PanelConfiguration(window,renderer,input,engineConfig,this);
 	panelLog = new PanelLog();
 
 	AddPanel(panelTest);
