@@ -35,7 +35,7 @@ public:
 	std::vector<float> msLog;
 	std::vector<float> fpsLog;
 
-	//Hardware
+	// Hardware
 	SDL_version sdlVersion;
 	Uint8 cpuCores = 0;
 	float RAM;

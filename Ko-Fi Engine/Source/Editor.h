@@ -31,6 +31,9 @@ public:
 	bool CleanUp();
 	bool CallMainMenuBar();
 	void AddPanel(Panel* panel);
+	void ShowAboutWindow(bool* p_open);
+	bool buttonPressed = false;
+
 private:
 
 	PanelTest* panelTest = nullptr;
@@ -45,6 +48,7 @@ private:
 	EditorStyleHandler styleHandler;
 	std::list<Panel*> panels;
 
+	bool showAboutWindow = false;
 };
 
 #endif IM_GUI_HANDLER_H

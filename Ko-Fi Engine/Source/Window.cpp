@@ -77,8 +77,6 @@ bool Window::Awake(Json configModule)
 	return ret;
 }
 
-
-
 // Called before quitting
 bool Window::CleanUp()
 {

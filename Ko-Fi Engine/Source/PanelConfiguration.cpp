@@ -5,7 +5,8 @@
 #include "EngineConfig.h"
 #include "Editor.h"
 #include <imgui.h>
-PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer,Input* input,EngineConfig* engineConfig,Editor* editor)
+
+PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer, Input* input, EngineConfig* engineConfig, Editor* editor)
 {
 	panelName = "Configuration";
 	this->window = window;
@@ -33,10 +34,11 @@ bool PanelConfiguration::Update()
 {
 	ImGui::Begin(panelName.c_str());
 
-		if (ImGui::BeginMenu("Options")) {
-			if (ImGui::MenuItem("Set Defaults")) {
+		if (ImGui::BeginMenu("Options"))
+		{
+			if (ImGui::MenuItem("Set Defaults"))
+			{
 				printf_s("%s", "Clicked Set Defaults\n");
-
 			}
 			if (ImGui::MenuItem("Load"))
 			{
@@ -49,7 +51,8 @@ bool PanelConfiguration::Update()
 			ImGui::EndMenu();
 		}
 
-	if (ImGui::CollapsingHeader("Application")) {
+	if (ImGui::CollapsingHeader("Application"))
+	{
 		static char appName[120];
 		strcpy_s(appName, 120, engineConfig->title.GetString());
 		ImGui::InputText("App Name",appName,120,ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
@@ -58,10 +61,8 @@ bool PanelConfiguration::Update()
 		strcpy_s(organization, 120, engineConfig->organization.GetString());
 		ImGui::InputText("Organization", organization, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
-		
-		if (ImGui::SliderInt("Max FPS", &engineConfig->maxFps, 0, 120)) {
+		if (ImGui::SliderInt("Max FPS", &engineConfig->maxFps, 0, 120))
 			engineConfig->cappedMs = 1000 / engineConfig->maxFps;
-		}
 
 		char title[25];
 		sprintf_s(title, 25, "Framerate %.1f", engineConfig->fpsLog[engineConfig->fpsLog.size() - 1]);
@@ -70,11 +71,11 @@ bool PanelConfiguration::Update()
 		ImGui::PlotHistogram("##milliseconds", &engineConfig->msLog[0], engineConfig->msLog.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 	}
 
-	if (ImGui::CollapsingHeader("Renderer")) {
+	if (ImGui::CollapsingHeader("Renderer"))
+	{
 		bool vsync = renderer->GetVsync();
-		if (ImGui::Checkbox("VSync", &vsync)) {
+		if (ImGui::Checkbox("VSync", &vsync))
 			renderer->SetVsync(vsync);
-		}
 	}
 	if (ImGui::CollapsingHeader("Input")) {
 		int mouseX = input->GetMouseX();
@@ -94,20 +95,19 @@ bool PanelConfiguration::Update()
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i", wheel);
 	}
-	if (ImGui::CollapsingHeader("Window")) {
-
+	if (ImGui::CollapsingHeader("Window"))
+	{
 		ImGui::Text("Icon:");
 		ImGui::SameLine();
 		if (ImGui::Selectable(window->GetIcon()))
 			loadingIcon = true;
 		float brightness = window->GetBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
-		{
 			window->AdjustBrightness(brightness);
-		}
 		int width = window->GetWidth();
 		int height = window->GetHeight();
-		if (ImGui::SliderInt("Width", &width, 640, 4096) | ImGui::SliderInt("Height", &height, 480, 2160)) {
+		if (ImGui::SliderInt("Width", &width, 640, 4096) | ImGui::SliderInt("Height", &height, 480, 2160))
+		{
 			SDL_SetWindowSize(window->window, width, height);
 			window->SetWidth(width);
 			window->SetHeight(height);
@@ -117,26 +117,18 @@ bool PanelConfiguration::Update()
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0),"%u",window->GetRefreshRate());
 		bool temp = window->GetFullscreen();
 		if (ImGui::Checkbox("Fullscreen",&temp))
-		{
 			window->SetFullscreen(temp);
-		}
+		ImGui::SameLine();
 		temp = window->GetFullscreenDesktop();
 		if (ImGui::Checkbox("Fullscreen Desktop", &temp))
-		{
 			window->SetFullscreenDesktop(temp);
-		}
 		temp = window->GetResizable();
 		if (ImGui::Checkbox("Resizable", &temp))
-		{
 			window->SetResizable(temp);
-		}
+		ImGui::SameLine();
 		temp = window->GetBorderless();
 		if (ImGui::Checkbox("Borderless", &temp))
-		{
 			window->SetBorderless(temp);
-		}
-
-		
 	}
 
 	if (ImGui::CollapsingHeader("Hardware")) {

@@ -26,7 +26,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	input = new Input();
 	camera = new Camera3D(input);
 	renderer = new Renderer3D(window,camera);
-	editor = new Editor(window, renderer, input,engineConfig);
+	editor = new Editor(window, renderer, input, engineConfig);
 	sceneIntro = new SceneIntro(camera, window, renderer, editor);
 
 	// Ordered for awake / Start / Update
@@ -39,7 +39,6 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 
 	// Render last to swap buffer
 	AddModule(renderer);
-
 
 	PERF_PEEK(ptimer);
 }
@@ -66,7 +65,6 @@ void KoFiEngine::AddModule(Module* module)
 bool KoFiEngine::Awake()
 {
 	PERF_START(ptimer);
-
 
 	//pugi::xml_document configFile;
 	//pugi::xml_node config;
@@ -169,7 +167,6 @@ void KoFiEngine::PrepareUpdate()
 // ---------------------------------------------
 void KoFiEngine::FinishUpdate()
 {
-
 	if (engineConfig->lastSecFrameTime.Read() > 1000)
 	{
 		engineConfig->lastSecFrameTime.Start();
