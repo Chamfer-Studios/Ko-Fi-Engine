@@ -57,12 +57,6 @@ bool SceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
-	if (editor->buttonPressed)
-	{
-		RNG rng;
-		random = rng.GetRandomInt(0, 35);
-	}
-
 	return true;
 }
 

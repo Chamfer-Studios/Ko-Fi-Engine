@@ -31,8 +31,19 @@ public:
 	void GetWindowSize(uint& width, uint& height) const;
 	int GetWidth() const;
 	int GetHeight() const;
+	bool GetFullscreen() const;
+	bool GetFullscreenDesktop() const;
+	bool GetResizable() const;
+	bool GetBorderless() const;
+	uint GetRefreshRate() const;
+	const char* GetIcon() const;
+	void SetFullscreen(bool fullscreen);
+	void SetFullscreenDesktop(bool fullscreenDesktop);
+	void SetResizable(bool resizable);
+	void SetBorderless(bool borderless);
 	void SetWidth(int width);
 	void SetHeight(int height);
+	void SetIcon(const char* file);
 
 	// Retrieve window scale
 	uint GetScale() const;
@@ -50,6 +61,11 @@ private:
 	uint height;
 	uint scale;
 	float brightness;
+	bool fullscreen = false;
+	bool fullscreenDesktop = false;
+	bool borderless = false;
+	bool resizable = false;
+	std::string iconFile;
 };
 
 #endif // __WINDOW_H__

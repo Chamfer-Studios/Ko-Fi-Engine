@@ -2,13 +2,15 @@
 #include "Window.h"
 #include "Renderer3D.h"
 #include "EngineConfig.h"
+#include "Editor.h"
 #include <imgui.h>
-PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer,EngineConfig* engineConfig)
+PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer,EngineConfig* engineConfig,Editor* editor)
 {
 	panelName = "Configuration";
 	this->window = window;
 	this->renderer = renderer;
 	this->engineConfig = engineConfig;
+	this->editor = editor;
 }
 
 PanelConfiguration::~PanelConfiguration()
@@ -67,10 +69,11 @@ bool PanelConfiguration::Update()
 	}
 
 	if (ImGui::CollapsingHeader("Window")) {
-		bool active = false;
-		ImGui::Checkbox("Active",&active);
 
-		ImGui::Text("Icon: default");
+		ImGui::Text("Icon:");
+		ImGui::SameLine();
+		if (ImGui::Selectable(window->GetIcon()))
+			loadingIcon = true;
 		float brightness = window->GetBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
 		{
@@ -83,6 +86,30 @@ bool PanelConfiguration::Update()
 			window->SetWidth(width);
 			window->SetHeight(height);
 		}
+		ImGui::Text("Refresh rate:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0),"%u",window->GetRefreshRate());
+		bool temp = window->GetFullscreen();
+		if (ImGui::Checkbox("Fullscreen",&temp))
+		{
+			window->SetFullscreen(temp);
+		}
+		temp = window->GetFullscreenDesktop();
+		if (ImGui::Checkbox("Fullscreen Desktop", &temp))
+		{
+			window->SetFullscreenDesktop(temp);
+		}
+		temp = window->GetResizable();
+		if (ImGui::Checkbox("Resizable", &temp))
+		{
+			window->SetResizable(temp);
+		}
+		temp = window->GetBorderless();
+		if (ImGui::Checkbox("Borderless", &temp))
+		{
+			window->SetBorderless(temp);
+		}
+
 		
 	}
 

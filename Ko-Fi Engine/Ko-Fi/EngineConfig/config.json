@@ -14,7 +14,8 @@
     "FullscreenDesktop": false,
     "Resizable": true,
     "Borderless": false,
-    "Title": "Ko-Fi Engine"
+    "Title": "Ko-Fi Engine",
+    "Icon" : "Assets/Icons/icon.bmp"
   },
   "Renderer3D": {
     "Vsync": true

@@ -6,7 +6,6 @@
 #include "Globals.h"
 #include "EditorStyleHandler.h"
 #include "Panel.h"
-
 class Window;
 class Renderer3D;
 
@@ -31,8 +30,6 @@ public:
 	bool CleanUp();
 	bool CallMainMenuBar();
 	void AddPanel(Panel* panel);
-	bool buttonPressed = false;
-
 private:
 
 	PanelTest* panelTest = nullptr;
@@ -46,6 +43,7 @@ private:
 
 	EditorStyleHandler styleHandler;
 	std::list<Panel*> panels;
+
 };
 
 #endif IM_GUI_HANDLER_H

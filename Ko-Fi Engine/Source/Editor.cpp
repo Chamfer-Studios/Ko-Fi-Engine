@@ -18,7 +18,7 @@ Editor::Editor(Window* window, Renderer3D* renderer, EngineConfig* engineConfig)
 	this->engine = engine;
 
 	panelTest = new PanelTest();
-	panelConfig = new PanelConfiguration(window,renderer,engineConfig);
+	panelConfig = new PanelConfiguration(window,renderer,engineConfig,this);
 	panelLog = new PanelLog();
 
 	AddPanel(panelTest);
@@ -192,3 +192,4 @@ bool Editor::CallMainMenuBar() {
 	}
 	return ret;
 }
+

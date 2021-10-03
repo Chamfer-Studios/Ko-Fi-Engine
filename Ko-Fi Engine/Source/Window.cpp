@@ -40,10 +40,10 @@ bool Window::Awake(Json configModule)
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 	
-		bool fullscreen = false;
-		bool borderless = false;
-		bool resizable = false;
-		bool fullscreen_window = false;
+		fullscreen = false;
+		fullscreenDesktop = false;
+		borderless = false;
+		resizable = false;
 
 		width = configModule.at("Width");
 		height = configModule.at("Height");
@@ -52,7 +52,7 @@ bool Window::Awake(Json configModule)
 		if(fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;
 		if(borderless == true) flags |= SDL_WINDOW_BORDERLESS;
 		if(resizable == true) flags |= SDL_WINDOW_RESIZABLE;
-		if(fullscreen_window == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+		if(fullscreenDesktop == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
 		window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 		if(window == NULL)
@@ -68,11 +68,16 @@ bool Window::Awake(Json configModule)
 			screenSurface = SDL_GetWindowSurface(window);
 			//Get window brightness
 			brightness = SDL_GetWindowBrightness(window);
+			std::string iconFile = configModule.at("Icon");
+			if (iconFile.size() > 1)
+				SetIcon(iconFile.c_str());
 		}
 	}
 
 	return ret;
 }
+
+
 
 // Called before quitting
 bool Window::CleanUp()
@@ -126,6 +131,67 @@ int Window::GetHeight() const
 	return (int)this->height;
 }
 
+bool Window::GetFullscreen() const
+{
+	return fullscreen;
+}
+
+bool Window::GetFullscreenDesktop() const
+{
+	return fullscreenDesktop;
+}
+
+bool Window::GetResizable() const
+{
+	return resizable;
+}
+
+bool Window::GetBorderless() const
+{
+	return borderless;
+}
+
+uint Window::GetRefreshRate() const
+{
+	uint ret = 0;
+
+	SDL_DisplayMode displayMode;
+	if (SDL_GetDesktopDisplayMode(0, &displayMode) != 0)
+		LOG("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+	else
+		ret = displayMode.refresh_rate;
+	return ret;
+}
+
+const char* Window::GetIcon() const
+{
+	return iconFile.c_str();
+}
+
+void Window::SetFullscreen(bool fullscreen)
+{
+	this->fullscreen = fullscreen;
+	SDL_SetWindowFullscreen(window, fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+}
+
+void Window::SetFullscreenDesktop(bool fullscreenDesktop)
+{
+	this->fullscreenDesktop = fullscreenDesktop;
+	SDL_SetWindowFullscreen(window, fullscreenDesktop ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+}
+
+void Window::SetResizable(bool resizable)
+{
+	this->resizable = resizable;
+	SDL_SetWindowResizable(window, (SDL_bool)resizable);
+}
+
+void Window::SetBorderless(bool borderless) 
+{
+	this->borderless = borderless;
+	SDL_SetWindowBordered(window, (SDL_bool)!borderless);
+}
+
 void Window::SetWidth(int width)
 {
 	SDL_assert(width >= 0);
@@ -136,6 +202,18 @@ void Window::SetHeight(int height)
 {
 	SDL_assert(height >= 0);
 	this->height = (uint)height;
+}
+
+void Window::SetIcon(const char* file)
+{
+	if (file != nullptr && file != iconFile)
+	{
+		iconFile = file;
+
+		SDL_Surface* surface = SDL_LoadBMP(file);
+		SDL_SetWindowIcon(window, surface);
+		SDL_FreeSurface(surface);
+	}
 }
 
 uint Window::GetScale() const
