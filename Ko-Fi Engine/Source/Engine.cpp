@@ -9,6 +9,7 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "ImGuiAppLog.h"
 
 #include <iostream>
 #include <sstream>
@@ -176,10 +177,6 @@ void KoFiEngine::FinishUpdate()
 		engineConfig->lastSecFrameCount = 0;
 	}
 
-	
-
-	
-
 	float averageFps = float(engineConfig->frameCount) / engineConfig->startupTime.ReadSec();
 	float secondsSinceStartup = engineConfig->startupTime.ReadSec();
 	uint32 lastFrameMs = engineConfig->frameTime.Read();
@@ -206,8 +203,8 @@ void KoFiEngine::FinishUpdate()
 		PerfTimer pt;
 		SDL_Delay(engineConfig->cappedMs - lastFrameMs);
 		LOG("We waited for %d milliseconds and got back in %f", engineConfig->cappedMs - lastFrameMs, pt.ReadMs());
+		appLog->AddLog("We waited for %d milliseconds and got back in %f\n", engineConfig->cappedMs - lastFrameMs, pt.ReadMs());
 	}
-
 }
 
 // Call modules before each loop iteration

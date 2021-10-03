@@ -3,9 +3,13 @@
 #include "Timer.h"
 #include "SString.h"
 #include "SDL.h"
-class EngineConfig {
+
+class EngineConfig
+{
 public:
-	EngineConfig() {
+
+	EngineConfig()
+	{
 		title = "";
 		organization = "";
 		frameCount = 0;
@@ -14,6 +18,7 @@ public:
 		dt = 0.0f;
 		cappedMs = -1;
 	}
+
 	SString title;
 	SString organization;
 	uint64 frameCount = 0;

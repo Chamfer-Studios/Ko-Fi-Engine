@@ -9,6 +9,7 @@
 #include <fstream>
 #include "SDL_assert.h"
 #include "RNG.h"
+#include "ImGuiAppLog.h"
 
 SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor) : Module()
 {
@@ -29,6 +30,7 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	LOG("Loading Intro assets");
+	appLog->AddLog("Loading Intro assets\n");
 	bool ret = true;
 
 	window->SetTitle(jsonHandler.JsonToString(j.at("Text")).c_str());
@@ -43,6 +45,7 @@ bool SceneIntro::Start()
 bool SceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	appLog->AddLog("Unloading Intro scene\n");
 
 	return true;
 }

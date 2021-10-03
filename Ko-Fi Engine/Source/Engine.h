@@ -17,7 +17,6 @@ class Renderer3D;
 class Camera3D;
 class Editor;
 
-
 class KoFiEngine
 {
 public:
@@ -49,6 +48,7 @@ public:
 	const uint64 GetFps() const;
 
 private:
+
 	// Add a new module to handle
 	void AddModule(Module* module);
 
@@ -71,6 +71,7 @@ private:
 	void SetVramStats();
 
 private:
+
 	//Modules
 	Window* window = nullptr;
 	Input* input = nullptr;
@@ -80,6 +81,7 @@ private:
 	Editor* editor = nullptr;
 
 private:
+
 	int argc;
 	char** args;
 	

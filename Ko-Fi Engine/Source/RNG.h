@@ -1,21 +1,25 @@
 #pragma once
 #include "MathGeoLib/Algorithm/Random/LCG.h"
-class RNG {
+
+class RNG
+{
 public:
-	RNG(){
-	}
-	~RNG() {
 
+	RNG()
+	{
+	}
+	~RNG()
+	{
 	}
 
-	int GetRandomInt() {
+	int GetRandomInt()
+	{
 		LCG randomGenerator;
-
 		return randomGenerator.Int();
 	}
-	int GetRandomInt(int min, int max) {
+	int GetRandomInt(int min, int max)
+	{
 		LCG randomGenerator;
-
 		return randomGenerator.Int(min, max);
 	}
 };
