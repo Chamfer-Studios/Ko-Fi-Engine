@@ -362,7 +362,7 @@ void Editor::ShowAboutWindow(bool* p_open)
 	ImGui::Separator();
 	Markdown("[Ko-Fi Engine v0.1](https://github.com/boscobarberesbert/Ko-Fi-Engine)");
 	ImGui::Text("The next generation 3D Game Engine");
-	Markdown("By [Alex Avila (Omicrxn)](https://github.com/Omicrxn) and [Bosco Barber (boscobarberesbert)](https://github.com/boscobarberesbert)");
+	Markdown("By [Alex Avila (Omicrxn)](https://github.com/Omicrxn) & [Bosco Barber (boscobarberesbert)](https://github.com/boscobarberesbert)");
 	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
