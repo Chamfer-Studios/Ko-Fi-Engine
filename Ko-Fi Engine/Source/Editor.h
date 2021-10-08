@@ -6,6 +6,8 @@
 #include "Globals.h"
 #include "EditorStyleHandler.h"
 #include "Panel.h"
+
+// Modules
 class Window;
 class Renderer3D;
 class Input;
@@ -14,6 +16,8 @@ class Input;
 class PanelTest;
 class PanelConfiguration;
 class PanelLog;
+class PanelAbout;
+
 struct EngineConfig;
 
 class Editor : public Module
@@ -31,14 +35,19 @@ public:
 	bool CleanUp();
 	bool CallMainMenuBar();
 	void AddPanel(Panel* panel);
-	void ShowAboutWindow(bool* p_open);
+
+	void Markdown(const std::string& markdown_);
+	void MarkdownExample();
+
 	bool buttonPressed = false;
 
 private:
 
+	// Panels
 	PanelTest* panelTest = nullptr;
 	PanelConfiguration* panelConfig = nullptr;
 	PanelLog* panelLog = nullptr;
+	PanelAbout* panelAbout = nullptr;
 
 	// Needed modules
 	Window* window = nullptr;
@@ -47,8 +56,6 @@ private:
 
 	EditorStyleHandler styleHandler;
 	std::list<Panel*> panels;
-
-	bool showAboutWindow = false;
 };
 
 #endif IM_GUI_HANDLER_H

@@ -232,6 +232,9 @@
     <ClCompile Include="Source\PanelLog.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PanelAbout.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -530,6 +533,9 @@
     </ClInclude>
     <ClInclude Include="Source\External\imgui\Extras\Markdown\imgui_markdown.h">
       <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelAbout.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

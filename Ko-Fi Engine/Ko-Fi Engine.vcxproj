@@ -194,6 +194,7 @@
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\PanelAbout.cpp" />
     <ClCompile Include="Source\PanelConfiguration.cpp" />
     <ClCompile Include="Source\PanelLog.cpp" />
     <ClCompile Include="Source\PanelTest.cpp" />
@@ -291,6 +292,7 @@
     <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Panel.h" />
+    <ClInclude Include="Source\PanelAbout.h" />
     <ClInclude Include="Source\PanelConfiguration.h" />
     <ClInclude Include="Source\PanelLog.h" />
     <ClInclude Include="Source\PanelTest.h" />

@@ -1,10 +1,13 @@
 #pragma once
 #include <string>
+
 class Panel
 {
 public:
+
 	Panel() : active(false) 
 	{}
+
 	void Init()
 	{
 		active = true;
@@ -25,7 +28,9 @@ public:
 	virtual bool Update() { return true; }
 	virtual bool PostUpdate(){ return true; }
 	virtual bool CleanUp(){ return true; }
+
 public:
+
 	std::string panelName;
 	bool active;
 };
