@@ -27,4 +27,6 @@ private:
 	Input* input = nullptr;
 	Editor* editor = nullptr;
 	bool loadingIcon = false;
+	bool modifyAttributesMenu = false;
+	bool wireframe = false;
 };

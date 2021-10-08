@@ -3,7 +3,6 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 //#include "glew.h"
-//#include "freeglut.h"
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)

@@ -5,6 +5,7 @@
 #include "EngineConfig.h"
 #include "Editor.h"
 #include <imgui.h>
+#include "glew.h"
 
 PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer, Input* input, EngineConfig* engineConfig, Editor* editor)
 {
@@ -34,22 +35,22 @@ bool PanelConfiguration::Update()
 {
 	ImGui::Begin(panelName.c_str());
 
-		if (ImGui::BeginMenu("Options"))
+	if (ImGui::BeginMenu("Options"))
+	{
+		if (ImGui::MenuItem("Set Defaults"))
 		{
-			if (ImGui::MenuItem("Set Defaults"))
-			{
-				printf_s("%s", "Clicked Set Defaults\n");
-			}
-			if (ImGui::MenuItem("Load"))
-			{
-				printf_s("%s", "Clicked Load\n");
-			}
-			if (ImGui::MenuItem("Save"))
-			{
-				printf_s("%s", "Clicked Save\n");
-			}
-			ImGui::EndMenu();
+			printf_s("%s", "Clicked Set Defaults\n");
 		}
+		if (ImGui::MenuItem("Load"))
+		{
+			printf_s("%s", "Clicked Load\n");
+		}
+		if (ImGui::MenuItem("Save"))
+		{
+			printf_s("%s", "Clicked Save\n");
+		}
+		ImGui::EndMenu();
+	}
 
 	if (ImGui::CollapsingHeader("Application"))
 	{
@@ -77,6 +78,7 @@ bool PanelConfiguration::Update()
 		if (ImGui::Checkbox("VSync", &vsync))
 			renderer->SetVsync(vsync);
 	}
+
 	if (ImGui::CollapsingHeader("Input")) {
 		int mouseX = input->GetMouseX();
 		int mouseY = input->GetMouseY();
@@ -95,6 +97,7 @@ bool PanelConfiguration::Update()
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i", wheel);
 	}
+
 	if (ImGui::CollapsingHeader("Window"))
 	{
 		ImGui::Text("Icon:");
@@ -136,7 +139,7 @@ bool PanelConfiguration::Update()
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%d.%d.%d", engineConfig->sdlVersion.major, engineConfig->sdlVersion.minor, engineConfig->sdlVersion.patch);
 		ImGui::Separator();
-		ImGui::Text("CPU:");
+		ImGui::Text("CPUs:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0),"%d", engineConfig->cpuCores);
 		ImGui::Text("System RAM:");
@@ -177,7 +180,65 @@ bool PanelConfiguration::Update()
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%.1f Mb", engineConfig->vramReserved * (1.0 / 1024.0));
 	}
+
+	if (ImGui::CollapsingHeader("OpenGL"))
+	{
+		if (!modifyAttributesMenu)
+		{
+			if (ImGui::Button("Modify attributes") == true)
+				modifyAttributesMenu = true;
+		}
+
+		if (modifyAttributesMenu)
+		{
+			if (ImGui::Button("Back") == true)
+				modifyAttributesMenu = false;
+
+			ImGui::Text("Depth Test");
+			if (ImGui::Button("Enable") == true) glEnable(GL_DEPTH_TEST);
+			ImGui::SameLine();
+			if (ImGui::Button("Disable") == true) glDisable(GL_DEPTH_TEST);
+			ImGui::Spacing();
+			ImGui::Text("Cull Face");
+			if (ImGui::Button("Enable") == true) glEnable(GL_CULL_FACE);
+			ImGui::SameLine();
+			if (ImGui::Button("Disable") == true) glDisable(GL_CULL_FACE);
+			ImGui::Text("Lighting");
+			if (ImGui::Button("Enable") == true) glEnable(GL_LIGHTING);
+			ImGui::SameLine();
+			if (ImGui::Button("Disable") == true) glDisable(GL_LIGHTING);
+			ImGui::Text("Color Material");
+			if (ImGui::Button("Enable") == true) glEnable(GL_COLOR_MATERIAL);
+			ImGui::SameLine();
+			if (ImGui::Button("Disable") == true) glDisable(GL_COLOR_MATERIAL);
+			ImGui::Text("Texture 2D");
+			if (ImGui::Button("Enable") == true) glEnable(GL_TEXTURE_2D);
+			ImGui::SameLine();
+			if (ImGui::Button("Disable") == true) glDisable(GL_TEXTURE_2D);
+			ImGui::Text("Triangles");
+			if (ImGui::Button("Enable") == true) glEnable(GL_TRIANGLES);
+			ImGui::SameLine();
+			if (ImGui::Button("Disable") == true) glDisable(GL_TRIANGLES);
+			ImGui::Text("Quads");
+			if (ImGui::Button("Enable") == true) glEnable(GL_QUADS);
+			ImGui::SameLine();
+			if (ImGui::Button("Disable") == true) glDisable(GL_QUADS);
+
+			if (ImGui::Button("Back") == true)
+				modifyAttributesMenu = false;
+		}
+
+		if (ImGui::Checkbox("Wireframe mode", &wireframe))
+		{
+			if (wireframe)
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			else
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+	}
+
 	ImGui::End();
+
 	return true;
 }
 

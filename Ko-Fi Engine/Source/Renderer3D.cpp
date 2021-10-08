@@ -1,6 +1,11 @@
 #include "Renderer3D.h"
-#include <glew.h>
+
+// OpenGL / GLEW
+#include "glew.h"
 #include "SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
 #include "Log.h"
 #include "Window.h"
 #include "Camera3D.h"
@@ -28,7 +33,7 @@ bool Renderer3D::Awake(Json configModule)
 	appLog->AddLog("Creating 3D Renderer context\n");
 	bool ret = true;
 
-	//Create context
+	// Create context
 	context = SDL_GL_CreateContext(window->window);
 	if (context == NULL)
 	{
@@ -39,15 +44,15 @@ bool Renderer3D::Awake(Json configModule)
 
 	if (ret == true)
 	{
-		//Use Vsync
+		// Use Vsync
 		vsync = configModule.at("Vsync");
 		SetVsync(vsync);
 
-		//Initialize Projection Matrix
+		// Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		//Check for error
+		// Check for error
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -56,11 +61,11 @@ bool Renderer3D::Awake(Json configModule)
 			ret = false;
 		}
 
-		//Initialize Modelview Matrix
+		// Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		//Check for error
+		// Check for error
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -72,10 +77,10 @@ bool Renderer3D::Awake(Json configModule)
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
 
-		//Initialize clear color
+		// Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		//Check for error
+		// Check for error
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
@@ -108,6 +113,32 @@ bool Renderer3D::Awake(Json configModule)
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	// Init the GLEW library
+	GLenum err = glewInit();
+	if (err != GLEW_OK)
+	{
+		LOG("Glew library could not be initiated! Glew Error: %s\n", glewGetErrorString(err));
+		appLog->AddLog("Glew library could not be initiated! GLEW Error: %s\n", glewGetErrorString(err));
+		ret = false;
+	}
+
+	if (err == GLEW_OK)
+	{
+		LOG("Using Glew %s\n", glewGetString(GLEW_VERSION));
+		appLog->AddLog("Using Glew %s\n", glewGetString(GLEW_VERSION));
+
+		// Current hardware and driver capabilities
+		LOG("Vendor: %s", glGetString(GL_VENDOR));
+		LOG("Renderer: %s", glGetString(GL_RENDERER));
+		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+		appLog->AddLog("Vendor: %s\n", glGetString(GL_VENDOR));
+		appLog->AddLog("Renderer: %s\n", glGetString(GL_RENDERER));
+		appLog->AddLog("OpenGL version supported %s\n", glGetString(GL_VERSION));
+		appLog->AddLog("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	}
 
 	return ret;
 }
@@ -162,8 +193,6 @@ void Renderer3D::SetVsync(bool vsync)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n",SDL_GetError());
 		}
-		
-			
 		
 		SDL_GL_GetSwapInterval() ? appLog->AddLog("Vsync Started\n") : appLog->AddLog("Vsync Stopped\n");;
 	}
