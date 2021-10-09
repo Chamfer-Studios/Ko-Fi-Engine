@@ -78,7 +78,7 @@ bool Editor::Start()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
 	styleHandler.SetKoFiStyle();
 	ImGui_ImplSDL2_InitForOpenGL(window->window, renderer->context);
 	ImGui_ImplOpenGL3_Init();
@@ -125,6 +125,26 @@ bool Editor::PreUpdate(float dt)
 bool Editor::Update(float dt)
 {
 	bool ret = true;
+	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking;
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->WorkPos);
+	ImGui::SetNextWindowSize(viewport->WorkSize);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+	windowFlags |= ImGuiWindowFlags_NoBackground;
+	if (ImGui::Begin("DockSpace Demo", nullptr, windowFlags))
+	{
+		// DockSpace
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+		{
+			ImGuiID dockspaceId = ImGui::GetID("DockSpace");
+			ImGui::DockSpace(dockspaceId);
+			ImGui::DockSpaceOverViewport(viewport);
+		}
+	}
+	ImGui::End();
 
 	// Panels Update
 	if (ret == true)
@@ -146,6 +166,8 @@ bool Editor::PostUpdate(float dt)
 	bool ret = true;
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	SDL_GL_MakeCurrent(window->window, renderer->context);
+
 
 	// Panels PostUpdate
 	if (ret == true)
