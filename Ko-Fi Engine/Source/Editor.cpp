@@ -126,26 +126,28 @@ bool Editor::Update(float dt)
 {
 	bool ret = true;
 
-	//ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking;
-	//ImGuiViewport* viewport = ImGui::GetMainViewport();
-	//ImGui::SetNextWindowPos(viewport->WorkPos);
-	//ImGui::SetNextWindowSize(viewport->WorkSize);
-	//ImGui::SetNextWindowViewport(viewport->ID);
-	//windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-	//windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-	//windowFlags |= ImGuiWindowFlags_NoBackground;
-	//if (ImGui::Begin("Dockspace", nullptr, windowFlags))
-	//{
-	//	// DockSpace
-	//	ImGuiIO& io = ImGui::GetIO();
-	//	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
-	//	{
-	//		ImGuiID dockspaceId = ImGui::GetID("DefaultDockspace");
-	//		ImGui::DockSpace(dockspaceId);
-	//		ImGui::DockSpaceOverViewport(viewport);
-	//	}
-	//}
-	//ImGui::End();
+	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking;
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->WorkPos);
+	ImGui::SetNextWindowSize(viewport->WorkSize);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	windowFlags |= ImGuiWindowFlags_NoBackground;
+	windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+	if (ImGui::Begin("Dockspace", 0, windowFlags))
+	{
+		// DockSpace
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+		{
+			ImGuiID dockspaceId = ImGui::GetID("DefaultDockspace");
+			ImGui::DockSpace(dockspaceId,ImVec2(0.0f,0.0f),ImGuiDockNodeFlags_PassthruCentralNode);
+			//ImGui::DockSpaceOverViewport(viewport);
+		}
+	}
+	ImGui::End();
+	ImGui::PopStyleVar();
 
 	// Panels Update
 	if (ret == true)

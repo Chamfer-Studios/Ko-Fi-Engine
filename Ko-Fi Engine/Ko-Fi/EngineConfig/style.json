@@ -1,6 +1,6 @@
 {
   "Window": {
-    "WindowPadding": { "x": 0, "y": 0 },
+    "WindowPadding": { "x": 15, "y": 10 },
     "WindowRounding": 5.0,
     "FramePadding": { "x": 5, "y": 5 },
     "FrameRounding": 4.0,
