@@ -224,9 +224,6 @@ bool PanelConfiguration::Update()
 			if (ImGui::Button("Enable") == true) glEnable(GL_QUADS);
 			ImGui::SameLine();
 			if (ImGui::Button("Disable") == true) glDisable(GL_QUADS);
-
-			if (ImGui::Button("Back") == true)
-				modifyAttributesMenu = false;
 		}
 
 		if (ImGui::Checkbox("Wireframe mode", &wireframe))

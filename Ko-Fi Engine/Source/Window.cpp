@@ -73,7 +73,6 @@ bool Window::Awake(Json configModule)
 			std::string iconFile = configModule.at("Icon");
 			if (iconFile.size() > 1)
 				SetIcon(iconFile.c_str());
-
 		}
 	}
 
@@ -123,10 +122,12 @@ void Window::GetWindowSize(uint& width, uint& height) const
 	width = this->width;
 	height = this->height;
 }
+
 int Window::GetWidth() const
 {
 	return (int)this->width;
 }
+
 int Window::GetHeight() const
 {
 	return (int)this->height;

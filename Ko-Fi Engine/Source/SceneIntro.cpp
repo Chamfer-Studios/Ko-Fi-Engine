@@ -41,21 +41,21 @@ bool SceneIntro::Start()
 	return ret;
 }
 
+// Update
+bool SceneIntro::Update(float dt)
+{
+	/*Plane p(0, 1, 0, 0);
+	p.axis = true;
+	p.Render();*/
+
+	return true;
+}
+
 // Load assets
 bool SceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 	appLog->AddLog("Unloading Intro scene\n");
-
-	return true;
-}
-
-// Update
-bool SceneIntro::Update(float dt)
-{
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
 
 	return true;
 }
