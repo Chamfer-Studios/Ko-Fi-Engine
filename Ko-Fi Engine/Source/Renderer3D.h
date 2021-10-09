@@ -25,6 +25,10 @@ public:
 	void OnResize(int width, int height);
 
 	void draw1();
+	void draw2();
+	void draw3();
+	void draw4();
+	void draw5();
 
 public:
 
