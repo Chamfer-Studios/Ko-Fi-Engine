@@ -23,7 +23,7 @@ bool PanelAbout::PreUpdate()
 
 bool PanelAbout::Update()
 {
-	if (showAboutWindow) ShowAboutWindow(&showAboutWindow);
+	if(editor->toggleAboutPanel) ShowAboutWindow(&editor->toggleAboutPanel);
 
 	return true;
 }
@@ -33,9 +33,9 @@ bool PanelAbout::PostUpdate()
 	return true;
 }
 
-void PanelAbout::ShowAboutWindow(bool* p_open)
+void PanelAbout::ShowAboutWindow(bool* toggleAboutPanel)
 {
-	if (!ImGui::Begin("About Ko-Fi Engine", p_open, ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("About Ko-Fi Engine", toggleAboutPanel, ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
 		return;

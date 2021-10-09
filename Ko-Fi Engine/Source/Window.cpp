@@ -68,9 +68,12 @@ bool Window::Awake(Json configModule)
 			screenSurface = SDL_GetWindowSurface(window);
 			//Get window brightness
 			brightness = SDL_GetWindowBrightness(window);
+			//Set window rezisable
+			SetResizable(true);
 			std::string iconFile = configModule.at("Icon");
 			if (iconFile.size() > 1)
 				SetIcon(iconFile.c_str());
+
 		}
 	}
 

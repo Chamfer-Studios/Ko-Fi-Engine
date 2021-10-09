@@ -59,6 +59,9 @@
     <Filter Include="Libs\mmgr">
       <UniqueIdentifier>{3e258013-dd79-4d84-9f8d-bc10657f6bf5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Editor\MenuBars">
+      <UniqueIdentifier>{9e3e199a-c5e2-4059-80bd-b48f881b223f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -234,6 +237,9 @@
     </ClCompile>
     <ClCompile Include="Source\PanelAbout.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MainBar.cpp">
+      <Filter>Source\Editor\MenuBars</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -536,6 +542,9 @@
     </ClInclude>
     <ClInclude Include="Source\PanelAbout.h">
       <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MainBar.h">
+      <Filter>Source\Editor\MenuBars</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

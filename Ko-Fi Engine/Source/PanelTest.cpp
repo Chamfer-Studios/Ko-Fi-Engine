@@ -1,5 +1,6 @@
 #include "PanelTest.h"
 #include <imgui.h>
+#include "EditorStyleHandler.h"
 
 PanelTest::PanelTest()
 {
@@ -21,9 +22,11 @@ bool PanelTest::PreUpdate()
 
 bool PanelTest::Update()
 {
-	ImGui::Begin("End the program");
-	ImGui::Text("Press the button to end the program.");
-	if (ImGui::Button("Button") == true) exit(0);
+	// Window with a button to create another window
+	ImGui::Begin("Create window");
+	ImGui::Text("Press the button to create another window.");
+	if (ImGui::Button("Button"))
+		styleHandler.SetKoFiStyle();
 	ImGui::End();
 
 	return true;

@@ -17,8 +17,6 @@ public:
 
 	void ShowAboutWindow(bool* p_open);
 
-	bool showAboutWindow = false;
-
 private:
 
 	Editor* editor = nullptr;

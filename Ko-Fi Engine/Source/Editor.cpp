@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "EngineConfig.h"
 #include "ImGuiAppLog.h"
+#include "MainBar.h"
 #include "PanelTest.h"
 #include "PanelConfiguration.h"
 #include "PanelLog.h"
@@ -21,11 +22,13 @@ Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig*
 	this->renderer = renderer;
 	this->engine = engine;
 
+	mainMenuBar = new MainBar(this);
 	panelTest = new PanelTest();
 	panelConfig = new PanelConfiguration(window,renderer,input,engineConfig,this);
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
 
+	AddPanel(mainMenuBar);
 	AddPanel(panelTest);
 	AddPanel(panelConfig);
 	AddPanel(panelLog);
@@ -123,16 +126,6 @@ bool Editor::Update(float dt)
 {
 	bool ret = true;
 
-	//Creating Main Menu Bar
-	CallMainMenuBar();
-
-	// Window with a button to create another window
-	ImGui::Begin("Create window");
-	ImGui::Text("Press the button to create another window.");
-	if (ImGui::Button("Button"))
-	styleHandler.SetKoFiStyle();
-	ImGui::End();
-
 	// Panels Update
 	if (ret == true)
 	{
@@ -186,25 +179,6 @@ bool Editor::CleanUp()
 	return true;
 }
 
-bool Editor::CallMainMenuBar()
-{
-	bool ret = true;
-
-	if (ImGui::BeginMainMenuBar())
-	{
-		if (ImGui::BeginMenu("Help"))
-		{
-			if (ImGui::MenuItem("About"))
-			{
-				panelAbout->showAboutWindow = true;
-			}
-			ImGui::EndMenu();
-		}
-		ImGui::EndMainMenuBar();
-	}
-
-	return ret;
-}
 
 #include "ImGui.h"                // https://github.com/ocornut/imgui
 #include "imgui_markdown.h"       // https://github.com/juliettef/imgui_markdown
