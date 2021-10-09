@@ -1,6 +1,6 @@
 {
   "Window": {
-    "WindowPadding": { "x": 15, "y": 15 },
+    "WindowPadding": { "x": 0, "y": 0 },
     "WindowRounding": 5.0,
     "FramePadding": { "x": 5, "y": 5 },
     "FrameRounding": 4.0,
@@ -10,14 +10,17 @@
     "ScrollbarSize": 15.0,
     "ScrollbarRounding": 9.0,
     "GrabMinSize": 5.0,
-    "GrabRounding": 3.0
+    "GrabRounding": 3.0,
+    "DisplaySafeAreaPadding": { "x": 0, "y": 0 },
+    "DisplayWindowPadding": { "x": 0, "y": 0 }
   },
   "Colors": {
     "Text": { "x": 1, "y": 1, "z":1, "w": 1.0 },
     "TextSelectedBg": { "x": 0.694, "y": 0.56, "z": 0.415, "w": 1.0 },
     "TextDisabled": { "x": 0.24, "y": 0.23, "z": 0.29, "w": 1.0 },
-    "WindowBg": { "x": 0.251, "y": 0.1922, "z": 0.1843, "w": 1.0 },
+    "WindowBg":  { "x": 0.25, "y": 0.192, "z": 0.184, "w": 1.0 },
     "ChildWindowBg": { "x": 0.25, "y": 0.192, "z": 0.184, "w": 1.0 },
+    "DockingEmptyBg": { "x": 0.25, "y": 0.192, "z": 0.184, "w": 1.0 },
     "PopupBg": { "x": 0.388, "y": 0.247, "z": 0.2, "w": 1.0 },
     "Border": { "x": 0.8, "y": 0.8, "z": 0.83, "w": 0.88 },
     "BorderShadow": { "x": 0.92, "y": 0.91, "z": 0.88, "w": 0.0 },

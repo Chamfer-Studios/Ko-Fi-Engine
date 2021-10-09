@@ -25,7 +25,8 @@ ImGuiStyle* EditorStyleHandler::SetKoFiStyle()
 	style->ScrollbarRounding = styleJson.at("Window").at("ScrollbarRounding");
 	style->GrabMinSize = styleJson.at("Window").at("GrabMinSize");
 	style->GrabRounding = styleJson.at("Window").at("GrabRounding");
-
+	style->DisplaySafeAreaPadding = ImVec2(styleJson.at("Window").at("DisplaySafeAreaPadding").at("x"), styleJson.at("Window").at("DisplaySafeAreaPadding").at("y"));
+	style->DisplayWindowPadding = ImVec2(styleJson.at("Window").at("DisplayWindowPadding").at("x"), styleJson.at("Window").at("DisplayWindowPadding").at("y"));
 	//Text Color
 	style->Colors[ImGuiCol_Text] = ImVec4(
 		styleJson.at("Colors").at("Text").at("x"),
@@ -68,7 +69,13 @@ ImGuiStyle* EditorStyleHandler::SetKoFiStyle()
 		styleJson.at("Colors").at("PopupBg").at("z"),
 		styleJson.at("Colors").at("PopupBg").at("w")
 	);
-
+	//Background of normal windows
+	style->Colors[ImGuiCol_DockingEmptyBg] = ImVec4(
+		styleJson.at("Colors").at("DockingEmptyBg").at("x"),
+		styleJson.at("Colors").at("DockingEmptyBg").at("y"),
+		styleJson.at("Colors").at("DockingEmptyBg").at("z"),
+		styleJson.at("Colors").at("DockingEmptyBg").at("w")
+	);
 	//Color of the window borders
 	style->Colors[ImGuiCol_Border] = ImVec4(
 		styleJson.at("Colors").at("Border").at("x"),
