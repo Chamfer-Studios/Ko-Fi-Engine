@@ -2,9 +2,9 @@
 #include "glmath.h"
 #include "Color.h"
 #include <vector>
+#include <list>
+#include "glew.h"
 
-typedef float GLfloat;
-typedef unsigned short GLushort;
 
 enum PrimitiveTypes
 {
@@ -45,39 +45,28 @@ class Cube : public Primitive
 public :
 	Cube();
 	Cube(float sizeX, float sizeY, float sizeZ);
-	void InnerRender() const;
+	void InnerRender();
+	void DrawInterleavedMode();
 public:
 	vec3 size;
+	GLfloat vnc[216];
+	GLubyte index[36];
 };
-
-// ============================================
-//class Sphere : public Primitive
-//{
-//public:
-//	Sphere();
-//	Sphere(float radius);
-//	void InnerRender() const;
-//public:
-//	float radius;
-//};
 
 // ============================================
 class Sphere : public Primitive
 {
-protected:
-	std::vector<GLfloat> vertices;
-	std::vector<GLfloat> normals;
-	std::vector<GLfloat> texcoords;
-	std::vector<GLushort> indices;
 
 public:
-	//Sphere();
-	//Sphere(float radius);
+	Sphere();
+	Sphere(float radius);
 	Sphere(float radius, unsigned int rings, unsigned int sectors);
-	void InnerRender(GLfloat x, GLfloat y, GLfloat z) const;
+	void InnerRender() const;
 
-//public:
-//	float radius;
+public:
+	float radius;
+	float rings;
+	float sectors;
 };
 
 // ============================================

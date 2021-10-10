@@ -225,19 +225,6 @@ bool PanelConfiguration::Update()
 			{
 				enabled ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
 			}
-			enabled = glIsEnabled(GL_TRIANGLES);
-
-			ImGui::Text("Triangles");
-			if (ImGui::Checkbox("Triangles", &enabled))
-			{
-				enabled ? glEnable(GL_TRIANGLES) : glDisable(GL_TRIANGLES);
-			}
-			enabled = glIsEnabled(GL_QUADS);
-			ImGui::Text("Quads");
-			if (ImGui::Checkbox("Quads", &enabled))
-			{
-				enabled ? glEnable(GL_QUADS) : glDisable(GL_QUADS);
-			}
 		}
 
 		if (ImGui::Checkbox("Wireframe mode", &wireframe))

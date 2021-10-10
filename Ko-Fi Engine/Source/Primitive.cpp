@@ -1,8 +1,8 @@
 #include "Primitive.h"
 #include "Globals.h"
+//#include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-//#include "glew.h"
 
 #define _USE_MATH_DEFINES
 //#include <GL/gl.h>
@@ -106,148 +106,169 @@ void Primitive::Scale(float x, float y, float z)
 Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+	float sx = size.x;
+	float sy = size.y;
+	float sz = size.z;
+	GLfloat vncA[216] =
+	{ sx, sy, sz,  0, 0, 1,  1, 1, 1, //v0 (front)
+	 -sx, sy, sz,  0, 0, 1,  1, 1, 0, //v1
+	 -sx,-sy, sz,  0, 0, 1,  1, 0, 0, //v2
+	  sx,-sy, sz,  0, 0, 1,  1, 0, 1, //v3
+
+	  sx, sy, sz,   1, 0, 0,   1, 1, 1, // v0 (right)
+	  sx,-sy, sz,   1, 0, 0,   1, 0, 1, // v3
+	  sx,-sy,-sz,   1, 0, 0,   0, 0, 1, // v4
+	  sx, sy,-sz,   1, 0, 0,   0, 1, 1, // v5
+
+	  sx, sy, sz,   0, 1, 0,   1, 1, 1, // v0 (top)
+	  sx, sy,-sz,   0, 1, 0,   0, 1, 1, // v5
+	 -sx, sy,-sz,   0, 1, 0,   0, 1, 0, // v6
+	 -sx, sy, sz,   0, 1, 0,   1, 1, 0, // v1
+
+	 -sx, sy, sz,  -1, 0, 0,   1, 1, 0,              // v1 (left)
+	 -sx, sy,-sz,  -1, 0, 0,   0, 1, 0,              // v6
+	 -sx,-sy,-sz,  -1, 0, 0,   0, 0, 0,              // v7
+	 -sx,-sy, sz,  -1, 0, 0,   1, 0, 0,              // v2
+
+	 -sx,-sy,-sz,   0,-1, 0,   0, 0, 0,              // v7 (bottom)
+	  sx,-sy,-sz,   0,-1, 0,   0, 0, 1,              // v4
+	  sx,-sy, sz,   0,-1, 0,   1, 0, 1,              // v3
+	 -sx,-sy, sz,   0,-1, 0,   1, 0, 0,              // v2
+
+	  sx,-sy,-sz,   0, 0,-1,   0, 0, 1,              // v4 (back)
+	 -sx,-sy,-sz,   0, 0,-1,   0, 0, 0,              // v7
+	 -sx, sy,-sz,   0, 0,-1,   0, 1, 0,              // v6
+	  sx, sy,-sz,   0, 0,-1,   0, 1, 1 };            // v5
+	std::copy(vncA, vncA + 216, vnc);
+	// index array of vertex array for glDrawElements() & glDrawRangeElement()
+	GLubyte indexA[36] = { 0, 1, 2,   2, 3, 0,      // front
+						   4, 5, 6,   6, 7, 4,      // right
+						   8, 9,10,  10,11, 8,      // top
+						  12,13,14,  14,15,12,      // left
+						  16,17,18,  18,19,16,      // bottom
+						  20,21,22,  22,23,20 };    // back
+	std::copy(indexA, indexA + 36, index);
+
 }
 
 Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+	float sx = size.x;
+	float sy = size.y;
+	float sz = size.z;
+	GLfloat vncA[216] =
+	{ sx, sy, sz,  0, 0, 1,  1, 1, 1, //v0 (front)
+	 -sx, sy, sz,  0, 0, 1,  1, 1, 0, //v1
+	 -sx,-sy, sz,  0, 0, 1,  1, 0, 0, //v2
+	  sx,-sy, sz,  0, 0, 1,  1, 0, 1, //v3
+
+	  sx, sy, sz,   1, 0, 0,   1, 1, 1, // v0 (right)
+	  sx,-sy, sz,   1, 0, 0,   1, 0, 1, // v3
+	  sx,-sy,-sz,   1, 0, 0,   0, 0, 1, // v4
+	  sx, sy,-sz,   1, 0, 0,   0, 1, 1, // v5
+
+	  sx, sy, sz,   0, 1, 0,   1, 1, 1, // v0 (top)
+	  sx, sy,-sz,   0, 1, 0,   0, 1, 1, // v5
+	 -sx, sy,-sz,   0, 1, 0,   0, 1, 0, // v6
+	 -sx, sy, sz,   0, 1, 0,   1, 1, 0, // v1
+
+	 -sx, sy, sz,  -1, 0, 0,   1, 1, 0,              // v1 (left)
+	 -sx, sy,-sz,  -1, 0, 0,   0, 1, 0,              // v6
+	 -sx,-sy,-sz,  -1, 0, 0,   0, 0, 0,              // v7
+	 -sx,-sy, sz,  -1, 0, 0,   1, 0, 0,              // v2
+
+	 -sx,-sy,-sz,   0,-1, 0,   0, 0, 0,              // v7 (bottom)
+	  sx,-sy,-sz,   0,-1, 0,   0, 0, 1,              // v4
+	  sx,-sy, sz,   0,-1, 0,   1, 0, 1,              // v3
+	 -sx,-sy, sz,   0,-1, 0,   1, 0, 0,              // v2
+
+	  sx,-sy,-sz,   0, 0,-1,   0, 0, 1,              // v4 (back)
+	 -sx,-sy,-sz,   0, 0,-1,   0, 0, 0,              // v7
+	 -sx, sy,-sz,   0, 0,-1,   0, 1, 0,              // v6
+	  sx, sy,-sz,   0, 0,-1,   0, 1, 1 };            // v5
+	std::copy(vncA, vncA + 216, vnc);
+	// index array of vertex array for glDrawElements() & glDrawRangeElement()
+	GLubyte indexA[36] = { 0, 1, 2,   2, 3, 0,      // front
+						   4, 5, 6,   6, 7, 4,      // right
+						   8, 9,10,  10,11, 8,      // top
+						  12,13,14,  14,15,12,      // left
+						  16,17,18,  18,19,16,      // bottom
+						  20,21,22,  22,23,20 };    // back
+	std::copy(indexA, indexA + 36, index);
 }
 
-void Cube::InnerRender() const
+void Cube::InnerRender()
 {	
-	float sx = size.x * 0.5f;
-	float sy = size.y * 0.5f;
-	float sz = size.z * 0.5f;
+	DrawInterleavedMode();
+}
 
-	glBegin(GL_QUADS);
+void Cube::DrawInterleavedMode()
+{
+	// enable and specify pointers to vertex arrays
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glNormalPointer(GL_FLOAT, 9 * sizeof(GLfloat), vnc + 3);
+	glColorPointer(3, GL_FLOAT, 9 * sizeof(GLfloat), vnc + 6);
+	glVertexPointer(3, GL_FLOAT, 9 * sizeof(GLfloat), vnc);
 
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-sx, -sy, sz);
-	glVertex3f( sx, -sy, sz);
-	glVertex3f( sx,  sy, sz);
-	glVertex3f(-sx,  sy, sz);
+	glPushMatrix();
+	glTranslatef(-2, -2, 0);                // move to bottom-left
 
-	glNormal3f(0.0f, 0.0f, -1.0f);
-	glVertex3f( sx, -sy, -sz);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx,  sy, -sz);
-	glVertex3f( sx,  sy, -sz);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, index);
 
-	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(sx, -sy,  sz);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(sx,  sy, -sz);
-	glVertex3f(sx,  sy,  sz);
+	glPopMatrix();
 
-	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx, -sy,  sz);
-	glVertex3f(-sx,  sy,  sz);
-	glVertex3f(-sx,  sy, -sz);
-
-	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(-sx, sy,  sz);
-	glVertex3f( sx, sy,  sz);
-	glVertex3f( sx, sy, -sz);
-	glVertex3f(-sx, sy, -sz);
-
-	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f( sx, -sy, -sz);
-	glVertex3f( sx, -sy,  sz);
-	glVertex3f(-sx, -sy,  sz);
-
-	glEnd();
+	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 // SPHERE ============================================
-//Sphere::Sphere() : Primitive(), radius(1.0f)
-//{
-//	type = PrimitiveTypes::Primitive_Sphere;
-//}
-//
-//Sphere::Sphere(float radius) : Primitive(), radius(radius)
-//{
-//	type = PrimitiveTypes::Primitive_Sphere;
-//}
-//
-//void Sphere::InnerRender() const
-//{
-//	/*glutSolidSphere(radius, 25, 25);*/
-//}
-
-//Sphere::Sphere() : Primitive(), radius(1.0f)
-//{
-//	type = PrimitiveTypes::Primitive_Sphere;
-//}
-//
-//Sphere::Sphere(float radius) : Primitive(), radius(radius)
-//{
-//	type = PrimitiveTypes::Primitive_Sphere;
-//}
-
-Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors)
+Sphere::Sphere() : Primitive(), radius(1.0f)
 {
-	float const R = 1. / (float)(rings - 1);
-	float const S = 1. / (float)(sectors - 1);
-	int r, s;
-
-	vertices.resize(rings * sectors * 3);
-	normals.resize(rings * sectors * 3);
-	texcoords.resize(rings * sectors * 2);
-	std::vector<GLfloat>::iterator v = vertices.begin();
-	std::vector<GLfloat>::iterator n = normals.begin();
-	std::vector<GLfloat>::iterator t = texcoords.begin();
-	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
-		float const y = sin(-M_PI_2 + M_PI * r * R);
-		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
-		float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
-
-		*t++ = s * S;
-		*t++ = r * R;
-
-		*v++ = x * radius;
-		*v++ = y * radius;
-		*v++ = z * radius;
-
-		*n++ = -x;
-		*n++ = -y;
-		*n++ = -z;
-	}
-
-	indices.resize(rings * sectors * 4);
-	std::vector<GLushort>::iterator i = indices.begin();
-	for (r = 0; r < rings - 1; r++)
-		for (s = 0; s < sectors - 1; s++) {
-			/*
-			 *i++ = r * sectors + s;
-			 *i++ = r * sectors + (s+1);
-			 *i++ = (r+1) * sectors + (s+1);
-			 *i++ = (r+1) * sectors + s;
-			 */
-			*i++ = (r + 1) * sectors + s;
-			*i++ = (r + 1) * sectors + (s + 1);
-			*i++ = r * sectors + (s + 1);
-			*i++ = r * sectors + s;
-
-		}
+	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-void Sphere::InnerRender(GLfloat x, GLfloat y, GLfloat z) const
+Sphere::Sphere(float radius) : Primitive(), radius(radius)
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glTranslatef(x, y, z);
+	type = PrimitiveTypes::Primitive_Sphere;
+}
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors) : Primitive(), radius(radius),rings(rings),sectors(sectors)
+{
+	type = PrimitiveTypes::Primitive_Sphere;
+}
 
-	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
-	glNormalPointer(GL_FLOAT, 0, &normals[0]);
-	glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
-	glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
-	glPopMatrix();
+void Sphere::InnerRender() const
+{
+	for (int j = 0; j < rings; j++) {
+		float latitude1 = (M_PI / rings) * j - M_PI_2;
+		float latitude2 = (M_PI / rings) * (j + 1) - M_PI_2;
+		float sinLat1 = sin(latitude1);
+		float cosLat1 = cos(latitude1);
+		float sinLat2 = sin(latitude2);
+		float cosLat2 = cos(latitude2);
+		glBegin(GL_TRIANGLE_STRIP);
+		for (int i = 0; i <= sectors; i++) {
+			float longitude = (2 * M_PI / sectors) * i;
+			float sinLong = sin(longitude);
+			float cosLong = cos(longitude);
+			float x1 = cosLong * cosLat1;
+			float y1 = sinLong * cosLat1;
+			float z1 = sinLat1;
+			float x2 = cosLong * cosLat2;
+			float y2 = sinLong * cosLat2;
+			float z2 = sinLat2;
+			glColor3d(1, 0, 1);
+			glNormal3d(x2, y2, z2);
+			glVertex3d(radius * x2, radius * y2, radius * z2);
+			glNormal3d(x1, y1, z1);
+			glVertex3d(radius * x1, radius * y1, radius * z1);
+		}
+		glEnd();
+	}
 }
 
 // CYLINDER ============================================
