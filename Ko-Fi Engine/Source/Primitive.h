@@ -1,6 +1,10 @@
 #pragma once
 #include "glmath.h"
 #include "Color.h"
+#include <vector>
+
+typedef float GLfloat;
+typedef unsigned short GLushort;
 
 enum PrimitiveTypes
 {
@@ -57,26 +61,21 @@ public:
 //	float radius;
 //};
 
-#define space 10
-#define  vertexcount (180/space)*(360/space)*2
-
-const double PI = 3.1415926535897;
-
-struct Vertices
-{
-	double x;
-	double y;
-	double z;
-} vertex[vertexcount];
-
 // ============================================
 class Sphere : public Primitive
 {
+protected:
+	std::vector<GLfloat> vertices;
+	std::vector<GLfloat> normals;
+	std::vector<GLfloat> texcoords;
+	std::vector<GLushort> indices;
+
 public:
 	//Sphere();
 	//Sphere(float radius);
-	Sphere(int R, int H, int K, int Z);
-	void InnerRender(double R=1.f) const;
+	Sphere(float radius, unsigned int rings, unsigned int sectors);
+	void InnerRender(GLfloat x, GLfloat y, GLfloat z) const;
+
 //public:
 //	float radius;
 };

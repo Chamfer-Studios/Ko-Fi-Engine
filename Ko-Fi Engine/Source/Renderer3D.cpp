@@ -187,6 +187,10 @@ bool Renderer3D::Update(float dt)
     // Back to default white
     glColor3ub(255, 255, 255);
 
+    // Draw sphere
+    Sphere sphere(1, 25, 25);
+    sphere.InnerRender(0,0,0);
+
 	return ret;
 }
 

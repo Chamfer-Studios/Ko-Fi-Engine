@@ -4,6 +4,12 @@
 #include <gl/GLU.h>
 //#include "glew.h"
 
+#define _USE_MATH_DEFINES
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+//#include <vector>
+#include <cmath>
+
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
 {}
@@ -167,10 +173,9 @@ void Cube::InnerRender() const
 //
 //void Sphere::InnerRender() const
 //{
-//	glutSolidSphere(radius, 25, 25);
+//	/*glutSolidSphere(radius, 25, 25);*/
 //}
 
-// SPHERE ============================================
 //Sphere::Sphere() : Primitive(), radius(1.0f)
 //{
 //	type = PrimitiveTypes::Primitive_Sphere;
@@ -181,51 +186,69 @@ void Cube::InnerRender() const
 //	type = PrimitiveTypes::Primitive_Sphere;
 //}
 
-//Sphere::Sphere(int R, int H, int K, int Z)
-//{
-//	int n;
-//	int a;
-//	int b;
-//	int debug = 0;
-//	int d = 0;
-//	double A;
-//	double B;
-//
-//	n = 0;
-//	for (b = 0; b <= 180 - space; b += space)
-//	{
-//		for (a = 0; a <= 360 - space; a += space)
-//		{
-//			vertex[n].x = R * (sin((a * PI) / 180)) * (sin((b * PI) / 180)) - H;
-//			vertex[n].z = R * (cos((b * PI) / 180)) * (sin((a * PI) / 180)) - Z;
-//			vertex[n].y = R * (cos((a * PI) / 180)) - K;
-//			n++;
-//
-//			vertex[n].x = R * (sin((a * PI) / 180)) * (sin(((b + space) * PI) / 180)) - H;
-//			vertex[n].z = R * (cos(((b + space) * PI) / 180)) * (sin((a * PI) / 180)) - Z;
-//			vertex[n].y = R * (cos((a * PI) / 180)) - K;
-//
-//			n++;
-//		}
-//	}
-//}
-//
-//void Sphere::InnerRender(double R) const
-//{
-//	int b;
-//	GLfloat mat[16];
-//	glScalef(0.0125 * R, 0.0125 * R, 0.0125 * R);
-//	glGetFloatv(GL_MODELVIEW_MATRIX, mat);
-//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//
-//	glBegin(GL_TRIANGLE_STRIP);
-//	for (b = 0; b <= vertexcount; b++)
-//	{
-//		glVertex3f(vertex[b].x, vertex[b].y, vertex[b].z);
-//	}
-//
-//	glEnd();
-//}
+Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors)
+{
+	float const R = 1. / (float)(rings - 1);
+	float const S = 1. / (float)(sectors - 1);
+	int r, s;
+
+	vertices.resize(rings * sectors * 3);
+	normals.resize(rings * sectors * 3);
+	texcoords.resize(rings * sectors * 2);
+	std::vector<GLfloat>::iterator v = vertices.begin();
+	std::vector<GLfloat>::iterator n = normals.begin();
+	std::vector<GLfloat>::iterator t = texcoords.begin();
+	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
+		float const y = sin(-M_PI_2 + M_PI * r * R);
+		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
+		float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
+
+		*t++ = s * S;
+		*t++ = r * R;
+
+		*v++ = x * radius;
+		*v++ = y * radius;
+		*v++ = z * radius;
+
+		*n++ = -x;
+		*n++ = -y;
+		*n++ = -z;
+	}
+
+	indices.resize(rings * sectors * 4);
+	std::vector<GLushort>::iterator i = indices.begin();
+	for (r = 0; r < rings - 1; r++)
+		for (s = 0; s < sectors - 1; s++) {
+			/*
+			 *i++ = r * sectors + s;
+			 *i++ = r * sectors + (s+1);
+			 *i++ = (r+1) * sectors + (s+1);
+			 *i++ = (r+1) * sectors + s;
+			 */
+			*i++ = (r + 1) * sectors + s;
+			*i++ = (r + 1) * sectors + (s + 1);
+			*i++ = r * sectors + (s + 1);
+			*i++ = r * sectors + s;
+
+		}
+}
+
+void Sphere::InnerRender(GLfloat x, GLfloat y, GLfloat z) const
+{
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glTranslatef(x, y, z);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+	glNormalPointer(GL_FLOAT, 0, &normals[0]);
+	glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
+	glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
+	glPopMatrix();
+}
 
 // CYLINDER ============================================
 Cylinder::Cylinder() : Primitive(), radius(1.0f), height(1.0f)
