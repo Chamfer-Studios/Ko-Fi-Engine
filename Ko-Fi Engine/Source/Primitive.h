@@ -47,14 +47,38 @@ public:
 };
 
 // ============================================
+//class Sphere : public Primitive
+//{
+//public:
+//	Sphere();
+//	Sphere(float radius);
+//	void InnerRender() const;
+//public:
+//	float radius;
+//};
+
+#define space 10
+#define  vertexcount (180/space)*(360/space)*2
+
+const double PI = 3.1415926535897;
+
+struct Vertices
+{
+	double x;
+	double y;
+	double z;
+} vertex[vertexcount];
+
+// ============================================
 class Sphere : public Primitive
 {
 public:
-	Sphere();
-	Sphere(float radius);
-	void InnerRender() const;
-public:
-	float radius;
+	//Sphere();
+	//Sphere(float radius);
+	Sphere(int R, int H, int K, int Z);
+	void InnerRender(double R=1.f) const;
+//public:
+//	float radius;
 };
 
 // ============================================

@@ -155,21 +155,77 @@ void Cube::InnerRender() const
 }
 
 // SPHERE ============================================
-Sphere::Sphere() : Primitive(), radius(1.0f)
-{
-	type = PrimitiveTypes::Primitive_Sphere;
-}
+//Sphere::Sphere() : Primitive(), radius(1.0f)
+//{
+//	type = PrimitiveTypes::Primitive_Sphere;
+//}
+//
+//Sphere::Sphere(float radius) : Primitive(), radius(radius)
+//{
+//	type = PrimitiveTypes::Primitive_Sphere;
+//}
+//
+//void Sphere::InnerRender() const
+//{
+//	glutSolidSphere(radius, 25, 25);
+//}
 
-Sphere::Sphere(float radius) : Primitive(), radius(radius)
-{
-	type = PrimitiveTypes::Primitive_Sphere;
-}
+// SPHERE ============================================
+//Sphere::Sphere() : Primitive(), radius(1.0f)
+//{
+//	type = PrimitiveTypes::Primitive_Sphere;
+//}
+//
+//Sphere::Sphere(float radius) : Primitive(), radius(radius)
+//{
+//	type = PrimitiveTypes::Primitive_Sphere;
+//}
 
-void Sphere::InnerRender() const
-{
-	/*glutSolidSphere(radius, 25, 25);*/
-}
-
+//Sphere::Sphere(int R, int H, int K, int Z)
+//{
+//	int n;
+//	int a;
+//	int b;
+//	int debug = 0;
+//	int d = 0;
+//	double A;
+//	double B;
+//
+//	n = 0;
+//	for (b = 0; b <= 180 - space; b += space)
+//	{
+//		for (a = 0; a <= 360 - space; a += space)
+//		{
+//			vertex[n].x = R * (sin((a * PI) / 180)) * (sin((b * PI) / 180)) - H;
+//			vertex[n].z = R * (cos((b * PI) / 180)) * (sin((a * PI) / 180)) - Z;
+//			vertex[n].y = R * (cos((a * PI) / 180)) - K;
+//			n++;
+//
+//			vertex[n].x = R * (sin((a * PI) / 180)) * (sin(((b + space) * PI) / 180)) - H;
+//			vertex[n].z = R * (cos(((b + space) * PI) / 180)) * (sin((a * PI) / 180)) - Z;
+//			vertex[n].y = R * (cos((a * PI) / 180)) - K;
+//
+//			n++;
+//		}
+//	}
+//}
+//
+//void Sphere::InnerRender(double R) const
+//{
+//	int b;
+//	GLfloat mat[16];
+//	glScalef(0.0125 * R, 0.0125 * R, 0.0125 * R);
+//	glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//
+//	glBegin(GL_TRIANGLE_STRIP);
+//	for (b = 0; b <= vertexcount; b++)
+//	{
+//		glVertex3f(vertex[b].x, vertex[b].y, vertex[b].z);
+//	}
+//
+//	glEnd();
+//}
 
 // CYLINDER ============================================
 Cylinder::Cylinder() : Primitive(), radius(1.0f), height(1.0f)

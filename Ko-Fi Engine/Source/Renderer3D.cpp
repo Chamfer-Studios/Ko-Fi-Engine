@@ -1,4 +1,5 @@
 #include "Renderer3D.h"
+#include "Primitive.h"
 
 // OpenGL / GLEW
 #include "glew.h"
@@ -176,11 +177,15 @@ bool Renderer3D::Update(float dt)
 
 	glLineWidth(1.0f);*/
 
-	draw1();
+    // Draw cube (with each different method)
+    draw1();
     draw2();
     draw3();
     draw4();
     draw5();
+
+    // Back to default white
+    glColor3ub(255, 255, 255);
 
 	return ret;
 }

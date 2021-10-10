@@ -48,6 +48,10 @@ bool SceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();*/
 
+	// Draw sphere
+	/*Sphere sphere(20, 0, 0, 0);
+	sphere.InnerRender(15);*/
+
 	return true;
 }
 
