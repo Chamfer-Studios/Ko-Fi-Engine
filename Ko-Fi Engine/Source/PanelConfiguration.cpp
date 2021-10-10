@@ -196,34 +196,48 @@ bool PanelConfiguration::Update()
 				modifyAttributesMenu = false;
 
 			ImGui::Text("Depth Test");
-			if (ImGui::Button("Enable") == true) glEnable(GL_DEPTH_TEST);
-			ImGui::SameLine();
-			if (ImGui::Button("Disable") == true) glDisable(GL_DEPTH_TEST);
-			ImGui::Spacing();
+			bool enabled = glIsEnabled(GL_DEPTH_TEST);
+			if (ImGui::Checkbox("Depth", &enabled))
+			{
+				enabled? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+			}
+			enabled = glIsEnabled(GL_CULL_FACE);
 			ImGui::Text("Cull Face");
-			if (ImGui::Button("Enable") == true) glEnable(GL_CULL_FACE);
-			ImGui::SameLine();
-			if (ImGui::Button("Disable") == true) glDisable(GL_CULL_FACE);
+			if (ImGui::Checkbox("Cull", &enabled))
+			{
+				enabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+			}
+			enabled = glIsEnabled(GL_LIGHTING);
 			ImGui::Text("Lighting");
-			if (ImGui::Button("Enable") == true) glEnable(GL_LIGHTING);
-			ImGui::SameLine();
-			if (ImGui::Button("Disable") == true) glDisable(GL_LIGHTING);
+			if (ImGui::Checkbox("Lighting", &enabled))
+			{
+				enabled ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
+			}
+			enabled = glIsEnabled(GL_COLOR_MATERIAL);
 			ImGui::Text("Color Material");
-			if (ImGui::Button("Enable") == true) glEnable(GL_COLOR_MATERIAL);
-			ImGui::SameLine();
-			if (ImGui::Button("Disable") == true) glDisable(GL_COLOR_MATERIAL);
+			if (ImGui::Checkbox("Color Material", &enabled))
+			{
+				enabled ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
+			}
+			enabled = glIsEnabled(GL_TEXTURE_2D);
 			ImGui::Text("Texture 2D");
-			if (ImGui::Button("Enable") == true) glEnable(GL_TEXTURE_2D);
-			ImGui::SameLine();
-			if (ImGui::Button("Disable") == true) glDisable(GL_TEXTURE_2D);
+			if (ImGui::Checkbox("Texture 2D", &enabled))
+			{
+				enabled ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
+			}
+			enabled = glIsEnabled(GL_TRIANGLES);
+
 			ImGui::Text("Triangles");
-			if (ImGui::Button("Enable") == true) glEnable(GL_TRIANGLES);
-			ImGui::SameLine();
-			if (ImGui::Button("Disable") == true) glDisable(GL_TRIANGLES);
+			if (ImGui::Checkbox("Triangles", &enabled))
+			{
+				enabled ? glEnable(GL_TRIANGLES) : glDisable(GL_TRIANGLES);
+			}
+			enabled = glIsEnabled(GL_QUADS);
 			ImGui::Text("Quads");
-			if (ImGui::Button("Enable") == true) glEnable(GL_QUADS);
-			ImGui::SameLine();
-			if (ImGui::Button("Disable") == true) glDisable(GL_QUADS);
+			if (ImGui::Checkbox("Quads", &enabled))
+			{
+				enabled ? glEnable(GL_QUADS) : glDisable(GL_QUADS);
+			}
 		}
 
 		if (ImGui::Checkbox("Wireframe mode", &wireframe))
