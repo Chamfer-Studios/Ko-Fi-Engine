@@ -261,7 +261,6 @@ void Sphere::InnerRender() const
 			float x2 = cosLong * cosLat2;
 			float y2 = sinLong * cosLat2;
 			float z2 = sinLat2;
-			glColor3d(1, 0, 1);
 			glNormal3d(x2, y2, z2);
 			glVertex3d(radius * x2, radius * y2, radius * z2);
 			glNormal3d(x1, y1, z1);
