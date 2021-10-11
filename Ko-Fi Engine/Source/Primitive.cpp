@@ -166,9 +166,9 @@ void Cube::DrawInterleavedMode()
 	//  |/      |/
 	//  v2------v3
 
-	float sx = size.x * 0.5f;
-	float sy = size.y * 0.5f;
-	float sz = size.z * 0.5f;
+	float sx = size.x;
+	float sy = size.y;
+	float sz = size.z;
 
 	// interleaved vertex array for glDrawElements() & glDrawRangeElements() ======
 	// All vertex attributes (position, normal, color) are packed together as a
@@ -243,7 +243,7 @@ Sphere::Sphere(float radius) : Primitive(), radius(radius)
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors) : Primitive(), radius(radius), stacks(stacks), sectors(sectors)
+Sphere::Sphere(float radius, unsigned int stacks, unsigned int sectors) : Primitive(), radius(radius), stacks(stacks), sectors(sectors)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }

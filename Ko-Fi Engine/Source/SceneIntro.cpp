@@ -46,17 +46,17 @@ bool SceneIntro::Start()
 // Update
 bool SceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
+	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
-	p.Render();
+	p.Render();*/
 
 	// Draw cube
-	/*Cube cube(1, 1, 1);
-	cube.InnerRender();*/
+	Cube cube(1, 1, 1);
+	cube.DrawInterleavedMode();
 
 	// Draw sphere
-	/*Sphere sphere(1, 25, 25);
-	sphere.InnerRender();*/
+	Sphere sphere(1, 25, 25);
+	sphere.InnerRender();
 
 	return true;
 }
