@@ -4,18 +4,17 @@
 
 #include "Module.h"
 #include "EngineConfig.h"
-#include <list>
 #include "JsonHandler.h"
+#include <list>
 
 // Modules
-
 class Window;
 class Input;
-
 class SceneIntro;
 class Renderer3D;
 class Camera3D;
 class Editor;
+class FileLoader;
 
 class KoFiEngine
 {
@@ -79,6 +78,7 @@ private:
 	Renderer3D* renderer = nullptr;
 	Camera3D* camera = nullptr;
 	Editor* editor = nullptr;
+	FileLoader* fileLoader = nullptr;
 
 private:
 

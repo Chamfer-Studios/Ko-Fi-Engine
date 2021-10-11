@@ -23,5 +23,6 @@
   "Camera": null,
   "Input": null,
   "Editor": null,
-  "SceneIntro": null
+  "SceneIntro": null,
+  "ModelLoader": null
 }

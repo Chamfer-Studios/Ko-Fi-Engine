@@ -195,36 +195,25 @@ bool PanelConfiguration::Update()
 			if (ImGui::Button("Back") == true)
 				modifyAttributesMenu = false;
 
-			ImGui::Text("Depth Test");
 			bool enabled = glIsEnabled(GL_DEPTH_TEST);
-			if (ImGui::Checkbox("Depth", &enabled))
-			{
+			if (ImGui::Checkbox("Depth Test", &enabled))
 				enabled? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-			}
+
 			enabled = glIsEnabled(GL_CULL_FACE);
-			ImGui::Text("Cull Face");
-			if (ImGui::Checkbox("Cull", &enabled))
-			{
+			if (ImGui::Checkbox("Cull Face", &enabled))
 				enabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-			}
+
 			enabled = glIsEnabled(GL_LIGHTING);
-			ImGui::Text("Lighting");
 			if (ImGui::Checkbox("Lighting", &enabled))
-			{
 				enabled ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
-			}
+
 			enabled = glIsEnabled(GL_COLOR_MATERIAL);
-			ImGui::Text("Color Material");
 			if (ImGui::Checkbox("Color Material", &enabled))
-			{
 				enabled ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
-			}
+
 			enabled = glIsEnabled(GL_TEXTURE_2D);
-			ImGui::Text("Texture 2D");
 			if (ImGui::Checkbox("Texture 2D", &enabled))
-			{
 				enabled ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
-			}
 		}
 
 		if (ImGui::Checkbox("Wireframe mode", &wireframe))

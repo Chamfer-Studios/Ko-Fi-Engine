@@ -1,10 +1,7 @@
 #pragma once
 #include "glmath.h"
 #include "Color.h"
-#include <vector>
-#include <list>
 #include "glew.h"
-
 
 enum PrimitiveTypes
 {
@@ -19,7 +16,6 @@ enum PrimitiveTypes
 class Primitive
 {
 public:
-
 	Primitive();
 
 	virtual void	Render() const;
@@ -30,7 +26,6 @@ public:
 	PrimitiveTypes	GetType() const;
 
 public:
-	
 	Color color;
 	mat4x4 transform;
 	bool axis,wire;
@@ -45,28 +40,24 @@ class Cube : public Primitive
 public :
 	Cube();
 	Cube(float sizeX, float sizeY, float sizeZ);
-	void InnerRender();
+	void InnerRender() const;
 	void DrawInterleavedMode();
 public:
 	vec3 size;
-	GLfloat vnc[216];
-	GLubyte index[36];
 };
 
 // ============================================
 class Sphere : public Primitive
 {
-
 public:
 	Sphere();
 	Sphere(float radius);
-	Sphere(float radius, unsigned int rings, unsigned int sectors);
+	Sphere(float radius, unsigned int stacks, unsigned int sectors);
 	void InnerRender() const;
-
 public:
 	float radius;
-	float rings;
-	float sectors;
+	unsigned int stacks;
+	unsigned int sectors;
 };
 
 // ============================================

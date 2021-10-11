@@ -4,14 +4,15 @@
 #include "glmath.h"
 #include "Light.h"
 #include "SDL_video.h"
+
 #define MAX_LIGHTS 8
 
 class Window;
 class Camera3D;
+
 class Renderer3D : public Module
 {
 public:
-
 	Renderer3D(Window* window,Camera3D* camera);
 	~Renderer3D();
 
@@ -24,14 +25,7 @@ public:
 	void SetVsync(bool vsync);
 	void OnResize(int width, int height);
 
-	void draw1();
-	void draw2();
-	void draw3();
-	void draw4();
-	void draw5();
-
 public:
-
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
@@ -40,6 +34,5 @@ public:
 	Camera3D* camera = nullptr;
 
 private:
-
 	bool vsync = false;
 };

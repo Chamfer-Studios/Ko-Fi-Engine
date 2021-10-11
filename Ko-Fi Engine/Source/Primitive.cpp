@@ -3,12 +3,7 @@
 //#include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-
-#define _USE_MATH_DEFINES
-//#include <GL/gl.h>
-//#include <GL/glu.h>
-//#include <vector>
-#include <cmath>
+#include <vector>
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
@@ -106,117 +101,129 @@ void Primitive::Scale(float x, float y, float z)
 Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
 {
 	type = PrimitiveTypes::Primitive_Cube;
-	float sx = size.x;
-	float sy = size.y;
-	float sz = size.z;
-	GLfloat vncA[216] =
-	{ sx, sy, sz,  0, 0, 1,  1, 1, 1, //v0 (front)
-	 -sx, sy, sz,  0, 0, 1,  1, 1, 0, //v1
-	 -sx,-sy, sz,  0, 0, 1,  1, 0, 0, //v2
-	  sx,-sy, sz,  0, 0, 1,  1, 0, 1, //v3
-
-	  sx, sy, sz,   1, 0, 0,   1, 1, 1, // v0 (right)
-	  sx,-sy, sz,   1, 0, 0,   1, 0, 1, // v3
-	  sx,-sy,-sz,   1, 0, 0,   0, 0, 1, // v4
-	  sx, sy,-sz,   1, 0, 0,   0, 1, 1, // v5
-
-	  sx, sy, sz,   0, 1, 0,   1, 1, 1, // v0 (top)
-	  sx, sy,-sz,   0, 1, 0,   0, 1, 1, // v5
-	 -sx, sy,-sz,   0, 1, 0,   0, 1, 0, // v6
-	 -sx, sy, sz,   0, 1, 0,   1, 1, 0, // v1
-
-	 -sx, sy, sz,  -1, 0, 0,   1, 1, 0,              // v1 (left)
-	 -sx, sy,-sz,  -1, 0, 0,   0, 1, 0,              // v6
-	 -sx,-sy,-sz,  -1, 0, 0,   0, 0, 0,              // v7
-	 -sx,-sy, sz,  -1, 0, 0,   1, 0, 0,              // v2
-
-	 -sx,-sy,-sz,   0,-1, 0,   0, 0, 0,              // v7 (bottom)
-	  sx,-sy,-sz,   0,-1, 0,   0, 0, 1,              // v4
-	  sx,-sy, sz,   0,-1, 0,   1, 0, 1,              // v3
-	 -sx,-sy, sz,   0,-1, 0,   1, 0, 0,              // v2
-
-	  sx,-sy,-sz,   0, 0,-1,   0, 0, 1,              // v4 (back)
-	 -sx,-sy,-sz,   0, 0,-1,   0, 0, 0,              // v7
-	 -sx, sy,-sz,   0, 0,-1,   0, 1, 0,              // v6
-	  sx, sy,-sz,   0, 0,-1,   0, 1, 1 };            // v5
-	std::copy(vncA, vncA + 216, vnc);
-	// index array of vertex array for glDrawElements() & glDrawRangeElement()
-	GLubyte indexA[36] = { 0, 1, 2,   2, 3, 0,      // front
-						   4, 5, 6,   6, 7, 4,      // right
-						   8, 9,10,  10,11, 8,      // top
-						  12,13,14,  14,15,12,      // left
-						  16,17,18,  18,19,16,      // bottom
-						  20,21,22,  22,23,20 };    // back
-	std::copy(indexA, indexA + 36, index);
-
 }
 
 Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
 {
 	type = PrimitiveTypes::Primitive_Cube;
-	float sx = size.x;
-	float sy = size.y;
-	float sz = size.z;
-	GLfloat vncA[216] =
-	{ sx, sy, sz,  0, 0, 1,  1, 1, 1, //v0 (front)
-	 -sx, sy, sz,  0, 0, 1,  1, 1, 0, //v1
-	 -sx,-sy, sz,  0, 0, 1,  1, 0, 0, //v2
-	  sx,-sy, sz,  0, 0, 1,  1, 0, 1, //v3
+}
 
-	  sx, sy, sz,   1, 0, 0,   1, 1, 1, // v0 (right)
-	  sx,-sy, sz,   1, 0, 0,   1, 0, 1, // v3
-	  sx,-sy,-sz,   1, 0, 0,   0, 0, 1, // v4
-	  sx, sy,-sz,   1, 0, 0,   0, 1, 1, // v5
+void Cube::InnerRender() const
+{
+	float sx = size.x * 0.5f;
+	float sy = size.y * 0.5f;
+	float sz = size.z * 0.5f;
 
-	  sx, sy, sz,   0, 1, 0,   1, 1, 1, // v0 (top)
-	  sx, sy,-sz,   0, 1, 0,   0, 1, 1, // v5
-	 -sx, sy,-sz,   0, 1, 0,   0, 1, 0, // v6
-	 -sx, sy, sz,   0, 1, 0,   1, 1, 0, // v1
+	glBegin(GL_QUADS);
 
-	 -sx, sy, sz,  -1, 0, 0,   1, 1, 0,              // v1 (left)
-	 -sx, sy,-sz,  -1, 0, 0,   0, 1, 0,              // v6
-	 -sx,-sy,-sz,  -1, 0, 0,   0, 0, 0,              // v7
-	 -sx,-sy, sz,  -1, 0, 0,   1, 0, 0,              // v2
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(-sx, -sy, sz);
+	glVertex3f(sx, -sy, sz);
+	glVertex3f(sx, sy, sz);
+	glVertex3f(-sx, sy, sz);
 
-	 -sx,-sy,-sz,   0,-1, 0,   0, 0, 0,              // v7 (bottom)
-	  sx,-sy,-sz,   0,-1, 0,   0, 0, 1,              // v4
-	  sx,-sy, sz,   0,-1, 0,   1, 0, 1,              // v3
-	 -sx,-sy, sz,   0,-1, 0,   1, 0, 0,              // v2
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(sx, -sy, -sz);
+	glVertex3f(-sx, -sy, -sz);
+	glVertex3f(-sx, sy, -sz);
+	glVertex3f(sx, sy, -sz);
 
-	  sx,-sy,-sz,   0, 0,-1,   0, 0, 1,              // v4 (back)
-	 -sx,-sy,-sz,   0, 0,-1,   0, 0, 0,              // v7
-	 -sx, sy,-sz,   0, 0,-1,   0, 1, 0,              // v6
-	  sx, sy,-sz,   0, 0,-1,   0, 1, 1 };            // v5
-	std::copy(vncA, vncA + 216, vnc);
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(sx, -sy, sz);
+	glVertex3f(sx, -sy, -sz);
+	glVertex3f(sx, sy, -sz);
+	glVertex3f(sx, sy, sz);
+
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glVertex3f(-sx, -sy, -sz);
+	glVertex3f(-sx, -sy, sz);
+	glVertex3f(-sx, sy, sz);
+	glVertex3f(-sx, sy, -sz);
+
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(-sx, sy, sz);
+	glVertex3f(sx, sy, sz);
+	glVertex3f(sx, sy, -sz);
+	glVertex3f(-sx, sy, -sz);
+
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glVertex3f(-sx, -sy, -sz);
+	glVertex3f(sx, -sy, -sz);
+	glVertex3f(sx, -sy, sz);
+	glVertex3f(-sx, -sy, sz);
+
+	glEnd();
+}
+
+void Cube::DrawInterleavedMode()
+{
+	// cube ///////////////////////////////////////////////////////////////////////
+	//    v6----- v5
+	//   /|      /|
+	//  v1------v0|
+	//  | |     | |
+	//  | |v7---|-|v4
+	//  |/      |/
+	//  v2------v3
+
+	float sx = size.x * 0.5f;
+	float sy = size.y * 0.5f;
+	float sz = size.z * 0.5f;
+
+	// interleaved vertex array for glDrawElements() & glDrawRangeElements() ======
+	// All vertex attributes (position, normal, color) are packed together as a
+	// struct or set, for example, ((V,N,C), (V,N,C), (V,N,C),...).
+	// It is called an array of struct, and provides better memory locality.
+	GLfloat vertices[]  = { sx, sy, sz,   0, 0, 1,   1, 1, 1,              // v0 (front)
+						   -sx, sy, sz,   0, 0, 1,   1, 1, 0,              // v1
+						   -sx,-sy, sz,   0, 0, 1,   1, 0, 0,              // v2
+							sx,-sy, sz,   0, 0, 1,   1, 0, 1,              // v3
+
+							sx, sy, sz,   1, 0, 0,   1, 1, 1,              // v0 (right)
+							sx,-sy, sz,   1, 0, 0,   1, 0, 1,              // v3
+							sx,-sy,-sz,   1, 0, 0,   0, 0, 1,              // v4
+							sx, sy,-sz,   1, 0, 0,   0, 1, 1,              // v5
+
+							sx, sy, sz,   0, 1, 0,   1, 1, 1,              // v0 (top)
+							sx, sy,-sz,   0, 1, 0,   0, 1, 1,              // v5
+						   -sx, sy,-sz,   0, 1, 0,   0, 1, 0,              // v6
+						   -sx, sy, sz,   0, 1, 0,   1, 1, 0,              // v1
+
+						   -sx, sy, sz,  -1, 0, 0,   1, 1, 0,              // v1 (left)
+						   -sx, sy,-sz,  -1, 0, 0,   0, 1, 0,              // v6
+						   -sx,-sy,-sz,  -1, 0, 0,   0, 0, 0,              // v7
+						   -sx,-sy, sz,  -1, 0, 0,   1, 0, 0,              // v2
+
+						   -sx,-sy,-sz,   0,-1, 0,   0, 0, 0,              // v7 (bottom)
+							sx,-sy,-sz,   0,-1, 0,   0, 0, 1,              // v4
+							sx,-sy, sz,   0,-1, 0,   1, 0, 1,              // v3
+						   -sx,-sy, sz,   0,-1, 0,   1, 0, 0,              // v2
+
+							sx,-sy,-sz,   0, 0,-1,   0, 0, 1,              // v4 (back)
+						   -sx,-sy,-sz,   0, 0,-1,   0, 0, 0,              // v7
+						   -sx, sy,-sz,   0, 0,-1,   0, 1, 0,              // v6
+							sx, sy,-sz,   0, 0,-1,   0, 1, 1 };            // v5
+
 	// index array of vertex array for glDrawElements() & glDrawRangeElement()
-	GLubyte indexA[36] = { 0, 1, 2,   2, 3, 0,      // front
+	GLubyte indices[]  = { 0, 1, 2,   2, 3, 0,      // front
 						   4, 5, 6,   6, 7, 4,      // right
 						   8, 9,10,  10,11, 8,      // top
 						  12,13,14,  14,15,12,      // left
 						  16,17,18,  18,19,16,      // bottom
 						  20,21,22,  22,23,20 };    // back
-	std::copy(indexA, indexA + 36, index);
-}
 
-void Cube::InnerRender()
-{	
-	DrawInterleavedMode();
-}
-
-void Cube::DrawInterleavedMode()
-{
 	// enable and specify pointers to vertex arrays
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glNormalPointer(GL_FLOAT, 9 * sizeof(GLfloat), vnc + 3);
-	glColorPointer(3, GL_FLOAT, 9 * sizeof(GLfloat), vnc + 6);
-	glVertexPointer(3, GL_FLOAT, 9 * sizeof(GLfloat), vnc);
+	glNormalPointer(GL_FLOAT, 9 * sizeof(GLfloat), vertices + 3);
+	glColorPointer(3, GL_FLOAT, 9 * sizeof(GLfloat), vertices + 6);
+	glVertexPointer(3, GL_FLOAT, 9 * sizeof(GLfloat), vertices);
 
 	glPushMatrix();
-	glTranslatef(-2, -2, 0);                // move to bottom-left
+	/*glTranslatef(-2, -2, 0);*/                // move to bottom-left
 
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, index);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
 
 	glPopMatrix();
 
@@ -236,31 +243,33 @@ Sphere::Sphere(float radius) : Primitive(), radius(radius)
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors) : Primitive(), radius(radius),rings(rings),sectors(sectors)
+Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors) : Primitive(), radius(radius), stacks(stacks), sectors(sectors)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
 void Sphere::InnerRender() const
 {
-	for (int j = 0; j < rings; j++) {
-		float latitude1 = (M_PI / rings) * j - M_PI_2;
-		float latitude2 = (M_PI / rings) * (j + 1) - M_PI_2;
-		float sinLat1 = sin(latitude1);
-		float cosLat1 = cos(latitude1);
-		float sinLat2 = sin(latitude2);
-		float cosLat2 = cos(latitude2);
+	for (int j = 0; j < stacks; j++)
+	{
+		double latitude1 = (M_PI / stacks) * j - M_PI_2;
+		double latitude2 = (M_PI / stacks) * (j + 1) - M_PI_2;
+		double sinLat1 = sin(latitude1);
+		double cosLat1 = cos(latitude1);
+		double sinLat2 = sin(latitude2);
+		double cosLat2 = cos(latitude2);
 		glBegin(GL_TRIANGLE_STRIP);
-		for (int i = 0; i <= sectors; i++) {
-			float longitude = (2 * M_PI / sectors) * i;
-			float sinLong = sin(longitude);
-			float cosLong = cos(longitude);
-			float x1 = cosLong * cosLat1;
-			float y1 = sinLong * cosLat1;
-			float z1 = sinLat1;
-			float x2 = cosLong * cosLat2;
-			float y2 = sinLong * cosLat2;
-			float z2 = sinLat2;
+		for (int i = 0; i <= sectors; i++)
+		{
+			double longitude = (2 * M_PI / sectors) * i;
+			double sinLong = sin(longitude);
+			double cosLong = cos(longitude);
+			double x1 = cosLong * cosLat1;
+			double y1 = sinLong * cosLat1;
+			double z1 = sinLat1;
+			double x2 = cosLong * cosLat2;
+			double y2 = sinLong * cosLat2;
+			double z2 = sinLat2;
 			glNormal3d(x2, y2, z2);
 			glVertex3d(radius * x2, radius * y2, radius * z2);
 			glNormal3d(x1, y1, z1);

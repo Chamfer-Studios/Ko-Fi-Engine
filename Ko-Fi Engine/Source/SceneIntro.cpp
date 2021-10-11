@@ -10,8 +10,9 @@
 #include "SDL_assert.h"
 #include "RNG.h"
 #include "ImGuiAppLog.h"
+#include "FileLoader.h"
 
-SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor) : Module()
+SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileLoader* fileLoader) : Module()
 {
 	name = "SceneIntro";
 	// Needed modules
@@ -19,6 +20,7 @@ SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, E
 	this->window = window;
 	this->renderer = renderer;
 	this->editor = editor;
+	this->fileLoader = fileLoader;
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 }
@@ -44,9 +46,17 @@ bool SceneIntro::Start()
 // Update
 bool SceneIntro::Update(float dt)
 {
-	/*Plane p(0, 1, 0, 0);
+	Plane p(0, 1, 0, 0);
 	p.axis = true;
-	p.Render();*/
+	p.Render();
+
+	// Draw cube
+	/*Cube cube(1, 1, 1);
+	cube.InnerRender();*/
+
+	// Draw sphere
+	/*Sphere sphere(1, 25, 25);
+	sphere.InnerRender();*/
 
 	return true;
 }

@@ -13,11 +13,12 @@ class Camera3D;
 class Renderer3D;
 class Window;
 class Editor;
+class FileLoader;
 
 class SceneIntro : public Module
 {
 public:
-	SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor);
+	SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileLoader* fileLoader);
 	~SceneIntro();
 
 	bool Start();
@@ -32,6 +33,7 @@ private:
 	Window* window;
 	Renderer3D* renderer;
 	Editor* editor;
+	FileLoader* fileLoader;
 
 	int random = 0;
 	JsonHandler jsonHandler;

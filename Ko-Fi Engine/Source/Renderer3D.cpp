@@ -2,7 +2,8 @@
 #include "Primitive.h"
 
 // OpenGL / GLEW
-//#include "glew.h"
+#include "glew.h"
+#include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -164,31 +165,7 @@ bool Renderer3D::PreUpdate(float dt)
 // Update
 bool Renderer3D::Update(float dt)
 {
-	bool ret = true;
-
-	// draw a line 10 units upwards
-	/*glLineWidth(2.0f);
-
-	glBegin(GL_LINES);
-		glVertex3f(0.f, 0.f, 0.f);
-		glVertex3f(0.f, 10.f, 0.f);
-	glEnd();
-
-	glLineWidth(1.0f);*/
-
-    // Draw cube (with each different method)
-
-    Cube cube(4,20,0.5);
-    cube.InnerRender();
-    // Draw sphere
-    Sphere sphere(1, 25, 25);
-    sphere.InnerRender();
-    // Back to default white
-    glColor3ub(255, 255, 255);
-
-
-
-	return ret;
+	return true;
 }
 
 // PostUpdate present buffer to screen
@@ -240,4 +217,3 @@ void Renderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-
