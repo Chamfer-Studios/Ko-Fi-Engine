@@ -30,9 +30,11 @@ bool MainBar::Update()
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("About"))
-			{
 				editor->toggleAboutPanel = !editor->toggleAboutPanel;
-			}
+
+			if (ImGui::MenuItem("Repository"))
+				ShellExecuteA(NULL, "open", "https://github.com/boscobarberesbert/Ko-Fi-Engine", NULL, NULL, SW_SHOWNORMAL);
+
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
