@@ -27,6 +27,11 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+
+	void LoadFile(const char* file_path);
+
+public:
+	std::vector<Mesh> meshes;
 };
 
 #endif FILELOADER_H // FILELOADER_H

@@ -11,16 +11,18 @@
 #include "Window.h"
 #include "Camera3D.h"
 #include "ImGuiAppLog.h"
+#include "FileLoader.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-Renderer3D::Renderer3D(Window* window,Camera3D* camera) : Module()
+Renderer3D::Renderer3D(Window* window, Camera3D* camera, FileLoader* fileLoader) : Module()
 {
 	name = "Renderer3D";
 
 	this->window = window;
 	this->camera = camera;
+	this->fileLoader = fileLoader;
 }
 
 // Destructor
@@ -141,6 +143,8 @@ bool Renderer3D::Awake(Json configModule)
 		appLog->AddLog("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	}
 
+	InitMeshes(fileLoader->meshes);
+
 	return ret;
 }
 
@@ -216,4 +220,38 @@ void Renderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void Renderer3D::InitMeshes(std::vector<Mesh> meshes)
+{
+	std::vector<Mesh>::iterator item = meshes.begin();
+	while (item != fileLoader->meshes.end())
+	{
+		InitMesh((Mesh)*item);
+		++item;
+	}
+}
+
+void Renderer3D::InitMesh(Mesh mesh)
+{
+	/*glGenBuffers(1, &mesh.id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &mesh.id_index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);*/
+}
+
+void Renderer3D::DrawMesh(Mesh mesh)
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	/*glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);*/
+	glVertexPointer(3, GL_FLOAT, 0, mesh.vertices);
+	// … bind and use other buffers
+	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);*/
+	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, mesh.indices);
+	glDisableClientState(GL_VERTEX_ARRAY);
 }

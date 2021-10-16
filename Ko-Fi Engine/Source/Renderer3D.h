@@ -9,11 +9,13 @@
 
 class Window;
 class Camera3D;
+class FileLoader;
+class Mesh;
 
 class Renderer3D : public Module
 {
 public:
-	Renderer3D(Window* window,Camera3D* camera);
+	Renderer3D(Window* window,Camera3D* camera, FileLoader* fileLoader);
 	~Renderer3D();
 
 	bool Awake(Json configModule);
@@ -25,6 +27,10 @@ public:
 	void SetVsync(bool vsync);
 	void OnResize(int width, int height);
 
+	void InitMeshes(std::vector<Mesh> meshes);
+	void InitMesh(Mesh mesh);
+	void DrawMesh(Mesh mesh);
+
 public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
@@ -32,6 +38,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	Window* window = nullptr;
 	Camera3D* camera = nullptr;
+	FileLoader* fileLoader = nullptr;
 
 private:
 	bool vsync = false;

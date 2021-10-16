@@ -40,6 +40,8 @@ bool SceneIntro::Start()
 	camera->Move(vec3(1.0f, 1.0f, 1.0f));
 	camera->LookAt(vec3(0, 0, 0));
 
+	fileLoader->LoadFile("Assets/Models/warrior.fbx");
+
 	return ret;
 }
 
@@ -51,12 +53,19 @@ bool SceneIntro::Update(float dt)
 	p.Render();
 
 	// Draw cube
-	Cube cube(1, 1, 1);
-	cube.DrawInterleavedMode();
+	/*Cube cube(1, 1, 1);
+	cube.DrawInterleavedMode();*/
 
 	// Draw sphere
-	Sphere sphere(1, 25, 25);
-	sphere.InnerRender();
+	/*Sphere sphere(1, 25, 25);
+	sphere.InnerRender();*/
+
+	std::vector<Mesh>::iterator item = fileLoader->meshes.begin();
+	while (item != fileLoader->meshes.end())
+	{
+		renderer->DrawMesh((Mesh)*item);
+		++item;
+	}
 
 	return true;
 }
