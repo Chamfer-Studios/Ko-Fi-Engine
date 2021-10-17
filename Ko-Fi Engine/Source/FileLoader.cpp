@@ -39,6 +39,10 @@ bool FileLoader::Start()
 	LOG("Starting Assimp...");
 	appLog->AddLog("Starting Assimp...\n");
 
+	// Load meshes
+	LoadFile("Assets/Meshes/warrior.fbx");
+	LoadFile("Assets/Meshes/BakerHouse.fbx");
+
 	return true;
 }
 

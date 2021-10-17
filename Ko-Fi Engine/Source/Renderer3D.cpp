@@ -143,9 +143,15 @@ bool Renderer3D::Awake(Json configModule)
 		appLog->AddLog("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	}
 
+	return ret;
+}
+
+bool Renderer3D::Start()
+{
+	// Init meshes data
 	InitMeshes(fileLoader->meshes);
 
-	return ret;
+	return true;
 }
 
 // PreUpdate: clear buffer
@@ -169,6 +175,14 @@ bool Renderer3D::PreUpdate(float dt)
 // Update
 bool Renderer3D::Update(float dt)
 {
+	// Draw meshes
+	/*std::vector<Mesh>::iterator item = fileLoader->meshes.begin();
+	while (item != fileLoader->meshes.end())
+	{
+		DrawMesh((Mesh)*item);
+		++item;
+	}*/
+
 	return true;
 }
 
@@ -225,7 +239,7 @@ void Renderer3D::OnResize(int width, int height)
 void Renderer3D::InitMeshes(std::vector<Mesh> meshes)
 {
 	std::vector<Mesh>::iterator item = meshes.begin();
-	while (item != fileLoader->meshes.end())
+	while (item != meshes.end())
 	{
 		InitMesh((Mesh)*item);
 		++item;
@@ -234,24 +248,35 @@ void Renderer3D::InitMeshes(std::vector<Mesh> meshes)
 
 void Renderer3D::InitMesh(Mesh mesh)
 {
-	/*glGenBuffers(1, &mesh.id_vertex);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
-
-	glGenBuffers(1, &mesh.id_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);*/
+	
 }
 
 void Renderer3D::DrawMesh(Mesh mesh)
 {
+	// Vertices
+	glGenBuffers(1, &mesh.id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
+	/*if (glCheckFramebufferStatus(mesh.id_vertex) == GL_FRAMEBUFFER_COMPLETE)
+		appLog->AddLog("The vertex buffer of the mesh with id: %d is complete.\n", mesh.id_index);
+	else
+		appLog->AddLog("The vertex buffer of the mesh with id: %d is NOT complete.\n", mesh.id_index);*/
+
+	// Indices
+	glGenBuffers(1, &mesh.id_index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
+	/*if (glCheckFramebufferStatus(mesh.id_index) == GL_FRAMEBUFFER_COMPLETE)
+		appLog->AddLog("The index buffer of the mesh with id: %d is complete.\n", mesh.id_index);
+	else
+		appLog->AddLog("The index buffer of the mesh with id: %d is NOT complete.\n", mesh.id_index);*/
+
+	// Draw mesh
 	glEnableClientState(GL_VERTEX_ARRAY);
-	/*glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);*/
-	glVertexPointer(3, GL_FLOAT, 0, mesh.vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	// … bind and use other buffers
-	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
-	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);*/
-	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, mesh.indices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
 }

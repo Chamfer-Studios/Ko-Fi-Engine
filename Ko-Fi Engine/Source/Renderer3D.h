@@ -19,6 +19,7 @@ public:
 	~Renderer3D();
 
 	bool Awake(Json configModule);
+	bool Start();
 	bool PreUpdate(float dt);
 	bool Update(float dt);
 	bool PostUpdate(float dt);

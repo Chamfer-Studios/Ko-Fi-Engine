@@ -380,3 +380,89 @@ void Plane::InnerRender() const
 
 	glEnd();
 }
+
+// PYRAMID ==================================================
+Pyramid::Pyramid() : Primitive(), base(1.0f, 1.0f), height(1.0f)
+{
+	type = PrimitiveTypes::Primitive_Pyramid;
+}
+
+Pyramid::Pyramid(float baseX, float baseZ, float height) : Primitive(), base(baseX, baseZ), height(height)
+{
+	type = PrimitiveTypes::Primitive_Pyramid;
+}
+
+void Pyramid::InnerRender() const
+{
+	float bx = base.x * 0.5f;
+	float bz = base.y * 0.5f;
+	float sh = height * 0.5f;
+
+	glBegin(GL_QUADS);
+
+	//Base
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(-bx, -sh, bz);
+	glVertex3f(bx, -sh, bz);
+	glVertex3f(bx, -sh, -bz);
+	glVertex3f(-bx, -sh, -bz);
+
+	glEnd();
+
+	glBegin(GL_TRIANGLES);
+
+	//Faces
+	//vec3 edge1 = vec3(0 + bx, sh + sh, 0 - bz);
+	//vec3 edge2 = vec3(bx + bx, -sh + sh, bz - bz);
+	//vec3 normal = cross(edge2, edge1);
+	//normalize(normal);
+	//glNormal3f(normal.x, normal.y, normal.z);
+
+	float ang = (float)atan(height / bz);
+	glNormal3f(0.0f, ang, ang);
+
+	glVertex3f(0, sh, 0);
+	glVertex3f(-bx, -sh, bz);
+	glVertex3f(bx, -sh, bz);
+
+	//edge1 = vec3(0 - bx, sh + sh, 0 - bz);
+	//edge2 = vec3(bx - bx, -sh + sh, bz + bz);
+	//normal = cross(edge2, edge1);
+	//normalize(normal);
+	//glNormal3f(normal.x, normal.y, normal.z);
+
+	ang = (float)atan(height / bx);
+	glNormal3f(ang, ang, 0.0f);
+
+	glVertex3f(0, sh, 0);
+	glVertex3f(bx, -sh, bz);
+	glVertex3f(bx, -sh, -bz);
+
+	//edge1 = vec3(0 - bx, sh + sh, 0 + bz);
+	//edge2 = vec3(bx + bx, -sh + sh, -bz + bz);
+	//normal = cross(edge2, edge1);
+	//normalize(normal);
+	//glNormal3f(normal.x, normal.y, normal.z);
+
+	ang = (float)atan(height / -bz);
+	glNormal3f(0.0f, ang, ang);
+
+	glVertex3f(0, sh, 0);
+	glVertex3f(bx, -sh, -bz);
+	glVertex3f(-bx, -sh, -bz);
+
+	//edge1 = vec3(0 + bx, sh + sh, 0 + bz);
+	//edge2 = vec3(-bx + bx, -sh + sh, -bz - bz);
+	//normal = cross(edge2, edge1);
+	//normalize(normal);
+	//glNormal3f(normal.x, normal.y, normal.z);
+
+	ang = (float)atan(height / -bx);
+	glNormal3f(ang, ang, 0.0f);
+
+	glVertex3f(0, sh, 0);
+	glVertex3f(-bx, -sh, -bz);
+	glVertex3f(-bx, -sh, bz);
+
+	glEnd();
+}

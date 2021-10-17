@@ -10,7 +10,6 @@
 #include "SDL_assert.h"
 #include "RNG.h"
 #include "ImGuiAppLog.h"
-#include "FileLoader.h"
 
 SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileLoader* fileLoader) : Module()
 {
@@ -40,17 +39,15 @@ bool SceneIntro::Start()
 	camera->Move(vec3(1.0f, 1.0f, 1.0f));
 	camera->LookAt(vec3(0, 0, 0));
 
-	fileLoader->LoadFile("Assets/Models/warrior.fbx");
-
 	return ret;
 }
 
 // Update
 bool SceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
+	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
-	p.Render();
+	p.Render();*/
 
 	// Draw cube
 	/*Cube cube(1, 1, 1);
@@ -60,12 +57,9 @@ bool SceneIntro::Update(float dt)
 	/*Sphere sphere(1, 25, 25);
 	sphere.InnerRender();*/
 
-	std::vector<Mesh>::iterator item = fileLoader->meshes.begin();
-	while (item != fileLoader->meshes.end())
-	{
-		renderer->DrawMesh((Mesh)*item);
-		++item;
-	}
+	// Draw pyramid
+	Pyramid pyramid(1,1,1);
+	pyramid.InnerRender();
 
 	return true;
 }
