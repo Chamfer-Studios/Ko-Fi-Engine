@@ -216,6 +216,18 @@ void Renderer3D::OnResize(int width, int height)
 
 void Renderer3D::DrawMesh(Mesh mesh)
 {
+	// Vertices
+	glGenBuffers(1, &mesh.id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
+
+	// Indices
+	glGenBuffers(1, &mesh.id_index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
+
+	// Later: Normals, Colors, etc.
+
 	// Draw mesh
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
