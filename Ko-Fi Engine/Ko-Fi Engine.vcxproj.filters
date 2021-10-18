@@ -241,7 +241,7 @@
     <ClCompile Include="Source\MainBar.cpp">
       <Filter>Source\Editor\MenuBars</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FileLoader.cpp">
+    <ClCompile Include="Source\FileSystem.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -549,7 +549,7 @@
     <ClInclude Include="Source\MainBar.h">
       <Filter>Source\Editor\MenuBars</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FileLoader.h">
+    <ClInclude Include="Source\FileSystem.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,27 +9,23 @@
 
 class Window;
 class Camera3D;
-class FileLoader;
+class FileSystem;
 class Mesh;
 
 class Renderer3D : public Module
 {
 public:
-	Renderer3D(Window* window,Camera3D* camera, FileLoader* fileLoader);
+	Renderer3D(Window* window,Camera3D* camera, FileSystem* fileSystem);
 	~Renderer3D();
 
 	bool Awake(Json configModule);
-	bool Start();
 	bool PreUpdate(float dt);
-	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 	bool GetVsync() const;
 	void SetVsync(bool vsync);
 	void OnResize(int width, int height);
 
-	void InitMeshes(std::vector<Mesh> meshes);
-	void InitMesh(Mesh mesh);
 	void DrawMesh(Mesh mesh);
 
 public:
@@ -39,7 +35,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	Window* window = nullptr;
 	Camera3D* camera = nullptr;
-	FileLoader* fileLoader = nullptr;
+	FileSystem* fileSystem = nullptr;
 
 private:
 	bool vsync = false;

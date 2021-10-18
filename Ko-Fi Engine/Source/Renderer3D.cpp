@@ -11,18 +11,18 @@
 #include "Window.h"
 #include "Camera3D.h"
 #include "ImGuiAppLog.h"
-#include "FileLoader.h"
+#include "FileSystem.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-Renderer3D::Renderer3D(Window* window, Camera3D* camera, FileLoader* fileLoader) : Module()
+Renderer3D::Renderer3D(Window* window, Camera3D* camera, FileSystem* fileSystem) : Module()
 {
 	name = "Renderer3D";
 
 	this->window = window;
 	this->camera = camera;
-	this->fileLoader = fileLoader;
+	this->fileSystem = fileSystem;
 }
 
 // Destructor
@@ -146,14 +146,6 @@ bool Renderer3D::Awake(Json configModule)
 	return ret;
 }
 
-bool Renderer3D::Start()
-{
-	// Init meshes data
-	InitMeshes(fileLoader->meshes);
-
-	return true;
-}
-
 // PreUpdate: clear buffer
 bool Renderer3D::PreUpdate(float dt)
 {
@@ -168,20 +160,6 @@ bool Renderer3D::PreUpdate(float dt)
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
-
-	return true;
-}
-
-// Update
-bool Renderer3D::Update(float dt)
-{
-	// Draw meshes
-	/*std::vector<Mesh>::iterator item = fileLoader->meshes.begin();
-	while (item != fileLoader->meshes.end())
-	{
-		DrawMesh((Mesh)*item);
-		++item;
-	}*/
 
 	return true;
 }
@@ -236,41 +214,8 @@ void Renderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
-void Renderer3D::InitMeshes(std::vector<Mesh> meshes)
-{
-	std::vector<Mesh>::iterator item = meshes.begin();
-	while (item != meshes.end())
-	{
-		InitMesh((Mesh)*item);
-		++item;
-	}
-}
-
-void Renderer3D::InitMesh(Mesh mesh)
-{
-	
-}
-
 void Renderer3D::DrawMesh(Mesh mesh)
 {
-	// Vertices
-	glGenBuffers(1, &mesh.id_vertex);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
-	/*if (glCheckFramebufferStatus(mesh.id_vertex) == GL_FRAMEBUFFER_COMPLETE)
-		appLog->AddLog("The vertex buffer of the mesh with id: %d is complete.\n", mesh.id_index);
-	else
-		appLog->AddLog("The vertex buffer of the mesh with id: %d is NOT complete.\n", mesh.id_index);*/
-
-	// Indices
-	glGenBuffers(1, &mesh.id_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
-	/*if (glCheckFramebufferStatus(mesh.id_index) == GL_FRAMEBUFFER_COMPLETE)
-		appLog->AddLog("The index buffer of the mesh with id: %d is complete.\n", mesh.id_index);
-	else
-		appLog->AddLog("The index buffer of the mesh with id: %d is NOT complete.\n", mesh.id_index);*/
-
 	// Draw mesh
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);

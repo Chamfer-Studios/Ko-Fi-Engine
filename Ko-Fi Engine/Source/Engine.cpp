@@ -6,7 +6,7 @@
 #include "Camera3D.h"
 #include "SceneIntro.h"
 #include "Editor.h"
-#include "FileLoader.h"
+#include "FileSystem.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -26,18 +26,18 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	window = new Window();
 	input = new Input();
 	camera = new Camera3D(input);
-	fileLoader = new FileLoader();
-	renderer = new Renderer3D(window, camera, fileLoader);
+	fileSystem = new FileSystem();
+	renderer = new Renderer3D(window, camera, fileSystem);
 	editor = new Editor(window, renderer, input, engineConfig);
-	sceneIntro = new SceneIntro(camera, window, renderer, editor, fileLoader);
+	sceneIntro = new SceneIntro(camera, window, renderer, editor, fileSystem);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(window);
-	AddModule(camera);
 	AddModule(input);
+	AddModule(camera);
+	AddModule(fileSystem);
 	AddModule(editor);
-	AddModule(fileLoader);
 	AddModule(sceneIntro);
 
 	// Render last to swap buffer

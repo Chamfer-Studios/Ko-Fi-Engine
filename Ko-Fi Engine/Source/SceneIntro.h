@@ -13,12 +13,12 @@ class Camera3D;
 class Renderer3D;
 class Window;
 class Editor;
-class FileLoader;
+class FileSystem;
 
 class SceneIntro : public Module
 {
 public:
-	SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileLoader* fileLoader);
+	SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileSystem* fileSystem);
 	~SceneIntro();
 
 	bool Start();
@@ -29,11 +29,11 @@ public:
 
 private:
 	// Needed modules
-	Camera3D* camera;
-	Window* window;
-	Renderer3D* renderer;
-	Editor* editor;
-	FileLoader* fileLoader;
+	Camera3D* camera = nullptr;
+	Window* window = nullptr;
+	Renderer3D* renderer = nullptr;
+	Editor* editor = nullptr;
+	FileSystem* fileSystem = nullptr;
 
 	int random = 0;
 	JsonHandler jsonHandler;

@@ -14,7 +14,7 @@ class SceneIntro;
 class Renderer3D;
 class Camera3D;
 class Editor;
-class FileLoader;
+class FileSystem;
 
 class KoFiEngine
 {
@@ -78,7 +78,7 @@ private:
 	Renderer3D* renderer = nullptr;
 	Camera3D* camera = nullptr;
 	Editor* editor = nullptr;
-	FileLoader* fileLoader = nullptr;
+	FileSystem* fileSystem = nullptr;
 
 private:
 

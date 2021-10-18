@@ -10,8 +10,9 @@
 #include "SDL_assert.h"
 #include "RNG.h"
 #include "ImGuiAppLog.h"
+#include "FileSystem.h"
 
-SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileLoader* fileLoader) : Module()
+SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileSystem* fileSystem) : Module()
 {
 	name = "SceneIntro";
 	// Needed modules
@@ -19,7 +20,7 @@ SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, E
 	this->window = window;
 	this->renderer = renderer;
 	this->editor = editor;
-	this->fileLoader = fileLoader;
+	this->fileSystem = fileSystem;
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 }
@@ -39,12 +40,25 @@ bool SceneIntro::Start()
 	camera->Move(vec3(1.0f, 1.0f, 1.0f));
 	camera->LookAt(vec3(0, 0, 0));
 
+	// Load meshes
+	/*fileSystem->LoadMesh("Assets/Meshes/warrior.fbx");
+	fileSystem->LoadMesh("Assets/Meshes/BakerHouse.fbx");*/
+	fileSystem->LoadMesh("Assets/Meshes/Prop.fbx");
+
 	return ret;
 }
 
 // Update
 bool SceneIntro::Update(float dt)
 {
+	// Draw meshes
+	std::vector<Mesh>::iterator item = fileSystem->meshes.begin();
+	while (item != fileSystem->meshes.end())
+	{
+		renderer->DrawMesh((Mesh)*item);
+		++item;
+	}
+
 	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();*/
@@ -58,8 +72,8 @@ bool SceneIntro::Update(float dt)
 	sphere.InnerRender();*/
 
 	// Draw pyramid
-	Pyramid pyramid(1,1,1);
-	pyramid.InnerRender();
+	/*Pyramid pyramid(1,1,1);
+	pyramid.InnerRender();*/
 
 	return true;
 }

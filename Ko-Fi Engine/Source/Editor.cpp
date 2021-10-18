@@ -167,6 +167,7 @@ bool Editor::Update(float dt)
 bool Editor::PostUpdate(float dt)
 {
 	bool ret = true;
+
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	SDL_GL_MakeCurrent(window->window, renderer->context);
@@ -183,7 +184,8 @@ bool Editor::PostUpdate(float dt)
 			item++;
 		}
 	}
-	return true;
+
+	return ret;
 }
 
 bool Editor::CleanUp()

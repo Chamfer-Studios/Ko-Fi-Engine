@@ -195,7 +195,7 @@
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MainBar.cpp" />
-    <ClCompile Include="Source\FileLoader.cpp" />
+    <ClCompile Include="Source\FileSystem.cpp" />
     <ClCompile Include="Source\PanelAbout.cpp" />
     <ClCompile Include="Source\PanelConfiguration.cpp" />
     <ClCompile Include="Source\PanelLog.cpp" />
@@ -293,7 +293,7 @@
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\MainBar.h" />
-    <ClInclude Include="Source\FileLoader.h" />
+    <ClInclude Include="Source\FileSystem.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Panel.h" />
     <ClInclude Include="Source\PanelAbout.h" />
