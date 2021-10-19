@@ -32,7 +32,7 @@ public:
 
 	void LoadMesh(const char* file_path);
 	void GenerateMeshesBuffers();
-	void GenerateMeshBuffer(Mesh mesh);
+	void GenerateMeshBuffer(Mesh& mesh);
 
 public:
 	std::vector<Mesh> meshes;

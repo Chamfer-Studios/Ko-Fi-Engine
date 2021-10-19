@@ -130,12 +130,12 @@ void FileSystem::GenerateMeshesBuffers()
 	std::vector<Mesh>::iterator item = meshes.begin();
 	while (item != meshes.end())
 	{
-		GenerateMeshBuffer((Mesh)*item);
+		GenerateMeshBuffer((Mesh&)*item);
 		++item;
 	}
 }
 
-void FileSystem::GenerateMeshBuffer(Mesh mesh)
+void FileSystem::GenerateMeshBuffer(Mesh& mesh)
 {
 	// Vertices
 	glGenBuffers(1, &mesh.id_vertex);
