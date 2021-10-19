@@ -22,7 +22,9 @@ public:
 	~SceneIntro();
 
 	bool Start();
+	bool PreUpdate(float dt);
 	bool Update(float dt);
+	bool PostUpdate(float dt);
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);

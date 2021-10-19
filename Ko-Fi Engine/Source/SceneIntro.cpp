@@ -48,17 +48,14 @@ bool SceneIntro::Start()
 	return ret;
 }
 
+bool SceneIntro::PreUpdate(float dt)
+{
+	return true;
+}
+
 // Update
 bool SceneIntro::Update(float dt)
 {
-	// Draw meshes
-	std::vector<Mesh>::iterator item = fileSystem->meshes.begin();
-	while (item != fileSystem->meshes.end())
-	{
-		renderer->DrawMesh((Mesh)*item);
-		++item;
-	}
-
 	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();*/
@@ -74,6 +71,19 @@ bool SceneIntro::Update(float dt)
 	// Draw pyramid
 	/*Pyramid pyramid(1,1,1);
 	pyramid.InnerRender();*/
+
+	return true;
+}
+
+bool SceneIntro::PostUpdate(float dt)
+{
+	// Draw meshes
+	std::vector<Mesh>::iterator item = fileSystem->meshes.begin();
+	while (item != fileSystem->meshes.end())
+	{
+		renderer->DrawMesh((Mesh)*item);
+		++item;
+	}
 
 	return true;
 }
