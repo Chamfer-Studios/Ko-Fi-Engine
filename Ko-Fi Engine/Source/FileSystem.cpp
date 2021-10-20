@@ -110,6 +110,14 @@ void FileSystem::LoadMesh(const char* file_path)
 				}
 			}
 
+			// Loading mesh normals data
+			if (aiMesh->HasNormals())
+			{
+				ourMesh.num_normals = aiMesh->mNumVertices;
+				ourMesh.normals = new float[ourMesh.num_normals * 3];
+				memcpy(ourMesh.normals, aiMesh->mNormals, sizeof(float) * ourMesh.num_normals * 3);
+			}
+
 			// Add the new mesh to our array of meshes to draw
 			meshes.push_back(ourMesh);
 
@@ -137,15 +145,32 @@ void FileSystem::GenerateMeshesBuffers()
 
 void FileSystem::GenerateMeshBuffer(Mesh& mesh)
 {
-	// Vertices
-	glGenBuffers(1, &mesh.id_vertex);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
-
 	// Indices
 	glGenBuffers(1, &mesh.id_index);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
 
-	// Later: Normals, Colors, etc.
+	// Vertex Array Object (VAO) --------------------------------------------------
+	glGenVertexArrays(1, &mesh.VAO);
+	glBindVertexArray(mesh.VAO);
+
+	// Vertices
+	glGenBuffers(1, &mesh.id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertices * 3, mesh.vertices, GL_STATIC_DRAW);
+	// Add vertex position attribute to the vertex array object (VAO)
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+
+	// Normals
+	glGenBuffers(1, &mesh.id_normal);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_normal);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_normals * 3, mesh.normals, GL_STATIC_DRAW);
+	// Add normals attribute to the vertex array object (VAO)
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+	glEnableVertexAttribArray(2);
+
+	// Unbind any vertex array we have binded before.
+	glBindVertexArray(0);
+	// ----------------------------------------------------------------------------------------------------
 }
