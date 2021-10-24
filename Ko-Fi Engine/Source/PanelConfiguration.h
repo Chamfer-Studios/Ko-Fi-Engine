@@ -26,7 +26,7 @@ private:
 	EngineConfig* engineConfig = nullptr;
 	Input* input = nullptr;
 	Editor* editor = nullptr;
-	bool loadingIcon = false;
 	bool modifyAttributesMenu = false;
 	bool wireframe = false;
+	bool loadingIcon = false;
 };

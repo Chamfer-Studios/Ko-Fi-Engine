@@ -41,9 +41,9 @@ bool SceneIntro::Start()
 	camera->LookAt(vec3(0, 0, 0));
 
 	// Load meshes
-	/*fileSystem->LoadMesh("Assets/Meshes/warrior.fbx");
-	fileSystem->LoadMesh("Assets/Meshes/BakerHouse.fbx");*/
-	fileSystem->LoadMesh("Assets/Meshes/Prop.fbx");
+	/*fileSystem->LoadMesh("Assets/Meshes/warrior.fbx");*/
+	fileSystem->LoadMesh("Assets/Meshes/BakerHouse.fbx", editor->meshes);
+	//fileSystem->LoadMesh("Assets/Meshes/Prop.fbx",meshes);
 
 	return ret;
 }
@@ -78,8 +78,8 @@ bool SceneIntro::Update(float dt)
 bool SceneIntro::PostUpdate(float dt)
 {
 	// Draw meshes
-	std::vector<Mesh>::iterator item = fileSystem->meshes.begin();
-	while (item != fileSystem->meshes.end())
+	std::vector<Mesh>::iterator item =editor->meshes.begin();
+	while (item != editor->meshes.end())
 	{
 		renderer->DrawMesh((Mesh)*item);
 		++item;

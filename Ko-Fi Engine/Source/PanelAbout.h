@@ -15,7 +15,7 @@ public:
 	bool Update();
 	bool PostUpdate();
 
-	void ShowAboutWindow(bool* p_open);
+	void ShowAboutWindow(bool* toggleAboutPanel);
 
 private:
 

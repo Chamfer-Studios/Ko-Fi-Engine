@@ -1,4 +1,5 @@
 #include "PanelConfiguration.h"
+#include "PanelChooser.h"
 #include "Window.h"
 #include "Renderer3D.h"
 #include "Input.h"
@@ -101,6 +102,18 @@ bool PanelConfiguration::Update()
 
 	if (ImGui::CollapsingHeader("Window"))
 	{
+
+		if (loadingIcon == true && editor->GetPanelChooser()->FileDialog("bmp"))
+		{
+			const char* file = editor->GetPanelChooser()->CloseFileDialog();
+			if (file != nullptr)
+			{
+				std::string newFile = file;
+				newFile.erase(newFile.begin());
+				window->SetIcon(newFile.c_str());
+			}
+			loadingIcon = false;
+		}
 		ImGui::Text("Icon:");
 		ImGui::SameLine();
 		if (ImGui::Selectable(window->GetIcon()))

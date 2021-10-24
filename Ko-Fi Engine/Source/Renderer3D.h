@@ -15,7 +15,7 @@ class Mesh;
 class Renderer3D : public Module
 {
 public:
-	Renderer3D(Window* window,Camera3D* camera, FileSystem* fileSystem);
+	Renderer3D(Window* window,Camera3D* camera);
 	~Renderer3D();
 
 	bool Awake(Json configModule);

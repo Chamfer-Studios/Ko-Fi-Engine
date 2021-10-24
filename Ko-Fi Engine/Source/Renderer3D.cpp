@@ -16,13 +16,12 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-Renderer3D::Renderer3D(Window* window, Camera3D* camera, FileSystem* fileSystem) : Module()
+Renderer3D::Renderer3D(Window* window, Camera3D* camera) : Module()
 {
 	name = "Renderer3D";
 
 	this->window = window;
 	this->camera = camera;
-	this->fileSystem = fileSystem;
 }
 
 // Destructor
@@ -112,6 +111,7 @@ bool Renderer3D::Awake(Json configModule)
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
@@ -224,8 +224,9 @@ void Renderer3D::DrawMesh(Mesh mesh)
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
 	//glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
 	//glDisableClientState(GL_VERTEX_ARRAY);
-
+	//glBindTexture(GL_TEXTURE_2D, mesh.id_tex_coord);
 	glBindVertexArray(mesh.VAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
 	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
+
 }

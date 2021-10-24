@@ -10,6 +10,7 @@
 class Window;
 class Renderer3D;
 class Input;
+class FileSystem;
 
 // Panels
 class MainBar;
@@ -17,14 +18,16 @@ class PanelTest;
 class PanelConfiguration;
 class PanelLog;
 class PanelAbout;
+class PanelChooser;
 
 struct EngineConfig;
 
+struct Mesh;
 class Editor : public Module
 {
 public:
 
-	Editor(Window* window, Renderer3D* renderer,Input* input,EngineConfig* engineConfig);
+	Editor(Window* window, Renderer3D* renderer,Input* input,EngineConfig* engineConfig,FileSystem* filesystem);
 	~Editor();
 
 	bool Awake(Json configModule);
@@ -34,7 +37,7 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 	void AddPanel(Panel* panel);
-
+	PanelChooser* GetPanelChooser();
 	void Markdown(const std::string& markdown_);
 	void MarkdownExample();
 public:
@@ -49,16 +52,20 @@ private:
 	PanelConfiguration* panelConfig = nullptr;
 	PanelLog* panelLog = nullptr;
 	PanelAbout* panelAbout = nullptr;
+	PanelChooser* panelChooser = nullptr;
 
 	// Needed modules
 	Window* window = nullptr;
 	Renderer3D* renderer = nullptr;
+	FileSystem* fileSystem = nullptr;
 	KoFiEngine* engine = nullptr;
 
 	std::list<Panel*> panels;
 public:
 	//Open/Close panel bools
 	bool toggleAboutPanel = false;
+	bool toggleChooserPanel = false;
+	std::vector<Mesh> meshes;
 };
 
 #endif IM_GUI_HANDLER_H

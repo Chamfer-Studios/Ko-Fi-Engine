@@ -1,10 +1,13 @@
 #include "MainBar.h"
 #include "Editor.h"
+#include "FileSystem.h"
+#include "PanelChooser.h"
 
 #include <imgui.h>
-MainBar::MainBar(Editor* editor)
+MainBar::MainBar(Editor* editor,FileSystem* filesystem)
 {
 	this->editor = editor;
+	this->filesystem = filesystem;
 }
 
 MainBar::~MainBar()
@@ -24,9 +27,22 @@ bool MainBar::PreUpdate()
 bool MainBar::Update()
 {
 	bool ret = true;
-
+	ImportModel();
 	if (ImGui::BeginMainMenuBar())
 	{
+		if (ImGui::BeginMenu("File"))
+		{
+
+			if (ImGui::MenuItem("Import Model"))
+			{
+					loadingModel = true;
+			}
+			if (ImGui::MenuItem("Clean Models"))
+			{
+				editor->meshes.clear();
+			}
+			ImGui::EndMenu();
+		}
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("About"))
@@ -46,4 +62,18 @@ bool MainBar::Update()
 bool MainBar::PostUpdate()
 {
 	return true;
+}
+
+void MainBar::ImportModel() {
+	if (loadingModel == true && editor->GetPanelChooser()->FileDialog("fbx"))
+	{
+		const char* file = editor->GetPanelChooser()->CloseFileDialog();
+		if (file != nullptr)
+		{
+			std::string newFile = file;
+			newFile.erase(newFile.begin());
+			filesystem->LoadMesh(newFile.c_str(), editor->meshes);
+		}
+		loadingModel = false;
+	}
 }

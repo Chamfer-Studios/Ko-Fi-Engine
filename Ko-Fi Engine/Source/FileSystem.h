@@ -3,9 +3,11 @@
 #define FILESYSTEM_H
 
 #include "Module.h"
-
+#include <filesystem>
+namespace fs = std::filesystem;
 class Renderer3D;
-
+#define CHECKERS_HEIGHT 128
+#define CHECKERS_WIDTH 128
 struct Mesh
 {
 	uint VAO;
@@ -30,7 +32,6 @@ struct Mesh
 	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
 };
-
 class FileSystem : public Module
 {
 public:
@@ -44,12 +45,20 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	void LoadMesh(const char* file_path);
-	void GenerateMeshesBuffers();
+	//FileSystem Functions
+	bool OpenFile(const char* path) const;
+	bool SaveFile(const char* path) const;
+	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
+	void AddPath(const char* path);
+	void LoadMesh(const char* file_path,std::vector<Mesh>& meshes);
+private:
+	void GenerateMeshesBuffers(std::vector<Mesh>& meshes);
 	void GenerateMeshBuffer(Mesh& mesh);
+	void GenerateTextureBuffers(Mesh& mesh);
 
 public:
-	std::vector<Mesh> meshes;
+	fs::path rootPath;
+
 };
 
 #endif FILELOADER_H // FILESYSTEM_H

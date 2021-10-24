@@ -1,15 +1,17 @@
 #include "FileSystem.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "SDL_assert.h"
+#include "SDL.h"
+#include <fstream>
+#include <filesystem>
+#include <iomanip>
 
 // Assimp (Open Asset Import Library)
 //#include "assimp/Importer.hpp"
 #include "assimp/cimport.h"     //#include "Assimp/include/cimport.h"
 #include "assimp/scene.h"       //#include "Assimp/include/scene.h"
 #include "assimp/postprocess.h" //#include "Assimp/include/postprocess.h"
-
-//#pragma comment (lib, "Assimp/libx86/assimp.lib")
-//Already included in the project configuration...
 
 // OpenGL / GLEW
 #include "glew.h"
@@ -20,6 +22,11 @@
 FileSystem::FileSystem()
 {
 	name = "ModelLoader";
+	std::string rootPathString = SDL_GetBasePath();
+	std::replace(rootPathString.begin(), rootPathString.end(), '\\', '/');
+	rootPath = rootPathString;
+	rootPath = rootPath.parent_path().parent_path();
+	AddPath("/Ko-Fi Engine/Ko-Fi");
 }
 
 FileSystem::~FileSystem()
@@ -29,21 +36,19 @@ FileSystem::~FileSystem()
 
 bool FileSystem::Awake()
 {
-	LOG("Turning on Assimp debugger...");
-	appLog->AddLog("Turning on Assimp debugger...\n");
-
+	LOG("Turning on FileSystem debugger...");
+	appLog->AddLog("Turning on FileSystem debugger...\n");
+	//Prepare filesystem
+	//std::filesystem::directory_entry().assign(addPath);
 	// Stream log messages to Debug window
-	struct aiLogStream stream;
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
 
 	return true;
 }
 
 bool FileSystem::Start()
 {
-	LOG("Starting Assimp...");
-	appLog->AddLog("Starting Assimp...\n");
+	LOG("Starting FileSystem...");
+	appLog->AddLog("Starting FileSystem...\n");
 
 	return true;
 }
@@ -65,16 +70,55 @@ bool FileSystem::PostUpdate(float dt)
 
 bool FileSystem::CleanUp()
 {
-	LOG("Cleaning Assimp up...");
-	appLog->AddLog("Cleaning Assimp up...\n");
+	LOG("Cleaning FileSystem up...");
+	appLog->AddLog("Cleaning FileSystem up...\n");
 
 	// detach log stream
-	aiDetachAllLogStreams();
-
+	
 	return true;
 }
 
-void FileSystem::LoadMesh(const char* file_path)
+//bool FileSystem::OpenFile(const char* path) const
+//{
+//	bool ret = true;
+//	SDL_assert(path != nullptr);
+//	std::ifstream stream(path);
+//	stream.is_open() ? ret = true : ret = false;
+//	stream.close();
+//	return ret;
+//}
+//
+//bool FileSystem::SaveFile(const char* path) const
+//{
+//	bool ret = true;
+//	SDL_assert(path != nullptr);
+//	std::ofstream stream(path)
+//	stream.is_open() ? ret = true : ret = false;
+//	return ret;
+//}
+
+
+
+void FileSystem::EnumerateFiles(const char* path,std::vector<std::string>&files,std::vector<std::string>&dirs)
+{
+	std::string p = rootPath.string()+path;
+	for (const auto& file : std::filesystem::directory_iterator(p))
+	{
+		if (std::filesystem::is_directory(file.path())) {
+			dirs.push_back(file.path().filename().string());
+		}
+		else {
+			files.push_back(file.path().filename().string());
+		}
+	}
+}
+
+void FileSystem::AddPath(const char* path)
+{
+	rootPath += path;
+}
+
+void FileSystem::LoadMesh(const char* file_path, std::vector<Mesh>& meshes)
 {
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
@@ -118,11 +162,22 @@ void FileSystem::LoadMesh(const char* file_path)
 				memcpy(ourMesh.normals, aiMesh->mNormals, sizeof(float) * ourMesh.num_normals * 3);
 			}
 
+			if (aiMesh->HasTextureCoords(0))
+			{
+				ourMesh.num_tex_coords = aiMesh->mNumVertices;
+				ourMesh.tex_coords = new float[ourMesh.num_tex_coords * 2];
+				memcpy(ourMesh.tex_coords, aiMesh->mTextureCoords, sizeof(float) * ourMesh.num_tex_coords * 2);
+				for (uint i = 0; i < ourMesh.num_tex_coords; ++i)
+				{
+					ourMesh.tex_coords[i * 2] = aiMesh->mTextureCoords[0][i].x;
+					ourMesh.tex_coords[i * 2 + 1] = aiMesh->mTextureCoords[0][i].y;
+				}
+			}
 			// Add the new mesh to our array of meshes to draw
 			meshes.push_back(ourMesh);
 
 			//  Generate new buffer for each mesh send the data to the VRAM
-			GenerateMeshesBuffers();
+			GenerateMeshesBuffers(meshes);
 		}
 		aiReleaseImport(scene);
 	}
@@ -133,11 +188,17 @@ void FileSystem::LoadMesh(const char* file_path)
 	}
 }
 
-void FileSystem::GenerateMeshesBuffers()
+void FileSystem::GenerateTextureBuffers(Mesh& mesh) {
+	
+	
+	
+}
+void FileSystem::GenerateMeshesBuffers(std::vector<Mesh>& meshes)
 {
 	std::vector<Mesh>::iterator item = meshes.begin();
 	while (item != meshes.end())
 	{
+		GenerateTextureBuffers((Mesh&)*item);
 		GenerateMeshBuffer((Mesh&)*item);
 		++item;
 	}
@@ -145,7 +206,17 @@ void FileSystem::GenerateMeshesBuffers()
 
 void FileSystem::GenerateMeshBuffer(Mesh& mesh)
 {
-	// Indices
+	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
 	glGenBuffers(1, &mesh.id_index);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
@@ -170,7 +241,21 @@ void FileSystem::GenerateMeshBuffer(Mesh& mesh)
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 	glEnableVertexAttribArray(2);
 
+	//Textures
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &mesh.id_tex_coord);
+	glBindTexture(GL_TEXTURE_2D, mesh.id_tex_coord);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+	//glGenerateMipmap(GL_TEXTURE_2D);
+	// Add texture position attribute to the vertex array object (VAO)
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+
 	// Unbind any vertex array we have binded before.
 	glBindVertexArray(0);
-	// ----------------------------------------------------------------------------------------------------
 }

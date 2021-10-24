@@ -4,6 +4,7 @@
 #include "Editor.h"
 #include "Window.h"
 #include "Renderer3D.h"
+#include "FileSystem.h"
 #include "Input.h"
 #include "EngineConfig.h"
 #include "ImGuiAppLog.h"
@@ -12,27 +13,31 @@
 #include "PanelConfiguration.h"
 #include "PanelLog.h"
 #include "PanelAbout.h"
+#include "PanelChooser.h"
 
 void LoadFonts(float fontSize_ = 12.0f);
 
-Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig* engineConfig)
+Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig* engineConfig,FileSystem* filesystem)
 {
 	name = "Editor";
 	this->window = window;
 	this->renderer = renderer;
 	this->engine = engine;
+	this->fileSystem = fileSystem;
 
-	mainMenuBar = new MainBar(this);
+	mainMenuBar = new MainBar(this,filesystem);
 	panelTest = new PanelTest();
 	panelConfig = new PanelConfiguration(window,renderer,input,engineConfig,this);
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
+	panelChooser = new PanelChooser(filesystem);
 
 	AddPanel(mainMenuBar);
 	AddPanel(panelTest);
 	AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);
+	AddPanel(panelChooser);
 }
 
 Editor::~Editor()
@@ -48,6 +53,11 @@ void Editor::AddPanel(Panel* panel)
 {
 	panel->Init();
 	panels.push_back(panel);
+}
+
+PanelChooser* Editor::GetPanelChooser()
+{
+	return this->panelChooser;
 }
 
 bool Editor::Awake(Json configModule)
