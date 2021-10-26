@@ -15,7 +15,7 @@
 
 // OpenGL / GLEW
 #include "glew.h"
-#include "SDL_opengl.h"
+//#include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -252,6 +252,11 @@ void FileSystem::GenerateMeshBuffer(Mesh& mesh)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 	//glGenerateMipmap(GL_TEXTURE_2D);
+	
+	glGenBuffers(1, &mesh.id_tex_coord);
+	glBindTexture(GL_ELEMENT_ARRAY_BUFFER, mesh.id_tex_coord);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_vertices * 2, mesh.tex_coords, GL_STATIC_DRAW);
+
 	// Add texture position attribute to the vertex array object (VAO)
 	glEnableVertexAttribArray(3);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
