@@ -22,7 +22,7 @@ class PanelChooser;
 
 struct EngineConfig;
 
-struct Mesh;
+class GameObject;
 class Editor : public Module
 {
 public:
@@ -65,7 +65,7 @@ public:
 	//Open/Close panel bools
 	bool toggleAboutPanel = false;
 	bool toggleChooserPanel = false;
-	std::vector<Mesh> meshes;
+	std::vector<GameObject> meshes;
 };
 
 #endif IM_GUI_HANDLER_H

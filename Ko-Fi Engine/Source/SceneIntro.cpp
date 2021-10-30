@@ -78,10 +78,10 @@ bool SceneIntro::Update(float dt)
 bool SceneIntro::PostUpdate(float dt)
 {
 	// Draw meshes
-	std::vector<Mesh>::iterator item =editor->meshes.begin();
+	std::vector<GameObject>::iterator item = editor->meshes.begin();
 	while (item != editor->meshes.end())
 	{
-		renderer->DrawMesh((Mesh)*item);
+		renderer->DrawMesh((GameObject)*item);
 		++item;
 	}
 

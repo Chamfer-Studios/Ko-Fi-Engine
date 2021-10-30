@@ -62,6 +62,12 @@
     <Filter Include="Source\Editor\MenuBars">
       <UniqueIdentifier>{9e3e199a-c5e2-4059-80bd-b48f881b223f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject">
+      <UniqueIdentifier>{efe9d3b9-25b8-4678-9a91-11835544f8c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\Components">
+      <UniqueIdentifier>{2cf47586-6d20-4466-97fd-1906bd525a7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -246,6 +252,12 @@
     </ClCompile>
     <ClCompile Include="Source\PanelChooser.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Source\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -557,6 +569,12 @@
     </ClInclude>
     <ClInclude Include="Source\PanelChooser.h">
       <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Source\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

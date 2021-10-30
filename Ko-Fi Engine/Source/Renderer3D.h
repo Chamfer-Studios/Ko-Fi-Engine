@@ -10,7 +10,7 @@
 class Window;
 class Camera3D;
 class FileSystem;
-class Mesh;
+class GameObject;
 
 class Renderer3D : public Module
 {
@@ -26,7 +26,7 @@ public:
 	void SetVsync(bool vsync);
 	void OnResize(int width, int height);
 
-	void DrawMesh(Mesh mesh);
+	void DrawMesh(GameObject gameObject);
 
 public:
 	Light lights[MAX_LIGHTS];

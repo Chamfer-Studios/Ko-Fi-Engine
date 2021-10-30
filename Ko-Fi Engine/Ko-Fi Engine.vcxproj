@@ -197,6 +197,8 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MainBar.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\PanelAbout.cpp" />
     <ClCompile Include="Source\PanelChooser.cpp" />
     <ClCompile Include="Source\PanelConfiguration.cpp" />
@@ -296,6 +298,8 @@
     <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\MainBar.h" />
     <ClInclude Include="Source\FileSystem.h" />
+    <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Panel.h" />
     <ClInclude Include="Source\PanelAbout.h" />

@@ -72,6 +72,7 @@ void MainBar::ImportModel() {
 		{
 			std::string newFile = file;
 			newFile.erase(newFile.begin());
+			//filesystem->LoadMesh(newFile.c_str(), editor->meshes);
 			filesystem->LoadMesh(newFile.c_str(), editor->meshes);
 		}
 		loadingModel = false;

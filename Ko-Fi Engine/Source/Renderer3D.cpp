@@ -214,7 +214,7 @@ void Renderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
-void Renderer3D::DrawMesh(Mesh mesh)
+void Renderer3D::DrawMesh(GameObject gameObject)
 {
 	//// Draw mesh
 	//glEnableClientState(GL_VERTEX_ARRAY);
@@ -225,8 +225,9 @@ void Renderer3D::DrawMesh(Mesh mesh)
 	//glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
 	//glDisableClientState(GL_VERTEX_ARRAY);
 	//glBindTexture(GL_TEXTURE_2D, mesh.id_tex_coord);
-	glBindVertexArray(mesh.VAO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
-	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
+	//glBindVertexArray(mesh.VAO);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+	//glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
+	gameObject.Draw();
 
 }
