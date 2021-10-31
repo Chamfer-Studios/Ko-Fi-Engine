@@ -18,13 +18,14 @@
 
 void LoadFonts(float fontSize_ = 12.0f);
 
-Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig* engineConfig,FileSystem* filesystem)
+Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig* engineConfig, FileSystem* filesystem)
 {
 	name = "Editor";
 	this->window = window;
 	this->renderer = renderer;
 	this->engine = engine;
 	this->fileSystem = fileSystem;
+	this->input = input;
 
 	mainMenuBar = new MainBar(this,filesystem);
 	panelScene = new PanelScene(this);
@@ -67,7 +68,7 @@ bool Editor::Awake(Json configModule)
 {
 	bool ret = true;
 
-	//Panels Awake
+	// Panels Awake
 	if (ret == true)
 	{
 		std::list<Panel*>::iterator item = panels.begin();;
@@ -78,6 +79,9 @@ bool Editor::Awake(Json configModule)
 			item++;
 		}
 	}
+
+	// FIXME: The list of meshes should be in scene intro.
+	input->gameObjects = &gameObjects;
 
 	return ret;
 }

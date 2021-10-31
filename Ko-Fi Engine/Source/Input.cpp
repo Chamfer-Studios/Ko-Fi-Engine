@@ -4,16 +4,23 @@
 #include "Renderer3D.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "Window.h"
+#include "FileSystem.h"
+// FIXME: The list of meshes should be in scene intro.
+#include "GameObject.h"
 
 #define MAX_KEYS 300
 
-Input::Input() : Module()
+Input::Input(Window* window, FileSystem* fileSystem) : Module()
 {
 	name = "Input";
 
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
+
+	this->window = window;
+	this->fileSystem = fileSystem;
 }
 
 // Destructor
@@ -37,15 +44,9 @@ bool Input::Init()
 		ret = false;
 	}
 
+	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
+
 	return ret;
-}
-
-bool Input::Start()
-{
-	appLog->AddLog("Init SDL input event system\n");
-	bool ret = true;
-
-	return true;
 }
 
 // Called every draw update
@@ -100,21 +101,21 @@ bool Input::PreUpdate(float dt)
 	mouse_x_motion = mouse_y_motion = 0;
 
 	bool quit = false;
-	SDL_Event e;
-	while (SDL_PollEvent(&e))
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
 	{
-		switch (e.type)
+		switch (event.type)
 		{
 		case SDL_MOUSEWHEEL:
-			mouse_z = e.wheel.y;
+			mouse_z = event.wheel.y;
 			break;
 
 		case SDL_MOUSEMOTION:
-			mouse_x = e.motion.x / SCREEN_SIZE;
-			mouse_y = e.motion.y / SCREEN_SIZE;
+			mouse_x = event.motion.x / SCREEN_SIZE;
+			mouse_y = event.motion.y / SCREEN_SIZE;
 
-			mouse_x_motion = e.motion.xrel / SCREEN_SIZE;
-			mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
+			mouse_x_motion = event.motion.xrel / SCREEN_SIZE;
+			mouse_y_motion = event.motion.yrel / SCREEN_SIZE;
 			break;
 
 		case SDL_QUIT:
@@ -123,7 +124,7 @@ bool Input::PreUpdate(float dt)
 
 		case SDL_WINDOWEVENT:
 		{
-			switch (e.window.event)
+			switch (event.window.event)
 			{
 				//case SDL_WINDOWEVENT_LEAVE:
 			case SDL_WINDOWEVENT_HIDDEN:
@@ -143,6 +144,32 @@ bool Input::PreUpdate(float dt)
 			}
 			//if (e.window.event == SDL_WINDOWEVENT_RESIZED)
 				//renderer->OnResize(e.window.data1, e.window.data2);
+			break;
+		}
+		//case (SDL_DROPFILE): {      // In case if dropped file
+		//	dropped_filedir = event.drop.file;
+		//	// Shows directory of dropped file
+		//	SDL_ShowSimpleMessageBox(
+		//		SDL_MESSAGEBOX_INFORMATION,
+		//		"File dropped on window",
+		//		dropped_filedir,
+		//		window->window
+		//	);
+		//	SDL_free(dropped_filedir);    // Free dropped_filedir memory
+		//	break;
+		//}
+		case SDL_DROPFILE:
+		{
+			std::string tmp;
+			tmp.assign(event.drop.file);
+			if (!tmp.empty())
+			{
+				if (tmp.find(".fbx") != std::string::npos)
+				{
+					fileSystem->LoadMesh(tmp.c_str(), *gameObjects);
+				}
+			}
+			break;
 		}
 		}
 	}

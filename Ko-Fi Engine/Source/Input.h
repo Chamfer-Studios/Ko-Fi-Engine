@@ -4,6 +4,11 @@
 
 #define MAX_MOUSE_BUTTONS 5
 
+class Window;
+class FileSystem;
+// FIXME: The list of meshes should be in scene intro.
+class GameObject;
+
 enum KEY_STATE
 {
 	KEY_IDLE = 0,
@@ -16,11 +21,10 @@ class Input : public Module
 {
 public:
 
-	Input();
+	Input(Window* window, FileSystem* fileSystem);
 	~Input();
 
 	bool Init();
-	bool Start();
 	bool PreUpdate(float dt);
 	bool CleanUp();
 
@@ -59,6 +63,10 @@ public:
 		return mouse_y_motion;
 	}
 
+public:
+	// FIXME: The list of meshes should be in scene intro.
+	std::vector<GameObject>* gameObjects;
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
@@ -69,4 +77,9 @@ private:
 	int mouse_y_motion;
 	//int mouse_z_motion;
 	//Renderer3D* renderer = nullptr;
+	char* dropped_filedir;
+
+	// Needed modules
+	Window* window = nullptr;
+	FileSystem* fileSystem = nullptr;
 };

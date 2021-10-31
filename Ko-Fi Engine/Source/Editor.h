@@ -8,8 +8,8 @@
 
 // Modules
 class Window;
-class Renderer3D;
 class Input;
+class Renderer3D;
 class FileSystem;
 
 // Panels
@@ -65,6 +65,7 @@ private:
 
 	// Needed modules
 	Window* window = nullptr;
+	Input* input = nullptr;
 	Renderer3D* renderer = nullptr;
 	FileSystem* fileSystem = nullptr;
 	KoFiEngine* engine = nullptr;
@@ -75,6 +76,9 @@ public:
 	// Open/Close panel bools
 	bool toggleAboutPanel = false;
 	bool toggleChooserPanel = false;
+
+	// FIXME: The list of meshes should be in scene intro.
+	// Is here temporarily for debug reasons...
 	std::vector<GameObject> gameObjects;
 };
 
