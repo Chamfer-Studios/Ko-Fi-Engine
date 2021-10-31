@@ -226,9 +226,6 @@
     <ClCompile Include="Source\EditorStyleHandler.cpp">
       <Filter>Source\Editor\Style</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PanelTest.cpp">
-      <Filter>Source\Editor\Panels</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Editor.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -258,6 +255,12 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>Source\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelScene.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelGameObject.cpp">
+      <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -531,9 +534,6 @@
     <ClInclude Include="Source\Panel.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PanelTest.h">
-      <Filter>Source\Editor\Panels</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Editor.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
@@ -575,6 +575,12 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject.h">
       <Filter>Source\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelScene.h">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelGameObject.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

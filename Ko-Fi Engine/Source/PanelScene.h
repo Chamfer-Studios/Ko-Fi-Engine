@@ -2,18 +2,22 @@
 #include "Panel.h"
 #include "EditorStyleHandler.h"
 
-class PanelTest : public Panel
+class Editor;
+
+class PanelScene : public Panel
 {
 public:
-
-	PanelTest();
-	~PanelTest();
+	PanelScene(Editor* editor);
+	~PanelScene();
 
 	bool Awake();
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
+
 private:
 	EditorStyleHandler styleHandler;
 
+	// Needed modules
+	Editor* editor = nullptr;
 };

@@ -14,15 +14,21 @@ class FileSystem;
 
 // Panels
 class MainBar;
-class PanelTest;
+class PanelScene;
 class PanelConfiguration;
 class PanelLog;
 class PanelAbout;
 class PanelChooser;
+class PanelGameObject;
 
 struct EngineConfig;
-
 class GameObject;
+
+struct PanelGameObjectInfo
+{
+	int currentGameObjectID = -1;
+};
+
 class Editor : public Module
 {
 public:
@@ -40,19 +46,22 @@ public:
 	PanelChooser* GetPanelChooser();
 	void Markdown(const std::string& markdown_);
 	void MarkdownExample();
+
 public:
 	bool buttonPressed = false;
+	PanelGameObjectInfo panelGameObjectInfo = {};
 
 private:
-	//Style
+	// Style
 	EditorStyleHandler styleHandler;
 	// Panels
 	MainBar* mainMenuBar = nullptr;
-	PanelTest* panelTest = nullptr;
+	PanelScene* panelScene = nullptr;
 	PanelConfiguration* panelConfig = nullptr;
 	PanelLog* panelLog = nullptr;
 	PanelAbout* panelAbout = nullptr;
 	PanelChooser* panelChooser = nullptr;
+	PanelGameObject* panelGameObject = nullptr;
 
 	// Needed modules
 	Window* window = nullptr;
@@ -61,11 +70,12 @@ private:
 	KoFiEngine* engine = nullptr;
 
 	std::list<Panel*> panels;
+
 public:
-	//Open/Close panel bools
+	// Open/Close panel bools
 	bool toggleAboutPanel = false;
 	bool toggleChooserPanel = false;
-	std::vector<GameObject> meshes;
+	std::vector<GameObject> gameObjects;
 };
 
 #endif IM_GUI_HANDLER_H

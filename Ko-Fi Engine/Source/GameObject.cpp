@@ -72,3 +72,18 @@ void GameObject::LoadModel(std::string path)
 
     aiReleaseImport(scene);
 }
+
+void GameObject::SetName(std::string name)
+{
+    this->name = name;
+}
+
+std::string GameObject::GetName()
+{
+    return name;
+}
+
+std::vector<Mesh>* GameObject::GetMeshes()
+{
+    return &meshes;
+}

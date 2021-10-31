@@ -7,6 +7,7 @@ typedef unsigned int uint;
 
 #define CHECKERS_HEIGHT 256
 #define CHECKERS_WIDTH 256
+
 class Mesh
 {
 public:
@@ -19,6 +20,9 @@ public:
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
 	void DrawFaceNormals() const;
+
+	void ToggleVertexNormals();
+	void ToggleFacesNormals();
 
 	// Indices
 	uint id_index = 0; // index in VRAM
@@ -49,8 +53,8 @@ private:
 	unsigned int VBO;
 
 	// Debug bools
-	bool drawVertexNormals = true;
-	bool drawFaceNormals = true;
+	bool drawVertexNormals = false;
+	bool drawFaceNormals = false;
 	bool drawColors = false;
 	bool drawTextureCoords = false;
 };

@@ -9,11 +9,12 @@
 #include "EngineConfig.h"
 #include "ImGuiAppLog.h"
 #include "MainBar.h"
-#include "PanelTest.h"
+#include "PanelScene.h"
 #include "PanelConfiguration.h"
 #include "PanelLog.h"
 #include "PanelAbout.h"
 #include "PanelChooser.h"
+#include "PanelGameObject.h"
 
 void LoadFonts(float fontSize_ = 12.0f);
 
@@ -26,18 +27,20 @@ Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig*
 	this->fileSystem = fileSystem;
 
 	mainMenuBar = new MainBar(this,filesystem);
-	panelTest = new PanelTest();
+	panelScene = new PanelScene(this);
 	panelConfig = new PanelConfiguration(window,renderer,input,engineConfig,this);
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
 	panelChooser = new PanelChooser(filesystem);
+	panelGameObject = new PanelGameObject(this);
 
 	AddPanel(mainMenuBar);
-	AddPanel(panelTest);
+	AddPanel(panelScene);
 	AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);
 	AddPanel(panelChooser);
+	AddPanel(panelGameObject);
 }
 
 Editor::~Editor()

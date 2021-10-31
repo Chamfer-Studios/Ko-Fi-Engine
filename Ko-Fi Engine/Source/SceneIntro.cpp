@@ -42,7 +42,7 @@ bool SceneIntro::Start()
 
 	// Load meshes
 	/*fileSystem->LoadMesh("Assets/Meshes/warrior.fbx");*/
-	fileSystem->LoadMesh("Assets/Meshes/BakerHouse.fbx", editor->meshes);
+	fileSystem->LoadMesh("Assets/Meshes/BakerHouse.fbx", editor->gameObjects);
 	//fileSystem->LoadMesh("Assets/Meshes/Prop.fbx",meshes);
 
 	return ret;
@@ -78,8 +78,8 @@ bool SceneIntro::Update(float dt)
 bool SceneIntro::PostUpdate(float dt)
 {
 	// Draw meshes
-	std::vector<GameObject>::iterator item = editor->meshes.begin();
-	while (item != editor->meshes.end())
+	std::vector<GameObject>::iterator item = editor->gameObjects.begin();
+	while (item != editor->gameObjects.end())
 	{
 		renderer->DrawMesh((GameObject)*item);
 		++item;

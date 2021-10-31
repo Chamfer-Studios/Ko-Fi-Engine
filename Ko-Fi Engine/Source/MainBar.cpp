@@ -39,7 +39,7 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
-				editor->meshes.clear();
+				editor->gameObjects.clear();
 			}
 			ImGui::EndMenu();
 		}
@@ -73,7 +73,7 @@ void MainBar::ImportModel() {
 			std::string newFile = file;
 			newFile.erase(newFile.begin());
 			//filesystem->LoadMesh(newFile.c_str(), editor->meshes);
-			filesystem->LoadMesh(newFile.c_str(), editor->meshes);
+			filesystem->LoadMesh(newFile.c_str(), editor->gameObjects);
 		}
 		loadingModel = false;
 	}

@@ -28,7 +28,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	camera = new Camera3D(input);
 	fileSystem = new FileSystem();
 	renderer = new Renderer3D(window, camera);
-	editor = new Editor(window, renderer, input, engineConfig,fileSystem);
+	editor = new Editor(window, renderer, input, engineConfig, fileSystem);
 	sceneIntro = new SceneIntro(camera, window, renderer, editor, fileSystem);
 
 	// Ordered for awake / Start / Update

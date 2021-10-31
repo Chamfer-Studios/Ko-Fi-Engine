@@ -191,3 +191,13 @@ void Mesh::DrawFaceNormals() const
 
 	glEnd();
 }
+
+void Mesh::ToggleVertexNormals()
+{
+	drawVertexNormals = !drawVertexNormals;
+}
+
+void Mesh::ToggleFacesNormals()
+{
+	drawFaceNormals = !drawFaceNormals;
+}
