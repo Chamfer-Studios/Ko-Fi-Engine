@@ -36,23 +36,22 @@ bool PanelConfiguration::Update()
 {
 	ImGui::Begin(panelName.c_str(),0);
 
-		if (ImGui::BeginMenu("Options"))
+	if (ImGui::BeginMenu("Options"))
+	{
+		if (ImGui::MenuItem("Set Defaults"))
 		{
-			if (ImGui::MenuItem("Set Defaults"))
-			{
-				printf_s("%s", "Clicked Set Defaults\n");
-			}
-			if (ImGui::MenuItem("Load"))
-			{
-				printf_s("%s", "Clicked Load\n");
-			}
-			if (ImGui::MenuItem("Save"))
-			{
-				printf_s("%s", "Clicked Save\n");
-			}
-			ImGui::EndMenu();
+			printf_s("%s", "Clicked Set Defaults\n");
 		}
-	
+		if (ImGui::MenuItem("Load"))
+		{
+			printf_s("%s", "Clicked Load\n");
+		}
+		if (ImGui::MenuItem("Save"))
+		{
+			printf_s("%s", "Clicked Save\n");
+		}
+		ImGui::EndMenu();
+	}
 
 	if (ImGui::CollapsingHeader("Application"))
 	{

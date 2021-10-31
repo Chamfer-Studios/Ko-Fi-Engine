@@ -1,5 +1,6 @@
 #include "PanelScene.h"
 #include <imgui.h>
+
 #include "Editor.h"
 #include "GameObject.h"
 
@@ -25,19 +26,15 @@ bool PanelScene::PreUpdate()
 bool PanelScene::Update()
 {
 	// Window with a button to create another window
-	ImGui::Begin("Create window");
-	ImGui::Text("Press the button to create another window.");
-	if (ImGui::Button("Button"))
-		styleHandler.SetKoFiStyle();
+	ImGui::Begin("Scene");
+	editor->Markdown("# Game Objects");
 
 	if (!editor->gameObjects.empty())
 	{
 		for (int i = 0; i < editor->gameObjects.size(); i++)
 		{
-			if (ImGui::Button(editor->gameObjects.at(i).GetName().c_str()))
-			{
+			if (ImGui::Selectable(editor->gameObjects.at(i).GetName().c_str()))
 				editor->panelGameObjectInfo.currentGameObjectID = i;
-			}
 		}
 	}
 
