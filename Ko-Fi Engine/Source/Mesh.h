@@ -7,8 +7,19 @@ typedef unsigned int uint;
 
 #define CHECKERS_HEIGHT 256
 #define CHECKERS_WIDTH 256
-class Mesh {
+class Mesh
+{
 public:
+	Mesh();
+	~Mesh();
+
+	void SetUpMesh();
+	void Draw();
+
+	// Debug functions for drawing
+	void DrawVertexNormals() const;
+	void DrawFaceNormals() const;
+
 	// Indices
 	uint id_index = 0; // index in VRAM
 	uint num_indices = 0;
@@ -25,18 +36,21 @@ public:
 	float* normals = nullptr;
 
 	// Texture coordinates
-	uint textureId = 0;
+	uint textureID = 0;
 	uint id_tex_coord = 0;
 	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
 
 	uint VAO;
-	Mesh();
-	~Mesh();
-	void SetUpMesh();
-	void Draw();
+	
 private:
-	unsigned int VBO, EBO;
-
 	void SetUpTexture();
+
+	unsigned int VBO;
+
+	// Debug bools
+	bool drawVertexNormals = true;
+	bool drawFaceNormals = true;
+	bool drawColors = false;
+	bool drawTextureCoords = false;
 };

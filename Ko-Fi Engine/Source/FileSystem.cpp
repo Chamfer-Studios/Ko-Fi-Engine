@@ -86,8 +86,6 @@ bool FileSystem::CleanUp()
 //	return ret;
 //}
 
-
-
 void FileSystem::EnumerateFiles(const char* path,std::vector<std::string>&files,std::vector<std::string>&dirs)
 {
 	std::string p = rootPath.string()+path;
@@ -111,5 +109,3 @@ void FileSystem::LoadMesh(const char* file_path, std::vector<GameObject>& gameOb
 {
 	gameObjects.push_back(GameObject(file_path));
 }
-
-

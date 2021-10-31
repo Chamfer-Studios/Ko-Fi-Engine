@@ -229,5 +229,4 @@ void Renderer3D::DrawMesh(GameObject gameObject)
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
 	//glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
 	gameObject.Draw();
-
 }
