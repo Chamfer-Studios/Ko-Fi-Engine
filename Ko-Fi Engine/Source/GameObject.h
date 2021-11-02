@@ -2,12 +2,15 @@
 #include "Mesh.h"
 #include <vector>
 
-class GameObject {
+class GameObject
+{
 public:
-	GameObject(const char* path)
+	GameObject(const char* path, uint id)
 	{
 		LoadModel(path);
-		name = "GameObjectX";
+		std::string tmpName = "GameObject";
+		tmpName += std::to_string(id);
+		name = tmpName;
 	}
 	void Draw();
 

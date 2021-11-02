@@ -107,5 +107,6 @@ void FileSystem::AddPath(const char* path)
 
 void FileSystem::LoadMesh(const char* file_path, std::vector<GameObject>& gameObjects)
 {
-	gameObjects.push_back(GameObject(file_path));
+	uint id = gameObjects.size();
+	gameObjects.push_back(GameObject(file_path, id));
 }
