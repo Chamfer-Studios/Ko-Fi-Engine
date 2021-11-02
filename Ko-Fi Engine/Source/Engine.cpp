@@ -338,9 +338,11 @@ void KoFiEngine::SetHardwareInfo() {
 	engineConfig->hasSSE42 = SDL_HasSSE42() ? true : false;
 }
 
-void KoFiEngine::SetVramStats() {
+void KoFiEngine::SetVramStats()
+{
 	GLint nTotalMemoryInKb = 0;
 	int temp;
+
 	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &temp); // Total Available Memory in KB
 	engineConfig->vramAvailable = (float)temp;
 
@@ -349,5 +351,6 @@ void KoFiEngine::SetVramStats() {
 
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &temp); // Total VRAM Memory in KB
 	engineConfig->vramBudget = (float)temp;
+
 	//TODO: GET RESERVED VRAM
 }

@@ -40,6 +40,7 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Clean Models"))
 			{
 				editor->gameObjects.clear();
+				editor->panelGameObjectInfo.currentGameObjectID = -1;
 			}
 			ImGui::EndMenu();
 		}
