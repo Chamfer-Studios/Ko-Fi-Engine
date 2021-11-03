@@ -2,6 +2,14 @@
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+
+GameObject::GameObject(const char* path, uint id)
+{
+    LoadModel(path);
+    name = "GameObject" + std::to_string(id);
+    this->id = id;
+}
+
 void GameObject::Draw()
 {
     for(Mesh var : meshes)
@@ -11,6 +19,11 @@ void GameObject::Draw()
 }
 
 void GameObject::LoadModel(std::string path)
+{
+    LoadMesh(path);
+}
+
+void GameObject::LoadMesh(std::string path)
 {
     const aiScene* scene = aiImportFile(path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
     if (scene != nullptr && scene->HasMeshes())
@@ -24,7 +37,7 @@ void GameObject::LoadModel(std::string path)
             ourMesh.num_vertices = aiMesh->mNumVertices;
             ourMesh.vertices = new float[ourMesh.num_vertices * 3];
             memcpy(ourMesh.vertices, aiMesh->mVertices, sizeof(float) * ourMesh.num_vertices * 3);
-
+           
             // copy faces
             if (aiMesh->HasFaces())
             {
@@ -87,4 +100,12 @@ std::string GameObject::GetName()
 std::vector<Mesh>* GameObject::GetMeshes()
 {
     return &meshes;
+}
+
+void GameObject::SetNewTexture(const char* path)
+{
+    for(Mesh mesh : meshes)
+    {
+        mesh.SetUpTexture(path);
+    }
 }

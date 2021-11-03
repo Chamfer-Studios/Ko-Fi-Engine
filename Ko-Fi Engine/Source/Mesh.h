@@ -15,6 +15,7 @@ public:
 	~Mesh();
 
 	void SetUpMesh();
+	void SetUpTexture(const char* path);
 	void Draw();
 
 	// Debug functions for drawing
@@ -48,8 +49,7 @@ public:
 	uint VAO;
 	
 private:
-	void SetUpTexture();
-
+	void SetUpDefaultTexture();
 	unsigned int VBO;
 
 	// Debug bools

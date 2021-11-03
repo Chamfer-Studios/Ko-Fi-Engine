@@ -1,10 +1,12 @@
 #include "Mesh.h"
-
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 // OpenGL / GLEW
 #include "glew.h"
 //#include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include <iostream>
 
 Mesh::Mesh()
 {
@@ -17,27 +19,34 @@ Mesh::~Mesh()
 void Mesh::SetUpMesh()
 {
 	/*SetUpTexture();*/
-
-	// Vertex Array Object (VAO) --------------------------------------------------
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
+	SetUpDefaultTexture();
 	// Vertices
 	glGenBuffers(1, &id_vertex);
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
-	// Add vertex position attribute to the vertex array object (VAO)
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
-	glEnableVertexAttribArray(0);
+
+	// Normals
+	glGenBuffers(1, &id_normal);
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normals * 3, normals, GL_STATIC_DRAW);
+
+	// Indices
+	glGenBuffers(1, &id_index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, indices, GL_STATIC_DRAW);
 
 	// Texture coords
 	glGenBuffers(1, &id_tex_coord);
 	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_tex_coords * 2, tex_coords, GL_STATIC_DRAW);
-	// Add texture coords attribute to the vertex array object (VAO)
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-	glEnableVertexAttribArray(1);
 
+	
+
+
+}
+
+void Mesh::SetUpDefaultTexture()
+{
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
 		for (int j = 0; j < CHECKERS_WIDTH; j++) {
@@ -60,48 +69,32 @@ void Mesh::SetUpMesh()
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 
 	glBindTexture(textureID, 0);
-
-	// Normals
-	glGenBuffers(1, &id_normal);
-	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normals * 3, normals, GL_STATIC_DRAW);
-	// Add normals attribute to the vertex array object (VAO)
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
-	glEnableVertexAttribArray(2);
-
-	// Indices
-	glGenBuffers(1, &id_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, indices, GL_STATIC_DRAW);
-
-	// Unbind any vertex array we have binded before.
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Mesh::SetUpTexture()
+void Mesh::SetUpTexture(const char* path)
 {
-	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
-	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
-		for (int j = 0; j < CHECKERS_WIDTH; j++) {
-			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-			checkerImage[i][j][0] = (GLubyte)c;
-			checkerImage[i][j][1] = (GLubyte)c;
-			checkerImage[i][j][2] = (GLubyte)c;
-			checkerImage[i][j][3] = (GLubyte)255;
-		}
-	}
-
+	int width, height, nrChannels;
+	unsigned char* pixels = stbi_load(path, &width, &height, &nrChannels, STBI_rgb);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
+	// set the texture wrapping/filtering options (on the currently bound texture object)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+	if (pixels) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	
+
+	stbi_image_free(pixels);
+
 }
 
 void Mesh::Draw()
@@ -109,33 +102,30 @@ void Mesh::Draw()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);
 
-	// Draw mesh
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glActiveTexture(textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
-
-	// Unbind buffers
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_VERTEX_ARRAY, 0);
-	glBindBuffer(GL_NORMAL_ARRAY, 0);
-	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	//vertex
+	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//normals
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glNormalPointer(GL_FLOAT, 0, NULL);
+	//coord
+	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	//texture
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glActiveTexture(0);
+	glBindTexture(GL_TEXTURE_2D, textureID);//only one texture for all scene
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
 
 	// Debug draw
 	if (drawVertexNormals) DrawVertexNormals();
 	if (drawFaceNormals) DrawFaceNormals();
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 void Mesh::DrawVertexNormals() const

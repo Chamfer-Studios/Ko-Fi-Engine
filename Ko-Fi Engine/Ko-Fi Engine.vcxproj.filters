@@ -68,6 +68,9 @@
     <Filter Include="Source\GameObject\Components">
       <UniqueIdentifier>{2cf47586-6d20-4466-97fd-1906bd525a7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\stb_image">
+      <UniqueIdentifier>{952fafdd-82fe-45b5-917b-46c6e6a0c5df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -581,6 +584,9 @@
     </ClInclude>
     <ClInclude Include="Source\PanelGameObject.h">
       <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>Libs\stb_image</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
