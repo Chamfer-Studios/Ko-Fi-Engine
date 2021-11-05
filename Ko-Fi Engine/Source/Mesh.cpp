@@ -1,5 +1,4 @@
 #include "Mesh.h"
-#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 // OpenGL / GLEW
 #include "glew.h"
@@ -113,8 +112,7 @@ void Mesh::Draw()
 	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 	//texture
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindTexture(GL_TEXTURE_2D, textureID);//only one texture for all scene
+	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
@@ -123,6 +121,10 @@ void Mesh::Draw()
 	if (drawVertexNormals) DrawVertexNormals();
 	if (drawFaceNormals) DrawFaceNormals();
 
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);

@@ -2,7 +2,7 @@
 #include "Editor.h"
 #include "FileSystem.h"
 #include "PanelChooser.h"
-
+#include "SDL.h"
 #include <imgui.h>
 MainBar::MainBar(Editor* editor,FileSystem* filesystem)
 {
@@ -42,6 +42,10 @@ bool MainBar::Update()
 				editor->gameObjects.clear();
 				editor->panelGameObjectInfo.currentGameObjectID = -1;
 			}
+			if (ImGui::MenuItem("Quit"))
+			{
+				ret = false;
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -73,7 +77,6 @@ void MainBar::ImportModel() {
 		{
 			std::string newFile = file;
 			newFile.erase(newFile.begin());
-			//filesystem->LoadMesh(newFile.c_str(), editor->meshes);
 			filesystem->LoadMesh(newFile.c_str(), editor->gameObjects);
 		}
 		loadingModel = false;

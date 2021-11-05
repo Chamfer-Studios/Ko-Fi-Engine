@@ -265,6 +265,9 @@
     <ClCompile Include="Source\PanelGameObject.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\External\stb_image\stb_image.cpp">
+      <Filter>Libs\stb_image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
