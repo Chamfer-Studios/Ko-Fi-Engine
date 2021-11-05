@@ -63,12 +63,11 @@ bool PanelGameObject::Update()
 					currentGameObject->GetMeshes()->at(i).ToggleFacesNormals();
 				}
 			}
+
 			// Draw faces normals
 			if (ImGui::	Button("New Texture"))
 			{
-				
-					currentGameObject->SetNewTexture("Assets/Images/brick.jpg");
-				
+				currentGameObject->SetNewTexture("Assets/Images/brick.jpg");
 			}
 		}
 	}

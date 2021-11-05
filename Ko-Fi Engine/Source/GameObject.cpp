@@ -68,11 +68,10 @@ void GameObject::LoadMesh(std::string path)
             {
                 ourMesh.num_tex_coords = aiMesh->mNumVertices;
                 ourMesh.tex_coords = new float[ourMesh.num_tex_coords * 2];
-                /*memcpy(ourMesh.tex_coords_3D, aiMesh->mTextureCoords, sizeof(float) * ourMesh.num_tex_coords * 2);*/
                 for (uint j = 0; j < ourMesh.num_tex_coords; ++j)
                 {
                     ourMesh.tex_coords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-                    ourMesh.tex_coords[j * 2 + 1] = aiMesh->mTextureCoords[0][j].y;
+                    ourMesh.tex_coords[j * 2 + 1] = 1.0f - aiMesh->mTextureCoords[0][j].y;
                 }
             }
             else
