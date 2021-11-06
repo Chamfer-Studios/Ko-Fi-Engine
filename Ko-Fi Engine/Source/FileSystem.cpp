@@ -7,7 +7,6 @@
 #include <filesystem>
 #include <iomanip>
 
-
 FileSystem::FileSystem()
 {
 	name = "ModelLoader";
@@ -116,9 +115,9 @@ void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObjec
 
 void FileSystem::GameObjectFromPrimitive(std::vector<GameObject*>& gameObjects)
 {
-	/*uint id = gameObjects.size();
-	GameObject* gameObject = new GameObject(file_path, id);
+	uint id = gameObjects.size();
+	GameObject* gameObject = new GameObject(id);
 	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
 	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
-	gameObjects.push_back(gameObject);*/
+	gameObjects.push_back(gameObject);
 }

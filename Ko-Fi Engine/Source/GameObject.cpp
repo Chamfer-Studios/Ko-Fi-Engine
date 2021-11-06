@@ -5,7 +5,7 @@
 #include "Primitive.h"
 
 // Used without a path because we use a primitive
-GameObject::GameObject(PrimitiveTypes primitiveType, uint id)
+GameObject::GameObject(uint id)
 {
     this->directory = nullptr; // As we use this constructor for primitives, we don't need a path...
     name = "GameObject" + std::to_string(id);
@@ -83,6 +83,27 @@ Component* GameObject::CreateComponent(COMPONENT_TYPE type)
         break;
     case COMPONENT_TYPE::COMPONENT_MESH:
         ret = new ComponentMesh(directory);
+        break;
+    case COMPONENT_TYPE::COMPONENT_MATERIAL:
+        ret = new ComponentMaterial();
+        break;
+    default:
+        break;
+    }
+    components.push_back(ret);
+    return ret;
+}
+
+Component* GameObject::CreateComponent(COMPONENT_TYPE type, COMPONENT_SUBTYPE subtype)
+{
+    Component* ret = nullptr;
+    switch (type)
+    {
+    case COMPONENT_TYPE::COMPONENT_TRANSFORM:
+        ret = new ComponentTransform();
+        break;
+    case COMPONENT_TYPE::COMPONENT_MESH:
+        ret = new ComponentMesh(subtype);
         break;
     case COMPONENT_TYPE::COMPONENT_MATERIAL:
         ret = new ComponentMaterial();

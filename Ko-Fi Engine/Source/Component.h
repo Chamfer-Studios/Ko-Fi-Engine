@@ -1,12 +1,20 @@
 #pragma once
-class GameObject;
 #include "imgui.h"
+
+class GameObject;
+
 enum class COMPONENT_TYPE
 {
 	COMPONENT_TRANSFORM = 0,
 	COMPONENT_MESH,
 	COMPONENT_MATERIAL
 };
+
+enum class COMPONENT_SUBTYPE
+{
+	COMPONENT_MESH_CUBE = 0,
+};
+
 class Component {
 public:
 

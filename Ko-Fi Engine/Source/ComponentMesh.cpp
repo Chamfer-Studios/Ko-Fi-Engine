@@ -3,6 +3,12 @@
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+
+ComponentMesh::ComponentMesh(COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
+{
+	LoadPrimitive(subtype);
+}
+
 ComponentMesh::ComponentMesh(const char* path) : Component(COMPONENT_TYPE::COMPONENT_MESH)
 {
 
@@ -108,4 +114,13 @@ bool ComponentMesh::InspectorDraw()
 	
 	materialComponent->InspectorDraw();
 	return ret;
+}
+
+void ComponentMesh::LoadPrimitive(COMPONENT_SUBTYPE subtype)
+{
+	switch (subtype)
+	{
+	case COMPONENT_MESH_CUBE:
+		break;
+	}
 }
