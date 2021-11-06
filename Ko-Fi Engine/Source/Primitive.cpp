@@ -166,9 +166,9 @@ void Cube::DrawInterleavedMode()
 	//  |/      |/
 	//  v2------v3
 
-	float sx = size.x *0.5;
-	float sy = size.y*0.5;
-	float sz = size.z*0.5;
+	float sx = size.x;
+	float sy = size.y;
+	float sz = size.z;
 
 	// interleaved vertex array for glDrawElements() & glDrawRangeElements() ======
 	// All vertex attributes (position, normal, color) are packed together as a

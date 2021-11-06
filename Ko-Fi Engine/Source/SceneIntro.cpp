@@ -70,21 +70,6 @@ bool SceneIntro::Update(float dt)
 	{
 		go->Update();
 	}
-	/*Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();*/
-
-	// Draw cube
-	/*Cube cube(1, 1, 1);
-	cube.DrawInterleavedMode();*/
-
-	// Draw sphere
-	/*Sphere sphere(1, 25, 25);
-	sphere.InnerRender();*/
-
-	// Draw pyramid
-	/*Pyramid pyramid(1,1,1);
-	pyramid.InnerRender();*/
 
 	return true;
 }

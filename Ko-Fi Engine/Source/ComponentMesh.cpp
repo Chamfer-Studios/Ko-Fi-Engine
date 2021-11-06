@@ -4,11 +4,11 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "glew.h"
-#include "Primitive.h"
 #include <gl/GL.h>
+#include "Primitive.h"
+
 ComponentMesh::ComponentMesh(COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
 {
-	LoadPrimitive(subtype);
 	this->subtype = subtype;
 }
 
@@ -34,13 +34,53 @@ bool ComponentMesh::PostUpdate()
 {
 	bool ret = true;
 
+	switch (subtype)
+	{
+	case COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE:
+	{
+		Cube cube(1, 1, 1);
+		cube.DrawInterleavedMode();
+		break;
+	}
+	case COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE:
+	{
+		Sphere sphere(1, 25, 25);
+		sphere.InnerRender();
+		break;
+	}
+	case COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER:
+	{
+		break;
+	}
+	case COMPONENT_SUBTYPE::COMPONENT_MESH_LINE:
+	{
+		break;
+	}
+	case COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE:
+	{
+		Plane p(0, 1, 0, 0);
+		p.Render();
+		break;
+	}
+	case COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID:
+	{
+		Pyramid pyramid(1,1,1);
+		pyramid.InnerRender();
+		break;
+	}
+	default:
+		break;
+	}
+
 	if (subtype == COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE)
 	{
 		Cube cube(1, 1, 1);
 		cube.DrawInterleavedMode();
 	}
-	else {
-		for (Mesh* mesh : meshes) {
+	else
+	{
+		for (Mesh* mesh : meshes)
+		{
 			mesh->Draw();
 		}
 	}
@@ -126,14 +166,4 @@ bool ComponentMesh::InspectorDraw()
 
 	materialComponent->InspectorDraw();
 	return ret;
-}
-
-void ComponentMesh::LoadPrimitive(COMPONENT_SUBTYPE subtype)
-{
-	switch (subtype)
-	{
-	case COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE:
-		materialComponent = new ComponentMaterial();
-		break;
-	}
 }

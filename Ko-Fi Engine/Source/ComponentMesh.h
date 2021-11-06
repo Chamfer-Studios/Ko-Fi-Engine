@@ -17,9 +17,6 @@ public:
 	void LoadMesh(const char* path);
 	bool InspectorDraw();
 
-	void LoadPrimitive(COMPONENT_SUBTYPE subtype);
-	void DrawCube();
-
 private:
 	const char* path = "";
 	std::vector<Mesh*> meshes;

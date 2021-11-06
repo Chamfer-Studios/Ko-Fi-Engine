@@ -113,11 +113,11 @@ void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObjec
 	gameObjects.push_back(gameObject);
 }
 
-void FileSystem::GameObjectFromPrimitive(std::vector<GameObject*>& gameObjects)
+void FileSystem::GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<GameObject*>& gameObjects)
 {
 	uint id = gameObjects.size();
 	GameObject* gameObject = new GameObject(id);
 	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
-	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH,COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE);
+	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH, COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE);
 	gameObjects.push_back(gameObject);
 }

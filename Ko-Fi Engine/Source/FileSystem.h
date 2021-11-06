@@ -28,7 +28,7 @@ public:
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
 	void AddPath(const char* path);
 	void GameObjectFromMesh(const char* file_path,std::vector<GameObject*>& meshes);
-	void GameObjectFromPrimitive(std::vector<GameObject*>& meshes);
+	void GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<GameObject*>& meshes);
 
 public:
 	fs::path rootPath;
