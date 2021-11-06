@@ -102,21 +102,21 @@ bool PanelConfiguration::Update()
 	if (ImGui::CollapsingHeader("Window"))
 	{
 
-		if (loadingIcon == true && editor->GetPanelChooser()->FileDialog("bmp"))
+		
+		ImGui::Text("Icon:");
+		ImGui::SameLine();
+		if (editor->GetPanelChooser()->IsReadyToClose())
 		{
-			const char* file = editor->GetPanelChooser()->CloseFileDialog();
+			const char* file = editor->GetPanelChooser()->OnChooserClosed();
 			if (file != nullptr)
 			{
 				std::string newFile = file;
 				newFile.erase(newFile.begin());
 				window->SetIcon(newFile.c_str());
 			}
-			loadingIcon = false;
 		}
-		ImGui::Text("Icon:");
-		ImGui::SameLine();
 		if (ImGui::Selectable(window->GetIcon()))
-			loadingIcon = true;
+			editor->GetPanelChooser()->OpenPanel("bmp");
 		float brightness = window->GetBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
 			window->AdjustBrightness(brightness);

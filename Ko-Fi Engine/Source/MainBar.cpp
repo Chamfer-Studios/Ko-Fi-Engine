@@ -36,7 +36,7 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Import Model"))
 			{
-				loadingModel = true;
+				editor->GetPanelChooser()->OpenPanel("fbx");
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
@@ -91,15 +91,16 @@ bool MainBar::PostUpdate()
 }
 
 void MainBar::ImportModel() {
-	if (loadingModel == true && editor->GetPanelChooser()->FileDialog("fbx"))
+
+
+	if (editor->GetPanelChooser()->IsReadyToClose())
 	{
-		const char* file = editor->GetPanelChooser()->CloseFileDialog();
+		const char* file = editor->GetPanelChooser()->OnChooserClosed();
 		if (file != nullptr)
 		{
 			std::string newFile = file;
 			newFile.erase(newFile.begin());
 			filesystem->GameObjectFromMesh(newFile.c_str(), editor->gameObjects);
 		}
-		loadingModel = false;
 	}
 }

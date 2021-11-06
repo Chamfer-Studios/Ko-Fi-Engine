@@ -15,21 +15,21 @@ public:
 	bool Update();
 	bool PostUpdate();
 
-	bool FileDialog(const char* extension=nullptr, const char* from_folder=nullptr);
-	const char* CloseFileDialog();
+	//Handles ChooserStateHandler State
+	bool IsReadyToClose();
+	const char* OnChooserClosed();
 	void ShowPanel(const char* path = nullptr, const char* extension = nullptr);
 	void GetPath(const char* path, const char* extension);
-
+	void OpenPanel(const char* extension = nullptr, const char* from_folder = nullptr);
 private:
 	enum
 	{
-		closed,
-		opened,
-		ready_to_close
-	} fileDialog = closed;
-	std::string fileDialogFilter;
+		CLOSED,
+		OPENED,
+		READY_TO_CLOSE
+	} chooserState = CLOSED;
 	std::string fileDialogOrigin;
 	FileSystem* fileSystem = nullptr;
-	const char* current_extension = "fbx";
-	char selected_file[FILE_MAX];
+	const char* currentExtension = "fbx";
+	char selectedFile[FILE_MAX];
 };

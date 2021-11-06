@@ -25,8 +25,8 @@ bool PanelChooser::PreUpdate()
 
 bool PanelChooser::Update()
 {
-	if (fileDialog == opened)
-		ShowPanel("/Assets", current_extension);
+	if (chooserState == OPENED)
+		ShowPanel("/Assets", currentExtension);
 	return true;
 }
 
@@ -34,31 +34,18 @@ bool PanelChooser::PostUpdate()
 {
 	return true;
 }
-bool PanelChooser::FileDialog(const char* extension, const char* from_folder)
+
+bool PanelChooser::IsReadyToClose()
 {
-	bool ret = true;
-
-	switch (fileDialog)
-	{
-	case closed:
-		selected_file[0] = '\0';
-		fileDialogFilter = (extension) ? extension : "";
-		fileDialogOrigin = (from_folder) ? from_folder : "";
-		fileDialog = opened;
-	case opened:
-		ret = false;
-		break;
-	}
-
-	return ret;
+	return chooserState == READY_TO_CLOSE?true:false;
 }
 
-const char* PanelChooser::CloseFileDialog()
+const char* PanelChooser::OnChooserClosed()
 {
-	if (fileDialog == ready_to_close)
+	if (chooserState == READY_TO_CLOSE)
 	{
-		fileDialog = closed;
-		return selected_file[0] ? selected_file : nullptr;
+		chooserState = CLOSED;
+		return selectedFile[0] ? selectedFile : nullptr;
 	}
 	return nullptr;
 }
@@ -70,19 +57,19 @@ void PanelChooser::ShowPanel(const char* path,const char* extension)
 		GetPath(path, extension);
 		ImGui::EndChild();
 		ImGui::PushItemWidth(200.0f);
-		if (ImGui::InputText("##file_selector", selected_file, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
-			fileDialog = ready_to_close;
+		if (ImGui::InputText("##file_selector", selectedFile, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+			chooserState = READY_TO_CLOSE;
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
-		const char* extensions[] = { "fbx", "bmp" };
+		const char* extensions[] = { "fbx", "bmp","png","jpg"};
 		ImGui::PushItemWidth(50.0f);
-		if (ImGui::BeginCombo("##combo", current_extension)) // The second parameter is the label previewed before opening the combo.
+		if (ImGui::BeginCombo("##combo", currentExtension)) // The second parameter is the label previewed before opening the combo.
 		{
 			for (int n = 0; n < IM_ARRAYSIZE(extensions); n++)
 			{
-				bool is_selected = (current_extension == extensions[n]); // You can store your selection however you want, outside or inside your objects
+				bool is_selected = (currentExtension == extensions[n]); // You can store your selection however you want, outside or inside your objects
 				if (ImGui::Selectable(extensions[n], is_selected))
-					current_extension = extensions[n];
+					currentExtension = extensions[n];
 					if (is_selected)
 						ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
 			}
@@ -91,13 +78,13 @@ void PanelChooser::ShowPanel(const char* path,const char* extension)
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 		if (ImGui::Button("Open", ImVec2(50, 0)))
-			fileDialog = ready_to_close;
+			chooserState = READY_TO_CLOSE;
 		ImGui::SameLine();
 
 		if (ImGui::Button("Cancel", ImVec2(50, 0)))
 		{
-			fileDialog = ready_to_close;
-			selected_file[0] = '\0';
+			chooserState = READY_TO_CLOSE;
+			selectedFile[0] = '\0';
 		}
 
 		ImGui::EndPopup();
@@ -129,14 +116,22 @@ void PanelChooser::GetPath(const char* path, const char* extension)
 		if(ret && ImGui::TreeNodeEx(str.c_str(), ImGuiTreeNodeFlags_Leaf))
 			{
 				if (ImGui::IsItemClicked()) {
-					sprintf_s(selected_file, FILE_MAX, "%s%s", dir.c_str(), str.c_str());
+					sprintf_s(selectedFile, FILE_MAX, "%s%s", dir.c_str(), str.c_str());
 
 					if (ImGui::IsMouseDoubleClicked(0))
-						fileDialog = ready_to_close;
+						chooserState = READY_TO_CLOSE;
 				}
 
 				ImGui::TreePop();
 			}
 	}
 
+}
+
+void PanelChooser::OpenPanel(const char* extension, const char* from_folder)
+{
+	selectedFile[0] = '\0';
+	currentExtension = (extension) ? extension : "";
+	fileDialogOrigin = (from_folder) ? from_folder : "";
+	chooserState = OPENED;
 }
