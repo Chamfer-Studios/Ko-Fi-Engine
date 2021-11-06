@@ -22,13 +22,13 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	//FileSystem Functions
+	// FileSystem Functions
 	bool OpenFile(const char* path) const;
 	bool SaveFile(const char* path) const;
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
 	void AddPath(const char* path);
-	void LoadMesh(const char* file_path,std::vector<GameObject*>& meshes);
-
+	void GameObjectFromMesh(const char* file_path,std::vector<GameObject*>& meshes);
+	void GameObjectFromPrimitive(std::vector<GameObject*>& meshes);
 
 public:
 	fs::path rootPath;

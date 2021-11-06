@@ -166,7 +166,7 @@ bool Input::PreUpdate(float dt)
 			{
 				if (tmp.find(".fbx") != std::string::npos)
 				{
-					fileSystem->LoadMesh(tmp.c_str(), *gameObjects);
+					fileSystem->GameObjectFromMesh(tmp.c_str(), *gameObjects);
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{

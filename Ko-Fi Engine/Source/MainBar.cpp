@@ -4,6 +4,7 @@
 #include "PanelChooser.h"
 #include "SDL.h"
 #include <imgui.h>
+#include "Primitive.h"
 
 MainBar::MainBar(Editor* editor,FileSystem* filesystem)
 {
@@ -33,10 +34,6 @@ bool MainBar::Update()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Create"))
-			{
-				// Primitive...
-			}
 			if (ImGui::MenuItem("Import Model"))
 			{
 				loadingModel = true;
@@ -49,6 +46,26 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Quit"))
 			{
 				ret = false;
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Create"))
+		{
+			if (ImGui::BeginMenu("Primitive"))
+			{
+				if (ImGui::MenuItem("Sphere"))
+				{
+					
+				}
+				if (ImGui::MenuItem("Cube"))
+				{
+					
+				}
+				if (ImGui::MenuItem("Plane"))
+				{
+					
+				}
+				ImGui::EndMenu();
 			}
 			ImGui::EndMenu();
 		}
@@ -81,7 +98,7 @@ void MainBar::ImportModel() {
 		{
 			std::string newFile = file;
 			newFile.erase(newFile.begin());
-			filesystem->LoadMesh(newFile.c_str(), editor->gameObjects);
+			filesystem->GameObjectFromMesh(newFile.c_str(), editor->gameObjects);
 		}
 		loadingModel = false;
 	}

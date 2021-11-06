@@ -2,10 +2,15 @@
 #include "Mesh.h"
 #include <vector>
 #include "Component.h"
+
+enum PrimitiveTypes;
+
 class GameObject
 {
 public:
+	GameObject(PrimitiveTypes primitiveType, uint id);
 	GameObject(const char* path, uint id);
+	~GameObject();
 	bool Start();
 	bool PreUpdate();
 	bool Update();
@@ -19,7 +24,7 @@ public:
 
 private:
 	std::vector<Component*> components;
-	std::string directory;
+	const char* directory;
 	std::string name;
 	uint id;
 	bool active;

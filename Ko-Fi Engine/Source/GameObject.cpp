@@ -2,13 +2,27 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
+#include "Primitive.h"
 
+// Used without a path because we use a primitive
+GameObject::GameObject(PrimitiveTypes primitiveType, uint id)
+{
+    this->directory = nullptr; // As we use this constructor for primitives, we don't need a path...
+    name = "GameObject" + std::to_string(id);
+    this->id = id;
+}
+
+// Used with a path for the .fbx load
 GameObject::GameObject(const char* path, uint id)
 {
     //LoadModel(path);
     this->directory = path;
     name = "GameObject" + std::to_string(id);
     this->id = id;
+}
+
+GameObject::~GameObject()
+{
 }
 
 bool GameObject::Start()
@@ -20,7 +34,6 @@ bool GameObject::Start()
     }
     return ret;
 }
-
 
 bool GameObject::PreUpdate() {
     bool ret = true;
@@ -69,7 +82,7 @@ Component* GameObject::CreateComponent(COMPONENT_TYPE type)
         ret = new ComponentTransform();
         break;
     case COMPONENT_TYPE::COMPONENT_MESH:
-        ret = new ComponentMesh(directory.c_str());
+        ret = new ComponentMesh(directory);
         break;
     case COMPONENT_TYPE::COMPONENT_MATERIAL:
         ret = new ComponentMaterial();

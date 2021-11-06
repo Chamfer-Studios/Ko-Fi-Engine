@@ -43,7 +43,7 @@ bool SceneIntro::Start()
 
 	// Load meshes
 	/*fileSystem->LoadMesh("Assets/Meshes/warrior.fbx");*/
-	fileSystem->LoadMesh("Assets/Meshes/baker_house.fbx", editor->gameObjects);
+	fileSystem->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", editor->gameObjects);
 	//fileSystem->LoadMesh("Assets/Meshes/Prop.fbx",meshes);
 	//editor->gameObjects.at(0).SetNewTexture("Assets/Images/baker_house.png");
 	for (GameObject* go : editor->gameObjects)
