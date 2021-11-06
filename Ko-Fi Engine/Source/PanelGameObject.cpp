@@ -47,28 +47,28 @@ bool PanelGameObject::Update()
 		if (debugOptions)
 		{
 			// Draw vertex normals
-			if (ImGui::Checkbox("Draw vertex normals", &drawVertexNormals))
+			/*if (ImGui::Checkbox("Draw vertex normals", &drawVertexNormals))
 			{
 				for (int i = 0; i < currentGameObject->GetMeshes()->size(); i++)
 				{
 					currentGameObject->GetMeshes()->at(i).ToggleVertexNormals();
 				}
-			}
+			}*/
 
 			// Draw faces normals
-			if (ImGui::Checkbox("Draw faces normals", &drawFacesNormals))
+			/*if (ImGui::Checkbox("Draw faces normals", &drawFacesNormals))
 			{
 				for (int i = 0; i < currentGameObject->GetMeshes()->size(); i++)
 				{
 					currentGameObject->GetMeshes()->at(i).ToggleFacesNormals();
 				}
-			}
+			}*/
 
 			// Draw faces normals
-			if (ImGui::	Button("New Texture"))
+			/*if (ImGui::	Button("New Texture"))
 			{
 				currentGameObject->SetNewTexture("Assets/Images/brick.jpg");
-			}
+			}*/
 		}
 	}
 

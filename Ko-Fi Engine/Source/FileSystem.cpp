@@ -108,5 +108,7 @@ void FileSystem::AddPath(const char* path)
 void FileSystem::LoadMesh(const char* file_path, std::vector<GameObject>& gameObjects)
 {
 	uint id = gameObjects.size();
-	gameObjects.push_back(GameObject(file_path, id));
+	GameObject gameObject = GameObject(file_path, id);
+	gameObject.CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
+	gameObjects.push_back(gameObject);
 }

@@ -7,6 +7,7 @@
 #include <gl/GLU.h>
 #include <iostream>
 
+
 Mesh::Mesh()
 {
 }
@@ -15,7 +16,8 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::SetUpMesh()
+
+void Mesh::SetUpMeshBuffers()
 {
 	/*SetUpTexture();*/
 	SetUpDefaultTexture();
@@ -70,7 +72,7 @@ void Mesh::SetUpDefaultTexture()
 	glBindTexture(textureID, 0);
 }
 
-void Mesh::SetUpTexture(const char* path)
+void Mesh::SetUpMeshTexture(const char* path)
 {
 	int width, height, nrChannels;
 	unsigned char* pixels = stbi_load(path, &width, &height, &nrChannels, STBI_rgb);
@@ -117,9 +119,7 @@ void Mesh::Draw()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
 
-	// Debug draw
-	if (drawVertexNormals) DrawVertexNormals();
-	if (drawFaceNormals) DrawFaceNormals();
+	DebugDraw();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -128,6 +128,14 @@ void Mesh::Draw()
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void Mesh::DebugDraw()
+{
+	// Debug draw
+	if (drawVertexNormals) DrawVertexNormals();
+	if (drawFaceNormals) DrawFaceNormals();
+
 }
 
 void Mesh::DrawVertexNormals() const

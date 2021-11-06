@@ -26,7 +26,6 @@ public:
 	void SetVsync(bool vsync);
 	void OnResize(int width, int height);
 
-	void DrawMesh(GameObject gameObject);
 
 public:
 	Light lights[MAX_LIGHTS];

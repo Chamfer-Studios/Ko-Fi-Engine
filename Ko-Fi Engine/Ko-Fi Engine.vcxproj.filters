@@ -268,6 +268,15 @@
     <ClCompile Include="Source\External\stb_image\stb_image.cpp">
       <Filter>Libs\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentMesh.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentTransform.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentMaterial.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -590,6 +599,18 @@
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>Libs\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentMesh.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentTransform.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentMaterial.h">
+      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -45,19 +45,31 @@ bool SceneIntro::Start()
 	/*fileSystem->LoadMesh("Assets/Meshes/warrior.fbx");*/
 	fileSystem->LoadMesh("Assets/Meshes/baker_house.fbx", editor->gameObjects);
 	//fileSystem->LoadMesh("Assets/Meshes/Prop.fbx",meshes);
-	editor->gameObjects.at(0).SetNewTexture("Assets/Images/baker_house.png");
-
+	//editor->gameObjects.at(0).SetNewTexture("Assets/Images/baker_house.png");
+	for (GameObject go : editor->gameObjects)
+	{
+		go.Start();
+	}
 	return ret;
 }
 
 bool SceneIntro::PreUpdate(float dt)
 {
+	for (GameObject go : editor->gameObjects)
+	{
+		go.PreUpdate();
+	}
 	return true;
 }
 
 // Update
 bool SceneIntro::Update(float dt)
 {
+
+	for (GameObject go : editor->gameObjects)
+	{
+		go.Update();
+	}
 	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();*/
@@ -80,11 +92,9 @@ bool SceneIntro::Update(float dt)
 bool SceneIntro::PostUpdate(float dt)
 {
 	// Draw meshes
-	std::vector<GameObject>::iterator item = editor->gameObjects.begin();
-	while (item != editor->gameObjects.end())
+	for (GameObject go : editor->gameObjects)
 	{
-		renderer->DrawMesh((GameObject)*item);
-		++item;
+		go.PostUpdate();
 	}
 
 	return true;

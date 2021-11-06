@@ -147,6 +147,8 @@
   <ItemGroup>
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\Color.cpp" />
+    <ClCompile Include="Source\ComponentMaterial.cpp" />
+    <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
@@ -209,11 +211,16 @@
     <ClCompile Include="Source\Primitive.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
+    <ClCompile Include="Source\ComponentMesh.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Color.h" />
+    <ClInclude Include="Source\Component.h" />
+    <ClInclude Include="Source\ComponentMaterial.h" />
+    <ClInclude Include="Source\ComponentMesh.h" />
+    <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
     <ClInclude Include="Source\Engine.h" />

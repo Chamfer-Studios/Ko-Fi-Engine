@@ -1,12 +1,13 @@
 #pragma once
+
 #include <vector>
 #include <string>
 #include "MathGeoLib/Math/float2.h"
 #include "MathGeoLib/Math/float3.h"
 typedef unsigned int uint;
 
-#define CHECKERS_HEIGHT 256
-#define CHECKERS_WIDTH 256
+#define CHECKERS_HEIGHT 128
+#define CHECKERS_WIDTH 128
 
 class Mesh
 {
@@ -14,10 +15,13 @@ public:
 	Mesh();
 	~Mesh();
 
-	void SetUpMesh();
-	void SetUpTexture(const char* path);
-	void Draw();
+	
 
+	//Mesh Functions
+	void SetUpMeshBuffers();
+	void SetUpMeshTexture(const char* path);
+	void Draw();
+	void DebugDraw();
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
 	void DrawFaceNormals() const;
@@ -45,16 +49,14 @@ public:
 	uint id_tex_coord = 0;
 	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
-
-	uint VAO;
 	
 private:
 	void SetUpDefaultTexture();
-	unsigned int VBO;
 
 	// Debug bools
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;
 	bool drawColors = false;
 	bool drawTextureCoords = false;
+
 };
