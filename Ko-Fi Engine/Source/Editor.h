@@ -48,8 +48,15 @@ public:
 	void MarkdownExample();
 
 public:
+	// Open/Close panel bools
+	bool toggleAboutPanel = false;
+	bool toggleChooserPanel = false;
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
+
+	// FIXME: The list of meshes should be in scene intro.
+	// Is here temporarily for debug reasons...
+	std::vector<GameObject> gameObjects;
 
 private:
 	// Style
@@ -71,15 +78,6 @@ private:
 	KoFiEngine* engine = nullptr;
 
 	std::list<Panel*> panels;
-
-public:
-	// Open/Close panel bools
-	bool toggleAboutPanel = false;
-	bool toggleChooserPanel = false;
-
-	// FIXME: The list of meshes should be in scene intro.
-	// Is here temporarily for debug reasons...
-	std::vector<GameObject> gameObjects;
 };
 
 #endif IM_GUI_HANDLER_H

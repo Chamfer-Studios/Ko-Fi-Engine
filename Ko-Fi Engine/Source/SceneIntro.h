@@ -40,7 +40,6 @@ private:
 	int random = 0;
 	JsonHandler jsonHandler;
 	Json j;
-
 };
 
 #endif SCENE_INTRO_H

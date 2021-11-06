@@ -15,6 +15,8 @@ public:
 	Component* CreateComponent(COMPONENT_TYPE type);
 	void SetName(std::string name);
 	std::string GetName();
+	std::vector<Component*> GetComponents();
+
 private:
 	std::vector<Component*> components;
 	std::string directory;

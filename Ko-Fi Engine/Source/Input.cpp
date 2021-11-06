@@ -168,6 +168,10 @@ bool Input::PreUpdate(float dt)
 				{
 					fileSystem->LoadMesh(tmp.c_str(), *gameObjects);
 				}
+				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
+				{
+					// Apply texture
+				}
 			}
 			break;
 		}

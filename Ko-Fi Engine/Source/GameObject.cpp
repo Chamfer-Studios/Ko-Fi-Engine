@@ -92,3 +92,7 @@ std::string GameObject::GetName()
     return name;
 }
 
+std::vector<Component*> GameObject::GetComponents()
+{
+    return components;
+}
