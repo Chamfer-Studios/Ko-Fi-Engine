@@ -36,7 +36,7 @@ bool ComponentMesh::PostUpdate()
 
 	if (subtype == COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE)
 	{
-		Cube cube(1, 1, 1);
+		Cube cube(6, 6, 6);
 		cube.DrawInterleavedMode();
 	}
 	else {
@@ -136,4 +136,70 @@ void ComponentMesh::LoadPrimitive(COMPONENT_SUBTYPE subtype)
 		materialComponent = new ComponentMaterial();
 		break;
 	}
+}
+
+void ComponentMesh::DrawCube() {
+	float sx = 1.0f;
+	float sy = 1.0f;
+	float sz = 1.0f;
+
+	// interleaved vertex array for glDrawElements() & glDrawRangeElements() ======
+	// All vertex attributes (position, normal, color) are packed together as a
+	// struct or set, for example, ((V,N,C), (V,N,C), (V,N,C),...).
+	// It is called an array of struct, and provides better memory locality.
+	GLfloat vertices[] = { sx, sy, sz,   0, 0, 1,   1, 1, 1,              // v0 (front)
+						   -sx, sy, sz,   0, 0, 1,   1, 1, 0,              // v1
+						   -sx,-sy, sz,   0, 0, 1,   1, 0, 0,              // v2
+							sx,-sy, sz,   0, 0, 1,   1, 0, 1,              // v3
+
+							sx, sy, sz,   1, 0, 0,   1, 1, 1,              // v0 (right)
+							sx,-sy, sz,   1, 0, 0,   1, 0, 1,              // v3
+							sx,-sy,-sz,   1, 0, 0,   0, 0, 1,              // v4
+							sx, sy,-sz,   1, 0, 0,   0, 1, 1,              // v5
+
+							sx, sy, sz,   0, 1, 0,   1, 1, 1,              // v0 (top)
+							sx, sy,-sz,   0, 1, 0,   0, 1, 1,              // v5
+						   -sx, sy,-sz,   0, 1, 0,   0, 1, 0,              // v6
+						   -sx, sy, sz,   0, 1, 0,   1, 1, 0,              // v1
+
+						   -sx, sy, sz,  -1, 0, 0,   1, 1, 0,              // v1 (left)
+						   -sx, sy,-sz,  -1, 0, 0,   0, 1, 0,              // v6
+						   -sx,-sy,-sz,  -1, 0, 0,   0, 0, 0,              // v7
+						   -sx,-sy, sz,  -1, 0, 0,   1, 0, 0,              // v2
+
+						   -sx,-sy,-sz,   0,-1, 0,   0, 0, 0,              // v7 (bottom)
+							sx,-sy,-sz,   0,-1, 0,   0, 0, 1,              // v4
+							sx,-sy, sz,   0,-1, 0,   1, 0, 1,              // v3
+						   -sx,-sy, sz,   0,-1, 0,   1, 0, 0,              // v2
+
+							sx,-sy,-sz,   0, 0,-1,   0, 0, 1,              // v4 (back)
+						   -sx,-sy,-sz,   0, 0,-1,   0, 0, 0,              // v7
+						   -sx, sy,-sz,   0, 0,-1,   0, 1, 0,              // v6
+							sx, sy,-sz,   0, 0,-1,   0, 1, 1 };            // v5
+
+	// index array of vertex array for glDrawElements() & glDrawRangeElement()
+	GLubyte indices[] = { 0, 1, 2,   2, 3, 0,      // front
+						   4, 5, 6,   6, 7, 4,      // right
+						   8, 9,10,  10,11, 8,      // top
+						  12,13,14,  14,15,12,      // left
+						  16,17,18,  18,19,16,      // bottom
+						  20,21,22,  22,23,20 };    // back
+// enable and specify pointers to vertex arrays
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glNormalPointer(GL_FLOAT, 9 * sizeof(GLfloat), vertices + 3);
+	glColorPointer(3, GL_FLOAT, 9 * sizeof(GLfloat), vertices + 6);
+	glVertexPointer(3, GL_FLOAT, 9 * sizeof(GLfloat), vertices);
+
+	glPushMatrix();
+	/*glTranslatef(-2, -2, 0);*/                // move to bottom-left
+
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
+
+	glPopMatrix();
+
+	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 }

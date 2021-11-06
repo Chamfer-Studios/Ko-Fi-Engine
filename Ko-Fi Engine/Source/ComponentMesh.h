@@ -18,10 +18,11 @@ public:
 	bool InspectorDraw();
 
 	void LoadPrimitive(COMPONENT_SUBTYPE subtype);
-	void LoadCube();
+	void DrawCube();
 
 private:
 	const char* path = "";
 	std::vector<Mesh*> meshes;
 	ComponentMaterial* materialComponent;
+	COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
 };

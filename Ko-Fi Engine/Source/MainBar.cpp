@@ -59,7 +59,7 @@ bool MainBar::Update()
 				}
 				if (ImGui::MenuItem("Cube"))
 				{
-					
+					filesystem->GameObjectFromPrimitive(editor->gameObjects);
 				}
 				if (ImGui::MenuItem("Plane"))
 				{

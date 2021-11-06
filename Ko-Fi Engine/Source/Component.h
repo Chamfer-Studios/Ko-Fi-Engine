@@ -12,7 +12,8 @@ enum class COMPONENT_TYPE
 
 enum class COMPONENT_SUBTYPE
 {
-	COMPONENT_MESH_CUBE = 0,
+	COMPONENT_MESH_MESH = 0,
+	COMPONENT_MESH_CUBE ,
 };
 
 class Component {
