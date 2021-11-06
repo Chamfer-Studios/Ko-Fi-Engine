@@ -105,10 +105,11 @@ void FileSystem::AddPath(const char* path)
 	rootPath += path;
 }
 
-void FileSystem::LoadMesh(const char* file_path, std::vector<GameObject>& gameObjects)
+void FileSystem::LoadMesh(const char* file_path, std::vector<GameObject*>& gameObjects)
 {
 	uint id = gameObjects.size();
-	GameObject gameObject = GameObject(file_path, id);
-	gameObject.CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
+	GameObject* gameObject = new GameObject(file_path, id);
+	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
+	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
 	gameObjects.push_back(gameObject);
 }

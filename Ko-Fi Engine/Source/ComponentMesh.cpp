@@ -6,7 +6,7 @@ ComponentMesh::ComponentMesh(const char* path) : Component(COMPONENT_TYPE::COMPO
 {
 
 	this->path = path;
-	LoadMesh(path);
+	LoadMesh(this->path);
 }
 
 ComponentMesh::~ComponentMesh()
@@ -89,4 +89,17 @@ void ComponentMesh::LoadMesh(const char* path)
 	}
 
 	aiReleaseImport(scene);
+}
+
+bool ComponentMesh::InspectorDraw()
+{
+	bool ret = true;
+	if (ImGui::CollapsingHeader("Mesh")) {
+		ImGui::Text("Mesh Path: ");
+		ImGui::SameLine();
+		if (ImGui::Selectable(path))
+		{
+		}
+	}
+	return ret;
 }

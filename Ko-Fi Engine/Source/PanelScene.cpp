@@ -79,7 +79,7 @@ bool PanelScene::Update()
 
     editor->Markdown("# Game Objects");
 
-    std::vector<GameObject> gameObjects = editor->gameObjects; // It should be an std::list and located in SceneIntro...
+    std::vector<GameObject*> gameObjects = editor->gameObjects; // It should be an std::list and located in SceneIntro...
     
     if (!gameObjects.empty())
     {
@@ -114,7 +114,7 @@ bool PanelScene::Update()
                 if (is_selected)
                     node_flags |= ImGuiTreeNodeFlags_Selected;
                 // Items 0..2 are Tree Node
-                bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, gameObjects.at(i).GetName().c_str(), i);
+                bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, gameObjects.at(i)->GetName().c_str(), i);
                 if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
                     node_clicked = i;
                 if (test_drag_and_drop && ImGui::BeginDragDropSource())
@@ -130,7 +130,7 @@ bool PanelScene::Update()
                     // Tree Leaves
                     // The only reason we use TreeNode at all is to allow selection of the leaf. Otherwise we can
                     // use BulletText() or advance the cursor by GetTreeNodeToLabelSpacing() and call Text().
-                    std::vector<Component*> components = gameObjects.at(i).GetComponents();
+                    std::vector<Component*> components = gameObjects.at(i)->GetComponents();
                     for (int i = 0; i < components.size(); i++)
                     {
                         node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet

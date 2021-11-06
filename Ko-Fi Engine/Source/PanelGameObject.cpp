@@ -36,9 +36,12 @@ bool PanelGameObject::Update()
 	else
 	{
 		// Current game object (the one we have selected at the moment)
-		GameObject* currentGameObject = &editor->gameObjects.at(editor->panelGameObjectInfo.currentGameObjectID);
+		GameObject* currentGameObject = editor->gameObjects.at(editor->panelGameObjectInfo.currentGameObjectID);
 		ImGui::Begin(currentGameObject->GetName().c_str());
-
+		for (Component* component : currentGameObject->GetComponents())
+		{
+			component->InspectorDraw();
+		}
 		if (ImGui::Button("Debug options"))
 		{
 			debugOptions = !debugOptions;
@@ -70,6 +73,7 @@ bool PanelGameObject::Update()
 				currentGameObject->SetNewTexture("Assets/Images/brick.jpg");
 			}*/
 		}
+
 	}
 
 	ImGui::End();

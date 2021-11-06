@@ -65,7 +65,7 @@ public:
 
 public:
 	// FIXME: The list of meshes should be in scene intro.
-	std::vector<GameObject>* gameObjects;
+	std::vector<GameObject*>* gameObjects;
 
 private:
 	KEY_STATE* keyboard;

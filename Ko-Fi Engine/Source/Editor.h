@@ -56,7 +56,7 @@ public:
 
 	// FIXME: The list of meshes should be in scene intro.
 	// Is here temporarily for debug reasons...
-	std::vector<GameObject> gameObjects;
+	std::vector<GameObject*> gameObjects;
 
 private:
 	// Style

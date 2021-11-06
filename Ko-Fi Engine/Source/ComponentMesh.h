@@ -11,7 +11,7 @@ public:
 	bool PostUpdate();
 
 	void LoadMesh(const char* path);
-
+	bool InspectorDraw();
 private:
 	const char* path = "";
 	std::vector<Mesh> meshes;

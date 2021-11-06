@@ -46,18 +46,18 @@ bool SceneIntro::Start()
 	fileSystem->LoadMesh("Assets/Meshes/baker_house.fbx", editor->gameObjects);
 	//fileSystem->LoadMesh("Assets/Meshes/Prop.fbx",meshes);
 	//editor->gameObjects.at(0).SetNewTexture("Assets/Images/baker_house.png");
-	for (GameObject go : editor->gameObjects)
+	for (GameObject* go : editor->gameObjects)
 	{
-		go.Start();
+		go->Start();
 	}
 	return ret;
 }
 
 bool SceneIntro::PreUpdate(float dt)
 {
-	for (GameObject go : editor->gameObjects)
+	for (GameObject* go : editor->gameObjects)
 	{
-		go.PreUpdate();
+		go->PreUpdate();
 	}
 	return true;
 }
@@ -66,9 +66,9 @@ bool SceneIntro::PreUpdate(float dt)
 bool SceneIntro::Update(float dt)
 {
 
-	for (GameObject go : editor->gameObjects)
+	for (GameObject* go : editor->gameObjects)
 	{
-		go.Update();
+		go->Update();
 	}
 	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
@@ -92,9 +92,9 @@ bool SceneIntro::Update(float dt)
 bool SceneIntro::PostUpdate(float dt)
 {
 	// Draw meshes
-	for (GameObject go : editor->gameObjects)
+	for (GameObject* go : editor->gameObjects)
 	{
-		go.PostUpdate();
+		go->PostUpdate();
 	}
 
 	return true;
