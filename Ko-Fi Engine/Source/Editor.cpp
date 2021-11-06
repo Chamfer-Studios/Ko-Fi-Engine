@@ -9,7 +9,7 @@
 #include "EngineConfig.h"
 #include "ImGuiAppLog.h"
 #include "MainBar.h"
-#include "PanelScene.h"
+#include "PanelHierarchy.h"
 #include "PanelConfiguration.h"
 #include "PanelLog.h"
 #include "PanelAbout.h"
@@ -28,7 +28,7 @@ Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig*
 	this->input = input;
 
 	mainMenuBar = new MainBar(this,filesystem);
-	panelScene = new PanelScene(this);
+	panelHierarchy = new PanelHierarchy(this);
 	panelConfig = new PanelConfiguration(window,renderer,input,engineConfig,this);
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
@@ -36,7 +36,7 @@ Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig*
 	panelGameObject = new PanelInspector(this);
 
 	AddPanel(mainMenuBar);
-	AddPanel(panelScene);
+	AddPanel(panelHierarchy);
 	AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);

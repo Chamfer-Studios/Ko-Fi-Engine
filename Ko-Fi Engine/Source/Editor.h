@@ -14,7 +14,7 @@ class FileSystem;
 
 // Panels
 class MainBar;
-class PanelScene;
+class PanelHierarchy;
 class PanelConfiguration;
 class PanelLog;
 class PanelAbout;
@@ -63,7 +63,7 @@ private:
 	EditorStyleHandler styleHandler;
 	// Panels
 	MainBar* mainMenuBar = nullptr;
-	PanelScene* panelScene = nullptr;
+	PanelHierarchy* panelHierarchy = nullptr;
 	PanelConfiguration* panelConfig = nullptr;
 	PanelLog* panelLog = nullptr;
 	PanelAbout* panelAbout = nullptr;

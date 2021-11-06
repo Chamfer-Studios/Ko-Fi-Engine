@@ -259,9 +259,6 @@
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>Source\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PanelScene.cpp">
-      <Filter>Source\Editor\Panels</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PanelInspector.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
@@ -276,6 +273,9 @@
     </ClCompile>
     <ClCompile Include="Source\ComponentMaterial.cpp">
       <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelHierarchy.cpp">
+      <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -591,9 +591,6 @@
     <ClInclude Include="Source\GameObject.h">
       <Filter>Source\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PanelScene.h">
-      <Filter>Source\Editor\Panels</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PanelInspector.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
@@ -611,6 +608,9 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentMaterial.h">
       <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelHierarchy.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@
 #include "PanelChooser.h"
 #include "SDL.h"
 #include <imgui.h>
+
 MainBar::MainBar(Editor* editor,FileSystem* filesystem)
 {
 	this->editor = editor;
@@ -32,10 +33,13 @@ bool MainBar::Update()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-
+			if (ImGui::MenuItem("Create"))
+			{
+				// Primitive...
+			}
 			if (ImGui::MenuItem("Import Model"))
 			{
-					loadingModel = true;
+				loadingModel = true;
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{

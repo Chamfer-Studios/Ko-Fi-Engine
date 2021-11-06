@@ -4,11 +4,11 @@
 
 class Editor;
 
-class PanelScene : public Panel
+class PanelHierarchy : public Panel
 {
 public:
-	PanelScene(Editor* editor);
-	~PanelScene();
+	PanelHierarchy(Editor* editor);
+	~PanelHierarchy();
 
 	bool Awake();
 	bool PreUpdate();
