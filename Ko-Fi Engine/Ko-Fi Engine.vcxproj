@@ -205,7 +205,7 @@
     <ClCompile Include="Source\PanelAbout.cpp" />
     <ClCompile Include="Source\PanelChooser.cpp" />
     <ClCompile Include="Source\PanelConfiguration.cpp" />
-    <ClCompile Include="Source\PanelGameObject.cpp" />
+    <ClCompile Include="Source\PanelInspector.cpp" />
     <ClCompile Include="Source\PanelLog.cpp" />
     <ClCompile Include="Source\PanelScene.cpp" />
     <ClCompile Include="Source\Primitive.cpp" />
@@ -315,7 +315,7 @@
     <ClInclude Include="Source\PanelAbout.h" />
     <ClInclude Include="Source\PanelChooser.h" />
     <ClInclude Include="Source\PanelConfiguration.h" />
-    <ClInclude Include="Source\PanelGameObject.h" />
+    <ClInclude Include="Source\PanelInspector.h" />
     <ClInclude Include="Source\PanelLog.h" />
     <ClInclude Include="Source\PanelScene.h" />
     <ClInclude Include="Source\PerfTimer.h" />

@@ -14,7 +14,7 @@
 #include "PanelLog.h"
 #include "PanelAbout.h"
 #include "PanelChooser.h"
-#include "PanelGameObject.h"
+#include "PanelInspector.h"
 
 void LoadFonts(float fontSize_ = 12.0f);
 
@@ -33,7 +33,7 @@ Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig*
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
 	panelChooser = new PanelChooser(filesystem);
-	panelGameObject = new PanelGameObject(this);
+	panelGameObject = new PanelInspector(this);
 
 	AddPanel(mainMenuBar);
 	AddPanel(panelScene);

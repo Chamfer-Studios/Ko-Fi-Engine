@@ -2,8 +2,6 @@
 
 #include <vector>
 #include <string>
-#include "MathGeoLib/Math/float2.h"
-#include "MathGeoLib/Math/float3.h"
 typedef unsigned int uint;
 
 #define CHECKERS_HEIGHT 128

@@ -3,11 +3,11 @@
 
 class Editor;
 
-class PanelGameObject : public Panel
+class PanelInspector : public Panel
 {
 public:
-	PanelGameObject(Editor* editor);
-	~PanelGameObject();
+	PanelInspector(Editor* editor);
+	~PanelInspector();
 
 	bool Awake();
 	bool PreUpdate();

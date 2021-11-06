@@ -19,7 +19,7 @@ class PanelConfiguration;
 class PanelLog;
 class PanelAbout;
 class PanelChooser;
-class PanelGameObject;
+class PanelInspector;
 
 struct EngineConfig;
 class GameObject;
@@ -68,7 +68,7 @@ private:
 	PanelLog* panelLog = nullptr;
 	PanelAbout* panelAbout = nullptr;
 	PanelChooser* panelChooser = nullptr;
-	PanelGameObject* panelGameObject = nullptr;
+	PanelInspector* panelGameObject = nullptr;
 
 	// Needed modules
 	Window* window = nullptr;

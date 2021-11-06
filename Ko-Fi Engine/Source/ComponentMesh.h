@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Mesh.h"
+class ComponentMaterial;
 class ComponentMesh : public Component
 {
 public:
@@ -14,5 +15,6 @@ public:
 	bool InspectorDraw();
 private:
 	const char* path = "";
-	std::vector<Mesh> meshes;
+	std::vector<Mesh*> meshes;
+	ComponentMaterial* materialComponent;
 };

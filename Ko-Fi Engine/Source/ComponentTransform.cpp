@@ -1,9 +1,9 @@
 #include "ComponentTransform.h"
 ComponentTransform::ComponentTransform() : Component(COMPONENT_TYPE::COMPONENT_TRANSFORM)
 {
-	position = Vector();
-	rotation = Vector();
-	scale = Vector();
+	position.x = position.y = position.z = 0;
+	rotation.x = rotation.y = rotation.z = 0;
+	scale.x = scale.y = scale.z = 0;
 }
 
 ComponentTransform::~ComponentTransform()
@@ -15,29 +15,29 @@ bool ComponentTransform::InspectorDraw()
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Transform")) {
 		ImGui::PushItemWidth(50);
-		ImGui::SliderFloat("", & position.x, 0, 120);
+		ImGui::SliderFloat("##positionX", &position.x, 0, 120);
 		ImGui::SameLine();
-		ImGui::SliderFloat("", & position.y, 0, 120);
+		ImGui::SliderFloat("##positionY", &position.y, 0, 120);
 		ImGui::SameLine();
-		ImGui::SliderFloat("", & position.z, 0, 120);
+		ImGui::SliderFloat("##positionZ", &position.z, 0, 120);
 		ImGui::SameLine();
 		ImGui::Text("Position");
 		ImGui::PopItemWidth();
 		ImGui::PushItemWidth(50);
-		ImGui::SliderFloat("", &rotation.x, 0, 120);
+		ImGui::SliderFloat("##rotationX", &rotation.x, 0, 120);
 		ImGui::SameLine();
-		ImGui::SliderFloat("", &rotation.y, 0, 120);
+		ImGui::SliderFloat("##rotationY", &rotation.y, 0, 120);
 		ImGui::SameLine();
-		ImGui::SliderFloat("", &rotation.z, 0, 120);
+		ImGui::SliderFloat("##rotationZ", &rotation.z, 0, 120);
 		ImGui::SameLine();
 		ImGui::Text("Rotation");
 		ImGui::PopItemWidth();
 		ImGui::PushItemWidth(50);
-		ImGui::SliderFloat("", &scale.x, 0, 120);
+		ImGui::SliderFloat("##scaleX", &scale.x, 0, 120);
 		ImGui::SameLine();
-		ImGui::SliderFloat("", &scale.y, 0, 120);
+		ImGui::SliderFloat("##scaleY", &scale.y, 0, 120);
 		ImGui::SameLine();
-		ImGui::SliderFloat("", &scale.z, 0, 120);
+		ImGui::SliderFloat("##scaleZ", &scale.z, 0, 120);
 		ImGui::SameLine();
 		ImGui::Text("Scale");
 		ImGui::PopItemWidth();
