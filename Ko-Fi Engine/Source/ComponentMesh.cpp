@@ -120,7 +120,13 @@ void ComponentMesh::LoadPrimitive(COMPONENT_SUBTYPE subtype)
 {
 	switch (subtype)
 	{
-	case COMPONENT_MESH_CUBE:
+	case COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE:
+		LoadCube();
 		break;
 	}
+}
+
+void ComponentMesh::LoadCube()
+{
+
 }

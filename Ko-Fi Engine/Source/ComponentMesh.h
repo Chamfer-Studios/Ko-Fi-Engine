@@ -18,6 +18,7 @@ public:
 	bool InspectorDraw();
 
 	void LoadPrimitive(COMPONENT_SUBTYPE subtype);
+	void LoadCube();
 
 private:
 	const char* path = "";
