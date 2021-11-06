@@ -77,20 +77,22 @@ bool PanelScene::Update()
 
     ImGui::Begin("Scene Hierarchy");
 
-    editor->Markdown("# Game Objects");
-
     std::vector<GameObject*> gameObjects = editor->gameObjects; // It should be an std::list and located in SceneIntro...
     
     if (!gameObjects.empty())
     {
-        if (ImGui::TreeNode("Advanced, with Selectable nodes"))
-        {
+        /*ImGui::TreeNode("Game Objects");*/
+        /*{*/
+            editor->Markdown("# Game Objects");
+            ImGui::SameLine();
+            ImGui::Text("Here you can manage your game objects.");
+            ImGui::SameLine();
             HelpMarker(
                 "This is a more typical looking tree with selectable nodes.\n"
                 "Click to select, CTRL+Click to toggle, click on arrows or double-click to open.");
             static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
             static bool align_label_with_current_x_position = false;
-            static bool test_drag_and_drop = false;
+            static bool test_drag_and_drop = true;
             /*ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnArrow", &base_flags, ImGuiTreeNodeFlags_OpenOnArrow);
             ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnDoubleClick", &base_flags, ImGuiTreeNodeFlags_OpenOnDoubleClick);
             ImGui::CheckboxFlags("ImGuiTreeNodeFlags_SpanAvailWidth", &base_flags, ImGuiTreeNodeFlags_SpanAvailWidth); ImGui::SameLine(); HelpMarker("Extend hit area to all available width instead of allowing more items to be laid out after the node.");
@@ -99,6 +101,7 @@ bool PanelScene::Update()
             ImGui::Checkbox("Test tree node as drag source", &test_drag_and_drop);*/
             if (align_label_with_current_x_position)
                 ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+
             // 'selection_mask' is dumb representation of what may be user-side selection state.
             //  You may retain selection state inside or outside your objects in whatever format you see fit.
             // 'node_clicked' is temporary storage of what node we have clicked to process selection at the end
@@ -126,37 +129,6 @@ bool PanelScene::Update()
                 if (node_open)
                 {
                     ImGui::TreePop();
-
-                    // Tree Leaves
-                    // The only reason we use TreeNode at all is to allow selection of the leaf. Otherwise we can
-                    // use BulletText() or advance the cursor by GetTreeNodeToLabelSpacing() and call Text().
-                    std::vector<Component*> components = gameObjects.at(i)->GetComponents();
-                    for (int i = 0; i < components.size(); i++)
-                    {
-                        node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
-                        std::string componentName;
-                        switch (components.at(i)->type)
-                        {
-                        case COMPONENT_TYPE::COMPONENT_TRANSFORM:
-                            componentName = "Transform";
-                            break;
-                        case COMPONENT_TYPE::COMPONENT_MESH:
-                            componentName = "Mesh";
-                            break;
-                        case COMPONENT_TYPE::COMPONENT_MATERIAL:
-                            componentName = "Material";
-                            break;
-                        }
-                        ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, componentName.c_str(), i);
-                        if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-                            node_clicked = i;
-                        if (test_drag_and_drop && ImGui::BeginDragDropSource())
-                        {
-                            ImGui::SetDragDropPayload("_TREENODE", NULL, 0);
-                            ImGui::Text("This is a drag and drop source");
-                            ImGui::EndDragDropSource();
-                        }
-                    }
                 }
             }
             if (node_clicked != -1)
@@ -173,8 +145,8 @@ bool PanelScene::Update()
             }
             if (align_label_with_current_x_position)
                 ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-            ImGui::TreePop();
-        }
+            /*ImGui::TreePop();*/
+        /*}*/
     }
 
     ImGui::End();
