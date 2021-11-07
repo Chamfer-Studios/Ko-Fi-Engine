@@ -2,6 +2,10 @@
 #include "Camera3D.h"
 #include "Engine.h"
 #include "Input.h"
+#include "SceneIntro.h"
+#include "Editor.h"
+#include "GameObject.h"
+#include "ComponentTransform.h"
 
 #include "SDL.h"
 #include "Log.h"
@@ -53,22 +57,34 @@ bool Camera3D::Update(float dt)
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
+	if (engine->GetInput()->GetMouseZ() > 0) newPos -= Z * speed * 3;
+	if (engine->GetInput()->GetMouseZ() < 0) newPos += Z * speed * 3;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+
+	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
+	if(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
+		spot = ((ComponentTransform*)engine->GetSceneIntro()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM))->GetPosition();
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		Look(vec3(5,5,5), spot, true);
+	}
 
 	Position += newPos;
 	Reference += newPos;
 
 	// Mouse motion ----------------
 
-	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT ||
+		(engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT))
 	{
 		int dx = -engine->GetInput()->GetMouseXMotion();
 		int dy = -engine->GetInput()->GetMouseYMotion();
@@ -101,6 +117,8 @@ bool Camera3D::Update(float dt)
 		}
 
 		Position = Reference + Z * length(Position);
+
+		if (engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) LookAt(spot);
 	}
 
 	// Recalculate matrix -------------

@@ -43,7 +43,6 @@ bool SceneIntro::Start()
 	engine->GetCamera3D()->LookAt(vec3(0, 0, 0));
 
 	// Load initial scene (temporal)
-	engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, this->gameObjectList);
 	engine->GetFileSystem()->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", this->gameObjectList,"Assets/Images/baker_house.png");
 	
 
@@ -51,6 +50,7 @@ bool SceneIntro::Start()
 	{
 		go->Start();
 	}
+
 	return ret;
 }
 
@@ -60,12 +60,17 @@ bool SceneIntro::PreUpdate(float dt)
 	{
 		go->PreUpdate();
 	}
+
 	return true;
 }
 
 // Update
 bool SceneIntro::Update(float dt)
 {
+	Plane plane(0, 0, 1, 0);
+	plane.axis = true;
+	plane.InnerRender();
+
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update();
@@ -108,5 +113,6 @@ GameObject* SceneIntro::GetGameObject(int id)
 			return go;
 		}
 	}
+
 	return nullptr;
 }

@@ -46,4 +46,17 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
+vec3 ComponentTransform::GetPosition()
+{
+	return position;
+}
 
+vec3 ComponentTransform::GetRotation()
+{
+	return rotation;
+}
+
+vec3 ComponentTransform::GetScale()
+{
+	return scale;
+}

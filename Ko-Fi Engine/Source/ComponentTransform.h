@@ -1,9 +1,7 @@
 #pragma once
 #include "Component.h"
-struct Vector {
-	
-	float x, y, z;
-};
+#include "glmath.h"
+
 class ComponentTransform : public Component
 {
 public:
@@ -11,9 +9,12 @@ public:
 	~ComponentTransform();
 	bool InspectorDraw(PanelChooser* chooser);
 
+	vec3 GetPosition();
+	vec3 GetRotation();
+	vec3 GetScale();
+
 private:
-	Vector position;
-	Vector rotation;
-	Vector scale;
-	
+	vec3 position;
+	vec3 rotation;
+	vec3 scale;
 };

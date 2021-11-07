@@ -3,6 +3,7 @@
 
 class GameObject;
 class PanelChooser;
+
 enum class COMPONENT_TYPE
 {
 	COMPONENT_TRANSFORM = 0,
