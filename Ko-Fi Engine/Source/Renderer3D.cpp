@@ -9,6 +9,7 @@
 
 #include "Log.h"
 #include "Window.h"
+#include "Engine.h"
 #include "Camera3D.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
@@ -16,12 +17,11 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-Renderer3D::Renderer3D(Window* window, Camera3D* camera) : Module()
+Renderer3D::Renderer3D(KoFiEngine* engine) : Module()
 {
 	name = "Renderer3D";
 
-	this->window = window;
-	this->camera = camera;
+	this->engine = engine;
 }
 
 // Destructor
@@ -36,7 +36,7 @@ bool Renderer3D::Awake(Json configModule)
 	bool ret = true;
 
 	// Create context
-	context = SDL_GL_CreateContext(window->window);
+	context = SDL_GL_CreateContext(engine->GetWindow()->window);
 	if (context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -153,10 +153,10 @@ bool Renderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(camera->GetViewMatrix());
+	glLoadMatrixf(engine->GetCamera3D()->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(camera->Position.x, camera->Position.y, camera->Position.z);
+	lights[0].SetPos(engine->GetCamera3D()->Position.x, engine->GetCamera3D()->Position.y, engine->GetCamera3D()->Position.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -167,7 +167,7 @@ bool Renderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 bool Renderer3D::PostUpdate(float dt)
 {
-	SDL_GL_SwapWindow(window->window);
+	SDL_GL_SwapWindow(engine->GetWindow()->window);
 	return true;
 }
 

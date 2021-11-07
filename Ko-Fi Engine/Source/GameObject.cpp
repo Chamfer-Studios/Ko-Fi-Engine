@@ -1,24 +1,26 @@
 #include "GameObject.h"
-#include "ComponentMesh.h"
-#include "ComponentTransform.h"
-#include "ComponentMaterial.h"
+
 #include "Primitive.h"
 
 // Used without a path because we use a primitive
 GameObject::GameObject(uint id)
 {
+    active = true;
     this->directory = nullptr; // As we use this constructor for primitives, we don't need a path...
     name = "GameObject" + std::to_string(id);
     this->id = id;
+    CreateComponent(COMPONENT_TYPE::COMPONENT_INFO);
 }
 
 // Used with a path for the .fbx load
 GameObject::GameObject(const char* path, uint id)
 {
+    active = true;
     //LoadModel(path);
     this->directory = path;
     name = "GameObject" + std::to_string(id);
     this->id = id;
+    CreateComponent(COMPONENT_TYPE::COMPONENT_INFO);
 }
 
 GameObject::~GameObject()
@@ -56,10 +58,14 @@ bool GameObject::Update()
 bool GameObject::PostUpdate()
 {
     bool ret = true;
-    for (Component* component : components)
+    if (active)
     {
-        ret = component->PostUpdate();
+        for (Component* component : components)
+        {
+            ret = component->PostUpdate();
+        }
     }
+   
     return ret;
 }
 void GameObject::Enable()
@@ -71,6 +77,8 @@ void GameObject::Disable()
 {
     active = false;
 }
+
+
 
 Component* GameObject::CreateComponent(COMPONENT_TYPE type)
 {
@@ -85,6 +93,9 @@ Component* GameObject::CreateComponent(COMPONENT_TYPE type)
         break;
     case COMPONENT_TYPE::COMPONENT_MATERIAL:
         ret = new ComponentMaterial();
+        break;
+    case COMPONENT_TYPE::COMPONENT_INFO:
+        ret = new ComponentInfo(this);
         break;
     default:
         break;
@@ -107,6 +118,9 @@ Component* GameObject::CreateComponent(COMPONENT_TYPE type, COMPONENT_SUBTYPE su
     case COMPONENT_TYPE::COMPONENT_MATERIAL:
         ret = new ComponentMaterial();
         break;
+    case COMPONENT_TYPE::COMPONENT_INFO:
+        ret = new ComponentInfo(this);
+        break;
     default:
         break;
     }
@@ -128,6 +142,11 @@ std::string GameObject::GetName()
 std::vector<Component*> GameObject::GetComponents()
 {
     return components;
+}
+
+uint GameObject::GetId()
+{
+    return id;
 }
 
 Component* GameObject::GetComponent(COMPONENT_TYPE type)

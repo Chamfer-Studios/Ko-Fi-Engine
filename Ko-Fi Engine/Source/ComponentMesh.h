@@ -15,11 +15,11 @@ public:
 	bool PostUpdate();
 
 	void LoadMesh(const char* path);
-	bool InspectorDraw();
+	bool InspectorDraw(PanelChooser* chooser);
+	ComponentMaterial* materialComponent;
 
 private:
 	const char* path = "";
 	std::vector<Mesh*> meshes;
-	ComponentMaterial* materialComponent;
 	COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
 };

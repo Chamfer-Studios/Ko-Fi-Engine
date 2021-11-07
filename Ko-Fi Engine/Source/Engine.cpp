@@ -25,11 +25,11 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 
 	window = new Window();
 	fileSystem = new FileSystem();
-	input = new Input(window, fileSystem);
-	camera = new Camera3D(input);
-	renderer = new Renderer3D(window, camera);
-	editor = new Editor(window, renderer, input, engineConfig, fileSystem);
-	sceneIntro = new SceneIntro(camera, window, renderer, editor, fileSystem);
+	input = new Input(this);
+	camera = new Camera3D(this);
+	renderer = new Renderer3D(this);
+	editor = new Editor(this);
+	sceneIntro = new SceneIntro(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -353,4 +353,44 @@ void KoFiEngine::SetVramStats()
 	engineConfig->vramBudget = (float)temp;
 
 	//TODO: GET RESERVED VRAM
+}
+
+EngineConfig* KoFiEngine::GetEngineConfig()
+{
+	return this->engineConfig;
+}
+
+Window* KoFiEngine::GetWindow() const
+{
+	return this->window;
+}
+
+Input* KoFiEngine::GetInput()const
+{
+	return this->input;
+}
+
+SceneIntro* KoFiEngine::GetSceneIntro()const
+{
+	return this->sceneIntro;
+}
+
+Renderer3D* KoFiEngine::GetRenderer()const
+{
+	return this->renderer;
+}
+
+Camera3D* KoFiEngine::GetCamera3D()const
+{
+	return this->camera;
+}
+
+Editor* KoFiEngine::GetEditor()const
+{
+	return this->editor;
+}
+
+FileSystem* KoFiEngine::GetFileSystem()const
+{
+	return this->fileSystem;
 }

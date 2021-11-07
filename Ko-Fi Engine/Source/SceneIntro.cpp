@@ -1,6 +1,7 @@
 #include "Editor.h"
 #include "SceneIntro.h"
 #include "Log.h"
+#include "Engine.h"
 #include "Camera3D.h"
 #include "Renderer3D.h"
 #include "Window.h"
@@ -11,19 +12,17 @@
 #include "RNG.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 #include "GameObject.h"
 
 #include "ComponentMaterial.h" // Temporal for the assignment, just to display the texture on the model when the program begins...
 
-SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileSystem* fileSystem) : Module()
+SceneIntro::SceneIntro(KoFiEngine* engine) : Module()
 {
 	name = "SceneIntro";
 	// Needed modules
-	this->camera = camera;
-	this->window = window;
-	this->renderer = renderer;
-	this->editor = editor;
-	this->fileSystem = fileSystem;
+	this->engine = engine;
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 }
@@ -38,19 +37,16 @@ bool SceneIntro::Start()
 	appLog->AddLog("Loading Intro assets\n");
 	bool ret = true;
 
-	window->SetTitle(jsonHandler.JsonToString(j.at("Text")).c_str());
+	engine->GetWindow()->SetTitle(jsonHandler.JsonToString(j.at("Text")).c_str());
 
-	camera->Move(vec3(1.0f, 1.0f, 1.0f));
-	camera->LookAt(vec3(0, 0, 0));
+	engine->GetCamera3D()->Move(vec3(1.0f, 1.0f, 1.0f));
+	engine->GetCamera3D()->LookAt(vec3(0, 0, 0));
 
 	// Load initial scene (temporal)
-	fileSystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->gameObjects);
-	fileSystem->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", editor->gameObjects);
-	// Temporal for the assignment, just to display the texture on the model when the program begins...
-	uint textureID = 1; ((ComponentMaterial*)editor->gameObjects.at(1)->GetComponent(COMPONENT_TYPE::COMPONENT_MESH))->LoadTexture((uint&) textureID, "Assets/Images/baker_house.png");
-	textureID = 2; ((ComponentMaterial*)editor->gameObjects.at(1)->GetComponent(COMPONENT_TYPE::COMPONENT_MESH))->LoadTexture((uint&)textureID, "Assets/Images/baker_house.png");
+	engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, this->gameObjectList);
+	engine->GetFileSystem()->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", this->gameObjectList,"Assets/Images/baker_house.png");
 	
-	for (GameObject* go : editor->gameObjects)
+	for (GameObject* go : this->gameObjectList)
 	{
 		go->Start();
 	}
@@ -59,7 +55,7 @@ bool SceneIntro::Start()
 
 bool SceneIntro::PreUpdate(float dt)
 {
-	for (GameObject* go : editor->gameObjects)
+	for (GameObject* go : this->gameObjectList)
 	{
 		go->PreUpdate();
 	}
@@ -69,7 +65,7 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
-	for (GameObject* go : editor->gameObjects)
+	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update();
 	}
@@ -80,7 +76,7 @@ bool SceneIntro::Update(float dt)
 bool SceneIntro::PostUpdate(float dt)
 {
 	// Draw meshes
-	for (GameObject* go : editor->gameObjects)
+	for (GameObject* go : this->gameObjectList)
 	{
 		go->PostUpdate();
 	}
@@ -100,4 +96,16 @@ bool SceneIntro::CleanUp()
 void SceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	
+}
+
+GameObject* SceneIntro::GetGameObject(int id)
+{
+	for (GameObject* go : gameObjectList)
+	{
+		if (go->GetId() == id)
+		{
+			return go;
+		}
+	}
+	return nullptr;
 }

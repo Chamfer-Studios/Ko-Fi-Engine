@@ -45,7 +45,15 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 	const uint64 GetFps() const;
-
+	EngineConfig* GetEngineConfig();
+	//Getters for the modules
+	Window* GetWindow() const;
+	Input* GetInput() const;
+	SceneIntro* GetSceneIntro() const;
+	Renderer3D* GetRenderer() const;
+	Camera3D* GetCamera3D() const;
+	Editor* GetEditor() const;
+	FileSystem* GetFileSystem() const;
 private:
 
 	// Add a new module to handle
@@ -68,6 +76,8 @@ private:
 
 	void SetHardwareInfo();
 	void SetVramStats();
+
+
 
 private:
 

@@ -2,7 +2,10 @@
 #include "Mesh.h"
 #include <vector>
 #include "Component.h"
-
+#include "ComponentMesh.h"
+#include "ComponentTransform.h"
+#include "ComponentMaterial.h"
+#include "ComponentInfo.h"
 class GameObject
 {
 public:
@@ -22,12 +25,13 @@ public:
 	void SetName(std::string name);
 	std::string GetName();
 	std::vector<Component*> GetComponents();
+	uint GetId();
 	Component* GetComponent(COMPONENT_TYPE type);
+	std::string name;
+	bool active = true;
 
 private:
 	std::vector<Component*> components;
 	const char* directory;
-	std::string name;
 	uint id;
-	bool active;
 };

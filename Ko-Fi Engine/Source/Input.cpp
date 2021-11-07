@@ -1,7 +1,10 @@
 #include "Globals.h"
 #include "Input.h"
+#include "Engine.h"
 #include "SDL.h"
 #include "Renderer3D.h"
+#include "SceneIntro.h"
+#include "Editor.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "Window.h"
@@ -11,16 +14,14 @@
 
 #define MAX_KEYS 300
 
-Input::Input(Window* window, FileSystem* fileSystem) : Module()
+Input::Input(KoFiEngine* engine) : Module()
 {
 	name = "Input";
 
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
-
-	this->window = window;
-	this->fileSystem = fileSystem;
+	this->engine = engine;
 }
 
 // Destructor
@@ -166,11 +167,24 @@ bool Input::PreUpdate(float dt)
 			{
 				if (tmp.find(".fbx") != std::string::npos)
 				{
-					fileSystem->GameObjectFromMesh(tmp.c_str(), *gameObjects);
+					engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), *gameObjects);
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{
 					// Apply texture
+					if (engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
+					{
+						GameObject* go = engine->GetSceneIntro()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID);
+						ComponentMesh* meshComponent = (ComponentMesh*)go->GetComponent(COMPONENT_TYPE::COMPONENT_MESH);
+						if (meshComponent != nullptr) {
+							if (meshComponent->materialComponent != nullptr)
+							{
+								meshComponent->materialComponent->LoadTexture(tmp.c_str());
+							}
+						}
+					}
+					
+					
 				}
 			}
 			break;

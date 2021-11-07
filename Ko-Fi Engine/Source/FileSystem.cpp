@@ -104,12 +104,21 @@ void FileSystem::AddPath(const char* path)
 	rootPath += path;
 }
 
-void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObject*>& gameObjects)
+void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObject*>& gameObjects,const char* texturePath)
 {
 	uint id = gameObjects.size();
 	GameObject* gameObject = new GameObject(file_path, id);
 	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
-	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
+	if (texturePath == nullptr)
+	{
+		gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
+
+	}
+	else {
+		ComponentMesh* meshComponent =(ComponentMesh*) gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
+		meshComponent->materialComponent->LoadTexture(texturePath);
+
+	}
 	gameObjects.push_back(gameObject);
 }
 

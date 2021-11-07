@@ -1,5 +1,6 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "PanelChooser.h"
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -152,7 +153,7 @@ void ComponentMesh::LoadMesh(const char* path)
 	aiReleaseImport(scene);
 }
 
-bool ComponentMesh::InspectorDraw()
+bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Mesh")) {
@@ -164,7 +165,6 @@ bool ComponentMesh::InspectorDraw()
 	}
 
 	if(materialComponent != nullptr)
-		materialComponent->InspectorDraw();
-
+		materialComponent->InspectorDraw(chooser);
 	return ret;
 }

@@ -1,15 +1,16 @@
 #include "MainBar.h"
 #include "Editor.h"
+#include "Engine.h"
 #include "FileSystem.h"
+#include "SceneIntro.h"
 #include "PanelChooser.h"
 #include "SDL.h"
 #include <imgui.h>
 #include "Primitive.h"
 
-MainBar::MainBar(Editor* editor,FileSystem* filesystem)
+MainBar::MainBar(Editor* editor)
 {
 	this->editor = editor;
-	this->filesystem = filesystem;
 }
 
 MainBar::~MainBar()
@@ -40,7 +41,7 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
-				editor->gameObjects.clear();
+				editor->engine->GetSceneIntro()->gameObjectList.clear();
 				editor->panelGameObjectInfo.currentGameObjectID = -1;
 			}
 			if (ImGui::MenuItem("Quit"))
@@ -55,27 +56,28 @@ bool MainBar::Update()
 			{
 				if (ImGui::MenuItem("Cube"))
 				{
-					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, editor->gameObjects);
+					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Sphere"))
 				{
-					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE, editor->gameObjects);
+					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{
-					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->gameObjects);
+					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Line"))
 				{
-					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->gameObjects);
+					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
+
 				}
 				if (ImGui::MenuItem("Plane"))
 				{
-					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->gameObjects);
+					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Pyramid"))
 				{
-					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->gameObjects);
+					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				ImGui::EndMenu();
 			}
@@ -112,7 +114,7 @@ void MainBar::ImportModel() {
 		{
 			std::string newFile = file;
 			newFile.erase(newFile.begin());
-			filesystem->GameObjectFromMesh(newFile.c_str(), editor->gameObjects);
+			editor->engine->GetFileSystem()->GameObjectFromMesh(newFile.c_str(), editor->engine->GetSceneIntro()->gameObjectList);
 		}
 	}
 }

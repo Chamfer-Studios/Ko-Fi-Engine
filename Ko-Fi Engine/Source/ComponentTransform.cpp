@@ -1,4 +1,5 @@
 #include "ComponentTransform.h"
+#include "PanelChooser.h"
 ComponentTransform::ComponentTransform() : Component(COMPONENT_TYPE::COMPONENT_TRANSFORM)
 {
 	position.x = position.y = position.z = 0;
@@ -10,7 +11,7 @@ ComponentTransform::~ComponentTransform()
 {
 }
 
-bool ComponentTransform::InspectorDraw()
+bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Transform")) {

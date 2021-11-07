@@ -6,12 +6,6 @@
 #include "Globals.h"
 #include "Panel.h"
 
-// Modules
-class Window;
-class Input;
-class Renderer3D;
-class FileSystem;
-
 // Panels
 class MainBar;
 class PanelHierarchy;
@@ -33,7 +27,7 @@ class Editor : public Module
 {
 public:
 
-	Editor(Window* window, Renderer3D* renderer,Input* input,EngineConfig* engineConfig,FileSystem* filesystem);
+	Editor(KoFiEngine* engine);
 	~Editor();
 
 	bool Awake(Json configModule);
@@ -53,10 +47,7 @@ public:
 	bool toggleChooserPanel = false;
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
-
-	// FIXME: The list of meshes should be in scene intro.
-	// Is here temporarily for debug reasons...
-	std::vector<GameObject*> gameObjects;
+	KoFiEngine* engine = nullptr;
 
 private:
 	// Style
@@ -69,14 +60,7 @@ private:
 	PanelAbout* panelAbout = nullptr;
 	PanelChooser* panelChooser = nullptr;
 	PanelInspector* panelGameObject = nullptr;
-
-	// Needed modules
-	Window* window = nullptr;
-	Input* input = nullptr;
-	Renderer3D* renderer = nullptr;
-	FileSystem* fileSystem = nullptr;
-	KoFiEngine* engine = nullptr;
-
+private:
 	std::list<Panel*> panels;
 };
 

@@ -8,6 +8,7 @@
 class GuiControl;
 enum class GuiControlState;
 class KoFiEngine;
+
 class Module
 {
 public:

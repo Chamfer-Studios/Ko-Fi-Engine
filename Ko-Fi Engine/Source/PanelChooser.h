@@ -1,13 +1,13 @@
 #pragma once
 #include "Panel.h"
 
-class FileSystem;
 #define FILE_MAX 250
+class Editor;
 class PanelChooser : public Panel
 {
 public:
 
-	PanelChooser(FileSystem* fileSystem);
+	PanelChooser(Editor* editor);
 	~PanelChooser();
 
 	bool Awake();
@@ -29,7 +29,7 @@ private:
 		READY_TO_CLOSE
 	} chooserState = CLOSED;
 	std::string fileDialogOrigin;
-	FileSystem* fileSystem = nullptr;
+	Editor* editor;
 	const char* currentExtension = "fbx";
 	char selectedFile[FILE_MAX];
 };

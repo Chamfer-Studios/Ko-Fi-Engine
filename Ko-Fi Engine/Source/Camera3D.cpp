@@ -1,12 +1,13 @@
 #include "Globals.h"
-#include "Input.h"
-//#include "PhysBody3D.h"
 #include "Camera3D.h"
+#include "Engine.h"
+#include "Input.h"
+
 #include "SDL.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
-Camera3D::Camera3D(Input* input) : Module()
+Camera3D::Camera3D(KoFiEngine* engine) : Module()
 {
 	name = "Camera";
 	CalculateViewMatrix();
@@ -17,8 +18,7 @@ Camera3D::Camera3D(Input* input) : Module()
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
-
-	this->input = input;
+	this->engine = engine;
 }
 
 Camera3D::~Camera3D()
@@ -50,28 +50,28 @@ bool Camera3D::Update(float dt)
 
 	vec3 newPos(0, 0, 0);
 	float speed = 3.0f * dt;
-	if (input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
 
-	if (input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if (input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
 
-	if (input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if (input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
 
-	if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
 	Position += newPos;
 	Reference += newPos;
 
 	// Mouse motion ----------------
 
-	if (input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
-		int dx = -input->GetMouseXMotion();
-		int dy = -input->GetMouseYMotion();
+		int dx = -engine->GetInput()->GetMouseXMotion();
+		int dy = -engine->GetInput()->GetMouseYMotion();
 
 		float Sensitivity = 0.25f;
 

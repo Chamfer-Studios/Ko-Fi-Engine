@@ -9,7 +9,7 @@ class ComponentTransform : public Component
 public:
 	ComponentTransform();
 	~ComponentTransform();
-	bool InspectorDraw();
+	bool InspectorDraw(PanelChooser* chooser);
 
 private:
 	Vector position;

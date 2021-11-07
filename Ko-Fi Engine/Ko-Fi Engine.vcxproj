@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\Color.cpp" />
+    <ClCompile Include="Source\ComponentInfo.cpp" />
     <ClCompile Include="Source\ComponentMaterial.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="Source\External\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_tables.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\Random\LCG.cpp" />
@@ -218,6 +220,7 @@
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
+    <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="Source\External\imgui\imgui_impl_sdl.h" />
     <ClInclude Include="Source\External\imgui\imgui_internal.h" />
+    <ClInclude Include="Source\External\imgui\imgui_stdlib.h" />
     <ClInclude Include="Source\External\imgui\imstb_rectpack.h" />
     <ClInclude Include="Source\External\imgui\imstb_textedit.h" />
     <ClInclude Include="Source\External\imgui\imstb_truetype.h" />

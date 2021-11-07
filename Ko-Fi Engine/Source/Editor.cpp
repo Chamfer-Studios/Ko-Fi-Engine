@@ -1,11 +1,13 @@
 #include <imgui.h>
 #include <imgui_impl_sdl.h>
 #include <imgui_impl_opengl3.h>
+#include "Engine.h"
 #include "Editor.h"
 #include "Window.h"
 #include "Renderer3D.h"
 #include "FileSystem.h"
 #include "Input.h"
+#include "SceneIntro.h"
 #include "EngineConfig.h"
 #include "ImGuiAppLog.h"
 #include "MainBar.h"
@@ -18,21 +20,16 @@
 
 void LoadFonts(float fontSize_ = 12.0f);
 
-Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig* engineConfig, FileSystem* filesystem)
+Editor::Editor(KoFiEngine* engine)
 {
 	name = "Editor";
-	this->window = window;
-	this->renderer = renderer;
-	this->engine = engine;
-	this->fileSystem = fileSystem;
-	this->input = input;
 
-	mainMenuBar = new MainBar(this,filesystem);
+	mainMenuBar = new MainBar(this);
 	panelHierarchy = new PanelHierarchy(this);
-	panelConfig = new PanelConfiguration(window,renderer,input,engineConfig,this);
+	panelConfig = new PanelConfiguration(engine->GetEngineConfig(),this);
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
-	panelChooser = new PanelChooser(filesystem);
+	panelChooser = new PanelChooser(this);
 	panelGameObject = new PanelInspector(this);
 
 	AddPanel(mainMenuBar);
@@ -42,6 +39,7 @@ Editor::Editor(Window* window, Renderer3D* renderer, Input* input, EngineConfig*
 	AddPanel(panelAbout);
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
+	this->engine = engine;
 }
 
 Editor::~Editor()
@@ -81,7 +79,7 @@ bool Editor::Awake(Json configModule)
 	}
 
 	// FIXME: The list of meshes should be in scene intro.
-	input->gameObjects = &gameObjects;
+	//input->gameObjects = &gameObjects;
 
 	return ret;
 }
@@ -97,7 +95,7 @@ bool Editor::Start()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
 	styleHandler.SetKoFiStyle();
-	ImGui_ImplSDL2_InitForOpenGL(window->window, renderer->context);
+	ImGui_ImplSDL2_InitForOpenGL(engine->GetWindow()->window, engine->GetRenderer()->context);
 	ImGui_ImplOpenGL3_Init();
 
 	// Panels Start
@@ -121,7 +119,7 @@ bool Editor::PreUpdate(float dt)
 {
 	bool ret = true;
 	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(window->window);
+	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
 
 	// Panels PreUpdate
@@ -187,7 +185,7 @@ bool Editor::PostUpdate(float dt)
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	SDL_GL_MakeCurrent(window->window, renderer->context);
+	SDL_GL_MakeCurrent(engine->GetWindow()->window, engine->GetRenderer()->context);
 
 
 	// Panels PostUpdate

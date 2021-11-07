@@ -1,6 +1,8 @@
 #include "PanelInspector.h"
 #include <imgui.h>
 #include "Editor.h"
+#include "Engine.h"
+#include "SceneIntro.h"
 #include "GameObject.h"
 
 PanelInspector::PanelInspector(Editor* editor)
@@ -31,10 +33,10 @@ bool PanelInspector::Update()
 	if (panelGameObjectInfo.currentGameObjectID != -1)
 	{
 		// Current game object (the one we have selected at the moment)
-		GameObject* currentGameObject = editor->gameObjects.at(editor->panelGameObjectInfo.currentGameObjectID);
+		GameObject* currentGameObject = editor->engine->GetSceneIntro()->gameObjectList.at(editor->panelGameObjectInfo.currentGameObjectID);
 		for (Component* component : currentGameObject->GetComponents())
 		{
-			component->InspectorDraw();
+			component->InspectorDraw(editor->GetPanelChooser());
 		}
 	}
 

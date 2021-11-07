@@ -7,15 +7,13 @@
 
 #define MAX_LIGHTS 8
 
-class Window;
-class Camera3D;
-class FileSystem;
+
 class GameObject;
 
 class Renderer3D : public Module
 {
 public:
-	Renderer3D(Window* window,Camera3D* camera);
+	Renderer3D(KoFiEngine* engine);
 	~Renderer3D();
 
 	bool Awake(Json configModule);
@@ -32,10 +30,8 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
-	Window* window = nullptr;
-	Camera3D* camera = nullptr;
-	FileSystem* fileSystem = nullptr;
 
 private:
 	bool vsync = false;
+	KoFiEngine* engine = nullptr;
 };

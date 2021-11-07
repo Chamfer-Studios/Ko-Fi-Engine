@@ -4,8 +4,7 @@
 
 #define MAX_MOUSE_BUTTONS 5
 
-class Window;
-class FileSystem;
+
 // FIXME: The list of meshes should be in scene intro.
 class GameObject;
 
@@ -21,7 +20,7 @@ class Input : public Module
 {
 public:
 
-	Input(Window* window, FileSystem* fileSystem);
+	Input(KoFiEngine* engine);
 	~Input();
 
 	bool Init();
@@ -78,8 +77,5 @@ private:
 	//int mouse_z_motion;
 	//Renderer3D* renderer = nullptr;
 	char* dropped_filedir;
-
-	// Needed modules
-	Window* window = nullptr;
-	FileSystem* fileSystem = nullptr;
+	KoFiEngine* engine = nullptr;
 };

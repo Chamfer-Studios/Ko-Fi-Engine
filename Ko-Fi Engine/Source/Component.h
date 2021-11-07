@@ -2,12 +2,13 @@
 #include "imgui.h"
 
 class GameObject;
-
+class PanelChooser;
 enum class COMPONENT_TYPE
 {
 	COMPONENT_TRANSFORM = 0,
 	COMPONENT_MESH,
-	COMPONENT_MATERIAL
+	COMPONENT_MATERIAL,
+	COMPONENT_INFO,
 };
 
 enum class COMPONENT_SUBTYPE
@@ -32,11 +33,11 @@ public:
 	virtual bool PreUpdate() { return true; }
 	virtual bool Update() {return true;}
 	virtual bool PostUpdate() {return true;}
-	virtual bool InspectorDraw() {return true;}
+	virtual bool InspectorDraw(PanelChooser* chooser) {return true;}
 	virtual void Disable() { active = false; }
 public:
 	COMPONENT_TYPE type;
-private:
+protected:
 	bool active;
 	GameObject* owner;
 

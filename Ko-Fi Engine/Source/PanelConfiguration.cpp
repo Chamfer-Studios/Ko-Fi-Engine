@@ -1,5 +1,6 @@
 #include "PanelConfiguration.h"
 #include "PanelChooser.h"
+#include "Engine.h"
 #include "Window.h"
 #include "Renderer3D.h"
 #include "Input.h"
@@ -8,14 +9,12 @@
 #include <imgui.h>
 #include "glew.h"
 
-PanelConfiguration::PanelConfiguration(Window* window, Renderer3D* renderer, Input* input, EngineConfig* engineConfig, Editor* editor)
+PanelConfiguration::PanelConfiguration(EngineConfig* engineConfig, Editor* editor)
 {
 	panelName = "Configuration";
-	this->window = window;
-	this->renderer = renderer;
+	
 	this->engineConfig = engineConfig;
 	this->editor = editor;
-	this->input = input;
 }
 
 PanelConfiguration::~PanelConfiguration()
@@ -75,25 +74,25 @@ bool PanelConfiguration::Update()
 
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
-		bool vsync = renderer->GetVsync();
+		bool vsync = editor->engine->GetRenderer()->GetVsync();
 		if (ImGui::Checkbox("VSync", &vsync))
-			renderer->SetVsync(vsync);
+			editor->engine->GetRenderer()->SetVsync(vsync);
 	}
 
 	if (ImGui::CollapsingHeader("Input")) {
-		int mouseX = input->GetMouseX();
-		int mouseY = input->GetMouseY();
+		int mouseX = editor->engine->GetInput()->GetMouseX();
+		int mouseY = editor->engine->GetInput()->GetMouseY();
 		ImGui::Text("Mouse Position:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i,%i", mouseX, mouseY);
 
-		mouseX = input->GetMouseXMotion();
-		mouseY = input->GetMouseYMotion();
+		mouseX = editor->engine->GetInput()->GetMouseXMotion();
+		mouseY = editor->engine->GetInput()->GetMouseYMotion();
 		ImGui::Text("Mouse Motion:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i,%i", mouseX, mouseY);
 
-		int wheel = input->GetMouseZ();
+		int wheel = editor->engine->GetInput()->GetMouseZ();
 		ImGui::Text("Mouse Wheel:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i", wheel);
@@ -112,39 +111,39 @@ bool PanelConfiguration::Update()
 			{
 				std::string newFile = file;
 				newFile.erase(newFile.begin());
-				window->SetIcon(newFile.c_str());
+				editor->engine->GetWindow()->SetIcon(newFile.c_str());
 			}
 		}
-		if (ImGui::Selectable(window->GetIcon()))
+		if (ImGui::Selectable(editor->engine->GetWindow()->GetIcon()))
 			editor->GetPanelChooser()->OpenPanel("bmp");
-		float brightness = window->GetBrightness();
+		float brightness = editor->engine->GetWindow()->GetBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
-			window->AdjustBrightness(brightness);
-		int width = window->GetWidth();
-		int height = window->GetHeight();
+			editor->engine->GetWindow()->AdjustBrightness(brightness);
+		int width = editor->engine->GetWindow()->GetWidth();
+		int height = editor->engine->GetWindow()->GetHeight();
 		if (ImGui::SliderInt("Width", &width, 640, 4096) | ImGui::SliderInt("Height", &height, 480, 2160))
 		{
-			SDL_SetWindowSize(window->window, width, height);
-			window->SetWidth(width);
-			window->SetHeight(height);
+			SDL_SetWindowSize(editor->engine->GetWindow()->window, width, height);
+			editor->engine->GetWindow()->SetWidth(width);
+			editor->engine->GetWindow()->SetHeight(height);
 		}
 		ImGui::Text("Refresh rate:");
 		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0),"%u",window->GetRefreshRate());
-		bool temp = window->GetFullscreen();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0),"%u", editor->engine->GetWindow()->GetRefreshRate());
+		bool temp = editor->engine->GetWindow()->GetFullscreen();
 		if (ImGui::Checkbox("Fullscreen",&temp))
-			window->SetFullscreen(temp);
+			editor->engine->GetWindow()->SetFullscreen(temp);
 		ImGui::SameLine();
-		temp = window->GetFullscreenDesktop();
+		temp = editor->engine->GetWindow()->GetFullscreenDesktop();
 		if (ImGui::Checkbox("Fullscreen Desktop", &temp))
-			window->SetFullscreenDesktop(temp);
-		temp = window->GetResizable();
+			editor->engine->GetWindow()->SetFullscreenDesktop(temp);
+		temp = editor->engine->GetWindow()->GetResizable();
 		if (ImGui::Checkbox("Resizable", &temp))
-			window->SetResizable(temp);
+			editor->engine->GetWindow()->SetResizable(temp);
 		ImGui::SameLine();
-		temp = window->GetBorderless();
+		temp = editor->engine->GetWindow()->GetBorderless();
 		if (ImGui::Checkbox("Borderless", &temp))
-			window->SetBorderless(temp);
+			editor->engine->GetWindow()->SetBorderless(temp);
 	}
 
 	if (ImGui::CollapsingHeader("Hardware")) {

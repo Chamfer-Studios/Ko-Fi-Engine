@@ -1,7 +1,9 @@
 #include "PanelHierarchy.h"
 #include <imgui.h>
 
+#include "Engine.h"
 #include "Editor.h"
+#include "SceneIntro.h"
 #include "GameObject.h"
 
 // Helper to display a little (?) mark which shows a tooltip when hovered.
@@ -79,7 +81,7 @@ bool PanelHierarchy::Update()
 
 	ImGui::Begin("Scene Hierarchy");
 
-	std::vector<GameObject*> gameObjects = editor->gameObjects; // It should be an std::list and located in SceneIntro...
+	std::vector<GameObject*> gameObjects = editor->engine->GetSceneIntro()->gameObjectList; // It should be an std::list and located in SceneIntro...
 
 	if (!gameObjects.empty())
 	{

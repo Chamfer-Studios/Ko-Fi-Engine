@@ -1,12 +1,13 @@
 #include "PanelChooser.h"
+#include "Engine.h"
 #include "Editor.h"
 #include "FileSystem.h"
 #include <imgui.h>
 #include <string>
 #include <vector>
-PanelChooser::PanelChooser(FileSystem* fileSystem)
+PanelChooser::PanelChooser(Editor* editor)
 {
-	this->fileSystem = fileSystem;
+	this->editor = editor;
 }
 
 PanelChooser::~PanelChooser()
@@ -42,7 +43,7 @@ bool PanelChooser::IsReadyToClose()
 
 const char* PanelChooser::OnChooserClosed()
 {
-	if (chooserState == READY_TO_CLOSE)
+	if (chooserState == READY_TO_CLOSE || chooserState == CLOSED)
 	{
 		chooserState = CLOSED;
 		return selectedFile[0] ? selectedFile : nullptr;
@@ -97,7 +98,7 @@ void PanelChooser::GetPath(const char* path, const char* extension)
 	std::vector<std::string> dirs;
 	std::string dir((path) ? path : "");
 	dir += "/";
-	fileSystem->EnumerateFiles(dir.c_str(),files,dirs);
+	editor->engine->GetFileSystem()->EnumerateFiles(dir.c_str(),files,dirs);
 	for (std::vector<std::string>::const_iterator it = dirs.begin(); it != dirs.end(); ++it) {
 		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str())) {
 			GetPath((dir + (*it)).c_str(), extension);

@@ -27,7 +27,7 @@ public:
 	bool SaveFile(const char* path) const;
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
 	void AddPath(const char* path);
-	void GameObjectFromMesh(const char* file_path,std::vector<GameObject*>& gameObjects);
+	void GameObjectFromMesh(const char* file_path,std::vector<GameObject*>& gameObjects,const char* texturePath = nullptr);
 	void GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<GameObject*>& gameObjects);
 
 public:

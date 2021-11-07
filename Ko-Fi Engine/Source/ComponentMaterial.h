@@ -4,15 +4,18 @@
 
 typedef unsigned int uint;
 
+class PanelChooser;
+
 class ComponentMaterial : public Component
 {
 public:
 	ComponentMaterial();
 	~ComponentMaterial();
-	void LoadTexture(uint& textureID,const char* path);
-	bool InspectorDraw();
-	void AddTextureId(uint& textureID);
+	void LoadTextureFromId(uint& textureID,const char* path);
+	void LoadTexture(const char* path);
+	bool InspectorDraw(PanelChooser* chooser);
+	void AddTextureId(uint textureID);
 private:
 	const char* path = "";
-	std::vector<std::reference_wrapper<uint>>textureIds;
+	std::vector<uint>textureIds;
 };
