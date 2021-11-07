@@ -27,12 +27,12 @@ public:
 	bool SaveFile(const char* path) const;
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
 	void AddPath(const char* path);
-	void GameObjectFromMesh(const char* file_path,std::vector<GameObject*>& meshes);
-	void GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<GameObject*>& meshes);
+	void GameObjectFromMesh(const char* file_path,std::vector<GameObject*>& gameObjects);
+	void GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<GameObject*>& gameObjects);
 
 public:
 	fs::path rootPath;
 
 };
 
-#endif FILELOADER_H // FILESYSTEM_H
+#endif FILESYSTEM_H // FILESYSTEM_H

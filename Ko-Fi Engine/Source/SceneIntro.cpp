@@ -13,6 +13,8 @@
 #include "FileSystem.h"
 #include "GameObject.h"
 
+#include "ComponentMaterial.h" // Temporal for the assignment, just to display the texture on the model when the program begins...
+
 SceneIntro::SceneIntro(Camera3D* camera, Window* window, Renderer3D* renderer, Editor* editor, FileSystem* fileSystem) : Module()
 {
 	name = "SceneIntro";
@@ -41,11 +43,13 @@ bool SceneIntro::Start()
 	camera->Move(vec3(1.0f, 1.0f, 1.0f));
 	camera->LookAt(vec3(0, 0, 0));
 
-	// Load meshes
-	/*fileSystem->LoadMesh("Assets/Meshes/warrior.fbx");*/
+	// Load initial scene (temporal)
+	fileSystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->gameObjects);
 	fileSystem->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", editor->gameObjects);
-	//fileSystem->LoadMesh("Assets/Meshes/Prop.fbx",meshes);
-	//editor->gameObjects.at(0).SetNewTexture("Assets/Images/baker_house.png");
+	// Temporal for the assignment, just to display the texture on the model when the program begins...
+	/*uint textureID = 1; ((ComponentMaterial*)editor->gameObjects.at(1)->GetComponent(COMPONENT_TYPE::COMPONENT_MESH))->LoadTexture((uint&) textureID, "Assets/Images/baker_house.png");
+	textureID = 2; ((ComponentMaterial*)editor->gameObjects.at(1)->GetComponent(COMPONENT_TYPE::COMPONENT_MESH))->LoadTexture((uint&)textureID, "Assets/Images/baker_house.png");*/
+	
 	for (GameObject* go : editor->gameObjects)
 	{
 		go->Start();
@@ -65,7 +69,6 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
-
 	for (GameObject* go : editor->gameObjects)
 	{
 		go->Update();

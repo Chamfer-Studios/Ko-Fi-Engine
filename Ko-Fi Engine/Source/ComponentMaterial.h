@@ -1,7 +1,9 @@
 #pragma once
 #include "Component.h"
 #include <vector>
+
 typedef unsigned int uint;
+
 class ComponentMaterial : public Component
 {
 public:

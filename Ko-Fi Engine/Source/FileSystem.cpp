@@ -118,6 +118,6 @@ void FileSystem::GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<
 	uint id = gameObjects.size();
 	GameObject* gameObject = new GameObject(id);
 	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
-	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH, COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE);
+	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH, subtype);
 	gameObjects.push_back(gameObject);
 }

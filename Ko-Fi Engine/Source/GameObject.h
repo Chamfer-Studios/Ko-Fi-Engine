@@ -22,6 +22,7 @@ public:
 	void SetName(std::string name);
 	std::string GetName();
 	std::vector<Component*> GetComponents();
+	Component* GetComponent(COMPONENT_TYPE type);
 
 private:
 	std::vector<Component*> components;

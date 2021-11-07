@@ -59,7 +59,6 @@ bool GameObject::PostUpdate()
     for (Component* component : components)
     {
         ret = component->PostUpdate();
-
     }
     return ret;
 }
@@ -129,4 +128,13 @@ std::string GameObject::GetName()
 std::vector<Component*> GameObject::GetComponents()
 {
     return components;
+}
+
+Component* GameObject::GetComponent(COMPONENT_TYPE type)
+{
+    for (Component* component : components)
+    {
+        if (component->type == type) return component;
+    }
+    return nullptr;
 }

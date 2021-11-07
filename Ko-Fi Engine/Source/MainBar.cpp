@@ -53,17 +53,29 @@ bool MainBar::Update()
 		{
 			if (ImGui::BeginMenu("Primitive"))
 			{
-				if (ImGui::MenuItem("Sphere"))
-				{
-					
-				}
 				if (ImGui::MenuItem("Cube"))
 				{
-					filesystem->GameObjectFromPrimitive(editor->gameObjects);
+					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, editor->gameObjects);
+				}
+				if (ImGui::MenuItem("Sphere"))
+				{
+					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE, editor->gameObjects);
+				}
+				if (ImGui::MenuItem("Cylinder"))
+				{
+					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->gameObjects);
+				}
+				if (ImGui::MenuItem("Line"))
+				{
+					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->gameObjects);
 				}
 				if (ImGui::MenuItem("Plane"))
 				{
-					
+					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->gameObjects);
+				}
+				if (ImGui::MenuItem("Pyramid"))
+				{
+					filesystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->gameObjects);
 				}
 				ImGui::EndMenu();
 			}

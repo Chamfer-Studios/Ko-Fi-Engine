@@ -5,6 +5,7 @@
 #include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+
 ComponentMaterial::ComponentMaterial() : Component(COMPONENT_TYPE::COMPONENT_MATERIAL)
 {
 	path = "";
@@ -26,16 +27,15 @@ void ComponentMaterial::LoadTexture(uint& textureID, const char* path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	if (pixels) {
+	if (pixels)
+	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 		glGenerateMipmap(GL_TEXTURE_2D);
-
 	}
 	else
 	{
 		appLog->AddLog("%s", "Texture Image not loaded correctly");
 	}
-
 
 	stbi_image_free(pixels);
 }

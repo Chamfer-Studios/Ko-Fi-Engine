@@ -36,6 +36,14 @@ bool ComponentMesh::PostUpdate()
 
 	switch (subtype)
 	{
+	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
+	{
+		for (Mesh* mesh : meshes)
+		{
+			mesh->Draw();
+		}
+		break;
+	}
 	case COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE:
 	{
 		Cube cube(1, 1, 1);
@@ -50,16 +58,21 @@ bool ComponentMesh::PostUpdate()
 	}
 	case COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER:
 	{
+		Cylinder cylinder(1, 1);
+		cylinder.InnerRender();
 		break;
 	}
 	case COMPONENT_SUBTYPE::COMPONENT_MESH_LINE:
 	{
+		Line line(1, 1, 1);
+		line.InnerRender();
 		break;
 	}
 	case COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE:
 	{
-		Plane p(0, 1, 0, 0);
-		p.Render();
+		Plane plane(0, 1, 0, 0);
+		plane.axis = true;
+		plane.Render();
 		break;
 	}
 	case COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID:
@@ -70,19 +83,6 @@ bool ComponentMesh::PostUpdate()
 	}
 	default:
 		break;
-	}
-
-	if (subtype == COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE)
-	{
-		Cube cube(1, 1, 1);
-		cube.DrawInterleavedMode();
-	}
-	else
-	{
-		for (Mesh* mesh : meshes)
-		{
-			mesh->Draw();
-		}
 	}
 
 	return ret;
@@ -99,12 +99,12 @@ void ComponentMesh::LoadMesh(const char* path)
 			Mesh* ourMesh = new Mesh();
 			aiMesh* aiMesh = scene->mMeshes[i];
 
-			//positions
+			// Positions
 			ourMesh->num_vertices = aiMesh->mNumVertices;
 			ourMesh->vertices = new float[ourMesh->num_vertices * 3];
 			memcpy(ourMesh->vertices, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertices * 3);
 
-			// copy faces
+			// Faces
 			if (aiMesh->HasFaces())
 			{
 				ourMesh->num_indices = aiMesh->mNumFaces * 3;
@@ -146,7 +146,6 @@ void ComponentMesh::LoadMesh(const char* path)
 			ourMesh->SetUpMeshBuffers();
 			materialComponent->AddTextureId(ourMesh->textureID);
 			meshes.push_back(ourMesh);
-
 		}
 	}
 
@@ -164,6 +163,8 @@ bool ComponentMesh::InspectorDraw()
 		}
 	}
 
-	materialComponent->InspectorDraw();
+	if(materialComponent != nullptr)
+		materialComponent->InspectorDraw();
+
 	return ret;
 }
