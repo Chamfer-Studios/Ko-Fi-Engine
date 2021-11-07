@@ -47,8 +47,8 @@ bool SceneIntro::Start()
 	fileSystem->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->gameObjects);
 	fileSystem->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", editor->gameObjects);
 	// Temporal for the assignment, just to display the texture on the model when the program begins...
-	/*uint textureID = 1; ((ComponentMaterial*)editor->gameObjects.at(1)->GetComponent(COMPONENT_TYPE::COMPONENT_MESH))->LoadTexture((uint&) textureID, "Assets/Images/baker_house.png");
-	textureID = 2; ((ComponentMaterial*)editor->gameObjects.at(1)->GetComponent(COMPONENT_TYPE::COMPONENT_MESH))->LoadTexture((uint&)textureID, "Assets/Images/baker_house.png");*/
+	uint textureID = 1; ((ComponentMaterial*)editor->gameObjects.at(1)->GetComponent(COMPONENT_TYPE::COMPONENT_MESH))->LoadTexture((uint&) textureID, "Assets/Images/baker_house.png");
+	textureID = 2; ((ComponentMaterial*)editor->gameObjects.at(1)->GetComponent(COMPONENT_TYPE::COMPONENT_MESH))->LoadTexture((uint&)textureID, "Assets/Images/baker_house.png");
 	
 	for (GameObject* go : editor->gameObjects)
 	{
