@@ -52,13 +52,13 @@ const char* PanelChooser::OnChooserClosed()
 }
 void PanelChooser::ShowPanel(const char* path,const char* extension)
 {
-	ImGui::OpenPopup("File Chooser");
-	if (ImGui::BeginPopupModal("File Chooser", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-		ImGui::BeginChild("File Browser", ImVec2(0, 300), true);
+	ImGui::OpenPopup("Chooser");
+	if (ImGui::BeginPopupModal("Chooser", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::BeginChild("ChooserPanel", ImVec2(0, 300), true);
 		GetPath(path, extension);
 		ImGui::EndChild();
 		ImGui::PushItemWidth(200.0f);
-		if (ImGui::InputText("##file_selector", selectedFile, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+		if (ImGui::InputText("##fileName", selectedFile, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
 			chooserState = READY_TO_CLOSE;
 		ImGui::PopItemWidth();
 		ImGui::SameLine();

@@ -6,8 +6,8 @@
 GameObject::GameObject(uint id)
 {
     active = true;
-    this->directory = nullptr; // As we use this constructor for primitives, we don't need a path...
-    name = "GameObject" + std::to_string(id);
+    this->directory =""; // As we use this constructor for primitives, we don't need a path...
+    name = "GameObject " + std::to_string(id);
     this->id = id;
     CreateComponent(COMPONENT_TYPE::COMPONENT_INFO);
 }
@@ -18,7 +18,7 @@ GameObject::GameObject(const char* path, uint id)
     active = true;
     //LoadModel(path);
     this->directory = path;
-    name = "GameObject" + std::to_string(id);
+    name = "GameObject " + std::to_string(id);
     this->id = id;
     CreateComponent(COMPONENT_TYPE::COMPONENT_INFO);
 }

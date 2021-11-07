@@ -60,8 +60,8 @@ void Mesh::SetUpDefaultTexture()
 	}
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	glGenTextures(1, &texture.textureID);
+	glBindTexture(GL_TEXTURE_2D, texture.textureID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -69,7 +69,7 @@ void Mesh::SetUpDefaultTexture()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 
-	glBindTexture(textureID, 0);
+	glBindTexture(texture.textureID, 0);
 }
 
 void Mesh::SetUpMeshTexture(const char* path)
@@ -114,7 +114,7 @@ void Mesh::Draw()
 	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 	//texture
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	glBindTexture(GL_TEXTURE_2D, texture.textureID);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);

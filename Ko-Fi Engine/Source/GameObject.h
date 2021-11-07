@@ -32,6 +32,6 @@ public:
 
 private:
 	std::vector<Component*> components;
-	const char* directory;
+	std::string directory;
 	uint id;
 };

@@ -7,6 +7,12 @@ typedef unsigned int uint;
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
 
+
+struct Texture {
+	uint textureID = 0;
+	int width, height, nrChannels;
+};
+
 class Mesh
 {
 public:
@@ -20,9 +26,7 @@ public:
 	void SetUpMeshTexture(const char* path);
 	void Draw();
 	void DebugDraw();
-	// Debug functions for drawing
-	void DrawVertexNormals() const;
-	void DrawFaceNormals() const;
+	
 
 	void ToggleVertexNormals();
 	void ToggleFacesNormals();
@@ -43,14 +47,18 @@ public:
 	float* normals = nullptr;
 
 	// Texture coordinates
-	uint textureID = 0;
 	uint id_tex_coord = 0;
 	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
+
+	//Texture
+	Texture texture;
 	
 private:
 	void SetUpDefaultTexture();
-
+	// Debug functions for drawing
+	void DrawVertexNormals() const;
+	void DrawFaceNormals() const;
 	// Debug bools
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;

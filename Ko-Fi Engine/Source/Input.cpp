@@ -12,6 +12,9 @@
 // FIXME: The list of meshes should be in scene intro.
 #include "GameObject.h"
 
+#include <imgui_impl_sdl.h>
+
+
 #define MAX_KEYS 300
 
 Input::Input(KoFiEngine* engine) : Module()
@@ -167,7 +170,7 @@ bool Input::PreUpdate(float dt)
 			{
 				if (tmp.find(".fbx") != std::string::npos)
 				{
-					engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), *gameObjects);
+					engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), engine->GetSceneIntro()->gameObjectList);
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{
@@ -191,7 +194,7 @@ bool Input::PreUpdate(float dt)
 		}
 		}
 	}
-
+	ImGui_ImplSDL2_ProcessEvent(&event);
 	if (quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
 		return false;
 

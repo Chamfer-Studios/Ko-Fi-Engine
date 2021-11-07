@@ -1,4 +1,5 @@
 #include "ComponentMaterial.h"
+#include "Mesh.h"
 #include "stb_image.h"
 #include "imgui.h"
 #include "ImGuiAppLog.h"
@@ -43,13 +44,13 @@ void ComponentMaterial::LoadTextureFromId(uint& textureID, const char* path)
 
 void ComponentMaterial::LoadTexture(const char* path)
 {
-	for (uint textureID : textureIds)
+	for (Texture& texture : textures)
 	{
 		this->path = path;
-		int width, height, nrChannels;
-		unsigned char* pixels = stbi_load(path, &width, &height, &nrChannels, STBI_rgb);
+		
+		unsigned char* pixels = stbi_load(path, &texture.width, &texture.height, &texture.nrChannels, STBI_rgb);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glBindTexture(GL_TEXTURE_2D, textureID);
+		glBindTexture(GL_TEXTURE_2D, texture.textureID);
 		// set the texture wrapping/filtering options (on the currently bound texture object)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -57,7 +58,7 @@ void ComponentMaterial::LoadTexture(const char* path)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		if (pixels)
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.width, texture.height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else
@@ -69,45 +70,79 @@ void ComponentMaterial::LoadTexture(const char* path)
 	}
 }
 
+void ComponentMaterial::LoadDefaultTexture(uint& textureID)
+{
+	this->path = "";
+	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
+	glBindTexture(textureID, 0);
+}
+
 bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Material")) {
 		if (panelChooser->IsReadyToClose()) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				path = panelChooser->OnChooserClosed();
-			
-				std::string newPath = path;
-				newPath.erase(newPath.begin());
-				path = newPath.c_str();
-				for (uint& textureID : textureIds)
+				path.erase(path.begin());
+				for (Texture& texture : textures)
 				{
-					LoadTextureFromId(textureID, path);
+					LoadTextureFromId(texture.textureID, path.c_str());
 				}
 			}
 			
 		}
-		if (path != nullptr && path != "")
+		if (path.c_str() != nullptr && path.c_str() != "")
 		{
 			ImGui::Text("Texture Path: ");
 			ImGui::SameLine();
-			if (ImGui::Selectable(path))
+			if (ImGui::Selectable(path.c_str()))
 			{
 				panelChooser->OpenPanel("png");
 
 			}
+			ImGui::Text("Texture width: ");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", textures[0].width);
+			ImGui::Text("Texture height: ");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", textures[0].height);
 		}
 			
 
 		
 		if (ImGui::Button("Add Texture")) {
 			panelChooser->OpenPanel("png");
-
+		}
+		if (ImGui::Button("Checkers Texture")) {
+			for (Texture& texture : textures)
+			{
+				LoadDefaultTexture(texture.textureID);
+			}
 		}
 	}
 	return true;
 }
 
-void ComponentMaterial::AddTextureId(uint textureID)
+void ComponentMaterial::AddTextures(Texture texture)
 {
-	textureIds.push_back(textureID);
+	this->textures.push_back(texture);
 }

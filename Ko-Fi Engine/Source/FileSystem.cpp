@@ -62,7 +62,7 @@ bool FileSystem::CleanUp()
 	appLog->AddLog("Cleaning FileSystem up...\n");
 
 	// detach log stream
-	
+
 	return true;
 }
 
@@ -85,9 +85,9 @@ bool FileSystem::CleanUp()
 //	return ret;
 //}
 
-void FileSystem::EnumerateFiles(const char* path,std::vector<std::string>&files,std::vector<std::string>&dirs)
+void FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs)
 {
-	std::string p = rootPath.string()+path;
+	std::string p = rootPath.string() + path;
 	for (const auto& file : std::filesystem::directory_iterator(p))
 	{
 		if (std::filesystem::is_directory(file.path())) {
@@ -104,7 +104,7 @@ void FileSystem::AddPath(const char* path)
 	rootPath += path;
 }
 
-void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObject*>& gameObjects,const char* texturePath)
+void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObject*>& gameObjects, const char* texturePath)
 {
 	uint id = gameObjects.size();
 	GameObject* gameObject = new GameObject(file_path, id);
@@ -115,9 +115,8 @@ void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObjec
 
 	}
 	else {
-		ComponentMesh* meshComponent =(ComponentMesh*) gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
+		ComponentMesh* meshComponent = (ComponentMesh*)gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
 		meshComponent->materialComponent->LoadTexture(texturePath);
-
 	}
 	gameObjects.push_back(gameObject);
 }

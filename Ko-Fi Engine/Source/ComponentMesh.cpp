@@ -13,10 +13,10 @@ ComponentMesh::ComponentMesh(COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TY
 	this->subtype = subtype;
 }
 
-ComponentMesh::ComponentMesh(const char* path) : Component(COMPONENT_TYPE::COMPONENT_MESH)
+ComponentMesh::ComponentMesh(std::string path) : Component(COMPONENT_TYPE::COMPONENT_MESH)
 {
 	this->path = path;
-	LoadMesh(this->path);
+	LoadMesh(this->path.c_str());
 	this->subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
 }
 
@@ -145,7 +145,7 @@ void ComponentMesh::LoadMesh(const char* path)
 				ourMesh->tex_coords = 0;
 
 			ourMesh->SetUpMeshBuffers();
-			materialComponent->AddTextureId(ourMesh->textureID);
+			materialComponent->AddTextures(ourMesh->texture);
 			meshes.push_back(ourMesh);
 		}
 	}
@@ -159,8 +159,20 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 	if (ImGui::CollapsingHeader("Mesh")) {
 		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();
-		if (ImGui::Selectable(path))
+		if (ImGui::Selectable(path.c_str()))
 		{
+		}
+		if (ImGui::Button("Display vertex")) {
+			for (Mesh* mesh :  meshes)
+			{
+				mesh->ToggleVertexNormals();
+			}
+		}
+		if (ImGui::Button("Display normals")) {
+			for (Mesh* mesh : meshes)
+			{
+				mesh->ToggleFacesNormals();
+			}
 		}
 	}
 

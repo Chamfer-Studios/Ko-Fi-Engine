@@ -46,6 +46,7 @@ bool SceneIntro::Start()
 	engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, this->gameObjectList);
 	engine->GetFileSystem()->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", this->gameObjectList,"Assets/Images/baker_house.png");
 	
+
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Start();

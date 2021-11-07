@@ -1,14 +1,13 @@
 #pragma once
 #include "Component.h"
 #include "Mesh.h"
-
 class ComponentMaterial;
 
 class ComponentMesh : public Component
 {
 public:
 	ComponentMesh(COMPONENT_SUBTYPE subtype);
-	ComponentMesh(const char* path);
+	ComponentMesh(std::string path);
 	~ComponentMesh();
 
 	bool Start(const char* path);
@@ -19,7 +18,7 @@ public:
 	ComponentMaterial* materialComponent;
 
 private:
-	const char* path = "";
+	std::string path = "";
 	std::vector<Mesh*> meshes;
 	COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
 };
