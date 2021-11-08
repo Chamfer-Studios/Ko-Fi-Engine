@@ -47,7 +47,7 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 		ImGui::PopItemWidth();
 	}
 	SetScale(scale.x, scale.y, scale.z);
-	SetPosition(position.x,position.y,position.z);
+	SetPosition(position.x, position.y, position.z);
 	SetRotation(rotation.x, rotation.y, rotation.z);
 	return ret;
 }
@@ -59,14 +59,14 @@ void ComponentTransform::SetPosition(float x,float y, float z)
 
 void ComponentTransform::SetRotation(float x, float y, float z)
 {
-	Quat rotation(0,0,0,0);
-	rotation = Quat().FromEulerXYZ(x,y ,z );
-	float angle = 2 * acos(rotation.w);
-	vec3 axis(0, 0, 0);
-	axis.x = rotation.x / sqrt(1 - rotation.w * rotation.w);
-	axis.y = rotation.y / sqrt(1 - rotation.w * rotation.w);
-	axis.z = rotation.z / sqrt(1 - rotation.w * rotation.w);
-	transform.rotate(angle,axis);
+	Quat q(0,0,0,0);
+	q = Quat().FromEulerXYZ(DegToRad(x), DegToRad(y), DegToRad(z));
+
+	float angle = 0;
+	float3 axis(0, 0, 0);
+	q.ToAxisAngle(axis, angle);
+
+	transform.rotate(RadToDeg(angle),vec3(axis.x,axis.y,axis.z));
 
 }
 
