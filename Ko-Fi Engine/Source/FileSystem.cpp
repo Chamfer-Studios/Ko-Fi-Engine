@@ -1,4 +1,6 @@
 #include "FileSystem.h"
+#include "Engine.h"
+#include "SceneIntro.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "SDL_assert.h"
@@ -7,7 +9,7 @@
 #include <filesystem>
 #include <iomanip>
 
-FileSystem::FileSystem()
+FileSystem::FileSystem(KoFiEngine* engine)
 {
 	name = "ModelLoader";
 	std::string rootPathString = SDL_GetBasePath();
@@ -15,6 +17,7 @@ FileSystem::FileSystem()
 	rootPath = rootPathString;
 	rootPath = rootPath.parent_path().parent_path();
 	AddPath("/Ko-Fi Engine/Ko-Fi");
+	this->engine = engine;
 }
 
 FileSystem::~FileSystem()
@@ -119,6 +122,7 @@ void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObjec
 		meshComponent->materialComponent->LoadTexture(texturePath);
 	}
 	gameObjects.push_back(gameObject);
+	engine->GetSceneIntro()->rootGo->SetChild(gameObject);
 }
 
 void FileSystem::GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<GameObject*>& gameObjects)
@@ -128,4 +132,5 @@ void FileSystem::GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<
 	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
 	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH, subtype);
 	gameObjects.push_back(gameObject);
+	engine->GetSceneIntro()->rootGo->SetChild(gameObject);
 }

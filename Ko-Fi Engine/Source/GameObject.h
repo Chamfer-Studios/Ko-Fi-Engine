@@ -9,8 +9,8 @@
 class GameObject
 {
 public:
-	GameObject(uint id);
-	GameObject(const char* path, uint id);
+	GameObject(int id,const char* name = nullptr);
+	GameObject(const char* path, int id,const char* name = nullptr);
 	~GameObject();
 
 	bool Start();
@@ -22,8 +22,12 @@ public:
 	void Disable();
 	Component* CreateComponent(COMPONENT_TYPE type);
 	Component* CreateComponent(COMPONENT_TYPE type, COMPONENT_SUBTYPE subtype);
+	void SetChild(GameObject* go);
+	void RemoveChild(GameObject* go);
 	void SetName(std::string name);
+	std::vector<GameObject*> GetChildren();
 	std::string GetName();
+	GameObject* GetParent();
 	std::vector<Component*> GetComponents();
 	uint GetId();
 	Component* GetComponent(COMPONENT_TYPE type);
@@ -32,6 +36,8 @@ public:
 
 private:
 	std::vector<Component*> components;
+	std::vector<GameObject*> children;
+	GameObject* parent = nullptr;
 	std::string directory;
-	uint id;
+	int id;
 };

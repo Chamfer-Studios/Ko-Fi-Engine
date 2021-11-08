@@ -12,7 +12,7 @@ class Renderer3D;
 class FileSystem : public Module
 {
 public:
-	FileSystem();
+	FileSystem(KoFiEngine* engien);
 	~FileSystem();
 
 	bool Awake();
@@ -32,7 +32,7 @@ public:
 
 public:
 	fs::path rootPath;
-
+	KoFiEngine* engine = nullptr;
 };
 
 #endif FILESYSTEM_H // FILESYSTEM_H

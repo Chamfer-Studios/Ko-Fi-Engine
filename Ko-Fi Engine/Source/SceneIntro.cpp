@@ -25,6 +25,8 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Module()
 	this->engine = engine;
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
+	rootGo = new GameObject(-1,"Root");
+	gameObjectList.push_back(rootGo);
 }
 
 SceneIntro::~SceneIntro()

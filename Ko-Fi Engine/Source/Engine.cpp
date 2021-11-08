@@ -24,7 +24,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	PERF_START(ptimer);
 
 	window = new Window();
-	fileSystem = new FileSystem();
+	fileSystem = new FileSystem(this);
 	input = new Input(this);
 	camera = new Camera3D(this);
 	renderer = new Renderer3D(this);

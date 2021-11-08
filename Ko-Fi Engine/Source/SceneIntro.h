@@ -25,7 +25,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	GameObject* GetGameObject(int id);
 	std::vector<GameObject*> gameObjectList;
-
+	GameObject* rootGo = nullptr;
 private:
 
 	int random = 0;
