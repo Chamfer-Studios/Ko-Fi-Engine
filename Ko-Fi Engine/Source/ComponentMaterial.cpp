@@ -8,9 +8,10 @@
 #include <gl/GLU.h>
 #include "PanelChooser.h"
 
-ComponentMaterial::ComponentMaterial() : Component(COMPONENT_TYPE::COMPONENT_MATERIAL)
+ComponentMaterial::ComponentMaterial(GameObject* owner) : Component(COMPONENT_TYPE::COMPONENT_MATERIAL)
 {
 	path = "";
+	this->owner = owner;
 }
 
 ComponentMaterial::~ComponentMaterial()
@@ -108,27 +109,25 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 					LoadTextureFromId(texture.textureID, path.c_str());
 				}
 			}
-			
 		}
 		if (path.c_str() != nullptr && path.c_str() != "")
 		{
 			ImGui::Text("Texture Path: ");
 			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text,ImVec4(1, 1, 0, 1));
 			if (ImGui::Selectable(path.c_str()))
 			{
 				panelChooser->OpenPanel("png");
-
 			}
+			ImGui::PopStyleColor();
 			ImGui::Text("Texture width: ");
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", textures[0].width);
 			ImGui::Text("Texture height: ");
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", textures[0].height);
+			ImGui::Image((ImTextureID)textures[0].textureID, ImVec2(85, 85));
 		}
-			
-
-		
 		if (ImGui::Button("Add Texture")) {
 			panelChooser->OpenPanel("png");
 		}

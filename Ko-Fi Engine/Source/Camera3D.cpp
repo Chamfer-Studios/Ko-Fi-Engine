@@ -118,7 +118,9 @@ bool Camera3D::Update(float dt)
 
 		Position = Reference + Z * length(Position);
 
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) LookAt(spot);
+		if (engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) {
+			Look(this->Position, spot, true);
+		}
 	}
 
 	// Recalculate matrix -------------

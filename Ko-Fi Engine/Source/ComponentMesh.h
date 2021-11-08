@@ -6,8 +6,8 @@ class ComponentMaterial;
 class ComponentMesh : public Component
 {
 public:
-	ComponentMesh(COMPONENT_SUBTYPE subtype);
-	ComponentMesh(std::string path);
+	ComponentMesh(GameObject* owner,COMPONENT_SUBTYPE subtype);
+	ComponentMesh(GameObject* owner,std::string path);
 	~ComponentMesh();
 
 	bool Start(const char* path);

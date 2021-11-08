@@ -31,6 +31,7 @@ public:
 	std::vector<Component*> GetComponents();
 	uint GetId();
 	Component* GetComponent(COMPONENT_TYPE type);
+	ComponentTransform* GetTransform();
 	std::string name;
 	bool active = true;
 
@@ -40,4 +41,5 @@ private:
 	GameObject* parent = nullptr;
 	std::string directory;
 	int id;
+
 };

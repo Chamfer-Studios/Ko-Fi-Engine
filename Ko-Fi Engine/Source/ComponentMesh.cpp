@@ -1,4 +1,5 @@
 #include "ComponentMesh.h"
+#include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "PanelChooser.h"
 #include <assimp/cimport.h>
@@ -8,16 +9,19 @@
 #include <gl/GL.h>
 #include "Primitive.h"
 
-ComponentMesh::ComponentMesh(COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
+ComponentMesh::ComponentMesh(GameObject* owner,COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
 {
 	this->subtype = subtype;
+	this->owner = owner;
 }
 
-ComponentMesh::ComponentMesh(std::string path) : Component(COMPONENT_TYPE::COMPONENT_MESH)
+ComponentMesh::ComponentMesh(GameObject* owner,std::string path) : Component(COMPONENT_TYPE::COMPONENT_MESH)
 {
 	this->path = path;
 	LoadMesh(this->path.c_str());
 	this->subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
+	this->owner = owner;
+
 }
 
 ComponentMesh::~ComponentMesh()
@@ -34,7 +38,8 @@ bool ComponentMesh::Start(const char* path)
 bool ComponentMesh::PostUpdate()
 {
 	bool ret = true;
-
+	glPushMatrix();
+	glMultMatrixf(this->owner->GetTransform()->GetTransformMatrix());
 	switch (subtype)
 	{
 	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
@@ -85,7 +90,7 @@ bool ComponentMesh::PostUpdate()
 	default:
 		break;
 	}
-
+	glPopMatrix();
 	return ret;
 }
 
@@ -94,7 +99,7 @@ void ComponentMesh::LoadMesh(const char* path)
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		materialComponent = new ComponentMaterial();
+		materialComponent = new ComponentMaterial(this->owner);
 		for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
 		{
 			Mesh* ourMesh = new Mesh();

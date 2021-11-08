@@ -11,7 +11,7 @@ struct Texture;
 class ComponentMaterial : public Component
 {
 public:
-	ComponentMaterial();
+	ComponentMaterial(GameObject* owner);
 	~ComponentMaterial();
 	void LoadTextureFromId(uint& textureID,const char* path);
 	void LoadTexture(const char* path);

@@ -16,6 +16,7 @@ GameObject::GameObject(int id, const char* name)
 	}
 	this->id = id;
 	CreateComponent(COMPONENT_TYPE::COMPONENT_INFO);
+	CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
 	this->parent = nullptr;
 }
 
@@ -100,13 +101,13 @@ Component* GameObject::CreateComponent(COMPONENT_TYPE type)
 	switch (type)
 	{
 	case COMPONENT_TYPE::COMPONENT_TRANSFORM:
-		ret = new ComponentTransform();
+		ret = new ComponentTransform(this);
 		break;
 	case COMPONENT_TYPE::COMPONENT_MESH:
-		ret = new ComponentMesh(directory);
+		ret = new ComponentMesh(this,directory);
 		break;
 	case COMPONENT_TYPE::COMPONENT_MATERIAL:
-		ret = new ComponentMaterial();
+		ret = new ComponentMaterial(this);
 		break;
 	case COMPONENT_TYPE::COMPONENT_INFO:
 		ret = new ComponentInfo(this);
@@ -124,13 +125,13 @@ Component* GameObject::CreateComponent(COMPONENT_TYPE type, COMPONENT_SUBTYPE su
 	switch (type)
 	{
 	case COMPONENT_TYPE::COMPONENT_TRANSFORM:
-		ret = new ComponentTransform();
+		ret = new ComponentTransform(this);
 		break;
 	case COMPONENT_TYPE::COMPONENT_MESH:
-		ret = new ComponentMesh(subtype);
+		ret = new ComponentMesh(this,subtype);
 		break;
 	case COMPONENT_TYPE::COMPONENT_MATERIAL:
-		ret = new ComponentMaterial();
+		ret = new ComponentMaterial(this);
 		break;
 	case COMPONENT_TYPE::COMPONENT_INFO:
 		ret = new ComponentInfo(this);
@@ -204,4 +205,9 @@ Component* GameObject::GetComponent(COMPONENT_TYPE type)
 		if (component->type == type) return component;
 	}
 	return nullptr;
+}
+
+ComponentTransform* GameObject::GetTransform()
+{
+	return (ComponentTransform*)GetComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
 }
