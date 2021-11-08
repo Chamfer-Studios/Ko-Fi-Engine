@@ -216,6 +216,14 @@ bool Editor::CleanUp()
 		ret = (*item)->CleanUp();
 	}
 
+	RELEASE(mainMenuBar);
+	RELEASE(panelHierarchy);
+	RELEASE(panelConfig);
+	RELEASE(panelLog);
+	RELEASE(panelAbout);
+	RELEASE(panelChooser);
+	RELEASE(panelGameObject);
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();

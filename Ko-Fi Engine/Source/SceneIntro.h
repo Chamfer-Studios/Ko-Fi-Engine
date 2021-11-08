@@ -26,13 +26,12 @@ public:
 	GameObject* GetGameObject(int id);
 	std::vector<GameObject*> gameObjectList;
 	GameObject* rootGo = nullptr;
-private:
 
+private:
 	int random = 0;
 	JsonHandler jsonHandler;
 	Json j;
 	KoFiEngine* engine = nullptr;
-
 };
 
 #endif SCENE_INTRO_H

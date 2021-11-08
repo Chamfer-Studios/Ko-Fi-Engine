@@ -19,14 +19,11 @@ public:
 	Mesh();
 	~Mesh();
 
-	
-
 	//Mesh Functions
 	void SetUpMeshBuffers();
 	void SetUpMeshTexture(const char* path);
 	void Draw();
 	void DebugDraw();
-	
 
 	void ToggleVertexNormals();
 	void ToggleFacesNormals();
@@ -64,5 +61,4 @@ private:
 	bool drawFaceNormals = false;
 	bool drawColors = false;
 	bool drawTextureCoords = false;
-
 };

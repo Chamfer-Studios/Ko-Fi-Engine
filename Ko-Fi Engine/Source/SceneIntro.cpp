@@ -98,6 +98,12 @@ bool SceneIntro::CleanUp()
 	LOG("Unloading Intro scene");
 	appLog->AddLog("Unloading Intro scene\n");
 
+	for (GameObject* gameObject : gameObjectList)
+	{
+		RELEASE(gameObject);
+	}
+	RELEASE(rootGo);
+
 	return true;
 }
 

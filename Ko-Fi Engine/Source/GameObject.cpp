@@ -1,6 +1,6 @@
 #include "GameObject.h"
-
 #include "Primitive.h"
+#include "Defs.h"
 
 // Used without a path because we use a primitive
 GameObject::GameObject(int id, const char* name)
@@ -83,6 +83,24 @@ bool GameObject::PostUpdate()
 
 	return ret;
 }
+
+bool GameObject::CleanUp()
+{
+	for (Component* component : components)
+	{
+		RELEASE(component);
+	}
+
+	for (GameObject* child : children)
+	{
+		RELEASE(child);
+	}
+
+	RELEASE(parent);
+
+	return true;
+}
+
 void GameObject::Enable()
 {
 	active = true;
@@ -92,8 +110,6 @@ void GameObject::Disable()
 {
 	active = false;
 }
-
-
 
 Component* GameObject::CreateComponent(COMPONENT_TYPE type)
 {
@@ -153,7 +169,6 @@ void GameObject::SetChild(GameObject* go)
 		this->children.push_back(go);
 		go->parent = this;
 	}
-	
 }
 
 void GameObject::RemoveChild(GameObject* go)
@@ -166,7 +181,6 @@ void GameObject::RemoveChild(GameObject* go)
 		}
 	}
 }
-
 
 void GameObject::SetName(std::string name)
 {

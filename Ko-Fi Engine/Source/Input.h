@@ -4,7 +4,6 @@
 
 #define MAX_MOUSE_BUTTONS 5
 
-
 // FIXME: The list of meshes should be in scene intro.
 class GameObject;
 
@@ -19,7 +18,6 @@ enum KEY_STATE
 class Input : public Module
 {
 public:
-
 	Input(KoFiEngine* engine);
 	~Input();
 
@@ -61,8 +59,6 @@ public:
 	{
 		return mouse_y_motion;
 	}
-
-public:
 
 private:
 	KEY_STATE* keyboard;

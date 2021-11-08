@@ -1,7 +1,6 @@
 #pragma once
 #include "Component.h"
 
-
 class ComponentInfo : public Component
 {
 public:

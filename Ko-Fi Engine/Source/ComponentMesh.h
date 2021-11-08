@@ -12,12 +12,14 @@ public:
 
 	bool Start(const char* path);
 	bool PostUpdate();
+	bool CleanUp();
 
 	void LoadMesh(const char* path);
 	bool InspectorDraw(PanelChooser* chooser);
 
 	uint GetVertices();
 
+public:
 	ComponentMaterial* materialComponent;
 
 private:

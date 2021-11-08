@@ -15,8 +15,9 @@ class PanelAbout;
 class PanelChooser;
 class PanelInspector;
 
-struct EngineConfig;
 class GameObject;
+
+struct EngineConfig;
 
 struct PanelGameObjectInfo
 {
@@ -26,7 +27,6 @@ struct PanelGameObjectInfo
 class Editor : public Module
 {
 public:
-
 	Editor(KoFiEngine* engine);
 	~Editor();
 
@@ -60,7 +60,7 @@ private:
 	PanelAbout* panelAbout = nullptr;
 	PanelChooser* panelChooser = nullptr;
 	PanelInspector* panelGameObject = nullptr;
-private:
+
 	std::list<Panel*> panels;
 };
 

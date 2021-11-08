@@ -6,6 +6,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
+
 class GameObject
 {
 public:
@@ -17,6 +18,7 @@ public:
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
+	bool CleanUp();
 
 	void Enable();
 	void Disable();
@@ -32,6 +34,8 @@ public:
 	uint GetId();
 	Component* GetComponent(COMPONENT_TYPE type);
 	ComponentTransform* GetTransform();
+
+public:
 	std::string name;
 	bool active = true;
 
@@ -41,5 +45,4 @@ private:
 	GameObject* parent = nullptr;
 	std::string directory;
 	int id;
-
 };

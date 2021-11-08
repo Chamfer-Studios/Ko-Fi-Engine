@@ -23,9 +23,9 @@ enum class COMPONENT_SUBTYPE
 	COMPONENT_MESH_PYRAMID,
 };
 
-class Component {
+class Component
+{
 public:
-
 	Component(COMPONENT_TYPE type): type(type),active(true) {}
 	~Component(){}
 
@@ -34,12 +34,14 @@ public:
 	virtual bool PreUpdate() { return true; }
 	virtual bool Update() {return true;}
 	virtual bool PostUpdate() {return true;}
-	virtual bool InspectorDraw(PanelChooser* chooser) {return true;}
+	virtual bool CleanUp() { return true; }
+	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
 	virtual void Disable() { active = false; }
+
 public:
 	COMPONENT_TYPE type;
+
 protected:
 	bool active;
 	GameObject* owner;
-
 };

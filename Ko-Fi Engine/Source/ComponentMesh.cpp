@@ -8,6 +8,7 @@
 #include "glew.h"
 #include <gl/GL.h>
 #include "Primitive.h"
+#include "Defs.h"
 
 ComponentMesh::ComponentMesh(GameObject* owner,COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
 {
@@ -38,8 +39,10 @@ bool ComponentMesh::Start(const char* path)
 bool ComponentMesh::PostUpdate()
 {
 	bool ret = true;
+
 	glPushMatrix();
 	glMultMatrixf(this->owner->GetTransform()->GetTransformMatrix());
+
 	switch (subtype)
 	{
 	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
@@ -90,8 +93,20 @@ bool ComponentMesh::PostUpdate()
 	default:
 		break;
 	}
+
 	glPopMatrix();
+
 	return ret;
+}
+
+bool ComponentMesh::CleanUp()
+{
+	for (Mesh* mesh : meshes)
+	{
+		RELEASE(mesh);
+	}
+
+	return true;
 }
 
 void ComponentMesh::LoadMesh(const char* path)
