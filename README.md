@@ -24,10 +24,10 @@ This panel allows you to check engine information and configurate some settings.
 ![image](https://user-images.githubusercontent.com/46872250/140809174-0107c7be-972a-48c9-8e2e-4f723aab7485.png)
 
 ## Controls
-- ESC: Exit Engine
-- Right Click: Camera Rotation
-- Right Click + WASDQE = Moving around the 3D space
+- WASDQE = Moving around the 3D space
 - Shift + moving: Speed increase
+- Right Click: Camera Rotation
+- Alt + Left Click: Rotate around the object selected
 - Mouse Wheel: Zoom
 - F: Focus Object
-- Alt + Left Click: Rotate around the object selected
+- ESC: Exit Engine
