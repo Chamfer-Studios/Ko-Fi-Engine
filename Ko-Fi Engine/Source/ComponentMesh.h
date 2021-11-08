@@ -15,10 +15,16 @@ public:
 
 	void LoadMesh(const char* path);
 	bool InspectorDraw(PanelChooser* chooser);
+
+	uint GetVertices();
+
 	ComponentMaterial* materialComponent;
 
 private:
 	std::string path = "";
 	std::vector<Mesh*> meshes;
 	COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
+	// Checkboxes vertex and faces bools to toggle
+	bool vertexNormals = false;
+	bool facesNormals = false;
 };

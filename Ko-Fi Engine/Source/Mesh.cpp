@@ -149,7 +149,7 @@ void Mesh::DrawVertexNormals() const
 	glBegin(GL_LINES);
 	for (size_t i = 0, c = 0; i < num_vertices * 3; i += 3, c += 4)
 	{
-		glColor3f(0.85f, 0.0f, 0.85f);
+		glColor3f(1.0f, 0.0f, 0.0f);
 		//glColor4f(colors[c], colors[c + 1], colors[c + 2], colors[c + 3]);
 		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
 
@@ -171,7 +171,7 @@ void Mesh::DrawFaceNormals() const
 	glBegin(GL_LINES);
 	for (size_t i = 0; i < num_vertices * 3; i += 3)
 	{
-		glColor3f(0.0f, 0.85f, 1.0f);
+		glColor3f(0.0f, 1.0f, 0.0f);
 		float vx = (vertices[i] + vertices[i + 3] + vertices[i + 6]) / 3;
 		float vy = (vertices[i + 1] + vertices[i + 4] + vertices[i + 7]) / 3;
 		float vz = (vertices[i + 2] + vertices[i + 5] + vertices[i + 8]) / 3;

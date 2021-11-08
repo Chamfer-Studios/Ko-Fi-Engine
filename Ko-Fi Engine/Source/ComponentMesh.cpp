@@ -156,19 +156,25 @@ void ComponentMesh::LoadMesh(const char* path)
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
+
 	if (ImGui::CollapsingHeader("Mesh")) {
 		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();
-		if (ImGui::Selectable(path.c_str()))
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+		if (ImGui::Selectable(path.c_str())) {}
+		ImGui::PopStyleColor();
+		ImGui::Text("Num. vertices: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
+		if (ImGui::Checkbox("Vertex Normals", &vertexNormals))
 		{
-		}
-		if (ImGui::Button("Display vertex")) {
-			for (Mesh* mesh :  meshes)
+			for (Mesh* mesh : meshes)
 			{
 				mesh->ToggleVertexNormals();
 			}
 		}
-		if (ImGui::Button("Display normals")) {
+		if (ImGui::Checkbox("Faces Normals", &facesNormals))
+		{
 			for (Mesh* mesh : meshes)
 			{
 				mesh->ToggleFacesNormals();
@@ -178,5 +184,16 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 
 	if(materialComponent != nullptr)
 		materialComponent->InspectorDraw(chooser);
+
 	return ret;
+}
+
+uint ComponentMesh::GetVertices()
+{
+	uint numVertices = 0;
+	for (Mesh* mesh : meshes)
+	{
+		numVertices += mesh->num_vertices;
+	}
+	return numVertices;
 }
