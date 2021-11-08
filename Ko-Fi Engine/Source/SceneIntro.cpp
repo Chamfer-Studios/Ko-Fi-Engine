@@ -46,7 +46,11 @@ bool SceneIntro::Start()
 
 	// Load initial scene (temporal)
 	engine->GetFileSystem()->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", this->gameObjectList,"Assets/Images/baker_house.png");
-	
+	engine->GetFileSystem()->GameObjectFromMesh("Assets/Meshes/prop.fbx", this->gameObjectList,"Assets/Images/prop.jpg");
+	engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, this->gameObjectList);
+	gameObjectList.at(2)->GetTransform()->SetPosition(5, 0, 0);
+	gameObjectList.at(3)->GetTransform()->SetPosition(-5, 0, 0);
+
 
 	for (GameObject* go : this->gameObjectList)
 	{

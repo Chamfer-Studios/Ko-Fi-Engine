@@ -43,6 +43,8 @@ bool MainBar::Update()
 			{
 				editor->engine->GetSceneIntro()->gameObjectList.clear();
 				editor->panelGameObjectInfo.currentGameObjectID = -1;
+				editor->engine->GetSceneIntro()->rootGo = new GameObject(-1, "Root");
+				editor->engine->GetSceneIntro()->gameObjectList.push_back(editor->engine->GetSceneIntro()->rootGo);
 			}
 			if (ImGui::MenuItem("Quit"))
 			{

@@ -17,6 +17,7 @@ FileSystem::FileSystem(KoFiEngine* engine)
 	rootPath = rootPathString;
 	rootPath = rootPath.parent_path().parent_path();
 	AddPath("/Ko-Fi Engine/Ko-Fi");
+	//AddPath("/Assets");
 	this->engine = engine;
 }
 

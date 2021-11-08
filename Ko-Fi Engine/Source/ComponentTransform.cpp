@@ -3,9 +3,6 @@
 #include "MathGeoLib/MathGeoLib.h"
 ComponentTransform::ComponentTransform(GameObject* owner) : Component(COMPONENT_TYPE::COMPONENT_TRANSFORM)
 {
-	position.x = position.y = position.z = 0;
-	rotation.x = rotation.y = rotation.z = 0;
-	scale.x = scale.y = scale.z = 1;
 	transform = IdentityMatrix;
 	this->owner = owner;
 }
@@ -46,18 +43,43 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 		ImGui::Text("Scale");
 		ImGui::PopItemWidth();
 	}
-	SetPosition(position.x, position.y, position.z);
-	SetRotation(rotation.x, rotation.y, rotation.z);
-	SetScale(scale.x, scale.y, scale.z);
+	SetPositionMatrix(position.x, position.y, position.z);
+	SetRotationMatrix(rotation.x, rotation.y, rotation.z);
+	SetScaleMatrix(scale.x, scale.y, scale.z);
 	return ret;
 }
 
-void ComponentTransform::SetPosition(float x,float y, float z)
+void ComponentTransform::SetPosition(float x, float y, float z)
+{
+	position.x = x;
+	position.y = y;
+	position.z = z;
+	SetPositionMatrix(position.x,position.y,position.z);
+}
+
+void ComponentTransform::SetRotation(float x, float y, float z)
+{
+	rotation.x = x;
+	rotation.y = y;
+	rotation.z = z;
+	SetRotationMatrix(rotation.x, rotation.y, rotation.z);
+
+}
+
+void ComponentTransform::SetScale(float x, float y, float z)
+{
+	scale.x = x;
+	scale.y = y;
+	scale.z = z;
+	SetScaleMatrix(scale.x, scale.y, scale.z);
+}
+
+void ComponentTransform::SetPositionMatrix(float x,float y, float z)
 {
 	transform.translate(x, y, z);
 }
 
-void ComponentTransform::SetRotation(float x, float y, float z)
+void ComponentTransform::SetRotationMatrix(float x, float y, float z)
 {
 	Quat q(0,0,0,0);
 	q = Quat().FromEulerZYX(DegToRad(x), DegToRad(y), DegToRad(z));
@@ -70,7 +92,7 @@ void ComponentTransform::SetRotation(float x, float y, float z)
 
 }
 
-void ComponentTransform::SetScale(float x, float y, float z)
+void ComponentTransform::SetScaleMatrix(float x, float y, float z)
 {
 	transform.scale(x, y, z);
 
