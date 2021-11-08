@@ -46,9 +46,9 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 		ImGui::Text("Scale");
 		ImGui::PopItemWidth();
 	}
-	SetScale(scale.x, scale.y, scale.z);
 	SetPosition(position.x, position.y, position.z);
 	SetRotation(rotation.x, rotation.y, rotation.z);
+	SetScale(scale.x, scale.y, scale.z);
 	return ret;
 }
 
@@ -60,7 +60,7 @@ void ComponentTransform::SetPosition(float x,float y, float z)
 void ComponentTransform::SetRotation(float x, float y, float z)
 {
 	Quat q(0,0,0,0);
-	q = Quat().FromEulerXYZ(DegToRad(x), DegToRad(y), DegToRad(z));
+	q = Quat().FromEulerZYX(DegToRad(x), DegToRad(y), DegToRad(z));
 
 	float angle = 0;
 	float3 axis(0, 0, 0);
