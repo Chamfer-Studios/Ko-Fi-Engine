@@ -1,7 +1,7 @@
 # Ko-Fi Engine
 Ko-Fi Engine is a software that allows developers to create amazing videogames with a huge toolset that speeds up the development process. Its name comes from 'coffee' which is well known for giving us developers a energy boost when we need it the most. This project is due Q1 2022 and is being developed by Alejandro Ávila Rodríguez and Bosco Barber Esbert for the university subject Engines I at UPC/CITM university.
 
-##Instructions
+## Instructions
 Ko-Fi features an editor with 4 panels as of today: Hierarchy, Inspector, Console Log and Configurations. Each panel helps you perform a different task.
 
 ### Hierarchy
