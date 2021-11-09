@@ -106,7 +106,6 @@ bool SceneIntro::CleanUp()
 	{
 		RELEASE(gameObject);
 	}
-	RELEASE(rootGo);
 
 	return true;
 }
