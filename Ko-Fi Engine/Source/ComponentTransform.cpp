@@ -1,6 +1,7 @@
 #include "ComponentTransform.h"
 #include "PanelChooser.h"
 #include "MathGeoLib/MathGeoLib.h"
+
 ComponentTransform::ComponentTransform(GameObject* owner) : Component(COMPONENT_TYPE::COMPONENT_TRANSFORM)
 {
 	transform = IdentityMatrix;
@@ -89,7 +90,6 @@ void ComponentTransform::SetRotationMatrix(float x, float y, float z)
 	q.ToAxisAngle(axis, angle);
 
 	transform.rotate(RadToDeg(angle),vec3(axis.x,axis.y,axis.z));
-
 }
 
 void ComponentTransform::SetScaleMatrix(float x, float y, float z)
