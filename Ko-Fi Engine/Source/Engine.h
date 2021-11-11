@@ -54,6 +54,7 @@ public:
 	Camera3D* GetCamera3D() const;
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
+
 private:
 
 	// Add a new module to handle
