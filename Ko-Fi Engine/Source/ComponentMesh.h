@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Mesh.h"
+
 class ComponentMaterial;
 
 class ComponentMesh : public Component

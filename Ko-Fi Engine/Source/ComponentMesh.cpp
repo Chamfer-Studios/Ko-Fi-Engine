@@ -27,6 +27,10 @@ ComponentMesh::ComponentMesh(GameObject* owner,std::string path) : Component(COM
 
 ComponentMesh::~ComponentMesh()
 {
+	for (std::vector<Mesh*>::iterator mesh = meshes.begin(); mesh != meshes.end(); mesh++)
+	{
+		RELEASE(*mesh);
+	}
 }
 
 bool ComponentMesh::Start(const char* path)

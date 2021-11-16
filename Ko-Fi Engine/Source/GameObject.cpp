@@ -40,6 +40,10 @@ GameObject::GameObject(const char* path, int id, const char* name)
 
 GameObject::~GameObject()
 {
+	for (std::vector<Component*>::iterator component = components.begin(); component != components.end(); component++)
+	{
+		RELEASE(*component);
+	}
 }
 
 bool GameObject::Start()

@@ -41,6 +41,11 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
+				std::vector<GameObject*> gameObjectList = editor->engine->GetSceneIntro()->gameObjectList;
+				for (std::vector<GameObject*>::iterator gameObject = gameObjectList.begin(); gameObject != gameObjectList.end(); gameObject++)
+				{
+					RELEASE(*gameObject);
+				}
 				editor->engine->GetSceneIntro()->gameObjectList.clear();
 				editor->panelGameObjectInfo.currentGameObjectID = -1;
 				editor->engine->GetSceneIntro()->rootGo = new GameObject(-1, "Root");

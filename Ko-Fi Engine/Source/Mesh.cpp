@@ -7,7 +7,6 @@
 #include <gl/GLU.h>
 #include <iostream>
 
-
 Mesh::Mesh()
 {
 }
@@ -16,11 +15,10 @@ Mesh::~Mesh()
 {
 }
 
-
 void Mesh::SetUpMeshBuffers()
 {
-	/*SetUpTexture();*/
 	SetUpDefaultTexture();
+
 	// Vertices
 	glGenBuffers(1, &id_vertex);
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
@@ -40,10 +38,6 @@ void Mesh::SetUpMeshBuffers()
 	glGenBuffers(1, &id_tex_coord);
 	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_tex_coords * 2, tex_coords, GL_STATIC_DRAW);
-
-	
-
-
 }
 
 void Mesh::SetUpDefaultTexture()
@@ -95,7 +89,6 @@ void Mesh::SetUpMeshTexture(const char* path)
 	//
 
 	//stbi_image_free(pixels);
-
 }
 
 void Mesh::Draw()

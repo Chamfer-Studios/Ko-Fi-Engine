@@ -64,7 +64,6 @@ void ComponentTransform::SetRotation(float x, float y, float z)
 	rotation.y = y;
 	rotation.z = z;
 	SetRotationMatrix(rotation.x, rotation.y, rotation.z);
-
 }
 
 void ComponentTransform::SetScale(float x, float y, float z)
@@ -95,7 +94,6 @@ void ComponentTransform::SetRotationMatrix(float x, float y, float z)
 void ComponentTransform::SetScaleMatrix(float x, float y, float z)
 {
 	transform.scale(x, y, z);
-
 }
 
 vec3 ComponentTransform::GetPosition()

@@ -27,7 +27,7 @@ class Component
 {
 public:
 	Component(COMPONENT_TYPE type): type(type),active(true) {}
-	~Component(){}
+	virtual ~Component(){}
 
 	virtual void Enable() { active = true; }
 	virtual bool Start() { return true; }
