@@ -28,7 +28,6 @@ GameObject::GameObject(const char* path, int id, const char* name)
 	this->directory = path;
 	if (name == nullptr) {
 		this->name = "GameObject " + std::to_string(id);
-
 	}
 	else {
 		this->name = name;
@@ -40,10 +39,14 @@ GameObject::GameObject(const char* path, int id, const char* name)
 
 GameObject::~GameObject()
 {
-	for (std::vector<Component*>::iterator component = components.begin(); component != components.end(); component++)
+	for (Component* component : components)
 	{
-		RELEASE(*component);
+		RELEASE(component);
 	}
+
+	components.clear();
+	children.clear();
+	parent = nullptr;
 }
 
 bool GameObject::Start()
@@ -95,12 +98,9 @@ bool GameObject::CleanUp()
 		RELEASE(component);
 	}
 
-	for (GameObject* child : children)
-	{
-		RELEASE(child);
-	}
-
-	RELEASE(parent);
+	components.clear();
+	children.clear();
+	parent = nullptr;
 
 	return true;
 }

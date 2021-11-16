@@ -22,15 +22,17 @@ ComponentMesh::ComponentMesh(GameObject* owner,std::string path) : Component(COM
 	LoadMesh(this->path.c_str());
 	this->subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
 	this->owner = owner;
-
 }
 
 ComponentMesh::~ComponentMesh()
 {
-	for (std::vector<Mesh*>::iterator mesh = meshes.begin(); mesh != meshes.end(); mesh++)
+	for (Mesh* mesh : meshes)
 	{
-		RELEASE(*mesh);
+		RELEASE(mesh);
 	}
+	meshes.clear();
+
+	RELEASE(materialComponent);
 }
 
 bool ComponentMesh::Start(const char* path)

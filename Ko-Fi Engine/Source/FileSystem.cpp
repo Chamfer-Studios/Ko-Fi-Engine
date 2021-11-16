@@ -116,7 +116,6 @@ void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObjec
 	if (texturePath == nullptr)
 	{
 		gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
-
 	}
 	else {
 		ComponentMesh* meshComponent = (ComponentMesh*)gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);

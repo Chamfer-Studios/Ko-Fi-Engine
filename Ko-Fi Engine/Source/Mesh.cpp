@@ -7,12 +7,36 @@
 #include <gl/GLU.h>
 #include <iostream>
 
+#include "Defs.h"
+
 Mesh::Mesh()
 {
 }
 
 Mesh::~Mesh()
 {
+	// Vertices
+	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+	glDeleteBuffers(1, &id_vertex);
+	RELEASE_ARRAY(vertices);
+
+	// Normals
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glDeleteBuffers(1, &id_normal);
+	RELEASE_ARRAY(normals);
+
+	// Indices
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+	glDeleteBuffers(1, &id_index);
+	RELEASE_ARRAY(indices);
+
+	// Texture coords
+	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
+	glDeleteBuffers(1, &id_tex_coord);
+	RELEASE_ARRAY(tex_coords);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void Mesh::SetUpMeshBuffers()
@@ -128,7 +152,6 @@ void Mesh::DebugDraw()
 	// Debug draw
 	if (drawVertexNormals) DrawVertexNormals();
 	if (drawFaceNormals) DrawFaceNormals();
-
 }
 
 void Mesh::DrawVertexNormals() const

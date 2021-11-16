@@ -42,9 +42,9 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Clean Models"))
 			{
 				std::vector<GameObject*> gameObjectList = editor->engine->GetSceneIntro()->gameObjectList;
-				for (std::vector<GameObject*>::iterator gameObject = gameObjectList.begin(); gameObject != gameObjectList.end(); gameObject++)
+				for (GameObject* gameObject : gameObjectList)
 				{
-					RELEASE(*gameObject);
+					RELEASE(gameObject);
 				}
 				editor->engine->GetSceneIntro()->gameObjectList.clear();
 				editor->panelGameObjectInfo.currentGameObjectID = -1;
@@ -76,7 +76,6 @@ bool MainBar::Update()
 				if (ImGui::MenuItem("Line"))
 				{
 					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
-
 				}
 				if (ImGui::MenuItem("Plane"))
 				{
