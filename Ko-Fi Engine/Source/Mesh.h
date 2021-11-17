@@ -7,8 +7,8 @@ typedef unsigned int uint;
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
 
-
-struct Texture {
+struct Texture
+{
 	uint textureID = 0;
 	int width, height, nrChannels;
 };
@@ -19,9 +19,8 @@ public:
 	Mesh();
 	~Mesh();
 
-	//Mesh Functions
+	// Mesh Functions
 	void SetUpMeshBuffers();
-	void SetUpMeshTexture(const char* path);
 	void Draw();
 	void DebugDraw();
 
@@ -48,7 +47,7 @@ public:
 	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
 
-	//Texture
+	// Texture
 	Texture texture;
 	
 private:

@@ -129,7 +129,7 @@ void ComponentMesh::LoadMesh(const char* path)
 			// Positions
 			ourMesh->num_vertices = aiMesh->mNumVertices;
 			ourMesh->vertices = new float[ourMesh->num_vertices * 3];
-			memcpy(ourMesh->vertices, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertices * 3);
+			memcpy(ourMesh->vertices, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertices * 3); // &vertices[0]
 
 			// Faces
 			if (aiMesh->HasFaces())
