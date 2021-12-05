@@ -36,9 +36,12 @@ bool PanelChooser::PostUpdate()
 	return true;
 }
 
-bool PanelChooser::IsReadyToClose()
+bool PanelChooser::IsReadyToClose(std::string id)
 {
-	return chooserState == READY_TO_CLOSE?true:false;
+	if (this->id == id) {
+		return chooserState == READY_TO_CLOSE ? true : false;
+	}
+	return false;
 }
 
 const char* PanelChooser::OnChooserClosed()
@@ -129,8 +132,9 @@ void PanelChooser::GetPath(const char* path, const char* extension)
 
 }
 
-void PanelChooser::OpenPanel(const char* extension, const char* from_folder)
+void PanelChooser::OpenPanel(std::string id ,const char* extension, const char* from_folder)
 {
+	this->id = id;
 	selectedFile[0] = '\0';
 	currentExtension = (extension) ? extension : "";
 	fileDialogOrigin = (from_folder) ? from_folder : "";

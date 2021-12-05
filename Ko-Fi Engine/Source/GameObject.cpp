@@ -2,30 +2,12 @@
 #include "Primitive.h"
 #include "Defs.h"
 
-// Used without a path because we use a primitive
-GameObject::GameObject(int id, const char* name)
-{
-	active = true;
-	this->directory = ""; // As we use this constructor for primitives, we don't need a path...
-	if (name == nullptr) {
-		this->name = "GameObject " + std::to_string(id);
-
-	}
-	else {
-		this->name = name;
-	}
-	this->id = id;
-	CreateComponent(COMPONENT_TYPE::COMPONENT_INFO);
-	CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
-	this->parent = nullptr;
-}
 
 // Used with a path for the .fbx load
-GameObject::GameObject(const char* path, int id, const char* name)
+GameObject::GameObject( int id, const char* name)
 {
 	active = true;
 	//LoadModel(path);
-	this->directory = path;
 	if (name == nullptr) {
 		this->name = "GameObject " + std::to_string(id);
 	}
@@ -33,19 +15,24 @@ GameObject::GameObject(const char* path, int id, const char* name)
 		this->name = name;
 	}
 	this->id = id;
-	CreateComponent(COMPONENT_TYPE::COMPONENT_INFO);
+	transform = CreateComponent<ComponentTransform>();
+	components.push_back((Component*)CreateComponent<ComponentInfo>());
 	this->parent = nullptr;
 }
 
-GameObject::~GameObject()
-{
-	for (Component* component : components)
-	{
-		RELEASE(component);
+GameObject::~GameObject() {
+
+	for (size_t i = 0; i < components.size(); i++) {
+		RELEASE(components[i]);
 	}
 
 	components.clear();
-	children.clear();
+
+	for (GameObject* go : children)
+	{
+		RELEASE(go);
+	}
+
 	parent = nullptr;
 }
 
@@ -114,77 +101,52 @@ void GameObject::Disable()
 {
 	active = false;
 }
+void GameObject::DeleteComponent(Component* component) {
 
-Component* GameObject::CreateComponent(COMPONENT_TYPE type)
-{
-	Component* ret = nullptr;
-	switch (type)
+	auto componentIt = std::find(components.begin(), components.end(), component);
+	if (componentIt != components.end())
 	{
-	case COMPONENT_TYPE::COMPONENT_TRANSFORM:
-		ret = new ComponentTransform(this);
-		break;
-	case COMPONENT_TYPE::COMPONENT_MESH:
-		ret = new ComponentMesh(this,directory);
-		break;
-	case COMPONENT_TYPE::COMPONENT_MATERIAL:
-		ret = new ComponentMaterial(this);
-		break;
-	case COMPONENT_TYPE::COMPONENT_INFO:
-		ret = new ComponentInfo(this);
-		break;
-	default:
-		break;
+		components.erase(componentIt);
+		components.shrink_to_fit();
 	}
-	components.push_back(ret);
-	return ret;
 }
 
-Component* GameObject::CreateComponent(COMPONENT_TYPE type, COMPONENT_SUBTYPE subtype)
+void GameObject::AddComponent(Component* component)
 {
-	Component* ret = nullptr;
-	switch (type)
+	components.push_back(component);
+}
+
+void GameObject::AttachChild(GameObject* child)
+{
+	child->parent = this;
+	children.push_back(child);
+	child->transform->NewAttachment();
+	child->PropagateTransform();
+}
+
+void GameObject::RemoveChild(GameObject* child)
+{
+	auto it = std::find(children.begin(), children.end(), child);
+	if (it != children.end())
 	{
-	case COMPONENT_TYPE::COMPONENT_TRANSFORM:
-		ret = new ComponentTransform(this);
-		break;
-	case COMPONENT_TYPE::COMPONENT_MESH:
-		ret = new ComponentMesh(this,subtype);
-		break;
-	case COMPONENT_TYPE::COMPONENT_MATERIAL:
-		ret = new ComponentMaterial(this);
-		break;
-	case COMPONENT_TYPE::COMPONENT_INFO:
-		ret = new ComponentInfo(this);
-		break;
-	default:
-		break;
+		children.erase(it);
 	}
-	components.push_back(ret);
-	return ret;
 }
 
-void GameObject::SetChild(GameObject* go)
+void GameObject::PropagateTransform()
 {
-	if (go->parent != this) {
-		if (go->parent != nullptr) {
-			go->parent->RemoveChild(go);
-		}
-
-		this->children.push_back(go);
-		go->parent = this;
+	for (GameObject* go : children)
+	{
+		go->transform->OnParentMoved();
 	}
 }
-
-void GameObject::RemoveChild(GameObject* go)
+ComponentTransform* GameObject::GetTransform()
 {
-	std::vector<GameObject*>::iterator it = children.begin();
-	for (int i = 0; children.size(); ++i, ++it) {
-		if (children.at(i) == go) {
-			children.erase(it);
-			break;
-		}
-	}
+	return this->transform;
 }
+
+
+
 
 void GameObject::SetName(std::string name)
 {
@@ -194,6 +156,11 @@ void GameObject::SetName(std::string name)
 std::vector<GameObject*> GameObject::GetChildren()
 {
 	return children;
+}
+
+void GameObject::SetChild(GameObject* child)
+{
+	children.push_back(child);
 }
 
 std::string GameObject::GetName()
@@ -216,16 +183,3 @@ uint GameObject::GetId()
 	return id;
 }
 
-Component* GameObject::GetComponent(COMPONENT_TYPE type)
-{
-	for (Component* component : components)
-	{
-		if (component->type == type) return component;
-	}
-	return nullptr;
-}
-
-ComponentTransform* GameObject::GetTransform()
-{
-	return (ComponentTransform*)GetComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
-}

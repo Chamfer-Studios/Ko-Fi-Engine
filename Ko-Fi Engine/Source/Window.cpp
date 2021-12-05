@@ -21,13 +21,13 @@ Window::~Window()
 // Called before render is available
 bool Window::Awake(Json configModule)
 {
-	LOG("Init SDL window & surface");
+	CONSOLE_LOG("Init SDL window & surface");
 	appLog->AddLog("Init SDL window & surface\n");
 	bool ret = true;
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		CONSOLE_LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		appLog->AddLog("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
@@ -57,7 +57,7 @@ bool Window::Awake(Json configModule)
 		window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 		if(window == NULL)
 		{
-			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			CONSOLE_LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			appLog->AddLog("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			SDL_assert(window != NULL);
 			ret = false;
@@ -82,7 +82,7 @@ bool Window::Awake(Json configModule)
 // Called before quitting
 bool Window::CleanUp()
 {
-	LOG("Destroying SDL window and quitting all SDL systems");
+	CONSOLE_LOG("Destroying SDL window and quitting all SDL systems");
 	appLog->AddLog("Destroying SDL window and quitting all SDL systems\n");
 
 	// Destroy window
@@ -159,7 +159,7 @@ uint Window::GetRefreshRate() const
 
 	SDL_DisplayMode displayMode;
 	if (SDL_GetDesktopDisplayMode(0, &displayMode) != 0)
-		LOG("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+		CONSOLE_LOG("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
 	else
 		ret = displayMode.refresh_rate;
 	return ret;

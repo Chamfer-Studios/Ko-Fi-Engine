@@ -1,30 +1,45 @@
 #pragma once
 #include "Component.h"
-#include "glmath.h"
-
+#include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/Quat.h"
 class ComponentTransform : public Component
 {
 public:
-	ComponentTransform(GameObject* owner);
+	ComponentTransform(GameObject* parent);
 	~ComponentTransform();
 	bool InspectorDraw(PanelChooser* chooser);
 
-	void SetPosition(float x, float y, float z);
-	void SetRotation(float x, float y, float z);
-	void SetScale(float x, float y, float z);
+	void SetPosition(const float3& newPosition);
+	void SetRotation(const float3& newRotation);
+	void SetScale(const float3& newScale);
 
-	void SetPositionMatrix(float x, float y, float z);
-	void SetRotationMatrix(float x, float y, float z);
-	void SetScaleMatrix(float x, float y, float z);
+	inline float3 GetPosition() const { return position; };
+	inline float3 GetRotation() const { return rotationEuler; };
+	inline float3 GetScale() const { return scale; };
 
-	vec3 GetPosition();
-	vec3 GetRotation();
-	vec3 GetScale();
-	float* GetTransformMatrix();
+	inline const float3& Right() const { return right; }
+	inline const float3& Up() const { return up; }
+	inline const float3& Front() const { return front; }
+
+	void NewAttachment();
+	void OnParentMoved();
+
+	void RecomputeGlobalMatrix();
+
+	float4x4 transformMatrix;
+	float4x4 transformMatrixLocal;
 
 private:
-	vec3 position = vec3(0,0,0);
-	vec3 rotation = vec3(0, 0, 0);
-	vec3 scale = vec3(1,1,1);
-	mat4x4 transform = IdentityMatrix;
+
+	bool isDirty = false;
+
+	float3 position;
+	Quat rotation;
+	float3 rotationEuler;
+	float3 scale;
+
+	float3 front = float3::unitZ;
+	float3 up = float3::unitY;
+	float3 right = float3::unitX;
 };

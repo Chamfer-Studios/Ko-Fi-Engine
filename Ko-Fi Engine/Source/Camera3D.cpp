@@ -30,7 +30,7 @@ Camera3D::~Camera3D()
 
 bool Camera3D::Start()
 {
-	LOG("Setting up the camera");
+	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
 	bool ret = true;
 
@@ -40,7 +40,7 @@ bool Camera3D::Start()
 // -----------------------------------------------------------------
 bool Camera3D::CleanUp()
 {
-	LOG("Cleaning camera");
+	CONSOLE_LOG("Cleaning camera");
 	appLog->AddLog("Cleaning camera\n");
 
 	return true;
@@ -71,7 +71,9 @@ bool Camera3D::Update(float dt)
 
 	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
 	if(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
-		spot = ((ComponentTransform*)engine->GetSceneIntro()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM))->GetPosition();
+		spot.x = (engine->GetSceneIntro()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().x;
+		spot.y = (engine->GetSceneIntro()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().y;
+		spot.z = (engine->GetSceneIntro()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().z;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{

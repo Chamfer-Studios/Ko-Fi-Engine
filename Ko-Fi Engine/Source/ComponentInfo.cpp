@@ -1,10 +1,10 @@
 #include "ComponentInfo.h"
 #include "GameObject.h"
 #include "imgui_stdlib.h"
+#include "PanelChooser.h"
 
-ComponentInfo::ComponentInfo(GameObject* owner) : Component(COMPONENT_TYPE::COMPONENT_INFO)
+ComponentInfo::ComponentInfo(GameObject* parent) : Component(parent)
 {
-	this->owner = owner;
 }
 
 ComponentInfo::~ComponentInfo()

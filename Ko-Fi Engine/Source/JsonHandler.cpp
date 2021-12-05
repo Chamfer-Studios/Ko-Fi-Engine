@@ -19,7 +19,7 @@ bool JsonHandler::SaveJson(Json& json, const char* path) const
 	}
 	catch (Json::parse_error& e)
 	{
-		LOG("Error while Saving File: %c", e.what());
+		CONSOLE_LOG("Error while Saving File: %c", e.what());
 		appLog->AddLog("Error while Saving File: %c\n", e.what());
 		ret = false;
 	}
@@ -38,7 +38,7 @@ bool JsonHandler::LoadJson(Json& json,const char* path) const
 		ret = true;
 	}
 	catch (Json::parse_error& e) {
-		LOG("Error while Loading File: %c", e.what());
+		CONSOLE_LOG("Error while Loading File: %c", e.what());
 		appLog->AddLog("Error while Loading File: %c\n", e.what());
 	}	
 	stream.close();

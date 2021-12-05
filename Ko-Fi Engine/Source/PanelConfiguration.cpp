@@ -104,7 +104,7 @@ bool PanelConfiguration::Update()
 		
 		ImGui::Text("Icon:");
 		ImGui::SameLine();
-		if (editor->GetPanelChooser()->IsReadyToClose())
+		if (editor->GetPanelChooser()->IsReadyToClose("PanelConfig"))
 		{
 			const char* file = editor->GetPanelChooser()->OnChooserClosed();
 			if (file != nullptr)
@@ -115,7 +115,7 @@ bool PanelConfiguration::Update()
 			}
 		}
 		if (ImGui::Selectable(editor->engine->GetWindow()->GetIcon()))
-			editor->GetPanelChooser()->OpenPanel("bmp");
+			editor->GetPanelChooser()->OpenPanel("PanelConfig","bmp");
 		float brightness = editor->engine->GetWindow()->GetBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
 			editor->engine->GetWindow()->AdjustBrightness(brightness);

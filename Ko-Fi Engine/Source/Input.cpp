@@ -36,14 +36,14 @@ Input::~Input()
 // Called before render is available
 bool Input::Init()
 {
-	LOG("Init SDL input event system");
+	CONSOLE_LOG("Init SDL input event system");
 	appLog->AddLog("Init SDL input event system\n");
 	bool ret = true;
 	SDL_Init(0);
 
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
-		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+		CONSOLE_LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		appLog->AddLog("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
@@ -178,13 +178,14 @@ bool Input::PreUpdate(float dt)
 					if (engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
 					{
 						GameObject* go = engine->GetSceneIntro()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID);
-						ComponentMesh* meshComponent = (ComponentMesh*)go->GetComponent(COMPONENT_TYPE::COMPONENT_MESH);
+						//TODO:Uncomment this when Game Objects work
+						/*ComponentMesh* meshComponent = (ComponentMesh*)go->GetComponent(COMPONENT_TYPE::COMPONENT_MESH);
 						if (meshComponent != nullptr) {
 							if (meshComponent->materialComponent != nullptr)
 							{
 								meshComponent->materialComponent->LoadTexture(tmp.c_str());
 							}
-						}
+						}*/
 					}
 					
 					
@@ -204,7 +205,7 @@ bool Input::PreUpdate(float dt)
 // Called before quitting
 bool Input::CleanUp()
 {
-	LOG("Quitting SDL input event subsystem");
+	CONSOLE_LOG("Quitting SDL input event subsystem");
 	appLog->AddLog("Quitting SDL input event subsystem\n");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;

@@ -35,7 +35,7 @@ SceneIntro::~SceneIntro()
 // Load assets
 bool SceneIntro::Start()
 {
-	LOG("Loading Intro assets");
+	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 	bool ret = true;
 
@@ -45,11 +45,8 @@ bool SceneIntro::Start()
 	engine->GetCamera3D()->LookAt(vec3(0, 0, 0));
 
 	// Load initial scene (temporal)
-	engine->GetFileSystem()->GameObjectFromMesh("Assets/Meshes/baker_house.fbx", this->gameObjectList,"Assets/Images/baker_house.png");
-	engine->GetFileSystem()->GameObjectFromMesh("Assets/Meshes/prop.fbx", this->gameObjectList,"Assets/Images/prop.jpg");
-	engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, this->gameObjectList);
-	gameObjectList.at(2)->GetTransform()->SetPosition(5, 0, 0);
-	gameObjectList.at(3)->GetTransform()->SetPosition(-5, 0, 0);
+	//engine->GetFileSystem()->GameObjectFromMesh("Assets/Models/baker_house.fbx", this->gameObjectList,"Assets/Textures/baker_house.png");
+
 
 
 	for (GameObject* go : this->gameObjectList)
@@ -73,9 +70,9 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
-	Plane plane(0, 0, 1, 0);
+	/*Plane plane(0, 0, 1, 0);
 	plane.axis = true;
-	plane.InnerRender();
+	plane.InnerRender();*/
 
 	for (GameObject* go : this->gameObjectList)
 	{
@@ -99,7 +96,7 @@ bool SceneIntro::PostUpdate(float dt)
 // Load assets
 bool SceneIntro::CleanUp()
 {
-	LOG("Unloading Intro scene");
+	CONSOLE_LOG("Unloading Intro scene");
 	appLog->AddLog("Unloading Intro scene\n");
 
 	for (GameObject* gameObject : gameObjectList)

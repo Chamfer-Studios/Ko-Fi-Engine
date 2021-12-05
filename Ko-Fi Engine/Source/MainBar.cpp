@@ -37,7 +37,7 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Import Model"))
 			{
-				editor->GetPanelChooser()->OpenPanel("fbx");
+				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx");
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
@@ -58,32 +58,38 @@ bool MainBar::Update()
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Create"))
+
 		{
+			if (ImGui::MenuItem("Create Game Object")) {
+				GameObject* go = new GameObject(editor->engine->GetSceneIntro()->gameObjectList.size());
+				editor->engine->GetSceneIntro()->gameObjectList.push_back(go);
+				editor->engine->GetSceneIntro()->rootGo->AttachChild(go);
+			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
 				if (ImGui::MenuItem("Cube"))
 				{
-					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, editor->engine->GetSceneIntro()->gameObjectList);
+					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Sphere"))
 				{
-					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE, editor->engine->GetSceneIntro()->gameObjectList);
+					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{
-					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->engine->GetSceneIntro()->gameObjectList);
+					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Line"))
 				{
-					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
+					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Plane"))
 				{
-					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->engine->GetSceneIntro()->gameObjectList);
+					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Pyramid"))
 				{
-					editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
+					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				ImGui::EndMenu();
 			}
@@ -113,7 +119,7 @@ bool MainBar::PostUpdate()
 void MainBar::ImportModel() {
 
 
-	if (editor->GetPanelChooser()->IsReadyToClose())
+	if (editor->GetPanelChooser()->IsReadyToClose("MainBar"))
 	{
 		const char* file = editor->GetPanelChooser()->OnChooserClosed();
 		if (file != nullptr)

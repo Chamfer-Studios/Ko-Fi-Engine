@@ -1,11 +1,15 @@
 #include "ComponentTransform.h"
 #include "PanelChooser.h"
 #include "MathGeoLib/MathGeoLib.h"
+#include "GameObject.h"
+ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent) {
 
-ComponentTransform::ComponentTransform(GameObject* owner) : Component(COMPONENT_TYPE::COMPONENT_TRANSFORM)
-{
-	transform = IdentityMatrix;
-	this->owner = owner;
+	position = float3::zero;
+	rotation = Quat::identity;
+	scale = float3::one;
+
+	transformMatrix.SetIdentity();
+	transformMatrixLocal.SetIdentity();
 }
 
 ComponentTransform::~ComponentTransform()
@@ -16,102 +20,90 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Transform")) {
+		float3 newPosition = position;
 		ImGui::PushItemWidth(50);
-		ImGui::InputFloat("X##positionX", &position.x);
+		ImGui::InputFloat("X##positionX", &newPosition.x);
 		ImGui::SameLine();
-		ImGui::InputFloat("Y##positionY", &position.y);
+		ImGui::InputFloat("Y##positionY", &newPosition.y);
 		ImGui::SameLine();
-		ImGui::InputFloat("Z##positionZ", &position.z);
+		ImGui::InputFloat("Z##positionZ", &newPosition.z);
 		ImGui::SameLine();
 		ImGui::Text("Position");
 		ImGui::PopItemWidth();
+		float3 newRotationEuler;
+		newRotationEuler.x = RadToDeg(rotationEuler.x);
+		newRotationEuler.y = RadToDeg(rotationEuler.y);
+		newRotationEuler.z = RadToDeg(rotationEuler.z);
 		ImGui::PushItemWidth(50);
-		ImGui::InputFloat("X##rotationX", &rotation.x);
+		ImGui::InputFloat("X##rotationX", &newRotationEuler.x);
 		ImGui::SameLine();
-		ImGui::InputFloat("Y##rotationY", &rotation.y);
+		ImGui::InputFloat("Y##rotationY", &newRotationEuler.y);
 		ImGui::SameLine();
-		ImGui::InputFloat("Z##rotationZ", &rotation.z);
+		ImGui::InputFloat("Z##rotationZ", &newRotationEuler.z);
 		ImGui::SameLine();
 		ImGui::Text("Rotation");
 		ImGui::PopItemWidth();
+		float3 newScale = scale;
 		ImGui::PushItemWidth(50);
-		ImGui::InputFloat("X##scaleX", &scale.x);
+		ImGui::InputFloat("X##scaleX", &newScale.x);
 		ImGui::SameLine();
-		ImGui::InputFloat("Y##scaleY", &scale.y);
+		ImGui::InputFloat("Y##scaleY", &newScale.y);
 		ImGui::SameLine();
-		ImGui::InputFloat("Z##scaleZ", &scale.z);
+		ImGui::InputFloat("Z##scaleZ", &newScale.z);
 		ImGui::SameLine();
 		ImGui::Text("Scale");
 		ImGui::PopItemWidth();
+		SetPosition(newPosition);
+		SetRotation(newRotationEuler);
+		SetScale(newScale);
 	}
-	SetPositionMatrix(position.x, position.y, position.z);
-	SetRotationMatrix(rotation.x, rotation.y, rotation.z);
-	SetScaleMatrix(scale.x, scale.y, scale.z);
+	
 	return ret;
 }
 
-void ComponentTransform::SetPosition(float x, float y, float z)
+void ComponentTransform::SetPosition(const float3& newPosition)
 {
-	position.x = x;
-	position.y = y;
-	position.z = z;
-	SetPositionMatrix(position.x,position.y,position.z);
+	position = newPosition;
+	isDirty = true;
 }
 
-void ComponentTransform::SetRotation(float x, float y, float z)
+void ComponentTransform::SetRotation(const float3& newRotation)
 {
-	rotation.x = x;
-	rotation.y = y;
-	rotation.z = z;
-	SetRotationMatrix(rotation.x, rotation.y, rotation.z);
+	Quat rotationDelta = Quat::FromEulerXYZ(newRotation.x - rotationEuler.x, newRotation.y - rotationEuler.y, newRotation.z - rotationEuler.z);
+	rotation = rotation*rotationDelta;
+	rotationEuler = newRotation;
+	isDirty = true;
 }
 
-void ComponentTransform::SetScale(float x, float y, float z)
+void ComponentTransform::SetScale(const float3& newScale)
 {
-	scale.x = x;
-	scale.y = y;
-	scale.z = z;
-	SetScaleMatrix(scale.x, scale.y, scale.z);
+	scale = newScale;
+	isDirty = true;
 }
 
-void ComponentTransform::SetPositionMatrix(float x,float y, float z)
+void ComponentTransform::NewAttachment()
 {
-	transform.translate(x, y, z);
+	if (owner->GetParent() != nullptr)
+		transformMatrixLocal = owner->GetParent()->GetTransform()->transformMatrix.Inverted().Mul(transformMatrix);
+
+	float3x3 rot;
+	transformMatrixLocal.Decompose(position, rot, scale);
+	rotationEuler = rot.ToEulerXYZ();
 }
 
-void ComponentTransform::SetRotationMatrix(float x, float y, float z)
+void ComponentTransform::OnParentMoved()
 {
-	Quat q(0,0,0,0);
-	q = Quat().FromEulerZYX(DegToRad(x), DegToRad(y), DegToRad(z));
-
-	float angle = 0;
-	float3 axis(0, 0, 0);
-	q.ToAxisAngle(axis, angle);
-
-	transform.rotate(RadToDeg(angle),vec3(axis.x,axis.y,axis.z));
+	RecomputeGlobalMatrix();
 }
 
-void ComponentTransform::SetScaleMatrix(float x, float y, float z)
+void ComponentTransform::RecomputeGlobalMatrix()
 {
-	transform.scale(x, y, z);
-}
-
-vec3 ComponentTransform::GetPosition()
-{
-	return position;
-}
-
-vec3 ComponentTransform::GetRotation()
-{
-	return rotation;
-}
-
-vec3 ComponentTransform::GetScale()
-{
-	return scale;
-}
-
-float* ComponentTransform::GetTransformMatrix()
-{
-	return transform.M;
+	if (owner->GetParent() != nullptr)
+	{
+		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
+	}
+	else
+	{
+		transformMatrix = transformMatrixLocal;
+	}
 }

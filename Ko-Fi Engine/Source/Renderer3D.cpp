@@ -31,7 +31,7 @@ Renderer3D::~Renderer3D()
 // Called before render is available
 bool Renderer3D::Awake(Json configModule)
 {
-	LOG("Creating 3D Renderer context");
+	CONSOLE_LOG("Creating 3D Renderer context");
 	appLog->AddLog("Creating 3D Renderer context\n");
 	bool ret = true;
 
@@ -39,7 +39,7 @@ bool Renderer3D::Awake(Json configModule)
 	context = SDL_GL_CreateContext(engine->GetWindow()->window);
 	if (context == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		CONSOLE_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		appLog->AddLog("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
@@ -58,7 +58,7 @@ bool Renderer3D::Awake(Json configModule)
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
@@ -71,7 +71,7 @@ bool Renderer3D::Awake(Json configModule)
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
@@ -86,7 +86,7 @@ bool Renderer3D::Awake(Json configModule)
 		error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
@@ -121,21 +121,21 @@ bool Renderer3D::Awake(Json configModule)
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
 	{
-		LOG("Glew library could not be initiated! Glew Error: %s\n", glewGetErrorString(err));
+		CONSOLE_LOG("Glew library could not be initiated! Glew Error: %s\n", glewGetErrorString(err));
 		appLog->AddLog("Glew library could not be initiated! GLEW Error: %s\n", glewGetErrorString(err));
 		ret = false;
 	}
 
 	if (err == GLEW_OK)
 	{
-		LOG("Using Glew %s\n", glewGetString(GLEW_VERSION));
+		CONSOLE_LOG("Using Glew %s\n", glewGetString(GLEW_VERSION));
 		appLog->AddLog("Using Glew %s\n", glewGetString(GLEW_VERSION));
 
 		// Current hardware and driver capabilities
-		LOG("Vendor: %s", glGetString(GL_VENDOR));
-		LOG("Renderer: %s", glGetString(GL_RENDERER));
-		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		CONSOLE_LOG("Vendor: %s", glGetString(GL_VENDOR));
+		CONSOLE_LOG("Renderer: %s", glGetString(GL_RENDERER));
+		CONSOLE_LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		CONSOLE_LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		appLog->AddLog("Vendor: %s\n", glGetString(GL_VENDOR));
 		appLog->AddLog("Renderer: %s\n", glGetString(GL_RENDERER));
@@ -174,7 +174,7 @@ bool Renderer3D::PostUpdate(float dt)
 // Called before quitting
 bool Renderer3D::CleanUp()
 {
-	LOG("Destroying 3D Renderer");
+	CONSOLE_LOG("Destroying 3D Renderer");
 	appLog->AddLog("Destroying 3D Renderer\n");
 
 	SDL_GL_DeleteContext(context);
@@ -193,7 +193,7 @@ void Renderer3D::SetVsync(bool vsync)
 	{
 		this->vsync = vsync;
 		if (SDL_GL_SetSwapInterval(vsync ? 1 : 0) < 0) {
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			CONSOLE_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n",SDL_GetError());
 		}
 		

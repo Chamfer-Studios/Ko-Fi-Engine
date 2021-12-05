@@ -202,7 +202,7 @@ void KoFiEngine::FinishUpdate()
 		// Measure accurately the amount of time SDL_Delay actually waits compared to what was expected
 		PerfTimer pt;
 		SDL_Delay(engineConfig->cappedMs - lastFrameMs);
-		LOG("We waited for %d milliseconds and got back in %f", engineConfig->cappedMs - lastFrameMs, pt.ReadMs());
+		CONSOLE_LOG("We waited for %d milliseconds and got back in %f", engineConfig->cappedMs - lastFrameMs, pt.ReadMs());
 	}
 }
 

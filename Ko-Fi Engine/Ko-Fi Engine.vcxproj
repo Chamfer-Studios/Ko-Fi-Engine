@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\Color.cpp" />
+    <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\ComponentInfo.cpp" />
     <ClCompile Include="Source\ComponentMaterial.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />

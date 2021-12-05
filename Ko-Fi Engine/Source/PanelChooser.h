@@ -16,11 +16,11 @@ public:
 	bool PostUpdate();
 
 	//Handles ChooserStateHandler State
-	bool IsReadyToClose();
+	bool IsReadyToClose(std::string id);
 	const char* OnChooserClosed();
 	void ShowPanel(const char* path = nullptr, const char* extension = nullptr);
 	void GetPath(const char* path, const char* extension);
-	void OpenPanel(const char* extension = nullptr, const char* from_folder = nullptr);
+	void OpenPanel(std::string id,const char* extension = nullptr, const char* from_folder = nullptr);
 private:
 	enum
 	{
@@ -32,4 +32,5 @@ private:
 	Editor* editor;
 	const char* currentExtension = "fbx";
 	char selectedFile[FILE_MAX];
+	std::string id = "";
 };
