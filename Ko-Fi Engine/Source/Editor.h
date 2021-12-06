@@ -5,6 +5,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Panel.h"
+#include "imgui.h"
 
 // Panels
 class MainBar;
@@ -14,6 +15,7 @@ class PanelLog;
 class PanelAbout;
 class PanelChooser;
 class PanelInspector;
+class PanelViewport;
 
 class GameObject;
 
@@ -22,6 +24,11 @@ struct EngineConfig;
 struct PanelGameObjectInfo
 {
 	int currentGameObjectID = -1;
+};
+
+struct PanelsState
+{
+	bool showViewportWindow = true;
 };
 
 class Editor : public Module
@@ -37,11 +44,16 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 	void AddPanel(Panel* panel);
+	void RemovePanel(Panel* panel);
 	PanelChooser* GetPanelChooser();
 	void Markdown(const std::string& markdown_);
 	void MarkdownExample();
+	void UpdatePanelsState();
 
 public:
+	PanelsState panelsState;
+	ImVec2 lastViewportSize;
+
 	// Open/Close panel bools
 	bool toggleAboutPanel = false;
 	bool toggleChooserPanel = false;
@@ -52,7 +64,10 @@ public:
 private:
 	// Style
 	EditorStyleHandler styleHandler;
+
 	// Panels
+	std::list<Panel*> panels;
+
 	MainBar* mainMenuBar = nullptr;
 	PanelHierarchy* panelHierarchy = nullptr;
 	PanelConfiguration* panelConfig = nullptr;
@@ -60,8 +75,7 @@ private:
 	PanelAbout* panelAbout = nullptr;
 	PanelChooser* panelChooser = nullptr;
 	PanelInspector* panelGameObject = nullptr;
-
-	std::list<Panel*> panels;
+	PanelViewport* panelViewport = nullptr;
 };
 
 #endif IM_GUI_HANDLER_H

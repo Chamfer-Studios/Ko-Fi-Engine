@@ -156,7 +156,7 @@ bool Renderer3D::PreUpdate(float dt)
 	glLoadMatrixf(engine->GetCamera3D()->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(engine->GetCamera3D()->Position.x, engine->GetCamera3D()->Position.y, engine->GetCamera3D()->Position.z);
+	lights[0].SetPos(engine->GetCamera3D()->position.x, engine->GetCamera3D()->position.y, engine->GetCamera3D()->position.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();

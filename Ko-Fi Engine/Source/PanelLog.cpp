@@ -3,6 +3,7 @@
 
 PanelLog::PanelLog()
 {
+	panelName = "Log";
 }
 
 PanelLog::~PanelLog()

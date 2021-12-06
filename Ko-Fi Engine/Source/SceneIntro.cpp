@@ -16,6 +16,8 @@
 #include "ComponentMaterial.h"
 #include "GameObject.h"
 
+#include "Primitive.h"
+
 #include "ComponentMaterial.h" // Temporal for the assignment, just to display the texture on the model when the program begins...
 
 SceneIntro::SceneIntro(KoFiEngine* engine) : Module()
@@ -70,9 +72,8 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
-	/*Plane plane(0, 0, 1, 0);
-	plane.axis = true;
-	plane.InnerRender();*/
+	Cube cube(3,3,3);
+	cube.InnerRender();
 
 	for (GameObject* go : this->gameObjectList)
 	{

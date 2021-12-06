@@ -17,6 +17,7 @@
 #include "PanelAbout.h"
 #include "PanelChooser.h"
 #include "PanelInspector.h"
+#include "PanelViewport.h"
 
 void LoadFonts(float fontSize_ = 12.0f);
 
@@ -24,13 +25,32 @@ Editor::Editor(KoFiEngine* engine)
 {
 	name = "Editor";
 
+	// We need to check whether or not each panel is activated.
+	// We have to set a bool for each of them in order to be able to close and open again a panel.
+	// Steps:
+	// 1.- We have to check if the panel is activated.
+	// 2.- If it is, we'll then check if an instance of the panel already exists.
+	// 3.- If it doesn't exist, we'll create one. But if it exists we don't need to do anything (the editor already updates each panel).
+	// 4.- If the bool is false and the panel exists, we will RELEASE the panel. (In the cases when we close a panel).
+	// NOTES:
+	// We can do it in the constructor for the initial values of the bool, but it is also essential to do it in the update.
+	// In order to have it updated when we close or open a panel.
+	// For organization, we'll create a struct to have all the bools stacked there.
+
+	// We should do it here
 	mainMenuBar = new MainBar(this);
 	panelHierarchy = new PanelHierarchy(this);
-	panelConfig = new PanelConfiguration(engine->GetEngineConfig(),this);
+	panelConfig = new PanelConfiguration(this, engine->GetEngineConfig());
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
 	panelChooser = new PanelChooser(this);
 	panelGameObject = new PanelInspector(this);
+	// Panel instance with its own bool
+	if (panelsState.showViewportWindow)
+	{
+		panelViewport = new PanelViewport(this, engine);
+		AddPanel(panelViewport);
+	}
 
 	AddPanel(mainMenuBar);
 	AddPanel(panelHierarchy);
@@ -39,6 +59,7 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelAbout);
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
+
 	this->engine = engine;
 }
 
@@ -55,6 +76,13 @@ void Editor::AddPanel(Panel* panel)
 {
 	panel->Init();
 	panels.push_back(panel);
+}
+
+void Editor::RemovePanel(Panel* panel)
+{
+	panels.remove(panelViewport);
+	panelViewport->CleanUp();
+	RELEASE(panelViewport);
 }
 
 PanelChooser* Editor::GetPanelChooser()
@@ -94,7 +122,6 @@ bool Editor::Start()
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
-	
 
 	styleHandler.SetKoFiStyle();
 	ImGui_ImplSDL2_InitForOpenGL(engine->GetWindow()->window, engine->GetRenderer()->context);
@@ -166,6 +193,9 @@ bool Editor::Update(float dt)
 	ImGui::End();
 	ImGui::PopStyleVar();
 
+	// Update panels state
+	UpdatePanelsState();
+
 	// Panels Update
 	if (ret == true)
 	{
@@ -188,7 +218,6 @@ bool Editor::PostUpdate(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	SDL_GL_MakeCurrent(engine->GetWindow()->window, engine->GetRenderer()->context);
-
 
 	// Panels PostUpdate
 	if (ret == true)
@@ -223,6 +252,7 @@ bool Editor::CleanUp()
 	RELEASE(panelAbout);
 	RELEASE(panelChooser);
 	RELEASE(panelGameObject);
+	RELEASE(panelViewport);
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -365,4 +395,23 @@ ___
   * Lists can have [links like this one to Avoyd](https://www.avoyd.com/) and *emphasized text*
 )";
 	Markdown(markdownText);
+}
+
+void Editor::UpdatePanelsState()
+{
+	if (panelsState.showViewportWindow == true)
+	{
+		if (panelViewport == nullptr)
+		{
+			panelViewport = new PanelViewport(this, engine);
+			AddPanel(panelViewport);
+		}
+	}
+	else
+	{
+		if (panelViewport != nullptr)
+		{
+			RemovePanel(panelViewport);
+		}
+	}
 }

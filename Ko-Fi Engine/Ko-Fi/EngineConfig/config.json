@@ -24,5 +24,6 @@
   "Input": null,
   "Editor": null,
   "SceneIntro": null,
-  "ModelLoader": null
+  "ModelLoader": null,
+  "ViewportFrameBuffer": null
 }

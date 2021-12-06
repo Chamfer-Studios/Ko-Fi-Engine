@@ -8,6 +8,7 @@
 PanelChooser::PanelChooser(Editor* editor)
 {
 	this->editor = editor;
+	panelName = "Chooser";
 }
 
 PanelChooser::~PanelChooser()

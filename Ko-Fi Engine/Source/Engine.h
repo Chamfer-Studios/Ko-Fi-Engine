@@ -15,11 +15,11 @@ class Renderer3D;
 class Camera3D;
 class Editor;
 class FileSystem;
+class ViewportFrameBuffer;
 
 class KoFiEngine
 {
 public:
-
 	// Constructor
 	KoFiEngine(int argc, char* args[]);
 
@@ -46,7 +46,7 @@ public:
 	const char* GetOrganization() const;
 	const uint64 GetFps() const;
 	EngineConfig* GetEngineConfig();
-	//Getters for the modules
+	// Getters for the modules
 	Window* GetWindow() const;
 	Input* GetInput() const;
 	SceneIntro* GetSceneIntro() const;
@@ -54,9 +54,9 @@ public:
 	Camera3D* GetCamera3D() const;
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
+	ViewportFrameBuffer* GetViewportFrameBuffer() const;
 
 private:
-
 	// Add a new module to handle
 	void AddModule(Module* module);
 
@@ -78,21 +78,18 @@ private:
 	void SetHardwareInfo();
 	void SetVramStats();
 
-
-
 private:
-
-	//Modules
+	// Modules
 	Window* window = nullptr;
 	Input* input = nullptr;
-	SceneIntro* sceneIntro = nullptr;
+	SceneIntro* scene = nullptr;
 	Renderer3D* renderer = nullptr;
 	Camera3D* camera = nullptr;
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
+	ViewportFrameBuffer* viewportBuffer = nullptr;
 
 private:
-
 	int argc;
 	char** args;
 	

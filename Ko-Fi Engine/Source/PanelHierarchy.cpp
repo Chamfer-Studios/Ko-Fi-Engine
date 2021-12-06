@@ -26,6 +26,7 @@ static void HelpMarker(const char* desc)
 PanelHierarchy::PanelHierarchy(Editor* editor)
 {
 	this->editor = editor;
+	panelName = "Hierarchy";
 }
 
 PanelHierarchy::~PanelHierarchy()
@@ -44,7 +45,6 @@ bool PanelHierarchy::PreUpdate()
 
 bool PanelHierarchy::Update()
 {
-
 	ImGui::Begin("Scene Hierarchy");
 
 	if (!editor->engine->GetSceneIntro()->gameObjectList.empty())
@@ -101,32 +101,26 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 		ImGui::TreePop();
 
 	}
-	else {
+	else
+	{
 		DragNDrop(go);
 	}
-	
-	
-	
-
-	
-	
-	
 }
 
 void PanelHierarchy::DragNDrop(GameObject* go)
 {
-	if (ImGui::BeginDragDropSource()) {
-
+	if (ImGui::BeginDragDropSource())
+	{
 		ImGui::SetDragDropPayload("Hierarchy", go, sizeof(GameObject));
 		selectedGameObject = go;
 		ImGui::Text(go->name.c_str());
 		ImGui::EndDragDropSource();
 	}
-	if (ImGui::BeginDragDropTarget()) {
+	if (ImGui::BeginDragDropTarget())
+	{
 		const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy");
 		if (payload != nullptr)
 		{
-
 			if (selectedGameObject != nullptr)
 			{
 				if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly)) {
@@ -134,7 +128,6 @@ void PanelHierarchy::DragNDrop(GameObject* go)
 					destinationGameObject->SetChild(selectedGameObject);
 					selectedGameObject = nullptr;
 					destinationGameObject = nullptr;
-
 				}
 			}
 		}

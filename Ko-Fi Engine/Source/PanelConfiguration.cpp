@@ -9,7 +9,7 @@
 #include <imgui.h>
 #include "glew.h"
 
-PanelConfiguration::PanelConfiguration(EngineConfig* engineConfig, Editor* editor)
+PanelConfiguration::PanelConfiguration(Editor* editor, EngineConfig* engineConfig)
 {
 	panelName = "Configuration";
 	

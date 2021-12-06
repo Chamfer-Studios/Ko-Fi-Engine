@@ -56,6 +56,8 @@ public:
 		return true;
 	}
 
+	virtual void OnGui() {}
+
 public:
 
 	SString name;

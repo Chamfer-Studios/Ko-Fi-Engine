@@ -8,8 +8,7 @@ struct EngineConfig;
 class PanelConfiguration : public Panel
 {
 public:
-
-	PanelConfiguration(EngineConfig* engineConfig,Editor* editor);
+	PanelConfiguration(Editor* editor, EngineConfig* engineConfig);
 	~PanelConfiguration();
 
 	bool Awake();
@@ -18,8 +17,6 @@ public:
 	bool PostUpdate();
 
 private:
-
-
 	EngineConfig* engineConfig = nullptr;
 	Editor* editor = nullptr;
 	bool modifyAttributesMenu = false;

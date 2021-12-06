@@ -8,6 +8,7 @@
 PanelInspector::PanelInspector(Editor* editor)
 {
 	this->editor = editor;
+	panelName = "Inspector";
 }
 
 PanelInspector::~PanelInspector()

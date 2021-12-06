@@ -286,6 +286,12 @@
     <ClCompile Include="Source\Component.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PanelViewport.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ViewportFrameBuffer.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -626,6 +632,12 @@
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_stdlib.h">
       <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelViewport.h">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ViewportFrameBuffer.h">
+      <Filter>Source\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

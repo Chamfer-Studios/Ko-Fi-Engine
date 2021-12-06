@@ -20,8 +20,8 @@ Camera3D::Camera3D(KoFiEngine* engine) : Module()
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(0.0f, 0.0f, 5.0f);
-	Reference = vec3(0.0f, 0.0f, 0.0f);
+	position = vec3(0.0f, 0.0f, 5.0f);
+	reference = vec3(0.0f, 0.0f, 0.0f);
 	this->engine = engine;
 }
 
@@ -80,8 +80,8 @@ bool Camera3D::Update(float dt)
 		Look(vec3(5,5,5), spot, true);
 	}
 
-	Position += newPos;
-	Reference += newPos;
+	position += newPos;
+	reference += newPos;
 
 	// Mouse motion ----------------
 
@@ -93,7 +93,7 @@ bool Camera3D::Update(float dt)
 
 		float Sensitivity = 0.25f;
 
-		Position -= Reference;
+		position -= reference;
 
 		if (dx != 0)
 		{
@@ -118,10 +118,10 @@ bool Camera3D::Update(float dt)
 			}
 		}
 
-		Position = Reference + Z * length(Position);
+		position = reference + Z * length(position);
 
 		if (engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) {
-			Look(this->Position, spot, true);
+			Look(this->position, spot, true);
 		}
 	}
 
@@ -134,8 +134,8 @@ bool Camera3D::Update(float dt)
 // -----------------------------------------------------------------
 void Camera3D::Look(const vec3& Position, const vec3& Reference, bool RotateAroundReference)
 {
-	this->Position = Position;
-	this->Reference = Reference;
+	this->position = Position;
+	this->reference = Reference;
 
 	Z = normalize(Position - Reference);
 	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
@@ -143,8 +143,8 @@ void Camera3D::Look(const vec3& Position, const vec3& Reference, bool RotateArou
 
 	if (!RotateAroundReference)
 	{
-		this->Reference = this->Position;
-		this->Position += Z * 0.05f;
+		this->reference = this->position;
+		this->position += Z * 0.05f;
 	}
 
 	CalculateViewMatrix();
@@ -153,9 +153,9 @@ void Camera3D::Look(const vec3& Position, const vec3& Reference, bool RotateArou
 // -----------------------------------------------------------------
 void Camera3D::LookAt(const vec3& Spot)
 {
-	Reference = Spot;
+	reference = Spot;
 
-	Z = normalize(Position - Reference);
+	Z = normalize(position - reference);
 	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
 	Y = cross(Z, X);
 
@@ -166,8 +166,8 @@ void Camera3D::LookAt(const vec3& Spot)
 // -----------------------------------------------------------------
 void Camera3D::Move(const vec3& Movement)
 {
-	Position += Movement;
-	Reference += Movement;
+	position += Movement;
+	reference += Movement;
 
 	CalculateViewMatrix();
 }
@@ -181,6 +181,60 @@ float* Camera3D::GetViewMatrix()
 // -----------------------------------------------------------------
 void Camera3D::CalculateViewMatrix()
 {
-	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
+	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, position), -dot(Y, position), -dot(Z, position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
 }
+
+void Camera3D::RecalculateProjection()
+{
+	cameraFrustum.type = FrustumType::PerspectiveFrustum;
+	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+	cameraFrustum.farPlaneDistance = farPlaneDistance;
+	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
+	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+}
+
+void Camera3D::OnGui()
+{
+	if (ImGui::CollapsingHeader("Editor Camera"))
+	{
+		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
+		{
+			projectionIsDirty = true;
+		}
+		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
+		{
+			projectionIsDirty = true;
+		}
+		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
+		{
+			projectionIsDirty = true;
+		}
+	}
+}
+
+//void Camera3D::OnSave(JSONWriter& writer) const
+//{
+//	writer.String("camera");
+//	writer.StartObject();
+//	SAVE_JSON_FLOAT(verticalFOV)
+//		SAVE_JSON_FLOAT(nearPlaneDistance)
+//		SAVE_JSON_FLOAT(farPlaneDistance)
+//		SAVE_JSON_FLOAT(cameraSpeed)
+//		SAVE_JSON_FLOAT(cameraSensitivity)
+//		writer.EndObject();
+//}
+//
+//void Camera3D::OnLoad(const JSONReader& reader)
+//{
+//	if (reader.HasMember("camera"))
+//	{
+//		const auto& config = reader["camera"];
+//		LOAD_JSON_FLOAT(verticalFOV);
+//		LOAD_JSON_FLOAT(nearPlaneDistance);
+//		LOAD_JSON_FLOAT(farPlaneDistance);
+//		LOAD_JSON_FLOAT(cameraSpeed);
+//		LOAD_JSON_FLOAT(cameraSensitivity);
+//	}
+//	RecalculateProjection();
+//}
