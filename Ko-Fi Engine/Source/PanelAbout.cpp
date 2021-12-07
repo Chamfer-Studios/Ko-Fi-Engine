@@ -4,8 +4,8 @@
 
 PanelAbout::PanelAbout(Editor* editor)
 {
-	this->editor = editor;
 	panelName = "About";
+	this->editor = editor;
 }
 
 PanelAbout::~PanelAbout()

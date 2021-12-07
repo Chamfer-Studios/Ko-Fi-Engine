@@ -3,7 +3,7 @@
 
 #include "Engine.h"
 #include "Editor.h"
-#include "SceneIntro.h"
+#include "SceneManager.h"
 #include "GameObject.h"
 
 // Helper to display a little (?) mark which shows a tooltip when hovered.
@@ -47,7 +47,7 @@ bool PanelHierarchy::Update()
 {
 	ImGui::Begin("Scene Hierarchy");
 
-	if (!editor->engine->GetSceneIntro()->gameObjectList.empty())
+	if (!editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.empty())
 	{
 		editor->Markdown("# Game Objects");
 		ImGui::SameLine();
@@ -60,10 +60,10 @@ bool PanelHierarchy::Update()
 
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-		for (int i = 0; i < editor->engine->GetSceneIntro()->rootGo->GetChildren().size(); ++i) {
+		for (int i = 0; i < editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().size(); ++i) {
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 			
-			DisplayTree(editor->engine->GetSceneIntro()->rootGo->GetChildren().at(i), flags);
+			DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().at(i), flags);
 			
 		}
 		

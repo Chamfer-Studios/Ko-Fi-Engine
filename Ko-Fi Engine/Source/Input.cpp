@@ -3,7 +3,7 @@
 #include "Engine.h"
 #include "SDL.h"
 #include "Renderer3D.h"
-#include "SceneIntro.h"
+#include "SceneManager.h"
 #include "Editor.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
@@ -170,14 +170,14 @@ bool Input::PreUpdate(float dt)
 			{
 				if (tmp.find(".fbx") != std::string::npos)
 				{
-					engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), engine->GetSceneIntro()->gameObjectList);
+					engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{
 					// Apply texture
 					if (engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
 					{
-						GameObject* go = engine->GetSceneIntro()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID);
+						GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID);
 						//TODO:Uncomment this when Game Objects work
 						/*ComponentMesh* meshComponent = (ComponentMesh*)go->GetComponent(COMPONENT_TYPE::COMPONENT_MESH);
 						if (meshComponent != nullptr) {

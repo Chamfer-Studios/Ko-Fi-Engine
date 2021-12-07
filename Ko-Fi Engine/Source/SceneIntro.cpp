@@ -20,7 +20,7 @@
 
 #include "ComponentMaterial.h" // Temporal for the assignment, just to display the texture on the model when the program begins...
 
-SceneIntro::SceneIntro(KoFiEngine* engine) : Module()
+SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 {
 	name = "SceneIntro";
 	// Needed modules
@@ -48,8 +48,6 @@ bool SceneIntro::Start()
 
 	// Load initial scene (temporal)
 	//engine->GetFileSystem()->GameObjectFromMesh("Assets/Models/baker_house.fbx", this->gameObjectList,"Assets/Textures/baker_house.png");
-
-
 
 	for (GameObject* go : this->gameObjectList)
 	{
@@ -111,17 +109,4 @@ bool SceneIntro::CleanUp()
 void SceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	
-}
-
-GameObject* SceneIntro::GetGameObject(int id)
-{
-	for (GameObject* go : gameObjectList)
-	{
-		if (go->GetId() == id)
-		{
-			return go;
-		}
-	}
-
-	return nullptr;
 }

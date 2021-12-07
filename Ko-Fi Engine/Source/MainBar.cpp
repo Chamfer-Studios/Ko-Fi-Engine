@@ -2,7 +2,7 @@
 #include "Editor.h"
 #include "Engine.h"
 #include "FileSystem.h"
-#include "SceneIntro.h"
+#include "SceneManager.h"
 #include "PanelChooser.h"
 #include "SDL.h"
 #include <imgui.h>
@@ -41,15 +41,15 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
-				std::vector<GameObject*> gameObjectList = editor->engine->GetSceneIntro()->gameObjectList;
+				std::vector<GameObject*> gameObjectList = editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
 				for (GameObject* gameObject : gameObjectList)
 				{
 					RELEASE(gameObject);
 				}
-				editor->engine->GetSceneIntro()->gameObjectList.clear();
+				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.clear();
 				editor->panelGameObjectInfo.currentGameObjectID = -1;
-				editor->engine->GetSceneIntro()->rootGo = new GameObject(-1, "Root");
-				editor->engine->GetSceneIntro()->gameObjectList.push_back(editor->engine->GetSceneIntro()->rootGo);
+				editor->engine->GetSceneManager()->GetCurrentScene()->rootGo = new GameObject(-1, "Root");
+				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.push_back(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo);
 			}
 			if (ImGui::MenuItem("Quit"))
 			{
@@ -61,9 +61,9 @@ bool MainBar::Update()
 
 		{
 			if (ImGui::MenuItem("Create Game Object")) {
-				GameObject* go = new GameObject(editor->engine->GetSceneIntro()->gameObjectList.size());
-				editor->engine->GetSceneIntro()->gameObjectList.push_back(go);
-				editor->engine->GetSceneIntro()->rootGo->AttachChild(go);
+				GameObject* go = new GameObject(editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.size());
+				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.push_back(go);
+				editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->AttachChild(go);
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
@@ -126,7 +126,7 @@ void MainBar::ImportModel() {
 		{
 			std::string newFile = file;
 			newFile.erase(newFile.begin());
-			editor->engine->GetFileSystem()->GameObjectFromMesh(newFile.c_str(), editor->engine->GetSceneIntro()->gameObjectList);
+			editor->engine->GetFileSystem()->GameObjectFromMesh(newFile.c_str(), editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
 		}
 	}
 }

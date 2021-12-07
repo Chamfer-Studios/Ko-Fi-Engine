@@ -2,7 +2,7 @@
 #include <imgui.h>
 #include "Editor.h"
 #include "Engine.h"
-#include "SceneIntro.h"
+#include "SceneManager.h"
 #include "GameObject.h"
 
 PanelInspector::PanelInspector(Editor* editor)
@@ -27,14 +27,13 @@ bool PanelInspector::PreUpdate()
 
 bool PanelInspector::Update()
 {
-
 	// Panel game object info. to manage the options of the current game object
 	PanelGameObjectInfo panelGameObjectInfo = editor->panelGameObjectInfo;
 	ImGui::Begin("Inspector");
 	if (panelGameObjectInfo.currentGameObjectID != -1)
 	{
 		// Current game object (the one we have selected at the moment)
-		GameObject* currentGameObject = editor->engine->GetSceneIntro()->gameObjectList.at(editor->panelGameObjectInfo.currentGameObjectID);
+		GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.at(editor->panelGameObjectInfo.currentGameObjectID);
 		for (Component* component : currentGameObject->GetComponents())
 		{
 			component->InspectorDraw(editor->GetPanelChooser());

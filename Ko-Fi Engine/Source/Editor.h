@@ -16,6 +16,8 @@ class PanelAbout;
 class PanelChooser;
 class PanelInspector;
 class PanelViewport;
+class PanelGame;
+class PanelRuntimeState;
 
 class GameObject;
 
@@ -29,6 +31,7 @@ struct PanelGameObjectInfo
 struct PanelsState
 {
 	bool showViewportWindow = true;
+	bool showGameWindow = true;
 };
 
 class Editor : public Module
@@ -76,6 +79,8 @@ private:
 	PanelChooser* panelChooser = nullptr;
 	PanelInspector* panelGameObject = nullptr;
 	PanelViewport* panelViewport = nullptr;
+	PanelGame* panelGame = nullptr;
+	PanelRuntimeState* panelRuntimeState = nullptr;
 };
 
 #endif IM_GUI_HANDLER_H

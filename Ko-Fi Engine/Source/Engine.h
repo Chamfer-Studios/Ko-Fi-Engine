@@ -10,7 +10,7 @@
 // Modules
 class Window;
 class Input;
-class SceneIntro;
+class SceneManager;
 class Renderer3D;
 class Camera3D;
 class Editor;
@@ -49,7 +49,7 @@ public:
 	// Getters for the modules
 	Window* GetWindow() const;
 	Input* GetInput() const;
-	SceneIntro* GetSceneIntro() const;
+	SceneManager* GetSceneManager() const;
 	Renderer3D* GetRenderer() const;
 	Camera3D* GetCamera3D() const;
 	Editor* GetEditor() const;
@@ -82,7 +82,7 @@ private:
 	// Modules
 	Window* window = nullptr;
 	Input* input = nullptr;
-	SceneIntro* scene = nullptr;
+	SceneManager* sceneManager = nullptr;
 	Renderer3D* renderer = nullptr;
 	Camera3D* camera = nullptr;
 	Editor* editor = nullptr;

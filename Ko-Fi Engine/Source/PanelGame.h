@@ -3,19 +3,19 @@
 
 class Editor;
 
-class PanelAbout : public Panel
+class PanelGame : public Panel
 {
 public:
-	PanelAbout(Editor* editor);
-	~PanelAbout();
+
+	PanelGame(Editor* editor);
+	~PanelGame();
 
 	bool Awake();
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
 
-	void ShowAboutWindow(bool* toggleAboutPanel);
-
 private:
+
 	Editor* editor = nullptr;
 };

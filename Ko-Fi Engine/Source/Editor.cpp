@@ -18,6 +18,8 @@
 #include "PanelChooser.h"
 #include "PanelInspector.h"
 #include "PanelViewport.h"
+#include "PanelGame.h"
+#include "PanelRuntimeState.h"
 
 void LoadFonts(float fontSize_ = 12.0f);
 
@@ -45,12 +47,23 @@ Editor::Editor(KoFiEngine* engine)
 	panelAbout = new PanelAbout(this);
 	panelChooser = new PanelChooser(this);
 	panelGameObject = new PanelInspector(this);
-	// Panel instance with its own bool
+
+	// Panel instances with its own bool
 	if (panelsState.showViewportWindow)
 	{
 		panelViewport = new PanelViewport(this, engine);
 		AddPanel(panelViewport);
 	}
+	if (panelsState.showGameWindow)
+	{
+		panelGame = new PanelGame(this);
+		AddPanel(panelGame);
+	}
+	//------------------------------------
+	
+	// We want to have it always displayed.
+	panelRuntimeState = new PanelRuntimeState(this, engine);
+	AddPanel(panelRuntimeState);
 
 	AddPanel(mainMenuBar);
 	AddPanel(panelHierarchy);
@@ -80,9 +93,9 @@ void Editor::AddPanel(Panel* panel)
 
 void Editor::RemovePanel(Panel* panel)
 {
-	panels.remove(panelViewport);
-	panelViewport->CleanUp();
-	RELEASE(panelViewport);
+	panel->CleanUp();
+	panels.remove(panel);
+	RELEASE(panel);
 }
 
 PanelChooser* Editor::GetPanelChooser()
@@ -253,6 +266,8 @@ bool Editor::CleanUp()
 	RELEASE(panelChooser);
 	RELEASE(panelGameObject);
 	RELEASE(panelViewport);
+	RELEASE(panelGame);
+	RELEASE(panelRuntimeState);
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -260,7 +275,6 @@ bool Editor::CleanUp()
 
 	return true;
 }
-
 
 #include "ImGui.h"                // https://github.com/ocornut/imgui
 #include "imgui_markdown.h"       // https://github.com/juliettef/imgui_markdown
@@ -280,7 +294,6 @@ static ImFont* H2 = NULL;
 static ImFont* H3 = NULL;
 
 static ImGui::MarkdownConfig mdConfig;
-
 
 void LinkCallback(ImGui::MarkdownLinkCallbackData data_)
 {
@@ -397,6 +410,7 @@ ___
 	Markdown(markdownText);
 }
 
+// Refactor this function (it's not done the right way right now...).
 void Editor::UpdatePanelsState()
 {
 	if (panelsState.showViewportWindow == true)
@@ -412,6 +426,24 @@ void Editor::UpdatePanelsState()
 		if (panelViewport != nullptr)
 		{
 			RemovePanel(panelViewport);
+			panelViewport = nullptr;
+		}
+	}
+
+	if (panelsState.showGameWindow == true)
+	{
+		if (panelGame == nullptr)
+		{
+			panelGame = new PanelGame(this);
+			AddPanel(panelGame);
+		}
+	}
+	else
+	{
+		if (panelGame != nullptr)
+		{
+			RemovePanel(panelGame);
+			panelGame = nullptr;
 		}
 	}
 }

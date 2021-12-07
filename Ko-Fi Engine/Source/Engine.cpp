@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "Renderer3D.h"
 #include "Camera3D.h"
-#include "SceneIntro.h"
+#include "SceneManager.h"
 #include "Editor.h"
 #include "FileSystem.h"
 #include "ViewportFrameBuffer.h"
@@ -30,7 +30,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	camera = new Camera3D(this);
 	renderer = new Renderer3D(this);
 	editor = new Editor(this);
-	scene = new SceneIntro(this);
+	sceneManager = new SceneManager(this);
 	viewportBuffer = new ViewportFrameBuffer(this);
 
 	// Ordered for awake / Start / Update
@@ -40,7 +40,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(viewportBuffer);
-	AddModule(scene);
+	AddModule(sceneManager);
 	AddModule(editor);
 
 	// Render last to swap buffer
@@ -373,9 +373,9 @@ Input* KoFiEngine::GetInput()const
 	return this->input;
 }
 
-SceneIntro* KoFiEngine::GetSceneIntro()const
+SceneManager* KoFiEngine::GetSceneManager()const
 {
-	return this->scene;
+	return this->sceneManager;
 }
 
 Renderer3D* KoFiEngine::GetRenderer()const

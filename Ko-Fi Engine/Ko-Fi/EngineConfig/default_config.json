@@ -23,6 +23,7 @@
   "Camera": null,
   "Input": null,
   "Editor": null,
-  "SceneIntro": null,
-  "ModelLoader": null
+  "SceneManager": null,
+  "ModelLoader": null,
+  "ViewportFrameBuffer":  null
 }
