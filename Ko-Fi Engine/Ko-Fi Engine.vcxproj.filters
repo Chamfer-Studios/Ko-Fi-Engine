@@ -301,6 +301,9 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Importer.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -659,6 +662,9 @@
     </ClInclude>
     <ClInclude Include="Source\PanelRuntimeState.h">
       <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Importer.h">
+      <Filter>Source\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

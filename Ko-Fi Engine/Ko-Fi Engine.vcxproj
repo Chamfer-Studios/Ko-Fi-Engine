@@ -198,6 +198,7 @@
     <ClCompile Include="Source\External\mmgr\mmgr.cpp" />
     <ClCompile Include="Source\External\stb_image\stb_image.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
+    <ClCompile Include="Source\Importer.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\JsonHandler.cpp" />
     <ClCompile Include="Source\Light.cpp" />
@@ -314,6 +315,7 @@
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\ImGuiAppLog.h" />
+    <ClInclude Include="Source\Importer.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\JsonHandler.h" />
     <ClInclude Include="Source\Light.h" />
