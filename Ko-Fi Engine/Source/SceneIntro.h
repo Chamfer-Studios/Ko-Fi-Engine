@@ -25,6 +25,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+
 private:
 	int random = 0;
 	JsonHandler jsonHandler;

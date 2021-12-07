@@ -70,10 +70,13 @@ bool Camera3D::Update(float dt)
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
 	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
-	if(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
+	if (engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
+	{
 		spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().x;
 		spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().y;
 		spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().z;
+
+	}
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{

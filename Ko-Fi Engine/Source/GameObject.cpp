@@ -16,7 +16,7 @@ GameObject::GameObject( int id, const char* name)
 	}
 	this->id = id;
 	transform = CreateComponent<ComponentTransform>();
-	components.push_back((Component*)CreateComponent<ComponentInfo>());
+	CreateComponent<ComponentInfo>();
 	this->parent = nullptr;
 }
 

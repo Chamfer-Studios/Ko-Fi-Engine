@@ -61,9 +61,9 @@ bool MainBar::Update()
 
 		{
 			if (ImGui::MenuItem("Create Game Object")) {
-				GameObject* go = new GameObject(editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.size());
-				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.push_back(go);
-				editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->AttachChild(go);
+
+				editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
