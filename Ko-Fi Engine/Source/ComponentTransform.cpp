@@ -15,6 +15,20 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent) {
 ComponentTransform::~ComponentTransform()
 {
 }
+bool ComponentTransform::Update() {
+	if (isDirty)
+	{
+		transformMatrixLocal = float4x4::FromTRS(position, rotation, scale);
+
+		right = transformMatrixLocal.Col3(0).Normalized();
+		up = transformMatrixLocal.Col3(1).Normalized();
+		front = transformMatrixLocal.Col3(2).Normalized();
+		RecomputeGlobalMatrix();
+		owner->PropagateTransform();
+		isDirty = false;
+	}
+	return true;
+}
 
 bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 {

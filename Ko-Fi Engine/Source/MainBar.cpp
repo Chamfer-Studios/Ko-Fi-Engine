@@ -7,10 +7,13 @@
 #include "SDL.h"
 #include <imgui.h>
 #include "Primitive.h"
+#include "Importer.h"
 
 MainBar::MainBar(Editor* editor)
 {
+
 	this->editor = editor;
+	this->importer = new Importer(editor->engine);
 }
 
 MainBar::~MainBar()
@@ -126,7 +129,8 @@ void MainBar::ImportModel() {
 		{
 			std::string newFile = file;
 			newFile.erase(newFile.begin());
-			editor->engine->GetFileSystem()->GameObjectFromMesh(newFile.c_str(), editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
+			importer->ImportModel(newFile.c_str());
+			//editor->engine->GetFileSystem()->GameObjectFromMesh(newFile.c_str(), editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
 		}
 	}
 }

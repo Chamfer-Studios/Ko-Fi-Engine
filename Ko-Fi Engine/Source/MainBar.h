@@ -2,6 +2,7 @@
 #include "Panel.h"
 
 class Editor;
+class Importer;
 
 class MainBar : public Panel
 {
@@ -18,5 +19,6 @@ public:
 
 private:
 	Editor* editor;
+	Importer* importer;
 	bool loadingModel = false;
 };

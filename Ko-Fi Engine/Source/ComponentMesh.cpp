@@ -1,17 +1,14 @@
-//#include "ComponentMesh.h"
-//#include "GameObject.h"
-//#include "ComponentMaterial.h"
-//#include "PanelChooser.h"
-//#include <assimp/cimport.h>
-//#include <assimp/scene.h>
-//#include <assimp/postprocess.h>
-//#include "glew.h"
-//#include <gl/GL.h>
-//#include "Primitive.h"
-//#include "Defs.h"
-//
-//ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent) {}
-//
+#include "ComponentMesh.h"
+#include "GameObject.h"
+#include "ComponentMaterial.h"
+#include "PanelChooser.h"
+#include "glew.h"
+#include <gl/GL.h>
+#include "Primitive.h"
+#include "Defs.h"
+
+ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent) {}
+
 //ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
 //{
 //	switch (shape)
@@ -27,8 +24,8 @@
 //		break;
 //	}
 //}
+
 //
-////
 ////ComponentMesh::ComponentMesh(GameObject* owner,COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
 ////{
 ////	this->subtype = subtype;
@@ -43,39 +40,66 @@
 ////	this->owner = owner;
 ////}
 ////
-////ComponentMesh::~ComponentMesh()
-////{
-////	for (Mesh* mesh : meshes)
-////	{
-////		RELEASE(mesh);
-////	}
-////	meshes.clear();
-////
-////	RELEASE(materialComponent);
-////}
-////
-////bool ComponentMesh::Start(const char* path)
-////{
-////	bool ret = true;
-////
-////	return ret;
-////}
-////
-////bool ComponentMesh::PostUpdate()
-////{
-////	bool ret = true;
-////
-////	glPushMatrix();
-////	glMultMatrixf(this->owner->GetTransform()->GetTransformMatrix());
+ComponentMesh::~ComponentMesh()
+{
+
+		RELEASE(mesh);
+
+	//RELEASE(materialComponent);
+}
+
+//void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
+//{
+//	
+//		this->mesh->num_vertices = parMesh->npoints;
+//		this->mesh->num_indices = parMesh->ntriangles * 3;
+//		this->mesh->num_normals = parMesh->ntriangles;
+//		this->mesh->vertices = new float[this->mesh->num_vertices * 3];
+//		this->mesh->normals = new float[this->mesh->num_normals * 3];
+//		this->mesh->indices = new uint[this->mesh->num_indices];
+//		par_shapes_compute_normals(parMesh);
+//		for (size_t i = 0; i < mesh->num_vertices; ++i)
+//		{
+//			memcpy(&mesh->vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);
+//			memcpy(&mesh->normals[i], &parMesh->normals[i * 3], sizeof(float) * 3);
+//		}
+//		for (size_t i = 0; i < mesh->num_indices; ++i)
+//		{
+//			mesh->indices[i] = parMesh->triangles[i];
+//		}
+//		memcpy(&mesh->normals[0], parMesh->normals, mesh->num_vertices);
+//
+//		par_shapes_free_mesh(parMesh);
+//
+//		mesh->SetUpMeshBuffers();
+//		//GenerateBuffers();
+//		//ComputeNormals();
+//		//GenerateBounds();
+//	
+//}
+
+bool ComponentMesh::Start(const char* path)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+bool ComponentMesh::PostUpdate()
+{
+	bool ret = true;
+
+	glPushMatrix();
+	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
 ////
 ////	switch (subtype)
 ////	{
 ////	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
 ////	{
-////		for (Mesh* mesh : meshes)
-////		{
-////			mesh->Draw();
-////		}
+////		
+			mesh->Draw();
+
+////		
 ////		break;
 ////	}
 ////	case COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE:
@@ -119,20 +143,26 @@
 ////		break;
 ////	}
 ////
-////	glPopMatrix();
+	glPopMatrix();
 ////
-////	return ret;
-////}
-////
-////bool ComponentMesh::CleanUp()
-////{
-////	for (Mesh* mesh : meshes)
-////	{
-////		RELEASE(mesh);
-////	}
-////
-////	return true;
-////}
+	return ret;
+}
+
+bool ComponentMesh::CleanUp()
+{
+	
+	RELEASE(mesh);
+
+	return true;
+}
+void ComponentMesh::SetMesh(Mesh* mesh)
+{
+	this->mesh = mesh;
+}
+Mesh* ComponentMesh::GetMesh()
+{
+	return mesh;
+}
 ////
 ////void ComponentMesh::LoadMesh(const char* path)
 ////{
@@ -198,47 +228,44 @@
 ////	aiReleaseImport(scene);
 ////}
 ////
-////bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
-////{
-////	bool ret = true;
-////
-////	if (ImGui::CollapsingHeader("Mesh")) {
-////		ImGui::Text("Mesh Path: ");
-////		ImGui::SameLine();
-////		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-////		if (ImGui::Selectable(path.c_str())) {}
-////		ImGui::PopStyleColor();
-////		ImGui::Text("Num. vertices: ");
-////		ImGui::SameLine();
-////		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
-////		if (ImGui::Checkbox("Vertex Normals", &vertexNormals))
-////		{
-////			for (Mesh* mesh : meshes)
-////			{
-////				mesh->ToggleVertexNormals();
-////			}
-////		}
-////		if (ImGui::Checkbox("Faces Normals", &facesNormals))
-////		{
-////			for (Mesh* mesh : meshes)
-////			{
-////				mesh->ToggleFacesNormals();
-////			}
-////		}
-////	}
-////
-////	if(materialComponent != nullptr)
-////		materialComponent->InspectorDraw(chooser);
-////
-////	return ret;
-////}
-////
-////uint ComponentMesh::GetVertices()
-////{
-////	uint numVertices = 0;
-////	for (Mesh* mesh : meshes)
-////	{
-////		numVertices += mesh->num_vertices;
-////	}
-////	return numVertices;
-////}
+bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
+{
+	bool ret = true;
+
+	if (ImGui::CollapsingHeader("Mesh")) {
+		ImGui::Text("Mesh Path: ");
+		ImGui::SameLine();
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+		if (ImGui::Selectable(path.c_str())) {}
+		ImGui::PopStyleColor();
+		ImGui::Text("Num. vertices: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
+		if (ImGui::Checkbox("Vertex Normals", &vertexNormals))
+		{
+			
+				mesh->ToggleVertexNormals();
+			
+		}
+		if (ImGui::Checkbox("Faces Normals", &facesNormals))
+		{
+			
+				mesh->ToggleFacesNormals();
+			
+		}
+	}
+
+	//if(materialComponent != nullptr)
+	//	materialComponent->InspectorDraw(chooser);
+
+	return ret;
+}
+
+uint ComponentMesh::GetVertices()
+{
+	uint numVertices = 0;
+	
+		numVertices += mesh->num_vertices;
+	
+	return numVertices;
+}

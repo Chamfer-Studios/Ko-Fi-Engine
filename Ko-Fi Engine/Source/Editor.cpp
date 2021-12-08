@@ -25,6 +25,7 @@ void LoadFonts(float fontSize_ = 12.0f);
 
 Editor::Editor(KoFiEngine* engine)
 {
+	this->engine = engine;
 	name = "Editor";
 
 	// We need to check whether or not each panel is activated.
@@ -73,7 +74,7 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
 
-	this->engine = engine;
+
 }
 
 Editor::~Editor()

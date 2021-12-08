@@ -9,7 +9,7 @@ public:
 	ComponentTransform(GameObject* parent);
 	~ComponentTransform();
 	bool InspectorDraw(PanelChooser* chooser);
-
+	bool Update() override;
 	void SetPosition(const float3& newPosition);
 	void SetRotation(const float3& newRotation);
 	void SetScale(const float3& newScale);

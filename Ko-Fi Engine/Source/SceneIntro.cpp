@@ -70,8 +70,9 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
-	Cube cube(3,3,3);
-	cube.InnerRender();
+	
+	/*Cube cube(3,3,3);
+	cube.InnerRender();*/
 
 	for (GameObject* go : this->gameObjectList)
 	{

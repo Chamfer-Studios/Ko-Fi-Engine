@@ -30,8 +30,8 @@ struct PanelGameObjectInfo
 
 struct PanelsState
 {
-	bool showViewportWindow = true;
-	bool showGameWindow = true;
+	bool showViewportWindow = false;
+	bool showGameWindow = false;
 };
 
 class Editor : public Module

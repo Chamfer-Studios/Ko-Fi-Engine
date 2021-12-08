@@ -31,7 +31,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	renderer = new Renderer3D(this);
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
-	viewportBuffer = new ViewportFrameBuffer(this);
+	//viewportBuffer = new ViewportFrameBuffer(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -39,7 +39,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(camera);
 	AddModule(fileSystem);
-	AddModule(viewportBuffer);
+	//AddModule(viewportBuffer);
 	AddModule(sceneManager);
 	AddModule(editor);
 

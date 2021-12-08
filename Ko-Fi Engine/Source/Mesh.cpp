@@ -41,7 +41,7 @@ Mesh::~Mesh()
 
 void Mesh::SetUpMeshBuffers()
 {
-	SetUpDefaultTexture();
+	//SetUpDefaultTexture();
 
 	// Vertices
 	glGenBuffers(1, &id_vertex);
@@ -92,9 +92,15 @@ void Mesh::SetUpDefaultTexture()
 
 void Mesh::Draw()
 {
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	if (this->id_tex_coord) {
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, this->id_tex_coord);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	}
 
 	//vertex
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
@@ -102,9 +108,7 @@ void Mesh::Draw()
 	//normals
 	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
 	glNormalPointer(GL_FLOAT, 0, NULL);
-	//coord
-	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
-	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
 	//texture
 	glBindTexture(GL_TEXTURE_2D, texture.textureID);
 
@@ -113,13 +117,19 @@ void Mesh::Draw()
 
 	DebugDraw();
 
-	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glActiveTexture(GL_TEXTURE0);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	if (this->id_tex_coord)
+	{
+		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
 void Mesh::DebugDraw()
