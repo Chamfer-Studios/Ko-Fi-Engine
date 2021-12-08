@@ -6,7 +6,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <iostream>
-
+#include "ComponentMaterial.h"
+#include "GameObject.h"
 #include "Defs.h"
 
 Mesh::Mesh()
@@ -41,7 +42,7 @@ Mesh::~Mesh()
 
 void Mesh::SetUpMeshBuffers()
 {
-	//SetUpDefaultTexture();
+	SetUpDefaultTexture();
 
 	// Vertices
 	glGenBuffers(1, &id_vertex);
@@ -59,9 +60,12 @@ void Mesh::SetUpMeshBuffers()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, indices, GL_STATIC_DRAW);
 
 	// Texture coords
-	glGenBuffers(1, &id_tex_coord);
-	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_tex_coords * 2, tex_coords, GL_STATIC_DRAW);
+	if (tex_coords != 0) {
+		glGenBuffers(1, &id_tex_coord);
+		glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_tex_coords * 2, tex_coords, GL_STATIC_DRAW);
+	}
+
 }
 
 void Mesh::SetUpDefaultTexture()
@@ -90,7 +94,7 @@ void Mesh::SetUpDefaultTexture()
 	glBindTexture(texture.textureID, 0);
 }
 
-void Mesh::Draw()
+void Mesh::Draw(GameObject* owner)
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -110,8 +114,9 @@ void Mesh::Draw()
 	glNormalPointer(GL_FLOAT, 0, NULL);
 
 	//texture
-	glBindTexture(GL_TEXTURE_2D, texture.textureID);
-
+	if (ComponentMaterial* material = owner->GetComponent<ComponentMaterial>()) {
+		glBindTexture(GL_TEXTURE_2D, texture.textureID);
+	}
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
 

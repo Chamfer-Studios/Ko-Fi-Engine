@@ -6,11 +6,13 @@ typedef unsigned int uint;
 
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
+class GameObject;
 
 struct Texture
 {
 	uint textureID = 0;
 	int width, height, nrChannels;
+	std::string texturePath;
 };
 
 class Mesh
@@ -21,7 +23,7 @@ public:
 
 	// Mesh Functions
 	void SetUpMeshBuffers();
-	void Draw();
+	void Draw(GameObject* owner);
 	void DebugDraw();
 
 	void ToggleVertexNormals();

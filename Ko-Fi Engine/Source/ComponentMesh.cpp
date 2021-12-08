@@ -97,8 +97,9 @@ bool ComponentMesh::PostUpdate()
 ////	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
 ////	{
 ////		
-			mesh->Draw();
-
+			mesh->Draw(owner);
+			//texture
+		
 ////		
 ////		break;
 ////	}
