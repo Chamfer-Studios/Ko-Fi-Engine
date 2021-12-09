@@ -9,8 +9,10 @@ class ComponentTransform : public Component
 public:
 	ComponentTransform(GameObject* parent);
 	~ComponentTransform();
-	bool InspectorDraw(PanelChooser* chooser);
+
 	bool Update() override;
+	bool InspectorDraw(PanelChooser* chooser); // OngGui
+
 	void SetPosition(const float3& newPosition);
 	void SetRotation(const float3& newRotation);
 	void SetScale(const float3& newScale);
@@ -30,11 +32,9 @@ public:
 
 	// Getters
 	bool GetDirty();
-	Quat GetRotationQuat();
 
 	// Setters
 	void SetDirty(bool isDirty);
-	void SetRotationEuler(float3 rotationEuler);
 
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;

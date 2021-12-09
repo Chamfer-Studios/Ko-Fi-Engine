@@ -238,16 +238,25 @@ Json SceneManager::SaveComponentTransform(ComponentTransform* componentTransform
 			componentTransform->GetPosition().y,
 			componentTransform->GetPosition().z
 		};
+		float pos = componentTransform->GetPosition().x;
+		pos = componentTransform->GetPosition().y;
+		pos = componentTransform->GetPosition().z;
 		jsonComponentTransform["rotation"] = {
 			componentTransform->GetRotation().x,
 			componentTransform->GetRotation().y,
 			componentTransform->GetRotation().z
 		};
+		float rotation = componentTransform->GetRotation().x;
+		rotation = componentTransform->GetRotation().y;
+		rotation = componentTransform->GetRotation().z;
 		jsonComponentTransform["scale"] = {
 			componentTransform->GetScale().x,
 			componentTransform->GetScale().y,
 			componentTransform->GetScale().z
 		};
+		float scale = componentTransform->GetScale().x;
+		scale = componentTransform->GetScale().y;
+		scale = componentTransform->GetScale().z;
 	}
 
 	return jsonComponentTransform;
@@ -283,8 +292,6 @@ Json SceneManager::SaveComponentInfo(ComponentInfo* componentInfo)
 {
 	Json jsonComponentInfo;
 
-	jsonComponentInfo["path"] = componentInfo->GetPath();
-
 	return jsonComponentInfo;
 }
 
@@ -313,12 +320,12 @@ bool SceneManager::SaveScene(Scene* scene)
 
 		std::string idString = std::to_string((int)gameObject->GetId());
 
-		jsonGameObject/*[idString.c_str()]*/["name"] = gameObject->GetName().c_str();
-		jsonGameObject/*[idString.c_str()]*/["active"] = gameObject->active;
+		jsonGameObject["name"] = gameObject->GetName().c_str();
+		jsonGameObject["active"] = gameObject->active;
 
-		jsonGameObject/*[idString.c_str()]*/["component_transform"] = SaveComponentTransform(gameObject->GetComponent<ComponentTransform>());
+		//jsonGameObject["component_transform"] = SaveComponentTransform(gameObject->GetComponent<ComponentTransform>());
 		
-		jsonGameObject/*[idString.c_str()]*/["components_list"] = Json::array();
+		jsonGameObject["components_list"] = Json::array();
 		std::vector<Component*> componentsList = gameObject->GetComponents();
 		for (std::vector<Component*>::iterator cmp = componentsList.begin(); cmp != componentsList.end(); cmp++)
 		{
@@ -345,7 +352,7 @@ bool SceneManager::SaveScene(Scene* scene)
 			default:
 				break;
 			}
-			jsonGameObject/*[idString.c_str()]*/["components_list"].push_back(jsonComponent);
+			jsonGameObject["components_list"].push_back(jsonComponent);
 		}
 
 		// We are just saving a game object...
@@ -354,20 +361,20 @@ bool SceneManager::SaveScene(Scene* scene)
 		// In order to keep track of parents and childrens, we will record the ids.
 		// This way when we load them, we'll be able to create all the game objects,
 		// and create afterwards the parent-children relations knowing the IDs.
-		jsonGameObject/*[idString.c_str()]*/["children_id_list"] = Json::array();
+		jsonGameObject["children_id_list"] = Json::array();
 		std::vector<GameObject*> children = gameObject->GetChildren();
 		for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
 		{
 			GameObject* child = (*ch);
-			jsonGameObject/*[idString.c_str()]*/["children_id_list"].push_back((int)child->GetId());
+			jsonGameObject["children_id_list"].push_back((int)child->GetId());
 		}
 
 		if (gameObject->GetParent() != nullptr)
-			jsonGameObject/*[idString.c_str()]*/["parent"] = (int)gameObject->GetParent()->GetId();
+			jsonGameObject["parent"] = (int)gameObject->GetParent()->GetId();
 		else
-			jsonGameObject/*[idString.c_str()]*/["parent"];
+			jsonGameObject["parent"];
 
-		jsonGameObject/*[idString.c_str()]*/["id"] = (int)gameObject->GetId();
+		jsonGameObject["id"] = (int)gameObject->GetId();
 
 		jsonFile[sceneName]["game_objects_list"].push_back(jsonGameObject);
 	}
@@ -418,6 +425,8 @@ void SceneManager::LoadComponentTransform(ComponentTransform* componentTransform
 	scale.y = values[1];
 	scale.z = values[2];
 	componentTransform->SetScale(scale);
+
+	componentTransform->SetDirty(false);
 }
 
 void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh)
@@ -442,8 +451,7 @@ void SceneManager::LoadComponentMaterial(ComponentMaterial* componentMaterial, J
 
 void SceneManager::LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo)
 {
-	std::string path = jsonComponentInfo.at("path");
-	componentInfo->SetPath(path.c_str());
+
 }
 
 // Load scene from a .json file
@@ -485,9 +493,9 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 				GameObject* gameObject = scene->GetGameObject(id);
 
 				gameObject->name = jsonGameObject.at("name");
-				gameObject->active = jsonGameObject.at("active").is_boolean();
+				gameObject->active = jsonGameObject.at("active");
 
-				LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
+				//LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
 
 				// ITERATE HERE THE COMPONENTS LIST AND SEEK THE SAME
 				// COMPONENT TO UPDATE ITS PROPERTIES.
@@ -574,9 +582,9 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 				GameObject* gameObject = scene->CreateEmptyGameObject();
 
 				gameObject->name = jsonGameObject.at("name");
-				gameObject->active = jsonGameObject.at("active").is_boolean();
+				gameObject->active = jsonGameObject.at("active");
 
-				LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
+				//LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
 
 				Json jsonComponentsList = jsonGameObject.at("components_list");
 
@@ -643,9 +651,11 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 			}
 			if (!isGameObjectSaved)
 			{
+				// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				// IF THE GAME OBJECT IS NOT IN THE .JSON FILE, IT'LL BE REMOVED
+				/*gameObject->CleanUp();
 				gameObjectsList.erase(go);
-				gameObject->CleanUp();
-				RELEASE(gameObject);
+				RELEASE(gameObject);*/
 			}
 		}
 

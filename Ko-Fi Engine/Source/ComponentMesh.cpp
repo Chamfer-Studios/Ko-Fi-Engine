@@ -7,7 +7,10 @@
 #include "Primitive.h"
 #include "Defs.h"
 
-ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent) {}
+ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
+{
+	type = ComponentType::MESH;
+}
 
 //ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
 //{

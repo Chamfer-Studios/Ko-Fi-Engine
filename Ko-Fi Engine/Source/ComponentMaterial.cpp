@@ -10,6 +10,8 @@
 
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
+	type = ComponentType::MATERIAL;
+
 	path = "";
 }
 

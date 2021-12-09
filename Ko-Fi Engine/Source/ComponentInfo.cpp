@@ -23,13 +23,3 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 	}
 	return ret;
 }
-
-void ComponentInfo::SetPath(const char* path)
-{
-	this->path = path;
-}
-
-const char* ComponentInfo::GetPath()
-{
-	return path;
-}

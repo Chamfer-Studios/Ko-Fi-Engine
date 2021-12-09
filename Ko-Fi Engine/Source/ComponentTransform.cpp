@@ -2,6 +2,7 @@
 #include "PanelChooser.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include "GameObject.h"
+#include "Globals.h"
 
 ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 {
@@ -18,6 +19,7 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 ComponentTransform::~ComponentTransform()
 {
 }
+
 bool ComponentTransform::Update() {
 	if (isDirty)
 	{
@@ -36,8 +38,9 @@ bool ComponentTransform::Update() {
 bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
-	if (ImGui::CollapsingHeader("Transform")) {
-		float3 newPosition = position;
+	if (ImGui::CollapsingHeader("Transform"))
+	{
+		/*float3 newPosition = position;
 		ImGui::PushItemWidth(50);
 		ImGui::InputFloat("X##positionX", &newPosition.x);
 		ImGui::SameLine();
@@ -72,7 +75,29 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 		ImGui::PopItemWidth();
 		SetPosition(newPosition);
 		SetRotation(newRotationEuler);
-		SetScale(newScale);
+		SetScale(newScale);*/
+
+		float3 newPosition = position;
+		if (ImGui::DragFloat3("Location", &newPosition[0]))
+		{
+			SetPosition(newPosition);
+		}
+		float3 newRotationEuler;
+		newRotationEuler.x = RADTODEG * rotationEuler.x;
+		newRotationEuler.y = RADTODEG * rotationEuler.y;
+		newRotationEuler.z = RADTODEG * rotationEuler.z;
+		if (ImGui::DragFloat3("Rotation", &(newRotationEuler[0])))
+		{
+			newRotationEuler.x = DEGTORAD * newRotationEuler.x;
+			newRotationEuler.y = DEGTORAD * newRotationEuler.y;
+			newRotationEuler.z = DEGTORAD * newRotationEuler.z;
+			SetRotation(newRotationEuler);
+		}
+		float3 newScale = scale;
+		if (ImGui::DragFloat3("Scale", &(newScale[0])))
+		{
+			SetScale(newScale);
+		}
 	}
 	
 	return ret;
@@ -130,17 +155,7 @@ bool ComponentTransform::GetDirty()
 	return isDirty;
 }
 
-Quat ComponentTransform::GetRotationQuat()
-{
-	return rotation;
-}
-
 void ComponentTransform::SetDirty(bool isDirty)
 {
 	this->isDirty = isDirty;
-}
-
-void ComponentTransform::SetRotationEuler(float3 rotationEuler)
-{
-	this->rotationEuler = rotationEuler;
 }
