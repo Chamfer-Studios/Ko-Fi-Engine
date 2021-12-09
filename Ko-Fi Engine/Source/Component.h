@@ -4,6 +4,13 @@
 class PanelChooser;
 class GameObject;
 
+enum class ComponentType
+{
+	TRANSFORM,
+	MESH,
+	MATERIAL,
+	INFO
+};
 
 class Component
 {
@@ -19,10 +26,10 @@ public:
 	virtual bool CleanUp() { return true; }
 	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
 	virtual void Disable() { active = false; }
-
-
+	ComponentType GetType() { return type; }
 
 protected:
 	bool active = true;
 	GameObject* owner;
+	ComponentType type;
 };

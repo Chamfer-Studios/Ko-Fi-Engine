@@ -3,6 +3,7 @@
 #include "SString.h"
 
 using Json = nlohmann::json;
+
 class JsonHandler
 {
 public:

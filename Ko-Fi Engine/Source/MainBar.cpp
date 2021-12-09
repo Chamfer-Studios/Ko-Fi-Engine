@@ -61,9 +61,9 @@ bool MainBar::Update()
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Create"))
-
 		{
-			if (ImGui::MenuItem("Create Game Object")) {
+			if (ImGui::MenuItem("Create Game Object"))
+			{
 
 				editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 

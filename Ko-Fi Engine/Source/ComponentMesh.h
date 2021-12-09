@@ -33,6 +33,15 @@ public:
 //public:
 //	ComponentMaterial* materialComponent;
 //
+
+	void SetPath(std::string path);
+	void SetVertexNormals(bool vertexNormals);
+	void SetFacesNormals(bool facesNormals);
+
+	std::string GetPath();
+	bool GetVertexNormals();
+	bool GetFacesNormals();
+
 private:
 	std::string path = "";
 	Mesh* mesh = nullptr;

@@ -78,8 +78,8 @@ private:
 	PanelAbout* panelAbout = nullptr;
 	PanelChooser* panelChooser = nullptr;
 	PanelInspector* panelGameObject = nullptr;
-	PanelViewport* panelViewport = nullptr;
 	PanelGame* panelGame = nullptr;
+	PanelViewport* panelViewport = nullptr;
 	PanelRuntimeState* panelRuntimeState = nullptr;
 };
 

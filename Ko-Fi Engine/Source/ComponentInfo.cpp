@@ -5,6 +5,7 @@
 
 ComponentInfo::ComponentInfo(GameObject* parent) : Component(parent)
 {
+	type = ComponentType::INFO;
 }
 
 ComponentInfo::~ComponentInfo()
@@ -21,4 +22,14 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 		ImGui::Checkbox("Active", &owner->active);
 	}
 	return ret;
+}
+
+void ComponentInfo::SetPath(const char* path)
+{
+	this->path = path;
+}
+
+const char* ComponentInfo::GetPath()
+{
+	return path;
 }

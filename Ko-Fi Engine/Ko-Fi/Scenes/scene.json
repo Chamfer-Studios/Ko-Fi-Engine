@@ -1,0 +1,116 @@
+{
+    "SceneIntro": {
+        "active": true,
+        "game_objects_amount": 1,
+        "game_objects_list": [
+            {
+                "active": true,
+                "children_id_list": [],
+                "component_transform": {
+                    "is_dirty": false,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "transform_matrix": [
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "transform_matrix_local": [
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                "components_list": [
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "info",
+                        "path": ""
+                    }
+                ],
+                "id": -1,
+                "name": "Root",
+                "parent": null
+            }
+        ],
+        "name": "SceneIntro",
+        "root_go": -1
+    }
+}

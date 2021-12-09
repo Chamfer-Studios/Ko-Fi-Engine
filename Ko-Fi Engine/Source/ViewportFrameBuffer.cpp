@@ -73,9 +73,9 @@ bool ViewportFrameBuffer::CleanUp()
 	/*texture ? glDeleteTextures(1, &texture) : 0;
 	frameBuffer ? glDeleteFramebuffers(1, &frameBuffer) : 0;
 	renderBufferoutput ? glDeleteRenderbuffers(1, &renderBufferoutput): 0;*/
-	glDeleteTextures(1, &texture); texture = 0;
-	glDeleteFramebuffers(1, &frameBuffer); frameBuffer = 0;
-	glDeleteRenderbuffers(1, &renderBufferoutput); renderBufferoutput = 0;
+	if (texture != 0) glDeleteTextures(1, &texture);
+	if (frameBuffer != 0) glDeleteFramebuffers(1, &frameBuffer);
+	if (renderBufferoutput != 0) glDeleteRenderbuffers(1, &renderBufferoutput);
 
 	return true;
 }

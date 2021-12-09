@@ -50,7 +50,6 @@ ImGuiStyle* EditorStyleHandler::SetKoFiStyle()
 		styleJson.at("Colors").at("TextSelectedBg").at("z"),
 		styleJson.at("Colors").at("TextSelectedBg").at("w")
 	);
-
 	//Background of normal windows
 	style->Colors[ImGuiCol_WindowBg] = ImVec4(
 		styleJson.at("Colors").at("WindowBg").at("x"),
@@ -339,70 +338,68 @@ ImGuiStyle* EditorStyleHandler::SetKoFiStyle()
 		styleJson.at("Colors").at("PlotHistogramHovered").at("w")
 	);
 	// Table header background
-		style->Colors[ImGuiCol_TableHeaderBg] = ImVec4(
+	style->Colors[ImGuiCol_TableHeaderBg] = ImVec4(
 		styleJson.at("Colors").at("TableHeaderBg").at("x"),
 		styleJson.at("Colors").at("TableHeaderBg").at("y"),
 		styleJson.at("Colors").at("TableHeaderBg").at("z"),
 		styleJson.at("Colors").at("TableHeaderBg").at("w")
 	);
-		// Table outer and header borders (prefer using Alpha=1.0 here)
-		style->Colors[ImGuiCol_TableBorderStrong] = ImVec4(
-			styleJson.at("Colors").at("TableBorderStrong").at("x"),
-			styleJson.at("Colors").at("TableBorderStrong").at("y"),
-			styleJson.at("Colors").at("TableBorderStrong").at("z"),
-			styleJson.at("Colors").at("TableBorderStrong").at("w")
-		);
-
-		// Table inner borders (prefer using Alpha=1.0 here)
-		style->Colors[ImGuiCol_TableBorderLight] = ImVec4(
-			styleJson.at("Colors").at("TableBorderLight").at("x"),
-			styleJson.at("Colors").at("TableBorderLight").at("y"),
-			styleJson.at("Colors").at("TableBorderLight").at("z"),
-			styleJson.at("Colors").at("TableBorderLight").at("w")
-		);		
-		// Table row background (even rows)
-		style->Colors[ImGuiCol_TableRowBg] = ImVec4(
-			styleJson.at("Colors").at("TableRowBg").at("x"),
-			styleJson.at("Colors").at("TableRowBg").at("y"),
-			styleJson.at("Colors").at("TableRowBg").at("z"),
-			styleJson.at("Colors").at("TableRowBg").at("w")
-		);
-		// Table row background (odd rows)
-		style->Colors[ImGuiCol_TableRowBgAlt] = ImVec4(
-			styleJson.at("Colors").at("TableRowBgAlt").at("x"),
-			styleJson.at("Colors").at("TableRowBgAlt").at("y"),
-			styleJson.at("Colors").at("TableRowBgAlt").at("z"),
-			styleJson.at("Colors").at("TableRowBgAlt").at("w")
-		);		
-		//Color for drag and drop
-		style->Colors[ImGuiCol_DragDropTarget] = ImVec4(
-			styleJson.at("Colors").at("DragDropTarget").at("x"),
-			styleJson.at("Colors").at("DragDropTarget").at("y"),
-			styleJson.at("Colors").at("DragDropTarget").at("z"),
-			styleJson.at("Colors").at("DragDropTarget").at("w")
-		);
-		// Gamepad/keyboard: current highlighted item
-		style->Colors[ImGuiCol_NavHighlight] = ImVec4(
-			styleJson.at("Colors").at("NavHighlight").at("x"),
-			styleJson.at("Colors").at("NavHighlight").at("y"),
-			styleJson.at("Colors").at("NavHighlight").at("z"),
-			styleJson.at("Colors").at("NavHighlight").at("w")
-		);		
-		// Highlight window when using CTRL+TAB
-		style->Colors[ImGuiCol_NavWindowingHighlight] = ImVec4(
-			styleJson.at("Colors").at("NavWindowingHighlight").at("x"),
-			styleJson.at("Colors").at("NavWindowingHighlight").at("y"),
-			styleJson.at("Colors").at("NavWindowingHighlight").at("z"),
-			styleJson.at("Colors").at("NavWindowingHighlight").at("w")
-		);		
-		// Darken/colorize entire screen behind the CTRL+TAB window list, when active
-		style->Colors[ImGuiCol_NavWindowingDimBg] = ImVec4(
-			styleJson.at("Colors").at("NavWindowingDimBg").at("x"),
-			styleJson.at("Colors").at("NavWindowingDimBg").at("y"),
-			styleJson.at("Colors").at("NavWindowingDimBg").at("z"),
-			styleJson.at("Colors").at("NavWindowingDimBg").at("w")
-		);
-
+	// Table outer and header borders (prefer using Alpha=1.0 here)
+	style->Colors[ImGuiCol_TableBorderStrong] = ImVec4(
+		styleJson.at("Colors").at("TableBorderStrong").at("x"),
+		styleJson.at("Colors").at("TableBorderStrong").at("y"),
+		styleJson.at("Colors").at("TableBorderStrong").at("z"),
+		styleJson.at("Colors").at("TableBorderStrong").at("w")
+	);
+	// Table inner borders (prefer using Alpha=1.0 here)
+	style->Colors[ImGuiCol_TableBorderLight] = ImVec4(
+		styleJson.at("Colors").at("TableBorderLight").at("x"),
+		styleJson.at("Colors").at("TableBorderLight").at("y"),
+		styleJson.at("Colors").at("TableBorderLight").at("z"),
+		styleJson.at("Colors").at("TableBorderLight").at("w")
+	);
+	// Table row background (even rows)
+	style->Colors[ImGuiCol_TableRowBg] = ImVec4(
+		styleJson.at("Colors").at("TableRowBg").at("x"),
+		styleJson.at("Colors").at("TableRowBg").at("y"),
+		styleJson.at("Colors").at("TableRowBg").at("z"),
+		styleJson.at("Colors").at("TableRowBg").at("w")
+	);
+	// Table row background (odd rows)
+	style->Colors[ImGuiCol_TableRowBgAlt] = ImVec4(
+		styleJson.at("Colors").at("TableRowBgAlt").at("x"),
+		styleJson.at("Colors").at("TableRowBgAlt").at("y"),
+		styleJson.at("Colors").at("TableRowBgAlt").at("z"),
+		styleJson.at("Colors").at("TableRowBgAlt").at("w")
+	);		
+	//Color for drag and drop
+	style->Colors[ImGuiCol_DragDropTarget] = ImVec4(
+		styleJson.at("Colors").at("DragDropTarget").at("x"),
+		styleJson.at("Colors").at("DragDropTarget").at("y"),
+		styleJson.at("Colors").at("DragDropTarget").at("z"),
+		styleJson.at("Colors").at("DragDropTarget").at("w")
+	);
+	// Gamepad/keyboard: current highlighted item
+	style->Colors[ImGuiCol_NavHighlight] = ImVec4(
+		styleJson.at("Colors").at("NavHighlight").at("x"),
+		styleJson.at("Colors").at("NavHighlight").at("y"),
+		styleJson.at("Colors").at("NavHighlight").at("z"),
+		styleJson.at("Colors").at("NavHighlight").at("w")
+	);
+	// Highlight window when using CTRL+TAB
+	style->Colors[ImGuiCol_NavWindowingHighlight] = ImVec4(
+		styleJson.at("Colors").at("NavWindowingHighlight").at("x"),
+		styleJson.at("Colors").at("NavWindowingHighlight").at("y"),
+		styleJson.at("Colors").at("NavWindowingHighlight").at("z"),
+		styleJson.at("Colors").at("NavWindowingHighlight").at("w")
+	);
+	// Darken/colorize entire screen behind the CTRL+TAB window list, when active
+	style->Colors[ImGuiCol_NavWindowingDimBg] = ImVec4(
+		styleJson.at("Colors").at("NavWindowingDimBg").at("x"),
+		styleJson.at("Colors").at("NavWindowingDimBg").at("y"),
+		styleJson.at("Colors").at("NavWindowingDimBg").at("z"),
+		styleJson.at("Colors").at("NavWindowingDimBg").at("w")
+	);
 	// Darken/colorize entire screen behind a modal window, when one is active
 	style->Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(
 		styleJson.at("Colors").at("ModalWindowDimBg").at("x"),

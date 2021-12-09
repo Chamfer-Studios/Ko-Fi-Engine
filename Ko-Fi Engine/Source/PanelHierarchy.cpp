@@ -67,7 +67,6 @@ bool PanelHierarchy::Update()
 			
 		}
 		
-		
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 	}

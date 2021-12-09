@@ -2,7 +2,10 @@
 #include "PanelChooser.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include "GameObject.h"
-ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent) {
+
+ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
+{
+	type = ComponentType::TRANSFORM;
 
 	position = float3::zero;
 	rotation = Quat::identity;
@@ -120,4 +123,24 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	{
 		transformMatrix = transformMatrixLocal;
 	}
+}
+
+bool ComponentTransform::GetDirty()
+{
+	return isDirty;
+}
+
+Quat ComponentTransform::GetRotationQuat()
+{
+	return rotation;
+}
+
+void ComponentTransform::SetDirty(bool isDirty)
+{
+	this->isDirty = isDirty;
+}
+
+void ComponentTransform::SetRotationEuler(float3 rotationEuler)
+{
+	this->rotationEuler = rotationEuler;
 }

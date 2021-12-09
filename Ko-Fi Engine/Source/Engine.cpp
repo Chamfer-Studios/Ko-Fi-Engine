@@ -120,9 +120,8 @@ bool KoFiEngine::Start()
 
 	bool ret = true;
 
-	//Setting hardware info
+	// Setting hardware info
 	SetHardwareInfo();
-
 
 	std::list<Module*>::iterator item = modules.begin();;
 

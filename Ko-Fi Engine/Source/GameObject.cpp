@@ -4,7 +4,7 @@
 
 
 // Used with a path for the .fbx load
-GameObject::GameObject( int id, const char* name)
+GameObject::GameObject(int id, const char* name)
 {
 	active = true;
 	//LoadModel(path);
@@ -54,6 +54,7 @@ bool GameObject::PreUpdate() {
 	}
 	return ret;
 }
+
 bool GameObject::Update()
 {
 	bool ret = true;
@@ -64,6 +65,7 @@ bool GameObject::Update()
 	}
 	return ret;
 }
+
 bool GameObject::PostUpdate()
 {
 	bool ret = true;
@@ -101,6 +103,7 @@ void GameObject::Disable()
 {
 	active = false;
 }
+
 void GameObject::DeleteComponent(Component* component) {
 
 	auto componentIt = std::find(components.begin(), components.end(), component);
@@ -143,13 +146,11 @@ void GameObject::PropagateTransform()
 		go->transform->OnParentMoved();
 	}
 }
+
 ComponentTransform* GameObject::GetTransform()
 {
 	return this->transform;
 }
-
-
-
 
 void GameObject::SetName(std::string name)
 {
@@ -181,8 +182,23 @@ std::vector<Component*> GameObject::GetComponents()
 	return components;
 }
 
+void GameObject::SetId(int id)
+{
+	this->id = id;
+}
+
 uint GameObject::GetId()
 {
 	return id;
+}
+
+bool GameObject::HasChildrenWithId(int id)
+{
+	for (std::vector<GameObject*>::iterator child = children.begin(); child != children.end(); child++)
+	{
+		if ((*child)->id == id)
+			return true;
+	}
+	return false;
 }
 

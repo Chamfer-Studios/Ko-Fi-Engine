@@ -53,7 +53,8 @@ public:
 		return true;
 	}
 
-	virtual GameObject* GetGameObject(int id) {
+	GameObject* GetGameObject(int id)
+	{
 		for (GameObject* go : gameObjectList)
 		{
 			if (go->GetId() == id)
@@ -64,14 +65,14 @@ public:
 
 		return nullptr;
 	}
-	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr) {
 
-
+	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
+	{
 		GameObject* go = new GameObject(gameObjectList.size());
 		this->gameObjectList.push_back(go);
 		this->rootGo->AttachChild(go);
-		return go;
 
+		return go;
 	}
 
 public:

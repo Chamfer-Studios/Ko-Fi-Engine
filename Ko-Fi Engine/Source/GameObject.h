@@ -53,8 +53,9 @@ public:
 	GameObject* GetParent();
 	ComponentTransform* GetTransform();
 	std::vector<Component*> GetComponents();
+	void SetId(int id);
 	uint GetId();
-	
+	bool HasChildrenWithId(int id);
 
 public:
 	std::string name;

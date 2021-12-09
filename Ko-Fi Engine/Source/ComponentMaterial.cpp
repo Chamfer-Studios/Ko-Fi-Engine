@@ -11,7 +11,6 @@
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
 	path = "";
-
 }
 
 ComponentMaterial::~ComponentMaterial()
@@ -141,4 +140,24 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 void ComponentMaterial::AddTextures(Texture texture)
 {
 	this->texture = texture;
+}
+
+void ComponentMaterial::SetPath(std::string path)
+{
+	this->path = path;
+}
+
+std::string ComponentMaterial::GetPath()
+{
+	return path;
+}
+
+void ComponentMaterial::SetTexture(Texture texture)
+{
+	this->texture = texture;
+}
+
+Texture ComponentMaterial::GetTexture()
+{
+	return texture;
 }

@@ -12,7 +12,6 @@ class KoFiEngine;
 class Module
 {
 public:
-
 	Module() : active(false)
 	{}
 
@@ -59,7 +58,6 @@ public:
 	virtual void OnGui() {}
 
 public:
-
 	SString name;
 	bool active;
 

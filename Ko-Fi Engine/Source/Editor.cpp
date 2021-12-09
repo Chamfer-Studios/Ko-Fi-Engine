@@ -50,15 +50,15 @@ Editor::Editor(KoFiEngine* engine)
 	panelGameObject = new PanelInspector(this);
 
 	// Panel instances with its own bool
-	if (panelsState.showViewportWindow)
-	{
-		panelViewport = new PanelViewport(this, engine);
-		AddPanel(panelViewport);
-	}
 	if (panelsState.showGameWindow)
 	{
 		panelGame = new PanelGame(this);
 		AddPanel(panelGame);
+	}
+	if (panelsState.showViewportWindow)
+	{
+		panelViewport = new PanelViewport(this, engine);
+		AddPanel(panelViewport);
 	}
 	//------------------------------------
 	
@@ -73,8 +73,6 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelAbout);
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
-
-
 }
 
 Editor::~Editor()

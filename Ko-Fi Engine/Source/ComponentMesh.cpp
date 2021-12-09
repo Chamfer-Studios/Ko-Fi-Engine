@@ -156,14 +156,47 @@ bool ComponentMesh::CleanUp()
 
 	return true;
 }
+
 void ComponentMesh::SetMesh(Mesh* mesh)
 {
 	this->mesh = mesh;
 }
+
 Mesh* ComponentMesh::GetMesh()
 {
 	return mesh;
 }
+
+void ComponentMesh::SetPath(std::string path)
+{
+	this->path = path;
+}
+
+void ComponentMesh::SetVertexNormals(bool vertexNormals)
+{
+	this->vertexNormals = vertexNormals;
+}
+
+void ComponentMesh::SetFacesNormals(bool facesNormals)
+{
+	this->facesNormals = facesNormals;
+}
+
+std::string ComponentMesh::GetPath()
+{
+	return path;
+}
+
+bool ComponentMesh::GetVertexNormals()
+{
+	return vertexNormals;
+}
+
+bool ComponentMesh::GetFacesNormals()
+{
+	return facesNormals;
+}
+
 ////
 ////void ComponentMesh::LoadMesh(const char* path)
 ////{
@@ -243,17 +276,9 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
 		if (ImGui::Checkbox("Vertex Normals", &vertexNormals))
-		{
-			
 				mesh->ToggleVertexNormals();
-			
-		}
 		if (ImGui::Checkbox("Faces Normals", &facesNormals))
-		{
-			
 				mesh->ToggleFacesNormals();
-			
-		}
 	}
 
 	//if(materialComponent != nullptr)

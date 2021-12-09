@@ -22,6 +22,10 @@ public:
 	void LoadDefaultTexture(uint& textureID);
 	bool InspectorDraw(PanelChooser* chooser);
 	void AddTextures(Texture texture);
+	void SetPath(std::string path);
+	std::string GetPath();
+	void SetTexture(Texture texture);
+	Texture GetTexture();
 
 private:
 	std::string path = "";

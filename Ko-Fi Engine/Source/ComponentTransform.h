@@ -3,6 +3,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Math/Quat.h"
+
 class ComponentTransform : public Component
 {
 public:
@@ -27,11 +28,18 @@ public:
 
 	void RecomputeGlobalMatrix();
 
+	// Getters
+	bool GetDirty();
+	Quat GetRotationQuat();
+
+	// Setters
+	void SetDirty(bool isDirty);
+	void SetRotationEuler(float3 rotationEuler);
+
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;
 
 private:
-
 	bool isDirty = false;
 
 	float3 position;

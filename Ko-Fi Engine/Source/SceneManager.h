@@ -10,6 +10,11 @@
 class KoFiEngine;
 class SceneIntro;
 class GameObject;
+class JasonHandler;
+class ComponentTransform;
+class ComponentMesh;
+class ComponentMaterial;
+class ComponentInfo;
 
 enum class RuntimeState
 {
@@ -57,6 +62,18 @@ public:
 	void OnResume();
 	void OnTick();
 
+	// Serialization functions
+	bool SaveScene(Scene* scene);
+	Json SaveComponentTransform(ComponentTransform* componentTransform);
+	Json SaveComponentMesh(ComponentMesh* componentMesh);
+	Json SaveComponentMaterial(ComponentMaterial* componentMaterial);
+	Json SaveComponentInfo(ComponentInfo* componentInfo);
+	bool LoadScene(Scene* scene, const char* sceneName);
+	void LoadComponentTransform(ComponentTransform* componentTransform, Json jsonComponentTransform);
+	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
+	void LoadComponentMaterial(ComponentMaterial* componentMaterial, Json jsonComponentMaterial);
+	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
+
 public:
 	bool active;
 
@@ -87,6 +104,8 @@ private:
 	// --------------------------------------------------
 	
 	RuntimeState runtimeState = RuntimeState::STOPPED;
+
+	JsonHandler jsonHandler;
 };
 
 #endif // __SCENE_MANAGER_H__
