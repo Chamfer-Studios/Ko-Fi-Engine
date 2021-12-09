@@ -9,6 +9,9 @@
 #include "ImGuiAppLog.h"
 #include "Window.h"
 #include "FileSystem.h"
+#include "Importer.h"
+#include "ComponentMaterial.h"
+#include "Importer.h"
 // FIXME: The list of meshes should be in scene intro.
 #include "GameObject.h"
 
@@ -170,22 +173,29 @@ bool Input::PreUpdate(float dt)
 			{
 				if (tmp.find(".fbx") != std::string::npos)
 				{
-					engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
+					Importer* importer = new Importer(engine);
+					importer->ImportModel(tmp.c_str());
+					//engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
+					RELEASE(importer);
+
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{
 					// Apply texture
 					if (engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
 					{
-						GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID);
-						//TODO:Uncomment this when Game Objects work
-						/*ComponentMesh* meshComponent = (ComponentMesh*)go->GetComponent(COMPONENT_TYPE::COMPONENT_MESH);
-						if (meshComponent != nullptr) {
-							if (meshComponent->materialComponent != nullptr)
-							{
-								meshComponent->materialComponent->LoadTexture(tmp.c_str());
+						
+							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID);
+			
+							if (go->GetComponent<ComponentMaterial>()) {
+								ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
+								cMat->LoadTexture(tmp.c_str());
+
 							}
-						}*/
+	
+							
+								
+							
 					}
 					
 					

@@ -36,6 +36,7 @@ void Importer::ImportModel(const char* path)
 
 void Importer::GetOneMesh(const aiScene* scene)
 {
+	//TODO: ADD MATERIAL
 	//materialComponent = new ComponentMaterial(this->owner);
 	GameObject* parent = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 
@@ -94,7 +95,6 @@ void Importer::GetOneMesh(const aiScene* scene)
 
 void Importer::GetMultipleMeshes(const aiScene* scene)
 {
-	//materialComponent = new ComponentMaterial(this->owner);
 	GameObject* parent = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 	aiMaterial* texture = nullptr;
 	aiString texturePath;
