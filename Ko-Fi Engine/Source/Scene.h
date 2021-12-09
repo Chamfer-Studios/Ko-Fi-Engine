@@ -10,7 +10,9 @@ class Scene
 {
 public:
 	Scene() : active(false)
-	{}
+	{
+		CleanUp();
+	}
 
 	void Init()
 	{

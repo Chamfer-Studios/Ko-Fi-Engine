@@ -32,7 +32,9 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 }
 
 SceneIntro::~SceneIntro()
-{}
+{
+	CleanUp();
+}
 
 // Load assets
 bool SceneIntro::Start()
@@ -111,5 +113,3 @@ void SceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	
 }
-
-

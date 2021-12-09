@@ -27,13 +27,14 @@ SceneManager::SceneManager(KoFiEngine* engine)
 
 SceneManager::~SceneManager()
 {
+	CleanUp();
 }
 
 bool SceneManager::Awake()
 {
 	bool ret = true;
 
-	for (std::list<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->Awake();
 	}
@@ -45,7 +46,7 @@ bool SceneManager::Start()
 {
 	bool ret = true;
 
-	for (std::list<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->Start();
 	}
@@ -61,7 +62,7 @@ bool SceneManager::PreUpdate(float dt)
 
 	PrepareUpdate();
 
-	for (std::list<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->PreUpdate(gameDt);
 	}
@@ -73,7 +74,7 @@ bool SceneManager::Update(float dt)
 {
 	bool ret = true;
 
-	for (std::list<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->Update(gameDt);
 	}
@@ -85,7 +86,7 @@ bool SceneManager::PostUpdate(float dt)
 {
 	bool ret = true;
 
-	for (std::list<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->PostUpdate(gameDt);
 	}
@@ -99,10 +100,10 @@ bool SceneManager::CleanUp()
 {
 	bool ret = true;
 
-	for (std::list<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->CleanUp();
-		RemoveScene((*scene));
+		RELEASE((*scene));
 	}
 	scenes.clear();
 
@@ -139,13 +140,6 @@ void SceneManager::AddScene(Scene* scene)
 {
 	scene->Init();
 	scenes.push_back(scene);
-}
-
-void SceneManager::RemoveScene(Scene* scene)
-{
-	scene->CleanUp();
-	scenes.remove(scene);
-	RELEASE(scene);
 }
 
 Scene* SceneManager::GetCurrentScene()
@@ -238,25 +232,16 @@ Json SceneManager::SaveComponentTransform(ComponentTransform* componentTransform
 			componentTransform->GetPosition().y,
 			componentTransform->GetPosition().z
 		};
-		float pos = componentTransform->GetPosition().x;
-		pos = componentTransform->GetPosition().y;
-		pos = componentTransform->GetPosition().z;
 		jsonComponentTransform["rotation"] = {
 			componentTransform->GetRotation().x,
 			componentTransform->GetRotation().y,
 			componentTransform->GetRotation().z
 		};
-		float rotation = componentTransform->GetRotation().x;
-		rotation = componentTransform->GetRotation().y;
-		rotation = componentTransform->GetRotation().z;
 		jsonComponentTransform["scale"] = {
 			componentTransform->GetScale().x,
 			componentTransform->GetScale().y,
 			componentTransform->GetScale().z
 		};
-		float scale = componentTransform->GetScale().x;
-		scale = componentTransform->GetScale().y;
-		scale = componentTransform->GetScale().z;
 	}
 
 	return jsonComponentTransform;
@@ -452,6 +437,42 @@ void SceneManager::LoadComponentMaterial(ComponentMaterial* componentMaterial, J
 void SceneManager::LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo)
 {
 
+}
+
+void SceneManager::RemoveGameObject(std::vector<GameObject*>::iterator go)
+{
+	GameObject* gameObject = (*go);
+	if (gameObject != nullptr)
+	{
+		GameObject* parent = gameObject->GetParent();
+		std::vector<GameObject*> children = gameObject->GetChildren();
+		if (children.size() > 0)
+		{
+			for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
+			{
+				GameObject* child = (*ch);
+				GameObject* childParent = child->GetParent();
+				childParent = gameObject->GetParent();
+				parent->AttachChild(child);
+			}
+		}
+		parent->RemoveChild(gameObject);
+
+		std::vector<GameObject*> gameObjectsList = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//gameObjectsList.erase(go);
+		gameObject->CleanUp();
+		RELEASE(gameObject);
+	}
 }
 
 // Load scene from a .json file
@@ -651,11 +672,8 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 			}
 			if (!isGameObjectSaved)
 			{
-				// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				// IF THE GAME OBJECT IS NOT IN THE .JSON FILE, IT'LL BE REMOVED
-				/*gameObject->CleanUp();
-				gameObjectsList.erase(go);
-				RELEASE(gameObject);*/
+				RemoveGameObject(go);
 			}
 		}
 

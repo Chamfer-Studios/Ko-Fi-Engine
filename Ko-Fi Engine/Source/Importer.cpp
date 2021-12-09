@@ -106,9 +106,6 @@ void Importer::GetMultipleMeshes(const aiScene* scene)
 		Mesh* ourMesh = new Mesh();
 		aiMesh* aiMesh = scene->mMeshes[i];
 
-
-
-
 		// Positions
 		ourMesh->num_vertices = aiMesh->mNumVertices;
 		ourMesh->vertices = new float[ourMesh->num_vertices * 3];

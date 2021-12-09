@@ -20,20 +20,9 @@ GameObject::GameObject(int id, const char* name)
 	this->parent = nullptr;
 }
 
-GameObject::~GameObject() {
-
-	for (size_t i = 0; i < components.size(); i++) {
-		RELEASE(components[i]);
-	}
-
-	components.clear();
-
-	for (GameObject* go : children)
-	{
-		RELEASE(go);
-	}
-
-	parent = nullptr;
+GameObject::~GameObject()
+{
+	CleanUp();
 }
 
 bool GameObject::Start()
@@ -86,7 +75,6 @@ bool GameObject::CleanUp()
 	{
 		RELEASE(component);
 	}
-
 	components.clear();
 	children.clear();
 	parent = nullptr;
@@ -121,8 +109,8 @@ void GameObject::AddComponent(Component* component)
 
 void GameObject::AttachChild(GameObject* child)
 {
-	if(child->parent != nullptr)
-	child->parent->RemoveChild(child);
+	if (child->parent != nullptr)
+		child->parent->RemoveChild(child);
 
 	child->parent = this;
 	children.push_back(child);

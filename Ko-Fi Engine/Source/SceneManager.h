@@ -52,7 +52,6 @@ public:
 	bool FinishUpdate();
 
 	void AddScene(Scene* scene);
-	void RemoveScene(Scene* scene);
 	Scene* GetCurrentScene();
 	RuntimeState GetState();
 
@@ -74,6 +73,8 @@ public:
 	void LoadComponentMaterial(ComponentMaterial* componentMaterial, Json jsonComponentMaterial);
 	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
 
+	void RemoveGameObject(std::vector<GameObject*>::iterator go);
+
 public:
 	bool active;
 
@@ -82,7 +83,7 @@ private:
 	KoFiEngine* engine = nullptr;
 
 	// Scenes
-	std::list<Scene*> scenes;
+	std::vector<Scene*> scenes;
 	Scene* currentScene = nullptr;
 	SceneIntro* sceneIntro = nullptr;
 
