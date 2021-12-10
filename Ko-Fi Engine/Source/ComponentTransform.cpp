@@ -150,6 +150,11 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	}
 }
 
+float4x4 ComponentTransform::GetGlobalTransform()
+{
+	return transformMatrix;
+}
+
 bool ComponentTransform::GetDirty()
 {
 	return isDirty;

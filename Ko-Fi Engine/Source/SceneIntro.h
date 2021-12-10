@@ -8,6 +8,7 @@
 
 #define MAX_SNAKE 2
 
+class GameObject;
 struct PhysBody3D;
 struct PhysMotor3D;
 
@@ -31,6 +32,9 @@ private:
 	JsonHandler jsonHandler;
 	Json j;
 	KoFiEngine* engine = nullptr;
+
+	// Temporal to manage the use of the camera
+	GameObject* camera = nullptr;
 };
 
 #endif SCENE_INTRO_H // SCENE_INTRO_H

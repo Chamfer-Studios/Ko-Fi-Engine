@@ -54,12 +54,11 @@ bool ViewportFrameBuffer::Start()
 bool ViewportFrameBuffer::PreUpdate(float dt)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	return true;
 }
-
 
 bool ViewportFrameBuffer::PostUpdate(float dt)
 {

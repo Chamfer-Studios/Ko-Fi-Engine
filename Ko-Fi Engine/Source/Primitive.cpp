@@ -83,6 +83,9 @@ void Primitive::InnerRender() const
 void Primitive::SetPos(float x, float y, float z)
 {
 	transform.translate(x, y, z);
+	this->x = x;
+	this->y = y;
+	this->z = z;
 }
 
 // ------------------------------------------------------------
@@ -117,40 +120,40 @@ void Cube::InnerRender() const
 	glBegin(GL_QUADS);
 
 	glNormal3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-sx, -sy, sz);
-	glVertex3f(sx, -sy, sz);
-	glVertex3f(sx, sy, sz);
-	glVertex3f(-sx, sy, sz);
+	glVertex3f(x-sx, y-sy, z+sz);
+	glVertex3f(x+sx, y-sy, z+sz);
+	glVertex3f(x+sx, y+sy, z+sz);
+	glVertex3f(x-sx, y+sy, z+sz);
 
 	glNormal3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx, sy, -sz);
-	glVertex3f(sx, sy, -sz);
+	glVertex3f(x+sx, y-sy, z-sz);
+	glVertex3f(x-sx, y-sy, z-sz);
+	glVertex3f(x-sx, y+sy, z-sz);
+	glVertex3f(x+sx, y+sy, z-sz);
 
 	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(sx, -sy, sz);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(sx, sy, -sz);
-	glVertex3f(sx, sy, sz);
+	glVertex3f(x+sx, y-sy, z+sz);
+	glVertex3f(x+sx, y-sy, z-sz);
+	glVertex3f(x+sx, y+sy, z-sz);
+	glVertex3f(x+sx, y+sy, z+sz);
 
 	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx, -sy, sz);
-	glVertex3f(-sx, sy, sz);
-	glVertex3f(-sx, sy, -sz);
+	glVertex3f(x-sx, y-sy, z-sz);
+	glVertex3f(x-sx, y-sy, z+sz);
+	glVertex3f(x-sx, y+sy, z+sz);
+	glVertex3f(x-sx, y+sy, z-sz);
 
 	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(-sx, sy, sz);
-	glVertex3f(sx, sy, sz);
-	glVertex3f(sx, sy, -sz);
-	glVertex3f(-sx, sy, -sz);
+	glVertex3f(x-sx, y+sy, z+sz);
+	glVertex3f(x+sx, y+sy, z+sz);
+	glVertex3f(x+sx, y+sy, z-sz);
+	glVertex3f(x-sx, y+sy, z-sz);
 
 	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(sx, -sy, sz);
-	glVertex3f(-sx, -sy, sz);
+	glVertex3f(x-sx, y-sy, z-sz);
+	glVertex3f(x+sx, y-sy, z-sz);
+	glVertex3f(x+sx, y-sy, z+sz);
+	glVertex3f(x-sx, y-sy, z+sz);
 
 	glEnd();
 }
@@ -166,9 +169,9 @@ void Cube::DrawInterleavedMode()
 	//  |/      |/
 	//  v2------v3
 
-	float sx = size.x;
-	float sy = size.y;
-	float sz = size.z;
+	float sx = size.x * 0.5;
+	float sy = size.y * 0.5;
+	float sz = size.z * 0.5;
 
 	// interleaved vertex array for glDrawElements() & glDrawRangeElements() ======
 	// All vertex attributes (position, normal, color) are packed together as a

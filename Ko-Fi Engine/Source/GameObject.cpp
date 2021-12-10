@@ -2,6 +2,9 @@
 #include "Primitive.h"
 #include "Defs.h"
 
+#include "ComponentTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentInfo.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int id, const char* name)
@@ -35,7 +38,8 @@ bool GameObject::Start()
 	return ret;
 }
 
-bool GameObject::PreUpdate() {
+bool GameObject::PreUpdate()
+{
 	bool ret = true;
 	for (Component* component : components)
 	{
@@ -65,7 +69,6 @@ bool GameObject::PostUpdate()
 			ret = component->PostUpdate();
 		}
 	}
-
 	return ret;
 }
 
@@ -189,4 +192,3 @@ bool GameObject::HasChildrenWithId(int id)
 	}
 	return false;
 }
-

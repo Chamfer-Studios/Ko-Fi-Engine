@@ -3,8 +3,10 @@
 #include <vector>
 
 #include "Component.h"
-#include "ComponentTransform.h"
-#include "ComponentInfo.h"
+
+class ComponentTransform;
+class ComponentMesh;
+class ComponentInfo;
 
 class GameObject
 {

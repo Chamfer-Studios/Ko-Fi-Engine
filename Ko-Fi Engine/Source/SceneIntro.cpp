@@ -14,6 +14,7 @@
 #include "FileSystem.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
 #include "GameObject.h"
 
 #include "Primitive.h"
@@ -28,6 +29,9 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 	rootGo = new GameObject(-1,"Root");
+	/*camera = CreateEmptyGameObject();
+	camera->SetName("Camera");
+	camera->CreateComponent<ComponentCamera>();*/
 	gameObjectList.push_back(rootGo);
 }
 

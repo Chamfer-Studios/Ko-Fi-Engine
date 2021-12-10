@@ -30,6 +30,8 @@ public:
 
 	void RecomputeGlobalMatrix();
 
+	float4x4 GetGlobalTransform();
+
 	// Getters
 	bool GetDirty();
 

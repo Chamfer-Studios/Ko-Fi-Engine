@@ -1,10 +1,12 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
+#include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "PanelChooser.h"
 #include "glew.h"
 #include <gl/GL.h>
 #include "Primitive.h"
+#include "par_shapes.h"
 #include "Defs.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
@@ -88,6 +90,16 @@ bool ComponentMesh::Start(const char* path)
 	return ret;
 }
 
+bool ComponentMesh::PreUpdate()
+{
+	return true;
+}
+
+bool ComponentMesh::Update()
+{
+	return true;
+}
+
 bool ComponentMesh::PostUpdate()
 {
 	bool ret = true;
@@ -101,6 +113,7 @@ bool ComponentMesh::PostUpdate()
 ////	{
 ////		
 			mesh->Draw(owner);
+			/*DrawBoundingBox();*/
 			//texture
 		
 ////		
@@ -149,6 +162,10 @@ bool ComponentMesh::PostUpdate()
 ////
 	glPopMatrix();
 ////
+
+	GetGlobalBoundingBox();
+	DrawBoundingBox(aabb, float3(0.0, 1.0, 0.0));
+
 	return ret;
 }
 
@@ -198,6 +215,27 @@ bool ComponentMesh::GetVertexNormals()
 bool ComponentMesh::GetFacesNormals()
 {
 	return facesNormals;
+}
+
+void ComponentMesh::GenerateBounds()
+{
+	// Generate AABB
+	mesh->localAABB.SetNegativeInfinity();
+	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->num_vertices);
+
+	/*Sphere sphere;
+	sphere.r = 0.f;
+	sphere.pos = mesh->localAABB.CenterPoint();
+	sphere.Enclose(mesh->localAABB);
+
+	radius = sphere.r;
+	centerPoint = sphere.pos;*/
+}
+
+AABB ComponentMesh::GetAABB()
+{
+	GenerateBounds();
+	return mesh->localAABB;
 }
 
 ////
@@ -297,4 +335,66 @@ uint ComponentMesh::GetVertices()
 		numVertices += mesh->num_vertices;
 	
 	return numVertices;
+}
+
+void ComponentMesh::GetGlobalBoundingBox()
+{
+	// Generate global OBB
+	obb = GetAABB();
+	obb.Transform(owner->GetTransform()->GetGlobalTransform());
+
+	// Generate global AABB
+	aabb.SetNegativeInfinity();
+	aabb.Enclose(obb);
+}
+
+void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
+{
+	glLineWidth(2.0f);
+	glColor3f(rgb.x, rgb.y, rgb.z);
+	glBegin(GL_LINES);
+
+	// Bottom 1
+	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+
+	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+
+	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+
+	// Bottom 2
+	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+
+	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+
+	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+
+	// Top 1
+	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+
+	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+
+	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+
+	// Top 2
+	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+
+	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+
+	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+
+	glEnd();
+	glColor3f(1.f, 1.f, 1.f);
+	glLineWidth(1.0f);
 }

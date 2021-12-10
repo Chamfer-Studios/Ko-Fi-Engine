@@ -1,11 +1,12 @@
 #pragma once
-
 #include <vector>
 #include <string>
-typedef unsigned int uint;
+#include "MathGeoLib/Geometry/AABB.h"
 
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
+
+typedef unsigned int uint;
 class GameObject;
 
 struct Texture
@@ -51,6 +52,9 @@ public:
 
 	// Texture
 	Texture texture;
+
+	// AABB
+	AABB localAABB;
 	
 private:
 	void SetUpDefaultTexture();
