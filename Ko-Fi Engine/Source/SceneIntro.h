@@ -35,6 +35,8 @@ private:
 
 	// Temporal to manage the use of the camera
 	GameObject* camera = nullptr;
+
+	Importer* importer = nullptr;
 };
 
 #endif SCENE_INTRO_H // SCENE_INTRO_H

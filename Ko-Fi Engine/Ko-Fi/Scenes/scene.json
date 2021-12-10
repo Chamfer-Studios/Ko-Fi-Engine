@@ -1,12 +1,13 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 4,
+        "game_objects_amount": 5,
         "game_objects_list": [
             {
                 "active": true,
                 "children_id_list": [
-                    1
+                    1,
+                    4
                 ],
                 "components_list": [
                     {
@@ -123,7 +124,7 @@
                     }
                 ],
                 "id": 1,
-                "name": "GameObject 1",
+                "name": "Baker house",
                 "parent": -1
             },
             {
@@ -136,7 +137,7 @@
                         "position": [
                             0.0,
                             0.0,
-                            0.0
+                            -10.0
                         ],
                         "rotation": [
                             -0.0,
@@ -160,7 +161,7 @@
                             1.0,
                             0.0,
                             0.0,
-                            0.0
+                            -10.0
                         ],
                         "transform_matrix_local": [
                             1.0,
@@ -174,7 +175,7 @@
                             1.0,
                             0.0,
                             0.0,
-                            0.0
+                            -10.0
                         ]
                     },
                     {
@@ -186,7 +187,7 @@
                         "texture": {
                             "height": 1024,
                             "nr_channels": 4,
-                            "texture_id": 3,
+                            "texture_id": 1,
                             "texture_path": "Assets/Textures/Baker_house.png",
                             "width": 1024
                         }
@@ -199,7 +200,7 @@
                     }
                 ],
                 "id": 2,
-                "name": "GameObject 2",
+                "name": "Chimney",
                 "parent": 1
             },
             {
@@ -212,11 +213,11 @@
                         "position": [
                             0.0,
                             0.0,
-                            0.0
+                            -10.0
                         ],
                         "rotation": [
                             -0.0,
-                            0.5235987901687622,
+                            0.0,
                             -0.0
                         ],
                         "scale": [
@@ -225,32 +226,32 @@
                             1.0
                         ],
                         "transform_matrix": [
-                            0.8660253882408142,
+                            1.0,
                             0.0,
-                            -0.5000000596046448,
+                            0.0,
                             0.0,
                             1.0,
                             0.0,
-                            0.5000000596046448,
-                            0.0,
-                            0.8660253882408142,
                             0.0,
                             0.0,
-                            0.0
+                            1.0,
+                            0.0,
+                            0.0,
+                            -10.0
                         ],
                         "transform_matrix_local": [
-                            0.8660253882408142,
+                            1.0,
                             0.0,
-                            -0.5000000596046448,
+                            0.0,
                             0.0,
                             1.0,
                             0.0,
-                            0.5000000596046448,
-                            0.0,
-                            0.8660253882408142,
                             0.0,
                             0.0,
-                            0.0
+                            1.0,
+                            0.0,
+                            0.0,
+                            -10.0
                         ]
                     },
                     {
@@ -262,7 +263,7 @@
                         "texture": {
                             "height": 1024,
                             "nr_channels": 4,
-                            "texture_id": 4,
+                            "texture_id": 2,
                             "texture_path": "Assets/Textures/Baker_house.png",
                             "width": 1024
                         }
@@ -275,8 +276,76 @@
                     }
                 ],
                 "id": 3,
-                "name": "GameObject 3",
+                "name": "House",
                 "parent": 1
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            0.05000000074505806,
+                            0.05000000074505806,
+                            0.05000000074505806
+                        ],
+                        "transform_matrix": [
+                            -4.17232506322307e-08,
+                            1.1920929132713809e-08,
+                            -0.05000004917383194,
+                            -0.05000004917383194,
+                            -5.364418242947977e-08,
+                            -5.9604645663569045e-09,
+                            -5.9604645663569045e-09,
+                            0.05000004917383194,
+                            -3.5762788286319847e-08,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            -4.17232506322307e-08,
+                            1.1920929132713809e-08,
+                            -0.05000004917383194,
+                            -0.05000004917383194,
+                            -5.364418242947977e-08,
+                            -5.9604645663569045e-09,
+                            -5.9604645663569045e-09,
+                            0.05000004917383194,
+                            -3.5762788286319847e-08,
+                            0.0,
+                            1.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
+                        "component_type": "camera"
+                    }
+                ],
+                "id": 4,
+                "name": "Test camera",
+                "parent": -1
             }
         ],
         "name": "SceneIntro",

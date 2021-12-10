@@ -54,7 +54,6 @@ bool GameObject::Update()
 	for (Component* component : components)
 	{
 		ret = component->Update();
-
 	}
 	return ret;
 }

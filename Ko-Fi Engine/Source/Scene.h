@@ -2,14 +2,17 @@
 #define __SCENE_H__
 
 #include "GameObject.h"
+#include "Importer.h"
 #include <vector>
-
-class GameObject;
 
 class Scene
 {
 public:
 	Scene() : active(false)
+	{
+	}
+
+	~Scene()
 	{
 		CleanUp();
 	}

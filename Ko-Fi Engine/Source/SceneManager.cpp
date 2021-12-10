@@ -6,6 +6,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
+#include "ComponentCamera.h"
 #include "Editor.h"
 
 #include "Defs.h"
@@ -280,6 +281,13 @@ Json SceneManager::SaveComponentInfo(ComponentInfo* componentInfo)
 	return jsonComponentInfo;
 }
 
+Json SceneManager::SaveComponentCamera(ComponentCamera* componentCamera)
+{
+	Json jsonComponentCamera;
+
+	return jsonComponentCamera;
+}
+
 // Serialize and save scene into a .json file
 bool SceneManager::SaveScene(Scene* scene)
 {
@@ -334,6 +342,9 @@ bool SceneManager::SaveScene(Scene* scene)
 				jsonComponent = SaveComponentInfo((ComponentInfo*)component);
 				jsonComponent["component_type"] = "info";
 				break;
+			case ComponentType::CAMERA:
+				jsonComponent = SaveComponentCamera((ComponentCamera*)component);
+				jsonComponent["component_type"] = "camera";
 			default:
 				break;
 			}
@@ -439,6 +450,11 @@ void SceneManager::LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComp
 
 }
 
+void SceneManager::LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera)
+{
+
+}
+
 void SceneManager::RemoveGameObject(std::vector<GameObject*>::iterator go)
 {
 	GameObject* gameObject = (*go);
@@ -536,6 +552,8 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						component = gameObject->GetComponent<ComponentMaterial>();
 					else if (componentString == "info")
 						component = gameObject->GetComponent<ComponentInfo>();
+					else if (componentString == "camera")
+						component = gameObject->GetComponent<ComponentCamera>();
 
 					// IF THE COMPONENT ALREADY EXISTS, IT'LL BE UPDATED
 					if (component != nullptr)
@@ -554,6 +572,9 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						case ComponentType::INFO:
 							LoadComponentInfo((ComponentInfo*)component, jsonComponent);
 							break;
+						case ComponentType::CAMERA:
+							LoadComponentCamera((ComponentCamera*)component, jsonComponent);
+							break;
 						default:
 							break;
 						}
@@ -569,11 +590,12 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 							component = gameObject->CreateComponent<ComponentMaterial>();
 						else if (componentString == "info")
 							component = gameObject->CreateComponent<ComponentInfo>();
+						else if (componentString == "camera")
+							component = gameObject->CreateComponent<ComponentCamera>();
 						gameObject->AddComponent(component);
 
 						if (component != nullptr)
 						{
-							Json jsonComponent = jsonComponentsList.at(componentString);
 							switch (component->GetType())
 							{
 							case ComponentType::TRANSFORM:
@@ -588,6 +610,8 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 							case ComponentType::INFO:
 								LoadComponentInfo((ComponentInfo*)component, jsonComponent);
 								break;
+							case ComponentType::CAMERA:
+								LoadComponentCamera((ComponentCamera*)component, jsonComponent);
 							default:
 								break;
 							}
@@ -622,11 +646,12 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						component = gameObject->CreateComponent<ComponentMaterial>();
 					else if (componentString == "info")
 						component = gameObject->CreateComponent<ComponentInfo>();
+					else if (componentString == "camera")
+						component = gameObject->CreateComponent<ComponentCamera>();
 					gameObject->AddComponent(component);
 
 					if (component != nullptr)
 					{
-						Json jsonComponent = jsonComponentsList.at(componentString);
 						switch (component->GetType())
 						{
 						case ComponentType::TRANSFORM:
@@ -640,6 +665,9 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 							break;
 						case ComponentType::INFO:
 							LoadComponentInfo((ComponentInfo*)component, jsonComponent);
+							break;
+						case ComponentType::CAMERA:
+							LoadComponentCamera((ComponentCamera*)component, jsonComponent);
 							break;
 						default:
 							break;

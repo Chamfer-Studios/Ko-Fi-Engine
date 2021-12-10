@@ -15,6 +15,7 @@ class ComponentTransform;
 class ComponentMesh;
 class ComponentMaterial;
 class ComponentInfo;
+class ComponentCamera;
 
 enum class RuntimeState
 {
@@ -67,11 +68,13 @@ public:
 	Json SaveComponentMesh(ComponentMesh* componentMesh);
 	Json SaveComponentMaterial(ComponentMaterial* componentMaterial);
 	Json SaveComponentInfo(ComponentInfo* componentInfo);
+	Json SaveComponentCamera(ComponentCamera* componentCamera);
 	bool LoadScene(Scene* scene, const char* sceneName);
 	void LoadComponentTransform(ComponentTransform* componentTransform, Json jsonComponentTransform);
 	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
 	void LoadComponentMaterial(ComponentMaterial* componentMaterial, Json jsonComponentMaterial);
 	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
+	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
 
 	void RemoveGameObject(std::vector<GameObject*>::iterator go);
 
