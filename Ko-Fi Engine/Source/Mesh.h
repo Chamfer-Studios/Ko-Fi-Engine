@@ -30,25 +30,31 @@ public:
 	void ToggleVertexNormals();
 	void ToggleFacesNormals();
 
+	//Serialization custom format
+	bool Mesh2Binary(const char* path);
+	bool Binary2Mesh(const char* path);
+
 	// Indices
 	uint id_index = 0; // index in VRAM
-	uint num_indices = 0;
 	uint* indices = nullptr;
+	uint indicesSizeBytes = 0;
 
 	// Vertices
 	uint id_vertex = 0; // unique vertex in VRAM
-	uint num_vertices = 0;
 	float* vertices = nullptr;
+	uint verticesSizeBytes = 0;
 
 	// Normals
 	uint id_normal = 0;
-	uint num_normals = 0;
 	float* normals = nullptr;
+	uint normalsSizeBytes = 0;
+
 
 	// Texture coordinates
 	uint id_tex_coord = 0;
-	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
+	uint texCoordSizeBytes = 0;
+
 
 	// Texture
 	Texture texture;

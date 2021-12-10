@@ -19,6 +19,5 @@ public:
 
 private:
 	Editor* editor;
-	Importer* importer;
 	bool loadingModel = false;
 };

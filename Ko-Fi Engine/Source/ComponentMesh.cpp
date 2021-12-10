@@ -221,7 +221,7 @@ void ComponentMesh::GenerateBounds()
 {
 	// Generate AABB
 	mesh->localAABB.SetNegativeInfinity();
-	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->num_vertices);
+	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes/(sizeof(float)*3));
 
 	/*Sphere sphere;
 	sphere.r = 0.f;
@@ -332,7 +332,7 @@ uint ComponentMesh::GetVertices()
 {
 	uint numVertices = 0;
 	
-		numVertices += mesh->num_vertices;
+		numVertices += mesh->verticesSizeBytes/(sizeof(float)*3);
 	
 	return numVertices;
 }

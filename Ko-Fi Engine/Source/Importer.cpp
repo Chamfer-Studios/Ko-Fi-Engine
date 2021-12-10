@@ -9,13 +9,23 @@
 #include "ComponentMaterial.h"
 #include "Engine.h"
 #include "SceneManager.h"
-Importer::Importer(KoFiEngine* engine)
+Importer* Importer::instance = nullptr;
+Importer::Importer()
 {
-	this->engine = engine;
 }
 Importer::~Importer()
 {
 }
+
+Importer* Importer::GetInstance() {
+	
+	if (instance == nullptr) {
+		instance = new Importer();
+	}
+		return instance;
+	
+}
+
 void Importer::ImportModel(const char* path)
 {
 	//Creating parent game object
@@ -44,15 +54,15 @@ void Importer::GetOneMesh(const aiScene* scene)
 	aiMesh* aiMesh = scene->mMeshes[0];
 
 	// Positions
-	ourMesh->num_vertices = aiMesh->mNumVertices;
-	ourMesh->vertices = new float[ourMesh->num_vertices * 3];
-	memcpy(ourMesh->vertices, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertices * 3); // &vertices[0]
+	ourMesh->verticesSizeBytes = aiMesh->mNumVertices * sizeof(float) * 3;
+	ourMesh->vertices = (float*)malloc(ourMesh->verticesSizeBytes);
+	memcpy(ourMesh->vertices, aiMesh->mVertices, ourMesh->verticesSizeBytes); // &vertices[0]
 
 	// Faces
 	if (aiMesh->HasFaces())
 	{
-		ourMesh->num_indices = aiMesh->mNumFaces * 3;
-		ourMesh->indices = new uint[ourMesh->num_indices]; // assume each face is a triangle
+		ourMesh->indicesSizeBytes = aiMesh->mNumFaces * sizeof(uint) * 3;
+		ourMesh->indices = (uint*)malloc(ourMesh->indicesSizeBytes); // assume each face is a triangle
 		for (uint i = 0; i < aiMesh->mNumFaces; ++i)
 		{
 			if (aiMesh->mFaces[i].mNumIndices != 3)
@@ -68,17 +78,17 @@ void Importer::GetOneMesh(const aiScene* scene)
 	// Loading mesh normals data
 	if (aiMesh->HasNormals())
 	{
-		ourMesh->num_normals = aiMesh->mNumVertices;
-		ourMesh->normals = new float[ourMesh->num_normals * 3];
-		memcpy(ourMesh->normals, aiMesh->mNormals, sizeof(float) * ourMesh->num_normals * 3);
+		ourMesh->normalsSizeBytes = aiMesh->mNumVertices * sizeof(float) * 3;
+		ourMesh->normals = (float*)malloc(ourMesh->normalsSizeBytes);
+		memcpy(ourMesh->normals, aiMesh->mNormals, ourMesh->normalsSizeBytes);
 	}
 
 	// Texture coordinates
 	if (aiMesh->HasTextureCoords(0))
 	{
-		ourMesh->num_tex_coords = aiMesh->mNumVertices;
-		ourMesh->tex_coords = new float[ourMesh->num_tex_coords * 2];
-		for (uint j = 0; j < ourMesh->num_tex_coords; ++j)
+		ourMesh->texCoordSizeBytes = aiMesh->mNumVertices * sizeof(float) * 2;
+		ourMesh->tex_coords = (float*)malloc(ourMesh->texCoordSizeBytes);
+		for (uint j = 0; j < aiMesh->mNumVertices; ++j)
 		{
 			ourMesh->tex_coords[j * 2] = aiMesh->mTextureCoords[0][j].x;
 			ourMesh->tex_coords[j * 2 + 1] = /*1.0f - */aiMesh->mTextureCoords[0][j].y;
@@ -107,15 +117,15 @@ void Importer::GetMultipleMeshes(const aiScene* scene)
 		aiMesh* aiMesh = scene->mMeshes[i];
 
 		// Positions
-		ourMesh->num_vertices = aiMesh->mNumVertices;
-		ourMesh->vertices = new float[ourMesh->num_vertices * 3];
-		memcpy(ourMesh->vertices, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertices * 3); // &vertices[0]
+		ourMesh->verticesSizeBytes = aiMesh->mNumVertices * sizeof(float)*3;
+		ourMesh->vertices = (float*)malloc(ourMesh->verticesSizeBytes);
+		memcpy(ourMesh->vertices, aiMesh->mVertices, ourMesh->verticesSizeBytes); // &vertices[0]
 
 		// Faces
 		if (aiMesh->HasFaces())
 		{
-			ourMesh->num_indices = aiMesh->mNumFaces * 3;
-			ourMesh->indices = new uint[ourMesh->num_indices]; // assume each face is a triangle
+			ourMesh->indicesSizeBytes = aiMesh->mNumFaces * sizeof(uint) * 3;
+			ourMesh->indices = (uint*)malloc(ourMesh->indicesSizeBytes); // assume each face is a triangle
 			for (uint i = 0; i < aiMesh->mNumFaces; ++i)
 			{
 				if (aiMesh->mFaces[i].mNumIndices != 3)
@@ -131,17 +141,17 @@ void Importer::GetMultipleMeshes(const aiScene* scene)
 		// Loading mesh normals data
 		if (aiMesh->HasNormals())
 		{
-			ourMesh->num_normals = aiMesh->mNumVertices;
-			ourMesh->normals = new float[ourMesh->num_normals * 3];
-			memcpy(ourMesh->normals, aiMesh->mNormals, sizeof(float) * ourMesh->num_normals * 3);
+			ourMesh->normalsSizeBytes = aiMesh->mNumVertices * sizeof(float)*3;
+			ourMesh->normals = (float*)malloc(ourMesh->normalsSizeBytes);
+			memcpy(ourMesh->normals, aiMesh->mNormals,ourMesh->normalsSizeBytes);
 		}
 
 		// Texture coordinates
 		if (aiMesh->HasTextureCoords(0))
 		{
-			ourMesh->num_tex_coords = aiMesh->mNumVertices;
-			ourMesh->tex_coords = new float[ourMesh->num_tex_coords * 2];
-			for (uint j = 0; j < ourMesh->num_tex_coords; ++j)
+			ourMesh->texCoordSizeBytes = aiMesh->mNumVertices * sizeof(float)*2;
+			ourMesh->tex_coords = (float*)malloc(ourMesh->texCoordSizeBytes);
+			for (uint j = 0; j < aiMesh->mNumVertices; ++j)
 			{
 				ourMesh->tex_coords[j * 2] = aiMesh->mTextureCoords[0][j].x;
 				ourMesh->tex_coords[j * 2 + 1] = /*1.0f - */aiMesh->mTextureCoords[0][j].y;

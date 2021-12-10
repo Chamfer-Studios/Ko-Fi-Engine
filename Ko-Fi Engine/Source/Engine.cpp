@@ -8,7 +8,7 @@
 #include "Editor.h"
 #include "FileSystem.h"
 #include "ViewportFrameBuffer.h"
-
+#include "Importer.h"
 #include "Defs.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
@@ -23,7 +23,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 {
 	engineConfig = new EngineConfig();
 	PERF_START(ptimer);
-
+	Importer::GetInstance()->SetEngine(this);
 	window = new Window();
 	fileSystem = new FileSystem(this);
 	input = new Input(this);

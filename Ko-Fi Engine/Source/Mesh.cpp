@@ -9,6 +9,7 @@
 #include "ComponentMaterial.h"
 #include "GameObject.h"
 #include "Defs.h"
+#include <fstream>
 
 Mesh::Mesh()
 {
@@ -47,23 +48,23 @@ void Mesh::SetUpMeshBuffers()
 	// Vertices
 	glGenBuffers(1, &id_vertex);
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, verticesSizeBytes, vertices, GL_STATIC_DRAW);
 
 	// Normals
 	glGenBuffers(1, &id_normal);
 	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normals * 3, normals, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, normalsSizeBytes, normals, GL_STATIC_DRAW);
 
 	// Indices
 	glGenBuffers(1, &id_index);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSizeBytes, indices, GL_STATIC_DRAW);
 
 	// Texture coords
 	if (tex_coords != 0) {
 		glGenBuffers(1, &id_tex_coord);
 		glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_tex_coords * 2, tex_coords, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, texCoordSizeBytes, tex_coords, GL_STATIC_DRAW);
 	}
 
 }
@@ -118,7 +119,7 @@ void Mesh::Draw(GameObject* owner)
 		glBindTexture(GL_TEXTURE_2D, texture.textureID);
 	}
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, indicesSizeBytes/sizeof(uint), GL_UNSIGNED_INT, NULL);
 
 	DebugDraw();
 
@@ -153,7 +154,7 @@ void Mesh::DrawVertexNormals() const
 
 	// Vertices normals
 	glBegin(GL_LINES);
-	for (size_t i = 0, c = 0; i < num_vertices * 3; i += 3, c += 4)
+	for (size_t i = 0, c = 0; i < verticesSizeBytes/sizeof(float); i += 3, c += 4)
 	{
 		glColor3f(1.0f, 0.0f, 0.0f);
 		//glColor4f(colors[c], colors[c + 1], colors[c + 2], colors[c + 3]);
@@ -175,7 +176,7 @@ void Mesh::DrawFaceNormals() const
 
 	// Face normals
 	glBegin(GL_LINES);
-	for (size_t i = 0; i < num_vertices * 3; i += 3)
+	for (size_t i = 0; i < verticesSizeBytes/sizeof(float); i += 3)
 	{
 		glColor3f(0.0f, 1.0f, 0.0f);
 		float vx = (vertices[i] + vertices[i + 3] + vertices[i + 6]) / 3;
@@ -206,4 +207,39 @@ void Mesh::ToggleVertexNormals()
 void Mesh::ToggleFacesNormals()
 {
 	drawFaceNormals = !drawFaceNormals;
+}
+
+bool Mesh::Mesh2Binary(const char* path)
+{
+	std::ofstream file;
+	file.open(path, std::ios::in | std::ios::app | std::ios::binary);
+	if (file.is_open()) {
+		file.write((char*)this->vertices, verticesSizeBytes);
+		file.write((char*)this->normals, normalsSizeBytes);
+		file.write((char*)this->tex_coords, texCoordSizeBytes);
+		file.write((char*)this->indices, indicesSizeBytes);
+		file.close();
+		return true;
+	}
+	return false;
+}
+
+bool Mesh::Binary2Mesh(const char* path)
+{
+	std::ifstream file;
+	file.open(path, std::ios::binary);
+	if (file.is_open()) {
+		this->vertices = (float*)malloc(this->verticesSizeBytes);
+		file.read((char*)this->vertices, this->verticesSizeBytes);
+		this->normals = (float*)malloc(this->normalsSizeBytes);
+		file.read((char*)this->normals, this->normalsSizeBytes);
+		this->tex_coords = (float*)malloc(this->texCoordSizeBytes);
+		file.read((char*)this->tex_coords, this->texCoordSizeBytes);
+		this->indices = (uint*)malloc(this->indicesSizeBytes);
+		file.read((char*)this->indices, this->indicesSizeBytes);
+		file.close();
+		this->SetUpMeshBuffers();
+		return true;
+	}
+		return false;
 }

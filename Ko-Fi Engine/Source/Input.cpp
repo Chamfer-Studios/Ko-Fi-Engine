@@ -173,10 +173,9 @@ bool Input::PreUpdate(float dt)
 			{
 				if (tmp.find(".fbx") != std::string::npos)
 				{
-					Importer* importer = new Importer(engine);
-					importer->ImportModel(tmp.c_str());
+					
+					Importer::GetInstance()->ImportModel(tmp.c_str());
 					//engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
-					RELEASE(importer);
 
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
