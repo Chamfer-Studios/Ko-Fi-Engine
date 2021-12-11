@@ -19,33 +19,30 @@
 
 #include <stdio.h>
 
-#include "../Math/vec2d.h"
+#include "../Math/float2.h"
 #include "../Math/float3.h"
 #include "../Math/MathConstants.h"
 
 MATH_BEGIN_NAMESPACE
 
-class AABB2D
+struct AABB2D
 {
-public:
-
 	AABB2D() { }
-
-	AABB2D(const vec2d &minPt, const vec2d &maxPt)
+	AABB2D(const float2 &minPt, const float2 &maxPt)
 	:minPoint(minPt),
 	maxPoint(maxPt)
 	{
 	}
 
-	vec2d minPoint;
-	vec2d maxPoint;
+	float2 minPoint;
+	float2 maxPoint;
 
 	float Width() const { return maxPoint.x - minPoint.x; }
 	float Height() const { return maxPoint.y - minPoint.y; }
 
-	float DistanceSq(const vec2d &pt) const
+	float DistanceSq(const float2 &pt) const
 	{
-		vec2d cp = pt.Clamp(minPoint, maxPoint);
+		float2 cp = pt.Clamp(minPoint, maxPoint);
 		return cp.DistanceSq(pt);
 	}
 
@@ -55,7 +52,7 @@ public:
 		maxPoint.SetFromScalar(-FLOAT_INF);
 	}
 
-	void Enclose(const vec2d &point)
+	void Enclose(const float2 &point)
 	{
 		minPoint = Min(minPoint, point);
 		maxPoint = Max(maxPoint, point);
@@ -75,18 +72,6 @@ public:
 			&& rhs.maxPoint.x <= maxPoint.x && rhs.maxPoint.y <= maxPoint.y;
 	}
 
-	bool Contains(const vec2d &pt) const
-	{
-		return pt.x >= minPoint.x && pt.y >= minPoint.y
-			&& pt.x <= maxPoint.x && pt.y <= maxPoint.y;
-	}
-
-	bool Contains(int x, int y) const
-	{
-		return x >= minPoint.x && y >= minPoint.y
-			&& x <= maxPoint.x && y <= maxPoint.y;
-	}
-
 	bool IsDegenerate() const
 	{
 		return minPoint.x >= maxPoint.x || minPoint.y >= maxPoint.y;
@@ -102,17 +87,7 @@ public:
 		return minPoint.IsFinite() && maxPoint.IsFinite() && minPoint.MinElement() > -1e5f && maxPoint.MaxElement() < 1e5f;
 	}
 
-	vec2d PosInside(const vec2d &normalizedPos) const
-	{
-		return minPoint + normalizedPos.Mul(maxPoint - minPoint);
-	}
-
-	vec2d ToNormalizedLocalSpace(const vec2d &pt) const
-	{
-		return (pt - minPoint).Div(maxPoint - minPoint);
-	}
-
-	AABB2D operator +(const vec2d &pt) const
+	AABB2D operator +(const float2 &pt) const
 	{
 		AABB2D a;
 		a.minPoint = minPoint + pt;
@@ -120,7 +95,7 @@ public:
 		return a;
 	}
 
-	AABB2D operator -(const vec2d &pt) const
+	AABB2D operator -(const float2 &pt) const
 	{
 		AABB2D a;
 		a.minPoint = minPoint - pt;
@@ -128,8 +103,8 @@ public:
 		return a;
 	}
 
-#if defined(MATH_ENABLE_STL_SUPPORT) || defined(MATH_CONTAINERLIB_SUPPORT)
-	StringT ToString() const
+#ifdef MATH_ENABLE_STL_SUPPORT
+	std::string ToString() const
 	{
 		char str[256];
 		sprintf(str, "AABB2D(Min:(%.2f, %.2f) Max:(%.2f, %.2f))", minPoint.x, minPoint.y, maxPoint.x, maxPoint.y);
@@ -137,6 +112,8 @@ public:
 	}
 #endif
 };
+
+inline AABB2D GetAABB2D(const float3 &pt) { return AABB2D(pt.xy(), pt.xy()); }
 
 inline bool Contains(const AABB2D &aabb, const float3 &pt)
 {

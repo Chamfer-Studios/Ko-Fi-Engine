@@ -42,4 +42,9 @@ struct HitInfo
 	float3 normalB;
 };
 
+#ifdef MATH_QT_INTEROP
+Q_DECLARE_METATYPE(HitInfo)
+Q_DECLARE_METATYPE(HitInfo*)
+#endif
+
 MATH_END_NAMESPACE

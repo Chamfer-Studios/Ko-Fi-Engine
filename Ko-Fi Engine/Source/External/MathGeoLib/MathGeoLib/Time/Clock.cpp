@@ -15,7 +15,7 @@
 /** @file Clock.cpp
 	@brief */
 
-#if defined(__unix__) || defined(__EMSCRIPTEN__) || defined(ANDROID) || defined(__APPLE__) || defined (__CYGWIN__)
+#if defined(__unix__) || defined(__native_client__) || defined(EMSCRIPTEN) || defined(ANDROID) || defined(__APPLE__) || defined (__CYGWIN__)
 #include <time.h>
 #include <errno.h>
 #include <string.h>
@@ -23,10 +23,10 @@
 #endif
 
 #ifdef WIN32
-#include "../Math/InclWindows.h"
+#include <windows.h>
 #endif
 
-#ifdef __EMSCRIPTEN__
+#ifdef EMSCRIPTEN
 #include <emscripten.h>
 #endif
 
@@ -41,7 +41,7 @@
 MATH_BEGIN_NAMESPACE
 
 #ifdef WIN32
-u64 Clock::ddwTimerFrequency;
+LARGE_INTEGER Clock::ddwTimerFrequency;
 #endif
 
 #ifdef __APPLE__
@@ -58,15 +58,29 @@ void Clock::InitClockData()
 		appStartTime = Tick();
 
 #ifdef WIN32
-	if (!QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&ddwTimerFrequency)))
+	if (!QueryPerformanceFrequency(&ddwTimerFrequency))
 	{
 		LOGE("The system doesn't support high-resolution timers!");
-		ddwTimerFrequency = (u64)-1;
+		ddwTimerFrequency.HighPart = (unsigned long)-1;
+		ddwTimerFrequency.LowPart = (unsigned long)-1;
 	}
 
 	if (appStartTime == 0)
 	{
+#if WINVER >= 0x0600 /* Vista or newer */ && !defined(MATH_ENABLE_WINXP_SUPPORT)
 		appStartTime = (tick_t)GetTickCount64();
+#else
+// We are explicitly building with XP support, so GetTickCount() instead of GetTickCount64 is desired.
+#if _MSC_VER >= 1700 // VS2012
+#pragma warning(push)
+#pragma warning(disable:28159) // warning C28159: Consider using 'GetTickCount64' instead of 'GetTickCount'. Reason: GetTickCount overflows roughly every 49 days.  Code that does not take that into account can loop indefinitely.  GetTickCount64 operates on 64 bit values and does not have that problem
+#endif
+		appStartTime = (tick_t)GetTickCount();
+#if _MSC_VER >= 1700 // VS2012
+#pragma warning(pop)
+#endif
+
+#endif
 	}
 #endif
 
@@ -86,10 +100,10 @@ Clock::Clock()
 void Clock::Sleep(int milliseconds)
 {
 #ifdef WIN8RT
-#pragma warning(Clock::Sleep has not been implemented!)
+#pragma WARNING(Clock::Sleep has not been implemented!)
 #elif defined(WIN32)
 	::Sleep(milliseconds);
-#elif !defined(__EMSCRIPTEN__)
+#elif !defined(__native_client__) && !defined(EMSCRIPTEN)
 	// http://linux.die.net/man/2/nanosleep
 	timespec ts;
 	ts.tv_sec = milliseconds / 1000;
@@ -97,11 +111,6 @@ void Clock::Sleep(int milliseconds)
 	int ret = nanosleep(&ts, NULL);
 	if (ret == -1)
 		LOGI("nanosleep returned -1! Reason: %s(%d).", strerror(errno), (int)errno);
-#elif defined(__EMSCRIPTEN_PTHREADS__)
-	emscripten_thread_sleep(milliseconds);
-#elif defined(__EMSCRIPTEN__)
-	/*NO-OP, cannot sleep*/
-	MARK_UNUSED(milliseconds);
 #else
 #warning Clock::Sleep has not been implemented!
 #endif
@@ -182,7 +191,20 @@ int Clock::Sec()
 unsigned long Clock::SystemTime()
 {
 #ifdef WIN32
+#if WINVER >= 0x0600 /* Vista or newer */ && !defined(MATH_ENABLE_WINXP_SUPPORT)
 	return (unsigned long)GetTickCount64();
+#else
+// We are explicitly building with XP support, so GetTickCount() instead of GetTickCount64 is desired.
+#if _MSC_VER >= 1700 // VS2012
+#pragma warning(push)
+#pragma warning(disable:28159) // warning C28159: Consider using 'GetTickCount64' instead of 'GetTickCount'. Reason: GetTickCount overflows roughly every 49 days.  Code that does not take that into account can loop indefinitely.  GetTickCount64 operates on 64 bit values and does not have that problem
+#endif
+	return (unsigned long)GetTickCount();
+#if _MSC_VER >= 1700 // VS2012
+#pragma warning(pop)
+#endif
+
+#endif
 #else
 	return TickU32();
 #endif
@@ -195,7 +217,7 @@ tick_t Clock::ApplicationStartupTick()
 */
 unsigned long Clock::Time()
 {
-	return (unsigned long)((Tick() - appStartTime) * 1000 / Clock::TicksPerSec());
+	return (unsigned long)(Tick() - appStartTime);
 }
 
 tick_t Clock::Tick()
@@ -204,16 +226,11 @@ tick_t Clock::Tick()
 	struct timespec res;
 	clock_gettime(CLOCK_REALTIME, &res);
 	return 1000000000ULL*res.tv_sec + (tick_t)res.tv_nsec;
-#elif defined(__EMSCRIPTEN__)
-
-#ifdef MATH_TICK_IS_FLOAT
-	return (tick_t)emscripten_get_now();
-#else
+#elif defined(EMSCRIPTEN)
 	// emscripten_get_now() returns a wallclock time as a float in milliseconds (1e-3).
 	// scale it to microseconds (1e-6) and return as a tick.
 	return (tick_t)(((double)emscripten_get_now()) * 1e3);
-#endif
-
+//	return (tick_t)clock();
 #elif defined(WIN32)
 	LARGE_INTEGER ddwTimer;
 	BOOL success = QueryPerformanceCounter(&ddwTimer);
@@ -252,16 +269,11 @@ tick_t Clock::TicksPerSec()
 {
 #if defined(ANDROID)
 	return 1000000000ULL; // 1e9 == nanoseconds.
-#elif defined(__EMSCRIPTEN__)
-
-#ifdef MATH_TICK_IS_FLOAT
-	return (tick_t)1000.0;
-#else
+#elif defined(EMSCRIPTEN)
 	return 1000000ULL; // 1e6 == microseconds.
-#endif
-
+//	return CLOCKS_PER_SEC;
 #elif defined(WIN32)
-	return ddwTimerFrequency;
+	return ddwTimerFrequency.QuadPart;
 #elif defined(__APPLE__)
 	return ticksPerSecond;
 #elif defined(_POSIX_MONOTONIC_CLOCK)
