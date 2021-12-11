@@ -72,7 +72,6 @@ public:
 	bool LoadScene(Scene* scene, const char* sceneName);
 	void LoadComponentTransform(ComponentTransform* componentTransform, Json jsonComponentTransform);
 	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
-	void LoadComponentMaterial(ComponentMaterial* componentMaterial, Json jsonComponentMaterial);
 	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
 	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
 

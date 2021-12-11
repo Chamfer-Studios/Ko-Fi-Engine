@@ -1,6 +1,7 @@
 #pragma once
 #include "imgui.h"
-
+#include "json.hpp"
+using nlohmann::json;
 class PanelChooser;
 class GameObject;
 
@@ -28,8 +29,9 @@ public:
 	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
 	virtual void Disable() { active = false; }
 	ComponentType GetType() { return type; }
+	
 
-protected:
+public:
 	bool active = true;
 	GameObject* owner;
 	ComponentType type;

@@ -46,7 +46,7 @@ Mesh::~Mesh()
 
 void Mesh::SetUpMeshBuffers()
 {
-
+	SetUpDefaultTexture();
 	// Vertices
 	glGenBuffers(1, &id_vertex);
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);

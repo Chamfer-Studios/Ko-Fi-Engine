@@ -77,7 +77,6 @@ Mesh* Importer::LoadModel(const char* path)
 		file.read((char*)mesh, 4 * sizeof(unsigned));
 
 
-
 		mesh->vertices = (float*)malloc(mesh->verticesSizeBytes);
 		file.read((char*)mesh->vertices, mesh->verticesSizeBytes);
 
@@ -95,11 +94,15 @@ Mesh* Importer::LoadModel(const char* path)
 		file.close();
 		mesh->SetUpMeshBuffers();
 		
+		
+
 		return mesh;
 	}
 	
 	return nullptr;
 }
+
+
 
 void Importer::GetOneMesh(const aiScene* scene)
 {

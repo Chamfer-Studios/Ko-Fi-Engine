@@ -9,7 +9,7 @@ bool JsonHandler::SaveJson(Json& json, const char* path) const
 {
 	bool ret = false;
 	SDL_assert(path != nullptr);
-	std::ofstream stream(path);
+	std::ofstream stream(path,std::ios::trunc);
 	SDL_assert(stream.is_open());
 	try
 	{

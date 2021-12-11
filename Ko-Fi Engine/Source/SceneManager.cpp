@@ -319,12 +319,12 @@ bool SceneManager::SaveScene(Scene* scene)
 		jsonGameObject["active"] = gameObject->active;
 
 		//jsonGameObject["component_transform"] = SaveComponentTransform(gameObject->GetComponent<ComponentTransform>());
-		
+
 		jsonGameObject["components_list"] = Json::array();
 		std::vector<Component*> componentsList = gameObject->GetComponents();
 		for (std::vector<Component*>::iterator cmp = componentsList.begin(); cmp != componentsList.end(); cmp++)
 		{
-			Component* component = (*cmp);;
+			Component* component = (*cmp);
 			Json jsonComponent;
 			switch (component->GetType())
 			{
@@ -427,29 +427,42 @@ void SceneManager::LoadComponentTransform(ComponentTransform* componentTransform
 	componentTransform->SetDirty(false);
 }
 
-void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh)
+void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentsList)
 {
-	
+	Json jsonComponentMesh;
+	Json jsonComponentMaterial;
+	for (const auto& cmp : jsonComponentsList.items())
+	{
+		if (cmp.value().at("component_type") == "mesh") {
+			jsonComponentMesh = cmp.value();
+		}
+		else if (cmp.value().at("component_type") == "material") {
+			jsonComponentMaterial = cmp.value();
+		}
+	}
 	componentMesh->SetPath(jsonComponentMesh.at("path"));
 	componentMesh->SetVertexNormals(jsonComponentMesh.at("vertex_normals"));
 	componentMesh->SetFacesNormals(jsonComponentMesh.at("faces_normals"));
 	Mesh* mesh = new Mesh();
 	mesh = Importer::GetInstance()->LoadModel(jsonComponentMesh.at("mesh").get<std::string>().c_str());
 	componentMesh->SetMesh(mesh);
+
+	if (mesh->tex_coords) {
+		GameObject* owner = componentMesh->owner;
+		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
+		cMat->SetTexture(mesh->texture);
+		std::string texturePath = jsonComponentMaterial.at("path");
+		if (!texturePath.empty())
+		{
+			cMat->SetPath(texturePath);
+
+			cMat->LoadTexture(texturePath.c_str());
+
+		}
+	}
 }
 
-void SceneManager::LoadComponentMaterial(ComponentMaterial* componentMaterial, Json jsonComponentMaterial)
-{
-	componentMaterial->SetPath(jsonComponentMaterial.at("path"));
-	Json jsonTexture = jsonComponentMaterial.at("texture");
-	Texture texture;
-	texture.textureID = jsonTexture.at("texture_id");
-	texture.width = jsonTexture.at("width");
-	texture.height = jsonTexture.at("height");
-	texture.nrChannels = jsonTexture.at("nr_channels");
-	texture.texturePath = jsonTexture.at("texture_path");
-	componentMaterial->SetTexture(texture);
-}
+
 
 void SceneManager::LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo)
 {
@@ -552,8 +565,6 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 					Component* component = nullptr;
 					if (componentString == "transform")
 						component = gameObject->GetComponent<ComponentTransform>();
-					else if (componentString == "material")
-						component = gameObject->GetComponent<ComponentMaterial>();
 					else if (componentString == "mesh")
 						component = gameObject->GetComponent<ComponentMesh>();
 					else if (componentString == "info")
@@ -569,11 +580,8 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						case ComponentType::TRANSFORM:
 							LoadComponentTransform((ComponentTransform*)component, jsonComponent);
 							break;
-						case ComponentType::MATERIAL:
-							LoadComponentMaterial((ComponentMaterial*)component, jsonComponent);
-							break;
 						case ComponentType::MESH:
-							LoadComponentMesh((ComponentMesh*)component, jsonComponent);
+							LoadComponentMesh((ComponentMesh*)component, jsonComponentsList);
 							break;
 						case ComponentType::INFO:
 							LoadComponentInfo((ComponentInfo*)component, jsonComponent);
@@ -589,13 +597,11 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 					else
 					{
 						if (componentString == "transform")
-							component = gameObject->CreateComponent<ComponentTransform>();
+							component = gameObject->GetTransform();
 						else if (componentString == "mesh")
 							component = gameObject->CreateComponent<ComponentMesh>();
-						else if (componentString == "material")
-							component = gameObject->CreateComponent<ComponentMaterial>();
 						else if (componentString == "info")
-							component = gameObject->CreateComponent<ComponentInfo>();
+							component = gameObject->GetComponent<ComponentInfo>();
 						else if (componentString == "camera")
 							component = gameObject->CreateComponent<ComponentCamera>();
 
@@ -607,10 +613,7 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 								LoadComponentTransform((ComponentTransform*)component, jsonComponent);
 								break;
 							case ComponentType::MESH:
-								LoadComponentMesh((ComponentMesh*)component, jsonComponent);
-								break;
-							case ComponentType::MATERIAL:
-								LoadComponentMaterial((ComponentMaterial*)component, jsonComponent);
+								LoadComponentMesh((ComponentMesh*)component, jsonComponentsList);
 								break;
 							case ComponentType::INFO:
 								LoadComponentInfo((ComponentInfo*)component, jsonComponent);
@@ -642,14 +645,13 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 					Json jsonComponent = cmp.value();
 					std::string componentString = jsonComponent.at("component_type");
 					Component* component = nullptr;
+
 					if (componentString == "transform")
-						component = gameObject->CreateComponent<ComponentTransform>();
+						component = gameObject->GetTransform();
 					else if (componentString == "mesh")
 						component = gameObject->CreateComponent<ComponentMesh>();
-					else if (componentString == "material")
-						component = gameObject->CreateComponent<ComponentMaterial>();
 					else if (componentString == "info")
-						component = gameObject->CreateComponent<ComponentInfo>();
+						component = gameObject->GetComponent<ComponentInfo>();
 					else if (componentString == "camera")
 						component = gameObject->CreateComponent<ComponentCamera>();
 
@@ -658,16 +660,13 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						switch (component->GetType())
 						{
 						case ComponentType::TRANSFORM:
-							LoadComponentTransform((ComponentTransform*)component, jsonComponent);
+							LoadComponentTransform(gameObject->GetComponent<ComponentTransform>(), jsonComponent);
 							break;
 						case ComponentType::MESH:
-							LoadComponentMesh((ComponentMesh*)component, jsonComponent);
-							break;
-						case ComponentType::MATERIAL:
-							LoadComponentMaterial((ComponentMaterial*)component, jsonComponent);
+							LoadComponentMesh((ComponentMesh*)component, jsonComponentsList);
 							break;
 						case ComponentType::INFO:
-							LoadComponentInfo((ComponentInfo*)component, jsonComponent);
+							LoadComponentInfo(gameObject->GetComponent<ComponentInfo>(), jsonComponent);
 							break;
 						case ComponentType::CAMERA:
 							LoadComponentCamera((ComponentCamera*)component, jsonComponent);

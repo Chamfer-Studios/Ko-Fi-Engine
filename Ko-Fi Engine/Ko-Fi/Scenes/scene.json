@@ -81,7 +81,7 @@
                         ],
                         "rotation": [
                             -0.0,
-                            0.0,
+                            -0.6283185482025146,
                             -0.0
                         ],
                         "scale": [
@@ -90,29 +90,29 @@
                             1.0
                         ],
                         "transform_matrix": [
-                            1.0,
+                            0.80901700258255,
                             0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
+                            0.5877854228019714,
                             0.0,
                             1.0,
+                            0.0,
+                            -0.5877854228019714,
+                            0.0,
+                            0.80901700258255,
                             0.0,
                             0.0,
                             0.0
                         ],
                         "transform_matrix_local": [
+                            0.80901700258255,
+                            0.0,
+                            0.5877854228019714,
+                            -0.0,
                             1.0,
                             0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
+                            -0.5877854228019714,
+                            -0.0,
+                            0.80901700258255,
                             0.0,
                             0.0,
                             0.0
@@ -135,12 +135,12 @@
                         "is_dirty": false,
                         "position": [
                             0.0,
-                            0.0,
+                            -3.0,
                             0.0
                         ],
                         "rotation": [
                             -0.0,
-                            0.0,
+                            0.9075711965560913,
                             -0.0
                         ],
                         "scale": [
@@ -149,31 +149,31 @@
                             1.0
                         ],
                         "transform_matrix": [
-                            1.0,
+                            0.9612618088722229,
                             0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
+                            -0.2756369411945343,
                             0.0,
                             1.0,
                             0.0,
+                            0.2756369411945343,
                             0.0,
+                            0.9612618088722229,
+                            0.0,
+                            -3.0,
                             0.0
                         ],
                         "transform_matrix_local": [
-                            1.0,
+                            0.61566162109375,
                             0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
+                            -0.7880104780197144,
                             0.0,
                             1.0,
                             0.0,
+                            0.7880104780197144,
                             0.0,
+                            0.61566162109375,
+                            0.0,
+                            -3.0,
                             0.0
                         ]
                     },
@@ -181,22 +181,22 @@
                         "component_type": "info"
                     },
                     {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png",
-                        "texture": {
-                            "height": 1024,
-                            "nr_channels": 4,
-                            "texture_id": 0,
-                            "texture_path": "Assets/Textures/Baker_house.png",
-                            "width": 1024
-                        }
-                    },
-                    {
                         "component_type": "mesh",
                         "faces_normals": false,
                         "mesh": "Library/GameObject 2.sugar",
                         "path": "",
                         "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png",
+                        "texture": {
+                            "height": 1024,
+                            "nr_channels": 4,
+                            "texture_id": 1,
+                            "texture_path": "",
+                            "width": 1024
+                        }
                     }
                 ],
                 "id": 2,
@@ -226,15 +226,15 @@
                             1.0
                         ],
                         "transform_matrix": [
-                            1.0,
+                            0.80901700258255,
                             0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
+                            0.5877854228019714,
                             0.0,
                             1.0,
+                            0.0,
+                            -0.5877854228019714,
+                            0.0,
+                            0.80901700258255,
                             0.0,
                             0.0,
                             0.0
@@ -258,22 +258,22 @@
                         "component_type": "info"
                     },
                     {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png",
-                        "texture": {
-                            "height": 1024,
-                            "nr_channels": 4,
-                            "texture_id": 0,
-                            "texture_path": "Assets/Textures/Baker_house.png",
-                            "width": 1024
-                        }
-                    },
-                    {
                         "component_type": "mesh",
                         "faces_normals": false,
                         "mesh": "Library/GameObject 3.sugar",
                         "path": "",
                         "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png",
+                        "texture": {
+                            "height": 1024,
+                            "nr_channels": 4,
+                            "texture_id": 2,
+                            "texture_path": "",
+                            "width": 1024
+                        }
                     }
                 ],
                 "id": 3,

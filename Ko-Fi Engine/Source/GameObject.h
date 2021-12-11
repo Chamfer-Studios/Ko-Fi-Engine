@@ -50,14 +50,14 @@ public:
 	void PropagateTransform();
 	//Old way
 	void SetName(std::string name);
-	std::vector<GameObject*> GetChildren();
+	std::vector<GameObject*> GetChildren() const;
 	void SetChild(GameObject*child);
 	std::string GetName();
-	GameObject* GetParent();
+	GameObject* GetParent() const;
 	ComponentTransform* GetTransform();
-	std::vector<Component*> GetComponents();
+	std::vector<Component*> GetComponents() const;
 	void SetId(int id);
-	uint GetId();
+	uint GetId() const;
 	bool HasChildrenWithId(int id);
 	KoFiEngine* GetEngine();
 

@@ -150,7 +150,7 @@ void GameObject::SetName(std::string name)
 	this->name = name;
 }
 
-std::vector<GameObject*> GameObject::GetChildren()
+std::vector<GameObject*> GameObject::GetChildren() const
 {
 	return children;
 }
@@ -165,12 +165,12 @@ std::string GameObject::GetName()
 	return name;
 }
 
-GameObject* GameObject::GetParent()
+GameObject* GameObject::GetParent()const
 {
 	return parent;
 }
 
-std::vector<Component*> GameObject::GetComponents()
+std::vector<Component*> GameObject::GetComponents() const
 {
 	return components;
 }
@@ -180,7 +180,7 @@ void GameObject::SetId(int id)
 	this->id = id;
 }
 
-uint GameObject::GetId()
+uint GameObject::GetId() const
 {
 	return id;
 }
