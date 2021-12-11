@@ -637,7 +637,6 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 				//LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
 
 				Json jsonComponentsList = jsonGameObject.at("components_list");
-
 				for (const auto& cmp : jsonComponentsList.items())
 				{
 					Json jsonComponent = cmp.value();
