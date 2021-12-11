@@ -49,7 +49,7 @@ void Importer::ImportModel(const char* path)
 bool Importer::SaveModel(const Mesh* mesh, const char* path)
 {
 	std::ofstream file;
-	file.open(path, std::ios::in | std::ios::app | std::ios::binary);
+	file.open(path, std::ios::in | std::ios::trunc | std::ios::binary);
 	if (file.is_open()) {
 
 		file.write((char*)mesh, 4 * sizeof(unsigned));
@@ -57,7 +57,9 @@ bool Importer::SaveModel(const Mesh* mesh, const char* path)
 
 		file.write((char*)mesh->vertices, mesh->verticesSizeBytes);
 		file.write((char*)mesh->normals, mesh->normalsSizeBytes);
-		file.write((char*)mesh->tex_coords, mesh->texCoordSizeBytes);
+		if (mesh->texCoordSizeBytes != 0) {
+			file.write((char*)mesh->tex_coords, mesh->texCoordSizeBytes);
+		}
 		file.write((char*)mesh->indices, mesh->indicesSizeBytes);
 		file.close();
 		return true;
@@ -82,8 +84,11 @@ Mesh* Importer::LoadModel(const char* path)
 		mesh->normals = (float*)malloc(mesh->normalsSizeBytes);
 		file.read((char*)mesh->normals, mesh->normalsSizeBytes);
 
-		mesh->tex_coords = (float*)malloc(mesh->texCoordSizeBytes);
-		file.read((char*)mesh->tex_coords, mesh->texCoordSizeBytes);
+		if (mesh->texCoordSizeBytes != 0) {
+			mesh->tex_coords = (float*)malloc(mesh->texCoordSizeBytes);
+			file.read((char*)mesh->tex_coords, mesh->texCoordSizeBytes);
+		}
+	
 
 		mesh->indices = (uint*)malloc(mesh->indicesSizeBytes);
 		file.read((char*)mesh->indices, mesh->indicesSizeBytes);
@@ -98,10 +103,9 @@ Mesh* Importer::LoadModel(const char* path)
 
 void Importer::GetOneMesh(const aiScene* scene)
 {
-	//TODO: ADD MATERIAL
-	//materialComponent = new ComponentMaterial(this->owner);
+	aiMaterial* texture = nullptr;
+	aiString texturePath;
 	GameObject* parent = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-
 	Mesh* ourMesh = new Mesh();
 	aiMesh* aiMesh = scene->mMeshes[0];
 
@@ -146,13 +150,33 @@ void Importer::GetOneMesh(const aiScene* scene)
 			ourMesh->tex_coords[j * 2 + 1] = /*1.0f - */aiMesh->mTextureCoords[0][j].y;
 		}
 	}
-	else
-		ourMesh->tex_coords = 0;
 
 	ourMesh->SetUpMeshBuffers();
+
+	if (scene->HasMaterials()) {
+		texture = scene->mMaterials[aiMesh->mMaterialIndex];
+		if (texture != nullptr) {
+			aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, aiMesh->mMaterialIndex, &texturePath);
+			std::string newPath(texturePath.C_Str());
+			if (newPath.size() > 0) {
+				ourMesh->texture.texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
+				ComponentMaterial* cMaterial = parent->CreateComponent<ComponentMaterial>();
+				cMaterial->AddTextures(ourMesh->texture);
+				if (newPath.c_str() != nullptr) {
+					cMaterial->LoadTexture(ourMesh->texture.texturePath.c_str());
+
+				}
+				else {
+					cMaterial->LoadDefaultTexture(ourMesh->texture.textureID);
+				}
+
+			}
+		}
+	}
 	//materialComponent->AddTextures(ourMesh->texture);
 	ComponentMesh* cMesh = parent->CreateComponent<ComponentMesh>();
 	cMesh->SetMesh(ourMesh);
+	parent = nullptr;
 }
 
 void Importer::GetMultipleMeshes(const aiScene* scene)

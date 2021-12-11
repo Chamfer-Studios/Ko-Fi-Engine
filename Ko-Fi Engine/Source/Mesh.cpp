@@ -63,7 +63,7 @@ void Mesh::SetUpMeshBuffers()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSizeBytes, indices, GL_STATIC_DRAW);
 
 	// Texture coords
-	if (tex_coords != 0) {
+	if (tex_coords) {
 		glGenBuffers(1, &id_tex_coord);
 		glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
 		glBufferData(GL_ARRAY_BUFFER, texCoordSizeBytes, tex_coords, GL_STATIC_DRAW);

@@ -599,7 +599,6 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 							component = gameObject->CreateComponent<ComponentInfo>();
 						else if (componentString == "camera")
 							component = gameObject->CreateComponent<ComponentCamera>();
-						gameObject->AddComponent(component);
 
 						if (component != nullptr)
 						{
@@ -655,7 +654,6 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						component = gameObject->CreateComponent<ComponentInfo>();
 					else if (componentString == "camera")
 						component = gameObject->CreateComponent<ComponentCamera>();
-					gameObject->AddComponent(component);
 
 					if (component != nullptr)
 					{
