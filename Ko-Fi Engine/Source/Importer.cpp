@@ -9,6 +9,8 @@
 #include "ComponentMaterial.h"
 #include "Engine.h"
 #include "SceneManager.h"
+#include <fstream>
+
 Importer* Importer::instance = nullptr;
 Importer::Importer()
 {
@@ -42,6 +44,56 @@ void Importer::ImportModel(const char* path)
 	}
 
 	aiReleaseImport(scene);
+}
+
+bool Importer::SaveModel(const Mesh* mesh, const char* path)
+{
+	std::ofstream file;
+	file.open(path, std::ios::in | std::ios::app | std::ios::binary);
+	if (file.is_open()) {
+
+		file.write((char*)mesh, 4 * sizeof(unsigned));
+
+
+		file.write((char*)mesh->vertices, mesh->verticesSizeBytes);
+		file.write((char*)mesh->normals, mesh->normalsSizeBytes);
+		file.write((char*)mesh->tex_coords, mesh->texCoordSizeBytes);
+		file.write((char*)mesh->indices, mesh->indicesSizeBytes);
+		file.close();
+		return true;
+	}
+	return false;
+}
+
+Mesh* Importer::LoadModel(const char* path)
+{
+	std::ifstream file;
+	file.open(path, std::ios::binary);
+	if (file.is_open()) {
+
+		Mesh* mesh = new Mesh();
+		file.read((char*)mesh, 4 * sizeof(unsigned));
+
+
+
+		mesh->vertices = (float*)malloc(mesh->verticesSizeBytes);
+		file.read((char*)mesh->vertices, mesh->verticesSizeBytes);
+
+		mesh->normals = (float*)malloc(mesh->normalsSizeBytes);
+		file.read((char*)mesh->normals, mesh->normalsSizeBytes);
+
+		mesh->tex_coords = (float*)malloc(mesh->texCoordSizeBytes);
+		file.read((char*)mesh->tex_coords, mesh->texCoordSizeBytes);
+
+		mesh->indices = (uint*)malloc(mesh->indicesSizeBytes);
+		file.read((char*)mesh->indices, mesh->indicesSizeBytes);
+		file.close();
+		mesh->SetUpMeshBuffers();
+		
+		return mesh;
+	}
+	
+	return nullptr;
 }
 
 void Importer::GetOneMesh(const aiScene* scene)

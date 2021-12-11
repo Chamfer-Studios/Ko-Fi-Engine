@@ -9,10 +9,13 @@
 #include "ComponentMaterial.h"
 #include "GameObject.h"
 #include "Defs.h"
-#include <fstream>
 
 Mesh::Mesh()
 {
+	verticesSizeBytes = 0;
+	normalsSizeBytes = 0;
+	texCoordSizeBytes = 0;
+	indicesSizeBytes = 0;
 }
 
 Mesh::~Mesh()
@@ -20,22 +23,22 @@ Mesh::~Mesh()
 	// Vertices
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glDeleteBuffers(1, &id_vertex);
-	RELEASE_ARRAY(vertices);
+	RELEASE_MALLOC(vertices);
 
 	// Normals
 	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
 	glDeleteBuffers(1, &id_normal);
-	RELEASE_ARRAY(normals);
+	RELEASE_MALLOC(normals);
 
 	// Indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glDeleteBuffers(1, &id_index);
-	RELEASE_ARRAY(indices);
+	RELEASE_MALLOC(indices);
 
 	// Texture coords
 	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
 	glDeleteBuffers(1, &id_tex_coord);
-	RELEASE_ARRAY(tex_coords);
+	RELEASE_MALLOC(tex_coords);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -43,7 +46,6 @@ Mesh::~Mesh()
 
 void Mesh::SetUpMeshBuffers()
 {
-	SetUpDefaultTexture();
 
 	// Vertices
 	glGenBuffers(1, &id_vertex);
@@ -209,37 +211,3 @@ void Mesh::ToggleFacesNormals()
 	drawFaceNormals = !drawFaceNormals;
 }
 
-bool Mesh::Mesh2Binary(const char* path)
-{
-	std::ofstream file;
-	file.open(path, std::ios::in | std::ios::app | std::ios::binary);
-	if (file.is_open()) {
-		file.write((char*)this->vertices, verticesSizeBytes);
-		file.write((char*)this->normals, normalsSizeBytes);
-		file.write((char*)this->tex_coords, texCoordSizeBytes);
-		file.write((char*)this->indices, indicesSizeBytes);
-		file.close();
-		return true;
-	}
-	return false;
-}
-
-bool Mesh::Binary2Mesh(const char* path)
-{
-	std::ifstream file;
-	file.open(path, std::ios::binary);
-	if (file.is_open()) {
-		this->vertices = (float*)malloc(this->verticesSizeBytes);
-		file.read((char*)this->vertices, this->verticesSizeBytes);
-		this->normals = (float*)malloc(this->normalsSizeBytes);
-		file.read((char*)this->normals, this->normalsSizeBytes);
-		this->tex_coords = (float*)malloc(this->texCoordSizeBytes);
-		file.read((char*)this->tex_coords, this->texCoordSizeBytes);
-		this->indices = (uint*)malloc(this->indicesSizeBytes);
-		file.read((char*)this->indices, this->indicesSizeBytes);
-		file.close();
-		this->SetUpMeshBuffers();
-		return true;
-	}
-		return false;
-}

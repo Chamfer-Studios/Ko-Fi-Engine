@@ -44,6 +44,7 @@ public:
 	void SetVertexNormals(bool vertexNormals);
 	void SetFacesNormals(bool facesNormals);
 
+	GameObject* GetParent();
 	std::string GetPath();
 	bool GetVertexNormals();
 	bool GetFacesNormals();

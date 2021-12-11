@@ -251,11 +251,13 @@ Json SceneManager::SaveComponentTransform(ComponentTransform* componentTransform
 Json SceneManager::SaveComponentMesh(ComponentMesh* componentMesh)
 {
 	Json jsonComponentMesh;
-
+	std::string name = componentMesh->GetParent()->name;
+	std::string savePath = "Library/" + name + ".sugar";
+	Importer::GetInstance()->SaveModel(componentMesh->GetMesh(), savePath.c_str());
 	jsonComponentMesh["path"] = componentMesh->GetPath().c_str();
 	jsonComponentMesh["vertex_normals"] = componentMesh->GetVertexNormals();
 	jsonComponentMesh["faces_normals"] = componentMesh->GetFacesNormals();
-
+	jsonComponentMesh["mesh"] = savePath.c_str();
 	return jsonComponentMesh;
 }
 
@@ -427,9 +429,13 @@ void SceneManager::LoadComponentTransform(ComponentTransform* componentTransform
 
 void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh)
 {
+	
 	componentMesh->SetPath(jsonComponentMesh.at("path"));
 	componentMesh->SetVertexNormals(jsonComponentMesh.at("vertex_normals"));
 	componentMesh->SetFacesNormals(jsonComponentMesh.at("faces_normals"));
+	Mesh* mesh = new Mesh();
+	mesh = Importer::GetInstance()->LoadModel(jsonComponentMesh.at("mesh").get<std::string>().c_str());
+	componentMesh->SetMesh(mesh);
 }
 
 void SceneManager::LoadComponentMaterial(ComponentMaterial* componentMaterial, Json jsonComponentMaterial)
@@ -546,10 +552,10 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 					Component* component = nullptr;
 					if (componentString == "transform")
 						component = gameObject->GetComponent<ComponentTransform>();
-					else if (componentString == "mesh")
-						component = gameObject->GetComponent<ComponentMesh>();
 					else if (componentString == "material")
 						component = gameObject->GetComponent<ComponentMaterial>();
+					else if (componentString == "mesh")
+						component = gameObject->GetComponent<ComponentMesh>();
 					else if (componentString == "info")
 						component = gameObject->GetComponent<ComponentInfo>();
 					else if (componentString == "camera")
@@ -563,12 +569,13 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						case ComponentType::TRANSFORM:
 							LoadComponentTransform((ComponentTransform*)component, jsonComponent);
 							break;
-						case ComponentType::MESH:
-							LoadComponentMesh((ComponentMesh*)component, jsonComponent);
-							break;
 						case ComponentType::MATERIAL:
 							LoadComponentMaterial((ComponentMaterial*)component, jsonComponent);
 							break;
+						case ComponentType::MESH:
+							LoadComponentMesh((ComponentMesh*)component, jsonComponent);
+							break;
+
 						case ComponentType::INFO:
 							LoadComponentInfo((ComponentInfo*)component, jsonComponent);
 							break;

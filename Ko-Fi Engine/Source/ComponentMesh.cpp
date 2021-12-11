@@ -179,6 +179,9 @@ bool ComponentMesh::CleanUp()
 
 void ComponentMesh::SetMesh(Mesh* mesh)
 {
+	if (this->mesh != nullptr) {
+		RELEASE(this->mesh);
+	}
 	this->mesh = mesh;
 }
 
@@ -200,6 +203,11 @@ void ComponentMesh::SetVertexNormals(bool vertexNormals)
 void ComponentMesh::SetFacesNormals(bool facesNormals)
 {
 	this->facesNormals = facesNormals;
+}
+
+GameObject* ComponentMesh::GetParent()
+{
+	return owner;
 }
 
 std::string ComponentMesh::GetPath()

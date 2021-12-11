@@ -30,7 +30,6 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 	rootGo = new GameObject(-1,"Root");
 	gameObjectList.push_back(rootGo);
-	importer = new Importer(engine);
 }
 
 SceneIntro::~SceneIntro()
@@ -54,11 +53,11 @@ bool SceneIntro::Start()
 	//engine->GetFileSystem()->GameObjectFromMesh("Assets/Models/baker_house.fbx", this->gameObjectList,"Assets/Textures/baker_house.png");
 
 	// REMOVE THE FOLLOWING 2 LINES WHEN WE HAVE THE CUSTOM FILE FORMAT FINISHED.
-	importer->ImportModel("Assets/Models/baker_house.fbx");
-	importer->ImportModel("Assets/Models/camera.fbx");
+	//Importer::GetInstance()->ImportModel("Assets/Models/baker_house.fbx");
+	//Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
 
 	// Load scene with a camera and several houses.
-	engine->GetSceneManager()->LoadScene(this, "SceneIntro");
+	//engine->GetSceneManager()->LoadScene(this, "SceneIntro");
 
 	for (GameObject* go : this->gameObjectList)
 	{
@@ -115,7 +114,6 @@ bool SceneIntro::CleanUp()
 		RELEASE(gameObject);
 	}
 
-	RELEASE(importer);
 
 	return true;
 }
