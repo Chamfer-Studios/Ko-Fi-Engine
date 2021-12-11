@@ -35,7 +35,7 @@ public:
 	bool ClipsWithBBox(const AABB& refBox) const;
 	void FrustumCull();
 
-	float3 right, up, front, position,rotation, reference;
+	float3 right, up, front, position, reference;
 	Frustum cameraFrustum;
 	float4x4 viewMatrix;
 	float aspectRatio = 1.f;
@@ -45,6 +45,8 @@ public:
 	float cameraSensitivity = .5f;
 	float cameraSpeed = 60.f;
 	bool projectionIsDirty = true;
+
+	float3 rotation;
 
 private:
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;

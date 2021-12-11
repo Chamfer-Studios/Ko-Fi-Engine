@@ -26,6 +26,8 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	componentTransform = owner->GetTransform();
 	float3 pos = componentTransform->GetPosition();
 	position = float3(pos.x, pos.y, pos.z);
+	float3 rot = componentTransform->GetRotation();
+	rotation = float3(rot.x, rot.y, rot.z);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	CalculateViewMatrix();
@@ -63,26 +65,34 @@ bool ComponentCamera::Update()
 	float3 rot = componentTransform->GetRotation();
 	if (position.x != pos.x ||
 		position.y != pos.y ||
-		position.z != pos.z || 
-		rotation.x != rot.x ||
+		position.z != pos.z)
+	{
+		position = float3(pos.x, pos.y, pos.z);
+	}
+
+	if (rotation.x != rot.x ||
 		rotation.y != rot.y ||
 		rotation.z != rot.z)
 	{
-		position = float3(pos.x, pos.y, pos.z);
+		float x, y;
+		x = rot.x - rotation.x;
+		y = rot.y - rotation.y;
+		Quat rotateY = Quat::RotateY(up.y >= 0.f ? x : -x);
+		up = rotateY * up;
+		front = rotateY * front;
+		CalculateViewMatrix();
+		Quat rotateX = Quat::RotateAxisAngle(right, -y);
+		up = rotateX * up;
+		front = rotateX * front;
+		CalculateViewMatrix();
+
 		rotation = float3(rot.x, rot.y, rot.z);
-
-		//up = rot.y * up;
-		//front = rot.y * front;
-
-		up = rot.x * up;
-		front = rot.x * front;
-
-		projectionIsDirty = true;
 	}
 
 	CalculateViewMatrix();
 	
 	DrawFrustum();
+	FrustumCull();
 
 	return true;
 }
@@ -224,7 +234,7 @@ bool ComponentCamera::ClipsWithBBox(const AABB& refBox) const
 {
 	float3 vertexCorner[8];
 
-	//Get BBox
+	// Get bounding box
 	refBox.GetCornerPoints(vertexCorner);
 
 	for (int p = 0; p < 6; ++p)
@@ -247,9 +257,13 @@ void ComponentCamera::FrustumCull()
 	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 	{
 		GameObject* gameObject = (*go);
+		
+		if (gameObject->GetComponent<ComponentMesh>() == nullptr)
+			continue;
+
 		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetAABB()))
-			gameObject->active = true;
-		else
 			gameObject->active = false;
+		else
+			gameObject->active = true;
 	}
 }

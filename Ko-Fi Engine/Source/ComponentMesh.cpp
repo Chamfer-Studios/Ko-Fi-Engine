@@ -113,7 +113,6 @@ bool ComponentMesh::PostUpdate()
 ////	{
 ////		
 			mesh->Draw(owner);
-			/*DrawBoundingBox();*/
 			//texture
 		
 ////		
@@ -160,11 +159,15 @@ bool ComponentMesh::PostUpdate()
 ////		break;
 ////	}
 ////
+
+	GenerateBounds();
+	GetGlobalBoundingBox();
+	
+
 	glPopMatrix();
 ////
-
-	GetGlobalBoundingBox();
 	DrawBoundingBox(aabb, float3(0.0, 1.0, 0.0));
+	
 
 	return ret;
 }
@@ -228,16 +231,11 @@ bool ComponentMesh::GetFacesNormals()
 void ComponentMesh::GenerateBounds()
 {
 	// Generate AABB
-	mesh->localAABB.SetNegativeInfinity();
-	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes/(sizeof(float)*3));
-
-	/*Sphere sphere;
-	sphere.r = 0.f;
-	sphere.pos = mesh->localAABB.CenterPoint();
-	sphere.Enclose(mesh->localAABB);
-
-	radius = sphere.r;
-	centerPoint = sphere.pos;*/
+	if (mesh != nullptr)
+	{
+		mesh->localAABB.SetNegativeInfinity();
+		mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
+	}
 }
 
 AABB ComponentMesh::GetAABB()
