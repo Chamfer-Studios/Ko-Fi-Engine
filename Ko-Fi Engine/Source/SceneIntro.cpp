@@ -28,7 +28,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	this->engine = engine;
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
-	rootGo = new GameObject(-1,"Root");
+	rootGo = new GameObject(-1, engine, "Root");
 	gameObjectList.push_back(rootGo);
 }
 
@@ -54,15 +54,13 @@ bool SceneIntro::Start()
 
 	// REMOVE THE FOLLOWING 2 LINES WHEN WE HAVE THE CUSTOM FILE FORMAT FINISHED.
 	//Importer::GetInstance()->ImportModel("Assets/Models/baker_house.fbx");
-	//Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
+	/*Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
+	GameObject* camera = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(2);
+	ComponentCamera* componentCamera = camera->CreateComponent<ComponentCamera>();
+	camera->AddComponent(componentCamera);*/
 
 	// Load scene with a camera and several houses.
-	//engine->GetSceneManager()->LoadScene(this, "SceneIntro");
-
-	for (GameObject* go : this->gameObjectList)
-	{
-		go->Start();
-	}
+	engine->GetSceneManager()->LoadScene(this, "SceneIntro");
 
 	return ret;
 }
@@ -80,10 +78,6 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
-	
-	/*Cube cube(3,3,3);
-	cube.InnerRender();*/
-
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update();

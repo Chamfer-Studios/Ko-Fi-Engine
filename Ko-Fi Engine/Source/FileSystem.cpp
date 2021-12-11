@@ -109,30 +109,3 @@ void FileSystem::AddPath(const char* path)
 {
 	rootPath += path;
 }
-
-void FileSystem::GameObjectFromMesh(const char* file_path, std::vector<GameObject*>& gameObjects, const char* texturePath)
-{
-	//TODO: get game objects list from scene not by passing as parameter
-	uint id = gameObjects.size();
-	GameObject* gameObject = new GameObject(id);
-	/*gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_TRANSFORM);
-	if (texturePath == nullptr)
-	{
-		gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
-	}
-	else {
-		ComponentMesh* meshComponent = (ComponentMesh*)gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH);
-		meshComponent->materialComponent->LoadTexture(texturePath);
-	}
-	gameObjects.push_back(gameObject);
-	engine->GetSceneIntro()->rootGo->SetChild(gameObject);*/
-}
-
-//void FileSystem::GameObjectFromPrimitive(COMPONENT_SUBTYPE subtype, std::vector<GameObject*>& gameObjects)
-//{
-//	uint id = gameObjects.size();
-//	GameObject* gameObject = new GameObject(id);
-//	gameObject->CreateComponent(COMPONENT_TYPE::COMPONENT_MESH, subtype);
-//	gameObjects.push_back(gameObject);
-//	engine->GetSceneIntro()->rootGo->SetChild(gameObject);
-//}

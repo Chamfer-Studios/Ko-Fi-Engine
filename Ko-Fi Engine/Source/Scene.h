@@ -73,7 +73,7 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
 	{
-		GameObject* go = new GameObject(gameObjectList.size());
+		GameObject* go = new GameObject(gameObjectList.size(), engine);
 		this->gameObjectList.push_back(go);
 		this->rootGo->AttachChild(go);
 
@@ -84,8 +84,10 @@ public:
 	SString name;
 	bool active;
 
+	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
 	GameObject* rootGo = nullptr;
+	GameObject* currentCamera = nullptr;
 };
 
 #endif // __SCENE_H__

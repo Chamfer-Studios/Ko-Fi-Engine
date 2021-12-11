@@ -575,7 +575,6 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						case ComponentType::MESH:
 							LoadComponentMesh((ComponentMesh*)component, jsonComponent);
 							break;
-
 						case ComponentType::INFO:
 							LoadComponentInfo((ComponentInfo*)component, jsonComponent);
 							break;
@@ -625,7 +624,7 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 					}
 				}
 
-				gameObject->SetId(jsonGameObject.at("id"));
+				gameObject->SetId(id);
 			}
 			// IF THE GAME OBJECT DOESN'T EXIST, IT'LL BE CREATED
 			else
@@ -680,7 +679,7 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 					}
 				}
 
-				gameObject->SetId(jsonGameObject.at("id").is_number_integer());
+				gameObject->SetId(id);
 			}
 		}
 

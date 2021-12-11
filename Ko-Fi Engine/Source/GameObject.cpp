@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include "Engine.h"
+
 #include "Primitive.h"
 #include "Defs.h"
 
@@ -7,17 +9,18 @@
 #include "ComponentInfo.h"
 
 // Used with a path for the .fbx load
-GameObject::GameObject(int id, const char* name)
+GameObject::GameObject(int id, KoFiEngine* engine, const char* name)
 {
 	active = true;
 	//LoadModel(path);
-	if (name == nullptr) {
+	if (name == nullptr)
 		this->name = "GameObject " + std::to_string(id);
-	}
-	else {
+	else
 		this->name = name;
-	}
+
 	this->id = id;
+	this->engine = engine;
+
 	transform = CreateComponent<ComponentTransform>();
 	CreateComponent<ComponentInfo>();
 	this->parent = nullptr;
@@ -94,8 +97,8 @@ void GameObject::Disable()
 	active = false;
 }
 
-void GameObject::DeleteComponent(Component* component) {
-
+void GameObject::DeleteComponent(Component* component)
+{
 	auto componentIt = std::find(components.begin(), components.end(), component);
 	if (componentIt != components.end())
 	{
@@ -190,4 +193,9 @@ bool GameObject::HasChildrenWithId(int id)
 			return true;
 	}
 	return false;
+}
+
+KoFiEngine* GameObject::GetEngine()
+{
+	return engine;
 }

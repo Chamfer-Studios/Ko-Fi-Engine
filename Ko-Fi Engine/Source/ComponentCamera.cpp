@@ -1,5 +1,14 @@
 #include "ComponentCamera.h"
+#include "Engine.h"
+#include "SceneManager.h"
+
+#include "GameObject.h"
+#include "ComponentTransform.h"
+#include "ComponentMesh.h"
+
 #include "Globals.h"
+#include "Log.h"
+#include "ImGuiAppLog.h"
 
 #include "glew.h"
 #include "SDL_opengl.h"
@@ -10,41 +19,147 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAMERA;
 
-	/*frustum.pos = float3(0.0f, 0.0f, -5.0f);
-	frustum.horizontalFov = horizontalFOV * DEGTORAD;
-	frustum.verticalFov = 30 * DEGTORAD;
-	frustum.AspectRatio();
-	frustum.nearPlaneDistance = 5.0f;
-	frustum.farPlaneDistance = 100.0f;
-	frustum.CenterPoint()*/
+	right = float3(1.0f, 0.0f, 0.0f);
+	up = float3(0.0f, 1.0f, 0.0f);
+	front = float3(0.0f, 0.0f, 1.0f);
+
+	componentTransform = owner->GetComponent<ComponentTransform>();
+	float3 pos = componentTransform->GetPosition();
+	position = float3(pos.x, pos.y, pos.z);
+	reference = float3(0.0f, 0.0f, 0.0f);
+
+	CalculateViewMatrix();
 }
 
 ComponentCamera::~ComponentCamera()
 {
 }
 
-bool ComponentCamera::Update()
+bool ComponentCamera::Start()
 {
+	CONSOLE_LOG("Setting up the camera");
+	appLog->AddLog("Setting up the camera\n");
+
+	LookAt(float3::zero);
+
 	bool ret = true;
 
 	return ret;
 }
 
+bool ComponentCamera::CleanUp()
+{
+	CONSOLE_LOG("Cleaning up the camera");
+	appLog->AddLog("Cleaning up the camera\n");
+
+	return true;
+}
+
+bool ComponentCamera::Update()
+{
+	// Add update functionality when we are able to change the main camera.
+
+	float3 pos = componentTransform->GetPosition();
+	if (position.x != pos.x ||
+		position.y != pos.y ||
+		position.z != pos.z)
+	{
+		position = float3(pos.x, pos.y, pos.z);
+		projectionIsDirty = true;
+	}
+	CalculateViewMatrix();
+	
+	DrawFrustum();
+
+	return true;
+}
+
+void ComponentCamera::LookAt(const float3& point)
+{
+	reference = point;
+
+	front = (reference - position).Normalized();
+	right = float3(0.0f, 1.0f, 0.0f).Cross(front).Normalized();
+	up = front.Cross(right);
+
+	CalculateViewMatrix();
+}
+
+void ComponentCamera::CalculateViewMatrix()
+{
+	if (projectionIsDirty)
+		RecalculateProjection();
+
+	cameraFrustum.pos = position;
+	cameraFrustum.front = front.Normalized();
+	cameraFrustum.up = up.Normalized();
+	float3::Orthonormalize(cameraFrustum.front, cameraFrustum.up);
+	right = up.Cross(front);
+	viewMatrix = cameraFrustum.ViewMatrix();
+}
+
+void ComponentCamera::RecalculateProjection()
+{
+	cameraFrustum.type = FrustumType::PerspectiveFrustum;
+	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+	cameraFrustum.farPlaneDistance = farPlaneDistance;
+	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
+	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+}
+
 bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 {
-	bool ret = true;
+	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 	
-	if (ImGui::CollapsingHeader("Camera")) {
-
+	if (ImGui::CollapsingHeader("Editor Camera"))
+	{
+		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
+		{
+			projectionIsDirty = true;
+		}
+		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
+		{
+			projectionIsDirty = true;
+		}
+		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
+		{
+			projectionIsDirty = true;
+		}
 	}
 
 	return ret;
 }
 
+//void ModuleCamera3D::OnSave(JSONWriter& writer) const
+//{
+//	writer.String("camera");
+//	writer.StartObject();
+//	SAVE_JSON_FLOAT(verticalFOV)
+//		SAVE_JSON_FLOAT(nearPlaneDistance)
+//		SAVE_JSON_FLOAT(farPlaneDistance)
+//		SAVE_JSON_FLOAT(cameraSpeed)
+//		SAVE_JSON_FLOAT(cameraSensitivity)
+//		writer.EndObject();
+//}
+//
+//void ModuleCamera3D::OnLoad(const JSONReader& reader)
+//{
+//	if (reader.HasMember("camera"))
+//	{
+//		const auto& config = reader["camera"];
+//		LOAD_JSON_FLOAT(verticalFOV);
+//		LOAD_JSON_FLOAT(nearPlaneDistance);
+//		LOAD_JSON_FLOAT(farPlaneDistance);
+//		LOAD_JSON_FLOAT(cameraSpeed);
+//		LOAD_JSON_FLOAT(cameraSensitivity);
+//	}
+//	RecalculateProjection();
+//}
+
 void ComponentCamera::DrawFrustum() const
 {
 	float3 cornerPoints[8];
-	frustum.GetCornerPoints(cornerPoints);
+	cameraFrustum.GetCornerPoints(cornerPoints);
 
 	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(3.5f);
@@ -90,4 +205,38 @@ void ComponentCamera::DrawFrustum() const
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.0f);
+}
+
+bool ComponentCamera::ClipsWithBBox(const AABB& refBox) const
+{
+	float3 vertexCorner[8];
+
+	//Get BBox
+	refBox.GetCornerPoints(vertexCorner);
+
+	for (int p = 0; p < 6; ++p)
+	{
+		int cornersOutside = 8;
+
+		for (int i = 0; i < 8; ++i)
+		{
+			if (cameraFrustum.GetPlane(p).IsOnPositiveSide(vertexCorner[i])) --cornersOutside;
+		}
+
+		if (cornersOutside == 0) return false;
+	}
+}
+
+void ComponentCamera::FrustumCull()
+{
+	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	{
+		GameObject* gameObject = (*go);
+		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetAABB()))
+			gameObject->active = true;
+		else
+			gameObject->active = false;
+	}
 }

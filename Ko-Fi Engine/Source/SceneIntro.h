@@ -26,16 +26,13 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-
 private:
 	int random = 0;
 	JsonHandler jsonHandler;
 	Json j;
-	KoFiEngine* engine = nullptr;
 
 	// Temporal to manage the use of the camera
 	GameObject* camera = nullptr;
-
 };
 
 #endif SCENE_INTRO_H // SCENE_INTRO_H
