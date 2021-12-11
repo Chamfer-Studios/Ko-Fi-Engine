@@ -1,12 +1,14 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 4,
+        "game_objects_amount": 10,
         "game_objects_list": [
             {
                 "active": true,
                 "children_id_list": [
-                    1
+                    1,
+                    4,
+                    7
                 ],
                 "components_list": [
                     {
@@ -75,13 +77,13 @@
                         "component_type": "transform",
                         "is_dirty": false,
                         "position": [
-                            0.0,
+                            -7.0,
                             0.0,
                             0.0
                         ],
                         "rotation": [
                             -0.0,
-                            -0.6283185482025146,
+                            2.4085543155670166,
                             -0.0
                         ],
                         "scale": [
@@ -90,30 +92,30 @@
                             1.0
                         ],
                         "transform_matrix": [
-                            0.80901700258255,
+                            -0.7431449890136719,
                             0.0,
-                            0.5877854228019714,
+                            -0.6691309213638306,
                             0.0,
                             1.0,
                             0.0,
-                            -0.5877854228019714,
+                            0.6691309213638306,
                             0.0,
-                            0.80901700258255,
-                            0.0,
+                            -0.7431449890136719,
+                            -7.0,
                             0.0,
                             0.0
                         ],
                         "transform_matrix_local": [
-                            0.80901700258255,
+                            -0.7431449890136719,
                             0.0,
-                            0.5877854228019714,
-                            -0.0,
+                            -0.6691309213638306,
+                            0.0,
                             1.0,
                             0.0,
-                            -0.5877854228019714,
-                            -0.0,
-                            0.80901700258255,
+                            0.6691309213638306,
                             0.0,
+                            -0.7431449890136719,
+                            -7.0,
                             0.0,
                             0.0
                         ]
@@ -135,12 +137,12 @@
                         "is_dirty": false,
                         "position": [
                             0.0,
-                            -3.0,
+                            0.0,
                             0.0
                         ],
                         "rotation": [
                             -0.0,
-                            0.9075711965560913,
+                            0.0,
                             -0.0
                         ],
                         "scale": [
@@ -149,31 +151,31 @@
                             1.0
                         ],
                         "transform_matrix": [
-                            0.9612618088722229,
+                            -0.7431449890136719,
                             0.0,
-                            -0.2756369411945343,
+                            -0.6691309213638306,
                             0.0,
                             1.0,
                             0.0,
-                            0.2756369411945343,
+                            0.6691309213638306,
                             0.0,
-                            0.9612618088722229,
+                            -0.7431449890136719,
+                            -7.0,
                             0.0,
-                            -3.0,
                             0.0
                         ],
                         "transform_matrix_local": [
-                            0.61566162109375,
+                            1.0,
                             0.0,
-                            -0.7880104780197144,
+                            0.0,
                             0.0,
                             1.0,
                             0.0,
-                            0.7880104780197144,
                             0.0,
-                            0.61566162109375,
                             0.0,
-                            -3.0,
+                            1.0,
+                            0.0,
+                            0.0,
                             0.0
                         ]
                     },
@@ -181,22 +183,15 @@
                         "component_type": "info"
                     },
                     {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
                         "component_type": "mesh",
                         "faces_normals": false,
                         "mesh": "Library/GameObject 2.sugar",
                         "path": "",
                         "vertex_normals": false
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png",
-                        "texture": {
-                            "height": 1024,
-                            "nr_channels": 4,
-                            "texture_id": 1,
-                            "texture_path": "",
-                            "width": 1024
-                        }
                     }
                 ],
                 "id": 2,
@@ -226,15 +221,147 @@
                             1.0
                         ],
                         "transform_matrix": [
-                            0.80901700258255,
+                            -0.7431449890136719,
                             0.0,
-                            0.5877854228019714,
+                            -0.6691309213638306,
                             0.0,
                             1.0,
                             0.0,
-                            -0.5877854228019714,
+                            0.6691309213638306,
                             0.0,
-                            0.80901700258255,
+                            -0.7431449890136719,
+                            -7.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/GameObject 3.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    }
+                ],
+                "id": 3,
+                "name": "GameObject 3",
+                "parent": 1
+            },
+            {
+                "active": true,
+                "children_id_list": [
+                    5,
+                    6
+                ],
+                "components_list": [
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "info"
+                    }
+                ],
+                "id": 4,
+                "name": "GameObject 4",
+                "parent": -1
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
                             0.0,
                             0.0,
                             0.0
@@ -258,27 +385,292 @@
                         "component_type": "info"
                     },
                     {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
                         "component_type": "mesh",
                         "faces_normals": false,
-                        "mesh": "Library/GameObject 3.sugar",
+                        "mesh": "Library/GameObject 5.sugar",
                         "path": "",
                         "vertex_normals": false
+                    }
+                ],
+                "id": 5,
+                "name": "GameObject 5",
+                "parent": 4
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "info"
                     },
                     {
                         "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png",
-                        "texture": {
-                            "height": 1024,
-                            "nr_channels": 4,
-                            "texture_id": 2,
-                            "texture_path": "",
-                            "width": 1024
-                        }
+                        "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/GameObject 6.sugar",
+                        "path": "",
+                        "vertex_normals": false
                     }
                 ],
-                "id": 3,
-                "name": "GameObject 3",
-                "parent": 1
+                "id": 6,
+                "name": "GameObject 6",
+                "parent": 4
+            },
+            {
+                "active": true,
+                "children_id_list": [
+                    8,
+                    9
+                ],
+                "components_list": [
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            7.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            2.6179938316345215,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            -0.8660299777984619,
+                            0.0,
+                            -0.5000012516975403,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.5000012516975403,
+                            0.0,
+                            -0.8660299777984619,
+                            7.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            -0.8660299777984619,
+                            0.0,
+                            -0.5000012516975403,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.5000012516975403,
+                            0.0,
+                            -0.8660299777984619,
+                            7.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "info"
+                    }
+                ],
+                "id": 7,
+                "name": "GameObject 7",
+                "parent": -1
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            -0.8660299777984619,
+                            0.0,
+                            -0.5000012516975403,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.5000012516975403,
+                            0.0,
+                            -0.8660299777984619,
+                            7.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/GameObject 8.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    }
+                ],
+                "id": 8,
+                "name": "GameObject 8",
+                "parent": 7
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            -0.8660299777984619,
+                            0.0,
+                            -0.5000012516975403,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.5000012516975403,
+                            0.0,
+                            -0.8660299777984619,
+                            7.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/GameObject 9.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    }
+                ],
+                "id": 9,
+                "name": "GameObject 9",
+                "parent": 7
             }
         ],
         "name": "SceneIntro",

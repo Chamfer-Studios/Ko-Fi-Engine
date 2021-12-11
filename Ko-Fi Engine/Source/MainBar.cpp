@@ -8,6 +8,7 @@
 #include <imgui.h>
 #include "Primitive.h"
 #include "Importer.h"
+#include "ComponentCamera.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -66,6 +67,13 @@ bool MainBar::Update()
 			{
 
 				editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+
+			}
+			if (ImGui::MenuItem("Create Camera"))
+			{
+
+				GameObject* camera = Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
+				camera->CreateComponent<ComponentCamera>();
 
 			}
 			if (ImGui::BeginMenu("Primitive"))

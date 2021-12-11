@@ -28,22 +28,24 @@ Importer* Importer::GetInstance() {
 	
 }
 
-void Importer::ImportModel(const char* path)
+GameObject* Importer::ImportModel(const char* path)
 {
 	//Creating parent game object
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		if (scene->mNumMeshes > 1) {
-			GetMultipleMeshes(scene);
+			return GetMultipleMeshes(scene);
 		}
 		else if (scene->mNumMeshes == 1) {
-			GetOneMesh(scene);
+			
+			return GetOneMesh(scene);
 		}
 
 	}
 
 	aiReleaseImport(scene);
+	return nullptr;
 }
 
 bool Importer::SaveModel(const Mesh* mesh, const char* path)
@@ -104,7 +106,7 @@ Mesh* Importer::LoadModel(const char* path)
 
 
 
-void Importer::GetOneMesh(const aiScene* scene)
+GameObject* Importer::GetOneMesh(const aiScene* scene)
 {
 	aiMaterial* texture = nullptr;
 	aiString texturePath;
@@ -179,10 +181,10 @@ void Importer::GetOneMesh(const aiScene* scene)
 	//materialComponent->AddTextures(ourMesh->texture);
 	ComponentMesh* cMesh = parent->CreateComponent<ComponentMesh>();
 	cMesh->SetMesh(ourMesh);
-	parent = nullptr;
+	return parent;
 }
 
-void Importer::GetMultipleMeshes(const aiScene* scene)
+GameObject* Importer::GetMultipleMeshes(const aiScene* scene)
 {
 	GameObject* parent = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 	aiMaterial* texture = nullptr;
@@ -266,4 +268,5 @@ void Importer::GetMultipleMeshes(const aiScene* scene)
 		cMesh->SetMesh(ourMesh);
 		child = nullptr;
 	}
+	return parent;
 }

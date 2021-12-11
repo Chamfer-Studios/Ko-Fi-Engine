@@ -266,12 +266,6 @@ Json SceneManager::SaveComponentMaterial(ComponentMaterial* componentMaterial)
 	Json jsonComponentMaterial;
 
 	jsonComponentMaterial["path"] = componentMaterial->GetPath();
-	Texture texture = componentMaterial->GetTexture();
-	jsonComponentMaterial["texture"]["texture_id"] = (int)texture.textureID;
-	jsonComponentMaterial["texture"]["width"] = texture.width;
-	jsonComponentMaterial["texture"]["height"] = texture.height;
-	jsonComponentMaterial["texture"]["nr_channels"] = texture.nrChannels;
-	jsonComponentMaterial["texture"]["texture_path"] = texture.texturePath.c_str();
 
 	return jsonComponentMaterial;
 }

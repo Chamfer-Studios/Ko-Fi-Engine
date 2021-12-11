@@ -23,7 +23,7 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	up = float3(0.0f, 1.0f, 0.0f);
 	front = float3(0.0f, 0.0f, 1.0f);
 
-	componentTransform = owner->GetComponent<ComponentTransform>();
+	componentTransform = owner->GetTransform();
 	float3 pos = componentTransform->GetPosition();
 	position = float3(pos.x, pos.y, pos.z);
 	reference = float3(0.0f, 0.0f, 0.0f);
@@ -60,13 +60,26 @@ bool ComponentCamera::Update()
 	// Add update functionality when we are able to change the main camera.
 
 	float3 pos = componentTransform->GetPosition();
+	float3 rot = componentTransform->GetRotation();
 	if (position.x != pos.x ||
 		position.y != pos.y ||
-		position.z != pos.z)
+		position.z != pos.z || 
+		rotation.x != rot.x ||
+		rotation.y != rot.y ||
+		rotation.z != rot.z)
 	{
 		position = float3(pos.x, pos.y, pos.z);
+		rotation = float3(rot.x, rot.y, rot.z);
+
+		//up = rot.y * up;
+		//front = rot.y * front;
+
+		up = rot.x * up;
+		front = rot.x * front;
+
 		projectionIsDirty = true;
 	}
+
 	CalculateViewMatrix();
 	
 	DrawFrustum();
