@@ -225,3 +225,8 @@ uint Window::GetScale() const
 {
 	return scale;
 }
+
+void Window::GetPosition(int& x, int& y)
+{
+	SDL_GetWindowPosition(window, &x, &y);
+}

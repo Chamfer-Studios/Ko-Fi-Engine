@@ -213,3 +213,28 @@ void Renderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+// Debug ray for mouse picking
+void Renderer3D::DrawRay()
+{
+	glColor3f(0.0f, 1.0f, 1.0f);
+	glLineWidth(3.0f);
+
+	glBegin(GL_LINES);
+	glVertex3f(ray.a.x, ray.a.y, ray.a.z);
+	glVertex3f(ray.b.x, ray.b.y, ray.b.z);
+	glEnd();
+
+	glLineWidth(1.0f);
+	glColor3f(1.0f, 1.0f, 1.0f);
+}
+
+void Renderer3D::SetRay(LineSegment ray)
+{
+	this->ray = ray;
+}
+
+LineSegment Renderer3D::GetRay()
+{
+	return ray;
+}

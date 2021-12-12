@@ -5,8 +5,9 @@
 #include "Light.h"
 #include "SDL_video.h"
 
-#define MAX_LIGHTS 8
+#include "MathGeoLib/Geometry/LineSegment.h"
 
+#define MAX_LIGHTS 8
 
 class GameObject;
 
@@ -24,6 +25,10 @@ public:
 	void SetVsync(bool vsync);
 	void OnResize(int width, int height);
 
+	// Debug ray for mouse picking
+	void DrawRay();
+	void SetRay(LineSegment ray);
+	LineSegment GetRay();
 
 public:
 	Light lights[MAX_LIGHTS];
@@ -34,4 +39,7 @@ public:
 private:
 	bool vsync = false;
 	KoFiEngine* engine = nullptr;
+
+	// Debug ray for mouse picking
+	LineSegment ray;
 };

@@ -47,6 +47,7 @@ public:
 
 	// Retrieve window scale
 	uint GetScale() const;
+	void GetPosition(int& x, int& y);
 
 public:
 	// The window we'll be rendering to

@@ -6,6 +6,8 @@
 #include "MathGeoLib/Geometry/Frustum.h"
 #include "glmath.h"
 
+class GameObject;
+
 class Camera3D : public Module
 {
 public:
@@ -26,6 +28,7 @@ public:
 
 	void Move(const vec3& Movement);
 	float* GetViewMatrix();
+	GameObject* MousePicking();
 
 public:
 	vec3 X, Y, Z, position, reference;
@@ -42,8 +45,8 @@ public:
 	bool projectionIsDirty = false;
 
 private:
+	float lastDeltaX = 0.f, lastDeltaY = 0.f;
+
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	KoFiEngine* engine = nullptr;
-
-	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 };

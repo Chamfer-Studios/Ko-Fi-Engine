@@ -16,8 +16,6 @@ struct Texture
 class Mesh
 {
 public:
-
-
 	Mesh();
 	~Mesh();
 
@@ -39,17 +37,13 @@ public:
 	uint id_index = 0; // index in VRAM
 	uint* indices = nullptr;
 
-
 	// Vertices
 	uint id_vertex = 0; // unique vertex in VRAM
 	float* vertices = nullptr;
 
-
 	// Normals
 	uint id_normal = 0;
 	float* normals = nullptr;
-
-
 
 	// Texture coordinates
 	uint id_tex_coord = 0;

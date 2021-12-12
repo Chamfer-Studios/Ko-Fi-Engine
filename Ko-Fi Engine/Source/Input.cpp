@@ -181,10 +181,10 @@ bool Input::PreUpdate(float dt)
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{
 					// Apply texture
-					if (engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
+					if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
 					{
 						
-							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID);
+							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 			
 							if (go->GetComponent<ComponentMaterial>()) {
 								ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();

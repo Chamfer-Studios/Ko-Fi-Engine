@@ -6,10 +6,13 @@
 #include "Editor.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentMesh.h"
+#include "Renderer3D.h"
 
 #include "SDL.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "MathGeoLib/Geometry/LineSegment.h"
 
 Camera3D::Camera3D(KoFiEngine* engine) : Module()
 {
@@ -70,11 +73,11 @@ bool Camera3D::Update(float dt)
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
 	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
-	if (engine->GetEditor()->panelGameObjectInfo.currentGameObjectID != -1)
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
 	{
-		spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().x;
-		spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().y;
-		spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.currentGameObjectID)->GetTransform())->GetPosition().z;
+		spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().x;
+		spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
+		spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
 
 	}
 
@@ -131,6 +134,14 @@ bool Camera3D::Update(float dt)
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
 
+	// Mouse picking
+	//if (engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN/* && !ImGuizmo::IsOver() && !ImGuizmo::IsUsing()*/)
+	//{
+	//	GameObject* picked = MousePicking();
+	//	/*engine->GetSceneManager()->GetCurrentScene()->gameObjects->selectedGameObject = picked;*/
+	//	engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = picked->GetId();
+	//}
+
 	return true;
 }
 
@@ -164,7 +175,6 @@ void Camera3D::LookAt(const vec3& Spot)
 
 	CalculateViewMatrix();
 }
-
 
 // -----------------------------------------------------------------
 void Camera3D::Move(const vec3& Movement)
@@ -240,4 +250,89 @@ void Camera3D::OnGui()
 //		LOAD_JSON_FLOAT(cameraSensitivity);
 //	}
 //	RecalculateProjection();
+//}
+
+//GameObject* Camera3D::MousePicking()
+//{
+//	Editor* editor = engine->GetEditor();
+//
+//	float normalX = editor->mouseScenePosition.x / editor->lastViewportSize.x;
+//	float normalY = editor->mouseScenePosition.y / editor->lastViewportSize.y;
+//
+//	normalX = (normalX - 0.5f) * 2.0f;
+//	normalY = -(normalY - 0.5f) * 2.0f;
+//
+//	LineSegment newRay = cameraFrustum.UnProjectLineSegment(normalX, normalY);
+//	engine->GetRenderer()->SetRay(newRay);
+//
+//	std::vector<GameObject*> sceneGameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
+//	std::map<float, GameObject*> hitGameObjects;
+//
+//	// Find all hit game objects
+//	for (size_t i = 0; i < sceneGameObjects.size(); i++)
+//	{
+//		ComponentMesh* m = sceneGameObjects.at(i)->GetComponent<ComponentMesh>();
+//		if (m != nullptr)
+//		{
+//			bool hit = newRay.Intersects(m->GetGlobalAABB());
+//
+//			if (hit)
+//			{
+//				float dNear;
+//				float dFar;
+//				hit = newRay.Intersects(m->GetGlobalAABB(), dNear, dFar);
+//				hitGameObjects[dNear] = sceneGameObjects[i];
+//			}
+//		}
+//	}
+//
+//	std::map<float, GameObject*>::iterator it = hitGameObjects.begin();
+//	for (it; it != hitGameObjects.end(); it++)
+//	{
+//		GameObject* gameObject = it->second;
+//
+//		LineSegment rayLocal = newRay;
+//		rayLocal.Transform(gameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Inverted());
+//
+//		ComponentMesh* cMesh = gameObject->GetComponent<ComponentMesh>();
+//
+//		if (cMesh != nullptr)
+//		{
+//			Mesh* rMesh = cMesh->GetMesh();
+//
+//			if (rMesh == nullptr) continue;
+//
+//			for (size_t i = 0; i < rMesh->indexNum; i += 3)
+//			{
+//				// Create every triangle
+//				float3 v1;
+//				v1.x = rMesh->vertices[rMesh->indices[i]].x;
+//				v1.y = rMesh->vertices[rMesh->indices[i]].y;
+//				v1.z = rMesh->vertices[rMesh->indices[i]].z;
+//
+//				float3 v2;
+//				v2.x = rMesh->vertices[rMesh->indices[i + 1]].x;
+//				v2.y = rMesh->vertices[rMesh->indices[i + 1]].y;
+//				v2.z = rMesh->vertices[rMesh->indices[i + 1]].z;
+//
+//				float3 v3;
+//				v3.x = rMesh->vertices[rMesh->indices[i + 2]].x;
+//				v3.y = rMesh->vertices[rMesh->indices[i + 2]].y;
+//				v3.z = rMesh->vertices[rMesh->indices[i + 2]].z;
+//
+//				const Triangle triangle(v1, v2, v3);
+//
+//				float distance;
+//				float3 intersectionPoint;
+//				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
+//			}
+//		}
+//		else
+//		{
+//			ComponentCamera* cam = gameObject->GetComponent<ComponentCamera>();
+//			if (cam != nullptr) return gameObject;
+//		}
+//	}
+//
+//	return nullptr;
 //}

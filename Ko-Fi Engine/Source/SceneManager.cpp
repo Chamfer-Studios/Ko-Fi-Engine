@@ -653,7 +653,7 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 		}
 
 		scene->rootGo = scene->GetGameObject(jsonScene.at("root_go"));
-		engine->GetEditor()->panelGameObjectInfo.currentGameObjectID = -1;
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 
 		// MAKE SURE THERE ISN'T ANY GAME OBJECT WE DON'T HAVE AT THE .JSON FILE
 		std::vector<GameObject*> gameObjectsList = scene->gameObjectList;

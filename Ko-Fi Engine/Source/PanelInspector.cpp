@@ -30,10 +30,10 @@ bool PanelInspector::Update()
 	// Panel game object info. to manage the options of the current game object
 	PanelGameObjectInfo panelGameObjectInfo = editor->panelGameObjectInfo;
 	ImGui::Begin("Inspector");
-	if (panelGameObjectInfo.currentGameObjectID != -1)
+	if (panelGameObjectInfo.selectedGameObjectID != -1)
 	{
 		// Current game object (the one we have selected at the moment)
-		GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.at(editor->panelGameObjectInfo.currentGameObjectID);
+		GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.at(editor->panelGameObjectInfo.selectedGameObjectID);
 		for (Component* component : currentGameObject->GetComponents())
 		{
 			component->InspectorDraw(editor->GetPanelChooser());

@@ -25,7 +25,7 @@ struct EngineConfig;
 
 struct PanelGameObjectInfo
 {
-	int currentGameObjectID = -1;
+	int selectedGameObjectID = -1;
 };
 
 struct PanelsState
@@ -56,6 +56,8 @@ public:
 public:
 	PanelsState panelsState;
 	ImVec2 lastViewportSize;
+	ImVec2 scenePanelOrigin;
+	ImVec2 mouseScenePosition;
 
 	// Open/Close panel bools
 	bool toggleAboutPanel = false;

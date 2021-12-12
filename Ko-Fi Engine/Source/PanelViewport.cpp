@@ -4,6 +4,8 @@
 #include "Engine.h"
 #include "Camera3D.h"
 #include "ViewportFrameBuffer.h"
+#include "Input.h"
+#include "Window.h"
 
 //Tools
 #include <imgui.h>
@@ -44,6 +46,19 @@ bool PanelViewport::Update()
     }
     editor->lastViewportSize = viewportSize;
     ImGui::Image((ImTextureID)engine->GetViewportFrameBuffer()->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
+
+    editor->scenePanelOrigin = ImGui::GetWindowPos();
+    editor->scenePanelOrigin.x += ImGui::GetWindowContentRegionMin().x;
+    editor->scenePanelOrigin.y += ImGui::GetWindowContentRegionMin().y;
+
+    int winX, winY;
+    engine->GetWindow()->GetPosition(winX, winY);
+    editor->scenePanelOrigin.x -= winX;
+    editor->scenePanelOrigin.y -= winY;
+
+    editor->mouseScenePosition.x = engine->GetInput()->GetMouseX() - editor->scenePanelOrigin.x;
+    editor->mouseScenePosition.y = engine->GetInput()->GetMouseY() - editor->scenePanelOrigin.y;
+
     ImGui::End();
 
 	return true;

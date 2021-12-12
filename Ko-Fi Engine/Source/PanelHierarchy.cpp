@@ -89,7 +89,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 	{
 		DragNDrop(go);
 		if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-			editor->panelGameObjectInfo.currentGameObjectID = go->GetId();
+			editor->panelGameObjectInfo.selectedGameObjectID = go->GetId();
 
 		for (int i = 0; i < go->GetChildren().size(); i++)
 		{
