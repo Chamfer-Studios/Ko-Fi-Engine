@@ -47,13 +47,14 @@ public:
 	float cameraSpeed = 60.f;
 	bool projectionIsDirty = true;
 
+	// Debug bools
+	bool drawFrustum = true;
+	bool frustumCulling = false;
+
 private:
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
 	ComponentTransform* componentTransform = nullptr;
-	// Debug bools
-	bool drawFrustum = true;
-	bool frustumCulling = false;
 };
 
 #endif // __COMPONENT_CAMERA_H__

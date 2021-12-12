@@ -3,6 +3,8 @@
 
 #include "GameObject.h"
 #include "Importer.h"
+#include "Engine.h"
+
 #include <vector>
 
 class Scene
@@ -80,9 +82,12 @@ public:
 		return go;
 	}
 
-	virtual void DeleteGameObject(GameObject* gameObject) {
-		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it) {
-			if ((*it)->GetId() == gameObject->GetId()) {
+	virtual void DeleteGameObject(GameObject* gameObject)
+	{
+		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
+		{
+			if ((*it)->GetId() == gameObject->GetId())
+			{
 				gameObjectList.erase(it);
 				break;
 			}
@@ -110,6 +115,31 @@ public:
 			RELEASE(gameObject);
 		}
 
+	}
+
+	void RemoveGameObjectIterator(std::vector<GameObject*>::iterator go)
+	{
+		GameObject* gameObject = (*go);
+		if (gameObject != nullptr)
+		{
+			GameObject* parent = gameObject->GetParent();
+			std::vector<GameObject*> children = gameObject->GetChildren();
+			if (children.size() > 0)
+			{
+				for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
+				{
+					GameObject* child = (*ch);
+					GameObject* childParent = child->GetParent();
+					childParent = gameObject->GetParent();
+					parent->AttachChild(child);
+				}
+			}
+			parent->RemoveChild(gameObject);
+
+			gameObjectList.erase(go);
+			gameObject->CleanUp();
+			RELEASE(gameObject);
+		}
 	}
 
 public:

@@ -78,33 +78,28 @@ Mesh* Importer::LoadModel(const char* path)
 		Mesh* mesh = new Mesh();
 		file.read((char*)mesh, 4 * sizeof(unsigned));
 
-
 		mesh->vertices = (float*)malloc(mesh->verticesSizeBytes);
 		file.read((char*)mesh->vertices, mesh->verticesSizeBytes);
 
 		mesh->normals = (float*)malloc(mesh->normalsSizeBytes);
 		file.read((char*)mesh->normals, mesh->normalsSizeBytes);
 
-		if (mesh->texCoordSizeBytes != 0) {
+		if (mesh->texCoordSizeBytes != 0)
+		{
 			mesh->tex_coords = (float*)malloc(mesh->texCoordSizeBytes);
 			file.read((char*)mesh->tex_coords, mesh->texCoordSizeBytes);
 		}
-	
 
 		mesh->indices = (uint*)malloc(mesh->indicesSizeBytes);
 		file.read((char*)mesh->indices, mesh->indicesSizeBytes);
 		file.close();
 		mesh->SetUpMeshBuffers();
-		
-		
 
 		return mesh;
 	}
 	
 	return nullptr;
 }
-
-
 
 GameObject* Importer::GetOneMesh(const aiScene* scene)
 {

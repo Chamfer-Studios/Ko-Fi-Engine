@@ -275,6 +275,11 @@ Json SceneManager::SaveComponentInfo(ComponentInfo* componentInfo)
 Json SceneManager::SaveComponentCamera(ComponentCamera* componentCamera)
 {
 	Json jsonComponentCamera;
+	jsonComponentCamera["vertical_fov"] = componentCamera->verticalFOV;
+	jsonComponentCamera["near_plane_distance"] = componentCamera->nearPlaneDistance;
+	jsonComponentCamera["far_plane_distance"] = componentCamera->farPlaneDistance;
+	jsonComponentCamera["draw_frustum"] = componentCamera->drawFrustum;
+	jsonComponentCamera["frustum_culling"] = componentCamera->frustumCulling;
 	return jsonComponentCamera;
 }
 
@@ -442,7 +447,6 @@ void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComp
 			cMat->SetPath(texturePath);
 
 			cMat->LoadTexture(texturePath.c_str());
-
 		}
 	}
 }
@@ -453,32 +457,11 @@ void SceneManager::LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComp
 
 void SceneManager::LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera)
 {
-}
-
-void SceneManager::RemoveGameObjectIterator(std::vector<GameObject*>::iterator go)
-{
-	GameObject* gameObject = (*go);
-	if (gameObject != nullptr)
-	{
-		GameObject* parent = gameObject->GetParent();
-		std::vector<GameObject*> children = gameObject->GetChildren();
-		if (children.size() > 0)
-		{
-			for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
-			{
-				GameObject* child = (*ch);
-				GameObject* childParent = child->GetParent();
-				childParent = gameObject->GetParent();
-				parent->AttachChild(child);
-			}
-		}
-		parent->RemoveChild(gameObject);
-
-		std::vector<GameObject*> gameObjectsList = currentScene->gameObjectList;
-		gameObjectsList.erase(go);
-		gameObject->CleanUp();
-		RELEASE(gameObject);
-	}
+	componentCamera->verticalFOV = jsonComponentCamera.at("vertical_fov");
+	componentCamera->nearPlaneDistance = jsonComponentCamera.at("near_plane_distance");
+	componentCamera->farPlaneDistance = jsonComponentCamera.at("far_plane_distance");
+	componentCamera->drawFrustum = jsonComponentCamera.at("draw_frustum");
+	componentCamera->frustumCulling = jsonComponentCamera.at("frustum_culling");
 }
 
 // Load scene from a .json file
@@ -674,7 +657,7 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 			if (!isGameObjectSaved)
 			{
 				// IF THE GAME OBJECT IS NOT IN THE .JSON FILE, IT'LL BE REMOVED
-				RemoveGameObjectIterator(go);
+				engine->GetSceneManager()->GetCurrentScene()->RemoveGameObjectIterator(go);
 			}
 		}
 

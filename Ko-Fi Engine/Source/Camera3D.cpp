@@ -2,7 +2,6 @@
 #include "Camera3D.h"
 #include "Engine.h"
 #include "Input.h"
-#include "Window.h"
 #include "SceneManager.h"
 #include "Editor.h"
 #include "GameObject.h"
@@ -14,9 +13,6 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "MathGeoLib/Geometry/LineSegment.h"
-#include "MathGeoLib/Geometry/Triangle.h"
-
-#include <vector>
 
 Camera3D::Camera3D(KoFiEngine* engine) : Module()
 {
@@ -33,7 +29,8 @@ Camera3D::Camera3D(KoFiEngine* engine) : Module()
 }
 
 Camera3D::~Camera3D()
-{}
+{
+}
 
 bool Camera3D::Start()
 {
@@ -82,7 +79,6 @@ bool Camera3D::Update(float dt)
 		spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().x;
 		spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
 		spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
-
 	}
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
@@ -138,16 +134,6 @@ bool Camera3D::Update(float dt)
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
 
-	// Mouse picking
-	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN/* && !ImGuizmo::IsOver() && !ImGuizmo::IsUsing()*/)
-	{
-		//GameObject* picked = MousePicking();
-		///*engine->GetSceneManager()->GetCurrentScene()->gameObjects->selectedGameObject = picked;*/
-		//if(picked != nullptr)
-		//engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = picked->GetId();
-		MousePicking();
-	}
-
 	return true;
 }
 
@@ -200,24 +186,8 @@ float* Camera3D::GetViewMatrix()
 // -----------------------------------------------------------------
 void Camera3D::CalculateViewMatrix()
 {
-	cameraFrustum.pos.x = position.x;
-	cameraFrustum.pos.y = position.y;
-	cameraFrustum.pos.z = position.z;
-	//setting camera frustum Up
-	cameraFrustum.up.x = Z.x;
-	cameraFrustum.up.y = Z.y;
-	cameraFrustum.up.z = Z.z;
-	//setting camera frustum front
-	cameraFrustum.front.x = X.x;
-	cameraFrustum.front.y = X.y;
-	cameraFrustum.front.z = X.z;
-	float3::Orthonormalize(cameraFrustum.front, cameraFrustum.up);
-	X = cross(Y,Z);
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, position), -dot(Y, position), -dot(Z, position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
-
-
-
 }
 
 void Camera3D::RecalculateProjection()
@@ -273,47 +243,3 @@ void Camera3D::OnGui()
 //	}
 //	RecalculateProjection();
 //}
-
-GameObject* Camera3D::MousePicking()
-{
-
-
-
-	float normalX = engine->GetEditor()->mouseScenePosition.x / engine->GetEditor()->lastViewportSize.x;
-	float normalY = engine->GetEditor()->mouseScenePosition.y / engine->GetEditor()->lastViewportSize.y;
-	
-	float normX = (normalX - 0.5f) * 2.0f;
-	float normY = -(normalY - 0.5f) * 2.0f;
-
-	LineSegment cameraProj = cameraFrustum.UnProjectLineSegment(normX, normY);
-	
-	float distance;
-	GameObject* firstObj = IntersectRay(cameraProj,distance,true) ;
-
-	return firstObj;
-}
-
-GameObject* Camera3D::IntersectRay(const LineSegment& segment, float& dist, bool nearest) const
-{
-	dist = INFINITY;
-	GameObject* chosen = nullptr;
-	std::map<float, GameObject*> objCollector;
-	std::vector<GameObject*> rootCollector = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
-	float nearHit, farHit;
-
-	for (int i = 0; i < rootCollector.size(); i++)
-		if (rootCollector[i]->active
-			&& rootCollector[i]->GetComponent<ComponentMesh>() != nullptr
-			&& segment.Intersects(rootCollector[i]->GetComponent<ComponentMesh>()->GetGlobalAABB(), nearHit, farHit))
-			if (nearest) {
-				objCollector[nearHit] = rootCollector[i];
-				return objCollector[nearHit];
-			}
-			else {
-				objCollector[farHit] = rootCollector[i];
-				return objCollector[farHit];
-			}
-
-	return nullptr;
-}
-

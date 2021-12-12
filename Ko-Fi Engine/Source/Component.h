@@ -18,7 +18,6 @@ class Component
 {
 public:
 	Component(GameObject* parent);
-	virtual ~Component() {}
 
 	virtual void Enable() { active = true; }
 	virtual bool Start() { return true; }

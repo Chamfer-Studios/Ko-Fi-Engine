@@ -194,6 +194,10 @@
                     {
                         "component_type": "material",
                         "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
                     }
                 ],
                 "id": 2,
@@ -260,6 +264,10 @@
                         "mesh": "Library/House.sugar",
                         "path": "",
                         "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
                     },
                     {
                         "component_type": "material",
@@ -396,6 +404,10 @@
                     {
                         "component_type": "material",
                         "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
                     }
                 ],
                 "id": 5,
@@ -462,6 +474,10 @@
                         "mesh": "Library/House (1).sugar",
                         "path": "",
                         "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
                     },
                     {
                         "component_type": "material",
@@ -598,6 +614,10 @@
                     {
                         "component_type": "material",
                         "path": "Assets/Textures/Baker_house.png"
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
                     }
                 ],
                 "id": 8,
@@ -664,6 +684,10 @@
                         "mesh": "Library/House (2).sugar",
                         "path": "",
                         "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/Baker_house.png"
                     },
                     {
                         "component_type": "material",
@@ -738,6 +762,10 @@
                     {
                         "component_type": "material",
                         "path": "Assets/Textures/cliff_rock.png"
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/cliff_rock.png"
                     }
                 ],
                 "id": 10,
@@ -806,7 +834,12 @@
                         "vertex_normals": false
                     },
                     {
-                        "component_type": "camera"
+                        "component_type": "camera",
+                        "draw_frustum": true,
+                        "far_plane_distance": 100.0,
+                        "frustum_culling": false,
+                        "near_plane_distance": 0.10000000149011612,
+                        "vertical_fov": 60.0
                     }
                 ],
                 "id": 11,

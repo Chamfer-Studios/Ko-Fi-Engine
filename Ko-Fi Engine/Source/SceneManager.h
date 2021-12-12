@@ -3,9 +3,10 @@
 
 #include "Module.h"
 #include "Scene.h"
+
+#include "Timer.h"
 #include <string>
 #include <list>
-#include "Timer.h"
 
 class KoFiEngine;
 class SceneIntro;
@@ -74,8 +75,6 @@ public:
 	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
 	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
 	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
-
-	void RemoveGameObjectIterator(std::vector<GameObject*>::iterator go);
 
 public:
 	bool active;

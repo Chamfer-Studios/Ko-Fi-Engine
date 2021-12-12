@@ -60,11 +60,11 @@ bool PanelHierarchy::Update()
 
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-		for (int i = 0; i < editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().size(); ++i) {
+		for (int i = 0; i < editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().size(); ++i)
+		{
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 			
 			DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().at(i), flags);
-			
 		}
 		
 		if (alignLabelWithCurrentXPosition)
@@ -144,9 +144,10 @@ void PanelHierarchy::DragNDrop(GameObject* go)
 		{
 			if (selectedGameObject != nullptr)
 			{
-				if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly)) {
+				if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
+				{
 					destinationGameObject = go;
-					destinationGameObject->SetChild(selectedGameObject);
+					destinationGameObject->AttachChild(selectedGameObject);
 					selectedGameObject = nullptr;
 					destinationGameObject = nullptr;
 				}
