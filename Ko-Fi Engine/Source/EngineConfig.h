@@ -19,8 +19,8 @@ public:
 		cappedMs = -1;
 	}
 
-	SString title;
-	SString organization;
+	std::string title;
+	std::string organization;
 	uint64 frameCount = 0;
 
 	Timer startupTime;

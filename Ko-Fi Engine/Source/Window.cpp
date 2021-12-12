@@ -6,11 +6,12 @@
 
 #include "SDL.h"
 
-Window::Window() : Module()
+Window::Window(KoFiEngine* engine) : Module()
 {
 	window = NULL;
 	screenSurface = NULL;
 	name.Create("Window");
+	this->engine = engine;
 }
 
 // Destructor
@@ -75,6 +76,8 @@ bool Window::Awake(Json configModule)
 				SetIcon(iconFile.c_str());
 		}
 	}
+
+	SetTitle(engine->GetTitle());
 
 	return ret;
 }

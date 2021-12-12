@@ -44,8 +44,6 @@ bool SceneIntro::Start()
 	appLog->AddLog("Loading Intro assets\n");
 	bool ret = true;
 
-	engine->GetWindow()->SetTitle(jsonHandler.JsonToString(j.at("Text")).c_str());
-
 	engine->GetCamera3D()->Move(vec3(1.0f, 1.0f, 1.0f));
 	engine->GetCamera3D()->LookAt(vec3(0, 0, 0));
 

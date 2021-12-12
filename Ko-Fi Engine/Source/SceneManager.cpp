@@ -419,12 +419,10 @@ void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComp
 	Json jsonComponentMaterial;
 	for (const auto& cmp : jsonComponentsList.items())
 	{
-		if (cmp.value().at("component_type") == "mesh") {
+		if (cmp.value().at("component_type") == "mesh")
 			jsonComponentMesh = cmp.value();
-		}
-		else if (cmp.value().at("component_type") == "material") {
+		else if (cmp.value().at("component_type") == "material")
 			jsonComponentMaterial = cmp.value();
-		}
 	}
 	componentMesh->SetPath(jsonComponentMesh.at("path"));
 	componentMesh->SetVertexNormals(jsonComponentMesh.at("vertex_normals"));
@@ -433,7 +431,8 @@ void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComp
 	mesh = Importer::GetInstance()->LoadModel(jsonComponentMesh.at("mesh").get<std::string>().c_str());
 	componentMesh->SetMesh(mesh);
 
-	if (mesh->tex_coords) {
+	if (mesh->tex_coords)
+	{
 		GameObject* owner = componentMesh->owner;
 		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
 		cMat->SetTexture(mesh->texture);

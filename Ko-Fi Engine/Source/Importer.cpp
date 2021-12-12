@@ -152,7 +152,7 @@ GameObject* Importer::GetOneMesh(const aiScene* scene)
 		for (uint j = 0; j < aiMesh->mNumVertices; ++j)
 		{
 			ourMesh->tex_coords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-			ourMesh->tex_coords[j * 2 + 1] = /*1.0f - */aiMesh->mTextureCoords[0][j].y;
+			ourMesh->tex_coords[j * 2 + 1] = 1.0f - aiMesh->mTextureCoords[0][j].y;
 		}
 	}
 

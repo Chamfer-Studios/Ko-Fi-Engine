@@ -24,7 +24,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	engineConfig = new EngineConfig();
 	PERF_START(ptimer);
 	Importer::GetInstance()->SetEngine(this);
-	window = new Window();
+	window = new Window(this);
 	fileSystem = new FileSystem(this);
 	input = new Input(this);
 	camera = new Camera3D(this);
@@ -91,8 +91,8 @@ bool KoFiEngine::Awake()
 		ret = true;
 		jsonConfigEngine = jsonConfig.at("Engine");
 
-		engineConfig->title.Create(jsonConfigEngine.at("Title").dump(4).c_str());
-		engineConfig->organization.Create(jsonConfigEngine.at("Organization").dump(4).c_str());
+		engineConfig->title = jsonConfigEngine.at("Title").get<std::string>().c_str();
+		engineConfig->organization = jsonConfigEngine.at("Organization").dump(4).c_str();
 		engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
 		if (engineConfig->maxFps > 0) engineConfig->cappedMs = 1000 / engineConfig->maxFps;
 	}
@@ -305,13 +305,13 @@ const char* KoFiEngine::GetArgv(int index) const
 // ---------------------------------------
 const char* KoFiEngine::GetTitle() const
 {
-	return engineConfig->title.GetString();
+	return engineConfig->title.c_str();
 }
 
 // ---------------------------------------
 const char* KoFiEngine::GetOrganization() const
 {
-	return engineConfig->organization.GetString();
+	return engineConfig->organization.c_str();
 }
 
 const uint64 KoFiEngine::GetFps() const

@@ -55,11 +55,11 @@ bool PanelConfiguration::Update()
 	if (ImGui::CollapsingHeader("Application"))
 	{
 		static char appName[120];
-		strcpy_s(appName, 120, engineConfig->title.GetString());
+		strcpy_s(appName, 120, engineConfig->title.c_str());
 		ImGui::InputText("App Name",appName,120,ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
 		static char organization[120];
-		strcpy_s(organization, 120, engineConfig->organization.GetString());
+		strcpy_s(organization, 120, engineConfig->organization.c_str());
 		ImGui::InputText("Organization", organization, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
 		if (ImGui::SliderInt("Max FPS", &engineConfig->maxFps, 0, 120))
