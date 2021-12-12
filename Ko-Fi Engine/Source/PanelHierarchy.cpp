@@ -88,7 +88,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 	if (ImGui::TreeNodeEx(go->GetName().c_str(),flags))
 	{
 		DragNDrop(go);
-		if ((ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1) ))
+		if ((ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)))
 			editor->panelGameObjectInfo.selectedGameObjectID = go->GetId();
 		if (ImGui::IsItemClicked(1)) {
 			ImGui::OpenPopup("Test");
@@ -104,7 +104,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 			}
 			if (ImGui::MenuItem("Delete")) {
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-					if (go->GetId() == editor->panelGameObjectInfo.selectedGameObjectID) {
+					if (go->GetId() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetId() != -1) {
 						editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
 						editor->panelGameObjectInfo.selectedGameObjectID = -1;
 					}
