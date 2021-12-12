@@ -455,7 +455,7 @@ void SceneManager::LoadComponentCamera(ComponentCamera* componentCamera, Json js
 {
 }
 
-void SceneManager::RemoveGameObject(std::vector<GameObject*>::iterator go)
+void SceneManager::RemoveGameObjectIterator(std::vector<GameObject*>::iterator go)
 {
 	GameObject* gameObject = (*go);
 	if (gameObject != nullptr)
@@ -474,7 +474,7 @@ void SceneManager::RemoveGameObject(std::vector<GameObject*>::iterator go)
 		}
 		parent->RemoveChild(gameObject);
 
-		std::vector<GameObject*> gameObjectsList = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
+		std::vector<GameObject*> gameObjectsList = currentScene->gameObjectList;
 		gameObjectsList.erase(go);
 		gameObject->CleanUp();
 		RELEASE(gameObject);
@@ -674,7 +674,7 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 			if (!isGameObjectSaved)
 			{
 				// IF THE GAME OBJECT IS NOT IN THE .JSON FILE, IT'LL BE REMOVED
-				RemoveGameObject(go);
+				RemoveGameObjectIterator(go);
 			}
 		}
 

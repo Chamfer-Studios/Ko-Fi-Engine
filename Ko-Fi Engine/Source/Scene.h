@@ -80,6 +80,38 @@ public:
 		return go;
 	}
 
+	virtual void DeleteGameObject(GameObject* gameObject) {
+		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it) {
+			if ((*it)->GetId() == gameObject->GetId()) {
+				gameObjectList.erase(it);
+				break;
+			}
+		}
+		
+		if (gameObject != nullptr)
+		{
+			GameObject* parent = gameObject->GetParent();
+			std::vector<GameObject*> children = gameObject->GetChildren();
+			if (children.size() > 0)
+			{
+				for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
+				{
+					GameObject* child = (*ch);
+					GameObject* childParent = child->GetParent();
+					childParent = gameObject->GetParent();
+					parent->AttachChild(child);
+				}
+			}
+			parent->RemoveChild(gameObject);
+
+			gameObject->CleanUp();
+			
+
+			RELEASE(gameObject);
+		}
+
+	}
+
 public:
 	SString name;
 	bool active;

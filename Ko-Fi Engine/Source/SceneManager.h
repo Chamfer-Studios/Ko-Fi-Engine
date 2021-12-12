@@ -75,7 +75,7 @@ public:
 	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
 	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
 
-	void RemoveGameObject(std::vector<GameObject*>::iterator go);
+	void RemoveGameObjectIterator(std::vector<GameObject*>::iterator go);
 
 public:
 	bool active;
