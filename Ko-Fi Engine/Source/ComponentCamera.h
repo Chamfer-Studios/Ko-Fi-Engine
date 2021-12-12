@@ -8,7 +8,6 @@
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Geometry/Frustum.h"
 #include "MathGeoLib/Geometry/Plane.h"
-#include "MathGeoLib/Math/Quat.h"
 
 class GameObject;
 class ComponentTransform;
@@ -34,11 +33,11 @@ public:
 
 	void DrawFrustum() const;
 	bool ClipsWithBBox(const AABB& refBox) const;
-	void FrustumCull();
+	void FrustumCulling();
+	void ResetFrustumCulling();
 
-	float3 right, up, front, position, reference, rotation,scale;
+	float3 right, up, front, position, reference, rotation;
 	Frustum cameraFrustum;
-	float4x4 localViewMatrix;
 	float4x4 viewMatrix;
 	float aspectRatio = 1.f;
 	float verticalFOV = 60.f;
@@ -48,11 +47,13 @@ public:
 	float cameraSpeed = 60.f;
 	bool projectionIsDirty = true;
 
-
 private:
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
 	ComponentTransform* componentTransform = nullptr;
+	// Debug bools
+	bool drawFrustum = true;
+	bool frustumCulling = false;
 };
 
 #endif // __COMPONENT_CAMERA_H__

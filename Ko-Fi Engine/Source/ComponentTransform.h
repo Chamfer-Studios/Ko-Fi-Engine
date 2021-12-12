@@ -18,7 +18,7 @@ public:
 	void SetScale(const float3& newScale);
 
 	inline float3 GetPosition() const { return position; };
-	inline Quat GetRotation() const { return rotation; };
+	inline float3 GetRotation() const { return rotationEuler; };
 	inline float3 GetScale() const { return scale; };
 
 	inline const float3& Right() const { return right; }
@@ -32,10 +32,7 @@ public:
 
 	float4x4 GetGlobalTransform();
 
-	// Getters
 	bool GetDirty();
-
-	// Setters
 	void SetDirty(bool isDirty);
 
 	float4x4 transformMatrix;

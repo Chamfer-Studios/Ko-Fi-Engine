@@ -30,7 +30,6 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 //	}
 //}
 
-//
 ////ComponentMesh::ComponentMesh(GameObject* owner,COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
 ////{
 ////	this->subtype = subtype;
@@ -44,18 +43,15 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 ////	this->subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
 ////	this->owner = owner;
 ////}
-////
+
 ComponentMesh::~ComponentMesh()
 {
-
-		RELEASE(mesh);
-
+	RELEASE(mesh);
 	//RELEASE(materialComponent);
 }
 
 //void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
 //{
-//	
 //		this->mesh->num_vertices = parMesh->npoints;
 //		this->mesh->num_indices = parMesh->ntriangles * 3;
 //		this->mesh->num_normals = parMesh->ntriangles;
@@ -80,7 +76,6 @@ ComponentMesh::~ComponentMesh()
 //		//GenerateBuffers();
 //		//ComputeNormals();
 //		//GenerateBounds();
-//	
 //}
 
 bool ComponentMesh::Start(const char* path)
@@ -106,7 +101,7 @@ bool ComponentMesh::PostUpdate()
 
 	glPushMatrix();
 	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
-////
+
 ////	switch (subtype)
 ////	{
 ////	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
@@ -156,12 +151,11 @@ bool ComponentMesh::PostUpdate()
 ////	default:
 ////		break;
 ////	}
-////
 
 	glPopMatrix();
 
-	GenerateBounds();
-	GetGlobalBoundingBox();
+	GenerateLocalBoundingBox();
+	GenerateGlobalBoundingBox();
 	DrawBoundingBox(aabb, float3(0.0, 1.0, 0.0));
 
 	return ret;
@@ -169,7 +163,6 @@ bool ComponentMesh::PostUpdate()
 
 bool ComponentMesh::CleanUp()
 {
-	
 	RELEASE(mesh);
 
 	return true;
@@ -223,7 +216,7 @@ bool ComponentMesh::GetFacesNormals()
 	return facesNormals;
 }
 
-void ComponentMesh::GenerateBounds()
+void ComponentMesh::GenerateLocalBoundingBox()
 {
 	// Generate AABB
 	if (mesh != nullptr)
@@ -233,13 +226,12 @@ void ComponentMesh::GenerateBounds()
 	}
 }
 
-AABB ComponentMesh::GetAABB()
+AABB ComponentMesh::GetLocalAABB()
 {
-	GenerateBounds();
+	GenerateLocalBoundingBox();
 	return mesh->localAABB;
 }
 
-////
 ////void ComponentMesh::LoadMesh(const char* path)
 ////{
 ////	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
@@ -303,7 +295,7 @@ AABB ComponentMesh::GetAABB()
 ////
 ////	aiReleaseImport(scene);
 ////}
-////
+
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
@@ -332,16 +324,14 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 uint ComponentMesh::GetVertices()
 {
 	uint numVertices = 0;
-	
-		numVertices += mesh->verticesSizeBytes/(sizeof(float)*3);
-	
+	numVertices += mesh->verticesSizeBytes/(sizeof(float)*3);
 	return numVertices;
 }
 
-void ComponentMesh::GetGlobalBoundingBox()
+void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
-	obb = GetAABB();
+	obb = GetLocalAABB();
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
@@ -400,7 +390,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glLineWidth(1.0f);
 }
 
-AABB ComponentMesh::GetBBox()
+AABB ComponentMesh::GetGlobalAABB()
 {
 	return aabb;
 }

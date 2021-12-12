@@ -52,8 +52,6 @@ bool SceneManager::Start()
 		ret = (*scene)->Start();
 	}
 
-	//SaveScene(currentScene);
-
 	return ret;
 }
 
@@ -264,23 +262,19 @@ Json SceneManager::SaveComponentMesh(ComponentMesh* componentMesh)
 Json SceneManager::SaveComponentMaterial(ComponentMaterial* componentMaterial)
 {
 	Json jsonComponentMaterial;
-
 	jsonComponentMaterial["path"] = componentMaterial->GetPath();
-
 	return jsonComponentMaterial;
 }
 
 Json SceneManager::SaveComponentInfo(ComponentInfo* componentInfo)
 {
 	Json jsonComponentInfo;
-
 	return jsonComponentInfo;
 }
 
 Json SceneManager::SaveComponentCamera(ComponentCamera* componentCamera)
 {
 	Json jsonComponentCamera;
-
 	return jsonComponentCamera;
 }
 
@@ -417,8 +411,6 @@ void SceneManager::LoadComponentTransform(ComponentTransform* componentTransform
 	scale.y = values[1];
 	scale.z = values[2];
 	componentTransform->SetScale(scale);
-
-	componentTransform->SetDirty(false);
 }
 
 void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentsList)
@@ -456,16 +448,12 @@ void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComp
 	}
 }
 
-
-
 void SceneManager::LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo)
 {
-
 }
 
 void SceneManager::LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera)
 {
-
 }
 
 void SceneManager::RemoveGameObject(std::vector<GameObject*>::iterator go)
@@ -488,17 +476,7 @@ void SceneManager::RemoveGameObject(std::vector<GameObject*>::iterator go)
 		parent->RemoveChild(gameObject);
 
 		std::vector<GameObject*> gameObjectsList = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// UNCOMMENT THAT LINE AND FIX IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//gameObjectsList.erase(go);
+		gameObjectsList.erase(go);
 		gameObject->CleanUp();
 		RELEASE(gameObject);
 	}

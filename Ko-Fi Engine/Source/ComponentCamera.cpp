@@ -23,9 +23,12 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	up = float3(0.0f, 1.0f, 0.0f);
 	front = float3(0.0f, 0.0f, 1.0f);
 
-	componentTransform = owner->GetTransform();
-
 	reference = float3(0.0f, 0.0f, 0.0f);
+
+	componentTransform = owner->GetTransform();
+	/*position = componentTransform->GetPosition();
+	up = componentTransform->Up();
+	front = componentTransform->Front();*/
 
 	CalculateViewMatrix();
 }
@@ -59,13 +62,17 @@ bool ComponentCamera::Update()
 	// Add update functionality when we are able to change the main camera.
 
 	position = componentTransform->GetPosition();
+
 	up = componentTransform->Up();
 	front = componentTransform->Front();
+	//right = componentTransform->Right();
 
 	CalculateViewMatrix();
 	
-	DrawFrustum();
-	FrustumCull();
+	if (drawFrustum)
+		DrawFrustum();
+	if (frustumCulling)
+		FrustumCulling();
 
 	return true;
 }
@@ -80,8 +87,6 @@ void ComponentCamera::LookAt(const float3& point)
 
 	CalculateViewMatrix();
 }
-
-
 
 void ComponentCamera::CalculateViewMatrix()
 {
@@ -123,6 +128,13 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 		{
 			projectionIsDirty = true;
 		}
+		if (ImGui::Checkbox("Draw frustum", &drawFrustum))
+		{
+		}
+		if (ImGui::Checkbox("Frustum culling", &frustumCulling))
+		{
+			ResetFrustumCulling();
+		}
 	}
 
 	return ret;
@@ -139,7 +151,7 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 //		SAVE_JSON_FLOAT(cameraSensitivity)
 //		writer.EndObject();
 //}
-//
+
 //void ModuleCamera3D::OnLoad(const JSONReader& reader)
 //{
 //	if (reader.HasMember("camera"))
@@ -225,7 +237,7 @@ bool ComponentCamera::ClipsWithBBox(const AABB& refBox) const
 	}
 }
 
-void ComponentCamera::FrustumCull()
+void ComponentCamera::FrustumCulling()
 {
 	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
@@ -233,12 +245,28 @@ void ComponentCamera::FrustumCull()
 	{
 		GameObject* gameObject = (*go);
 		
-		if (gameObject->GetComponent<ComponentMesh>() == nullptr)
+		if (gameObject->GetComponent<ComponentMesh>() == nullptr || gameObject == owner)
 			continue;
 
-		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetBBox()))
+		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetGlobalAABB()))
 			gameObject->active = false;
 		else
+			gameObject->active = true;
+	}
+}
+
+void ComponentCamera::ResetFrustumCulling()
+{
+	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	{
+		GameObject* gameObject = (*go);
+
+		if (gameObject->GetComponent<ComponentMesh>() == nullptr || gameObject == owner)
+			continue;
+
+		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetGlobalAABB()))
 			gameObject->active = true;
 	}
 }

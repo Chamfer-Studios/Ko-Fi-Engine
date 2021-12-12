@@ -20,7 +20,8 @@ ComponentTransform::~ComponentTransform()
 {
 }
 
-bool ComponentTransform::Update() {
+bool ComponentTransform::Update()
+{
 	if (isDirty)
 	{
 		transformMatrixLocal = float4x4::FromTRS(position, rotation, scale);
@@ -40,43 +41,6 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Transform"))
 	{
-		/*float3 newPosition = position;
-		ImGui::PushItemWidth(50);
-		ImGui::InputFloat("X##positionX", &newPosition.x);
-		ImGui::SameLine();
-		ImGui::InputFloat("Y##positionY", &newPosition.y);
-		ImGui::SameLine();
-		ImGui::InputFloat("Z##positionZ", &newPosition.z);
-		ImGui::SameLine();
-		ImGui::Text("Position");
-		ImGui::PopItemWidth();
-		float3 newRotationEuler;
-		newRotationEuler.x = RadToDeg(rotationEuler.x);
-		newRotationEuler.y = RadToDeg(rotationEuler.y);
-		newRotationEuler.z = RadToDeg(rotationEuler.z);
-		ImGui::PushItemWidth(50);
-		ImGui::InputFloat("X##rotationX", &newRotationEuler.x);
-		ImGui::SameLine();
-		ImGui::InputFloat("Y##rotationY", &newRotationEuler.y);
-		ImGui::SameLine();
-		ImGui::InputFloat("Z##rotationZ", &newRotationEuler.z);
-		ImGui::SameLine();
-		ImGui::Text("Rotation");
-		ImGui::PopItemWidth();
-		float3 newScale = scale;
-		ImGui::PushItemWidth(50);
-		ImGui::InputFloat("X##scaleX", &newScale.x);
-		ImGui::SameLine();
-		ImGui::InputFloat("Y##scaleY", &newScale.y);
-		ImGui::SameLine();
-		ImGui::InputFloat("Z##scaleZ", &newScale.z);
-		ImGui::SameLine();
-		ImGui::Text("Scale");
-		ImGui::PopItemWidth();
-		SetPosition(newPosition);
-		SetRotation(newRotationEuler);
-		SetScale(newScale);*/
-
 		float3 newPosition = position;
 		if (ImGui::DragFloat3("Location", &newPosition[0]))
 		{
