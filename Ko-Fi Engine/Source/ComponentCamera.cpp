@@ -59,10 +59,8 @@ bool ComponentCamera::Update()
 	// Add update functionality when we are able to change the main camera.
 
 	position = componentTransform->GetPosition();
-
-	front = componentTransform->Front();
 	up = componentTransform->Up();
-	right = componentTransform->Right();
+	front = componentTransform->Front();
 
 	CalculateViewMatrix();
 	
@@ -82,6 +80,8 @@ void ComponentCamera::LookAt(const float3& point)
 
 	CalculateViewMatrix();
 }
+
+
 
 void ComponentCamera::CalculateViewMatrix()
 {
