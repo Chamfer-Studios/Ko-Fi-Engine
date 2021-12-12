@@ -111,10 +111,8 @@ bool ComponentMesh::PostUpdate()
 ////	{
 ////	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
 ////	{
-////		
 			mesh->Draw(owner);
 			//texture
-		
 ////		
 ////		break;
 ////	}
@@ -160,14 +158,11 @@ bool ComponentMesh::PostUpdate()
 ////	}
 ////
 
+	glPopMatrix();
+
 	GenerateBounds();
 	GetGlobalBoundingBox();
-	
-
-	glPopMatrix();
-////
 	DrawBoundingBox(aabb, float3(0.0, 1.0, 0.0));
-	
 
 	return ret;
 }
@@ -403,4 +398,9 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glEnd();
 	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1.0f);
+}
+
+AABB ComponentMesh::GetBBox()
+{
+	return aabb;
 }

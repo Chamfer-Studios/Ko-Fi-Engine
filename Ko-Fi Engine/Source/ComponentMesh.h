@@ -53,6 +53,7 @@ public:
 	AABB GetAABB();
 	void GetGlobalBoundingBox();
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
+	AABB GetBBox();
 
 private:
 	//Bounding sphere

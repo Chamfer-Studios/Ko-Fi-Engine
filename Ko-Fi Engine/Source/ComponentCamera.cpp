@@ -24,10 +24,7 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	front = float3(0.0f, 0.0f, 1.0f);
 
 	componentTransform = owner->GetTransform();
-	float3 pos = componentTransform->GetPosition();
-	position = float3(pos.x, pos.y, pos.z);
-	float3 rot = componentTransform->GetRotation();
-	rotation = float3(rot.x, rot.y, rot.z);
+
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	CalculateViewMatrix();
@@ -61,33 +58,11 @@ bool ComponentCamera::Update()
 {
 	// Add update functionality when we are able to change the main camera.
 
-	float3 pos = componentTransform->GetPosition();
-	float3 rot = componentTransform->GetRotation();
-	if (position.x != pos.x ||
-		position.y != pos.y ||
-		position.z != pos.z)
-	{
-		position = float3(pos.x, pos.y, pos.z);
-	}
+	position = componentTransform->GetPosition();
 
-	if (rotation.x != rot.x ||
-		rotation.y != rot.y ||
-		rotation.z != rot.z)
-	{
-		float x, y;
-		x = rot.x - rotation.x;
-		y = rot.y - rotation.y;
-		Quat rotateY = Quat::RotateY(up.y >= 0.f ? x : -x);
-		up = rotateY * up;
-		front = rotateY * front;
-		CalculateViewMatrix();
-		Quat rotateX = Quat::RotateAxisAngle(right, -y);
-		up = rotateX * up;
-		front = rotateX * front;
-		CalculateViewMatrix();
-
-		rotation = float3(rot.x, rot.y, rot.z);
-	}
+	front = componentTransform->Front();
+	up = componentTransform->Up();
+	right = componentTransform->Right();
 
 	CalculateViewMatrix();
 	
@@ -261,7 +236,7 @@ void ComponentCamera::FrustumCull()
 		if (gameObject->GetComponent<ComponentMesh>() == nullptr)
 			continue;
 
-		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetAABB()))
+		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetBBox()))
 			gameObject->active = false;
 		else
 			gameObject->active = true;
