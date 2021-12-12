@@ -92,6 +92,7 @@ bool SceneIntro::PostUpdate(float dt)
 		go->PostUpdate();
 	}
 
+	engine->GetRenderer()->DrawRay();
 	return true;
 }
 

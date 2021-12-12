@@ -29,6 +29,7 @@ public:
 	void Move(const vec3& Movement);
 	float* GetViewMatrix();
 	GameObject* MousePicking();
+	GameObject* IntersectRay(const LineSegment& segment, float& dist, bool nearest)const;
 
 public:
 	vec3 X, Y, Z, position, reference;
