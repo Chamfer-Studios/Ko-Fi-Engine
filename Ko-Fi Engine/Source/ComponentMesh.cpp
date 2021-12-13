@@ -106,7 +106,8 @@ bool ComponentMesh::PostUpdate()
 ////	{
 ////	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
 ////	{
-			mesh->Draw(owner);
+			if(renderMesh)
+				mesh->Draw(owner);
 			//texture
 ////		
 ////		break;
@@ -393,4 +394,14 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 AABB ComponentMesh::GetGlobalAABB()
 {
 	return aabb;
+}
+
+bool ComponentMesh::GetRenderMesh()
+{
+	return renderMesh;
+}
+
+void ComponentMesh::SetRenderMesh(bool renderMesh)
+{
+	this->renderMesh = renderMesh;
 }

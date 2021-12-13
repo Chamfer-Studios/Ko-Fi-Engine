@@ -15,12 +15,14 @@ FileSystem::FileSystem(KoFiEngine* engine)
 	std::string rootPathString = SDL_GetBasePath();
 	std::replace(rootPathString.begin(), rootPathString.end(), '\\', '/');
 	rootPath = rootPathString;
+	// Comment this for release path and uncomment when developing...
 	rootPath = rootPath.parent_path().parent_path();
-	//Comment this for release path and uncomment when developing
+	// Comment this for release path and uncomment when developing...
 	AddPath("/Ko-Fi Engine/Ko-Fi");
-	//Uncomment this for release path and comment when developing
-	//AddPath("/Assets");
 	this->engine = engine;
+
+	CONSOLE_LOG("Filesystem: %s", rootPath.string());
+	appLog->AddLog("Filesystem: %s\n", rootPath.string());
 }
 
 FileSystem::~FileSystem()

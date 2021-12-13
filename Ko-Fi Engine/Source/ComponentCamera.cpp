@@ -26,9 +26,6 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	componentTransform = owner->GetTransform();
-	/*position = componentTransform->GetPosition();
-	up = componentTransform->Up();
-	front = componentTransform->Front();*/
 
 	CalculateViewMatrix();
 }
@@ -244,14 +241,15 @@ void ComponentCamera::FrustumCulling()
 	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 	{
 		GameObject* gameObject = (*go);
+		ComponentMesh* componentMesh = gameObject->GetComponent<ComponentMesh>();
 		
-		if (gameObject->GetComponent<ComponentMesh>() == nullptr || gameObject == owner)
+		if (componentMesh == nullptr || gameObject == owner)
 			continue;
 
-		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetGlobalAABB()))
-			gameObject->active = false;
+		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
+			componentMesh->SetRenderMesh(false);
 		else
-			gameObject->active = true;
+			componentMesh->SetRenderMesh(true);
 	}
 }
 
@@ -262,11 +260,12 @@ void ComponentCamera::ResetFrustumCulling()
 	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 	{
 		GameObject* gameObject = (*go);
+		ComponentMesh* componentMesh = gameObject->GetComponent<ComponentMesh>();
 
-		if (gameObject->GetComponent<ComponentMesh>() == nullptr || gameObject == owner)
+		if (componentMesh == nullptr || gameObject == owner)
 			continue;
 
-		if (!ClipsWithBBox(gameObject->GetComponent<ComponentMesh>()->GetGlobalAABB()))
-			gameObject->active = true;
+		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
+			componentMesh->SetRenderMesh(true);
 	}
 }
