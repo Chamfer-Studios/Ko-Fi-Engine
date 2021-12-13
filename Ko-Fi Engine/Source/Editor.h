@@ -18,6 +18,7 @@ class PanelInspector;
 class PanelViewport;
 class PanelGame;
 class PanelRuntimeState;
+class PanelAssets;
 
 class GameObject;
 
@@ -83,6 +84,7 @@ private:
 	PanelGame* panelGame = nullptr;
 	PanelViewport* panelViewport = nullptr;
 	PanelRuntimeState* panelRuntimeState = nullptr;
+	PanelAssets* panelAssets = nullptr;
 };
 
 #endif IM_GUI_HANDLER_H

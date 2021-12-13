@@ -209,6 +209,7 @@
     <ClCompile Include="Source\FileSystem.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\PanelAssets.cpp" />
     <ClCompile Include="Source\PanelGame.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -327,6 +328,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\PanelAssets.h" />
     <ClInclude Include="Source\PanelGame.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\Scene.h" />
