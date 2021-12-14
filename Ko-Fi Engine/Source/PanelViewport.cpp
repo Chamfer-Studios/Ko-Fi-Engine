@@ -36,7 +36,7 @@ bool PanelViewport::PreUpdate()
 
 bool PanelViewport::Update()
 {
-    ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar);
+    ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, /*ImGuiWindowFlags_NoScrollbar*/ ImGuiWindowFlags_NoScrollWithMouse);
 
     ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
     if (viewportSize.x != editor->lastViewportSize.x || viewportSize.y != editor->lastViewportSize.y)
