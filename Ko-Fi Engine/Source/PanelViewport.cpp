@@ -66,7 +66,5 @@ bool PanelViewport::Update()
 
 bool PanelViewport::PostUpdate()
 {
-    
-
 	return true;
 }

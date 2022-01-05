@@ -187,6 +187,8 @@ bool Camera3D::Update(float dt)
 
 	!hasRotated ? lastDeltaX = lastDeltaY = 0.f : 0.f;
 
+	CalculateViewMatrix();
+
 	return true;
 }
 

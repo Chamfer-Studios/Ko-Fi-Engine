@@ -27,8 +27,6 @@ public:
 
 public:
 	float3 right, up, front, position, reference;
-
-	//float3 right, up, front, position, reference;
 	Frustum cameraFrustum;
 	float4x4 viewMatrix;
 	float aspectRatio = 1.f;
