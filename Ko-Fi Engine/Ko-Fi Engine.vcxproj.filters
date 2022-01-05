@@ -71,6 +71,9 @@
     <Filter Include="Libs\stb_image">
       <UniqueIdentifier>{952fafdd-82fe-45b5-917b-46c6e6a0c5df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Shaders">
+      <UniqueIdentifier>{ef5e0122-2c93-4faf-bfa5-7c2778cbb5a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -309,6 +312,12 @@
     </ClCompile>
     <ClCompile Include="Source\PanelAssets.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Textures.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shader.cpp">
+      <Filter>Source\Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -677,6 +686,12 @@
     </ClInclude>
     <ClInclude Include="Source\PanelAssets.h">
       <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Textures.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>Source\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

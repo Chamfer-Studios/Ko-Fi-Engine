@@ -1,16 +1,12 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 12,
+        "game_objects_amount": 4,
         "game_objects_list": [
             {
                 "active": true,
                 "children_id_list": [
-                    1,
-                    4,
-                    7,
-                    10,
-                    11
+                    1
                 ],
                 "components_list": [
                     {
@@ -79,9 +75,9 @@
                         "component_type": "transform",
                         "is_dirty": false,
                         "position": [
-                            -10.0,
                             0.0,
-                            -10.0
+                            0.0,
+                            0.0
                         ],
                         "rotation": [
                             -0.0,
@@ -103,9 +99,9 @@
                             0.0,
                             0.0,
                             1.0,
-                            -10.0,
                             0.0,
-                            -10.0
+                            0.0,
+                            0.0
                         ],
                         "transform_matrix_local": [
                             1.0,
@@ -117,9 +113,9 @@
                             0.0,
                             0.0,
                             1.0,
-                            -10.0,
                             0.0,
-                            -10.0
+                            0.0,
+                            0.0
                         ]
                     },
                     {
@@ -127,7 +123,7 @@
                     }
                 ],
                 "id": 1,
-                "name": "Baker house",
+                "name": "GameObject 1",
                 "parent": -1
             },
             {
@@ -162,9 +158,9 @@
                             0.0,
                             0.0,
                             1.0,
-                            -10.0,
                             0.0,
-                            -10.0
+                            0.0,
+                            0.0
                         ],
                         "transform_matrix_local": [
                             1.0,
@@ -187,13 +183,9 @@
                     {
                         "component_type": "mesh",
                         "faces_normals": false,
-                        "mesh": "Library/Chimney.sugar",
+                        "mesh": "Library/GameObject 2.sugar",
                         "path": "",
                         "vertex_normals": false
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
                     },
                     {
                         "component_type": "material",
@@ -201,7 +193,7 @@
                     }
                 ],
                 "id": 2,
-                "name": "Chimney",
+                "name": "GameObject 2",
                 "parent": 1
             },
             {
@@ -236,9 +228,9 @@
                             0.0,
                             0.0,
                             1.0,
-                            -10.0,
                             0.0,
-                            -10.0
+                            0.0,
+                            0.0
                         ],
                         "transform_matrix_local": [
                             1.0,
@@ -261,13 +253,9 @@
                     {
                         "component_type": "mesh",
                         "faces_normals": false,
-                        "mesh": "Library/House.sugar",
+                        "mesh": "Library/GameObject 3.sugar",
                         "path": "",
                         "vertex_normals": false
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
                     },
                     {
                         "component_type": "material",
@@ -275,576 +263,8 @@
                     }
                 ],
                 "id": 3,
-                "name": "House",
+                "name": "GameObject 3",
                 "parent": 1
-            },
-            {
-                "active": true,
-                "children_id_list": [
-                    5,
-                    6
-                ],
-                "components_list": [
-                    {
-                        "component_type": "transform",
-                        "is_dirty": false,
-                        "position": [
-                            0.0,
-                            0.0,
-                            -10.0
-                        ],
-                        "rotation": [
-                            -0.0,
-                            0.0,
-                            -0.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "transform_matrix": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            -10.0
-                        ],
-                        "transform_matrix_local": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            -10.0
-                        ]
-                    },
-                    {
-                        "component_type": "info"
-                    }
-                ],
-                "id": 4,
-                "name": "Baker house (1)",
-                "parent": -1
-            },
-            {
-                "active": true,
-                "children_id_list": [],
-                "components_list": [
-                    {
-                        "component_type": "transform",
-                        "is_dirty": false,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.0,
-                            0.0,
-                            -0.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "transform_matrix": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            -10.0
-                        ],
-                        "transform_matrix_local": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0
-                        ]
-                    },
-                    {
-                        "component_type": "info"
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/Chimney (1).sugar",
-                        "path": "",
-                        "vertex_normals": false
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
-                    }
-                ],
-                "id": 5,
-                "name": "Chimney (1)",
-                "parent": 4
-            },
-            {
-                "active": true,
-                "children_id_list": [],
-                "components_list": [
-                    {
-                        "component_type": "transform",
-                        "is_dirty": false,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.0,
-                            0.0,
-                            -0.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "transform_matrix": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            -10.0
-                        ],
-                        "transform_matrix_local": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0
-                        ]
-                    },
-                    {
-                        "component_type": "info"
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/House (1).sugar",
-                        "path": "",
-                        "vertex_normals": false
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
-                    }
-                ],
-                "id": 6,
-                "name": "House (1)",
-                "parent": 4
-            },
-            {
-                "active": true,
-                "children_id_list": [
-                    8,
-                    9
-                ],
-                "components_list": [
-                    {
-                        "component_type": "transform",
-                        "is_dirty": false,
-                        "position": [
-                            10.0,
-                            0.0,
-                            -10.0
-                        ],
-                        "rotation": [
-                            -0.0,
-                            0.0,
-                            -0.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "transform_matrix": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            10.0,
-                            0.0,
-                            -10.0
-                        ],
-                        "transform_matrix_local": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            10.0,
-                            0.0,
-                            -10.0
-                        ]
-                    },
-                    {
-                        "component_type": "info"
-                    }
-                ],
-                "id": 7,
-                "name": "Baker house (2)",
-                "parent": -1
-            },
-            {
-                "active": true,
-                "children_id_list": [],
-                "components_list": [
-                    {
-                        "component_type": "transform",
-                        "is_dirty": false,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.0,
-                            0.0,
-                            -0.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "transform_matrix": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            10.0,
-                            0.0,
-                            -10.0
-                        ],
-                        "transform_matrix_local": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0
-                        ]
-                    },
-                    {
-                        "component_type": "info"
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/Chimney (2).sugar",
-                        "path": "",
-                        "vertex_normals": false
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
-                    }
-                ],
-                "id": 8,
-                "name": "Chimney (2)",
-                "parent": 7
-            },
-            {
-                "active": true,
-                "children_id_list": [],
-                "components_list": [
-                    {
-                        "component_type": "transform",
-                        "is_dirty": false,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.0,
-                            0.0,
-                            -0.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "transform_matrix": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            10.0,
-                            0.0,
-                            -10.0
-                        ],
-                        "transform_matrix_local": [
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0
-                        ]
-                    },
-                    {
-                        "component_type": "info"
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/House (2).sugar",
-                        "path": "",
-                        "vertex_normals": false
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/Baker_house.png"
-                    }
-                ],
-                "id": 9,
-                "name": "House (2)",
-                "parent": 7
-            },
-            {
-                "active": true,
-                "children_id_list": [],
-                "components_list": [
-                    {
-                        "component_type": "transform",
-                        "is_dirty": false,
-                        "position": [
-                            0.0,
-                            -3.0,
-                            -30.0
-                        ],
-                        "rotation": [
-                            -0.0,
-                            0.0,
-                            -0.0
-                        ],
-                        "scale": [
-                            5.0,
-                            1.0,
-                            5.0
-                        ],
-                        "transform_matrix": [
-                            5.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            5.0,
-                            0.0,
-                            -3.0,
-                            -30.0
-                        ],
-                        "transform_matrix_local": [
-                            5.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            0.0,
-                            5.0,
-                            0.0,
-                            -3.0,
-                            -30.0
-                        ]
-                    },
-                    {
-                        "component_type": "info"
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/Floor.sugar",
-                        "path": "",
-                        "vertex_normals": false
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/cliff_rock.png"
-                    },
-                    {
-                        "component_type": "material",
-                        "path": "Assets/Textures/cliff_rock.png"
-                    }
-                ],
-                "id": 10,
-                "name": "Floor",
-                "parent": -1
-            },
-            {
-                "active": true,
-                "children_id_list": [],
-                "components_list": [
-                    {
-                        "component_type": "transform",
-                        "is_dirty": false,
-                        "position": [
-                            0.0,
-                            2.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.0,
-                            3.1415927410125732,
-                            -0.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "transform_matrix": [
-                            -1.0,
-                            0.0,
-                            8.742277657347586e-08,
-                            0.0,
-                            1.0,
-                            0.0,
-                            -8.742277657347586e-08,
-                            0.0,
-                            -1.0,
-                            0.0,
-                            2.0,
-                            0.0
-                        ],
-                        "transform_matrix_local": [
-                            -1.0,
-                            0.0,
-                            8.742277657347586e-08,
-                            0.0,
-                            1.0,
-                            0.0,
-                            -8.742277657347586e-08,
-                            0.0,
-                            -1.0,
-                            0.0,
-                            2.0,
-                            0.0
-                        ]
-                    },
-                    {
-                        "component_type": "info"
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/Test camera.sugar",
-                        "path": "",
-                        "vertex_normals": false
-                    },
-                    {
-                        "component_type": "camera",
-                        "draw_frustum": true,
-                        "far_plane_distance": 100.0,
-                        "frustum_culling": false,
-                        "near_plane_distance": 0.10000000149011612,
-                        "vertical_fov": 60.0
-                    }
-                ],
-                "id": 11,
-                "name": "Test camera",
-                "parent": -1
             }
         ],
         "name": "SceneIntro",

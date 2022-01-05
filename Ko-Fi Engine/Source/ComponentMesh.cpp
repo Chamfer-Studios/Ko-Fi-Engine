@@ -2,6 +2,9 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
+#include "Engine.h"
+#include "Camera3D.h"
 #include "PanelChooser.h"
 #include "glew.h"
 #include <gl/GL.h>
@@ -12,6 +15,7 @@
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MESH;
+
 }
 
 //ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
@@ -83,8 +87,15 @@ float3 ComponentMesh::GetCenterPointInWorldCoords() const
 	return owner->GetTransform()->transformMatrix.TransformPos(centerPoint);
 }
 
+bool ComponentMesh::Start()
+{
+	GenerateLocalBoundingBox();
+	return true;
+}
+
 bool ComponentMesh::Update()
 {
+
 	return true;
 }
 
@@ -92,65 +103,35 @@ bool ComponentMesh::PostUpdate()
 {
 	bool ret = true;
 
-	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
 
-////	switch (subtype)
-////	{
-////	case COMPONENT_SUBTYPE::COMPONENT_MESH_MESH:
-////	{
-			if(renderMesh)
-				mesh->Draw(owner);
-			//texture
-////		
-////		break;
-////	}
-////	case COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE:
-////	{
-////		Cube cube(1, 1, 1);
-////		cube.DrawInterleavedMode();
-////		break;
-////	}
-////	case COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE:
-////	{
-////		Sphere sphere(1, 25, 25);
-////		sphere.InnerRender();
-////		break;
-////	}
-////	case COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER:
-////	{
-////		Cylinder cylinder(1, 1);
-////		cylinder.InnerRender();
-////		break;
-////	}
-////	case COMPONENT_SUBTYPE::COMPONENT_MESH_LINE:
-////	{
-////		Line line(1, 1, 1);
-////		line.InnerRender();
-////		break;
-////	}
-////	case COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE:
-////	{
-////		Plane plane(0, 1, 0, 0);
-////		plane.axis = true;
-////		plane.Render();
-////		break;
-////	}
-////	case COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID:
-////	{
-////		Pyramid pyramid(1,1,1);
-////		pyramid.InnerRender();
-////		break;
-////	}
-////	default:
-////		break;
-////	}
+	if (renderMesh) {
+		
+		uint shader = 
+			owner->GetComponent<ComponentMaterial>()->GetShader();
+		glUseProgram(shader);
+		//Matrices
+		GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+		glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 
-	glPopMatrix();
+		GLint projection_location = glGetUniformLocation(shader, "projection");
+		glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
-	GenerateLocalBoundingBox();
-	GenerateGlobalBoundingBox();
-	DrawBoundingBox(aabb, float3(0.0, 1.0, 0.0));
+		GLint view_location = glGetUniformLocation(shader, "view");
+		glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+	
+		mesh->Draw(owner);
+
+		GenerateGlobalBoundingBox();
+		DrawBoundingBox(aabb, float3(1.0, 0.0, 0.0));
+		glUseProgram(0);
+
+
+
+
+	}
+
+
+
 
 	return ret;
 }
@@ -312,9 +293,9 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
 		if (ImGui::Checkbox("Vertex Normals", &vertexNormals))
-				mesh->ToggleVertexNormals();
+			mesh->ToggleVertexNormals();
 		if (ImGui::Checkbox("Faces Normals", &facesNormals))
-				mesh->ToggleFacesNormals();
+			mesh->ToggleFacesNormals();
 	}
 
 	//if(materialComponent != nullptr)
@@ -326,7 +307,7 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 uint ComponentMesh::GetVertices()
 {
 	uint numVertices = 0;
-	numVertices += mesh->verticesSizeBytes/(sizeof(float)*3);
+	numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
 	return numVertices;
 }
 
@@ -334,7 +315,7 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
 	obb = GetLocalAABB();
-	obb.Transform(owner->GetTransform()->GetGlobalTransform());
+	//obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
 	aabb.SetNegativeInfinity();
@@ -343,6 +324,33 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 
 void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 {
+	//float vertices[] = {
+	//aabb.MinX(), aabb.MinY(), aabb.MinZ(),
+	//aabb.MaxX(), aabb.MinY(), aabb.MinZ(),
+	//aabb.MinX(), aabb.MinY(), aabb.MinZ(),
+	//aabb.MinX(), aabb.MaxY(), aabb.MinZ(),
+	//aabb.MinX(), aabb.MinY(), aabb.MinZ(),
+	//aabb.MinX(), aabb.MinY(), aabb.MaxZ(),
+	//aabb.MaxX(), aabb.MinY(), aabb.MaxZ(),
+	//aabb.MinX(), aabb.MinY(), aabb.MaxZ(),
+	//aabb.MaxX(), aabb.MinY(), aabb.MaxZ(),
+	//aabb.MaxX(), aabb.MaxY(), aabb.MaxZ(),
+	//aabb.MaxX(), aabb.MinY(), aabb.MaxZ(),
+	//aabb.MaxX(), aabb.MinY(), aabb.MinZ(),
+	//aabb.MaxX(), aabb.MaxY(), aabb.MinZ(),
+	//aabb.MinX(), aabb.MaxY(), aabb.MinZ(),
+	//aabb.MaxX(), aabb.MaxY(), aabb.MinZ(),
+	//aabb.MaxX(), aabb.MinY(), aabb.MinZ(),
+	//aabb.MaxX(), aabb.MaxY(), aabb.MinZ(),
+	//aabb.MaxX(), aabb.MaxY(), aabb.MaxZ(),
+	//aabb.MinX(), aabb.MaxY(), aabb.MaxZ(),
+	//aabb.MaxX(), aabb.MaxY(), aabb.MaxZ(),
+	//aabb.MinX(), aabb.MaxY(), aabb.MaxZ(),
+	//aabb.MinX(), aabb.MinY(), aabb.MaxZ(),
+	//aabb.MinX(), aabb.MaxY(), aabb.MaxZ(),
+	//aabb.MinX(), aabb.MaxY(), aabb.MinZ(),
+
+	//};
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
 	glBegin(GL_LINES);
@@ -406,3 +414,5 @@ void ComponentMesh::SetRenderMesh(bool renderMesh)
 {
 	this->renderMesh = renderMesh;
 }
+
+

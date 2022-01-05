@@ -49,6 +49,7 @@ public:
 	uint id_tex_coord = 0;
 	float* tex_coords = nullptr;
 
+	unsigned int VAO;
 
 	// Texture
 	Texture texture;

@@ -2,7 +2,6 @@
 #include "Component.h"
 #include <vector>
 #include <string>
-
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
 
@@ -26,8 +25,10 @@ public:
 	std::string GetPath();
 	void SetTexture(Texture texture);
 	Texture GetTexture();
-
+	uint GetShader();
+	void LoadShader();
 private:
 	std::string path = "";
 	Texture texture;
+	uint materialShader = 0;
 };

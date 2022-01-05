@@ -90,7 +90,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -213,6 +213,8 @@
     <ClCompile Include="Source\PanelGame.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\ViewportFrameBuffer.cpp" />
     <ClCompile Include="Source\PanelAbout.cpp" />
     <ClCompile Include="Source\PanelChooser.cpp" />
@@ -333,6 +335,8 @@
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\ViewportFrameBuffer.h" />
     <ClInclude Include="Source\Panel.h" />
     <ClInclude Include="Source\PanelAbout.h" />

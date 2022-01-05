@@ -7,16 +7,19 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "PanelChooser.h"
+#include "Shader.h"
 
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
-
+	LoadShader();
 	path = "";
 }
 
 ComponentMaterial::~ComponentMaterial()
 {
+	glDeleteProgram(this->materialShader);
+
 }
 
 void ComponentMaterial::LoadTextureFromId(uint& textureID, const char* path)
@@ -163,4 +166,15 @@ void ComponentMaterial::SetTexture(Texture texture)
 Texture ComponentMaterial::GetTexture()
 {
 	return texture;
+}
+
+uint ComponentMaterial::GetShader()
+{
+	return materialShader;
+}
+
+void ComponentMaterial::LoadShader()
+{
+	shader::ShaderProgramSource shaderSource = shader::ParseShader("Assets/Shaders/default_shader.glsl");
+	materialShader = shader::CreateShader(shaderSource.VertexSource, shaderSource.FragmentSource);
 }

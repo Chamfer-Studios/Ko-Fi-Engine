@@ -44,8 +44,6 @@ bool SceneIntro::Start()
 	appLog->AddLog("Loading Intro assets\n");
 	bool ret = true;
 
-	engine->GetCamera3D()->position = float3(1, 1, 1);
-	engine->GetCamera3D()->LookAt(float3(0, 0, 0));
 
 	// Load initial scene (temporal)
 	//engine->GetFileSystem()->GameObjectFromMesh("Assets/Models/baker_house.fbx", this->gameObjectList,"Assets/Textures/baker_house.png");

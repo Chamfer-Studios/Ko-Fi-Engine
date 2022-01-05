@@ -4,7 +4,7 @@
 #include "par_shapes.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
-
+#include "Shader.h"
 class ComponentTransform;
 class ComponentMaterial;
 
@@ -27,6 +27,7 @@ public:
 	float3 GetCenterPointInWorldCoords() const;
 	inline float GetSphereRadius() const { return radius; }
 
+	bool Start();
 	bool Update();
 	bool PostUpdate();
 	bool CleanUp();

@@ -20,6 +20,8 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
+	glDeleteVertexArrays(1, &VAO);
+
 	// Vertices
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glDeleteBuffers(1, &id_vertex);
@@ -42,32 +44,81 @@ Mesh::~Mesh()
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+
 }
 
 void Mesh::SetUpMeshBuffers()
 {
-	SetUpDefaultTexture();
-	// Vertices
-	glGenBuffers(1, &id_vertex);
-	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, verticesSizeBytes, vertices, GL_STATIC_DRAW);
+	//SetUpDefaultTexture();
+	//// Vertices
+	//glGenBuffers(1, &id_vertex);
+	//glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+	//glBufferData(GL_ARRAY_BUFFER, verticesSizeBytes, vertices, GL_STATIC_DRAW);
 
-	// Normals
-	glGenBuffers(1, &id_normal);
-	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-	glBufferData(GL_ARRAY_BUFFER, normalsSizeBytes, normals, GL_STATIC_DRAW);
+	//// Normals
+	//glGenBuffers(1, &id_normal);
+	//glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	//glBufferData(GL_ARRAY_BUFFER, normalsSizeBytes, normals, GL_STATIC_DRAW);
+
+	//// Indices
+	//glGenBuffers(1, &id_index);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSizeBytes, indices, GL_STATIC_DRAW);
+
+	//// Texture coords
+	//if (tex_coords) {
+	//	glGenBuffers(1, &id_tex_coord);
+	//	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
+	//	glBufferData(GL_ARRAY_BUFFER, texCoordSizeBytes, tex_coords, GL_STATIC_DRAW);
+	//}
+
+	// Vertex Array Object (VAO) --------------------------------------------------
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
 
 	// Indices
 	glGenBuffers(1, &id_index);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSizeBytes, indices, GL_STATIC_DRAW);
 
+	// Vertices
+	glGenBuffers(1, &id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, verticesSizeBytes, vertices, GL_STATIC_DRAW);
+	// Add vertex position attribute to the vertex array object (VAO)
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+
+
+	// Normals
+	glGenBuffers(1, &id_normal);
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glBufferData(GL_ARRAY_BUFFER, normalsSizeBytes, normals, GL_STATIC_DRAW);
+	// Add normals attribute to the vertex array object (VAO)
+	
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3* sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+
+
 	// Texture coords
 	if (tex_coords) {
 		glGenBuffers(1, &id_tex_coord);
 		glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
 		glBufferData(GL_ARRAY_BUFFER, texCoordSizeBytes, tex_coords, GL_STATIC_DRAW);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+		glEnableVertexAttribArray(2);
+
 	}
+
+
+	// Unbind any vertex array we have binded before.
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
 
 }
 
@@ -99,45 +150,19 @@ void Mesh::SetUpDefaultTexture()
 
 void Mesh::Draw(GameObject* owner)
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	if (this->id_tex_coord) {
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, this->id_tex_coord);
-		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-	}
-
-	//vertex
-	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//normals
-	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-	glNormalPointer(GL_FLOAT, 0, NULL);
-
-	//texture
+	//Texture
 	if (ComponentMaterial* material = owner->GetComponent<ComponentMaterial>()) {
 		glBindTexture(GL_TEXTURE_2D, texture.textureID);
 	}
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glDrawElements(GL_TRIANGLES, indicesSizeBytes/sizeof(uint), GL_UNSIGNED_INT, NULL);
 
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, 0);
 	DebugDraw();
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glActiveTexture(GL_TEXTURE0);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	if (this->id_tex_coord)
-	{
-		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	}
-	glBindTexture(GL_TEXTURE_2D, 0);
+	
 
+	
 }
 
 void Mesh::DebugDraw()
@@ -156,7 +181,7 @@ void Mesh::DrawVertexNormals() const
 
 	// Vertices normals
 	glBegin(GL_LINES);
-	for (size_t i = 0, c = 0; i < verticesSizeBytes/sizeof(float); i += 3, c += 4)
+	for (size_t i = 0, c = 0; i < verticesSizeBytes / sizeof(float); i += 3, c += 4)
 	{
 		glColor3f(1.0f, 0.0f, 0.0f);
 		//glColor4f(colors[c], colors[c + 1], colors[c + 2], colors[c + 3]);
@@ -178,7 +203,7 @@ void Mesh::DrawFaceNormals() const
 
 	// Face normals
 	glBegin(GL_LINES);
-	for (size_t i = 0; i < verticesSizeBytes/sizeof(float); i += 3)
+	for (size_t i = 0; i < verticesSizeBytes / sizeof(float); i += 3)
 	{
 		glColor3f(0.0f, 1.0f, 0.0f);
 		float vx = (vertices[i] + vertices[i + 3] + vertices[i + 6]) / 3;

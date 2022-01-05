@@ -163,6 +163,7 @@ GameObject* Importer::GetOneMesh(const aiScene* scene)
 				ComponentMaterial* cMaterial = parent->CreateComponent<ComponentMaterial>();
 				cMaterial->AddTextures(ourMesh->texture);
 				if (newPath.c_str() != nullptr) {
+					//TODO UNCOMMENT WHEN SHADER WORKS
 					cMaterial->LoadTexture(ourMesh->texture.texturePath.c_str());
 
 				}
@@ -173,7 +174,6 @@ GameObject* Importer::GetOneMesh(const aiScene* scene)
 			}
 		}
 	}
-	//materialComponent->AddTextures(ourMesh->texture);
 	ComponentMesh* cMesh = parent->CreateComponent<ComponentMesh>();
 	cMesh->SetMesh(ourMesh);
 	return parent;
@@ -258,7 +258,6 @@ GameObject* Importer::GetMultipleMeshes(const aiScene* scene)
 				}
 			}
 		}
-		//materialComponent->AddTextures(ourMesh->texture);
 		ComponentMesh* cMesh = child->CreateComponent<ComponentMesh>();
 		cMesh->SetMesh(ourMesh);
 		child = nullptr;
