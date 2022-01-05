@@ -120,10 +120,11 @@ bool ComponentMesh::PostUpdate()
 		glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
 	
 		mesh->Draw(owner);
-
 		GenerateGlobalBoundingBox();
 		DrawBoundingBox(aabb, float3(1.0, 0.0, 0.0));
+
 		glUseProgram(0);
+
 
 
 
@@ -315,7 +316,6 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
 	obb = GetLocalAABB();
-	//obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
 	aabb.SetNegativeInfinity();
