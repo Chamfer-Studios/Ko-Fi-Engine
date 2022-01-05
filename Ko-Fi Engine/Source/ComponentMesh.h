@@ -21,10 +21,12 @@ public:
 	ComponentMesh(GameObject* parent);
 	//ComponentMesh(GameObject* parent,Shape shape);
 	~ComponentMesh();
+
 	//void CopyParMesh(par_shapes_mesh* parMesh);
 
-	bool Start(const char* path);
-	bool PreUpdate();
+	float3 GetCenterPointInWorldCoords() const;
+	inline float GetSphereRadius() const { return radius; }
+
 	bool Update();
 	bool PostUpdate();
 	bool CleanUp();

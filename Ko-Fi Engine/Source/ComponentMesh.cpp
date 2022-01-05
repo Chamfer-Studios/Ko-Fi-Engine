@@ -78,16 +78,9 @@ ComponentMesh::~ComponentMesh()
 //		//GenerateBounds();
 //}
 
-bool ComponentMesh::Start(const char* path)
+float3 ComponentMesh::GetCenterPointInWorldCoords() const
 {
-	bool ret = true;
-
-	return ret;
-}
-
-bool ComponentMesh::PreUpdate()
-{
-	return true;
+	return owner->GetTransform()->transformMatrix.TransformPos(centerPoint);
 }
 
 bool ComponentMesh::Update()
@@ -224,6 +217,14 @@ void ComponentMesh::GenerateLocalBoundingBox()
 	{
 		mesh->localAABB.SetNegativeInfinity();
 		mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
+
+		/*Sphere sphere;
+		sphere.r = 0.f;
+		sphere.pos = mesh->localAABB.CenterPoint();
+		sphere.Enclose(localAABB);
+
+		radius = sphere.r;
+		centerPoint = sphere.pos;*/
 	}
 }
 

@@ -18,19 +18,15 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
-	void Look(const vec3& Position, const vec3& Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3& Spot);
+	void LookAt(const float3& Spot);
 	void CalculateViewMatrix();
 	void RecalculateProjection();
 	void OnGui() override;
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;
 
-	void Move(const vec3& Movement);
-	float* GetViewMatrix();
-
 public:
-	vec3 X, Y, Z, position, reference;
+	float3 right, up, front, position, reference;
 
 	//float3 right, up, front, position, reference;
 	Frustum cameraFrustum;
@@ -46,6 +42,5 @@ public:
 private:
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
-	mat4x4 ViewMatrix, ViewMatrixInverse;
 	KoFiEngine* engine = nullptr;
 };
