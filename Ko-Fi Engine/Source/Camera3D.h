@@ -24,6 +24,7 @@ public:
 	void OnGui() override;
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;
+	GameObject* MousePicking();
 
 public:
 	float3 right, up, front, position, reference;

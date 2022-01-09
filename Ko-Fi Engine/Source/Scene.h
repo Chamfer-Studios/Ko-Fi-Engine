@@ -6,6 +6,7 @@
 #include "Engine.h"
 
 #include <vector>
+#include "MathGeoLib/Geometry/LineSegment.h"
 
 class Scene
 {
@@ -150,6 +151,8 @@ public:
 	std::vector<GameObject*> gameObjectList;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
+
+	LineSegment ray;
 };
 
 #endif // __SCENE_H__

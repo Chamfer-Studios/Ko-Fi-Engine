@@ -13,6 +13,7 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "MathGeoLib/Geometry/LineSegment.h"
+#include "MathGeoLib/Geometry/Triangle.h"
 
 Camera3D::Camera3D(KoFiEngine* engine) : Module()
 {
@@ -189,6 +190,16 @@ bool Camera3D::Update(float dt)
 
 	CalculateViewMatrix();
 
+	// Mouse Picking
+	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN /*&& !ImGuizmo::IsOver() && !ImGuizmo::IsUsing()*/)
+	{
+		GameObject* picked = MousePicking();
+		if (picked != nullptr)
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = picked->GetId();
+		else
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	}
+
 	return true;
 }
 
@@ -271,3 +282,88 @@ void Camera3D::OnGui()
 //	}
 //	RecalculateProjection();
 //}
+
+GameObject* Camera3D::MousePicking()
+{
+	float normalX = engine->GetEditor()->mouseScenePosition.x / engine->GetEditor()->lastViewportSize.x;
+	float normalY = engine->GetEditor()->mouseScenePosition.y / engine->GetEditor()->lastViewportSize.y;
+
+	normalX = (normalX - 0.5f) * 2.0f;
+	normalY = -(normalY - 0.5f) * 2.0f;
+
+	LineSegment newRay = cameraFrustum.UnProjectLineSegment(normalX, normalY);
+	engine->GetSceneManager()->GetCurrentScene()->ray = newRay;
+
+	std::vector<GameObject*> sceneGameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
+	std::map<float, GameObject*> hitGameObjects;
+
+	// Find all hit GameObjects
+	for (size_t i = 0; i < sceneGameObjects.size(); i++)
+	{
+		ComponentMesh* m = sceneGameObjects[i]->GetComponent<ComponentMesh>();
+		if (m != nullptr)
+		{
+			bool hit = newRay.Intersects(m->GetGlobalAABB());
+
+			if (hit)
+			{
+				float dNear;
+				float dFar;
+				hit = newRay.Intersects(m->GetGlobalAABB(), dNear, dFar);
+				hitGameObjects[dNear] = sceneGameObjects[i];
+			}
+		}
+	}
+
+	for (std::map<float, GameObject*>::iterator it = hitGameObjects.begin(); it != hitGameObjects.end(); it++)
+	{
+		GameObject* gameObject = it->second;
+
+		LineSegment rayLocal = newRay;
+		rayLocal.Transform(gameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Inverted());
+
+		ComponentMesh* cMesh = gameObject->GetComponent<ComponentMesh>();
+
+		if (cMesh != nullptr)
+		{
+			Mesh* rMesh = cMesh->GetMesh();
+
+			if (rMesh == nullptr) continue;
+
+			// Convert our float pointer to a std::vector of float3
+			std::vector<float3> vertices;
+			float* fvertices = rMesh->vertices;
+			for (int i = 0; i < rMesh->verticesSizeBytes / sizeof(float); i += 3)
+			{
+				vertices.push_back(float3(fvertices[i], fvertices[i + 1], fvertices[i + 2]));
+			}
+
+			for (size_t i = 0; i < rMesh->indicesSizeBytes / sizeof(unsigned int); i += 3)
+			{
+				// Create every triangle
+				float3 v1;
+				v1.x = vertices[rMesh->indices[i]].x;
+				v1.y = vertices[rMesh->indices[i]].y;
+				v1.z = vertices[rMesh->indices[i]].z;
+
+				float3 v2;
+				v2.x = vertices[rMesh->indices[i + 1]].x;
+				v2.y = vertices[rMesh->indices[i + 1]].y;
+				v2.z = vertices[rMesh->indices[i + 1]].z;
+
+				float3 v3;
+				v3.x = vertices[rMesh->indices[i + 2]].x;
+				v3.y = vertices[rMesh->indices[i + 2]].y;
+				v3.z = vertices[rMesh->indices[i + 2]].z;
+
+				const Triangle triangle(v1, v2, v3);
+
+				float distance;
+				float3 intersectionPoint;
+				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
+			}
+		}
+	}
+
+	return nullptr;
+}

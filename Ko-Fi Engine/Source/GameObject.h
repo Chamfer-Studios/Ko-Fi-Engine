@@ -42,13 +42,13 @@ public:
 		return component;
 	}
 
-	//New way
+	// New way
 	void DeleteComponent(Component* component);
 	void AddComponent(Component* component);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 	void PropagateTransform();
-	//Old way
+	// Old way
 	void SetName(std::string name);
 	std::vector<GameObject*> GetChildren() const;
 	void SetChild(GameObject*child);

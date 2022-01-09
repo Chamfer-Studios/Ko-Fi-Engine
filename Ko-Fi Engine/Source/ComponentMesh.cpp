@@ -124,15 +124,7 @@ bool ComponentMesh::PostUpdate()
 		DrawBoundingBox(aabb, float3(1.0, 0.0, 0.0));
 
 		glUseProgram(0);
-
-
-
-
-
 	}
-
-
-
 
 	return ret;
 }

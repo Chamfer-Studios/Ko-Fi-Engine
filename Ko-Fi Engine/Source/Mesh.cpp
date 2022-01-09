@@ -77,7 +77,6 @@ void Mesh::SetUpMeshBuffers()
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-
 	// Indices
 	glGenBuffers(1, &id_index);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
@@ -91,35 +90,28 @@ void Mesh::SetUpMeshBuffers()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-
-
 	// Normals
 	glGenBuffers(1, &id_normal);
 	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
 	glBufferData(GL_ARRAY_BUFFER, normalsSizeBytes, normals, GL_STATIC_DRAW);
 	// Add normals attribute to the vertex array object (VAO)
-	
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3* sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
 
-
 	// Texture coords
-	if (tex_coords) {
+	if (tex_coords)
+	{
 		glGenBuffers(1, &id_tex_coord);
 		glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
 		glBufferData(GL_ARRAY_BUFFER, texCoordSizeBytes, tex_coords, GL_STATIC_DRAW);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
 		glEnableVertexAttribArray(2);
-
 	}
-
 
 	// Unbind any vertex array we have binded before.
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
 }
 
 void Mesh::SetUpDefaultTexture()
