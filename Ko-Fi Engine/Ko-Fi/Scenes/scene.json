@@ -298,9 +298,9 @@
                             0.0,
                             0.0,
                             0.05000000074505806,
-                            5.960465898624534e-09,
                             0.0,
-                            -1.1920931797249068e-07,
+                            0.0,
+                            0.0,
                             1.0,
                             0.0,
                             0.0,
@@ -312,9 +312,9 @@
                             0.0,
                             0.0,
                             0.05000000074505806,
-                            5.960465898624534e-09,
                             0.0,
-                            -1.1920931797249068e-07,
+                            0.0,
+                            0.0,
                             1.0,
                             0.0,
                             0.0,
@@ -322,15 +322,15 @@
                         ]
                     },
                     {
-                        "component_type": "material",
-                        "path": "Assets/Textures/cliff_rock.png"
-                    },
-                    {
                         "component_type": "mesh",
                         "faces_normals": false,
                         "mesh": "Library/Floor.sugar",
                         "path": "",
                         "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "path": "Assets/Textures/cliff_rock.png"
                     }
                 ],
                 "id": 4,
