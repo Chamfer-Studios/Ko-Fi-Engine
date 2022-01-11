@@ -191,14 +191,14 @@ bool Camera3D::Update(float dt)
 	CalculateViewMatrix();
 
 	// Mouse Picking
-	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN /*&& !ImGuizmo::IsOver() && !ImGuizmo::IsUsing()*/)
-	{
-		GameObject* picked = MousePicking();
-		if (picked != nullptr)
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = picked->GetId();
-		else
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
-	}
+	//if (engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN /*&& !ImGuizmo::IsOver() && !ImGuizmo::IsUsing()*/)
+	//{
+	//	GameObject* picked = MousePicking();
+	//	if (picked != nullptr)
+	//		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = picked->GetId();
+	//	else
+	//		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	//}
 
 	return true;
 }

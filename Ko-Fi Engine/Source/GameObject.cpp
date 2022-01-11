@@ -21,8 +21,9 @@ GameObject::GameObject(int id, KoFiEngine* engine, const char* name)
 	this->id = id;
 	this->engine = engine;
 
-	transform = CreateComponent<ComponentTransform>();
 	CreateComponent<ComponentInfo>();
+	transform = CreateComponent<ComponentTransform>();
+
 	this->parent = nullptr;
 }
 

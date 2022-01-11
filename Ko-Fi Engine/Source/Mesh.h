@@ -3,16 +3,8 @@
 #include <string>
 #include "MathGeoLib/Geometry/AABB.h"
 
-typedef unsigned int uint;
 class GameObject;
-
-struct Texture
-{
-	uint textureID = 0;
-	int width, height, nrChannels;
-	std::string texturePath;
-};
-
+typedef unsigned int uint;
 class Mesh
 {
 public:
@@ -52,7 +44,6 @@ public:
 	unsigned int VAO;
 
 	// Texture
-	Texture texture;
 
 	// AABB
 	AABB localAABB;

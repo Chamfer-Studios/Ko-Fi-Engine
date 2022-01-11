@@ -159,16 +159,15 @@ GameObject* Importer::GetOneMesh(const aiScene* scene)
 			aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, aiMesh->mMaterialIndex, &texturePath);
 			std::string newPath(texturePath.C_Str());
 			if (newPath.size() > 0) {
-				ourMesh->texture.texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
+				std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
 				ComponentMaterial* cMaterial = parent->CreateComponent<ComponentMaterial>();
-				cMaterial->AddTextures(ourMesh->texture);
 				if (newPath.c_str() != nullptr) {
 					//TODO UNCOMMENT WHEN SHADER WORKS
-					cMaterial->LoadTexture(ourMesh->texture.texturePath.c_str());
+					cMaterial->LoadTexture(texturePath.c_str());
 
 				}
 				else {
-					cMaterial->LoadDefaultTexture(ourMesh->texture.textureID);
+					cMaterial->LoadTexture();
 				}
 
 			}
@@ -244,15 +243,14 @@ GameObject* Importer::GetMultipleMeshes(const aiScene* scene)
 				aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, aiMesh->mMaterialIndex, &texturePath);
 				std::string newPath(texturePath.C_Str());
 				if (newPath.size() > 0) {
-					ourMesh->texture.texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\')+1);
+					std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\')+1);
 					ComponentMaterial* cMaterial = child->CreateComponent<ComponentMaterial>();
-					cMaterial->AddTextures(ourMesh->texture);
 					if (newPath.c_str() != nullptr) {
-						cMaterial->LoadTexture(ourMesh->texture.texturePath.c_str());
+						cMaterial->LoadTexture(texturePath.c_str());
 
 					}
 					else {
-						cMaterial->LoadDefaultTexture(ourMesh->texture.textureID);
+						cMaterial->LoadTexture();
 					}
 
 				}

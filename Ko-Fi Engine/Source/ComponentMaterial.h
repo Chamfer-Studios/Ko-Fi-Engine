@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Texture.h"
 #include <vector>
 #include <string>
 #define CHECKERS_HEIGHT 128
@@ -16,19 +17,12 @@ public:
 	ComponentMaterial(GameObject* parent);
 	~ComponentMaterial();
 
-	void LoadTextureFromId(uint& textureID, const char* path);
-	void LoadTexture(const char* path);
-	void LoadDefaultTexture(uint& textureID);
+	void LoadTexture(const char* path = nullptr);
 	bool InspectorDraw(PanelChooser* chooser);
-	void AddTextures(Texture texture);
-	void SetPath(std::string path);
-	std::string GetPath();
-	void SetTexture(Texture texture);
 	Texture GetTexture();
 	uint GetShader();
 	void LoadShader();
 private:
-	std::string path = "";
 	Texture texture;
 	uint materialShader = 0;
 };

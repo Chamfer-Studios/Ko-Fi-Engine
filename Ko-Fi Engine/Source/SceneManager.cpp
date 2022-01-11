@@ -262,7 +262,7 @@ Json SceneManager::SaveComponentMesh(ComponentMesh* componentMesh)
 Json SceneManager::SaveComponentMaterial(ComponentMaterial* componentMaterial)
 {
 	Json jsonComponentMaterial;
-	jsonComponentMaterial["path"] = componentMaterial->GetPath();
+	jsonComponentMaterial["path"] = componentMaterial->GetTexture().GetTexturePath();
 	return jsonComponentMaterial;
 }
 
@@ -440,11 +440,9 @@ void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComp
 	{
 		GameObject* owner = componentMesh->owner;
 		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
-		cMat->SetTexture(mesh->texture);
 		std::string texturePath = jsonComponentMaterial.at("path");
 		if (!texturePath.empty())
 		{
-			cMat->SetPath(texturePath);
 
 			cMat->LoadTexture(texturePath.c_str());
 		}

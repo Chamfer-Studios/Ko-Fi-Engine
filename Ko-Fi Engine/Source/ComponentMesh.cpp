@@ -121,7 +121,7 @@ bool ComponentMesh::PostUpdate()
 	
 		mesh->Draw(owner);
 		GenerateGlobalBoundingBox();
-		DrawBoundingBox(aabb, float3(1.0, 0.0, 0.0));
+		DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
 
 		glUseProgram(0);
 	}
