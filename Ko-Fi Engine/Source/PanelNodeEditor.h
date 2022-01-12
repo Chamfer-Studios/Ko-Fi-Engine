@@ -15,9 +15,11 @@ struct Node
 	const char* name;
 	int id;
 	float value;
-	explicit Node(const char* name,const NodeType t,int id) : type(t),id(id), name(name), value(0.f) {}
+	Node() = default;
 
-	Node(const char* name,const NodeType t, int id,const float v) : type(t), id(id), name(name), value(v) {}
+	explicit Node(const char* name,const NodeType t,const int id) : type(t),id(id), name(name), value(0.f) {}
+
+	Node(const char* name,const NodeType t, const int id,const float v) : type(t), id(id), name(name), value(v) {}
 };
 
 struct Link
@@ -40,12 +42,13 @@ public:
 private:
 	//Node editor functions
 	void CreateNode(NodeType type);
-	void DrawNodes(Node node);
+	void DrawNodes(Node& node);
 	void RightClickListener();
-	
+	void Save();
+	void Load(const char* path);
 private:
 	Editor* editor;
-	std::vector<Node> nodes;;
+	std::vector<Node> nodes;
 	std::vector<Link> links;
 	int current_id;
 
