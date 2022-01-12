@@ -7,19 +7,17 @@ enum class NodeType
 {
 	add,
 	multiply,
-	output,
-	sine,
-	time,
-	value
+
 };
 struct Node
 {
 	NodeType type;
+	const char* name;
 	int id;
 	float value;
-	explicit Node(const NodeType t,int id) : type(t),id(id), value(0.f) {}
+	explicit Node(const char* name,const NodeType t,int id) : type(t),id(id), name(name), value(0.f) {}
 
-	Node(const NodeType t, int id,const float v) : type(t), id(id), value(v) {}
+	Node(const char* name,const NodeType t, int id,const float v) : type(t), id(id), name(name), value(v) {}
 };
 
 struct Link
@@ -38,6 +36,11 @@ public:
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
+
+private:
+	//Node editor functions
+	void CreateNode(NodeType type);
+	void DrawNodes(Node node);
 private:
 	Editor* editor;
 	std::vector<Node> nodes;;
