@@ -1,11 +1,13 @@
 #include "PanelNodeEditor.h"
-#include <imgui.h>
+#include "Editor.h"
+#include "Engine.h"
+#include "Input.h"
 
-#include <imnodes.h>
+#include <ImNodes.h>
 PanelNodeEditor::PanelNodeEditor(Editor* editor)
 {
 	this->editor = editor;
-	panelName = "NodeEditor";
+	panelName = "Node Editor";
 }
 
 PanelNodeEditor::~PanelNodeEditor()
@@ -24,71 +26,70 @@ bool PanelNodeEditor::PreUpdate()
 
 bool PanelNodeEditor::Update()
 {
-	int hardcoded_node_id = 1;
-	//Beggin window
-	ImGui::Begin(panelName.c_str(),0);
-	//Beggin node editor
-	imnodes::BeginNodeEditor();
-	//Create a node
-	imnodes::BeginNode(1);
-	//the node has a title bar
-	imnodes::BeginNodeTitleBar();
-	ImGui::TextUnformatted("Output Node");
-	imnodes::EndNodeTitleBar();
-	//The output pin of the node
-	 int output_attr_id = 2;
-	imnodes::BeginOutputAttribute(2);
-	ImGui::Text("B");
-	imnodes::EndOutputAttribute();
-	 int input_attr_id = 3;
-	//the input pin of the node
-	imnodes::BeginInputAttribute(3);
-	ImGui::Text("A");
-	imnodes::EndInputAttribute();
-	imnodes::EndNode();
-
-
-	imnodes::PushColorStyle(
-		imnodes::ColorStyle_TitleBar, IM_COL32(255, 50,50, 255));
-	imnodes::PushColorStyle(
-		imnodes::ColorStyle_TitleBarSelected, IM_COL32(150, 50, 50, 255));
-	imnodes::PushColorStyle(
-		imnodes::ColorStyle_TitleBarHovered, IM_COL32(150, 50, 50, 255));
-	//Create a node
-	imnodes::BeginNode(4);
-
-	//the node has a title bar
-	imnodes::BeginNodeTitleBar();
-	ImGui::TextUnformatted("Output Node 2");
-	imnodes::EndNodeTitleBar();
-	//The output pin of the node
-	imnodes::BeginOutputAttribute(5);
-	ImGui::Text("B");
-	imnodes::EndOutputAttribute();
-	//the input pin of the node
-	imnodes::BeginInputAttribute(6);
-	ImGui::Text("A");
-	imnodes::EndInputAttribute();
-	imnodes::EndNode();
-
-	imnodes::PopColorStyle();
-	imnodes::PopColorStyle();
-	imnodes::PopColorStyle();
-	for (int i = 0; i < links.size(); ++i)
+	//Begin window
+	ImGui::Begin(panelName.c_str(), 0);
+	ImGui::TextUnformatted("Press A to add a node");
+	//Begin editor
+	ImNodes::BeginNodeEditor();
+	if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows) &&
+		ImNodes::IsEditorHovered() && editor->engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_UP )
 	{
-		const std::pair<int, int> p = links[i];
-		// in this case, we just use the array index of the link
-		// as the unique identifier
-		imnodes::Link(i, p.first, p.second);
+		const int node_id = ++current_id;
+		ImNodes::SetNodeScreenSpacePos(node_id, ImGui::GetMousePos());
+		nodes.push_back(Node(NodeType::add, node_id));
 	}
-	
-	imnodes::EndNodeEditor();
-	int start_attr, end_attr;
-	if (imnodes::IsLinkCreated(&start_attr, &end_attr))
-	{
-		links.push_back(std::make_pair(start_attr, end_attr));
-	}
-    ImGui::End();
+
+    for (Node& node : nodes)
+    {
+        ImNodes::BeginNode(node.id);
+
+        ImNodes::BeginNodeTitleBar();
+        ImGui::TextUnformatted("node");
+        ImNodes::EndNodeTitleBar();
+
+        ImNodes::BeginInputAttribute(node.id << 8);
+        ImGui::TextUnformatted("input");
+        ImNodes::EndInputAttribute();
+
+        ImNodes::BeginStaticAttribute(node.id << 16);
+        ImGui::PushItemWidth(120.f);
+        ImGui::DragFloat("value", &node.value, 0.01f);
+        ImGui::PopItemWidth();
+        ImNodes::EndStaticAttribute();
+
+        ImNodes::BeginOutputAttribute(node.id << 24);
+        const float text_width = ImGui::CalcTextSize("output").x;
+        ImGui::Indent(120.f + ImGui::CalcTextSize("value").x - text_width);
+        ImGui::TextUnformatted("output");
+        ImNodes::EndOutputAttribute();
+
+        ImNodes::EndNode();
+    }
+
+    for (const Link& link : links)
+    {
+        ImNodes::Link(link.id, link.start_attr, link.end_attr);
+    }
+	ImNodes::EndNodeEditor();
+
+    Link link;
+    if (ImNodes::IsLinkCreated(&link.start_attr, &link.end_attr))
+    {
+        link.id = ++current_id;
+        links.push_back(link);
+    }
+
+    int link_id;
+    if (ImNodes::IsLinkDestroyed(&link_id))
+    {
+        auto iter =
+            std::find_if(links.begin(), links.end(), [link_id](const Link& link) -> bool {
+            return link.id == link_id;
+                });
+        assert(iter != links.end());
+        links.erase(iter);
+    }
+	ImGui::End();
 	return true;
 }
 

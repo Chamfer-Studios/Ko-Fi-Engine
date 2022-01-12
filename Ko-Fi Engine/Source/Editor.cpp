@@ -1,5 +1,4 @@
-#include <imgui.h>
-#include <imnodes.h>
+#include <ImNodes.h>
 #include <imgui_impl_sdl.h>
 #include <imgui_impl_opengl3.h>
 #include "Engine.h"
@@ -139,7 +138,7 @@ bool Editor::Start()
 	// Initializing ImGui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	imnodes::CreateContext();
+	ImNodes::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
 
@@ -294,7 +293,7 @@ bool Editor::CleanUp()
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
-	imnodes::DestroyContext();
+	ImNodes::DestroyContext();
 	ImGui::DestroyContext();
 
 	return true;
