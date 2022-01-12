@@ -74,6 +74,9 @@
     <Filter Include="Source\Shaders">
       <UniqueIdentifier>{ef5e0122-2c93-4faf-bfa5-7c2778cbb5a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\ImGuiNodeEditor">
+      <UniqueIdentifier>{4fc7fceb-aaa4-484d-8f4e-37072c0b495e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -318,6 +321,24 @@
     </ClCompile>
     <ClCompile Include="Source\Texture.cpp">
       <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui_node_editor\imgui_node_editor.cpp">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelNodeEditor.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui_node_editor\crude_json.cpp">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui_node_editor\imgui_canvas.cpp">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui_node_editor\imgui_node_editor_api.cpp">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui_node_editor\imnodes.cpp">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -693,5 +714,40 @@
     <ClInclude Include="Source\Texture.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_node_editor.h">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelNodeEditor.h">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_node_editor_internal.h">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui_node_editor\crude_json.h">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_bezier_math.h">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_canvas.h">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_extra_math.h">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui_node_editor\imnodes.h">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\External\imgui_node_editor\imgui_node_editor_internal.inl">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </None>
+    <None Include="Source\External\imgui_node_editor\imgui_bezier_math.inl">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </None>
+    <None Include="Source\External\imgui_node_editor\imgui_extra_math.inl">
+      <Filter>Libs\ImGuiNodeEditor</Filter>
+    </None>
   </ItemGroup>
 </Project>

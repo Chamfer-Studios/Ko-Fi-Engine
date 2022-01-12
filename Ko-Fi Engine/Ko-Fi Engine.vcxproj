@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,6 +166,11 @@
     <ClCompile Include="Source\External\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_tables.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\External\imgui_node_editor\crude_json.cpp" />
+    <ClCompile Include="Source\External\imgui_node_editor\imgui_canvas.cpp" />
+    <ClCompile Include="Source\External\imgui_node_editor\imgui_node_editor.cpp" />
+    <ClCompile Include="Source\External\imgui_node_editor\imgui_node_editor_api.cpp" />
+    <ClCompile Include="Source\External\imgui_node_editor\imnodes.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\Random\LCG.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Geometry\AABB.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Geometry\Capsule.cpp" />
@@ -211,6 +216,7 @@
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\PanelAssets.cpp" />
     <ClCompile Include="Source\PanelGame.cpp" />
+    <ClCompile Include="Source\PanelNodeEditor.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
@@ -255,6 +261,13 @@
     <ClInclude Include="Source\External\imgui\imstb_rectpack.h" />
     <ClInclude Include="Source\External\imgui\imstb_textedit.h" />
     <ClInclude Include="Source\External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Source\External\imgui_node_editor\crude_json.h" />
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_bezier_math.h" />
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_canvas.h" />
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_extra_math.h" />
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_node_editor.h" />
+    <ClInclude Include="Source\External\imgui_node_editor\imgui_node_editor_internal.h" />
+    <ClInclude Include="Source\External\imgui_node_editor\imnodes.h" />
     <ClInclude Include="Source\External\JsonParser\json.hpp" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\Random\LCG.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Geometry\AABB.h" />
@@ -332,6 +345,7 @@
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\PanelAssets.h" />
     <ClInclude Include="Source\PanelGame.h" />
+    <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
@@ -354,6 +368,11 @@
     <ClInclude Include="Source\SString.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\External\imgui_node_editor\imgui_bezier_math.inl" />
+    <None Include="Source\External\imgui_node_editor\imgui_extra_math.inl" />
+    <None Include="Source\External\imgui_node_editor\imgui_node_editor_internal.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

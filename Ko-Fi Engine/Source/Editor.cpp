@@ -1,4 +1,5 @@
 #include <imgui.h>
+#include <imnodes.h>
 #include <imgui_impl_sdl.h>
 #include <imgui_impl_opengl3.h>
 #include "Engine.h"
@@ -21,8 +22,9 @@
 #include "PanelGame.h"
 #include "PanelRuntimeState.h"
 #include "PanelAssets.h"
+#include "PanelNodeEditor.h"
 
-void LoadFonts(float fontSize_ = 12.0f);
+void LoadFontsEditor(float fontSize_ = 12.0f);
 
 Editor::Editor(KoFiEngine* engine)
 {
@@ -50,6 +52,7 @@ Editor::Editor(KoFiEngine* engine)
 	panelChooser = new PanelChooser(this);
 	panelGameObject = new PanelInspector(this);
 	panelAssets = new PanelAssets(this);
+	panelNodeEditor = new PanelNodeEditor(this);
 
 	// Panel instances with its own bool
 	if (panelsState.showGameWindow)
@@ -76,6 +79,7 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
+	AddPanel(panelNodeEditor);
 }
 
 Editor::~Editor()
@@ -135,6 +139,7 @@ bool Editor::Start()
 	// Initializing ImGui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	imnodes::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
 
@@ -154,7 +159,7 @@ bool Editor::Start()
 		}
 	}
 
-	LoadFonts(16);
+	LoadFontsEditor(16);
 
 	return ret;
 }
@@ -289,6 +294,7 @@ bool Editor::CleanUp()
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
+	imnodes::DestroyContext();
 	ImGui::DestroyContext();
 
 	return true;
@@ -345,7 +351,7 @@ inline ImGui::MarkdownImageData ImageCallback(ImGui::MarkdownLinkCallbackData da
 	return imageData;
 }
 
-void LoadFonts(float fontSize_/* = 12.0f*/)
+void LoadFontsEditor(float fontSize_/* = 12.0f*/)
 {
 	ImGuiIO& io = ImGui::GetIO();
 	io.Fonts->Clear();

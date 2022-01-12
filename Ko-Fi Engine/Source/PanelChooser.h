@@ -29,7 +29,7 @@ private:
 		READY_TO_CLOSE
 	} chooserState = CLOSED;
 	std::string fileDialogOrigin;
-	Editor* editor;
+	Editor* editor = nullptr;
 	const char* currentExtension = "fbx";
 	char selectedFile[FILE_MAX];
 	std::string id = "";

@@ -19,6 +19,7 @@ class PanelViewport;
 class PanelGame;
 class PanelRuntimeState;
 class PanelAssets;
+class PanelNodeEditor;
 
 class GameObject;
 
@@ -54,6 +55,7 @@ public:
 	void MarkdownExample();
 	void UpdatePanelsState();
 
+
 public:
 	PanelsState panelsState;
 	ImVec2 lastViewportSize;
@@ -85,6 +87,7 @@ private:
 	PanelViewport* panelViewport = nullptr;
 	PanelRuntimeState* panelRuntimeState = nullptr;
 	PanelAssets* panelAssets = nullptr;
+	PanelNodeEditor* panelNodeEditor = nullptr;
 };
 
 #endif IM_GUI_HANDLER_H
