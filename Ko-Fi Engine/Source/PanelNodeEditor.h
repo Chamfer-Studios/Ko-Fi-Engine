@@ -5,8 +5,8 @@ class Editor;
 
 enum class NodeType
 {
-	add,
-	multiply,
+	SUM,
+	MULTIPLY,
 
 };
 struct Node
@@ -41,6 +41,8 @@ private:
 	//Node editor functions
 	void CreateNode(NodeType type);
 	void DrawNodes(Node node);
+	void RightClickListener();
+	
 private:
 	Editor* editor;
 	std::vector<Node> nodes;;

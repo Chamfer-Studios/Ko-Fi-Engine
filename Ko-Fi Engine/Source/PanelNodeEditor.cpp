@@ -28,25 +28,12 @@ bool PanelNodeEditor::Update()
 {
 	//Begin window
 	ImGui::Begin(panelName.c_str(), 0);
-	ImGui::TextUnformatted("Press A to add a ADD node.");
-	ImGui::TextUnformatted("Press M to add a MULTIPLY node.");
+
 	//Begin editor
 	ImNodes::BeginNodeEditor();
-    //if A button is pressed create an Add node
-	if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows) &&
-		ImNodes::IsEditorHovered() && editor->engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_UP )
-	{
-        CreateNode(NodeType::add);
-	
-	}
-    //if M Button is pressed create a multiply node
-    if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows) &&
-        ImNodes::IsEditorHovered() && editor->engine->GetInput()->GetKey(SDL_SCANCODE_M) == KEY_UP)
-    {
-        CreateNode(NodeType::multiply);
-
-    }
-
+    //Check mouse clicking
+    
+    RightClickListener();
     //Draw all nodes in the nodes vector
     for (Node& node : nodes)
     {
@@ -90,19 +77,17 @@ void PanelNodeEditor::CreateNode(NodeType type)
 {
     const int node_id = ++current_id;
     switch (type) {
-    case NodeType::add:
+    case NodeType::SUM:
         ImNodes::SetNodeScreenSpacePos(node_id, ImGui::GetMousePos());
         nodes.push_back(Node("Add", type, node_id));
         break;
-    case NodeType::multiply:
+    case NodeType::MULTIPLY:
         ImNodes::SetNodeScreenSpacePos(node_id, ImGui::GetMousePos());
         nodes.push_back(Node("Multiply", type, node_id));
         break;
     default:
         break;
     }
-  
-
 }
 
 void PanelNodeEditor::DrawNodes(Node node)
@@ -130,4 +115,23 @@ void PanelNodeEditor::DrawNodes(Node node)
     ImNodes::EndOutputAttribute();
 
     ImNodes::EndNode();
+}
+
+void PanelNodeEditor::RightClickListener()
+{
+    if (ImGui::IsMouseClicked(1) && ImGui::IsWindowHovered()) {
+        ImGui::OpenPopup("Create Node");
+    }
+
+    if (ImGui::BeginPopup("Create Node"))
+    {
+        if (ImGui::MenuItem("Sum")) {
+            CreateNode(NodeType::SUM);
+        }
+        if (ImGui::MenuItem("Multiply")) {
+            CreateNode(NodeType::MULTIPLY);
+
+        }
+        ImGui::EndPopup();
+    }
 }
