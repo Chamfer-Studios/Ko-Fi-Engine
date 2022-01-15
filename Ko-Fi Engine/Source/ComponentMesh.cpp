@@ -119,6 +119,9 @@ bool ComponentMesh::PostUpdate()
 		GLint view_location = glGetUniformLocation(shader, "view");
 		glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
 	
+		GLint albedoTint = glGetUniformLocation(shader, "albedoTint");
+		glUniform4fv(albedoTint, 1, owner->GetComponent<ComponentMaterial>()->GetMaterial().albedoTint.ptr());
+
 		mesh->Draw(owner);
 		GenerateGlobalBoundingBox();
 		DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));

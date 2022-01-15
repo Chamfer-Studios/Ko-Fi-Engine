@@ -4,9 +4,9 @@
 #include "ImGuiAppLog.h"
 
 #define CHECKERS_SIZE 32
-void Texture::SetUpTexture(const char* path)
+void Texture::SetUpTexture(std::string path)
 {
-	if (path == nullptr) {
+	if (path.empty()) {
 		GLubyte checkerImage[CHECKERS_SIZE][CHECKERS_SIZE][4];
 		for (int i = 0; i < CHECKERS_SIZE; i++) {
 			for (int j = 0; j < CHECKERS_SIZE; j++) {
@@ -33,7 +33,7 @@ void Texture::SetUpTexture(const char* path)
 
 	this->texturePath = path;
 
-	unsigned char* pixels = stbi_load(path, &this->width, &this->height, &this->nrChannels, STBI_rgb);
+	unsigned char* pixels = stbi_load(path.c_str(), &this->width, &this->height, &this->nrChannels, STBI_rgb);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	if (textureID == 0) {
 		glGenTextures(1, &textureID);

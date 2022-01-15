@@ -30,25 +30,26 @@ bool PanelNodeEditor::Update()
 	//Begin window
 	ImGui::Begin(panelName.c_str(), 0);
     if (ImGui::Button("Save")) {
-        Save();
+        SaveNodeEditor();
     }
     ImGui::SameLine();
     if (ImGui::Button("Load")) {
-        editor->GetPanelChooser()->OpenPanel("MainBar", "ini");
+        editor->GetPanelChooser()->OpenPanel("NodeEditor", "ini");
     }
-    if (editor->GetPanelChooser()->IsReadyToClose("MainBar"))
+    if (editor->GetPanelChooser()->IsReadyToClose("NodeEditor"))
     {
         const char* path = editor->GetPanelChooser()->OnChooserClosed();
         if (path != nullptr)
         {
-            Load(path);
+            LoadNodeEditor(path);
         }
     }
 	//Begin editor
 	ImNodes::BeginNodeEditor();
     //Check mouse clicking
-    
     RightClickListener();
+
+   
     //Draw all nodes in the nodes vector
     for (Node& node : nodes)
     {
@@ -62,10 +63,11 @@ bool PanelNodeEditor::Update()
     ImNodes::MiniMap(0.2f,ImNodesMiniMapLocation_TopRight);
 	ImNodes::EndNodeEditor();
 
+    NodeHoveringAndSelectingListener();
     Link link;
     if (ImNodes::IsLinkCreated(&link.start_attr, &link.end_attr))
     {
-        link.id = ++current_id;
+        link.id = ++currentId;
         links.push_back(link);
     }
 
@@ -88,18 +90,18 @@ bool PanelNodeEditor::PostUpdate()
 	return true;
 }
 
-void PanelNodeEditor::CreateNode(NodeType type)
+int PanelNodeEditor::CreateNode(NodeType type)
 {
-    const int node_id = ++current_id;
+    const int nodeId = ++currentId;
     switch (type) {
     case NodeType::SUM:
-        ImNodes::SetNodeScreenSpacePos(node_id, ImGui::GetMousePos());
-        nodes.push_back(Node("Add", type, node_id,0.0f));
-        break;
+        ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
+        nodes.push_back(Node("Add", type, nodeId,0.0f));
+        return nodeId;
     case NodeType::MULTIPLY:
-        ImNodes::SetNodeScreenSpacePos(node_id, ImGui::GetMousePos());
-        nodes.push_back(Node("Multiply", type, node_id));
-        break;
+        ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
+        nodes.push_back(Node("Multiply", type, nodeId));
+        return nodeId;
     default:
         break;
     }
@@ -134,24 +136,64 @@ void PanelNodeEditor::DrawNodes(Node& node)
 
 void PanelNodeEditor::RightClickListener()
 {
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8.f, 8.f));
+
     if (ImGui::IsMouseClicked(1) && ImGui::IsWindowHovered()) {
+        //if (hoveredId!=0)
+        //{
+        //    ImGui::OpenPopup("Node Options");
+        //}
+
+        //else {
+        //    ImGui::OpenPopup("Create Node");
+        //}
         ImGui::OpenPopup("Create Node");
     }
 
     if (ImGui::BeginPopup("Create Node"))
     {
+        const ImVec2 click_pos = ImGui::GetMousePosOnOpeningCurrentPopup();
         if (ImGui::MenuItem("Sum")) {
-            CreateNode(NodeType::SUM);
+            int nodeId = CreateNode(NodeType::SUM);
+            ImNodes::SetNodeScreenSpacePos(nodeId, click_pos);
         }
         if (ImGui::MenuItem("Multiply")) {
-            CreateNode(NodeType::MULTIPLY);
+            int nodeId = CreateNode(NodeType::MULTIPLY);
+            ImNodes::SetNodeScreenSpacePos(nodeId, click_pos);
 
         }
         ImGui::EndPopup();
     }
+
+    if (ImGui::BeginPopup("Node Options"))
+    {
+        if (ImGui::MenuItem("Delete")) {
+            
+        }
+        ImGui::EndPopup();
+    }
+    ImGui::PopStyleVar();
+
+}
+void PanelNodeEditor::NodeHoveringAndSelectingListener()
+{
+    //Checking if some node has been hovered
+    int node_id;
+    if (ImNodes::IsNodeHovered(&node_id))
+    {
+        hoveredId = node_id;
+    }
+
+    //Checking if any node or nodes have been hovered
+    const int num_selected_nodes = ImNodes::NumSelectedNodes();
+    if (num_selected_nodes > 0)
+    {
+        selectedNodes.resize(num_selected_nodes);
+        ImNodes::GetSelectedNodes(selectedNodes.data());
+    }
 }
 
-void PanelNodeEditor::Save()
+void PanelNodeEditor::SaveNodeEditor()
 {
     ImNodes::SaveCurrentEditorStateToIniFile("Assets/Nodes/testNodes.ini");
     std::fstream fout("Assets/Nodes/save_load.bytes", std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
@@ -175,12 +217,14 @@ void PanelNodeEditor::Save()
     fout.write(
         reinterpret_cast<const char*>(links.data()),
         static_cast<std::streamsize>(sizeof(Link) * num_links));
-    // save the current_id
+    // save the currentId
     fout.write(
-        reinterpret_cast<const char*>(&current_id), static_cast<std::streamsize>(sizeof(int)));
+        reinterpret_cast<const char*>(&currentId), static_cast<std::streamsize>(sizeof(int)));
 }
 
-void PanelNodeEditor::Load(const char* path)
+
+
+void PanelNodeEditor::LoadNodeEditor(const char* path)
 {
     // Load the internal imnodes state
     ImNodes::LoadCurrentEditorStateFromIniFile(path);
@@ -210,6 +254,8 @@ void PanelNodeEditor::Load(const char* path)
         reinterpret_cast<char*>(links.data()),
         static_cast<std::streamsize>(sizeof(Link) * num_links));
 
-    // copy current_id into memory
-    fin.read(reinterpret_cast<char*>(&current_id), static_cast<std::streamsize>(sizeof(int)));
+    // copy currentId into memory
+    fin.read(reinterpret_cast<char*>(&currentId), static_cast<std::streamsize>(sizeof(int)));
 }
+
+

@@ -1,12 +1,13 @@
 #pragma once
 typedef unsigned int uint;
 #include <string>
+#include "MathGeoLib/Math/float2.h"
 
 class Texture
 {
 public:
 	Texture(){}
-	void SetUpTexture(const char* path = nullptr);
+	void SetUpTexture(std::string path = "");
 	//Getters
 	uint GetTextureId() { return textureID; }
 	int GetTextureWidth() { return width; }
@@ -17,4 +18,6 @@ private:
 	uint textureID = 0;
 	int width, height, nrChannels;
 	std::string texturePath;
+	float2 scale;
+	float2 offset;
 };

@@ -8,10 +8,13 @@
 #include <gl/GLU.h>
 #include "PanelChooser.h"
 #include "Shader.h"
+#include "JsonHandler.h"
+
 
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
+	LoadDefaultMaterial();
 	LoadShader();
 }
 
@@ -46,10 +49,34 @@ ComponentMaterial::~ComponentMaterial()
 //	stbi_image_free(pixels);
 //}
 
-void ComponentMaterial::LoadTexture(const char* path)
+void ComponentMaterial::LoadDefaultMaterial()
 {
-	this->texture.SetUpTexture(path);
-	
+	const char* defaultMaterialPath = "Assets/Materials/default.milk";
+	JsonHandler jsonHandler;
+	Json jsonMaterial;
+	bool ret = true;
+
+	ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath);
+
+	if (!jsonMaterial.empty())
+	{
+		ret = true;
+		std::string path = jsonMaterial.at("albedo").at("texture").at("path").get<std::string>().c_str();
+		LoadTexture(path.c_str());
+		material.albedoTint = { jsonMaterial.at("albedo").at("color").at("r"),
+			jsonMaterial.at("albedo").at("color").at("g"),
+			jsonMaterial.at("albedo").at("color").at("b"),
+			jsonMaterial.at("albedo").at("color").at("a"),
+		};
+		material.metallicValue = jsonMaterial.at("metallic").at("value");
+		material.roughnessValue = jsonMaterial.at("roughness").at("value");
+		material.ambientOcclusionValue = jsonMaterial.at("ao").at("value");
+	};
+}
+
+void ComponentMaterial::LoadTexture(std::string path)
+{
+	this->material.textureAlbedo.SetUpTexture(path);
 }
 
 
@@ -66,23 +93,23 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 				LoadTexture(path.c_str());
 			}
 		}
-		if (texture.GetTexturePath() != nullptr && texture.GetTexturePath() != "")
+		if (material.textureAlbedo.GetTexturePath() != nullptr && material.textureAlbedo.GetTexturePath() != "")
 		{
 			ImGui::Text("Texture Path: ");
 			ImGui::SameLine();
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-			if (ImGui::Selectable(texture.GetTexturePath()))
+			if (ImGui::Selectable(material.textureAlbedo.GetTexturePath()))
 			{
 				panelChooser->OpenPanel("MaterialComponent","png");
 			}
 			ImGui::PopStyleColor();
 			ImGui::Text("Texture width: ");
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", texture.GetTextureWidth());
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", material.textureAlbedo.GetTextureWidth());
 			ImGui::Text("Texture height: ");
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", texture.GetTextureHeight());
-			ImGui::Image((ImTextureID)texture.GetTextureId(), ImVec2(85, 85));
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", material.textureAlbedo.GetTextureHeight());
+			ImGui::Image((ImTextureID)material.textureAlbedo.GetTextureId(), ImVec2(85, 85));
 		}
 		if (ImGui::Button("Add Texture")) {
 			panelChooser->OpenPanel("MaterialComponent","png");
@@ -98,7 +125,12 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 
 Texture ComponentMaterial::GetTexture()
 {
-	return texture;
+	return material.textureAlbedo;
+}
+
+Material ComponentMaterial::GetMaterial()
+{
+	return this->material;
 }
 
 uint ComponentMaterial::GetShader()

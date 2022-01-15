@@ -331,6 +331,7 @@
     <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\MainBar.h" />
     <ClInclude Include="Source\FileSystem.h" />
+    <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />

@@ -17,9 +17,9 @@ struct Node
 	float value;
 	Node() = default;
 
-	explicit Node(const char* name,const NodeType t,const int id) : type(t),id(id), name(name), value(0.f) {}
+	explicit Node(const char* name, const NodeType t, const int id) : type(t), id(id), name(name), value(0.f) {}
 
-	Node(const char* name,const NodeType t, const int id,const float v) : type(t), id(id), name(name), value(v) {}
+	Node(const char* name, const NodeType t, const int id, const float v) : type(t), id(id), name(name), value(v) {}
 };
 
 struct Link
@@ -41,15 +41,19 @@ public:
 
 private:
 	//Node editor functions
-	void CreateNode(NodeType type);
+	int CreateNode(NodeType type);
 	void DrawNodes(Node& node);
 	void RightClickListener();
-	void Save();
-	void Load(const char* path);
+	void NodeHoveringAndSelectingListener();
+	void SaveNodeEditor();
+	void LoadNodeEditor(const char* path);
 private:
 	Editor* editor;
 	std::vector<Node> nodes;
 	std::vector<Link> links;
-	int current_id;
+	std::vector<int> selectedNodes;
+
+	int currentId;
+	int hoveredId = 0;
 
 };

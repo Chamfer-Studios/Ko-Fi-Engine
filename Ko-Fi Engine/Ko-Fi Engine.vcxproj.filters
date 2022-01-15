@@ -711,5 +711,8 @@
     <ClInclude Include="Source\External\imgui_node_editor\imnodes_internal.h">
       <Filter>Libs\ImGuiNodeEditor</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,6 +4,8 @@
 #include "Engine.h"
 #include "SceneManager.h"
 #include "GameObject.h"
+#include "ComponentMaterial.h"
+#include "ComponentMesh.h"
 
 PanelInspector::PanelInspector(Editor* editor)
 {
@@ -37,6 +39,30 @@ bool PanelInspector::Update()
 		for (Component* component : currentGameObject->GetComponents())
 		{
 			component->InspectorDraw(editor->GetPanelChooser());
+		}
+
+		ImGui::Separator();
+		//const char* items[] = { "Material Component", "Mesh Component"};
+		const char* items[] = { ""};
+		static const char* current_item = NULL;
+
+		if (ImGui::BeginCombo("##combo", "Add Component")) // The second parameter is the label previewed before opening the combo.
+		{
+			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+			{
+				if (ImGui::Selectable(items[n]))
+				{
+					current_item = items[n];
+					if (current_item == "Material Component") {
+						bool alreadyExists = currentGameObject->GetComponent<ComponentMaterial>();
+						if(!alreadyExists)
+						currentGameObject->CreateComponent<ComponentMaterial>();
+					}
+					
+				}
+					
+			}
+			ImGui::EndCombo();
 		}
 	}
 
