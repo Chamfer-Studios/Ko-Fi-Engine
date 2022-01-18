@@ -122,6 +122,7 @@ bool ComponentMesh::PostUpdate()
 		GLint albedoTint = glGetUniformLocation(shader, "albedoTint");
 		glUniform4fv(albedoTint, 1, owner->GetComponent<ComponentMaterial>()->GetMaterial().albedoTint.ptr());
 
+		
 		mesh->Draw(owner);
 		GenerateGlobalBoundingBox();
 		DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));

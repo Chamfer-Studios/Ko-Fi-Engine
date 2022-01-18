@@ -8,6 +8,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "Engine.h"
+#include "FileSystem.h"
 #include "SceneManager.h"
 #include <fstream>
 
@@ -156,18 +157,19 @@ GameObject* Importer::GetOneMesh(const aiScene* scene)
 	if (scene->HasMaterials()) {
 		texture = scene->mMaterials[aiMesh->mMaterialIndex];
 		if (texture != nullptr) {
+			
 			aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, aiMesh->mMaterialIndex, &texturePath);
 			std::string newPath(texturePath.C_Str());
 			if (newPath.size() > 0) {
+				std::string base_filename = newPath.substr(newPath.find_last_of("/\\") + 1);
+				std::string::size_type const p(base_filename.find_last_of('.'));
+				std::string filenameWithoutExtension = base_filename.substr(0, p);
+				std::string materialPath = "Library/" + filenameWithoutExtension+".milk";
 				std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
 				ComponentMaterial* cMaterial = parent->CreateComponent<ComponentMaterial>();
 				if (newPath.c_str() != nullptr) {
-					//TODO UNCOMMENT WHEN SHADER WORKS
-					cMaterial->LoadTexture(texturePath.c_str());
-
-				}
-				else {
-					cMaterial->LoadTexture();
+					engine->GetFileSystem()->CreateMaterial(materialPath.c_str(),filenameWithoutExtension.c_str());
+					cMaterial->LoadMaterial(materialPath.c_str());
 				}
 
 			}
@@ -240,17 +242,19 @@ GameObject* Importer::GetMultipleMeshes(const aiScene* scene)
 		if (scene->HasMaterials()) {
 			texture = scene->mMaterials[aiMesh->mMaterialIndex];
 			if (texture != nullptr) {
+
 				aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, aiMesh->mMaterialIndex, &texturePath);
 				std::string newPath(texturePath.C_Str());
+				ComponentMaterial* cMaterial = child->CreateComponent<ComponentMaterial>();
 				if (newPath.size() > 0) {
-					std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\')+1);
-					ComponentMaterial* cMaterial = child->CreateComponent<ComponentMaterial>();
+					std::string base_filename = newPath.substr(newPath.find_last_of("/\\") + 1);
+					std::string::size_type const p(base_filename.find_last_of('.'));
+					std::string filenameWithoutExtension = base_filename.substr(0, p);
+					std::string materialPath = "Library/" + filenameWithoutExtension + ".milk";
+					std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
 					if (newPath.c_str() != nullptr) {
-						cMaterial->LoadTexture(texturePath.c_str());
-
-					}
-					else {
-						cMaterial->LoadTexture();
+						engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str());
+						cMaterial->LoadMaterial(materialPath.c_str());
 					}
 
 				}

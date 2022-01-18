@@ -1,0 +1,64 @@
+{
+    "albedo": {
+        "color": {
+            "a": 1,
+            "b": 1,
+            "g": 1,
+            "r": 1
+        },
+        "texture": {
+            "offset": {
+                "x": 0,
+                "y": 0
+            },
+            "path": "",
+            "scale": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    },
+    "ao": {
+        "texture": {
+            "offset": {
+                "x": 0,
+                "y": 0
+            },
+            "path": "",
+            "scale": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        "value": 0
+    },
+    "metallic": {
+        "texture": {
+            "offset": {
+                "x": 0,
+                "y": 0
+            },
+            "path": "",
+            "scale": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        "value": 0
+    },
+    "name": "cliff_rock",
+    "roughness": {
+        "texture": {
+            "offset": {
+                "x": 0,
+                "y": 0
+            },
+            "path": "",
+            "scale": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        "value": 0
+    }
+}

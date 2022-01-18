@@ -21,6 +21,7 @@
 #include "PanelGame.h"
 #include "PanelRuntimeState.h"
 #include "PanelAssets.h"
+#include "PanelTextEditor.h"
 #include "PanelNodeEditor.h"
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
@@ -52,6 +53,7 @@ Editor::Editor(KoFiEngine* engine)
 	panelGameObject = new PanelInspector(this);
 	panelAssets = new PanelAssets(this);
 	panelNodeEditor = new PanelNodeEditor(this);
+	panelTextEditor = new PanelTextEditor(this);
 
 	// Panel instances with its own bool
 	if (panelsState.showGameWindow)
@@ -79,6 +81,7 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
 	AddPanel(panelNodeEditor);
+	AddPanel(panelTextEditor);
 }
 
 Editor::~Editor()

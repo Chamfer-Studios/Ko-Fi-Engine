@@ -4,6 +4,9 @@
 #include <ios> // for std::streamsize
 #include "PanelChooser.h"
 
+//Nodes
+#include "MaterialNode.h"
+
 #include <ImNodes.h>
 PanelNodeEditor::PanelNodeEditor(Editor* editor)
 {
@@ -13,6 +16,7 @@ PanelNodeEditor::PanelNodeEditor(Editor* editor)
 
 PanelNodeEditor::~PanelNodeEditor()
 {
+    
 }
 
 bool PanelNodeEditor::Awake()
@@ -51,7 +55,7 @@ bool PanelNodeEditor::Update()
 
    
     //Draw all nodes in the nodes vector
-    for (Node& node : nodes)
+    for (Node* node : nodes)
     {
         DrawNodes(node);
     }
@@ -94,44 +98,20 @@ int PanelNodeEditor::CreateNode(NodeType type)
 {
     const int nodeId = ++currentId;
     switch (type) {
-    case NodeType::SUM:
+    case NodeType::MATERIAL:
         ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
-        nodes.push_back(Node("Add", type, nodeId,0.0f));
+        nodes.push_back((Node*) new MaterialNode("Material",NodeType::MATERIAL,nodeId));
         return nodeId;
-    case NodeType::MULTIPLY:
-        ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
-        nodes.push_back(Node("Multiply", type, nodeId));
-        return nodeId;
+    
     default:
         break;
     }
 }
 
-void PanelNodeEditor::DrawNodes(Node& node)
+void PanelNodeEditor::DrawNodes(Node* node)
 {
-    ImNodes::BeginNode(node.id);
-
-    ImNodes::BeginNodeTitleBar();
-    ImGui::TextUnformatted(node.name);
-    ImNodes::EndNodeTitleBar();
-
-    ImNodes::BeginInputAttribute(node.id << 8);
-    ImGui::TextUnformatted("input");
-    ImNodes::EndInputAttribute();
-
-    ImNodes::BeginStaticAttribute(node.id << 16);
-    ImGui::PushItemWidth(120.f);
-    ImGui::DragFloat("value", &node.value,0.01f);
-    ImGui::PopItemWidth();
-    ImNodes::EndStaticAttribute();
-
-    ImNodes::BeginOutputAttribute(node.id << 24);
-    const float text_width = ImGui::CalcTextSize("output").x;
-    ImGui::Indent(120.f + ImGui::CalcTextSize("value").x - text_width);
-    ImGui::TextUnformatted("output");
-    ImNodes::EndOutputAttribute();
-
-    ImNodes::EndNode();
+        node->Render();
+   
 }
 
 void PanelNodeEditor::RightClickListener()
@@ -153,15 +133,11 @@ void PanelNodeEditor::RightClickListener()
     if (ImGui::BeginPopup("Create Node"))
     {
         const ImVec2 click_pos = ImGui::GetMousePosOnOpeningCurrentPopup();
-        if (ImGui::MenuItem("Sum")) {
-            int nodeId = CreateNode(NodeType::SUM);
-            ImNodes::SetNodeScreenSpacePos(nodeId, click_pos);
+        if (ImGui::MenuItem("Material")) {
+            CreateNode(NodeType::MATERIAL);
+            
         }
-        if (ImGui::MenuItem("Multiply")) {
-            int nodeId = CreateNode(NodeType::MULTIPLY);
-            ImNodes::SetNodeScreenSpacePos(nodeId, click_pos);
-
-        }
+       
         ImGui::EndPopup();
     }
 

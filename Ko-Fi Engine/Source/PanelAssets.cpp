@@ -1,4 +1,6 @@
 #include "PanelAssets.h"
+#include "FileSystem.h"
+#include "Engine.h"
 #include <imgui.h>
 #include "Editor.h"
 #include "glew.h"
@@ -58,11 +60,15 @@ bool PanelAssets::Update()
 				currentDir /= path.filename();
 
 		}
-
+		
 		ImGui::TextWrapped(filenameString.c_str());
 		ImGui::NextColumn();
 	}
 	ImGui::Columns(1);
+	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1)) {
+		std::string matPath = currentDir.string() + "/test.milk";
+		//editor->engine->GetFileSystem()->CreateMaterial(matPath.c_str());
+	}
 	ImGui::End();
 	return true;
 }

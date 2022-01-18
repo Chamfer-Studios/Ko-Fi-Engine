@@ -51,16 +51,17 @@ ComponentMaterial::~ComponentMaterial()
 
 void ComponentMaterial::LoadDefaultMaterial()
 {
-	const char* defaultMaterialPath = "Assets/Materials/default.milk";
+	std::string defaultMaterialPath = "Assets/Materials/default.milk";
 	JsonHandler jsonHandler;
 	Json jsonMaterial;
 	bool ret = true;
 
-	ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath);
+	ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath.c_str());
 
 	if (!jsonMaterial.empty())
 	{
 		ret = true;
+		material.materialName = jsonMaterial.at("name").get<std::string>();
 		std::string path = jsonMaterial.at("albedo").at("texture").at("path").get<std::string>().c_str();
 		LoadTexture(path.c_str());
 		material.albedoTint = { jsonMaterial.at("albedo").at("color").at("r"),
@@ -72,6 +73,39 @@ void ComponentMaterial::LoadDefaultMaterial()
 		material.roughnessValue = jsonMaterial.at("roughness").at("value");
 		material.ambientOcclusionValue = jsonMaterial.at("ao").at("value");
 	};
+}
+
+
+
+void ComponentMaterial::LoadMaterial(const char* path)
+{
+	std::string materialPath = path;
+	JsonHandler jsonHandler;
+	Json jsonMaterial;
+	bool ret = true;
+
+	ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
+
+	if (!jsonMaterial.empty())
+	{
+		ret = true;
+		material.materialName = jsonMaterial.at("name").get<std::string>();
+		std::string path = jsonMaterial.at("albedo").at("texture").at("path").get<std::string>().c_str();
+		LoadTexture(path.c_str());
+		material.albedoTint = { jsonMaterial.at("albedo").at("color").at("r"),
+			jsonMaterial.at("albedo").at("color").at("g"),
+			jsonMaterial.at("albedo").at("color").at("b"),
+			jsonMaterial.at("albedo").at("color").at("a"),
+		};
+		material.metallicValue = jsonMaterial.at("metallic").at("value");
+		material.roughnessValue = jsonMaterial.at("roughness").at("value");
+		material.ambientOcclusionValue = jsonMaterial.at("ao").at("value");
+	};
+}
+
+void ComponentMaterial::Compile()
+{
+	LoadShader(this->shaderPath.c_str());
 }
 
 void ComponentMaterial::LoadTexture(std::string path)
@@ -86,39 +120,61 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 	if (ImGui::CollapsingHeader("Material")) {
 		if (panelChooser->IsReadyToClose("MaterialComponent")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
-				std::string path = panelChooser->OnChooserClosed();
-				path.erase(path.begin());
-				
+				std::string path = panelChooser->OnChooserClosed();				
 					//LoadTextureFromId(texture.textureID, path.c_str());
 				LoadTexture(path.c_str());
 			}
 		}
+		if (panelChooser->IsReadyToClose("MaterialComponentSelectShader")) {
+			if (panelChooser->OnChooserClosed() != nullptr) {
+				std::string path = panelChooser->OnChooserClosed();
+				//LoadTextureFromId(texture.textureID, path.c_str());
+				LoadShader(path.c_str());
+			}
+		}
 		if (material.textureAlbedo.GetTexturePath() != nullptr && material.textureAlbedo.GetTexturePath() != "")
 		{
-			ImGui::Text("Texture Path: ");
-			ImGui::SameLine();
-			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-			if (ImGui::Selectable(material.textureAlbedo.GetTexturePath()))
-			{
-				panelChooser->OpenPanel("MaterialComponent","png");
+			ImGui::TextColored(ImVec4(0, 1, 1, 1), "Material %s: ", material.materialName.c_str());
+			
+			ImGui::Columns(2, 0,false);	
+			ImGui::SetColumnWidth(0, ImGui::GetWindowWidth()*0.30);
+			if (ImGui::Button("Select Shader")) {
+				panelChooser->OpenPanel("MaterialComponentSelectShader","glsl");
 			}
-			ImGui::PopStyleColor();
-			ImGui::Text("Texture width: ");
+			//Albedo Info
+			ImGui::Text("Texture:");
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", material.textureAlbedo.GetTextureWidth());
-			ImGui::Text("Texture height: ");
-			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", material.textureAlbedo.GetTextureHeight());
+			std::string texturePath = material.textureAlbedo.GetTexturePath();
+			std::string textureName = texturePath.substr(texturePath.find_last_of("/\\")+1);
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", textureName.c_str());
+			
+			////Metallic Info
+			//ImGui::Text("Metallic:");
+			//ImGui::SameLine();
+			//ImGui::TextColored(ImVec4(1,1,0,1), "%d", material.metallicValue);
+			////Roughness Info
+			//ImGui::Text("Roughness:");
+			//ImGui::SameLine();
+			//ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", material.roughnessValue);
+			////Ao Info
+			//ImGui::Text("Ambient Occlusion:");
+			//ImGui::SameLine();
+			//ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", material.ambientOcclusionValue);
+			//ImGui::NextColumn();
+
+			//Material Texture Image
 			ImGui::Image((ImTextureID)material.textureAlbedo.GetTextureId(), ImVec2(85, 85));
+			ImGui::NextColumn();
+			for (Uniform& uniform : uniforms) {
+				if (uniform.type == GL_FLOAT_VEC4) {
+					if (ImGui::SliderFloat4(uniform.name.c_str(), material.albedoTint.ptr(), 0, 1)) {
+						Compile();
+					}
+				}
+			}
+			ImGui::Columns();
 		}
-		if (ImGui::Button("Add Texture")) {
-			panelChooser->OpenPanel("MaterialComponent","png");
-		}
-		if (ImGui::Button("Checkers Texture")) {
-			
-				LoadTexture();
-			
-		}
+		
 	}
 	return true;
 }
@@ -138,8 +194,36 @@ uint ComponentMaterial::GetShader()
 	return materialShader;
 }
 
-void ComponentMaterial::LoadShader()
+void ComponentMaterial::LoadUniforms()
 {
-	shader::ShaderProgramSource shaderSource = shader::ParseShader("Assets/Shaders/default_shader.glsl");
-	materialShader = shader::CreateShader(shaderSource.VertexSource, shaderSource.FragmentSource);
+	uniforms.clear();
+	GLint i;
+	GLint count;
+
+	GLint size; // size of the variable
+	GLenum type; // type of the variable (float, vec3 or mat4, etc)
+
+	const GLsizei bufSize = 16; // maximum name length
+	GLchar name[bufSize]; // variable name in GLSL
+	GLsizei length; // name length
+	glGetProgramiv(this->materialShader, GL_ACTIVE_UNIFORMS, &count);
+
+	for (i = 0; i < count; i++) {
+
+		glGetActiveUniform(this->materialShader, (GLuint)i, bufSize, &length, &size, &type, name);
+		this->uniforms.push_back({ type, name});
+	}
 }
+void ComponentMaterial::LoadShader(const char* shaderPath)
+{
+	if (this->materialShader != 0) {
+		glDeleteProgram(this->materialShader);
+	}
+	shaderPath ? this->shaderPath = shaderPath : this->shaderPath = "Assets/Shaders/default_shader.glsl";
+	shader::ShaderProgramSource shaderSource = shader::ParseShader(this->shaderPath);
+	materialShader = shader::CreateShader(shaderSource.VertexSource, shaderSource.FragmentSource);
+	LoadUniforms();
+}
+
+
+

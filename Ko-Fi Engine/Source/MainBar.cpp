@@ -135,9 +135,7 @@ void MainBar::ImportModel() {
 		const char* file = editor->GetPanelChooser()->OnChooserClosed();
 		if (file != nullptr)
 		{
-			std::string newFile = file;
-			newFile.erase(newFile.begin());
-			Importer::GetInstance()->ImportModel(newFile.c_str());
+			Importer::GetInstance()->ImportModel(file);
 			//editor->engine->GetFileSystem()->GameObjectFromMesh(newFile.c_str(), editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
 		}
 	}

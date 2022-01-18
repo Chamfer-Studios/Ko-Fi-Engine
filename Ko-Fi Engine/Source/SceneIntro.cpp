@@ -18,6 +18,7 @@
 #include "GameObject.h"
 //#include "Importer.h"
 #include "SceneManager.h"
+#include "node_editor.h"
 
 #include "ComponentMaterial.h" // Temporal for the assignment, just to display the texture on the model when the program begins...
 
@@ -43,7 +44,7 @@ bool SceneIntro::Start()
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 	bool ret = true;
-
+	example::NodeEditorInitialize();
 
 	// Load initial scene (temporal)
 	//engine->GetFileSystem()->GameObjectFromMesh("Assets/Models/baker_house.fbx", this->gameObjectList,"Assets/Textures/baker_house.png");
@@ -78,6 +79,7 @@ bool SceneIntro::Update(float dt)
 	{
 		go->Update();
 	}
+	//example::NodeEditorShow();
 
 	return true;
 }
@@ -105,6 +107,7 @@ bool SceneIntro::CleanUp()
 		RELEASE(gameObject);
 	}
 
+	example::NodeEditorShutdown();
 
 	return true;
 }

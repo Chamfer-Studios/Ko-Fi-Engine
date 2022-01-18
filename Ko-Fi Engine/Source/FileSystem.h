@@ -24,10 +24,12 @@ public:
 	bool CleanUp();
 
 	// FileSystem Functions
-	bool OpenFile(const char* path) const;
-	bool SaveFile(const char* path) const;
+	std::string OpenFile(const char* path) const;
+	bool SaveFile(const char* path, std::string text) const;
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
 	void AddPath(const char* path);
+
+	void CreateMaterial(const char* path, const char* filename);
 
 public:
 	fs::path rootPath;

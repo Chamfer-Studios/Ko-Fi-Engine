@@ -20,6 +20,7 @@ class PanelGame;
 class PanelRuntimeState;
 class PanelAssets;
 class PanelNodeEditor;
+class PanelTextEditor;
 
 class GameObject;
 
@@ -88,6 +89,7 @@ private:
 	PanelRuntimeState* panelRuntimeState = nullptr;
 	PanelAssets* panelAssets = nullptr;
 	PanelNodeEditor* panelNodeEditor = nullptr;
+	PanelTextEditor* panelTextEditor = nullptr;
 };
 
 #endif IM_GUI_HANDLER_H

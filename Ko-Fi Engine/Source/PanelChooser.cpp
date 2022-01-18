@@ -50,7 +50,9 @@ const char* PanelChooser::OnChooserClosed()
 	if (chooserState == READY_TO_CLOSE || chooserState == CLOSED)
 	{
 		chooserState = CLOSED;
-		return selectedFile[0] ? selectedFile : nullptr;
+		
+		return selectedFile[0] ? &selectedFile[1] : nullptr;
+
 	}
 	return nullptr;
 }

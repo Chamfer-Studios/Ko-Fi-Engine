@@ -77,6 +77,12 @@
     <Filter Include="Libs\ImGuiNodeEditor">
       <UniqueIdentifier>{4fc7fceb-aaa4-484d-8f4e-37072c0b495e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Editor\Panels\Nodes">
+      <UniqueIdentifier>{d4faa9fb-c6f8-4a34-9a6b-198a86b88863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Editor\Panels\Example">
+      <UniqueIdentifier>{3e536255-1b8b-4f95-85bc-74a6bf41e6ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -327,6 +333,15 @@
     </ClCompile>
     <ClCompile Include="Source\External\imgui_node_editor\imnodes.cpp">
       <Filter>Libs\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\color_node_editor.cpp">
+      <Filter>Source\Editor\Panels\Example</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelTextEditor.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TextEditor.cpp">
+      <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -713,6 +728,24 @@
     </ClInclude>
     <ClInclude Include="Source\Material.h">
       <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node.h">
+      <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MaterialNode.h">
+      <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graph.h">
+      <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\node_editor.h">
+      <Filter>Source\Editor\Panels\Example</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelTextEditor.h">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TextEditor.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

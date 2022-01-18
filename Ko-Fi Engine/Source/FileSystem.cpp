@@ -8,7 +8,7 @@
 #include <fstream>
 #include <filesystem>
 #include <iomanip>
-
+#include "JsonHandler.h"
 FileSystem::FileSystem(KoFiEngine* engine)
 {
 	name = "ModelLoader";
@@ -74,24 +74,34 @@ bool FileSystem::CleanUp()
 	return true;
 }
 
-//bool FileSystem::OpenFile(const char* path) const
-//{
-//	bool ret = true;
-//	SDL_assert(path != nullptr);
-//	std::ifstream stream(path);
-//	stream.is_open() ? ret = true : ret = false;
-//	stream.close();
-//	return ret;
-//}
-//
-//bool FileSystem::SaveFile(const char* path) const
-//{
-//	bool ret = true;
-//	SDL_assert(path != nullptr);
-//	std::ofstream stream(path)
-//	stream.is_open() ? ret = true : ret = false;
-//	return ret;
-//}
+std::string FileSystem::OpenFile(const char* path) const
+{
+	std::string fileText;
+
+	SDL_assert(path != nullptr);
+	std::ifstream stream(path);
+	if (stream.is_open()) {
+		std::string line;
+	
+		while (std::getline(stream, line)) {
+			fileText.append(line+"\n");
+		}
+	}
+	stream.close();
+	return fileText;
+}
+
+bool FileSystem::SaveFile(const char* path,std::string text) const
+{
+	bool ret = true;
+	SDL_assert(path != nullptr);
+	std::ofstream stream(path);
+	if (stream.is_open()) {
+		stream.write(text.c_str(),text.size());
+	}
+	stream.close();
+	return ret;
+}
 
 void FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs)
 {
@@ -110,4 +120,14 @@ void FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& file
 void FileSystem::AddPath(const char* path)
 {
 	rootPath += path;
+}
+
+void FileSystem::CreateMaterial(const char* path, const char* filename)
+{
+	JsonHandler jsonHandler;
+	auto materialJson = R"(
+{"albedo":{"color":{"a":1,"b":1,"g":1,"r":1},"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}}},"ao":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"metallic":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"roughness":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0}}
+)"_json;
+	materialJson["name"] = filename;
+    jsonHandler.SaveJson(materialJson,path);
 }

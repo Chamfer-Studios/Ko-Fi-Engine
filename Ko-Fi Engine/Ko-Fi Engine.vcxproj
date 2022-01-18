@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\Color.cpp" />
+    <ClCompile Include="Source\color_node_editor.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\ComponentCamera.cpp" />
     <ClCompile Include="Source\ComponentInfo.cpp" />
@@ -214,8 +215,10 @@
     <ClCompile Include="Source\PanelGame.cpp" />
     <ClCompile Include="Source\PanelNodeEditor.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
+    <ClCompile Include="Source\PanelTextEditor.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\ViewportFrameBuffer.cpp" />
     <ClCompile Include="Source\PanelAbout.cpp" />
@@ -323,6 +326,7 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
+    <ClInclude Include="Source\Graph.h" />
     <ClInclude Include="Source\ImGuiAppLog.h" />
     <ClInclude Include="Source\Importer.h" />
     <ClInclude Include="Source\Input.h" />
@@ -332,16 +336,21 @@
     <ClInclude Include="Source\MainBar.h" />
     <ClInclude Include="Source\FileSystem.h" />
     <ClInclude Include="Source\Material.h" />
+    <ClInclude Include="Source\MaterialNode.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\Node.h" />
+    <ClInclude Include="Source\node_editor.h" />
     <ClInclude Include="Source\PanelAssets.h" />
     <ClInclude Include="Source\PanelGame.h" />
     <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
+    <ClInclude Include="Source\PanelTextEditor.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\ViewportFrameBuffer.h" />
     <ClInclude Include="Source\Panel.h" />
