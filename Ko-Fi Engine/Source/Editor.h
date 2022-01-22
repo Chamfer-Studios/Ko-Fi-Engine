@@ -55,7 +55,7 @@ public:
 	void Markdown(const std::string& markdown_);
 	void MarkdownExample();
 	void UpdatePanelsState();
-
+	void OpenTextEditor(std::string path);
 
 public:
 	PanelsState panelsState;
@@ -66,6 +66,7 @@ public:
 	// Open/Close panel bools
 	bool toggleAboutPanel = false;
 	bool toggleChooserPanel = false;
+	bool toggleTextEditor = false;
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
 	KoFiEngine* engine = nullptr;

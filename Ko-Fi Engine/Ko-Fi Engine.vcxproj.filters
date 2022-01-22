@@ -747,5 +747,11 @@
     <ClInclude Include="Source\TextEditor.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Vec1Node.h">
+      <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AdditionNode.h">
+      <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

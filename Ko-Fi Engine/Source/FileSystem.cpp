@@ -122,12 +122,13 @@ void FileSystem::AddPath(const char* path)
 	rootPath += path;
 }
 
-void FileSystem::CreateMaterial(const char* path, const char* filename)
+void FileSystem::CreateMaterial(const char* path, const char* filename,const char* texturePath)
 {
 	JsonHandler jsonHandler;
 	auto materialJson = R"(
-{"albedo":{"color":{"a":1,"b":1,"g":1,"r":1},"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}}},"ao":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"metallic":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"roughness":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0}}
+{"albedo":{"color":{"a":1.0,"b":1.0,"g":1.0,"r":1.0},"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}}},"ao":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"metallic":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"roughness":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0}}
 )"_json;
 	materialJson["name"] = filename;
+	materialJson["albedo"]["texture"]["path"] = texturePath;
     jsonHandler.SaveJson(materialJson,path);
 }

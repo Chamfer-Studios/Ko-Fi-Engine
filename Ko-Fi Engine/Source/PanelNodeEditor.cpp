@@ -6,6 +6,8 @@
 
 //Nodes
 #include "MaterialNode.h"
+#include "Vec1Node.h"
+#include "AdditionNode.h"
 
 #include <ImNodes.h>
 PanelNodeEditor::PanelNodeEditor(Editor* editor)
@@ -57,6 +59,7 @@ bool PanelNodeEditor::Update()
     //Draw all nodes in the nodes vector
     for (Node* node : nodes)
     {
+        node->Update();
         DrawNodes(node);
     }
 
@@ -69,10 +72,25 @@ bool PanelNodeEditor::Update()
 
     NodeHoveringAndSelectingListener();
     Link link;
-    if (ImNodes::IsLinkCreated(&link.start_attr, &link.end_attr))
+    if (ImNodes::IsLinkCreated(&link.start_node,&link.start_attr,&link.end_node, &link.end_attr))
     {
         link.id = ++currentId;
         links.push_back(link);
+        Node* inputNode = nullptr;
+        Node* outputNode = nullptr;
+        for (Node* node : nodes) {
+            if (node->id == link.start_node) {
+                inputNode = node;
+            }
+            if (node->id == link.end_node) {
+                outputNode = node;
+            }
+        }
+        if (inputNode != nullptr && outputNode != nullptr) {
+            inputNode->inputs_vec.push_back(outputNode);
+            outputNode->inputs_vec.push_back(inputNode);
+            
+        }
     }
 
     int link_id;
@@ -102,7 +120,14 @@ int PanelNodeEditor::CreateNode(NodeType type)
         ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
         nodes.push_back((Node*) new MaterialNode("Material",NodeType::MATERIAL,nodeId));
         return nodeId;
-    
+    case NodeType::VEC1:
+        ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
+        nodes.push_back((Node*) new Vec1Node("Vec1", NodeType::VEC1, nodeId));        
+        return nodeId;
+    case NodeType::ADD:
+        ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
+        nodes.push_back((Node*) new AdditionNode("Add", NodeType::VEC1, nodeId));
+        return nodeId;
     default:
         break;
     }
@@ -135,9 +160,13 @@ void PanelNodeEditor::RightClickListener()
         const ImVec2 click_pos = ImGui::GetMousePosOnOpeningCurrentPopup();
         if (ImGui::MenuItem("Material")) {
             CreateNode(NodeType::MATERIAL);
-            
         }
-       
+        if (ImGui::MenuItem("Vec1")) {
+            CreateNode(NodeType::VEC1);
+        }
+        if (ImGui::MenuItem("Add")) {
+            CreateNode(NodeType::ADD);
+        }
         ImGui::EndPopup();
     }
 

@@ -235,6 +235,7 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AdditionNode.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
@@ -352,6 +353,7 @@
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\Texture.h" />
+    <ClInclude Include="Source\Vec1Node.h" />
     <ClInclude Include="Source\ViewportFrameBuffer.h" />
     <ClInclude Include="Source\Panel.h" />
     <ClInclude Include="Source\PanelAbout.h" />

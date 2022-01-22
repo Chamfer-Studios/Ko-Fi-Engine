@@ -57,8 +57,18 @@ bool PanelAssets::Update()
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
 			if (directoryEntry.is_directory())
+			{
 				currentDir /= path.filename();
+			}
+			else {
+				std::string ext = path.extension().string();
+				if(ext == ".milk"){
+					editor->OpenTextEditor(path.string());
+				}
+			}
+				
 
+			
 		}
 		
 		ImGui::TextWrapped(filenameString.c_str());

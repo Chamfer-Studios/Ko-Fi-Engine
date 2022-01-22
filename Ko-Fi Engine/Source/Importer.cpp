@@ -168,7 +168,7 @@ GameObject* Importer::GetOneMesh(const aiScene* scene)
 				std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
 				ComponentMaterial* cMaterial = parent->CreateComponent<ComponentMaterial>();
 				if (newPath.c_str() != nullptr) {
-					engine->GetFileSystem()->CreateMaterial(materialPath.c_str(),filenameWithoutExtension.c_str());
+					engine->GetFileSystem()->CreateMaterial(materialPath.c_str(),filenameWithoutExtension.c_str(),texturePath.c_str());
 					cMaterial->LoadMaterial(materialPath.c_str());
 				}
 
@@ -253,7 +253,7 @@ GameObject* Importer::GetMultipleMeshes(const aiScene* scene)
 					std::string materialPath = "Library/" + filenameWithoutExtension + ".milk";
 					std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
 					if (newPath.c_str() != nullptr) {
-						engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str());
+						engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str(),texturePath.c_str());
 						cMaterial->LoadMaterial(materialPath.c_str());
 					}
 

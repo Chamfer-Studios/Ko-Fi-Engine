@@ -29,7 +29,7 @@ public:
 	uint GetShader();
 	void LoadShader(const char* shaderPath = nullptr);
 	//Material Handling
-	void LoadMaterial(const char* path);
+	void LoadMaterial(const char* path="");
 	void Compile();
 
 private:

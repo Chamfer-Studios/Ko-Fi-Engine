@@ -59,8 +59,9 @@ bool PanelViewport::Update()
         }
         editor->lastViewportSize = viewportSize;
         ImGui::Image((ImTextureID)engine->GetViewportFrameBuffer()->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
-        ImGui::End();
+
     }
+    ImGui::End();
     ImGui::PopStyleVar();
 
 	return true;

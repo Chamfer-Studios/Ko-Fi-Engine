@@ -5,8 +5,28 @@ enum class NodeType
 	MATERIAL,
 	TEXTURE,
 	COLOR,
+	VEC1,
+	ADD,
 
 };
+enum class PinType {
+	BOOL,
+	INT,
+	FLOAT,
+	STRING,
+	VEC4,
+	UINT
+};
+
+class Node;
+struct Pin
+{
+	int id;
+	Node* node;
+	PinType type;
+	Pin(int id, PinType type):id(id),node(nullptr),type(type){}
+};
+
 class Node
 {
 public:
@@ -19,8 +39,12 @@ public:
 	virtual void Render() {};
 public:
 	NodeType type;
+	std::vector<Node*> inputs_vec;
+	std::vector<Node*> outputs_vec;
+	
+	std::vector<Pin> inputPins;
+	std::vector<Pin> outputPins;
 	const char* name;
 	int id;
-	
-
 };
+

@@ -80,7 +80,7 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
-	AddPanel(panelNodeEditor);
+	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
 }
 
@@ -472,4 +472,10 @@ void Editor::UpdatePanelsState()
 			panelGame = nullptr;
 		}
 	}
+}
+
+void Editor::OpenTextEditor(std::string path)
+{
+	toggleTextEditor = true;
+	panelTextEditor->LoadFile(path);
 }

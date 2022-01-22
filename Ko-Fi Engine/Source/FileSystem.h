@@ -29,7 +29,7 @@ public:
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
 	void AddPath(const char* path);
 
-	void CreateMaterial(const char* path, const char* filename);
+	void CreateMaterial(const char* path, const char* filename,const char* texturePath);
 
 public:
 	fs::path rootPath;

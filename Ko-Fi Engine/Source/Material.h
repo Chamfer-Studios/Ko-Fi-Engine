@@ -8,6 +8,7 @@ public:
 	~Material() {}
 public:
 	std::string materialName;
+	std::string materialPath;
 	//albedo
 	float4 albedoTint;
 	Texture textureAlbedo;

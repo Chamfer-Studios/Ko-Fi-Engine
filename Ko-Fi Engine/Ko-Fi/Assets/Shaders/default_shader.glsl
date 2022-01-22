@@ -29,11 +29,3 @@ void main()
      // color = texture(ourTexture, TexCoord);
 }
 
-
-
-
-
-
-
-
-

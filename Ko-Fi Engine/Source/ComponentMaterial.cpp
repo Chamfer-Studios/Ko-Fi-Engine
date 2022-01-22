@@ -62,6 +62,7 @@ void ComponentMaterial::LoadDefaultMaterial()
 	{
 		ret = true;
 		material.materialName = jsonMaterial.at("name").get<std::string>();
+		material.materialPath = defaultMaterialPath;
 		std::string path = jsonMaterial.at("albedo").at("texture").at("path").get<std::string>().c_str();
 		LoadTexture(path.c_str());
 		material.albedoTint = { jsonMaterial.at("albedo").at("color").at("r"),
@@ -83,15 +84,24 @@ void ComponentMaterial::LoadMaterial(const char* path)
 	JsonHandler jsonHandler;
 	Json jsonMaterial;
 	bool ret = true;
+	if (materialPath.empty()) {
+		ret = jsonHandler.LoadJson(jsonMaterial, material.materialPath.c_str());
+	}
+	else {
+		ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
 
-	ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
+	}
+
 
 	if (!jsonMaterial.empty())
 	{
 		ret = true;
 		material.materialName = jsonMaterial.at("name").get<std::string>();
-		std::string path = jsonMaterial.at("albedo").at("texture").at("path").get<std::string>().c_str();
-		LoadTexture(path.c_str());
+		material.materialPath = materialPath.empty()? material.materialPath : materialPath;
+		std::string texturePath = jsonMaterial.at("albedo").at("texture").at("path").get<std::string>().c_str();
+		if (texturePath != material.textureAlbedo.GetTexturePath())
+		LoadTexture(texturePath.c_str());
+
 		material.albedoTint = { jsonMaterial.at("albedo").at("color").at("r"),
 			jsonMaterial.at("albedo").at("color").at("g"),
 			jsonMaterial.at("albedo").at("color").at("b"),
@@ -222,6 +232,7 @@ void ComponentMaterial::LoadShader(const char* shaderPath)
 	shaderPath ? this->shaderPath = shaderPath : this->shaderPath = "Assets/Shaders/default_shader.glsl";
 	shader::ShaderProgramSource shaderSource = shader::ParseShader(this->shaderPath);
 	materialShader = shader::CreateShader(shaderSource.VertexSource, shaderSource.FragmentSource);
+
 	LoadUniforms();
 }
 

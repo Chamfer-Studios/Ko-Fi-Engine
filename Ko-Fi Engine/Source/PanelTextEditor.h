@@ -12,7 +12,13 @@ public:
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
+	void RenderWindow(bool* toggleEditText);
+	void LoadFile(std::string path = "");
+	void SaveFile(std::string path);
+private:
+	void ChooserListener();
 private:
 	Editor* editor;
 	TextEditor textEditor;
+	std::string filePath;
 };
