@@ -57,6 +57,19 @@ public:
 	void UpdatePanelsState();
 	void OpenTextEditor(std::string path);
 
+
+	template<class T> T* GetPanel()
+	{
+		T* panel = nullptr;
+		for (Panel* p : panels)
+		{
+			panel = dynamic_cast<T*>(p);
+			if (panel)
+				break;
+		}
+		return panel;
+	}
+
 public:
 	PanelsState panelsState;
 	ImVec2 lastViewportSize;

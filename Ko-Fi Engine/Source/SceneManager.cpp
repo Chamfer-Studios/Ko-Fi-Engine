@@ -250,7 +250,7 @@ Json SceneManager::SaveComponentMesh(ComponentMesh* componentMesh)
 {
 	Json jsonComponentMesh;
 	std::string name = componentMesh->GetParent()->name;
-	std::string savePath = "Library/" + name + ".sugar";
+	std::string savePath = "Library/Meshes/" + name + ".sugar";
 	Importer::GetInstance()->SaveModel(componentMesh->GetMesh(), savePath.c_str());
 	jsonComponentMesh["path"] = componentMesh->GetPath().c_str();
 	jsonComponentMesh["vertex_normals"] = componentMesh->GetVertexNormals();

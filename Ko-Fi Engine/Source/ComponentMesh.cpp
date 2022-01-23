@@ -119,10 +119,32 @@ bool ComponentMesh::PostUpdate()
 		GLint view_location = glGetUniformLocation(shader, "view");
 		glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
 	
-		GLint albedoTint = glGetUniformLocation(shader, "albedoTint");
-		glUniform4fv(albedoTint, 1, owner->GetComponent<ComponentMaterial>()->GetMaterial().albedoTint.ptr());
+		Material mat = owner->GetComponent<ComponentMaterial>()->GetMaterial();
+		for (Uniform* uniform : mat.uniforms) {
+			switch (uniform->type) {
+			case GL_FLOAT:
+			{
+				glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
 
-		
+			}
+				break;
+			case GL_FLOAT_VEC4:
+			{
+				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+				glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
+			}
+				
+				break;
+			case GL_INT:
+			{
+				glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+
+			}
+
+				break;
+			}
+		}
+
 		mesh->Draw(owner);
 		GenerateGlobalBoundingBox();
 		DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));

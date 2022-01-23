@@ -101,6 +101,13 @@ void PanelTextEditor::SaveFile(std::string path)
 	}
 }
 
+void PanelTextEditor::Focus()
+{
+	ImGui::SetWindowFocus(panelName.c_str());
+
+
+}
+
 void PanelTextEditor::ChooserListener()
 {
 	if (editor->GetPanelChooser()->IsReadyToClose("TextEditor")) {

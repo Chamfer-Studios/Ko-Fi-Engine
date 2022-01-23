@@ -18,11 +18,14 @@ TexCoord = texCoord;
 
 #shader fragment
 #version 330 core
+in vec4 ourColor;
 in vec2 TexCoord;
 out vec4 color;
 uniform sampler2D ourTexture;
 void main()
 {
-        color = texture(ourTexture, TexCoord);
+      //color = texture(ourTexture, TexCoord)*vec4(1.0f,1.0f,1.0f,1.0f);
+      color = texture(ourTexture, TexCoord)*ourColor;
+     // color = texture(ourTexture, TexCoord);
 }
 

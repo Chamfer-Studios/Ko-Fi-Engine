@@ -164,12 +164,13 @@ GameObject* Importer::GetOneMesh(const aiScene* scene)
 				std::string base_filename = newPath.substr(newPath.find_last_of("/\\") + 1);
 				std::string::size_type const p(base_filename.find_last_of('.'));
 				std::string filenameWithoutExtension = base_filename.substr(0, p);
-				std::string materialPath = "Library/" + filenameWithoutExtension+".milk";
+				std::string materialPath = "Assets/Materials/" + filenameWithoutExtension+".milk";
 				std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
 				ComponentMaterial* cMaterial = parent->CreateComponent<ComponentMaterial>();
 				if (newPath.c_str() != nullptr) {
 					engine->GetFileSystem()->CreateMaterial(materialPath.c_str(),filenameWithoutExtension.c_str(),texturePath.c_str());
 					cMaterial->LoadMaterial(materialPath.c_str());
+					cMaterial->LoadTexture(texturePath);
 				}
 
 			}
@@ -250,7 +251,7 @@ GameObject* Importer::GetMultipleMeshes(const aiScene* scene)
 					std::string base_filename = newPath.substr(newPath.find_last_of("/\\") + 1);
 					std::string::size_type const p(base_filename.find_last_of('.'));
 					std::string filenameWithoutExtension = base_filename.substr(0, p);
-					std::string materialPath = "Library/" + filenameWithoutExtension + ".milk";
+					std::string materialPath = "Assets/Materials/" + filenameWithoutExtension + ".milk";
 					std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
 					if (newPath.c_str() != nullptr) {
 						engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str(),texturePath.c_str());

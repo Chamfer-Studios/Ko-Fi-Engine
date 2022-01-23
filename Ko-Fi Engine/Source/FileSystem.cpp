@@ -82,22 +82,22 @@ std::string FileSystem::OpenFile(const char* path) const
 	std::ifstream stream(path);
 	if (stream.is_open()) {
 		std::string line;
-	
+
 		while (std::getline(stream, line)) {
-			fileText.append(line+"\n");
+			fileText.append(line + "\n");
 		}
 	}
 	stream.close();
 	return fileText;
 }
 
-bool FileSystem::SaveFile(const char* path,std::string text) const
+bool FileSystem::SaveFile(const char* path, std::string text) const
 {
 	bool ret = true;
 	SDL_assert(path != nullptr);
 	std::ofstream stream(path);
 	if (stream.is_open()) {
-		stream.write(text.c_str(),text.size());
+		stream.write(text.c_str(), text.size());
 	}
 	stream.close();
 	return ret;
@@ -122,7 +122,7 @@ void FileSystem::AddPath(const char* path)
 	rootPath += path;
 }
 
-void FileSystem::CreateMaterial(const char* path, const char* filename,const char* texturePath)
+void FileSystem::CreateMaterial(const char* path, const char* filename, const char* texturePath)
 {
 	JsonHandler jsonHandler;
 	auto materialJson = R"(
@@ -130,5 +130,67 @@ void FileSystem::CreateMaterial(const char* path, const char* filename,const cha
 )"_json;
 	materialJson["name"] = filename;
 	materialJson["albedo"]["texture"]["path"] = texturePath;
-    jsonHandler.SaveJson(materialJson,path);
+	jsonHandler.SaveJson(materialJson, path);
 }
+
+void FileSystem::CreateMaterial(const char* path)
+{
+	JsonHandler jsonHandler;
+	auto materialJson = R"(
+{"albedo":{"color":{"a":1.0,"b":1.0,"g":1.0,"r":1.0},"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}}},"ao":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"metallic":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"roughness":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0}}
+)"_json;
+	materialJson["name"] = "default";
+	jsonHandler.SaveJson(materialJson, path);
+}
+
+void FileSystem::CreateShader(const char* path)
+{
+	const char* text = R"(
+#shader vertex
+#version 330 core
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normals;
+layout (location = 2) in vec2 texCoord;
+out vec4 ourColor;
+out vec2 TexCoord;
+uniform mat4 model_matrix;
+uniform mat4 view;
+uniform mat4 projection;
+uniform vec4 albedoTint;
+void main()
+{
+gl_Position = projection * view * model_matrix * vec4(position, 1.0f);
+ourColor = albedoTint;
+TexCoord = texCoord;
+}
+
+#shader fragment
+#version 330 core
+in vec4 ourColor;
+in vec2 TexCoord;
+out vec4 color;
+uniform sampler2D ourTexture;
+void main()
+{
+      //color = texture(ourTexture, TexCoord)*vec4(1.0f,1.0f,1.0f,1.0f);
+      color = texture(ourTexture, TexCoord)*ourColor;
+     // color = texture(ourTexture, TexCoord);
+}
+)";
+	SDL_assert(path != nullptr);
+	std::ofstream stream(path, std::ios::trunc);
+	SDL_assert(stream.is_open());
+	try
+	{
+		stream << std::setw(4) << text << std::endl;
+
+	}
+	catch (Json::parse_error& e)
+	{
+		CONSOLE_LOG("Error while Saving File: %c", e.what());
+		appLog->AddLog("Error while Saving File: %c\n", e.what());
+	}
+	stream.close();
+
+}
+

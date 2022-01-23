@@ -30,6 +30,8 @@ public:
 	void AddPath(const char* path);
 
 	void CreateMaterial(const char* path, const char* filename,const char* texturePath);
+	void CreateMaterial(const char* path);
+	void CreateShader(const char* path);
 
 public:
 	fs::path rootPath;

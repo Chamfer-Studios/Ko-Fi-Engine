@@ -479,3 +479,5 @@ void Editor::OpenTextEditor(std::string path)
 	toggleTextEditor = true;
 	panelTextEditor->LoadFile(path);
 }
+
+

@@ -9,7 +9,8 @@
 #include "PanelChooser.h"
 #include "Shader.h"
 #include "JsonHandler.h"
-
+#include "MathGeoLib/Math/float4.h"
+#include "MathGeoLib/Math/float4x4.h"
 
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
@@ -51,66 +52,14 @@ ComponentMaterial::~ComponentMaterial()
 
 void ComponentMaterial::LoadDefaultMaterial()
 {
-	std::string defaultMaterialPath = "Assets/Materials/default.milk";
-	JsonHandler jsonHandler;
-	Json jsonMaterial;
-	bool ret = true;
 
-	ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath.c_str());
-
-	if (!jsonMaterial.empty())
-	{
-		ret = true;
-		material.materialName = jsonMaterial.at("name").get<std::string>();
-		material.materialPath = defaultMaterialPath;
-		std::string path = jsonMaterial.at("albedo").at("texture").at("path").get<std::string>().c_str();
-		LoadTexture(path.c_str());
-		material.albedoTint = { jsonMaterial.at("albedo").at("color").at("r"),
-			jsonMaterial.at("albedo").at("color").at("g"),
-			jsonMaterial.at("albedo").at("color").at("b"),
-			jsonMaterial.at("albedo").at("color").at("a"),
-		};
-		material.metallicValue = jsonMaterial.at("metallic").at("value");
-		material.roughnessValue = jsonMaterial.at("roughness").at("value");
-		material.ambientOcclusionValue = jsonMaterial.at("ao").at("value");
-	};
 }
 
 
 
 void ComponentMaterial::LoadMaterial(const char* path)
 {
-	std::string materialPath = path;
-	JsonHandler jsonHandler;
-	Json jsonMaterial;
-	bool ret = true;
-	if (materialPath.empty()) {
-		ret = jsonHandler.LoadJson(jsonMaterial, material.materialPath.c_str());
-	}
-	else {
-		ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
 
-	}
-
-
-	if (!jsonMaterial.empty())
-	{
-		ret = true;
-		material.materialName = jsonMaterial.at("name").get<std::string>();
-		material.materialPath = materialPath.empty()? material.materialPath : materialPath;
-		std::string texturePath = jsonMaterial.at("albedo").at("texture").at("path").get<std::string>().c_str();
-		if (texturePath != material.textureAlbedo.GetTexturePath())
-		LoadTexture(texturePath.c_str());
-
-		material.albedoTint = { jsonMaterial.at("albedo").at("color").at("r"),
-			jsonMaterial.at("albedo").at("color").at("g"),
-			jsonMaterial.at("albedo").at("color").at("b"),
-			jsonMaterial.at("albedo").at("color").at("a"),
-		};
-		material.metallicValue = jsonMaterial.at("metallic").at("value");
-		material.roughnessValue = jsonMaterial.at("roughness").at("value");
-		material.ambientOcclusionValue = jsonMaterial.at("ao").at("value");
-	};
 }
 
 void ComponentMaterial::Compile()
@@ -120,7 +69,7 @@ void ComponentMaterial::Compile()
 
 void ComponentMaterial::LoadTexture(std::string path)
 {
-	this->material.textureAlbedo.SetUpTexture(path);
+	this->material.texture.SetUpTexture(path);
 }
 
 
@@ -128,70 +77,39 @@ void ComponentMaterial::LoadTexture(std::string path)
 bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Material")) {
-		if (panelChooser->IsReadyToClose("MaterialComponent")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
-				std::string path = panelChooser->OnChooserClosed();				
-					//LoadTextureFromId(texture.textureID, path.c_str());
-				LoadTexture(path.c_str());
-			}
-		}
-		if (panelChooser->IsReadyToClose("MaterialComponentSelectShader")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
-				std::string path = panelChooser->OnChooserClosed();
-				//LoadTextureFromId(texture.textureID, path.c_str());
-				LoadShader(path.c_str());
-			}
-		}
-		if (material.textureAlbedo.GetTexturePath() != nullptr && material.textureAlbedo.GetTexturePath() != "")
-		{
-			ImGui::TextColored(ImVec4(0, 1, 1, 1), "Material %s: ", material.materialName.c_str());
-			
-			ImGui::Columns(2, 0,false);	
-			ImGui::SetColumnWidth(0, ImGui::GetWindowWidth()*0.30);
-			if (ImGui::Button("Select Shader")) {
-				panelChooser->OpenPanel("MaterialComponentSelectShader","glsl");
-			}
-			//Albedo Info
-			ImGui::Text("Texture:");
-			ImGui::SameLine();
-			std::string texturePath = material.textureAlbedo.GetTexturePath();
-			std::string textureName = texturePath.substr(texturePath.find_last_of("/\\")+1);
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", textureName.c_str());
-			
-			////Metallic Info
-			//ImGui::Text("Metallic:");
-			//ImGui::SameLine();
-			//ImGui::TextColored(ImVec4(1,1,0,1), "%d", material.metallicValue);
-			////Roughness Info
-			//ImGui::Text("Roughness:");
-			//ImGui::SameLine();
-			//ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", material.roughnessValue);
-			////Ao Info
-			//ImGui::Text("Ambient Occlusion:");
-			//ImGui::SameLine();
-			//ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", material.ambientOcclusionValue);
-			//ImGui::NextColumn();
 
-			//Material Texture Image
-			ImGui::Image((ImTextureID)material.textureAlbedo.GetTextureId(), ImVec2(85, 85));
-			ImGui::NextColumn();
-			for (Uniform& uniform : uniforms) {
-				if (uniform.type == GL_FLOAT_VEC4) {
-					if (ImGui::SliderFloat4(uniform.name.c_str(), material.albedoTint.ptr(), 0, 1)) {
-						Compile();
-					}
-				}
+		for (Uniform* uniform : material.uniforms) {
+			switch (uniform->type) {
+			case GL_FLOAT:
+			{
+				UniformT<float>* uf = (UniformT<float>*)uniform;
+				ImGui::SliderFloat(uniform->name.c_str(), &uf->value, 0, 1);
 			}
-			ImGui::Columns();
+			break;
+			case GL_FLOAT_VEC4:
+			{
+
+				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+				ImGui::SliderFloat4(uniform->name.c_str(), uf4->value.ptr(), 0, 1);
+			}
+			break;
+			case GL_INT:
+
+			{
+				UniformT<int>* ui = (UniformT<int>*)uniform;
+				ImGui::SliderInt(uniform->name.c_str(), &ui->value, 0, 1);
+			}
+			break;
+			}
 		}
-		
+
 	}
 	return true;
 }
 
 Texture ComponentMaterial::GetTexture()
 {
-	return material.textureAlbedo;
+	return material.texture;
 }
 
 Material ComponentMaterial::GetMaterial()
@@ -206,7 +124,7 @@ uint ComponentMaterial::GetShader()
 
 void ComponentMaterial::LoadUniforms()
 {
-	uniforms.clear();
+	this->material.uniforms.clear();
 	GLint i;
 	GLint count;
 
@@ -221,7 +139,28 @@ void ComponentMaterial::LoadUniforms()
 	for (i = 0; i < count; i++) {
 
 		glGetActiveUniform(this->materialShader, (GLuint)i, bufSize, &length, &size, &type, name);
-		this->uniforms.push_back({ type, name});
+		switch (type) {
+		case GL_FLOAT:
+		{
+			UniformT<float>* uf = new UniformT<float>(name,type,0.0f);
+			this->material.AddUniform(uf);
+		}
+		break;
+		case GL_FLOAT_VEC4:
+		{
+
+			UniformT<float4>* uf4 = new UniformT<float4>(name,type, float4(1.0f, 1.0f, 1.0f, 1.0f));
+			this->material.AddUniform(uf4);
+		}
+		break;
+		case GL_INT:
+
+		{
+			UniformT<int>* ui = new UniformT<int>(name, type, 0);
+			this->material.AddUniform(ui);
+		}
+		break;
+		}
 	}
 }
 void ComponentMaterial::LoadShader(const char* shaderPath)
@@ -229,7 +168,7 @@ void ComponentMaterial::LoadShader(const char* shaderPath)
 	if (this->materialShader != 0) {
 		glDeleteProgram(this->materialShader);
 	}
-	shaderPath ? this->shaderPath = shaderPath : this->shaderPath = "Assets/Shaders/default_shader.glsl";
+	shaderPath ? this->shaderPath = shaderPath : this->shaderPath = "Library/Shaders/default_shader.glsl";
 	shader::ShaderProgramSource shaderSource = shader::ParseShader(this->shaderPath);
 	materialShader = shader::CreateShader(shaderSource.VertexSource, shaderSource.FragmentSource);
 

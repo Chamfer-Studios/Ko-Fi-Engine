@@ -1,5 +1,6 @@
 #include "PanelAssets.h"
 #include "FileSystem.h"
+#include "PanelTextEditor.h"
 #include "Engine.h"
 #include <imgui.h>
 #include "Editor.h"
@@ -36,7 +37,6 @@ bool PanelAssets::Update()
 	int columnCount = (int)(panelWidth / cellSize);
 	if (columnCount < 1)
 		columnCount = 1;
-	ImGui::Columns(columnCount, 0, false);
 	//Back button when we enter on a folder, however we dont want it to go further back if we are on the assets folder or the
 	//user could access system files which is not right
 	if (currentDir != std::filesystem::path(assetsDir)) {
@@ -45,6 +45,8 @@ bool PanelAssets::Update()
 			currentDir = currentDir.parent_path();
 		}
 	}
+	ImGui::Columns(columnCount, 0, false);
+
 	for (auto& directoryEntry : std::filesystem::directory_iterator(currentDir)) {
 		const auto& path = directoryEntry.path();
 		auto relativePath = std::filesystem::relative(path, assetsDir);
@@ -55,29 +57,74 @@ bool PanelAssets::Update()
 		ImGui::ImageButton((ImTextureID)id, { iconSize,iconSize });
 		ImGui::PopStyleColor();
 
+
+
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
 			if (directoryEntry.is_directory())
 			{
 				currentDir /= path.filename();
 			}
 			else {
+
 				std::string ext = path.extension().string();
-				if(ext == ".milk"){
+				if (ext == ".milk" || ext == ".cream" || ext == ".txt" || ext == ".glsl" || ext == ".mat") {
+				
 					editor->OpenTextEditor(path.string());
+					PanelTextEditor* panel = editor->GetPanel<PanelTextEditor>();
+					panel->Focus();
 				}
 			}
-				
 
-			
 		}
-		
+		if (ImGui::IsItemHovered() && (ImGui::IsMouseClicked(1) || ImGui::IsMouseClicked(0))) {
+			if (!directoryEntry.is_directory()) {
+				selectedFile = path.string();
+
+			}
+		}
+	
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID)) {
+			std::string itemPath = selectedFile;
+			ImGui::SetDragDropPayload("ASSETS_ITEM", itemPath.c_str(), itemPath.size()*sizeof(const char*));
+			ImGui::Text(itemPath.c_str());
+			ImGui::EndDragDropSource();
+		}
+
 		ImGui::TextWrapped(filenameString.c_str());
 		ImGui::NextColumn();
+		
+	}
+	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1)) {
+		ImGui::OpenPopup("File Handle");
 	}
 	ImGui::Columns(1);
-	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1)) {
-		std::string matPath = currentDir.string() + "/test.milk";
-		//editor->engine->GetFileSystem()->CreateMaterial(matPath.c_str());
+	
+	if (ImGui::BeginPopup("File Handle")) {
+
+		if (ImGui::BeginMenu("Create")) {
+			if (ImGui::MenuItem("Material")) {
+				std::string fileName =  FileExsists("/material.milk",1);
+			
+				std::string path = currentDir.string() +fileName;
+				editor->engine->GetFileSystem()->CreateMaterial(path.c_str());
+			}
+			if (ImGui::MenuItem("Shader")) {
+				std::string fileName = FileExsists("/shader.cream", 1);
+
+				std::string path = currentDir.string() + fileName;
+				editor->engine->GetFileSystem()->CreateShader(path.c_str());
+			}
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::MenuItem("Delete")) {
+			std::filesystem::remove(selectedFile);
+			selectedFile = "";
+		}
+
+
+		ImGui::EndPopup();
+
 	}
 	ImGui::End();
 	return true;
@@ -106,6 +153,24 @@ void PanelAssets::LoadIcons(TextureIcon& texture, const char* path)
 	}
 
 	stbi_image_free(pixels);
+}
+
+std::string PanelAssets::FileExsists(std::string fileName,int i)
+{
+	int j = i;
+	std::string name = "";
+	std::string number = "";
+	std::string ext = "";
+	if (std::filesystem::exists(currentDir.string() + fileName)) {
+		name = "/material";
+		number = std::to_string(j);
+		ext = ".milk";
+		return FileExsists(name + " ("+number+") " + ext, j+1);
+	}
+	else {
+		return fileName;
+	}
+	return name + number + ext;
 }
 
 

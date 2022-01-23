@@ -11,10 +11,7 @@ typedef unsigned int uint;
 
 class PanelChooser;
 
-struct Uniform {
-	uint type;
-	std::string name;
-};
+
 class ComponentMaterial : public Component
 {
 public:
@@ -36,7 +33,7 @@ private:
 	void LoadDefaultMaterial();
 	void LoadUniforms();
 private:
-	std::vector<Uniform> uniforms;
+	
 	Material material;
 	uint materialShader = 0;
 	std::string shaderPath = "Assets/Shaders/default_shader.glsl";

@@ -15,6 +15,7 @@ public:
 	void RenderWindow(bool* toggleEditText);
 	void LoadFile(std::string path = "");
 	void SaveFile(std::string path);
+	void Focus();
 private:
 	void ChooserListener();
 private:
