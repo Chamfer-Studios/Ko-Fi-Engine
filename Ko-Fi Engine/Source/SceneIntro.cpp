@@ -57,7 +57,7 @@ bool SceneIntro::Start()
 	camera->AddComponent(componentCamera);*/
 
 	// Load scene with a camera and several houses.
-	//engine->GetSceneManager()->LoadScene(this, "SceneIntro");
+	engine->GetSceneManager()->LoadScene(this, "SceneIntro");
 
 	return ret;
 }

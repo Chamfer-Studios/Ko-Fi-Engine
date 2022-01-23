@@ -23,6 +23,8 @@ public:
 	bool InspectorDraw(PanelChooser* chooser);
 	Material GetMaterial();
 	uint GetShader();
+	const char* GetShaderPath() { return shaderPath.c_str(); }
+	void SetShaderPath(std::string path) { this->shaderPath = path; }
 	void LoadShader(const char* shaderPath = nullptr);
 	//Material Handling
 	void LoadMaterial(const char* path="");

@@ -89,7 +89,8 @@ void main(void) {
 	float f = fbm(p + r);
 	vec3 color = mix(
 		vec3(0.101961, 1.0, 0.8),
-		vec3(0.0, 0.3, 0.666667),
+		customColorOne,
+		//vec3(0.0, 0.3, 0.666667),
 		clamp((f * f) * 4.0, 0.0, 1.0)
 	);
 
@@ -110,4 +111,5 @@ void main(void) {
 
 	fragColor = vec4(color, 1.0);
 }
+
 

@@ -11,7 +11,7 @@
 
 #include "Defs.h"
 #include "JsonHandler.h"
-
+#include "glew.h"
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Math/Quat.h"
@@ -262,11 +262,74 @@ Json SceneManager::SaveComponentMesh(ComponentMesh* componentMesh)
 Json SceneManager::SaveComponentMaterial(ComponentMaterial* componentMaterial)
 {
 	Json jsonComponentMaterial;
+	json jsonTex;
+	jsonComponentMaterial["textures"] = json::array();
 	for (Texture& tex : componentMaterial->GetMaterial().textures) {
-		json jsonarray = json::array();
-		jsonarray.push_back(tex.GetTexturePath());
-		jsonComponentMaterial["path"] = jsonarray;
+		
+		jsonTex["path"]=tex.GetTexturePath();
+		jsonComponentMaterial["textures"].push_back(jsonTex);
 	}
+
+
+	json jsonUniform;
+	for (Uniform* uniform : componentMaterial->GetMaterial().uniforms) {
+		
+		switch (uniform->type)
+		{
+
+		case GL_FLOAT:
+		{
+			UniformT<float>* uf = (UniformT<float>*)uniform;
+			jsonUniform["name"] = uf->name;
+			jsonUniform["type"] = uf->type;
+			jsonUniform["value"] = uf->value;
+		}
+		break;
+		case GL_FLOAT_VEC2:
+		{
+			UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+			jsonUniform["name"] = uf2->name;
+			jsonUniform["type"] = uf2->type;
+			jsonUniform["value"]["x"] = uf2->value.x;
+			jsonUniform["value"]["y"] = uf2->value.y;
+		}
+		break;
+		case GL_FLOAT_VEC3:
+		{
+			UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+			jsonUniform["name"] = uf3->name;
+			jsonUniform["type"] = uf3->type;
+			jsonUniform["value"]["x"] = uf3->value.x;
+			jsonUniform["value"]["y"] = uf3->value.y;
+			jsonUniform["value"]["z"] = uf3->value.z;
+		}
+		break;
+		case GL_FLOAT_VEC4:
+		{
+			UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+			jsonUniform["name"] = uf4->name;
+			jsonUniform["type"] = uf4->type;
+			jsonUniform["value"]["x"] = uf4->value.x;
+			jsonUniform["value"]["y"] = uf4->value.y;
+			jsonUniform["value"]["z"] = uf4->value.z;
+			jsonUniform["value"]["w"] = uf4->value.w;
+		}
+		break;
+		case GL_INT:
+		{
+			UniformT<int>* ui = (UniformT<int>*)uniform;
+			jsonUniform["name"] = ui->name;
+			jsonUniform["type"] = ui->type;
+			jsonUniform["value"] = ui->value;
+		}
+		break;
+		}
+		jsonComponentMaterial["uniforms"].push_back(jsonUniform);
+
+	}
+	jsonComponentMaterial["materialName"] = componentMaterial->GetMaterial().materialName;
+	jsonComponentMaterial["materialPath"] = componentMaterial->GetMaterial().materialPath;
+	jsonComponentMaterial["shaderPath"] = componentMaterial->GetShaderPath();
 	return jsonComponentMaterial;
 }
 
@@ -439,16 +502,61 @@ void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComp
 	Mesh* mesh = new Mesh();
 	mesh = Importer::GetInstance()->LoadModel(jsonComponentMesh.at("mesh").get<std::string>().c_str());
 	componentMesh->SetMesh(mesh);
-
+	//Loading Material
 	if (mesh->tex_coords && !jsonComponentMaterial.empty())
 	{
 		GameObject* owner = componentMesh->owner;
 		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
-		std::string texturePath = jsonComponentMaterial.at("path");
-		if (!texturePath.empty())
-		{
+		cMat->GetMaterial().materialName = jsonComponentMaterial.at("materialName").get<std::string>();
+		cMat->GetMaterial().materialPath = jsonComponentMaterial.at("materialPath").get<std::string>();
+		cMat->LoadShader(jsonComponentMaterial.at("shaderPath").get<std::string>().c_str());
+		for (const auto& tex : jsonComponentMaterial.at("textures").items()) {
+			cMat->LoadTexture(tex.value().at("path").get<std::string>());
+		}
+		for (const auto& uni : jsonComponentMaterial.at("uniforms").items()) {
+			std::string uniformName = uni.value().at("name").get<std::string>();
+			uint uniformType = uni.value().at("type").get<uint>();
+			switch (uniformType) {
+			case GL_FLOAT:
+			{
+				UniformT<float>* uniform = (UniformT<float>*)cMat->GetMaterial().FindUniform(uniformName);
+				uniform->value = uni.value().at("value");
 
-			cMat->LoadTexture(texturePath.c_str());
+			}
+			break;
+			case GL_FLOAT_VEC2:
+			{
+				UniformT<float2>* uniform = (UniformT<float2>*)cMat->GetMaterial().FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+
+			}
+			break;
+			case GL_FLOAT_VEC3:
+			{
+				UniformT<float3>* uniform = (UniformT<float3>*)cMat->GetMaterial().FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+				uniform->value.z = uni.value().at("value").at("z");
+			}
+			break;
+			case GL_FLOAT_VEC4:
+			{
+				UniformT<float4>* uniform = (UniformT<float4>*)cMat->GetMaterial().FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+				uniform->value.z = uni.value().at("value").at("z");
+				uniform->value.w = uni.value().at("value").at("w");
+			}
+			break;
+			case GL_INT:
+			{
+				UniformT<int>* uniform = (UniformT<int>*)cMat->GetMaterial().FindUniform(uniformName);
+				uniform->value = uni.value().at("value");
+			}
+			break;
+			}
+
 		}
 	}
 	else if(mesh->tex_coords && jsonComponentMaterial.empty()){
