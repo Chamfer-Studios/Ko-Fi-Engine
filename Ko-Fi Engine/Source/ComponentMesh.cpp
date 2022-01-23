@@ -15,7 +15,7 @@
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MESH;
-
+	this->time = 0.0f;
 }
 
 //ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
@@ -99,7 +99,7 @@ bool ComponentMesh::Update()
 	return true;
 }
 
-bool ComponentMesh::PostUpdate()
+bool ComponentMesh::PostUpdate(float dt)
 {
 	bool ret = true;
 
@@ -119,15 +119,41 @@ bool ComponentMesh::PostUpdate()
 		GLint view_location = glGetUniformLocation(shader, "view");
 		glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
 	
+		GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
+		glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+		float2 resolution = float2(1080.0f, 720.0f);
+		glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+		this->time += 0.02f;
+		glUniform1f(glGetUniformLocation(shader, "time"), this->time);
+		
 		Material mat = owner->GetComponent<ComponentMaterial>()->GetMaterial();
 		for (Uniform* uniform : mat.uniforms) {
 			switch (uniform->type) {
 			case GL_FLOAT:
 			{
+				if(uniform->name != "time")
 				glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
 
 			}
 				break;
+			case GL_FLOAT_VEC2:
+			{
+				if (uniform->name != "resolution")
+				{
+					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+					glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
+				}
+				
+			}
+
+			break;
+			case GL_FLOAT_VEC3:
+			{
+				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+				glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
+			}
+
+			break;
 			case GL_FLOAT_VEC4:
 			{
 				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
@@ -142,6 +168,8 @@ bool ComponentMesh::PostUpdate()
 			}
 
 				break;
+
+			break;
 			}
 		}
 

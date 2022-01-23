@@ -94,7 +94,6 @@ void PanelTextEditor::SaveFile(std::string path)
 	editor->engine->GetFileSystem()->SaveFile(path.c_str(), textEditor.GetText());
 	for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 		if (go->GetComponent<ComponentMaterial>() != nullptr) {
-			go->GetComponent<ComponentMaterial>()->LoadMaterial();
 			go->GetComponent<ComponentMaterial>()->Compile();
 
 		}

@@ -123,7 +123,10 @@ void Mesh::Draw(GameObject* owner)
 {
 	//Texture
 	if (ComponentMaterial* material = owner->GetComponent<ComponentMaterial>()) {
-		glBindTexture(GL_TEXTURE_2D, material->GetTexture().GetTextureId());
+		for (Texture& tex : material->GetMaterial().textures) {
+			glBindTexture(GL_TEXTURE_2D,tex.GetTextureId());
+
+		}
 	}
 
 	glBindVertexArray(VAO);

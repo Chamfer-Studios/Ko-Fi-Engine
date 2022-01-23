@@ -126,10 +126,24 @@ void FileSystem::CreateMaterial(const char* path, const char* filename, const ch
 {
 	JsonHandler jsonHandler;
 	auto materialJson = R"(
-{"albedo":{"color":{"a":1.0,"b":1.0,"g":1.0,"r":1.0},"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}}},"ao":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"metallic":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"roughness":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0}}
+{
+    "name":"",
+    "path":"",
+	"textures":[""],
+    "uniforms":{
+       "albedoTint" :{
+           "x":1.0,
+           "y":1.0,
+           "z":1.0,
+           "w":1.0
+       }
+    }
+}
 )"_json;
 	materialJson["name"] = filename;
-	materialJson["albedo"]["texture"]["path"] = texturePath;
+	auto texturesArray = json::array();
+	texturesArray.push_back(texturePath);
+	materialJson["textures"] = texturesArray;
 	jsonHandler.SaveJson(materialJson, path);
 }
 
@@ -137,7 +151,19 @@ void FileSystem::CreateMaterial(const char* path)
 {
 	JsonHandler jsonHandler;
 	auto materialJson = R"(
-{"albedo":{"color":{"a":1.0,"b":1.0,"g":1.0,"r":1.0},"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}}},"ao":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"metallic":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0},"roughness":{"texture":{"offset":{"x":0,"y":0},"path":"","scale":{"x":1,"y":1}},"value":0}}
+{
+    "name":"",
+    "path":"",
+  "textures":[""],
+    "uniforms":{
+       "albedoTint" :{
+           "x":1.0,
+           "y":1.0,
+           "z":1.0,
+           "w":1.0
+       }
+    }
+}
 )"_json;
 	materialJson["name"] = "default";
 	jsonHandler.SaveJson(materialJson, path);

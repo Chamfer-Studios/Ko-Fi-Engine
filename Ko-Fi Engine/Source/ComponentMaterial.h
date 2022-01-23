@@ -21,12 +21,12 @@ public:
 	
 	void LoadTexture(std::string path = "");
 	bool InspectorDraw(PanelChooser* chooser);
-	Texture GetTexture();
 	Material GetMaterial();
 	uint GetShader();
 	void LoadShader(const char* shaderPath = nullptr);
 	//Material Handling
 	void LoadMaterial(const char* path="");
+	void SaveMaterial();
 	void Compile();
 
 private:
@@ -37,4 +37,5 @@ private:
 	Material material;
 	uint materialShader = 0;
 	std::string shaderPath = "Assets/Shaders/default_shader.glsl";
+	int currentTextureId=0;
 };

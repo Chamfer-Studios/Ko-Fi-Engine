@@ -262,7 +262,11 @@ Json SceneManager::SaveComponentMesh(ComponentMesh* componentMesh)
 Json SceneManager::SaveComponentMaterial(ComponentMaterial* componentMaterial)
 {
 	Json jsonComponentMaterial;
-	jsonComponentMaterial["path"] = componentMaterial->GetTexture().GetTexturePath();
+	for (Texture& tex : componentMaterial->GetMaterial().textures) {
+		json jsonarray = json::array();
+		jsonarray.push_back(tex.GetTexturePath());
+		jsonComponentMaterial["path"] = jsonarray;
+	}
 	return jsonComponentMaterial;
 }
 

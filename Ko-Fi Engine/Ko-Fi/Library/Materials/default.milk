@@ -1,68 +1,13 @@
 {
   "name": "default",
-  "path": "Assets/Materials/default.milk",
-  "albedo": {
-    "color": {
-      "r": 1.0,
-      "g": 1.0,
-      "b": 1.0,
-      "a": 1.0
-    },
-    "texture": {
-      "path": "",
-      "scale": {
-        "x": 1,
-        "y": 1
-      },
-      "offset": {
-        "x": 0,
-        "y": 0
-      }
-    }
-  },
-  "metallic": {
-    "value": 0,
-    "texture": {
-      "path": "",
-      "scale": {
-        "x": 1,
-        "y": 1
-      },
-      "offset": {
-        "x": 0,
-        "y": 0
-      }
-    }
-  },
-  "roughness": {
-    "value": 0,
-    "texture": {
-      "path": "",
-      "scale": {
-        "x": 1,
-        "y": 1
-      },
-      "offset": {
-        "x": 0,
-        "y": 0
-      }
-    }
-  },
-  "ao": {
-    "value": 0,
-    "texture": {
-      "path": "",
-      "scale": {
-        "x": 1,
-        "y": 1
-      },
-      "offset": {
-        "x": 0,
-        "y": 0
-      }
+  "path": "Library/Materials/default.milk",
+  "textures":[""],
+  "uniforms": {
+    "albedoTint": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "w": 1
     }
   }
 }
-
-
-

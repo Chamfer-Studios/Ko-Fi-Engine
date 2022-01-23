@@ -89,7 +89,7 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : this->gameObjectList)
 	{
-		go->PostUpdate();
+		go->PostUpdate(dt);
 	}
 
 	engine->GetRenderer()->DrawRay();

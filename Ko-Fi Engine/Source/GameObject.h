@@ -19,7 +19,7 @@ public:
 	bool Start();
 	bool PreUpdate();
 	bool Update();
-	bool PostUpdate();
+	bool PostUpdate(float dt);
 	bool CleanUp();
 
 	void Enable();

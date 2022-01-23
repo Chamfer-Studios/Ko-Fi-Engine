@@ -29,7 +29,7 @@ public:
 
 	bool Start();
 	bool Update();
-	bool PostUpdate();
+	bool PostUpdate(float dt);
 	bool CleanUp();
 
 	//void LoadMesh(const char* path);
@@ -75,4 +75,5 @@ private:
 	AABB aabb;
 
 	bool renderMesh = true;
+	float time = 0;
 };

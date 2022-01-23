@@ -14,6 +14,9 @@ public:
 	int GetTextureHeight() { return height; }
 	int GetNrChannels() { return nrChannels; }
 	const char* GetTexturePath() { return texturePath.c_str(); }
+	bool operator==(const Texture& tex) {
+		return tex.textureID == this->textureID;
+	}
 private:
 	uint textureID = 0;
 	int width, height, nrChannels;

@@ -170,7 +170,7 @@ GameObject* Importer::GetOneMesh(const aiScene* scene)
 				if (newPath.c_str() != nullptr) {
 					engine->GetFileSystem()->CreateMaterial(materialPath.c_str(),filenameWithoutExtension.c_str(),texturePath.c_str());
 					cMaterial->LoadMaterial(materialPath.c_str());
-					cMaterial->LoadTexture(texturePath);
+					//cMaterial->LoadTexture(texturePath);
 				}
 
 			}

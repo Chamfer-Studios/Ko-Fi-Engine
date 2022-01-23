@@ -34,6 +34,5 @@ public:
 	std::string materialPath;
 	//Crear un vector de uniforms con id, type y valor y guardarlos ahi para luego sacar los datos
 	std::vector<Uniform*> uniforms;
-	//std::vector<Texture> textures;
-	Texture texture;
+	std::vector<Texture> textures;
 };
