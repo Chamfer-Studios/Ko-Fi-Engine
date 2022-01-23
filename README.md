@@ -1,21 +1,24 @@
 # Ko-Fi Engine
 Ko-Fi Engine is a 3D game engine based on SDL and OpenGL, developed by Álex Ávila and Bosco Barber for the "Game Engines" subject in the Bachelor's degree in Video Game Design and Development at the CITM-UPC center, Barcelona.
 
-# Assignment 2
-
-## Overview
-For our second assignment the goal is to remove our dependency from FBX for running our games,
-organize resources coherently and apply the minimal optimizations of a graphics engine (frustum culling).
+# Brand-New Shaders Pipeline
+From Version 3.0 fordward Ko-Fi Engine uses Shaders to render our game objects geometry into the scene.
+##Features
+- You can double click a shader in the assets window to open the in-engine text editor. You can write or modify your own shaders and save them.
+- You can modify the shader uniform values through the inspector under the material menu item.
+- You can change, delete or add textures to the material component and then use them on your shader.
+- Editing a shader in-engine automatically compiles and applies the changes
+- We have created a water shader for you to test and a default shader with a albedo texture and albedo tint.
+- Compile error lines and messages are shown in the editor.
 
 ## Content
-- A scene with some houses, a floor and a camera is automatically loaded at the start.
+- A scene with some houses, a floor and lake is automatically loaded at the start.
 - The user is able to use the inspector to modify a GameObject:
     - Hierarchy: delete, reparent, create empty and create children.
     - Transform: translate, rotate and scale Game Objects.
     - Mesh: select or drop any imported mesh.
     - Texture: select or drop any imported texture.
     - Camera is a component with settings that can be modified.
-- GameObjects can be picked from the world using the mouse.
 - All meshes use a bounding volume (AABB) and can be discarded using Frustum Culling. This process is visualized in the editor (debug raycast and boxes).
 - Models, meshes and textures are saved to our own format (.sugar) under “Library” folder.
 - Scene can be serialized to a file that can be loaded.
