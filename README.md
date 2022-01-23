@@ -40,3 +40,8 @@ From Version 3.0 fordward Ko-Fi Engine uses Shaders to render our game objects g
 - Mouse Wheel: Zoom
 - F: Focus Object
 - ESC: Exit engine
+# Known Issues 🚧🚧
+- Primitives do not work at the moment
+- Frustum culling does not work after the shaders implementation due to projection rework.
+- Text editor sometimes goes crazy and keeps the delete action active. Text editor has problems with ctrl commands.
+- Importing objects from the assets directly can cause hierarchy selection problems
