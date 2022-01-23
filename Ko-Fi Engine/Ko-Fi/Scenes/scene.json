@@ -121,9 +121,16 @@
                         ]
                     },
                     {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/Meshes/Floor.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
                         "component_type": "material",
-                        "materialName": "cliff_rock",
-                        "materialPath": "Assets/Materials/cliff_rock.milk",
+                        "materialName": "",
+                        "materialPath": "",
                         "shaderPath": "Library/Shaders/default_shader.glsl",
                         "textures": [
                             {
@@ -142,13 +149,6 @@
                                 }
                             }
                         ]
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/Meshes/Floor.sugar",
-                        "path": "",
-                        "vertex_normals": false
                     }
                 ],
                 "id": 1,
@@ -210,9 +210,16 @@
                         ]
                     },
                     {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/Meshes/Water.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
                         "component_type": "material",
-                        "materialName": "cliff_rock",
-                        "materialPath": "Assets/Materials/cliff_rock.milk",
+                        "materialName": "",
+                        "materialPath": "",
                         "shaderPath": "Assets/Shaders/water_shader.glsl",
                         "textures": [
                             {
@@ -225,7 +232,7 @@
                                 "type": 35665,
                                 "value": {
                                     "x": 0.0,
-                                    "y": 0.30000001192092896,
+                                    "y": 0.0,
                                     "z": 1.0
                                 }
                             },
@@ -234,7 +241,7 @@
                                 "type": 35665,
                                 "value": {
                                     "x": 0.0,
-                                    "y": 0.6000000238418579,
+                                    "y": 0.5,
                                     "z": 1.0
                                 }
                             },
@@ -262,13 +269,6 @@
                                 "value": 0.0
                             }
                         ]
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/Meshes/Water.sugar",
-                        "path": "",
-                        "vertex_normals": false
                     }
                 ],
                 "id": 2,
@@ -392,9 +392,16 @@
                         ]
                     },
                     {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/Meshes/Chimney.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
                         "component_type": "material",
-                        "materialName": "Baker_house",
-                        "materialPath": "Assets/Materials/Baker_house.milk",
+                        "materialName": "",
+                        "materialPath": "",
                         "shaderPath": "Library/Shaders/default_shader.glsl",
                         "textures": [
                             {
@@ -413,13 +420,6 @@
                                 }
                             }
                         ]
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/Meshes/Chimney.sugar",
-                        "path": "",
-                        "vertex_normals": false
                     }
                 ],
                 "id": 4,
@@ -481,9 +481,16 @@
                         ]
                     },
                     {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/Meshes/HouseBody.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
                         "component_type": "material",
-                        "materialName": "Baker_house",
-                        "materialPath": "Assets/Materials/Baker_house.milk",
+                        "materialName": "",
+                        "materialPath": "",
                         "shaderPath": "Library/Shaders/default_shader.glsl",
                         "textures": [
                             {
@@ -502,13 +509,6 @@
                                 }
                             }
                         ]
-                    },
-                    {
-                        "component_type": "mesh",
-                        "faces_normals": false,
-                        "mesh": "Library/Meshes/HouseBody.sugar",
-                        "path": "",
-                        "vertex_normals": false
                     }
                 ],
                 "id": 5,

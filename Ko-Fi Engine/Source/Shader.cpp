@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include "ImGuiAppLog.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -18,6 +19,8 @@ unsigned int shader::CompileShader(unsigned int type, const std::string& source)
 		glGetShaderInfoLog(id, length, &length, message);
 		std::cout << "Failed to compile shader!" << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << std::endl;
 		std::cout << message << std::endl;
+		appLog->AddLog("Failed to compile shader! %s\n", (type == GL_VERTEX_SHADER ? "vertex" : "fragment"));
+		appLog->AddLog(" %s\n", message);
 		glDeleteShader(id);
 		return 0;
 	}
