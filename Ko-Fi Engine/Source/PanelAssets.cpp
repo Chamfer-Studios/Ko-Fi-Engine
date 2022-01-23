@@ -103,13 +103,13 @@ bool PanelAssets::Update()
 
 		if (ImGui::BeginMenu("Create")) {
 			if (ImGui::MenuItem("Material")) {
-				std::string fileName =  FileExsists("/material.milk",1);
+				std::string fileName =  FileExistsMaterial("/material.milk",1);
 			
 				std::string path = currentDir.string() +fileName;
 				editor->engine->GetFileSystem()->CreateMaterial(path.c_str());
 			}
 			if (ImGui::MenuItem("Shader")) {
-				std::string fileName = FileExsists("/shader.cream", 1);
+				std::string fileName = FileExsistsShader("/shader.glsl", 1);
 
 				std::string path = currentDir.string() + fileName;
 				editor->engine->GetFileSystem()->CreateShader(path.c_str());
@@ -155,7 +155,7 @@ void PanelAssets::LoadIcons(TextureIcon& texture, const char* path)
 	stbi_image_free(pixels);
 }
 
-std::string PanelAssets::FileExsists(std::string fileName,int i)
+std::string PanelAssets::FileExistsMaterial(std::string fileName,int i)
 {
 	int j = i;
 	std::string name = "";
@@ -165,7 +165,25 @@ std::string PanelAssets::FileExsists(std::string fileName,int i)
 		name = "/material";
 		number = std::to_string(j);
 		ext = ".milk";
-		return FileExsists(name + " ("+number+") " + ext, j+1);
+		return FileExistsMaterial(name + " ("+number+") " + ext, j+1);
+	}
+	else {
+		return fileName;
+	}
+	return name + number + ext;
+}
+
+std::string PanelAssets::FileExsistsShader(std::string fileName, int i)
+{
+	int j = i;
+	std::string name = "";
+	std::string number = "";
+	std::string ext = "";
+	if (std::filesystem::exists(currentDir.string() + fileName)) {
+		name = "/shader";
+		number = std::to_string(j);
+		ext = ".glsl";
+		return FileExsistsShader(name + " (" + number + ") " + ext, j + 1);
 	}
 	else {
 		return fileName;
