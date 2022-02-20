@@ -152,9 +152,11 @@
     <ClCompile Include="Source\color_node_editor.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\ComponentCamera.cpp" />
+    <ClCompile Include="Source\ComponentCanvas.cpp" />
     <ClCompile Include="Source\ComponentInfo.cpp" />
     <ClCompile Include="Source\ComponentMaterial.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />
+    <ClCompile Include="Source\ComponentTransform2D.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
@@ -220,6 +222,7 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\UI.cpp" />
     <ClCompile Include="Source\ViewportFrameBuffer.cpp" />
     <ClCompile Include="Source\PanelAbout.cpp" />
     <ClCompile Include="Source\PanelChooser.cpp" />
@@ -240,10 +243,12 @@
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentCamera.h" />
+    <ClInclude Include="Source\ComponentCanvas.h" />
     <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
+    <ClInclude Include="Source\ComponentTransform2D.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
     <ClInclude Include="Source\Engine.h" />
@@ -341,6 +346,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />
     <ClInclude Include="Source\PanelAssets.h" />

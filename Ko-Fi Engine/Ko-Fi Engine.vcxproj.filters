@@ -83,6 +83,9 @@
     <Filter Include="Source\Editor\Panels\Example">
       <UniqueIdentifier>{3e536255-1b8b-4f95-85bc-74a6bf41e6ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Components\UI">
+      <UniqueIdentifier>{f14257b0-f5e3-4dcf-9d8e-c73dcdec444c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -342,6 +345,15 @@
     </ClCompile>
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentTransform2D.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentCanvas.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -752,6 +764,15 @@
     </ClInclude>
     <ClInclude Include="Source\AdditionNode.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentTransform2D.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentCanvas.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
