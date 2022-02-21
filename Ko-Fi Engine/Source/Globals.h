@@ -26,6 +26,7 @@ void log(const char file[], int line, const char* format, ...);
 typedef unsigned int uint;
 typedef unsigned __int32 uint32;
 typedef unsigned __int64 uint64;
+typedef unsigned long long UID;
 
 enum update_status
 {
@@ -33,6 +34,10 @@ enum update_status
 	UPDATE_STOP,
 	UPDATE_ERROR
 };
+
+// Paths
+#define ASSETS_FOLDER "/Assets/"
+#define LIBRARY_FOLDER "/Library/"
 
 // Configuration -----------
 #define SCREEN_WIDTH 1280

@@ -71,9 +71,6 @@
     <Filter Include="Libs\stb_image">
       <UniqueIdentifier>{952fafdd-82fe-45b5-917b-46c6e6a0c5df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Shaders">
-      <UniqueIdentifier>{ef5e0122-2c93-4faf-bfa5-7c2778cbb5a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libs\ImGuiNodeEditor">
       <UniqueIdentifier>{4fc7fceb-aaa4-484d-8f4e-37072c0b495e}</UniqueIdentifier>
     </Filter>
@@ -82,6 +79,9 @@
     </Filter>
     <Filter Include="Source\Editor\Panels\Example">
       <UniqueIdentifier>{3e536255-1b8b-4f95-85bc-74a6bf41e6ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resources">
+      <UniqueIdentifier>{b584c71f-4e5f-403c-ac2d-424816ead254}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -265,9 +265,6 @@
     <ClCompile Include="Source\PanelChooser.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>Source\GameObject</Filter>
     </ClCompile>
@@ -322,12 +319,6 @@
     <ClCompile Include="Source\PanelAssets.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Shader.cpp">
-      <Filter>Source\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>Source\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PanelNodeEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
@@ -342,6 +333,21 @@
     </ClCompile>
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shader.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Source\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -651,9 +657,6 @@
     <ClInclude Include="Source\PanelChooser.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject.h">
       <Filter>Source\GameObject</Filter>
     </ClInclude>
@@ -711,12 +714,6 @@
     <ClInclude Include="Source\PanelAssets.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Shader.h">
-      <Filter>Source\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Texture.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PanelNodeEditor.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
@@ -725,9 +722,6 @@
     </ClInclude>
     <ClInclude Include="Source\External\imgui_node_editor\imnodes_internal.h">
       <Filter>Libs\ImGuiNodeEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Material.h">
-      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
@@ -752,6 +746,24 @@
     </ClInclude>
     <ClInclude Include="Source\AdditionNode.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ResourceManager.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource.h">
+      <Filter>Source\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
