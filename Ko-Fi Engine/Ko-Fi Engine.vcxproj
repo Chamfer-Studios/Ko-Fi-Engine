@@ -157,6 +157,8 @@
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />
+    <ClCompile Include="Source\Emitter.cpp" />
+    <ClCompile Include="Source\EmitterInstance.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\External\imgui\imgui.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_demo.cpp" />
@@ -216,6 +218,9 @@
     <ClCompile Include="Source\PanelNodeEditor.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
+    <ClCompile Include="Source\ComponentParticle.cpp" />
+    <ClCompile Include="Source\Particle Module.cpp" />
+    <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
@@ -246,6 +251,8 @@
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
+    <ClInclude Include="Source\Emitter.h" />
+    <ClInclude Include="Source\EmitterInstance.h" />
     <ClInclude Include="Source\Engine.h" />
     <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\EngineConfig.h" />
@@ -348,6 +355,9 @@
     <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\PanelTextEditor.h" />
+    <ClInclude Include="Source\ComponentParticle.h" />
+    <ClInclude Include="Source\Particle.h" />
+    <ClInclude Include="Source\ParticleModule.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Shader.h" />

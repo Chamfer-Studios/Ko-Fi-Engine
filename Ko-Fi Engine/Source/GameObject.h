@@ -8,6 +8,7 @@ class KoFiEngine;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentInfo;
+class ComponentParticle;
 
 class GameObject
 {
@@ -18,7 +19,7 @@ public:
 
 	bool Start();
 	bool PreUpdate();
-	bool Update();
+	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 

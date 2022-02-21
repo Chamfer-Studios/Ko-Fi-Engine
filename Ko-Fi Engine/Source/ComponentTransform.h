@@ -10,7 +10,7 @@ public:
 	ComponentTransform(GameObject* parent);
 	~ComponentTransform();
 
-	bool Update() override;
+	bool Update(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser); // OngGui
 
 	void SetPosition(const float3& newPosition);

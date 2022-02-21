@@ -83,6 +83,12 @@
     <Filter Include="Source\Editor\Panels\Example">
       <UniqueIdentifier>{3e536255-1b8b-4f95-85bc-74a6bf41e6ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Components\Particles">
+      <UniqueIdentifier>{23df9338-b10c-4b88-bff5-2556cdb3aae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Helpers\Particles">
+      <UniqueIdentifier>{fdcdaa78-ce37-43e6-bc8e-4a0a368d8e0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -342,6 +348,21 @@
     </ClCompile>
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentParticle.cpp">
+      <Filter>Source\GameObject\Components\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EmitterInstance.cpp">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Particle.cpp">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Emitter.cpp">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Particle Module.cpp">
+      <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -752,6 +773,21 @@
     </ClInclude>
     <ClInclude Include="Source\AdditionNode.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentParticle.h">
+      <Filter>Source\GameObject\Components\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EmitterInstance.h">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Particle.h">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Emitter.h">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleModule.h">
+      <Filter>Source\Helpers\Particles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

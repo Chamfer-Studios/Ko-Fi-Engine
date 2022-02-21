@@ -19,7 +19,7 @@ public:
 	~ComponentCamera();
 
 	bool Start() override;
-	bool Update() override;
+	bool Update(float dt) override;
 	bool CleanUp() override;
 
 	void LookAt(const float3& point);

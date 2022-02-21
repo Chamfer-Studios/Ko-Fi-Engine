@@ -93,7 +93,7 @@ bool ComponentMesh::Start()
 	return true;
 }
 
-bool ComponentMesh::Update()
+bool ComponentMesh::Update(float dt)
 {
 
 	return true;

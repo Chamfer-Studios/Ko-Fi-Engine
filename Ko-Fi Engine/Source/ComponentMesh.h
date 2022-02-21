@@ -28,7 +28,7 @@ public:
 	inline float GetSphereRadius() const { return radius; }
 
 	bool Start();
-	bool Update();
+	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 

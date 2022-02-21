@@ -7,6 +7,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentInfo.h"
+#include "ComponentParticle.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int id, KoFiEngine* engine, const char* name)
@@ -52,12 +53,12 @@ bool GameObject::PreUpdate()
 	return ret;
 }
 
-bool GameObject::Update()
+bool GameObject::Update(float dt)
 {
 	bool ret = true;
 	for (Component* component : components)
 	{
-		ret = component->Update();
+		ret = component->Update(dt);
 	}
 	return ret;
 }

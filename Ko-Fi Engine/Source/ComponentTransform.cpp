@@ -20,7 +20,7 @@ ComponentTransform::~ComponentTransform()
 {
 }
 
-bool ComponentTransform::Update()
+bool ComponentTransform::Update(float dt)
 {
 	if (isDirty)
 	{
