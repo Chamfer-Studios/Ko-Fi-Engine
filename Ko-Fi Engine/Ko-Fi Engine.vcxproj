@@ -221,6 +221,7 @@
     <ClCompile Include="Source\ComponentParticle.cpp" />
     <ClCompile Include="Source\Particle Module.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
+    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
@@ -358,6 +359,7 @@
     <ClInclude Include="Source\ComponentParticle.h" />
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleModule.h" />
+    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Shader.h" />

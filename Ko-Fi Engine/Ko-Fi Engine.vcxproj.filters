@@ -364,6 +364,9 @@
     <ClCompile Include="Source\Particle Module.cpp">
       <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
+    <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -788,6 +791,9 @@
     </ClInclude>
     <ClInclude Include="Source\ParticleModule.h">
       <Filter>Source\Helpers\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

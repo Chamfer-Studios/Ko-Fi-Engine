@@ -77,6 +77,7 @@ public:
 	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);
 	Color ColorLerp(float current);
+	bool EditColor(FadeColor& color, uint pos = 0);
 
 public:
 	std::vector<FadeColor> colorOverTime;

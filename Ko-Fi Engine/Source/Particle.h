@@ -4,6 +4,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "ComponentTransform.h"
 #include "Color.h"
+#include "Globals.h"
 
 class Particle
 {
@@ -12,6 +13,7 @@ public:
 	~Particle();
 
 	bool Update(float dt);
+	void Draw(uint id, uint indexNum);
 
 public:
 	bool active = false;
@@ -19,7 +21,7 @@ public:
 	//float4x4 transformMatrix;
 	//float4x4 transformMatrixLocal;
 	float3 position;
-	//Quat rotation;
+	Quat rotation;
 	//float3 rotationEuler;
 	float3 scale;
 

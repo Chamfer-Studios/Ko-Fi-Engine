@@ -11,6 +11,7 @@
 class GameObject;
 struct PhysBody3D;
 struct PhysMotor3D;
+class TMPPlane;
 
 class SceneIntro : public Scene
 {
@@ -26,6 +27,9 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+public:
+	TMPPlane* plane = nullptr;
+
 private:
 	int random = 0;
 	JsonHandler jsonHandler;
@@ -33,9 +37,42 @@ private:
 
 	// Temporal to manage the use of the camera
 	GameObject* camera = nullptr;
+};
 
+// TMP
+/////////////////////////////////////////////////////////////
 
+#include "par_shapes.h"
 
+class TMPPlane
+{
+public:
+	TMPPlane(uint uid);
+	~TMPPlane();
+
+	void GenerateBuffers();
+
+private:
+	void CopyParMesh(par_shapes_mesh* parMesh);
+
+public:
+	uint uid = 0;
+
+	uint vertexNum = 0;
+	std::vector<float3> vertices;
+
+	uint normalNum = 0;
+	std::vector<float3> normals;
+
+	std::vector<float2> texCoords;
+
+	uint indexNum = 0;
+	std::vector<uint> indices;
+
+	uint vertexBuf = 0;
+	uint indexBuf = 0;
+	uint textureBuf = 0;
+	uint normalsBuf = 0;
 };
 
 #endif SCENE_INTRO_H // SCENE_INTRO_H

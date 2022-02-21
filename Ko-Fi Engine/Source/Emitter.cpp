@@ -3,7 +3,7 @@
 Emitter::Emitter()
 {
 	texture = new Texture();
-	path = "Ko-Fi Engine\Ko-Fi Engine\Ko-Fi\Assets\Textures";
+	path = "Assets\Textures\firework_projectile.png";
 	texture->SetUpTexture(path);
 	CreateModule<EmitterDefault>();
 }
