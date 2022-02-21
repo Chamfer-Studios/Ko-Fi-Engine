@@ -59,17 +59,18 @@ public:
 	virtual void OnGui() {}
 
 	// Methods to manage observers
-	void addObserver(Module* observer)
+	void AddObserver(Module* observer)
 	{
 		observers.push_back(observer);
 	}
 
-	void removeObserver(Module* observer)
+	void RemoveObserver(Module* observer)
 	{
 		observers.remove(observer);
 	}
 
-	virtual void onNotify(const Event& event) = 0;
+	// Method to receive and manage events
+	virtual void OnNotify(const Event& event) = 0;
 
 protected:
 	// Method to notify events to other modules in order to manage them
@@ -77,7 +78,7 @@ protected:
 	{
 		for (std::list<Module*>::iterator observer = observers.begin(); observer != observers.end(); observer++)
 		{
-			(*observer)->onNotify(event);
+			(*observer)->OnNotify(event);
 		}
 	}
 

@@ -99,6 +99,12 @@ bool Window::CleanUp()
 	return true;
 }
 
+// Method to receive and manage events
+void Window::OnNotify(const Event& event)
+{
+	// Manage events
+}
+
 // Set new window title
 void Window::SetTitle(const char* new_title)
 {

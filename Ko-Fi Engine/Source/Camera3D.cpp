@@ -48,15 +48,6 @@ bool Camera3D::Start()
 }
 
 // -----------------------------------------------------------------
-bool Camera3D::CleanUp()
-{
-	CONSOLE_LOG("Cleaning camera");
-	appLog->AddLog("Cleaning camera\n");
-
-	return true;
-}
-
-// -----------------------------------------------------------------
 bool Camera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
@@ -202,6 +193,21 @@ bool Camera3D::Update(float dt)
 	//}
 
 	return true;
+}
+
+// -----------------------------------------------------------------
+bool Camera3D::CleanUp()
+{
+	CONSOLE_LOG("Cleaning camera");
+	appLog->AddLog("Cleaning camera\n");
+
+	return true;
+}
+
+// Method to receive and manage events
+void Camera3D::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 // -----------------------------------------------------------------

@@ -49,6 +49,9 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
+
 	void AddPanel(Panel* panel);
 	void RemovePanel(Panel* panel);
 	PanelChooser* GetPanelChooser();
@@ -56,7 +59,6 @@ public:
 	void MarkdownExample();
 	void UpdatePanelsState();
 	void OpenTextEditor(std::string path);
-
 
 	template<class T> T* GetPanel()
 	{

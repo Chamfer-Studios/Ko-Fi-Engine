@@ -307,9 +307,6 @@
     <ClCompile Include="Source\PanelGame.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Source\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PanelRuntimeState.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
@@ -342,6 +339,9 @@
     </ClCompile>
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -696,9 +696,6 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Source\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Source\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PanelRuntimeState.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
@@ -755,6 +752,9 @@
     </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Source\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -21,7 +21,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Changae title
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
+
+	// Change title
 	void SetTitle(const char* title);
 
 	void AdjustBrightness(float brightness);

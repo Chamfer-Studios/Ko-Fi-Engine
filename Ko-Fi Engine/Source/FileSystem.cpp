@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <iomanip>
 #include "JsonHandler.h"
+
 FileSystem::FileSystem(KoFiEngine* engine)
 {
 	name = "ModelLoader";
@@ -72,6 +73,12 @@ bool FileSystem::CleanUp()
 	// detach log stream
 
 	return true;
+}
+
+// Method to receive and manage events
+void FileSystem::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 std::string FileSystem::OpenFile(const char* path) const

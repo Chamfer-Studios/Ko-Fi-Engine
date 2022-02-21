@@ -16,6 +16,8 @@ public:
 	bool PreUpdate(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
 
 public:
 	uint frameBuffer = 0;

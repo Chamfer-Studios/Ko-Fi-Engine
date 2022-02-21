@@ -109,6 +109,12 @@ bool SceneManager::CleanUp()
 	return ret;
 }
 
+// Method to receive and manage events
+void SceneManager::OnNotify(const Event& event)
+{
+	// Manage events
+}
+
 bool SceneManager::PrepareUpdate()
 {
 	bool ret = true;

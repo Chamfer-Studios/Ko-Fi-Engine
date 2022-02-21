@@ -182,6 +182,12 @@ bool Renderer3D::CleanUp()
 	return true;
 }
 
+// Method to receive and manage events
+void Renderer3D::OnNotify(const Event& event)
+{
+	// Manage events
+}
+
 bool Renderer3D::GetVsync() const
 {
 	return vsync;

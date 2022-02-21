@@ -50,6 +50,9 @@ public:
 	// Called before quitting
 	virtual bool CleanUp();
 
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
+
 	bool PrepareUpdate();
 	bool FinishUpdate();
 

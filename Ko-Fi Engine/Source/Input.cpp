@@ -208,3 +208,9 @@ bool Input::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
+
+// Method to receive and manage events
+void Input::OnNotify(const Event& event)
+{
+	// Manage events
+}
