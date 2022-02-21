@@ -753,5 +753,8 @@
     <ClInclude Include="Source\AdditionNode.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -24,6 +24,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	engineConfig = new EngineConfig();
 	PERF_START(ptimer);
 	Importer::GetInstance()->SetEngine(this);
+
 	window = new Window(this);
 	fileSystem = new FileSystem(this);
 	input = new Input(this);

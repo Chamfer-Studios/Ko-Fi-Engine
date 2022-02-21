@@ -2,8 +2,9 @@
 #define __MODULE_H__
 
 #include "SString.h"
-
 #include "JsonHandler.h"
+#include "Event.h"
+#include <list>
 
 class GuiControl;
 enum class GuiControlState;
@@ -57,10 +58,37 @@ public:
 
 	virtual void OnGui() {}
 
+	// Methods to manage observers
+	void addObserver(Module* observer)
+	{
+		observers.push_back(observer);
+	}
+
+	void removeObserver(Module* observer)
+	{
+		observers.remove(observer);
+	}
+
+	virtual void onNotify(const Event& event) = 0;
+
+protected:
+	// Method to notify events to other modules in order to manage them
+	void notify(const Event& event)
+	{
+		for (std::list<Module*>::iterator observer = observers.begin(); observer != observers.end(); observer++)
+		{
+			(*observer)->onNotify(event);
+		}
+	}
+
 public:
 	SString name;
 	bool active;
 
+private:
+	// To keep track of the observers of each module
+	std::list<Module*> observers;
+	int numObservers;
 };
 
 #endif // __MODULE_H__

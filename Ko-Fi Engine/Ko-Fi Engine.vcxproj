@@ -235,6 +235,7 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Event.h" />
     <ClInclude Include="Source\AdditionNode.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Color.h" />

@@ -17,7 +17,6 @@
 
 #include <imgui_impl_sdl.h>
 
-
 #define MAX_KEYS 300
 
 Input::Input(KoFiEngine* engine) : Module()
@@ -173,31 +172,21 @@ bool Input::PreUpdate(float dt)
 			{
 				if (tmp.find(".fbx") != std::string::npos)
 				{
-					
 					Importer::GetInstance()->ImportModel(tmp.c_str());
 					//engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
-
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{
 					// Apply texture
 					if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
 					{
-						
-							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-			
-							if (go->GetComponent<ComponentMaterial>()) {
-								ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
-								cMat->LoadTexture(tmp.c_str());
+						GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 
-							}
-	
-							
-								
-							
+						if (go->GetComponent<ComponentMaterial>()) {
+							ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
+							cMat->LoadTexture(tmp.c_str());
+						}
 					}
-					
-					
 				}
 			}
 			break;
