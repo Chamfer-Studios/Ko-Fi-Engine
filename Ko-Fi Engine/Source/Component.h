@@ -12,7 +12,8 @@ enum class ComponentType
 	MATERIAL,
 	INFO,
 	CAMERA,
-	TRANSFORM2D
+	TRANSFORM2D,
+	IMAGE
 };
 
 class Component

@@ -75,7 +75,6 @@ public:
 	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
 	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
 	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
-
 public:
 	bool active;
 

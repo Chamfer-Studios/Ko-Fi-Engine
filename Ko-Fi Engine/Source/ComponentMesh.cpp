@@ -198,6 +198,45 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 	this->mesh = mesh;
 }
 
+void ComponentMesh::SetMesh(par_shapes_mesh* parMesh)
+{
+	mesh->verticesSizeBytes = parMesh->npoints * 3 * sizeof(float);
+	mesh->indicesSizeBytes = parMesh->ntriangles * 3 * 3 * sizeof(unsigned int);
+	numNormalFaces = parMesh->ntriangles;
+	vertices.resize(numVertices);
+	normals.resize(numVertices);
+	indices.resize(numIndices);
+	par_shapes_compute_normals(parMesh);
+
+	// Copy Texture Coords
+	// TexCoords(u,v|u,v|u,v)
+	for (size_t i = 0; i < numVertices * 2; i += 2)
+	{
+		if (parMesh->tcoords != nullptr) {
+			float u = *(parMesh->tcoords + i);
+			float v = *(parMesh->tcoords + (i + 1));
+			texCoords.push_back((float2(*(parMesh->tcoords + i), *(parMesh->tcoords + (i + 1)))));
+		}
+	}
+
+	for (size_t i = 0; i < numVertices; ++i)
+	{
+		memcpy(&vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);
+		memcpy(&normals[i], &parMesh->normals[i * 3], sizeof(float) * 3);
+	}
+	for (size_t i = 0; i < indices.size(); ++i)
+	{
+		indices[i] = parMesh->triangles[i];
+	}
+	memcpy(&normals[0], parMesh->normals, numVertices);
+
+	par_shapes_free_mesh(parMesh);
+
+	GenerateBuffers();
+	ComputeNormals();
+	GenerateBounds();
+}
+
 Mesh* ComponentMesh::GetMesh()
 {
 	return mesh;
