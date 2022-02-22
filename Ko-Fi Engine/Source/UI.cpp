@@ -6,8 +6,12 @@
 #include "GameObject.h"
 #include "Editor.h"
 #include "ImGuiAppLog.h"
+#include "Camera3D.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 #include "ComponentMesh.h"
+#include "ComponentTransform2D.h"
 
 #include <queue>
 
@@ -31,25 +35,25 @@ bool UI::PreUpdate(float dt)
 	return true;
 }
 
-bool UI::Update(float dt)
+bool UI::PostUpdate(float dt)
 {
 	return true;
 
-	/*float3 right = App->camera->right;
-	float3 up = App->camera->up;
-	float3 front = App->camera->front;
-	float3 position = App->camera->position;
+	float3 right = engine->GetCamera3D()->right;
+	float3 up = engine->GetCamera3D()->up;
+	float3 front = engine->GetCamera3D()->front;
+	float3 position = engine->GetCamera3D()->position;
 
-	App->camera->position = { 0, 0, 2 };
-	App->camera->LookAt({ 0, 0, 0 });
+	engine->GetCamera3D()->position = { 0, 0, 2 };
+	engine->GetCamera3D()->LookAt({ 0, 0, 0 });
 
-	App->camera->projectionIsDirty = true;
-	App->camera->CalculateViewMatrix();
+	engine->GetCamera3D()->projectionIsDirty = true;
+	engine->GetCamera3D()->CalculateViewMatrix();
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->viewMatrix.Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
 
 	GLint viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
@@ -72,7 +76,7 @@ bool UI::Update(float dt)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	std::queue<GameObject*> S;
-	for (GameObject* child : App->scene->root->children)
+	for (GameObject* child : engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren())
 	{
 		if (child->active)
 			S.push(child);
@@ -82,10 +86,10 @@ bool UI::Update(float dt)
 	{
 		GameObject* go = S.front();
 		if (go->GetComponent<ComponentTransform2D>() != nullptr) {
-			go->Update(dt);
+			go->PostUpdate(dt);
 		}
 		S.pop();
-		for (GameObject* child : go->children)
+		for (GameObject* child : go->GetChildren())
 		{
 			if (child->active)
 				S.push(child);
@@ -99,24 +103,19 @@ bool UI::Update(float dt)
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 
-	App->camera->right = right;
-	App->camera->up = up;
-	App->camera->front = front;
-	App->camera->position = position;
+	engine->GetCamera3D()->right = right;
+	engine->GetCamera3D()->up = up;
+	engine->GetCamera3D()->front = front;
+	engine->GetCamera3D()->position = position;
 
-	App->camera->projectionIsDirty = true;
-	App->camera->CalculateViewMatrix();
+	engine->GetCamera3D()->projectionIsDirty = true;
+	engine->GetCamera3D()->CalculateViewMatrix();
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->viewMatrix.Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
 
-	return UPDATE_CONTINUE;*/
-}
-
-bool UI::PostUpdate(float dt)
-{
 	return true;
 }
 

@@ -10,7 +10,7 @@
 
 #include "PanelChooser.h"
 
-ComponentTransform2D::ComponentTransform2D(KoFiEngine* engine, GameObject* parent) : Component(parent)
+ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::TRANSFORM2D;
 
@@ -20,8 +20,6 @@ ComponentTransform2D::ComponentTransform2D(KoFiEngine* engine, GameObject* paren
 	pivot = { 0.5f, 0.5f };
 	rotation = { 0.0f,0.f,0.f };
 	anchor = Anchor::CENTER;
-
-	this->engine = engine;
 }
 
 bool ComponentTransform2D::Update()
@@ -108,8 +106,8 @@ void ComponentTransform2D::GetRealPosition(float2& realPosition, bool ignoreCanv
 
 void ComponentTransform2D::GetRealSize(float2& realSize)
 {
-	float propX = engine->GetUI()->uiCameraViewport[2] / engine->GetEditor()->lastViewportSize.x;
-	float propY = engine->GetUI()->uiCameraViewport[3] / engine->GetEditor()->lastViewportSize.y;
+	float propX = owner->GetEngine()->GetUI()->uiCameraViewport[2] / owner->GetEngine()->GetEditor()->lastViewportSize.x;
+	float propY = owner->GetEngine()->GetUI()->uiCameraViewport[3] / owner->GetEngine()->GetEditor()->lastViewportSize.y;
 
 	realSize.x = size.x * propX;
 	realSize.y = size.y * propY;
@@ -130,11 +128,11 @@ float2 ComponentTransform2D::GetCanvasCenter()
 
 bool ComponentTransform2D::CheckMouseInsideBounds()
 {
-	float2 mousePosition = { (float)engine->GetInput()->GetMouseX(), SCREEN_HEIGHT - (float)engine->GetInput()->GetMouseY()};
+	float2 mousePosition = { (float)owner->GetEngine()->GetInput()->GetMouseX(), SCREEN_HEIGHT - (float)owner->GetEngine()->GetInput()->GetMouseY()};
 
-	float2 uiMousePosition = engine->GetUI()->GetUINormalizedMousePosition();
-	uiMousePosition.x = uiMousePosition.x / engine->GetEditor()->lastViewportSize.x * SCREEN_WIDTH;
-	uiMousePosition.y = uiMousePosition.y / engine->GetEditor()->lastViewportSize.y * SCREEN_HEIGHT;
+	float2 uiMousePosition = owner->GetEngine()->GetUI()->GetUINormalizedMousePosition();
+	uiMousePosition.x = uiMousePosition.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * SCREEN_WIDTH;
+	uiMousePosition.y = uiMousePosition.y / owner->GetEngine()->GetEditor()->lastViewportSize.y * SCREEN_HEIGHT;
 
 	float2 realPos;
 	GetRealPosition(realPos, false);
@@ -215,7 +213,7 @@ float2 ComponentTransform2D::GetRelativeAnchorPosition(Anchor anchor)
 	GetRealSize(realSize);
 
 	float2 anchorPosition = GetAnchorPosition(anchor);
-	float2 bottomLeft = { realPosition.x + engine->GetEditor()->scenePanelOrigin.x, realPosition.y + engine->GetEditor()->scenePanelOrigin.y };
+	float2 bottomLeft = { realPosition.x + owner->GetEngine()->GetEditor()->scenePanelOrigin.x, realPosition.y + owner->GetEngine()->GetEditor()->scenePanelOrigin.y };
 
 	return anchorPosition - bottomLeft;
 }

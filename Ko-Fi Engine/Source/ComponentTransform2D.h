@@ -58,7 +58,4 @@ public:
 	float2 size = { 0, 0 };
 
 	Anchor anchor = Anchor::CENTER;
-
-protected:
-	KoFiEngine* engine = nullptr;
 };

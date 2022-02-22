@@ -57,6 +57,7 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
 {
+	this->mesh = new Mesh();
 	this->mesh->verticesSizeBytes = parMesh->npoints * sizeof(float3);
 	this->mesh->indicesSizeBytes = parMesh->ntriangles * 3 * sizeof(uint);
 	this->mesh->normalsSizeBytes = parMesh->ntriangles * 3 * sizeof(float3);

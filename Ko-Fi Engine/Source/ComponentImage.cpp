@@ -6,6 +6,10 @@
 #include "Camera3D.h"
 #include "Engine.h"
 
+#include "PanelChooser.h"
+
+#include "par_shapes.h"
+
 #include "MathGeoLib/Math/Quat.h"
 
 #include "glew.h"
@@ -35,7 +39,12 @@ ComponentImage::~ComponentImage()
 
 bool ComponentImage::Update()
 {
-	glBindTexture(GL_TEXTURE_2D, 0); // Bindear Textura a Default
+	return true;
+}
+
+bool ComponentImage::PostUpdate(float dt)
+{
+	/*glBindTexture(GL_TEXTURE_2D, 0); // Bindear Textura a Default
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, plane->GetMesh()->id_vertex);
@@ -45,13 +54,15 @@ bool ComponentImage::Update()
 	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
 
 	GLint viewport[4];
-	glGetIntegerv(GL_VIEWPORT, viewport);
+	glGetIntegerv(GL_VIEWPORT, viewport);*/
+
+	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
 
 	/*float3 pos = { cTransform->position, App->camera->nearPlaneDistance + 0.1f };*/
 	/*float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };*/
 	float2 realPosition;
 	cTransform->GetRealPosition(realPosition);
-	float3 pos = { realPosition.x, realPosition.y, this->owner->GetEngine()->GetCamera3D()->nearPlaneDistance + 0.1f};
+	float3 pos = { realPosition.x, realPosition.y, this->owner->GetEngine()->GetCamera3D()->nearPlaneDistance + 0.1f };
 	float2 realSize;
 	cTransform->GetRealSize(realSize);
 	float3 size = { realSize.x, realSize.y, 1.0f };
@@ -81,11 +92,8 @@ bool ComponentImage::Update()
 
 	glPushMatrix();
 	glMultMatrixf(transform3D.Transposed().ptr());
-	glDrawElements(GL_TRIANGLES, plane->GetMesh()->indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
+	plane->GetMesh()->Draw(owner);
 	glPopMatrix();
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	//-- Buffers--//
 
@@ -125,7 +133,7 @@ void ComponentImage::SetOpacity(float alpha)
 	imageColor.w -= alpha;
 }*/
 
-bool ComponentImage::InspectorDraw(PanelChooser* chooser)
+bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Image")) {
 		// Texture display
@@ -141,12 +149,26 @@ bool ComponentImage::InspectorDraw(PanelChooser* chooser)
 			ImGui::Image((ImTextureID)texture.GetTextureId(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 		}
 
+		if (panelChooser->IsReadyToClose("AddTextureImage")) {
+			if (panelChooser->OnChooserClosed() != nullptr) {
+				std::string path = panelChooser->OnChooserClosed();
+				//LoadTextureFromId(texture.textureID, path.c_str());
+				texture.SetUpTexture(path);
+			}
+		}
+
+		if (ImGui::Button("Set Texture")) {
+			panelChooser->OpenPanel("AddTextureImage", "png");
+		}
+
 		// Image color button
 		ImGui::Separator();
 		ImGui::ColorEdit4("##Image color", (float*)&imageColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_NoBorder | ImGuiColorEditFlags_AlphaPreviewHalf);
 		ImGui::SameLine();
 		ImGui::Text("Image color");
 	}
+
+	return true;
 }
 
 /*float4x4 ComponentImage::GetTransform()

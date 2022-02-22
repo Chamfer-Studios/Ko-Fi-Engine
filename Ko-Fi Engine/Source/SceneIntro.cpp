@@ -15,6 +15,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "ComponentTransform2D.h"
 #include "GameObject.h"
 //#include "Importer.h"
 #include "SceneManager.h"
@@ -66,7 +67,8 @@ bool SceneIntro::PreUpdate(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		go->PreUpdate();
+		if (go->GetComponent<ComponentTransform2D>() != nullptr)
+			go->PreUpdate();
 	}
 
 	return true;
@@ -77,7 +79,8 @@ bool SceneIntro::Update(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		go->Update();
+		if (go->GetComponent<ComponentTransform2D>() != nullptr)
+			go->Update();
 	}
 	//example::NodeEditorShow();
 
@@ -89,7 +92,8 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : this->gameObjectList)
 	{
-		go->PostUpdate(dt);
+		if (go->GetComponent<ComponentTransform2D>() != nullptr)
+			go->PostUpdate(dt);
 	}
 
 	engine->GetRenderer()->DrawRay();

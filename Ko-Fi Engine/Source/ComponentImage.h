@@ -24,6 +24,7 @@ public:
 	~ComponentImage();
 
 	bool Update() override;
+	bool PostUpdate(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	float4x4 GetTransform();

@@ -10,7 +10,7 @@ class KoFiEngine;
 
 class ComponentCanvas : public ComponentTransform2D {
 public:
-	ComponentCanvas(KoFiEngine* engine, GameObject* parent);
+	ComponentCanvas(GameObject* parent);
 
 	bool Update() override;
 
