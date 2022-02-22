@@ -37,8 +37,6 @@ bool UI::PreUpdate(float dt)
 
 bool UI::PostUpdate(float dt)
 {
-	return true;
-
 	float3 right = engine->GetCamera3D()->right;
 	float3 up = engine->GetCamera3D()->up;
 	float3 front = engine->GetCamera3D()->front;

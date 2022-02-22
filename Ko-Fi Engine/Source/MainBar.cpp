@@ -11,6 +11,7 @@
 #include "ComponentCamera.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
+#include "ComponentMaterial.h"
 #include "ComponentImage.h"
 
 MainBar::MainBar(Editor* editor)
@@ -118,6 +119,7 @@ bool MainBar::Update()
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 					go->SetName("Image");
 					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentMaterial>();
 					go->CreateComponent<ComponentImage>();
 				}
 				ImGui::EndMenu();

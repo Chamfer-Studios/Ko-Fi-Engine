@@ -3,6 +3,7 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
 #include "ComponentTransform2D.h"
+#include "ComponentMaterial.h"
 #include "Camera3D.h"
 #include "Engine.h"
 
@@ -73,41 +74,78 @@ bool ComponentImage::PostUpdate(float dt)
 
 	transform3D = transform3D * rotationQuat;
 
-	if (this->textureBufferId)
-	{
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, this->textureBufferId);
-		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-		glColor4f(imageColor.x, imageColor.y, imageColor.z, imageColor.w);
+	uint shader = owner->GetComponent<ComponentMaterial>()->GetShader();
+	glUseProgram(shader);
+	//Matrices
+	GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+	glUniformMatrix4fv(model_matrix, 1, GL_FALSE, transform3D.Transposed().ptr());
+
+	GLint projection_location = glGetUniformLocation(shader, "projection");
+	glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+
+	GLint view_location = glGetUniformLocation(shader, "view");
+	glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+
+	GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
+	glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+	float2 resolution = float2(1080.0f, 720.0f);
+	glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+	this->time += 0.02f;
+	glUniform1f(glGetUniformLocation(shader, "time"), this->time);
+
+	Material mat = owner->GetComponent<ComponentMaterial>()->GetMaterial();
+	for (Uniform* uniform : mat.uniforms) {
+		switch (uniform->type) {
+		case GL_FLOAT:
+		{
+			if (uniform->name != "time")
+				glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+
+		}
+		break;
+		case GL_FLOAT_VEC2:
+		{
+			if (uniform->name != "resolution")
+			{
+				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+				glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
+			}
+
+		}
+
+		break;
+		case GL_FLOAT_VEC3:
+		{
+			UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+			glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
+		}
+
+		break;
+		case GL_FLOAT_VEC4:
+		{
+			UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+			glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
+		}
+
+		break;
+		case GL_INT:
+		{
+			glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+
+		}
+
+		break;
+
+		break;
+		}
 	}
 
-	if (texture.GetTextureId() != 0)
-	{
-		glBindTexture(GL_TEXTURE_2D, texture.GetTextureId());
-	}
-	else // Called once when created an object. Set white fallback as a default texture
-	{
-		//glBindTexture(GL_TEXTURE_2D, owner->GetEngine()->);
-	}
-
-	glPushMatrix();
-	glMultMatrixf(transform3D.Transposed().ptr());
 	plane->GetMesh()->Draw(owner);
-	glPopMatrix();
+	plane->GenerateGlobalBoundingBox();
+	plane->DrawBoundingBox(plane->GetGlobalAABB(), float3(1.0f, 0.0f, 0.0f));
 
-	//-- Buffers--//
+	glUseProgram(0);
 
-	//-- Textures --//
-	if (this->textureBufferId)
-	{
-		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	}
-	//App->textures->Load(texture.name);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	//--Disables States--//
-	glDisableClientState(GL_VERTEX_ARRAY);
 	return true;
 }
 

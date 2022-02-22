@@ -42,6 +42,7 @@ private:
 
 	std::string texturePath;
 	uint textureBufferId = 0;
+	float time = 0;
 
 };
 
