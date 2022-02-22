@@ -20,7 +20,7 @@ public:
 		BOTTOM_RIGHT,
 	};
 public:
-	ComponentTransform2D(KoFiEngine* engine, GameObject* parent);
+	ComponentTransform2D(GameObject* parent);
 
 	bool Update() override;
 	virtual bool InspectorDraw(PanelChooser* chooser) override;

@@ -355,6 +355,9 @@
     <ClCompile Include="Source\ComponentCanvas.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentImage.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -772,6 +775,9 @@
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentCanvas.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentImage.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>

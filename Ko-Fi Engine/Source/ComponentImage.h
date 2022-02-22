@@ -12,6 +12,9 @@
 #include <string.h>
 #include <vector>
 
+#include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/float4.h"
+
 class ComponentMesh;
 struct TextureObject;
 
@@ -31,9 +34,11 @@ public:
 
 	ComponentMesh* plane = nullptr;
 
-	//float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
+	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
 	Texture texture;
 private:
+	float4x4 transform3D;
+
 	std::string texturePath;
 	uint textureBufferId = 0;
 

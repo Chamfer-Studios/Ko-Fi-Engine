@@ -9,6 +9,9 @@
 #include "Primitive.h"
 #include "Importer.h"
 #include "ComponentCamera.h"
+#include "ComponentCanvas.h"
+#include "ComponentTransform2D.h"
+#include "ComponentImage.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -101,6 +104,21 @@ bool MainBar::Update()
 				if (ImGui::MenuItem("Pyramid"))
 				{
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("UI"))
+			{
+				if (ImGui::MenuItem("Canvas")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+					go->SetName("Canvas");
+					go->CreateComponent<ComponentCanvas>();
+				}
+				if (ImGui::MenuItem("Image")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+					go->SetName("Image");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentImage>();
 				}
 				ImGui::EndMenu();
 			}

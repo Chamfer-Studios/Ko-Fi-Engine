@@ -1,6 +1,12 @@
 #include "ComponentImage.h"
 
 #include "ComponentMesh.h"
+#include "GameObject.h"
+#include "ComponentTransform2D.h"
+#include "Camera3D.h"
+#include "Engine.h"
+
+#include "MathGeoLib/Math/Quat.h"
 
 #include "glew.h"
 #include <vector>
@@ -9,15 +15,16 @@ ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::IMAGE;
 	plane = new ComponentMesh(nullptr);
-	App->scene->CreatePlane(plane);
-	plane->GenerateBuffers();
+	AddPlaneToMesh(plane);
+	plane->GenerateLocalBoundingBox();
+	plane->GenerateGlobalBoundingBox();
 
-	if (plane->texCoords.size() != 0)
+	if (plane->GetMesh()->texCoordSizeBytes != 0)
 	{
 		textureBufferId = 0;
 		glGenBuffers(1, &textureBufferId);
 		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * plane->texCoords.size(), &plane->texCoords[0], GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, plane->GetMesh()->texCoordSizeBytes, &plane->GetMesh()->tex_coords[0], GL_STATIC_DRAW);
 	}
 }
 
@@ -26,16 +33,16 @@ ComponentImage::~ComponentImage()
 
 }
 
-bool ComponentImage::Update(float dt)
+bool ComponentImage::Update()
 {
 	glBindTexture(GL_TEXTURE_2D, 0); // Bindear Textura a Default
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	glBindBuffer(GL_ARRAY_BUFFER, plane->vertexBufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, plane->GetMesh()->id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, plane->indexBufferId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, plane->GetMesh()->id_index);
 
-	ComponentTransform2D* cTransform = owner->GetComponent<ComponentTransform2D>();
+	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
 
 	GLint viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
@@ -44,16 +51,16 @@ bool ComponentImage::Update(float dt)
 	/*float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };*/
 	float2 realPosition;
 	cTransform->GetRealPosition(realPosition);
-	float3 pos = { realPosition.x, realPosition.y, App->camera->nearPlaneDistance + 0.1f };
+	float3 pos = { realPosition.x, realPosition.y, this->owner->GetEngine()->GetCamera3D()->nearPlaneDistance + 0.1f};
 	float2 realSize;
 	cTransform->GetRealSize(realSize);
 	float3 size = { realSize.x, realSize.y, 1.0f };
 	float3 rotation = { cTransform->rotation.x,cTransform->rotation.y,cTransform->rotation.z };
 	Quat rotationQuat = Quat::FromEulerXYZ(DEGTORAD * rotation.x, DEGTORAD * rotation.y, DEGTORAD * rotation.z);
 
-	transform = transform.FromTRS(pos, Quat::identity, size);
+	transform3D = transform3D.FromTRS(pos, Quat::identity, size);
 
-	transform = transform * rotationQuat;
+	transform3D = transform3D * rotationQuat;
 
 	if (this->textureBufferId)
 	{
@@ -63,19 +70,18 @@ bool ComponentImage::Update(float dt)
 		glColor4f(imageColor.x, imageColor.y, imageColor.z, imageColor.w);
 	}
 
-	if (texture.id != 0)
+	if (texture.GetTextureId() != 0)
 	{
-		glBindTexture(GL_TEXTURE_2D, texture.id);
+		glBindTexture(GL_TEXTURE_2D, texture.GetTextureId());
 	}
 	else // Called once when created an object. Set white fallback as a default texture
 	{
-		glBindTexture(GL_TEXTURE_2D, App->textures->whiteFallback);
-		SetTexture(App->textures->textures.at("WHITE_FALLBACK"));
+		//glBindTexture(GL_TEXTURE_2D, owner->GetEngine()->);
 	}
 
 	glPushMatrix();
-	glMultMatrixf(transform.Transposed().ptr());
-	glDrawElements(GL_TRIANGLES, plane->numIndices, GL_UNSIGNED_INT, NULL);
+	glMultMatrixf(transform3D.Transposed().ptr());
+	glDrawElements(GL_TRIANGLES, plane->GetMesh()->indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
 	glPopMatrix();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -98,7 +104,7 @@ bool ComponentImage::Update(float dt)
 }
 
 
-void ComponentImage::SetTextureById(const int id)
+/*void ComponentImage::SetTextureById(const int id)
 {
 	for (auto i = App->textures->textures.begin(); i != App->textures->textures.end(); ++i)
 	{
@@ -117,35 +123,22 @@ void ComponentImage::SetOpacity(float alpha)
 		return;
 	}
 	imageColor.w -= alpha;
-}
+}*/
 
-void ComponentImage::OnGui()
+bool ComponentImage::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Image")) {
 		// Texture display
 		ImGui::Text("Texture: ");
 		ImGui::SameLine();
-		if (texture.id == 0) // Supposedly there is no textureId = 0 in textures array
+		if (texture.GetTextureId() == 0) // Supposedly there is no textureId = 0 in textures array
 		{
 			ImGui::Text("None");
 		}
 		else
 		{
-			ImGui::Text(texture.name.c_str());
-			ImGui::Image((ImTextureID)texture.id, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
-		}
-
-		// Texture selector settings
-		ImGui::Separator();
-		if (ImGui::Button("Set default texture"))
-		{
-			texture.id = 0;
-		}
-		int newTextureId = (int)texture.id;
-		if (ImGui::Combo("Set texture", &newTextureId, " \0WHITE_FALLBACK\0BLACK_FALLBACK\0CHECKERS\0"))
-		{
-			texture.id = newTextureId;
-			SetTextureById(texture.id);
+			ImGui::Text(texture.GetTexturePath());
+			ImGui::Image((ImTextureID)texture.GetTextureId(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 		}
 
 		// Image color button
@@ -156,12 +149,12 @@ void ComponentImage::OnGui()
 	}
 }
 
-float4x4 ComponentImage::GetTransform()
+/*float4x4 ComponentImage::GetTransform()
 {
 	float4x4 ret = transform.ScaleAlongAxis(float3::unitX, 1);
 	ret = ret.ScaleAlongAxis(float3::unitY, 1);
 	return transform;
-}
+}*/
 
 void ComponentImage::AddPlaneToMesh(ComponentMesh* mesh)
 {
@@ -170,7 +163,7 @@ void ComponentImage::AddPlaneToMesh(ComponentMesh* mesh)
 	mesh->CopyParMesh(plane);
 }
 
-void ComponentImage::OnLoad(const JSONReader& reader)
+/*void ComponentImage::OnLoad(const JSONReader& reader)
 {
 	// Loading texture name
 	if (reader.HasMember("Texture name"))
@@ -252,4 +245,4 @@ void ComponentImage::OnSave(JSONWriter& writer) const
 	writer.EndArray();
 
 	writer.EndObject();
-}
+}*/

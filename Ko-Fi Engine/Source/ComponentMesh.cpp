@@ -11,6 +11,7 @@
 #include "Primitive.h"
 #include "par_shapes.h"
 #include "Defs.h"
+#include "MathGeoLib/Math/float3.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
@@ -54,33 +55,30 @@ ComponentMesh::~ComponentMesh()
 	//RELEASE(materialComponent);
 }
 
-//void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
-//{
-//		this->mesh->num_vertices = parMesh->npoints;
-//		this->mesh->num_indices = parMesh->ntriangles * 3;
-//		this->mesh->num_normals = parMesh->ntriangles;
-//		this->mesh->vertices = new float[this->mesh->num_vertices * 3];
-//		this->mesh->normals = new float[this->mesh->num_normals * 3];
-//		this->mesh->indices = new uint[this->mesh->num_indices];
-//		par_shapes_compute_normals(parMesh);
-//		for (size_t i = 0; i < mesh->num_vertices; ++i)
-//		{
-//			memcpy(&mesh->vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);
-//			memcpy(&mesh->normals[i], &parMesh->normals[i * 3], sizeof(float) * 3);
-//		}
-//		for (size_t i = 0; i < mesh->num_indices; ++i)
-//		{
-//			mesh->indices[i] = parMesh->triangles[i];
-//		}
-//		memcpy(&mesh->normals[0], parMesh->normals, mesh->num_vertices);
-//
-//		par_shapes_free_mesh(parMesh);
-//
-//		mesh->SetUpMeshBuffers();
-//		//GenerateBuffers();
-//		//ComputeNormals();
-//		//GenerateBounds();
-//}
+void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
+{
+	this->mesh->verticesSizeBytes = parMesh->npoints * sizeof(float3);
+	this->mesh->indicesSizeBytes = parMesh->ntriangles * 3 * sizeof(uint);
+	this->mesh->normalsSizeBytes = parMesh->ntriangles * 3 * sizeof(float3);
+	this->mesh->vertices = new float[parMesh->npoints * 3];
+	this->mesh->normals = new float[parMesh->ntriangles * 3 * 3];
+	this->mesh->indices = new uint[parMesh->ntriangles * 3];
+	par_shapes_compute_normals(parMesh);
+	for (size_t i = 0; i < parMesh->npoints; ++i)
+	{
+		memcpy(&mesh->vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);
+		memcpy(&mesh->normals[i], &parMesh->normals[i * 3], sizeof(float) * 3);
+	}
+	for (size_t i = 0; i < parMesh->ntriangles * 3; ++i)
+	{
+		mesh->indices[i] = parMesh->triangles[i];
+	}
+	memcpy(&mesh->normals[0], parMesh->normals, parMesh->npoints);
+
+	par_shapes_free_mesh(parMesh);
+
+	mesh->SetUpMeshBuffers();
+}
 
 float3 ComponentMesh::GetCenterPointInWorldCoords() const
 {
@@ -198,7 +196,7 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 	this->mesh = mesh;
 }
 
-void ComponentMesh::SetMesh(par_shapes_mesh* parMesh)
+/*void ComponentMesh::SetMesh(par_shapes_mesh* parMesh)
 {
 	mesh->verticesSizeBytes = parMesh->npoints * 3 * sizeof(float);
 	mesh->indicesSizeBytes = parMesh->ntriangles * 3 * 3 * sizeof(unsigned int);
@@ -235,7 +233,7 @@ void ComponentMesh::SetMesh(par_shapes_mesh* parMesh)
 	GenerateBuffers();
 	ComputeNormals();
 	GenerateBounds();
-}
+}*/
 
 Mesh* ComponentMesh::GetMesh()
 {

@@ -37,7 +37,8 @@ public:
 
 	uint GetVertices();
 	void SetMesh(Mesh* mesh);
-	void SetMesh(par_shapes_mesh* parMesh);
+	//void SetMesh(par_shapes_mesh* parMesh);
+	void CopyParMesh(par_shapes_mesh* parMesh);
 	Mesh* GetMesh();
 
 //public:
