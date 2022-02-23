@@ -25,3 +25,13 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 
 	return ret;
 }
+
+Json ComponentInfo::Save()
+{
+	Json jsonComponentInfo;
+	return jsonComponentInfo;
+}
+
+void ComponentInfo::Load(Json json)
+{
+}

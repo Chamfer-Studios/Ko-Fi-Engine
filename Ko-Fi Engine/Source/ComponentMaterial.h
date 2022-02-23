@@ -10,6 +10,7 @@
 typedef unsigned int uint;
 
 class PanelChooser;
+using Json = nlohmann::json;
 
 
 class ComponentMaterial : public Component
@@ -21,14 +22,14 @@ public:
 	
 	void LoadTexture(std::string path = "");
 	bool InspectorDraw(PanelChooser* chooser);
-	Material GetMaterial();
+	Material* GetMaterial();
 	uint GetShader();
 	const char* GetShaderPath() { return shaderPath.c_str(); }
 	void SetShaderPath(std::string path) { this->shaderPath = path; }
 	void LoadShader(const char* shaderPath = nullptr);
 	//Material Handling
 	void LoadMaterial(const char* path="");
-	void SaveMaterial();
+	Json Save() override;
 	void Compile();
 
 private:
@@ -36,7 +37,7 @@ private:
 	void LoadUniforms();
 private:
 	
-	Material material;
+	Material* material;
 	uint materialShader = 0;
 	std::string shaderPath = "Assets/Shaders/default_shader.glsl";
 	int currentTextureId=0;

@@ -7,6 +7,7 @@
 #include "Shader.h"
 class ComponentTransform;
 class ComponentMaterial;
+using Json = nlohmann::json;
 
 class ComponentMesh : public Component
 {
@@ -38,6 +39,8 @@ public:
 	uint GetVertices();
 	void SetMesh(Mesh* mesh);
 	Mesh* GetMesh();
+	Json Save() override;
+	void Load(Json json) override;
 
 //public:
 //	ComponentMaterial* materialComponent;

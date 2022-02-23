@@ -138,6 +138,26 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
+Json ComponentCamera::Save()
+{
+	Json jsonComponentCamera;
+	jsonComponentCamera["vertical_fov"] = verticalFOV;
+	jsonComponentCamera["near_plane_distance"] = nearPlaneDistance;
+	jsonComponentCamera["far_plane_distance"] = farPlaneDistance;
+	jsonComponentCamera["draw_frustum"] = drawFrustum;
+	jsonComponentCamera["frustum_culling"] = frustumCulling;
+	return jsonComponentCamera;
+}
+
+void ComponentCamera::Load(Json json)
+{
+	verticalFOV = json.at("vertical_fov");
+	nearPlaneDistance = json.at("near_plane_distance");
+	farPlaneDistance = json.at("far_plane_distance");
+	drawFrustum = json.at("draw_frustum");
+	frustumCulling = json.at("frustum_culling");
+}
+
 //void ModuleCamera3D::OnSave(JSONWriter& writer) const
 //{
 //	writer.String("camera");

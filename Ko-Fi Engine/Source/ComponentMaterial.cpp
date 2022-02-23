@@ -61,10 +61,10 @@ void ComponentMaterial::LoadDefaultMaterial()
 	if (!jsonMaterial.empty())
 	{
 		ret = true;
-		material.materialName = jsonMaterial.at("name").get<std::string>();
-		material.materialPath = defaultMaterialPath;
+		material->materialName = jsonMaterial.at("name").get<std::string>();
+		material->materialPath = defaultMaterialPath;
 		LoadTexture(0);
-		UniformT<float4>* albedoTint = (UniformT<float4>*)material.FindUniform("albedoTint");
+		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
 		albedoTint->value = { jsonMaterial.at("uniforms").at("x"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
@@ -82,7 +82,7 @@ void ComponentMaterial::LoadMaterial(const char* path)
 	Json jsonMaterial;
 	bool ret = true;
 	if (materialPath.empty()) {
-		ret = jsonHandler.LoadJson(jsonMaterial, material.materialPath.c_str());
+		ret = jsonHandler.LoadJson(jsonMaterial, material->materialPath.c_str());
 	}
 	else {
 		ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
@@ -93,22 +93,22 @@ void ComponentMaterial::LoadMaterial(const char* path)
 	if (!jsonMaterial.empty())
 	{
 		ret = true;
-		material.materialName = jsonMaterial.at("name").get<std::string>();
-		material.materialPath = materialPath.empty() ? material.materialPath : materialPath;
+		material->materialName = jsonMaterial.at("name").get<std::string>();
+		material->materialPath = materialPath.empty() ? material->materialPath : materialPath;
 		std::vector<std::string> texturePaths = jsonMaterial.at("textures");
 		for (int i = 0; i < texturePaths.size(); i++) {
 			std::string texturePath = texturePaths.at(i);
-			if (material.textures.empty()) {
+			if (material->textures.empty()) {
 				LoadTexture(texturePath.c_str());
 			}
 			else {
-				if (texturePath != material.textures[i].GetTexturePath())
+				if (texturePath != material->textures[i].GetAssetPath())
 					LoadTexture(texturePath.c_str());
 
 			}
 		}
 
-		UniformT<float4>* albedoTint = (UniformT<float4>*)material.FindUniform("albedoTint");
+		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
 		albedoTint->value = { jsonMaterial.at("uniforms").at("albedoTint").at("x"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
@@ -116,10 +116,6 @@ void ComponentMaterial::LoadMaterial(const char* path)
 		};
 
 	};
-}
-
-void ComponentMaterial::SaveMaterial()
-{
 }
 
 void ComponentMaterial::Compile()
@@ -130,8 +126,9 @@ void ComponentMaterial::Compile()
 void ComponentMaterial::LoadTexture(std::string path)
 {
 	Texture texture;
-	texture.SetUpTexture(path);
-	material.textures.push_back(texture);
+	texture.SetAssetPath(path.c_str());
+	texture.SetUpTexture();
+	material->textures.push_back(texture);
 }
 
 
@@ -151,9 +148,10 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
 				//LoadTextureFromId(texture.textureID, path.c_str());
-				for (Texture& tex : material.textures) {
-					if (tex.GetTextureId() == currentTextureId)
-						tex.SetUpTexture(path);
+				for (Texture& tex : material->textures) {
+					tex.SetAssetPath(path.c_str());
+					if (tex.textureID == currentTextureId)
+						tex.SetUpTexture();
 				}
 			}
 		}
@@ -167,23 +165,23 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 
 		ImGui::Text("Material Name:");
 		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material.materialName.c_str());
+		ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
 		ImGui::Text("Material Textures:");
-		for (Texture& tex : material.textures) {
-			ImGui::Image((ImTextureID)tex.GetTextureId(), ImVec2(85, 85));
+		for (Texture& tex : material->textures) {
+			ImGui::Image((ImTextureID)tex.textureID, ImVec2(85, 85));
 			ImGui::SameLine();
 			ImGui::BeginGroup();
-			ImGui::Text(tex.GetTexturePath());
-			ImGui::PushID(tex.GetTextureId() << 8);
+			ImGui::Text(tex.GetAssetPath());
+			ImGui::PushID(tex.textureID << 8);
 			if (ImGui::Button("Change Texture")) {
 				panelChooser->OpenPanel("ChangeTexture", "png");
-				currentTextureId = tex.GetTextureId();
+				currentTextureId = tex.textureID;
 			}
 			ImGui::PopID();
 
-			ImGui::PushID(tex.GetTextureId() << 16);
+			ImGui::PushID(tex.textureID << 16);
 			if (ImGui::Button("Delete Textures")) {
-				material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
+				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
 			}
 			ImGui::PopID();
 			ImGui::EndGroup();
@@ -196,7 +194,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::Button("Change Shader")) {
 			panelChooser->OpenPanel("ChangeShader","glsl");
 		}
-		for (Uniform* uniform : material.uniforms) {
+		for (Uniform* uniform : material->uniforms) {
 			switch (uniform->type) {
 			case GL_FLOAT:
 			{
@@ -245,11 +243,83 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-
-
-Material ComponentMaterial::GetMaterial()
+Json ComponentMaterial::Save()
 {
-	return this->material;
+	Json jsonComponentMaterial;
+	json jsonTex;
+	jsonComponentMaterial["textures"] = json::array();
+	for (Texture& tex : GetMaterial()->textures) {
+
+		jsonTex["path"] = tex.GetAssetPath();
+		jsonComponentMaterial["textures"].push_back(jsonTex);
+	}
+
+
+	json jsonUniform;
+	for (Uniform* uniform : GetMaterial()->uniforms) {
+
+		switch (uniform->type)
+		{
+
+		case GL_FLOAT:
+		{
+			UniformT<float>* uf = (UniformT<float>*)uniform;
+			jsonUniform["name"] = uf->name;
+			jsonUniform["type"] = uf->type;
+			jsonUniform["value"] = uf->value;
+		}
+		break;
+		case GL_FLOAT_VEC2:
+		{
+			UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+			jsonUniform["name"] = uf2->name;
+			jsonUniform["type"] = uf2->type;
+			jsonUniform["value"]["x"] = uf2->value.x;
+			jsonUniform["value"]["y"] = uf2->value.y;
+		}
+		break;
+		case GL_FLOAT_VEC3:
+		{
+			UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+			jsonUniform["name"] = uf3->name;
+			jsonUniform["type"] = uf3->type;
+			jsonUniform["value"]["x"] = uf3->value.x;
+			jsonUniform["value"]["y"] = uf3->value.y;
+			jsonUniform["value"]["z"] = uf3->value.z;
+		}
+		break;
+		case GL_FLOAT_VEC4:
+		{
+			UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+			jsonUniform["name"] = uf4->name;
+			jsonUniform["type"] = uf4->type;
+			jsonUniform["value"]["x"] = uf4->value.x;
+			jsonUniform["value"]["y"] = uf4->value.y;
+			jsonUniform["value"]["z"] = uf4->value.z;
+			jsonUniform["value"]["w"] = uf4->value.w;
+		}
+		break;
+		case GL_INT:
+		{
+			UniformT<int>* ui = (UniformT<int>*)uniform;
+			jsonUniform["name"] = ui->name;
+			jsonUniform["type"] = ui->type;
+			jsonUniform["value"] = ui->value;
+		}
+		break;
+		}
+		jsonComponentMaterial["uniforms"].push_back(jsonUniform);
+
+	}
+	jsonComponentMaterial["materialName"] = GetMaterial()->materialName;
+	jsonComponentMaterial["materialPath"] = GetMaterial()->materialPath;
+	jsonComponentMaterial["shaderPath"] = GetShaderPath();
+	return jsonComponentMaterial;
+}
+
+Material* ComponentMaterial::GetMaterial()
+{
+	return material;
 }
 
 uint ComponentMaterial::GetShader()
@@ -259,7 +329,7 @@ uint ComponentMaterial::GetShader()
 
 void ComponentMaterial::LoadUniforms()
 {
-	this->material.uniforms.clear();
+	material->uniforms.clear();
 	GLint i;
 	GLint count;
 
@@ -278,33 +348,33 @@ void ComponentMaterial::LoadUniforms()
 		case GL_FLOAT:
 		{
 			UniformT<float>* uf = new UniformT<float>(name, type, 0.0f);
-			this->material.AddUniform(uf);
+			material->AddUniform(uf);
 		}
 		break;
 		case GL_FLOAT_VEC2:
 		{
 			UniformT<float2>* uf2 = new UniformT<float2>(name, type, float2(1.0f,1.0f));
-			this->material.AddUniform(uf2);
+			material->AddUniform(uf2);
 		}
 		break;
 		case GL_FLOAT_VEC3:
 		{
 			UniformT<float3>* uf3 = new UniformT<float3>(name, type, float3(1.0f,1.0f,1.0f));
-			this->material.AddUniform(uf3);
+			material->AddUniform(uf3);
 		}
 		break;
 		case GL_FLOAT_VEC4:
 		{
 
 			UniformT<float4>* uf4 = new UniformT<float4>(name, type, float4(1.0f, 1.0f, 1.0f, 1.0f));
-			this->material.AddUniform(uf4);
+			material->AddUniform(uf4);
 		}
 		break;
 		case GL_INT:
 
 		{
 			UniformT<int>* ui = new UniformT<int>(name, type, 0);
-			this->material.AddUniform(ui);
+			material->AddUniform(ui);
 		}
 		break;
 		}

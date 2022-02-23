@@ -4,6 +4,7 @@
 using nlohmann::json;
 class PanelChooser;
 class GameObject;
+using Json = nlohmann::json;
 
 enum class ComponentType
 {
@@ -27,6 +28,8 @@ public:
 	virtual bool CleanUp() { return true; }
 	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
 	virtual void Disable() { active = false; }
+	virtual Json Save() { Json tmp; return tmp; }
+	virtual void Load(Json json) {}
 	ComponentType GetType() { return type; }
 	
 

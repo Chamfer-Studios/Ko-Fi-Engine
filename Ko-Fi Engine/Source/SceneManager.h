@@ -65,16 +65,7 @@ public:
 
 	// Serialization functions
 	bool SaveScene(Scene* scene);
-	Json SaveComponentTransform(ComponentTransform* componentTransform);
-	Json SaveComponentMesh(ComponentMesh* componentMesh);
-	Json SaveComponentMaterial(ComponentMaterial* componentMaterial);
-	Json SaveComponentInfo(ComponentInfo* componentInfo);
-	Json SaveComponentCamera(ComponentCamera* componentCamera);
 	bool LoadScene(Scene* scene, const char* sceneName);
-	void LoadComponentTransform(ComponentTransform* componentTransform, Json jsonComponentTransform);
-	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
-	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
-	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
 
 public:
 	bool active;

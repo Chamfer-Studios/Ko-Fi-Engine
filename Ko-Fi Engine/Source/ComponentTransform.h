@@ -4,6 +4,8 @@
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Math/Quat.h"
 
+using Json = nlohmann::json;
+
 class ComponentTransform : public Component
 {
 public:
@@ -34,6 +36,9 @@ public:
 
 	bool GetDirty();
 	void SetDirty(bool isDirty);
+
+	Json Save() override;
+	void Load(Json json) override;
 
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;

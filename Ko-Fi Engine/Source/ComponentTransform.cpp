@@ -128,3 +128,101 @@ void ComponentTransform::SetDirty(bool isDirty)
 {
 	this->isDirty = isDirty;
 }
+
+Json ComponentTransform::Save()
+{
+	Json jsonComponentTransform;
+
+	if (this != nullptr)
+	{
+		jsonComponentTransform["transform_matrix"] = {
+			transformMatrix.Col3(0).x,
+			transformMatrix.Col3(0).y,
+			transformMatrix.Col3(0).z,
+			transformMatrix.Col3(1).x,
+			transformMatrix.Col3(1).y,
+			transformMatrix.Col3(1).z,
+			transformMatrix.Col3(2).x,
+			transformMatrix.Col3(2).y,
+			transformMatrix.Col3(2).z,
+			transformMatrix.Col3(3).x,
+			transformMatrix.Col3(3).y,
+			transformMatrix.Col3(3).z
+		};
+		jsonComponentTransform["transform_matrix_local"] = {
+			transformMatrixLocal.Col3(0).x,
+			transformMatrixLocal.Col3(0).y,
+			transformMatrixLocal.Col3(0).z,
+			transformMatrixLocal.Col3(1).x,
+			transformMatrixLocal.Col3(1).y,
+			transformMatrixLocal.Col3(1).z,
+			transformMatrixLocal.Col3(2).x,
+			transformMatrixLocal.Col3(2).y,
+			transformMatrixLocal.Col3(2).z,
+			transformMatrixLocal.Col3(3).x,
+			transformMatrixLocal.Col3(3).y,
+			transformMatrixLocal.Col3(3).z
+		};
+
+		jsonComponentTransform["is_dirty"] = GetDirty();
+
+		jsonComponentTransform["position"] = {
+			GetPosition().x,
+			GetPosition().y,
+			GetPosition().z
+		};
+		jsonComponentTransform["rotation"] = {
+			GetRotation().x,
+			GetRotation().y,
+			GetRotation().z
+		};
+		jsonComponentTransform["scale"] = {
+			GetScale().x,
+			GetScale().y,
+			GetScale().z
+		};
+	}
+
+	return jsonComponentTransform;
+}
+
+void ComponentTransform::Load(Json jsonComponentTransform)
+{
+	std::vector<float> values = jsonComponentTransform["transform_matrix"].get<std::vector<float>>();
+	float3 columnVector;
+	for (int i = 0; i < 4; i++)
+	{
+		columnVector = { values[i * 3], values[(i * 3) + 1], values[(i * 3) + 2] };
+		transformMatrix.SetCol3(i, columnVector);
+	}
+
+	values = jsonComponentTransform["transform_matrix_local"].get<std::vector<float>>();
+	for (int i = 0; i < 4; i++)
+	{
+		columnVector = { values[i * 3], values[(i * 3) + 1], values[(i * 3) + 2] };
+		transformMatrixLocal.SetCol3(i, columnVector);
+	}
+
+	SetDirty(jsonComponentTransform.at("is_dirty"));
+
+	values = jsonComponentTransform["position"].get<std::vector<float>>();
+	float3 position;
+	position.x = values[0];
+	position.y = values[1];
+	position.z = values[2];
+	SetPosition(position);
+
+	values = jsonComponentTransform["rotation"].get<std::vector<float>>();
+	float3 rotation;
+	rotation.x = values[0];
+	rotation.y = values[1];
+	rotation.z = values[2];
+	SetRotation(rotation);
+
+	values = jsonComponentTransform["scale"].get<std::vector<float>>();
+	float3 scale;
+	scale.x = values[0];
+	scale.y = values[1];
+	scale.z = values[2];
+	SetScale(scale);
+}

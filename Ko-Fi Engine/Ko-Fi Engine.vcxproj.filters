@@ -83,6 +83,9 @@
     <Filter Include="Source\Resources">
       <UniqueIdentifier>{b584c71f-4e5f-403c-ac2d-424816ead254}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Importers">
+      <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -351,6 +354,24 @@
     </ClCompile>
     <ClCompile Include="Source\RNG.cpp">
       <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Shader.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Material.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Mesh.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Texture.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Scene.cpp">
+      <Filter>Source\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -770,6 +791,24 @@
     </ClInclude>
     <ClInclude Include="Source\FSDefs.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Shader.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Material.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Mesh.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Texture.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Scene.h">
+      <Filter>Source\Importers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

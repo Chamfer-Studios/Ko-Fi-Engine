@@ -11,6 +11,7 @@
 #include "Primitive.h"
 #include "par_shapes.h"
 #include "Defs.h"
+#include "I_Mesh.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
@@ -102,82 +103,88 @@ bool ComponentMesh::Update()
 bool ComponentMesh::PostUpdate(float dt)
 {
 	bool ret = true;
-
-
-	if (renderMesh) {
-		
-		uint shader = 
-			owner->GetComponent<ComponentMaterial>()->GetShader();
-		glUseProgram(shader);
-		//Matrices
-		GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
-		glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
-
-		GLint projection_location = glGetUniformLocation(shader, "projection");
-		glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-
-		GLint view_location = glGetUniformLocation(shader, "view");
-		glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-	
-		GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-		glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-		float2 resolution = float2(1080.0f, 720.0f);
-		glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
-		this->time += 0.02f;
-		glUniform1f(glGetUniformLocation(shader, "time"), this->time);
-		
-		Material mat = owner->GetComponent<ComponentMaterial>()->GetMaterial();
-		for (Uniform* uniform : mat.uniforms) {
-			switch (uniform->type) {
-			case GL_FLOAT:
-			{
-				if(uniform->name != "time")
-				glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
-
-			}
-				break;
-			case GL_FLOAT_VEC2:
-			{
-				if (uniform->name != "resolution")
-				{
-					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-					glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
-				}
-				
-			}
-
-			break;
-			case GL_FLOAT_VEC3:
-			{
-				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-				glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
-			}
-
-			break;
-			case GL_FLOAT_VEC4:
-			{
-				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-				glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
-			}
-				
-				break;
-			case GL_INT:
-			{
-				glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
-
-			}
-
-				break;
-
-			break;
-			}
+	ComponentMaterial* cm = owner->GetComponent<ComponentMaterial>();
+	if (cm != nullptr)
+	{
+		if (!cm->active)
+		{
+			glDisable(GL_TEXTURE_2D);
 		}
+	
+		if (renderMesh || owner->GetComponent<ComponentMaterial>()->GetShader() == 0) {
 
-		mesh->Draw(owner);
-		GenerateGlobalBoundingBox();
-		DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
+			uint shader = owner->GetComponent<ComponentMaterial>()->GetShader();
+			glUseProgram(shader);
+			//Matrices
+			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 
-		glUseProgram(0);
+			GLint projection_location = glGetUniformLocation(shader, "projection");
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+
+			GLint view_location = glGetUniformLocation(shader, "view");
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+
+			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+			float2 resolution = float2(1080.0f, 720.0f);
+			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+			this->time += 0.02f;
+			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
+
+			Material* mat = owner->GetComponent<ComponentMaterial>()->GetMaterial();
+			for (Uniform* uniform : mat->uniforms) {
+				switch (uniform->type) {
+				case GL_FLOAT:
+				{
+					if (uniform->name != "time")
+						glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+
+				}
+				break;
+				case GL_FLOAT_VEC2:
+				{
+					if (uniform->name != "resolution")
+					{
+						UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+						glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
+					}
+
+				}
+
+				break;
+				case GL_FLOAT_VEC3:
+				{
+					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+					glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
+				}
+
+				break;
+				case GL_FLOAT_VEC4:
+				{
+					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
+				}
+
+				break;
+				case GL_INT:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+
+				}
+
+				break;
+
+				break;
+				}
+			}
+
+			mesh->Draw(owner);
+			GenerateGlobalBoundingBox();
+			DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
+
+			glUseProgram(0);
+		}
 	}
 
 	return ret;
@@ -261,6 +268,98 @@ AABB ComponentMesh::GetLocalAABB()
 	GenerateLocalBoundingBox();
 	return mesh->localAABB;
 }
+
+Json ComponentMesh::Save()
+{
+	Json jsonComponentMesh;
+	std::string name = GetParent()->name;
+	std::string savePath = "Library/Meshes/" + name + ".sugar";
+	Importer::Meshes::Save(GetMesh(), savePath.c_str());
+	jsonComponentMesh["path"] = GetPath().c_str();
+	jsonComponentMesh["vertex_normals"] = GetVertexNormals();
+	jsonComponentMesh["faces_normals"] = GetFacesNormals();
+	jsonComponentMesh["mesh"] = savePath.c_str();
+	return jsonComponentMesh;
+}
+
+void ComponentMesh::Load(Json json)
+{
+	Json jsonComponentMesh;
+	Json jsonComponentMaterial;
+	for (const auto& cmp : json.items())
+	{
+		if (cmp.value().at("component_type") == "mesh")
+			jsonComponentMesh = cmp.value();
+		else if (cmp.value().at("component_type") == "material")
+			jsonComponentMaterial = cmp.value();
+	}
+	SetPath(jsonComponentMesh.at("path"));
+	SetVertexNormals(jsonComponentMesh.at("vertex_normals"));
+	SetFacesNormals(jsonComponentMesh.at("faces_normals"));
+	Mesh* mesh = new Mesh();
+	Importer::Meshes::Load(jsonComponentMesh.at("mesh").get<std::string>().c_str(), mesh);
+	SetMesh(mesh);
+	//Loading Material
+	if (mesh->texCoords && !jsonComponentMaterial.empty())
+	{
+		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
+		cMat->GetMaterial()->materialName = jsonComponentMaterial.at("materialName").get<std::string>();
+		cMat->GetMaterial()->materialPath = jsonComponentMaterial.at("materialPath").get<std::string>();
+		cMat->LoadShader(jsonComponentMaterial.at("shaderPath").get<std::string>().c_str());
+		for (const auto& tex : jsonComponentMaterial.at("textures").items()) {
+			cMat->LoadTexture(tex.value().at("path").get<std::string>());
+		}
+		for (const auto& uni : jsonComponentMaterial.at("uniforms").items()) {
+			std::string uniformName = uni.value().at("name").get<std::string>();
+			uint uniformType = uni.value().at("type").get<uint>();
+			switch (uniformType) {
+			case GL_FLOAT:
+			{
+				UniformT<float>* uniform = (UniformT<float>*)cMat->GetMaterial()->FindUniform(uniformName);
+				uniform->value = uni.value().at("value");
+
+			}
+			break;
+			case GL_FLOAT_VEC2:
+			{
+				UniformT<float2>* uniform = (UniformT<float2>*)cMat->GetMaterial()->FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+
+			}
+			break;
+			case GL_FLOAT_VEC3:
+			{
+				UniformT<float3>* uniform = (UniformT<float3>*)cMat->GetMaterial()->FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+				uniform->value.z = uni.value().at("value").at("z");
+			}
+			break;
+			case GL_FLOAT_VEC4:
+			{
+				UniformT<float4>* uniform = (UniformT<float4>*)cMat->GetMaterial()->FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+				uniform->value.z = uni.value().at("value").at("z");
+				uniform->value.w = uni.value().at("value").at("w");
+			}
+			break;
+			case GL_INT:
+			{
+				UniformT<int>* uniform = (UniformT<int>*)cMat->GetMaterial()->FindUniform(uniformName);
+				uniform->value = uni.value().at("value");
+			}
+			break;
+			}
+
+		}
+	}
+	else if (mesh->texCoords && jsonComponentMaterial.empty()) {
+		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
+	}
+}
+
 
 ////void ComponentMesh::LoadMesh(const char* path)
 ////{

@@ -1,14 +1,30 @@
-#pragma once
+#ifndef __MESH_H__
+#define __MESH_H__
+
 #include <vector>
 #include <string>
 #include "MathGeoLib/Geometry/AABB.h"
+#include "Resource.h"
+#include "par_shapes.h"
+
+
+enum class Shape
+{
+	NONE,
+	CUBE,
+	SPHERE,
+	CYLINDER,
+	TORUS,
+	PLANE,
+	CONE
+};
 
 class GameObject;
-typedef unsigned int uint;
-class Mesh
+
+class Mesh : public Resource
 {
 public:
-	Mesh();
+	Mesh(Shape shape = Shape::NONE);
 	~Mesh();
 
 	// Mesh Functions
@@ -26,36 +42,41 @@ public:
 	unsigned indicesSizeBytes = 0;
 
 	// Indices
-	uint id_index = 0; // index in VRAM
+	uint idIndex = 0; // index in VRAM
 	uint* indices = nullptr;
 
 	// Vertices
-	uint id_vertex = 0; // unique vertex in VRAM
+	uint idVertex = 0; // unique vertex in VRAM
 	float* vertices = nullptr;
 
 	// Normals
-	uint id_normal = 0;
+	uint idNormal = 0;
 	float* normals = nullptr;
 
 	// Texture coordinates
-	uint id_tex_coord = 0;
-	float* tex_coords = nullptr;
+	uint idTexCoord = 0;
+	float* texCoords = nullptr;
 
-	unsigned int VAO;
+	unsigned int VAO = 0;
 
 	// Texture
 
 	// AABB
 	AABB localAABB;
-	
+
+	Shape meshType;
+
 private:
 	void SetUpDefaultTexture();
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
 	void DrawFaceNormals() const;
+	void PrimitiveMesh(par_shapes_mesh* primitiveMesh);
 	// Debug bools
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;
 	bool drawColors = false;
 	bool drawTextureCoords = false;
 };
+
+#endif // !__MESH_H__

@@ -18,9 +18,6 @@ public:
 	void SetEngine(KoFiEngine* engine) { this->engine = engine; }
 	
 private:
-	GameObject* GetOneMesh(const aiScene* scene);
-	GameObject* GetMultipleMeshes(const aiScene* scene);
-
 	ComponentTransform* AdjustTransform(const aiScene* scene, GameObject* go);
 private:
 	KoFiEngine* engine = nullptr;

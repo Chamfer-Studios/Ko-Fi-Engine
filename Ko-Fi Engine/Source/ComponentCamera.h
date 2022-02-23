@@ -11,6 +11,7 @@
 
 class GameObject;
 class ComponentTransform;
+using Json = nlohmann::json;
 
 class ComponentCamera : public Component
 {
@@ -35,6 +36,8 @@ public:
 	bool ClipsWithBBox(const AABB& refBox) const;
 	void FrustumCulling();
 	void ResetFrustumCulling();
+	Json Save() override;
+	void Load(Json json) override;
 
 	float3 right, up, front, position, reference, rotation;
 	Frustum cameraFrustum;
