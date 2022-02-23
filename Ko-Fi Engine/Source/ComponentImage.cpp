@@ -4,10 +4,12 @@
 #include "GameObject.h"
 #include "ComponentTransform2D.h"
 #include "ComponentMaterial.h"
+#include "ComponentTransform.h"
 #include "Camera3D.h"
 #include "Engine.h"
 
 #include "PanelChooser.h"
+#include "SceneIntro.h"
 
 #include "par_shapes.h"
 
@@ -19,18 +21,8 @@
 ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::IMAGE;
-	plane = new ComponentMesh(nullptr);
-	AddPlaneToMesh(plane);
-	plane->GenerateLocalBoundingBox();
-	plane->GenerateGlobalBoundingBox();
-
-	if (plane->GetMesh()->texCoordSizeBytes != 0)
-	{
-		textureBufferId = 0;
-		glGenBuffers(1, &textureBufferId);
-		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
-		glBufferData(GL_ARRAY_BUFFER, plane->GetMesh()->texCoordSizeBytes, &plane->GetMesh()->tex_coords[0], GL_STATIC_DRAW);
-	}
+	plane = new TMPPlane(0);
+	plane->GenerateBuffers();
 }
 
 ComponentImage::~ComponentImage()
@@ -74,7 +66,8 @@ bool ComponentImage::PostUpdate(float dt)
 
 	transform3D = transform3D * rotationQuat;
 
-	uint shader = owner->GetComponent<ComponentMaterial>()->GetShader();
+	uint shader =
+		owner->GetComponent<ComponentMaterial>()->GetShader();
 	glUseProgram(shader);
 	//Matrices
 	GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
@@ -140,9 +133,19 @@ bool ComponentImage::PostUpdate(float dt)
 		}
 	}
 
-	plane->GetMesh()->Draw(owner);
-	plane->GenerateGlobalBoundingBox();
-	plane->DrawBoundingBox(plane->GetGlobalAABB(), float3(1.0f, 0.0f, 0.0f));
+	//Texture
+	if (ComponentMaterial* material = owner->GetComponent<ComponentMaterial>()) {
+		for (Texture& tex : material->GetMaterial().textures) {
+			glBindTexture(GL_TEXTURE_2D, tex.GetTextureId());
+
+		}
+	}
+
+	glBindVertexArray(plane->VAO);
+	glDrawElements(GL_TRIANGLES, plane->indexNum, GL_UNSIGNED_INT, 0);
+
+	//Unbind Texture
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glUseProgram(0);
 
@@ -215,13 +218,6 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 	ret = ret.ScaleAlongAxis(float3::unitY, 1);
 	return transform;
 }*/
-
-void ComponentImage::AddPlaneToMesh(ComponentMesh* mesh)
-{
-	par_shapes_mesh* plane = par_shapes_create_plane(1, 1);
-	par_shapes_translate(plane, -0.5f, -0.5f, 0);
-	mesh->CopyParMesh(plane);
-}
 
 /*void ComponentImage::OnLoad(const JSONReader& reader)
 {

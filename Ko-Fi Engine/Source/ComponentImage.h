@@ -16,6 +16,7 @@
 #include "MathGeoLib/Math/float4.h"
 
 class ComponentMesh;
+class TMPPlane;
 struct TextureObject;
 
 class ComponentImage : public Component {
@@ -31,9 +32,7 @@ public:
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 
-	void AddPlaneToMesh(ComponentMesh*);
-
-	ComponentMesh* plane = nullptr;
+	TMPPlane* plane = nullptr;
 
 	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
 	Texture texture;

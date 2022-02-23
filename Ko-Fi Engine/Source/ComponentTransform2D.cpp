@@ -109,8 +109,8 @@ void ComponentTransform2D::GetRealSize(float2& realSize)
 	float propX = owner->GetEngine()->GetUI()->uiCameraViewport[2] / owner->GetEngine()->GetEditor()->lastViewportSize.x;
 	float propY = owner->GetEngine()->GetUI()->uiCameraViewport[3] / owner->GetEngine()->GetEditor()->lastViewportSize.y;
 
-	realSize.x = size.x * propX;
-	realSize.y = size.y * propY;
+	realSize.x = size.x;
+	realSize.y = size.y;
 }
 
 float2 ComponentTransform2D::GetCanvasCenter()

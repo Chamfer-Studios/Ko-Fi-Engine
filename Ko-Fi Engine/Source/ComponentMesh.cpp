@@ -55,32 +55,6 @@ ComponentMesh::~ComponentMesh()
 	//RELEASE(materialComponent);
 }
 
-void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
-{
-	this->mesh = new Mesh();
-	this->mesh->verticesSizeBytes = parMesh->npoints * sizeof(float3);
-	this->mesh->indicesSizeBytes = parMesh->ntriangles * 3 * sizeof(uint);
-	this->mesh->normalsSizeBytes = parMesh->ntriangles * 3 * sizeof(float3);
-	this->mesh->vertices = new float[parMesh->npoints * 3];
-	this->mesh->normals = new float[parMesh->ntriangles * 3 * 3];
-	this->mesh->indices = new uint[parMesh->ntriangles * 3];
-	par_shapes_compute_normals(parMesh);
-	for (size_t i = 0; i < parMesh->npoints; ++i)
-	{
-		memcpy(&mesh->vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);
-		memcpy(&mesh->normals[i], &parMesh->normals[i * 3], sizeof(float) * 3);
-	}
-	for (size_t i = 0; i < parMesh->ntriangles * 3; ++i)
-	{
-		mesh->indices[i] = parMesh->triangles[i];
-	}
-	memcpy(&mesh->normals[0], parMesh->normals, parMesh->npoints);
-
-	par_shapes_free_mesh(parMesh);
-
-	mesh->SetUpMeshBuffers();
-}
-
 float3 ComponentMesh::GetCenterPointInWorldCoords() const
 {
 	return owner->GetTransform()->transformMatrix.TransformPos(centerPoint);

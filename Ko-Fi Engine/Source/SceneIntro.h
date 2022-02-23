@@ -38,4 +38,39 @@ private:
 
 };
 
+#include "par_shapes.h"
+
+class TMPPlane
+{
+public:
+	TMPPlane(uint uid);
+	~TMPPlane();
+
+	void GenerateBuffers();
+
+private:
+	void CopyParMesh(par_shapes_mesh* parMesh);
+
+public:
+	uint uid = 0;
+
+	uint vertexNum = 0;
+	std::vector<float3> vertices;
+
+	uint normalNum = 0;
+	std::vector<float3> normals;
+
+	std::vector<float2> texCoords;
+
+	uint indexNum = 0;
+	std::vector<uint> indices;
+
+	uint vertexBuf = 0;
+	uint indexBuf = 0;
+	uint textureBuf = 0;
+	uint normalsBuf = 0;
+
+	unsigned int VAO;
+};
+
 #endif SCENE_INTRO_H // SCENE_INTRO_H
