@@ -35,10 +35,6 @@ enum update_status
 	UPDATE_ERROR
 };
 
-// Paths
-#define ASSETS_FOLDER "/Assets/"
-#define LIBRARY_FOLDER "/Library/"
-
 // Configuration -----------
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720

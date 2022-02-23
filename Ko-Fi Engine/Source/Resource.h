@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include <string>
 
-class Resource 
+class Resource
 {
 	friend class ResourceManager;
 
@@ -18,18 +18,33 @@ public:
 	};
 
 	Resource() {}
-	Resource(UID uid, Resource::Type type, const char* assetPath);
-	~Resource();
+	Resource(Resource::Type type);
+	virtual ~Resource();
+
+	virtual void CleanUp();
 
 	inline Resource::Type GetType() const { return type; }
+
 	inline UID GetUID() const { return uid; }
+	inline void SetUID(const UID& uid) { this->uid = uid; }
+
+	inline uint GetReferenceCount() const { return referenceCount; }
+	inline void SetReferenceCount(const uint& referenceCount) { this->referenceCount = referenceCount; }
+
+	// Getters and Setters for Asset & Library Paths
 	inline const char* GetAssetPath() const { return assetPath.c_str(); }
+	inline const char* GetAssetFile() const { return assetFile.c_str(); }
+	inline void SetAssetPath(const char* assetPath) { this->assetPath = assetPath; }
+	inline void SetAssetFile(const char* assetFile) { this->assetFile = assetFile; }
+
 	inline const char* GetLibraryPath() const { return libraryPath.c_str(); }
-	inline const char* GetName() const { return name.c_str(); }
+	inline const char* GetLibraryFile() const { return libraryFile.c_str(); }
+	inline void SetLibraryPath(const char* libraryPath) { this->libraryPath = libraryPath; }
+	inline void SetLibraryFile(const char* libraryFile) { this->libraryFile = libraryFile; }
 
-	bool HasResource(UID uid) const;
+	void SetLibraryPathAndFile();
 
-	//uint GetReferenceCount() const;
+	//bool HasResource(UID uid) const;
 
 	//bool LoadToMemory();
 	//bool IsLoadedToMemory();
@@ -39,9 +54,10 @@ public:
 
 protected:
 	UID uid = 0;
-	std::string name = "";
 	std::string assetPath = "";
+	std::string assetFile = "";
 	std::string libraryPath = "";
+	std::string libraryFile = "";
 
 	Type type = Type::UNKNOWN;
 	uint referenceCount = 0;

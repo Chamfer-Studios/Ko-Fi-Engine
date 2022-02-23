@@ -2,13 +2,17 @@
 #include "Engine.h"
 #include "Log.h"
 
-ResourceManager::ResourceManager(KoFiEngine* engine) : Module()
+ResourceManager::ResourceManager(KoFiEngine* engine) : Module(),
+fileRefreshRate(0.0f)
 {
 	name = "ResourceManager";
 	this->engine = engine;
 }
 
-ResourceManager::~ResourceManager() {}
+ResourceManager::~ResourceManager()
+{
+
+}
 
 bool ResourceManager::Start()
 {
@@ -23,7 +27,19 @@ bool ResourceManager::CleanUp()
 	CONSOLE_LOG("Cleaning ResourceManager up...");
 	//appLog->AddLog("Cleaning ResourceManager up...\n");
 
-	return true;
+	bool ret = true;
+
+	std::map<UID, Resource*>::iterator it;
+	for (it = resourcesMap.begin(); it != resourcesMap.end(); ++it)
+	{
+		it->second->CleanUp();
+		RELEASE(it->second);
+	}
+
+	resourcesMap.clear();
+	library.clear();
+
+	return ret;
 }
 
 UID ResourceManager::ImportFile(const char* assetPath)

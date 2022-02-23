@@ -349,6 +349,9 @@
     <ClCompile Include="Source\Resource.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\RNG.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -764,6 +767,9 @@
     </ClInclude>
     <ClInclude Include="Source\Resource.h">
       <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FSDefs.h">
+      <Filter>Source\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

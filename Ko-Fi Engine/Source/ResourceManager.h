@@ -31,6 +31,9 @@ private:
 	KoFiEngine* engine = nullptr;
 
 	std::map<UID, Resource*> resourcesMap;
+	std::map<UID, std::string> library;
+
+	float fileRefreshRate;
 };
 
 #endif // __RESOURCE_MANAGER_H__
