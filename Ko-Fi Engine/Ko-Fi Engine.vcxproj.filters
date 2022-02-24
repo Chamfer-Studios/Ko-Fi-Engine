@@ -346,6 +346,9 @@
     <ClCompile Include="Source\ComponentCollider.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CollisionDetector.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -758,6 +761,12 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentCollider.h">
       <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentRigidBody.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionDetector.h">
+      <Filter>Source\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

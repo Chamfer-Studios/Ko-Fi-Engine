@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Camera3D.cpp" />
+    <ClCompile Include="Source\CollisionDetector.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\color_node_editor.cpp" />
     <ClCompile Include="Source\Component.cpp" />
@@ -238,6 +239,7 @@
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
     <ClInclude Include="Source\Camera3D.h" />
+    <ClInclude Include="Source\CollisionDetector.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentCamera.h" />
@@ -245,6 +247,7 @@
     <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
+    <ClInclude Include="Source\ComponentRigidBody.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />

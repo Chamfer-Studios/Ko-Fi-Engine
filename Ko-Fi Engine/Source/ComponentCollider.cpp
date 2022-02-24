@@ -12,7 +12,8 @@ ComponentCollider::~ComponentCollider()
 
 bool ComponentCollider::Start()
 {
-	return false;
+	
+	return true;
 }
 
 bool ComponentCollider::Update()

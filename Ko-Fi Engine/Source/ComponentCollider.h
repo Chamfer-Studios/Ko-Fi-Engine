@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "ComponentMesh.h"
 #include "GameObject.h"
+#include "CollisionDetector.h"
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Math/Quat.h"
@@ -13,17 +14,18 @@
 
 class ComponentMesh;
 
+enum class ColliderType
+	{
+		PLAYER,
+		ENEMY,
+		WALL,
+		FLOOR,
+		NONE
+	};
+
 class ComponentCollider : public Component
 {
 public:
-	enum class ColliderType
-	{
-		COLL_SPHERE,
-		COLL_PLANE,
-		COLL_CAPSULE,
-		COLL_BOX,
-		NONE
-	};
 
 	ComponentCollider(GameObject* parent, ColliderType collType);
 	~ComponentCollider();
@@ -31,7 +33,6 @@ public:
 	bool Update() override;
 	bool CleanUp() override;
 	
-
 	// ----- Editor settings ---------------
 	bool InspectorDraw(PanelChooser* chooser);
 	// -------------------------------------
@@ -42,9 +43,16 @@ public:
 
 	// ----- Getters Setters ---------------
 	const ColliderType GetColliderType() const { return collType; }
+	bool IsTrigger() const { return isTrigger; }
+
+	void SetTrigger(bool enable) { isTrigger = enable; }
 	// -------------------------------------
 
+	
 private:
+	
+	bool isTrigger = false;
+
 	ColliderType collType = ColliderType::NONE;
 };
 
