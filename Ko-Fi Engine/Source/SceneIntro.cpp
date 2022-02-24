@@ -55,6 +55,8 @@ TMPPlane::~TMPPlane()
 
 void TMPPlane::CopyParMesh(par_shapes_mesh* parMesh)
 {
+	par_shapes_translate(parMesh, -0.5f, -0.5f, 0);
+
 	vertexNum = parMesh->npoints;
 	indexNum = parMesh->ntriangles * 3;
 	normalNum = parMesh->npoints;

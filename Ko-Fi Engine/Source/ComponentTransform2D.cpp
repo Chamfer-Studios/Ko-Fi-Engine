@@ -15,7 +15,7 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	type = ComponentType::TRANSFORM2D;
 
 	// Set default position, size, pivot, rotation & anchor
-	position = { 0,0 };
+	position = { 0 , 0};
 	size = { 200, 200 };
 	pivot = { 0.5f, 0.5f };
 	rotation = { 0.0f,0.f,0.f };
@@ -101,16 +101,21 @@ void ComponentTransform2D::GetRealPosition(float2& realPosition, bool ignoreCanv
 
 	if (parentTransform == nullptr) return;
 
-	realPosition = parentTransform->GetAnchorPosition(anchor) + position;
+	float2 anchorPosition = parentTransform->GetAnchorPosition(anchor);
+	realPosition = anchorPosition + position;
+	//realPosition.x += owner->GetEngine()->GetEditor()->scenePanelOrigin.x;
+	//realPosition.y += owner->GetEngine()->GetEditor()->scenePanelOrigin.y;
 }
 
 void ComponentTransform2D::GetRealSize(float2& realSize)
 {
-	float propX = owner->GetEngine()->GetUI()->uiCameraViewport[2] / owner->GetEngine()->GetEditor()->lastViewportSize.x;
-	float propY = owner->GetEngine()->GetUI()->uiCameraViewport[3] / owner->GetEngine()->GetEditor()->lastViewportSize.y;
+	float propX = owner->GetEngine()->GetUI()->uiCameraViewport[2] / (owner->GetEngine()->GetEditor()->lastViewportSize.x);
+	float propY = owner->GetEngine()->GetUI()->uiCameraViewport[3] / (owner->GetEngine()->GetEditor()->lastViewportSize.y);
 
 	realSize.x = size.x;
 	realSize.y = size.y;
+	realSize.x /= owner->GetEngine()->GetEditor()->lastViewportSize.x;
+	realSize.y /= owner->GetEngine()->GetEditor()->lastViewportSize.y;
 }
 
 float2 ComponentTransform2D::GetCanvasCenter()

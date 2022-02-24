@@ -17,6 +17,7 @@ public:
 
 	bool Start() override;
 	bool PreUpdate(float dt) override;
+	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
 

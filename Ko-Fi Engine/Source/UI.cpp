@@ -35,6 +35,31 @@ bool UI::PreUpdate(float dt)
 	return true;
 }
 
+bool UI::Update(float dt) {
+	std::queue<GameObject*> S;
+	for (GameObject* child : engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren())
+	{
+		if (child->active)
+			S.push(child);
+	}
+
+	while (!S.empty())
+	{
+		GameObject* go = S.front();
+		if (go->GetComponent<ComponentTransform2D>() != nullptr) {
+			go->Update();
+		}
+		S.pop();
+		for (GameObject* child : go->GetChildren())
+		{
+			if (child->active)
+				S.push(child);
+		}
+	}
+
+	return true;
+}
+
 bool UI::PostUpdate(float dt)
 {
 	float3 right = engine->GetCamera3D()->right;
@@ -57,12 +82,12 @@ bool UI::PostUpdate(float dt)
 	glGetIntegerv(GL_VIEWPORT, viewport);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(viewport[0], viewport[2], viewport[1], viewport[3], 1, 1000);
+	glOrtho(engine->GetEditor()->scenePanelOrigin.x, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->scenePanelOrigin.y, engine->GetEditor()->lastViewportSize.y, 1, 1000);
 
-	uiCameraViewport[0] = viewport[0];
-	uiCameraViewport[1] = viewport[1];
-	uiCameraViewport[2] = viewport[2];
-	uiCameraViewport[3] = viewport[3];
+	uiCameraViewport[0] = engine->GetEditor()->scenePanelOrigin.x;
+	uiCameraViewport[1] = engine->GetEditor()->scenePanelOrigin.y;
+	uiCameraViewport[2] = engine->GetEditor()->lastViewportSize.x;
+	uiCameraViewport[3] = engine->GetEditor()->lastViewportSize.y;
 
 	glPushAttrib(GL_LIST_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT | GL_TRANSFORM_BIT);
 	glMatrixMode(GL_MODELVIEW);
