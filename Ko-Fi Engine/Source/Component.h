@@ -11,7 +11,8 @@ enum class ComponentType
 	MESH,
 	MATERIAL,
 	INFO,
-	CAMERA
+	CAMERA,
+	COLLIDER
 };
 
 class Component

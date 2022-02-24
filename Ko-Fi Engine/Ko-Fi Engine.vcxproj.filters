@@ -343,6 +343,9 @@
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentCollider.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">

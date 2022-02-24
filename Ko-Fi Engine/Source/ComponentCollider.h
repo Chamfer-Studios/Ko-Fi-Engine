@@ -2,24 +2,34 @@
 #define __COMPONENT_COLLIDER_H__
 
 #include "Component.h"
+#include "ComponentMesh.h"
+#include "GameObject.h"
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Math/Quat.h"
+#include "Engine.h"
+
+// See: https://github.com/MissclickStudios/Projecte3/commits/31099184ed0cfc0294897689afc08654caf98fde
+
+class ComponentMesh;
 
 class ComponentCollider : public Component
 {
 public:
-	enum class COLLIDER_TYPE
+	enum class ColliderType
 	{
 		COLL_SPHERE,
 		COLL_PLANE,
 		COLL_CAPSULE,
-		COLL_BOX
+		COLL_BOX,
+		NONE
 	};
 
-	ComponentCollider(GameObject* parent);
+	ComponentCollider(GameObject* parent, ColliderType collType);
 	~ComponentCollider();
-
+	
+	bool Update() override;
+	bool CleanUp() override;
 	
 
 	// ----- Editor settings ---------------
@@ -27,11 +37,15 @@ public:
 	// -------------------------------------
 
 	// ----- Serialization -----------------
+	// Save and load done in ModuleSceneIntro.... TODO: Need to serialize every component different
+	// -------------------------------------
 
+	// ----- Getters Setters ---------------
+	const ColliderType GetColliderType() const { return collType; }
 	// -------------------------------------
 
 private:
-
+	ColliderType collType = ColliderType::NONE;
 };
 
 

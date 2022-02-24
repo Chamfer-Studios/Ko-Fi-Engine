@@ -57,6 +57,8 @@ public:
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
 	bool GetRenderMesh();
 	void SetRenderMesh(bool renderMesh);
+	bool GetRenderAABB();
+	void SetRenderAABB(bool newRenderAABB);
 
 private:
 	//Bounding sphere
@@ -75,5 +77,6 @@ private:
 	AABB aabb;
 
 	bool renderMesh = true;
+	bool renderAABB = true;
 	float time = 0;
 };

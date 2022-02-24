@@ -174,8 +174,9 @@ bool ComponentMesh::PostUpdate(float dt)
 		}
 
 		mesh->Draw(owner);
+
 		GenerateGlobalBoundingBox();
-		DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
+		DrawBoundingBox(aabb, float3(1.0f, 1.0f, 0.0f));
 
 		glUseProgram(0);
 	}
@@ -260,6 +261,11 @@ AABB ComponentMesh::GetLocalAABB()
 {
 	GenerateLocalBoundingBox();
 	return mesh->localAABB;
+}
+
+AABB ComponentMesh::GetGlobalAABB()
+{
+	return aabb;
 }
 
 ////void ComponentMesh::LoadMesh(const char* path)
@@ -399,6 +405,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	//};
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
+
 	glBegin(GL_LINES);
 
 	// Bottom 1
@@ -442,13 +449,6 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 
 	glEnd();
-	glColor3f(1.f, 1.f, 1.f);
-	glLineWidth(1.0f);
-}
-
-AABB ComponentMesh::GetGlobalAABB()
-{
-	return aabb;
 }
 
 bool ComponentMesh::GetRenderMesh()
@@ -459,6 +459,16 @@ bool ComponentMesh::GetRenderMesh()
 void ComponentMesh::SetRenderMesh(bool renderMesh)
 {
 	this->renderMesh = renderMesh;
+}
+
+bool ComponentMesh::GetRenderAABB()
+{
+	return renderAABB;
+}
+
+void ComponentMesh::SetRenderAABB(bool newRenderAABB)
+{
+	this->renderAABB = newRenderAABB;
 }
 
 
