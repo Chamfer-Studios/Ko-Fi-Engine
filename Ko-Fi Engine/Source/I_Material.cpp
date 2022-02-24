@@ -1,16 +1,25 @@
 #include "I_Material.h"
+#include "Material.h"
 
-bool Importer::Materials::Import(const aiMaterial* aiMaterial, Material* material)
+I_Material::I_Material()
+{
+}
+
+I_Material::~I_Material()
+{
+}
+
+bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 {
 	return true;
 }
 
-bool Importer::Materials::Save(const Material* material)
+bool I_Material::Save(const Material* material)
 {
 	return true;
 }
 
-bool Importer::Materials::Load(const char* path, Mesh* mesh)
+bool I_Material::Load(const char* path, Material* material)
 {
 	return true;
 }

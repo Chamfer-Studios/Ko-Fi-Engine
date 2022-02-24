@@ -31,22 +31,7 @@ Importer* Importer::GetInstance() {
 
 GameObject* Importer::ImportModel(const char* path)
 {
-	//Creating parent game object
-	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
-	if (scene != nullptr && scene->HasMeshes())
-	{
-		if (scene->mNumMeshes > 1) {
-			return GetMultipleMeshes(scene);
-		}
-		else if (scene->mNumMeshes == 1) {
-			
-			return GetOneMesh(scene);
-		}
 
-	}
-
-	aiReleaseImport(scene);
-	return nullptr;
 }
 
 

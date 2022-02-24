@@ -1,204 +1,81 @@
 #include "I_Scene.h"
+#include "I_Mesh.h"
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include "Mesh.h"
+#include "GameObject.h"
 
-//void Importer::Scene::Import(const char* path, std::vector<GameObject*>& gameObjects)
-//{
-//	if (path == nullptr)
-//		return;
-//
-//	char* buffer = nullptr;
-//	uint read = app->fileSystem->Load(path, &buffer);
-//
-//	if (read == 0)
-//		return;
-//
-//	if (buffer == nullptr)
-//		return;
-//
-//	const aiScene* scene = aiImportFileFromMemory((const char*)buffer, read, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
-//
-//	RELEASE_ARRAY(buffer);
-//
-//	if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-//		return;
-//
-//	Importer::Scene::Private::ProcessNode(scene, scene->mRootNode, gameObjects, gameObjects[0]);
-//
-//}
-
-bool Importer::Scenes::ImportOne(const aiScene* scene, )
+I_Scene::I_Scene()
 {
-	aiMaterial* texture = nullptr;
-	aiString texturePath;
-	GameObject* parent = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-	Mesh* ourMesh = new Mesh();
-	aiMesh* aiMesh = scene->mMeshes[0];
+}
 
-	// Positions
-	ourMesh->verticesSizeBytes = aiMesh->mNumVertices * sizeof(float) * 3;
-	ourMesh->vertices = (float*)malloc(ourMesh->verticesSizeBytes);
-	memcpy(ourMesh->vertices, aiMesh->mVertices, ourMesh->verticesSizeBytes); // &vertices[0]
+I_Scene::~I_Scene()
+{
+}
 
-	// Faces
-	if (aiMesh->HasFaces())
+bool I_Scene::Import(const char* buffer, uint size, Mesh* mesh)
+{
+	if (mesh == nullptr)
 	{
-		ourMesh->indicesSizeBytes = aiMesh->mNumFaces * sizeof(uint) * 3;
-		ourMesh->indices = (uint*)malloc(ourMesh->indicesSizeBytes); // assume each face is a triangle
-		for (uint i = 0; i < aiMesh->mNumFaces; ++i)
+		LOG("[ERROR] Importer: Could not Import Model! Error: R_Model* was nullptr.");
+		return;
+	}
+
+	std::string errorString = "[ERROR] Importer: Could not Import Model { " + std::string(mesh->GetAssetFile()) + " }";
+
+	if (buffer == nullptr)
+	{
+		LOG("%s! Error: Buffer was nullptr.", errorString.c_str());
+		return;
+	}
+	if (size == 0)
+	{
+		LOG("%s! Error: Size was 0.", errorString.c_str());
+		return;
+	}
+
+	LOG("[STATUS] Importing Scene: %s", mesh->GetAssetFile());
+
+	const aiScene* assimpScene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
+
+	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
+	{
+		LOG("%s! Error: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
+		return;
+	}
+
+	for (uint i = 0; i < assimpScene->mNumMeshes; ++i)
+	{
+		Utilities::aiMeshes.push_back(assimpScene->mMeshes[i]);
+
+		uint matIndex = assimpScene->mMeshes[i]->mMaterialIndex;
+		if (matIndex >= 0)
 		{
-			if (aiMesh->mFaces[i].mNumIndices != 3)
-			{
-				/*                       CONSOLE_LOG("WARNING, geometry face with != 3 indices!");
-									   appLog->AddLog("WARNING, geometry face with != 3 indices!\n");*/
-			}
-			else
-				memcpy(&ourMesh->indices[i * 3], aiMesh->mFaces[i].mIndices, 3 * sizeof(uint));
+			Utilities::aiMaterials.push_back(assimpScene->mMaterials[matIndex]);
 		}
 	}
 
-	// Loading mesh normals data
-	if (aiMesh->HasNormals())
-	{
-		ourMesh->normalsSizeBytes = aiMesh->mNumVertices * sizeof(float) * 3;
-		ourMesh->normals = (float*)malloc(ourMesh->normalsSizeBytes);
-		memcpy(ourMesh->normals, aiMesh->mNormals, ourMesh->normalsSizeBytes);
-	}
+	App->resourceManager->GetForcedUIDsFromMeta(mesh->GetAssetPath(), Utilities::forcedUIDs);				// Getting all the UIDs to force if imported asset already has a .meta file.
 
-	// Texture coordinates
-	if (aiMesh->HasTextureCoords(0))
-	{
-		ourMesh->texCoordSizeBytes = aiMesh->mNumVertices * sizeof(float) * 2;
-		ourMesh->texCoords = (float*)malloc(ourMesh->texCoordSizeBytes);
-		for (uint j = 0; j < aiMesh->mNumVertices; ++j)
-		{
-			ourMesh->texCoords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-			ourMesh->texCoords[j * 2 + 1] = 1.0f - aiMesh->mTextureCoords[0][j].y;
-		}
-	}
+	Utilities::CheckAndApplyForcedUID(mesh);																	// Checking if R_Model* has a UID to be forced. Cast rModel to Resource?
 
-	ourMesh->SetUpMeshBuffers();
+	Utilities::ProcessNode(assimpScene, assimpScene->mRootNode, mesh, ModelNode());							// First Parent is empty. Later assigned to scene_root.
 
-	if (scene->HasMaterials()) {
-		texture = scene->mMaterials[aiMesh->mMaterialIndex];
-		if (texture != nullptr) {
+	Utilities::ImportAnimations(assimpScene, mesh);
 
-			aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, aiMesh->mMaterialIndex, &texturePath);
-			std::string newPath(texturePath.C_Str());
-			ComponentMaterial* cMaterial = parent->CreateComponent<ComponentMaterial>();
+	Utilities::aiMeshes.clear();
+	Utilities::aiMaterials.clear();
+	Utilities::loadedNodes.clear();
+	Utilities::loadedTextures.clear();
 
-			if (newPath.size() > 0) {
-				std::string base_filename = newPath.substr(newPath.find_last_of("/\\") + 1);
-				std::string::size_type const p(base_filename.find_last_of('.'));
-				std::string filenameWithoutExtension = base_filename.substr(0, p);
-				std::string materialPath = "Assets/Materials/" + filenameWithoutExtension + ".milk";
-				std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
-				if (newPath.c_str() != nullptr) {
-					engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str(), texturePath.c_str());
-					cMaterial->LoadMaterial(materialPath.c_str());
-				}
+	Utilities::forcedUIDs.clear();
 
-			}
-		}
-	}
-	ComponentMesh* cMesh = parent->CreateComponent<ComponentMesh>();
-	cMesh->SetMesh(ourMesh);
-	return parent;
+	return true;
 }
 
 
-
-
-
-bool Importer::Scenes::ImportMultiple(const aiScene* scene)
-{
-	GameObject* parent = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-	aiMaterial* texture = nullptr;
-	aiString texturePath;
-
-	for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
-	{
-		GameObject* child = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-		parent->AttachChild(child);
-		Mesh* ourMesh = new Mesh();
-		aiMesh* aiMesh = scene->mMeshes[i];
-
-		// Positions
-		ourMesh->verticesSizeBytes = aiMesh->mNumVertices * sizeof(float) * 3;
-		ourMesh->vertices = (float*)malloc(ourMesh->verticesSizeBytes);
-		memcpy(ourMesh->vertices, aiMesh->mVertices, ourMesh->verticesSizeBytes); // &vertices[0]
-
-		// Faces
-		if (aiMesh->HasFaces())
-		{
-			ourMesh->indicesSizeBytes = aiMesh->mNumFaces * sizeof(uint) * 3;
-			ourMesh->indices = (uint*)malloc(ourMesh->indicesSizeBytes); // assume each face is a triangle
-			for (uint i = 0; i < aiMesh->mNumFaces; ++i)
-			{
-				if (aiMesh->mFaces[i].mNumIndices != 3)
-				{
-					/*                       CONSOLE_LOG("WARNING, geometry face with != 3 indices!");
-										   appLog->AddLog("WARNING, geometry face with != 3 indices!\n");*/
-				}
-				else
-					memcpy(&ourMesh->indices[i * 3], aiMesh->mFaces[i].mIndices, 3 * sizeof(uint));
-			}
-		}
-
-		// Loading mesh normals data
-		if (aiMesh->HasNormals())
-		{
-			ourMesh->normalsSizeBytes = aiMesh->mNumVertices * sizeof(float) * 3;
-			ourMesh->normals = (float*)malloc(ourMesh->normalsSizeBytes);
-			memcpy(ourMesh->normals, aiMesh->mNormals, ourMesh->normalsSizeBytes);
-		}
-
-		// Texture coordinates
-		if (aiMesh->HasTextureCoords(0))
-		{
-			ourMesh->texCoordSizeBytes = aiMesh->mNumVertices * sizeof(float) * 2;
-			ourMesh->texCoords = (float*)malloc(ourMesh->texCoordSizeBytes);
-			for (uint j = 0; j < aiMesh->mNumVertices; ++j)
-			{
-				ourMesh->texCoords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-				ourMesh->texCoords[j * 2 + 1] = /*1.0f - */aiMesh->mTextureCoords[0][j].y;
-			}
-		}
-		else
-			ourMesh->texCoords = 0;
-
-		ourMesh->SetUpMeshBuffers();
-
-		if (scene->HasMaterials()) {
-			texture = scene->mMaterials[aiMesh->mMaterialIndex];
-			if (texture != nullptr) {
-
-				aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, aiMesh->mMaterialIndex, &texturePath);
-				std::string newPath(texturePath.C_Str());
-				ComponentMaterial* cMaterial = child->CreateComponent<ComponentMaterial>();
-				if (newPath.size() > 0) {
-					std::string base_filename = newPath.substr(newPath.find_last_of("/\\") + 1);
-					std::string::size_type const p(base_filename.find_last_of('.'));
-					std::string filenameWithoutExtension = base_filename.substr(0, p);
-					std::string materialPath = "Assets/Materials/" + filenameWithoutExtension + ".milk";
-					std::string texturePath = "Assets/Textures/" + newPath.substr(newPath.find_last_of('\\') + 1);
-					if (newPath.c_str() != nullptr) {
-						engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str(), texturePath.c_str());
-						cMaterial->LoadMaterial(materialPath.c_str());
-					}
-
-				}
-			}
-		}
-		ComponentMesh* cMesh = child->CreateComponent<ComponentMesh>();
-		cMesh->SetMesh(ourMesh);
-		child = nullptr;
-	}
-	return parent;
-}
-
-
-
-
-bool Importer::Scenes::Save(Scene* scene)
+bool I_Scene::Save(const Scene* scene, const char* path)
 {
 	bool ret = false;
 
@@ -351,7 +228,8 @@ bool Importer::Scenes::Save(Scene* scene)
 	//return ret;
 }
 
-bool Importer::Scenes::Load(Scene* scene, const char* sceneName)
+
+bool I_Scene::Load(const char* path, Scene* mesh)
 {
 	bool ret = false;
 
@@ -631,6 +509,51 @@ bool Importer::Scenes::Load(Scene* scene, const char* sceneName)
 
 	//return ret;
 }
+
+void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, Mesh* mesh, const Mesh& parent)
+{
+	Mesh modelNode = Mesh();
+	modelNode.uid = Random::LCG::GetRandomUint();
+	modelNode.parentUID = parent.uid;
+
+	assimpNode = Utilities::ImportTransform(assimpNode, modelNode);
+	Utilities::ImportMeshesAndMaterials(assimpScene, assimpNode, mesh, modelNode);
+
+	modelNode.name = (assimpNode == assimpScene->mRootNode) ? mesh->GetAssetFile() : assimpNode->mName.C_Str();
+
+	mesh->modelNodes.push_back(modelNode);
+
+	for (uint i = 0; i < assimpNode->mNumChildren; ++i)
+	{
+		ImportNode(assimpScene, assimpNode->mChildren[i], mesh, modelNode);
+	}
+}
+
+//void Importer::Scene::Import(const char* path, std::vector<GameObject*>& gameObjects)
+//{
+//	if (path == nullptr)
+//		return;
+//
+//	char* buffer = nullptr;
+//	uint read = app->fileSystem->Load(path, &buffer);
+//
+//	if (read == 0)
+//		return;
+//
+//	if (buffer == nullptr)
+//		return;
+//
+//	const aiScene* scene = aiImportFileFromMemory((const char*)buffer, read, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
+//
+//	RELEASE_ARRAY(buffer);
+//
+//	if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+//		return;
+//
+//	Importer::Scene::Private::ProcessNode(scene, scene->mRootNode, gameObjects, gameObjects[0]);
+//
+//}
+
 
 //void Importer::Scene::Private::ProcessNode(const aiScene* aiscene, const aiNode* node, std::vector<GameObject*>& gameObjects, GameObject* parent)
 //{

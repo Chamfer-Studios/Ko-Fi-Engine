@@ -1,14 +1,17 @@
-#ifndef __I_SHADER__
-#define __I_SHADER__
+#ifndef __I_SHADER_H__
+#define __I_SHADER_H__
 
-namespace Importer
+class Shader;
+
+class I_Shader
 {
-	namespace Shaders
-	{
-		bool Import(const aiMesh* aiMaterial, Mesh* mesh);
-		bool Save(const Mesh* mesh, const char* path);
-		bool Load(const char* path, Mesh* mesh);
-	}
-}
+public:
+	I_Shader();
+	~I_Shader();
 
-#endif // !__I_SHADER__
+	bool Import(const aiMesh* aiMaterial, Shader* shader);
+	bool Save(const Shader* shader, const char* path);
+	bool Load(const char* path, Shader* shader);
+};
+
+#endif // !__I_SHADER_H__

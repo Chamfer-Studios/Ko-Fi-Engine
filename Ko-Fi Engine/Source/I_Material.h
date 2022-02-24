@@ -1,18 +1,18 @@
-#ifndef __I_MATERIAL__
-#define __I_MATERIAL__
+#ifndef __I_MATERIAL_H__
+#define __I_MATERIAL_H__
 
 class Material;
 class aiMaterial;
-class Mesh;
 
-namespace Importer
+class I_Material
 {
-	namespace Materials
-	{
-		bool Import(const aiMaterial* aiMaterial, Material* material);
-		bool Save(const Material* material);
-		bool Load(const char* path, Mesh* mesh);
-	}
-}
+public:
+	I_Material();
+	~I_Material();
 
-#endif // !__I_MATERIAL__
+	bool Import(const aiMaterial* aiMaterial, Material* material);
+	bool Save(const Material* material);
+	bool Load(const char* path, Material* material);
+};
+
+#endif // !__I_MATERIAL_H__

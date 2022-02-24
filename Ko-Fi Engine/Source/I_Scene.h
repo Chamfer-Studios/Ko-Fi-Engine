@@ -1,18 +1,27 @@
-#ifndef __I_SCENE__
-#define __I_SCENE__
+#ifndef __I_SCENE_H__
+#define __I_SCENE_H__
+
+#include <vector>
+#include "Globals.h"
 
 class aiScene;
+class aiNode;
 class Scene;
+class I_Mesh;
+class GameObject;
+class Mesh;
 
-namespace Importer
+class I_Scene
 {
-	namespace Scenes
-	{
-		bool ImportOne(const aiScene* aiScene, Scene* scene);
-		bool ImportMultiple(const aiScene* aiScene, Scene* scene);
-		bool Save(const Scene* mesh, const char* path);
-		bool Load(const char* path, Scene* mesh);
-	}
-}
+public:
+	I_Scene();
+	~I_Scene();
 
-#endif // !__I_SCENE__
+	bool Import(const char* buffer, uint size, Mesh* mesh);
+	bool Save(const Scene* scene, const char* path);
+	bool Load(const char* path, Scene* scene);
+
+	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, Mesh* mesh, const Mesh& parent);
+};
+
+#endif // !__I_SCENE_H__

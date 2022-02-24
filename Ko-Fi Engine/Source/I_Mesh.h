@@ -1,17 +1,20 @@
-#ifndef __I_MESH__
-#define __I_MESH__
+#ifndef __I_MESH_H__
+#define __I_MESH_H__
 
 class aiMesh;
 class Mesh;
 
-namespace Importer
+class I_Mesh
 {
-	namespace Meshes
-	{
-		bool Import(const aiMesh* aiMaterial, Mesh* mesh);
-		bool Save(const Mesh* mesh, const char* path);
-		bool Load(const char* path, Mesh* mesh);
-	}
-}
+public:
+	I_Mesh();
+	~I_Mesh();
 
-#endif // !__I_MESH__
+	bool ImportOne(const aiScene* aiScene, Scene* scene);
+	bool ImportMultiple(const aiScene* aiScene, Scene* scene);
+	bool Import(const aiMesh* aiMaterial, Mesh* mesh);
+	bool Save(const Mesh* mesh, const char* path);
+	bool Load(const char* path, Mesh* mesh);
+};
+
+#endif // !__I_MESH_H__

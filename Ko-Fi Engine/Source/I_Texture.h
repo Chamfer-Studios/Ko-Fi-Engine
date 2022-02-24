@@ -1,14 +1,16 @@
-#ifndef __I_TEXTURE__
-#define __I_TEXTURE__
+#ifndef __I_TEXTURE_H__
+#define __I_TEXTURE_H__
 
-namespace Importer
+class Texture;
+
+class I_Texture
 {
-	namespace Textures
-	{
-		bool Import(const aiMesh* aiMaterial, Mesh* mesh);
-		bool Save(const Mesh* mesh, const char* path);
-		bool Load(const char* path, Mesh* mesh);
-	}
-}
+	I_Texture();
+	~I_Texture();
 
-#endif // !__I_TEXTURE__
+	bool Import(const aiMesh* aiMaterial, Texture* texture);
+	bool Save(const Texture* texture, const char* path);
+	bool Load(const char* path, Texture* texture);
+};
+
+#endif // !__I_TEXTURE_H__
