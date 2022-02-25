@@ -5,6 +5,12 @@ struct aiScene;
 class GameObject;
 class ComponentTransform;
 class Mesh;
+class I_Material;
+class I_Mesh;
+class I_Scene;
+class I_Shader;
+class I_Texture;
+
 class Importer{
 private:
 	Importer();
@@ -22,4 +28,10 @@ private:
 private:
 	KoFiEngine* engine = nullptr;
 	static Importer* instance;
+public:
+	I_Material* materialImporter = nullptr;
+	I_Mesh* meshImporter = nullptr;
+	I_Scene* sceneImporter = nullptr;
+	I_Shader* shaderImporter = nullptr;
+	I_Texture* textureImporter = nullptr;
 };

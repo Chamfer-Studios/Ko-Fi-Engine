@@ -1,10 +1,9 @@
 #ifndef __TEXTURE_H__
 #define __TEXTURE_H__
 
-typedef unsigned int uint;
 #include <string>
 #include "MathGeoLib/Math/float2.h"
-
+#include "Globals.h"
 #include "Resource.h"
 
 //class Texture

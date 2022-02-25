@@ -16,60 +16,60 @@ I_Scene::~I_Scene()
 
 bool I_Scene::Import(const char* buffer, uint size, Mesh* mesh)
 {
-	if (mesh == nullptr)
-	{
-		LOG("[ERROR] Importer: Could not Import Model! Error: R_Model* was nullptr.");
-		return;
-	}
+	//if (mesh == nullptr)
+	//{
+	//	LOG("[ERROR] Importer: Could not Import Model! Error: R_Model* was nullptr.");
+	//	return;
+	//}
 
-	std::string errorString = "[ERROR] Importer: Could not Import Model { " + std::string(mesh->GetAssetFile()) + " }";
+	//std::string errorString = "[ERROR] Importer: Could not Import Model { " + std::string(mesh->GetAssetFile()) + " }";
 
-	if (buffer == nullptr)
-	{
-		LOG("%s! Error: Buffer was nullptr.", errorString.c_str());
-		return;
-	}
-	if (size == 0)
-	{
-		LOG("%s! Error: Size was 0.", errorString.c_str());
-		return;
-	}
+	//if (buffer == nullptr)
+	//{
+	//	LOG("%s! Error: Buffer was nullptr.", errorString.c_str());
+	//	return;
+	//}
+	//if (size == 0)
+	//{
+	//	LOG("%s! Error: Size was 0.", errorString.c_str());
+	//	return;
+	//}
 
-	LOG("[STATUS] Importing Scene: %s", mesh->GetAssetFile());
+	//LOG("[STATUS] Importing Scene: %s", mesh->GetAssetFile());
 
-	const aiScene* assimpScene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
+	//const aiScene* assimpScene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 
-	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
-	{
-		LOG("%s! Error: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
-		return;
-	}
+	//if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
+	//{
+	//	LOG("%s! Error: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
+	//	return;
+	//}
 
-	for (uint i = 0; i < assimpScene->mNumMeshes; ++i)
-	{
-		Utilities::aiMeshes.push_back(assimpScene->mMeshes[i]);
+	//for (uint i = 0; i < assimpScene->mNumMeshes; ++i)
+	//{
+	//	Utilities::aiMeshes.push_back(assimpScene->mMeshes[i]);
 
-		uint matIndex = assimpScene->mMeshes[i]->mMaterialIndex;
-		if (matIndex >= 0)
-		{
-			Utilities::aiMaterials.push_back(assimpScene->mMaterials[matIndex]);
-		}
-	}
+	//	uint matIndex = assimpScene->mMeshes[i]->mMaterialIndex;
+	//	if (matIndex >= 0)
+	//	{
+	//		Utilities::aiMaterials.push_back(assimpScene->mMaterials[matIndex]);
+	//	}
+	//}
 
-	App->resourceManager->GetForcedUIDsFromMeta(mesh->GetAssetPath(), Utilities::forcedUIDs);				// Getting all the UIDs to force if imported asset already has a .meta file.
+	//App->resourceManager->GetForcedUIDsFromMeta(mesh->GetAssetPath(), Utilities::forcedUIDs);				// Getting all the UIDs to force if imported asset already has a .meta file.
 
-	Utilities::CheckAndApplyForcedUID(mesh);																	// Checking if R_Model* has a UID to be forced. Cast rModel to Resource?
+	//Utilities::CheckAndApplyForcedUID(mesh);																	// Checking if R_Model* has a UID to be forced. Cast rModel to Resource?
 
-	Utilities::ProcessNode(assimpScene, assimpScene->mRootNode, mesh, ModelNode());							// First Parent is empty. Later assigned to scene_root.
+	//ImportNode(assimpScene, assimpScene->mRootNode, mesh, ModelNode());							// First Parent is empty. Later assigned to scene_root.
 
-	Utilities::ImportAnimations(assimpScene, mesh);
+	//Utilities::ImportAnimations(assimpScene, mesh);
 
-	Utilities::aiMeshes.clear();
-	Utilities::aiMaterials.clear();
-	Utilities::loadedNodes.clear();
-	Utilities::loadedTextures.clear();
+	//Utilities::aiMeshes.clear();
+	//Utilities::aiMaterials.clear();
+	//Utilities::loadedNodes.clear();
+	//Utilities::loadedTextures.clear();
 
-	Utilities::forcedUIDs.clear();
+	//Utilities::forcedUIDs.clear();
 
 	return true;
 }
@@ -77,92 +77,92 @@ bool I_Scene::Import(const char* buffer, uint size, Mesh* mesh)
 
 bool I_Scene::Save(const Scene* scene, const char* path)
 {
-	bool ret = false;
+	//bool ret = false;
 
-	Json jsonFile;
+	//Json jsonFile;
 
-	const char* sceneName = scene->name.GetString();
-	jsonFile[sceneName];
-	//Json jsonScene = jsonFile.at(sceneName); // It doesn't work :/
+	//const char* sceneName = scene->name.GetString();
+	//jsonFile[sceneName];
+	////Json jsonScene = jsonFile.at(sceneName); // It doesn't work :/
 
-	jsonFile[sceneName]["name"] = sceneName;
-	jsonFile[sceneName]["active"] = scene->active;
+	//jsonFile[sceneName]["name"] = sceneName;
+	//jsonFile[sceneName]["active"] = scene->active;
 
-	std::vector<GameObject*> gameObjectList = scene->gameObjectList;
-	jsonFile[sceneName]["game_objects_amount"] = gameObjectList.size();
-	jsonFile[sceneName]["game_objects_list"] = Json::array();
-	//Json jsonGameObjectList = jsonScene.at("game_object_list"); // It doesn't work :/
-	for (std::vector<GameObject*>::iterator go = gameObjectList.begin(); go != gameObjectList.end(); go++)
-	{
-		GameObject* gameObject = (*go);
-		Json jsonGameObject;
+	//std::vector<GameObject*> gameObjectList = scene->gameObjectList;
+	//jsonFile[sceneName]["game_objects_amount"] = gameObjectList.size();
+	//jsonFile[sceneName]["game_objects_list"] = Json::array();
+	////Json jsonGameObjectList = jsonScene.at("game_object_list"); // It doesn't work :/
+	//for (std::vector<GameObject*>::iterator go = gameObjectList.begin(); go != gameObjectList.end(); go++)
+	//{
+	//	GameObject* gameObject = (*go);
+	//	Json jsonGameObject;
 
-		std::string idString = std::to_string((int)gameObject->GetId());
+	//	std::string idString = std::to_string((int)gameObject->GetId());
 
-		jsonGameObject["name"] = gameObject->GetName().c_str();
-		jsonGameObject["active"] = gameObject->active;
+	//	jsonGameObject["name"] = gameObject->GetName().c_str();
+	//	jsonGameObject["active"] = gameObject->active;
 
-		//jsonGameObject["component_transform"] = SaveComponentTransform(gameObject->GetComponent<ComponentTransform>());
+	//	//jsonGameObject["component_transform"] = SaveComponentTransform(gameObject->GetComponent<ComponentTransform>());
 
-		jsonGameObject["components_list"] = Json::array();
-		std::vector<Component*> componentsList = gameObject->GetComponents();
-		for (std::vector<Component*>::iterator cmp = componentsList.begin(); cmp != componentsList.end(); cmp++)
-		{
-			Component* component = (*cmp);
-			Json jsonComponent;
-			jsonComponent = component->Save();
+	//	jsonGameObject["components_list"] = Json::array();
+	//	std::vector<Component*> componentsList = gameObject->GetComponents();
+	//	for (std::vector<Component*>::iterator cmp = componentsList.begin(); cmp != componentsList.end(); cmp++)
+	//	{
+	//		Component* component = (*cmp);
+	//		Json jsonComponent;
+	//		jsonComponent = component->Save();
 
-			switch (component->GetType())
-			{
-			case ComponentType::TRANSFORM:
-				jsonComponent["component_type"] = "transform";
-				break;
-			case ComponentType::MESH:
-				jsonComponent["component_type"] = "mesh";
-				break;
-			case ComponentType::MATERIAL:
-				jsonComponent["component_type"] = "material";
-				break;
-			case ComponentType::INFO:
-				jsonComponent["component_type"] = "info";
-				break;
-			case ComponentType::CAMERA:
-				jsonComponent["component_type"] = "camera";
-			default:
-				break;
-			}
-			jsonGameObject["components_list"].push_back(jsonComponent);
-		}
+	//		switch (component->GetType())
+	//		{
+	//		case ComponentType::TRANSFORM:
+	//			jsonComponent["component_type"] = "transform";
+	//			break;
+	//		case ComponentType::MESH:
+	//			jsonComponent["component_type"] = "mesh";
+	//			break;
+	//		case ComponentType::MATERIAL:
+	//			jsonComponent["component_type"] = "material";
+	//			break;
+	//		case ComponentType::INFO:
+	//			jsonComponent["component_type"] = "info";
+	//			break;
+	//		case ComponentType::CAMERA:
+	//			jsonComponent["component_type"] = "camera";
+	//		default:
+	//			break;
+	//		}
+	//		jsonGameObject["components_list"].push_back(jsonComponent);
+	//	}
 
-		// We are just saving a game object...
-		// We don't want to save also its children here,
-		// because we will arrive and create them at the proper moment with the loop.
-		// In order to keep track of parents and childrens, we will record the ids.
-		// This way when we load them, we'll be able to create all the game objects,
-		// and create afterwards the parent-children relations knowing the IDs.
-		jsonGameObject["children_id_list"] = Json::array();
-		std::vector<GameObject*> children = gameObject->GetChildren();
-		for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
-		{
-			GameObject* child = (*ch);
-			jsonGameObject["children_id_list"].push_back((int)child->GetId());
-		}
+	//	// We are just saving a game object...
+	//	// We don't want to save also its children here,
+	//	// because we will arrive and create them at the proper moment with the loop.
+	//	// In order to keep track of parents and childrens, we will record the ids.
+	//	// This way when we load them, we'll be able to create all the game objects,
+	//	// and create afterwards the parent-children relations knowing the IDs.
+	//	jsonGameObject["children_id_list"] = Json::array();
+	//	std::vector<GameObject*> children = gameObject->GetChildren();
+	//	for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
+	//	{
+	//		GameObject* child = (*ch);
+	//		jsonGameObject["children_id_list"].push_back((int)child->GetId());
+	//	}
 
-		if (gameObject->GetParent() != nullptr)
-			jsonGameObject["parent"] = (int)gameObject->GetParent()->GetId();
-		else
-			jsonGameObject["parent"];
+	//	if (gameObject->GetParent() != nullptr)
+	//		jsonGameObject["parent"] = (int)gameObject->GetParent()->GetId();
+	//	else
+	//		jsonGameObject["parent"];
 
-		jsonGameObject["id"] = (int)gameObject->GetId();
+	//	jsonGameObject["id"] = (int)gameObject->GetId();
 
-		jsonFile[sceneName]["game_objects_list"].push_back(jsonGameObject);
-	}
+	//	jsonFile[sceneName]["game_objects_list"].push_back(jsonGameObject);
+	//}
 
-	jsonFile[sceneName]["root_go"] = (int)scene->rootGo->GetId();
+	//jsonFile[sceneName]["root_go"] = (int)scene->rootGo->GetId();
 
-	ret = jsonHandler.SaveJson(jsonFile, "Scenes/scene.json");
+	//ret = jsonHandler.SaveJson(jsonFile, "Scenes/scene.json");
 
-	return ret;
+	//return ret;
 
 
 
@@ -231,190 +231,190 @@ bool I_Scene::Save(const Scene* scene, const char* path)
 
 bool I_Scene::Load(const char* path, Scene* mesh)
 {
-	bool ret = false;
+	//bool ret = false;
 
-	Json jsonFile;
-	Json jsonScene;
-	ret = jsonHandler.LoadJson(jsonFile, "Scenes/scene.json");
+	//Json jsonFile;
+	//Json jsonScene;
+	//ret = jsonHandler.LoadJson(jsonFile, "Scenes/scene.json");
 
-	if (!jsonFile.empty())
-	{
-		ret = true;
-		jsonScene = jsonFile.at(sceneName);
+	//if (!jsonFile.empty())
+	//{
+	//	ret = true;
+	//	jsonScene = jsonFile.at(sceneName);
 
-		// LOAD HERE THE PATHS TO EACH MODEL WE HAD IN THE SCENE
-		// (SAVE THEM IN A LIST EACH TIME A MODEL IS LOADED)
-		// AND LOAD THE MODELS TO GENERATE THE GAME OBJECTS.
-		// THEN ITERATE THE LIST OF GAME OBJECTS JUST CREATED AND UPDATE
-		// THEIR INFO WITH THE .JSON FILE INFO. SAVED BEFORE.
+	//	// LOAD HERE THE PATHS TO EACH MODEL WE HAD IN THE SCENE
+	//	// (SAVE THEM IN A LIST EACH TIME A MODEL IS LOADED)
+	//	// AND LOAD THE MODELS TO GENERATE THE GAME OBJECTS.
+	//	// THEN ITERATE THE LIST OF GAME OBJECTS JUST CREATED AND UPDATE
+	//	// THEIR INFO WITH THE .JSON FILE INFO. SAVED BEFORE.
 
-		std::string name = jsonScene.at("name");
-		scene->name.Create(name.c_str());
-		scene->active = jsonScene.at("active");
+	//	std::string name = jsonScene.at("name");
+	//	scene->name.Create(name.c_str());
+	//	scene->active = jsonScene.at("active");
 
-		// ITERATE HERE THE GAME OBJECTS LIST AND SEEK THE SAME
-		// GAME OBJECT WITH THE SAME ID TO UPDATE ITS PROPERTIES.
-		// IF THE GAME OBJECT DOESN'T EXIST, IT'LL BE CREATED.
-		Json jsonGameObjectsList = jsonScene.at("game_objects_list");
-		for (const auto& go : jsonGameObjectsList.items())
-		{
-			Json jsonGameObject = go.value();
-			int id = jsonGameObject["id"];
+	//	// ITERATE HERE THE GAME OBJECTS LIST AND SEEK THE SAME
+	//	// GAME OBJECT WITH THE SAME ID TO UPDATE ITS PROPERTIES.
+	//	// IF THE GAME OBJECT DOESN'T EXIST, IT'LL BE CREATED.
+	//	Json jsonGameObjectsList = jsonScene.at("game_objects_list");
+	//	for (const auto& go : jsonGameObjectsList.items())
+	//	{
+	//		Json jsonGameObject = go.value();
+	//		int id = jsonGameObject["id"];
 
-			// IF THE GAME OBJECT ALREADY EXISTS, IT'LL BE UPDATED
-			if (scene->GetGameObject(id) != nullptr)
-			{
-				GameObject* gameObject = scene->GetGameObject(id);
+	//		// IF THE GAME OBJECT ALREADY EXISTS, IT'LL BE UPDATED
+	//		if (scene->GetGameObject(id) != nullptr)
+	//		{
+	//			GameObject* gameObject = scene->GetGameObject(id);
 
-				gameObject->name = jsonGameObject.at("name");
-				gameObject->active = jsonGameObject.at("active");
+	//			gameObject->name = jsonGameObject.at("name");
+	//			gameObject->active = jsonGameObject.at("active");
 
-				//LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
+	//			//LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
 
-				// ITERATE HERE THE COMPONENTS LIST AND SEEK THE SAME
-				// COMPONENT TO UPDATE ITS PROPERTIES.
-				// IF THE COMPONENT DOESN'T EXIST, IT'LL BE CREATED.
-				// IN THE FUTURE WE'LL HAVE COMPONENT IDS TO HAVE THE SAME COMPONENT SEVERAL TIMES.
-				Json jsonComponentsList = jsonGameObject.at("components_list");
-				for (const auto& cmp : jsonComponentsList.items())
-				{
-					Json jsonComponent = cmp.value();
-					std::string componentString = jsonComponent.at("component_type");
-					Component* component = nullptr;
-					if (componentString == "transform")
-						component = gameObject->GetComponent<ComponentTransform>();
-					else if (componentString == "mesh")
-						component = gameObject->GetComponent<ComponentMesh>();
-					else if (componentString == "info")
-						component = gameObject->GetComponent<ComponentInfo>();
-					else if (componentString == "camera")
-						component = gameObject->GetComponent<ComponentCamera>();
+	//			// ITERATE HERE THE COMPONENTS LIST AND SEEK THE SAME
+	//			// COMPONENT TO UPDATE ITS PROPERTIES.
+	//			// IF THE COMPONENT DOESN'T EXIST, IT'LL BE CREATED.
+	//			// IN THE FUTURE WE'LL HAVE COMPONENT IDS TO HAVE THE SAME COMPONENT SEVERAL TIMES.
+	//			Json jsonComponentsList = jsonGameObject.at("components_list");
+	//			for (const auto& cmp : jsonComponentsList.items())
+	//			{
+	//				Json jsonComponent = cmp.value();
+	//				std::string componentString = jsonComponent.at("component_type");
+	//				Component* component = nullptr;
+	//				if (componentString == "transform")
+	//					component = gameObject->GetComponent<ComponentTransform>();
+	//				else if (componentString == "mesh")
+	//					component = gameObject->GetComponent<ComponentMesh>();
+	//				else if (componentString == "info")
+	//					component = gameObject->GetComponent<ComponentInfo>();
+	//				else if (componentString == "camera")
+	//					component = gameObject->GetComponent<ComponentCamera>();
 
-					// IF THE COMPONENT ALREADY EXISTS, IT'LL BE UPDATED
-					if (component != nullptr)
-					{
-						component->Load(jsonComponent);
-					}
-					// IF THE COMPONENT DOESN'T EXIST, IT'LL BE CREATED
-					else
-					{
-						if (componentString == "transform")
-							component = gameObject->GetTransform();
-						else if (componentString == "mesh")
-							component = gameObject->CreateComponent<ComponentMesh>();
-						else if (componentString == "info")
-							component = gameObject->GetComponent<ComponentInfo>();
-						else if (componentString == "camera")
-							component = gameObject->CreateComponent<ComponentCamera>();
+	//				// IF THE COMPONENT ALREADY EXISTS, IT'LL BE UPDATED
+	//				if (component != nullptr)
+	//				{
+	//					component->Load(jsonComponent);
+	//				}
+	//				// IF THE COMPONENT DOESN'T EXIST, IT'LL BE CREATED
+	//				else
+	//				{
+	//					if (componentString == "transform")
+	//						component = gameObject->GetTransform();
+	//					else if (componentString == "mesh")
+	//						component = gameObject->CreateComponent<ComponentMesh>();
+	//					else if (componentString == "info")
+	//						component = gameObject->GetComponent<ComponentInfo>();
+	//					else if (componentString == "camera")
+	//						component = gameObject->CreateComponent<ComponentCamera>();
 
-						if (component != nullptr)
-						{
-							component->Load(jsonComponent);
-						}
-					}
-				}
+	//					if (component != nullptr)
+	//					{
+	//						component->Load(jsonComponent);
+	//					}
+	//				}
+	//			}
 
-				gameObject->SetId(id);
-			}
-			// IF THE GAME OBJECT DOESN'T EXIST, IT'LL BE CREATED
-			else
-			{
-				GameObject* gameObject = scene->CreateEmptyGameObject();
+	//			gameObject->SetId(id);
+	//		}
+	//		// IF THE GAME OBJECT DOESN'T EXIST, IT'LL BE CREATED
+	//		else
+	//		{
+	//			GameObject* gameObject = scene->CreateEmptyGameObject();
 
-				gameObject->name = jsonGameObject.at("name");
-				gameObject->active = jsonGameObject.at("active");
+	//			gameObject->name = jsonGameObject.at("name");
+	//			gameObject->active = jsonGameObject.at("active");
 
-				//LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
+	//			//LoadComponentTransform(gameObject->GetTransform(), jsonGameObject["component_transform"]);
 
-				Json jsonComponentsList = jsonGameObject.at("components_list");
-				for (const auto& cmp : jsonComponentsList.items())
-				{
-					Json jsonComponent = cmp.value();
-					std::string componentString = jsonComponent.at("component_type");
-					Component* component = nullptr;
+	//			Json jsonComponentsList = jsonGameObject.at("components_list");
+	//			for (const auto& cmp : jsonComponentsList.items())
+	//			{
+	//				Json jsonComponent = cmp.value();
+	//				std::string componentString = jsonComponent.at("component_type");
+	//				Component* component = nullptr;
 
-					if (componentString == "transform")
-						component = gameObject->GetTransform();
-					else if (componentString == "mesh")
-						component = gameObject->CreateComponent<ComponentMesh>();
-					else if (componentString == "info")
-						component = gameObject->GetComponent<ComponentInfo>();
-					else if (componentString == "camera")
-						component = gameObject->CreateComponent<ComponentCamera>();
+	//				if (componentString == "transform")
+	//					component = gameObject->GetTransform();
+	//				else if (componentString == "mesh")
+	//					component = gameObject->CreateComponent<ComponentMesh>();
+	//				else if (componentString == "info")
+	//					component = gameObject->GetComponent<ComponentInfo>();
+	//				else if (componentString == "camera")
+	//					component = gameObject->CreateComponent<ComponentCamera>();
 
-					if (component != nullptr)
-					{
-						component->Load(jsonComponent);
-					}
-				}
+	//				if (component != nullptr)
+	//				{
+	//					component->Load(jsonComponent);
+	//				}
+	//			}
 
-				gameObject->SetId(id);
-			}
-		}
+	//			gameObject->SetId(id);
+	//		}
+	//	}
 
-		scene->rootGo = scene->GetGameObject(jsonScene.at("root_go"));
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	//	scene->rootGo = scene->GetGameObject(jsonScene.at("root_go"));
+	//	engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 
-		// MAKE SURE THERE ISN'T ANY GAME OBJECT WE DON'T HAVE AT THE .JSON FILE
-		std::vector<GameObject*> gameObjectsList = scene->gameObjectList;
-		for (std::vector<GameObject*>::iterator go = gameObjectsList.begin(); go != gameObjectsList.end(); go++)
-		{
-			GameObject* gameObject = (*go);
-			bool isGameObjectSaved = false;
-			for (const auto& jsonGo : jsonGameObjectsList.items())
-			{
-				Json jsonGameObject = jsonGo.value();
-				int id = jsonGameObject.at("id");
-				if ((int)gameObject->GetId() == id)
-				{
-					isGameObjectSaved = true;
-					break;
-				}
-			}
-			if (!isGameObjectSaved)
-			{
-				// IF THE GAME OBJECT IS NOT IN THE .JSON FILE, IT'LL BE REMOVED
-				engine->GetSceneManager()->GetCurrentScene()->RemoveGameObjectIterator(go);
-			}
-		}
+	//	// MAKE SURE THERE ISN'T ANY GAME OBJECT WE DON'T HAVE AT THE .JSON FILE
+	//	std::vector<GameObject*> gameObjectsList = scene->gameObjectList;
+	//	for (std::vector<GameObject*>::iterator go = gameObjectsList.begin(); go != gameObjectsList.end(); go++)
+	//	{
+	//		GameObject* gameObject = (*go);
+	//		bool isGameObjectSaved = false;
+	//		for (const auto& jsonGo : jsonGameObjectsList.items())
+	//		{
+	//			Json jsonGameObject = jsonGo.value();
+	//			int id = jsonGameObject.at("id");
+	//			if ((int)gameObject->GetId() == id)
+	//			{
+	//				isGameObjectSaved = true;
+	//				break;
+	//			}
+	//		}
+	//		if (!isGameObjectSaved)
+	//		{
+	//			// IF THE GAME OBJECT IS NOT IN THE .JSON FILE, IT'LL BE REMOVED
+	//			engine->GetSceneManager()->GetCurrentScene()->RemoveGameObjectIterator(go);
+	//		}
+	//	}
 
-		// ONCE ALL GAME OBJECTS ARE CREATED WE CAN UPDATE THE PARENTS AND CHILDREN RELATIONS.
-		// SEE IF THE RELATION THAT THE .JSON STABLISHES IS THE SAME OF THE ONE OF OUR GAME OBJECT
-		// AND UPDATE IT IF NECESSARY.
-		for (const auto& go : jsonGameObjectsList.items())
-		{
-			Json jsonGameObject = go.value();
-			int id = jsonGameObject["id"];
+	//	// ONCE ALL GAME OBJECTS ARE CREATED WE CAN UPDATE THE PARENTS AND CHILDREN RELATIONS.
+	//	// SEE IF THE RELATION THAT THE .JSON STABLISHES IS THE SAME OF THE ONE OF OUR GAME OBJECT
+	//	// AND UPDATE IT IF NECESSARY.
+	//	for (const auto& go : jsonGameObjectsList.items())
+	//	{
+	//		Json jsonGameObject = go.value();
+	//		int id = jsonGameObject["id"];
 
-			Json jsonChildrenList = jsonGameObject.at("children_id_list");
-			GameObject* gameObject = scene->GetGameObject(id);
-			for (const auto& ch : jsonChildrenList.items())
-			{
-				int childId = ch.value();
-				if (gameObject->HasChildrenWithId(childId))
-					continue;
-				else
-				{
-					GameObject* child = scene->GetGameObject(childId);
-					gameObject->AttachChild(child);
-				}
-			}
+	//		Json jsonChildrenList = jsonGameObject.at("children_id_list");
+	//		GameObject* gameObject = scene->GetGameObject(id);
+	//		for (const auto& ch : jsonChildrenList.items())
+	//		{
+	//			int childId = ch.value();
+	//			if (gameObject->HasChildrenWithId(childId))
+	//				continue;
+	//			else
+	//			{
+	//				GameObject* child = scene->GetGameObject(childId);
+	//				gameObject->AttachChild(child);
+	//			}
+	//		}
 
-			if (id != -1) // Check that we are not setting a parent to the root...
-			{
-				int parentId = jsonGameObject.at("parent");
-				if (parentId == (int)gameObject->GetParent()->GetId())
-					continue;
-				else
-				{
-					GameObject* parent = scene->GetGameObject(parentId);
-					parent->AttachChild(gameObject);
-				}
-			}
-		}
+	//		if (id != -1) // Check that we are not setting a parent to the root...
+	//		{
+	//			int parentId = jsonGameObject.at("parent");
+	//			if (parentId == (int)gameObject->GetParent()->GetId())
+	//				continue;
+	//			else
+	//			{
+	//				GameObject* parent = scene->GetGameObject(parentId);
+	//				parent->AttachChild(gameObject);
+	//			}
+	//		}
+	//	}
 
-		return ret;
-	}
+	//	return ret;
+	//}
 
 
 	//bool ret = false;
@@ -512,22 +512,66 @@ bool I_Scene::Load(const char* path, Scene* mesh)
 
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, Mesh* mesh, const Mesh& parent)
 {
-	Mesh modelNode = Mesh();
-	modelNode.uid = Random::LCG::GetRandomUint();
-	modelNode.parentUID = parent.uid;
+	//Mesh modelNode = Mesh();
+	//modelNode.uid = Random::LCG::GetRandomUint();
+	//modelNode.parentUID = parent.uid;
 
-	assimpNode = Utilities::ImportTransform(assimpNode, modelNode);
-	Utilities::ImportMeshesAndMaterials(assimpScene, assimpNode, mesh, modelNode);
+	//assimpNode = Utilities::ImportTransform(assimpNode, modelNode);
+	//Utilities::ImportMeshesAndMaterials(assimpScene, assimpNode, mesh, modelNode);
 
-	modelNode.name = (assimpNode == assimpScene->mRootNode) ? mesh->GetAssetFile() : assimpNode->mName.C_Str();
+	//modelNode.name = (assimpNode == assimpScene->mRootNode) ? mesh->GetAssetFile() : assimpNode->mName.C_Str();
 
-	mesh->modelNodes.push_back(modelNode);
+	//mesh->modelNodes.push_back(modelNode);
 
-	for (uint i = 0; i < assimpNode->mNumChildren; ++i)
-	{
-		ImportNode(assimpScene, assimpNode->mChildren[i], mesh, modelNode);
-	}
+	//for (uint i = 0; i < assimpNode->mNumChildren; ++i)
+	//{
+	//	ImportNode(assimpScene, assimpNode->mChildren[i], mesh, modelNode);
+	//}
 }
+
+//void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode* assimpNode, Mesh* mesh, ModelNode& modelNode)
+//{
+	//if (assimpScene == nullptr || assimpNode == nullptr || mesh == nullptr)
+	//{
+	//	return;
+	//}
+	//if (!assimpScene->HasMeshes())
+	//{
+	//	return;
+	//}
+
+	//const char* nodeName = assimpNode->mName.C_Str();
+
+	//for (uint i = 0; i < assimpNode->mNumMeshes; ++i)
+	//{
+	//	std::map<uint, ModelNode>::iterator item = loadedNodes.find(assimpNode->mMeshes[i]);
+	//	if (item != loadedNodes.end())
+	//	{
+	//		modelNode.meshUID = item->second.meshUID;
+	//		modelNode.materialUID = item->second.materialUID;
+	//		modelNode.textureUID = item->second.textureUID;
+	//		modelNode.shaderUID = item->second.shaderUID;
+	//		continue;
+	//	}
+
+	//	aiMesh* assimpMesh = assimpScene->mMeshes[assimpNode->mMeshes[i]];
+
+	//	if (assimpMesh != nullptr && assimpMesh->HasFaces())
+	//	{
+	//		Importer::Scenes::Utilities::ImportMesh(nodeName, assimpMesh, modelNode);
+
+	//		if (assimpMesh->mMaterialIndex >= 0)
+	//		{
+	//			aiMaterial* assimpMaterial = assimpScene->mMaterials[assimpMesh->mMaterialIndex];
+
+	//			Importer::Scenes::Utilities::ImportMaterial(nodeName, assimpMaterial, mesh, modelNode);
+	//		}
+	//	}
+
+	//	loadedNodes.emplace(assimpNode->mMeshes[i], modelNode);
+	//}
+//}
+
 
 //void Importer::Scene::Import(const char* path, std::vector<GameObject*>& gameObjects)
 //{

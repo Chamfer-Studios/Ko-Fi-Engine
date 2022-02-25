@@ -1,10 +1,13 @@
-//#pragma once
+#ifndef __COMPONENT_MESH_H__
+#include __COMPONENT_MESH_H__
+
 #include "Component.h"
 #include "Mesh.h"
 #include "par_shapes.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
 #include "Shader.h"
+
 class ComponentTransform;
 class ComponentMaterial;
 using Json = nlohmann::json;
@@ -42,8 +45,8 @@ public:
 	Json Save() override;
 	void Load(Json json) override;
 
-//public:
-//	ComponentMaterial* materialComponent;
+	//public:
+	//	ComponentMaterial* materialComponent;
 
 	void SetPath(std::string path);
 	void SetVertexNormals(bool vertexNormals);
@@ -80,3 +83,5 @@ private:
 	bool renderMesh = true;
 	float time = 0;
 };
+
+#endif // !__COMPONENT_MESH_H__

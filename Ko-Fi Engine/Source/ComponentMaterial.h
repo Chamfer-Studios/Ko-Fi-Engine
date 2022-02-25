@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __COMPONENT_MATERIAL_H__
+#define __COMPONENT_MATERIAL_H__
+
 #include "Component.h"
 #include "Mesh.h"
 #include "Material.h"
@@ -7,10 +9,9 @@
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
 
-typedef unsigned int uint;
-
 class PanelChooser;
 using Json = nlohmann::json;
+class Shader;
 
 
 class ComponentMaterial : public Component
@@ -19,26 +20,22 @@ public:
 	ComponentMaterial(GameObject* parent);
 	~ComponentMaterial();
 
-	
 	void LoadTexture(std::string path = "");
 	bool InspectorDraw(PanelChooser* chooser);
 	Material* GetMaterial();
-	uint GetShader();
-	const char* GetShaderPath() { return shaderPath.c_str(); }
-	void SetShaderPath(std::string path) { this->shaderPath = path; }
-	void LoadShader(const char* shaderPath = nullptr);
 	//Material Handling
 	void LoadMaterial(const char* path="");
 	Json Save() override;
 	void Compile();
+	Shader* GetShader();
 
 private:
 	void LoadDefaultMaterial();
-	void LoadUniforms();
+
 private:
-	
-	Material* material;
-	uint materialShader = 0;
-	std::string shaderPath = "Assets/Shaders/default_shader.glsl";
+	Shader* shader = nullptr;
+	Material* material = nullptr;
 	int currentTextureId=0;
 };
+
+#endif // !__COMPONENT_MATERIAL_H__

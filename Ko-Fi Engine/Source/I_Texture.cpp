@@ -7,7 +7,7 @@ I_Texture::I_Texture()
 I_Texture::~I_Texture()
 {}
 
-bool I_Texture::Import(const aiMesh* aiMaterial, Texture* texture)
+bool I_Texture::Import(const char* path, Texture* texture)
 {
 	return true;
 }

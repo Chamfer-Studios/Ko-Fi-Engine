@@ -12,6 +12,8 @@
 #include "par_shapes.h"
 #include "Defs.h"
 #include "I_Mesh.h"
+#include "I_Shader.h"
+#include "Importer.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
@@ -113,7 +115,7 @@ bool ComponentMesh::PostUpdate(float dt)
 	
 		if (renderMesh || owner->GetComponent<ComponentMaterial>()->GetShader() == 0) {
 
-			uint shader = owner->GetComponent<ComponentMaterial>()->GetShader();
+			uint shader = owner->GetComponent<ComponentMaterial>()->GetShader()->materialShader;
 			glUseProgram(shader);
 			//Matrices
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
@@ -132,8 +134,8 @@ bool ComponentMesh::PostUpdate(float dt)
 			this->time += 0.02f;
 			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
 
-			Material* mat = owner->GetComponent<ComponentMaterial>()->GetMaterial();
-			for (Uniform* uniform : mat->uniforms) {
+			ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
+			for (Uniform* uniform : cMat->GetShader()->uniforms) {
 				switch (uniform->type) {
 				case GL_FLOAT:
 				{
@@ -274,7 +276,7 @@ Json ComponentMesh::Save()
 	Json jsonComponentMesh;
 	std::string name = GetParent()->name;
 	std::string savePath = "Library/Meshes/" + name + ".sugar";
-	Importer::Meshes::Save(GetMesh(), savePath.c_str());
+	Importer::GetInstance()->meshImporter->Save(GetMesh(), savePath.c_str());
 	jsonComponentMesh["path"] = GetPath().c_str();
 	jsonComponentMesh["vertex_normals"] = GetVertexNormals();
 	jsonComponentMesh["faces_normals"] = GetFacesNormals();
@@ -297,7 +299,7 @@ void ComponentMesh::Load(Json json)
 	SetVertexNormals(jsonComponentMesh.at("vertex_normals"));
 	SetFacesNormals(jsonComponentMesh.at("faces_normals"));
 	Mesh* mesh = new Mesh();
-	Importer::Meshes::Load(jsonComponentMesh.at("mesh").get<std::string>().c_str(), mesh);
+	Importer::GetInstance()->meshImporter->Load(jsonComponentMesh.at("mesh").get<std::string>().c_str(), mesh);
 	SetMesh(mesh);
 	//Loading Material
 	if (mesh->texCoords && !jsonComponentMaterial.empty())
@@ -305,7 +307,8 @@ void ComponentMesh::Load(Json json)
 		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
 		cMat->GetMaterial()->materialName = jsonComponentMaterial.at("materialName").get<std::string>();
 		cMat->GetMaterial()->materialPath = jsonComponentMaterial.at("materialPath").get<std::string>();
-		cMat->LoadShader(jsonComponentMaterial.at("shaderPath").get<std::string>().c_str());
+		Shader* shader = cMat->GetShader();
+		Importer::GetInstance()->shaderImporter->Load(jsonComponentMaterial.at("shaderPath").get<std::string>().c_str(),shader);
 		for (const auto& tex : jsonComponentMaterial.at("textures").items()) {
 			cMat->LoadTexture(tex.value().at("path").get<std::string>());
 		}
@@ -315,14 +318,14 @@ void ComponentMesh::Load(Json json)
 			switch (uniformType) {
 			case GL_FLOAT:
 			{
-				UniformT<float>* uniform = (UniformT<float>*)cMat->GetMaterial()->FindUniform(uniformName);
+				UniformT<float>* uniform = (UniformT<float>*)shader->FindUniform(uniformName);
 				uniform->value = uni.value().at("value");
 
 			}
 			break;
 			case GL_FLOAT_VEC2:
 			{
-				UniformT<float2>* uniform = (UniformT<float2>*)cMat->GetMaterial()->FindUniform(uniformName);
+				UniformT<float2>* uniform = (UniformT<float2>*)shader->FindUniform(uniformName);
 				uniform->value.x = uni.value().at("value").at("x");
 				uniform->value.y = uni.value().at("value").at("y");
 
@@ -330,7 +333,7 @@ void ComponentMesh::Load(Json json)
 			break;
 			case GL_FLOAT_VEC3:
 			{
-				UniformT<float3>* uniform = (UniformT<float3>*)cMat->GetMaterial()->FindUniform(uniformName);
+				UniformT<float3>* uniform = (UniformT<float3>*)shader->FindUniform(uniformName);
 				uniform->value.x = uni.value().at("value").at("x");
 				uniform->value.y = uni.value().at("value").at("y");
 				uniform->value.z = uni.value().at("value").at("z");
@@ -338,7 +341,7 @@ void ComponentMesh::Load(Json json)
 			break;
 			case GL_FLOAT_VEC4:
 			{
-				UniformT<float4>* uniform = (UniformT<float4>*)cMat->GetMaterial()->FindUniform(uniformName);
+				UniformT<float4>* uniform = (UniformT<float4>*)shader->FindUniform(uniformName);
 				uniform->value.x = uni.value().at("value").at("x");
 				uniform->value.y = uni.value().at("value").at("y");
 				uniform->value.z = uni.value().at("value").at("z");
@@ -347,7 +350,7 @@ void ComponentMesh::Load(Json json)
 			break;
 			case GL_INT:
 			{
-				UniformT<int>* uniform = (UniformT<int>*)cMat->GetMaterial()->FindUniform(uniformName);
+				UniformT<int>* uniform = (UniformT<int>*)shader->FindUniform(uniformName);
 				uniform->value = uni.value().at("value");
 			}
 			break;
@@ -559,5 +562,3 @@ void ComponentMesh::SetRenderMesh(bool renderMesh)
 {
 	this->renderMesh = renderMesh;
 }
-
-

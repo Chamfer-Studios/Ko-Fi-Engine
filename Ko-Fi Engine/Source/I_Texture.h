@@ -5,10 +5,11 @@ class Texture;
 
 class I_Texture
 {
+public:
 	I_Texture();
 	~I_Texture();
 
-	bool Import(const aiMesh* aiMaterial, Texture* texture);
+	bool Import(const char* path, Texture* texture);
 	bool Save(const Texture* texture, const char* path);
 	bool Load(const char* path, Texture* texture);
 };

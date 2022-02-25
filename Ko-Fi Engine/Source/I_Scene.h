@@ -22,6 +22,7 @@ public:
 	bool Load(const char* path, Scene* scene);
 
 	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, Mesh* mesh, const Mesh& parent);
+	//void ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode* assimpNode, Mesh* mesh, ModelNode& modelNode);
 };
 
 #endif // !__I_SCENE_H__

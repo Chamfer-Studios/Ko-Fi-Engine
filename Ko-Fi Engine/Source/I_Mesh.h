@@ -10,10 +10,8 @@ public:
 	I_Mesh();
 	~I_Mesh();
 
-	bool ImportOne(const aiScene* aiScene, Scene* scene);
-	bool ImportMultiple(const aiScene* aiScene, Scene* scene);
-	bool Import(const aiMesh* aiMaterial, Mesh* mesh);
-	bool Save(const Mesh* mesh, const char* path);
+	bool Import(const aiMesh* aiMesh, Mesh* mesh);
+	bool Save(const Mesh* mesh, const char* buffer);
 	bool Load(const char* path, Mesh* mesh);
 };
 

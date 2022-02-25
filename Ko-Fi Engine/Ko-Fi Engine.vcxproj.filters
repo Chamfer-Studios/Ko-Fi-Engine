@@ -693,9 +693,6 @@
     <ClInclude Include="Source\Component.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentMesh.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ComponentTransform.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
@@ -809,6 +806,9 @@
     </ClInclude>
     <ClInclude Include="Source\I_Scene.h">
       <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentMesh.h">
+      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

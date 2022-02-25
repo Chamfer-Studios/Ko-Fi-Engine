@@ -11,17 +11,16 @@
 #include "JsonHandler.h"
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/float4x4.h"
+#include "Shader.h"
 
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
-	LoadShader();
+	//LoadShader();
 }
 
 ComponentMaterial::~ComponentMaterial()
 {
-	glDeleteProgram(this->materialShader);
-
 }
 
 //void ComponentMaterial::LoadTextureFromId(uint& textureID, const char* path)
@@ -64,7 +63,7 @@ void ComponentMaterial::LoadDefaultMaterial()
 		material->materialName = jsonMaterial.at("name").get<std::string>();
 		material->materialPath = defaultMaterialPath;
 		LoadTexture(0);
-		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
+		UniformT<float4>* albedoTint = (UniformT<float4>*)shader->FindUniform("albedoTint");
 		albedoTint->value = { jsonMaterial.at("uniforms").at("x"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
@@ -108,7 +107,7 @@ void ComponentMaterial::LoadMaterial(const char* path)
 			}
 		}
 
-		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
+		UniformT<float4>* albedoTint = (UniformT<float4>*)shader->FindUniform("albedoTint");
 		albedoTint->value = { jsonMaterial.at("uniforms").at("albedoTint").at("x"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
@@ -120,7 +119,7 @@ void ComponentMaterial::LoadMaterial(const char* path)
 
 void ComponentMaterial::Compile()
 {
-	LoadShader(this->shaderPath.c_str());
+	//LoadShader(this->shaderPath.c_str());
 }
 
 void ComponentMaterial::LoadTexture(std::string path)
@@ -159,7 +158,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
 				//LoadTextureFromId(texture.textureID, path.c_str());
-				LoadShader(path.c_str());
+				//LoadShader(path.c_str());
 			}
 		}
 
@@ -194,7 +193,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::Button("Change Shader")) {
 			panelChooser->OpenPanel("ChangeShader","glsl");
 		}
-		for (Uniform* uniform : material->uniforms) {
+		for (Uniform* uniform : shader->uniforms) {
 			switch (uniform->type) {
 			case GL_FLOAT:
 			{
@@ -256,7 +255,7 @@ Json ComponentMaterial::Save()
 
 
 	json jsonUniform;
-	for (Uniform* uniform : GetMaterial()->uniforms) {
+	for (Uniform* uniform : shader->uniforms) {
 
 		switch (uniform->type)
 		{
@@ -313,7 +312,7 @@ Json ComponentMaterial::Save()
 	}
 	jsonComponentMaterial["materialName"] = GetMaterial()->materialName;
 	jsonComponentMaterial["materialPath"] = GetMaterial()->materialPath;
-	jsonComponentMaterial["shaderPath"] = GetShaderPath();
+	//jsonComponentMaterial["shaderPath"] = GetShaderPath();
 	return jsonComponentMaterial;
 }
 
@@ -322,74 +321,12 @@ Material* ComponentMaterial::GetMaterial()
 	return material;
 }
 
-uint ComponentMaterial::GetShader()
+Shader* ComponentMaterial::GetShader()
 {
-	return materialShader;
+	return shader;
 }
 
-void ComponentMaterial::LoadUniforms()
-{
-	material->uniforms.clear();
-	GLint i;
-	GLint count;
 
-	GLint size; // size of the variable
-	GLenum type; // type of the variable (float, vec3 or mat4, etc)
-
-	const GLsizei bufSize = 32; // maximum name length
-	GLchar name[bufSize]; // variable name in GLSL
-	GLsizei length; // name length
-	glGetProgramiv(this->materialShader, GL_ACTIVE_UNIFORMS, &count);
-
-	for (i = 0; i < count; i++) {
-
-		glGetActiveUniform(this->materialShader, (GLuint)i, bufSize, &length, &size, &type, name);
-		switch (type) {
-		case GL_FLOAT:
-		{
-			UniformT<float>* uf = new UniformT<float>(name, type, 0.0f);
-			material->AddUniform(uf);
-		}
-		break;
-		case GL_FLOAT_VEC2:
-		{
-			UniformT<float2>* uf2 = new UniformT<float2>(name, type, float2(1.0f,1.0f));
-			material->AddUniform(uf2);
-		}
-		break;
-		case GL_FLOAT_VEC3:
-		{
-			UniformT<float3>* uf3 = new UniformT<float3>(name, type, float3(1.0f,1.0f,1.0f));
-			material->AddUniform(uf3);
-		}
-		break;
-		case GL_FLOAT_VEC4:
-		{
-
-			UniformT<float4>* uf4 = new UniformT<float4>(name, type, float4(1.0f, 1.0f, 1.0f, 1.0f));
-			material->AddUniform(uf4);
-		}
-		break;
-		case GL_INT:
-
-		{
-			UniformT<int>* ui = new UniformT<int>(name, type, 0);
-			material->AddUniform(ui);
-		}
-		break;
-		}
-	}
-}
-void ComponentMaterial::LoadShader(const char* shaderPath)
-{
-	if (this->materialShader != 0) {
-		glDeleteProgram(this->materialShader);
-	}
-	shaderPath ? this->shaderPath = shaderPath : this->shaderPath = "Library/Shaders/default_shader.glsl";
-	shader::ShaderProgramSource shaderSource = shader::ParseShader(this->shaderPath);
-	materialShader = shader::CreateShader(shaderSource.VertexSource, shaderSource.FragmentSource);
-	LoadUniforms();
-}
 
 
 

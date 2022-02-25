@@ -11,10 +11,20 @@
 #include "FileSystem.h"
 #include "SceneManager.h"
 #include <fstream>
+#include "I_Material.h"
+#include "I_Mesh.h"
+#include "I_Scene.h"
+#include "I_Shader.h"
+#include "I_Texture.h"
 
 Importer* Importer::instance = nullptr;
 Importer::Importer()
 {
+	materialImporter = new I_Material();
+	meshImporter = new I_Mesh();
+	sceneImporter = new I_Scene();
+	shaderImporter = new I_Shader();
+	textureImporter = new I_Texture();
 }
 Importer::~Importer()
 {
@@ -38,34 +48,7 @@ GameObject* Importer::ImportModel(const char* path)
 
 Mesh* Importer::LoadModel(const char* path)
 {
-	std::ifstream file;
-	file.open(path, std::ios::binary);
-	if (file.is_open()) {
 
-		Mesh* mesh = new Mesh();
-		file.read((char*)mesh, 4 * sizeof(unsigned));
-
-		mesh->vertices = (float*)malloc(mesh->verticesSizeBytes);
-		file.read((char*)mesh->vertices, mesh->verticesSizeBytes);
-
-		mesh->normals = (float*)malloc(mesh->normalsSizeBytes);
-		file.read((char*)mesh->normals, mesh->normalsSizeBytes);
-
-		if (mesh->texCoordSizeBytes != 0)
-		{
-			mesh->texCoords = (float*)malloc(mesh->texCoordSizeBytes);
-			file.read((char*)mesh->texCoords, mesh->texCoordSizeBytes);
-		}
-
-		mesh->indices = (uint*)malloc(mesh->indicesSizeBytes);
-		file.read((char*)mesh->indices, mesh->indicesSizeBytes);
-		file.close();
-		mesh->SetUpMeshBuffers();
-
-		return mesh;
-	}
-	
-	return nullptr;
 }
 
 

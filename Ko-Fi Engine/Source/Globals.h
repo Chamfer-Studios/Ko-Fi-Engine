@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __GLOBALS_H__
+#define __GLOBALS_H__
 
 // Warning disabled ---
 #pragma warning( disable : 4577 ) // Warning that exceptions are disabled
@@ -23,6 +24,7 @@ void log(const char file[], int line, const char* format, ...);
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
 
+typedef unsigned char uchar;
 typedef unsigned int uint;
 typedef unsigned __int32 uint32;
 typedef unsigned __int64 uint64;
@@ -46,3 +48,5 @@ enum update_status
 #define VSYNC true
 #define TITLE "Ko-Fi Engine"
 #define ORGANITZATION "CITM UPC 2021-2022"
+
+#endif // !__GLOBALS_H__
