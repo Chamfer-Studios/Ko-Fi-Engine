@@ -12,6 +12,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "CollisionDetector.h"
 
 #include <iostream>
 #include <sstream>
@@ -32,6 +33,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
 	viewportBuffer = new ViewportFrameBuffer(this);
+	collisionDetector = new CollisionDetector(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -40,6 +42,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(sceneManager);
+	AddModule(collisionDetector);
 	AddModule(viewportBuffer);
 	AddModule(editor);
 
@@ -401,4 +404,9 @@ FileSystem* KoFiEngine::GetFileSystem()const
 ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
 {
 	return this->viewportBuffer;
+}
+
+CollisionDetector* KoFiEngine::GetCollisionDetector() const
+{
+	return this->collisionDetector;
 }

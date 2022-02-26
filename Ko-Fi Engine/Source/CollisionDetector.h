@@ -12,7 +12,7 @@ public:
 	CollisionDetector(KoFiEngine* engine);
 	~CollisionDetector();
 
-	bool Update();
+	bool Update(float dt);
 	bool CleanUp();
 
 	void AddCollidableEntity(GameObject* GO); //TODO: The GameObject should add itself here when a ComponentCollider is added.

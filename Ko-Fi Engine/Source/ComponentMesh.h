@@ -54,6 +54,7 @@ public:
 	AABB GetLocalAABB();
 	void GenerateGlobalBoundingBox();
 	AABB GetGlobalAABB();
+	OBB GetGlobalOBB();
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
 	bool GetRenderMesh();
 	void SetRenderMesh(bool renderMesh);

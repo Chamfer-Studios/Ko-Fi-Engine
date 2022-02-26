@@ -13,6 +13,7 @@
 
 CollisionDetector::CollisionDetector(KoFiEngine* engine)
 {
+	name = "CollisionDetector";
 	this->engine = engine;
 }
 
@@ -20,15 +21,16 @@ CollisionDetector::~CollisionDetector()
 {
 }
 
-bool CollisionDetector::Update()
+bool CollisionDetector::Update(float dt)
 {
-	//timed updates?
+	//TODO: timed updates?
+
 	for (int i = 0; i < collidableEntities.size(); i++)
 	{
 		CheckCollisions(collidableEntities[i]);
 	}
 
-	return false;
+	return true;
 }
 
 bool CollisionDetector::CleanUp()
@@ -68,8 +70,8 @@ void CollisionDetector::RemoveCollidableEntity(GameObject* GO)
 void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 {
 	std::vector<GameObject*> fullGOList = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
-	math::AABB currentEntityBB = currentEntity->GetComponent<ComponentMesh>()->GetGlobalAABB();
-	
+	math::AABB currentEntityAABB = currentEntity->GetComponent<ComponentMesh>()->GetGlobalAABB();
+
 	for (int i = 0; i < fullGOList.size(); i++)
 	{
 		if (fullGOList[i]->GetComponent<ComponentMesh>() != nullptr && fullGOList[i]->GetComponent<ComponentCollider>() != nullptr)
@@ -78,10 +80,15 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 			{
 				continue;
 			}
-			math::AABB newCollider = currentEntity->GetComponent<ComponentMesh>()->GetGlobalAABB();
+			math::AABB newCollider = fullGOList[i]->GetComponent<ComponentMesh>()->GetGlobalAABB();
 			ColliderType newColliderType = fullGOList[i]->GetComponent<ComponentCollider>()->GetColliderType();
 
-			if (currentEntityBB.Intersects(newCollider))
+			/*if (a.MinX() <= b.MaxX() && a.MaxX() >= b.MinX() &&
+				(a.MinY() <= b.MaxY() && a.MaxY() >= b.MinY()) &&
+				(a.MinZ() <= b.MaxZ() && a.MaxZ() >= b.MinZ()))
+			*/
+
+			if (currentEntityAABB.Intersects(newCollider))
 			{
 				//call corresponding event depending on collider type
 

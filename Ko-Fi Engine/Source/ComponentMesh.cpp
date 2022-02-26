@@ -268,6 +268,11 @@ AABB ComponentMesh::GetGlobalAABB()
 	return aabb;
 }
 
+OBB ComponentMesh::GetGlobalOBB()
+{
+	return obb;
+}
+
 ////void ComponentMesh::LoadMesh(const char* path)
 ////{
 ////	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
@@ -368,6 +373,7 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
 	obb = GetLocalAABB();
+	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
 	aabb.SetNegativeInfinity();

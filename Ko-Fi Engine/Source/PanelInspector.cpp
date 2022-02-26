@@ -6,6 +6,10 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
+#include "ComponentCamera.h"
+#include "ComponentInfo.h"
+#include "ComponentTransform.h"
+#include "ComponentCollider.h"
 
 PanelInspector::PanelInspector(Editor* editor)
 {
@@ -46,9 +50,23 @@ bool PanelInspector::Update()
 		const char* items[] = { ""};
 		static const char* current_item = NULL;
 
-		if (ImGui::BeginCombo("##combo", "Add Component")) // The second parameter is the label previewed before opening the combo.
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider");
+		
+		ImGui::SameLine();
+
+		if ((ImGui::Button("ADD")))
 		{
-			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+			switch (componentType)
+			{
+			case (int)ComponentType::NONE: break;
+			case (int)ComponentType::MESH: currentGameObject->CreateComponent<ComponentMesh>(); break;
+			case (int)ComponentType::MATERIAL: currentGameObject->CreateComponent<ComponentMaterial>(); break;
+			case (int)ComponentType::CAMERA: currentGameObject->CreateComponent<ComponentCamera>(); break;
+			case (int)ComponentType::COLLIDER: currentGameObject->CreateComponent<ComponentCollider>(); break;
+			}
+		}
+
+		/*	for (int n = 0; n < IM_ARRAYSIZE(items); n++)
 			{
 				if (ImGui::Selectable(items[n]))
 				{
@@ -62,8 +80,8 @@ bool PanelInspector::Update()
 				}
 					
 			}
-			ImGui::EndCombo();
-		}
+			ImGui::EndCombo();*/
+		
 	}
 
 	ImGui::End();

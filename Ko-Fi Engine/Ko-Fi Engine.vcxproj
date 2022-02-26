@@ -247,7 +247,6 @@
     <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
-    <ClInclude Include="Source\ComponentRigidBody.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />

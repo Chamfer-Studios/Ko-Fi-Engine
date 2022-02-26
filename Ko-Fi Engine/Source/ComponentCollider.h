@@ -2,7 +2,6 @@
 #define __COMPONENT_COLLIDER_H__
 
 #include "Component.h"
-#include "ComponentMesh.h"
 #include "GameObject.h"
 #include "CollisionDetector.h"
 #include "MathGeoLib/Math/float3.h"
@@ -16,23 +15,25 @@ class ComponentMesh;
 
 enum class ColliderType
 	{
+		UNDEFINED,
 		PLAYER,
 		ENEMY,
 		WALL,
-		FLOOR,
-		NONE
+		FLOOR
 	};
 
 class ComponentCollider : public Component
 {
 public:
 
-	ComponentCollider(GameObject* parent, ColliderType collType);
+	ComponentCollider(GameObject* parent, ColliderType collType = ColliderType::UNDEFINED);
 	~ComponentCollider();
-	
+
+	bool Start() override; //get the owner and put it inside the list of collidableEntities
 	bool Update() override;
 	bool CleanUp() override;
-	
+	bool PostUpdate(float dt) override;
+	 
 	// ----- Editor settings ---------------
 	bool InspectorDraw(PanelChooser* chooser);
 	// -------------------------------------
@@ -45,6 +46,7 @@ public:
 	const ColliderType GetColliderType() const { return collType; }
 	bool IsTrigger() const { return isTrigger; }
 
+	void SetColliderType(ColliderType type); 
 	void SetTrigger(bool enable) { isTrigger = enable; }
 	// -------------------------------------
 
@@ -53,7 +55,8 @@ private:
 	
 	bool isTrigger = false;
 
-	ColliderType collType = ColliderType::NONE;
+	ColliderType collType;
+	int colliderType;
 };
 
 

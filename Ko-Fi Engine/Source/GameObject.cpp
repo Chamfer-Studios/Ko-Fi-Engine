@@ -103,6 +103,7 @@ void GameObject::DeleteComponent(Component* component)
 	auto componentIt = std::find(components.begin(), components.end(), component);
 	if (componentIt != components.end())
 	{
+		(*componentIt)->CleanUp();
 		components.erase(componentIt);
 		components.shrink_to_fit();
 	}

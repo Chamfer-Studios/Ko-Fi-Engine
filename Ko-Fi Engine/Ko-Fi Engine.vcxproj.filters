@@ -762,9 +762,6 @@
     <ClInclude Include="Source\ComponentCollider.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentRigidBody.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CollisionDetector.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>

@@ -16,6 +16,7 @@ class Camera3D;
 class Editor;
 class FileSystem;
 class ViewportFrameBuffer;
+class CollisionDetector;
 
 class KoFiEngine
 {
@@ -55,6 +56,7 @@ public:
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
 	ViewportFrameBuffer* GetViewportFrameBuffer() const;
+	CollisionDetector* GetCollisionDetector() const;
 
 private:
 	// Add a new module to handle
@@ -88,6 +90,7 @@ private:
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
 	ViewportFrameBuffer* viewportBuffer = nullptr;
+	CollisionDetector* collisionDetector = nullptr;
 
 private:
 	int argc;
