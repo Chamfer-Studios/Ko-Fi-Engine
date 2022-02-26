@@ -177,19 +177,15 @@ bool ComponentImage::PostUpdate(float dt)
 	glGenFramebuffers(1, &fboId);
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
 	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture.GetTextureId(), 0);
-	float2 position = cTransform->position;
-	float2 size = cTransform->size;
+	float2 normalizedPosition = cTransform->GetNormalizedPosition();
 	float2 pivot = cTransform->pivot;
 
-	float ratioX = owner->GetEngine()->GetEditor()->lastViewportSize.x / owner->GetEngine()->GetWindow()->GetWidth();
-	float ratioY = owner->GetEngine()->GetEditor()->lastViewportSize.y / owner->GetEngine()->GetWindow()->GetHeight();
-	float2 normalizedSize = { size.x * ratioY, size.y * ratioX };
+	float2 normalizedSize = cTransform->GetNormalizedSize();
 
-	float2 lowerLeft = { position.x - pivot.x * normalizedSize.x, position.y - pivot.y * normalizedSize.y };
+	float2 lowerLeft = { normalizedPosition.x - pivot.x * normalizedSize.x, normalizedPosition.y - pivot.y * normalizedSize.y };
 	float canvasRatio = (owner->GetEngine()->GetEditor()->lastViewportSize.x) / (owner->GetEngine()->GetEditor()->lastViewportSize.y);
 	float2 upperRight = { lowerLeft.x + normalizedSize.x, lowerLeft.y + normalizedSize.y };
 	glBlitFramebuffer(0, 0, rect.w, rect.h, lowerLeft.x, lowerLeft.y, upperRight.x, upperRight.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);  // if not already bound
 
 	return true;
 }

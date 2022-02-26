@@ -42,15 +42,11 @@ public:
 	inline float2 GetSize() const { return size; };
 	inline Anchor GetAnchor() const { return anchor; };
 
-	virtual void GetRealPosition(float2& position, bool ignoreCanvas = false);
-	virtual void GetRealSize(float2& realSize);
-
-	float2 GetCanvasCenter();
+	virtual float2 GetNormalizedPosition();
+	virtual float2 GetAnchorPosition(Anchor _anchor);
+	virtual float2 GetNormalizedSize();
 
 	bool CheckMouseInsideBounds();
-
-	float2 GetAnchorPosition(Anchor anchor);
-	float2 GetRelativeAnchorPosition(Anchor anchor);
 
 	float2 position = { 0, 0 };
 	float2 pivot = { 0, 0 };

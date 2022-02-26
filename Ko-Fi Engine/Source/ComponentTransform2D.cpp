@@ -7,6 +7,7 @@
 
 #include "GameObject.h"
 #include "ComponentCanvas.h"
+#include "Window.h"
 
 #include "PanelChooser.h"
 
@@ -85,55 +86,74 @@ void ComponentTransform2D::SetAnchor(const Anchor& newAnchor)
 	//CalculateAnchor();
 }
 
-void ComponentTransform2D::GetRealPosition(float2& realPosition, bool ignoreCanvas)
+float2 ComponentTransform2D::GetNormalizedPosition()
 {
-	ComponentTransform2D* parentTransform = (ComponentTransform2D*)owner->GetParent()->GetComponent<ComponentCanvas>();
-	if (parentTransform != nullptr) {
-		if (ignoreCanvas)
-		{
-			realPosition = parentTransform->GetRelativeAnchorPosition(anchor) + position;
-			return;
-		}
-	}
-	else {
-		parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
-	}
+	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
+	if (parentTransform == nullptr) return position;
 
-	if (parentTransform == nullptr) return;
-
-	float2 anchorPosition = parentTransform->GetAnchorPosition(anchor);
-	realPosition = anchorPosition + position;
-	//realPosition.x += owner->GetEngine()->GetEditor()->scenePanelOrigin.x;
-	//realPosition.y += owner->GetEngine()->GetEditor()->scenePanelOrigin.y;
+	float2 normalizedPosition = { position.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * owner->GetEngine()->GetWindow()->GetWidth(), position.y / owner->GetEngine()->GetEditor()->lastViewportSize.y * owner->GetEngine()->GetWindow()->GetHeight() };
+	return normalizedPosition + parentTransform->GetNormalizedPosition() + parentTransform->GetAnchorPosition(anchor);
 }
 
-void ComponentTransform2D::GetRealSize(float2& realSize)
+float2 ComponentTransform2D::GetAnchorPosition(Anchor _anchor)
 {
-	float propX = owner->GetEngine()->GetUI()->uiCameraViewport[2] / (owner->GetEngine()->GetEditor()->lastViewportSize.x);
-	float propY = owner->GetEngine()->GetUI()->uiCameraViewport[3] / (owner->GetEngine()->GetEditor()->lastViewportSize.y);
+	float2 normalizedPosition = GetNormalizedPosition();
+	float2 normalizedSize = GetNormalizedSize();
 
-	realSize.x = size.x;
-	realSize.y = size.y;
-	realSize.x /= owner->GetEngine()->GetEditor()->lastViewportSize.x;
-	realSize.y /= owner->GetEngine()->GetEditor()->lastViewportSize.y;
-}
-
-float2 ComponentTransform2D::GetCanvasCenter()
-{
-	ComponentCanvas* canvas = owner->GetParent()->GetComponent<ComponentCanvas>();
-	if (canvas != nullptr)
-		return canvas->GetAnchorPosition(Anchor::CENTER);
-	else
+	switch (_anchor)
 	{
-		ComponentTransform2D* trans = owner->GetParent()->GetComponent<ComponentTransform2D>();
-		if (trans == nullptr) return { 0, 0 };
-		else return trans->GetCanvasCenter();
+	case ComponentTransform2D::Anchor::TOP_LEFT:
+		return { normalizedPosition.x, normalizedPosition.y + normalizedSize.y };
+		break;
+	case ComponentTransform2D::Anchor::TOP_CENTER:
+		return { normalizedPosition.x + normalizedSize.x / 2, normalizedPosition.y + normalizedSize.y };
+
+		break;
+	case ComponentTransform2D::Anchor::TOP_RIGHT:
+		return { normalizedPosition.x + normalizedSize.x, normalizedPosition.y + normalizedSize.y };
+
+		break;
+	case ComponentTransform2D::Anchor::LEFT:
+		return { normalizedPosition.x, normalizedPosition.y + normalizedSize.y / 2 };
+
+		break;
+	case ComponentTransform2D::Anchor::CENTER:
+		return { normalizedPosition.x + normalizedSize.x / 2, normalizedPosition.y + normalizedSize.y / 2 };
+
+		break;
+	case ComponentTransform2D::Anchor::RIGHT:
+		return { normalizedPosition.x + normalizedSize.x, normalizedPosition.y + normalizedSize.y / 2 };
+
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_LEFT:
+		return { normalizedPosition.x, normalizedPosition.y };
+
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_CENTER:
+		return { normalizedPosition.x + normalizedSize.x / 2, normalizedPosition.y };
+
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_RIGHT:
+		return { normalizedPosition.x + normalizedSize.x, normalizedPosition.y };
+
+		break;
+	default:
+		break;
 	}
+	return { 0, 0 };
+}
+
+float2 ComponentTransform2D::GetNormalizedSize()
+{
+	//float ratioX = owner->GetEngine()->GetEditor()->lastViewportSize.x / owner->GetEngine()->GetWindow()->GetWidth();
+	//float ratioY = owner->GetEngine()->GetEditor()->lastViewportSize.y / owner->GetEngine()->GetWindow()->GetHeight();
+	float2 normalizedSize = { size.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * owner->GetEngine()->GetWindow()->GetWidth(), size.y / owner->GetEngine()->GetEditor()->lastViewportSize.y * owner->GetEngine()->GetWindow()->GetHeight() };
+	return normalizedSize;
 }
 
 bool ComponentTransform2D::CheckMouseInsideBounds()
 {
-	float2 mousePosition = { (float)owner->GetEngine()->GetInput()->GetMouseX(), SCREEN_HEIGHT - (float)owner->GetEngine()->GetInput()->GetMouseY()};
+	/*/float2 mousePosition = {(float)owner->GetEngine()->GetInput()->GetMouseX(), SCREEN_HEIGHT - (float)owner->GetEngine()->GetInput()->GetMouseY()};
 
 	float2 uiMousePosition = owner->GetEngine()->GetUI()->GetUINormalizedMousePosition();
 	uiMousePosition.x = uiMousePosition.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * SCREEN_WIDTH;
@@ -155,12 +175,12 @@ bool ComponentTransform2D::CheckMouseInsideBounds()
 		{
 			return true;
 		}
-	}
+	}*/
 
 	return false;
 }
 
-float2 ComponentTransform2D::GetAnchorPosition(Anchor anchor)
+/*float2 ComponentTransform2D::GetAnchorPosition(Anchor anchor)
 {
 	float2 realPosition;
 	GetRealPosition(realPosition);
@@ -208,9 +228,9 @@ float2 ComponentTransform2D::GetAnchorPosition(Anchor anchor)
 		break;
 	}
 	return { 0, 0 };
-}
+}*/
 
-float2 ComponentTransform2D::GetRelativeAnchorPosition(Anchor anchor)
+/*float2 ComponentTransform2D::GetRelativeAnchorPosition(Anchor anchor)
 {
 	float2 realPosition;
 	GetRealPosition(realPosition);
@@ -221,7 +241,7 @@ float2 ComponentTransform2D::GetRelativeAnchorPosition(Anchor anchor)
 	float2 bottomLeft = { realPosition.x + owner->GetEngine()->GetEditor()->scenePanelOrigin.x, realPosition.y + owner->GetEngine()->GetEditor()->scenePanelOrigin.y };
 
 	return anchorPosition - bottomLeft;
-}
+}*/
 
 /*void ComponentTransform2D::OnSave(JSONWriter& writer) const
 {

@@ -17,9 +17,8 @@ public:
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void AdjustPositionAndSize();
-
-	void GetRealPosition(float2& position, bool ignoreCanvas = false) override;
-	void GetRealSize(float2& realSize) override;
+	float2 GetNormalizedSize() override;
+	float2 GetNormalizedPosition() override;
 
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
