@@ -786,5 +786,8 @@
     <ClInclude Include="Source\par_shapes.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\IconsFontAwesome5.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

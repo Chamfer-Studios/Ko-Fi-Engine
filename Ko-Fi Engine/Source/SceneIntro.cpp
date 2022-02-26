@@ -176,7 +176,7 @@ bool SceneIntro::PreUpdate(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
+		//if (go->GetComponent<ComponentTransform2D>() == nullptr)
 			go->PreUpdate();
 	}
 
@@ -188,7 +188,7 @@ bool SceneIntro::Update(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
+		//if (go->GetComponent<ComponentTransform2D>() == nullptr)
 			go->Update();
 	}
 	//example::NodeEditorShow();
@@ -201,7 +201,7 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : this->gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
+		//if (go->GetComponent<ComponentTransform2D>() == nullptr)
 			go->PostUpdate(dt);
 	}
 

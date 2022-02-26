@@ -18,6 +18,8 @@
 class ComponentMesh;
 class TMPPlane;
 struct TextureObject;
+class SDL_Texture;
+class SDL_Surface;
 
 class ComponentImage : public Component {
 public:
@@ -28,6 +30,10 @@ public:
 	bool PostUpdate(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
+	SDL_Texture* LoadTexture(const char* path);
+	SDL_Texture* const LoadSurface(SDL_Surface* surface);
+
+
 	float4x4 GetTransform();
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
@@ -35,7 +41,8 @@ public:
 	TMPPlane* plane = nullptr;
 
 	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
-	Texture texture;
+	SDL_Texture* SDLTexture = nullptr;
+	Texture openGLTexture;
 private:
 	float4x4 transform3D;
 

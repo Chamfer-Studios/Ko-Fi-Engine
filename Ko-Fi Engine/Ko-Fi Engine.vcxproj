@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
@@ -93,7 +93,7 @@
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -336,6 +336,7 @@
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Graph.h" />
+    <ClInclude Include="Source\IconsFontAwesome5.h" />
     <ClInclude Include="Source\ImGuiAppLog.h" />
     <ClInclude Include="Source\Importer.h" />
     <ClInclude Include="Source\Input.h" />

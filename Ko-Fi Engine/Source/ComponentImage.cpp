@@ -7,13 +7,21 @@
 #include "ComponentTransform.h"
 #include "Camera3D.h"
 #include "Engine.h"
+#include "Editor.h"
+#include "Window.h"
 
 #include "PanelChooser.h"
 #include "SceneIntro.h"
 
 #include "par_shapes.h"
+#include "Log.h"
+#include "UI.h"
 
 #include "MathGeoLib/Math/Quat.h"
+#include "ImGuiAppLog.h"
+#include "SDL_image.h"
+
+#include "SDL.h"
 
 #include "glew.h"
 #include <vector>
@@ -49,11 +57,11 @@ bool ComponentImage::PostUpdate(float dt)
 	GLint viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);*/
 
-	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
+	//ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
 
 	/*float3 pos = { cTransform->position, App->camera->nearPlaneDistance + 0.1f };*/
 	/*float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };*/
-	float2 realPosition;
+	/*float2 realPosition;
 	cTransform->GetRealPosition(realPosition);
 	float3 pos = { realPosition.x, realPosition.y, this->owner->GetEngine()->GetCamera3D()->nearPlaneDistance + 0.1f };
 	float2 realSize;
@@ -148,6 +156,40 @@ bool ComponentImage::PostUpdate(float dt)
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glUseProgram(0);
+	*/
+
+	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
+
+	SDL_Rect rect;
+
+	rect.x = 30;
+	rect.y = 30;
+
+	if (SDLTexture != nullptr) {
+		SDL_QueryTexture(SDLTexture, NULL, NULL, &rect.w, &rect.h);
+	}
+	else {
+		rect.w = 0;
+		rect.h = 0;
+	}
+
+	GLuint fboId = 0;
+	glGenFramebuffers(1, &fboId);
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
+	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture.GetTextureId(), 0);
+	float2 position = cTransform->position;
+	float2 size = cTransform->size;
+	float2 pivot = cTransform->pivot;
+
+	float ratioX = owner->GetEngine()->GetEditor()->lastViewportSize.x / owner->GetEngine()->GetWindow()->GetWidth();
+	float ratioY = owner->GetEngine()->GetEditor()->lastViewportSize.y / owner->GetEngine()->GetWindow()->GetHeight();
+	float2 normalizedSize = { size.x * ratioY, size.y * ratioX };
+
+	float2 lowerLeft = { position.x - pivot.x * normalizedSize.x, position.y - pivot.y * normalizedSize.y };
+	float canvasRatio = (owner->GetEngine()->GetEditor()->lastViewportSize.x) / (owner->GetEngine()->GetEditor()->lastViewportSize.y);
+	float2 upperRight = { lowerLeft.x + normalizedSize.x, lowerLeft.y + normalizedSize.y };
+	glBlitFramebuffer(0, 0, rect.w, rect.h, lowerLeft.x, lowerLeft.y, upperRight.x, upperRight.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);  // if not already bound
 
 	return true;
 }
@@ -180,21 +222,22 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 		// Texture display
 		ImGui::Text("Texture: ");
 		ImGui::SameLine();
-		if (texture.GetTextureId() == 0) // Supposedly there is no textureId = 0 in textures array
+		if (openGLTexture.GetTextureId() == 0) // Supposedly there is no textureId = 0 in textures array
 		{
 			ImGui::Text("None");
 		}
 		else
 		{
-			ImGui::Text(texture.GetTexturePath());
-			ImGui::Image((ImTextureID)texture.GetTextureId(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::Text(openGLTexture.GetTexturePath());
+			ImGui::Image((ImTextureID)openGLTexture.GetTextureId(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 		}
 
 		if (panelChooser->IsReadyToClose("AddTextureImage")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
 				//LoadTextureFromId(texture.textureID, path.c_str());
-				texture.SetUpTexture(path);
+				openGLTexture.SetUpTexture(path);
+				SDLTexture = LoadTexture(path.c_str());
 			}
 		}
 
@@ -210,6 +253,40 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 	}
 
 	return true;
+}
+
+SDL_Texture* ComponentImage::LoadTexture(const char* path)
+{
+	SDL_Texture* texture = NULL;
+	SDL_Surface* surface = IMG_Load(path);
+
+	if (surface == NULL)
+	{
+		appLog->AddLog("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
+	}
+	else
+	{
+		texture = LoadSurface(surface);
+		SDL_FreeSurface(surface);
+	}
+
+	return texture;
+}
+
+SDL_Texture* const ComponentImage::LoadSurface(SDL_Surface* surface)
+{
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(owner->GetEngine()->GetUI()->renderer, surface);
+
+	if (texture == NULL)
+	{
+		appLog->AddLog("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+	}
+	else
+	{
+		owner->GetEngine()->GetUI()->loadedTextures.push_back(texture);
+	}
+
+	return texture;
 }
 
 /*float4x4 ComponentImage::GetTransform()

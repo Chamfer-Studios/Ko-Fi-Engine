@@ -9,9 +9,12 @@
 #include "Camera3D.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "Window.h"
 
 #include "ComponentMesh.h"
 #include "ComponentTransform2D.h"
+
+#include "SDL.h"
 
 #include <queue>
 
@@ -27,6 +30,9 @@ UI::~UI()
 
 bool UI::Start()
 {
+	Uint32 flags = SDL_RENDERER_ACCELERATED;
+
+	renderer = SDL_CreateRenderer(engine->GetWindow()->window, -1, flags);
 	return true;
 }
 
@@ -36,6 +42,7 @@ bool UI::PreUpdate(float dt)
 }
 
 bool UI::Update(float dt) {
+	return true;
 	std::queue<GameObject*> S;
 	for (GameObject* child : engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren())
 	{
@@ -62,7 +69,9 @@ bool UI::Update(float dt) {
 
 bool UI::PostUpdate(float dt)
 {
-	float3 right = engine->GetCamera3D()->right;
+	return true;
+
+	/*float3 right = engine->GetCamera3D()->right;
 	float3 up = engine->GetCamera3D()->up;
 	float3 front = engine->GetCamera3D()->front;
 	float3 position = engine->GetCamera3D()->position;
@@ -96,7 +105,7 @@ bool UI::PostUpdate(float dt)
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
 
 	std::queue<GameObject*> S;
 	for (GameObject* child : engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren())
@@ -119,7 +128,7 @@ bool UI::PostUpdate(float dt)
 		}
 	}
 
-	glPopAttrib();
+	/*glPopAttrib();
 
 	glPopMatrix();
 	glEnable(GL_CULL_FACE);
@@ -137,7 +146,7 @@ bool UI::PostUpdate(float dt)
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());*/
 
 	return true;
 }

@@ -7,6 +7,8 @@
 #include "glew.h"
 #include <vector>
 
+#include "SDL.h"
+
 class ComponentCamera;
 
 class UI : public Module
@@ -22,6 +24,9 @@ public:
 	bool CleanUp() override;
 
 	float2 GetUINormalizedMousePosition();
+
+	SDL_Renderer* renderer = nullptr;
+	std::vector<SDL_Texture*> loadedTextures;
 
 	void OnGui() override;
 	//void OnLoad(const JSONReader& reader) override;

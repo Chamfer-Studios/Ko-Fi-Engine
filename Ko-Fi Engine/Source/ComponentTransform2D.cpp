@@ -37,7 +37,7 @@ bool ComponentTransform2D::InspectorDraw(PanelChooser* chooser)
 			SetPosition(newPosition);
 		}
 		float2 newPivot = GetPivot();
-		if (ImGui::DragFloat2("Pivot", &newPivot[0])) // PIVOT
+		if (ImGui::DragFloat2("Pivot", &newPivot[0], 0.005f, 0.0f, 1.0f)) // PIVOT
 		{
 			SetPivot(newPivot);
 		}
