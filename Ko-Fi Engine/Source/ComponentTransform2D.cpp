@@ -9,6 +9,8 @@
 #include "ComponentCanvas.h"
 #include "Window.h"
 
+#include "ImGuiAppLog.h"
+
 #include "PanelChooser.h"
 
 ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(parent)
@@ -88,7 +90,7 @@ float2 ComponentTransform2D::GetNormalizedPosition()
 	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
 	if (parentTransform == nullptr) return position;
 
-	float2 normalizedPosition = GetCanvas()->LogicalToScreen(position);
+	float2 normalizedPosition = GetCanvas()->LogicalToViewport(position);
 	return normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset();
 }
 
@@ -97,7 +99,7 @@ float2 ComponentTransform2D::GetNormalizedSize()
 	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
 	if (parentTransform == nullptr) return size;
 
-	float2 normalizedSize = GetCanvas()->LogicalToScreen(size);
+	float2 normalizedSize = GetCanvas()->LogicalToViewport(size);
 	return normalizedSize;
 }
 
@@ -173,33 +175,18 @@ float2 ComponentTransform2D::GetCanvasLogicalSize()
 	return { 0, 0 };
 }
 
-bool ComponentTransform2D::CheckMouseInsideBounds()
+bool ComponentTransform2D::CheckPointWithinBounds(float2 vec)
 {
-	/*/float2 mousePosition = {(float)owner->GetEngine()->GetInput()->GetMouseX(), SCREEN_HEIGHT - (float)owner->GetEngine()->GetInput()->GetMouseY()};
+	float2 normalizedPosition = GetNormalizedPosition();
+	float2 normalizedSize = GetNormalizedSize();
 
-	float2 uiMousePosition = owner->GetEngine()->GetUI()->GetUINormalizedMousePosition();
-	uiMousePosition.x = uiMousePosition.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * SCREEN_WIDTH;
-	uiMousePosition.y = uiMousePosition.y / owner->GetEngine()->GetEditor()->lastViewportSize.y * SCREEN_HEIGHT;
+	float2 logicalPosition = GetCanvas()->ViewportToLogical(normalizedPosition);
+	float2 logicalSize = GetCanvas()->ViewportToLogical(normalizedSize);
 
-	float2 realPos;
-	GetRealPosition(realPos, false);
+	float2 lowerLeft = { logicalPosition.x, logicalPosition.y };
+	float2 upperRight = { logicalPosition.x + size.x, logicalPosition.y + size.y };
 
-	float2 realSize;
-	GetRealSize(realSize);
-
-	float2 lowerBot = { realPos.x - realSize.x / 2, realPos.y - realSize.y / 2 };
-	float2 upperRight = { realPos.x + realSize.x / 2, realPos.y + realSize.y / 2 };
-
-	//TODO CHECK
-	if (lowerBot.x < uiMousePosition.x && upperRight.x > uiMousePosition.x)
-	{
-		if (lowerBot.y < uiMousePosition.y && upperRight.y > uiMousePosition.y)
-		{
-			return true;
-		}
-	}*/
-
-	return false;
+	return lowerLeft.x < vec.x && lowerLeft.y < vec.y && vec.x < upperRight.x && vec.y < upperRight.y;
 }
 
 /*void ComponentTransform2D::OnSave(JSONWriter& writer) const

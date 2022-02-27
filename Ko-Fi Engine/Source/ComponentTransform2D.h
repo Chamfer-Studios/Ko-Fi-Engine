@@ -51,7 +51,7 @@ public:
 	virtual ComponentCanvas* GetCanvas();
 	virtual float2 GetCanvasLogicalSize();
 
-	bool CheckMouseInsideBounds();
+	bool CheckPointWithinBounds(float2 vec);
 
 protected:
 	float2 position = { 0, 0 };

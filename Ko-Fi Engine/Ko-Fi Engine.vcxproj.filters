@@ -361,6 +361,9 @@
     <ClCompile Include="Source\par_shapes.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentButton.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -788,6 +791,9 @@
     </ClInclude>
     <ClInclude Include="Source\IconsFontAwesome5.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentButton.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

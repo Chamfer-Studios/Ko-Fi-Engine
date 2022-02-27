@@ -29,8 +29,6 @@
 ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::IMAGE;
-	plane = new TMPPlane(0);
-	plane->GenerateBuffers();
 }
 
 ComponentImage::~ComponentImage()
@@ -75,28 +73,6 @@ bool ComponentImage::PostUpdate(float dt)
 	return true;
 }
 
-
-/*void ComponentImage::SetTextureById(const int id)
-{
-	for (auto i = App->textures->textures.begin(); i != App->textures->textures.end(); ++i)
-	{
-		if (i->second.id == id)
-		{
-			texture = App->textures->Get(i->second.name);
-		}
-	}
-}
-
-void ComponentImage::SetOpacity(float alpha)
-{
-	if (imageColor.w == 0.f)
-	{
-		App->ui->fadeOut = false;
-		return;
-	}
-	imageColor.w -= alpha;
-}*/
-
 bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Image")) {
@@ -125,12 +101,6 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::Button("Set Texture")) {
 			panelChooser->OpenPanel("AddTextureImage", "png");
 		}
-
-		// Image color button
-		ImGui::Separator();
-		ImGui::ColorEdit4("##Image color", (float*)&imageColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_NoBorder | ImGuiColorEditFlags_AlphaPreviewHalf);
-		ImGui::SameLine();
-		ImGui::Text("Image color");
 	}
 
 	return true;
@@ -169,13 +139,6 @@ SDL_Texture* const ComponentImage::LoadSurface(SDL_Surface* surface)
 
 	return texture;
 }
-
-/*float4x4 ComponentImage::GetTransform()
-{
-	float4x4 ret = transform.ScaleAlongAxis(float3::unitX, 1);
-	ret = ret.ScaleAlongAxis(float3::unitY, 1);
-	return transform;
-}*/
 
 /*void ComponentImage::OnLoad(const JSONReader& reader)
 {

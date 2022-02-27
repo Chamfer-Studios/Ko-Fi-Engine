@@ -20,7 +20,9 @@ public:
 	float2 GetNormalizedSize() override;
 	float2 GetNormalizedPosition() override;
 
-	float2 LogicalToScreen(float2 vec);
+	float2 LogicalToViewport(float2 vec);
+	float2 ViewportToLogical(float2 vec);
+	float2 ScreenToViewport(float2 vec);
 	float2 ScreenToLogical(float2 vec);
 
 	//void OnLoad(const JSONReader& reader) override;

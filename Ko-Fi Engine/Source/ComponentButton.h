@@ -1,5 +1,4 @@
-#ifndef _COMPONENT_IMAGE_H_
-#define _COMPONENT_IMAGE_H_
+#pragma once
 
 #include "Component.h"
 #include "ComponentTransform2D.h"
@@ -18,10 +17,10 @@
 class SDL_Texture;
 class SDL_Surface;
 
-class ComponentImage : public Component {
+class ComponentButton : public Component {
 public:
-	ComponentImage(GameObject* parent);
-	~ComponentImage();
+	ComponentButton(GameObject* parent);
+	~ComponentButton();
 
 	bool Update() override;
 	bool PostUpdate(float dt) override;
@@ -33,9 +32,22 @@ public:
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 
-	SDL_Texture* SDLTexture = nullptr;
-	Texture openGLTexture;
-};
+private:
+	enum class BUTTON_STATE {
+		IDLE,
+		HOVER,
+		PRESSED
+	};
 
-#endif
+	SDL_Texture* idleSDLTexture = nullptr;
+	Texture idleOpenGLTexture;
+
+	SDL_Texture* hoverSDLTexture = nullptr;
+	Texture hoverOpenGLTexture;
+
+	SDL_Texture* pressedSDLTexture = nullptr;
+	Texture pressedOpenGLTexture;
+
+	BUTTON_STATE state = BUTTON_STATE::IDLE;
+};
 

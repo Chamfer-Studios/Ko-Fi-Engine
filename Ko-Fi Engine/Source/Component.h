@@ -13,7 +13,8 @@ enum class ComponentType
 	INFO,
 	CAMERA,
 	TRANSFORM2D,
-	IMAGE
+	IMAGE,
+	BUTTON,
 };
 
 class Component

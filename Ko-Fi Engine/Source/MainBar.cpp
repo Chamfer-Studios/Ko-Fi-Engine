@@ -13,6 +13,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentMaterial.h"
 #include "ComponentImage.h"
+#include "ComponentButton.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -120,6 +121,12 @@ bool MainBar::Update()
 					go->SetName("Image");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentImage>();
+				}
+				if (ImGui::MenuItem("Button")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, false);
+					go->SetName("Button");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentButton>();
 				}
 				ImGui::EndMenu();
 			}

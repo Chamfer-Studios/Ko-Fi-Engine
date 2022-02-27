@@ -47,8 +47,8 @@ bool PanelViewport::Update()
 
 		int winX, winY;
 		engine->GetWindow()->GetPosition(winX, winY);
-		editor->scenePanelOrigin.x -= winX;
-		editor->scenePanelOrigin.y -= winY;
+		//editor->scenePanelOrigin.x -= winX;
+		//editor->scenePanelOrigin.y -= winY;
 
 		editor->mouseScenePosition.x = engine->GetInput()->GetMouseX() - editor->scenePanelOrigin.x;
 		editor->mouseScenePosition.y = engine->GetInput()->GetMouseY() - editor->scenePanelOrigin.y;

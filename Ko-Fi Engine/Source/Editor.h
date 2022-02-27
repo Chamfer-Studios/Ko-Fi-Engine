@@ -74,7 +74,6 @@ public:
 	PanelsState panelsState;
 	ImVec2 lastViewportSize;
 	ImVec2 scenePanelOrigin;
-	ImVec2 scenePanelOffset;
 	ImVec2 mouseScenePosition;
 
 	// Open/Close panel bools

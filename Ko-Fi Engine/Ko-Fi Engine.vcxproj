@@ -151,6 +151,7 @@
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\color_node_editor.cpp" />
     <ClCompile Include="Source\Component.cpp" />
+    <ClCompile Include="Source\ComponentButton.cpp" />
     <ClCompile Include="Source\ComponentCamera.cpp" />
     <ClCompile Include="Source\ComponentCanvas.cpp" />
     <ClCompile Include="Source\ComponentImage.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
+    <ClInclude Include="Source\ComponentButton.h" />
     <ClInclude Include="Source\ComponentCamera.h" />
     <ClInclude Include="Source\ComponentCanvas.h" />
     <ClInclude Include="Source\ComponentImage.h" />
