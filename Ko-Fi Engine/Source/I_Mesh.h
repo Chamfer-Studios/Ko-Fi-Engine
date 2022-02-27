@@ -1,8 +1,9 @@
 #ifndef __I_MESH_H__
 #define __I_MESH_H__
 
+#include "Assimp.h"
+
 class Mesh;
-class aiMesh;
 
 class I_Mesh
 {

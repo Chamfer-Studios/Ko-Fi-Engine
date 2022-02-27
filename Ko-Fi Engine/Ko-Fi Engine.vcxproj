@@ -85,7 +85,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>

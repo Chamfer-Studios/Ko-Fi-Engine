@@ -7,10 +7,6 @@
 #include "I_Shader.h"
 #include "I_Texture.h"
 
-struct aiScene;
-class GameObject;
-class Mesh;
-
 class Importer
 {
 private:

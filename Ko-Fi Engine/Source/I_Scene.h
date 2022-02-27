@@ -8,7 +8,6 @@ class aiScene;
 class aiNode;
 class aiMesh;
 class aiMaterial;
-
 class Scene;
 class GameObject;
 

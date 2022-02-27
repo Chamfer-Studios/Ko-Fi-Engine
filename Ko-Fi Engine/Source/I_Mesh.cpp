@@ -1,7 +1,6 @@
 #include "I_Mesh.h"
 #include "Globals.h"
 #include "Log.h"
-#include "Assimp.h"
 
 #include "Mesh.h"
 

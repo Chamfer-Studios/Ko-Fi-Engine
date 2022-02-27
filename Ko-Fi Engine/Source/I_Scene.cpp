@@ -17,6 +17,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "Importer.h"
 
 #include "glew.h"
 #include <gl/GL.h>
@@ -82,7 +83,9 @@ bool I_Scene::Import(const char* path)
 
 GameObject* I_Scene::ImportModel(const char* path)
 {
-
+	// TODO: WE SHOULD CHANGE THIS
+	GameObject* tmp = nullptr;
+	return tmp;
 }
 
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent)
@@ -185,8 +188,13 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 {
 	//std::string assetPath = ASSETS_MODELS_DIR + std::string(nodeName) + MESH_EXTENSION;
 	
+	if (assimpMesh == nullptr || gameObj == nullptr)
+	{
+		return;
+	}
+
 	// Import Mesh to GameObject
-	Mesh* mesh = new Mesh();
+	Mesh* mesh = new Mesh(Shape::NONE);
 	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh);
 
 	if (mesh == nullptr)

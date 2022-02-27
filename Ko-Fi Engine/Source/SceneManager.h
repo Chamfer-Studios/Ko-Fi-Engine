@@ -63,9 +63,10 @@ public:
 	void OnResume();
 	void OnTick();
 
+	// TODO: LOAD / SAVE SCENE
 	// Serialization functions
-	bool SaveScene(Scene* scene);
-	bool LoadScene(Scene* scene, const char* sceneName);
+	//bool SaveScene(Scene* scene);
+	//bool LoadScene(Scene* scene, const char* sceneName);
 
 public:
 	bool active;

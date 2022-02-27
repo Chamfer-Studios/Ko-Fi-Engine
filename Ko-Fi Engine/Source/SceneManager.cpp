@@ -157,7 +157,7 @@ void SceneManager::OnPlay()
 	gameClockSpeed = timeScale;
 
 	// Serialize scene and save it as a .json
-	SaveScene(currentScene);
+	//SaveScene(currentScene);
 }
 
 void SceneManager::OnPause()
@@ -174,7 +174,7 @@ void SceneManager::OnStop()
 	time = 0.0f;
 
 	// Load the scene we saved before in .json
-	LoadScene(currentScene, "SceneIntro");
+	//LoadScene(currentScene, "SceneIntro");
 }
 
 void SceneManager::OnResume()
