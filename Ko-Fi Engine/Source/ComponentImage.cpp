@@ -45,119 +45,6 @@ bool ComponentImage::Update()
 
 bool ComponentImage::PostUpdate(float dt)
 {
-	/*glBindTexture(GL_TEXTURE_2D, 0); // Bindear Textura a Default
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	glBindBuffer(GL_ARRAY_BUFFER, plane->GetMesh()->id_vertex);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, plane->GetMesh()->id_index);
-
-	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
-
-	GLint viewport[4];
-	glGetIntegerv(GL_VIEWPORT, viewport);*/
-
-	//ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
-
-	/*float3 pos = { cTransform->position, App->camera->nearPlaneDistance + 0.1f };*/
-	/*float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };*/
-	/*float2 realPosition;
-	cTransform->GetRealPosition(realPosition);
-	float3 pos = { realPosition.x, realPosition.y, this->owner->GetEngine()->GetCamera3D()->nearPlaneDistance + 0.1f };
-	float2 realSize;
-	cTransform->GetRealSize(realSize);
-	float3 size = { realSize.x, realSize.y, 1.0f };
-	float3 rotation = { cTransform->rotation.x,cTransform->rotation.y,cTransform->rotation.z };
-	Quat rotationQuat = Quat::FromEulerXYZ(DEGTORAD * rotation.x, DEGTORAD * rotation.y, DEGTORAD * rotation.z);
-
-	transform3D = transform3D.FromTRS(pos, Quat::identity, size);
-
-	transform3D = transform3D * rotationQuat;
-
-	uint shader =
-		owner->GetComponent<ComponentMaterial>()->GetShader();
-	glUseProgram(shader);
-	//Matrices
-	GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
-	glUniformMatrix4fv(model_matrix, 1, GL_FALSE, transform3D.Transposed().ptr());
-
-	GLint projection_location = glGetUniformLocation(shader, "projection");
-	glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-
-	GLint view_location = glGetUniformLocation(shader, "view");
-	glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-
-	GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-	glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-	float2 resolution = float2(1080.0f, 720.0f);
-	glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
-	this->time += 0.02f;
-	glUniform1f(glGetUniformLocation(shader, "time"), this->time);
-
-	Material mat = owner->GetComponent<ComponentMaterial>()->GetMaterial();
-	for (Uniform* uniform : mat.uniforms) {
-		switch (uniform->type) {
-		case GL_FLOAT:
-		{
-			if (uniform->name != "time")
-				glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
-
-		}
-		break;
-		case GL_FLOAT_VEC2:
-		{
-			if (uniform->name != "resolution")
-			{
-				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-				glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
-			}
-
-		}
-
-		break;
-		case GL_FLOAT_VEC3:
-		{
-			UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-			glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
-		}
-
-		break;
-		case GL_FLOAT_VEC4:
-		{
-			UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-			glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
-		}
-
-		break;
-		case GL_INT:
-		{
-			glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
-
-		}
-
-		break;
-
-		break;
-		}
-	}
-
-	//Texture
-	if (ComponentMaterial* material = owner->GetComponent<ComponentMaterial>()) {
-		for (Texture& tex : material->GetMaterial().textures) {
-			glBindTexture(GL_TEXTURE_2D, tex.GetTextureId());
-
-		}
-	}
-
-	glBindVertexArray(plane->VAO);
-	glDrawElements(GL_TRIANGLES, plane->indexNum, GL_UNSIGNED_INT, 0);
-
-	//Unbind Texture
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glUseProgram(0);
-	*/
-
 	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
 
 	SDL_Rect rect;
@@ -177,13 +64,11 @@ bool ComponentImage::PostUpdate(float dt)
 	glGenFramebuffers(1, &fboId);
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
 	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture.GetTextureId(), 0);
-	float2 normalizedPosition = cTransform->GetNormalizedPosition();
-	float2 pivot = cTransform->pivot;
 
+	float2 normalizedPosition = cTransform->GetNormalizedPosition();
 	float2 normalizedSize = cTransform->GetNormalizedSize();
 
-	float2 lowerLeft = { normalizedPosition.x - pivot.x * normalizedSize.x, normalizedPosition.y - pivot.y * normalizedSize.y };
-	float canvasRatio = (owner->GetEngine()->GetEditor()->lastViewportSize.x) / (owner->GetEngine()->GetEditor()->lastViewportSize.y);
+	float2 lowerLeft = { normalizedPosition.x, normalizedPosition.y };
 	float2 upperRight = { lowerLeft.x + normalizedSize.x, lowerLeft.y + normalizedSize.y };
 	glBlitFramebuffer(0, 0, rect.w, rect.h, lowerLeft.x, lowerLeft.y, upperRight.x, upperRight.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 

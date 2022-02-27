@@ -72,9 +72,7 @@ void ComponentTransform2D::SetPivot(const float2& newPivot)
 }
 void ComponentTransform2D::SetRotation(const float3& newRotation)
 {
-	// TODO: UPDATEAR LA MATRIZ
 	rotation = newRotation;
-	//owner->GetComponent<ComponentImage>().
 }
 void ComponentTransform2D::SetSize(const float2& newSize)
 {
@@ -83,7 +81,6 @@ void ComponentTransform2D::SetSize(const float2& newSize)
 void ComponentTransform2D::SetAnchor(const Anchor& newAnchor)
 {
 	anchor = newAnchor;
-	//CalculateAnchor();
 }
 
 float2 ComponentTransform2D::GetNormalizedPosition()
@@ -91,8 +88,23 @@ float2 ComponentTransform2D::GetNormalizedPosition()
 	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
 	if (parentTransform == nullptr) return position;
 
-	float2 normalizedPosition = { position.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * owner->GetEngine()->GetWindow()->GetWidth(), position.y / owner->GetEngine()->GetEditor()->lastViewportSize.y * owner->GetEngine()->GetWindow()->GetHeight() };
-	return normalizedPosition + parentTransform->GetNormalizedPosition() + parentTransform->GetAnchorPosition(anchor);
+	float2 normalizedPosition = GetCanvas()->LogicalToScreen(position);
+	return normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset();
+}
+
+float2 ComponentTransform2D::GetNormalizedSize()
+{
+	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
+	if (parentTransform == nullptr) return size;
+
+	float2 normalizedSize = GetCanvas()->LogicalToScreen(size);
+	return normalizedSize;
+}
+
+float2 ComponentTransform2D::GetNormalizedPivotOffset()
+{
+	float2 normalizedSize = GetNormalizedSize();
+	return { pivot.x * normalizedSize.x, pivot.y * normalizedSize.y };
 }
 
 float2 ComponentTransform2D::GetAnchorPosition(Anchor _anchor)
@@ -143,12 +155,22 @@ float2 ComponentTransform2D::GetAnchorPosition(Anchor _anchor)
 	return { 0, 0 };
 }
 
-float2 ComponentTransform2D::GetNormalizedSize()
+ComponentCanvas* ComponentTransform2D::GetCanvas()
 {
-	//float ratioX = owner->GetEngine()->GetEditor()->lastViewportSize.x / owner->GetEngine()->GetWindow()->GetWidth();
-	//float ratioY = owner->GetEngine()->GetEditor()->lastViewportSize.y / owner->GetEngine()->GetWindow()->GetHeight();
-	float2 normalizedSize = { size.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * owner->GetEngine()->GetWindow()->GetWidth(), size.y / owner->GetEngine()->GetEditor()->lastViewportSize.y * owner->GetEngine()->GetWindow()->GetHeight() };
-	return normalizedSize;
+	ComponentCanvas* canvas = owner->GetParent()->GetComponent<ComponentCanvas>();
+	if (canvas != nullptr) return canvas;
+	ComponentTransform2D* pTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
+	if (pTransform != nullptr) return pTransform->GetCanvas();
+	return nullptr;
+}
+
+float2 ComponentTransform2D::GetCanvasLogicalSize()
+{
+	ComponentCanvas* canvas = owner->GetParent()->GetComponent<ComponentCanvas>();
+	if (canvas != nullptr) return canvas->GetLogicalSize();
+	ComponentTransform2D* pTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
+	if (pTransform != nullptr) return pTransform->GetCanvasLogicalSize();
+	return { 0, 0 };
 }
 
 bool ComponentTransform2D::CheckMouseInsideBounds()
@@ -179,69 +201,6 @@ bool ComponentTransform2D::CheckMouseInsideBounds()
 
 	return false;
 }
-
-/*float2 ComponentTransform2D::GetAnchorPosition(Anchor anchor)
-{
-	float2 realPosition;
-	GetRealPosition(realPosition);
-	float2 realSize;
-	GetRealSize(realSize);
-
-	switch (anchor)
-	{
-	case ComponentTransform2D::Anchor::TOP_LEFT:
-		return { realPosition.x, realPosition.y + realSize.y };
-		break;
-	case ComponentTransform2D::Anchor::TOP_CENTER:
-		return { realPosition.x + realSize.x / 2, realPosition.y + realSize.y };
-
-		break;
-	case ComponentTransform2D::Anchor::TOP_RIGHT:
-		return { realPosition.x + realSize.x, realPosition.y + realSize.y };
-
-		break;
-	case ComponentTransform2D::Anchor::LEFT:
-		return { realPosition.x, realPosition.y + realSize.y / 2 };
-
-		break;
-	case ComponentTransform2D::Anchor::CENTER:
-		return { realPosition.x + realSize.x / 2, realPosition.y + realSize.y / 2 };
-
-		break;
-	case ComponentTransform2D::Anchor::RIGHT:
-		return { realPosition.x + realSize.x, realPosition.y + realSize.y / 2 };
-
-		break;
-	case ComponentTransform2D::Anchor::BOTTOM_LEFT:
-		return { realPosition.x, realPosition.y };
-
-		break;
-	case ComponentTransform2D::Anchor::BOTTOM_CENTER:
-		return { realPosition.x + realSize.x / 2, realPosition.y };
-
-		break;
-	case ComponentTransform2D::Anchor::BOTTOM_RIGHT:
-		return { realPosition.x + realSize.x, realPosition.y };
-
-		break;
-	default:
-		break;
-	}
-	return { 0, 0 };
-}*/
-
-/*float2 ComponentTransform2D::GetRelativeAnchorPosition(Anchor anchor)
-{
-	float2 realPosition;
-	GetRealPosition(realPosition);
-	float2 realSize;
-	GetRealSize(realSize);
-
-	float2 anchorPosition = GetAnchorPosition(anchor);
-	float2 bottomLeft = { realPosition.x + owner->GetEngine()->GetEditor()->scenePanelOrigin.x, realPosition.y + owner->GetEngine()->GetEditor()->scenePanelOrigin.y };
-
-	return anchorPosition - bottomLeft;
-}*/
 
 /*void ComponentTransform2D::OnSave(JSONWriter& writer) const
 {

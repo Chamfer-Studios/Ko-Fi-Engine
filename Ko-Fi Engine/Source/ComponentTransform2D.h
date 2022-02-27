@@ -5,6 +5,7 @@
 #include "MathGeoLib/Math/float3.h"
 
 class KoFiEngine;
+class ComponentCanvas;
 
 class ComponentTransform2D : public Component {
 public:
@@ -43,11 +44,16 @@ public:
 	inline Anchor GetAnchor() const { return anchor; };
 
 	virtual float2 GetNormalizedPosition();
-	virtual float2 GetAnchorPosition(Anchor _anchor);
 	virtual float2 GetNormalizedSize();
+	virtual float2 GetNormalizedPivotOffset();
+	virtual float2 GetAnchorPosition(Anchor _anchor);
+
+	virtual ComponentCanvas* GetCanvas();
+	virtual float2 GetCanvasLogicalSize();
 
 	bool CheckMouseInsideBounds();
 
+protected:
 	float2 position = { 0, 0 };
 	float2 pivot = { 0, 0 };
 	float3 rotation = { 0.f,0.f,0.f };
