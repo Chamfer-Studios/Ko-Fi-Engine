@@ -1,5 +1,7 @@
 #include "I_Shader.h"
 #include "Shader.h"
+#include "Log.h"
+
 #include <fstream>
 #include <sstream>
 #include <MathGeoLib/Math/float2.h>
@@ -18,57 +20,208 @@ I_Shader::~I_Shader()
 bool I_Shader::Import(const char* path, Shader* shader)
 {
 	bool ret = true;
-	enum class ShaderType
+
+	if (shader == nullptr)
 	{
-		NONE = -1,
-		VERTEX = 0,
-		FRAGMENT = 1
-	};
+		CONSOLE_LOG("[ERROR] Importer: Shader* is nullptr.");
+		return false;
+	}
+
 	std::ifstream stream(path);
 	std::string line;
 	std::stringstream ss[2];
+
 	ShaderType type = ShaderType::NONE;
-	while (getline(stream, line)) {
-		if (line.find("#shader") != std::string::npos) {
-			if (line.find("vertex") != std::string::npos) {
+
+	while (getline(stream, line))
+	{
+		if (line.find("#shader") != std::string::npos)
+		{
+			if (line.find("vertex") != std::string::npos)
+			{
 				type = ShaderType::VERTEX;
 			}
-			else if (line.find("fragment") != std::string::npos) {
+			else if (line.find("fragment") != std::string::npos)
+			{
 				type = ShaderType::FRAGMENT;
 			}
 		}
-		else {
+		else
+		{
 			ss[(int)type] << line << '\n';
 		}
 	}
-	shader->vertexSource = ss[0].str();
-	shader->fragmentSource = ss[1].str();
 
-	if (shader->vertexSource != "\n" && shader->fragmentSource != "\n")
+	std::string vertexSource = ss[0].str();
+	std::string fragmentSource = ss[1].str();
+
+	if (vertexSource != "\n" && fragmentSource != "\n")
 	{
-		//First we create the shader program
-		shader->materialShader = glCreateProgram();
-		//We create the vertex shader and the fragment shader
-		unsigned int vShader = CompileShader(GL_VERTEX_SHADER, shader->vertexSource);
-		unsigned int fShader = CompileShader(GL_FRAGMENT_SHADER, shader->fragmentSource);
+		// First we create the shader program
+		shader->shaderProgramID = glCreateProgram();
 
-		glAttachShader(shader->materialShader, vShader);
-		glAttachShader(shader->materialShader, fShader);
-		glLinkProgram(shader->materialShader);
-		glValidateProgram(shader->materialShader);
+		// We create the vertex shader and the fragment shader
+		unsigned int vShader = ImportShader(GL_VERTEX_SHADER, vertexSource);
+		unsigned int fShader = ImportShader(GL_FRAGMENT_SHADER, fragmentSource);
+
+		glAttachShader(shader->shaderProgramID, vShader);
+		glAttachShader(shader->shaderProgramID, fShader);
+		glLinkProgram(shader->shaderProgramID);
+
+		// Check linking errors
+		GLint success;
+		glGetProgramiv(shader->shaderProgramID, GL_LINK_STATUS, &success);
+		if (success == GL_FALSE)
+		{
+			GLchar info[512];
+			glGetProgramInfoLog(shader->shaderProgramID, 512, NULL, info);
+			glDeleteProgram(shader->shaderProgramID);
+			glDeleteShader(vShader);
+			glDeleteShader(fShader);
+			CONSOLE_LOG("Shader compiling error: %s", info);
+		}
+		glValidateProgram(shader->shaderProgramID);
 
 		ret = LoadUniforms(shader);
 
+		glDetachShader(shader->shaderProgramID, vShader);
+		glDetachShader(shader->shaderProgramID, fShader);
+
 		glDeleteShader(vShader);
 		glDeleteShader(fShader);
-		glDeleteShader(shader->materialShader);
+	}
+	else
+		CONSOLE_LOG("[ERROR] Vertex shader: %d or Fragment shader: %d are not correctly compiled.", vertexSource, fragmentSource);
+
+	return ret;
+}
+
+unsigned int I_Shader::ImportShader(unsigned int type, const std::string& source)
+{
+	unsigned int id = glCreateShader(type);
+
+	const GLchar* src = (const GLchar*)source.c_str();
+
+	glShaderSource(id, 1, &src, NULL);
+	glCompileShader(id);
+
+	// Check shader compilation errors
+	GLint result;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (result == GL_FALSE)
+	{
+		GLint maxLength;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
+
+		// maxLength includes /0 character
+		std::vector<GLchar> errorLog(maxLength);
+		glGetShaderInfoLog(id, maxLength, &maxLength, &errorLog[0]);
+
+		CONSOLE_LOG("Failed to compile shader! The type was: %d\n", type);
+		std::string str(errorLog.begin(), errorLog.end());
+		CONSOLE_LOG("error: %s\n", str.c_str());
+
+		glDeleteShader(id);
+
+		return 0;
+	}
+	return id;
+}
+
+bool I_Shader::LoadUniforms(Shader* shader)
+{
+	shader->uniforms.clear();
+	GLint uniformsCount;
+
+	glGetProgramiv(shader->shaderProgramID, GL_ACTIVE_UNIFORMS, &uniformsCount);
+
+	if (uniformsCount == 0)
+	{
+		GLchar info[512];
+		glGetProgramInfoLog(shader->shaderProgramID, 512, NULL, info);
+		CONSOLE_LOG("Shader compiling error: %s", info);
+		return false;
 	}
 	else
 	{
-		LOG("ERROR, Vertex shader: %d or Fragment shader: %d are not correctly compiled.", shader->vertexSource, shader->fragmentSource);
-	}
+		GLint size; // size of the variable
+		GLenum type; // type of the variable (float, vec3 or mat4, etc)
 
-	return ret;
+		const GLsizei bufSize = 32; // maximum name length
+		GLchar name[bufSize]; // variable name in GLSL
+		GLsizei length; // name length
+
+		for (GLuint i = 0; i < uniformsCount; i++)
+		{
+			glGetActiveUniform(shader->shaderProgramID, (GLuint)i, bufSize, &length, &size, &type, name);
+
+			if (CheckUniformName(name))
+			{
+				switch (type)
+				{
+				case GL_FLOAT:
+				{
+					UniformT<float>* uf = new UniformT<float>(name, type, 0.0f);
+					shader->AddUniform(uf);
+				}
+				break;
+				case GL_FLOAT_VEC2:
+				{
+					UniformT<float2>* uf2 = new UniformT<float2>(name, type, float2(1.0f, 1.0f));
+					shader->AddUniform(uf2);
+				}
+				break;
+				case GL_FLOAT_VEC3:
+				{
+					UniformT<float3>* uf3 = new UniformT<float3>(name, type, float3(1.0f, 1.0f, 1.0f));
+					shader->AddUniform(uf3);
+				}
+				break;
+				case GL_FLOAT_VEC4:
+				{
+					UniformT<float4>* uf4 = new UniformT<float4>(name, type, float4(1.0f, 1.0f, 1.0f, 1.0f));
+					shader->AddUniform(uf4);
+				}
+				break;
+				case GL_INT:
+				{
+					UniformT<int>* ui = new UniformT<int>(name, type, 0);
+					shader->AddUniform(ui);
+				}
+				break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+}
+
+bool I_Shader::CheckUniformName(std::string name)
+{
+	if (name != "time" && name != "model_matrix" &&
+		name != "view" && name != "projection" && name != "resolution")
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void I_Shader::DeleteShader(Shader* shader)
+{
+	//glDetachShader(shader->materialShader, shader->vertexSource);
+	//glDetachShader(shader->materialShader, shader->fragmentSource);
+	glDeleteProgram(shader->shaderProgramID);
+}
+
+void I_Shader::Recompile(Shader* shader)
+{
+	DeleteShader(shader);
+
+	//Import(shader->GetAssetsPath(), shader);
 }
 
 bool I_Shader::Save(const Shader* shader, const char* path)
@@ -142,108 +295,4 @@ bool I_Shader::Load(const char* path, Shader* shader)
 	Recompile(shader);
 
 	return ret;
-}
-
-void I_Shader::DeleteShader(Shader* shader)
-{
-	//glDetachShader(shader->materialShader, shader->vertexSource);
-	//glDetachShader(shader->materialShader, shader->fragmentSource);
-	glDeleteProgram(shader->materialShader);
-}
-
-void I_Shader::Recompile(Shader* shader)
-{
-	DeleteShader(shader);
-
-	//Import(shader->GetAssetsPath(), shader);
-}
-
-bool I_Shader::LoadUniforms(Shader* shader)
-{
-	shader->uniforms.clear();
-	GLint i;
-	GLint count;
-
-	GLint size; // size of the variable
-	GLenum type; // type of the variable (float, vec3 or mat4, etc)
-
-	const GLsizei bufSize = 32; // maximum name length
-	GLchar name[bufSize]; // variable name in GLSL
-	GLsizei length; // name length
-	glGetProgramiv(shader->materialShader, GL_ACTIVE_UNIFORMS, &count);
-	if (count == 0)
-	{
-		GLchar info[512];
-		glGetProgramInfoLog(shader->materialShader, 512, NULL, info);
-		LOG("Shader compiling error: %s", info);
-		return false;
-	}
-	else
-	{
-		for (i = 0; i < count; i++)
-		{
-			glGetActiveUniform(shader->materialShader, (GLuint)i, bufSize, &length, &size, &type, name);
-			switch (type) {
-			case GL_FLOAT:
-			{
-				UniformT<float>* uf = new UniformT<float>(name, type, 0.0f);
-				shader->AddUniform(uf);
-			}
-			break;
-			case GL_FLOAT_VEC2:
-			{
-				UniformT<float2>* uf2 = new UniformT<float2>(name, type, float2(1.0f, 1.0f));
-				shader->AddUniform(uf2);
-			}
-			break;
-			case GL_FLOAT_VEC3:
-			{
-				UniformT<float3>* uf3 = new UniformT<float3>(name, type, float3(1.0f, 1.0f, 1.0f));
-				shader->AddUniform(uf3);
-			}
-			break;
-			case GL_FLOAT_VEC4:
-			{
-
-				UniformT<float4>* uf4 = new UniformT<float4>(name, type, float4(1.0f, 1.0f, 1.0f, 1.0f));
-				shader->AddUniform(uf4);
-			}
-			break;
-			case GL_INT:
-
-			{
-				UniformT<int>* ui = new UniformT<int>(name, type, 0);
-				shader->AddUniform(ui);
-			}
-			break;
-			}
-		}
-	}
-}
-
-unsigned int I_Shader::CompileShader(unsigned int type, const std::string& source)
-{
-	unsigned int id = glCreateShader(type);
-	const char* src = source.c_str();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
-	//TODO: HANDLE ERROR
-	int result;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-	if (result == GL_FALSE) {
-		int length;
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-		char* message = (char*)alloca(length * sizeof(char));
-		glGetShaderInfoLog(id, length, &length, message);
-		LOG("Failed to compile shader! The type was: %d\n", type);
-		LOG("error: %s\n", message);
-		//std::cout << "Failed to compile shader!" << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << std::endl;
-		//std::cout << message << std::endl;
-		//appLog->AddLog("Failed to compile shader! %s\n", (type == GL_VERTEX_SHADER ? "vertex" : "fragment"));
-		//appLog->AddLog(" %s\n", message);
-		glDeleteShader(id);
-		return 0;
-	}
-
-	return id;
 }

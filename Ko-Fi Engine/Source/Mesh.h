@@ -4,9 +4,10 @@
 #include <vector>
 #include <string>
 #include "MathGeoLib/Geometry/AABB.h"
-#include "Resource.h"
+//#include "Resource.h"
 #include "par_shapes.h"
-
+#include "Globals.h"
+class GameObject;
 
 enum class Shape
 {
@@ -19,9 +20,7 @@ enum class Shape
 	CONE
 };
 
-class GameObject;
-
-class Mesh : public Resource
+class Mesh
 {
 public:
 	Mesh(Shape shape = Shape::NONE);
@@ -35,7 +34,7 @@ public:
 	void ToggleVertexNormals();
 	void ToggleFacesNormals();
 
-	//SizeBytes
+	// Size in Bytes
 	unsigned verticesSizeBytes = 0;
 	unsigned normalsSizeBytes = 0;
 	unsigned texCoordSizeBytes = 0;
@@ -59,19 +58,18 @@ public:
 
 	unsigned int VAO = 0;
 
-	// Texture
-
 	// AABB
 	AABB localAABB;
 
 	Shape meshType;
 
 private:
-	void SetUpDefaultTexture();
+	void PrimitiveMesh(par_shapes_mesh* primitiveMesh);
+
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
 	void DrawFaceNormals() const;
-	void PrimitiveMesh(par_shapes_mesh* primitiveMesh);
+
 	// Debug bools
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;

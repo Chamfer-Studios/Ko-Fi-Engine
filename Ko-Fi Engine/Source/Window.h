@@ -2,6 +2,7 @@
 #define __WINDOW_H__
 
 #include "Module.h"
+#include "Globals.h"
 
 struct SDL_Window;
 struct SDL_Surface;
@@ -57,7 +58,7 @@ public:
 	SDL_Surface* screenSurface;
 
 private:
-	SString title;
+	std::string title;
 	uint width;
 	uint height;
 	uint scale;

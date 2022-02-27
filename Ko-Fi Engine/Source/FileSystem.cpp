@@ -215,6 +215,4 @@ void main()
 		appLog->AddLog("Error while Saving File: %c\n", e.what());
 	}
 	stream.close();
-
 }
-

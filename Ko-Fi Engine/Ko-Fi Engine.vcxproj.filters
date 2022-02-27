@@ -313,9 +313,6 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Importer.cpp">
-      <Filter>Source\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ComponentCamera.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
@@ -373,21 +370,21 @@
     <ClCompile Include="Source\I_Scene.cpp">
       <Filter>Source\Importers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Importer.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Material.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Defs.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Log.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\PerfTimer.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SString.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
@@ -726,9 +723,6 @@
     <ClInclude Include="Source\PanelRuntimeState.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Importer.h">
-      <Filter>Source\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ComponentCamera.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
@@ -809,6 +803,15 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentMesh.h">
       <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Importer.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MathGeoTransform.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Assimp.h">
+      <Filter>Source\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

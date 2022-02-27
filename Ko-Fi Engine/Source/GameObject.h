@@ -48,6 +48,7 @@ public:
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 	void PropagateTransform();
+
 	// Old way
 	void SetName(std::string name);
 	std::vector<GameObject*> GetChildren() const;

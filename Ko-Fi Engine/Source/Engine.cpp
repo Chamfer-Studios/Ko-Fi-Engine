@@ -9,7 +9,7 @@
 #include "FileSystem.h"
 #include "ViewportFrameBuffer.h"
 #include "Importer.h"
-#include "Defs.h"
+#include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
@@ -103,7 +103,7 @@ bool KoFiEngine::Awake()
 
 		while (item != modules.end() && ret)
 		{
-			ret = (*item)->Awake(jsonConfig.at((*item)->name.GetString()));
+			ret = (*item)->Awake(jsonConfig.at((*item)->name));
 			item++;
 		}
 	}

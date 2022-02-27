@@ -3,6 +3,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "Material.h"
 #include "Engine.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
@@ -10,7 +11,7 @@
 #include <gl/GL.h>
 #include "Primitive.h"
 #include "par_shapes.h"
-#include "Defs.h"
+#include "Globals.h"
 #include "I_Mesh.h"
 #include "I_Shader.h"
 #include "Importer.h"
@@ -112,12 +113,14 @@ bool ComponentMesh::PostUpdate(float dt)
 		{
 			glDisable(GL_TEXTURE_2D);
 		}
-	
-		if (renderMesh || owner->GetComponent<ComponentMaterial>()->GetShader() == 0) {
 
-			uint shader = owner->GetComponent<ComponentMaterial>()->GetShader()->materialShader;
+		if (renderMesh || owner->GetComponent<ComponentMaterial>()->GetShader() == 0)
+		{
+			uint shader = owner->GetComponent<ComponentMaterial>()->GetShader()->shaderProgramID;
+			
 			glUseProgram(shader);
-			//Matrices
+			
+			// Matrices
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 
@@ -129,55 +132,48 @@ bool ComponentMesh::PostUpdate(float dt)
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
 			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+			
 			float2 resolution = float2(1080.0f, 720.0f);
 			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+			
 			this->time += 0.02f;
 			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
 
 			ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
-			for (Uniform* uniform : cMat->GetShader()->uniforms) {
-				switch (uniform->type) {
+			for (Uniform* uniform : cMat->GetShader()->uniforms)
+			{
+				switch (uniform->type)
+				{
 				case GL_FLOAT:
 				{
-					if (uniform->name != "time")
-						glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
-
+					glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
 				}
 				break;
 				case GL_FLOAT_VEC2:
 				{
-					if (uniform->name != "resolution")
-					{
-						UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-						glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
-					}
-
+					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+					glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
 				}
-
 				break;
 				case GL_FLOAT_VEC3:
 				{
 					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
 					glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
 				}
-
 				break;
 				case GL_FLOAT_VEC4:
 				{
 					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
 					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
 				}
-
 				break;
 				case GL_INT:
 				{
 					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
-
 				}
-
 				break;
-
-				break;
+				default:
+					break;
 				}
 			}
 
@@ -188,7 +184,6 @@ bool ComponentMesh::PostUpdate(float dt)
 			glUseProgram(0);
 		}
 	}
-
 	return ret;
 }
 
@@ -201,9 +196,9 @@ bool ComponentMesh::CleanUp()
 
 void ComponentMesh::SetMesh(Mesh* mesh)
 {
-	if (this->mesh != nullptr) {
+	if (this->mesh != nullptr)
 		RELEASE(this->mesh);
-	}
+
 	this->mesh = mesh;
 }
 
@@ -308,7 +303,7 @@ void ComponentMesh::Load(Json json)
 		cMat->GetMaterial()->materialName = jsonComponentMaterial.at("materialName").get<std::string>();
 		cMat->GetMaterial()->materialPath = jsonComponentMaterial.at("materialPath").get<std::string>();
 		Shader* shader = cMat->GetShader();
-		Importer::GetInstance()->shaderImporter->Load(jsonComponentMaterial.at("shaderPath").get<std::string>().c_str(),shader);
+		Importer::GetInstance()->shaderImporter->Load(jsonComponentMaterial.at("shaderPath").get<std::string>().c_str(), shader);
 		for (const auto& tex : jsonComponentMaterial.at("textures").items()) {
 			cMat->LoadTexture(tex.value().at("path").get<std::string>());
 		}
@@ -355,10 +350,10 @@ void ComponentMesh::Load(Json json)
 			}
 			break;
 			}
-
 		}
 	}
-	else if (mesh->texCoords && jsonComponentMaterial.empty()) {
+	else if (mesh->texCoords && jsonComponentMaterial.empty())
+	{
 		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
 	}
 }
@@ -432,7 +427,8 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
-	if (ImGui::CollapsingHeader("Mesh")) {
+	if (ImGui::CollapsingHeader("Mesh"))
+	{
 		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));

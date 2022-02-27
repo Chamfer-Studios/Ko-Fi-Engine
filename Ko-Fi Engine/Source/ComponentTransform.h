@@ -17,6 +17,7 @@ public:
 
 	void SetPosition(const float3& newPosition);
 	void SetRotation(const float3& newRotation);
+	void SetRotation(const Quat& newRotation);
 	void SetScale(const float3& newScale);
 
 	inline float3 GetPosition() const { return position; };

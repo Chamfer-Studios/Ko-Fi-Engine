@@ -12,6 +12,7 @@ public:
 	~ResourceManager();
 
 	bool Start();
+	bool PreUpdate(float dt);
 	bool CleanUp();
 
 	//uint Find(const char* assetPath) const;
@@ -34,6 +35,7 @@ private:
 	std::map<UID, std::string> library;
 
 	float fileRefreshRate;
+	float fileRefreshTime;
 };
 
 #endif // __RESOURCE_MANAGER_H__

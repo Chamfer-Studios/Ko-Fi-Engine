@@ -3,7 +3,8 @@
 #include "Log.h"
 
 ResourceManager::ResourceManager(KoFiEngine* engine) : Module(),
-fileRefreshRate(0.0f)
+fileRefreshRate(0.0f),
+fileRefreshTime(0.0f)
 {
 	name = "ResourceManager";
 	this->engine = engine;
@@ -18,6 +19,33 @@ bool ResourceManager::Start()
 {
 	CONSOLE_LOG("Starting ResourceManager...");
 	//appLog->AddLog("Starting ResourceManager...\n");
+
+	fileRefreshRate = 5.0f;
+
+	//RefreshDirectoryFiles()
+
+	return true;
+}
+
+bool ResourceManager::PreUpdate(float dt)
+{
+	//fileRefreshTime += dt;
+	//if (fileRefreshTime > fileRefreshRate)
+	//{
+	//	std::map<UID, Resource*>::iterator it = resourcesMap.begin();
+	//	while (it != resourcesMap.end())
+	//	{
+	//		if (it->second->GetReferenceCount() == 0)
+	//		{
+	//			UID resourceUID = it->second->GetUID();
+	//			++it;
+	//			DeallocateResource(resourceUID);
+	//			continue;
+	//		}
+	//		++it;
+	//	}
+	//	fileRefreshTime = 0.0f;
+	//}
 
 	return true;
 }

@@ -214,6 +214,7 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MainBar.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
+    <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\PanelAssets.cpp" />
@@ -245,6 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\Assimp.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
@@ -256,7 +258,6 @@
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
     <ClInclude Include="Source\Engine.h" />
-    <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\EngineConfig.h" />
     <ClInclude Include="Source\External\imgui\Extras\Markdown\imgui_markdown.h" />
     <ClInclude Include="Source\External\imgui\imconfig.h" />
@@ -353,6 +354,7 @@
     <ClInclude Include="Source\FileSystem.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\MaterialNode.h" />
+    <ClInclude Include="Source\MathGeoTransform.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
@@ -386,7 +388,6 @@
     <ClInclude Include="Source\Renderer3D.h" />
     <ClInclude Include="Source\RNG.h" />
     <ClInclude Include="Source\SceneIntro.h" />
-    <ClInclude Include="Source\SString.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>

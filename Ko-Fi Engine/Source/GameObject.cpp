@@ -2,7 +2,7 @@
 #include "Engine.h"
 
 #include "Primitive.h"
-#include "Defs.h"
+#include "Globals.h"
 
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"

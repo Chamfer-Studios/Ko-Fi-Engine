@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include "Texture.h"
 
 // OpenGL / GLEW
 #include "glew.h"
@@ -8,17 +9,18 @@
 #include <iostream>
 #include "ComponentMaterial.h"
 #include "GameObject.h"
-#include "Defs.h"
+
 #include "Globals.h"
 
-Mesh::Mesh(Shape shape) : Resource(Resource::Type::MESH)
+Mesh::Mesh(Shape shape)
 {
-	meshType = shape;
 	verticesSizeBytes = 0;
 	normalsSizeBytes = 0;
 	texCoordSizeBytes = 0;
 	indicesSizeBytes = 0;
 	VAO = 0;
+
+	meshType = shape;
 
 	switch (shape)
 	{
@@ -71,36 +73,11 @@ Mesh::~Mesh()
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
 }
 
 void Mesh::SetUpMeshBuffers()
 {
-	//SetUpDefaultTexture();
-	//// Vertices
-	//glGenBuffers(1, &id_vertex);
-	//glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-	//glBufferData(GL_ARRAY_BUFFER, verticesSizeBytes, vertices, GL_STATIC_DRAW);
-
-	//// Normals
-	//glGenBuffers(1, &id_normal);
-	//glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-	//glBufferData(GL_ARRAY_BUFFER, normalsSizeBytes, normals, GL_STATIC_DRAW);
-
-	//// Indices
-	//glGenBuffers(1, &id_index);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSizeBytes, indices, GL_STATIC_DRAW);
-
-	//// Texture coords
-	//if (tex_coords) {
-	//	glGenBuffers(1, &id_tex_coord);
-	//	glBindBuffer(GL_ARRAY_BUFFER, id_tex_coord);
-	//	glBufferData(GL_ARRAY_BUFFER, texCoordSizeBytes, tex_coords, GL_STATIC_DRAW);
-	//}
-
-	// Vertex Array Object (VAO) --------------------------------------------------
+	// Vertex Array Object (VAO)
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
@@ -114,7 +91,7 @@ void Mesh::SetUpMeshBuffers()
 	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
 	glBufferData(GL_ARRAY_BUFFER, verticesSizeBytes, vertices, GL_STATIC_DRAW);
 	// Add vertex position attribute to the vertex array object (VAO)
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 	// Normals
@@ -122,7 +99,7 @@ void Mesh::SetUpMeshBuffers()
 	glBindBuffer(GL_ARRAY_BUFFER, idNormal);
 	glBufferData(GL_ARRAY_BUFFER, normalsSizeBytes, normals, GL_STATIC_DRAW);
 	// Add normals attribute to the vertex array object (VAO)
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3* sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
 
 	// Texture coords
@@ -131,7 +108,7 @@ void Mesh::SetUpMeshBuffers()
 		glGenBuffers(1, &idTexCoord);
 		glBindBuffer(GL_ARRAY_BUFFER, idTexCoord);
 		glBufferData(GL_ARRAY_BUFFER, texCoordSizeBytes, texCoords, GL_STATIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(2);
 	}
 
@@ -141,18 +118,14 @@ void Mesh::SetUpMeshBuffers()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Mesh::SetUpDefaultTexture()
-{
-	
-}
-
 void Mesh::Draw(GameObject* owner)
 {
-	//Texture
-	if (ComponentMaterial* material = owner->GetComponent<ComponentMaterial>()) {
-		for (Texture& tex : material->GetMaterial()->textures) {
-			glBindTexture(GL_TEXTURE_2D,tex.textureID);
-
+	// Texture
+	if (ComponentMaterial* cMaterial = owner->GetComponent<ComponentMaterial>())
+	{
+		for (Texture& tex : cMaterial->textures)
+		{
+			glBindTexture(GL_TEXTURE_2D, tex.textureID);
 		}
 	}
 
@@ -160,20 +133,18 @@ void Mesh::Draw(GameObject* owner)
 	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, 0);
 	DebugDraw();
 
-	//Unbind Texture
+	// Unbind Texture
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	
-	
-
-	
 }
 
 void Mesh::DebugDraw()
 {
 	// Debug draw
-	if (drawVertexNormals) DrawVertexNormals();
-	if (drawFaceNormals) DrawFaceNormals();
+	if (drawVertexNormals)
+		DrawVertexNormals();
+
+	if (drawFaceNormals)
+		DrawFaceNormals();
 }
 
 void Mesh::DrawVertexNormals() const
@@ -240,7 +211,6 @@ void Mesh::ToggleFacesNormals()
 	drawFaceNormals = !drawFaceNormals;
 }
 
-
 void Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 {
 	//vertexNum = primitiveMesh->npoints;
@@ -255,7 +225,7 @@ void Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 	verticesSizeBytes = sizeof(float) * primitiveMesh->npoints;
 	normalsSizeBytes = sizeof(float) * primitiveMesh->ntriangles;
 	texCoordSizeBytes = sizeof(uint) * primitiveMesh->ntriangles * 3;
-	indicesSizeBytes = sizeof(float)* primitiveMesh->npoints;
+	indicesSizeBytes = sizeof(float) * primitiveMesh->npoints;
 
 	par_shapes_compute_normals(primitiveMesh);
 	for (size_t i = 0; i < primitiveMesh->npoints; ++i)
@@ -272,7 +242,7 @@ void Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 			{
 			case 0:
 				texCoords[i] = 0.0f;
-				texCoords[i+1] = 0.0f;
+				texCoords[i + 1] = 0.0f;
 				break;
 			case 1:
 				texCoords[i] = 1.0f;

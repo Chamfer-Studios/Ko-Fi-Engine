@@ -1,7 +1,7 @@
 #pragma once
 #include "PerfTimer.h"
 #include "Timer.h"
-#include "SString.h"
+#include <string> 
 #include "SDL.h"
 
 class EngineConfig

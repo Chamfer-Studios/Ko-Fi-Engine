@@ -1,16 +1,19 @@
-#pragma once
-#include "MathGeoLib/Math/float4.h"
-#include "Texture.h"
 #include <string>
+#include "Color.h"
 
-class Material {
+class Texture;
+
+class Material
+{
 public:
-	Material() {}
-	~Material() {}
+	Material();
+	~Material();
+
+	inline void SetColor(Color color) { diffuseColor = color; }
 
 public:
+	Color diffuseColor;
+
 	std::string materialName;
 	std::string materialPath;
-	//Crear un vector de uniforms con id, type y valor y guardarlos ahi para luego sacar los datos
-	std::vector<Texture> textures;
 };

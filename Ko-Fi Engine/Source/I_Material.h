@@ -11,8 +11,8 @@ public:
 	~I_Material();
 
 	bool Import(const aiMaterial* aiMaterial, Material* material);
-	bool Save(const Material* material, char** buffer);
-	bool Load(const char* buffer, Material* material);
+	bool Save(const Material* material);
+	bool Load(Material* material);
 };
 
 #endif // !__I_MATERIAL_H__

@@ -144,7 +144,7 @@ public:
 	}
 
 public:
-	SString name;
+	std::string name;
 	bool active;
 
 	KoFiEngine* engine = nullptr;

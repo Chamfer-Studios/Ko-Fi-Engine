@@ -81,6 +81,13 @@ void ComponentTransform::SetRotation(const float3& newRotation)
 	isDirty = true;
 }
 
+void ComponentTransform::SetRotation(const Quat& newRotation)
+{
+	this->rotation = newRotation;
+	rotationEuler = newRotation.ToEulerXYZ() * RADTODEG;
+	isDirty = true;
+}
+
 void ComponentTransform::SetScale(const float3& newScale)
 {
 	scale = newScale;

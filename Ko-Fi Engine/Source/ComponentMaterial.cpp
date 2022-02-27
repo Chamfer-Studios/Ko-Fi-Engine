@@ -1,17 +1,21 @@
 #include "ComponentMaterial.h"
-//#include "Mesh.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "Texture.h"
+#include "Shader.h"
+
+#include "JsonHandler.h"
+#include "ImGuiAppLog.h"
+#include "PanelChooser.h"
+
 #include "stb_image.h"
 #include "imgui.h"
-#include "ImGuiAppLog.h"
 #include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-#include "PanelChooser.h"
-#include "Shader.h"
-#include "JsonHandler.h"
+
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/float4x4.h"
-#include "Shader.h"
 
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
@@ -72,8 +76,6 @@ void ComponentMaterial::LoadDefaultMaterial()
 	};
 }
 
-
-
 void ComponentMaterial::LoadMaterial(const char* path)
 {
 	std::string materialPath = path;
@@ -95,15 +97,18 @@ void ComponentMaterial::LoadMaterial(const char* path)
 		material->materialName = jsonMaterial.at("name").get<std::string>();
 		material->materialPath = materialPath.empty() ? material->materialPath : materialPath;
 		std::vector<std::string> texturePaths = jsonMaterial.at("textures");
-		for (int i = 0; i < texturePaths.size(); i++) {
+		for (int i = 0; i < texturePaths.size(); i++)
+		{
 			std::string texturePath = texturePaths.at(i);
-			if (material->textures.empty()) {
+
+			if (textures.empty())
+			{
 				LoadTexture(texturePath.c_str());
 			}
-			else {
-				if (texturePath != material->textures[i].GetAssetPath())
+			else
+			{
+				if (texturePath != textures[i].GetTexturePath())
 					LoadTexture(texturePath.c_str());
-
 			}
 		}
 
@@ -125,37 +130,48 @@ void ComponentMaterial::Compile()
 void ComponentMaterial::LoadTexture(std::string path)
 {
 	Texture texture;
-	texture.SetAssetPath(path.c_str());
+	texture.SetTexturePath(path.c_str());
 	texture.SetUpTexture();
-	material->textures.push_back(texture);
+	textures.push_back(texture);
 }
-
-
 
 bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Material")) {
-
-		if (panelChooser->IsReadyToClose("AddTexture")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+	if (ImGui::CollapsingHeader("Material"))
+	{
+		if (panelChooser->IsReadyToClose("AddTexture"))
+		{
+			if (panelChooser->OnChooserClosed() != nullptr)
+			{
 				std::string path = panelChooser->OnChooserClosed();
+
 				//LoadTextureFromId(texture.textureID, path.c_str());
+
 				LoadTexture(path.c_str());
 			}
 		}
-		if (panelChooser->IsReadyToClose("ChangeTexture")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+
+		if (panelChooser->IsReadyToClose("ChangeTexture"))
+		{
+			if (panelChooser->OnChooserClosed() != nullptr)
+			{
 				std::string path = panelChooser->OnChooserClosed();
+
 				//LoadTextureFromId(texture.textureID, path.c_str());
-				for (Texture& tex : material->textures) {
-					tex.SetAssetPath(path.c_str());
+
+				for (Texture& tex : textures)
+				{
+					tex.SetTexturePath(path.c_str());
 					if (tex.textureID == currentTextureId)
 						tex.SetUpTexture();
 				}
 			}
 		}
-		if (panelChooser->IsReadyToClose("ChangeShader")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+
+		if (panelChooser->IsReadyToClose("ChangeShader"))
+		{
+			if (panelChooser->OnChooserClosed() != nullptr)
+			{
 				std::string path = panelChooser->OnChooserClosed();
 				//LoadTextureFromId(texture.textureID, path.c_str());
 				//LoadShader(path.c_str());
@@ -166,78 +182,78 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
 		ImGui::Text("Material Textures:");
-		for (Texture& tex : material->textures) {
+		for (Texture& tex : textures)
+		{
 			ImGui::Image((ImTextureID)tex.textureID, ImVec2(85, 85));
 			ImGui::SameLine();
 			ImGui::BeginGroup();
-			ImGui::Text(tex.GetAssetPath());
+			ImGui::Text(tex.GetTexturePath());
 			ImGui::PushID(tex.textureID << 8);
-			if (ImGui::Button("Change Texture")) {
+
+			if (ImGui::Button("Change Texture"))
+			{
 				panelChooser->OpenPanel("ChangeTexture", "png");
 				currentTextureId = tex.textureID;
 			}
+
 			ImGui::PopID();
 
 			ImGui::PushID(tex.textureID << 16);
-			if (ImGui::Button("Delete Textures")) {
+
+			if (ImGui::Button("Delete Textures"))
+			{
 				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
 			}
 			ImGui::PopID();
 			ImGui::EndGroup();
 		}
-		if (ImGui::Button("Add Texture")) {
+
+		if (ImGui::Button("Add Texture"))
 			panelChooser->OpenPanel("AddTexture", "png");
 
-		}
 		ImGui::Separator();
-		if (ImGui::Button("Change Shader")) {
-			panelChooser->OpenPanel("ChangeShader","glsl");
-		}
-		for (Uniform* uniform : shader->uniforms) {
-			switch (uniform->type) {
+
+		if (ImGui::Button("Change Shader"))
+			panelChooser->OpenPanel("ChangeShader", "glsl");
+
+		for (Uniform* uniform : shader->uniforms)
+		{
+			switch (uniform->type)
+			{
 			case GL_FLOAT:
 			{
-				if (uniform->name != "time") {
-					UniformT<float>* uf = (UniformT<float>*)uniform;
-					ImGui::DragFloat(uniform->name.c_str(), &uf->value, -10, 10);
-				}
-				
+				UniformT<float>* uf = (UniformT<float>*)uniform;
+				ImGui::DragFloat(uniform->name.c_str(), &uf->value, -10, 10);
 			}
 			break;
 			case GL_FLOAT_VEC2:
 			{
-				if (uniform->name != "resolution") {
-					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-					ImGui::DragFloat2(uniform->name.c_str(), uf2->value.ptr(), -10, 10);
-				}
-				
+				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+				ImGui::DragFloat2(uniform->name.c_str(), uf2->value.ptr(), -10, 10);
 			}
 			break;
 			case GL_FLOAT_VEC3:
 			{
-					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-					ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), -10, 10);
-				
-
+				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+				ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), -10, 10);
 			}
 			break;
 			case GL_FLOAT_VEC4:
 			{
-
 				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
 				ImGui::DragFloat4(uniform->name.c_str(), uf4->value.ptr(), -10, 10);
 			}
 			break;
 			case GL_INT:
-
 			{
 				UniformT<int>* ui = (UniformT<int>*)uniform;
 				ImGui::DragInt(uniform->name.c_str(), &ui->value, -10, 10);
 			}
 			break;
+			default:
+				break;
 			}
 		}
-
 	}
 	return true;
 }
@@ -247,19 +263,17 @@ Json ComponentMaterial::Save()
 	Json jsonComponentMaterial;
 	json jsonTex;
 	jsonComponentMaterial["textures"] = json::array();
-	for (Texture& tex : GetMaterial()->textures) {
-
-		jsonTex["path"] = tex.GetAssetPath();
+	for (Texture& tex : textures)
+	{
+		jsonTex["path"] = tex.GetTexturePath();
 		jsonComponentMaterial["textures"].push_back(jsonTex);
 	}
 
-
 	json jsonUniform;
-	for (Uniform* uniform : shader->uniforms) {
-
+	for (Uniform* uniform : shader->uniforms)
+	{
 		switch (uniform->type)
 		{
-
 		case GL_FLOAT:
 		{
 			UniformT<float>* uf = (UniformT<float>*)uniform;
@@ -321,12 +335,8 @@ Material* ComponentMaterial::GetMaterial()
 	return material;
 }
 
+
 Shader* ComponentMaterial::GetShader()
 {
 	return shader;
 }
-
-
-
-
-

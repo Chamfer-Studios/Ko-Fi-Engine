@@ -1,11 +1,12 @@
 #include "Texture.h"
+#include "ImGuiAppLog.h"
+
 #include "glew.h"
 #include "stb_image.h"
-#include "ImGuiAppLog.h"
 
 #define CHECKERS_SIZE 32
 
-Texture::Texture() : Resource(Resource::Type::TEXTURE)
+Texture::Texture()
 {
 }
 
@@ -15,7 +16,8 @@ Texture::~Texture()
 
 void Texture::SetUpTexture()
 {
-	if (assetPath.empty()) {
+	if (texturePath.empty())
+	{
 		GLubyte checkerImage[CHECKERS_SIZE][CHECKERS_SIZE][4];
 		for (int i = 0; i < CHECKERS_SIZE; i++) {
 			for (int j = 0; j < CHECKERS_SIZE; j++) {
@@ -40,30 +42,28 @@ void Texture::SetUpTexture()
 		return;
 	}
 
-	unsigned char* pixels = stbi_load(assetPath.c_str(), &this->width, &this->height, &this->nrChannels, STBI_rgb);
+	unsigned char* pixels = stbi_load(texturePath.c_str(), &this->width, &this->height, &this->nrChannels, STBI_rgb);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	if (textureID == 0) {
+	
+	if (textureID == 0)
+	{
 		glGenTextures(1, &textureID);
 	}
 	glBindTexture(GL_TEXTURE_2D, this->textureID);
-	// set the texture wrapping/filtering options (on the currently bound texture object)
+
+	// Set the texture wrapping/filtering options (on the currently bound texture object)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
 	if (pixels)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->width, this->height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
-	{
 		appLog->AddLog("%s", "Texture Image not loaded correctly");
-	}
 
 	stbi_image_free(pixels);
-	
-
-	
-
 }

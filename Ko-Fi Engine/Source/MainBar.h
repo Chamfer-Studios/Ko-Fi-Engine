@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __MAINBAR_H__
+#define __MAINBAR_H__
+
 #include "Panel.h"
 
 class Editor;
@@ -21,3 +23,5 @@ private:
 	Editor* editor;
 	bool loadingModel = false;
 };
+
+#endif // !__MAINBAR_H__

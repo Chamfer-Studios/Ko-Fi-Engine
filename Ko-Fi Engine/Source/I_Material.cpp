@@ -1,6 +1,7 @@
 #include "I_Material.h"
 #include "Material.h"
 #include "Log.h"
+#include "Assimp.h"
 
 I_Material::I_Material()
 {
@@ -12,19 +13,19 @@ I_Material::~I_Material()
 
 bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 {
-	//if (material == nullptr)
-	//{
-	//	CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: R_Material* was nullptr.");
-	//	return;
-	//}
-	//if (aiMaterial == nullptr)
-	//{
-	//	CONSOLE_LOG("[ERROR] Importer: Could not Import Material { %s }! Error: aiMaterial* was nullptr.", material->GetAssetsFile());
-	//	return;
-	//}
+	if (material == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: R_Material* was nullptr.");
+		return false;
+	}
+	if (aiMaterial == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: aiMaterial* was nullptr.");
+		return false;
+	}
 
-
-	//std::string dirPath = ASSETS_TEXTURES_PATH + App->fileSystem->GetLastDirectory(material->GetAssetsPath());			// Dirty setting of the assets path.
+	// Dirty setting of the assets path.
+	//std::string dirPath = ASSETS_TEXTURES_PATH + App->fileSystem->GetLastDirectory(material->GetAssetsPath());
 
 	//std::string file = "";
 	//std::string fullPath = "";
@@ -38,55 +39,18 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 	//aiString texPath;
 	//if (aiMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &texPath) == AI_SUCCESS)												// At the moment only DIFFUSE textures will be imported.
 	//{
-
-	//	file = App->fileSystem->GetFileAndExtension(texPath.C_Str());
-	//	fullPath = dirPath + file;
-	//	material->materials.push_back(MaterialData(TextureType::DIFFUSE, 0, fullPath));
-
+		//file = App->fileSystem->GetFileAndExtension(texPath.C_Str());
+		//fullPath = dirPath + file;
+		//material->materials.push_back(MaterialData(TextureType::DIFFUSE, 0, fullPath));
 	//}
-	//if (aiMaterial->GetTexture(aiTextureType_SPECULAR, 0, &texPath) == AI_SUCCESS)											// Checking if there is a SPECULAR texture.
-	//{
 
-	//	file = App->fileSystem->GetFileAndExtension(texPath.C_Str());
-	//	fullPath = dirPath + file;
-	//	material->materials.push_back(MaterialData(TextureType::SPECULAR, 0, fullPath));
-	//}
-	//if (aiMaterial->GetTexture(aiTextureType_AMBIENT, 0, &texPath) == AI_SUCCESS)												// Checking if there is a AMBIENT texture.
-	//{
-
-	//	file = App->fileSystem->GetFileAndExtension(texPath.C_Str());
-	//	fullPath = dirPath + file;
-	//	material->materials.push_back(MaterialData(TextureType::AMBIENT, 0, fullPath));
-
-	//}
-	//if (aiMaterial->GetTexture(aiTextureType_EMISSIVE, 0, &texPath) == AI_SUCCESS)											// Checking if there is a EMISSIVE texture.
-	//{
-
-	//	file = App->fileSystem->GetFileAndExtension(texPath.C_Str());
-	//	fullPath = dirPath + file;
-	//	material->materials.push_back(MaterialData(TextureType::EMISSIVE, 0, fullPath));
-	//}
-	//if (aiMaterial->GetTexture(aiTextureType_HEIGHT, 0, &texPath) == AI_SUCCESS)												// Checking if there is a HEIGHT texture.
-	//{
-
-	//	file = App->fileSystem->GetFileAndExtension(texPath.C_Str());
-	//	fullPath = dirPath + file;
-	//	material->materials.push_back(MaterialData(TextureType::HEIGHT, 0, fullPath));
-
-	//}
-	//if (aiMaterial->GetTexture(aiTextureType_NORMALS, 0, &texPath) == AI_SUCCESS)												// Checking if there is a NORMALS texture.
-	//{
-
-	//	file = App->fileSystem->GetFileAndExtension(texPath.C_Str());
-	//	fullPath = dirPath + file;
-	//	material->materials.push_back(MaterialData(TextureType::NORMALS, 0, fullPath));
-
-	//}
 	return true;
 }
 
-bool I_Material::Save(const Material* material, char** buffer)
+bool I_Material::Save(const Material* material)
 {
+	bool ret = true;
+
 	//uint written = 0;
 
 	//if (material == nullptr)
@@ -133,10 +97,10 @@ bool I_Material::Save(const Material* material, char** buffer)
 
 	//return written;
 
-	return true;
+	return ret;
 }
 
-bool I_Material::Load(const char* buffer, Material* material)
+bool I_Material::Load(Material* material)
 {
 	bool ret = true;
 

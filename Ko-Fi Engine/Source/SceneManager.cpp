@@ -9,7 +9,7 @@
 #include "ComponentCamera.h"
 #include "Editor.h"
 
-#include "Defs.h"
+#include "Globals.h"
 #include "JsonHandler.h"
 #include "glew.h"
 #include "MathGeoLib/Math/float3.h"
