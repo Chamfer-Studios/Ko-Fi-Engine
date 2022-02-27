@@ -12,6 +12,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "Physics.h"
 
 #include <iostream>
 #include <sstream>
@@ -32,6 +33,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
 	viewportBuffer = new ViewportFrameBuffer(this);
+	physics = new Physics(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -41,6 +43,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fileSystem);
 	AddModule(sceneManager);
 	AddModule(viewportBuffer);
+	AddModule(physics);
 	AddModule(editor);
 
 	// Render last to swap buffer

@@ -343,6 +343,9 @@
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -752,6 +755,9 @@
     </ClInclude>
     <ClInclude Include="Source\AdditionNode.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Source\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

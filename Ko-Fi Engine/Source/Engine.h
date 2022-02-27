@@ -16,6 +16,7 @@ class Camera3D;
 class Editor;
 class FileSystem;
 class ViewportFrameBuffer;
+class Physics;
 
 class KoFiEngine
 {
@@ -88,6 +89,7 @@ private:
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
 	ViewportFrameBuffer* viewportBuffer = nullptr;
+	Physics* physics = nullptr;
 
 private:
 	int argc;
