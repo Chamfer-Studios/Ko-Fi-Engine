@@ -1,5 +1,8 @@
-#pragma once
+#ifndef __NODE_H__
+#define __NODE_H__
+
 #include <ImNodes.h>
+
 enum class NodeType
 {
 	MATERIAL,
@@ -9,6 +12,7 @@ enum class NodeType
 	ADD,
 
 };
+
 enum class PinType {
 	BOOL,
 	INT,
@@ -37,6 +41,7 @@ public:
 	Node(const char* name, const NodeType t, const int id, const float v) : type(t), id(id), name(name) {}
 	virtual void Update() {};
 	virtual void Render() {};
+
 public:
 	NodeType type;
 	std::vector<Node*> inputs_vec;
@@ -48,3 +53,4 @@ public:
 	int id;
 };
 
+#endif // !__NODE_H__

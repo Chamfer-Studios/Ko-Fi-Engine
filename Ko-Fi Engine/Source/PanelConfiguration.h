@@ -1,6 +1,7 @@
-#pragma once
-#include "Panel.h"
+#ifndef __PANEL_CONFIG_H__
+#define __PANEL_CONFIG_H__
 
+#include "Panel.h"
 
 class Editor;
 struct EngineConfig;
@@ -23,3 +24,5 @@ private:
 	bool wireframe = false;
 	bool loadingIcon = false;
 };
+
+#endif // !__PANEL_CONFIG_H__

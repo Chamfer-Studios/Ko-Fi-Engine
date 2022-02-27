@@ -36,4 +36,4 @@ private:
 	uint64 frequency;
 };
 
-#endif //__PERFTIMER_H__
+#endif // !__PERFTIMER_H__

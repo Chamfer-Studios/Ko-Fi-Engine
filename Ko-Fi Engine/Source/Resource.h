@@ -63,4 +63,4 @@ protected:
 	uint referenceCount = 0;
 };
 
-#endif __RESOURCE_H__
+#endif // !__RESOURCE_H__

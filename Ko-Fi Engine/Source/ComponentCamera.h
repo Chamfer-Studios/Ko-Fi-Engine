@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __COMPONENT_CAMERA_H__
 #define __COMPONENT_CAMERA_H__
 
@@ -60,4 +59,4 @@ private:
 	ComponentTransform* componentTransform = nullptr;
 };
 
-#endif // __COMPONENT_CAMERA_H__
+#endif // !__COMPONENT_CAMERA_H__

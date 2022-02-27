@@ -1,7 +1,6 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-
 #include "JsonHandler.h"
 
 class GuiControl;
@@ -62,4 +61,4 @@ public:
 
 };
 
-#endif // __MODULE_H__
+#endif // !__MODULE_H__

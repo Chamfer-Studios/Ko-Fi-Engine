@@ -7,6 +7,7 @@
 //#include "Resource.h"
 #include "par_shapes.h"
 #include "Globals.h"
+
 class GameObject;
 
 enum class Shape

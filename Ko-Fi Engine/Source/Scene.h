@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
@@ -155,4 +157,4 @@ public:
 	LineSegment ray;
 };
 
-#endif // __SCENE_H__
+#endif // !__SCENE_H__

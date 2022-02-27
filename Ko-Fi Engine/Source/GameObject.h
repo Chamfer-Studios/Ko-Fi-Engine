@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __GAMEOBJECT_H__
+#define __GAMEOBJECT_H__
+
 #include "Mesh.h"
 #include <vector>
 
@@ -75,3 +77,5 @@ private:
 	KoFiEngine* engine = nullptr;
 	ComponentTransform* transform = nullptr;
 };
+
+#endif // !__GAMEOBJECT_H__

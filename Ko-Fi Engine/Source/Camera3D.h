@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
+
 #include "Module.h"
 #include "Globals.h"
 #include "MathGeoLib/Math/float3.h"
@@ -43,3 +45,5 @@ private:
 
 	KoFiEngine* engine = nullptr;
 };
+
+#endif // !__CAMERA_H__

@@ -1,6 +1,5 @@
-#pragma once
-#ifndef FILESYSTEM_H
-#define FILESYSTEM_H
+#ifndef __FILESYSTEM_H__
+#define __FILESYSTEM_H__
 
 #include "Module.h"
 #include <filesystem>
@@ -38,4 +37,4 @@ public:
 	KoFiEngine* engine = nullptr;
 };
 
-#endif FILESYSTEM_H // FILESYSTEM_H
+#endif FILESYSTEM_H // !__FILESYSTEM_H__

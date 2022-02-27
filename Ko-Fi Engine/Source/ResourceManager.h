@@ -38,4 +38,4 @@ private:
 	float fileRefreshTime;
 };
 
-#endif // __RESOURCE_MANAGER_H__
+#endif // !__RESOURCE_MANAGER_H__

@@ -101,4 +101,4 @@ private:
 	JsonHandler jsonHandler;
 };
 
-#endif // __SCENE_MANAGER_H__
+#endif // !__SCENE_MANAGER_H__

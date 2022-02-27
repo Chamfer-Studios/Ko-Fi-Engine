@@ -1,3 +1,6 @@
+#ifndef __MATERIAL_H__
+#define __MATERIAL_H__
+
 #include <string>
 #include "Color.h"
 
@@ -17,3 +20,5 @@ public:
 	std::string materialName;
 	std::string materialPath;
 };
+
+#endif // !__MATERIAL_H__

@@ -1,4 +1,4 @@
-#ifndef  __FSDIRECTORIES_H__
+#ifndef __FSDIRECTORIES_H__
 #define __FSDIRECTORIES_H__
 
 // DIRECTORIES
@@ -20,4 +20,4 @@
 #define MATERIAL_EXTENSION ".milk"
 #define SHADER_EXTENSION ".glsl"
 
-#endif // ! __FSDIRECTORIES_H__
+#endif // !__FSDIRECTORIES_H__

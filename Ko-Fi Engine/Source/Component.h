@@ -1,6 +1,9 @@
-#pragma once
+#ifndef __COMPONENT_H__
+#define __COMPONENT_H__
+
 #include "imgui.h"
 #include "json.hpp"
+
 using nlohmann::json;
 class PanelChooser;
 class GameObject;
@@ -38,3 +41,5 @@ public:
 	GameObject* owner;
 	ComponentType type;
 };
+
+#endif // !__COMPONENT_H__

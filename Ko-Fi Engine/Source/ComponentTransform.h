@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __COMPONENT_TRANSFORM_H__
+#define __COMPONENT_TRANSFORM_H__
+
 #include "Component.h"
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4x4.h"
@@ -56,3 +58,5 @@ private:
 	float3 up = float3::unitY;
 	float3 right = float3::unitX;
 };
+
+#endif // !__COMPONENT_TRANSFORM_H__

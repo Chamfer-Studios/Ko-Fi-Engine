@@ -72,4 +72,4 @@ private:
 	KoFiEngine* engine = nullptr;
 };
 
-#endif // __WINDOW_H__
+#endif // !__WINDOW_H__
