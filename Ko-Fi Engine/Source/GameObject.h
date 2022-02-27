@@ -12,7 +12,7 @@ class ComponentInfo;
 class GameObject
 {
 public:
-	GameObject(int id, KoFiEngine* engine, const char* name = nullptr);
+	GameObject(int id, KoFiEngine* engine, const char* name = nullptr, bool is3D = true);
 	//GameObject(const char* path, int id, const char* name = nullptr);
 	~GameObject();
 

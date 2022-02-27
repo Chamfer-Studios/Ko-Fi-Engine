@@ -74,9 +74,9 @@ public:
 		return nullptr;
 	}
 
-	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
+	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, bool is3D = true)
 	{
-		GameObject* go = new GameObject(gameObjectList.size(), engine);
+		GameObject* go = new GameObject(gameObjectList.size(), engine, name, is3D);
 		this->gameObjectList.push_back(go);
 		this->rootGo->AttachChild(go);
 

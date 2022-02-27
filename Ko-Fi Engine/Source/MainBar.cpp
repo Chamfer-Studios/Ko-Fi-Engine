@@ -111,15 +111,14 @@ bool MainBar::Update()
 			if (ImGui::BeginMenu("UI"))
 			{
 				if (ImGui::MenuItem("Canvas")) {
-					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, false);
 					go->SetName("Canvas");
 					go->CreateComponent<ComponentCanvas>();
 				}
 				if (ImGui::MenuItem("Image")) {
-					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, false);
 					go->SetName("Image");
 					go->CreateComponent<ComponentTransform2D>();
-					go->CreateComponent<ComponentMaterial>();
 					go->CreateComponent<ComponentImage>();
 				}
 				ImGui::EndMenu();
