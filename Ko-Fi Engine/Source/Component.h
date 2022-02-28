@@ -30,12 +30,15 @@ public:
 	virtual bool Update() { return true; }
 	virtual bool PostUpdate(float dt) { return true; }
 	virtual bool CleanUp() { return true; }
+
 	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
+
 	virtual void Disable() { active = false; }
+
 	virtual void Save(Json& json) const {}
 	virtual void Load(Json& json) {}
+
 	ComponentType GetType() { return type; }
-	
 
 public:
 	bool active = true;

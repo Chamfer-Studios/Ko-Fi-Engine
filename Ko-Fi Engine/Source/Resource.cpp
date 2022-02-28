@@ -43,7 +43,7 @@ void Resource::SetLibraryPathAndFile()
 		break;
 	case Resource::Type::SCENE:
 		dir = SCENES_DIR;
-		extension = ".json";
+		extension = SCENE_EXTENSION;
 		break;
 	case Resource::Type::SHADER:
 		dir = SHADERS_DIR;

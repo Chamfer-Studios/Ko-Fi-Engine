@@ -26,6 +26,7 @@ public:
 
 	void Enable();
 	void Disable();
+
 	template<class T> T* CreateComponent()
 	{
 		T* newComponent = new T(this);
@@ -47,23 +48,31 @@ public:
 	// New way
 	void DeleteComponent(Component* component);
 	void AddComponent(Component* component);
+
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
+
 	void PropagateTransform();
 
 	// Old way
-	void SetName(std::string name);
+	void SetName(const char* name);
+	const char* GetName();
+
 	std::vector<GameObject*> GetChildren() const;
-	void SetChild(GameObject*child);
-	std::string GetName();
+	void SetChild(GameObject* child);
 	GameObject* GetParent() const;
+
 	ComponentTransform* GetTransform();
 	std::vector<Component*> GetComponents() const;
+
 	void SetUID(uint uid);
 	uint GetUID() const;
+
 	void SetParentUID(uint uid);
 	uint GetParentUID() const;
-	bool HasChildrenWithUID(int uid);
+
+	bool HasChildrenWithUID(uint uid);
+
 	KoFiEngine* GetEngine();
 
 public:
@@ -76,7 +85,7 @@ private:
 	GameObject* parent = nullptr;
 	uint uid;
 	uint parentUid;
-	
+
 	KoFiEngine* engine = nullptr;
 	ComponentTransform* transform = nullptr;
 };

@@ -242,72 +242,78 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 bool I_Scene::Save(Scene* scene)
 {
 	bool ret = false;
-	Json jsonFile;
+
 	JsonHandler jsonHandler;
+	Json jsonFile;
+
 	const char* name = scene->name.c_str();
-	std::vector<GameObject*> gameObjects = scene->gameObjectList;
+	std::vector<GameObject*> gameObjectList = scene->gameObjectList;
 
 	jsonFile[name];
 	jsonFile[name]["name"] = name;
-	jsonFile[name]["game_objects_list"] = Json::array();
+	jsonFile[name]["active"] = scene->active;
+	jsonFile[name]["game_objects_amount"] = gameObjectList.size();
 
-	for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
+	jsonFile[name]["game_objects_list"] = Json::array();
+	for (std::vector<GameObject*>::iterator goIt = gameObjectList.begin(); goIt != gameObjectList.end(); ++goIt)
 	{
 		Json jsonGameObject;
-		GameObject* go = (*goIt);
 
-		const char* goName = go->GetName().c_str();
+		GameObject* gameObject = (*goIt);
+
+		const char* goName = gameObject->GetName();
 		jsonGameObject["name"] = goName;
-		jsonGameObject["active"] = go->active;
-		jsonGameObject["UID"] = (uint)go->GetUID();
+		jsonGameObject["active"] = gameObject->active;
+		jsonGameObject["UID"] = gameObject->GetUID();
 
 		// We don't want to save also its children here.
 		// We will arrive and create them when they get here with the loop.
 		// So, in order to keep track of parents and childrens, we will record the UID of the parent.
-		if (go->GetParent() != nullptr)
-			jsonGameObject["parent_UID"] = (uint)go->GetParent()->GetUID();
+		if (gameObject->GetParent() != nullptr)
+			jsonGameObject["parent_UID"] = gameObject->GetParent()->GetUID();
 
+		std::vector<Component*> componentsList = gameObject->GetComponents();
 		jsonGameObject["components"] = Json::array();
-
-		for (std::vector<Component*>::iterator cmpIt = go->GetComponents().begin(); cmpIt != go->GetComponents().end(); ++cmpIt)
+		for (std::vector<Component*>::iterator cmpIt = componentsList.begin(); cmpIt != componentsList.end(); ++cmpIt)
 		{
 			Json jsonComponent;
-			Component* cmp = (*cmpIt);
 
-			jsonComponent["active"] = cmp->active;
+			Component* component = (*cmpIt);
 
-			switch (cmp->GetType())
+			jsonComponent["active"] = component->active;
+
+			switch (component->GetType())
 			{
 			case ComponentType::NONE:
 				jsonComponent["type"] = "NONE";
 				break;
 			case ComponentType::TRANSFORM:
 			{
-				ComponentTransform* transformCmp = (ComponentTransform*)cmp;
+				ComponentTransform* transformCmp = (ComponentTransform*)component;
 				transformCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::MESH:
 			{
-				ComponentMesh* meshCmp = (ComponentMesh*)cmp;
+				ComponentMesh* meshCmp = (ComponentMesh*)component;
 				meshCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::MATERIAL:
 			{
-				ComponentMaterial* materialCmp = (ComponentMaterial*)cmp;
+				ComponentMaterial* materialCmp = (ComponentMaterial*)component;
 				materialCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::INFO:
 			{
-				ComponentInfo* infoCmp = (ComponentInfo*)cmp;
+				ComponentInfo* infoCmp = (ComponentInfo*)component;
 				infoCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::CAMERA:
 			{
-				ComponentCamera* cameraCmp = (ComponentCamera*)cmp;
+				ComponentCamera* cameraCmp = (ComponentCamera*)component;
 				cameraCmp->Save(jsonComponent);
 				break;
 			}

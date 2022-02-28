@@ -271,10 +271,13 @@ AABB ComponentMesh::GetLocalAABB()
 void ComponentMesh::Save(Json& json) const
 {
 	json["type"] = "mesh";
+
 	std::string name = owner->name;
 	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
-	Importer::GetInstance()->meshImporter->Save(mesh,mesh->path.c_str());
-	json["path"] = mesh->path.c_str();
+
+	Importer::GetInstance()->meshImporter->Save(mesh, mesh->path.c_str());
+
+	json["path"] = mesh->path;
 	json["shape_type"] = (int)mesh->meshType;
 	json["draw_vertex_normals"] = mesh->GetVertexNormals();
 	json["draw_face_normals"] = mesh->GetFaceNormals();

@@ -21,16 +21,18 @@ public:
 	ComponentMaterial(GameObject* parent);
 	~ComponentMaterial();
 
-	void LoadTexture(std::string path = "");
 	bool InspectorDraw(PanelChooser* chooser);
-	Material* GetMaterial();
+
+	Material* GetMaterial() { return material; }
+	Shader* GetShader() { return shader; }
+
+	void LoadTexture(const char* path = "");
+	void LoadMaterial(const char* path = "");
 	
-	// Material Handling
-	void LoadMaterial(const char* path="");
-	void Save(Json& json) const override;
-	void Load(Json& json) override;
 	void Compile();
-	Shader* GetShader();
+
+	void Save(Json& json);
+	void Load(Json& json) override;
 
 private:
 	bool LoadDefaultMaterial();

@@ -85,7 +85,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 {
 	if (go->GetChildren().size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf;
-	if (ImGui::TreeNodeEx(go->GetName().c_str(),flags))
+	if (ImGui::TreeNodeEx(go->GetName(),flags))
 	{
 		DragNDrop(go);
 		if ((ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)))

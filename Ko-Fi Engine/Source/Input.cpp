@@ -182,7 +182,8 @@ bool Input::PreUpdate(float dt)
 					{
 						GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 
-						if (go->GetComponent<ComponentMaterial>()) {
+						if (go->GetComponent<ComponentMaterial>())
+						{
 							ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
 							cMat->LoadTexture(tmp.c_str());
 						}

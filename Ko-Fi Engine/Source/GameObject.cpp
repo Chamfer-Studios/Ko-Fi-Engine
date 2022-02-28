@@ -141,14 +141,14 @@ void GameObject::PropagateTransform()
 	}
 }
 
-ComponentTransform* GameObject::GetTransform()
-{
-	return this->transform;
-}
-
-void GameObject::SetName(std::string name)
+void GameObject::SetName(const char* name)
 {
 	this->name = name;
+}
+
+const char* GameObject::GetName()
+{
+	return name.c_str();
 }
 
 std::vector<GameObject*> GameObject::GetChildren() const
@@ -161,14 +161,14 @@ void GameObject::SetChild(GameObject* child)
 	children.push_back(child);
 }
 
-std::string GameObject::GetName()
-{
-	return name;
-}
-
 GameObject* GameObject::GetParent()const
 {
 	return parent;
+}
+
+ComponentTransform* GameObject::GetTransform()
+{
+	return this->transform;
 }
 
 std::vector<Component*> GameObject::GetComponents() const
@@ -196,7 +196,7 @@ uint GameObject::GetParentUID() const
 	return parentUid;
 }
 
-bool GameObject::HasChildrenWithUID(int uid)
+bool GameObject::HasChildrenWithUID(uint uid)
 {
 	for (std::vector<GameObject*>::iterator child = children.begin(); child != children.end(); child++)
 	{
