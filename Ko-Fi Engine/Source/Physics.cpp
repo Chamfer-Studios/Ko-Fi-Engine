@@ -1,5 +1,15 @@
 #include "Physics.h"
 
+#pragma comment (lib, "PhysX_32.lib")    
+#pragma comment (lib, "PhysXCharacterKinematic_static_32.lib")
+#pragma comment (lib, "PhysXCommon_32.lib")    
+#pragma comment (lib, "PhysXCooking_32.lib") 
+#pragma comment (lib, "PhysXExtensions_static_32.lib")    
+#pragma comment (lib, "PhysXFoundation_32.lib") 
+#pragma comment (lib, "PhysXPvdSDK_static_32.lib") 
+#pragma comment (lib, "PhysXTask_static_32.lib")    
+#pragma comment (lib, "PhysXVehicle_static_32.lib") 
+
 // Module constructor
 Physics::Physics(KoFiEngine* engine) : Module()
 {
