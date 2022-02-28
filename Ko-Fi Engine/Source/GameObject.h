@@ -8,6 +8,7 @@ class KoFiEngine;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentInfo;
+class ComponentScript;
 
 class GameObject
 {

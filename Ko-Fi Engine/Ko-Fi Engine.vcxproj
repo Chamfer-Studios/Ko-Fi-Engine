@@ -70,12 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,7 +83,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -92,8 +92,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,7 +117,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -126,8 +126,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,6 +154,7 @@
     <ClCompile Include="Source\ComponentCamera.cpp" />
     <ClCompile Include="Source\ComponentInfo.cpp" />
     <ClCompile Include="Source\ComponentMaterial.cpp" />
+    <ClCompile Include="Source\ComponentScript.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />
@@ -217,6 +218,7 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\Scripting.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
@@ -243,6 +245,7 @@
     <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
+    <ClInclude Include="Source\ComponentScript.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
@@ -264,6 +267,11 @@
     <ClInclude Include="Source\External\imgui_node_editor\imnodes.h" />
     <ClInclude Include="Source\External\imgui_node_editor\imnodes_internal.h" />
     <ClInclude Include="Source\External\JsonParser\json.hpp" />
+    <ClInclude Include="Source\External\lua\include\lauxlib.h" />
+    <ClInclude Include="Source\External\lua\include\lua.h" />
+    <ClInclude Include="Source\External\lua\include\lua.hpp" />
+    <ClInclude Include="Source\External\lua\include\luaconf.h" />
+    <ClInclude Include="Source\External\lua\include\lualib.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\Random\LCG.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Geometry\AABB.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Geometry\AABB2D.h" />
@@ -324,6 +332,9 @@
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.h" />
     <ClInclude Include="Source\External\mmgr\mmgr.h" />
     <ClInclude Include="Source\External\mmgr\nommgr.h" />
+    <ClInclude Include="Source\External\sol\config.hpp" />
+    <ClInclude Include="Source\External\sol\forward.hpp" />
+    <ClInclude Include="Source\External\sol\sol.hpp" />
     <ClInclude Include="Source\External\stb_image\stb_image.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
@@ -350,6 +361,7 @@
     <ClInclude Include="Source\PanelTextEditor.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\Scripting.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\Texture.h" />
@@ -371,6 +383,10 @@
     <ClInclude Include="Source\SString.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\GameState.lua" />
+    <None Include="Source\Movement.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

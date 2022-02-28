@@ -17,6 +17,7 @@ public:
 private:
 	// Needed modules
 	Editor* editor = nullptr;
+	int componentType;
 
 	// Bools for the different options
 	bool debugOptions = false;
