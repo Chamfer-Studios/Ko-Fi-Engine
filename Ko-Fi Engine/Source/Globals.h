@@ -6,7 +6,6 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include "ImGuiAppLog.h"
 
 #define LOAD_JSON_BOOL(b) { b = config.HasMember(#b) ? config[#b].GetBool() : b; }
 #define SAVE_JSON_BOOL(b) { writer.String(#b); writer.Bool(b); }
@@ -14,10 +13,9 @@
 #define LOAD_JSON_FLOAT(b) { b = config.HasMember(#b) ? config[#b].GetFloat() : b; }
 #define SAVE_JSON_FLOAT(b) { writer.String(#b); writer.Double(b); }
 
-#define LOG(format, ...) Log(__FILE__, __LINE__, format, __VA_ARGS__);
-#define LOG_BOTH(format, ...) Log(__FILE__, __LINE__, format, __VA_ARGS__), appLog->AddLog(format);
+#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
-void Log(const char file[], int line, const char* format, ...);
+void log(const char file[], int line, const char* format, ...);
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
 

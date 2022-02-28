@@ -1,28 +1,14 @@
 #include "Physics.h"
 
-#ifndef NDEBUG
-#pragma comment (lib, "PhysRelease/PhysX_32.lib")    
-#pragma comment (lib, "PhysRelease/PhysXCharacterKinematic_static_32.lib")
-#pragma comment (lib, "PhysRelease/PhysXCommon_32.lib")    
-#pragma comment (lib, "PhysRelease/PhysXCooking_32.lib") 
-#pragma comment (lib, "PhysRelease/PhysXExtensions_static_32.lib")    
-#pragma comment (lib, "PhysRelease/PhysXFoundation_32.lib") 
-#pragma comment (lib, "PhysRelease/PhysXPvdSDK_static_32.lib") 
-#pragma comment (lib, "PhysRelease/PhysXTask_static_32.lib")    
-#pragma comment (lib, "PhysRelease/PhysXVehicle_static_32.lib") 
-#else
-#pragma comment (lib, "PhysDebug/PhysX_32.lib")    
-#pragma comment (lib, "PhysDebug/PhysXCharacterKinematic_static_32.lib")
-#pragma comment (lib, "PhysDebug/PhysXCommon_32.lib")    
-#pragma comment (lib, "PhysDebug/PhysXCooking_32.lib") 
-#pragma comment (lib, "PhysDebug/PhysXExtensions_static_32.lib")    
-#pragma comment (lib, "PhysDebug/PhysXFoundation_32.lib") 
-#pragma comment (lib, "PhysDebug/PhysXPvdSDK_static_32.lib") 
-#pragma comment (lib, "PhysDebug/PhysXTask_static_32.lib")    
-#pragma comment (lib, "PhysDebug/PhysXVehicle_static_32.lib") 
-#endif // !NDEBUG
-
-
+#pragma comment (lib, "PhysX_32.lib")    
+#pragma comment (lib, "PhysXCharacterKinematic_static_32.lib")
+#pragma comment (lib, "PhysXCommon_32.lib")    
+#pragma comment (lib, "PhysXCooking_32.lib") 
+#pragma comment (lib, "PhysXExtensions_static_32.lib")    
+#pragma comment (lib, "PhysXFoundation_32.lib") 
+#pragma comment (lib, "PhysXPvdSDK_static_32.lib") 
+#pragma comment (lib, "PhysXTask_static_32.lib")    
+#pragma comment (lib, "PhysXVehicle_static_32.lib") 
 
 // Module constructor
 Physics::Physics(KoFiEngine* engine) : Module()
@@ -43,11 +29,7 @@ bool Physics::Awake(Json configModule)
 
 bool Physics::Start()
 {
-	LOG_BOTH("Initializing PhysX 4.1 --------------------------------------------------------");
 
-
-
-	LOG_BOTH("Finished to initialize PhysX 4.1 ----------------------------------------------");
 	return true;
 }
 
