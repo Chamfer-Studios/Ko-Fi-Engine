@@ -10,6 +10,7 @@
 #include "ImGuiAppLog.h"
 #include "imgui_stdlib.h"
 #include <fstream>
+#include "MathGeoLib/Math/float2.h"
 
 
 ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
@@ -46,11 +47,11 @@ bool ComponentScript::Update(float dt)
 {
 	if (isRunning)
 	{
-		float x = owner->GetEngine()->GetScripting()->lua["Update"](dt, componentTransform->GetPosition().x, componentTransform->GetPosition().y, componentTransform->GetPosition().z, (int)owner->GetEngine()->GetInput()->GetMouseButton(1), (int)owner->GetEngine()->GetInput()->GetMouseButton(3));
-		componentTransform->SetPosition(float3(x, componentTransform->GetPosition().y, componentTransform->GetPosition().z));
-
+		math::float2 goTo = math::float2(10, -2); // TODO: replace with mouse pos on click
+		owner->GetEngine()->GetScripting()->lua["Update"](dt, componentTransform->GetPosition().x, componentTransform->GetPosition().y, componentTransform->GetPosition().z, goTo.x, goTo.y, (int)owner->GetEngine()->GetInput()->GetMouseButton(1), (int)owner->GetEngine()->GetInput()->GetMouseButton(3));
+		componentTransform->SetPosition(float3((float)owner->GetEngine()->GetScripting()->lua["posX"], (float)owner->GetEngine()->GetScripting()->lua["posY"], (float)owner->GetEngine()->GetScripting()->lua["posZ"]));
+		
 		//variables = owner->GetEngine()->GetScripting()->lua["ToShowInPanel"]();
-
 	}
 	return true;
 }
@@ -69,6 +70,15 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 		}
 		else
 		{
+			if (isRunning)
+			{
+				float s = owner->GetEngine()->GetScripting()->lua["speed"];
+				if (ImGui::DragFloat("Speed", &s))
+				{
+					owner->GetEngine()->GetScripting()->lua["speed"] = s;
+				}
+			}
+			
 			ImGui::Text(fileName.c_str());
 			if (ImGui::Button("Run")) // This will be an event call
 			{

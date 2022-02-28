@@ -11,7 +11,7 @@
 Scripting::Scripting(KoFiEngine* engine) : Module()
 {
 	name = "Scripting";
-	lua.open_libraries(sol::lib::base, sol::lib::io);
+	lua.open_libraries(sol::lib::base, sol::lib::io, sol::lib::math);
 
 	this->engine = engine;
 }

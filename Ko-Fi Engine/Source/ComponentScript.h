@@ -23,7 +23,7 @@ public:
 
 public:
 	sol::load_result script;
-	
+
 private:
 	std::string fileName;
 	std::string fullName;
