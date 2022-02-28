@@ -83,6 +83,9 @@
     <Filter Include="Source\Editor\Panels\Example">
       <UniqueIdentifier>{3e536255-1b8b-4f95-85bc-74a6bf41e6ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Physics">
+      <UniqueIdentifier>{1ce379f6-26e2-4259-afbe-9433e0201822}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -344,7 +347,10 @@
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
-      <Filter>Source\Modules</Filter>
+      <Filter>Source\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PhysxSimulationEventCallback.cpp">
+      <Filter>Source\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -757,7 +763,10 @@
       <Filter>Source\Editor\Panels\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Physics.h">
-      <Filter>Source\Modules</Filter>
+      <Filter>Source\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhysxSimulationEventCallback.h">
+      <Filter>Source\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
