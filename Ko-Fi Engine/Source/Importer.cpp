@@ -95,7 +95,7 @@ Mesh* Importer::LoadModel(const char* path)
 		file.read((char*)mesh->indices, mesh->indicesSizeBytes);
 		file.close();
 		mesh->SetUpMeshBuffers();
-
+		
 		return mesh;
 	}
 	

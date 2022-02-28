@@ -59,15 +59,18 @@ public:
 	void SetId(int id);
 	uint GetId() const;
 	bool HasChildrenWithId(int id);
+	AABB BoundingAABB();
 	KoFiEngine* GetEngine();
+
+	bool isParentSelected();
 
 public:
 	std::string name;
 	bool active = true;
 
+	std::vector<GameObject*> children;
 private:
 	std::vector<Component*> components;
-	std::vector<GameObject*> children;
 	GameObject* parent = nullptr;
 	int id;
 	

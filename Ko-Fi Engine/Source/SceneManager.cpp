@@ -501,6 +501,7 @@ void SceneManager::LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComp
 	componentMesh->SetFacesNormals(jsonComponentMesh.at("faces_normals"));
 	Mesh* mesh = new Mesh();
 	mesh = Importer::GetInstance()->LoadModel(jsonComponentMesh.at("mesh").get<std::string>().c_str());
+	
 	componentMesh->SetMesh(mesh);
 	//Loading Material
 	if (mesh->tex_coords && !jsonComponentMaterial.empty())

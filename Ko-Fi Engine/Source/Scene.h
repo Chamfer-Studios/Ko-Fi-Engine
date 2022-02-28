@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Importer.h"
 #include "Engine.h"
+#include "QuadTree3D.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
@@ -143,6 +144,27 @@ public:
 		}
 	}
 
+
+	template<class UnaryFunction>
+	void ApplyToObjects(UnaryFunction f);
+
+	void ComputeQuadTree()// Compute Space Partitioning
+	{
+		if (!sceneTreeIsDirty) return;
+
+		std::vector<GameObject*>* objects = new std::vector<GameObject*>();
+
+		if (sceneTree != nullptr) delete sceneTree;
+		sceneTree = new QuadTree3D(AABB(float3(-100, -100, -100), float3(100, 100, 100)));
+
+		ApplyToObjects([objects](GameObject* it) mutable {
+			objects->push_back(it);
+			});
+
+		sceneTree->AddObjects(*objects);
+		delete objects;
+	}
+
 public:
 	SString name;
 	bool active;
@@ -151,8 +173,34 @@ public:
 	std::vector<GameObject*> gameObjectList;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
+	
+	//Space Partitioning
+	bool sceneTreeIsDirty = true;
+	bool drawSceneTree = false;
+	QuadTree3D* sceneTree = nullptr;
+
 
 	LineSegment ray;
+
+	// Space Partitioning Functions...
+	private:
+		template<class UnaryFunction>
+		void recursive_iterate(const GameObject* o, UnaryFunction f)
+		{
+			for (auto c = o->children.begin(); c != o->children.end(); ++c)
+			{
+				recursive_iterate(*c, f);
+				f(*c);
+			}
+		}
+
 };
+
+template<class UnaryFunction>
+inline void Scene::ApplyToObjects(UnaryFunction f)
+{
+	recursive_iterate(rootGo, f);
+}
+
 
 #endif // __SCENE_H__

@@ -4,6 +4,7 @@
 #include "par_shapes.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
+#include "MathGeoLib/Geometry/Sphere.h"
 #include "Shader.h"
 class ComponentTransform;
 class ComponentMaterial;
@@ -35,28 +36,38 @@ public:
 	//void LoadMesh(const char* path);
 	bool InspectorDraw(PanelChooser* chooser);
 
+	// Getters
 	uint GetVertices();
-	void SetMesh(Mesh* mesh);
 	Mesh* GetMesh();
-
-//public:
-//	ComponentMaterial* materialComponent;
-
-	void SetPath(std::string path);
-	void SetVertexNormals(bool vertexNormals);
-	void SetFacesNormals(bool facesNormals);
-
 	GameObject* GetParent();
 	std::string GetPath();
 	bool GetVertexNormals();
 	bool GetFacesNormals();
-	void GenerateLocalBoundingBox();
-	AABB GetLocalAABB();
-	void GenerateGlobalBoundingBox();
-	AABB GetGlobalAABB();
-	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
 	bool GetRenderMesh();
+
+	// Setters
+	void SetMesh(Mesh* mesh);
+	void SetPath(std::string path);
+	void SetVertexNormals(bool vertexNormals);
+	void SetFacesNormals(bool facesNormals);
 	void SetRenderMesh(bool renderMesh);
+
+
+
+	//Space Partitioning	
+	//OLD
+	void GenerateLocalBoundingBox();
+	void GenerateGlobalBoundingBox();
+	AABB GetLocalAABB();
+	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
+	
+	// NEW - Using
+	void GenerateBounds();
+	AABB GetGlobalAABB() const;
+	void DrawAABB() const;
+	// -------------------
+
+	void DrawOutline() const;
 
 private:
 	//Bounding sphere
@@ -71,9 +82,10 @@ private:
 	bool facesNormals = false;
 
 	// Bounding boxes
-	OBB obb;
-	AABB aabb;
+	//OBB obb;
+	//AABB aabb;
 
 	bool renderMesh = true;
+	bool drawAABB = false;
 	float time = 0;
 };

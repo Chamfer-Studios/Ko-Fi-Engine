@@ -196,7 +196,24 @@ bool GameObject::HasChildrenWithId(int id)
 	return false;
 }
 
+AABB GameObject::BoundingAABB()
+{
+	return GetComponent<ComponentMesh>()->GetGlobalAABB();
+}
+
 KoFiEngine* GameObject::GetEngine()
 {
 	return engine;
+}
+
+bool GameObject::isParentSelected()
+{
+	GameObject* ancestor = parent;
+	while (ancestor != nullptr)
+	{
+		if (ancestor->active) return true;
+		ancestor = ancestor->parent;
+	}
+
+	return false;
 }

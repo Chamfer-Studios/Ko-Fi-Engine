@@ -2,6 +2,7 @@
 #include "PanelChooser.h"
 #include "Engine.h"
 #include "Window.h"
+#include "SceneManager.h"
 #include "Renderer3D.h"
 #include "Input.h"
 #include "EngineConfig.h"
@@ -77,6 +78,7 @@ bool PanelConfiguration::Update()
 		bool vsync = editor->engine->GetRenderer()->GetVsync();
 		if (ImGui::Checkbox("VSync", &vsync))
 			editor->engine->GetRenderer()->SetVsync(vsync);
+		if (ImGui::Checkbox("Draw scene partition tree", &editor->engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {}
 	}
 
 	if (ImGui::CollapsingHeader("Input")) {
