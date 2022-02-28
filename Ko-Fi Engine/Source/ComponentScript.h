@@ -16,14 +16,16 @@ public:
 	~ComponentScript();
 
 	bool Start() override;
-	bool Update() override;
+	bool Update(float dt) override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 
+public:
+	sol::load_result script;
+	
 private:
-	sol::load_result script1;
 	std::string fileName;
-
+	bool isRunning = false; // Temp
 	ComponentTransform* componentTransform = nullptr;
 };
 

@@ -52,12 +52,12 @@ bool GameObject::PreUpdate()
 	return ret;
 }
 
-bool GameObject::Update()
+bool GameObject::Update(float dt)
 {
 	bool ret = true;
 	for (Component* component : components)
 	{
-		ret = component->Update();
+		ret = component->Update(dt);
 	}
 	return ret;
 }

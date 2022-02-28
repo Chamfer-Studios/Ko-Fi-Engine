@@ -77,7 +77,7 @@ bool SceneIntro::Update(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		go->Update();
+		go->Update(dt);
 	}
 	//example::NodeEditorShow();
 

@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "Input.h"
 
 #include "Globals.h"
 #include "Log.h"
@@ -15,10 +16,6 @@ ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 	type = ComponentType::SCRIPT;
 
 	fileName = "Movement.lua"; // Temp
-	std::string fullName = "../Source/" + fileName;
-
-	// Load Script without running
-	script1 = parent->GetEngine()->GetScripting()->lua.load_file(fullName);
 
 	componentTransform = owner->GetTransform();
 }
@@ -41,9 +38,16 @@ bool ComponentScript::CleanUp()
 	return true;
 }
 
-bool ComponentScript::Update()
+bool ComponentScript::Update(float dt)
 {
-	
+	if (isRunning)
+	{
+		bool isMouseLeftClicked = owner->GetEngine()->GetInput()->GetMouseButton(1) ? KEY_STATE::KEY_REPEAT : false;
+		bool isMouseRightClicked = owner->GetEngine()->GetInput()->GetMouseButton(3) ? KEY_STATE::KEY_DOWN : false;
+		//isRunning = false;
+		float x = owner->GetEngine()->GetScripting()->lua["Update"](dt, componentTransform->GetPosition().x, componentTransform->GetPosition().y, componentTransform->GetPosition().z, isMouseLeftClicked, isMouseRightClicked);
+		componentTransform->SetPosition(float3(x, componentTransform->GetPosition().y, componentTransform->GetPosition().z));
+	}
 	return true;
 }
 
@@ -54,9 +58,16 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 	if (ImGui::CollapsingHeader("Script"))
 	{
 		ImGui::InputText("Script Name", &(fileName));
-		if (ImGui::Button("Run"))
+		if (ImGui::Button("Run")) // This will be an event call
 		{
-			script1();
+			std::string fullName = "../Source/" + fileName;
+			script = owner->GetEngine()->GetScripting()->lua.load_file(fullName);
+			script();
+			isRunning = true;
+		}
+		if (ImGui::Button("Stop")) // This will be an event call
+		{
+			isRunning = false;
 		}
 	}
 

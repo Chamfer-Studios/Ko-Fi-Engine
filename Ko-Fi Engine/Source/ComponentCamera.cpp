@@ -55,7 +55,7 @@ bool ComponentCamera::CleanUp()
 	return true;
 }
 
-bool ComponentCamera::Update()
+bool ComponentCamera::Update(float dt)
 {
 	// Add update functionality when we are able to change the main camera.
 
