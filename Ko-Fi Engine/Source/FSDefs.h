@@ -19,5 +19,6 @@
 #define MESH_EXTENSION ".sugar"
 #define MATERIAL_EXTENSION ".milk"
 #define SHADER_EXTENSION ".glsl"
+#define SCENE_EXTENSION ".json"
 
 #endif // !__FSDIRECTORIES_H__

@@ -2,6 +2,7 @@
 #define __I_SCENE_H__
 
 #include "Globals.h"
+#include <vector>
 
 class KoFiEngine;
 class aiScene;
@@ -18,8 +19,8 @@ public:
 	~I_Scene();
 
 	bool Import(const char* path);
-	bool Save(Scene* scene, const char* path);
-	bool Load(Scene* scene, const char* path);
+	bool Save(Scene* scene);
+	bool Load(Scene* scene, const char* name);
 
 	GameObject* ImportModel(const char* path);
 

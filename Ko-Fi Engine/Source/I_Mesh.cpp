@@ -89,13 +89,14 @@ bool I_Mesh::Save(const Mesh* mesh, const char* path)
 	{
 		file.write((char*)mesh, 4 * sizeof(unsigned));
 
+		file.write((char*)mesh->indices, mesh->indicesSizeBytes);
+
 		file.write((char*)mesh->vertices, mesh->verticesSizeBytes);
 
 		file.write((char*)mesh->normals, mesh->normalsSizeBytes);
+
 		if (mesh->texCoordSizeBytes != 0)
 			file.write((char*)mesh->texCoords, mesh->texCoordSizeBytes);
-
-		file.write((char*)mesh->indices, mesh->indicesSizeBytes);
 
 		file.close();
 
@@ -114,6 +115,9 @@ bool I_Mesh::Load(const char* path, Mesh* mesh)
 		// TODO mesh = new Mesh();
 		file.read((char*)mesh, 4 * sizeof(unsigned));
 
+		mesh->indices = (uint*)malloc(mesh->indicesSizeBytes);
+		file.read((char*)mesh->indices, mesh->indicesSizeBytes);
+
 		mesh->vertices = (float*)malloc(mesh->verticesSizeBytes);
 		file.read((char*)mesh->vertices, mesh->verticesSizeBytes);
 
@@ -125,9 +129,6 @@ bool I_Mesh::Load(const char* path, Mesh* mesh)
 			mesh->texCoords = (float*)malloc(mesh->texCoordSizeBytes);
 			file.read((char*)mesh->texCoords, mesh->texCoordSizeBytes);
 		}
-
-		mesh->indices = (uint*)malloc(mesh->indicesSizeBytes);
-		file.read((char*)mesh->indices, mesh->indicesSizeBytes);
 
 		file.close();
 

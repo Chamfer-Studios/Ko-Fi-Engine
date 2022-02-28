@@ -16,7 +16,8 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
-	if (ImGui::CollapsingHeader("Info")) {
+	if (ImGui::CollapsingHeader("Info"))
+	{
 		ImGui::Text("Name:");
 		ImGui::SameLine();
 		ImGui::InputText("##Name",&(owner->name));
@@ -26,12 +27,11 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-Json ComponentInfo::Save()
+void ComponentInfo::Save(Json& json) const
 {
-	Json jsonComponentInfo;
-	return jsonComponentInfo;
+	json["type"] = "info";
 }
 
-void ComponentInfo::Load(Json json)
+void ComponentInfo::Load(Json& json)
 {
 }

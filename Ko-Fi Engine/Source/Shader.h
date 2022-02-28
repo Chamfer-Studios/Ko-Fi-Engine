@@ -55,6 +55,7 @@ public:
 	void SetBool(std::string name, bool value);
 
 public:
+	// TODO: we dont have vertext id or fragment id. Should we have this?
 	uint shaderProgramID = 0;
 	std::vector<Uniform*> uniforms;
 

@@ -138,18 +138,17 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-Json ComponentCamera::Save()
+void ComponentCamera::Save(Json& json) const
 {
-	Json jsonComponentCamera;
-	jsonComponentCamera["vertical_fov"] = verticalFOV;
-	jsonComponentCamera["near_plane_distance"] = nearPlaneDistance;
-	jsonComponentCamera["far_plane_distance"] = farPlaneDistance;
-	jsonComponentCamera["draw_frustum"] = drawFrustum;
-	jsonComponentCamera["frustum_culling"] = frustumCulling;
-	return jsonComponentCamera;
+	json["type"] = "camera";
+	json["vertical_fov"] = verticalFOV;
+	json["near_plane_distance"] = nearPlaneDistance;
+	json["far_plane_distance"] = farPlaneDistance;
+	json["draw_frustum"] = drawFrustum;
+	json["frustum_culling"] = frustumCulling;
 }
 
-void ComponentCamera::Load(Json json)
+void ComponentCamera::Load(Json& json)
 {
 	verticalFOV = json.at("vertical_fov");
 	nearPlaneDistance = json.at("near_plane_distance");

@@ -32,8 +32,11 @@ public:
 	void Draw(GameObject* owner);
 	void DebugDraw();
 
-	void ToggleVertexNormals();
-	void ToggleFacesNormals();
+	void SetVertexNormals(bool vertex);
+	void SetFaceNormals(bool faces);
+
+	bool GetVertexNormals();
+	bool GetFaceNormals();
 
 	// Size in Bytes
 	unsigned verticesSizeBytes = 0;
@@ -63,6 +66,7 @@ public:
 	AABB localAABB;
 
 	Shape meshType;
+	std::string path = "";
 
 private:
 	void PrimitiveMesh(par_shapes_mesh* primitiveMesh);
@@ -74,8 +78,6 @@ private:
 	// Debug bools
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;
-	bool drawColors = false;
-	bool drawTextureCoords = false;
 };
 
 #endif // !__MESH_H__

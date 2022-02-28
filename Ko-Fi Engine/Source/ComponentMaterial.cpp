@@ -235,18 +235,21 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-Json ComponentMaterial::Save()
+void ComponentMaterial::Save(Json& json) const
 {
-	Json jsonComponentMaterial;
-	json jsonTex;
-	jsonComponentMaterial["textures"] = json::array();
-	for (Texture& tex : textures)
+	json["type"] = "material";
+	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
+	json["material_path"] = material->materialPath;
+	json["material_name"] = material->materialName;
+	json["shader_path"] = shader->GetShaderPath();
+
+	json["textures"] = json::array();
+	for (std::vector<Texture>::const_iterator tex = textures.begin(); tex != textures.end(); ++tex)
 	{
-		jsonTex["path"] = tex.GetTexturePath();
-		jsonComponentMaterial["textures"].push_back(jsonTex);
+		Texture t = (*tex);
+		json["textures"]["path"] = t.GetTexturePath();
 	}
 
-	json jsonUniform;
 	for (Uniform* uniform : shader->uniforms)
 	{
 		switch (uniform->type)
@@ -254,57 +257,56 @@ Json ComponentMaterial::Save()
 		case GL_FLOAT:
 		{
 			UniformT<float>* uf = (UniformT<float>*)uniform;
-			jsonUniform["name"] = uf->name;
-			jsonUniform["type"] = uf->type;
-			jsonUniform["value"] = uf->value;
+			json["uniforms"]["name"] = uf->name;
+			json["uniforms"]["type"] = uf->type;
+			json["uniforms"]["value"] = uf->value;
 		}
 		break;
 		case GL_FLOAT_VEC2:
 		{
 			UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-			jsonUniform["name"] = uf2->name;
-			jsonUniform["type"] = uf2->type;
-			jsonUniform["value"]["x"] = uf2->value.x;
-			jsonUniform["value"]["y"] = uf2->value.y;
+			json["uniforms"]["name"] = uf2->name;
+			json["uniforms"]["type"] = uf2->type;
+			json["uniforms"]["value"]["x"] = uf2->value.x;
+			json["uniforms"]["value"]["y"] = uf2->value.y;
 		}
 		break;
 		case GL_FLOAT_VEC3:
 		{
 			UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-			jsonUniform["name"] = uf3->name;
-			jsonUniform["type"] = uf3->type;
-			jsonUniform["value"]["x"] = uf3->value.x;
-			jsonUniform["value"]["y"] = uf3->value.y;
-			jsonUniform["value"]["z"] = uf3->value.z;
+			json["uniforms"]["name"] = uf3->name;
+			json["uniforms"]["type"] = uf3->type;
+			json["uniforms"]["value"]["x"] = uf3->value.x;
+			json["uniforms"]["value"]["y"] = uf3->value.y;
+			json["uniforms"]["value"]["z"] = uf3->value.z;
 		}
 		break;
 		case GL_FLOAT_VEC4:
 		{
 			UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-			jsonUniform["name"] = uf4->name;
-			jsonUniform["type"] = uf4->type;
-			jsonUniform["value"]["x"] = uf4->value.x;
-			jsonUniform["value"]["y"] = uf4->value.y;
-			jsonUniform["value"]["z"] = uf4->value.z;
-			jsonUniform["value"]["w"] = uf4->value.w;
+			json["uniforms"]["name"] = uf4->name;
+			json["uniforms"]["type"] = uf4->type;
+			json["uniforms"]["value"]["x"] = uf4->value.x;
+			json["uniforms"]["value"]["y"] = uf4->value.y;
+			json["uniforms"]["value"]["z"] = uf4->value.z;
+			json["uniforms"]["value"]["w"] = uf4->value.w;
 		}
 		break;
 		case GL_INT:
 		{
 			UniformT<int>* ui = (UniformT<int>*)uniform;
-			jsonUniform["name"] = ui->name;
-			jsonUniform["type"] = ui->type;
-			jsonUniform["value"] = ui->value;
+			json["uniforms"]["name"] = ui->name;
+			json["uniforms"]["type"] = ui->type;
+			json["uniforms"]["value"] = ui->value;
 		}
 		break;
 		}
-		jsonComponentMaterial["uniforms"].push_back(jsonUniform);
-
 	}
-	jsonComponentMaterial["materialName"] = GetMaterial()->materialName;
-	jsonComponentMaterial["materialPath"] = GetMaterial()->materialPath;
-	//jsonComponentMaterial["shaderPath"] = GetShaderPath();
-	return jsonComponentMaterial;
+}
+
+void ComponentMaterial::Load(Json& json)
+{
+	// TODO: load what we are saving
 }
 
 Material* ComponentMaterial::GetMaterial()

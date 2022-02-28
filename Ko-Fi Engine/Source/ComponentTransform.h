@@ -37,17 +37,17 @@ public:
 
 	float4x4 GetGlobalTransform();
 
-	bool GetDirty();
+	bool GetDirty() const;
 	void SetDirty(bool isDirty);
 
-	Json Save() override;
-	void Load(Json json) override;
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;
 
 private:
-	bool isDirty = false;
+	bool isDirty = true;
 
 	float3 position;
 	Quat rotation;

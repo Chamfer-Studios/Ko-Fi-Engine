@@ -15,11 +15,18 @@
 #include "I_Mesh.h"
 #include "I_Shader.h"
 #include "Importer.h"
+#include "FSDefs.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MESH;
-	this->time = 0.0f;
+	centerPoint = float3::zero;
+	radius = 0.0f;
+	mesh = nullptr;
+	SetVertexNormals(false);
+	SetFaceNormals(false);
+	renderMesh = true;
+	time = 0.0f;
 }
 
 //ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
@@ -179,7 +186,7 @@ bool ComponentMesh::PostUpdate(float dt)
 
 			mesh->Draw(owner);
 			GenerateGlobalBoundingBox();
-			DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
+			DrawBoundingBox(mesh->localAABB, float3(1.0f, 0.0f, 0.0f));
 
 			glUseProgram(0);
 		}
@@ -209,37 +216,32 @@ Mesh* ComponentMesh::GetMesh()
 
 void ComponentMesh::SetPath(std::string path)
 {
-	this->path = path;
+	this->mesh->path = path;
 }
 
 void ComponentMesh::SetVertexNormals(bool vertexNormals)
 {
-	this->vertexNormals = vertexNormals;
+	this->mesh->SetVertexNormals(vertexNormals);
 }
 
-void ComponentMesh::SetFacesNormals(bool facesNormals)
+void ComponentMesh::SetFaceNormals(bool facesNormals)
 {
-	this->facesNormals = facesNormals;
+	this->mesh->SetFaceNormals(facesNormals);
 }
 
-GameObject* ComponentMesh::GetParent()
+const char* ComponentMesh::GetMeshPath()
 {
-	return owner;
-}
-
-std::string ComponentMesh::GetPath()
-{
-	return path;
+	return mesh->path.c_str();
 }
 
 bool ComponentMesh::GetVertexNormals()
 {
-	return vertexNormals;
+	return mesh->GetVertexNormals();
 }
 
-bool ComponentMesh::GetFacesNormals()
+bool ComponentMesh::GetFaceNormals()
 {
-	return facesNormals;
+	return mesh->GetFaceNormals();
 }
 
 void ComponentMesh::GenerateLocalBoundingBox()
@@ -266,96 +268,123 @@ AABB ComponentMesh::GetLocalAABB()
 	return mesh->localAABB;
 }
 
-Json ComponentMesh::Save()
+void ComponentMesh::Save(Json& json) const
 {
-	Json jsonComponentMesh;
-	std::string name = GetParent()->name;
-	std::string savePath = "Library/Meshes/" + name + ".sugar";
-	Importer::GetInstance()->meshImporter->Save(GetMesh(), savePath.c_str());
-	jsonComponentMesh["path"] = GetPath().c_str();
-	jsonComponentMesh["vertex_normals"] = GetVertexNormals();
-	jsonComponentMesh["faces_normals"] = GetFacesNormals();
-	jsonComponentMesh["mesh"] = savePath.c_str();
-	return jsonComponentMesh;
+	json["type"] = "mesh";
+	std::string name = owner->name;
+	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
+	Importer::GetInstance()->meshImporter->Save(mesh,mesh->path.c_str());
+	json["path"] = mesh->path.c_str();
+	json["shape_type"] = (int)mesh->meshType;
+	json["draw_vertex_normals"] = mesh->GetVertexNormals();
+	json["draw_face_normals"] = mesh->GetFaceNormals();
 }
 
-void ComponentMesh::Load(Json json)
+void ComponentMesh::Load(Json& json)
 {
-	Json jsonComponentMesh;
-	Json jsonComponentMaterial;
-	for (const auto& cmp : json.items())
+	//Json jsonComponentMesh;
+	//Json jsonComponentMaterial;
+	//for (const auto& cmp : json.items())
+	//{
+	//	if (cmp.value().at("component_type") == "mesh")
+	//		jsonComponentMesh = cmp.value();
+	//	//else if (cmp.value().at("component_type") == "material")
+	//	//	jsonComponentMaterial = cmp.value();
+	//}
+	int type = json["shape_type"];
+	Shape meshType = Shape::NONE;
+	switch (type)
 	{
-		if (cmp.value().at("component_type") == "mesh")
-			jsonComponentMesh = cmp.value();
-		else if (cmp.value().at("component_type") == "material")
-			jsonComponentMaterial = cmp.value();
+	case 0:
+		meshType = Shape::NONE;
+		break;
+	case 1:
+		meshType = Shape::CUBE;
+		break;
+	case 2:
+		meshType = Shape::SPHERE;
+		break;
+	case 3:
+		meshType = Shape::CYLINDER;
+		break;
+	case 4:
+		meshType = Shape::TORUS;
+		break;
+	case 5:
+		meshType = Shape::PLANE;
+		break;
+	case 6:
+		meshType = Shape::CONE;
+		break;
 	}
-	SetPath(jsonComponentMesh.at("path"));
-	SetVertexNormals(jsonComponentMesh.at("vertex_normals"));
-	SetFacesNormals(jsonComponentMesh.at("faces_normals"));
-	Mesh* mesh = new Mesh();
-	Importer::GetInstance()->meshImporter->Load(jsonComponentMesh.at("mesh").get<std::string>().c_str(), mesh);
-	SetMesh(mesh);
+	mesh = new Mesh(meshType);
+	std::string path = json["path"];
+	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh);
+	mesh->meshType = meshType;
+	mesh->path = path;
+	SetVertexNormals(json["draw_vertex_normals"]);
+	SetFaceNormals(json["draw_face_normals"]);
+
 	//Loading Material
-	if (mesh->texCoords && !jsonComponentMaterial.empty())
-	{
-		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
-		cMat->GetMaterial()->materialName = jsonComponentMaterial.at("materialName").get<std::string>();
-		cMat->GetMaterial()->materialPath = jsonComponentMaterial.at("materialPath").get<std::string>();
-		Shader* shader = cMat->GetShader();
-		Importer::GetInstance()->shaderImporter->Load(jsonComponentMaterial.at("shaderPath").get<std::string>().c_str(), shader);
-		for (const auto& tex : jsonComponentMaterial.at("textures").items()) {
-			cMat->LoadTexture(tex.value().at("path").get<std::string>());
-		}
-		for (const auto& uni : jsonComponentMaterial.at("uniforms").items()) {
-			std::string uniformName = uni.value().at("name").get<std::string>();
-			uint uniformType = uni.value().at("type").get<uint>();
-			switch (uniformType) {
-			case GL_FLOAT:
-			{
-				UniformT<float>* uniform = (UniformT<float>*)shader->FindUniform(uniformName);
-				uniform->value = uni.value().at("value");
+	//if (mesh->texCoords && !jsonComponentMaterial.empty())
+	//{
+	//	ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
+	//	cMat->GetMaterial()->materialName = jsonComponentMaterial.at("materialName").get<std::string>();
+	//	cMat->GetMaterial()->materialPath = jsonComponentMaterial.at("materialPath").get<std::string>();
+	//	Shader* shader = cMat->GetShader();
+	//	Importer::GetInstance()->shaderImporter->Load(jsonComponentMaterial.at("shaderPath").get<std::string>().c_str(), shader);
+	//	for (const auto& tex : jsonComponentMaterial.at("textures").items()) {
+	//		cMat->LoadTexture(tex.value().at("path").get<std::string>());
+	//	}
+	//	for (const auto& uni : jsonComponentMaterial.at("uniforms").items()) {
+	//		std::string uniformName = uni.value().at("name").get<std::string>();
+	//		uint uniformType = uni.value().at("type").get<uint>();
+	//		switch (uniformType) {
+	//		case GL_FLOAT:
+	//		{
+	//			UniformT<float>* uniform = (UniformT<float>*)shader->FindUniform(uniformName);
+	//			uniform->value = uni.value().at("value");
 
-			}
-			break;
-			case GL_FLOAT_VEC2:
-			{
-				UniformT<float2>* uniform = (UniformT<float2>*)shader->FindUniform(uniformName);
-				uniform->value.x = uni.value().at("value").at("x");
-				uniform->value.y = uni.value().at("value").at("y");
+	//		}
+	//		break;
+	//		case GL_FLOAT_VEC2:
+	//		{
+	//			UniformT<float2>* uniform = (UniformT<float2>*)shader->FindUniform(uniformName);
+	//			uniform->value.x = uni.value().at("value").at("x");
+	//			uniform->value.y = uni.value().at("value").at("y");
 
-			}
-			break;
-			case GL_FLOAT_VEC3:
-			{
-				UniformT<float3>* uniform = (UniformT<float3>*)shader->FindUniform(uniformName);
-				uniform->value.x = uni.value().at("value").at("x");
-				uniform->value.y = uni.value().at("value").at("y");
-				uniform->value.z = uni.value().at("value").at("z");
-			}
-			break;
-			case GL_FLOAT_VEC4:
-			{
-				UniformT<float4>* uniform = (UniformT<float4>*)shader->FindUniform(uniformName);
-				uniform->value.x = uni.value().at("value").at("x");
-				uniform->value.y = uni.value().at("value").at("y");
-				uniform->value.z = uni.value().at("value").at("z");
-				uniform->value.w = uni.value().at("value").at("w");
-			}
-			break;
-			case GL_INT:
-			{
-				UniformT<int>* uniform = (UniformT<int>*)shader->FindUniform(uniformName);
-				uniform->value = uni.value().at("value");
-			}
-			break;
-			}
-		}
-	}
-	else if (mesh->texCoords && jsonComponentMaterial.empty())
-	{
-		ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
-	}
+	//		}
+	//		break;
+	//		case GL_FLOAT_VEC3:
+	//		{
+	//			UniformT<float3>* uniform = (UniformT<float3>*)shader->FindUniform(uniformName);
+	//			uniform->value.x = uni.value().at("value").at("x");
+	//			uniform->value.y = uni.value().at("value").at("y");
+	//			uniform->value.z = uni.value().at("value").at("z");
+	//		}
+	//		break;
+	//		case GL_FLOAT_VEC4:
+	//		{
+	//			UniformT<float4>* uniform = (UniformT<float4>*)shader->FindUniform(uniformName);
+	//			uniform->value.x = uni.value().at("value").at("x");
+	//			uniform->value.y = uni.value().at("value").at("y");
+	//			uniform->value.z = uni.value().at("value").at("z");
+	//			uniform->value.w = uni.value().at("value").at("w");
+	//		}
+	//		break;
+	//		case GL_INT:
+	//		{
+	//			UniformT<int>* uniform = (UniformT<int>*)shader->FindUniform(uniformName);
+	//			uniform->value = uni.value().at("value");
+	//		}
+	//		break;
+	//		}
+	//	}
+	//}
+	//else if (mesh->texCoords && jsonComponentMaterial.empty())
+	//{
+	//	ComponentMaterial* cMat = owner->CreateComponent<ComponentMaterial>();
+	//}
 }
 
 
@@ -432,15 +461,17 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-		if (ImGui::Selectable(path.c_str())) {}
+		if (ImGui::Selectable(mesh->path.c_str())) {}
 		ImGui::PopStyleColor();
 		ImGui::Text("Num. vertices: ");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
-		if (ImGui::Checkbox("Vertex Normals", &vertexNormals))
-			mesh->ToggleVertexNormals();
-		if (ImGui::Checkbox("Faces Normals", &facesNormals))
-			mesh->ToggleFacesNormals();
+		bool vertex = GetVertexNormals();
+		if (ImGui::Checkbox("Vertex Normals", &vertex))
+			mesh->SetVertexNormals(vertex);
+		bool faces = GetFaceNormals();
+		if (ImGui::Checkbox("Faces Normals", &faces))
+			mesh->SetFaceNormals(faces);
 	}
 
 	//if(materialComponent != nullptr)
@@ -462,8 +493,8 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 	obb = GetLocalAABB();
 
 	// Generate global AABB
-	aabb.SetNegativeInfinity();
-	aabb.Enclose(obb);
+	mesh->localAABB.SetNegativeInfinity();
+	mesh->localAABB.Enclose(obb);
 }
 
 void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
@@ -546,7 +577,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 
 AABB ComponentMesh::GetGlobalAABB()
 {
-	return aabb;
+	return mesh->localAABB;
 }
 
 bool ComponentMesh::GetRenderMesh()

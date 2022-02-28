@@ -20,6 +20,8 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentInfo.h"
+#include "ComponentCamera.h"
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 {
@@ -237,102 +239,190 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	}
 }
 
-bool I_Scene::Save(Scene* scene, const char* path)
+bool I_Scene::Save(Scene* scene)
 {
 	bool ret = false;
-
-	JsonHandler jsonHandler;
 	Json jsonFile;
+	JsonHandler jsonHandler;
+	const char* name = scene->name.c_str();
+	std::vector<GameObject*> gameObjects = scene->gameObjectList;
 
-	const char* sceneName = scene->name.c_str();
-	jsonFile[sceneName];
+	jsonFile[name];
+	jsonFile[name]["name"] = name;
+	jsonFile[name]["game_objects_list"] = Json::array();
 
-	jsonFile[sceneName]["name"] = sceneName;
-	jsonFile[sceneName]["active"] = scene->active;
-
-	std::vector<GameObject*> gameObjectList = scene->gameObjectList;
-	jsonFile[sceneName]["game_objects_amount"] = gameObjectList.size();
-	jsonFile[sceneName]["game_objects_list"] = Json::array();
-
-	for (std::vector<GameObject*>::iterator go = gameObjectList.begin(); go != gameObjectList.end(); go++)
+	for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
 	{
-		GameObject* gameObject = (*go);
 		Json jsonGameObject;
+		GameObject* go = (*goIt);
 
-		std::string idString = std::to_string((int)gameObject->GetId());
+		const char* goName = go->GetName().c_str();
+		jsonGameObject["name"] = goName;
+		jsonGameObject["active"] = go->active;
+		jsonGameObject["UID"] = (uint)go->GetUID();
 
-		jsonGameObject["name"] = gameObject->GetName().c_str();
-		jsonGameObject["active"] = gameObject->active;
+		// We don't want to save also its children here.
+		// We will arrive and create them when they get here with the loop.
+		// So, in order to keep track of parents and childrens, we will record the UID of the parent.
+		if (go->GetParent() != nullptr)
+			jsonGameObject["parent_UID"] = (uint)go->GetParent()->GetUID();
 
-		std::vector<Component*> componentsList = gameObject->GetComponents();
-		jsonGameObject["components_list"] = Json::array();
-		for (std::vector<Component*>::iterator cmp = componentsList.begin(); cmp != componentsList.end(); cmp++)
+		jsonGameObject["components"] = Json::array();
+
+		for (std::vector<Component*>::iterator cmpIt = go->GetComponents().begin(); cmpIt != go->GetComponents().end(); ++cmpIt)
 		{
-			Component* component = (*cmp);
 			Json jsonComponent;
+			Component* cmp = (*cmpIt);
 
-			switch (component->GetType())
+			jsonComponent["active"] = cmp->active;
+
+			switch (cmp->GetType())
 			{
+			case ComponentType::NONE:
+				jsonComponent["type"] = "NONE";
+				break;
 			case ComponentType::TRANSFORM:
-				jsonComponent["component_type"] = "transform";
+			{
+				ComponentTransform* transformCmp = (ComponentTransform*)cmp;
+				transformCmp->Save(jsonComponent);
 				break;
+			}
 			case ComponentType::MESH:
-				jsonComponent["component_type"] = "mesh";
+			{
+				ComponentMesh* meshCmp = (ComponentMesh*)cmp;
+				meshCmp->Save(jsonComponent);
 				break;
+			}
 			case ComponentType::MATERIAL:
-				jsonComponent["component_type"] = "material";
+			{
+				ComponentMaterial* materialCmp = (ComponentMaterial*)cmp;
+				materialCmp->Save(jsonComponent);
 				break;
+			}
 			case ComponentType::INFO:
-				jsonComponent["component_type"] = "info";
+			{
+				ComponentInfo* infoCmp = (ComponentInfo*)cmp;
+				infoCmp->Save(jsonComponent);
 				break;
+			}
 			case ComponentType::CAMERA:
-				jsonComponent["component_type"] = "camera";
+			{
+				ComponentCamera* cameraCmp = (ComponentCamera*)cmp;
+				cameraCmp->Save(jsonComponent);
 				break;
+			}
 			default:
 				break;
 			}
-			jsonGameObject["components_list"].push_back(jsonComponent);
+			jsonGameObject["components"].push_back(jsonComponent);
 		}
-
-		// We are just saving a game object...
-		// We don't want to save also its children here,
-		// because we will arrive and create them at the proper moment with the loop.
-		// In order to keep track of parents and childrens, we will record the ids.
-		// This way when we load them, we'll be able to create all the game objects,
-		// and create afterwards the parent-children relations knowing the IDs.
-		jsonGameObject["children_id_list"] = Json::array();
-		std::vector<GameObject*> children = gameObject->GetChildren();
-		for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
-		{
-			GameObject* child = (*ch);
-			jsonGameObject["children_id_list"].push_back((int)child->GetId());
-		}
-
-		if (gameObject->GetParent() != nullptr)
-			jsonGameObject["parent"] = (int)gameObject->GetParent()->GetId();
-		else
-			jsonGameObject["parent"];
-
-		jsonGameObject["id"] = (int)gameObject->GetId();
-
-		jsonFile[sceneName]["game_objects_list"].push_back(jsonGameObject);
+		jsonFile[name]["game_objects_list"].push_back(jsonGameObject);
 	}
+	std::string path = SCENES_DIR + std::string(name) + SCENE_EXTENSION;
 
-	//jsonFile[sceneName]["root_go"] = (int)scene->rootGo->GetId();
-
-	//ret = jsonHandler.SaveJson(jsonFile, "Scenes/scene.json");
+	ret = jsonHandler.SaveJson(jsonFile, path.c_str());
 
 	return ret;
 }
 
-bool I_Scene::Load(Scene* scene, const char* path)
+bool I_Scene::Load(Scene* scene, const char* name)
 {
 	bool ret = true;
+	Json jsonFile;
+	JsonHandler jsonHandler;
+	std::string path = SCENES_DIR + std::string(name) + SCENE_EXTENSION;
+	ret = jsonHandler.LoadJson(jsonFile, path.c_str());
 
-	//Json jsonFile;
-	//Json jsonScene;
-	//ret = jsonHandler.LoadJson(jsonFile, "Scenes/scene.json");
+	if (!jsonFile.is_null())
+	{
+		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
+		//{
+		//	(*goIt)->CleanUp();
+		//	RELEASE((*goIt));
+		//}
 
+		Json jsonGameObjects = jsonFile["game_objects_list"];
+		for (const auto& goIt : jsonGameObjects.items())
+		{
+			Json jsonGo = goIt.value();
+
+			std::string name = jsonGo["name"];
+			bool active = jsonGo["active"];
+			uint UID = jsonGo["UID"];
+			uint parentUid = jsonGo["parent_UID"];
+			GameObject* go = new GameObject(UID, engine, name.c_str());
+			go->SetParentUID(parentUid);
+			go->active = active;
+
+			Json jsonCmp = jsonGo["components"];
+			for (const auto& cmpIt : jsonCmp.items())
+			{
+				Json jsonCmp = cmpIt.value();
+				bool active = jsonCmp["active"];
+				std::string type = jsonCmp["type"];
+
+				if (type == "transform")
+				{
+					ComponentTransform* transformCmp = go->GetComponent<ComponentTransform>();
+					transformCmp->active = true;
+					transformCmp->Load(jsonCmp);
+				}
+				else if (type == "mesh")
+				{
+					ComponentMesh* meshCmp = go->GetComponent<ComponentMesh>();
+					if (meshCmp == nullptr)
+					{
+						meshCmp = go->CreateComponent<ComponentMesh>();
+					}
+					meshCmp->active = true;
+					meshCmp->Load(jsonCmp);
+				}
+				else if (type == "material")
+				{
+					ComponentMaterial* materialCmp = go->GetComponent<ComponentMaterial>();
+					if (materialCmp == nullptr)
+					{
+						materialCmp = go->CreateComponent<ComponentMaterial>();
+					}
+					materialCmp->active = true;
+					materialCmp->Load(jsonCmp);
+				}
+				else if (type == "info")
+				{
+					ComponentInfo* infoCmp = go->GetComponent<ComponentInfo>();
+					infoCmp->active = true;
+					infoCmp->Load(jsonCmp);
+				}
+				else if (type == "camera")
+				{
+					ComponentCamera* cameraCmp = go->GetComponent<ComponentCamera>();
+					if (cameraCmp == nullptr)
+					{
+						cameraCmp = go->CreateComponent<ComponentCamera>();
+					}
+					cameraCmp->active = true;
+					cameraCmp->Load(jsonCmp);
+				}
+			}
+			scene->gameObjectList.push_back(go);
+		}
+
+		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
+		{
+			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)
+			{
+				if ((*goIt)->GetParentUID() == (*childrenIt)->GetUID() && (*childrenIt)->GetUID() != -1)
+				{
+					(*goIt)->AttachChild((*childrenIt));
+				}
+			}
+		}
+		ret = true;
+	}
+	else
+		ret = false;
+	return ret;
+}
 	//if (!jsonFile.empty())
 	//{
 	//	ret = true;
@@ -509,5 +599,3 @@ bool I_Scene::Load(Scene* scene, const char* path)
 	//		}
 	//	}
 	//}
-	return ret;
-}

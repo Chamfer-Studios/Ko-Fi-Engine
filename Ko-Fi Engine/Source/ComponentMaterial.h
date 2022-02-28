@@ -27,7 +27,8 @@ public:
 	
 	// Material Handling
 	void LoadMaterial(const char* path="");
-	Json Save() override;
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 	void Compile();
 	Shader* GetShader();
 

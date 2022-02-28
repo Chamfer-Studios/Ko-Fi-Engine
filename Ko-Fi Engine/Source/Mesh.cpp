@@ -201,14 +201,24 @@ void Mesh::DrawFaceNormals() const
 	glEnd();
 }
 
-void Mesh::ToggleVertexNormals()
+void Mesh::SetVertexNormals(bool vertex)
 {
-	drawVertexNormals = !drawVertexNormals;
+	drawVertexNormals = vertex;
 }
 
-void Mesh::ToggleFacesNormals()
+void Mesh::SetFaceNormals(bool faces)
 {
-	drawFaceNormals = !drawFaceNormals;
+	drawFaceNormals = faces;
+}
+
+bool Mesh::GetVertexNormals()
+{
+	return drawVertexNormals;
+}
+
+bool Mesh::GetFaceNormals()
+{
+	return drawFaceNormals;
 }
 
 void Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)

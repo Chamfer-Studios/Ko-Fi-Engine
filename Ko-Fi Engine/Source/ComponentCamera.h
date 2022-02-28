@@ -35,8 +35,8 @@ public:
 	bool ClipsWithBBox(const AABB& refBox) const;
 	void FrustumCulling();
 	void ResetFrustumCulling();
-	Json Save() override;
-	void Load(Json json) override;
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 
 	float3 right, up, front, position, reference, rotation;
 	Frustum cameraFrustum;

@@ -15,13 +15,6 @@ using Json = nlohmann::json;
 class ComponentMesh : public Component
 {
 public:
-	enum class Shape
-	{
-		CUBE,
-		SPHERE,
-		CYLINDER
-	};
-
 	ComponentMesh(GameObject* parent);
 	//ComponentMesh(GameObject* parent,Shape shape);
 	~ComponentMesh();
@@ -42,20 +35,19 @@ public:
 	uint GetVertices();
 	void SetMesh(Mesh* mesh);
 	Mesh* GetMesh();
-	Json Save() override;
-	void Load(Json json) override;
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 
 	//public:
 	//	ComponentMaterial* materialComponent;
 
 	void SetPath(std::string path);
 	void SetVertexNormals(bool vertexNormals);
-	void SetFacesNormals(bool facesNormals);
+	void SetFaceNormals(bool facesNormals);
 
-	GameObject* GetParent();
-	std::string GetPath();
+	const char* GetMeshPath();
 	bool GetVertexNormals();
-	bool GetFacesNormals();
+	bool GetFaceNormals();
 	void GenerateLocalBoundingBox();
 	AABB GetLocalAABB();
 	void GenerateGlobalBoundingBox();
@@ -69,16 +61,11 @@ private:
 	float3 centerPoint = float3::zero;
 	float radius;
 
-	std::string path = "";
 	Mesh* mesh = nullptr;
 	//COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
-	// Checkboxes vertex and faces bools to toggle
-	bool vertexNormals = false;
-	bool facesNormals = false;
 
 	// Bounding boxes
 	OBB obb;
-	AABB aabb;
 
 	bool renderMesh = true;
 	float time = 0;

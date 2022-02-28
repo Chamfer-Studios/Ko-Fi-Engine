@@ -12,8 +12,8 @@ public:
 	~ComponentInfo();
 
 	bool InspectorDraw(PanelChooser* chooser);
-	Json Save() override;
-	void Load(Json json) override;
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 };
 
 #endif // !__COMPONENT_INFO_H__

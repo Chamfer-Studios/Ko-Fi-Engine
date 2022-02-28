@@ -27,6 +27,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 
 	rootGo = new GameObject(-1, engine, "Root");
+	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
 }
 

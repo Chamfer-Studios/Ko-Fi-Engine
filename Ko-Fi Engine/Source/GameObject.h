@@ -14,7 +14,7 @@ class ComponentInfo;
 class GameObject
 {
 public:
-	GameObject(int id, KoFiEngine* engine, const char* name = nullptr);
+	GameObject(uint uid, KoFiEngine* engine, const char* name = nullptr);
 	//GameObject(const char* path, int id, const char* name = nullptr);
 	~GameObject();
 
@@ -59,9 +59,11 @@ public:
 	GameObject* GetParent() const;
 	ComponentTransform* GetTransform();
 	std::vector<Component*> GetComponents() const;
-	void SetId(int id);
-	uint GetId() const;
-	bool HasChildrenWithId(int id);
+	void SetUID(uint uid);
+	uint GetUID() const;
+	void SetParentUID(uint uid);
+	uint GetParentUID() const;
+	bool HasChildrenWithUID(int uid);
 	KoFiEngine* GetEngine();
 
 public:
@@ -72,7 +74,8 @@ private:
 	std::vector<Component*> components;
 	std::vector<GameObject*> children;
 	GameObject* parent = nullptr;
-	int id;
+	uint uid;
+	uint parentUid;
 	
 	KoFiEngine* engine = nullptr;
 	ComponentTransform* transform = nullptr;

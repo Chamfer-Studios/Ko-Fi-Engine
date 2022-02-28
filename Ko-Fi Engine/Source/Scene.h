@@ -62,11 +62,11 @@ public:
 		return true;
 	}
 
-	GameObject* GetGameObject(int id)
+	GameObject* GetGameObject(int uid)
 	{
 		for (GameObject* go : gameObjectList)
 		{
-			if (go->GetId() == id)
+			if (go->GetUID() == uid)
 			{
 				return go;
 			}
@@ -88,7 +88,7 @@ public:
 	{
 		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
 		{
-			if ((*it)->GetId() == gameObject->GetId())
+			if ((*it)->GetUID() == gameObject->GetUID())
 			{
 				gameObjectList.erase(it);
 				break;
