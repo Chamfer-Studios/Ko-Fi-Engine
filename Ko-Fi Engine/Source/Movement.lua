@@ -1,18 +1,35 @@
 print("Movement.lua loaded")
 
--- dt = float dt, xyz = pos.xyz, b = leftMouseClick, c = RightMouseClick
-function Update(dt, x, y, z, b, c)
-	if(b) 
+-- Variables
+local variable = {}
+local speed = 10
+
+-- Methods
+function PreUpdate()
+	
+end
+
+-- Called each loop iteration
+function Update(dt, x, y, z, mouseLeftClick, mouseRightClick)
+	if(mouseLeftClick == 1 or mouseLeftClick == 2) -- 2 equals key_repeat
 	then	
-		x = x + 0.1 --*dt
+		x = x + speed * dt
 	end
 
-	if(c) 
+	if(mouseRightClick == 1 or mouseRightClick == 2) -- 2 equals key_repeat
 	then	
-		x = x - 0.1 --*dt
+		x = x - speed * dt
 	end
 
 	return x
 end
 
-print("Movement.lua compiled")
+function PostUpdate()
+
+end
+
+--function ToShowInPanel()
+--	return {speed, 10}[2]
+--end
+
+print("Movement.lua compiled succesfully")

@@ -75,7 +75,7 @@ bool SceneManager::Update(float dt)
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->Update(gameDt);
+		ret = (*scene)->Update(dt);
 	}
 
 	return ret;
@@ -87,7 +87,7 @@ bool SceneManager::PostUpdate(float dt)
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->PostUpdate(gameDt);
+		ret = (*scene)->PostUpdate(dt);
 	}
 
 	FinishUpdate();

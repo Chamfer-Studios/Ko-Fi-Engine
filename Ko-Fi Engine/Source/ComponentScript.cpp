@@ -46,11 +46,11 @@ bool ComponentScript::Update(float dt)
 {
 	if (isRunning)
 	{
-		bool isMouseLeftClicked = owner->GetEngine()->GetInput()->GetMouseButton(1) ? KEY_STATE::KEY_REPEAT : false;
-		bool isMouseRightClicked = owner->GetEngine()->GetInput()->GetMouseButton(3) ? KEY_STATE::KEY_DOWN : false;
-		//isRunning = false;
-		float x = owner->GetEngine()->GetScripting()->lua["Update"](dt, componentTransform->GetPosition().x, componentTransform->GetPosition().y, componentTransform->GetPosition().z, isMouseLeftClicked, isMouseRightClicked);
+		float x = owner->GetEngine()->GetScripting()->lua["Update"](dt, componentTransform->GetPosition().x, componentTransform->GetPosition().y, componentTransform->GetPosition().z, (int)owner->GetEngine()->GetInput()->GetMouseButton(1), (int)owner->GetEngine()->GetInput()->GetMouseButton(3));
 		componentTransform->SetPosition(float3(x, componentTransform->GetPosition().y, componentTransform->GetPosition().z));
+
+		//variables = owner->GetEngine()->GetScripting()->lua["ToShowInPanel"]();
+
 	}
 	return true;
 }
