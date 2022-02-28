@@ -33,12 +33,12 @@ float2 ComponentCanvas::GetLogicalSize()
 	return logicalSize;
 }
 
-float2 ComponentCanvas::GetNormalizedSize()
+float2 ComponentCanvas::GetNormalizedSize(bool invertY)
 {
 	return LogicalToViewport(logicalSize);
 }
 
-float2 ComponentCanvas::GetNormalizedPosition()
+float2 ComponentCanvas::GetNormalizedPosition(bool invertY)
 {
 	return position;
 }

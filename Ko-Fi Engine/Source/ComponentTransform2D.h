@@ -43,9 +43,9 @@ public:
 	inline float2 GetSize() const { return size; };
 	inline Anchor GetAnchor() const { return anchor; };
 
-	virtual float2 GetNormalizedPosition();
-	virtual float2 GetNormalizedSize();
-	virtual float2 GetNormalizedPivotOffset();
+	virtual float2 GetNormalizedPosition(bool invertY = false);
+	virtual float2 GetNormalizedSize(bool invertY = false);
+	virtual float2 GetNormalizedPivotOffset(bool invertY = false);
 	virtual float2 GetAnchorPosition(Anchor _anchor);
 
 	virtual ComponentCanvas* GetCanvas();

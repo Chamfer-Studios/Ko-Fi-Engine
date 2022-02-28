@@ -10,6 +10,9 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Window.h"
+#include "FileSystem.h"
+
+#include <string>
 
 #include "ComponentMesh.h"
 #include "ComponentTransform2D.h"
@@ -26,6 +29,7 @@ UI::UI(KoFiEngine* engine) : Module()
 
 UI::~UI()
 {
+
 }
 
 bool UI::Start()
@@ -33,6 +37,10 @@ bool UI::Start()
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
 	renderer = SDL_CreateRenderer(engine->GetWindow()->window, -1, flags);
+
+	TTF_Init();
+	rubik = TTF_OpenFont("Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf", 60);
+
 	return true;
 }
 
@@ -153,6 +161,7 @@ bool UI::PostUpdate(float dt)
 
 bool UI::CleanUp()
 {
+	TTF_CloseFont(rubik);
 	return true;
 }
 

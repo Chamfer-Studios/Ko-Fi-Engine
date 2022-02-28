@@ -14,6 +14,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentImage.h"
 #include "ComponentButton.h"
+#include "ComponentText.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -127,6 +128,12 @@ bool MainBar::Update()
 					go->SetName("Button");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentButton>();
+				}
+				if (ImGui::MenuItem("Text")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, false);
+					go->SetName("Text");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentText>();
 				}
 				ImGui::EndMenu();
 			}

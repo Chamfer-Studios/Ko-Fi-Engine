@@ -25,6 +25,7 @@ public:
 
 	// FileSystem Functions
 	std::string OpenFile(const char* path) const;
+	std::string OpenFileBinary(const char* path) const;
 	bool SaveFile(const char* path, std::string text) const;
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
 	void AddPath(const char* path);

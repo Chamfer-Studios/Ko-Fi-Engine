@@ -85,27 +85,29 @@ void ComponentTransform2D::SetAnchor(const Anchor& newAnchor)
 	anchor = newAnchor;
 }
 
-float2 ComponentTransform2D::GetNormalizedPosition()
+float2 ComponentTransform2D::GetNormalizedPosition(bool invertY)
 {
 	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
 	if (parentTransform == nullptr) return position;
 
 	float2 normalizedPosition = GetCanvas()->LogicalToViewport(position);
-	return normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset();
+	return normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset(invertY);
 }
 
-float2 ComponentTransform2D::GetNormalizedSize()
+float2 ComponentTransform2D::GetNormalizedSize(bool invertY)
 {
 	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
 	if (parentTransform == nullptr) return size;
 
 	float2 normalizedSize = GetCanvas()->LogicalToViewport(size);
+	if (invertY)
+		normalizedSize.y = -normalizedSize.y;
 	return normalizedSize;
 }
 
-float2 ComponentTransform2D::GetNormalizedPivotOffset()
+float2 ComponentTransform2D::GetNormalizedPivotOffset(bool invertY)
 {
-	float2 normalizedSize = GetNormalizedSize();
+	float2 normalizedSize = GetNormalizedSize(invertY);
 	return { pivot.x * normalizedSize.x, pivot.y * normalizedSize.y };
 }
 

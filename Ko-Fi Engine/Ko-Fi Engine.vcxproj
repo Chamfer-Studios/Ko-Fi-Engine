@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -83,7 +83,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -92,8 +92,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,7 +117,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -126,8 +126,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,6 +157,7 @@
     <ClCompile Include="Source\ComponentImage.cpp" />
     <ClCompile Include="Source\ComponentInfo.cpp" />
     <ClCompile Include="Source\ComponentMaterial.cpp" />
+    <ClCompile Include="Source\ComponentText.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\ComponentTransform2D.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="Source\External\mmgr\mmgr.cpp" />
+    <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c" />
     <ClCompile Include="Source\External\stb_image\stb_image.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\Importer.cpp" />
@@ -252,6 +254,7 @@
     <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
+    <ClInclude Include="Source\ComponentText.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\ComponentTransform2D.h" />
     <ClInclude Include="Source\Editor.h" />
@@ -334,7 +337,9 @@
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.h" />
     <ClInclude Include="Source\External\mmgr\mmgr.h" />
     <ClInclude Include="Source\External\mmgr\nommgr.h" />
+    <ClInclude Include="Source\External\SDL_ttf\include\SDL_ttf.h" />
     <ClInclude Include="Source\External\stb_image\stb_image.h" />
+    <ClInclude Include="Source\External\stb_truetype\stb_truetype.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Graph.h" />

@@ -15,6 +15,7 @@ enum class ComponentType
 	TRANSFORM2D,
 	IMAGE,
 	BUTTON,
+	TEXT
 };
 
 class Component

@@ -91,6 +91,23 @@ std::string FileSystem::OpenFile(const char* path) const
 	return fileText;
 }
 
+std::string FileSystem::OpenFileBinary(const char* path) const
+{
+	std::string fileText;
+
+	SDL_assert(path != nullptr);
+	std::ifstream stream(path, std::ios::binary);
+	if (stream.is_open()) {
+		std::string line;
+
+		while (std::getline(stream, line)) {
+			fileText.append(line + "\n");
+		}
+	}
+	stream.close();
+	return fileText;
+}
+
 bool FileSystem::SaveFile(const char* path, std::string text) const
 {
 	bool ret = true;

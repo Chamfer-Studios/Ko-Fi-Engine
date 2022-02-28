@@ -86,6 +86,12 @@
     <Filter Include="Source\GameObject\Components\UI">
       <UniqueIdentifier>{f14257b0-f5e3-4dcf-9d8e-c73dcdec444c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\stb_truetype">
+      <UniqueIdentifier>{24bb395e-3fc1-41a4-8726-a905204ec415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\SDL_ttf">
+      <UniqueIdentifier>{7d8ca1e5-eefd-4c67-a8f4-310da73f01b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -362,6 +368,10 @@
       <Filter>Source\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentButton.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c" />
+    <ClCompile Include="Source\ComponentText.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -793,6 +803,15 @@
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentButton.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_truetype\stb_truetype.h">
+      <Filter>Libs\stb_truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\SDL_ttf\include\SDL_ttf.h">
+      <Filter>Libs\SDL_ttf</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentText.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>

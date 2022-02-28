@@ -1,8 +1,11 @@
 #pragma once
+
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
 #include "GameObject.h"
+#include "SDL_ttf.h"
+
 
 #include "glew.h"
 #include <vector>
@@ -33,7 +36,9 @@ public:
 	//void OnSave(JSONWriter& writer) const override;
 public:
 	GLint uiCameraViewport[4] = { 0, 0, 0, 0 };
-
+	TTF_Font* rubik = nullptr;
 private:
 	KoFiEngine* engine = nullptr;
+
+
 };
