@@ -24,6 +24,8 @@ public:
 
 private:
 	KoFiEngine* engine = nullptr;
+
+	PxFoundation* foundation = nullptr;
 };
 
 #endif // !__MODULE_PHYSICS_H__
