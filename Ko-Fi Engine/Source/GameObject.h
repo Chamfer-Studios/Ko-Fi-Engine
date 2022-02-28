@@ -65,6 +65,7 @@ public:
 public:
 	std::string name;
 	bool active = true;
+	int numScripts = 0;
 
 private:
 	std::vector<Component*> components;

@@ -9,13 +9,17 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "imgui_stdlib.h"
+#include <fstream>
 
 
 ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
 
-	fileName = "Movement.lua"; // Temp
+	owner->numScripts++;
+	numScript = owner->numScripts;
+
+	//fileName = "Movement.lua"; // Temp
 
 	componentTransform = owner->GetTransform();
 }
@@ -55,21 +59,48 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 	
-	if (ImGui::CollapsingHeader("Script"))
+	std::string headerName = "Script" + std::to_string(numScript);
+
+	if (ImGui::CollapsingHeader(headerName.c_str()))
 	{
-		ImGui::InputText("Script Name", &(fileName));
-		if (ImGui::Button("Run")) // This will be an event call
+		if (!scriptLoaded)
 		{
-			std::string fullName = "../Source/" + fileName;
-			script = owner->GetEngine()->GetScripting()->lua.load_file(fullName);
-			script();
-			isRunning = true;
+			ImGui::InputText("Script Name", &fileName);
 		}
-		if (ImGui::Button("Stop")) // This will be an event call
+		else
 		{
-			isRunning = false;
+			ImGui::Text(fileName.c_str());
+			if (ImGui::Button("Run")) // This will be an event call
+			{
+				script = owner->GetEngine()->GetScripting()->lua.load_file(fullName);
+				script();
+				isRunning = true;
+			}
+			if (ImGui::Button("Stop")) // This will be an event call
+			{
+				isRunning = false;
+			}
 		}
 	}
 
+	if (owner->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
+		LoadScript();
+	}
+
 	return ret;
+}
+
+bool ComponentScript::LoadScript()
+{
+	if (scriptLoaded) return false;
+
+	fullName = "../Source/" + fileName + ".lua";
+	std::ifstream file(fullName.c_str());
+	if (file.good())
+	{
+		scriptLoaded = true;
+	}
+
+	return true;
 }

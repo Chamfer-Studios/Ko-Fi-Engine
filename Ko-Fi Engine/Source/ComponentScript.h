@@ -19,13 +19,19 @@ public:
 	bool Update(float dt) override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
+	bool LoadScript();
 
 public:
 	sol::load_result script;
 	
 private:
 	std::string fileName;
+	std::string fullName;
+	int numScript;
 	bool isRunning = false; // Temp
+	bool scriptLoaded = false;
+
+	GameObject* parent = nullptr;
 	ComponentTransform* componentTransform = nullptr;
 };
 
