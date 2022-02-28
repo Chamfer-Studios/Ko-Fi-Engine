@@ -14,13 +14,15 @@ public:
 	Physics(KoFiEngine* engine); // Module constructor
 	~Physics(); // Module destructor
 
+	bool Awake(Json configModule);
 	bool Start();
+	bool PreUpdate(float dt);
 	bool Update(float dt);
+	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	void OnGui() override;
-	void OnSave(JSONWriter& writer) const override;
-	void OnLoad(const JSONReader& reader) override;
+
+
 
 private:
 	KoFiEngine* engine = nullptr;
