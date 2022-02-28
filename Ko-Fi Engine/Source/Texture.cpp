@@ -8,19 +8,27 @@
 
 Texture::Texture()
 {
+	textureID = -1;
+	width = -1;
+	height = -1;
+	nrChannels = 1;
 }
 
 Texture::~Texture()
 {
+	path.clear();
+	path.shrink_to_fit();
 }
 
 void Texture::SetUpTexture()
 {
-	if (texturePath.empty())
+	if (path.empty())
 	{
 		GLubyte checkerImage[CHECKERS_SIZE][CHECKERS_SIZE][4];
-		for (int i = 0; i < CHECKERS_SIZE; i++) {
-			for (int j = 0; j < CHECKERS_SIZE; j++) {
+		for (int i = 0; i < CHECKERS_SIZE; i++)
+		{
+			for (int j = 0; j < CHECKERS_SIZE; j++)
+			{
 				int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
 				checkerImage[i][j][0] = (GLubyte)c;
 				checkerImage[i][j][1] = (GLubyte)c;
@@ -29,9 +37,10 @@ void Texture::SetUpTexture()
 			}
 		}
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		if (textureID == 0) {
+
+		if (textureID == 0)
 			glGenTextures(1, &textureID);
-		}
+
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -42,13 +51,12 @@ void Texture::SetUpTexture()
 		return;
 	}
 
-	unsigned char* pixels = stbi_load(texturePath.c_str(), &this->width, &this->height, &this->nrChannels, STBI_rgb);
+	unsigned char* pixels = stbi_load(path.c_str(), &this->width, &this->height, &this->nrChannels, STBI_rgb);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	
 	if (textureID == 0)
-	{
 		glGenTextures(1, &textureID);
-	}
+
 	glBindTexture(GL_TEXTURE_2D, this->textureID);
 
 	// Set the texture wrapping/filtering options (on the currently bound texture object)

@@ -32,12 +32,10 @@ public:
 	Shader* GetShader();
 
 private:
-	void LoadDefaultMaterial();
+	bool LoadDefaultMaterial();
 
 private:
 	Material* material = nullptr;
-
-
 
 	Shader* shader = nullptr;
 

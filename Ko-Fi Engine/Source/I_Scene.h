@@ -18,8 +18,8 @@ public:
 	~I_Scene();
 
 	bool Import(const char* path);
-	bool Save(const char* path);
-	bool Load(const char* path);
+	bool Save(Scene* scene, const char* path);
+	bool Load(Scene* scene, const char* path);
 
 	GameObject* ImportModel(const char* path);
 

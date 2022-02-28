@@ -24,9 +24,6 @@ public:
 	bool LoadUniforms(Shader* shader);
 	bool CheckUniformName(std::string name);
 
-	void DeleteShader(Shader* shader);
-	void Recompile(Shader* shader);
-
 	bool Save(const Shader* shader, const char* path);
 	bool Load(const char* path, Shader* shader);
 };

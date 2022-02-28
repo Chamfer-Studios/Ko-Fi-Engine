@@ -11,7 +11,6 @@
 class KoFiEngine;
 class SceneIntro;
 class GameObject;
-class JasonHandler;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentMaterial;
@@ -98,8 +97,6 @@ private:
 	// --------------------------------------------------
 	
 	RuntimeState runtimeState = RuntimeState::STOPPED;
-
-	JsonHandler jsonHandler;
 };
 
 #endif // !__SCENE_MANAGER_H__

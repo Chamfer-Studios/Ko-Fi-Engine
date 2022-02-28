@@ -20,44 +20,20 @@
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
-	//LoadShader();
 }
 
 ComponentMaterial::~ComponentMaterial()
 {
 }
 
-//void ComponentMaterial::LoadTextureFromId(uint& textureID, const char* path)
-//{
-//	this->path = path;
-//	int width, height, nrChannels;
-//	unsigned char* pixels = stbi_load(path, &width, &height, &nrChannels, STBI_rgb);
-//	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-//	glBindTexture(GL_TEXTURE_2D, textureID);
-//	// set the texture wrapping/filtering options (on the currently bound texture object)
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//	if (pixels)
-//	{
-//		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-//		glGenerateMipmap(GL_TEXTURE_2D);
-//	}
-//	else
-//	{
-//		appLog->AddLog("%s", "Texture Image not loaded correctly");
-//	}
-//
-//	stbi_image_free(pixels);
-//}
-
-void ComponentMaterial::LoadDefaultMaterial()
+bool ComponentMaterial::LoadDefaultMaterial()
 {
+	bool ret = false;
+
 	std::string defaultMaterialPath = "Library/Materials/default.milk";
+
 	JsonHandler jsonHandler;
 	Json jsonMaterial;
-	bool ret = true;
 
 	ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath.c_str());
 
@@ -68,28 +44,30 @@ void ComponentMaterial::LoadDefaultMaterial()
 		material->materialPath = defaultMaterialPath;
 		LoadTexture(0);
 		UniformT<float4>* albedoTint = (UniformT<float4>*)shader->FindUniform("albedoTint");
-		albedoTint->value = { jsonMaterial.at("uniforms").at("x"),
+		albedoTint->value = {
+			jsonMaterial.at("uniforms").at("x"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("w"),
 		};
 	};
+
+	return ret;
 }
 
 void ComponentMaterial::LoadMaterial(const char* path)
 {
+	bool ret = false;
+
 	std::string materialPath = path;
+
 	JsonHandler jsonHandler;
 	Json jsonMaterial;
-	bool ret = true;
-	if (materialPath.empty()) {
+
+	if (materialPath.empty())
 		ret = jsonHandler.LoadJson(jsonMaterial, material->materialPath.c_str());
-	}
-	else {
+	else
 		ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
-
-	}
-
 
 	if (!jsonMaterial.empty())
 	{
@@ -100,7 +78,6 @@ void ComponentMaterial::LoadMaterial(const char* path)
 		for (int i = 0; i < texturePaths.size(); i++)
 		{
 			std::string texturePath = texturePaths.at(i);
-
 			if (textures.empty())
 			{
 				LoadTexture(texturePath.c_str());
@@ -113,12 +90,12 @@ void ComponentMaterial::LoadMaterial(const char* path)
 		}
 
 		UniformT<float4>* albedoTint = (UniformT<float4>*)shader->FindUniform("albedoTint");
-		albedoTint->value = { jsonMaterial.at("uniforms").at("albedoTint").at("x"),
+		albedoTint->value = {
+			jsonMaterial.at("uniforms").at("albedoTint").at("x"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("w"),
 		};
-
 	};
 }
 

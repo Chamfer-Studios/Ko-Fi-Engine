@@ -6,28 +6,26 @@
 #include "Renderer3D.h"
 #include "Window.h"
 #include "Primitive.h"
-#include <iostream>
-#include <fstream>
-#include "SDL_assert.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
 #include "GameObject.h"
-//#include "Importer.h"
 #include "SceneManager.h"
 #include "node_editor.h"
 
-#include "ComponentMaterial.h" // Temporal for the assignment, just to display the texture on the model when the program begins...
+#include "SDL_assert.h"
 
 SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 {
 	name = "SceneIntro";
+
 	// Needed modules
 	this->engine = engine;
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
+
 	rootGo = new GameObject(-1, engine, "Root");
 	gameObjectList.push_back(rootGo);
 }
@@ -40,9 +38,11 @@ SceneIntro::~SceneIntro()
 // Load assets
 bool SceneIntro::Start()
 {
+	bool ret = true;
+
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
-	bool ret = true;
+
 	example::NodeEditorInitialize();
 
 	// Load initial scene (temporal)

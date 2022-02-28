@@ -34,6 +34,7 @@ public:
 	void AddUniform(Uniform* uniform);
 
 	void UseShader();
+	void DeleteShader();
 
 	const char* GetShaderPath() const;
 	void SetShaderPath(const char* name);
@@ -55,7 +56,6 @@ public:
 
 public:
 	uint shaderProgramID = 0;
-
 	std::vector<Uniform*> uniforms;
 
 private:

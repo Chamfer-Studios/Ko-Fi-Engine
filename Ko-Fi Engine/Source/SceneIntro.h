@@ -2,7 +2,6 @@
 #define __SCENE_INTRO_H__
 
 #include "Scene.h"
-//#include "Globals.h"
 #include "JsonHandler.h"
 
 #define MAX_SNAKE 2

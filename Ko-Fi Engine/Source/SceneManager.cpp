@@ -1,20 +1,9 @@
 #include "SceneManager.h"
 #include "Engine.h"
 #include "SceneIntro.h"
-#include "GameObject.h"
-#include "ComponentTransform.h"
-#include "ComponentMesh.h"
-#include "ComponentMaterial.h"
-#include "ComponentInfo.h"
-#include "ComponentCamera.h"
 #include "Editor.h"
 
 #include "Globals.h"
-#include "JsonHandler.h"
-#include "glew.h"
-#include "MathGeoLib/Math/float3.h"
-#include "MathGeoLib/Math/float4x4.h"
-#include "MathGeoLib/Math/Quat.h"
 
 SceneManager::SceneManager(KoFiEngine* engine)
 {
@@ -188,20 +177,3 @@ void SceneManager::OnTick()
 	runtimeState = RuntimeState::TICK;
 	gameClockSpeed = timeScale;
 }
-
-
-
-
-
-
-
-
-// Serialize and save scene into a .json file
-
-
-
-
-
-
-
-// Load scene from a .json file

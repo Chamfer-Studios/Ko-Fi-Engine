@@ -12,13 +12,13 @@ public:
 	Texture();
 	~Texture();
 
+	inline const char* GetTexturePath() { return path.c_str(); }
+	inline void SetTexturePath(const char* path) { path = path; }
+
 	inline uint GetTextureId() { return textureID; }
 	inline int GetTextureWidth() { return width; }
 	inline int GetTextureHeight() { return height; }
 	inline int GetNrChannels() { return nrChannels; }
-	inline const char* GetTexturePath() { return texturePath.c_str(); }
-
-	inline void SetTexturePath(const char* path) { texturePath = path; }
 
 	void SetUpTexture();
 
@@ -28,7 +28,7 @@ public:
 	int height = -1;
 	int nrChannels = 1;
 
-	std::string texturePath;
+	std::string path;
 };
 
 #endif // !__TEXTURE_H__

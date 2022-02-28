@@ -13,6 +13,12 @@ Shader::Shader() : shaderProgramID(0), path(SHADERS_DIR + std::string("default_s
 
 Shader::~Shader()
 {
+	glDeleteProgram(shaderProgramID);
+
+	uniforms.clear();
+
+	path.clear();
+	path.shrink_to_fit();
 }
 
 Uniform* Shader::FindUniform(std::string name)
@@ -35,6 +41,11 @@ void Shader::AddUniform(Uniform* uniform)
 void Shader::UseShader()
 {
 	glUseProgram(shaderProgramID);
+}
+
+void Shader::DeleteShader()
+{
+	glDeleteProgram(shaderProgramID);
 }
 
 const char* Shader::GetShaderPath() const

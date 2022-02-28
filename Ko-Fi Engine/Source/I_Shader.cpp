@@ -210,20 +210,6 @@ bool I_Shader::CheckUniformName(std::string name)
 	}
 }
 
-void I_Shader::DeleteShader(Shader* shader)
-{
-	//glDetachShader(shader->materialShader, shader->vertexSource);
-	//glDetachShader(shader->materialShader, shader->fragmentSource);
-	glDeleteProgram(shader->shaderProgramID);
-}
-
-void I_Shader::Recompile(Shader* shader)
-{
-	DeleteShader(shader);
-
-	//Import(shader->GetAssetsPath(), shader);
-}
-
 bool I_Shader::Save(const Shader* shader, const char* path)
 {
 	//uint written = 0;
@@ -233,7 +219,6 @@ bool I_Shader::Save(const Shader* shader, const char* path)
 	//	LOG("[ERROR] Importer: Could not Save R_Shader* in Library! Error: Given R_Shader* was nullptr.");
 	//	return 0;
 	//}
-
 
 	//ParsonNode parsonFile = ParsonNode();
 	//ParsonArray parsonArrray = parsonFile.SetArray("Uniforms");
@@ -255,8 +240,6 @@ bool I_Shader::Save(const Shader* shader, const char* path)
 	//	case  UniformType::FLOAT_VEC4:	node.SetFloat4("Value", shader->uniforms[i].vec4);			break;
 	//	}
 	//}
-
-
 
 	//std::string path = SHADERS_PATH + std::to_string(shader->GetUID()) + SHADERS_EXTENSION;
 	//written = parsonFile.SerializeToFile(path.c_str(), buffer);
@@ -291,8 +274,6 @@ bool I_Shader::Load(const char* path, Shader* shader)
 
 	//	shader->uniforms.push_back(uniform);
 	//}
-
-	Recompile(shader);
 
 	return ret;
 }

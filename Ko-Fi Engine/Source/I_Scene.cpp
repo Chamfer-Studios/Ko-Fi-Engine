@@ -4,12 +4,15 @@
 #include "Assimp.h"
 #include "MathGeoTransform.h"
 #include "FSDefs.h"
+#include "JsonHandler.h"
 
+#include "Scene.h"
 #include "SceneManager.h"
 #include "FileSystem.h"
 
 #include "Mesh.h"
 
+#include "Importer.h"
 #include "I_Mesh.h"
 #include "I_Material.h"
 
@@ -17,11 +20,6 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
-#include "Importer.h"
-
-#include "glew.h"
-#include <gl/GL.h>
-#include <fstream>
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 {
@@ -239,161 +237,95 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	}
 }
 
-bool I_Scene::Save(const char* path)
+bool I_Scene::Save(Scene* scene, const char* path)
 {
-	bool ret = true;
+	bool ret = false;
 
-	//Json jsonFile;
+	JsonHandler jsonHandler;
+	Json jsonFile;
 
-	//const char* sceneName = scene->name.GetString();
-	//jsonFile[sceneName];
-	////Json jsonScene = jsonFile.at(sceneName); // It doesn't work :/
+	const char* sceneName = scene->name.c_str();
+	jsonFile[sceneName];
 
-	//jsonFile[sceneName]["name"] = sceneName;
-	//jsonFile[sceneName]["active"] = scene->active;
+	jsonFile[sceneName]["name"] = sceneName;
+	jsonFile[sceneName]["active"] = scene->active;
 
-	//std::vector<GameObject*> gameObjectList = scene->gameObjectList;
-	//jsonFile[sceneName]["game_objects_amount"] = gameObjectList.size();
-	//jsonFile[sceneName]["game_objects_list"] = Json::array();
-	////Json jsonGameObjectList = jsonScene.at("game_object_list"); // It doesn't work :/
-	//for (std::vector<GameObject*>::iterator go = gameObjectList.begin(); go != gameObjectList.end(); go++)
-	//{
-	//	GameObject* gameObject = (*go);
-	//	Json jsonGameObject;
+	std::vector<GameObject*> gameObjectList = scene->gameObjectList;
+	jsonFile[sceneName]["game_objects_amount"] = gameObjectList.size();
+	jsonFile[sceneName]["game_objects_list"] = Json::array();
 
-	//	std::string idString = std::to_string((int)gameObject->GetId());
+	for (std::vector<GameObject*>::iterator go = gameObjectList.begin(); go != gameObjectList.end(); go++)
+	{
+		GameObject* gameObject = (*go);
+		Json jsonGameObject;
 
-	//	jsonGameObject["name"] = gameObject->GetName().c_str();
-	//	jsonGameObject["active"] = gameObject->active;
+		std::string idString = std::to_string((int)gameObject->GetId());
 
-	//	//jsonGameObject["component_transform"] = SaveComponentTransform(gameObject->GetComponent<ComponentTransform>());
+		jsonGameObject["name"] = gameObject->GetName().c_str();
+		jsonGameObject["active"] = gameObject->active;
 
-	//	jsonGameObject["components_list"] = Json::array();
-	//	std::vector<Component*> componentsList = gameObject->GetComponents();
-	//	for (std::vector<Component*>::iterator cmp = componentsList.begin(); cmp != componentsList.end(); cmp++)
-	//	{
-	//		Component* component = (*cmp);
-	//		Json jsonComponent;
-	//		jsonComponent = component->Save();
+		std::vector<Component*> componentsList = gameObject->GetComponents();
+		jsonGameObject["components_list"] = Json::array();
+		for (std::vector<Component*>::iterator cmp = componentsList.begin(); cmp != componentsList.end(); cmp++)
+		{
+			Component* component = (*cmp);
+			Json jsonComponent;
 
-	//		switch (component->GetType())
-	//		{
-	//		case ComponentType::TRANSFORM:
-	//			jsonComponent["component_type"] = "transform";
-	//			break;
-	//		case ComponentType::MESH:
-	//			jsonComponent["component_type"] = "mesh";
-	//			break;
-	//		case ComponentType::MATERIAL:
-	//			jsonComponent["component_type"] = "material";
-	//			break;
-	//		case ComponentType::INFO:
-	//			jsonComponent["component_type"] = "info";
-	//			break;
-	//		case ComponentType::CAMERA:
-	//			jsonComponent["component_type"] = "camera";
-	//		default:
-	//			break;
-	//		}
-	//		jsonGameObject["components_list"].push_back(jsonComponent);
-	//	}
+			switch (component->GetType())
+			{
+			case ComponentType::TRANSFORM:
+				jsonComponent["component_type"] = "transform";
+				break;
+			case ComponentType::MESH:
+				jsonComponent["component_type"] = "mesh";
+				break;
+			case ComponentType::MATERIAL:
+				jsonComponent["component_type"] = "material";
+				break;
+			case ComponentType::INFO:
+				jsonComponent["component_type"] = "info";
+				break;
+			case ComponentType::CAMERA:
+				jsonComponent["component_type"] = "camera";
+				break;
+			default:
+				break;
+			}
+			jsonGameObject["components_list"].push_back(jsonComponent);
+		}
 
-	//	// We are just saving a game object...
-	//	// We don't want to save also its children here,
-	//	// because we will arrive and create them at the proper moment with the loop.
-	//	// In order to keep track of parents and childrens, we will record the ids.
-	//	// This way when we load them, we'll be able to create all the game objects,
-	//	// and create afterwards the parent-children relations knowing the IDs.
-	//	jsonGameObject["children_id_list"] = Json::array();
-	//	std::vector<GameObject*> children = gameObject->GetChildren();
-	//	for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
-	//	{
-	//		GameObject* child = (*ch);
-	//		jsonGameObject["children_id_list"].push_back((int)child->GetId());
-	//	}
+		// We are just saving a game object...
+		// We don't want to save also its children here,
+		// because we will arrive and create them at the proper moment with the loop.
+		// In order to keep track of parents and childrens, we will record the ids.
+		// This way when we load them, we'll be able to create all the game objects,
+		// and create afterwards the parent-children relations knowing the IDs.
+		jsonGameObject["children_id_list"] = Json::array();
+		std::vector<GameObject*> children = gameObject->GetChildren();
+		for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
+		{
+			GameObject* child = (*ch);
+			jsonGameObject["children_id_list"].push_back((int)child->GetId());
+		}
 
-	//	if (gameObject->GetParent() != nullptr)
-	//		jsonGameObject["parent"] = (int)gameObject->GetParent()->GetId();
-	//	else
-	//		jsonGameObject["parent"];
+		if (gameObject->GetParent() != nullptr)
+			jsonGameObject["parent"] = (int)gameObject->GetParent()->GetId();
+		else
+			jsonGameObject["parent"];
 
-	//	jsonGameObject["id"] = (int)gameObject->GetId();
+		jsonGameObject["id"] = (int)gameObject->GetId();
 
-	//	jsonFile[sceneName]["game_objects_list"].push_back(jsonGameObject);
-	//}
+		jsonFile[sceneName]["game_objects_list"].push_back(jsonGameObject);
+	}
 
 	//jsonFile[sceneName]["root_go"] = (int)scene->rootGo->GetId();
 
 	//ret = jsonHandler.SaveJson(jsonFile, "Scenes/scene.json");
 
-	//return ret;
-
-
-
-	//bool ret = false;
-
-	//JsonFile sceneJson;
-	//// We start setting gameobjects, including the object for the root scene:
-	//sceneJson.file["Game Objects"] = json::array(); // Start filling the array for it (as the slides explain)
-	//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); goIt++)
-	//{
-	//	json jsonGO;
-	//	jsonGO["name"] = (*goIt)->GetName();
-	//	const char* name = (*goIt)->GetName();
-	//	jsonGO["active"] = (*goIt)->IsActive();
-	//	jsonGO["uuid"] = (*goIt)->GetUUID();
-	//	jsonGO["parentUUID"] = (*goIt)->GetParentUUID();
-
-	//	// We start setting its components in another array:
-	//	jsonGO["Components"] = json::array();
-	//	for (std::vector<Component*>::iterator componentIt = (*goIt)->components.begin(); componentIt != (*goIt)->components.end(); componentIt++)
-	//	{
-	//		Component* component = (*componentIt);
-
-	//		json jsonComp;
-	//		jsonComp["active"] = (*componentIt)->IsActive();
-	//		switch ((*componentIt)->GetType())
-	//		{
-	//		case COMPONENT_TYPE::NONE:
-	//			jsonComp["type"] = "NONE";
-	//			break;
-	//		case COMPONENT_TYPE::TRANSFORM:
-	//		{
-	//			C_Transform transformComp = *(C_Transform*)component;
-	//			transformComp.Save(jsonComp);
-	//		}
-	//		break;
-	//		case COMPONENT_TYPE::MESH:
-	//		{
-	//			C_Mesh meshComp = *(C_Mesh*)component;
-	//			meshComp.Save(jsonComp);
-
-	//			std::string path(MESHES_PATH + std::string(name) + ".DaVMesh");
-	//			Importer::Mesh::Save(meshComp.GetMesh(), path.c_str());
-	//		}
-	//		break;
-	//		case COMPONENT_TYPE::MATERIAL:
-	//		{
-	//			C_Material materialComp = *(C_Material*)component;
-	//			materialComp.Save(jsonComp);
-	//		}
-	//		break;
-	//		default:
-	//			break;
-	//		}
-	//		jsonGO["Components"].push_back(jsonComp);
-	//	}
-	//	sceneJson.file["Game Objects"].push_back(jsonGO);
-	//}
-
-	//std::string path = SCENES_PATH + std::string(name) + ".json";
-	//ret = sceneJson.Save(path.c_str());
-
 	return ret;
 }
 
-
-bool I_Scene::Load(const char* path)
+bool I_Scene::Load(Scene* scene, const char* path)
 {
 	bool ret = true;
 
@@ -576,99 +508,6 @@ bool I_Scene::Load(const char* path)
 	//			}
 	//		}
 	//	}
-
+	//}
 	return ret;
 }
-
-
-	//bool ret = false;
-
-	//JsonFile sceneJson;
-	//std::string path = SCENES_PATH + std::string(nameScene) + ".json";
-	//sceneJson.Load(path.c_str());
-
-	//if (!sceneJson.file.is_null())
-	//{
-	//	for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); goIt++)
-	//	{
-	//		(*goIt)->Clear();
-	//		RELEASE((*goIt));
-	//	}
-	//	app->sceneIntro->sceneGameObjects.clear();
-	//	app->sceneIntro->sceneGameObjects.shrink_to_fit();
-
-	//	json jsonGameObjects = sceneJson.file["Game Objects"];
-
-	//	for (auto goIt = jsonGameObjects.begin(); goIt != jsonGameObjects.end(); ++goIt)
-	//	{
-	//		// We store all values of the different keys in variables to then set the gameobject
-	//		std::string name = (*goIt)["name"];
-	//		bool active = (*goIt)["active"];
-	//		UINT32 uuid = (*goIt)["uuid"];
-	//		UINT32 parentUUID = (*goIt)["parentUUID"];
-
-	//		GameObject* gameObj = new GameObject(uuid, active);
-
-	//		if (uuid == 0)
-	//		{
-	//			gameObj->SetName(nameScene);
-	//			gameObj->SetParentUUID(parentUUID);
-	//			app->sceneIntro->sceneRoot = gameObj;
-	//			app->sceneIntro->selectedGameObj = app->sceneIntro->sceneRoot;
-	//		}
-	//		else
-	//		{
-	//			gameObj->SetName(name.c_str());
-	//		}
-
-	//		gameObj->SetParentUUID(parentUUID);
-
-	//		json jsonComp = (*goIt)["Components"];
-	//		for (auto componentIt = jsonComp.begin(); componentIt != jsonComp.end(); ++componentIt)
-	//		{
-	//			// We store all values of the different keys as we set the components
-	//			bool active = (*componentIt)["active"];
-	//			gameObj->transform->SetIsActive(active);
-
-	//			std::string strType = (*componentIt)["type"];
-
-	//			if (strType == "Transform")
-	//			{
-	//				gameObj->transform->Load(*componentIt);
-	//			}
-	//			if (strType == "Mesh")
-	//			{
-	//				C_Mesh* compMesh = (C_Mesh*)gameObj->CreateComponent(COMPONENT_TYPE::MESH);
-
-	//				compMesh->Load(*componentIt);
-
-	//				ret = Importer::Mesh::Load(compMesh->GetMeshPath(), compMesh->GetMesh());
-	//			}
-	//			if (strType == "Material")
-	//			{
-	//				C_Material* compMaterial = (C_Material*)gameObj->CreateComponent(COMPONENT_TYPE::MATERIAL);
-
-	//				compMaterial->Load(*componentIt);
-
-	//				ret = Importer::Texture::Import(compMaterial->GetTexturePath(), compMaterial->GetTexture());
-	//				Importer::Shader::Import(compMaterial->GetShaderPath(), compMaterial->GetShader());
-	//			}
-	//		}
-	//		gameObjects.push_back(gameObj);
-	//	}
-	//	for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); goIt++)
-	//	{
-	//		for (std::vector<GameObject*>::iterator childrengoIt = gameObjects.begin(); childrengoIt != gameObjects.end(); childrengoIt++)
-	//		{
-	//			if ((*childrengoIt)->GetParentUUID() == (*goIt)->GetUUID() && (*childrengoIt)->GetUUID() != 0)
-	//			{
-	//				(*goIt)->AddChild((*childrengoIt));
-	//			}
-	//		}
-	//	}
-	//	ret = true;
-	//}
-	//else
-	//	ret = false;
-
-	//return ret;

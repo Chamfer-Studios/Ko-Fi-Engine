@@ -1,11 +1,10 @@
-#pragma once
-
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
 #include "GameObject.h"
 #include "Importer.h"
 #include "Engine.h"
+#include "RNG.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
@@ -78,7 +77,7 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
 	{
-		GameObject* go = new GameObject(gameObjectList.size(), engine);
+		GameObject* go = new GameObject(RNG::GetRandomUint(), engine);
 		this->gameObjectList.push_back(go);
 		this->rootGo->AttachChild(go);
 
