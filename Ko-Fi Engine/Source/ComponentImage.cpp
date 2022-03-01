@@ -67,8 +67,8 @@ bool ComponentImage::PostUpdate(float dt)
 	float2 normalizedSize = cTransform->GetNormalizedSize();
 
 	float2 lowerLeft = { normalizedPosition.x, normalizedPosition.y };
-	float2 upperRight = { lowerLeft.x + normalizedSize.x, lowerLeft.y + normalizedSize.y };
-	glBlitFramebuffer(0, 0, rect.w, rect.h, lowerLeft.x, lowerLeft.y, upperRight.x, upperRight.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	float2 upperRight = { lowerLeft.x + normalizedSize.x * mask.x, lowerLeft.y + normalizedSize.y * mask.y };
+	glBlitFramebuffer(0, 0, rect.w * mask.x, rect.h * mask.y, lowerLeft.x, lowerLeft.y, upperRight.x, upperRight.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 	return true;
 }
@@ -101,6 +101,8 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::Button("Set Texture")) {
 			panelChooser->OpenPanel("AddTextureImage", "png");
 		}
+
+		ImGui::DragFloat2("Mask", &mask[0], 0.005f, 0.0f, 1.0f);
 	}
 
 	return true;

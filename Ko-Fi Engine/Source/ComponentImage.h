@@ -35,6 +35,9 @@ public:
 
 	SDL_Texture* SDLTexture = nullptr;
 	Texture openGLTexture;
+
+private:
+	float2 mask = { 1.0f, 1.0f };
 };
 
 #endif
