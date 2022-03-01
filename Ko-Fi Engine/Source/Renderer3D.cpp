@@ -151,7 +151,7 @@ bool Renderer3D::Awake(Json configModule)
 // PreUpdate: clear buffer
 bool Renderer3D::PreUpdate(float dt)
 {
-	SDL_RenderClear(engine->GetUI()->renderer);
+	//SDL_RenderClear(engine->GetUI()->renderer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -169,9 +169,9 @@ bool Renderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 bool Renderer3D::PostUpdate(float dt)
 {
+	SDL_SetRenderDrawColor(engine->GetUI()->renderer, 0, 0, 0, 0);
+	SDL_RenderPresent(engine->GetUI()->renderer);
 	SDL_GL_SwapWindow(engine->GetWindow()->window);
-	SDL_SetRenderDrawColor(engine->GetUI()->renderer, 0, 0, 0, 255);
-	//SDL_RenderPresent(engine->GetUI()->renderer);
 	return true;
 }
 
