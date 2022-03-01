@@ -83,6 +83,9 @@
     <Filter Include="Source\Editor\Panels\Example">
       <UniqueIdentifier>{3e536255-1b8b-4f95-85bc-74a6bf41e6ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\PhysX">
+      <UniqueIdentifier>{d0f948d0-4ad2-4262-9a39-3321cdcb7606}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -758,6 +761,570 @@
     </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geomutils\GuContactBuffer.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geomutils\GuContactPoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\Px.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxActor.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxAggregate.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxAllocatorCallback.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulation.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationBase.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationJoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationJointReducedCoordinate.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationLink.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationReducedCoordinate.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxAssert.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxBase.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxBatchQuery.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxBatchQueryDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxBinaryConverter.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxBitAndData.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxBounds3.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxBoxController.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxBoxGeometry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxBroadPhase.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxBroadPhaseExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxBVH33MidphaseDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxBVH34MidphaseDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxBVHStructure.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxBVHStructureDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\Pxc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxCapsuleController.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxCapsuleGeometry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxClient.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxCollection.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxCollectionExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\collision\PxCollisionDefs.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxConfig.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxConstraint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxConstraintDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxConstraintExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxContact.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxContactJoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxContactModifyCallback.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxController.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxControllerBehavior.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxControllerManager.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxControllerObstacles.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxConvexMesh.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxConvexMeshDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxConvexMeshExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxConvexMeshGeometry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxCooking.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxCoreUtilityTypes.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\task\PxCpuDispatcher.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cudamanager\PxCudaContextManager.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cudamanager\PxCudaMemoryManager.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxD6Joint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxD6JointCreate.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultAllocator.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultCpuDispatcher.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultErrorCallback.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultSimulationFilterShader.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultStreams.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxDeletionListener.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDistanceJoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxErrorCallback.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxErrors.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxExtended.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxExtensionsAPI.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\filebuf\PxFileBuf.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxFiltering.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxFixedJoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxFlags.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxForceMode.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxFoundation.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxFoundationConfig.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxGeometry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxGeometryHelpers.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxGeometryQuery.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\gpu\PxGpu.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightField.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightFieldDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightFieldFlag.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightFieldGeometry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightFieldSample.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxImmediateMode.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxIntrinsics.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxIO.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxJoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxJointLimit.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxLockedData.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxMassProperties.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMat33.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMat44.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxMaterial.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMath.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMathUtils.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMemory.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxMeshQuery.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxMeshScale.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxMetaData.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxMetaDataFlags.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxMidphaseDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysics.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysicsAPI.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxPhysicsInsertionCallback.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysicsSerialization.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysicsVersion.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxPhysXCommonConfig.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysXConfig.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxPlane.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxPlaneGeometry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxPreprocessor.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxPrismaticJoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxProfiler.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxProfileZone.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxPruningStructure.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\pvd\PxPvd.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\pvd\PxPvdSceneClient.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\pvd\PxPvdTransport.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxQuat.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxQueryFiltering.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxQueryReport.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRaycastCCD.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxRenderBuffer.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRepXSerializer.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRepXSimpleType.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRevoluteJoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxRigidActor.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRigidActorExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxRigidBody.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRigidBodyExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxRigidDynamic.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxRigidStatic.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxScene.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxSceneDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxSceneLock.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSceneQueryExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxSerialFramework.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSerialization.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxSerializer.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxShape.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxShapeExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxSharedAssert.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSimpleFactory.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxSimpleTriangleMesh.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxSimpleTypes.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxSimulationEventCallback.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxSimulationStatistics.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSmoothNormals.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\solver\PxSolverDefs.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxSphereGeometry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSphericalJoint.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxStrideIterator.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxStringTable.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxStringTableExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\task\PxTask.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\task\PxTaskDefine.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\task\PxTaskManager.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxTolerancesScale.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxTransform.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxTriangle.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxTriangleMesh.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxTriangleMeshDesc.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxTriangleMeshExt.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxTriangleMeshGeometry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxTypeInfo.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxUnionCast.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\unix\PxUnixIntrinsics.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxVec2.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxVec3.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxVec4.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleComponents.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleDrive.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleDrive4W.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleDriveNW.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleDriveTank.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleNoDrive.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleSDK.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleShaders.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleTireFriction.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUpdate.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUtil.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUtilControl.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUtilSetup.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUtilTelemetry.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleWheels.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\PxVisualizationParameter.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\common\windows\PxWindowsDelayLoadHook.h">
+      <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\windows\PxWindowsIntrinsics.h">
+      <Filter>Libs\PhysX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

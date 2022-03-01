@@ -6,6 +6,22 @@
 #include <string>
 #include "Globals.h"
 
+
+
+
+namespace physx
+{
+	class PxFoundation;
+	class PxPhysics;
+	class PxScene;
+	class PxMaterial;
+	class PxRigidActor;
+	class PxSimulationEventCallback;
+	class PxActor;
+	class PxControllerManager;
+	class PxCooking;
+};
+
 class GameObject;
 
 class Physics : public Module
@@ -26,6 +42,8 @@ public:
 
 private:
 	KoFiEngine* engine = nullptr;
+
+	physx::PxFoundation* foundation = nullptr;
 };
 
 #endif // !__MODULE_PHYSICS_H__

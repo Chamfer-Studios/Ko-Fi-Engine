@@ -49,10 +49,10 @@ namespace physx
 	class PxDefaultErrorCallback : public PxErrorCallback
 	{
 	public:
-		PxDefaultErrorCallback();
-		~PxDefaultErrorCallback();
+		PxDefaultErrorCallback() {}
+		~PxDefaultErrorCallback() {}
 
-		virtual void reportError(PxErrorCode::Enum code, const char* message, const char* file, int line);
+		virtual void reportError(PxErrorCode::Enum code, const char* message, const char* file, int line) {}
 	};
 
 #if !PX_DOXYGEN
