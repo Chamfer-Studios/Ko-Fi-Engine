@@ -4,8 +4,11 @@
 #include "Module.h"
 #include <filesystem>
 #include "GameObject.h"
+
 namespace fs = std::filesystem;
+
 class Renderer3D;
+
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
 

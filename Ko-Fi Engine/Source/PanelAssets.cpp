@@ -105,7 +105,7 @@ bool PanelAssets::Update()
 			if (ImGui::MenuItem("Material")) {
 				std::string fileName =  FileExistsMaterial("/material.milk",1);
 			
-				std::string path = currentDir.string() +fileName;
+				std::string path = currentDir.string() + fileName;
 				editor->engine->GetFileSystem()->CreateMaterial(path.c_str());
 			}
 			if (ImGui::MenuItem("Shader")) {

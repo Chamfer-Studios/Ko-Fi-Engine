@@ -170,7 +170,7 @@ bool ComponentMaterial::LoadDefaultMaterial()
 		material->materialPath = defaultMaterialPath;
 		LoadTexture(0);
 
-		UniformT<float4>* albedoTint = (UniformT<float4>*)shader->FindUniform("albedoTint");
+		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
 		albedoTint->value =
 		{
 			jsonMaterial.at("uniforms").at("x"),
