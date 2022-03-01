@@ -1,11 +1,8 @@
 print("Movement.lua loaded")
 
 -- Variables
-local variable = {}
-speed = 2
-posX = 0
-poxY = 0
-posZ = 0
+speed = 3
+--componentTransform = nil
 local targetPos = {}
 
 -- Methods
@@ -16,25 +13,41 @@ end
 -- Called each loop iteration
 function Update(dt, x, y, z, goTo_x, goTo_y, mouseLeftClick, mouseRightClick)
 
-	pos = {x,z}
+	--pos = {x,z}
+	--
+	--posY = y
+	--posZ = z
+	--
+	--targetPos = {goTo_x, goTo_y}
+	--local d = Distance(pos, targetPos)
+	--print (d)
+	--if(d > 0.001)
+	--then --move
+	--	local vec = { targetPos[1] - pos[1], targetPos[2] - pos[2] }
+	--	posX = posX + (vec[1] / d) * speed * dt
+	--	posZ = posZ + (vec[2] / d) * speed * dt
+	--end
+	--
+	--return
 
-	posY = y
-	posZ = z
+	
 
-	targetPos = {goTo_x, goTo_y}
-	local d = Distance(pos, targetPos)
+	targetPos = { goTo_x, goTo_y }
+	pos2D = { componentTransform.pos.x, componentTransform.pos.z }
+	print(pos2D[1],pos2D[2])
+	local d = Distance(pos2D, targetPos)
 	print (d)
 	if(d > 0.001)
 	then --move
-		local vec = { targetPos[1] - pos[1], targetPos[2] - pos[2] }
-		posX = posX + (vec[1] / d) * speed * dt
-		posZ = posZ + (vec[2] / d) * speed * dt
+		local vec = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
+		componentTransform.pos.x = componentTransform.pos.x + (vec[1] / d) * speed * dt
+		componentTransform.pos.z = componentTransform.pos.z + (vec[2] / d) * speed * dt
 	end
 	
-	return 0
+	return
 end
 
-function PostUpdate()
+function PostUpdate(x, y)
 
 end
 

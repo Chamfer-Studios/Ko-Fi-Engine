@@ -27,6 +27,21 @@ GameObject::GameObject(int id, KoFiEngine* engine, const char* name)
 	this->parent = nullptr;
 }
 
+GameObject::GameObject()
+{
+	active = true;
+	//LoadModel(path);
+	this->name = "GameObject " + std::to_string(id);
+
+	this->id = id;
+	this->engine = engine;
+
+	CreateComponent<ComponentInfo>();
+	transform = CreateComponent<ComponentTransform>();
+
+	this->parent = nullptr;
+}
+
 GameObject::~GameObject()
 {
 	CleanUp();

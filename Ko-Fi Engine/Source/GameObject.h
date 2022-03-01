@@ -14,6 +14,7 @@ class GameObject
 {
 public:
 	GameObject(int id, KoFiEngine* engine, const char* name = nullptr);
+	GameObject();
 	//GameObject(const char* path, int id, const char* name = nullptr);
 	~GameObject();
 

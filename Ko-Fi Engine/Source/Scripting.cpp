@@ -5,10 +5,10 @@
 
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "ComponentTransform.h"
 
 
-
-Scripting::Scripting(KoFiEngine* engine) : Module()
+Scripting::Scripting(KoFiEngine* engine) : Module() // TODO: check if it's actually needed
 {
 	name = "Scripting";
 	lua.open_libraries(sol::lib::base, sol::lib::io, sol::lib::math);

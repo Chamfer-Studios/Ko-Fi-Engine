@@ -20,6 +20,7 @@ public:
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 	bool LoadScript();
+	void SetUpVariableTypes();
 
 public:
 	sol::load_result script;

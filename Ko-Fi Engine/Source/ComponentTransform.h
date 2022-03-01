@@ -37,11 +37,12 @@ public:
 
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;
+	float3 position;
 
 private:
 	bool isDirty = false;
 
-	float3 position;
+	//float3 position;
 	Quat rotation;
 	float3 rotationEuler;
 	float3 scale;
