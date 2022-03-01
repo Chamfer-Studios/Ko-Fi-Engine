@@ -28,6 +28,8 @@ public:
 
 	void SetTextValue(std::string newValue);
 
+	void SaveToFile(int width, int height);
+
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 
@@ -39,5 +41,7 @@ private:
 	SDL_Texture* SurfaceToSDLTexture(SDL_Surface* surface);
 
 	std::string textValue = "HELLO WORLD!";
+
+	GLuint fboId = 0;
 };
 
