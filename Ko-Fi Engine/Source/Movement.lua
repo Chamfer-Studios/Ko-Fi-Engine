@@ -11,7 +11,7 @@ function PreUpdate()
 end
 
 -- Called each loop iteration
-function Update(dt, x, y, z, goTo_x, goTo_y, mouseLeftClick, mouseRightClick)
+function Update(dt, goTo_x, goTo_y, mouseLeftClick, mouseRightClick)
 
 	--pos = {x,z}
 	--
@@ -33,15 +33,12 @@ function Update(dt, x, y, z, goTo_x, goTo_y, mouseLeftClick, mouseRightClick)
 	
 
 	targetPos = { goTo_x, goTo_y }
-	pos2D = { componentTransform.pos.x, componentTransform.pos.z }
-	print(pos2D[1],pos2D[2])
+	pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local d = Distance(pos2D, targetPos)
-	print (d)
-	if(d > 0.001)
+	if(d > 0.025)
 	then --move
-		local vec = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
-		componentTransform.pos.x = componentTransform.pos.x + (vec[1] / d) * speed * dt
-		componentTransform.pos.z = componentTransform.pos.z + (vec[2] / d) * speed * dt
+		local vec2 = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
+		componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * speed * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * speed * dt))
 	end
 	
 	return

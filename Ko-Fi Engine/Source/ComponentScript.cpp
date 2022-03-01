@@ -51,8 +51,8 @@ bool ComponentScript::Update(float dt)
 {
 	if (isRunning && active)
 	{
-		math::float2 goTo = math::float2(10, -2); // TODO: replace with mouse pos on click
-		owner->GetEngine()->GetScripting()->lua["Update"](dt, componentTransform->GetPosition().x, componentTransform->GetPosition().y, componentTransform->GetPosition().z, goTo.x, goTo.y, (int)owner->GetEngine()->GetInput()->GetMouseButton(1), (int)owner->GetEngine()->GetInput()->GetMouseButton(3));
+		math::float2 goTo = math::float2(0, -2); // TODO: replace with mouse pos on click
+		owner->GetEngine()->GetScripting()->lua["Update"](dt, goTo.x, goTo.y, (int)owner->GetEngine()->GetInput()->GetMouseButton(1), (int)owner->GetEngine()->GetInput()->GetMouseButton(3));
 		//componentTransform->SetPosition(float3((float)owner->GetEngine()->GetScripting()->lua["posX"], (float)owner->GetEngine()->GetScripting()->lua["posY"], (float)owner->GetEngine()->GetScripting()->lua["posZ"]));
 		//variables = owner->GetEngine()->GetScripting()->lua["ToShowInPanel"]();
 	}
@@ -121,6 +121,9 @@ bool ComponentScript::LoadScript()
 
 void ComponentScript::SetUpVariableTypes()
 {
+	// Here we give lua certain data structures and variables
+
+	// float3 structure
 	owner->GetEngine()->GetScripting()->lua.new_usertype<float3>("float3",
 		sol::constructors<void(), void(float, float, float)>(),
 		"x", &float3::x,
@@ -128,24 +131,22 @@ void ComponentScript::SetUpVariableTypes()
 		"z", &float3::z
 		);
 
+	// GameObject structure
 	owner->GetEngine()->GetScripting()->lua.new_usertype<GameObject>("GameObject",
 		sol::constructors<void()>(),
 		"active", &GameObject::active
 		);
 
+	// Transform structure
 	owner->GetEngine()->GetScripting()->lua.new_usertype<ComponentTransform>("ComponentTransform",
 		sol::constructors<void(GameObject*)>(),
-		"pos", &ComponentTransform::position/*,
+		"GetPosition", &ComponentTransform::GetPosition,
+		"SetPosition", &ComponentTransform::SetPosition
+		/*,
 		"y", &ComponentTransform::GetPosition.y,
 		"z", ComponentTransform->GetPosition().z*/
 		);
 
-	//owner->GetEngine()->GetScripting()->lua.script("f3 = float3.new(1, 2, 3)");
-	//owner->GetEngine()->GetScripting()->lua.script("print(f3)");
-
-	owner->GetEngine()->GetScripting()->lua.script("go = GameObject.new()");
-	owner->GetEngine()->GetScripting()->lua.script("print(go.active)");
-
+	// Transform
 	owner->GetEngine()->GetScripting()->lua["componentTransform"] = componentTransform;
-	owner->GetEngine()->GetScripting()->lua.script("print(componentTransform.pos)");
 }
