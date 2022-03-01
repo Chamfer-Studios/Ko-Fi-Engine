@@ -8,7 +8,6 @@ Importer::Importer()
 	meshImporter = new I_Mesh();
 	materialImporter = new I_Material();
 	textureImporter = new I_Texture();
-	shaderImporter = new I_Shader();
 }
 
 Importer::~Importer()

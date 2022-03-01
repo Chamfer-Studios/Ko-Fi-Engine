@@ -31,7 +31,7 @@ public:
 	
 	void Compile();
 
-	void Save(Json& json);
+	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
 private:

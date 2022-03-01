@@ -13,7 +13,6 @@
 #include "par_shapes.h"
 #include "Globals.h"
 #include "I_Mesh.h"
-#include "I_Shader.h"
 #include "Importer.h"
 #include "FSDefs.h"
 
@@ -123,7 +122,7 @@ bool ComponentMesh::PostUpdate(float dt)
 
 		if (renderMesh || owner->GetComponent<ComponentMaterial>()->GetShader() == 0)
 		{
-			uint shader = owner->GetComponent<ComponentMaterial>()->GetShader()->shaderProgramID;
+			uint shader = owner->GetComponent<ComponentMaterial>()->GetMaterial()->shaderProgramID;
 			
 			glUseProgram(shader);
 			
@@ -147,7 +146,7 @@ bool ComponentMesh::PostUpdate(float dt)
 			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
 
 			ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
-			for (Uniform* uniform : cMat->GetShader()->uniforms)
+			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 			{
 				switch (uniform->type)
 				{

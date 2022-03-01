@@ -4,7 +4,6 @@
 #include "I_Material.h"
 #include "I_Mesh.h"
 #include "I_Scene.h"
-#include "I_Shader.h"
 #include "I_Texture.h"
 
 class Importer
@@ -24,7 +23,6 @@ public:
 	I_Mesh* meshImporter = nullptr;
 	I_Material* materialImporter = nullptr;
 	I_Texture* textureImporter = nullptr;
-	I_Shader* shaderImporter = nullptr;
 
 private:
 	KoFiEngine* engine = nullptr;

@@ -9,35 +9,11 @@
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4.h"
 
-struct Uniform
-{
-	Uniform(std::string name, uint type) : name(name), type(type) {};
-	uint type;
-	std::string name;
-};
-template<class T>
-
-struct UniformT : public Uniform
-{
-	UniformT(std::string name, uint type, T value) : Uniform(name, type), value(value) {}
-	T value;
-};
-
 class Shader
 {
 public:
 	Shader();
 	~Shader();
-
-	Uniform* FindUniform(std::string name);
-
-	void AddUniform(Uniform* uniform);
-
-	void UseShader();
-	void DeleteShader();
-
-	const char* GetShaderPath() const;
-	void SetShaderPath(const char* name);
 
 	// Functionality to be able to save/modify data of Shader
 	void SetUniformMatrix4(std::string name, GLfloat* value);
@@ -56,11 +32,7 @@ public:
 
 public:
 	// TODO: we dont have vertext id or fragment id. Should we have this?
-	uint shaderProgramID = 0;
-	std::vector<Uniform*> uniforms;
-
-private:
-	std::string path;
+	uint ID = 0;
 };
 
 #endif // !__SHADER_H__

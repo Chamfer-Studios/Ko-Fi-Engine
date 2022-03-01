@@ -233,7 +233,7 @@ void ComponentMaterial::Compile()
 	//LoadShader(this->shaderPath.c_str());
 }
 
-void ComponentMaterial::Save(Json& json)
+void ComponentMaterial::Save(Json& json) const
 {
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
@@ -243,7 +243,7 @@ void ComponentMaterial::Save(Json& json)
 
 	Json jsonTex;
 	json["textures"] = json::array();
-	for (Texture& tex : textures)
+	for (auto tex : textures)
 	{
 		jsonTex["path"] = tex.GetTexturePath();
 		json["textures"].push_back(jsonTex);
