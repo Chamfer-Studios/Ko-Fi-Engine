@@ -2,6 +2,7 @@
 #define __MODULE_H__
 
 #include "SString.h"
+#include "SDL_events.h"
 
 #include "JsonHandler.h"
 
@@ -56,6 +57,8 @@ public:
 	}
 
 	virtual void OnGui() {}
+
+	virtual void OnClick(SDL_Event event) {}
 
 public:
 	SString name;

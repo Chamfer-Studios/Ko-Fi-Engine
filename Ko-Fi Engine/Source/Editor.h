@@ -57,6 +57,9 @@ public:
 	void UpdatePanelsState();
 	void OpenTextEditor(std::string path);
 
+	void setSceneIsClicked(bool con) { isSceneWindowClicked = con; }
+	bool getIfSceneClicked() { return isSceneWindowClicked; }
+
 
 	template<class T> T* GetPanel()
 	{
@@ -104,6 +107,9 @@ private:
 	PanelAssets* panelAssets = nullptr;
 	PanelNodeEditor* panelNodeEditor = nullptr;
 	PanelTextEditor* panelTextEditor = nullptr;
+	
+	bool isSceneWindowClicked = false;
+
 };
 
 #endif IM_GUI_HANDLER_H

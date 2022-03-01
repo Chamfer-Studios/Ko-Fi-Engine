@@ -125,6 +125,13 @@ bool Input::PreUpdate(float dt)
 			mouse_y_motion = event.motion.yrel / SCREEN_SIZE;
 			break;
 
+		case SDL_MOUSEBUTTONDOWN:
+			for (auto m : engine->AllModules())
+			{
+				m->OnClick(event);
+			}
+			break;
+
 		case SDL_QUIT:
 			quit = true;
 			break;

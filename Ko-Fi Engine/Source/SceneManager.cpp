@@ -8,6 +8,8 @@
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
 #include "Editor.h"
+#include "Camera3D.h"
+#include "Log.h"
 
 #include "Defs.h"
 #include "JsonHandler.h"
@@ -187,6 +189,14 @@ void SceneManager::OnTick()
 {
 	runtimeState = RuntimeState::TICK;
 	gameClockSpeed = timeScale;
+}
+
+void SceneManager::OnClick(SDL_Event event)
+{
+	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT && engine->GetEditor()->getIfSceneClicked()) return;
+
+
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
 }
 
 Json SceneManager::SaveComponentTransform(ComponentTransform* componentTransform)

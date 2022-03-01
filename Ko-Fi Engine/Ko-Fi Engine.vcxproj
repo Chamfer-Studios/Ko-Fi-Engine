@@ -331,6 +331,7 @@
     <ClInclude Include="Source\ImGuiAppLog.h" />
     <ClInclude Include="Source\Importer.h" />
     <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\Iterable.h" />
     <ClInclude Include="Source\JsonHandler.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Log.h" />

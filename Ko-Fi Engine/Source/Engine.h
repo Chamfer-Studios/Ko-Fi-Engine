@@ -5,6 +5,7 @@
 #include "Module.h"
 #include "EngineConfig.h"
 #include "JsonHandler.h"
+#include "Iterable.h"
 #include <list>
 
 // Modules
@@ -99,6 +100,12 @@ private:
 	EngineConfig* engineConfig;
 
 	JsonHandler jsonHandler;
+
+public:
+	auto AllModules() -> decltype(make_iterable(modules.begin(), modules.end()))
+	{
+		return make_iterable(modules.begin(), modules.end());
+	}
 };
 
 #endif //__ENGINE_H__

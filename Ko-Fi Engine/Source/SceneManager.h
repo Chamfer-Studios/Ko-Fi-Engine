@@ -62,6 +62,7 @@ public:
 	void OnPause();
 	void OnResume();
 	void OnTick();
+	void OnClick(SDL_Event event);
 
 	// Serialization functions
 	bool SaveScene(Scene* scene);

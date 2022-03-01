@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "Importer.h"
 
+#include "Log.h"
 // Tools
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -40,6 +41,12 @@ bool PanelViewport::Update()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove))
 	{
+		
+		if (ImGui::IsWindowHovered()) //Know if Scene Window is Clicked or Not
+			editor->setSceneIsClicked(true);
+		else
+			editor->setSceneIsClicked(false);
+		
 
 		editor->scenePanelOrigin = ImGui::GetWindowPos();
 		editor->scenePanelOrigin.x += ImGui::GetWindowContentRegionMin().x;
@@ -57,6 +64,9 @@ bool PanelViewport::Update()
 		if (viewportSize.x != editor->lastViewportSize.x || viewportSize.y != editor->lastViewportSize.y)
 		{
 			engine->GetCamera3D()->aspectRatio = viewportSize.x / viewportSize.y;
+			CONSOLE_LOG("Vx: %2f", viewportSize.x);
+			CONSOLE_LOG("Vy: %2f", viewportSize.y);
+
 			engine->GetCamera3D()->RecalculateProjection();
 		}
 		editor->lastViewportSize = viewportSize;
