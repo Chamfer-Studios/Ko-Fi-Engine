@@ -174,10 +174,11 @@ bool ComponentMesh::PostUpdate(float dt)
 		}
 
 		mesh->Draw(owner);
-		GenerateGlobalBoundingBox();
-		DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
 
 		glUseProgram(0);
+
+		GenerateGlobalBoundingBox();
+		DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
 	}
 
 	return ret;
@@ -361,7 +362,8 @@ uint ComponentMesh::GetVertices()
 void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
-	obb = GetLocalAABB();
+	obb.SetFrom(GetLocalAABB());
+	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
 	aabb.SetNegativeInfinity();

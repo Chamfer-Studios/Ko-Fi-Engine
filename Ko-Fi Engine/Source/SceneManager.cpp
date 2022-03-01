@@ -193,10 +193,14 @@ void SceneManager::OnTick()
 
 void SceneManager::OnClick(SDL_Event event)
 {
-	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT && engine->GetEditor()->getIfSceneClicked()) return;
+	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT) return;
+
+	if (!engine->GetEditor()->getIfSceneClicked()) return;
 
 
 	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	int a = 0;
+
 }
 
 Json SceneManager::SaveComponentTransform(ComponentTransform* componentTransform)
