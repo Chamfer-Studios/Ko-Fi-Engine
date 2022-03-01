@@ -43,7 +43,7 @@ public:
 	uint shaderProgramID;
 	std::vector<Uniform*> uniforms;
 
-	//Color diffuseColor;
+	Color diffuseColor;
 
 	std::string materialName;
 	std::string materialPath;

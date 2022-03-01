@@ -101,7 +101,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::Button("Change Shader"))
 			panelChooser->OpenPanel("ChangeShader", "glsl");
 
-		for (Uniform* uniform : shader->uniforms)
+		for (Uniform* uniform : material->uniforms)
 		{
 			switch (uniform->type)
 			{
@@ -217,7 +217,7 @@ void ComponentMaterial::LoadMaterial(const char* path)
 			}
 		}
 
-		UniformT<float4>* albedoTint = (UniformT<float4>*)shader->FindUniform("albedoTint");
+		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
 		albedoTint->value =
 		{
 			jsonMaterial.at("uniforms").at("albedoTint").at("x"),
@@ -239,7 +239,7 @@ void ComponentMaterial::Save(Json& json) const
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
 	json["material_path"] = material->materialPath;
 	json["material_name"] = material->materialName;
-	json["shader_path"] = shader->GetShaderPath();
+	json["shader_path"] = material->GetShaderPath();
 
 	Json jsonTex;
 	json["textures"] = json::array();
@@ -250,7 +250,7 @@ void ComponentMaterial::Save(Json& json) const
 	}
 
 	Json jsonUniform;
-	for (Uniform* uniform : shader->uniforms)
+	for (Uniform* uniform : material->uniforms)
 	{
 		switch (uniform->type)
 		{
