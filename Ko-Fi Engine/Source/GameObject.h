@@ -64,6 +64,7 @@ public:
 public:
 	std::string name;
 	bool active = true;
+	bool is3D = true;
 
 private:
 	std::vector<Component*> components;

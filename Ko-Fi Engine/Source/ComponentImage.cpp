@@ -48,16 +48,10 @@ bool ComponentImage::PostUpdate(float dt)
 
 	SDL_Rect rect;
 
-	rect.x = 30;
-	rect.y = 30;
-
-	if (SDLTexture != nullptr) {
-		SDL_QueryTexture(SDLTexture, NULL, NULL, &rect.w, &rect.h);
-	}
-	else {
-		rect.w = 0;
-		rect.h = 0;
-	}
+	rect.x = 0;
+	rect.y = 0;
+	rect.w = openGLTexture.GetTextureWidth();
+	rect.h = openGLTexture.GetTextureHeight();
 
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
 	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture.GetTextureId(), 0);
@@ -91,9 +85,7 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("AddTextureImage")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
-				FreeTextures();
-				openGLTexture.SetUpTexture(path);
-				SDLTexture = LoadTexture(path.c_str());
+				SetTexture(path.c_str());
 			}
 		}
 
@@ -107,7 +99,7 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-SDL_Texture* ComponentImage::LoadTexture(const char* path)
+/*SDL_Texture* ComponentImage::LoadTexture(const char* path)
 {
 	SDL_Texture* texture = NULL;
 	SDL_Surface* surface = IMG_Load(path);
@@ -123,9 +115,9 @@ SDL_Texture* ComponentImage::LoadTexture(const char* path)
 	}
 
 	return texture;
-}
+}*/
 
-SDL_Texture* const ComponentImage::LoadSurface(SDL_Surface* surface)
+/*SDL_Texture* const ComponentImage::LoadSurface(SDL_Surface* surface)
 {
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(owner->GetEngine()->GetUI()->renderer, surface);
 
@@ -139,12 +131,19 @@ SDL_Texture* const ComponentImage::LoadSurface(SDL_Surface* surface)
 	}
 
 	return texture;
+}*/
+
+void ComponentImage::SetTexture(const char* path)
+{
+	FreeTextures();
+	openGLTexture.SetUpTexture(path);
+	//SDLTexture = LoadTexture(path);
 }
 
 void ComponentImage::FreeTextures()
 {
-	if (SDLTexture != nullptr)
-		SDL_DestroyTexture(SDLTexture);
+	//if (SDLTexture != nullptr)
+	//	SDL_DestroyTexture(SDLTexture);
 	if (openGLTexture.GetTextureId() != 0) {
 		GLuint id = openGLTexture.GetTextureId();
 		glDeleteTextures(1, &id);

@@ -27,13 +27,15 @@ public:
 	bool PostUpdate(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
-	SDL_Texture* LoadTexture(const char* path);
-	SDL_Texture* const LoadSurface(SDL_Surface* surface);
+	//SDL_Texture* LoadTexture(const char* path);
+	//SDL_Texture* const LoadSurface(SDL_Surface* surface);
+
+	void SetTexture(const char* path);
+	float2 GetMask() { return mask; };
 
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 
-	SDL_Texture* SDLTexture = nullptr;
 	Texture openGLTexture;
 
 private:

@@ -32,16 +32,10 @@ bool ComponentText::PostUpdate(float dt)
 
 	SDL_Rect rect;
 
-	rect.x = 30;
-	rect.y = 30;
-
-	if (SDLTexture != nullptr) {
-		SDL_QueryTexture(SDLTexture, NULL, NULL, &rect.w, &rect.h);
-	}
-	else {
-		rect.w = 0;
-		rect.h = 0;
-	}
+	rect.x = 0;
+	rect.y = 0;
+	rect.w = texW;
+	rect.h = texH;
 
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
 	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture, 0);
@@ -98,8 +92,11 @@ void ComponentText::SetTextValue(std::string newValue)
 		fprintf(dstSurfaceFile, "\n");
 	}
 
+	texW = dstSurface->w;
+	texH = dstSurface->h;
+
 	openGLTexture = SurfaceToOpenGLTexture(dstSurface);
-	SDLTexture = SurfaceToSDLTexture(dstSurface);
+	//SDLTexture = SurfaceToSDLTexture(dstSurface);
 
 	SaveToFile(dstSurface->w, dstSurface->h);
 
@@ -188,8 +185,8 @@ SDL_Texture* ComponentText::SurfaceToSDLTexture(SDL_Surface* surface)
 
 void ComponentText::FreeTextures()
 {
-	if (SDLTexture != nullptr)
-		SDL_DestroyTexture(SDLTexture);
+	//if (SDLTexture != nullptr)
+	//	SDL_DestroyTexture(SDLTexture);
 	if (openGLTexture != 0)
 		glDeleteTextures(1, &openGLTexture);
 }

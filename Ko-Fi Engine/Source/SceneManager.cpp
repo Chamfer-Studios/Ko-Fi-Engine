@@ -357,17 +357,69 @@ Json SceneManager::SaveComponentCamera(ComponentCamera* componentCamera)
 
 Json SceneManager::SaveComponentCanvas(ComponentCanvas* componentCanvas)
 {
-	return Json();
+	Json jsonComponentTransform2D;
+	jsonComponentTransform2D["position"] = {
+		componentCanvas->GetPosition().x,
+		componentCanvas->GetPosition().y,
+	};
+	jsonComponentTransform2D["rotation"] = {
+		componentCanvas->GetRotation().x,
+		componentCanvas->GetRotation().y,
+		componentCanvas->GetRotation().z,
+	};
+	jsonComponentTransform2D["size"] = {
+		componentCanvas->GetSize().x,
+		componentCanvas->GetSize().y
+	};
+	jsonComponentTransform2D["pivot"] = {
+		componentCanvas->GetPivot().x,
+		componentCanvas->GetPivot().y
+	};
+	jsonComponentTransform2D["logicalSize"] = {
+		componentCanvas->GetLogicalSize().x,
+		componentCanvas->GetLogicalSize().y
+	};
+	jsonComponentTransform2D["anchor"] = (int)componentCanvas->GetAnchor();
+
+	return jsonComponentTransform2D;
 }
 
 Json SceneManager::SaveComponentTransform2D(ComponentTransform2D* componentTransform2D)
 {
-	return Json();
+	Json jsonComponentTransform2D;
+	jsonComponentTransform2D["position"] = {
+		componentTransform2D->GetPosition().x,
+		componentTransform2D->GetPosition().y,
+	};
+	jsonComponentTransform2D["rotation"] = {
+		componentTransform2D->GetRotation().x,
+		componentTransform2D->GetRotation().y,
+		componentTransform2D->GetRotation().z,
+	};
+	jsonComponentTransform2D["size"] = {
+		componentTransform2D->GetSize().x,
+		componentTransform2D->GetSize().y
+	};
+	jsonComponentTransform2D["pivot"] = {
+		componentTransform2D->GetPivot().x,
+		componentTransform2D->GetPivot().y
+	};
+	jsonComponentTransform2D["anchor"] = (int)componentTransform2D->GetAnchor();
+
+	return jsonComponentTransform2D;
 }
 
 Json SceneManager::SaveComponentImage(ComponentImage* componentImage)
 {
-	return Json();
+	Json jsonComponentImage;
+
+	jsonComponentImage["texture"] = componentImage->openGLTexture.GetTexturePath();
+	jsonComponentImage["mask"] = {
+		componentImage->GetMask().x,
+		componentImage->GetMask().y
+	};
+
+	return jsonComponentImage;
 }
 
 Json SceneManager::SaveComponentButton(ComponentButton* componentButton)
@@ -407,6 +459,7 @@ bool SceneManager::SaveScene(Scene* scene)
 
 		jsonGameObject["name"] = gameObject->GetName().c_str();
 		jsonGameObject["active"] = gameObject->active;
+		jsonGameObject["is3D"] = gameObject->is3D;
 
 		//jsonGameObject["component_transform"] = SaveComponentTransform(gameObject->GetComponent<ComponentTransform>());
 
@@ -631,14 +684,90 @@ void SceneManager::LoadComponentCamera(ComponentCamera* componentCamera, Json js
 
 void SceneManager::LoadComponentCanvas(ComponentCanvas* componentCanvas, Json jsonComponentCanvas)
 {
+	std::vector<float> values = jsonComponentCanvas["position"].get<std::vector<float>>();
+	float2 position;
+	position.x = values[0];
+	position.y = values[1];
+
+	componentCanvas->SetPosition(position);
+
+	values = jsonComponentCanvas["rotation"].get<std::vector<float>>();
+	float3 rotation;
+	rotation.x = values[0];
+	rotation.y = values[1];
+	rotation.z = values[2];
+
+	componentCanvas->SetRotation(rotation);
+
+	values = jsonComponentCanvas["size"].get<std::vector<float>>();
+	float2 size;
+	size.x = values[0];
+	size.y = values[1];
+
+	componentCanvas->SetSize(size);
+
+	values = jsonComponentCanvas["pivot"].get<std::vector<float>>();
+	float2 pivot;
+	pivot.x = values[0];
+	pivot.y = values[1];
+
+	componentCanvas->SetPivot(pivot);
+
+	values = jsonComponentCanvas["logicalSize"].get<std::vector<float>>();
+	float2 logicalSize;
+	logicalSize.x = values[0];
+	logicalSize.y = values[1];
+
+	componentCanvas->SetLogicalSize(logicalSize);
+
+	int anchor = jsonComponentCanvas["anchor"].get<int>();
+	componentCanvas->SetAnchor((ComponentTransform2D::Anchor)anchor);
 }
 
 void SceneManager::LoadComponentTransform2D(ComponentTransform2D* componentTransform2D, Json jsonComponentTransform2D)
 {
+	std::vector<float> values = jsonComponentTransform2D["position"].get<std::vector<float>>();
+	float2 position;
+	position.x = values[0];
+	position.y = values[1];
+
+	componentTransform2D->SetPosition(position);
+
+	values = jsonComponentTransform2D["rotation"].get<std::vector<float>>();
+	float3 rotation;
+	rotation.x = values[0];
+	rotation.y = values[1];
+	rotation.z = values[2];
+
+	componentTransform2D->SetRotation(rotation);
+
+	values = jsonComponentTransform2D["size"].get<std::vector<float>>();
+	float2 size;
+	size.x = values[0];
+	size.y = values[1];
+
+	componentTransform2D->SetSize(size);
+
+	values = jsonComponentTransform2D["pivot"].get<std::vector<float>>();
+	float2 pivot;
+	pivot.x = values[0];
+	pivot.y = values[1];
+
+	componentTransform2D->SetPivot(pivot);
+
+	int anchor = jsonComponentTransform2D["anchor"].get<int>();
+	componentTransform2D->SetAnchor((ComponentTransform2D::Anchor)anchor);
 }
 
 void SceneManager::LoadComponentImage(ComponentImage* componentImage, Json jsonComponentImage)
 {
+	std::string path = jsonComponentImage["texture"].get<std::string>();
+	componentImage->SetTexture(path.c_str());
+
+	std::vector<float> values = jsonComponentImage["mask"].get<std::vector<float>>();
+	float2 mask;
+	mask.x = values[0];
+	mask.y = values[1];
 }
 
 void SceneManager::LoadComponentButton(ComponentButton* componentButton, Json jsonComponentButton)
@@ -822,7 +951,8 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 			// IF THE GAME OBJECT DOESN'T EXIST, IT'LL BE CREATED
 			else
 			{
-				GameObject* gameObject = scene->CreateEmptyGameObject();
+				bool is3D = (jsonGameObject.contains("is3D") ? jsonGameObject["is3D"].get<bool>() : true);
+				GameObject* gameObject = scene->CreateEmptyGameObject("", is3D);
 
 				gameObject->name = jsonGameObject.at("name");
 				gameObject->active = jsonGameObject.at("active");

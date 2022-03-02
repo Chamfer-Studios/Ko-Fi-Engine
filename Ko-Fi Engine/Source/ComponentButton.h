@@ -26,8 +26,8 @@ public:
 	bool PostUpdate(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
-	SDL_Texture* LoadTexture(const char* path);
-	SDL_Texture* const LoadSurface(SDL_Surface* surface);
+	//SDL_Texture* LoadTexture(const char* path);
+	//SDL_Texture* const LoadSurface(SDL_Surface* surface);
 
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
@@ -43,13 +43,13 @@ private:
 
 	void FreeTextures(BUTTON_STATE type);
 
-	SDL_Texture* idleSDLTexture = nullptr;
+	//SDL_Texture* idleSDLTexture = nullptr;
 	Texture idleOpenGLTexture;
 
-	SDL_Texture* hoverSDLTexture = nullptr;
+	//SDL_Texture* hoverSDLTexture = nullptr;
 	Texture hoverOpenGLTexture;
 
-	SDL_Texture* pressedSDLTexture = nullptr;
+	//SDL_Texture* pressedSDLTexture = nullptr;
 	Texture pressedOpenGLTexture;
 
 	BUTTON_STATE state = BUTTON_STATE::IDLE;

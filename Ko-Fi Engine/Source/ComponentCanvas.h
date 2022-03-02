@@ -16,6 +16,7 @@ public:
 
 	bool InspectorDraw(PanelChooser* chooser) override;
 
+	void SetLogicalSize(float2 _newVal) { logicalSize = _newVal; };
 	float2 GetLogicalSize();
 	float2 GetNormalizedSize(bool invertY = false) override;
 	float2 GetNormalizedPosition(bool invertY = false) override;
