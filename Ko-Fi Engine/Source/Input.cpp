@@ -14,6 +14,7 @@
 #include "Importer.h"
 // FIXME: The list of meshes should be in scene intro.
 #include "GameObject.h"
+#include "Texture.h"
 
 #include <imgui_impl_sdl.h>
 
@@ -184,8 +185,12 @@ bool Input::PreUpdate(float dt)
 
 						if (go->GetComponent<ComponentMaterial>())
 						{
-							ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
-							cMat->LoadTexture(tmp.c_str());
+							Texture texture = Texture();
+							Importer::GetInstance()->textureImporter->Import(tmp.c_str(), &texture);
+
+							ComponentMaterial* cMaterial = go->GetComponent<ComponentMaterial>();
+							if (cMaterial != nullptr)
+								cMaterial->textures.push_back(texture);
 						}
 					}
 				}

@@ -29,14 +29,15 @@ public:
 
 	// Mesh Functions
 	void SetUpMeshBuffers();
+
 	void Draw(GameObject* owner);
 	void DebugDraw();
 
-	void SetVertexNormals(bool vertex);
-	void SetFaceNormals(bool faces);
+	inline void SetVertexNormals(bool vertex) { drawVertexNormals = vertex; }
+	inline bool GetVertexNormals() const { return drawVertexNormals; }
 
-	bool GetVertexNormals();
-	bool GetFaceNormals();
+	inline void SetFaceNormals(bool faces) { drawFaceNormals = faces; }
+	inline bool GetFaceNormals() const { return drawFaceNormals; }
 
 	// Size in Bytes
 	unsigned verticesSizeBytes = 0;
@@ -69,12 +70,13 @@ public:
 	std::string path = "";
 
 private:
-	void PrimitiveMesh(par_shapes_mesh* primitiveMesh);
-
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
 	void DrawFaceNormals() const;
 
+	void PrimitiveMesh(par_shapes_mesh* primitiveMesh);
+
+private:
 	// Debug bools
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;

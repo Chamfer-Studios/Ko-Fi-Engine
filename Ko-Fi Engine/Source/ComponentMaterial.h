@@ -13,7 +13,6 @@ using Json = nlohmann::json;
 class PanelChooser;
 class Material;
 class Texture;
-class Shader;
 
 class ComponentMaterial : public Component
 {
@@ -21,30 +20,26 @@ public:
 	ComponentMaterial(GameObject* parent);
 	~ComponentMaterial();
 
-	bool InspectorDraw(PanelChooser* chooser);
-
-	Material* GetMaterial() { return material; }
-	Shader* GetShader() { return shader; }
-
-	void LoadMaterial(const char* path = "");
-	
-	void Compile();
-
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
+
+	void SetMaterial(Material* material);
+	inline Material* GetMaterial() const { return material; }
+
+	void LoadMaterial(const char* path = "");
+
+	bool InspectorDraw(PanelChooser* chooser);
 
 private:
 	bool LoadDefaultMaterial();
 
+public:
+	std::vector<Texture> textures;
+
 private:
 	Material* material = nullptr;
 
-	Shader* shader = nullptr;
-
 	int currentTextureId = 0;
-public:
-	//Texture* texture = nullptr;
-	std::vector<Texture> textures;
 };
 
 #endif // !__COMPONENT_MATERIAL_H__

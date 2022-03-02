@@ -31,9 +31,6 @@ public:
 	Uniform* FindUniform(std::string name);
 	void AddUniform(Uniform* uniform);
 
-	void UseShader();
-	void DeleteShader();
-
 	inline const char* GetMaterialPath() const { return shaderPath.c_str(); }
 	inline void SetMaterialPath(const char* name) { this->shaderPath = name; }
 

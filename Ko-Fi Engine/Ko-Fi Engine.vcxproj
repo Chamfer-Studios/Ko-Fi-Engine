@@ -226,7 +226,6 @@
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\RNG.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
-    <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\ViewportFrameBuffer.cpp" />
@@ -368,7 +367,6 @@
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
-    <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Vec1Node.h" />

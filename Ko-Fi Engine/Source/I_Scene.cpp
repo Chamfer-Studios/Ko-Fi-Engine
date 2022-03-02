@@ -10,19 +10,21 @@
 #include "SceneManager.h"
 #include "FileSystem.h"
 
-#include "Mesh.h"
-#include "Texture.h"
-
-#include "Importer.h"
-#include "I_Mesh.h"
-#include "I_Material.h"
-
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
+
+#include "Importer.h"
+#include "I_Mesh.h"
+#include "I_Texture.h"
+#include "I_Material.h"
+
+#include "Mesh.h"
+#include "Texture.h"
+#include "Material.h"
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 {
@@ -188,7 +190,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj)
 {
 	//std::string assetPath = ASSETS_MODELS_DIR + std::string(nodeName) + MESH_EXTENSION;
-	
+
 	if (assimpMesh == nullptr || gameObj == nullptr)
 	{
 		return;
@@ -205,43 +207,71 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 
 	ComponentMesh* cMesh = gameObj->CreateComponent<ComponentMesh>();
-	cMesh->SetMesh(mesh);
+	if (cMesh != nullptr)
+		cMesh->SetMesh(mesh);
+	else
+	{
+		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
+		return;
+	}
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)
 {
-	//std::string matFullPath = App->fileSystem->GetDirectory(rModel->GetAssetsPath()) + nodeName + MATERIALS_EXTENSION;
-
 	if (assimpMaterial == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Importer: aiMaterial is nullptr.");
 		return;
 	}
 
-	//for(){
-	aiString texturePath;
-	aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &texturePath);
-	std::string path = texturePath.C_Str();
-	Texture t = Texture();
-	Importer::GetInstance()->textureImporter->Import(path.c_str(), &t);
-	//}
-	
+	aiString aiTexturePath;
+	std::string texturePath;
+	Texture texture;
+	if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
+	{
+		std::string textureFilename = aiTexturePath.C_Str();
+
+		textureFilename = textureFilename.substr(textureFilename.find_last_of("/\\") + 1);
+
+		texturePath = ASSETS_TEXTURES_DIR + textureFilename;
+
+		texture = Texture();
+		Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
+	}
+
 	// Import Material to GameObject
 	ComponentMaterial* cMaterial = gameObj->CreateComponent<ComponentMaterial>();
-	if (path.size() > 0)
+
+	if (cMaterial != nullptr)
+		cMaterial->textures.push_back(texture);
+	else
 	{
-		std::string baseFilename = path.substr(path.find_last_of("/\\") + 1);
-		std::string::size_type const p(baseFilename.find_last_of('.'));
-		std::string filenameWithoutExtension = baseFilename.substr(0, p);
-		std::string materialPath = ASSETS_MATERIALS_DIR + filenameWithoutExtension + MATERIAL_EXTENSION;
-		std::string texturePath = ASSETS_TEXTURES_DIR + path.substr(path.find_last_of('\\') + 1);
-		
-		if (path.c_str() != nullptr)
-		{
-			engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str(), texturePath.c_str());
-			cMaterial->LoadMaterial(materialPath.c_str());
-		}
+		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
+		return;
 	}
+
+	Material* material = new Material();
+
+	if (!Importer::GetInstance()->materialImporter->Import(assimpMaterial, material))
+	{
+		CONSOLE_LOG("[ERROR] Importer: error while importing the material.");
+		return;
+	}
+	
+	//if (textureFilename.size() > 0)
+	//{
+	//	std::string baseFilename = textureFilename.substr(textureFilename.find_last_of("/\\") + 1);
+	//	std::string::size_type const p(baseFilename.find_last_of('.'));
+	//	std::string filenameWithoutExtension = baseFilename.substr(0, p);
+	//	std::string materialPath = ASSETS_MATERIALS_DIR + filenameWithoutExtension + MATERIAL_EXTENSION;
+	//	std::string texturePath = ASSETS_TEXTURES_DIR + textureFilename.substr(textureFilename.find_last_of('\\') + 1);
+	//	
+	//	if (textureFilename.c_str() != nullptr)
+	//	{
+	//		engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str(), texturePath.c_str());
+	//		cMaterial->LoadMaterial(materialPath.c_str());
+	//	}
+	//}
 }
 
 bool I_Scene::Save(Scene* scene)

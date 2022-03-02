@@ -1,5 +1,7 @@
 #include "I_Material.h"
 #include "Material.h"
+
+#include "Globals.h"
 #include "Log.h"
 #include "Assimp.h"
 #include "FSDefs.h"
@@ -40,7 +42,33 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 		material->diffuseColor = Color(color.r, color.g, color.b, color.a);
 	}
 
-	std::ifstream stream(SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION);
+	std::string defaultPath = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+	material->SetShaderPath(defaultPath.c_str());
+
+	ret = LoadAndCreateShader(defaultPath.c_str(), material);
+
+	return ret;
+}
+
+bool I_Material::Save(const Material* material)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+bool I_Material::Load(Material* material)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+bool I_Material::LoadAndCreateShader(const char* shaderPath, Material* material)
+{
+	bool ret = false;
+
+	std::ifstream stream(shaderPath);
 	std::string line;
 	std::stringstream ss[2];
 
@@ -74,8 +102,8 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 		material->shaderProgramID = glCreateProgram();
 
 		// We create the vertex shader and the fragment shader
-		unsigned int vShader = ImportShader(GL_VERTEX_SHADER, vertexSource);
-		unsigned int fShader = ImportShader(GL_FRAGMENT_SHADER, fragmentSource);
+		unsigned int vShader = CreateShaderStage(GL_VERTEX_SHADER, vertexSource);
+		unsigned int fShader = CreateShaderStage(GL_FRAGMENT_SHADER, fragmentSource);
 
 		glAttachShader(material->shaderProgramID, vShader);
 		glAttachShader(material->shaderProgramID, fShader);
@@ -104,15 +132,17 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 		glDeleteShader(fShader);
 	}
 	else
+	{
 		CONSOLE_LOG("[ERROR] Vertex shader: %d or Fragment shader: %d are not correctly compiled.", vertexSource, fragmentSource);
-
-
-	return true;
+		ret = false;
+	}
+	
+	return ret;
 }
 
-unsigned int I_Material::ImportShader(unsigned int type, const std::string& source)
+unsigned int I_Material::CreateShaderStage(unsigned int type, const std::string& source)
 {
-	unsigned int id = glCreateShader(type);
+	uint id = glCreateShader(type);
 
 	const GLchar* src = (const GLchar*)source.c_str();
 
@@ -204,12 +234,12 @@ bool I_Material::LoadUniforms(Material* material)
 					material->AddUniform(ui);
 				}
 				break;
-				case GL_BOOL:
-				{
-					UniformT<bool>* ub = new UniformT<bool>(name, type, false);
-					material->AddUniform(ub);
-				}
-				break;
+				//case GL_BOOL:
+				//{
+				//	UniformT<bool>* ub = new UniformT<bool>(name, type, false);
+				//	material->AddUniform(ub);
+				//}
+				//break;
 				default:
 					break;
 				}
@@ -229,145 +259,4 @@ bool I_Material::CheckUniformName(std::string name)
 	{
 		return false;
 	}
-}
-
-bool I_Material::Save(const Material* material)
-{
-	bool ret = true;
-
-	//uint written = 0;
-
-	//if (material == nullptr)
-	//{
-	//	CONSOLE_LOG("[ERROR] Importer: Could not Save Material to Library! Error: R_Material* was nullptr.");
-	//	return 0;
-	//}
-
-	//float color[4] = {
-	//	material->diffuseColor.r,
-	//	material->diffuseColor.g,
-	//	material->diffuseColor.b,
-	//	material->diffuseColor.a,
-	//};
-
-	//uint size = sizeof(color);
-
-	//if (size == 0)
-	//{
-	//	return 0;
-	//}
-
-	//*buffer = new char[size];
-	//char* cursor = *buffer;
-	//uint bytes = 0;
-
-	//// --- COLOR DATA ---
-	//bytes = sizeof(color);
-	//memcpy_s(cursor, size, color, bytes);
-	//cursor += bytes;
-
-	//// --- SAVING THE BUFFER ---
-	//std::string path = std::string(MATERIALS_PATH) + std::to_string(material->GetUID()) + std::string(MATERIALS_EXTENSION);
-
-	//written = App->fileSystem->Save(path.c_str(), *buffer, size);
-	//if (written > 0)
-	//{
-	//	CONSOLE_LOG("[STATUS] Importer Materials: Successfully Saved Material { %s } to Library! Path: { %s }", material->GetAssetsFile(), path.c_str());
-	//}
-	//else
-	//{
-	//	CONSOLE_LOG("[ERROR] Importer: Could not Save Material { %s } to Library! Error: File System could not Write File.", material->GetAssetsFile());
-	//}
-
-	//return written;
-
-		//uint written = 0;
-
-	//if (shader == nullptr)
-	//{
-	//	LOG("[ERROR] Importer: Could not Save R_Shader* in Library! Error: Given R_Shader* was nullptr.");
-	//	return 0;
-	//}
-
-	//ParsonNode parsonFile = ParsonNode();
-	//ParsonArray parsonArrray = parsonFile.SetArray("Uniforms");
-
-	//for (uint i = 0; i < shader->uniforms.size(); i++)
-	//{
-	//	ParsonNode& node = parsonArrray.SetNode(shader->uniforms[i].name.c_str());
-	//	node.SetString("Name", shader->uniforms[i].name.c_str());
-	//	node.SetInteger("Type", (int)shader->uniforms[i].uniformType);
-	//	switch (shader->uniforms[i].uniformType)
-	//	{
-	//	case  UniformType::INT:			node.SetNumber("Value", shader->uniforms[i].integer);		break;
-	//	case  UniformType::FLOAT:		node.SetNumber("Value", shader->uniforms[i].floatNumber);	break;
-	//	case  UniformType::INT_VEC2:	node.SetFloat2("Value", shader->uniforms[i].vec2);			break;
-	//	case  UniformType::INT_VEC3:	node.SetFloat3("Value", shader->uniforms[i].vec3);			break;
-	//	case  UniformType::INT_VEC4:	node.SetFloat4("Value", shader->uniforms[i].vec4);			break;
-	//	case  UniformType::FLOAT_VEC2:	node.SetFloat2("Value", shader->uniforms[i].vec2);			break;
-	//	case  UniformType::FLOAT_VEC3:	node.SetFloat3("Value", shader->uniforms[i].vec3);			break;
-	//	case  UniformType::FLOAT_VEC4:	node.SetFloat4("Value", shader->uniforms[i].vec4);			break;
-	//	}
-	//}
-
-	//std::string path = SHADERS_PATH + std::to_string(shader->GetUID()) + SHADERS_EXTENSION;
-	//written = parsonFile.SerializeToFile(path.c_str(), buffer);
-
-	//return written;
-
-	return ret;
-}
-
-bool I_Material::Load(Material* material)
-{
-	bool ret = true;
-
-	//if (material == nullptr)
-	//{
-	//	CONSOLE_LOG("[ERROR] Importer: Could not Load Material from Library! Error: R_Material* was nullptr.");
-	//	return false;
-	//}
-	//if (buffer == nullptr)
-	//{
-	//	CONSOLE_LOG("[ERROR] Importer: Could not Load Material { %s } from Library! Error: Buffer was nullptr.", material->GetAssetsFile());
-	//	return false;
-	//}
-
-	//char* cursor = (char*)buffer;
-	//uint bytes = 0;
-
-	//float color[4];
-
-	//bytes = sizeof(color);
-	//memcpy_s(color, bytes, cursor, bytes);
-	//cursor += bytes;
-
-	//material->diffuseColor.Set(color[0], color[1], color[2], color[3]);
-
-	//CONSOLE_LOG("[STATUS] Importer: Successfully Loaded Material { %s } from Library!", material->GetAssetsFile());
-
-		//ParsonNode parsonFile(buffer);
-	//ParsonArray parsonArrray = parsonFile.GetArray("Uniforms");
-	//Uniform uniform;
-	//for (uint i = 0; i < parsonArrray.GetSize(); i++)
-	//{
-	//	ParsonNode node = parsonArrray.GetNode(i);
-	//	uniform.name = node.GetString("Name");
-	//	uniform.uniformType = (UniformType)node.GetInteger("Type");
-	//	switch (uniform.uniformType)
-	//	{
-	//	case  UniformType::INT:			uniform.integer = node.GetNumber("Value");		break;
-	//	case  UniformType::FLOAT:		uniform.floatNumber = node.GetNumber("Value");	break;
-	//	case  UniformType::INT_VEC2:	uniform.vec2 = node.GetFloat2("Value");			break;
-	//	case  UniformType::INT_VEC3:	uniform.vec3 = node.GetFloat3("Value");			break;
-	//	case  UniformType::INT_VEC4:	uniform.vec4 = node.GetFloat4("Value");			break;
-	//	case  UniformType::FLOAT_VEC2:	uniform.vec2 = node.GetFloat2("Value");			break;
-	//	case  UniformType::FLOAT_VEC3:	uniform.vec3 = node.GetFloat3("Value");			break;
-	//	case  UniformType::FLOAT_VEC4:	uniform.vec4 = node.GetFloat4("Value");			break;
-	//	}
-
-	//	shader->uniforms.push_back(uniform);
-	//}
-
-	return ret;
 }

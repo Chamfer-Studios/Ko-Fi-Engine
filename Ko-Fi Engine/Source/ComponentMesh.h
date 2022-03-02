@@ -6,7 +6,6 @@
 #include "par_shapes.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
-#include "Shader.h"
 
 class ComponentTransform;
 class ComponentMaterial;
@@ -21,54 +20,57 @@ public:
 
 	//void CopyParMesh(par_shapes_mesh* parMesh);
 
-	float3 GetCenterPointInWorldCoords() const;
-	inline float GetSphereRadius() const { return radius; }
-
 	bool Start();
 	bool Update();
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	//void LoadMesh(const char* path);
-	bool InspectorDraw(PanelChooser* chooser);
-
-	uint GetVertices();
-	void SetMesh(Mesh* mesh);
-	Mesh* GetMesh();
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
-	//public:
-	//	ComponentMaterial* materialComponent;
+	void SetMesh(Mesh* mesh);
+	inline Mesh* GetMesh() const { return mesh; }
 
-	void SetPath(std::string path);
+	inline void SetPath(const char* path) { mesh->path = path; }
+	inline const char* GetMeshPath() const { mesh->path.c_str(); }
+
+	uint GetVertices();
+
+	float3 GetCenterPointInWorldCoords() const;
+	inline float GetSphereRadius() const { return radius; }
+
 	void SetVertexNormals(bool vertexNormals);
+	bool GetVertexNormals() const;
 	void SetFaceNormals(bool facesNormals);
+	bool GetFaceNormals() const;
 
-	const char* GetMeshPath();
-	bool GetVertexNormals();
-	bool GetFaceNormals();
 	void GenerateLocalBoundingBox();
 	AABB GetLocalAABB();
+
 	void GenerateGlobalBoundingBox();
 	AABB GetGlobalAABB();
+	
+	inline bool GetRenderMesh() const { return renderMesh; }
+	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
+
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
-	bool GetRenderMesh();
-	void SetRenderMesh(bool renderMesh);
+
+	bool InspectorDraw(PanelChooser* chooser);
 
 private:
-	//Bounding sphere
-	float3 centerPoint = float3::zero;
-	float radius;
-
 	Mesh* mesh = nullptr;
-	//COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
-
-	// Bounding boxes
-	OBB obb;
 
 	bool renderMesh = true;
 	float time = 0;
+
+	//COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
+
+	// Bounding sphere
+	float3 centerPoint = float3::zero;
+	float radius;
+
+	// Bounding boxes
+	OBB obb;
 };
 
 #endif // !__COMPONENT_MESH_H__

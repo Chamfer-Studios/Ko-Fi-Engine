@@ -201,26 +201,6 @@ void Mesh::DrawFaceNormals() const
 	glEnd();
 }
 
-void Mesh::SetVertexNormals(bool vertex)
-{
-	drawVertexNormals = vertex;
-}
-
-void Mesh::SetFaceNormals(bool faces)
-{
-	drawFaceNormals = faces;
-}
-
-bool Mesh::GetVertexNormals()
-{
-	return drawVertexNormals;
-}
-
-bool Mesh::GetFaceNormals()
-{
-	return drawFaceNormals;
-}
-
 void Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 {
 	//vertexNum = primitiveMesh->npoints;

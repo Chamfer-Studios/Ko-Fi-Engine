@@ -20,13 +20,15 @@ public:
 	~I_Material();
 
 	bool Import(const aiMaterial* aiMaterial, Material* material);
-
-	unsigned int ImportShader(unsigned int type, const std::string& source);
-	bool LoadUniforms(Material* material);
-	bool CheckUniformName(std::string name);
-
 	bool Save(const Material* material);
 	bool Load(Material* material);
+
+	bool LoadAndCreateShader(const char* shaderPath, Material* material);
+
+private:
+	unsigned int CreateShaderStage(unsigned int type, const std::string& source);
+	bool LoadUniforms(Material* material);
+	bool CheckUniformName(std::string name);
 };
 
 #endif // !__I_MATERIAL_H__

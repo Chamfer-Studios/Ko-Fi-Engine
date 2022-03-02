@@ -37,13 +37,3 @@ void Material::AddUniform(Uniform* uniform)
 {
 	uniforms.push_back(uniform);
 }
-
-void Material::UseShader()
-{
-	glUseProgram(shaderProgramID);
-}
-
-void Material::DeleteShader()
-{
-	glDeleteProgram(shaderProgramID);
-}

@@ -42,7 +42,8 @@ bool I_Texture::Import(const char* path, Texture* texture)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_SIZE, CHECKERS_SIZE,
 			0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
-		return;
+
+		return true;
 	}
 
 	unsigned char* pixels = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb);
@@ -69,10 +70,5 @@ bool I_Texture::Import(const char* path, Texture* texture)
 
 	stbi_image_free(pixels);
 
-	return true;
-}
-
-bool I_Texture::Save(const Texture* texture, const char* path)
-{
 	return true;
 }

@@ -1,13 +1,14 @@
 #include "ComponentMaterial.h"
 #include "Material.h"
 #include "Texture.h"
-#include "Shader.h"
+
 #include "Importer.h"
 #include "I_Material.h"
 
 #include "JsonHandler.h"
 #include "ImGuiAppLog.h"
 #include "PanelChooser.h"
+#include "FSDefs.h"
 
 #include "stb_image.h"
 #include "imgui.h"
@@ -25,218 +26,6 @@ ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 
 ComponentMaterial::~ComponentMaterial()
 {
-}
-
-bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
-{
-	if (ImGui::CollapsingHeader("Material"))
-	{
-		if (panelChooser->IsReadyToClose("AddTexture"))
-		{
-			if (panelChooser->OnChooserClosed() != nullptr)
-			{
-				std::string path = panelChooser->OnChooserClosed();
-
-				Texture texture;
-				Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
-				textures.push_back(texture);
-			}
-		}
-
-		if (panelChooser->IsReadyToClose("ChangeTexture"))
-		{
-			if (panelChooser->OnChooserClosed() != nullptr)
-			{
-				std::string path = panelChooser->OnChooserClosed();
-				for (Texture& tex : textures)
-				{
-					if (tex.textureID == currentTextureId)
-					{
-						Texture texture;
-						Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
-						textures.push_back(texture);
-					}
-				}
-			}
-		}
-
-		if (panelChooser->IsReadyToClose("ChangeShader"))
-		{
-			if (panelChooser->OnChooserClosed() != nullptr)
-			{
-				std::string path = panelChooser->OnChooserClosed();
-				//LoadShader(path.c_str());
-			}
-		}
-
-		ImGui::Text("Material Name:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
-		ImGui::Text("Material Textures:");
-		for (Texture& tex : textures)
-		{
-			ImGui::Image((ImTextureID)tex.textureID, ImVec2(85, 85));
-			ImGui::SameLine();
-			ImGui::BeginGroup();
-			ImGui::Text(tex.GetTexturePath());
-			ImGui::PushID(tex.textureID << 8);
-
-			if (ImGui::Button("Change Texture"))
-			{
-				panelChooser->OpenPanel("ChangeTexture", "png");
-				currentTextureId = tex.textureID;
-			}
-
-			ImGui::PopID();
-
-			ImGui::PushID(tex.textureID << 16);
-
-			if (ImGui::Button("Delete Textures"))
-			{
-				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
-			}
-			ImGui::PopID();
-			ImGui::EndGroup();
-		}
-
-		if (ImGui::Button("Add Texture"))
-			panelChooser->OpenPanel("AddTexture", "png");
-
-		ImGui::Separator();
-
-		if (ImGui::Button("Change Shader"))
-			panelChooser->OpenPanel("ChangeShader", "glsl");
-
-		for (Uniform* uniform : material->uniforms)
-		{
-			switch (uniform->type)
-			{
-			case GL_FLOAT:
-			{
-				UniformT<float>* uf = (UniformT<float>*)uniform;
-				ImGui::DragFloat(uniform->name.c_str(), &uf->value, -10, 10);
-			}
-			break;
-			case GL_FLOAT_VEC2:
-			{
-				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-				ImGui::DragFloat2(uniform->name.c_str(), uf2->value.ptr(), -10, 10);
-			}
-			break;
-			case GL_FLOAT_VEC3:
-			{
-				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-				ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), -10, 10);
-			}
-			break;
-			case GL_FLOAT_VEC4:
-			{
-				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-				ImGui::DragFloat4(uniform->name.c_str(), uf4->value.ptr(), -10, 10);
-			}
-			break;
-			case GL_INT:
-			{
-				UniformT<int>* ui = (UniformT<int>*)uniform;
-				ImGui::DragInt(uniform->name.c_str(), &ui->value, -10, 10);
-			}
-			break;
-			default:
-				break;
-			}
-		}
-	}
-	return true;
-}
-
-bool ComponentMaterial::LoadDefaultMaterial()
-{
-	bool ret = false;
-
-	std::string defaultMaterialPath = "Library/Materials/default.milk";
-
-	JsonHandler jsonHandler;
-	Json jsonMaterial;
-
-	ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath.c_str());
-
-	if (!jsonMaterial.empty())
-	{
-		ret = true;
-
-		material->materialName = jsonMaterial.at("name").get<std::string>();
-		material->SetMaterialPath(defaultMaterialPath.c_str());
-		Texture texture;
-		Importer::GetInstance()->textureImporter->Import(0, &texture);
-		textures.push_back(texture);
-
-		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
-		albedoTint->value =
-		{
-			jsonMaterial.at("uniforms").at("x"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("w"),
-		};
-	}
-
-	return ret;
-}
-
-void ComponentMaterial::LoadMaterial(const char* path)
-{
-	bool ret = false;
-
-	std::string materialPath = path;
-
-	JsonHandler jsonHandler;
-	Json jsonMaterial;
-
-	if (materialPath.empty())
-		ret = jsonHandler.LoadJson(jsonMaterial, material->GetMaterialPath());
-	else
-		ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
-
-	if (!jsonMaterial.empty())
-	{
-		ret = true;
-		material->materialName = jsonMaterial.at("name").get<std::string>();
-
-		if (!materialPath.empty())
-			material->SetMaterialPath(materialPath.c_str());
-
-		std::vector<std::string> texturePaths = jsonMaterial.at("textures");
-		for (int i = 0; i < texturePaths.size(); i++)
-		{
-			std::string texturePath = texturePaths.at(i);
-			if (textures.empty())
-			{
-				Texture texture;
-				Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
-				textures.push_back(texture);
-			}
-			else if (texturePath != textures[i].GetTexturePath())
-			{
-				Texture texture;
-				Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
-				textures.push_back(texture);
-			}
-		}
-
-		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
-		albedoTint->value =
-		{
-			jsonMaterial.at("uniforms").at("albedoTint").at("x"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("w"),
-		};
-	};
-}
-
-void ComponentMaterial::Compile()
-{
-	//LoadShader(this->shaderPath.c_str());
 }
 
 void ComponentMaterial::Save(Json& json) const
@@ -375,4 +164,230 @@ void ComponentMaterial::Load(Json& json)
 		}
 		// TODO: LOAD SHADER
 	}
+}
+
+void ComponentMaterial::SetMaterial(Material* material)
+{
+	if (this->material != nullptr)
+		RELEASE(this->material);
+
+	this->material = material;
+}
+
+void ComponentMaterial::LoadMaterial(const char* path)
+{
+	bool ret = false;
+
+	std::string materialPath = path;
+
+	JsonHandler jsonHandler;
+	Json jsonMaterial;
+
+	if (materialPath.empty())
+		ret = jsonHandler.LoadJson(jsonMaterial, material->GetMaterialPath());
+	else
+		ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
+
+	if (!jsonMaterial.empty())
+	{
+		ret = true;
+		material->materialName = jsonMaterial.at("name").get<std::string>();
+
+		if (!materialPath.empty())
+			material->SetMaterialPath(materialPath.c_str());
+
+		std::vector<std::string> texturePaths = jsonMaterial.at("textures");
+		for (int i = 0; i < texturePaths.size(); i++)
+		{
+			std::string texturePath = texturePaths.at(i);
+			if (textures.empty())
+			{
+				Texture texture;
+				Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
+				textures.push_back(texture);
+			}
+			else if (texturePath != textures[i].GetTexturePath())
+			{
+				Texture texture;
+				Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
+				textures.push_back(texture);
+			}
+		}
+
+		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
+		albedoTint->value =
+		{
+			jsonMaterial.at("uniforms").at("albedoTint").at("x"),
+			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
+			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
+			jsonMaterial.at("uniforms").at("albedoTint").at("w"),
+		};
+	};
+}
+
+bool ComponentMaterial::LoadDefaultMaterial()
+{
+	bool ret = false;
+
+	std::string defaultMaterialPath = "Library/Materials/default.milk";
+
+	JsonHandler jsonHandler;
+	Json jsonMaterial;
+
+	ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath.c_str());
+
+	if (!jsonMaterial.empty())
+	{
+		ret = true;
+
+		material->materialName = jsonMaterial.at("name").get<std::string>();
+		material->SetMaterialPath(defaultMaterialPath.c_str());
+		Texture texture;
+		Importer::GetInstance()->textureImporter->Import(0, &texture);
+		textures.push_back(texture);
+
+		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
+		albedoTint->value =
+		{
+			jsonMaterial.at("uniforms").at("x"),
+			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
+			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
+			jsonMaterial.at("uniforms").at("albedoTint").at("w"),
+		};
+	}
+
+	return ret;
+}
+
+bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
+{
+	if (ImGui::CollapsingHeader("Material"))
+	{
+		if (panelChooser->IsReadyToClose("AddTexture"))
+		{
+			if (panelChooser->OnChooserClosed() != nullptr)
+			{
+				std::string path = panelChooser->OnChooserClosed();
+
+				Texture texture;
+				Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
+				textures.push_back(texture);
+			}
+		}
+
+		if (panelChooser->IsReadyToClose("ChangeTexture"))
+		{
+			if (panelChooser->OnChooserClosed() != nullptr)
+			{
+				std::string path = panelChooser->OnChooserClosed();
+				for (Texture& tex : textures)
+				{
+					if (tex.textureID == currentTextureId)
+					{
+						Texture texture;
+						Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
+						textures.push_back(texture);
+					}
+				}
+			}
+		}
+
+		if (panelChooser->IsReadyToClose("ChangeShader"))
+		{
+			if (panelChooser->OnChooserClosed() != nullptr)
+			{
+				std::string path = panelChooser->OnChooserClosed();
+
+				if (material->shaderProgramID != 0)
+					glDeleteProgram(material->shaderProgramID);
+
+				if (!path.empty())
+					material->SetShaderPath(path.c_str());
+				else
+				{
+					path = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+					material->SetShaderPath(path.c_str());
+				}
+				Importer::GetInstance()->materialImporter->LoadAndCreateShader(path.c_str(), material);
+			}
+		}
+
+		ImGui::Text("Material Name:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
+		ImGui::Text("Material Textures:");
+		for (Texture& tex : textures)
+		{
+			ImGui::Image((ImTextureID)tex.textureID, ImVec2(85, 85));
+			ImGui::SameLine();
+			ImGui::BeginGroup();
+			ImGui::Text(tex.GetTexturePath());
+			ImGui::PushID(tex.textureID << 8);
+
+			if (ImGui::Button("Change Texture"))
+			{
+				panelChooser->OpenPanel("ChangeTexture", "png");
+				currentTextureId = tex.textureID;
+			}
+
+			ImGui::PopID();
+
+			ImGui::PushID(tex.textureID << 16);
+
+			if (ImGui::Button("Delete Textures"))
+			{
+				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
+			}
+			ImGui::PopID();
+			ImGui::EndGroup();
+		}
+
+		if (ImGui::Button("Add Texture"))
+			panelChooser->OpenPanel("AddTexture", "png");
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Change Shader"))
+			panelChooser->OpenPanel("ChangeShader", "glsl");
+
+		for (Uniform* uniform : material->uniforms)
+		{
+			switch (uniform->type)
+			{
+			case GL_FLOAT:
+			{
+				UniformT<float>* uf = (UniformT<float>*)uniform;
+				ImGui::DragFloat(uniform->name.c_str(), &uf->value, -10, 10);
+			}
+			break;
+			case GL_FLOAT_VEC2:
+			{
+				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+				ImGui::DragFloat2(uniform->name.c_str(), uf2->value.ptr(), -10, 10);
+			}
+			break;
+			case GL_FLOAT_VEC3:
+			{
+				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+				ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), -10, 10);
+			}
+			break;
+			case GL_FLOAT_VEC4:
+			{
+				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+				ImGui::DragFloat4(uniform->name.c_str(), uf4->value.ptr(), -10, 10);
+			}
+			break;
+			case GL_INT:
+			{
+				UniformT<int>* ui = (UniformT<int>*)uniform;
+				ImGui::DragInt(uniform->name.c_str(), &ui->value, -10, 10);
+			}
+			break;
+			default:
+				break;
+			}
+		}
+	}
+	return true;
 }

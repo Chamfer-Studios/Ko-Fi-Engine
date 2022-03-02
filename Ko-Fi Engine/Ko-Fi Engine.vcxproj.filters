@@ -337,9 +337,6 @@
     <ClCompile Include="Source\ResourceManager.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Shader.cpp">
-      <Filter>Source\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
@@ -761,9 +758,6 @@
     </ClInclude>
     <ClInclude Include="Source\ResourceManager.h">
       <Filter>Source\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Shader.h">
-      <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mesh.h">
       <Filter>Source\Resources</Filter>

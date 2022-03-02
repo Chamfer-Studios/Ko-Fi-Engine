@@ -5,6 +5,11 @@
 #include "PanelChooser.h"
 #include "SceneManager.h"
 #include "ComponentMaterial.h"
+#include "Material.h"
+
+#include "glew.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
 
 PanelTextEditor::PanelTextEditor(Editor* editor)
 {
@@ -93,9 +98,13 @@ void PanelTextEditor::SaveFile(std::string path)
 {
 	editor->engine->GetFileSystem()->SaveFile(path.c_str(), textEditor.GetText());
 	for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-		if (go->GetComponent<ComponentMaterial>() != nullptr) {
-			go->GetComponent<ComponentMaterial>()->Compile();
+		if (go->GetComponent<ComponentMaterial>() != nullptr)
+		{
+			Material* material = go->GetComponent<ComponentMaterial>()->GetMaterial();
+			if (material->shaderProgramID != 0)
+				glDeleteProgram(material->shaderProgramID);
 
+			Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 		}
 	}
 }
