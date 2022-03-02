@@ -2,6 +2,19 @@
 #define __I_MATERIAL_H__
 
 #include <string>
+#include <glew.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include <fstream>
+#include <sstream>
+#include <vector>
+
+#include "MathGeoLib/Math/float2.h"
+#include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/Math/float4.h"
+
+#include "Assimp.h"
+
 
 class Material;
 class aiMaterial;

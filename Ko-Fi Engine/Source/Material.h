@@ -6,8 +6,6 @@
 #include "Globals.h"
 #include "Color.h"
 
-class Texture;
-
 struct Uniform
 {
 	Uniform(std::string name, uint type) : name(name), type(type) {};

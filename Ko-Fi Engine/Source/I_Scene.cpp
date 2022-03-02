@@ -17,14 +17,14 @@
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
 
+#include "Mesh.h"
+#include "Texture.h"
+#include "Material.h"
+
 #include "Importer.h"
 #include "I_Mesh.h"
 #include "I_Texture.h"
 #include "I_Material.h"
-
-#include "Mesh.h"
-#include "Texture.h"
-#include "Material.h"
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 {
@@ -69,7 +69,18 @@ bool I_Scene::Import(const char* path)
 	
 	// Checking if R_Model* has a UID to be forced. Cast rModel to Resource?
 	//Utilities::CheckAndApplyForcedUID(mesh);
-
+	if (engine->GetSceneManager() != nullptr)
+	{
+		CONSOLE_LOG("POG");
+	}
+	if (engine->GetSceneManager()->GetCurrentScene() != nullptr)
+	{
+		CONSOLE_LOG("SADGE");
+	}
+	if (engine->GetSceneManager()->GetCurrentScene()->rootGo != nullptr)
+	{
+		CONSOLE_LOG("VERY POG");
+	}
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo);
 
 	//Utilities::ImportAnimations(assimpScene, mesh);
@@ -257,7 +268,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		CONSOLE_LOG("[ERROR] Importer: error while importing the material.");
 		return;
 	}
-	
+
 	//if (textureFilename.size() > 0)
 	//{
 	//	std::string baseFilename = textureFilename.substr(textureFilename.find_last_of("/\\") + 1);

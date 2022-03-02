@@ -6,17 +6,17 @@
 #include "I_Scene.h"
 #include "I_Texture.h"
 
+class KofiEngine;
+
 class Importer
 {
 private:
-	Importer();
+	Importer(KoFiEngine* e = nullptr);
 
 public:
 	~Importer();
 
-	static Importer* GetInstance();
-
-	inline void SetEngine(KoFiEngine* engine) { this->engine = engine; }
+	static Importer* GetInstance(KoFiEngine* e = nullptr);
 
 public:
 	I_Scene* sceneImporter = nullptr;

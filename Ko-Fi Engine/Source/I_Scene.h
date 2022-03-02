@@ -32,7 +32,7 @@ private:
 
 	void ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* gameObj);
 	void ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj);
-	void ImportMaterial (const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj);
+	void ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj);
 
 private:
 	KoFiEngine* engine = nullptr;

@@ -12,7 +12,7 @@
 
 FileSystem::FileSystem(KoFiEngine* engine)
 {
-	name = "Filesystem";
+	name = "ModelLoader";
 
 	std::string rootPathString = SDL_GetBasePath();
 	std::replace(rootPathString.begin(), rootPathString.end(), '\\', '/');

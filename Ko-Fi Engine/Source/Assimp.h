@@ -11,6 +11,7 @@
 #include "assimp/matrix4x4.h"
 #include "assimp/vector3.h"
 #include "assimp/quaternion.h"
+#include "assimp/color4.h"
 
 struct aiTransform
 {

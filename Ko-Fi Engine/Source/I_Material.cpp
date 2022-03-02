@@ -1,17 +1,10 @@
 #include "I_Material.h"
 #include "Material.h"
 
-#include "Globals.h"
-#include "Log.h"
-#include "Assimp.h"
 #include "FSDefs.h"
-
-#include <glew.h>
-#include <fstream>
-#include <sstream>
-#include <MathGeoLib/Math/float2.h>
-#include <MathGeoLib/Math/float3.h>
-#include <MathGeoLib/Math/float4.h>
+#include "Globals.h"
+#include "Color.h"
+#include "Log.h"
 
 I_Material::I_Material()
 {
@@ -23,7 +16,7 @@ I_Material::~I_Material()
 
 bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 {
-	bool ret = false;
+	bool ret = true;
 
 	if (material == nullptr)
 	{
@@ -66,7 +59,7 @@ bool I_Material::Load(Material* material)
 
 bool I_Material::LoadAndCreateShader(const char* shaderPath, Material* material)
 {
-	bool ret = false;
+	bool ret = true;
 
 	std::ifstream stream(shaderPath);
 	std::string line;
@@ -102,8 +95,8 @@ bool I_Material::LoadAndCreateShader(const char* shaderPath, Material* material)
 		material->shaderProgramID = glCreateProgram();
 
 		// We create the vertex shader and the fragment shader
-		unsigned int vShader = CreateShaderStage(GL_VERTEX_SHADER, vertexSource);
-		unsigned int fShader = CreateShaderStage(GL_FRAGMENT_SHADER, fragmentSource);
+		uint vShader = CreateShaderStage(GL_VERTEX_SHADER, vertexSource);
+		uint fShader = CreateShaderStage(GL_FRAGMENT_SHADER, fragmentSource);
 
 		glAttachShader(material->shaderProgramID, vShader);
 		glAttachShader(material->shaderProgramID, fShader);
@@ -245,6 +238,7 @@ bool I_Material::LoadUniforms(Material* material)
 				}
 			}
 		}
+		return true;
 	}
 }
 
