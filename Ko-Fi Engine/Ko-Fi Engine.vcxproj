@@ -206,7 +206,6 @@
     <ClCompile Include="Source\I_Material.cpp" />
     <ClCompile Include="Source\I_Mesh.cpp" />
     <ClCompile Include="Source\I_Scene.cpp" />
-    <ClCompile Include="Source\I_Shader.cpp" />
     <ClCompile Include="Source\I_Texture.cpp" />
     <ClCompile Include="Source\JsonHandler.cpp" />
     <ClCompile Include="Source\Light.cpp" />
@@ -344,7 +343,6 @@
     <ClInclude Include="Source\I_Material.h" />
     <ClInclude Include="Source\I_Mesh.h" />
     <ClInclude Include="Source\I_Scene.h" />
-    <ClInclude Include="Source\I_Shader.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\I_Texture.h" />
     <ClInclude Include="Source\JsonHandler.h" />

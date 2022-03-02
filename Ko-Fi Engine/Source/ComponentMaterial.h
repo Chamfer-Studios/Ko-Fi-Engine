@@ -26,7 +26,6 @@ public:
 	Material* GetMaterial() { return material; }
 	Shader* GetShader() { return shader; }
 
-	void LoadTexture(const char* path = "");
 	void LoadMaterial(const char* path = "");
 	
 	void Compile();

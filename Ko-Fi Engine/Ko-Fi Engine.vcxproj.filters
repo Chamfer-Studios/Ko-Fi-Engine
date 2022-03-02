@@ -355,9 +355,6 @@
     <ClCompile Include="Source\par_shapes.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\I_Shader.cpp">
-      <Filter>Source\Importers</Filter>
-    </ClCompile>
     <ClCompile Include="Source\I_Material.cpp">
       <Filter>Source\Importers</Filter>
     </ClCompile>
@@ -785,9 +782,6 @@
     </ClInclude>
     <ClInclude Include="Source\par_shapes.h">
       <Filter>Source\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\I_Shader.h">
-      <Filter>Source\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Material.h">
       <Filter>Source\Importers</Filter>

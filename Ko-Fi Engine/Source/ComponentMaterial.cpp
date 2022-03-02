@@ -2,6 +2,8 @@
 #include "Material.h"
 #include "Texture.h"
 #include "Shader.h"
+#include "Importer.h"
+#include "I_Material.h"
 
 #include "JsonHandler.h"
 #include "ImGuiAppLog.h"
@@ -35,7 +37,9 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			{
 				std::string path = panelChooser->OnChooserClosed();
 
-				LoadTexture(path.c_str());
+				Texture texture;
+				Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
+				textures.push_back(texture);
 			}
 		}
 
@@ -46,10 +50,12 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 				std::string path = panelChooser->OnChooserClosed();
 				for (Texture& tex : textures)
 				{
-					tex.SetTexturePath(path.c_str());
-
 					if (tex.textureID == currentTextureId)
-						tex.SetUpTexture();
+					{
+						Texture texture;
+						Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
+						textures.push_back(texture);
+					}
 				}
 			}
 		}
@@ -143,14 +149,6 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-void ComponentMaterial::LoadTexture(const char* path)
-{
-	Texture texture;
-	texture.SetTexturePath(path);
-	texture.SetUpTexture();
-	textures.push_back(texture);
-}
-
 bool ComponentMaterial::LoadDefaultMaterial()
 {
 	bool ret = false;
@@ -168,7 +166,9 @@ bool ComponentMaterial::LoadDefaultMaterial()
 
 		material->materialName = jsonMaterial.at("name").get<std::string>();
 		material->SetMaterialPath(defaultMaterialPath.c_str());
-		LoadTexture(0);
+		Texture texture;
+		Importer::GetInstance()->textureImporter->Import(0, &texture);
+		textures.push_back(texture);
 
 		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
 		albedoTint->value =
@@ -211,12 +211,15 @@ void ComponentMaterial::LoadMaterial(const char* path)
 			std::string texturePath = texturePaths.at(i);
 			if (textures.empty())
 			{
-				LoadTexture(texturePath.c_str());
+				Texture texture;
+				Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
+				textures.push_back(texture);
 			}
-			else
+			else if (texturePath != textures[i].GetTexturePath())
 			{
-				if (texturePath != textures[i].GetTexturePath())
-					LoadTexture(texturePath.c_str());
+				Texture texture;
+				Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
+				textures.push_back(texture);
 			}
 		}
 
@@ -310,5 +313,66 @@ void ComponentMaterial::Save(Json& json) const
 
 void ComponentMaterial::Load(Json& json)
 {
-	// TODO: load what we are saving
+	if (!json.empty())
+	{
+		material = new Material();
+		material->materialName = json["material_name"];
+		material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
+		material->SetShaderPath(json.at("shader_path").get<std::string>().c_str());
+		std::vector<float> values = json["color"].get<std::vector<float>>();
+		material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
+		values.clear();
+
+		for (const auto& tex : json.at("textures").items())
+		{
+			Texture t = Texture();
+			Importer::GetInstance()->textureImporter->Import(tex.value().at("path").get<std::string>().c_str(), &t);
+			textures.push_back(t);
+		}
+		for (const auto& uni : json.at("uniforms").items())
+		{
+			std::string uniformName = uni.value().at("name").get<std::string>();
+			uint uniformType = uni.value().at("type").get<uint>();
+			switch (uniformType)
+			{
+			case GL_FLOAT:
+			{
+				UniformT<float>* uniform = (UniformT<float>*)material->FindUniform(uniformName);
+				uniform->value = uni.value().at("value");
+			}
+			break;
+			case GL_FLOAT_VEC2:
+			{
+				UniformT<float2>* uniform = (UniformT<float2>*)material->FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+			}
+			break;
+			case GL_FLOAT_VEC3:
+			{
+				UniformT<float3>* uniform = (UniformT<float3>*)material->FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+				uniform->value.z = uni.value().at("value").at("z");
+			}
+			break;
+			case GL_FLOAT_VEC4:
+			{
+				UniformT<float4>* uniform = (UniformT<float4>*)material->FindUniform(uniformName);
+				uniform->value.x = uni.value().at("value").at("x");
+				uniform->value.y = uni.value().at("value").at("y");
+				uniform->value.z = uni.value().at("value").at("z");
+				uniform->value.w = uni.value().at("value").at("w");
+			}
+			break;
+			case GL_INT:
+			{
+				UniformT<int>* uniform = (UniformT<int>*)material->FindUniform(uniformName);
+				uniform->value = uni.value().at("value");
+			}
+			break;
+			}
+		}
+		// TODO: LOAD SHADER
+	}
 }

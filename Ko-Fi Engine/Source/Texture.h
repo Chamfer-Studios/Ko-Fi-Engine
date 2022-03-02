@@ -13,14 +13,12 @@ public:
 	~Texture();
 
 	inline const char* GetTexturePath() { return path.c_str(); }
-	inline void SetTexturePath(const char* path) { path = path; }
+	inline void SetTexturePath(const char* path) { this->path = path; }
 
 	inline uint GetTextureId() { return textureID; }
 	inline int GetTextureWidth() { return width; }
 	inline int GetTextureHeight() { return height; }
 	inline int GetNrChannels() { return nrChannels; }
-
-	void SetUpTexture();
 
 public:
 	uint textureID = -1;

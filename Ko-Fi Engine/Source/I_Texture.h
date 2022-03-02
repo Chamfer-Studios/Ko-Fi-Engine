@@ -11,7 +11,6 @@ public:
 
 	bool Import(const char* path, Texture* texture);
 	bool Save(const Texture* texture, const char* path);
-	bool Load(const char* path, Texture* texture);
 };
 
 #endif // !__I_TEXTURE_H__
