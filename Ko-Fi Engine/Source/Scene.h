@@ -76,7 +76,7 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
 	{
-		GameObject* go = new GameObject(gameObjectList.size(), engine);
+		GameObject* go = new GameObject(gameObjectList.size(), engine, name);
 		this->gameObjectList.push_back(go);
 		this->rootGo->AttachChild(go);
 

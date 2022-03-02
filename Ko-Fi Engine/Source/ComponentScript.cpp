@@ -12,7 +12,6 @@
 #include <fstream>
 #include "MathGeoLib/Math/float2.h"
 
-
 ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
@@ -22,15 +21,15 @@ ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 
 	handler = new Scripting();
 
+	handler->gameObject = owner;
 	handler->componentTransform = owner->GetTransform();
-
 	handler->SetUpVariableTypes();
-
 }
 
 ComponentScript::~ComponentScript()
 {
-
+	delete(handler);
+	handler = nullptr;
 }
 
 bool ComponentScript::Start()
@@ -85,6 +84,7 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 			{
 				script = handler->lua.load_file(fullName);
 				script();
+
 				isRunning = true;
 			}
 			if (ImGui::Button("Stop")) // This will be an event call
@@ -99,7 +99,7 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 		}
 	}
 
-	if (owner->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (owner->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN)
 	{
 		LoadScript();
 	}

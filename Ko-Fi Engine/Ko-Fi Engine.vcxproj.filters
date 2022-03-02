@@ -797,7 +797,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Source\Movement.lua">
+    <None Include="Source\Player.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="Source\GameState.lua">
