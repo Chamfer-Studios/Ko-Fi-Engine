@@ -51,10 +51,7 @@ bool ComponentScript::Update(float dt)
 {
 	if (isRunning && active)
 	{
-		math::float2 goTo = math::float2(0, -2); // TODO: replace with mouse pos on click
-		owner->GetEngine()->GetScripting()->lua["Update"](dt, goTo.x, goTo.y, (int)owner->GetEngine()->GetInput()->GetMouseButton(1), (int)owner->GetEngine()->GetInput()->GetMouseButton(3));
-		//componentTransform->SetPosition(float3((float)owner->GetEngine()->GetScripting()->lua["posX"], (float)owner->GetEngine()->GetScripting()->lua["posY"], (float)owner->GetEngine()->GetScripting()->lua["posZ"]));
-		//variables = owner->GetEngine()->GetScripting()->lua["ToShowInPanel"]();
+		owner->GetEngine()->GetScripting()->lua["Update"](dt);
 	}
 	return true;
 }
@@ -93,6 +90,11 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 			if (ImGui::Button("Stop")) // This will be an event call
 			{
 				isRunning = false;
+			}
+			if (ImGui::Button("Fetch")) // This will be an event call
+			{
+				float3 dest = float3(0, 0.2, -2);
+				owner->GetEngine()->GetScripting()->lua["SetDestination"](dest);
 			}
 		}
 	}
