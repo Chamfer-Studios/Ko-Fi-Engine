@@ -20,7 +20,6 @@ public:
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 	bool LoadScript();
-	void SetUpVariableTypes();
 
 public:
 	sol::load_result script;
@@ -32,8 +31,7 @@ private:
 	bool isRunning = false; // Temp
 	bool scriptLoaded = false;
 
-	GameObject* parent = nullptr;
-	ComponentTransform* componentTransform = nullptr;
+	Scripting* handler = nullptr;
 };
 
 #endif // __COMPONENT_SCRIPT_H__

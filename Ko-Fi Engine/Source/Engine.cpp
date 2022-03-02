@@ -9,7 +9,6 @@
 #include "FileSystem.h"
 #include "ViewportFrameBuffer.h"
 #include "Importer.h"
-#include "Scripting.h"
 #include "Defs.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
@@ -33,7 +32,6 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
 	viewportBuffer = new ViewportFrameBuffer(this);
-	scripting = new Scripting(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -44,7 +42,6 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneManager);
 	AddModule(viewportBuffer);
 	AddModule(editor);
-	AddModule(scripting);
 
 	// Render last to swap buffer
 	AddModule(renderer);
@@ -404,9 +401,4 @@ FileSystem* KoFiEngine::GetFileSystem()const
 ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
 {
 	return this->viewportBuffer;
-}
-
-Scripting* KoFiEngine::GetScripting()const
-{
-	return this->scripting;
 }

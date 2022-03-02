@@ -16,7 +16,6 @@ class Camera3D;
 class Editor;
 class FileSystem;
 class ViewportFrameBuffer;
-class Scripting;
 
 class KoFiEngine
 {
@@ -56,7 +55,6 @@ public:
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
 	ViewportFrameBuffer* GetViewportFrameBuffer() const;
-	Scripting* GetScripting() const;
 
 private:
 	// Add a new module to handle
@@ -90,7 +88,6 @@ private:
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
 	ViewportFrameBuffer* viewportBuffer = nullptr;
-	Scripting* scripting = nullptr;
 
 private:
 	int argc;

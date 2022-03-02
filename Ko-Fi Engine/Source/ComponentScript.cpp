@@ -20,11 +20,11 @@ ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 	owner->numScripts++;
 	numScript = owner->numScripts;
 
-	//fileName = "Movement.lua"; // Temp
+	handler = new Scripting();
 
-	componentTransform = owner->GetTransform();
+	handler->componentTransform = owner->GetTransform();
 
-	SetUpVariableTypes();
+	handler->SetUpVariableTypes();
 
 }
 
@@ -43,7 +43,7 @@ bool ComponentScript::Start()
 
 bool ComponentScript::CleanUp()
 {
-
+	handler->CleanUp();
 	return true;
 }
 
@@ -51,7 +51,7 @@ bool ComponentScript::Update(float dt)
 {
 	if (isRunning && active)
 	{
-		owner->GetEngine()->GetScripting()->lua["Update"](dt);
+		handler->lua["Update"](dt);
 	}
 	return true;
 }
@@ -74,16 +74,16 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 			if (isRunning)
 			{
-				float s = owner->GetEngine()->GetScripting()->lua["speed"];
+				float s = handler->lua["speed"];
 				if (ImGui::DragFloat("Speed", &s))
 				{
-					owner->GetEngine()->GetScripting()->lua["speed"] = s;
+					handler->lua["speed"] = s;
 				}
 			}
 			
 			if (ImGui::Button("Run")) // This will be an event call
 			{
-				script = owner->GetEngine()->GetScripting()->lua.load_file(fullName);
+				script = handler->lua.load_file(fullName);
 				script();
 				isRunning = true;
 			}
@@ -91,10 +91,10 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 			{
 				isRunning = false;
 			}
-			if (ImGui::Button("Fetch")) // This will be an event call
+			if (ImGui::Button("Fetch") && isRunning) // This will be an event call
 			{
 				float3 dest = float3(0, 0.2, -2);
-				owner->GetEngine()->GetScripting()->lua["SetDestination"](dest);
+				handler->lua["SetDestination"](dest);
 			}
 		}
 	}
@@ -119,36 +119,4 @@ bool ComponentScript::LoadScript()
 	}
 
 	return true;
-}
-
-void ComponentScript::SetUpVariableTypes()
-{
-	// Here we give lua certain data structures and variables
-
-	// float3 structure
-	owner->GetEngine()->GetScripting()->lua.new_usertype<float3>("float3",
-		sol::constructors<void(), void(float, float, float)>(),
-		"x", &float3::x,
-		"y", &float3::y,
-		"z", &float3::z
-		);
-
-	// GameObject structure
-	owner->GetEngine()->GetScripting()->lua.new_usertype<GameObject>("GameObject",
-		sol::constructors<void()>(),
-		"active", &GameObject::active
-		);
-
-	// Transform structure
-	owner->GetEngine()->GetScripting()->lua.new_usertype<ComponentTransform>("ComponentTransform",
-		sol::constructors<void(GameObject*)>(),
-		"GetPosition", &ComponentTransform::GetPosition,
-		"SetPosition", &ComponentTransform::SetPosition
-		/*,
-		"y", &ComponentTransform::GetPosition.y,
-		"z", ComponentTransform->GetPosition().z*/
-		);
-
-	// Transform
-	owner->GetEngine()->GetScripting()->lua["componentTransform"] = componentTransform;
 }
