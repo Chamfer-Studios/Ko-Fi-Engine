@@ -424,7 +424,12 @@ Json SceneManager::SaveComponentImage(ComponentImage* componentImage)
 
 Json SceneManager::SaveComponentButton(ComponentButton* componentButton)
 {
-	return Json();
+	Json jsonComponentButton;
+	jsonComponentButton["idleTexture"] = componentButton->GetIdleTexture().GetTexturePath();
+	jsonComponentButton["hoverTexture"] = componentButton->GetHoverTexture().GetTexturePath();
+	jsonComponentButton["pressedTexture"] = componentButton->GetPressedTexture().GetTexturePath();
+
+	return jsonComponentButton;
 }
 
 Json SceneManager::SaveComponentText(ComponentText* componentText)
@@ -775,6 +780,14 @@ void SceneManager::LoadComponentImage(ComponentImage* componentImage, Json jsonC
 
 void SceneManager::LoadComponentButton(ComponentButton* componentButton, Json jsonComponentButton)
 {
+	std::string path = jsonComponentButton["idleTexture"].get<std::string>();
+	componentButton->SetIdleTexture(path.c_str());
+
+	path = jsonComponentButton["hoverTexture"].get<std::string>();
+	componentButton->SetHoverTexture(path.c_str());
+
+	path = jsonComponentButton["pressedTexture"].get<std::string>();
+	componentButton->SetPressedTexture(path.c_str());
 }
 
 void SceneManager::LoadComponentText(ComponentText* componentText, Json jsonComponentText)

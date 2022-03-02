@@ -115,9 +115,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("IDLETextureButton")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
-				FreeTextures(BUTTON_STATE::IDLE);
-				idleOpenGLTexture.SetUpTexture(path);
-				//idleSDLTexture = LoadTexture(path.c_str());
+				SetIdleTexture(path.c_str());
 			}
 		}
 
@@ -141,9 +139,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("HOVERTextureButton")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
-				FreeTextures(BUTTON_STATE::HOVER);
-				hoverOpenGLTexture.SetUpTexture(path);
-				//hoverSDLTexture = LoadTexture(path.c_str());
+				SetHoverTexture(path.c_str());
 			}
 		}
 
@@ -167,9 +163,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("PRESSEDTextureButton")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
-				FreeTextures(BUTTON_STATE::PRESSED);
-				pressedOpenGLTexture.SetUpTexture(path);
-				//pressedSDLTexture = LoadTexture(path.c_str());
+				SetPressedTexture(path.c_str());
 			}
 		}
 
@@ -214,6 +208,24 @@ SDL_Texture* const ComponentButton::LoadSurface(SDL_Surface* surface)
 
 	return texture;
 }*/
+
+void ComponentButton::SetIdleTexture(const char* path)
+{
+	FreeTextures(BUTTON_STATE::IDLE);
+	idleOpenGLTexture.SetUpTexture(path);
+}
+
+void ComponentButton::SetHoverTexture(const char* path)
+{
+	FreeTextures(BUTTON_STATE::HOVER);
+	hoverOpenGLTexture.SetUpTexture(path);
+}
+
+void ComponentButton::SetPressedTexture(const char* path)
+{
+	FreeTextures(BUTTON_STATE::PRESSED);
+	pressedOpenGLTexture.SetUpTexture(path);
+}
 
 void ComponentButton::FreeTextures(BUTTON_STATE type)
 {

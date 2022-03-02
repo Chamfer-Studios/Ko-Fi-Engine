@@ -1,7 +1,7 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 9,
+        "game_objects_amount": 10,
         "game_objects_list": [
             {
                 "active": true,
@@ -568,7 +568,8 @@
                 "active": true,
                 "children_id_list": [
                     6,
-                    8
+                    8,
+                    9
                 ],
                 "components_list": [
                     {
@@ -641,6 +642,46 @@
                 "id": 8,
                 "is3D": false,
                 "name": "Text",
+                "parent": 7
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "transform2d",
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -359.0,
+                            288.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ]
+                    },
+                    {
+                        "component_type": "button",
+                        "hoverTexture": "Assets/Textures/baker_house.png",
+                        "idleTexture": "Assets/Textures/checker.png",
+                        "pressedTexture": "Assets/Textures/Building_V01_C.png"
+                    }
+                ],
+                "id": 9,
+                "is3D": false,
+                "name": "Button",
                 "parent": 7
             }
         ],

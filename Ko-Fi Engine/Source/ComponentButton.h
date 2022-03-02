@@ -32,6 +32,14 @@ public:
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 
+	Texture GetIdleTexture() { return idleOpenGLTexture; };
+	Texture GetHoverTexture() { return hoverOpenGLTexture; };
+	Texture GetPressedTexture() { return pressedOpenGLTexture; };
+
+	void SetIdleTexture(const char* path);
+	void SetHoverTexture(const char* path);
+	void SetPressedTexture(const char* path);
+
 private:
 	enum class BUTTON_STATE {
 		IDLE,
@@ -43,13 +51,8 @@ private:
 
 	void FreeTextures(BUTTON_STATE type);
 
-	//SDL_Texture* idleSDLTexture = nullptr;
 	Texture idleOpenGLTexture;
-
-	//SDL_Texture* hoverSDLTexture = nullptr;
 	Texture hoverOpenGLTexture;
-
-	//SDL_Texture* pressedSDLTexture = nullptr;
 	Texture pressedOpenGLTexture;
 
 	BUTTON_STATE state = BUTTON_STATE::IDLE;
