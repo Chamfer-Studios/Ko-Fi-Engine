@@ -34,10 +34,11 @@ public:
 	void UseShader();
 	void DeleteShader();
 
+	inline const char* GetMaterialPath() const { return shaderPath.c_str(); }
+	inline void SetMaterialPath(const char* name) { this->shaderPath = name; }
+
 	inline const char* GetShaderPath() const { return shaderPath.c_str(); }
 	inline void SetShaderPath(const char* name) { this->shaderPath = name; }
-
-	//inline void SetColor(Color color) { diffuseColor = color; }
 
 public:
 	uint shaderProgramID;
@@ -46,8 +47,9 @@ public:
 	Color diffuseColor;
 
 	std::string materialName;
-	std::string materialPath;
 
+private:
+	std::string materialPath;
 	std::string shaderPath;
 };
 

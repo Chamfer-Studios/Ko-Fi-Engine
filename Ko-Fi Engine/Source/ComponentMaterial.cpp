@@ -167,7 +167,7 @@ bool ComponentMaterial::LoadDefaultMaterial()
 		ret = true;
 
 		material->materialName = jsonMaterial.at("name").get<std::string>();
-		material->materialPath = defaultMaterialPath;
+		material->SetMaterialPath(defaultMaterialPath.c_str());
 		LoadTexture(0);
 
 		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
@@ -193,7 +193,7 @@ void ComponentMaterial::LoadMaterial(const char* path)
 	Json jsonMaterial;
 
 	if (materialPath.empty())
-		ret = jsonHandler.LoadJson(jsonMaterial, material->materialPath.c_str());
+		ret = jsonHandler.LoadJson(jsonMaterial, material->GetMaterialPath());
 	else
 		ret = jsonHandler.LoadJson(jsonMaterial, materialPath.c_str());
 
@@ -201,7 +201,10 @@ void ComponentMaterial::LoadMaterial(const char* path)
 	{
 		ret = true;
 		material->materialName = jsonMaterial.at("name").get<std::string>();
-		material->materialPath = materialPath.empty() ? material->materialPath : materialPath;
+
+		if (!materialPath.empty())
+			material->SetMaterialPath(materialPath.c_str());
+
 		std::vector<std::string> texturePaths = jsonMaterial.at("textures");
 		for (int i = 0; i < texturePaths.size(); i++)
 		{
@@ -237,7 +240,7 @@ void ComponentMaterial::Save(Json& json) const
 {
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
-	json["material_path"] = material->materialPath;
+	json["material_path"] = material->GetMaterialPath();
 	json["material_name"] = material->materialName;
 	json["shader_path"] = material->GetShaderPath();
 

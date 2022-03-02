@@ -12,7 +12,7 @@ public:
 	~I_Mesh();
 
 	bool Import(const aiMesh* aiMesh, Mesh* mesh);
-	bool Save(const Mesh* mesh, const char* buffer);
+	bool Save(const Mesh* mesh, const char* path);
 	bool Load(const char* path, Mesh* mesh);
 };
 
