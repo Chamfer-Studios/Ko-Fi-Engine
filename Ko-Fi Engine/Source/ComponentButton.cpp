@@ -15,10 +15,14 @@
 ComponentButton::ComponentButton(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::BUTTON;
+	glGenFramebuffers(1, &fboId);
 }
 
 ComponentButton::~ComponentButton()
 {
+	FreeTextures(BUTTON_STATE::IDLE);
+	FreeTextures(BUTTON_STATE::HOVER);
+	FreeTextures(BUTTON_STATE::PRESSED);
 }
 
 bool ComponentButton::Update()
@@ -85,8 +89,6 @@ bool ComponentButton::PostUpdate(float dt)
 		rect.h = 0;
 	}
 
-	GLuint fboId = 0;
-	glGenFramebuffers(1, &fboId);
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
 	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture.GetTextureId(), 0);
 
@@ -119,6 +121,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("IDLETextureButton")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
+				FreeTextures(BUTTON_STATE::IDLE);
 				idleOpenGLTexture.SetUpTexture(path);
 				idleSDLTexture = LoadTexture(path.c_str());
 			}
@@ -144,6 +147,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("HOVERTextureButton")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
+				FreeTextures(BUTTON_STATE::HOVER);
 				hoverOpenGLTexture.SetUpTexture(path);
 				hoverSDLTexture = LoadTexture(path.c_str());
 			}
@@ -169,6 +173,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("PRESSEDTextureButton")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
+				FreeTextures(BUTTON_STATE::PRESSED);
 				pressedOpenGLTexture.SetUpTexture(path);
 				pressedSDLTexture = LoadTexture(path.c_str());
 			}
@@ -214,4 +219,32 @@ SDL_Texture* const ComponentButton::LoadSurface(SDL_Surface* surface)
 	}
 
 	return texture;
+}
+
+void ComponentButton::FreeTextures(BUTTON_STATE type)
+{
+	GLuint id = 0;
+	switch (type) {
+	case BUTTON_STATE::IDLE:
+		if (idleSDLTexture != nullptr)
+			SDL_DestroyTexture(idleSDLTexture);
+		id = idleOpenGLTexture.GetTextureId();
+		if (id != 0)
+			glDeleteTextures(1, &id);
+		break;
+	case BUTTON_STATE::HOVER:
+		if (hoverSDLTexture != nullptr)
+			SDL_DestroyTexture(hoverSDLTexture);
+		id = hoverOpenGLTexture.GetTextureId();
+		if (id != 0)
+			glDeleteTextures(1, &id);
+		break;
+	case BUTTON_STATE::PRESSED:
+		if (pressedSDLTexture != nullptr)
+			SDL_DestroyTexture(pressedSDLTexture);
+		id = pressedOpenGLTexture.GetTextureId();
+		if (id != 0)
+			glDeleteTextures(1, &id);
+		break;
+	}
 }

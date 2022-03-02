@@ -9,6 +9,7 @@
 
 ComponentCanvas::ComponentCanvas(GameObject* parent) : ComponentTransform2D(parent)
 {
+	type = ComponentType::CANVAS;
 	logicalSize = { 1920, 1080 };
 }
 

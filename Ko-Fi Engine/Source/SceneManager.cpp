@@ -7,6 +7,11 @@
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
+#include "ComponentCanvas.h"
+#include "ComponentTransform2D.h"
+#include "ComponentImage.h"
+#include "ComponentButton.h"
+#include "ComponentText.h"
 #include "Editor.h"
 
 #include "Defs.h"
@@ -350,6 +355,31 @@ Json SceneManager::SaveComponentCamera(ComponentCamera* componentCamera)
 	return jsonComponentCamera;
 }
 
+Json SceneManager::SaveComponentCanvas(ComponentCanvas* componentCanvas)
+{
+	return Json();
+}
+
+Json SceneManager::SaveComponentTransform2D(ComponentTransform2D* componentTransform2D)
+{
+	return Json();
+}
+
+Json SceneManager::SaveComponentImage(ComponentImage* componentImage)
+{
+	return Json();
+}
+
+Json SceneManager::SaveComponentButton(ComponentButton* componentButton)
+{
+	return Json();
+}
+
+Json SceneManager::SaveComponentText(ComponentText* componentText)
+{
+	return Json();
+}
+
 // Serialize and save scene into a .json file
 bool SceneManager::SaveScene(Scene* scene)
 {
@@ -407,6 +437,27 @@ bool SceneManager::SaveScene(Scene* scene)
 			case ComponentType::CAMERA:
 				jsonComponent = SaveComponentCamera((ComponentCamera*)component);
 				jsonComponent["component_type"] = "camera";
+				break;
+			case ComponentType::CANVAS:
+				jsonComponent = SaveComponentCanvas((ComponentCanvas*)component);
+				jsonComponent["component_type"] = "canvas";
+				break;
+			case ComponentType::TRANSFORM2D:
+				jsonComponent = SaveComponentTransform2D((ComponentTransform2D*)component);
+				jsonComponent["component_type"] = "transform2d";
+				break;
+			case ComponentType::IMAGE:
+				jsonComponent = SaveComponentImage((ComponentImage*)component);
+				jsonComponent["component_type"] = "image";
+				break;
+			case ComponentType::BUTTON:
+				jsonComponent = SaveComponentButton((ComponentButton*)component);
+				jsonComponent["component_type"] = "button";
+				break;
+			case ComponentType::TEXT:
+				jsonComponent = SaveComponentText((ComponentText*)component);
+				jsonComponent["component_type"] = "text";
+				break;
 			default:
 				break;
 			}
@@ -578,6 +629,26 @@ void SceneManager::LoadComponentCamera(ComponentCamera* componentCamera, Json js
 	componentCamera->frustumCulling = jsonComponentCamera.at("frustum_culling");
 }
 
+void SceneManager::LoadComponentCanvas(ComponentCanvas* componentCanvas, Json jsonComponentCanvas)
+{
+}
+
+void SceneManager::LoadComponentTransform2D(ComponentTransform2D* componentTransform2D, Json jsonComponentTransform2D)
+{
+}
+
+void SceneManager::LoadComponentImage(ComponentImage* componentImage, Json jsonComponentImage)
+{
+}
+
+void SceneManager::LoadComponentButton(ComponentButton* componentButton, Json jsonComponentButton)
+{
+}
+
+void SceneManager::LoadComponentText(ComponentText* componentText, Json jsonComponentText)
+{
+}
+
 // Load scene from a .json file
 bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 {
@@ -639,6 +710,16 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						component = gameObject->GetComponent<ComponentInfo>();
 					else if (componentString == "camera")
 						component = gameObject->GetComponent<ComponentCamera>();
+					else if (componentString == "canvas")
+						component = gameObject->GetComponent<ComponentCanvas>();
+					else if (componentString == "transform2d")
+						component = gameObject->GetComponent<ComponentTransform2D>();
+					else if (componentString == "image")
+						component = gameObject->GetComponent<ComponentImage>();
+					else if (componentString == "button")
+						component = gameObject->GetComponent<ComponentButton>();
+					else if (componentString == "text")
+						component = gameObject->GetComponent<ComponentText>();
 
 					// IF THE COMPONENT ALREADY EXISTS, IT'LL BE UPDATED
 					if (component != nullptr)
@@ -657,6 +738,21 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						case ComponentType::CAMERA:
 							LoadComponentCamera((ComponentCamera*)component, jsonComponent);
 							break;
+						case ComponentType::CANVAS:
+							LoadComponentCanvas((ComponentCanvas*)component, jsonComponent);
+							break;
+						case ComponentType::TRANSFORM2D:
+							LoadComponentTransform2D((ComponentTransform2D*)component, jsonComponent);
+							break;
+						case ComponentType::IMAGE:
+							LoadComponentImage((ComponentImage*)component, jsonComponent);
+							break;
+						case ComponentType::BUTTON:
+							LoadComponentButton((ComponentButton*)component, jsonComponent);
+							break;
+						case ComponentType::TEXT:
+							LoadComponentText((ComponentText*)component, jsonComponent);
+							break;
 						default:
 							break;
 						}
@@ -672,6 +768,16 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 							component = gameObject->GetComponent<ComponentInfo>();
 						else if (componentString == "camera")
 							component = gameObject->CreateComponent<ComponentCamera>();
+						else if (componentString == "canvas")
+							component = gameObject->CreateComponent<ComponentCanvas>();
+						else if (componentString == "transform2d")
+							component = gameObject->CreateComponent<ComponentTransform2D>();
+						else if (componentString == "image")
+							component = gameObject->CreateComponent<ComponentImage>();
+						else if (componentString == "button")
+							component = gameObject->CreateComponent<ComponentButton>();
+						else if (componentString == "text")
+							component = gameObject->CreateComponent<ComponentText>();
 
 						if (component != nullptr)
 						{
@@ -688,6 +794,22 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 								break;
 							case ComponentType::CAMERA:
 								LoadComponentCamera((ComponentCamera*)component, jsonComponent);
+								break;
+							case ComponentType::CANVAS:
+								LoadComponentCanvas((ComponentCanvas*)component, jsonComponent);
+								break;
+							case ComponentType::TRANSFORM2D:
+								LoadComponentTransform2D((ComponentTransform2D*)component, jsonComponent);
+								break;
+							case ComponentType::IMAGE:
+								LoadComponentImage((ComponentImage*)component, jsonComponent);
+								break;
+							case ComponentType::BUTTON:
+								LoadComponentButton((ComponentButton*)component, jsonComponent);
+								break;
+							case ComponentType::TEXT:
+								LoadComponentText((ComponentText*)component, jsonComponent);
+								break;
 							default:
 								break;
 							}
@@ -722,6 +844,16 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 						component = gameObject->GetComponent<ComponentInfo>();
 					else if (componentString == "camera")
 						component = gameObject->CreateComponent<ComponentCamera>();
+					else if (componentString == "canvas")
+						component = gameObject->CreateComponent<ComponentCanvas>();
+					else if (componentString == "transform2d")
+						component = gameObject->CreateComponent<ComponentTransform2D>();
+					else if (componentString == "image")
+						component = gameObject->CreateComponent<ComponentImage>();
+					else if (componentString == "button")
+						component = gameObject->CreateComponent<ComponentButton>();
+					else if (componentString == "text")
+						component = gameObject->CreateComponent<ComponentText>();
 
 					if (component != nullptr)
 					{
@@ -738,6 +870,21 @@ bool SceneManager::LoadScene(Scene* scene, const char* sceneName)
 							break;
 						case ComponentType::CAMERA:
 							LoadComponentCamera((ComponentCamera*)component, jsonComponent);
+							break;
+						case ComponentType::CANVAS:
+							LoadComponentCanvas((ComponentCanvas*)component, jsonComponent);
+							break;
+						case ComponentType::TRANSFORM2D:
+							LoadComponentTransform2D((ComponentTransform2D*)component, jsonComponent);
+							break;
+						case ComponentType::IMAGE:
+							LoadComponentImage((ComponentImage*)component, jsonComponent);
+							break;
+						case ComponentType::BUTTON:
+							LoadComponentButton((ComponentButton*)component, jsonComponent);
+							break;
+						case ComponentType::TEXT:
+							LoadComponentText((ComponentText*)component, jsonComponent);
 							break;
 						default:
 							break;

@@ -33,12 +33,13 @@ public:
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 
-	SDL_Texture* SDLTexture;
-	GLuint openGLTexture;
+	SDL_Texture* SDLTexture = nullptr;
+	GLuint openGLTexture = 0;
 
 private:
 	GLuint SurfaceToOpenGLTexture(SDL_Surface* surface);
 	SDL_Texture* SurfaceToSDLTexture(SDL_Surface* surface);
+	void FreeTextures();
 
 	std::string textValue = "HELLO WORLD!";
 

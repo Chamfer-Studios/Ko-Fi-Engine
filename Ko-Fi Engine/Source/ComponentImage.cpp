@@ -29,6 +29,7 @@
 ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::IMAGE;
+	glGenFramebuffers(1, &fboId);
 }
 
 ComponentImage::~ComponentImage()
@@ -58,8 +59,6 @@ bool ComponentImage::PostUpdate(float dt)
 		rect.h = 0;
 	}
 
-	GLuint fboId = 0;
-	glGenFramebuffers(1, &fboId);
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
 	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture.GetTextureId(), 0);
 
@@ -92,7 +91,7 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("AddTextureImage")) {
 			if (panelChooser->OnChooserClosed() != nullptr) {
 				std::string path = panelChooser->OnChooserClosed();
-				//LoadTextureFromId(texture.textureID, path.c_str());
+				FreeTextures();
 				openGLTexture.SetUpTexture(path);
 				SDLTexture = LoadTexture(path.c_str());
 			}
@@ -140,6 +139,16 @@ SDL_Texture* const ComponentImage::LoadSurface(SDL_Surface* surface)
 	}
 
 	return texture;
+}
+
+void ComponentImage::FreeTextures()
+{
+	if (SDLTexture != nullptr)
+		SDL_DestroyTexture(SDLTexture);
+	if (openGLTexture.GetTextureId() != 0) {
+		GLuint id = openGLTexture.GetTextureId();
+		glDeleteTextures(1, &id);
+	}
 }
 
 /*void ComponentImage::OnLoad(const JSONReader& reader)

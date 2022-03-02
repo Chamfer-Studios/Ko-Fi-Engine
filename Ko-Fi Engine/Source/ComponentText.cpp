@@ -6,6 +6,7 @@
 #include "SDL_ttf.h"
 #include "Engine.h"
 #include "ImGuiAppLog.h"
+#include "imgui_stdlib.h"
 #include "Editor.h"
 #include "UI.h"
 
@@ -58,16 +59,8 @@ bool ComponentText::PostUpdate(float dt)
 bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Text")) {
-		// Texture display
-		ImGui::Text("Texture: ");
-		ImGui::SameLine();
-		if (openGLTexture == 0) // Supposedly there is no textureId = 0 in textures array
-		{
-			ImGui::Text("None");
-		}
-		else
-		{
-			ImGui::Image((ImTextureID)openGLTexture, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
+		if (ImGui::InputText("Value", &(textValue))) {
+			SetTextValue(textValue);
 		}
 	}
 
@@ -76,27 +69,22 @@ bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
 
 void ComponentText::SetTextValue(std::string newValue)
 {
+	FreeTextures();
+
 	textValue = newValue;
 	SDL_Color color = { 255, 255, 255, 255 };
 	uint colorAsDecimal = (color.r << 24) + (color.g << 16) + (color.b << 8) + (color.a);
 	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(owner->GetEngine()->GetUI()->rubik, textValue.c_str(), color);
-	/*SDL_Surface* converted = SDL_ConvertSurfaceFormat(srcSurface, SDL_PIXELFORMAT_RGBA8888, 0);
-	for (uint i = 0; i < converted->w; i++) {
-		for (uint j = 0; j < converted->h; j++) {
-			uint pixel = ((GLuint*)converted->pixels)[j * converted->w + i];
-			if (pixel != colorAsDecimal)
-				((GLuint*)converted->pixels)[j * converted->w + i] = 0;
-		}
-	}*/
-	SDL_Surface* dstSurface = SDL_CreateRGBSurface(0, srcSurface->w, srcSurface->h, 32, 0xff, 0xff00, 0xff0000, 0xff000000);
-	//SDL_SetSurfaceBlendMode(dstSurface, SDL_BLENDMODE_BLEND);
-	//SDL_SetSurfaceAlphaMod(dstSurface, 255);
-	//SDL_SetColorKey(dstSurface, SDL_TRUE, SDL_MapRGB(dstSurface->format, 255, 0, 255));
-	//SDL_Surface* converted = SDL_ConvertSurface(srcSurface, dstSurface->format, 0);
-	//SDL_SetColorKey(converted, SDL_TRUE, SDL_MapRGB(converted->format, 0, 255, 255));
-	//SDL_SetSurfaceBlendMode(converted, SDL_BLENDMODE_BLEND);
-	SDL_BlitSurface(srcSurface, NULL, dstSurface, NULL);
-	//appLog->AddLog("%d\n", ((GLuint*)dstSurface->pixels)[0]);
+
+	SDL_Surface* dstSurface = SDL_CreateRGBSurface(0, (srcSurface != nullptr ? srcSurface->w : 100), (srcSurface != nullptr ? srcSurface->h : 100), 32, 0xff, 0xff00, 0xff0000, 0xff000000);
+	if (srcSurface != nullptr) {
+		SDL_BlitSurface(srcSurface, NULL, dstSurface, NULL);
+	}
+	else {
+		SDL_Rect rect = { 0, 0, dstSurface->w, dstSurface->h };
+		Uint32 black = (255 << 24) + (0 << 16) + (0 << 8) + (0);
+		SDL_FillRect(dstSurface, &rect, black);
+	}
 
 	FILE* dstSurfaceFile = fopen("Assets/outputdst.txt", "wt");
 	int i, j, k = 0;
@@ -117,7 +105,6 @@ void ComponentText::SetTextValue(std::string newValue)
 
 	SDL_FreeSurface(srcSurface);
 	SDL_FreeSurface(dstSurface);
-	//SDL_FreeSurface(converted);
 }
 
 void ComponentText::SaveToFile(int width, int height)
@@ -197,4 +184,12 @@ SDL_Texture* ComponentText::SurfaceToSDLTexture(SDL_Surface* surface)
 	}
 
 	return texture;
+}
+
+void ComponentText::FreeTextures()
+{
+	if (SDLTexture != nullptr)
+		SDL_DestroyTexture(SDLTexture);
+	if (openGLTexture != 0)
+		glDeleteTextures(1, &openGLTexture);
 }

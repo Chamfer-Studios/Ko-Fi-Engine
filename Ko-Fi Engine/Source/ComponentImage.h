@@ -37,7 +37,10 @@ public:
 	Texture openGLTexture;
 
 private:
+	void FreeTextures();
+
 	float2 mask = { 1.0f, 1.0f };
+	GLuint fboId = 0;
 };
 
 #endif

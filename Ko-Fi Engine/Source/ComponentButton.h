@@ -39,6 +39,10 @@ private:
 		PRESSED
 	};
 
+	GLuint fboId = 0;
+
+	void FreeTextures(BUTTON_STATE type);
+
 	SDL_Texture* idleSDLTexture = nullptr;
 	Texture idleOpenGLTexture;
 
