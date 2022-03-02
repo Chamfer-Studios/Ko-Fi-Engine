@@ -34,25 +34,11 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 		return false;
 	}
 
-	// Dirty setting of the assets path.
-	//std::string dirPath = ASSETS_TEXTURES_PATH + App->fileSystem->GetLastDirectory(material->GetAssetsPath());
-
-	//std::string file = "";
-	//std::string fullPath = "";
-
-	//aiColor4D color;
-	//if (aiMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)															// Could also get specular and ambient occlusion colours.
-	//{
-	//	material->diffuseColor = Color(color.r, color.g, color.b, color.a);
-	//}
-
-	//aiString texPath;
-	//if (aiMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &texPath) == AI_SUCCESS)												// At the moment only DIFFUSE textures will be imported.
-	//{
-		//file = App->fileSystem->GetFileAndExtension(texPath.C_Str());
-		//fullPath = dirPath + file;
-		//material->materials.push_back(MaterialData(TextureType::DIFFUSE, 0, fullPath));
-	//}
+	aiColor4D color;
+	if (aiMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
+	{
+		material->diffuseColor = Color(color.r, color.g, color.b, color.a);
+	}
 
 	std::ifstream stream(SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION);
 	std::string line;

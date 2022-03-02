@@ -11,6 +11,7 @@
 #include "FileSystem.h"
 
 #include "Mesh.h"
+#include "Texture.h"
 
 #include "Importer.h"
 #include "I_Mesh.h"
@@ -217,10 +218,14 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
+	//for(){
 	aiString texturePath;
 	aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &texturePath);
 	std::string path = texturePath.C_Str();
-
+	Texture t = Texture();
+	Importer::GetInstance()->textureImporter->Import(path.c_str(), &t);
+	//}
+	
 	// Import Material to GameObject
 	ComponentMaterial* cMaterial = gameObj->CreateComponent<ComponentMaterial>();
 	if (path.size() > 0)
