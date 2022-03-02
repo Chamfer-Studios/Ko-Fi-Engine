@@ -429,7 +429,10 @@ Json SceneManager::SaveComponentButton(ComponentButton* componentButton)
 
 Json SceneManager::SaveComponentText(ComponentText* componentText)
 {
-	return Json();
+	Json jsonComponentText;
+	jsonComponentText["value"] = componentText->GetTextValue();
+
+	return jsonComponentText;
 }
 
 // Serialize and save scene into a .json file
@@ -776,6 +779,8 @@ void SceneManager::LoadComponentButton(ComponentButton* componentButton, Json js
 
 void SceneManager::LoadComponentText(ComponentText* componentText, Json jsonComponentText)
 {
+	std::string value = jsonComponentText["value"].get<std::string>();
+	componentText->SetTextValue(value);
 }
 
 // Load scene from a .json file

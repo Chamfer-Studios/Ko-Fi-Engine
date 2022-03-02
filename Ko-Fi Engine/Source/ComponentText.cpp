@@ -70,6 +70,9 @@ void ComponentText::SetTextValue(std::string newValue)
 	uint colorAsDecimal = (color.r << 24) + (color.g << 16) + (color.b << 8) + (color.a);
 	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(owner->GetEngine()->GetUI()->rubik, textValue.c_str(), color);
 
+	if (srcSurface == nullptr)
+		appLog->AddLog("%s\n", SDL_GetError());
+
 	SDL_Surface* dstSurface = SDL_CreateRGBSurface(0, (srcSurface != nullptr ? srcSurface->w : 100), (srcSurface != nullptr ? srcSurface->h : 100), 32, 0xff, 0xff00, 0xff0000, 0xff000000);
 	if (srcSurface != nullptr) {
 		SDL_BlitSurface(srcSurface, NULL, dstSurface, NULL);

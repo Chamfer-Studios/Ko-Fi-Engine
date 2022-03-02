@@ -27,6 +27,8 @@ UI::UI(KoFiEngine* engine) : Module()
 	this->engine = engine;
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 	renderer = SDL_CreateRenderer(engine->GetWindow()->window, -1, flags);
+	TTF_Init();
+	rubik = TTF_OpenFont("Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf", 60);
 }
 
 UI::~UI()
@@ -38,8 +40,6 @@ bool UI::Start()
 {
 
 
-	TTF_Init();
-	rubik = TTF_OpenFont("Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf", 60);
 
 	return true;
 }

@@ -27,6 +27,7 @@ public:
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void SetTextValue(std::string newValue);
+	std::string GetTextValue() { return textValue; };
 
 	void SaveToFile(int width, int height);
 
