@@ -97,7 +97,8 @@ void PanelTextEditor::LoadFile(std::string path)
 void PanelTextEditor::SaveFile(std::string path)
 {
 	editor->engine->GetFileSystem()->SaveFile(path.c_str(), textEditor.GetText());
-	for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
+	for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
 		if (go->GetComponent<ComponentMaterial>() != nullptr)
 		{
 			Material* material = go->GetComponent<ComponentMaterial>()->GetMaterial();
@@ -112,8 +113,6 @@ void PanelTextEditor::SaveFile(std::string path)
 void PanelTextEditor::Focus()
 {
 	ImGui::SetWindowFocus(panelName.c_str());
-
-
 }
 
 void PanelTextEditor::ChooserListener()

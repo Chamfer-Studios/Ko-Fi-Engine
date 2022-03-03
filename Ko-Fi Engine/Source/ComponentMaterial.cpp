@@ -1,8 +1,10 @@
 #include "ComponentMaterial.h"
 #include "Material.h"
+#include "Log.h"
 
 #include "Importer.h"
 #include "I_Material.h"
+#include "I_Texture.h"
 
 #include "JsonHandler.h"
 #include "ImGuiAppLog.h"
@@ -22,6 +24,7 @@ ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
 
+	material = nullptr;
 	currentTextureId = 0;
 }
 
@@ -33,9 +36,11 @@ void ComponentMaterial::Save(Json& json) const
 {
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
+	json["shader_path"] = material->GetShaderPath();
+	json["texture_path"] = texture.path;
+
 	//json["material_path"] = material->GetMaterialPath();
 	//json["material_name"] = material->materialName;
-	json["shader_path"] = material->GetShaderPath();
 
 	//Json jsonTex;
 	//json["textures"] = json::array();
@@ -44,7 +49,6 @@ void ComponentMaterial::Save(Json& json) const
 	//	jsonTex["path"] = tex.GetTexturePath();
 	//	json["textures"].push_back(jsonTex);
 	//}
-	json["texture_path"] = texture.path;
 
 	Json jsonUniform;
 	for (Uniform* uniform : material->uniforms)
@@ -111,12 +115,25 @@ void ComponentMaterial::Load(Json& json)
 		//material->materialName = json["material_name"];
 		//material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
 
-		material->SetShaderPath(json.at("shader_path").get<std::string>().c_str());
+		std::string shaderPath = json.at("shader_path").get<std::string>();
+		if (!shaderPath.empty())
+			material->SetShaderPath(shaderPath.c_str());
+		else
+		{
+			shaderPath = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+			material->SetShaderPath(shaderPath.c_str());
+		}
+
+		if (!Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material))
+		{
+			CONSOLE_LOG("[ERROR] Something went wrong loading the shader.");
+		}
 
 		std::vector<float> values = json["color"].get<std::vector<float>>();
 		material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
 		values.clear();
 
+		Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), &texture);
 		//for (const auto& tex : json.at("textures").items())
 		//{
 		//	Texture t = Texture();
@@ -168,7 +185,6 @@ void ComponentMaterial::Load(Json& json)
 			break;
 			}
 		}
-		// TODO: LOAD SHADER
 	}
 }
 
@@ -329,7 +345,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		//ImGui::Text("Material Name:");
 		//ImGui::SameLine();
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
-		ImGui::Text("Material Textures:");
+		ImGui::Text("Material Texture:");
 		//for (Texture& tex : textures)
 		if(texture.textureID != -1)
 		{

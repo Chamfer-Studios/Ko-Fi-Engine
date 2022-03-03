@@ -146,7 +146,7 @@ void SceneManager::OnPlay()
 	gameClockSpeed = timeScale;
 
 	// Serialize scene and save it as a .json
-	//SaveScene(currentScene);
+	Importer::GetInstance()->sceneImporter->Save(currentScene);
 }
 
 void SceneManager::OnPause()

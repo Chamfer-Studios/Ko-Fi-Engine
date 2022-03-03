@@ -68,7 +68,6 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 ComponentMesh::~ComponentMesh()
 {
 	RELEASE(mesh);
-	//RELEASE(materialComponent);
 }
 
 //void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
@@ -113,17 +112,19 @@ bool ComponentMesh::Update()
 bool ComponentMesh::PostUpdate(float dt)
 {
 	bool ret = true;
-	ComponentMaterial* cm = owner->GetComponent<ComponentMaterial>();
-	if (cm != nullptr)
+
+	ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
+
+	if (cMat != nullptr)
 	{
-		if (!cm->active)
+		if (!cMat->active)
 		{
 			glDisable(GL_TEXTURE_2D);
 		}
 
 		if (renderMesh)
 		{
-			uint shader = owner->GetComponent<ComponentMaterial>()->GetMaterial()->shaderProgramID;
+			uint shader = cMat->GetMaterial()->shaderProgramID;
 
 			glUseProgram(shader);
 
@@ -146,7 +147,6 @@ bool ComponentMesh::PostUpdate(float dt)
 			this->time += 0.02f;
 			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
 
-			ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
 			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 			{
 				switch (uniform->type)

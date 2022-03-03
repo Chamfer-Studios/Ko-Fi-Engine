@@ -16,6 +16,7 @@ Material::~Material()
 	glDeleteProgram(shaderProgramID);
 
 	uniforms.clear();
+	uniforms.shrink_to_fit();
 
 	shaderPath.clear();
 	shaderPath.shrink_to_fit();

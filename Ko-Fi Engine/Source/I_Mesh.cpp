@@ -112,7 +112,6 @@ bool I_Mesh::Load(const char* path, Mesh* mesh)
 	file.open(path, std::ios::binary);
 	if (file.is_open())
 	{
-		// TODO mesh = new Mesh();
 		file.read((char*)mesh, 4 * sizeof(unsigned));
 
 		mesh->indices = (uint*)malloc(mesh->indicesSizeBytes);
