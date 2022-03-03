@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __RENDERER_3D_H__
+#define __RENDERER_3D_H__
+
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
@@ -43,3 +45,5 @@ private:
 	// Debug ray for mouse picking
 	LineSegment ray;
 };
+
+#endif // !__RENDERER_3D_H__

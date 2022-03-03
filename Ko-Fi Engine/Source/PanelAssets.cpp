@@ -105,7 +105,7 @@ bool PanelAssets::Update()
 			if (ImGui::MenuItem("Material")) {
 				std::string fileName =  FileExistsMaterial("/material.milk",1);
 			
-				std::string path = currentDir.string() +fileName;
+				std::string path = currentDir.string() + fileName;
 				editor->engine->GetFileSystem()->CreateMaterial(path.c_str());
 			}
 			if (ImGui::MenuItem("Shader")) {
@@ -165,7 +165,7 @@ std::string PanelAssets::FileExistsMaterial(std::string fileName,int i)
 		name = "/material";
 		number = std::to_string(j);
 		ext = ".milk";
-		return FileExistsMaterial(name + " ("+number+") " + ext, j+1);
+		return FileExistsMaterial(name + " (" + number + ") " + ext, j + 1);
 	}
 	else {
 		return fileName;
@@ -179,16 +179,15 @@ std::string PanelAssets::FileExsistsShader(std::string fileName, int i)
 	std::string name = "";
 	std::string number = "";
 	std::string ext = "";
-	if (std::filesystem::exists(currentDir.string() + fileName)) {
+	if (std::filesystem::exists(currentDir.string() + fileName))
+	{
 		name = "/shader";
 		number = std::to_string(j);
 		ext = ".glsl";
 		return FileExsistsShader(name + " (" + number + ") " + ext, j + 1);
 	}
-	else {
+	else
 		return fileName;
-	}
+
 	return name + number + ext;
 }
-
-

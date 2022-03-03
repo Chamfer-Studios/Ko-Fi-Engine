@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "Engine.h"
-#include "Defs.h"
+#include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
@@ -10,7 +10,7 @@ Window::Window(KoFiEngine* engine) : Module()
 {
 	window = NULL;
 	screenSurface = NULL;
-	name.Create("Window");
+	name = "Window";
 	this->engine = engine;
 }
 

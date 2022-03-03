@@ -9,16 +9,21 @@
 #include <filesystem>
 #include <iomanip>
 #include "JsonHandler.h"
+
 FileSystem::FileSystem(KoFiEngine* engine)
 {
 	name = "ModelLoader";
+
 	std::string rootPathString = SDL_GetBasePath();
 	std::replace(rootPathString.begin(), rootPathString.end(), '\\', '/');
 	rootPath = rootPathString;
+
 	// Comment this for release path and uncomment when developing...
 	rootPath = rootPath.parent_path().parent_path();
+
 	// Comment this for release path and uncomment when developing...
 	AddPath("/Ko-Fi Engine/Ko-Fi");
+
 	this->engine = engine;
 
 	CONSOLE_LOG("Filesystem: %s", rootPath.string());
@@ -34,6 +39,7 @@ bool FileSystem::Awake()
 {
 	CONSOLE_LOG("Turning on FileSystem debugger...");
 	appLog->AddLog("Turning on FileSystem debugger...\n");
+
 	//Prepare filesystem
 	//std::filesystem::directory_entry().assign(addPath);
 	// Stream log messages to Debug window
@@ -126,24 +132,30 @@ void FileSystem::CreateMaterial(const char* path, const char* filename, const ch
 {
 	JsonHandler jsonHandler;
 	auto materialJson = R"(
-{
-    "name":"",
-    "path":"",
-	"textures":[""],
-    "uniforms":{
-       "albedoTint" :{
-           "x":1.0,
-           "y":1.0,
-           "z":1.0,
-           "w":1.0
-       }
-    }
-}
-)"_json;
+	{
+		"name" : "",
+		"path" : "",
+		"textures" : [""],
+		"uniforms" :
+		{
+			"albedoTint" :
+			{
+				"x":1.0,
+				"y":1.0,
+				"z":1.0,
+				"w":1.0
+			}
+		}
+	}
+	)"_json;
+
 	materialJson["name"] = filename;
+
 	auto texturesArray = json::array();
 	texturesArray.push_back(texturePath);
+
 	materialJson["textures"] = texturesArray;
+
 	jsonHandler.SaveJson(materialJson, path);
 }
 
@@ -151,57 +163,72 @@ void FileSystem::CreateMaterial(const char* path)
 {
 	JsonHandler jsonHandler;
 	auto materialJson = R"(
-{
-    "name":"",
-    "path":"",
-  "textures":[""],
-    "uniforms":{
-       "albedoTint" :{
-           "x":1.0,
-           "y":1.0,
-           "z":1.0,
-           "w":1.0
-       }
-    }
-}
-)"_json;
+	{
+		"name" : "",
+		"path" : "",
+		"textures" : [""],
+		"uniforms" : 
+		{
+			"albedoTint" :
+			{
+				"x":1.0,
+				"y":1.0,
+				"z":1.0,
+				"w":1.0
+			}
+		}
+	}
+	)"_json;
+
 	materialJson["name"] = "default";
+	materialJson["path"] = path;
+
 	jsonHandler.SaveJson(materialJson, path);
 }
 
 void FileSystem::CreateShader(const char* path)
 {
 	const char* text = R"(
-#shader vertex
-#version 330 core
-layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 normals;
-layout (location = 2) in vec2 texCoord;
-out vec4 ourColor;
-out vec2 TexCoord;
-uniform mat4 model_matrix;
-uniform mat4 view;
-uniform mat4 projection;
-uniform vec4 albedoTint;
-void main()
-{
-gl_Position = projection * view * model_matrix * vec4(position, 1.0f);
-ourColor = albedoTint;
-TexCoord = texCoord;
-}
+	#shader vertex
+	#version 330 core
 
-#shader fragment
-#version 330 core
-in vec4 ourColor;
-in vec2 TexCoord;
-out vec4 color;
-uniform sampler2D ourTexture;
-void main()
-{
-      color = texture(ourTexture, TexCoord)*ourColor;
-}
-)";
+	layout (location = 0) in vec3 position;
+	layout (location = 1) in vec3 normals;
+	layout (location = 2) in vec2 texCoord;
+
+	out vec4 ourColor;
+	out vec2 TexCoord;
+
+	uniform mat4 model_matrix;
+	uniform mat4 view;
+	uniform mat4 projection;
+	uniform vec4 albedoTint;
+
+	void main()
+	{
+		gl_Position = projection * view * model_matrix * vec4(position, 1.0f);
+		ourColor = albedoTint;
+		TexCoord = texCoord;
+	}
+
+	#shader fragment
+	#version 330 core
+
+	in vec4 ourColor;
+	in vec2 TexCoord;
+
+	out vec4 color;
+
+	uniform sampler2D ourTexture;
+
+	void main()
+	{
+		color = texture(ourTexture, TexCoord)*ourColor;
+	}
+	)";
+
 	SDL_assert(path != nullptr);
+
 	std::ofstream stream(path, std::ios::trunc);
 	SDL_assert(stream.is_open());
 	try
@@ -215,6 +242,4 @@ void main()
 		appLog->AddLog("Error while Saving File: %c\n", e.what());
 	}
 	stream.close();
-
 }
-

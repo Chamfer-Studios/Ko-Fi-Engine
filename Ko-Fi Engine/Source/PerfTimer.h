@@ -1,7 +1,7 @@
 #ifndef __PERFTIMER_H__
 #define __PERFTIMER_H__
 
-#include "Defs.h"
+#include "Globals.h"
 #include "SDL_timer.h"
 
 class PerfTimer
@@ -36,4 +36,4 @@ private:
 	uint64 frequency;
 };
 
-#endif //__PERFTIMER_H__
+#endif // !__PERFTIMER_H__

@@ -65,16 +65,12 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Create Game Object"))
 			{
-
 				editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-
 			}
 			if (ImGui::MenuItem("Create Camera"))
 			{
-
-				GameObject* camera = Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
-				camera->CreateComponent<ComponentCamera>();
-
+				//GameObject* camera = Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
+				//camera->CreateComponent<ComponentCamera>();
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
@@ -127,16 +123,14 @@ bool MainBar::PostUpdate()
 	return true;
 }
 
-void MainBar::ImportModel() {
-
-
+void MainBar::ImportModel()
+{
 	if (editor->GetPanelChooser()->IsReadyToClose("MainBar"))
 	{
 		const char* file = editor->GetPanelChooser()->OnChooserClosed();
 		if (file != nullptr)
 		{
-			Importer::GetInstance()->ImportModel(file);
-			//editor->engine->GetFileSystem()->GameObjectFromMesh(newFile.c_str(), editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
+			Importer::GetInstance()->sceneImporter->Import(file);
 		}
 	}
 }

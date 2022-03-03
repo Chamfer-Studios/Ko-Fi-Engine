@@ -85,7 +85,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
@@ -117,8 +117,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -204,12 +204,17 @@
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\Importer.cpp" />
     <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\I_Material.cpp" />
+    <ClCompile Include="Source\I_Mesh.cpp" />
+    <ClCompile Include="Source\I_Scene.cpp" />
+    <ClCompile Include="Source\I_Texture.cpp" />
     <ClCompile Include="Source\JsonHandler.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MainBar.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
+    <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\PanelAssets.cpp" />
@@ -217,8 +222,11 @@
     <ClCompile Include="Source\PanelNodeEditor.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
+    <ClCompile Include="Source\par_shapes.cpp" />
+    <ClCompile Include="Source\Resource.cpp" />
+    <ClCompile Include="Source\ResourceManager.cpp" />
+    <ClCompile Include="Source\RNG.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
-    <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\ViewportFrameBuffer.cpp" />
@@ -237,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\Assimp.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
@@ -249,7 +258,6 @@
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
     <ClInclude Include="Source\Engine.h" />
-    <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\EngineConfig.h" />
     <ClInclude Include="Source\External\imgui\Extras\Markdown\imgui_markdown.h" />
     <ClInclude Include="Source\External\imgui\imconfig.h" />
@@ -335,12 +343,17 @@
     <ClInclude Include="Source\External\sol\forward.hpp" />
     <ClInclude Include="Source\External\sol\sol.hpp" />
     <ClInclude Include="Source\External\stb_image\stb_image.h" />
+    <ClInclude Include="Source\FSDefs.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Graph.h" />
     <ClInclude Include="Source\ImGuiAppLog.h" />
     <ClInclude Include="Source\Importer.h" />
+    <ClInclude Include="Source\I_Material.h" />
+    <ClInclude Include="Source\I_Mesh.h" />
+    <ClInclude Include="Source\I_Scene.h" />
     <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\I_Texture.h" />
     <ClInclude Include="Source\JsonHandler.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Log.h" />
@@ -348,6 +361,7 @@
     <ClInclude Include="Source\FileSystem.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\MaterialNode.h" />
+    <ClInclude Include="Source\MathGeoTransform.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
@@ -358,10 +372,12 @@
     <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\PanelTextEditor.h" />
+    <ClInclude Include="Source\par_shapes.h" />
+    <ClInclude Include="Source\Resource.h" />
+    <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Scripting.h" />
-    <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Vec1Node.h" />
@@ -379,7 +395,6 @@
     <ClInclude Include="Source\Renderer3D.h" />
     <ClInclude Include="Source\RNG.h" />
     <ClInclude Include="Source\SceneIntro.h" />
-    <ClInclude Include="Source\SString.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>

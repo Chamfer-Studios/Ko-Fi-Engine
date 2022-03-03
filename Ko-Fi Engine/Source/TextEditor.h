@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __TEXT_EDITOR_H__
+#define __TEXT_EDITOR_H__
 
 #include <string>
 #include <vector>
@@ -387,3 +388,5 @@ private:
 
 	float mLastClick;
 };
+
+#endif // !__TEXT_EDITOR_H__

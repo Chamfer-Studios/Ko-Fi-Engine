@@ -40,7 +40,6 @@ bool PanelViewport::Update()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove))
 	{
-
 		editor->scenePanelOrigin = ImGui::GetWindowPos();
 		editor->scenePanelOrigin.x += ImGui::GetWindowContentRegionMin().x;
 		editor->scenePanelOrigin.y += ImGui::GetWindowContentRegionMin().y;
@@ -64,19 +63,19 @@ bool PanelViewport::Update()
 		if (ImGui::IsMouseClicked(1)) ImGui::SetWindowFocus();
 		isFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
 
-		if (ImGui::BeginDragDropTarget()) {
+		if (ImGui::BeginDragDropTarget())
+		{
 			const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSETS_ITEM");
-			if (payload != nullptr) {
+			if (payload != nullptr)
+			{
 				if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
 				{
 					const char* path = (const char*)payload->Data;
-					Importer::GetInstance()->ImportModel(path);
+					Importer::GetInstance()->sceneImporter->Import(path);
 				}
 			}
 			ImGui::EndDragDropTarget();
-
 		}
-
 	}
 	ImGui::End();
 	ImGui::PopStyleVar();

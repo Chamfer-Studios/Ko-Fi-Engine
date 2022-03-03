@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __VIEWPORT_FRAME_BUFFER_H__
+#define __VIEWPORT_FRAME_BUFFER_H__
+
 #include "Module.h"
 #include "Globals.h"
 
@@ -25,3 +27,5 @@ public:
 
 	KoFiEngine* engine = nullptr;
 };
+
+#endif // !__VIEWPORT_FRAME_BUFFER_H__

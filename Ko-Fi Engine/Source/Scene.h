@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Importer.h"
 #include "Engine.h"
+#include "RNG.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
@@ -61,11 +62,11 @@ public:
 		return true;
 	}
 
-	GameObject* GetGameObject(int id)
+	GameObject* GetGameObject(int uid)
 	{
 		for (GameObject* go : gameObjectList)
 		{
-			if (go->GetId() == id)
+			if (go->GetUID() == uid)
 			{
 				return go;
 			}
@@ -76,7 +77,7 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr)
 	{
-		GameObject* go = new GameObject(gameObjectList.size(), engine, name);
+		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name);
 		this->gameObjectList.push_back(go);
 		if (parent)
 			parent->AttachChild(go);
@@ -90,7 +91,7 @@ public:
 	{
 		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
 		{
-			if ((*it)->GetId() == gameObject->GetId())
+			if ((*it)->GetUID() == gameObject->GetUID())
 			{
 				gameObjectList.erase(it);
 				break;
@@ -147,7 +148,7 @@ public:
 	}
 
 public:
-	SString name;
+	std::string name;
 	bool active;
 
 	KoFiEngine* engine = nullptr;
@@ -159,4 +160,4 @@ public:
 	LineSegment ray;
 };
 
-#endif // __SCENE_H__
+#endif // !__SCENE_H__

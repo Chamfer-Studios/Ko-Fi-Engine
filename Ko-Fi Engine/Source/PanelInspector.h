@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PANEL_INSPECTOR_H__
+#define __PANEL_INSPECTOR_H__
+
 #include "Panel.h"
 
 class Editor;
@@ -21,6 +23,8 @@ private:
 
 	// Bools for the different options
 	bool debugOptions = false;
-		bool drawVertexNormals = false;
-		bool drawFacesNormals = false;
+	bool drawVertexNormals = false;
+	bool drawFacesNormals = false;
 };
+
+#endif // !__PANEL_INSPECTOR_H__
