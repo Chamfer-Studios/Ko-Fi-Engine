@@ -803,5 +803,8 @@
     <None Include="Source\GameState.lua">
       <Filter>Scripts</Filter>
     </None>
+    <None Include="Bullet.lua">
+      <Filter>Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

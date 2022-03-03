@@ -384,6 +384,7 @@
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bullet.lua" />
     <None Include="Source\GameState.lua" />
     <None Include="Source\Player.lua" />
   </ItemGroup>

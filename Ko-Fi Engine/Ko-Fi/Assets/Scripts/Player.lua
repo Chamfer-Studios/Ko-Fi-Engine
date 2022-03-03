@@ -4,9 +4,6 @@ print("Player.lua loaded")
 speed = 3  -- consider Start()
 
 bullets = {}
---table.setn(bullets, 100)
-
-i = 1
 
 -- Methods:
 -- Called each loop iteration
@@ -19,15 +16,23 @@ function Update(dt)
 	mLeftButton = GetMouseButton(1)
 	mRightButton = GetMouseButton(3)
 
-	if(mLeftButton == KEY_STATE.KEY_DOWN) then
-		Fire()
+	if(mRightButton == KEY_STATE.KEY_DOWN) then
+		CreateBullet()
 	end
 
 end
 
-function PostUpdate(dt)
+function SetBulletDirection(bullet, parent)
 	
-	return 
+	local playerPos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
+	local bulletPos2D = { bullet:GetTransform():GetPosition().x, bullet:GetTransform():GetPosition().z }
+	local dir = { bulletPos2D[1] - playerPos2D[1], bulletPos2D[2] - playerPos2D[2] }
+	local dist = Distance(playerPos2D, bulletPos2D)
+	dir = Normalize(dir, dist)
+	
+	dir3 = float3.new(dir[1], 0, dir[2])
+	bullet:GetTransform():SetFront(dir3)
+
 end
 
 -- Move to destination
@@ -47,28 +52,24 @@ function Move(dt)
 
 end
 
-function Fire()
-
-	print("Bang!")
-
-	CreateBullet()
-	--local bullet = CreateBullet()
-	--bullet.name = "Bullet " ..i
-	--i = i + 1
-	--print(bullet.name)
-	--table.insert(bullets, bullet)
-
-	
-
-end
-
 function SetDestination(dest)
 	destination = dest
 end
 
+--math
+function Normalize(vec, distance)
+    
+	vec[1] = vec[1] / distance
+	vec[2] = vec[2] / distance
+
+	return vec
+end
+
 function Distance(a, b)
+
     local dx, dy = a[1] - b[1], a[2] - b[2]
     return math.sqrt(dx * dx + dy * dy)
+
 end
 
 print("Player.lua compiled succesfully")

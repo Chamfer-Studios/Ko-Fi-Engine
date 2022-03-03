@@ -21,6 +21,7 @@ public:
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 	bool LoadScript();
+	void SetRunning(const bool& setTo);
 
 public:
 	sol::load_result script; // Check if it can be private

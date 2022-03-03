@@ -94,11 +94,28 @@ bool SceneIntro::PostUpdate(float dt)
 	}
 	for (GameObject* parent : gameObjectListToCreate)
 	{
-		GameObject* bullet = CreateEmptyGameObject("Bullet", parent);
+		GameObject* bullet = CreateEmptyGameObject("Bullet");
 		parent->GetComponent<ComponentScript>()->handler->lua["bullet"] = bullet;
 		parent->GetComponent<ComponentScript>()->handler->lua.script("table.insert(bullets, bullet)");
 		parent->GetComponent<ComponentScript>()->handler->lua.script("print(bullets[1]:GetTransform():GetPosition().x)");
 
+		bullet->GetTransform()->SetScale(float3(0.025, 0.05, 0.08));
+		float3 pos = parent->GetTransform()->GetPosition();
+		bullet->GetTransform()->SetPosition(float3(pos.x, pos.y + 1, pos.z));
+		bullet->GetTransform()->SetRotation(parent->GetTransform()->GetRotation());
+
+		ComponentMesh* componentMesh = bullet->CreateComponent<ComponentMesh>();
+		Mesh* mesh = gameObjectList.at(2)->GetComponent<ComponentMesh>()->GetMesh();
+		componentMesh->SetMesh(mesh);
+
+		ComponentMaterial* componentMaterial = bullet->CreateComponent<ComponentMaterial>();
+		componentMaterial->LoadTexture();
+
+		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
+		componentScript->script = componentScript->handler->lua.load_file("../Source/Bullet.lua");
+		componentScript->script();
+		componentScript->SetRunning(true);
+		parent->GetComponent<ComponentScript>()->handler->lua["SetBulletDirection"](bullet);
 	}
 	gameObjectListToCreate.clear();
 	engine->GetRenderer()->DrawRay();

@@ -117,7 +117,6 @@ bool ComponentScript::LoadScript()
 {
 	if (scriptLoaded) return false;
 
-	fullName = "../Source/" + fileName + ".lua";
 	std::ifstream file(fullName.c_str());
 	if (file.good())
 	{
@@ -125,4 +124,10 @@ bool ComponentScript::LoadScript()
 	}
 
 	return true;
+}
+
+void ComponentScript::SetRunning(const bool& setTo)
+{
+	if (setTo != isRunning)
+		isRunning = setTo;
 }

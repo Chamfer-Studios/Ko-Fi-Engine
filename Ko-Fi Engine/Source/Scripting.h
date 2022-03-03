@@ -66,7 +66,9 @@ public:
 			"GetRotation", &ComponentTransform::GetRotation,
 			"SetRotation", &ComponentTransform::SetRotation,
 			"GetScale",	   &ComponentTransform::GetScale,
-			"SetScale",	   &ComponentTransform::SetScale
+			"SetScale",	   &ComponentTransform::SetScale,
+			"GetFront",	   &ComponentTransform::Front,
+			"SetFront",	   &ComponentTransform::SetFront
 			);
 
 

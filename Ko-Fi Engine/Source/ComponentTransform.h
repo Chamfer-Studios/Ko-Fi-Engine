@@ -24,6 +24,7 @@ public:
 	inline const float3& Right() const { return right; }
 	inline const float3& Up() const { return up; }
 	inline const float3& Front() const { return front; }
+	void SetFront(const float3& front) { this->front = front; }
 
 	void NewAttachment();
 	void OnParentMoved();
