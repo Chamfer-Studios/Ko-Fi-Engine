@@ -30,7 +30,6 @@ public:
 
 	bool InspectorDraw(PanelChooser* chooser);
 
-private:
 	bool LoadDefaultMaterial();
 
 public:

@@ -1,6 +1,9 @@
-#pragma once
-#include "Globals.h"
+#ifndef __SCRIPTING_H__
+#define __SCRIPTING_H__
 
+
+
+#include "Globals.h"
 #include "Engine.h"
 #include "Input.h" 
 #include "SceneManager.h"
@@ -8,12 +11,12 @@
 
 #include "Log.h"
 #include "ImGuiAppLog.h"
-
+#include "MathGeoLib/Math/float3.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
-
 #include <lua.hpp>
 #include <sol.hpp>
+
 
 class Scripting
 {
@@ -57,7 +60,7 @@ public:
 			"GetTransform", &GameObject::GetTransform
 			);
 
-
+		
 		// Transform structure
 		lua.new_usertype<ComponentTransform>("ComponentTransform",
 			sol::constructors<void(GameObject*)>(),
@@ -103,3 +106,5 @@ public:
 	GameObject* gameObject = nullptr;
 	ComponentTransform* componentTransform = nullptr;
 };
+
+#endif // !__SCRIPTING_H__

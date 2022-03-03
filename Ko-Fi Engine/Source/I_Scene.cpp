@@ -119,7 +119,7 @@ const aiNode* I_Scene::ImportTransform(const aiNode* assimpNode, GameObject* chi
 	}
 
 	child->GetComponent<ComponentTransform>()->SetPosition(position);
-	child->GetComponent<ComponentTransform>()->SetRotation(rotation);
+	child->GetComponent<ComponentTransform>()->SetRotationQuat(rotation);
 	child->GetComponent<ComponentTransform>()->SetScale(scale);
 
 	CONSOLE_LOG("[STATUS] Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());

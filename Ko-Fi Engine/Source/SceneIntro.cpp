@@ -12,6 +12,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
 #include "ComponentScript.h"
+#include "Material.h"
 #include "GameObject.h"
 #include "SceneManager.h"
 #include "node_editor.h"
@@ -108,8 +109,13 @@ bool SceneIntro::PostUpdate(float dt)
 		Mesh* mesh = gameObjectList.at(2)->GetComponent<ComponentMesh>()->GetMesh();
 		componentMesh->SetMesh(mesh);
 
+		
 		ComponentMaterial* componentMaterial = bullet->CreateComponent<ComponentMaterial>();
-		componentMaterial->LoadTexture();
+		Importer::GetInstance()->textureImporter->Import(nullptr,&componentMaterial->texture);
+		Material* material = new Material();
+		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
+		componentMaterial->SetMaterial(material);
+		
 
 		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
 		componentScript->script = componentScript->handler->lua.load_file("Assets/Scripts/Bullet.lua");

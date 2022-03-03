@@ -31,9 +31,9 @@ GameObject::GameObject()
 {
 	active = true;
 	//LoadModel(path);
-	this->name = "GameObject " + std::to_string(id);
+	this->name = "GameObject " + std::to_string(uid);
 
-	this->id = id;
+	this->uid = uid;
 	this->engine = engine;
 
 	CreateComponent<ComponentInfo>();

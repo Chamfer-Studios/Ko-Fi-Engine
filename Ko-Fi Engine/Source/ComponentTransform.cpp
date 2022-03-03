@@ -82,7 +82,7 @@ void ComponentTransform::SetRotation(const float3& newRotation)
 	isDirty = true;
 }
 
-void ComponentTransform::SetRotation(const Quat& newRotation)
+void ComponentTransform::SetRotationQuat(const Quat& newRotation)
 {
 	this->rotation = newRotation;
 	rotationEuler = newRotation.ToEulerXYZ() * RADTODEG;
@@ -152,7 +152,7 @@ void ComponentTransform::Load(Json& json)
 	values.clear();
 
 	values = json["rotation"].get<std::vector<float>>();
-	SetRotation(Quat(values[0], values[1], values[2], values[3]));
+	SetRotationQuat(Quat(values[0], values[1], values[2], values[3]));
 	values.clear();
 
 	values = json["scale"].get<std::vector<float>>();

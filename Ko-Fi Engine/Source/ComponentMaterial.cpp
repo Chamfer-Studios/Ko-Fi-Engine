@@ -255,17 +255,19 @@ bool ComponentMaterial::LoadDefaultMaterial()
 	//Json jsonMaterial;
 
 	//ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath.c_str());
-
+	
 	//if (!jsonMaterial.empty())
 	//{
 	//	ret = true;
-
+	//	Material* material = new Material();
+	//	//material->SetShaderPath(defaultMaterialPath);
+	//	Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(),material);
+	//	this->SetMaterial(material);
 	//	//material->materialName = jsonMaterial.at("name").get<std::string>();
 	//	//material->SetMaterialPath(defaultMaterialPath.c_str());
 	//	Texture texture;
 	//	Importer::GetInstance()->textureImporter->Import(0, &texture);
-	//	textures.push_back(texture);
-
+	//	this->texture = texture;
 	//	UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
 	//	albedoTint->value =
 	//	{
