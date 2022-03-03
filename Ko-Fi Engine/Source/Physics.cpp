@@ -117,3 +117,11 @@ bool Physics::CleanUp()
 
 	return true;
 }
+
+void Physics::AddActor(physx::PxActor* actor)
+{
+}
+
+void Physics::DeleteActor(physx::PxActor* actor)
+{
+}

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __COMPONENT_H__
+#define __COMPONENT_H__
+
 #include "imgui.h"
 #include "json.hpp"
 using nlohmann::json;
@@ -11,7 +13,8 @@ enum class ComponentType
 	MESH,
 	MATERIAL,
 	INFO,
-	CAMERA
+	CAMERA,
+	RIGID_BODY
 };
 
 class Component
@@ -28,10 +31,13 @@ public:
 	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
 	virtual void Disable() { active = false; }
 	ComponentType GetType() { return type; }
-	
+
 
 public:
 	bool active = true;
 	GameObject* owner;
 	ComponentType type;
 };
+
+#endif // !__COMPONENT_H__
+

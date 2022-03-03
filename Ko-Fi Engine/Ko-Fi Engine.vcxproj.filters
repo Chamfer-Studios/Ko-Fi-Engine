@@ -352,6 +352,9 @@
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Source\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentRigidBody.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1328,6 +1331,9 @@
     </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Source\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentRigidBody.h">
+      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

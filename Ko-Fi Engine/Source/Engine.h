@@ -56,6 +56,7 @@ public:
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
 	ViewportFrameBuffer* GetViewportFrameBuffer() const;
+	Physics* GetPhysics() const;
 
 private:
 	// Add a new module to handle

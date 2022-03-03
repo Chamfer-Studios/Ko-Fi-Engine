@@ -41,9 +41,11 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	//void AddActor(physx::PxActor* actor);
-	//void DeleteActor(physx::PxActor* actor);
+	void AddActor(physx::PxActor* actor);
+	void DeleteActor(physx::PxActor* actor);
 
+	// Getters & setters
+	inline physx::PxPhysics* GetPxPhysics() const { return physics; }
 
 private:
 	KoFiEngine* engine = nullptr;
