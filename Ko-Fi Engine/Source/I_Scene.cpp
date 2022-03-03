@@ -268,6 +268,8 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		CONSOLE_LOG("[ERROR] Importer: error while importing the material.");
 		return;
 	}
+	else
+		cMaterial->SetMaterial(material);
 
 	//if (textureFilename.size() > 0)
 	//{

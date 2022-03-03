@@ -31,8 +31,6 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 	centerPoint = float3::zero;
 	radius = 0.0f;
 	mesh = nullptr;
-	SetVertexNormals(false);
-	SetFaceNormals(false);
 	renderMesh = true;
 	time = 0.0f;
 }
