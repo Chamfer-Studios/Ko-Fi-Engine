@@ -86,6 +86,9 @@
     <Filter Include="Libs\PhysX">
       <UniqueIdentifier>{d0f948d0-4ad2-4262-9a39-3321cdcb7606}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Physics">
+      <UniqueIdentifier>{f9672267-00e4-430b-9bd2-c2aad4a948ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -347,7 +350,7 @@
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
-      <Filter>Source\Modules</Filter>
+      <Filter>Source\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -758,9 +761,6 @@
     </ClInclude>
     <ClInclude Include="Source\AdditionNode.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\PhysX_4.1\include\geomutils\GuContactBuffer.h">
       <Filter>Libs\PhysX</Filter>
@@ -1325,6 +1325,9 @@
     </ClInclude>
     <ClInclude Include="Source\External\PhysX_4.1\include\foundation\windows\PxWindowsIntrinsics.h">
       <Filter>Libs\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Source\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

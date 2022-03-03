@@ -8,18 +8,22 @@
 
 
 
-
 namespace physx
 {
+	class PxBase;
 	class PxFoundation;
 	class PxPhysics;
+	class PxCooking;
 	class PxScene;
 	class PxMaterial;
-	class PxRigidActor;
-	class PxSimulationEventCallback;
 	class PxActor;
-	class PxControllerManager;
-	class PxCooking;
+	class PxActorShape;
+	class PxRigidActor;
+	class PxRigidStatic;
+	class PxSimulationEventCallback;
+	class PxQueryFilterCallback;
+
+	typedef uint32_t PxU32;
 };
 
 class GameObject;
@@ -37,13 +41,21 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-
+	//void AddActor(physx::PxActor* actor);
+	//void DeleteActor(physx::PxActor* actor);
 
 
 private:
 	KoFiEngine* engine = nullptr;
 
 	physx::PxFoundation* foundation = nullptr;
+	physx::PxPhysics* physics = nullptr;
+	physx::PxCooking* cooking = nullptr;
+	physx::PxScene* scene = nullptr;
+
+	float gravity = 9.8f;
+
+	physx::PxU32 nbThreads = 4;
 };
 
 #endif // !__MODULE_PHYSICS_H__
