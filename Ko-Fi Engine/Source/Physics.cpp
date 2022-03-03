@@ -2,30 +2,6 @@
 
 #include "PxPhysicsAPI.h"
 
-#define NBTHREADS 4
-
-physx::PxFilterFlags SampleSubmarineFilterShader(
-	physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
-	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
-	physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
-{
-	// let triggers through
-	if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
-	{
-		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
-		return physx::PxFilterFlag::eDEFAULT;
-	}
-	// generate contacts for all that were not filtered above
-	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
-
-	// trigger the contact callback for pairs (A,B) where
-	// the filtermask of A contains the ID of B and vice versa.
-	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
-
-	return physx::PxFilterFlag::eDEFAULT;
-}
-
 // Module constructor
 Physics::Physics(KoFiEngine* engine) : Module()
 {
@@ -48,8 +24,6 @@ bool Physics::Start()
 	LOG("Initializing Module Physics ------------------------------------------------");
 
 	// PxFoundation object creation
-	// Note: PxDefaultErrorCallback: This PhysX class, had no constructor definition, so vs threw some errors on it.
-	// To fix it, I just defined empty constructors on that clas... I do not know if it will affect later
 	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
 	static physx::PxDefaultAllocator gDefaultAllocatorCallback;
 
@@ -83,20 +57,20 @@ bool Physics::Start()
 	// Scene description creation
 	physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
 	sceneDesc.gravity = physx::PxVec3(0.0f, -gravity, 0.0f);
-	sceneDesc.bounceThresholdVelocity = gravity * 0.2f;
-	//if (!sceneDesc.cpuDispatcher)
-	//{
-	//	PxCpuDispatcher* _cpuDispatcher = PxDefaultCpuDispatcherCreate(nbThreads);
-	//	if (!_cpuDispatcher)
-	//	{
-	//		LOG_BOTH("PxDefaultCpuDispatcherCreate failed!");
-	//		return false;
-	//	}
-	//	LOG_BOTH("PxDefaultCpuDispatcherCreate returned successfully!");
-	//	sceneDesc.cpuDispatcher = _cpuDispatcher;
-	//}
+	sceneDesc.bounceThresholdVelocity = gravity * 0.25f;
+	if (!sceneDesc.cpuDispatcher)
+	{
+		physx::PxCpuDispatcher* _cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(nbThreads);
+		if (!_cpuDispatcher)
+		{
+			LOG_BOTH("PxDefaultCpuDispatcherCreate failed!");
+			return false;
+		}
+		LOG_BOTH("PxDefaultCpuDispatcherCreate returned successfully!");
+		sceneDesc.cpuDispatcher = _cpuDispatcher;
+	}
 
-	sceneDesc.filterShader = SampleSubmarineFilterShader;
+	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 	scene = physics->createScene(sceneDesc);
 	if (!scene)
 	{
@@ -132,8 +106,9 @@ bool Physics::CleanUp()
 		physics->release();
 	if (cooking)
 		cooking->release();
-	if (scene)
-		scene->release();
+	// This pointer release crashes at cleaning, I suppose it is due physx itself does its own cleanup or something
+	/*if (scene)
+		scene->release();*/
 
 	foundation = nullptr;
 	physics = nullptr;
