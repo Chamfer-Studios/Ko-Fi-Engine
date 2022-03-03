@@ -23,7 +23,8 @@ public:
 	bool LoadScript();
 
 public:
-	sol::load_result script;
+	sol::load_result script; // Check if it can be private
+	Scripting* handler = nullptr;
 
 private:
 	std::string fileName;
@@ -32,7 +33,6 @@ private:
 	bool isRunning = false; // Temp
 	bool scriptLoaded = false;
 
-	Scripting* handler = nullptr;
 };
 
 #endif // __COMPONENT_SCRIPT_H__

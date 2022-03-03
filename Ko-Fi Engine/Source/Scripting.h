@@ -21,7 +21,7 @@ public:
 
 	Scripting()
 	{
-		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string, sol::lib::debug);
+		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, /*sol::lib::string,*/ sol::lib::debug);
 	}
 
 	~Scripting() {}
@@ -90,11 +90,9 @@ public:
 			return gameObject->GetEngine()->GetInput()->GetMouseButton(button);
 	}
 
-	GameObject* LuaCreateBullet()
+	void LuaCreateBullet()
 	{
-		GameObject* ret = gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-		gameObject->AttachChild(ret);
-		return ret;
+		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.push_back(gameObject);
 	}
 	
 

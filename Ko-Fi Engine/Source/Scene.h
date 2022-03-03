@@ -74,11 +74,14 @@ public:
 		return nullptr;
 	}
 
-	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
+	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr)
 	{
 		GameObject* go = new GameObject(gameObjectList.size(), engine, name);
 		this->gameObjectList.push_back(go);
-		this->rootGo->AttachChild(go);
+		if (parent)
+			parent->AttachChild(go);
+		else
+			this->rootGo->AttachChild(go);
 
 		return go;
 	}
@@ -149,6 +152,7 @@ public:
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
+	std::vector<GameObject*> gameObjectListToCreate;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
 

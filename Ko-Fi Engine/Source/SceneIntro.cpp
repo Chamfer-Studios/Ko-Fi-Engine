@@ -15,6 +15,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "ComponentScript.h"
 #include "GameObject.h"
 //#include "Importer.h"
 #include "SceneManager.h"
@@ -89,9 +90,17 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : gameObjectList)
 	{
-		go->PostUpdate(dt); // DIES HERE CAUSE HE CAN'T POSTUPDATE BULLET or in update
+		go->PostUpdate(dt); 
 	}
+	for (GameObject* parent : gameObjectListToCreate)
+	{
+		GameObject* bullet = CreateEmptyGameObject("Bullet", parent);
+		parent->GetComponent<ComponentScript>()->handler->lua["bullet"] = bullet;
+		parent->GetComponent<ComponentScript>()->handler->lua.script("table.insert(bullets, bullet)");
+		parent->GetComponent<ComponentScript>()->handler->lua.script("print(bullets[1]:GetTransform():GetPosition().x)");
 
+	}
+	gameObjectListToCreate.clear();
 	engine->GetRenderer()->DrawRay();
 	return true;
 }
