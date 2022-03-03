@@ -12,7 +12,7 @@
 GameObject::GameObject(uint uid, KoFiEngine* engine, const char* name)
 {
 	active = true;
-	//LoadModel(path);
+
 	if (name == nullptr)
 		this->name = "GameObject " + std::to_string(uid);
 	else

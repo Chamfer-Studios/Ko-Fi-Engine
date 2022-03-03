@@ -53,8 +53,8 @@ bool I_Scene::Import(const char* path)
 		return false;
 	}
 
-	fbxName = path;
-	fbxName = fbxName.substr(fbxName.find_last_of("/\\") + 1);
+	nodeName = path;
+	nodeName = nodeName.substr(nodeName.find_last_of("/\\") + 1);
 
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo);
 
@@ -72,13 +72,13 @@ GameObject* I_Scene::ImportModel(const char* path)
 
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent)
 {
-	fbxName = (assimpNode == assimpScene->mRootNode) ? fbxName : assimpNode->mName.C_Str();
-
-	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(fbxName.c_str());
+	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 
 	assimpNode = ImportTransform(assimpNode, gameObj);
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
 
+	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
+	gameObj->SetName(nodeName.c_str());
 	parent->AttachChild(gameObj);
 
 	for (unsigned int i = 0; i < assimpNode->mNumChildren; ++i)

@@ -38,7 +38,7 @@ private:
 private:
 	KoFiEngine* engine = nullptr;
 
-	std::string fbxName;
+	std::string nodeName;
 };
 
 #endif // !__I_SCENE_H__
