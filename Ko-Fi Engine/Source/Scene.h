@@ -77,7 +77,7 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
 	{
-		GameObject* go = new GameObject(RNG::GetRandomUint(), engine);
+		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name);
 		this->gameObjectList.push_back(go);
 		this->rootGo->AttachChild(go);
 

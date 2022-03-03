@@ -32,7 +32,7 @@ bool I_Texture::Import(const char* path, Texture* texture)
 		}
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		if (texture->textureID == 0)
+		if (texture->textureID == -1)
 			glGenTextures(1, &texture->textureID);
 
 		glBindTexture(GL_TEXTURE_2D, texture->textureID);
@@ -49,7 +49,7 @@ bool I_Texture::Import(const char* path, Texture* texture)
 	unsigned char* pixels = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	if (texture->textureID == 0)
+	if (texture->textureID == -1)
 		glGenTextures(1, &texture->textureID);
 
 	glBindTexture(GL_TEXTURE_2D, texture->textureID);

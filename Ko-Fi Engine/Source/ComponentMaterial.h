@@ -2,6 +2,7 @@
 #define __COMPONENT_MATERIAL_H__
 
 #include "Component.h"
+#include "Texture.h"
 #include <vector>
 #include <string>
 
@@ -12,7 +13,6 @@ using Json = nlohmann::json;
 
 class PanelChooser;
 class Material;
-class Texture;
 
 class ComponentMaterial : public Component
 {
@@ -34,7 +34,8 @@ private:
 	bool LoadDefaultMaterial();
 
 public:
-	std::vector<Texture> textures;
+	Texture texture;
+	//std::vector<Texture> textures;
 
 private:
 	Material* material = nullptr;

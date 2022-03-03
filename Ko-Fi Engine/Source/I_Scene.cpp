@@ -53,44 +53,12 @@ bool I_Scene::Import(const char* path)
 		return false;
 	}
 
-	//for (uint i = 0; i < assimpScene->mNumMeshes; ++i)
-	//{
-	//	aiMeshes.push_back(assimpScene->mMeshes[i]);
+	fbxName = path;
+	fbxName = fbxName.substr(fbxName.find_last_of("/\\") + 1);
 
-	//	uint matIndex = assimpScene->mMeshes[i]->mMaterialIndex;
-	//	if (matIndex >= 0)
-	//	{
-	//		aiMaterials.push_back(assimpScene->mMaterials[matIndex]);
-	//	}
-	//}
-
-	// Getting all the UIDs to force if imported asset already has a .meta file.
-	//App->resourceManager->GetForcedUIDsFromMeta(mesh->GetAssetPath(), Utilities::forcedUIDs);
-	
-	// Checking if R_Model* has a UID to be forced. Cast rModel to Resource?
-	//Utilities::CheckAndApplyForcedUID(mesh);
-	if (engine->GetSceneManager() != nullptr)
-	{
-		CONSOLE_LOG("POG");
-	}
-	if (engine->GetSceneManager()->GetCurrentScene() != nullptr)
-	{
-		CONSOLE_LOG("SADGE");
-	}
-	if (engine->GetSceneManager()->GetCurrentScene()->rootGo != nullptr)
-	{
-		CONSOLE_LOG("VERY POG");
-	}
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo);
 
-	//Utilities::ImportAnimations(assimpScene, mesh);
-
-	//Utilities::aiMeshes.clear();
-	//Utilities::aiMaterials.clear();
-	//Utilities::loadedNodes.clear();
-	//Utilities::loadedTextures.clear();
-
-	//Utilities::forcedUIDs.clear();
+	//ImportAnimations(assimpScene, mesh);
 
 	return true;
 }
@@ -104,7 +72,9 @@ GameObject* I_Scene::ImportModel(const char* path)
 
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent)
 {
-	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+	fbxName = (assimpNode == assimpScene->mRootNode) ? fbxName : assimpNode->mName.C_Str();
+
+	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(fbxName.c_str());
 
 	assimpNode = ImportTransform(assimpNode, gameObj);
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
@@ -254,7 +224,10 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	ComponentMaterial* cMaterial = gameObj->CreateComponent<ComponentMaterial>();
 
 	if (cMaterial != nullptr)
-		cMaterial->textures.push_back(texture);
+	{
+		//cMaterial->textures.push_back(texture);
+		cMaterial->texture = texture;
+	}
 	else
 	{
 		CONSOLE_LOG("[ERROR] Component Material is nullptr.");

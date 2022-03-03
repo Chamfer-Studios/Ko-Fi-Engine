@@ -29,8 +29,8 @@ public:
 	Uniform* FindUniform(std::string name);
 	void AddUniform(Uniform* uniform);
 
-	inline const char* GetMaterialPath() const { return shaderPath.c_str(); }
-	inline void SetMaterialPath(const char* name) { this->shaderPath = name; }
+	//inline const char* GetMaterialPath() const { return materialPath.c_str(); }
+	//inline void SetMaterialPath(const char* name) { this->materialPath = name; }
 
 	inline const char* GetShaderPath() const { return shaderPath.c_str(); }
 	inline void SetShaderPath(const char* name) { this->shaderPath = name; }
@@ -41,10 +41,10 @@ public:
 
 	Color diffuseColor;
 
-	std::string materialName;
+	//std::string materialName;
 
 private:
-	std::string materialPath;
+	//std::string materialPath;
 	std::string shaderPath;
 };
 

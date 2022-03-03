@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <string>
+
 #include "MathGeoLib/Geometry/AABB.h"
+
 //#include "Resource.h"
 #include "par_shapes.h"
 #include "Globals.h"
@@ -67,7 +69,7 @@ public:
 	AABB localAABB;
 
 	Shape meshType;
-	std::string path = "";
+	std::string path;
 
 private:
 	// Debug functions for drawing

@@ -1,6 +1,5 @@
 #include "ComponentMaterial.h"
 #include "Material.h"
-#include "Texture.h"
 
 #include "Importer.h"
 #include "I_Material.h"
@@ -22,6 +21,8 @@
 ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
+
+	currentTextureId = 0;
 }
 
 ComponentMaterial::~ComponentMaterial()
@@ -32,17 +33,18 @@ void ComponentMaterial::Save(Json& json) const
 {
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
-	json["material_path"] = material->GetMaterialPath();
-	json["material_name"] = material->materialName;
+	//json["material_path"] = material->GetMaterialPath();
+	//json["material_name"] = material->materialName;
 	json["shader_path"] = material->GetShaderPath();
 
-	Json jsonTex;
-	json["textures"] = json::array();
-	for (auto tex : textures)
-	{
-		jsonTex["path"] = tex.GetTexturePath();
-		json["textures"].push_back(jsonTex);
-	}
+	//Json jsonTex;
+	//json["textures"] = json::array();
+	//for (auto tex : textures)
+	//{
+	//	jsonTex["path"] = tex.GetTexturePath();
+	//	json["textures"].push_back(jsonTex);
+	//}
+	json["texture_path"] = texture.path;
 
 	Json jsonUniform;
 	for (Uniform* uniform : material->uniforms)
@@ -105,19 +107,23 @@ void ComponentMaterial::Load(Json& json)
 	if (!json.empty())
 	{
 		material = new Material();
-		material->materialName = json["material_name"];
-		material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
+
+		//material->materialName = json["material_name"];
+		//material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
+
 		material->SetShaderPath(json.at("shader_path").get<std::string>().c_str());
+
 		std::vector<float> values = json["color"].get<std::vector<float>>();
 		material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
 		values.clear();
 
-		for (const auto& tex : json.at("textures").items())
-		{
-			Texture t = Texture();
-			Importer::GetInstance()->textureImporter->Import(tex.value().at("path").get<std::string>().c_str(), &t);
-			textures.push_back(t);
-		}
+		//for (const auto& tex : json.at("textures").items())
+		//{
+		//	Texture t = Texture();
+		//	Importer::GetInstance()->textureImporter->Import(tex.value().at("path").get<std::string>().c_str(), &t);
+		//	textures.push_back(t);
+		//}
+
 		for (const auto& uni : json.at("uniforms").items())
 		{
 			std::string uniformName = uni.value().at("name").get<std::string>();
@@ -176,9 +182,7 @@ void ComponentMaterial::SetMaterial(Material* material)
 
 void ComponentMaterial::LoadMaterial(const char* path)
 {
-	bool ret = false;
-
-	std::string materialPath = path;
+	/*std::string materialPath = path;
 
 	JsonHandler jsonHandler;
 	Json jsonMaterial;
@@ -222,39 +226,39 @@ void ComponentMaterial::LoadMaterial(const char* path)
 			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
 			jsonMaterial.at("uniforms").at("albedoTint").at("w"),
 		};
-	};
+	};*/
 }
 
 bool ComponentMaterial::LoadDefaultMaterial()
 {
 	bool ret = false;
 
-	std::string defaultMaterialPath = "Library/Materials/default.milk";
+	//std::string defaultMaterialPath = "Library/Materials/default.milk";
 
-	JsonHandler jsonHandler;
-	Json jsonMaterial;
+	//JsonHandler jsonHandler;
+	//Json jsonMaterial;
 
-	ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath.c_str());
+	//ret = jsonHandler.LoadJson(jsonMaterial, defaultMaterialPath.c_str());
 
-	if (!jsonMaterial.empty())
-	{
-		ret = true;
+	//if (!jsonMaterial.empty())
+	//{
+	//	ret = true;
 
-		material->materialName = jsonMaterial.at("name").get<std::string>();
-		material->SetMaterialPath(defaultMaterialPath.c_str());
-		Texture texture;
-		Importer::GetInstance()->textureImporter->Import(0, &texture);
-		textures.push_back(texture);
+	//	//material->materialName = jsonMaterial.at("name").get<std::string>();
+	//	//material->SetMaterialPath(defaultMaterialPath.c_str());
+	//	Texture texture;
+	//	Importer::GetInstance()->textureImporter->Import(0, &texture);
+	//	textures.push_back(texture);
 
-		UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
-		albedoTint->value =
-		{
-			jsonMaterial.at("uniforms").at("x"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("y"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("z"),
-			jsonMaterial.at("uniforms").at("albedoTint").at("w"),
-		};
-	}
+	//	UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
+	//	albedoTint->value =
+	//	{
+	//		jsonMaterial.at("uniforms").at("x"),
+	//		jsonMaterial.at("uniforms").at("albedoTint").at("y"),
+	//		jsonMaterial.at("uniforms").at("albedoTint").at("z"),
+	//		jsonMaterial.at("uniforms").at("albedoTint").at("w"),
+	//	};
+	//}
 
 	return ret;
 }
@@ -263,31 +267,37 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Material"))
 	{
-		if (panelChooser->IsReadyToClose("AddTexture"))
-		{
-			if (panelChooser->OnChooserClosed() != nullptr)
-			{
-				std::string path = panelChooser->OnChooserClosed();
+		//if (panelChooser->IsReadyToClose("AddTexture"))
+		//{
+		//	if (panelChooser->OnChooserClosed() != nullptr)
+		//	{
+		//		std::string path = panelChooser->OnChooserClosed();
 
-				Texture texture;
-				Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
-				textures.push_back(texture);
-			}
-		}
+		//		Texture tex = Texture();
+		//		Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
+		//		textures.push_back(texture);
+		//	}
+		//}
 
 		if (panelChooser->IsReadyToClose("ChangeTexture"))
 		{
 			if (panelChooser->OnChooserClosed() != nullptr)
 			{
 				std::string path = panelChooser->OnChooserClosed();
-				for (Texture& tex : textures)
+				//for (Texture& tex : textures)
+				//{
+				//	if (tex.textureID == currentTextureId)
+				//	{
+				//		Texture tex;
+				//		Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
+				//		textures.push_back(texture);
+				//	}
+				//}
+				if (texture.textureID == currentTextureId)
 				{
-					if (tex.textureID == currentTextureId)
-					{
-						Texture texture;
-						Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
-						textures.push_back(texture);
-					}
+					Texture tex;
+					Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
+					texture = tex;
 				}
 			}
 		}
@@ -299,7 +309,11 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 				std::string path = panelChooser->OnChooserClosed();
 
 				if (material->shaderProgramID != 0)
+				{
 					glDeleteProgram(material->shaderProgramID);
+					material->uniforms.clear();
+					material->uniforms.shrink_to_fit();
+				}
 
 				if (!path.empty())
 					material->SetShaderPath(path.c_str());
@@ -312,27 +326,28 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			}
 		}
 
-		ImGui::Text("Material Name:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
+		//ImGui::Text("Material Name:");
+		//ImGui::SameLine();
+		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
 		ImGui::Text("Material Textures:");
-		for (Texture& tex : textures)
+		//for (Texture& tex : textures)
+		if(texture.textureID != -1)
 		{
-			ImGui::Image((ImTextureID)tex.textureID, ImVec2(85, 85));
+			ImGui::Image((ImTextureID)texture.textureID, ImVec2(85, 85));
 			ImGui::SameLine();
 			ImGui::BeginGroup();
-			ImGui::Text(tex.GetTexturePath());
-			ImGui::PushID(tex.textureID << 8);
+			ImGui::Text(texture.GetTexturePath());
+			ImGui::PushID(texture.textureID << 8);
 
 			if (ImGui::Button("Change Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png");
-				currentTextureId = tex.textureID;
+				currentTextureId = texture.textureID;
 			}
 
 			ImGui::PopID();
 
-			ImGui::PushID(tex.textureID << 16);
+			ImGui::PushID(texture.textureID << 16);
 
 			if (ImGui::Button("Delete Textures"))
 			{
@@ -342,8 +357,8 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			ImGui::EndGroup();
 		}
 
-		if (ImGui::Button("Add Texture"))
-			panelChooser->OpenPanel("AddTexture", "png");
+		//if (ImGui::Button("Add Texture"))
+		//	panelChooser->OpenPanel("AddTexture", "png");
 
 		ImGui::Separator();
 

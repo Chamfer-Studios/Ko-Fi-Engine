@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 #include <vector>
+#include <string>
 
 class KoFiEngine;
 class aiScene;
@@ -36,6 +37,8 @@ private:
 
 private:
 	KoFiEngine* engine = nullptr;
+
+	std::string fbxName;
 };
 
 #endif // !__I_SCENE_H__

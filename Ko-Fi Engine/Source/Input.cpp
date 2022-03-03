@@ -190,7 +190,10 @@ bool Input::PreUpdate(float dt)
 
 							ComponentMaterial* cMaterial = go->GetComponent<ComponentMaterial>();
 							if (cMaterial != nullptr)
-								cMaterial->textures.push_back(texture);
+							{
+								cMaterial->texture = texture;
+								//cMaterial->textures.push_back(texture);
+							}
 						}
 					}
 				}

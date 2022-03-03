@@ -1,16 +1,14 @@
 #include "Mesh.h"
 #include "Texture.h"
 
+#include "GameObject.h"
+#include "ComponentMaterial.h"
+
 // OpenGL / GLEW
 #include "glew.h"
-//#include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <iostream>
-#include "ComponentMaterial.h"
-#include "GameObject.h"
-
-#include "Globals.h"
 
 Mesh::Mesh(Shape shape)
 {
@@ -123,14 +121,17 @@ void Mesh::Draw(GameObject* owner)
 	// Texture
 	if (ComponentMaterial* cMaterial = owner->GetComponent<ComponentMaterial>())
 	{
-		for (Texture& tex : cMaterial->textures)
-		{
-			glBindTexture(GL_TEXTURE_2D, tex.textureID);
-		}
+		//for (Texture& tex : cMaterial->textures)
+		//{
+		//	glBindTexture(GL_TEXTURE_2D, tex.textureID);
+		//}
+		glBindTexture(GL_TEXTURE_2D, cMaterial->texture.GetTextureId());
 	}
 
 	glBindVertexArray(VAO);
+
 	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, 0);
+
 	DebugDraw();
 
 	// Unbind Texture
