@@ -20,7 +20,7 @@ public:
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
-	bool LoadScript();
+	bool LoadScript(std::string scriptPath);
 	void SetRunning(const bool& setTo);
 
 public:

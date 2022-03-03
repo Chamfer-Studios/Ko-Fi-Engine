@@ -8,6 +8,7 @@
 #include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "PanelChooser.h"
 #include "imgui_stdlib.h"
 #include <fstream>
 #include "MathGeoLib/Math/float2.h"
@@ -64,64 +65,60 @@ bool ComponentScript::PostUpdate(float dt)
 bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
-	
+
 	std::string headerName = "Script" + std::to_string(numScript);
 
 	if (ImGui::CollapsingHeader(headerName.c_str()))
 	{
-		if (!scriptLoaded)
-		{
-			ImGui::InputText("Script Name", &fileName);
+
+		if (chooser->IsReadyToClose("LoadScript")) {
+			if (chooser->OnChooserClosed() != nullptr) {
+				std::string path = chooser->OnChooserClosed();
+				fileName = path.substr(path.find_last_of('/')+1);
+				LoadScript(path);
+			}
 		}
-		else
+		if (ImGui::Button("Select Script")) {
+			chooser->OpenPanel("LoadScript", "lua");
+		}
+		ImGui::SameLine();
+		ImGui::Text(fileName.c_str());
+
+
+		if (isRunning)
 		{
-			ImGui::Text(fileName.c_str());
+			float s = handler->lua["speed"];
+			if (ImGui::DragFloat("Speed", &s))
+			{
+				handler->lua["speed"] = s;
+			}
+		}
 
-			if (isRunning)
-			{
-				float s = handler->lua["speed"];
-				if (ImGui::DragFloat("Speed", &s))
-				{
-					handler->lua["speed"] = s;
-				}
-			}
-			
-			if (ImGui::Button("Run")) // This will be an event call
-			{
-				script = handler->lua.load_file(fullName);
-				script();
+		if (ImGui::Button("Run")) // This will be an event call
+		{
 
-				isRunning = true;
-			}
-			if (ImGui::Button("Stop")) // This will be an event call
-			{
-				isRunning = false;
-			}
-			if (ImGui::Button("Fetch") && isRunning) // This will be an event call
-			{
-				float3 dest = float3(0, 0.2, -2);
-				handler->lua["SetDestination"](dest);
-			}
+			script();
+
+			isRunning = true;
+		}
+		if (ImGui::Button("Stop")) // This will be an event call
+		{
+			isRunning = false;
+		}
+		if (ImGui::Button("Fetch") && isRunning) // This will be an event call
+		{
+			float3 dest = float3(0, 0.2, -2);
+			handler->lua["SetDestination"](dest);
 		}
 	}
 
-	if (owner->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN)
-	{
-		LoadScript();
-	}
 
 	return ret;
 }
 
-bool ComponentScript::LoadScript()
+bool ComponentScript::LoadScript(std::string path)
 {
-	if (scriptLoaded) return false;
-
-	std::ifstream file(fullName.c_str());
-	if (file.good())
-	{
-		scriptLoaded = true;
-	}
+	script = handler->lua.load_file(path);
 
 	return true;
 }

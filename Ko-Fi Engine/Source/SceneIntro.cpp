@@ -112,7 +112,7 @@ bool SceneIntro::PostUpdate(float dt)
 		componentMaterial->LoadTexture();
 
 		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
-		componentScript->script = componentScript->handler->lua.load_file("../Source/Bullet.lua");
+		componentScript->script = componentScript->handler->lua.load_file("Assets/Scripts/Bullet.lua");
 		componentScript->script();
 		componentScript->SetRunning(true);
 		parent->GetComponent<ComponentScript>()->handler->lua["SetBulletDirection"](bullet);
