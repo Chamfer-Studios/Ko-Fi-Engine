@@ -87,9 +87,9 @@ bool SceneIntro::Update(float dt)
 bool SceneIntro::PostUpdate(float dt)
 {
 	// Draw meshes
-	for (GameObject* go : this->gameObjectList)
+	for (GameObject* go : gameObjectList)
 	{
-		go->PostUpdate(dt);
+		go->PostUpdate(dt); // DIES HERE CAUSE HE CAN'T POSTUPDATE BULLET or in update
 	}
 
 	engine->GetRenderer()->DrawRay();

@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "Input.h" 
 #include "SceneManager.h"
+#include "SceneIntro.h"
 
 #include "Log.h"
 #include "ImGuiAppLog.h"
@@ -20,7 +21,7 @@ public:
 
 	Scripting()
 	{
-		lua.open_libraries(sol::lib::base, sol::lib::io, sol::lib::math);
+		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string, sol::lib::debug);
 	}
 
 	~Scripting() {}
@@ -91,7 +92,7 @@ public:
 
 	GameObject* LuaCreateBullet()
 	{
-		GameObject* ret = gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Bullet");
+		GameObject* ret = gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 		gameObject->AttachChild(ret);
 		return ret;
 	}

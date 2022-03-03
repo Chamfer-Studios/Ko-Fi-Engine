@@ -50,8 +50,15 @@ bool ComponentScript::Update(float dt)
 {
 	if (isRunning && active)
 	{
-		handler->lua["Update"](dt);
+		if ((int)handler->lua["Update"](dt) == 1)
+			printf("A");
 	}
+	return true;
+}
+
+bool ComponentScript::PostUpdate(float dt)
+{
+
 	return true;
 }
 

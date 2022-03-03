@@ -11,6 +11,7 @@ i = 1
 -- Methods:
 -- Called each loop iteration
 function Update(dt)
+	print("Update")
 
 	if(destination ~= nil)	then
 		Move(dt)
@@ -19,10 +20,19 @@ function Update(dt)
 	mLeftButton = GetMouseButton(1)
 	mRightButton = GetMouseButton(3)
 
+	ret = 0
 	if(mLeftButton == KEY_STATE.KEY_DOWN) then
 		Fire()
+		ret = 1
 	end
+	
+	return ret
+end
 
+function PostUpdate(dt)
+
+	
+	return 
 end
 
 -- Move to destination
@@ -46,13 +56,13 @@ function Fire()
 
 	print("Bang!")
 
-	--table.insert(bullets, i, 1)
+	local bullet = CreateBullet()
+	bullet.name = "Bullet " ..i
 	i = i + 1
-	--print(bullet.name)
+	print(bullet.name)
+	table.insert(bullets, bullet)
 
-	--if(bullet ~= nil) then
-	--	print(1)
-	--end
+	
 
 end
 

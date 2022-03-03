@@ -17,6 +17,7 @@ public:
 
 	bool Start() override;
 	bool Update(float dt) override;
+	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 	bool LoadScript();
