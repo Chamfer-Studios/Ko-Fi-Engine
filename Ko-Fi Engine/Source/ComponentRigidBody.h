@@ -22,24 +22,25 @@ public:
 	//getters/setters
 	inline bool GetActive() const { return isActive; }
 	inline float3 GetLinearVelocity() const { return linearVelocity; }
+	inline float3 GetAngularVelocity() const { return angularVelocity; }
+	inline float GetMass() const { return mass; }
 
 	inline void SetActive(bool state) { isActive = state; }
-	inline void SetLinearVelocity(float3 lV) { linearVelocity = lV;  }
+	inline void SetLinearVelocity(float3 lV) { linearVelocity = lV; }
+	inline void SetAngularVelocity(float3 aV) { angularVelocity = aV; }
+	inline void SetMass(float newMass) { mass = newMass; }
 
 private:
 	bool isActive;
 	float4x4 parentTransform;
-
+	
 	float mass;
 	float density;
 
 	float3 linearVelocity;
-	bool modifiedLinVel;
+
 	float3 angularVelocity;
-	bool modifiedAngVel;
 
 	bool addForce;
 	float3 force;
-	bool modifiedForce;
-
 };

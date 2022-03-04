@@ -7,9 +7,6 @@
 ComponentRigidBody::ComponentRigidBody(GameObject* parent) : Component(parent)
 {
 	isActive = false;
-	modifiedLinVel = false;
-	modifiedAngVel = false;
-	modifiedForce = false;
 
 	mass = 0;
 	density = 0;
@@ -37,36 +34,29 @@ bool ComponentRigidBody::Update(float dt)
 	parentTransform = owner->GetTransform()->GetGlobalTransform();
 	if (isActive)
 	{
-		//Check forces and apply them to velocity
-		if (modifiedForce)
-		{
-			float3 currentForce = force / dt; 
+		//Check forces and apply them to acceleration
+		float3 currentAcceleration = force / mass; 
 
-			//apply force to linear velocity
-			linearVelocity += currentForce;
-		}
+		//apply acceleration to linear velocity
+		linearVelocity += currentAcceleration / dt;
+	
 		//Check velocity and apply it to position
-		if (modifiedLinVel)
-		{
-			float3 currentLV = linearVelocity / dt;
+		float3 currentLV = linearVelocity / dt;
 
-			//y axis cap
-			if (currentLV.y != 0.0f)
-			{
-				currentLV.y = 0;
-			}
-			
-			//apply velocity to position
-			parentTransform.Translate(currentLV);
-		}
-		else if (modifiedAngVel)
+		//y axis cap
+		if (currentLV.y != 0.0f)
 		{
-			float3 currentLV = linearVelocity / dt;
-
-			//apply velocity to rotation
-			//parentTransform.Rotate(Quat rotation);
+			currentLV.y = 0;
 		}
 
+		parentTransform.Translate(currentLV);
+	
+		//float3 currentAV = angularVelocity / dt;
+		//translate to rotation angles
+		//euler to quat
+		// 
+		//apply rotation
+		//parentTransform.Rotate(Quat rotation);
 	}
 	return ret;
 }
