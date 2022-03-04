@@ -21,8 +21,61 @@ bool Physics::Awake(Json configModule)
 
 bool Physics::Start()
 {
-	LOG("Initializing Module Physics ------------------------------------------------");
+	bool ret = true;
 
+	LOG_BOTH("Initializing Module Physics ------------------------------------------------");
+
+	ret = InitializePhysX();
+
+	LOG_BOTH("Finished initializing Module Physics ---------------------------------------");
+
+	return ret;
+}
+
+bool Physics::PreUpdate(float dt)
+{
+	return true;
+}
+
+bool Physics::Update(float dt)
+{
+	/* 
+	If simulating(play button)
+		scene->simulate(dt)
+		scene->FetchResults(true)
+	
+	*/ 
+
+	return true;
+}
+
+bool Physics::PostUpdate(float dt)
+{
+	return true;
+}
+
+bool Physics::CleanUp()
+{
+	if (foundation)
+		foundation->release();
+	if (physics)
+		physics->release();
+	if (cooking)
+		cooking->release();
+	// This pointer release crashes at cleaning, I suppose it is due physx itself does its own cleanup or something
+	/*if (scene)
+		scene->release();*/
+
+	foundation = nullptr;
+	physics = nullptr;
+	cooking = nullptr;
+	scene = nullptr;
+
+	return true;
+}
+
+bool Physics::InitializePhysX()
+{
 	// PxFoundation object creation
 	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
 	static physx::PxDefaultAllocator gDefaultAllocatorCallback;
@@ -78,42 +131,6 @@ bool Physics::Start()
 		return false;
 	}
 	LOG_BOTH("createScene returned successfully!");
-
-	LOG("Finished initializing Module Physics ---------------------------------------");
-	return true;
-}
-
-bool Physics::PreUpdate(float dt)
-{
-	return true;
-}
-
-bool Physics::Update(float dt)
-{
-	return true;
-}
-
-bool Physics::PostUpdate(float dt)
-{
-	return true;
-}
-
-bool Physics::CleanUp()
-{
-	if (foundation)
-		foundation->release();
-	if (physics)
-		physics->release();
-	if (cooking)
-		cooking->release();
-	// This pointer release crashes at cleaning, I suppose it is due physx itself does its own cleanup or something
-	/*if (scene)
-		scene->release();*/
-
-	foundation = nullptr;
-	physics = nullptr;
-	cooking = nullptr;
-	scene = nullptr;
 
 	return true;
 }

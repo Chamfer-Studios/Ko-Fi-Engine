@@ -41,6 +41,8 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
+	bool InitializePhysX();
+
 	void AddActor(physx::PxActor* actor);
 	void DeleteActor(physx::PxActor* actor);
 

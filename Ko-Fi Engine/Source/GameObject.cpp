@@ -7,6 +7,9 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentInfo.h"
+#include "ComponentCamera.h"
+#include "ComponentRigidBody.h"
+#include "ComponentMaterial.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int id, KoFiEngine* engine, const char* name)
@@ -111,6 +114,55 @@ void GameObject::DeleteComponent(Component* component)
 void GameObject::AddComponent(Component* component)
 {
 	components.push_back(component);
+}
+
+void GameObject::AddComponentByType(ComponentType componentType)
+{
+	// Check if it is repeated
+	for (Component* component : components)
+	{
+		if (component->GetType() == componentType)
+		{
+			LOG_BOTH("Components cannot be duplicated!");
+			return;
+		}
+	}
+
+	Component* component = nullptr;
+
+	switch (componentType)
+	{
+		case ComponentType::TRANSFORM: 
+		{ 
+			component = new ComponentTransform(this); 
+			break;
+		}	
+		case ComponentType::MESH: 
+		{ 
+			component = new ComponentMesh(this); 
+			break;
+		}		
+		case ComponentType::MATERIAL: 
+		{ 
+			component = new ComponentMaterial(this); 
+			break;
+		}	
+		case ComponentType::CAMERA: 
+		{ 
+			component = new ComponentCamera(this); 
+			break;
+		}		
+		case ComponentType::INFO:
+		{
+			component = new ComponentInfo(this);
+			break;
+		}
+		case ComponentType::RIGID_BODY: 
+		{ 
+			component = new ComponentRigidBody(this); 
+			break;
+		}	
+	}
 }
 
 void GameObject::AttachChild(GameObject* child)

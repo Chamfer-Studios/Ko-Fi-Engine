@@ -20,6 +20,8 @@ private:
 
 	// Bools for the different options
 	bool debugOptions = false;
-		bool drawVertexNormals = false;
-		bool drawFacesNormals = false;
+	bool drawVertexNormals = false;
+	bool drawFacesNormals = false;
+
+	int componentType;
 };

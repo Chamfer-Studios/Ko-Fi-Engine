@@ -45,6 +45,7 @@ public:
 	// New way
 	void DeleteComponent(Component* component);
 	void AddComponent(Component* component);
+	void AddComponentByType(ComponentType componentType);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 	void PropagateTransform();
