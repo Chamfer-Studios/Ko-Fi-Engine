@@ -13,6 +13,7 @@
 #include "ComponentCamera.h"
 #include "ComponentScript.h"
 #include "Material.h"
+#include "ComponentTransform2D.h"
 #include "GameObject.h"
 #include "SceneManager.h"
 #include "node_editor.h"
@@ -68,7 +69,8 @@ bool SceneIntro::PreUpdate(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		go->PreUpdate();
+		//if (go->GetComponent<ComponentTransform2D>() == nullptr)
+			go->PreUpdate();
 	}
 
 	return true;

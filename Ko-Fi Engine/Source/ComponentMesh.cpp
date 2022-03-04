@@ -24,6 +24,10 @@
 #include <MathGeoLib/Math/float3.h>
 #include <MathGeoLib/Math/float4.h>
 
+#include "Primitive.h"
+#include "par_shapes.h"
+#include "Globals.h"
+#include "MathGeoLib/Math/float3.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
@@ -216,6 +220,8 @@ void ComponentMesh::Save(Json& json) const
 	json["draw_vertex_normals"] = mesh->GetVertexNormals();
 	json["draw_face_normals"] = mesh->GetFaceNormals();
 }
+
+
 
 void ComponentMesh::Load(Json& json)
 {

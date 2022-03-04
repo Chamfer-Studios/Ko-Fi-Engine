@@ -30,6 +30,8 @@ public:
 
 	void SetMesh(Mesh* mesh);
 	inline Mesh* GetMesh() const { return mesh; }
+	//void SetMesh(par_shapes_mesh* parMesh);
+	//void CopyParMesh(par_shapes_mesh* parMesh);
 
 	inline void SetPath(const char* path) { mesh->path = path; }
 	inline const char* GetMeshPath() const { mesh->path.c_str(); }

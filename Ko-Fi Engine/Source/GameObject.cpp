@@ -9,7 +9,7 @@
 #include "ComponentInfo.h"
 
 // Used with a path for the .fbx load
-GameObject::GameObject(uint uid, KoFiEngine* engine, const char* name)
+GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
 {
 	active = true;
 
@@ -22,7 +22,9 @@ GameObject::GameObject(uint uid, KoFiEngine* engine, const char* name)
 	this->engine = engine;
 
 	CreateComponent<ComponentInfo>();
-	transform = CreateComponent<ComponentTransform>();
+	is3D = _is3D;
+	if (is3D)
+		transform = CreateComponent<ComponentTransform>();
 
 	this->parent = nullptr;
 }
@@ -37,7 +39,9 @@ GameObject::GameObject()
 	this->engine = engine;
 
 	CreateComponent<ComponentInfo>();
-	transform = CreateComponent<ComponentTransform>();
+		transform = CreateComponent<ComponentTransform>();
+
+
 
 	this->parent = nullptr;
 }
@@ -135,8 +139,10 @@ void GameObject::AttachChild(GameObject* child)
 
 	child->parent = this;
 	children.push_back(child);
-	child->transform->NewAttachment();
-	child->PropagateTransform();
+	if (child->transform != nullptr) {
+		child->transform->NewAttachment();
+		child->PropagateTransform();
+	}
 }
 
 void GameObject::RemoveChild(GameObject* child)
@@ -152,7 +158,8 @@ void GameObject::PropagateTransform()
 {
 	for (GameObject* go : children)
 	{
-		go->transform->OnParentMoved();
+		if (go->transform != nullptr)
+			go->transform->OnParentMoved();
 	}
 }
 

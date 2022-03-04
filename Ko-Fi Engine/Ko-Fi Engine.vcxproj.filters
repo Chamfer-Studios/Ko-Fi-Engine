@@ -88,11 +88,21 @@
     </Filter>
     <Filter Include="Scripts">
       <UniqueIdentifier>{c3bc3e96-3c54-404f-8be3-56d68d1e30ce}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Resources">
       <UniqueIdentifier>{b584c71f-4e5f-403c-ac2d-424816ead254}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Importers">
       <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\Components\UI">
+      <UniqueIdentifier>{f14257b0-f5e3-4dcf-9d8e-c73dcdec444c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\stb_truetype">
+      <UniqueIdentifier>{24bb395e-3fc1-41a4-8726-a905204ec415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\SDL_ttf">
+      <UniqueIdentifier>{7d8ca1e5-eefd-4c67-a8f4-310da73f01b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +354,7 @@
     </ClCompile>
     <ClCompile Include="Source\ComponentScript.cpp">
       <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -379,6 +390,28 @@
     </ClCompile>
     <ClCompile Include="Source\Material.cpp">
       <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentTransform2D.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentCanvas.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentImage.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentButton.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c" />
+    <ClCompile Include="Source\ComponentText.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -851,6 +884,36 @@
     </ClInclude>
     <ClInclude Include="Source\Assimp.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentTransform2D.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentCanvas.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentImage.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IconsFontAwesome5.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentButton.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_truetype\stb_truetype.h">
+      <Filter>Libs\stb_truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\SDL_ttf\include\SDL_ttf.h">
+      <Filter>Libs\SDL_ttf</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentText.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
