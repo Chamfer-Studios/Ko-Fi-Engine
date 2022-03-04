@@ -20,10 +20,8 @@ FileSystem::FileSystem(KoFiEngine* engine)
 
 	// Comment this for release path and uncomment when developing...
 	rootPath = rootPath.parent_path().parent_path();
-
 	// Comment this for release path and uncomment when developing...
 	AddPath("/Ko-Fi Engine/Ko-Fi");
-
 	this->engine = engine;
 
 	CONSOLE_LOG("Filesystem: %s", rootPath.string());
@@ -86,6 +84,23 @@ std::string FileSystem::OpenFile(const char* path) const
 
 	SDL_assert(path != nullptr);
 	std::ifstream stream(path);
+	if (stream.is_open()) {
+		std::string line;
+
+		while (std::getline(stream, line)) {
+			fileText.append(line + "\n");
+		}
+	}
+	stream.close();
+	return fileText;
+}
+
+std::string FileSystem::OpenFileBinary(const char* path) const
+{
+	std::string fileText;
+
+	SDL_assert(path != nullptr);
+	std::ifstream stream(path, std::ios::binary);
 	if (stream.is_open()) {
 		std::string line;
 
