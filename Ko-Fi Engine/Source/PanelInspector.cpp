@@ -53,6 +53,7 @@ bool PanelInspector::Update()
 			if (componentType != (int)ComponentType::NONE)
 			{
 				currentGameObject->AddComponentByType((ComponentType)componentType);
+				componentType = 0;
 			}
 		}
 	}

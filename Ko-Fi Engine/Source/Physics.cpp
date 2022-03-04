@@ -39,12 +39,17 @@ bool Physics::PreUpdate(float dt)
 
 bool Physics::Update(float dt)
 {
-	/* 
-	If simulating(play button)
-		scene->simulate(dt)
-		scene->FetchResults(true)
-	
-	*/ 
+	if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING || engine->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+	{
+		inGame = true;
+	}
+	else inGame = false;
+
+	if (scene && inGame)
+	{
+		scene->simulate(dt);
+		scene->fetchResults(true);
+	}
 
 	return true;
 }
@@ -135,10 +140,20 @@ bool Physics::InitializePhysX()
 	return true;
 }
 
-void Physics::AddActor(physx::PxActor* actor)
+void Physics::AddActor(physx::PxActor* actor, GameObject* owner)
 {
+	if (actor)
+	{
+		scene->addActor(*actor);
+		actors.insert(std::make_pair<physx::PxRigidActor*, GameObject*>((physx::PxRigidActor*)actor, (GameObject*)(void*)owner));
+	}
 }
 
 void Physics::DeleteActor(physx::PxActor* actor)
 {
+	if (actor)
+	{
+		scene->removeActor(*actor);
+		actors.erase((physx::PxRigidActor*)actor);
+	}
 }

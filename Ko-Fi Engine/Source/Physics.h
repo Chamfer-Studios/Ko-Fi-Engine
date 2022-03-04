@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 #include "Globals.h"
+#include "Engine.h"
+#include "SceneManager.h"
 
 
 
@@ -43,21 +45,29 @@ public:
 
 	bool InitializePhysX();
 
-	void AddActor(physx::PxActor* actor);
+	void AddActor(physx::PxActor* actor, GameObject* owner);
 	void DeleteActor(physx::PxActor* actor);
+	inline const std::map<physx::PxRigidActor*, GameObject*> GetActors() { return actors; }
+
 
 	// Getters & setters
 	inline physx::PxPhysics* GetPxPhysics() const { return physics; }
 
+	inline bool GetInGame() { return inGame; }
+
 private:
 	KoFiEngine* engine = nullptr;
+
+	bool inGame = false;
+
+	std::map<physx::PxRigidActor*, GameObject*> actors;
 
 	physx::PxFoundation* foundation = nullptr;
 	physx::PxPhysics* physics = nullptr;
 	physx::PxCooking* cooking = nullptr;
 	physx::PxScene* scene = nullptr;
 
-	float gravity = 9.8f;
+	float gravity = 0.2f;
 
 	physx::PxU32 nbThreads = 4;
 };

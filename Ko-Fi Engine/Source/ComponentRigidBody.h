@@ -9,6 +9,8 @@
 #include "Component.h"
 #include "ComponentTransform.h"
 
+#include "SceneManager.h"
+
 #include "PxPhysicsAPI.h"
 #include "Physics.h"
 
@@ -21,16 +23,14 @@ public:
 	ComponentRigidBody(GameObject* parent);
 	~ComponentRigidBody();
 
-	bool Start() override;
 	bool Update() override;
-	bool CleanUp() override;
 
 	void UpdatePhysicsValues(); // Is called whenever a rigid body attribute is changed
 
-	inline void	AddForce(physx::PxVec3 force, physx::PxForceMode::Enum forceMode) { if (rigidBody) rigidBody->addForce(force, forceMode); }
-	inline void	AddTorque(physx::PxVec3 force, physx::PxForceMode::Enum forceMode) { if (rigidBody)rigidBody->addTorque(force, forceMode); }
+	inline void	AddForce(physx::PxVec3 force, physx::PxForceMode::Enum forceMode) { if (dynamicBody) dynamicBody->addForce(force, forceMode); }
+	inline void	AddTorque(physx::PxVec3 force, physx::PxForceMode::Enum forceMode) { if (dynamicBody) dynamicBody->addTorque(force, forceMode); }
 
-	inline const bool IsSleeping() { return rigidBody->isSleeping(); }
+	inline const bool IsSleeping() { return dynamicBody->isSleeping(); }
 
 	// Serialization
 	//
@@ -39,7 +39,7 @@ public:
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 
 	// Getters & setters
-	inline const physx::PxRigidDynamic* GetRigidBody() { return rigidBody; }
+	inline const physx::PxRigidActor* GetRigidBody() { if (isStatic) return staticBody; else return dynamicBody; }
 
 	inline bool IsStatic() const { return isStatic; }
 	inline bool IsKinematic() const { return !isStatic; }
@@ -71,7 +71,8 @@ public:
 	inline void FreezeRotationZ(bool freeze) { freezeRotationZ = freeze; hasUpdated = true; }
 
 private:
-	physx::PxRigidDynamic* rigidBody = nullptr;
+	physx::PxRigidDynamic* dynamicBody = nullptr;
+	physx::PxRigidStatic* staticBody = nullptr;
 
 	bool isStatic = false;
 
