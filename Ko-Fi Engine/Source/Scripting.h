@@ -76,7 +76,7 @@ public:
 		// Giving lua certain variables
 		lua["gameObject"] = gameObject;
 		lua["componentTransform"] = componentTransform;
-		lua.set_function("GetMouseButton", &Scripting::LuaGetMouseButton, this);
+		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
 		lua.set_function("CreateBullet", &Scripting::LuaCreateBullet, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
 	}
@@ -88,10 +88,18 @@ public:
 		return true;
 	}
 
-	KEY_STATE LuaGetMouseButton(int button)
+	KEY_STATE LuaGetInput(int button)
 	{
-		if (button < 5 && button > 0)
+		if (button < 4 && button > 0)
 			return gameObject->GetEngine()->GetInput()->GetMouseButton(button);
+
+		switch (button)
+		{
+			case 4: {return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_UP); }
+			case 5: {return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_LEFT); }
+			case 6: {return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_DOWN); }
+			case 7: {return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RIGHT); }
+		}
 	}
 
 	void LuaCreateBullet()

@@ -2,29 +2,54 @@ print("Player.lua loaded")
 
 ------------------- Variables --------------------
 
-speed = 3  -- consider Start()
+speed = 30  -- consider Start()
 
 bullets = {}
 
 -------------------- Methods ---------------------
+
 -- Called each loop iteration
 function Update(dt)
 
-	if(destination ~= nil)	then
-		Move(dt)
-	end
-	
-	mLeftButton = GetMouseButton(1)
-	mRightButton = GetMouseButton(3)
+	mouseLeft = GetInput(1)
+	mouseRight = GetInput(3)
 
-	if(mRightButton == KEY_STATE.KEY_DOWN) then
+	-------------------------------- To be removed after VS --------------------------------
+	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
+	local targetPos = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
+	if(GetInput(4) == KEY_STATE.KEY_DOWN or GetInput(4) == KEY_STATE.KEY_REPEAT) then
+		targetPos[2] = targetPos[2] + 1
+	end
+	if(GetInput(5) == KEY_STATE.KEY_DOWN or GetInput(5) == KEY_STATE.KEY_REPEAT) then
+		targetPos[1] = targetPos[1] + 1
+	end
+	if(GetInput(6) == KEY_STATE.KEY_DOWN or GetInput(6) == KEY_STATE.KEY_REPEAT) then
+		targetPos[2] = targetPos[2] - 1
+	end
+	if(GetInput(7) == KEY_STATE.KEY_DOWN or GetInput(7) == KEY_STATE.KEY_REPEAT) then
+		targetPos[1] = targetPos[1] - 1
+	end
+	if(pos2D[1] ~= targetPos[1] or pos2D[2] ~= targetPos[2]) then
+		-- Move
+		local d = Distance(pos2D, targetPos)
+		local vec2 = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
+		vec2 = Normalize(vec2, d)
+		componentTransform:SetPosition(float3.new(pos2D[1] + vec2[1] * speed * dt, componentTransform:GetPosition().y, pos2D[2] + vec2[2] * speed * dt))
+	end
+	----------------------------------------------------------------------------------------
+
+	if(destination ~= nil)	then
+		MoveToDestination(dt)
+	end
+
+	if(mouseRight == KEY_STATE.KEY_DOWN) then
 		CreateBullet()
 	end
 
 end
 
 -- Move to destination
-function Move(dt)
+function MoveToDestination(dt)
 
 	local targetPos = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
@@ -54,11 +79,11 @@ function SetBulletDirection(bullet, parent)
 	
 	local playerPos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local bulletPos2D = { bullet:GetTransform():GetPosition().x, bullet:GetTransform():GetPosition().z }
-	local dir = { bulletPos2D[1] - playerPos2D[1], bulletPos2D[2] - playerPos2D[2] }
 	local dist = Distance(playerPos2D, bulletPos2D)
+	local dir = { bulletPos2D[1] - playerPos2D[1], bulletPos2D[2] - playerPos2D[2] }
 	dir = Normalize(dir, dist)
-	
 	dir3 = float3.new(dir[1], 0, dir[2])
+
 	bullet:GetTransform():SetFront(dir3)
 
 end
