@@ -6,9 +6,12 @@
 #include "SceneManager.h"
 #include "ComponentMesh.h"
 #include "ComponentCollider.h"
+#include "ComponentRigidBody.h"
 
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
+
+#include <iostream>
 
 
 CollisionDetector::CollisionDetector(KoFiEngine* engine)
@@ -70,16 +73,21 @@ void CollisionDetector::RemoveCollidableEntity(GameObject* GO)
 void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 {
 	std::vector<GameObject*> fullGOList = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+	currentEntity->GetComponent<ComponentMesh>()->GenerateGlobalBoundingBox();
 	math::AABB currentEntityAABB = currentEntity->GetComponent<ComponentMesh>()->GetGlobalAABB();
+	ColliderType currentType = currentEntity->GetComponent<ComponentCollider>()->GetColliderType();
 
 	for (int i = 0; i < fullGOList.size(); i++)
 	{
 		if (fullGOList[i]->GetComponent<ComponentMesh>() != nullptr && fullGOList[i]->GetComponent<ComponentCollider>() != nullptr)
 		{
+
 			if (fullGOList[i] == currentEntity)
 			{
 				continue;
 			}
+			
 			math::AABB newCollider = fullGOList[i]->GetComponent<ComponentMesh>()->GetGlobalAABB();
 			ColliderType newColliderType = fullGOList[i]->GetComponent<ComponentCollider>()->GetColliderType();
 
@@ -91,23 +99,36 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 			if (currentEntityAABB.Intersects(newCollider))
 			{
 				//call corresponding event depending on collider type
+				//std::cout<<"intersectioooooon";
 
 				switch (newColliderType)
 				{
 				case ColliderType::FLOOR:
 				{
+					float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
+					currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(currentVelocity.x, -currentVelocity.y, currentVelocity.z)); //change velocity direction excluding y axis.
+
 					break;
 				}
 				case ColliderType::WALL:
 				{
+					float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
+					currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3( -currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+
 					break;
 				}
 				case ColliderType::ENEMY:
 				{
+					float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
+					currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+
 					break;
 				}
 				case ColliderType::PLAYER:
 				{
+					float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
+					currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+
 					break;
 				}
 				}

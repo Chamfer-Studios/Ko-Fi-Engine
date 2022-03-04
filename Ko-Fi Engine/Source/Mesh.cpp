@@ -7,8 +7,11 @@
 #include <gl/GLU.h>
 #include <iostream>
 #include "ComponentMaterial.h"
+#include "ComponentTransform.h"
 #include "GameObject.h"
 #include "Defs.h"
+
+#include "MathGeoLib/Math/float4x4.h"
 
 Mesh::Mesh()
 {
@@ -135,11 +138,6 @@ void Mesh::Draw(GameObject* owner)
 
 	//Unbind Texture
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	
-	
-
-	
 }
 
 void Mesh::DebugDraw()
