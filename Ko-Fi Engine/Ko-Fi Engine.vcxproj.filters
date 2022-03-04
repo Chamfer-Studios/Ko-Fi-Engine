@@ -88,11 +88,13 @@
     </Filter>
     <Filter Include="Scripts">
       <UniqueIdentifier>{c3bc3e96-3c54-404f-8be3-56d68d1e30ce}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Resources">
       <UniqueIdentifier>{b584c71f-4e5f-403c-ac2d-424816ead254}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Importers">
       <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\GameObject\Components\UI">
       <UniqueIdentifier>{f14257b0-f5e3-4dcf-9d8e-c73dcdec444c}</UniqueIdentifier>
     </Filter>
@@ -352,6 +354,7 @@
     </ClCompile>
     <ClCompile Include="Source\ComponentScript.cpp">
       <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -387,6 +390,7 @@
     </ClCompile>
     <ClCompile Include="Source\Material.cpp">
       <Filter>Source\Resources</Filter>
+    </ClCompile>
     <ClCompile Include="Source\UI.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -880,6 +884,7 @@
     </ClInclude>
     <ClInclude Include="Source\Assimp.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\UI.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>

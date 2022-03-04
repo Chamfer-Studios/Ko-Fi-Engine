@@ -11,6 +11,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentCanvas.h"
 #include "Input.h"
+#include "Importer.h"
 
 ComponentButton::ComponentButton(GameObject* parent) : Component(parent)
 {
@@ -25,7 +26,7 @@ ComponentButton::~ComponentButton()
 	FreeTextures(BUTTON_STATE::PRESSED);
 }
 
-bool ComponentButton::Update()
+bool ComponentButton::Update(float dt)
 {
 	float2 mouseScreenPosition = { (float)owner->GetEngine()->GetInput()->GetMouseX(), (float)owner->GetEngine()->GetInput()->GetMouseY() };
 	ComponentCanvas* canvas = owner->GetComponent<ComponentTransform2D>()->GetCanvas();
@@ -212,19 +213,19 @@ SDL_Texture* const ComponentButton::LoadSurface(SDL_Surface* surface)
 void ComponentButton::SetIdleTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::IDLE);
-	idleOpenGLTexture.SetUpTexture(path);
+	Importer::GetInstance()->textureImporter->Import(path,&idleOpenGLTexture);
 }
 
 void ComponentButton::SetHoverTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::HOVER);
-	hoverOpenGLTexture.SetUpTexture(path);
+	Importer::GetInstance()->textureImporter->Import(path, &hoverOpenGLTexture);
 }
 
 void ComponentButton::SetPressedTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::PRESSED);
-	pressedOpenGLTexture.SetUpTexture(path);
+	Importer::GetInstance()->textureImporter->Import(path, &pressedOpenGLTexture);
 }
 
 void ComponentButton::FreeTextures(BUTTON_STATE type)

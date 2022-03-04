@@ -21,7 +21,7 @@ ComponentText::~ComponentText()
 {
 }
 
-bool ComponentText::Update()
+bool ComponentText::Update(float dt)
 {
 	return true;
 }

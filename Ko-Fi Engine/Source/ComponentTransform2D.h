@@ -23,7 +23,7 @@ public:
 public:
 	ComponentTransform2D(GameObject* parent);
 
-	bool Update() override;
+	bool Update(float dt) override;
 	virtual bool InspectorDraw(PanelChooser* chooser) override;
 
 	//void OnLoad(const JSONReader& reader) override;

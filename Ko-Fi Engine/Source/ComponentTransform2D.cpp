@@ -25,7 +25,7 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	anchor = Anchor::CENTER;
 }
 
-bool ComponentTransform2D::Update()
+bool ComponentTransform2D::Update(float dt)
 {
 	return true;
 }

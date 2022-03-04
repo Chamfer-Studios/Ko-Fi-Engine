@@ -12,7 +12,7 @@ class ComponentCanvas : public ComponentTransform2D {
 public:
 	ComponentCanvas(GameObject* parent);
 
-	bool Update() override;
+	bool Update(float dt) override;
 
 	bool InspectorDraw(PanelChooser* chooser) override;
 

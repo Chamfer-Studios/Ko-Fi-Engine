@@ -101,10 +101,6 @@ ComponentMesh::~ComponentMesh()
 //		//ComputeNormals();
 //		//GenerateBounds();
 //}
-float3 ComponentMesh::GetCenterPointInWorldCoords() const
-{
-	return owner->GetTransform()->transformMatrix.TransformPos(centerPoint);
-}
 
 bool ComponentMesh::Start()
 {

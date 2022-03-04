@@ -13,7 +13,7 @@ ComponentCanvas::ComponentCanvas(GameObject* parent) : ComponentTransform2D(pare
 	logicalSize = { 1920, 1080 };
 }
 
-bool ComponentCanvas::Update()
+bool ComponentCanvas::Update(float dt)
 {
 	return true;
 }

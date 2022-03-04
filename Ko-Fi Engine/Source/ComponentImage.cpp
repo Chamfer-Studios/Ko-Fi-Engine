@@ -37,7 +37,7 @@ ComponentImage::~ComponentImage()
 
 }
 
-bool ComponentImage::Update()
+bool ComponentImage::Update(float dt)
 {
 	return true;
 }
@@ -136,7 +136,7 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 void ComponentImage::SetTexture(const char* path)
 {
 	FreeTextures();
-	openGLTexture.SetUpTexture(path);
+	Importer::GetInstance()->textureImporter->Import(path, &openGLTexture);
 	//SDLTexture = LoadTexture(path);
 }
 

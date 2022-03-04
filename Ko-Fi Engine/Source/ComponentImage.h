@@ -23,7 +23,7 @@ public:
 	ComponentImage(GameObject* parent);
 	~ComponentImage();
 
-	bool Update() override;
+	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 

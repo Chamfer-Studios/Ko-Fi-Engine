@@ -50,111 +50,12 @@ bool UI::PreUpdate(float dt)
 }
 
 bool UI::Update(float dt) {
-	return true;
-	std::queue<GameObject*> S;
-	for (GameObject* child : engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren())
-	{
-		if (child->active)
-			S.push(child);
-	}
-
-	while (!S.empty())
-	{
-		GameObject* go = S.front();
-		if (go->GetComponent<ComponentTransform2D>() != nullptr) {
-			go->Update();
-		}
-		S.pop();
-		for (GameObject* child : go->GetChildren())
-		{
-			if (child->active)
-				S.push(child);
-		}
-	}
 
 	return true;
 }
 
 bool UI::PostUpdate(float dt)
 {
-	return true;
-
-	/*float3 right = engine->GetCamera3D()->right;
-	float3 up = engine->GetCamera3D()->up;
-	float3 front = engine->GetCamera3D()->front;
-	float3 position = engine->GetCamera3D()->position;
-
-	engine->GetCamera3D()->position = { 0, 0, 2 };
-	engine->GetCamera3D()->LookAt({ 0, 0, 0 });
-
-	engine->GetCamera3D()->projectionIsDirty = true;
-	engine->GetCamera3D()->CalculateViewMatrix();
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
-
-	GLint viewport[4];
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(engine->GetEditor()->scenePanelOrigin.x, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->scenePanelOrigin.y, engine->GetEditor()->lastViewportSize.y, 1, 1000);
-
-	uiCameraViewport[0] = engine->GetEditor()->scenePanelOrigin.x;
-	uiCameraViewport[1] = engine->GetEditor()->scenePanelOrigin.y;
-	uiCameraViewport[2] = engine->GetEditor()->lastViewportSize.x;
-	uiCameraViewport[3] = engine->GetEditor()->lastViewportSize.y;
-
-	glPushAttrib(GL_LIST_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT | GL_TRANSFORM_BIT);
-	glMatrixMode(GL_MODELVIEW);
-	glDisable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
-
-	std::queue<GameObject*> S;
-	for (GameObject* child : engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren())
-	{
-		if (child->active)
-			S.push(child);
-	}
-
-	while (!S.empty())
-	{
-		GameObject* go = S.front();
-		if (go->GetComponent<ComponentTransform2D>() != nullptr) {
-			go->PostUpdate(dt);
-		}
-		S.pop();
-		for (GameObject* child : go->GetChildren())
-		{
-			if (child->active)
-				S.push(child);
-		}
-	}
-
-	/*glPopAttrib();
-
-	glPopMatrix();
-	glEnable(GL_CULL_FACE);
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-
-	engine->GetCamera3D()->right = right;
-	engine->GetCamera3D()->up = up;
-	engine->GetCamera3D()->front = front;
-	engine->GetCamera3D()->position = position;
-
-	engine->GetCamera3D()->projectionIsDirty = true;
-	engine->GetCamera3D()->CalculateViewMatrix();
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());*/
 
 	return true;
 }
