@@ -26,5 +26,6 @@
   "SceneManager": null,
   "ModelLoader": null,
   "ViewportFrameBuffer": null,
-  "Scripting": null
+  "Scripting": null,
+  "UI": null
 }

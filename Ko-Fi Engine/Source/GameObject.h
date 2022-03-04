@@ -15,8 +15,8 @@ class ComponentScript;
 class GameObject
 {
 public:
+	GameObject(int id, KoFiEngine* engine, const char* name = nullptr, bool is3D = true);
 	GameObject();
-	GameObject(uint uid, KoFiEngine* engine, const char* name = nullptr);
 	//GameObject(const char* path, int id, const char* name = nullptr);
 	~GameObject();
 
@@ -81,6 +81,7 @@ public:
 	std::string name;
 	bool active = true;
 	int numScripts = 0;
+	bool is3D = true;
 
 private:
 	std::vector<Component*> components;

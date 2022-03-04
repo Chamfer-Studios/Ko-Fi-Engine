@@ -18,7 +18,12 @@ enum class ComponentType
 	COLLIDER,
 	SCRIPT,
 	TRANSFORM,
-	INFO
+	INFO,
+	TRANSFORM2D,
+	CANVAS,
+	IMAGE,
+	BUTTON,
+	TEXT
 };
 
 class Component
