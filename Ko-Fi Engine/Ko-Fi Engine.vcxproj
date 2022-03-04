@@ -426,9 +426,9 @@
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Bullet.lua" />
-    <None Include="Source\GameState.lua" />
-    <None Include="Source\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

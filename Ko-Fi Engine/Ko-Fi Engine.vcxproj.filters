@@ -829,17 +829,14 @@
     <ClInclude Include="Source\Scripting.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Source\Player.lua">
-      <Filter>Scripts</Filter>
-    </None>
-    <None Include="Source\GameState.lua">
-      <Filter>Scripts</Filter>
-    </None>
-    <None Include="Bullet.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <ClInclude Include="Source\ResourceManager.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
@@ -915,5 +912,16 @@
     <ClInclude Include="Source\ComponentText.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Player.lua">
+      <Filter>Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

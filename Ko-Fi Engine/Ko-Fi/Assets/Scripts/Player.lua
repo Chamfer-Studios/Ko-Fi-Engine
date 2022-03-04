@@ -6,6 +6,10 @@ speed = 5  -- consider Start()
 
 bullets = {}
 
+GameState = require "Assets.Scripts.GameState"
+GameState:SayHi()
+
+print(GameState:GetGameState())
 -------------------- Methods ---------------------
 
 -- Called each loop iteration

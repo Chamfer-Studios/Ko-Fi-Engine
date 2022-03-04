@@ -22,7 +22,7 @@ public:
 
 	Scripting()
 	{
-		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, /*sol::lib::string,*/ sol::lib::debug);
+		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug);
 	}
 
 	~Scripting() {}
