@@ -8,6 +8,7 @@
 #include "Editor.h"
 #include "FileSystem.h"
 #include "ViewportFrameBuffer.h"
+#include "UI.h"
 #include "Importer.h"
 #include "Globals.h"
 #include "Log.h"
@@ -31,6 +32,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	renderer = new Renderer3D(this);
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
+	ui = new UI(this);
 	viewportBuffer = new ViewportFrameBuffer(this);
 
 	// Ordered for awake / Start / Update
@@ -40,6 +42,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(sceneManager);
+	AddModule(ui);
 	AddModule(viewportBuffer);
 	AddModule(editor);
 
@@ -401,4 +404,9 @@ FileSystem* KoFiEngine::GetFileSystem()const
 ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
 {
 	return this->viewportBuffer;
+}
+
+UI* KoFiEngine::GetUI() const
+{
+	return this->ui;
 }

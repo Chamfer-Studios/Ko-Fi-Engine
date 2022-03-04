@@ -9,6 +9,12 @@
 #include "Primitive.h"
 #include "Importer.h"
 #include "ComponentCamera.h"
+#include "ComponentCanvas.h"
+#include "ComponentTransform2D.h"
+#include "ComponentMaterial.h"
+#include "ComponentImage.h"
+#include "ComponentButton.h"
+#include "ComponentText.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -97,6 +103,33 @@ bool MainBar::Update()
 				if (ImGui::MenuItem("Pyramid"))
 				{
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("UI"))
+			{
+				if (ImGui::MenuItem("Canvas")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr,nullptr, false);
+					go->SetName("Canvas");
+					go->CreateComponent<ComponentCanvas>();
+				}
+				if (ImGui::MenuItem("Image")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+					go->SetName("Image");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentImage>();
+				}
+				if (ImGui::MenuItem("Button")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+					go->SetName("Button");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentButton>();
+				}
+				if (ImGui::MenuItem("Text")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+					go->SetName("Text");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentText>();
 				}
 				ImGui::EndMenu();
 			}

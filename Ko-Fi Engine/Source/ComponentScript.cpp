@@ -96,19 +96,20 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 		if (ImGui::Button("Run")) // This will be an event call
 		{
-
 			script();
-
 			isRunning = true;
 		}
-		if (ImGui::Button("Stop")) // This will be an event call
+		if (isRunning)
 		{
-			isRunning = false;
-		}
-		if (ImGui::Button("Fetch") && isRunning) // This will be an event call
-		{
-			float3 dest = float3(0, 0.2, -2);
-			handler->lua["SetDestination"](dest);
+			if (ImGui::Button("Stop")) // This will be an event call
+			{
+				isRunning = false;
+			}
+			if (ImGui::Button("Fetch") && isRunning) // This will be an event call
+			{
+				float3 dest = float3(0, 0.2, -2);
+				handler->lua["SetDestination"](dest);
+			}
 		}
 	}
 

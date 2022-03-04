@@ -2,7 +2,7 @@ print("Player.lua loaded")
 
 ------------------- Variables --------------------
 
-speed = 30  -- consider Start()
+speed = 5  -- consider Start()
 
 bullets = {}
 
@@ -13,36 +13,48 @@ function Update(dt)
 
 	mouseLeft = GetInput(1)
 	mouseRight = GetInput(3)
-
+	spaceButton = GetInput(8)
+	goingRight = false
 	-------------------------------- To be removed after VS --------------------------------
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local targetPos = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
-	if(GetInput(4) == KEY_STATE.KEY_DOWN or GetInput(4) == KEY_STATE.KEY_REPEAT) then
+	if (GetInput(4) == KEY_STATE.KEY_DOWN or GetInput(4) == KEY_STATE.KEY_REPEAT) then
 		targetPos[2] = targetPos[2] + 1
 	end
-	if(GetInput(5) == KEY_STATE.KEY_DOWN or GetInput(5) == KEY_STATE.KEY_REPEAT) then
+	if (GetInput(5) == KEY_STATE.KEY_DOWN or GetInput(5) == KEY_STATE.KEY_REPEAT) then
 		targetPos[1] = targetPos[1] + 1
 	end
-	if(GetInput(6) == KEY_STATE.KEY_DOWN or GetInput(6) == KEY_STATE.KEY_REPEAT) then
+	if (GetInput(6) == KEY_STATE.KEY_DOWN or GetInput(6) == KEY_STATE.KEY_REPEAT) then
 		targetPos[2] = targetPos[2] - 1
 	end
-	if(GetInput(7) == KEY_STATE.KEY_DOWN or GetInput(7) == KEY_STATE.KEY_REPEAT) then
+	if (GetInput(7) == KEY_STATE.KEY_DOWN or GetInput(7) == KEY_STATE.KEY_REPEAT) then
 		targetPos[1] = targetPos[1] - 1
+		goingRight = true
 	end
-	if(pos2D[1] ~= targetPos[1] or pos2D[2] ~= targetPos[2]) then
+	if (pos2D[1] ~= targetPos[1] or pos2D[2] ~= targetPos[2]) then
+		
 		-- Move
 		local d = Distance(pos2D, targetPos)
 		local vec2 = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
+		
 		vec2 = Normalize(vec2, d)
 		componentTransform:SetPosition(float3.new(pos2D[1] + vec2[1] * speed * dt, componentTransform:GetPosition().y, pos2D[2] + vec2[2] * speed * dt))
+		
+		a = { 0, 1 } 
+		rad = math.acos(a[1] * vec2[1] + a[2] * vec2[2])
+		if (goingRight == true) then
+			rad = rad * (-1)
+		end
+
+		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
 	end
 	----------------------------------------------------------------------------------------
 
-	if(destination ~= nil)	then
+	if (destination ~= nil)	then
 		MoveToDestination(dt)
 	end
 
-	if(mouseRight == KEY_STATE.KEY_DOWN) then
+	if (spaceButton == KEY_STATE.KEY_DOWN) then
 		CreateBullet()
 	end
 
@@ -55,7 +67,7 @@ function MoveToDestination(dt)
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local d = Distance(pos2D, targetPos)
 
-	if(d > 0.025)
+	if (d > 0.025)
 		then --move
 			local vec2 = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
 			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * speed * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * speed * dt))
