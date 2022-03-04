@@ -6,7 +6,9 @@
 
 ComponentRigidBody::ComponentRigidBody(GameObject* parent) : Component(parent)
 {
-	isActive = false;
+	isActive = true;
+	isStatic = false;
+	isDynamic = false;
 
 	mass = 0;
 	density = 0;
@@ -30,34 +32,39 @@ bool ComponentRigidBody::Start()
 bool ComponentRigidBody::Update(float dt)
 {
 	bool ret = true;
-
-	parentTransform = owner->GetTransform()->GetGlobalTransform();
-	if (isActive)
+	
+	if (isDynamic)
 	{
-		//Check forces and apply them to acceleration
-		float3 currentAcceleration = force / mass; 
-
-		//apply acceleration to linear velocity
-		linearVelocity += currentAcceleration / dt;
-	
-		//Check velocity and apply it to position
-		float3 currentLV = linearVelocity / dt;
-
-		//y axis cap
-		if (currentLV.y != 0.0f)
+		parentTransform = owner->GetTransform()->GetGlobalTransform();
+		if (isActive)
 		{
-			currentLV.y = 0;
-		}
+			//Check forces and apply them to acceleration
+			float3 currentAcceleration = force / mass;
 
-		parentTransform.Translate(currentLV);
-	
-		//float3 currentAV = angularVelocity / dt;
-		//translate to rotation angles
-		//euler to quat
-		// 
-		//apply rotation
-		//parentTransform.Rotate(Quat rotation);
+			//apply acceleration to linear velocity
+			linearVelocity += currentAcceleration / dt;
+
+			//Check velocity and apply it to position
+			float3 currentLV = linearVelocity / dt;
+
+			//y axis cap
+			if (currentLV.y != 0.0f)
+			{
+				currentLV.y = 0;
+			}
+
+			parentTransform.Translate(currentLV);
+
+			//impement angular movement
+			//floate3 currentAV = angularVelocity / dt;
+			//translate to rotation angles
+			//euler to quat
+			// 
+			//apply rotation
+			//parentTransform.Rotate(Quat rotation);
+		}
 	}
+
 	return ret;
 }
 
