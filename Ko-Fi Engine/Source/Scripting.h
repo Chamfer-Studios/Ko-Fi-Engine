@@ -95,10 +95,11 @@ public:
 
 		switch (button)
 		{
-			case 4: {return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_UP); }
-			case 5: {return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_LEFT); }
-			case 6: {return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_DOWN); }
-			case 7: {return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RIGHT); }
+			case 4: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_UP); }
+			case 5: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_LEFT); }
+			case 6: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_DOWN); }
+			case 7: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RIGHT); }
+			case 8: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE); }
 		}
 	}
 

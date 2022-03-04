@@ -96,9 +96,7 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 		if (ImGui::Button("Run")) // This will be an event call
 		{
-
 			script();
-
 			isRunning = true;
 		}
 		if (ImGui::Button("Stop")) // This will be an event call
