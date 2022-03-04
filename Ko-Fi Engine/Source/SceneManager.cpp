@@ -407,6 +407,7 @@ bool SceneManager::SaveScene(Scene* scene)
 			case ComponentType::CAMERA:
 				jsonComponent = SaveComponentCamera((ComponentCamera*)component);
 				jsonComponent["component_type"] = "camera";
+				break;
 			default:
 				break;
 			}
