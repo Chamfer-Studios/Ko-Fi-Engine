@@ -128,3 +128,16 @@ void ComponentScript::SetRunning(const bool& setTo)
 	if (setTo != isRunning)
 		isRunning = setTo;
 }
+
+void ComponentScript::Save(Json& json) const
+{
+	json["type"] = "script";
+	json["file_name"] = fileName;
+	json["script_number"] = numScript;
+}
+
+void ComponentScript::Load(Json& json)
+{
+	fileName = json.at("file_name");
+	numScript = json.at("script_number");
+}
