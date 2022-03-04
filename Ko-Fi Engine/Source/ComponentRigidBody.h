@@ -2,7 +2,6 @@
 #define __COMPONENT_RIGID_BODY_H__
 
 #include "Globals.h"
-#include "Defs.h"
 #include "Engine.h"
 
 #include "GameObject.h"
@@ -23,7 +22,7 @@ public:
 	ComponentRigidBody(GameObject* parent);
 	~ComponentRigidBody();
 
-	bool Update() override;
+	bool Update(float dt) override;
 
 	void UpdatePhysicsValues(); // Is called whenever a rigid body attribute is changed
 

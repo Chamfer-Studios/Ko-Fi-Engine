@@ -17,7 +17,7 @@ enum class ComponentType
 	CAMERA,
 	COLLIDER,
 	SCRIPT,
-	RIGID_BODY
+	RIGID_BODY,
 	TRANSFORM2D,
 	CANVAS,
 	IMAGE,

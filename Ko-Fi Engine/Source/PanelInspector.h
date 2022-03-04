@@ -26,8 +26,6 @@ private:
 	bool drawVertexNormals = false;
 	bool drawFacesNormals = false;
 
-	int componentType;
-
 };
 
 #endif // !__PANEL_INSPECTOR_H__

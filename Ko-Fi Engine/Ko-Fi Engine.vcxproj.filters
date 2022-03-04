@@ -85,7 +85,7 @@
     </Filter>
     <Filter Include="Source\Physics">
       <UniqueIdentifier>{f9672267-00e4-430b-9bd2-c2aad4a948ff}</UniqueIdentifier>
-          </Filter>
+    </Filter>
     <Filter Include="Libs\lua">
       <UniqueIdentifier>{bacdd039-412c-4820-8ee9-0c6c150a7660}</UniqueIdentifier>
     </Filter>
@@ -1410,6 +1410,15 @@
     </ClInclude>
     <ClInclude Include="Source\Scripting.h">
       <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

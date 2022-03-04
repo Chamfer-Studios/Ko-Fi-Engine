@@ -39,7 +39,7 @@ ComponentRigidBody::~ComponentRigidBody()
 	}
 }
 
-bool ComponentRigidBody::Update()
+bool ComponentRigidBody::Update(float dt)
 {
 	// If it's not simulating, skip the update
 	if (!owner->GetEngine()->GetPhysics()->GetInGame())
