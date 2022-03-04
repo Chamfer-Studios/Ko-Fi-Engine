@@ -8,6 +8,11 @@
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
 
+#include "glew.h"
+#include "SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
 class Scene
 {
 public:
@@ -143,12 +148,22 @@ public:
 		}
 	}
 
+	void DrawDebugRay(const LineSegment newRay) const
+	{
+		glColor4f(1.0f, 1.0f, 0.0f, 0.5f);
+		glLineWidth(10.5f);
+		glBegin(GL_LINES);
+		glVertex3f(newRay.a.x, newRay.a.y, newRay.a.z);
+		glVertex3f(newRay.b.x, newRay.b.y, newRay.b.z);
+		glEnd();
+	}
 public:
 	SString name;
 	bool active;
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
+	GameObject* selectedGameObject = nullptr;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
 

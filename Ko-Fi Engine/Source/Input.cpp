@@ -157,7 +157,11 @@ bool Input::PreUpdate(float dt)
 				break;
 			}
 			if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-				engine->GetRenderer()->OnResize(event.window.data1, event.window.data2);
+			{
+				engine->GetWindow()->SetWidth(event.window.data1);
+				engine->GetWindow()->SetHeight(event.window.data2);
+			}
+			
 			break;
 		}
 		//case (SDL_DROPFILE): {      // In case if dropped file

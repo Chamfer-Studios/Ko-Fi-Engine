@@ -197,9 +197,15 @@ void SceneManager::OnClick(SDL_Event event)
 
 	if (!engine->GetEditor()->getIfSceneClicked()) return;
 
-
 	GameObject* hit = engine->GetCamera3D()->MousePicking();
-	int a = 0;
+	if (hit != nullptr)
+	{
+		CONSOLE_LOG("%s", hit->GetName().c_str());
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetId();
+	}
+	else {
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	}
 
 }
 
@@ -355,13 +361,14 @@ Json SceneManager::SaveComponentInfo(ComponentInfo* componentInfo)
 
 Json SceneManager::SaveComponentCamera(ComponentCamera* componentCamera)
 {
-	Json jsonComponentCamera;
-	jsonComponentCamera["vertical_fov"] = componentCamera->verticalFOV;
-	jsonComponentCamera["near_plane_distance"] = componentCamera->nearPlaneDistance;
-	jsonComponentCamera["far_plane_distance"] = componentCamera->farPlaneDistance;
-	jsonComponentCamera["draw_frustum"] = componentCamera->drawFrustum;
-	jsonComponentCamera["frustum_culling"] = componentCamera->frustumCulling;
-	return jsonComponentCamera;
+	//Json jsonComponentCamera;
+	//jsonComponentCamera["vertical_fov"] = componentCamera->verticalFOV;
+	//jsonComponentCamera["near_plane_distance"] = componentCamera->nearPlaneDistance;
+	//jsonComponentCamera["far_plane_distance"] = componentCamera->farPlaneDistance;
+	//jsonComponentCamera["draw_frustum"] = componentCamera->drawFrustum;
+	//jsonComponentCamera["frustum_culling"] = componentCamera->frustumCulling;
+	//return jsonComponentCamera;
+	return true;
 }
 
 // Serialize and save scene into a .json file
@@ -585,11 +592,11 @@ void SceneManager::LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComp
 
 void SceneManager::LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera)
 {
-	componentCamera->verticalFOV = jsonComponentCamera.at("vertical_fov");
+	/*componentCamera->verticalFOV = jsonComponentCamera.at("vertical_fov");
 	componentCamera->nearPlaneDistance = jsonComponentCamera.at("near_plane_distance");
 	componentCamera->farPlaneDistance = jsonComponentCamera.at("far_plane_distance");
 	componentCamera->drawFrustum = jsonComponentCamera.at("draw_frustum");
-	componentCamera->frustumCulling = jsonComponentCamera.at("frustum_culling");
+	componentCamera->frustumCulling = jsonComponentCamera.at("frustum_culling");*/
 }
 
 // Load scene from a .json file

@@ -80,6 +80,8 @@ bool SceneIntro::Update(float dt)
 		go->Update();
 	}
 	//example::NodeEditorShow();
+	if (ray.IsFinite())
+		//DrawDebugRay(ray);
 
 	return true;
 }

@@ -2,6 +2,7 @@
 #define __WINDOW_H__
 
 #include "Module.h"
+#include "Globals.h"
 
 struct SDL_Window;
 struct SDL_Surface;
@@ -58,8 +59,8 @@ public:
 
 private:
 	SString title;
-	uint width;
-	uint height;
+	uint width = SCREEN_WIDTH;
+	uint height = SCREEN_HEIGHT;
 	uint scale;
 	float brightness;
 	bool fullscreen = false;

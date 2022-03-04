@@ -115,7 +115,7 @@ bool Renderer3D::Awake(Json configModule)
 	}
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
 
 	// Init the GLEW library
 	GLenum err = glewInit();
