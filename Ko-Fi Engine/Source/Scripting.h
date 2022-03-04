@@ -1,8 +1,6 @@
 #ifndef __SCRIPTING_H__
 #define __SCRIPTING_H__
 
-
-
 #include "Globals.h"
 #include "Engine.h"
 #include "Input.h" 
@@ -31,7 +29,7 @@ public:
 
 	void SetUpVariableTypes()
 	{
-		// Here we give lua certain data structures and variables
+		// Giving lua certain data structures and functions
 
 		// KEY_STATE
 		lua.new_enum("KEY_STATE",
@@ -75,11 +73,12 @@ public:
 			);
 
 
-		// Transform
+		// Giving lua certain variables
 		lua["gameObject"] = gameObject;
 		lua["componentTransform"] = componentTransform;
 		lua.set_function("GetMouseButton", &Scripting::LuaGetMouseButton, this);
 		lua.set_function("CreateBullet", &Scripting::LuaCreateBullet, this);
+		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
 	}
 
 	bool CleanUp()
@@ -98,6 +97,11 @@ public:
 	void LuaCreateBullet()
 	{
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.push_back(gameObject);
+	}
+
+	void DeleteGameObject()
+	{
+		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToDelete.push_back(gameObject);
 	}
 	
 

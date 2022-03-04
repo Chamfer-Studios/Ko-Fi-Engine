@@ -1,11 +1,12 @@
 print("Player.lua loaded")
 
--- Variables
+------------------- Variables --------------------
+
 speed = 3  -- consider Start()
 
 bullets = {}
 
--- Methods:
+-------------------- Methods ---------------------
 -- Called each loop iteration
 function Update(dt)
 
@@ -19,19 +20,6 @@ function Update(dt)
 	if(mRightButton == KEY_STATE.KEY_DOWN) then
 		CreateBullet()
 	end
-
-end
-
-function SetBulletDirection(bullet, parent)
-	
-	local playerPos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
-	local bulletPos2D = { bullet:GetTransform():GetPosition().x, bullet:GetTransform():GetPosition().z }
-	local dir = { bulletPos2D[1] - playerPos2D[1], bulletPos2D[2] - playerPos2D[2] }
-	local dist = Distance(playerPos2D, bulletPos2D)
-	dir = Normalize(dir, dist)
-	
-	dir3 = float3.new(dir[1], 0, dir[2])
-	bullet:GetTransform():SetFront(dir3)
 
 end
 
@@ -52,11 +40,31 @@ function Move(dt)
 
 end
 
+-------------------- Setters ---------------------
+
 function SetDestination(dest)
 	destination = dest
 end
 
---math
+function SetTarget(tar)
+	target = tar
+end
+
+function SetBulletDirection(bullet, parent)
+	
+	local playerPos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
+	local bulletPos2D = { bullet:GetTransform():GetPosition().x, bullet:GetTransform():GetPosition().z }
+	local dir = { bulletPos2D[1] - playerPos2D[1], bulletPos2D[2] - playerPos2D[2] }
+	local dist = Distance(playerPos2D, bulletPos2D)
+	dir = Normalize(dir, dist)
+	
+	dir3 = float3.new(dir[1], 0, dir[2])
+	bullet:GetTransform():SetFront(dir3)
+
+end
+
+----------------- Math Functions -----------------
+
 function Normalize(vec, distance)
     
 	vec[1] = vec[1] / distance
@@ -71,5 +79,7 @@ function Distance(a, b)
     return math.sqrt(dx * dx + dy * dy)
 
 end
+
+--------------------------------------------------
 
 print("Player.lua compiled succesfully")
