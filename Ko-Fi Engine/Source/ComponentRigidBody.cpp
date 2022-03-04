@@ -64,6 +64,10 @@ bool ComponentRigidBody::Update(float dt)
 			//parentTransform.Rotate(Quat rotation);
 		}
 	}
+	else
+	{
+
+	}
 
 	return ret;
 }

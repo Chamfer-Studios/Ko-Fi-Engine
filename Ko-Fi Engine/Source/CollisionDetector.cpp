@@ -105,30 +105,38 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 				{
 				case ColliderType::FLOOR:
 				{
-					float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
-					currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(currentVelocity.x, -currentVelocity.y, currentVelocity.z)); //change velocity direction excluding y axis.
-
+					if (currentEntity->GetComponent<ComponentRigidBody>()) 
+					{
+						float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
+						currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(currentVelocity.x, -currentVelocity.y, currentVelocity.z)); //change velocity direction on y axis.
+					}
 					break;
 				}
 				case ColliderType::WALL:
 				{
-					float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
-					currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3( -currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
-
+					if (currentEntity->GetComponent<ComponentRigidBody>())
+					{
+						float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
+						currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+					}
 					break;
 				}
 				case ColliderType::ENEMY:
 				{
-					float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
-					currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
-
+					if (currentEntity->GetComponent<ComponentRigidBody>())
+					{
+						float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
+						currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+					}
 					break;
 				}
 				case ColliderType::PLAYER:
 				{
-					float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
-					currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
-
+					if (currentEntity->GetComponent<ComponentRigidBody>())
+					{
+						float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
+						currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+					}
 					break;
 				}
 				}
