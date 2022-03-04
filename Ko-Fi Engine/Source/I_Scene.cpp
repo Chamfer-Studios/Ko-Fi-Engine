@@ -16,6 +16,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
+#include "ComponentScript.h"
 
 #include "Mesh.h"
 #include "Texture.h"
@@ -337,6 +338,12 @@ bool I_Scene::Save(Scene* scene)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::SCRIPT:
+			{
+				ComponentScript* scriptCmp = (ComponentScript*)component;
+				scriptCmp->Save(jsonComponent);
+				break;
+			}
 			default:
 				break;
 			}
@@ -434,6 +441,16 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					cameraCmp->active = true;
 					cameraCmp->Load(jsonCmp);
+				}
+				else if (type == "script")
+				{
+					ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
+					if (scriptCmp == nullptr)
+					{
+						scriptCmp = go->CreateComponent<ComponentScript>();
+					}
+					scriptCmp->active = true;
+					scriptCmp->Load(jsonCmp);
 				}
 			}
 			scene->gameObjectList.push_back(go);
