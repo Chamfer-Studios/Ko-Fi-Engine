@@ -1380,6 +1380,7 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentRigidBody.h">
       <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Source\External\lua\include\lauxlib.h">
       <Filter>Libs\lua</Filter>
     </ClInclude>
