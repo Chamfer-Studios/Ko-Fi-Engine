@@ -55,7 +55,7 @@ bool ComponentCamera::CleanUp()
 	return true;
 }
 
-bool ComponentCamera::Update()
+bool ComponentCamera::Update(float dt)
 {
 	// Add update functionality when we are able to change the main camera.
 
@@ -136,6 +136,25 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 	}
 
 	return ret;
+}
+
+void ComponentCamera::Save(Json& json) const
+{
+	json["type"] = "camera";
+	json["vertical_fov"] = verticalFOV;
+	json["near_plane_distance"] = nearPlaneDistance;
+	json["far_plane_distance"] = farPlaneDistance;
+	json["draw_frustum"] = drawFrustum;
+	json["frustum_culling"] = frustumCulling;
+}
+
+void ComponentCamera::Load(Json& json)
+{
+	verticalFOV = json.at("vertical_fov");
+	nearPlaneDistance = json.at("near_plane_distance");
+	farPlaneDistance = json.at("far_plane_distance");
+	drawFrustum = json.at("draw_frustum");
+	frustumCulling = json.at("frustum_culling");
 }
 
 //void ModuleCamera3D::OnSave(JSONWriter& writer) const

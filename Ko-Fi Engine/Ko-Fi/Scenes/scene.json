@@ -1,14 +1,15 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 6,
+        "game_objects_amount": 10,
         "game_objects_list": [
             {
                 "active": true,
                 "children_id_list": [
                     1,
                     2,
-                    3
+                    3,
+                    7
                 ],
                 "components_list": [
                     {
@@ -63,6 +64,7 @@
                     }
                 ],
                 "id": -1,
+                "is3D": true,
                 "name": "Root",
                 "parent": null
             },
@@ -152,6 +154,7 @@
                     }
                 ],
                 "id": 1,
+                "is3D": true,
                 "name": "Floor",
                 "parent": -1
             },
@@ -272,6 +275,7 @@
                     }
                 ],
                 "id": 2,
+                "is3D": true,
                 "name": "Water",
                 "parent": -1
             },
@@ -334,6 +338,7 @@
                     }
                 ],
                 "id": 3,
+                "is3D": true,
                 "name": "House",
                 "parent": -1
             },
@@ -423,6 +428,7 @@
                     }
                 ],
                 "id": 4,
+                "is3D": true,
                 "name": "Chimney",
                 "parent": 3
             },
@@ -512,8 +518,171 @@
                     }
                 ],
                 "id": 5,
+                "is3D": true,
                 "name": "HouseBody",
                 "parent": 3
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "transform2d",
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ]
+                    },
+                    {
+                        "component_type": "image",
+                        "mask": [
+                            1.0,
+                            1.0
+                        ],
+                        "texture": "Assets/Textures/checker.png"
+                    }
+                ],
+                "id": 6,
+                "is3D": false,
+                "name": "Image",
+                "parent": 7
+            },
+            {
+                "active": true,
+                "children_id_list": [
+                    6,
+                    8,
+                    9
+                ],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "canvas",
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ]
+                    }
+                ],
+                "id": 7,
+                "is3D": false,
+                "name": "Canvas",
+                "parent": -1
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "transform2d",
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            17.0,
+                            -287.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1458.0,
+                            200.0
+                        ]
+                    },
+                    {
+                        "component_type": "text",
+                        "value": "Hello world!"
+                    }
+                ],
+                "id": 8,
+                "is3D": false,
+                "name": "Text",
+                "parent": 7
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "transform2d",
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -359.0,
+                            288.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ]
+                    },
+                    {
+                        "component_type": "button",
+                        "hoverTexture": "Assets/Textures/baker_house.png",
+                        "idleTexture": "Assets/Textures/checker.png",
+                        "pressedTexture": "Assets/Textures/Building_V01_C.png"
+                    }
+                ],
+                "id": 9,
+                "is3D": false,
+                "name": "Button",
+                "parent": 7
             }
         ],
         "name": "SceneIntro",

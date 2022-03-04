@@ -1,7 +1,9 @@
-#pragma once
+#ifndef __ENGINE_CONFIG_H__
+#define __ENGINE_CONFIG_H__
+
 #include "PerfTimer.h"
 #include "Timer.h"
-#include "SString.h"
+#include <string> 
 #include "SDL.h"
 
 class EngineConfig
@@ -56,3 +58,5 @@ public:
 	bool hasSSE41 = false;
 	bool hasSSE42 = false;
 };
+
+#endif // !__ENGINE_CONFIG_H__

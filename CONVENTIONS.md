@@ -26,12 +26,13 @@ Pointers | MyType* pointer | `Texture2D* array;`
 float values | always x.xf | `float value = 10.0f`
 Ternary Operator | (condition)? result1 : result2 | `printf("Value is 0: %s", (value == 0)? "yes" : "no");`
 
-The curly braces need to be in K&R style.
+The curly braces need to be in Aliman style.
 ```c
 int main(int argc, char *argv[])
 {
     ...
-    while (x == y) {
+    while (x == y) 
+    {
         something();
         somethingelse();
 
@@ -428,8 +429,46 @@ Map types:
 </map>
 
 ```
+ ## 8. JSON
+ For the JSON files we will format them in the following convention:
+ - Format JSON files to be human readable.
+ - Use a tab for indentation or 4 spaces.
+ - Use one space after the name-separator (:)
+ - Follow the formal JSON conventinos. Wrap strings in double (not single) quotes. Numbers and other data types without quotes.
+ - Sample files may have their keys ordered if that makes the file easier to understand. Automatic reformatting tools preserve the order of keys.
+ ```
+{
+  "Engine": {
+    "Authors": "Alejandro Avila & Bosco Barber",
+    "Organization": "Ko-Fi Studios",
+    "Title": "Ko-Fi Engine",
+    "MaxFPS": 60
+  },
+  "Window": {
+    "Width": 1024,
+    "Height": 768,
+    "Scale": 1,
+    "Fullscreen": false,
+    "FullscreenDesktop": false,
+    "Resizable": true,
+    "Borderless": false,
+    "Title": "Ko-Fi Engine",
+    "Icon": "Assets/Icons/icon.bmp"
+  },
+  "Renderer3D": {
+    "Vsync": true
+  },
+  "Camera": null,
+  "Input": null,
+  "Editor": null,
+  "SceneManager": null,
+  "ModelLoader": null,
+  "ViewportFrameBuffer": null
+}
+
+```
  
- ## 7. Files and Directories Naming Conventions
+ ## 9. Files and Directories Naming Conventions
  
   - Directories are named using `TitleCase` : `Assets/Audio/Music`
   

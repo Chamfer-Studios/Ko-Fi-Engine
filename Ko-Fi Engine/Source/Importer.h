@@ -1,28 +1,32 @@
-#pragma once
-#include "Module.h"
+#ifndef __IMPORTER_H__
+#define __IMPORTER_H__
 
-struct aiScene;
-class GameObject;
-class ComponentTransform;
-class Mesh;
-class Importer{
+#include "I_Material.h"
+#include "I_Mesh.h"
+#include "I_Scene.h"
+#include "I_Texture.h"
+
+class KofiEngine;
+
+class Importer
+{
 private:
-	Importer();
+	Importer(KoFiEngine* e = nullptr);
+
 public:
 	~Importer();
-	static Importer* GetInstance();
-	GameObject* ImportModel(const char* path);
-	bool SaveModel(const Mesh* mesh,const char* path);
-	Mesh* LoadModel(const char* path);
-	
-	void SetEngine(KoFiEngine* engine) { this->engine = engine; }
-	
-private:
-	GameObject* GetOneMesh(const aiScene* scene);
-	GameObject* GetMultipleMeshes(const aiScene* scene);
 
-	ComponentTransform* AdjustTransform(const aiScene* scene, GameObject* go);
+	static Importer* GetInstance(KoFiEngine* e = nullptr);
+
+public:
+	I_Scene* sceneImporter = nullptr;
+	I_Mesh* meshImporter = nullptr;
+	I_Material* materialImporter = nullptr;
+	I_Texture* textureImporter = nullptr;
+
 private:
 	KoFiEngine* engine = nullptr;
 	static Importer* instance;
 };
+
+#endif // !__IMPORTER_H__

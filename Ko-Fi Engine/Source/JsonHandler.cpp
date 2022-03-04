@@ -8,6 +8,7 @@
 bool JsonHandler::SaveJson(Json& json, const char* path) const
 {
 	bool ret = false;
+
 	SDL_assert(path != nullptr);
 	std::ofstream stream(path,std::ios::trunc);
 	SDL_assert(stream.is_open());
@@ -15,7 +16,6 @@ bool JsonHandler::SaveJson(Json& json, const char* path) const
 	{
 		stream << std::setw(4) << json << std::endl;
 		ret = true;
-
 	}
 	catch (Json::parse_error& e)
 	{
@@ -23,24 +23,31 @@ bool JsonHandler::SaveJson(Json& json, const char* path) const
 		appLog->AddLog("Error while Saving File: %c\n", e.what());
 		ret = false;
 	}
+
 	stream.close();
+
 	return ret;
 }
 
 bool JsonHandler::LoadJson(Json& json,const char* path) const
 {
-	bool ret = true;
+	bool ret = false;
+
 	SDL_assert(path != nullptr);
 	std::ifstream stream(path);
 	SDL_assert(stream.is_open());
-	try {
+	try 
+	{
 		json = Json::parse(stream);
 		ret = true;
 	}
-	catch (Json::parse_error& e) {
+	catch (Json::parse_error& e)
+	{
 		CONSOLE_LOG("Error while Loading File: %c", e.what());
 		appLog->AddLog("Error while Loading File: %c\n", e.what());
-	}	
+		ret = false;
+	}
+
 	stream.close();
 
 	return ret;

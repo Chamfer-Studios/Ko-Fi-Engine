@@ -3,19 +3,28 @@
 
 #include "imgui.h"
 #include "json.hpp"
+
 using nlohmann::json;
 class PanelChooser;
 class GameObject;
+using Json = nlohmann::json;
 
 enum class ComponentType
 {
 	NONE,
-	TRANSFORM,
 	MESH,
 	MATERIAL,
-	INFO,
 	CAMERA,
+	COLLIDER,
+	SCRIPT,
 	RIGID_BODY
+	TRANSFORM2D,
+	CANVAS,
+	IMAGE,
+	BUTTON,
+	TEXT,
+	TRANSFORM,
+	INFO,
 };
 
 class Component
@@ -26,11 +35,17 @@ public:
 	virtual void Enable() { active = true; }
 	virtual bool Start() { return true; }
 	virtual bool PreUpdate() { return true; }
-	virtual bool Update() { return true; }
+	virtual bool Update(float dt) { return true; }
 	virtual bool PostUpdate(float dt) { return true; }
 	virtual bool CleanUp() { return true; }
+
 	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
+
 	virtual void Disable() { active = false; }
+
+	virtual void Save(Json& json) const {}
+	virtual void Load(Json& json) {}
+
 	ComponentType GetType() { return type; }
 
 
@@ -41,4 +56,3 @@ public:
 };
 
 #endif // !__COMPONENT_H__
-

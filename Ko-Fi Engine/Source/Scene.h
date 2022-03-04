@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Importer.h"
 #include "Engine.h"
+#include "RNG.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
@@ -61,11 +62,11 @@ public:
 		return true;
 	}
 
-	GameObject* GetGameObject(int id)
+	GameObject* GetGameObject(int uid)
 	{
 		for (GameObject* go : gameObjectList)
 		{
-			if (go->GetId() == id)
+			if (go->GetUID() == uid)
 			{
 				return go;
 			}
@@ -74,11 +75,14 @@ public:
 		return nullptr;
 	}
 
-	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
+	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
 	{
-		GameObject* go = new GameObject(gameObjectList.size(), engine);
+		GameObject* go = new GameObject(gameObjectList.size(), engine, name, is3D);
 		this->gameObjectList.push_back(go);
-		this->rootGo->AttachChild(go);
+		if (parent)
+			parent->AttachChild(go);
+		else
+			this->rootGo->AttachChild(go);
 
 		return go;
 	}
@@ -87,7 +91,7 @@ public:
 	{
 		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
 		{
-			if ((*it)->GetId() == gameObject->GetId())
+			if ((*it)->GetUID() == gameObject->GetUID())
 			{
 				gameObjectList.erase(it);
 				break;
@@ -144,15 +148,16 @@ public:
 	}
 
 public:
-	SString name;
+	std::string name;
 	bool active;
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
+	std::vector<GameObject*> gameObjectListToCreate;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
 
 	LineSegment ray;
 };
 
-#endif // __SCENE_H__
+#endif // !__SCENE_H__

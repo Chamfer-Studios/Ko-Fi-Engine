@@ -1,8 +1,6 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-#include "SString.h"
-
 #include "JsonHandler.h"
 
 class GuiControl;
@@ -58,9 +56,9 @@ public:
 	virtual void OnGui() {}
 
 public:
-	SString name;
+	std::string name;
 	bool active;
 
 };
 
-#endif // __MODULE_H__
+#endif // !__MODULE_H__

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
@@ -17,6 +16,7 @@ class Editor;
 class FileSystem;
 class ViewportFrameBuffer;
 class Physics;
+class UI;
 
 class KoFiEngine
 {
@@ -57,6 +57,7 @@ public:
 	FileSystem* GetFileSystem() const;
 	ViewportFrameBuffer* GetViewportFrameBuffer() const;
 	Physics* GetPhysics() const;
+	UI* GetUI() const;
 
 private:
 	// Add a new module to handle
@@ -91,6 +92,7 @@ private:
 	FileSystem* fileSystem = nullptr;
 	ViewportFrameBuffer* viewportBuffer = nullptr;
 	Physics* physics = nullptr;
+	UI* ui = nullptr;
 
 private:
 	int argc;
@@ -104,4 +106,4 @@ private:
 	JsonHandler jsonHandler;
 };
 
-#endif //__ENGINE_H__
+#endif // !__ENGINE_H__

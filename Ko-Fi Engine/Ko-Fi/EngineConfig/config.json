@@ -26,5 +26,7 @@
   "SceneManager": null,
   "ModelLoader": null,
   "ViewportFrameBuffer": null,
-  "Physics":  null
+  "Physics":  null,
+  "Scripting": null,
+  "UI": null
 }

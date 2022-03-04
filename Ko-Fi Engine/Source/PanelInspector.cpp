@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
+#include "ComponentScript.h"
 
 PanelInspector::PanelInspector(Editor* editor)
 {
@@ -43,17 +44,20 @@ bool PanelInspector::Update()
 
 		ImGui::Separator();
 
-		// Take care with the order in the combo, it has to follow the ComponentType enum class order (ignore enum[0] --> NONE)
-		ImGui::Combo("##", &componentType, "Add Component\0Transform\0Mesh\0Material\0Info\0Camera\0RigidBody");
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody");
 
 		ImGui::SameLine();
 
 		if ((ImGui::Button("ADD")))
 		{
-			if (componentType != (int)ComponentType::NONE)
+			switch (componentType)
 			{
-				currentGameObject->AddComponentByType((ComponentType)componentType);
-				componentType = 0;
+			case (int)ComponentType::NONE: break;
+			case (int)ComponentType::MESH: currentGameObject->CreateComponent<ComponentMesh>(); break;
+			case (int)ComponentType::MATERIAL: currentGameObject->CreateComponent<ComponentMaterial>(); break;
+			//case (int)ComponentType::CAMERA: currentGameObject->CreateComponent<ComponentCamera>(); break;
+			//case (int)ComponentType::COLLIDER: currentGameObject->CreateComponent<ComponentCollider>(); break;
+			case (int)ComponentType::SCRIPT: currentGameObject->CreateComponent<ComponentScript>(); break;
 			}
 		}
 	}

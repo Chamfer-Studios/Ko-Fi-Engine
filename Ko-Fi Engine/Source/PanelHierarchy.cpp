@@ -85,11 +85,11 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 {
 	if (go->GetChildren().size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf;
-	if (ImGui::TreeNodeEx(go->GetName().c_str(),flags))
+	if (ImGui::TreeNodeEx(go->GetName(),flags))
 	{
 		DragNDrop(go);
 		if ((ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)))
-			editor->panelGameObjectInfo.selectedGameObjectID = go->GetId();
+			editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
 		if (ImGui::IsItemClicked(1)) {
 			ImGui::OpenPopup("Test");
 		}
@@ -98,13 +98,13 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 			if (ImGui::MenuItem("Create Empty Child")) {
 				GameObject* child = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-					if (go->GetId() == editor->panelGameObjectInfo.selectedGameObjectID)
+					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID)
 						go->AttachChild(child);
 				}
 			}
 			if (ImGui::MenuItem("Delete")) {
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-					if (go->GetId() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetId() != -1) {
+					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetUID() != -1) {
 						editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
 						editor->panelGameObjectInfo.selectedGameObjectID = -1;
 					}
