@@ -188,10 +188,14 @@ bool ComponentMesh::PostUpdate(float dt)
 				}
 			}
 
-			mesh->Draw(owner);
+		mesh->Draw(owner);
 
-			GenerateGlobalBoundingBox();
-			DrawBoundingBox(mesh->localAABB, float3(1.0f, 0.0f, 0.0f));
+		//draw bounding boxes
+
+		GenerateGlobalBoundingBox();
+		DrawBoundingBox(GetLocalAABB(), float3(1.0f, 1.0f, 0.0f));
+		 
+
 
 			glUseProgram(0);
 		}
@@ -328,8 +332,16 @@ AABB ComponentMesh::GetLocalAABB()
 
 void ComponentMesh::GenerateGlobalBoundingBox()
 {
+	/*math::float4x4 modelMatrix = owner->GetTransform()->GetGlobalTransform();
+	math::float4x4 projectionMatrix = owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix();
+	math::float4x4 viewMatrix = owner->GetEngine()->GetCamera3D()->viewMatrix * owner->GetTransform()->GetGlobalTransform();
+
+	math::float4x4 MVP = projectionMatrix * viewMatrix * modelMatrix;*/
+
 	// Generate global OBB
-	obb = GetLocalAABB();
+	obb.SetFrom(GetLocalAABB());
+	obb.Transform(owner->GetTransform()->GetGlobalTransform());
+	//obb.Translate(ownerTransform.TranslatePart());
 
 	// Generate global AABB
 	mesh->localAABB.SetNegativeInfinity();
@@ -372,6 +384,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	//};
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
+
 	glBegin(GL_LINES);
 
 	// Bottom 1
@@ -417,12 +430,12 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glEnd();
 	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1.0f);
-}
 
+}
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
-	bool ret = true;
 
+	bool ret = true;
 	if (ImGui::CollapsingHeader("Mesh"))
 	{
 		ImGui::Text("Mesh Path: ");
@@ -443,6 +456,14 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Faces Normals", &faces))
 			mesh->SetFaceNormals(faces);
 	}
-
 	return ret;
+}
+bool ComponentMesh::GetRenderAABB()
+{
+	return renderAABB;
+}
+
+void ComponentMesh::SetRenderAABB(bool newRenderAABB)
+{
+	this->renderAABB = newRenderAABB;
 }

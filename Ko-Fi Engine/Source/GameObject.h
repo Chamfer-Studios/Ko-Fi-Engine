@@ -11,6 +11,7 @@ class ComponentTransform;
 class ComponentMesh;
 class ComponentInfo;
 class ComponentScript;
+class ComponentCollider;
 
 class GameObject
 {

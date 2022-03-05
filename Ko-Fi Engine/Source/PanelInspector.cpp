@@ -7,6 +7,10 @@
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentScript.h"
+#include "ComponentCamera.h"
+#include "ComponentInfo.h"
+#include "ComponentTransform.h"
+#include "ComponentCollider.h"
 #include "ComponentRigidBody.h"
 
 PanelInspector::PanelInspector(Editor* editor)

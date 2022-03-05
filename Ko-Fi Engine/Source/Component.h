@@ -24,7 +24,7 @@ enum class ComponentType
 	BUTTON,
 	TEXT,
 	TRANSFORM,
-	INFO,
+	INFO
 };
 
 class Component
