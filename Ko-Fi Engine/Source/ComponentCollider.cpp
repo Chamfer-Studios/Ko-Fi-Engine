@@ -81,8 +81,13 @@ bool ComponentCollider::InspectorDraw(PanelChooser* chooser)
 			}
 		}
 		
-	}                                                                                                                        
-
+		ImGui::Text("Currenly Colliding...");
+		ImGui::SameLine();
+		if ( isColliding == true )
+			ImGui::Text(lastObjectCollided->GetName().c_str());
+		else
+			ImGui::Text("No collision");
+	}                        
 	return ret;
 }
 

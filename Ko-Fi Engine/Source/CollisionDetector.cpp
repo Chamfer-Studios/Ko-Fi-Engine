@@ -99,7 +99,11 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 			if (currentEntityAABB.Intersects(newCollider))
 			{
 				//call corresponding event depending on collider type
-				//std::cout<<"intersectioooooon";
+				std::cout<<"intersectioooooon";
+
+				//set new collision for the inspector properties
+				currentEntity->GetComponent<ComponentCollider>()->SetNewCollision(fullGOList[i]);
+				fullGOList[i]->GetComponent<ComponentCollider>()->SetNewCollision(currentEntity);
 
 				switch (newColliderType)
 				{
@@ -140,6 +144,12 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 					break;
 				}
 				}
+			}
+			//if they are not colliding anymore, set the isColliding bool to false
+			else if (currentEntity->GetComponent<ComponentCollider>()->IsColliding() && currentEntity->GetComponent<ComponentCollider>()->GetLastCollided() == fullGOList[i])
+			{
+				currentEntity->GetComponent<ComponentCollider>()->SetColliding(false);
+				fullGOList[i]->GetComponent<ComponentCollider>()->SetColliding(false);
 			}
 		}
 	}

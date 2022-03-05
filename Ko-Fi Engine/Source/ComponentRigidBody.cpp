@@ -8,7 +8,6 @@ ComponentRigidBody::ComponentRigidBody(GameObject* parent) : Component(parent)
 {
 	isActive = true;
 	isStatic = false;
-	isDynamic = false;
 
 	mass = 0;
 	density = 0;
@@ -33,7 +32,7 @@ bool ComponentRigidBody::Update(float dt)
 {
 	bool ret = true;
 	
-	if (isDynamic)
+	if (!isStatic)
 	{
 		parentTransform = owner->GetTransform()->GetGlobalTransform();
 		if (isActive)
@@ -75,6 +74,20 @@ bool ComponentRigidBody::Update(float dt)
 bool ComponentRigidBody::CleanUp()
 {
 	bool ret = true;
+
+	return ret;
+}
+
+bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
+{
+	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
+
+	if (ImGui::CollapsingHeader("Component RigidBody"))
+	{
+		bool state = isStatic;
+		if (ImGui::Checkbox("isStatic", &state))
+			this->SetStatic(state);
+	}
 
 	return ret;
 }

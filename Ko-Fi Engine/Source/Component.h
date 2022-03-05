@@ -12,6 +12,7 @@ enum class ComponentType
 	MATERIAL,
 	CAMERA,
 	COLLIDER,
+	RIGIDBODY,
 
 	TRANSFORM,
 	INFO

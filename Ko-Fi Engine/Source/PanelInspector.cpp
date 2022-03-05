@@ -10,6 +10,7 @@
 #include "ComponentInfo.h"
 #include "ComponentTransform.h"
 #include "ComponentCollider.h"
+#include "ComponentRigidBody.h"
 
 PanelInspector::PanelInspector(Editor* editor)
 {
@@ -50,7 +51,7 @@ bool PanelInspector::Update()
 		const char* items[] = { ""};
 		static const char* current_item = NULL;
 
-		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider");
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0RigidBody");
 		
 		ImGui::SameLine();
 
@@ -63,6 +64,7 @@ bool PanelInspector::Update()
 			case (int)ComponentType::MATERIAL: currentGameObject->CreateComponent<ComponentMaterial>(); break;
 			case (int)ComponentType::CAMERA: currentGameObject->CreateComponent<ComponentCamera>(); break;
 			case (int)ComponentType::COLLIDER: currentGameObject->CreateComponent<ComponentCollider>(); break;
+			case (int)ComponentType::RIGIDBODY: currentGameObject->CreateComponent<ComponentRigidBody>(); break;
 			}
 		}
 

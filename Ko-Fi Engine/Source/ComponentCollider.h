@@ -45,15 +45,20 @@ public:
 	// ----- Getters Setters ---------------
 	const ColliderType GetColliderType() const { return collType; }
 	bool IsTrigger() const { return isTrigger; }
+	bool IsColliding() const { return isColliding; }
+	GameObject* GetLastCollided() const { return lastObjectCollided; }
 
-	void SetColliderType(ColliderType type); 
+	void SetColliderType(ColliderType type);
 	void SetTrigger(bool enable) { isTrigger = enable; }
+	void SetColliding(bool collides) { isColliding = collides; }
+	void SetNewCollision(GameObject* collidedGO) { isColliding = true; lastObjectCollided = collidedGO; }
 	// -------------------------------------
 
 	
 private:
-	
 	bool isTrigger = false;
+	bool isColliding = false;
+	GameObject* lastObjectCollided = nullptr;
 
 	ColliderType collType;
 	int colliderType;
