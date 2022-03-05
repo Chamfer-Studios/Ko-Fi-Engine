@@ -58,6 +58,8 @@ public:
 	bool GetRenderMesh();
 	void SetRenderMesh(bool renderMesh);
 
+	void DrawOutline() const;
+
 private:
 	//Bounding sphere
 	float3 centerPoint = float3::zero;

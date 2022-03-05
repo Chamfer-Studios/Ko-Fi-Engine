@@ -9,6 +9,7 @@
 #include "ComponentCamera.h"
 #include "Editor.h"
 #include "Camera3D.h"
+#include "PanelViewport.h"
 #include "Log.h"
 
 #include "Defs.h"
@@ -195,7 +196,7 @@ void SceneManager::OnClick(SDL_Event event)
 {
 	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT) return;
 
-	if (!engine->GetEditor()->getIfSceneClicked()) return;
+	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) return;
 
 	GameObject* hit = engine->GetCamera3D()->MousePicking();
 	if (hit != nullptr)

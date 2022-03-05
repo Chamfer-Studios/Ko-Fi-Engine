@@ -15,8 +15,9 @@ public:
 	bool Update();
 	bool PostUpdate();
 	bool IsWindowFocused();
+	
 private:
+	bool isFocused = false;
 	Editor* editor = nullptr;
 	KoFiEngine* engine = nullptr;
-	bool isFocused = false;
 };

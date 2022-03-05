@@ -15,7 +15,6 @@
 #include "ImGuiAppLog.h"
 #include "MathGeoLib/Geometry/LineSegment.h"
 #include "MathGeoLib/Geometry/Triangle.h"
-#include "MathGeoLib/Math/MathFunc.h"
 
 Camera3D::Camera3D(KoFiEngine* engine) : Module()
 {
@@ -26,7 +25,7 @@ Camera3D::Camera3D(KoFiEngine* engine) : Module()
 	up = float3(0.0f, 1.0f, 0.0f);
 	front = float3(0.0f, 0.0f, 1.0f);
 
-	position = float3(0.0f, 5.0f, -15.0f);
+	position = float3(0.0f,5.0f,-15.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	CalculateViewMatrix();
@@ -65,13 +64,16 @@ bool Camera3D::Update(float dt)
 
 	float3 newPos(0, 0, 0);
 	float speed = cameraSpeed * dt;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) speed *= 4.f;
+	bool isWindowFocused = engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused();
+	if (!isWindowFocused) return true;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos.y -= speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos.y += speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
 
 	// Focus --> NEEDS TO BE FIXED... SOME (MESH) FUNCTIONS DEPEND ON A PRIMITIVE LIBRARY WE STILL DON'T HAVE IMPLEMENTED.
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN )
 	{
 		// TO DO: Manage current object selection by the game object itself! Not by its index...
 		if (/*engine->GetEditor()->gameobjectSelected != nullptr <-- Should be this way*/
@@ -105,19 +107,19 @@ bool Camera3D::Update(float dt)
 		spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
 		spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
 	}
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN )
 	{
 		LookAt(float3(5, 5, 5));
 	}
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos += front * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos -= front * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += front * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= front * speed;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos += right * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos -= right * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += right * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
 
-	if (engine->GetInput()->GetMouseZ() > 0 && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos += front * speed * 2;
-	if (engine->GetInput()->GetMouseZ() < 0 && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos -= front * speed * 2;
+	if (engine->GetInput()->GetMouseZ() > 0 ) newPos += front * speed * 2;
+	if (engine->GetInput()->GetMouseZ() < 0 ) newPos -= front * speed * 2;
 
 	position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
 
@@ -125,7 +127,7 @@ bool Camera3D::Update(float dt)
 
 	bool hasRotated = false;
 
-	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
+	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		int dx = -engine->GetInput()->GetMouseXMotion();
 		int dy = -engine->GetInput()->GetMouseYMotion();
@@ -192,16 +194,6 @@ bool Camera3D::Update(float dt)
 
 	CalculateViewMatrix();
 
-	// Mouse Picking
-	//if (engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN /*&& !ImGuizmo::IsOver() && !ImGuizmo::IsUsing()*/)
-	//{
-	//	GameObject* picked = MousePicking();
-	//	if (picked != nullptr)
-	//		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = picked->GetId();
-	//	else
-	//		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
-	//}
-
 	return true;
 }
 
@@ -238,7 +230,6 @@ void Camera3D::RecalculateProjection()
 	cameraFrustum.farPlaneDistance = farPlaneDistance;
 	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
 	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
-
 }
 
 void Camera3D::OnGui()
@@ -288,16 +279,11 @@ void Camera3D::OnGui()
 
 GameObject* Camera3D::MousePicking()
 {
-	float vx = engine->GetEditor()->viewportSize.x;
-	float vy = engine->GetEditor()->lastViewportSize.y;
-	float mx = engine->GetEditor()->mouseScenePosition.x;
-	float my = engine->GetEditor()->mouseScenePosition.y;
-	float normalX = engine->GetEditor()->mouseScenePosition.x / engine->GetEditor()->viewportSize.x;
-	float normalY = engine->GetEditor()->mouseScenePosition.y / engine->GetEditor()->viewportSize.y;
+	float normalX = engine->GetEditor()->mouseScenePosition.x / engine->GetEditor()->lastViewportSize.x;
+	float normalY = engine->GetEditor()->mouseScenePosition.y / engine->GetEditor()->lastViewportSize.y;
 
 	normalX = (normalX - 0.5f) * 2.0f;
 	normalY = -(normalY - 0.5f) * 2.0f;
-	CONSOLE_LOG("x: %f, y:%f", normalX, normalY);
 
 	LineSegment newRay = cameraFrustum.UnProjectLineSegment(normalX, normalY);
 	engine->GetSceneManager()->GetCurrentScene()->ray = newRay;
@@ -305,23 +291,22 @@ GameObject* Camera3D::MousePicking()
 	std::vector<GameObject*> sceneGameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
 	std::map<float, GameObject*> hitGameObjects;
 
-	//Find all hit GameObjects
+	// Find all hit GameObjects
 	for (size_t i = 0; i < sceneGameObjects.size(); i++)
 	{
 		ComponentMesh* m = sceneGameObjects[i]->GetComponent<ComponentMesh>();
 		if (m != nullptr)
 		{
-			bool hit = newRay.Intersects(m->GetLocalAABB());
+			bool hit = newRay.Intersects(m->GetGlobalAABB());
 
 			if (hit)
 			{
 				float dNear;
 				float dFar;
-				hit = newRay.Intersects(m->GetLocalAABB(), dNear, dFar);
+				hit = newRay.Intersects(m->GetGlobalAABB(), dNear, dFar);
 				hitGameObjects[dNear] = sceneGameObjects[i];
 			}
 		}
-
 	}
 
 	for (std::map<float, GameObject*>::iterator it = hitGameObjects.begin(); it != hitGameObjects.end(); it++)
@@ -330,7 +315,6 @@ GameObject* Camera3D::MousePicking()
 
 		LineSegment rayLocal = newRay;
 		rayLocal.Transform(gameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Inverted());
-
 
 		ComponentMesh* cMesh = gameObject->GetComponent<ComponentMesh>();
 
@@ -374,91 +358,6 @@ GameObject* Camera3D::MousePicking()
 			}
 		}
 	}
-
-	//float normalX = engine->GetEditor()->mouseScenePosition.x / engine->GetEditor()->lastViewportSize.x;
-	//float normalY = engine->GetEditor()->mouseScenePosition.y / engine->GetEditor()->lastViewportSize.y;
-
-	//normalX = (normalX - 0.5f) * 2.0f;
-	//normalY = -(normalY - 0.5f) * 2.0f;
-
-	//LineSegment newRay = cameraFrustum.UnProjectLineSegment(normalX, normalY);
-	//
-
-	//engine->GetSceneManager()->GetCurrentScene()->ray = newRay;
-
-	//std::vector<GameObject*> sceneGameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
-	//std::map<float, GameObject*> hitGameObjects;
-
-	//// Find all hit GameObjects
-	//for (size_t i = 0; i < sceneGameObjects.size(); i++)
-	//{
-	//	ComponentMesh* m = sceneGameObjects[i]->GetComponent<ComponentMesh>();
-	//	if (m != nullptr)
-	//	{
-	//		bool hit = newRay.Intersects(m->GetGlobalAABB());
-
-	//		if (hit)
-	//		{
-	//			float dNear;
-	//			float dFar;
-	//			hit = newRay.Intersects(m->GetGlobalAABB(), dNear, dFar);
-	//			hitGameObjects[dNear] = sceneGameObjects[i];
-	//		}
-	//	}
-	//}
-	//for (auto c : hitGameObjects)
-	//{
-	//	CONSOLE_LOG("%s", c.second->name.c_str());
-	//}
-	//for (std::map<float, GameObject*>::iterator it = hitGameObjects.begin(); it != hitGameObjects.end(); it++)
-	//{
-	//	GameObject* gameObject = it->second;
-
-	//	LineSegment rayLocal = newRay;
-	//	rayLocal.Transform(gameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Inverted());
-
-	//	ComponentMesh* cMesh = gameObject->GetComponent<ComponentMesh>();
-
-	//	if (cMesh != nullptr)
-	//	{
-	//		Mesh* rMesh = cMesh->GetMesh();
-
-	//		if (rMesh == nullptr) continue;
-
-	//		// Convert our float pointer to a std::vector of float3
-	//		std::vector<float3> vertices;
-	//		float* fvertices = rMesh->vertices;
-	//		for (int i = 0; i < rMesh->verticesSizeBytes / sizeof(float); i += 3)
-	//		{
-	//			vertices.push_back(float3(fvertices[i], fvertices[i + 1], fvertices[i + 2]));
-	//		}
-
-	//		for (size_t i = 0; i < rMesh->indicesSizeBytes / sizeof(unsigned int); i += 3)
-	//		{
-	//			// Create every triangle
-	//			float3 v1;
-	//			v1.x = vertices[rMesh->indices[i]].x;
-	//			v1.y = vertices[rMesh->indices[i]].y;
-	//			v1.z = vertices[rMesh->indices[i]].z;
-
-	//			float3 v2;
-	//			v2.x = vertices[rMesh->indices[i + 1]].x;
-	//			v2.y = vertices[rMesh->indices[i + 1]].y;
-	//			v2.z = vertices[rMesh->indices[i + 1]].z;
-
-	//			float3 v3;
-	//			v3.x = vertices[rMesh->indices[i + 2]].x;
-	//			v3.y = vertices[rMesh->indices[i + 2]].y;
-	//			v3.z = vertices[rMesh->indices[i + 2]].z;
-
-	//			const Triangle triangle(v1, v2, v3);
-
-	//			float distance;
-	//			float3 intersectionPoint;
-	//			if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
-	//		}
-	//	}
-	//}
 
 	return nullptr;
 }
