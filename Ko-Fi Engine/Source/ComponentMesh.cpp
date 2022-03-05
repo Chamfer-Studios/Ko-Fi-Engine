@@ -336,17 +336,12 @@ void ComponentMesh::GenerateLocalBoundingBox()
 AABB ComponentMesh::GetLocalAABB()
 {
 	GenerateLocalBoundingBox();
+
 	return mesh->localAABB;
 }
 
 void ComponentMesh::GenerateGlobalBoundingBox()
 {
-	/*math::float4x4 modelMatrix = owner->GetTransform()->GetGlobalTransform();
-	math::float4x4 projectionMatrix = owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix();
-	math::float4x4 viewMatrix = owner->GetEngine()->GetCamera3D()->viewMatrix * owner->GetTransform()->GetGlobalTransform();
-
-	math::float4x4 MVP = projectionMatrix * viewMatrix * modelMatrix;*/
-
 	// Generate global OBB
 	obb.SetFrom(GetLocalAABB());
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
@@ -492,9 +487,9 @@ void ComponentMesh::GenerateBounds()
 
 AABB ComponentMesh::GetGlobalAABB() const
 {
-	AABB global = AABB(mesh->localAABB);
-	global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
-	return global;
+	//AABB global = AABB(mesh->localAABB);
+	//global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
+	return mesh->localAABB;
 }
 
 void ComponentMesh::DrawAABB() const
