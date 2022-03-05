@@ -71,18 +71,20 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 	if (ImGui::CollapsingHeader(headerName.c_str()))
 	{
 
-		if (chooser->IsReadyToClose("LoadScript")) {
-			if (chooser->OnChooserClosed() != nullptr) {
-				std::string path = chooser->OnChooserClosed();
-				fileName = path.substr(path.find_last_of('/')+1);
-				LoadScript(path);
+		if (chooser->IsReadyToClose("LoadScript")) 
+		{
+			if (chooser->OnChooserClosed() != nullptr) 
+			{
+				path = chooser->OnChooserClosed();
+				script = handler->lua.load_file(path);
 			}
 		}
-		if (ImGui::Button("Select Script")) {
+		if (ImGui::Button("Select Script")) 
+		{
 			chooser->OpenPanel("LoadScript", "lua");
 		}
 		ImGui::SameLine();
-		ImGui::Text(fileName.c_str());
+		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());
 
 
 		if (isRunning)
@@ -114,7 +116,6 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 bool ComponentScript::LoadScript(std::string path)
 {
-	script = handler->lua.load_file(path);
 
 	return true;
 }
@@ -128,12 +129,12 @@ void ComponentScript::SetRunning(const bool& setTo)
 void ComponentScript::Save(Json& json) const
 {
 	json["type"] = "script";
-	json["file_name"] = fileName;
+	json["file_name"] = path;
 	json["script_number"] = numScript;
 }
 
 void ComponentScript::Load(Json& json)
 {
-	fileName = json.at("file_name");
+	path = json.at("file_name");
 	numScript = json.at("script_number");
 }

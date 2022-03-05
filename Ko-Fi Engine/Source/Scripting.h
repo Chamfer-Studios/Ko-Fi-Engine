@@ -73,6 +73,7 @@ public:
 			"active",		&GameObject::active,
 			"name",			&GameObject::name,
 			"GetParent",	&GameObject::GetParent,
+			"GetComponents",&GameObject::GetComponents,
 			"GetTransform", &GameObject::GetTransform/*,
 			"GetComponent", &GameObject::GetComponent<ComponentTransform>*/ // Further documentation needed to get this as a dynamic cast
 			);

@@ -60,6 +60,11 @@ function Update(dt)
 
 	if (spaceButton == KEY_STATE.KEY_DOWN) then
 		CreateBullet()
+		local components = gameObject:GetComponents() -- Try regular loop with [i]
+		for component in pairs(components) do  -- Table iteration.
+			--print(component:GetPosition())
+			print(component)
+		end
 	end
 
 end

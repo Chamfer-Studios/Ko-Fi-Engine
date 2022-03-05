@@ -31,7 +31,7 @@ public:
 	Scripting* handler = nullptr;
 
 private:
-	std::string fileName;
+	std::string path;
 	//std::string fullName;
 	int numScript;
 	bool isRunning = false; // Temp
