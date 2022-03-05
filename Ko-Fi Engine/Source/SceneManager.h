@@ -11,12 +11,16 @@
 class KoFiEngine;
 class SceneIntro;
 class GameObject;
-class JasonHandler;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentMaterial;
 class ComponentInfo;
 class ComponentCamera;
+class ComponentCanvas;
+class ComponentTransform2D;
+class ComponentText;
+class ComponentImage;
+class ComponentButton;
 
 enum class RuntimeState
 {
@@ -73,12 +77,23 @@ public:
 	Json SaveComponentMaterial(ComponentMaterial* componentMaterial);
 	Json SaveComponentInfo(ComponentInfo* componentInfo);
 	Json SaveComponentCamera(ComponentCamera* componentCamera);
+	Json SaveComponentCanvas(ComponentCanvas* componentCanvas);
+	Json SaveComponentTransform2D(ComponentTransform2D* componentTransform2D);
+	Json SaveComponentImage(ComponentImage* componentImage);
+	Json SaveComponentButton(ComponentButton* componentButton);
+	Json SaveComponentText(ComponentText* componentText);
+
 	bool LoadScene(Scene* scene, const char* sceneName);
 	void LoadComponentTransform(ComponentTransform* componentTransform, Json jsonComponentTransform);
 	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
 	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
 	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
 
+	void LoadComponentCanvas(ComponentCanvas* componentCanvas, Json jsonComponentCanvas);
+	void LoadComponentTransform2D(ComponentTransform2D* componentTransform2D, Json jsonComponentTransform2D);
+	void LoadComponentImage(ComponentImage* componentImage, Json jsonComponentImage);
+	void LoadComponentButton(ComponentButton* componentButton, Json jsonComponentButton);
+	void LoadComponentText(ComponentText* componentText, Json jsonComponentText);
 public:
 	bool active;
 
@@ -109,8 +124,6 @@ private:
 	// --------------------------------------------------
 	
 	RuntimeState runtimeState = RuntimeState::STOPPED;
-
-	JsonHandler jsonHandler;
 };
 
-#endif // __SCENE_MANAGER_H__
+#endif // !__SCENE_MANAGER_H__

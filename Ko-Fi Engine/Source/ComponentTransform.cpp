@@ -11,6 +11,7 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 	position = float3::zero;
 	rotation = Quat::identity;
 	scale = float3::one;
+	isDirty = true;
 
 	transformMatrix.SetIdentity();
 	transformMatrixLocal.SetIdentity();
@@ -20,7 +21,7 @@ ComponentTransform::~ComponentTransform()
 {
 }
 
-bool ComponentTransform::Update()
+bool ComponentTransform::Update(float dt)
 {
 	if (isDirty)
 	{
@@ -81,6 +82,13 @@ void ComponentTransform::SetRotation(const float3& newRotation)
 	isDirty = true;
 }
 
+void ComponentTransform::SetRotationQuat(const Quat& newRotation)
+{
+	this->rotation = newRotation;
+	rotationEuler = newRotation.ToEulerXYZ() * RADTODEG;
+	isDirty = true;
+}
+
 void ComponentTransform::SetScale(const float3& newScale)
 {
 	scale = newScale;
@@ -119,7 +127,7 @@ float4x4 ComponentTransform::GetGlobalTransform()
 	return transformMatrix;
 }
 
-bool ComponentTransform::GetDirty()
+bool ComponentTransform::GetDirty() const
 {
 	return isDirty;
 }
@@ -127,4 +135,27 @@ bool ComponentTransform::GetDirty()
 void ComponentTransform::SetDirty(bool isDirty)
 {
 	this->isDirty = isDirty;
+}
+
+void ComponentTransform::Save(Json& json) const
+{
+	json["type"] = "transform";
+	json["position"] = { position.x,position.y,position.z };
+	json["rotation"] = { rotation.x,rotation.y,rotation.z,rotation.w };
+	json["scale"] = { scale.x,scale.y,scale.z };
+}
+
+void ComponentTransform::Load(Json& json)
+{
+	std::vector<float> values = json["position"].get<std::vector<float>>();
+	SetPosition(float3(values[0], values[1], values[2]));
+	values.clear();
+
+	values = json["rotation"].get<std::vector<float>>();
+	SetRotationQuat(Quat(values[0], values[1], values[2], values[3]));
+	values.clear();
+
+	values = json["scale"].get<std::vector<float>>();
+	SetScale(float3(values[0], values[1], values[2]));
+	values.clear();
 }

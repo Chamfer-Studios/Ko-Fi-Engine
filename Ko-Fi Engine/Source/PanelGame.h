@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PANEL_GAME_H__
+#define __PANEL_GAME_H__
+
 #include "Panel.h"
 
 class Editor;
@@ -19,3 +21,5 @@ private:
 
 	Editor* editor = nullptr;
 };
+
+#endif // !__PANEL_GAME_H__

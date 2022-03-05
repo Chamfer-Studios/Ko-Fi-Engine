@@ -71,9 +71,6 @@
     <Filter Include="Libs\stb_image">
       <UniqueIdentifier>{952fafdd-82fe-45b5-917b-46c6e6a0c5df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Shaders">
-      <UniqueIdentifier>{ef5e0122-2c93-4faf-bfa5-7c2778cbb5a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libs\ImGuiNodeEditor">
       <UniqueIdentifier>{4fc7fceb-aaa4-484d-8f4e-37072c0b495e}</UniqueIdentifier>
     </Filter>
@@ -82,6 +79,30 @@
     </Filter>
     <Filter Include="Source\Editor\Panels\Example">
       <UniqueIdentifier>{3e536255-1b8b-4f95-85bc-74a6bf41e6ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\lua">
+      <UniqueIdentifier>{bacdd039-412c-4820-8ee9-0c6c150a7660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\sol">
+      <UniqueIdentifier>{f5a6cd4b-5f77-4c32-928a-d22f93452f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{c3bc3e96-3c54-404f-8be3-56d68d1e30ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resources">
+      <UniqueIdentifier>{b584c71f-4e5f-403c-ac2d-424816ead254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Importers">
+      <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\Components\UI">
+      <UniqueIdentifier>{f14257b0-f5e3-4dcf-9d8e-c73dcdec444c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\stb_truetype">
+      <UniqueIdentifier>{24bb395e-3fc1-41a4-8726-a905204ec415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\SDL_ttf">
+      <UniqueIdentifier>{7d8ca1e5-eefd-4c67-a8f4-310da73f01b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -265,9 +286,6 @@
     <ClCompile Include="Source\PanelChooser.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>Source\GameObject</Filter>
     </ClCompile>
@@ -310,20 +328,11 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Importer.cpp">
-      <Filter>Source\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ComponentCamera.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelAssets.cpp">
       <Filter>Source\Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Shader.cpp">
-      <Filter>Source\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>Source\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelNodeEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
@@ -343,21 +352,76 @@
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentScript.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RNG.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Material.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Mesh.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Texture.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Scene.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Importer.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Material.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentTransform2D.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentCanvas.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentImage.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentButton.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c" />
+    <ClCompile Include="Source\ComponentText.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Defs.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Log.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\PerfTimer.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SString.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
@@ -651,9 +715,6 @@
     <ClInclude Include="Source\PanelChooser.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject.h">
       <Filter>Source\GameObject</Filter>
     </ClInclude>
@@ -664,9 +725,6 @@
       <Filter>Libs\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="Source\Component.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentMesh.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentTransform.h">
@@ -699,20 +757,11 @@
     <ClInclude Include="Source\PanelRuntimeState.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Importer.h">
-      <Filter>Source\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ComponentCamera.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelAssets.h">
       <Filter>Source\Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Shader.h">
-      <Filter>Source\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Texture.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelNodeEditor.h">
       <Filter>Source\Editor\Panels</Filter>
@@ -722,9 +771,6 @@
     </ClInclude>
     <ClInclude Include="Source\External\imgui_node_editor\imnodes_internal.h">
       <Filter>Libs\ImGuiNodeEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Material.h">
-      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
@@ -755,6 +801,122 @@
     </ClInclude>
     <ClInclude Include="Source\SceneManager.h">
       <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\lua\include\lauxlib.h">
+      <Filter>Libs\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\lua\include\lua.h">
+      <Filter>Libs\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\lua\include\lua.hpp">
+      <Filter>Libs\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\lua\include\luaconf.h">
+      <Filter>Libs\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\lua\include\lualib.h">
+      <Filter>Libs\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\sol\config.hpp">
+      <Filter>Libs\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\sol\forward.hpp">
+      <Filter>Libs\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\sol\sol.hpp">
+      <Filter>Libs\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentScript.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scripting.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Player.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Source\GameState.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Bullet.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <ClInclude Include="Source\ResourceManager.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FSDefs.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Material.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Mesh.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Texture.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Scene.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentMesh.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Importer.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MathGeoTransform.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Assimp.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentTransform2D.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentCanvas.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentImage.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IconsFontAwesome5.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentButton.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_truetype\stb_truetype.h">
+      <Filter>Libs\stb_truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\SDL_ttf\include\SDL_ttf.h">
+      <Filter>Libs\SDL_ttf</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentText.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

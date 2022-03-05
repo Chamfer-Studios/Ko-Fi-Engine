@@ -1,8 +1,12 @@
-#pragma once
+#ifndef __PANEL_TEXT_EDITOR_H__
+#define __PANEL_TEXT_EDITOR_H__
+
 #include "Panel.h"
 class Editor;
 #include "TextEditor.h"
-class PanelTextEditor : public Panel {
+
+class PanelTextEditor : public Panel
+{
 public:
 	PanelTextEditor(Editor* editor);
 	PanelTextEditor(Editor* editor,const char* path);
@@ -23,3 +27,5 @@ private:
 	TextEditor textEditor;
 	std::string filePath;
 };
+
+#endif // !__PANEL_TEXT_EDITOR_H__

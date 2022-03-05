@@ -1,25 +1,16 @@
-#pragma once
+#ifndef __RANDOM_H__
+#define __RANDOM_H__
+
 #include "MathGeoLib/Algorithm/Random/LCG.h"
+#include "Globals.h"
 
-class RNG
+namespace RNG // RNG library included with MathGeoLib. Average Performance (Real random factor...)
 {
-public:
+	static math::LCG lcg_rand;
 
-	RNG()
-	{
-	}
-	~RNG()
-	{
-	}
+	uint32	GetRandomUint();
+	uint32	GetBoundedRandomUint(uint32 min = 0, uint32 max = 4294967295);
+	float	GetBoundedRandomFloat(float min, float max);
+}
 
-	int GetRandomInt()
-	{
-		LCG randomGenerator;
-		return randomGenerator.Int();
-	}
-	int GetRandomInt(int min, int max)
-	{
-		LCG randomGenerator;
-		return randomGenerator.Int(min, max);
-	}
-};
+#endif // !__RANDOM_H__

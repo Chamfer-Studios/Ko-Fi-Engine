@@ -1,6 +1,6 @@
-#pragma once
-#ifndef IM_GUI_HANDLER_H
-#define IM_GUI_HANDLER_H
+#ifndef __EDITOR_H__
+#define __EDITOR_H__
+
 #include "EditorStyleHandler.h"
 #include "Module.h"
 #include "Globals.h"
@@ -108,4 +108,4 @@ private:
 	PanelTextEditor* panelTextEditor = nullptr;
 };
 
-#endif IM_GUI_HANDLER_H
+#endif // !__EDITOR_H__

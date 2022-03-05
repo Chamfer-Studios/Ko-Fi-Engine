@@ -1,7 +1,6 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-#include "SString.h"
 #include "JsonHandler.h"
 #include "Event.h"
 #include <list>
@@ -83,7 +82,7 @@ protected:
 	}
 
 public:
-	SString name;
+	std::string name;
 	bool active;
 
 private:
@@ -92,4 +91,4 @@ private:
 	int numObservers;
 };
 
-#endif // __MODULE_H__
+#endif // !__MODULE_H__

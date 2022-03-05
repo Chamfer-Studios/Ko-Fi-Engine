@@ -1,6 +1,6 @@
-#pragma once
-#ifndef PANELLOG_H
-#define PANELLOG_H
+#ifndef __PANEL_LOG_H__
+#define __PANEL_LOG_H__
+
 #include "Panel.h"
 
 class PanelLog : public Panel
@@ -13,4 +13,4 @@ public:
 	bool Update();
 };
 
-#endif PANELLOG_H // PANELLOG_H
+#endif PANELLOG_H // !__PANEL_LOG_H__
