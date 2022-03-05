@@ -42,7 +42,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
-
+	void OnNotify(const Event& event);
 	bool InitializePhysX();
 
 	void AddActor(physx::PxActor* actor, GameObject* owner);

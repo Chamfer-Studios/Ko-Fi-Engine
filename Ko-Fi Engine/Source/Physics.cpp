@@ -79,6 +79,10 @@ bool Physics::CleanUp()
 	return true;
 }
 
+void Physics::OnNotify(const Event& event)
+{
+}
+
 bool Physics::InitializePhysX()
 {
 	// PxFoundation object creation

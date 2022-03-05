@@ -14,7 +14,7 @@ public:
 
 	bool Update(float dt);
 	bool CleanUp();
-
+	void OnNotify(const Event& event);
 	void AddCollidableEntity(GameObject* GO); //TODO: The GameObject should add itself here when a ComponentCollider is added.
 	void RemoveCollidableEntity(GameObject* GO); //TODO: The GameObject should remove itself from the list at cleanup/when deactivated.
 

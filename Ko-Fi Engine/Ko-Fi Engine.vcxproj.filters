@@ -360,6 +360,7 @@
     </ClCompile>
     <ClCompile Include="Source\ComponentRigidBody.cpp">
       <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Source\QuadTree3D.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
@@ -1387,7 +1388,8 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentRigidBody.h">
       <Filter>Source\GameObject\Components</Filter>
-    <ClInclude Include="Source\Iterable.h">
+    </ClInclude>
+      <ClInclude Include="Source\Iterable.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\QuadTree3D.h">

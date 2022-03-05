@@ -476,7 +476,7 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 //}
 void ComponentMesh::GenerateBounds()
 {
-	mesh->localAABBesh->localAABB.SetNegativeInfinity();
+	mesh->localAABB.SetNegativeInfinity();
 	//mesh->localAABB->Enclose(&mesh->vertices[0], vertices.size());
 	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
 

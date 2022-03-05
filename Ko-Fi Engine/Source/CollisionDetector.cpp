@@ -42,6 +42,10 @@ bool CollisionDetector::CleanUp()
 	return true;
 }
 
+void CollisionDetector::OnNotify(const Event& event)
+{
+}
+
 void CollisionDetector::AddCollidableEntity(GameObject* GO)
 {
 	for (int i = 0; i < collidableEntities.size(); i++)

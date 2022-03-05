@@ -608,7 +608,6 @@
     <ClInclude Include="Source\PanelTextEditor.h" />
     <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\QuadTree3D.h" />
-    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
