@@ -110,7 +110,8 @@ void ComponentMaterial::Load(Json& json)
 {
 	if (!json.empty())
 	{
-		material = new Material();
+		if (material == nullptr)
+			material = new Material();
 
 		//material->materialName = json["material_name"];
 		//material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
@@ -129,7 +130,7 @@ void ComponentMaterial::Load(Json& json)
 			CONSOLE_LOG("[ERROR] Something went wrong loading the shader.");
 		}
 
-		std::vector<float> values = json["color"].get<std::vector<float>>();
+		std::vector<float> values = json.at("color").get<std::vector<float>>();
 		material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
 		values.clear();
 

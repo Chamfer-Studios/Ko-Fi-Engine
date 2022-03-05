@@ -175,6 +175,7 @@ void SceneManager::OnStop()
 	frameCount = 0;
 	time = 0.0f;
 
+	Importer::GetInstance()->sceneImporter->Load(currentScene,currentScene->name.c_str());
 	// Load the scene we saved before in .json
 	//LoadScene(currentScene, "SceneIntro");
 }

@@ -147,15 +147,15 @@ void ComponentTransform::Save(Json& json) const
 
 void ComponentTransform::Load(Json& json)
 {
-	std::vector<float> values = json["position"].get<std::vector<float>>();
+	std::vector<float> values = json.at("position").get<std::vector<float>>();
 	SetPosition(float3(values[0], values[1], values[2]));
 	values.clear();
 
-	values = json["rotation"].get<std::vector<float>>();
+	values = json.at("rotation").get<std::vector<float>>();
 	SetRotationQuat(Quat(values[0], values[1], values[2], values[3]));
 	values.clear();
 
-	values = json["scale"].get<std::vector<float>>();
+	values = json.at("scale").get<std::vector<float>>();
 	SetScale(float3(values[0], values[1], values[2]));
 	values.clear();
 }

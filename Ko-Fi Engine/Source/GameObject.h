@@ -75,7 +75,8 @@ public:
 
 	bool HasChildrenWithUID(uint uid);
 
-	KoFiEngine* GetEngine();
+	KoFiEngine* GetEngine() const;
+	void SetEngine(KoFiEngine* engine);
 
 public:
 	std::string name;

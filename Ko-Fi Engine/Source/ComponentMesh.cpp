@@ -225,41 +225,44 @@ void ComponentMesh::Save(Json& json) const
 
 void ComponentMesh::Load(Json& json)
 {
-	int type = json["shape_type"];
-	Shape meshType = Shape::NONE;
-	switch (type)
+	if (mesh == nullptr)
 	{
-	case 0:
-		meshType = Shape::NONE;
-		break;
-	case 1:
-		meshType = Shape::CUBE;
-		break;
-	case 2:
-		meshType = Shape::SPHERE;
-		break;
-	case 3:
-		meshType = Shape::CYLINDER;
-		break;
-	case 4:
-		meshType = Shape::TORUS;
-		break;
-	case 5:
-		meshType = Shape::PLANE;
-		break;
-	case 6:
-		meshType = Shape::CONE;
-		break;
-	}
-	mesh->meshType = meshType;
+		int type = json.at("shape_type");
+		Shape meshType = Shape::NONE;
+		switch (type)
+		{
+		case 0:
+			meshType = Shape::NONE;
+			break;
+		case 1:
+			meshType = Shape::CUBE;
+			break;
+		case 2:
+			meshType = Shape::SPHERE;
+			break;
+		case 3:
+			meshType = Shape::CYLINDER;
+			break;
+		case 4:
+			meshType = Shape::TORUS;
+			break;
+		case 5:
+			meshType = Shape::PLANE;
+			break;
+		case 6:
+			meshType = Shape::CONE;
+			break;
+		}
+		mesh->meshType = meshType;
 
-	mesh = new Mesh(meshType);
-	std::string path = json["path"];
-	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh);
+		mesh = new Mesh(meshType);
+	}
+	std::string path = json.at("path");
+	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
 	mesh->path = path;
 
-	SetVertexNormals(json["draw_vertex_normals"]);
-	SetFaceNormals(json["draw_face_normals"]);
+	SetVertexNormals(json.at("draw_vertex_normals"));
+	SetFaceNormals(json.at("draw_face_normals"));
 }
 
 void ComponentMesh::SetMesh(Mesh* mesh)

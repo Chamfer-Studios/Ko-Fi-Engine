@@ -228,7 +228,12 @@ bool GameObject::HasChildrenWithUID(uint uid)
 	return false;
 }
 
-KoFiEngine* GameObject::GetEngine()
+KoFiEngine* GameObject::GetEngine() const
 {
 	return engine;
+}
+
+void GameObject::SetEngine(KoFiEngine* engine)
+{
+	this->engine = engine;
 }

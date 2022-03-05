@@ -291,6 +291,8 @@ bool I_Scene::Save(Scene* scene)
 		// So, in order to keep track of parents and childrens, we will record the UID of the parent.
 		if (gameObject->GetParent() != nullptr)
 			jsonGameObject["parent_UID"] = gameObject->GetParent()->GetUID();
+		else
+			jsonGameObject["parent_UID"] = gameObject->GetUID();
 
 		std::vector<Component*> componentsList = gameObject->GetComponents();
 		jsonGameObject["components"] = Json::array();
@@ -357,6 +359,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 	JsonHandler jsonHandler;
 	Json jsonFile;
+	Json jsonScene;
 
 	std::string path = SCENES_DIR + std::string(name) + SCENE_EXTENSION;
 	ret = jsonHandler.LoadJson(jsonFile, path.c_str());
@@ -364,34 +367,45 @@ bool I_Scene::Load(Scene* scene, const char* name)
 	if (!jsonFile.is_null())
 	{
 		ret = true;
-
+		jsonScene = jsonFile.at(name);
+		scene->name = jsonScene.at("name");
+		scene->active = jsonScene.at("active");
 		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
 		//{
 		//	(*goIt)->CleanUp();
 		//	RELEASE((*goIt));
 		//}
 
-
-
-		Json jsonGameObjects = jsonFile["game_objects_list"];
+		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
+			uint UID = jsonGo.at("UID");
+			GameObject* go = nullptr;
 
-			std::string name = jsonGo["name"];
-			bool active = jsonGo["active"];
-			uint UID = jsonGo["UID"];
-			uint parentUid = jsonGo["parent_UID"];
-			GameObject* go = new GameObject(UID, engine, name.c_str());
+			if (scene->GetGameObject(UID) != nullptr)
+			{
+				go = scene->GetGameObject(UID);
+				go->name = jsonGo.at("name");
+				go->SetUID(UID);
+				go->SetEngine(engine);
+			}
+			else
+			{
+				std::string name = jsonGo.at("name");
+				go = new GameObject(UID, engine, name.c_str());
+			}
+
+			go->active = jsonGo.at("active");
+			uint parentUid = jsonGo.at("parent_UID");
 			go->SetParentUID(parentUid);
-			go->active = active;
 
-			Json jsonCmp = jsonGo["components"];
+			Json jsonCmp = jsonGo.at("components");
 			for (const auto& cmpIt : jsonCmp.items())
 			{
 				Json jsonCmp = cmpIt.value();
-				bool active = jsonCmp["active"];
-				std::string type = jsonCmp["type"];
+				bool active = jsonCmp.at("active");
+				std::string type = jsonCmp.at("type");
 
 				if (type == "transform")
 				{
@@ -423,7 +437,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				{
 					ComponentInfo* infoCmp = go->GetComponent<ComponentInfo>();
 					infoCmp->active = true;
-					infoCmp->Load(jsonCmp);
+					infoCmp->Load(jsonCmp); //does nothing as of now
 				}
 				else if (type == "camera")
 				{
@@ -443,7 +457,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)
 			{
-				if ((*goIt)->GetParentUID() == (*childrenIt)->GetUID() && (*childrenIt)->GetUID() != -1)
+				if ((*goIt)->GetUID() == (*childrenIt)->GetParentUID() && (*childrenIt)->GetUID() != -1)
 				{
 					(*goIt)->AttachChild((*childrenIt));
 				}
