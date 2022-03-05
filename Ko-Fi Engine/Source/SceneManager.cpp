@@ -208,8 +208,8 @@ void SceneManager::OnClick(SDL_Event event)
 	GameObject* hit = engine->GetCamera3D()->MousePicking();
 	if (hit != nullptr)
 	{
-		CONSOLE_LOG("%s", hit->GetName().c_str());
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetId();
+		CONSOLE_LOG("%s", hit->GetName());
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
 	}
 	else {
 		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;

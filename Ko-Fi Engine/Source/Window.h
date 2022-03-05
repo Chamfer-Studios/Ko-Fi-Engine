@@ -61,7 +61,7 @@ public:
 	SDL_Surface* screenSurface;
 
 private:
-	SString title;
+	std::string title;
 	uint width = SCREEN_WIDTH;
 	uint height = SCREEN_HEIGHT;
 	uint scale;
