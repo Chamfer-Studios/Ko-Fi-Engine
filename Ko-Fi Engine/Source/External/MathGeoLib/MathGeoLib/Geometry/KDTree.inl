@@ -211,7 +211,8 @@ int KdTree<T>::NumInnerNodes() const
 
 	return numInnerNodes;
 }
-
+#undef min
+#undef max
 template<typename T>
 int KdTree<T>::TreeHeight(int nodeIndex) const
 {

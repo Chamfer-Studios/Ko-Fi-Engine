@@ -26,6 +26,8 @@ public:
 	bool Init();
 	bool PreUpdate(float dt);
 	bool CleanUp();
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
 
 	KEY_STATE GetKey(int id) const
 	{

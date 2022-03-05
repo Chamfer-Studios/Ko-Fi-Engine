@@ -294,6 +294,11 @@ bool GameObject::HasChildrenWithUID(uint uid)
 	return false;
 }
 
+AABB GameObject::BoundingAABB()
+{
+	return GetComponent<ComponentMesh>()->GetGlobalAABB();
+}
+
 KoFiEngine* GameObject::GetEngine()
 {
 	return engine;

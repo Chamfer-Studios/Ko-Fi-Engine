@@ -26,15 +26,15 @@ bool ViewportFrameBuffer::Start()
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glGenTextures(1, &textureBuffer);
+	glBindTexture(GL_TEXTURE_2D, textureBuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glBindTexture(GL_TEXTURE_2D, 0); //Unbind texture
 
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBuffer, 0);
 
 	//Render Buffers
 	glGenRenderbuffers(1, &renderBufferoutput);
@@ -67,14 +67,35 @@ bool ViewportFrameBuffer::PostUpdate(float dt)
 	return true;
 }
 
+void ViewportFrameBuffer::OnResize(int width, int height)
+{
+	glViewport(0, 0, width, height);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glBindTexture(GL_TEXTURE_2D, textureBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 bool ViewportFrameBuffer::CleanUp()
 {
 	/*texture ? glDeleteTextures(1, &texture) : 0;
 	frameBuffer ? glDeleteFramebuffers(1, &frameBuffer) : 0;
 	renderBufferoutput ? glDeleteRenderbuffers(1, &renderBufferoutput): 0;*/
-	if (texture != 0) glDeleteTextures(1, &texture);
+	if (textureBuffer != 0) glDeleteTextures(1, &textureBuffer);
 	if (frameBuffer != 0) glDeleteFramebuffers(1, &frameBuffer);
 	if (renderBufferoutput != 0) glDeleteRenderbuffers(1, &renderBufferoutput);
 
 	return true;
+}
+
+// Method to receive and manage events
+void ViewportFrameBuffer::OnNotify(const Event& event)
+{
+	// Manage events
 }

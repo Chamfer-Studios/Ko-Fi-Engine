@@ -24,6 +24,8 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
 
 	// FileSystem Functions
 	std::string OpenFile(const char* path) const;

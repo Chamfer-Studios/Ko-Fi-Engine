@@ -66,6 +66,10 @@ bool UI::CleanUp()
 	return true;
 }
 
+void UI::OnNotify(const Event& event)
+{
+}
+
 float2 UI::GetUINormalizedMousePosition()
 {
 	float mouseX = engine->GetEditor()->mouseScenePosition.x;
