@@ -193,3 +193,9 @@ void ComponentText::FreeTextures()
 	if (openGLTexture != 0)
 		glDeleteTextures(1, &openGLTexture);
 }
+
+//void SceneManager::LoadComponentText(ComponentText* componentText, Json jsonComponentText)
+//{
+//	std::string value = jsonComponentText["value"].get<std::string>();
+//	componentText->SetTextValue(value);
+//}

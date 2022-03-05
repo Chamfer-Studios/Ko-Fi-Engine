@@ -99,6 +99,30 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
+//Json SceneManager::SaveComponentImage(ComponentImage* componentImage)
+//{
+//	Json jsonComponentImage;
+//
+//	jsonComponentImage["texture"] = componentImage->openGLTexture.GetTexturePath();
+//	jsonComponentImage["mask"] = {
+//		componentImage->GetMask().x,
+//		componentImage->GetMask().y
+//	};
+//
+//	return jsonComponentImage;
+//}
+
+//void SceneManager::LoadComponentImage(ComponentImage* componentImage, Json jsonComponentImage)
+//{
+//	std::string path = jsonComponentImage["texture"].get<std::string>();
+//	componentImage->SetTexture(path.c_str());
+//
+//	std::vector<float> values = jsonComponentImage["mask"].get<std::vector<float>>();
+//	float2 mask;
+//	mask.x = values[0];
+//	mask.y = values[1];
+//}
+
 /*SDL_Texture* ComponentImage::LoadTexture(const char* path)
 {
 	SDL_Texture* texture = NULL;

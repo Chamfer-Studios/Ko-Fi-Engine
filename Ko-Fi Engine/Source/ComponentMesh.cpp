@@ -253,9 +253,9 @@ void ComponentMesh::Load(Json& json)
 			meshType = Shape::CONE;
 			break;
 		}
-		mesh->meshType = meshType;
-
 		mesh = new Mesh(meshType);
+
+		mesh->meshType = meshType;
 	}
 	std::string path = json.at("path");
 	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED

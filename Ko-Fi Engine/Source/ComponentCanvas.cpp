@@ -78,3 +78,74 @@ void ComponentCanvas::OnSave(JSONWriter& writer) const
 
 	writer.EndObject();
 }*/
+
+//Json SceneManager::SaveComponentCanvas(ComponentCanvas* componentCanvas)
+//{
+//	Json jsonComponentTransform2D;
+//	jsonComponentTransform2D["position"] = {
+//		componentCanvas->GetPosition().x,
+//		componentCanvas->GetPosition().y,
+//	};
+//	jsonComponentTransform2D["rotation"] = {
+//		componentCanvas->GetRotation().x,
+//		componentCanvas->GetRotation().y,
+//		componentCanvas->GetRotation().z,
+//	};
+//	jsonComponentTransform2D["size"] = {
+//		componentCanvas->GetSize().x,
+//		componentCanvas->GetSize().y
+//	};
+//	jsonComponentTransform2D["pivot"] = {
+//		componentCanvas->GetPivot().x,
+//		componentCanvas->GetPivot().y
+//	};
+//	jsonComponentTransform2D["logicalSize"] = {
+//		componentCanvas->GetLogicalSize().x,
+//		componentCanvas->GetLogicalSize().y
+//	};
+//	jsonComponentTransform2D["anchor"] = (int)componentCanvas->GetAnchor();
+//
+//	return jsonComponentTransform2D;
+//}
+
+//void SceneManager::LoadComponentCanvas(ComponentCanvas* componentCanvas, Json jsonComponentCanvas)
+//{
+//	std::vector<float> values = jsonComponentCanvas["position"].get<std::vector<float>>();
+//	float2 position;
+//	position.x = values[0];
+//	position.y = values[1];
+//
+//	componentCanvas->SetPosition(position);
+//
+//	values = jsonComponentCanvas["rotation"].get<std::vector<float>>();
+//	float3 rotation;
+//	rotation.x = values[0];
+//	rotation.y = values[1];
+//	rotation.z = values[2];
+//
+//	componentCanvas->SetRotation(rotation);
+//
+//	values = jsonComponentCanvas["size"].get<std::vector<float>>();
+//	float2 size;
+//	size.x = values[0];
+//	size.y = values[1];
+//
+//	componentCanvas->SetSize(size);
+//
+//	values = jsonComponentCanvas["pivot"].get<std::vector<float>>();
+//	float2 pivot;
+//	pivot.x = values[0];
+//	pivot.y = values[1];
+//
+//	componentCanvas->SetPivot(pivot);
+//
+//	values = jsonComponentCanvas["logicalSize"].get<std::vector<float>>();
+//	float2 logicalSize;
+//	logicalSize.x = values[0];
+//	logicalSize.y = values[1];
+//
+//	componentCanvas->SetLogicalSize(logicalSize);
+//
+//	int anchor = jsonComponentCanvas["anchor"].get<int>();
+//	componentCanvas->SetAnchor((ComponentTransform2D::Anchor)anchor);
+//}

@@ -43,19 +43,19 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 	return ret;
 }
 
-bool I_Material::Save(const Material* material)
-{
-	bool ret = true;
-
-	return ret;
-}
-
-bool I_Material::Load(Material* material)
-{
-	bool ret = true;
-
-	return ret;
-}
+//bool I_Material::Save(const Material* material)
+//{
+//	bool ret = true;
+//
+//	return ret;
+//}
+//
+//bool I_Material::Load(Material* material)
+//{
+//	bool ret = true;
+//
+//	return ret;
+//}
 
 bool I_Material::LoadAndCreateShader(const char* shaderPath, Material* material)
 {

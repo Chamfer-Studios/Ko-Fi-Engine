@@ -452,7 +452,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					cameraCmp->Load(jsonCmp);
 				}
 			}
-			if(!exists)
+			if (!exists)
 				scene->gameObjectList.push_back(go);
 		}
 

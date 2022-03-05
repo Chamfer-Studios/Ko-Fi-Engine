@@ -33,8 +33,8 @@ public:
 	~I_Material();
 
 	bool Import(const aiMaterial* aiMaterial, Material* material);
-	bool Save(const Material* material);
-	bool Load(Material* material);
+	//bool Save(const Material* material);
+	//bool Load(Material* material);
 
 	bool LoadAndCreateShader(const char* shaderPath, Material* material);
 

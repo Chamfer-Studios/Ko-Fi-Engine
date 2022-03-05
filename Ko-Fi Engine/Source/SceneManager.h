@@ -67,30 +67,6 @@ public:
 	void OnResume();
 	void OnTick();
 
-	// Serialization functions
-	bool SaveScene(Scene* scene);
-	Json SaveComponentTransform(ComponentTransform* componentTransform);
-	Json SaveComponentMesh(ComponentMesh* componentMesh);
-	Json SaveComponentMaterial(ComponentMaterial* componentMaterial);
-	Json SaveComponentInfo(ComponentInfo* componentInfo);
-	Json SaveComponentCamera(ComponentCamera* componentCamera);
-	Json SaveComponentCanvas(ComponentCanvas* componentCanvas);
-	Json SaveComponentTransform2D(ComponentTransform2D* componentTransform2D);
-	Json SaveComponentImage(ComponentImage* componentImage);
-	Json SaveComponentButton(ComponentButton* componentButton);
-	Json SaveComponentText(ComponentText* componentText);
-
-	bool LoadScene(Scene* scene, const char* sceneName);
-	void LoadComponentTransform(ComponentTransform* componentTransform, Json jsonComponentTransform);
-	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
-	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
-	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
-
-	void LoadComponentCanvas(ComponentCanvas* componentCanvas, Json jsonComponentCanvas);
-	void LoadComponentTransform2D(ComponentTransform2D* componentTransform2D, Json jsonComponentTransform2D);
-	void LoadComponentImage(ComponentImage* componentImage, Json jsonComponentImage);
-	void LoadComponentButton(ComponentButton* componentButton, Json jsonComponentButton);
-	void LoadComponentText(ComponentText* componentText, Json jsonComponentText);
 public:
 	bool active;
 
