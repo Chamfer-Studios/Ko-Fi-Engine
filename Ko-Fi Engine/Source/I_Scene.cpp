@@ -382,9 +382,11 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			Json jsonGo = goIt.value();
 			uint UID = jsonGo.at("UID");
 			GameObject* go = nullptr;
+			bool exists = false;
 
 			if (scene->GetGameObject(UID) != nullptr)
 			{
+				exists = true;
 				go = scene->GetGameObject(UID);
 				go->name = jsonGo.at("name");
 				go->SetUID(UID);
@@ -450,7 +452,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					cameraCmp->Load(jsonCmp);
 				}
 			}
-			scene->gameObjectList.push_back(go);
+			if(!exists)
+				scene->gameObjectList.push_back(go);
 		}
 
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
