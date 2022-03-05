@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PANEL_VIEWPORT_H__
+#define __PANEL_VIEWPORT_H__
+
 #include "Panel.h"
 
 class Editor;
@@ -20,3 +22,5 @@ private:
 	KoFiEngine* engine = nullptr;
 	bool isFocused = false;
 };
+
+#endif // !__PANEL_VIEWPORT_H__

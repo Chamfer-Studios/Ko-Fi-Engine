@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "Defs.h"
+#include "Globals.h"
 #include "Log.h"
 
 #include "Engine.h"

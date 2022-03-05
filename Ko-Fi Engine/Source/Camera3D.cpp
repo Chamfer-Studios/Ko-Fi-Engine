@@ -48,15 +48,6 @@ bool Camera3D::Start()
 }
 
 // -----------------------------------------------------------------
-bool Camera3D::CleanUp()
-{
-	CONSOLE_LOG("Cleaning camera");
-	appLog->AddLog("Cleaning camera\n");
-
-	return true;
-}
-
-// -----------------------------------------------------------------
 bool Camera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
@@ -92,7 +83,9 @@ bool Camera3D::Update(float dt)
 			}
 			else
 			{
-				LookAt(gameObjectSelected->GetTransform()->GetPosition());
+				ComponentTransform* transform = gameObjectSelected->GetTransform();
+				if (transform != nullptr)
+					LookAt(gameObjectSelected->GetTransform()->GetPosition());
 			}
 		}
 	}
@@ -100,9 +93,12 @@ bool Camera3D::Update(float dt)
 	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
 	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
 	{
-		spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().x;
-		spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
-		spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
+		ComponentTransform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform();
+		if (transform != nullptr) {
+			spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().x;
+			spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
+			spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
+		}
 	}
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN )
 	{
@@ -202,6 +198,21 @@ bool Camera3D::Update(float dt)
 	//}
 
 	return true;
+}
+
+// -----------------------------------------------------------------
+bool Camera3D::CleanUp()
+{
+	CONSOLE_LOG("Cleaning camera");
+	appLog->AddLog("Cleaning camera\n");
+
+	return true;
+}
+
+// Method to receive and manage events
+void Camera3D::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 // -----------------------------------------------------------------

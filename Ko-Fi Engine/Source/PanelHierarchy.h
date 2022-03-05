@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PANEL_HIERARCHY_H__
+#define __PANEL_HIERARCHY_H__
+
 #include "Panel.h"
 #include "EditorStyleHandler.h"
 
@@ -26,3 +28,5 @@ private:
 	GameObject* destinationGameObject = nullptr;
 	bool is_selected = false;
 };
+
+#endif // !__PANEL_HIERARCHY_H__

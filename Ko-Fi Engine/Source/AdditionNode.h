@@ -1,9 +1,11 @@
-#pragma once
+#ifndef __ADDITION_NODE_H__
+#define __ADDITION_NODE_H__
 
 #include "Node.h"
 #include "Vec1Node.h"
-class AdditionNode : public Node {
 
+class AdditionNode : public Node
+{
 public:
 	AdditionNode(const char* name, const NodeType t, const int id) : Node(name, t, id) {}
 	~AdditionNode() {}
@@ -38,10 +40,13 @@ public:
 		ImNodes::EndNode();
 
 	}
+
 private:
 	float a = 0;
 	float b = 0;
+
 public:
 	float result = 0;
-
 };
+
+#endif // !__ADDITION_NODE_H__

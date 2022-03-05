@@ -78,3 +78,9 @@ bool ViewportFrameBuffer::CleanUp()
 
 	return true;
 }
+
+// Method to receive and manage events
+void ViewportFrameBuffer::OnNotify(const Event& event)
+{
+	// Manage events
+}

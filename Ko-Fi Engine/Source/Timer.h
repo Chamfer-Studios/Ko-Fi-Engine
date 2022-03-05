@@ -1,7 +1,7 @@
 #ifndef __TIMER_H__
 #define __TIMER_H__
 
-#include "Defs.h"
+#include "Globals.h"
 #include "SDL_timer.h"
 
 class Timer
@@ -33,4 +33,4 @@ private:
 	uint32 startTime;
 };
 
-#endif //__TIMER_H__
+#endif // !__TIMER_H__

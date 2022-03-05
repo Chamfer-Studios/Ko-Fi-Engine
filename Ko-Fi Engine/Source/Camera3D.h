@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
+
 #include "Module.h"
 #include "Globals.h"
 #include "MathGeoLib/Math/float3.h"
@@ -17,6 +19,8 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
 
 	void LookAt(const float3& Spot);
 	void CalculateViewMatrix();
@@ -43,3 +47,5 @@ private:
 
 	KoFiEngine* engine = nullptr;
 };
+
+#endif // !__CAMERA_H__

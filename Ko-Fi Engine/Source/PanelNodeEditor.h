@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PANEL_NODE_EDITOR_H__
+#define __PANEL_NODE_EDITOR_H__
+
 #include "Panel.h"
 #include <vector>
 class Editor;
@@ -77,3 +79,5 @@ private:
 	int hoveredId = 0;
 
 };
+
+#endif // !__PANEL_NODE_EDITOR_H__

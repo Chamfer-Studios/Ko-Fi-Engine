@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __COMPONENT_CAMERA_H__
 #define __COMPONENT_CAMERA_H__
 
@@ -11,6 +10,7 @@
 
 class GameObject;
 class ComponentTransform;
+using Json = nlohmann::json;
 
 class ComponentCamera : public Component
 {
@@ -19,7 +19,7 @@ public:
 	~ComponentCamera();
 
 	bool Start() override;
-	bool Update() override;
+	bool Update(float dt) override;
 	bool CleanUp() override;
 
 	void LookAt(const float3& point);
@@ -35,6 +35,8 @@ public:
 	bool ClipsWithBBox(const AABB& refBox) const;
 	void FrustumCulling();
 	void ResetFrustumCulling();
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 
 	float3 right, up, front, position, reference, rotation;
 	Frustum cameraFrustum;
@@ -57,4 +59,4 @@ private:
 	ComponentTransform* componentTransform = nullptr;
 };
 
-#endif // __COMPONENT_CAMERA_H__
+#endif // !__COMPONENT_CAMERA_H__

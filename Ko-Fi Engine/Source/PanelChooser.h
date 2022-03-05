@@ -1,12 +1,14 @@
-#pragma once
+#ifndef __PANEL_CHOOSER_H__
+#define __PANEL_CHOOSER_H__
+
 #include "Panel.h"
 
 #define FILE_MAX 250
 class Editor;
+
 class PanelChooser : public Panel
 {
 public:
-
 	PanelChooser(Editor* editor);
 	~PanelChooser();
 
@@ -21,6 +23,7 @@ public:
 	void ShowPanel(const char* path = nullptr, const char* extension = nullptr);
 	void GetPath(const char* path, const char* extension);
 	void OpenPanel(std::string id,const char* extension = nullptr, const char* from_folder = nullptr);
+
 private:
 	enum
 	{
@@ -34,3 +37,5 @@ private:
 	char selectedFile[FILE_MAX];
 	std::string id = "";
 };
+
+#endif // !__PANEL_CHOOSER_H__

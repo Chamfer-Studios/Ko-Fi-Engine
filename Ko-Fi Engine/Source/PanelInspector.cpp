@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
+#include "ComponentScript.h"
 
 PanelInspector::PanelInspector(Editor* editor)
 {
@@ -46,23 +47,21 @@ bool PanelInspector::Update()
 		const char* items[] = { ""};
 		static const char* current_item = NULL;
 
-		if (ImGui::BeginCombo("##combo", "Add Component")) // The second parameter is the label previewed before opening the combo.
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script");
+
+		ImGui::SameLine();
+
+		if ((ImGui::Button("ADD")))
 		{
-			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+			switch (componentType)
 			{
-				if (ImGui::Selectable(items[n]))
-				{
-					current_item = items[n];
-					if (current_item == "Material Component") {
-						bool alreadyExists = currentGameObject->GetComponent<ComponentMaterial>();
-						if(!alreadyExists)
-						currentGameObject->CreateComponent<ComponentMaterial>();
-					}
-					
-				}
-					
+			case (int)ComponentType::NONE: break;
+			case (int)ComponentType::MESH: currentGameObject->CreateComponent<ComponentMesh>(); break;
+			case (int)ComponentType::MATERIAL: currentGameObject->CreateComponent<ComponentMaterial>(); break;
+			//case (int)ComponentType::CAMERA: currentGameObject->CreateComponent<ComponentCamera>(); break;
+			//case (int)ComponentType::COLLIDER: currentGameObject->CreateComponent<ComponentCollider>(); break;
+			case (int)ComponentType::SCRIPT: currentGameObject->CreateComponent<ComponentScript>(); break;
 			}
-			ImGui::EndCombo();
 		}
 	}
 
