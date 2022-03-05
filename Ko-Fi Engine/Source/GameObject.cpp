@@ -9,7 +9,9 @@
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
 #include "ComponentRigidBody.h"
+#include "ComponentCollider.h"
 #include "ComponentMaterial.h"
+#include "ComponentScript.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -148,40 +150,51 @@ void GameObject::AddComponentByType(ComponentType componentType)
 		}
 	}
 
-	Component* component = nullptr;
+	
 
 	switch (componentType)
 	{
 		case ComponentType::TRANSFORM: 
 		{ 
-			component = new ComponentTransform(this); 
+			this->CreateComponent<ComponentTransform>();
 			break;
 		}	
 		case ComponentType::MESH: 
 		{ 
-			component = new ComponentMesh(this); 
+			this->CreateComponent<ComponentMesh>();
 			break;
-		}		
+		}
+		case ComponentType::SCRIPT:
+		{
+			this->CreateComponent<ComponentScript>();
+			break;
+		}
+		case ComponentType::COLLIDER:
+		{
+			this->CreateComponent<ComponentCollider>();
+			break;
+		}
 		case ComponentType::MATERIAL: 
 		{ 
-			component = new ComponentMaterial(this); 
+			this->CreateComponent<ComponentMaterial>();
 			break;
 		}	
 		case ComponentType::CAMERA: 
 		{ 
-			component = new ComponentCamera(this); 
+			this->CreateComponent<ComponentCamera>();
 			break;
 		}		
 		case ComponentType::INFO:
 		{
-			component = new ComponentInfo(this);
+			this->CreateComponent<ComponentInfo>();
 			break;
 		}
 		case ComponentType::RIGID_BODY: 
 		{ 
-			component = new ComponentRigidBody(this); 
+			this->CreateComponent<ComponentRigidBody>();
 			break;
 		}	
+		
 	}
 }
 

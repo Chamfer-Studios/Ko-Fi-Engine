@@ -19,7 +19,7 @@ bool ComponentCollider::Start()
 	return true;
 }
 
-bool ComponentCollider::Update()
+bool ComponentCollider::Update(float dt)
 {
 	//check if the GO with the componentCollider has an actual mesh and bounding box to collide with
 	//in case not, delete component and pop an error of "no mesh"
@@ -84,7 +84,7 @@ bool ComponentCollider::InspectorDraw(PanelChooser* chooser)
 		ImGui::Text("Currenly Colliding...");
 		ImGui::SameLine();
 		if ( isColliding == true )
-			ImGui::Text(lastObjectCollided->GetName().c_str());
+			ImGui::Text(lastObjectCollided->GetName());
 		else
 			ImGui::Text("No collision");
 	}                        

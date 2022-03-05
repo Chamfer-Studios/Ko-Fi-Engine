@@ -458,12 +458,12 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 	}
 	return ret;
 }
-bool ComponentMesh::GetRenderAABB()
-{
-	return renderAABB;
-}
-
-void ComponentMesh::SetRenderAABB(bool newRenderAABB)
-{
-	this->renderAABB = newRenderAABB;
-}
+//bool ComponentMesh::GetRenderAABB()
+//{
+//	return renderAABB;
+//}
+//
+//void ComponentMesh::SetRenderAABB(bool newRenderAABB)
+//{
+//	this->renderAABB = newRenderAABB;
+//}

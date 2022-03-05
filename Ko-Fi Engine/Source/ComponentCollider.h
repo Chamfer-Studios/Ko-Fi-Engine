@@ -30,7 +30,7 @@ public:
 	~ComponentCollider();
 
 	bool Start() override; //get the owner and put it inside the list of collidableEntities
-	bool Update() override;
+	bool Update(float dt) override;
 	bool CleanUp() override;
 	bool PostUpdate(float dt) override;
 	 
