@@ -219,7 +219,7 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
     <ClCompile Include="Source\ComponentParticle.cpp" />
-    <ClCompile Include="Source\Particle Module.cpp" />
+    <ClCompile Include="Source\ParticleModule.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />

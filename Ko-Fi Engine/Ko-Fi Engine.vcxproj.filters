@@ -361,7 +361,7 @@
     <ClCompile Include="Source\Emitter.cpp">
       <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Particle Module.cpp">
+    <ClCompile Include="Source\ParticleModule.cpp">
       <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
     <ClCompile Include="Source\par_shapes.cpp">
