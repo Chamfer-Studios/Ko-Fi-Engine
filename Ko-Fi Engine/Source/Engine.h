@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
@@ -17,6 +16,7 @@ class Camera3D;
 class Editor;
 class FileSystem;
 class ViewportFrameBuffer;
+class UI;
 
 class KoFiEngine
 {
@@ -56,6 +56,7 @@ public:
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
 	ViewportFrameBuffer* GetViewportFrameBuffer() const;
+	UI* GetUI() const;
 
 private:
 	// Add a new module to handle
@@ -89,6 +90,7 @@ private:
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
 	ViewportFrameBuffer* viewportBuffer = nullptr;
+	UI* ui = nullptr;
 
 private:
 	int argc;
@@ -108,4 +110,4 @@ public:
 	}
 };
 
-#endif //__ENGINE_H__
+#endif // !__ENGINE_H__

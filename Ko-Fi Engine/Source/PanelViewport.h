@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PANEL_VIEWPORT_H__
+#define __PANEL_VIEWPORT_H__
+
 #include "Panel.h"
 
 class Editor;
@@ -21,3 +23,5 @@ private:
 	Editor* editor = nullptr;
 	KoFiEngine* engine = nullptr;
 };
+
+#endif // !__PANEL_VIEWPORT_H__

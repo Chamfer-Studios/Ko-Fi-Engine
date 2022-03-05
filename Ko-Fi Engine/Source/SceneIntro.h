@@ -1,9 +1,7 @@
-#pragma once
-#ifndef SCENE_INTRO_H
-#define SCENE_INTRO_H
+#ifndef __SCENE_INTRO_H__
+#define __SCENE_INTRO_H__
 
 #include "Scene.h"
-//#include "Globals.h"
 #include "JsonHandler.h"
 
 #define MAX_SNAKE 2
@@ -33,9 +31,6 @@ private:
 
 	// Temporal to manage the use of the camera
 	GameObject* camera = nullptr;
-
-
-
 };
 
-#endif SCENE_INTRO_H // SCENE_INTRO_H
+#endif // !__SCENE_INTRO_H__

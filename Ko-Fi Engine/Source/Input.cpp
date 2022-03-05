@@ -14,9 +14,9 @@
 #include "Importer.h"
 // FIXME: The list of meshes should be in scene intro.
 #include "GameObject.h"
+#include "Texture.h"
 
 #include <imgui_impl_sdl.h>
-
 
 #define MAX_KEYS 300
 
@@ -184,31 +184,28 @@ bool Input::PreUpdate(float dt)
 			{
 				if (tmp.find(".fbx") != std::string::npos)
 				{
-					
-					Importer::GetInstance()->ImportModel(tmp.c_str());
-					//engine->GetFileSystem()->GameObjectFromMesh(tmp.c_str(), engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
-
+					Importer::GetInstance()->sceneImporter->Import(tmp.c_str());
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{
 					// Apply texture
 					if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
 					{
-						
-							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-			
-							if (go->GetComponent<ComponentMaterial>()) {
-								ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
-								cMat->LoadTexture(tmp.c_str());
+						GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 
+						if (go->GetComponent<ComponentMaterial>())
+						{
+							Texture texture = Texture();
+							Importer::GetInstance()->textureImporter->Import(tmp.c_str(), &texture);
+
+							ComponentMaterial* cMaterial = go->GetComponent<ComponentMaterial>();
+							if (cMaterial != nullptr)
+							{
+								cMaterial->texture = texture;
+								//cMaterial->textures.push_back(texture);
 							}
-	
-							
-								
-							
+						}
 					}
-					
-					
 				}
 			}
 			break;
@@ -216,6 +213,7 @@ bool Input::PreUpdate(float dt)
 		}
 	}
 	ImGui_ImplSDL2_ProcessEvent(&event);
+
 	if (quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
 		return false;
 
@@ -229,4 +227,10 @@ bool Input::CleanUp()
 	appLog->AddLog("Quitting SDL input event subsystem\n");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+// Method to receive and manage events
+void Input::OnNotify(const Event& event)
+{
+	// Manage events
 }

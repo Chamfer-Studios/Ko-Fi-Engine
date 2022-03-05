@@ -1,4 +1,10 @@
 #include "ComponentMesh.h"
+#include "Globals.h"
+#include "Engine.h"
+#include "FSDefs.h"
+#include "Camera3D.h"
+#include "PanelChooser.h"
+
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
@@ -7,16 +13,28 @@
 #include "Engine.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
+
+#include "Importer.h"
+
+#include "I_Mesh.h"
+#include "Material.h"
+
 #include "glew.h"
 #include <gl/GL.h>
-#include "Primitive.h"
-#include "par_shapes.h"
-#include "Defs.h"
+
+#include <MathGeoLib/Math/float2.h>
+#include <MathGeoLib/Math/float3.h>
+#include <MathGeoLib/Math/float4.h>
+
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MESH;
-	this->time = 0.0f;
+	centerPoint = float3::zero;
+	radius = 0.0f;
+	mesh = nullptr;
+	renderMesh = true;
+	time = 0.0f;
 }
 
 //ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
@@ -52,7 +70,6 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 ComponentMesh::~ComponentMesh()
 {
 	RELEASE(mesh);
-	//RELEASE(materialComponent);
 }
 
 //void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
@@ -83,14 +100,10 @@ ComponentMesh::~ComponentMesh()
 //		//GenerateBounds();
 //}
 
-float3 ComponentMesh::GetCenterPointInWorldCoords() const
-{
-	return owner->GetTransform()->transformMatrix.TransformPos(centerPoint);
-}
-
 bool ComponentMesh::Start()
 {
-	GenerateLocalBoundingBox();
+	//GenerateLocalBoundingBox();
+	GenerateBounds();
 	return true;
 }
 
@@ -103,84 +116,93 @@ bool ComponentMesh::PostUpdate(float dt)
 {
 	bool ret = true;
 
+	ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
 
-	if (renderMesh) {
-		
-		uint shader = 
-			owner->GetComponent<ComponentMaterial>()->GetShader();
-		glUseProgram(shader);
-		//Matrices
-		GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
-		glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+	if (cMat != nullptr)
+	{
+		if (!cMat->active)
+		{
+			glDisable(GL_TEXTURE_2D);
+		}
 
-		GLint projection_location = glGetUniformLocation(shader, "projection");
-		glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+		if (renderMesh)
+		{
+			uint shader = cMat->GetMaterial()->shaderProgramID;
 
-		GLint view_location = glGetUniformLocation(shader, "view");
-		glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-	
-		GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-		glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-		float2 resolution = float2(1080.0f, 720.0f);
-		glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
-		this->time += 0.02f;
-		glUniform1f(glGetUniformLocation(shader, "time"), this->time);
-		
-		Material mat = owner->GetComponent<ComponentMaterial>()->GetMaterial();
-		for (Uniform* uniform : mat.uniforms) {
-			switch (uniform->type) {
-			case GL_FLOAT:
+			glUseProgram(shader);
+
+			// Matrices
+			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+
+			GLint projection_location = glGetUniformLocation(shader, "projection");
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+
+			GLint view_location = glGetUniformLocation(shader, "view");
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+
+			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+
+			float2 resolution = float2(1080.0f, 720.0f);
+			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+
+			this->time += 0.02f;
+			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
+
+			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 			{
-				if(uniform->name != "time")
-				glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
-
-			}
+				switch (uniform->type)
+				{
+				case GL_FLOAT:
+				{
+					glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+				}
 				break;
-			case GL_FLOAT_VEC2:
-			{
-				if (uniform->name != "resolution")
+				case GL_FLOAT_VEC2:
 				{
 					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
 					glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
 				}
-				
-			}
-
-			break;
-			case GL_FLOAT_VEC3:
-			{
-				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-				glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
-			}
-
-			break;
-			case GL_FLOAT_VEC4:
-			{
-				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-				glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
-			}
-				
 				break;
-			case GL_INT:
-			{
-				glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
-
-			}
-
+				case GL_FLOAT_VEC3:
+				{
+					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+					glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
+				}
 				break;
-
-			break;
+				case GL_FLOAT_VEC4:
+				{
+					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
+				}
+				break;
+				case GL_INT:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+				}
+				break;
+				default:
+					break;
+				}
 			}
-		}
 
 		mesh->Draw(owner);
-
-		glUseProgram(0);
-
-		GenerateGlobalBoundingBox();
+		//GenerateGlobalBoundingBox();
 		//DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
-	}
+		
+	if (drawAABB)
+		DrawAABB();
 
+	//if (owner->active || owner->isParentSelected())
+	//	DrawOutline();
+
+			GenerateGlobalBoundingBox();
+			DrawBoundingBox(mesh->localAABB, float3(1.0f, 0.0f, 0.0f));
+
+			glUseProgram(0);
+		}
+	}
 	return ret;
 }
 
@@ -191,52 +213,102 @@ bool ComponentMesh::CleanUp()
 	return true;
 }
 
+void ComponentMesh::Save(Json& json) const
+{
+	json["type"] = "mesh";
+
+	std::string name = owner->name;
+	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
+
+	Importer::GetInstance()->meshImporter->Save(mesh, mesh->path.c_str());
+
+	json["path"] = mesh->path;
+	json["shape_type"] = (int)mesh->meshType;
+	json["draw_vertex_normals"] = mesh->GetVertexNormals();
+	json["draw_face_normals"] = mesh->GetFaceNormals();
+}
+
+
+
+void ComponentMesh::Load(Json& json)
+{
+	int type = json["shape_type"];
+	Shape meshType = Shape::NONE;
+	switch (type)
+	{
+	case 0:
+		meshType = Shape::NONE;
+		break;
+	case 1:
+		meshType = Shape::CUBE;
+		break;
+	case 2:
+		meshType = Shape::SPHERE;
+		break;
+	case 3:
+		meshType = Shape::CYLINDER;
+		break;
+	case 4:
+		meshType = Shape::TORUS;
+		break;
+	case 5:
+		meshType = Shape::PLANE;
+		break;
+	case 6:
+		meshType = Shape::CONE;
+		break;
+	}
+	mesh->meshType = meshType;
+
+	mesh = new Mesh(meshType);
+	std::string path = json["path"];
+	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh);
+	mesh->path = path;
+
+	SetVertexNormals(json["draw_vertex_normals"]);
+	SetFaceNormals(json["draw_face_normals"]);
+}
+
 void ComponentMesh::SetMesh(Mesh* mesh)
 {
-	if (this->mesh != nullptr) {
+	if (this->mesh != nullptr)
 		RELEASE(this->mesh);
-	}
+
 	this->mesh = mesh;
+	GenerateBounds();
+
 }
 
-Mesh* ComponentMesh::GetMesh()
+uint ComponentMesh::GetVertices()
 {
-	return mesh;
+	uint numVertices = 0;
+	numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
+	return numVertices;
 }
 
-void ComponentMesh::SetPath(std::string path)
+float3 ComponentMesh::GetCenterPointInWorldCoords() const
 {
-	this->path = path;
+	return owner->GetTransform()->transformMatrix.TransformPos(centerPoint);
 }
 
 void ComponentMesh::SetVertexNormals(bool vertexNormals)
 {
-	this->vertexNormals = vertexNormals;
+	this->mesh->SetVertexNormals(vertexNormals);
 }
 
-void ComponentMesh::SetFacesNormals(bool facesNormals)
+bool ComponentMesh::GetVertexNormals() const
 {
-	this->facesNormals = facesNormals;
+	return mesh->GetVertexNormals();
 }
 
-GameObject* ComponentMesh::GetParent()
+void ComponentMesh::SetFaceNormals(bool facesNormals)
 {
-	return owner;
+	this->mesh->SetFaceNormals(facesNormals);
 }
 
-std::string ComponentMesh::GetPath()
+bool ComponentMesh::GetFaceNormals() const
 {
-	return path;
-}
-
-bool ComponentMesh::GetVertexNormals()
-{
-	return vertexNormals;
-}
-
-bool ComponentMesh::GetFacesNormals()
-{
-	return facesNormals;
+	return mesh->GetFaceNormals();
 }
 
 void ComponentMesh::GenerateLocalBoundingBox()
@@ -263,102 +335,6 @@ AABB ComponentMesh::GetLocalAABB()
 	return mesh->localAABB;
 }
 
-////void ComponentMesh::LoadMesh(const char* path)
-////{
-////	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
-////	if (scene != nullptr && scene->HasMeshes())
-////	{
-////		materialComponent = new ComponentMaterial(this->owner);
-////		for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
-////		{
-////			Mesh* ourMesh = new Mesh();
-////			aiMesh* aiMesh = scene->mMeshes[i];
-////
-////			// Positions
-////			ourMesh->num_vertices = aiMesh->mNumVertices;
-////			ourMesh->vertices = new float[ourMesh->num_vertices * 3];
-////			memcpy(ourMesh->vertices, aiMesh->mVertices, sizeof(float) * ourMesh->num_vertices * 3); // &vertices[0]
-////
-////			// Faces
-////			if (aiMesh->HasFaces())
-////			{
-////				ourMesh->num_indices = aiMesh->mNumFaces * 3;
-////				ourMesh->indices = new uint[ourMesh->num_indices]; // assume each face is a triangle
-////				for (uint i = 0; i < aiMesh->mNumFaces; ++i)
-////				{
-////					if (aiMesh->mFaces[i].mNumIndices != 3)
-////					{
-////						/*                       CONSOLE_LOG("WARNING, geometry face with != 3 indices!");
-////											   appLog->AddLog("WARNING, geometry face with != 3 indices!\n");*/
-////					}
-////					else
-////						memcpy(&ourMesh->indices[i * 3], aiMesh->mFaces[i].mIndices, 3 * sizeof(uint));
-////				}
-////			}
-////
-////			// Loading mesh normals data
-////			if (aiMesh->HasNormals())
-////			{
-////				ourMesh->num_normals = aiMesh->mNumVertices;
-////				ourMesh->normals = new float[ourMesh->num_normals * 3];
-////				memcpy(ourMesh->normals, aiMesh->mNormals, sizeof(float) * ourMesh->num_normals * 3);
-////			}
-////
-////			// Texture coordinates
-////			if (aiMesh->HasTextureCoords(0))
-////			{
-////				ourMesh->num_tex_coords = aiMesh->mNumVertices;
-////				ourMesh->tex_coords = new float[ourMesh->num_tex_coords * 2];
-////				for (uint j = 0; j < ourMesh->num_tex_coords; ++j)
-////				{
-////					ourMesh->tex_coords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-////					ourMesh->tex_coords[j * 2 + 1] = /*1.0f - */aiMesh->mTextureCoords[0][j].y;
-////				}
-////			}
-////			else
-////				ourMesh->tex_coords = 0;
-////
-////			ourMesh->SetUpMeshBuffers();
-////			materialComponent->AddTextures(ourMesh->texture);
-////			meshes.push_back(ourMesh);
-////		}
-////	}
-////
-////	aiReleaseImport(scene);
-////}
-
-bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
-{
-	bool ret = true;
-
-	if (ImGui::CollapsingHeader("Mesh")) {
-		ImGui::Text("Mesh Path: ");
-		ImGui::SameLine();
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-		if (ImGui::Selectable(path.c_str())) {}
-		ImGui::PopStyleColor();
-		ImGui::Text("Num. vertices: ");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
-		if (ImGui::Checkbox("Vertex Normals", &vertexNormals))
-			mesh->ToggleVertexNormals();
-		if (ImGui::Checkbox("Faces Normals", &facesNormals))
-			mesh->ToggleFacesNormals();
-	}
-
-	//if(materialComponent != nullptr)
-	//	materialComponent->InspectorDraw(chooser);
-
-	return ret;
-}
-
-uint ComponentMesh::GetVertices()
-{
-	uint numVertices = 0;
-	numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
-	return numVertices;
-}
-
 void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
@@ -366,8 +342,13 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
-	aabb.SetNegativeInfinity();
-	aabb.Enclose(obb);
+	mesh->localAABB.SetNegativeInfinity();
+	mesh->localAABB.Enclose(obb);
+}
+
+AABB ComponentMesh::GetGlobalAABB()
+{
+	return mesh->localAABB;
 }
 
 void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
@@ -448,63 +429,80 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glLineWidth(1.0f);
 }
 
-AABB ComponentMesh::GetGlobalAABB()
+bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
-	return aabb;
-}
+	bool ret = true;
 
-bool ComponentMesh::GetRenderMesh()
-{
-	return renderMesh;
-}
-
-void ComponentMesh::SetRenderMesh(bool renderMesh)
-{
-	this->renderMesh = renderMesh;
-}
-
-void ComponentMesh::DrawOutline() const
-{
-	glEnable(GL_STENCIL);
-	glStencilFunc(GL_ALWAYS, 1, -1);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	glDisable(GL_LIGHTING);
-
-	if (owner->GetParent() == owner->GetEngine()->GetSceneManager()->GetCurrentScene()->rootGo)
+	if (ImGui::CollapsingHeader("Mesh"))
 	{
-		glColor3f(0.8f, 0.8f, 0.0f);
-		glLineWidth(1.5f);
+		ImGui::Text("Mesh Path: ");
+		ImGui::SameLine();
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+		if (ImGui::Selectable(mesh->path.c_str())) {}
+		ImGui::PopStyleColor();
+
+		ImGui::Text("Num. vertices: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
+
+		bool vertex = GetVertexNormals();
+		if (ImGui::Checkbox("Vertex Normals", &vertex))
+			mesh->SetVertexNormals(vertex);
+		bool faces = GetFaceNormals();
+		if (ImGui::Checkbox("Faces Normals", &faces))
+			mesh->SetFaceNormals(faces);
 	}
-	else if (owner->GetParent() != owner->GetEngine()->GetSceneManager()->GetCurrentScene()->rootGo)
-	{
-		glColor3f(0.8f, 0.2f, 0.0f);
-		glLineWidth(1.5f);
-	}
+	return ret;
+}
+void ComponentMesh::GenerateBounds()
+{
+	mesh->localAABB.SetNegativeInfinity();
+	//mesh->localAABB->Enclose(&mesh->vertices[0], vertices.size());
+	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
 
-	glStencilFunc(GL_NOTEQUAL, 1, -1);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-	glPolygonMode(GL_FRONT, GL_LINE);
+	Sphere sphere;
+	sphere.r = 0.f;
+	sphere.pos = mesh->localAABB.CenterPoint();
+	sphere.Enclose(mesh->localAABB);
 
-	glPushMatrix();
-	ComponentTransform* transform = owner->GetComponent<ComponentTransform>();
-	glMultMatrixf(transform->transformMatrix.Transposed().ptr());
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-	glDrawElements(GL_TRIANGLES, mesh->indicesSizeBytes / sizeof(unsigned int) * 3, GL_UNSIGNED_INT, 0);
-
-	glDisable(GL_STENCIL);
-	glDisable(GL_POLYGON_OFFSET_FILL);
-	glEnable(GL_LIGHTING);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glLineWidth(1);
-
-	glPopMatrix();
+	radius = sphere.r;
+	centerPoint = sphere.pos;
 }
 
+AABB ComponentMesh::GetGlobalAABB() const
+{
+	AABB global = AABB(mesh->localAABB);
+	global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
+	return global;
+}
+
+void ComponentMesh::DrawAABB() const
+{
+	AABB aabb = GetGlobalAABB();
+	float3 corners[8];
+	aabb.GetCornerPoints(corners);
+
+	for (int i = 0; i < 8; i++)
+	{
+		glColor3f(1, 0.8, 0);
+		GLUquadric* quadric = gluNewQuadric();
+		glTranslatef(corners[i].x, corners[i].y, corners[i].z);
+		gluSphere(quadric, 0.05f, 8, 8);
+		glTranslatef(-corners[i].x, -corners[i].y, -corners[i].z);
+		gluDeleteQuadric(quadric);
+
+		for (int j = 0; j < 8; j++)
+		{
+			if (j == i) continue;
+			glBegin(GL_LINES);
+			glDisable(GL_LIGHTING);
+			glLineWidth(3.f);
+			glVertex3f(corners[i].x, corners[i].y, corners[i].z);
+			glVertex3f(corners[j].x, corners[j].y, corners[j].z);
+			glEnd();
+			glEnable(GL_LIGHTING);
+		}
+	}
+}
 

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __EDITOR_STYLE_HANDLER_H__
+#define __EDITOR_STYLE_HANDLER_H__
+
 #include "JsonHandler.h"
 
 class ImGuiStyle;
@@ -14,3 +16,5 @@ private:
 	JsonHandler jsonHandler;
 	Json styleJson;
 };
+
+#endif // !__EDITOR_STYLE_HANDLER_H__

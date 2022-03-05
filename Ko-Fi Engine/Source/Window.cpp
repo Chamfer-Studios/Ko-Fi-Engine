@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "Engine.h"
-#include "Defs.h"
+#include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "Renderer3D.h"
@@ -11,7 +11,7 @@ Window::Window(KoFiEngine* engine) : Module()
 {
 	window = NULL;
 	screenSurface = NULL;
-	name.Create("Window");
+	name = "Window";
 	this->engine = engine;
 }
 
@@ -140,6 +140,12 @@ bool Window::CleanUp()
 	// Quit SDL subsystems
 	SDL_Quit();
 	return true;
+}
+
+// Method to receive and manage events
+void Window::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 // Set new window title

@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "Importer.h"
 #include "Engine.h"
+#include "QuadTree3D.h"
+#include "RNG.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
@@ -66,11 +68,11 @@ public:
 		return true;
 	}
 
-	GameObject* GetGameObject(int id)
+	GameObject* GetGameObject(int uid)
 	{
 		for (GameObject* go : gameObjectList)
 		{
-			if (go->GetId() == id)
+			if (go->GetUID() == uid)
 			{
 				return go;
 			}
@@ -79,11 +81,14 @@ public:
 		return nullptr;
 	}
 
-	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
+	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
 	{
-		GameObject* go = new GameObject(gameObjectList.size(), engine);
+		GameObject* go = new GameObject(gameObjectList.size(), engine, name, is3D);
 		this->gameObjectList.push_back(go);
-		this->rootGo->AttachChild(go);
+		if (parent)
+			parent->AttachChild(go);
+		else
+			this->rootGo->AttachChild(go);
 
 		return go;
 	}
@@ -92,7 +97,7 @@ public:
 	{
 		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
 		{
-			if ((*it)->GetId() == gameObject->GetId())
+			if ((*it)->GetUID() == gameObject->GetUID())
 			{
 				gameObjectList.erase(it);
 				break;
@@ -148,26 +153,65 @@ public:
 		}
 	}
 
-	void DrawDebugRay(const LineSegment newRay) const
+
+	template<class UnaryFunction>
+	void ApplyToObjects(UnaryFunction f);
+
+	void ComputeQuadTree()// Compute Space Partitioning
 	{
-		glColor4f(1.0f, 1.0f, 0.0f, 0.5f);
-		glLineWidth(10.5f);
-		glBegin(GL_LINES);
-		glVertex3f(newRay.a.x, newRay.a.y, newRay.a.z);
-		glVertex3f(newRay.b.x, newRay.b.y, newRay.b.z);
-		glEnd();
+		if (!sceneTreeIsDirty) return;
+
+		std::vector<GameObject*>* objects = new std::vector<GameObject*>();
+
+		if (sceneTree != nullptr) delete sceneTree;
+		sceneTree = new QuadTree3D(AABB(float3(-100, -100, -100), float3(100, 100, 100)));
+
+		ApplyToObjects([objects](GameObject* it) mutable {
+			objects->push_back(it);
+			});
+
+		sceneTree->AddObjects(*objects);
+		delete objects;
 	}
+
 public:
-	SString name;
+	std::string name;
 	bool active;
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
 	GameObject* selectedGameObject = nullptr;
+	std::vector<GameObject*> gameObjectListToCreate;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
+	
+	//Space Partitioning
+	bool sceneTreeIsDirty = true;
+	bool drawSceneTree = false;
+	QuadTree3D* sceneTree = nullptr;
+
 
 	LineSegment ray;
+
+	// Space Partitioning Functions...
+	private:
+		template<class UnaryFunction>
+		void recursive_iterate(const GameObject* o, UnaryFunction f)
+		{
+			for (auto c = o->children.begin(); c != o->children.end(); ++c)
+			{
+				recursive_iterate(*c, f);
+				f(*c);
+			}
+		}
+
 };
+
+template<class UnaryFunction>
+inline void Scene::ApplyToObjects(UnaryFunction f)
+{
+	recursive_iterate(rootGo, f);
+}
+
 
 #endif // __SCENE_H__

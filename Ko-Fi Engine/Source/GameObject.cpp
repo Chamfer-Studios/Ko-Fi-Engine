@@ -2,27 +2,46 @@
 #include "Engine.h"
 
 #include "Primitive.h"
-#include "Defs.h"
+#include "Globals.h"
 
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentInfo.h"
 
 // Used with a path for the .fbx load
-GameObject::GameObject(int id, KoFiEngine* engine, const char* name)
+GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
 {
 	active = true;
-	//LoadModel(path);
+
 	if (name == nullptr)
-		this->name = "GameObject " + std::to_string(id);
+		this->name = "GameObject " + std::to_string(uid);
 	else
 		this->name = name;
 
-	this->id = id;
+	this->uid = uid;
 	this->engine = engine;
 
 	CreateComponent<ComponentInfo>();
-	transform = CreateComponent<ComponentTransform>();
+	is3D = _is3D;
+	if (is3D)
+		transform = CreateComponent<ComponentTransform>();
+
+	this->parent = nullptr;
+}
+
+GameObject::GameObject()
+{
+	active = true;
+	//LoadModel(path);
+	this->name = "GameObject " + std::to_string(uid);
+
+	this->uid = uid;
+	this->engine = engine;
+
+	CreateComponent<ComponentInfo>();
+		transform = CreateComponent<ComponentTransform>();
+
+
 
 	this->parent = nullptr;
 }
@@ -52,12 +71,12 @@ bool GameObject::PreUpdate()
 	return ret;
 }
 
-bool GameObject::Update()
+bool GameObject::Update(float dt)
 {
 	bool ret = true;
 	for (Component* component : components)
 	{
-		ret = component->Update();
+		ret = component->Update(dt);
 	}
 	return ret;
 }
@@ -120,8 +139,10 @@ void GameObject::AttachChild(GameObject* child)
 
 	child->parent = this;
 	children.push_back(child);
-	child->transform->NewAttachment();
-	child->PropagateTransform();
+	if (child->transform != nullptr) {
+		child->transform->NewAttachment();
+		child->PropagateTransform();
+	}
 }
 
 void GameObject::RemoveChild(GameObject* child)
@@ -137,18 +158,19 @@ void GameObject::PropagateTransform()
 {
 	for (GameObject* go : children)
 	{
-		go->transform->OnParentMoved();
+		if (go->transform != nullptr)
+			go->transform->OnParentMoved();
 	}
 }
 
-ComponentTransform* GameObject::GetTransform()
-{
-	return this->transform;
-}
-
-void GameObject::SetName(std::string name)
+void GameObject::SetName(const char* name)
 {
 	this->name = name;
+}
+
+const char* GameObject::GetName()
+{
+	return name.c_str();
 }
 
 std::vector<GameObject*> GameObject::GetChildren() const
@@ -161,14 +183,14 @@ void GameObject::SetChild(GameObject* child)
 	children.push_back(child);
 }
 
-std::string GameObject::GetName()
-{
-	return name;
-}
-
 GameObject* GameObject::GetParent()const
 {
 	return parent;
+}
+
+ComponentTransform* GameObject::GetTransform()
+{
+	return this->transform;
 }
 
 std::vector<Component*> GameObject::GetComponents() const
@@ -176,24 +198,39 @@ std::vector<Component*> GameObject::GetComponents() const
 	return components;
 }
 
-void GameObject::SetId(int id)
+void GameObject::SetUID(uint uid)
 {
-	this->id = id;
+	this->uid = uid;
 }
 
-uint GameObject::GetId() const
+uint GameObject::GetUID() const
 {
-	return id;
+	return uid;
 }
 
-bool GameObject::HasChildrenWithId(int id)
+void GameObject::SetParentUID(uint uid)
+{
+	this->parentUid = uid;
+}
+
+uint GameObject::GetParentUID() const
+{
+	return parentUid;
+}
+
+bool GameObject::HasChildrenWithUID(uint uid)
 {
 	for (std::vector<GameObject*>::iterator child = children.begin(); child != children.end(); child++)
 	{
-		if ((*child)->id == id)
+		if ((*child)->uid == uid)
 			return true;
 	}
 	return false;
+}
+
+AABB GameObject::BoundingAABB()
+{
+	return GetComponent<ComponentMesh>()->GetGlobalAABB();
 }
 
 KoFiEngine* GameObject::GetEngine()

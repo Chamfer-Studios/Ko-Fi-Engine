@@ -1,8 +1,10 @@
+#ifndef __VEC1_NODE_H__
+#define __VEC1_NODE_H__
 
-#pragma once
 #include "Node.h"
-class Vec1Node : public Node {
 
+class Vec1Node : public Node
+{
 public:
 	Vec1Node(const char* name, const NodeType t, const int id) : Node(name, t, id) {
 		inputPins.push_back(Pin(this->id << 8, PinType::FLOAT));
@@ -22,10 +24,10 @@ public:
 		ImGui::PopItemWidth();
 		ImNodes::EndOutputAttribute();
 		ImNodes::EndNode();
-
 	}
-public:
-	
-	float number = 0;
 
+public:
+	float number = 0;
 };
+
+#endif // !__VEC1_NODE_H__

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __INPUT_H__
+#define __INPUT_H__
+
 #include "Module.h"
 #include "Globals.h"
 
@@ -24,6 +26,8 @@ public:
 	bool Init();
 	bool PreUpdate(float dt);
 	bool CleanUp();
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
 
 	KEY_STATE GetKey(int id) const
 	{
@@ -73,3 +77,5 @@ private:
 	char* dropped_filedir;
 	KoFiEngine* engine = nullptr;
 };
+
+#endif // !__INPUT_H__
