@@ -4,8 +4,6 @@
 #include "FSDefs.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
-#include "Primitive.h"
-#include "par_shapes.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -24,10 +22,6 @@
 #include <MathGeoLib/Math/float3.h>
 #include <MathGeoLib/Math/float4.h>
 
-#include "Primitive.h"
-#include "par_shapes.h"
-#include "Globals.h"
-#include "MathGeoLib/Math/float3.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
@@ -218,7 +212,6 @@ bool ComponentMesh::CleanUp()
 void ComponentMesh::Save(Json& json) const
 {
 	json["type"] = "mesh";
-	GenerateBounds();
 
 	std::string name = owner->name;
 	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
@@ -278,6 +271,8 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 		RELEASE(this->mesh);
 
 	this->mesh = mesh;
+	GenerateBounds();
+
 }
 
 uint ComponentMesh::GetVertices()
@@ -452,6 +447,8 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Faces Normals", &faces))
 			mesh->SetFaceNormals(faces);
 	}
+	return ret;
+}
 void ComponentMesh::GenerateBounds()
 {
 	mesh->localAABB.SetNegativeInfinity();
@@ -504,50 +501,3 @@ void ComponentMesh::DrawAABB() const
 	}
 }
 
-void ComponentMesh::DrawOutline() const
-{
-	glEnable(GL_STENCIL);
-	glStencilFunc(GL_ALWAYS, 1, -1);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	glDisable(GL_LIGHTING);
-
-	if (owner->active)
-	{
-		glColor3f(0.8f, 0.8f, 0.0f);
-		glLineWidth(1.5f);
-	}
-	else if (owner->isParentSelected())
-	{
-		glColor3f(0.8f, 0.2f, 0.0f);
-		glLineWidth(1.5f);
-	}
-
-	glStencilFunc(GL_NOTEQUAL, 1, -1);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-
-	glPolygonMode(GL_FRONT, GL_LINE);
-
-	glPushMatrix();
-	ComponentTransform* transform = owner->GetComponent<ComponentTransform>();
-	glMultMatrixf(transform->transformMatrix.Transposed().ptr());
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-	glDrawElements(GL_TRIANGLES, *mesh->indices * 3, GL_UNSIGNED_INT, 0);
-
-	glDisable(GL_STENCIL);
-	glDisable(GL_POLYGON_OFFSET_FILL);
-	glEnable(GL_LIGHTING);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glLineWidth(1);
-
-	glPopMatrix();
-}
-
-
-	return ret;
-}

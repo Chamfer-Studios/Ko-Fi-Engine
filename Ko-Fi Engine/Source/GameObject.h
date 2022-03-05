@@ -77,7 +77,6 @@ public:
 
 	KoFiEngine* GetEngine();
 
-	bool isParentSelected();
 
 public:
 	std::string name;

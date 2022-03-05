@@ -3,7 +3,6 @@
 
 #include "Component.h"
 #include "Mesh.h"
-#include "par_shapes.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
 #include "MathGeoLib/Geometry/Sphere.h"
@@ -64,8 +63,6 @@ public:
 	AABB GetGlobalAABB() const;
 	void DrawAABB() const;
 	// -------------------
-
-	void DrawOutline() const;
 
 private:
 	Mesh* mesh = nullptr;
