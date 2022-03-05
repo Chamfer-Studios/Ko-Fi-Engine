@@ -7,9 +7,8 @@ speed = 5  -- consider Start()
 bullets = {}
 
 GameState = require "Assets.Scripts.GameState"
-GameState:SayHi()
-
 print(GameState:GetGameState())
+
 -------------------- Methods ---------------------
 
 -- Called each loop iteration
@@ -19,6 +18,7 @@ function Update(dt)
 	mouseRight = GetInput(3)
 	spaceButton = GetInput(8)
 	goingRight = false
+
 	-------------------------------- To be removed after VS --------------------------------
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local targetPos = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }

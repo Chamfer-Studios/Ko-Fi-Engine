@@ -390,7 +390,6 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
-    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />

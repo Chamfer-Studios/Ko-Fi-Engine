@@ -96,7 +96,7 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 		if (ImGui::Button("Run")) // This will be an event call
 		{
-			script();
+			script(); // TODO: This doens't save changes done to the .lua file. We need to call load_file again!!!
 			isRunning = true;
 		}
 		if (isRunning)
@@ -104,11 +104,6 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 			if (ImGui::Button("Stop")) // This will be an event call
 			{
 				isRunning = false;
-			}
-			if (ImGui::Button("Fetch") && isRunning) // This will be an event call
-			{
-				float3 dest = float3(0, 0.2, -2);
-				handler->lua["SetDestination"](dest);
 			}
 		}
 	}
