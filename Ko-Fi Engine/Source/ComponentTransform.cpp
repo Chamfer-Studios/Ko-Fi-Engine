@@ -163,4 +163,12 @@ void ComponentTransform::Load(Json& json)
 	values = json.at("scale").get<std::vector<float>>();
 	SetScale(float3(values[0], values[1], values[2]));
 	values.clear();
+
+	transformMatrixLocal = float4x4::FromTRS(position, rotation, scale);
+
+	right = transformMatrixLocal.Col3(0).Normalized();
+	up = transformMatrixLocal.Col3(1).Normalized();
+	front = transformMatrixLocal.Col3(2).Normalized();
+	RecomputeGlobalMatrix();
+	owner->PropagateTransform();
 }

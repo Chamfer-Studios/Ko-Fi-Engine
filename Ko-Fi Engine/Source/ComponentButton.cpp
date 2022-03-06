@@ -26,6 +26,26 @@ ComponentButton::~ComponentButton()
 	FreeTextures(BUTTON_STATE::PRESSED);
 }
 
+void ComponentButton::Save(Json& json) const
+{
+	json["type"] = "button";
+	json["idleTexture"] = idleOpenGLTexture.path;
+	json["hoverTexture"] = hoverOpenGLTexture.path;
+	json["pressedTexture"] = pressedOpenGLTexture.path;
+}
+
+void ComponentButton::Load(Json& json)
+{
+	std::string path = json["idleTexture"].get<std::string>();
+	SetIdleTexture(path.c_str());
+
+	path = json["hoverTexture"].get<std::string>();
+	SetHoverTexture(path.c_str());
+
+	path = json["pressedTexture"].get<std::string>();
+	SetPressedTexture(path.c_str());
+}
+
 bool ComponentButton::Update(float dt)
 {
 	float2 mouseScreenPosition = { (float)owner->GetEngine()->GetInput()->GetMouseX(), (float)owner->GetEngine()->GetInput()->GetMouseY() };
@@ -175,36 +195,6 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 
 	return true;
 }
-
-//Json SceneManager::SaveComponentButton(ComponentButton* componentButton)
-//{
-//	Json jsonComponentButton;
-//	jsonComponentButton["idleTexture"] = componentButton->GetIdleTexture().GetTexturePath();
-//	jsonComponentButton["hoverTexture"] = componentButton->GetHoverTexture().GetTexturePath();
-//	jsonComponentButton["pressedTexture"] = componentButton->GetPressedTexture().GetTexturePath();
-//
-//	return jsonComponentButton;
-//}
-//
-//Json SceneManager::SaveComponentText(ComponentText* componentText)
-//{
-//	Json jsonComponentText;
-//	jsonComponentText["value"] = componentText->GetTextValue();
-//
-//	return jsonComponentText;
-//}
-
-//void SceneManager::LoadComponentButton(ComponentButton* componentButton, Json jsonComponentButton)
-//{
-//	std::string path = jsonComponentButton["idleTexture"].get<std::string>();
-//	componentButton->SetIdleTexture(path.c_str());
-//
-//	path = jsonComponentButton["hoverTexture"].get<std::string>();
-//	componentButton->SetHoverTexture(path.c_str());
-//
-//	path = jsonComponentButton["pressedTexture"].get<std::string>();
-//	componentButton->SetPressedTexture(path.c_str());
-//}
 
 /*SDL_Texture* ComponentButton::LoadTexture(const char* path)
 {

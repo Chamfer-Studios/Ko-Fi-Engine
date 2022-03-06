@@ -121,7 +121,7 @@ void ComponentMaterial::Load(Json& json)
 			material->SetShaderPath(shaderPath.c_str());
 		else
 		{
-			shaderPath = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+			shaderPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 			material->SetShaderPath(shaderPath.c_str());
 		}
 
@@ -338,7 +338,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 					material->SetShaderPath(path.c_str());
 				else
 				{
-					path = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+					path = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 					material->SetShaderPath(path.c_str());
 				}
 				Importer::GetInstance()->materialImporter->LoadAndCreateShader(path.c_str(), material);

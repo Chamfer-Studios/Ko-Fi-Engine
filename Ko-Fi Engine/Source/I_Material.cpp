@@ -35,7 +35,7 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 		material->diffuseColor = Color(color.r, color.g, color.b, color.a);
 	}
 
-	std::string defaultPath = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+	std::string defaultPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 	material->SetShaderPath(defaultPath.c_str());
 
 	ret = LoadAndCreateShader(defaultPath.c_str(), material);
@@ -233,12 +233,12 @@ bool I_Material::LoadUniforms(Material* material)
 					material->AddUniform(uf4);
 				}
 				break;
-				case GL_FLOAT_MAT4:
-				{
-					UniformT<float4x4>* mat = new UniformT<float4x4>(name, type, float4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
-					material->AddUniform(mat);
-				}
-				break;
+				//case GL_FLOAT_MAT4:
+				//{
+				//	UniformT<float4x4>* mat = new UniformT<float4x4>(name, type, float4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
+				//	material->AddUniform(mat);
+				//}
+				//break;
 				default:
 					break;
 				}

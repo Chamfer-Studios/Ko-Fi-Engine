@@ -37,6 +37,27 @@ ComponentImage::~ComponentImage()
 
 }
 
+void ComponentImage::Save(Json& json) const
+{
+	json["type"] = "image";
+
+	json["texture"] = openGLTexture.path;
+	json["mask"] = {
+		mask.x,
+		mask.y
+	};
+}
+
+void ComponentImage::Load(Json& json)
+{
+	std::string path = json["texture"].get<std::string>();
+	SetTexture(path.c_str());
+
+	std::vector<float> values = json["mask"].get<std::vector<float>>();
+	mask.x = values[0];
+	mask.y = values[1];
+}
+
 bool ComponentImage::Update(float dt)
 {
 	return true;
@@ -98,30 +119,6 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 
 	return true;
 }
-
-//Json SceneManager::SaveComponentImage(ComponentImage* componentImage)
-//{
-//	Json jsonComponentImage;
-//
-//	jsonComponentImage["texture"] = componentImage->openGLTexture.GetTexturePath();
-//	jsonComponentImage["mask"] = {
-//		componentImage->GetMask().x,
-//		componentImage->GetMask().y
-//	};
-//
-//	return jsonComponentImage;
-//}
-
-//void SceneManager::LoadComponentImage(ComponentImage* componentImage, Json jsonComponentImage)
-//{
-//	std::string path = jsonComponentImage["texture"].get<std::string>();
-//	componentImage->SetTexture(path.c_str());
-//
-//	std::vector<float> values = jsonComponentImage["mask"].get<std::vector<float>>();
-//	float2 mask;
-//	mask.x = values[0];
-//	mask.y = values[1];
-//}
 
 /*SDL_Texture* ComponentImage::LoadTexture(const char* path)
 {
