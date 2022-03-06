@@ -109,23 +109,40 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 				currentEntity->GetComponent<ComponentCollider>()->SetNewCollision(fullGOList[i]);
 				fullGOList[i]->GetComponent<ComponentCollider>()->SetNewCollision(currentEntity);
 
+				//basic rejection calculations
+				math::float3 center1 = currentEntityAABB.CenterPoint();
+				math::float3 center2 = newCollider.CenterPoint();
+
+				math::float3 Size1 = currentEntityAABB.Size();
+				math::float3 Size2 = newCollider.Size();
+
+				math::float3 initialDistance = center1 - center2;
+
+				//hay que tener en cuenta la direccion de la que viene la colision para tenerla en cuenta a la hora de hacer los calculos
+
+				math::float2 finalDistanceXZ = math::float2((Size1.x/2 + Size2.x/2),(Size1.z/2 + Size2.z/2));
+				float finalDistanceY = math::Abs(Size1.y) / 2 + math::Abs(Size2.y) / 2;
+
+				math::float3 wallCollisionTranslation = math::float3(finalDistanceXZ.x, 0, finalDistanceXZ.y) - math::float3(initialDistance.x, 0, initialDistance.z);
+				float floorCollisionTranslation = finalDistanceY - initialDistance.y;
+
 				switch (newColliderType)
 				{
 				case ColliderType::FLOOR:
 				{
-					if (currentEntity->GetComponent<ComponentRigidBody>()) 
+					if (currentEntity->GetComponent<ComponentRigidBody>())
 					{
-						float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
-						currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(currentVelocity.x, -currentVelocity.y, currentVelocity.z)); //change velocity direction on y axis.
+						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + float3(0, floorCollisionTranslation, 0);
+						currentEntity->GetTransform()->SetPosition(finalPosition);
 					}
 					break;
 				}
 				case ColliderType::WALL:
-				{
+				{	
 					if (currentEntity->GetComponent<ComponentRigidBody>())
 					{
-						float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
-						currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + wallCollisionTranslation;
+						currentEntity->GetTransform()->SetPosition(finalPosition);
 					}
 					break;
 				}
@@ -133,17 +150,18 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 				{
 					if (currentEntity->GetComponent<ComponentRigidBody>())
 					{
-						float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
-						currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + wallCollisionTranslation;
+						currentEntity->GetTransform()->SetPosition(finalPosition);
 					}
+
 					break;
 				}
 				case ColliderType::PLAYER:
 				{
 					if (currentEntity->GetComponent<ComponentRigidBody>())
 					{
-						float3 currentVelocity = currentEntity->GetComponent<ComponentRigidBody>()->GetLinearVelocity();
-						currentEntity->GetComponent<ComponentRigidBody>()->SetLinearVelocity(float3(-currentVelocity.x, currentVelocity.y, -currentVelocity.z)); //change velocity direction excluding y axis.
+						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + wallCollisionTranslation;
+						currentEntity->GetTransform()->SetPosition(finalPosition);
 					}
 					break;
 				}
