@@ -25,6 +25,65 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	anchor = Anchor::CENTER;
 }
 
+void ComponentTransform2D::Save(Json& json) const
+{
+	json["type"] = "transform2D";
+
+	json["position"] = {
+		GetPosition().x,
+		GetPosition().y,
+	};
+	json["rotation"] = {
+		GetRotation().x,
+		GetRotation().y,
+		GetRotation().z,
+	};
+	json["size"] = {
+		GetSize().x,
+		GetSize().y
+	};
+	json["pivot"] = {
+		GetPivot().x,
+		GetPivot().y
+	};
+	json["anchor"] = (int)GetAnchor();
+}
+
+void ComponentTransform2D::Load(Json& json)
+{
+	std::vector<float> values = json["position"].get<std::vector<float>>();
+	float2 position;
+	position.x = values[0];
+	position.y = values[1];
+
+	SetPosition(position);
+
+	values = json["rotation"].get<std::vector<float>>();
+	float3 rotation;
+	rotation.x = values[0];
+	rotation.y = values[1];
+	rotation.z = values[2];
+
+	SetRotation(rotation);
+
+	values = json["size"].get<std::vector<float>>();
+	float2 size;
+	size.x = values[0];
+	size.y = values[1];
+
+	SetSize(size);
+
+	values = json["pivot"].get<std::vector<float>>();
+	float2 pivot;
+	pivot.x = values[0];
+	pivot.y = values[1];
+
+	SetPivot(pivot);
+
+	int anchor = json["anchor"].get<int>();
+	SetAnchor((ComponentTransform2D::Anchor)anchor);
+}
+
 bool ComponentTransform2D::Update(float dt)
 {
 	return true;
@@ -190,66 +249,6 @@ bool ComponentTransform2D::CheckPointWithinBounds(float2 vec)
 
 	return lowerLeft.x < vec.x && lowerLeft.y < vec.y && vec.x < upperRight.x && vec.y < upperRight.y;
 }
-
-//Json SceneManager::SaveComponentTransform2D(ComponentTransform2D* componentTransform2D)
-//{
-//	Json jsonComponentTransform2D;
-//	jsonComponentTransform2D["position"] = {
-//		componentTransform2D->GetPosition().x,
-//		componentTransform2D->GetPosition().y,
-//	};
-//	jsonComponentTransform2D["rotation"] = {
-//		componentTransform2D->GetRotation().x,
-//		componentTransform2D->GetRotation().y,
-//		componentTransform2D->GetRotation().z,
-//	};
-//	jsonComponentTransform2D["size"] = {
-//		componentTransform2D->GetSize().x,
-//		componentTransform2D->GetSize().y
-//	};
-//	jsonComponentTransform2D["pivot"] = {
-//		componentTransform2D->GetPivot().x,
-//		componentTransform2D->GetPivot().y
-//	};
-//	jsonComponentTransform2D["anchor"] = (int)componentTransform2D->GetAnchor();
-//
-//	return jsonComponentTransform2D;
-//}
-
-//void SceneManager::LoadComponentTransform2D(ComponentTransform2D* componentTransform2D, Json jsonComponentTransform2D)
-//{
-//	std::vector<float> values = jsonComponentTransform2D["position"].get<std::vector<float>>();
-//	float2 position;
-//	position.x = values[0];
-//	position.y = values[1];
-//
-//	componentTransform2D->SetPosition(position);
-//
-//	values = jsonComponentTransform2D["rotation"].get<std::vector<float>>();
-//	float3 rotation;
-//	rotation.x = values[0];
-//	rotation.y = values[1];
-//	rotation.z = values[2];
-//
-//	componentTransform2D->SetRotation(rotation);
-//
-//	values = jsonComponentTransform2D["size"].get<std::vector<float>>();
-//	float2 size;
-//	size.x = values[0];
-//	size.y = values[1];
-//
-//	componentTransform2D->SetSize(size);
-//
-//	values = jsonComponentTransform2D["pivot"].get<std::vector<float>>();
-//	float2 pivot;
-//	pivot.x = values[0];
-//	pivot.y = values[1];
-//
-//	componentTransform2D->SetPivot(pivot);
-//
-//	int anchor = jsonComponentTransform2D["anchor"].get<int>();
-//	componentTransform2D->SetAnchor((ComponentTransform2D::Anchor)anchor);
-//}
 
 /*void ComponentTransform2D::OnSave(JSONWriter& writer) const
 {

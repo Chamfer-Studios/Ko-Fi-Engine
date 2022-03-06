@@ -16,6 +16,11 @@
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
+#include "ComponentButton.h"
+#include "ComponentCanvas.h"
+#include "ComponentImage.h"
+#include "ComponentText.h"
+#include "ComponentTransform2D.h"
 
 #include "Mesh.h"
 #include "Texture.h"
@@ -339,6 +344,36 @@ bool I_Scene::Save(Scene* scene)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::TRANSFORM2D:
+			{
+				ComponentTransform2D* transform2DCmp = (ComponentTransform2D*)component;
+				transform2DCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::CANVAS:
+			{
+				ComponentCanvas* canvasCmp = (ComponentCanvas*)component;
+				canvasCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::IMAGE:
+			{
+				ComponentImage* imageCmp = (ComponentImage*)component;
+				imageCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::BUTTON:
+			{
+				ComponentButton* buttonCmp = (ComponentButton*)component;
+				buttonCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::TEXT:
+			{
+				ComponentText* textCmp = (ComponentText*)component;
+				textCmp->Save(jsonComponent);
+				break;
+			}
 			default:
 				break;
 			}
@@ -450,6 +485,56 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					cameraCmp->active = true;
 					cameraCmp->Load(jsonCmp);
+				}
+				else if (type == "transform2D")
+				{
+					ComponentTransform2D* transform2DCmp = go->GetComponent<ComponentTransform2D>();
+					if (transform2DCmp == nullptr)
+					{
+						transform2DCmp = go->CreateComponent<ComponentTransform2D>();
+					}
+					transform2DCmp->active = true;
+					transform2DCmp->Load(jsonCmp);
+				}
+				else if (type == "canvas")
+				{
+					ComponentCanvas* canvasCmp = go->GetComponent<ComponentCanvas>();
+					if (canvasCmp == nullptr)
+					{
+						canvasCmp = go->CreateComponent<ComponentCanvas>();
+					}
+					canvasCmp->active = true;
+					canvasCmp->Load(jsonCmp);
+				}
+				else if (type == "image")
+				{
+					ComponentImage* imageCmp = go->GetComponent<ComponentImage>();
+					if (imageCmp == nullptr)
+					{
+						imageCmp = go->CreateComponent<ComponentImage>();
+					}
+					imageCmp->active = true;
+					imageCmp->Load(jsonCmp);
+				}
+				else if (type == "button")
+				{
+					ComponentButton* buttonCmp = go->GetComponent<ComponentButton>();
+					if (buttonCmp == nullptr)
+					{
+						buttonCmp = go->CreateComponent<ComponentButton>();
+					}
+					buttonCmp->active = true;
+					buttonCmp->Load(jsonCmp);
+				}
+				else if (type == "text")
+				{
+					ComponentText* textCmp = go->GetComponent<ComponentText>();
+					if (textCmp == nullptr)
+					{
+						textCmp = go->CreateComponent<ComponentText>();
+					}
+					textCmp->active = true;
+					textCmp->Load(jsonCmp);
 				}
 			}
 			if (!exists)

@@ -21,6 +21,18 @@ ComponentText::~ComponentText()
 {
 }
 
+void ComponentText::Save(Json& json) const
+{
+	json["type"] = "text";
+	json["value"] = textValue;
+}
+
+void ComponentText::Load(Json& json)
+{
+	std::string value = json["value"].get<std::string>();
+	SetTextValue(value);
+}
+
 bool ComponentText::Update(float dt)
 {
 	return true;
@@ -193,9 +205,3 @@ void ComponentText::FreeTextures()
 	if (openGLTexture != 0)
 		glDeleteTextures(1, &openGLTexture);
 }
-
-//void SceneManager::LoadComponentText(ComponentText* componentText, Json jsonComponentText)
-//{
-//	std::string value = jsonComponentText["value"].get<std::string>();
-//	componentText->SetTextValue(value);
-//}
