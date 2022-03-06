@@ -14,6 +14,7 @@
 #include "PanelChooser.h"
 #include "PanelViewport.h"
 #include "Editor.h"
+#include "Log.h"
 
 #include "Importer.h"
 
@@ -197,8 +198,7 @@ bool ComponentMesh::PostUpdate(float dt)
 
 			GOID = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 
-			if(owner == owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(GOID))
-				DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
+			DrawMouseSelection(); // Draw AABB if Selected with Mosue
 
 			glUseProgram(0);
 		}
@@ -328,7 +328,7 @@ void ComponentMesh::GenerateLocalBoundingBox()
 	}
 }
 
-AABB ComponentMesh::GetLocalAABB()
+const AABB ComponentMesh::GetLocalAABB()
 {
 	GenerateLocalBoundingBox();
 
@@ -346,7 +346,7 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 	aabb.Enclose(obb);
 }
 
-AABB ComponentMesh::GetGlobalAABB() const
+const AABB ComponentMesh::GetGlobalAABB() const
 {
 	return aabb;
 }
@@ -472,32 +472,17 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 //	return mesh->localAABB;
 //}
 
-void ComponentMesh::DrawAABB() const
+void ComponentMesh::DrawMouseSelection()
 {
-	AABB aabb = GetGlobalAABB();
-	float3 corners[8];
-	aabb.GetCornerPoints(corners);
+	int selectedId = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 
-	for (int i = 0; i < 8; i++)
-	{
-		glColor3f(1, 0.8, 0);
-		GLUquadric* quadric = gluNewQuadric();
-		glTranslatef(corners[i].x, corners[i].y, corners[i].z);
-		gluSphere(quadric, 0.05f, 8, 8);
-		glTranslatef(-corners[i].x, -corners[i].y, -corners[i].z);
-		gluDeleteQuadric(quadric);
+	if (selectedId == -1) return;
 
-		for (int j = 0; j < 8; j++)
-		{
-			if (j == i) continue;
-			glBegin(GL_LINES);
-			glDisable(GL_LIGHTING);
-			glLineWidth(3.f);
-			glVertex3f(corners[i].x, corners[i].y, corners[i].z);
-			glVertex3f(corners[j].x, corners[j].y, corners[j].z);
-			glEnd();
-			glEnable(GL_LIGHTING);
-		}
-	}
+
+	if ( selectedId == owner->GetUID()) // Draw Selected Object
+		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
+
+	else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
+		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
 }
 

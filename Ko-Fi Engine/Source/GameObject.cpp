@@ -294,6 +294,17 @@ bool GameObject::HasChildrenWithUID(uint uid)
 	return false;
 }
 
+bool GameObject::HasParentWithUID(uint uid)
+{
+	while (parent != engine->GetSceneManager()->GetCurrentScene()->rootGo)
+	{
+		if (parent->uid = uid)
+			return true;
+	}
+
+	return false;
+}
+
 AABB GameObject::BoundingAABB()
 {
 	return GetComponent<ComponentMesh>()->GetGlobalAABB();

@@ -47,10 +47,10 @@ public:
 	bool GetFaceNormals() const;
 
 	void GenerateLocalBoundingBox();
-	AABB GetLocalAABB();
+	const AABB GetLocalAABB();
 
 	void GenerateGlobalBoundingBox();
-	AABB GetGlobalAABB() const;
+	const AABB GetGlobalAABB() const;
 	
 	inline bool GetRenderMesh() const { return renderMesh; }
 	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
@@ -60,7 +60,7 @@ public:
 	bool InspectorDraw(PanelChooser* chooser);
 	// NEW - Using Space Partitioning
 	//AABB GetGlobalAABB();
-	void DrawAABB() const;
+	void DrawMouseSelection();
 	// -------------------
 
 private:
