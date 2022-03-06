@@ -66,7 +66,7 @@ public:
 
 	ComponentTransform* GetTransform();
 	std::vector<Component*> GetComponents() const;
-
+	AABB BoundingAABB();
 	void SetUID(uint uid);
 	uint GetUID() const;
 
@@ -78,15 +78,16 @@ public:
 	KoFiEngine* GetEngine() const;
 	void SetEngine(KoFiEngine* engine);
 
+
 public:
 	std::string name;
 	bool active = true;
 	int numScripts = 0;
 	bool is3D = true;
 
+	std::vector<GameObject*> children;
 private:
 	std::vector<Component*> components;
-	std::vector<GameObject*> children;
 	GameObject* parent = nullptr;
 	uint uid;
 	uint parentUid;

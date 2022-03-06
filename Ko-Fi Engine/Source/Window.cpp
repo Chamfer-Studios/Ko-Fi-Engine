@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "Renderer3D.h"
 
 #include "SDL.h"
 
@@ -26,7 +27,7 @@ bool Window::Awake(Json configModule)
 	appLog->AddLog("Init SDL window & surface\n");
 	bool ret = true;
 
-	if(SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		CONSOLE_LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		appLog->AddLog("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -34,30 +35,26 @@ bool Window::Awake(Json configModule)
 	}
 	else
 	{
-		// Create window
-		// L01: DONE 6: Load all required configurations from config.xml
+		//Create window
+
+		width = width * SCREEN_SIZE;
+		height = height * SCREEN_SIZE;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-		// Set up SDL to use OpenGL 2.x
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+
+		//Use OpenGL 2.1
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-	
-		fullscreen = false;
-		fullscreenDesktop = false;
-		borderless = false;
-		resizable = false;
 
-		width = configModule.at("Width");
-		height = configModule.at("Height");
-		scale = configModule.at("Scale");
-
-		if(fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;
-		if(borderless == true) flags |= SDL_WINDOW_BORDERLESS;
-		if(resizable == true) flags |= SDL_WINDOW_RESIZABLE;
-		if(fullscreenDesktop == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+		if (fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;
+		if (resizable == true) flags |= SDL_WINDOW_RESIZABLE;
+		if (borderless == true) flags |= SDL_WINDOW_BORDERLESS;
+		if (fullscreenDesktop == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
 		window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
-		if(window == NULL)
+
+		if (window == NULL)
 		{
+
 			CONSOLE_LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			appLog->AddLog("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			SDL_assert(window != NULL);
@@ -65,21 +62,65 @@ bool Window::Awake(Json configModule)
 		}
 		else
 		{
-			// Get window surface
+			//Get window surface
 			screenSurface = SDL_GetWindowSurface(window);
-			//Get window brightness
 			brightness = SDL_GetWindowBrightness(window);
+
 			//Set window rezisable
 			SetResizable(true);
 			std::string iconFile = configModule.at("Icon");
 			if (iconFile.size() > 1)
 				SetIcon(iconFile.c_str());
 		}
+
 	}
 
-	SetTitle(engine->GetTitle());
+//	// Create window
+//	// L01: DONE 6: Load all required configurations from config.xml
+//	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+//	// Set up SDL to use OpenGL 2.x
+//	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+//	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+//
+//	fullscreen = false;
+//	fullscreenDesktop = false;
+//	borderless = false;
+//	resizable = false;
 
-	return ret;
+//	width = configModule.at("Width");
+//	height = configModule.at("Height");
+//	scale = configModule.at("Scale");
+
+//	if(fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;
+//	if(borderless == true) flags |= SDL_WINDOW_BORDERLESS;
+//	if(resizable == true) flags |= SDL_WINDOW_RESIZABLE;
+//	if(fullscreenDesktop == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+//	window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+//	if(window == NULL)
+//	{
+//		CONSOLE_LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+//		appLog->AddLog("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+//		SDL_assert(window != NULL);
+//		ret = false;
+//	}
+//	else
+//	{
+//		// Get window surface
+//		screenSurface = SDL_GetWindowSurface(window);
+//		//Get window brightness
+//		brightness = SDL_GetWindowBrightness(window);
+//		//Set window rezisable
+//		SetResizable(true);
+//		std::string iconFile = configModule.at("Icon");
+//		if (iconFile.size() > 1)
+//			SetIcon(iconFile.c_str());
+//	}
+//}
+
+//SetTitle(engine->GetTitle());
+
+return ret;
 }
 
 // Called before quitting
@@ -88,8 +129,10 @@ bool Window::CleanUp()
 	CONSOLE_LOG("Destroying SDL window and quitting all SDL systems");
 	appLog->AddLog("Destroying SDL window and quitting all SDL systems\n");
 
+	SDL_FreeSurface(screenSurface);
+
 	// Destroy window
-	if(window != NULL)
+	if (window != NULL)
 	{
 		SDL_DestroyWindow(window);
 	}
@@ -97,6 +140,12 @@ bool Window::CleanUp()
 	// Quit SDL subsystems
 	SDL_Quit();
 	return true;
+}
+
+// Method to receive and manage events
+void Window::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 // Set new window title
@@ -191,7 +240,7 @@ void Window::SetResizable(bool resizable)
 	SDL_SetWindowResizable(window, (SDL_bool)resizable);
 }
 
-void Window::SetBorderless(bool borderless) 
+void Window::SetBorderless(bool borderless)
 {
 	this->borderless = borderless;
 	SDL_SetWindowBordered(window, (SDL_bool)!borderless);
@@ -201,12 +250,16 @@ void Window::SetWidth(int width)
 {
 	SDL_assert(width >= 0);
 	this->width = (uint)width;
+	SDL_SetWindowSize(window, width, height);
+	engine->GetRenderer()->OnResize(width, height);
 }
 
 void Window::SetHeight(int height)
 {
 	SDL_assert(height >= 0);
 	this->height = (uint)height;
+	SDL_SetWindowSize(window, width, height);
+	engine->GetRenderer()->OnResize(width, height);
 }
 
 void Window::SetIcon(const char* file)

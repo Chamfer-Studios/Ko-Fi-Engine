@@ -236,3 +236,7 @@ void GameObject::SetEngine(KoFiEngine* engine)
 {
 	this->engine = engine;
 }
+AABB GameObject::BoundingAABB()
+{
+	return GetComponent<ComponentMesh>()->GetGlobalAABB();
+}

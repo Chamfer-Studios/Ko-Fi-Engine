@@ -3,9 +3,9 @@
 
 #include "Component.h"
 #include "Mesh.h"
-#include "par_shapes.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
+#include "MathGeoLib/Geometry/Sphere.h"
 
 class ComponentTransform;
 class ComponentMaterial;
@@ -58,6 +58,11 @@ public:
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
 
 	bool InspectorDraw(PanelChooser* chooser);
+	// NEW - Using Space Partitioning
+	void GenerateBounds();
+	AABB GetGlobalAABB() const;
+	void DrawAABB() const;
+	// -------------------
 
 private:
 	Mesh* mesh = nullptr;
@@ -72,6 +77,10 @@ private:
 	float radius;
 
 	// Bounding boxes
+	//OBB obb;
+	//AABB aabb;
+
+	bool drawAABB = false;
 	OBB obb;
 };
 

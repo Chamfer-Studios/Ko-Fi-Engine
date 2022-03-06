@@ -15,6 +15,9 @@
 #include "Material.h"
 #include "Texture.h"
 #include "Editor.h"
+#include "Camera3D.h"
+#include "PanelViewport.h"
+#include "Log.h"
 
 #include "Globals.h"
 
@@ -109,6 +112,12 @@ bool SceneManager::CleanUp()
 	scenes.clear();
 
 	return ret;
+}
+
+// Method to receive and manage events
+void SceneManager::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 bool SceneManager::PrepareUpdate()

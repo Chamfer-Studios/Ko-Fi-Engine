@@ -325,9 +325,6 @@
     <ClCompile Include="Source\PanelGame.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Source\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PanelRuntimeState.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
@@ -351,6 +348,13 @@
     </ClCompile>
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QuadTree3D.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentScript.cpp">
       <Filter>Source\GameObject\Components</Filter>
@@ -754,9 +758,6 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Source\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Source\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PanelRuntimeState.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
@@ -798,6 +799,18 @@
     </ClInclude>
     <ClInclude Include="Source\AdditionNode.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Iterable.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QuadTree3D.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\lua\include\lauxlib.h">
       <Filter>Libs\lua</Filter>

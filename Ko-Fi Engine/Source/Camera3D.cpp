@@ -48,15 +48,6 @@ bool Camera3D::Start()
 }
 
 // -----------------------------------------------------------------
-bool Camera3D::CleanUp()
-{
-	CONSOLE_LOG("Cleaning camera");
-	appLog->AddLog("Cleaning camera\n");
-
-	return true;
-}
-
-// -----------------------------------------------------------------
 bool Camera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
@@ -64,10 +55,13 @@ bool Camera3D::Update(float dt)
 
 	float3 newPos(0, 0, 0);
 	float speed = cameraSpeed * dt;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) speed *= 4.f;
+	bool isWindowFocused = engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused();
+	if (!isWindowFocused) return true;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos.y -= speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos.y += speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
 
 	// Focus --> NEEDS TO BE FIXED... SOME (MESH) FUNCTIONS DEPEND ON A PRIMITIVE LIBRARY WE STILL DON'T HAVE IMPLEMENTED.
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN )
@@ -114,14 +108,14 @@ bool Camera3D::Update(float dt)
 		LookAt(float3(5, 5, 5));
 	}
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos += front * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos -= front * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += front * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= front * speed;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos += right * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos -= right * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += right * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
 
-	if (engine->GetInput()->GetMouseZ() > 0 && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos += front * speed * 2;
-	if (engine->GetInput()->GetMouseZ() < 0 && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) newPos -= front * speed * 2;
+	if (engine->GetInput()->GetMouseZ() > 0 ) newPos += front * speed * 2;
+	if (engine->GetInput()->GetMouseZ() < 0 ) newPos -= front * speed * 2;
 
 	position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
 
@@ -129,7 +123,7 @@ bool Camera3D::Update(float dt)
 
 	bool hasRotated = false;
 
-	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
+	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		int dx = -engine->GetInput()->GetMouseXMotion();
 		int dy = -engine->GetInput()->GetMouseYMotion();
@@ -196,17 +190,22 @@ bool Camera3D::Update(float dt)
 
 	CalculateViewMatrix();
 
-	// Mouse Picking
-	//if (engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN /*&& !ImGuizmo::IsOver() && !ImGuizmo::IsUsing()*/)
-	//{
-	//	GameObject* picked = MousePicking();
-	//	if (picked != nullptr)
-	//		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = picked->GetId();
-	//	else
-	//		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
-	//}
+	return true;
+}
+
+// -----------------------------------------------------------------
+bool Camera3D::CleanUp()
+{
+	CONSOLE_LOG("Cleaning camera");
+	appLog->AddLog("Cleaning camera\n");
 
 	return true;
+}
+
+// Method to receive and manage events
+void Camera3D::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 // -----------------------------------------------------------------

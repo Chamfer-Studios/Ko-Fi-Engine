@@ -18,7 +18,6 @@
 
 #include <imgui_impl_sdl.h>
 
-
 #define MAX_KEYS 300
 
 Input::Input(KoFiEngine* engine) : Module()
@@ -126,6 +125,13 @@ bool Input::PreUpdate(float dt)
 			mouse_y_motion = event.motion.yrel / SCREEN_SIZE;
 			break;
 
+		case SDL_MOUSEBUTTONDOWN:
+			for (auto m : engine->AllModules())
+			{
+				m->OnClick(event);
+			}
+			break;
+
 		case SDL_QUIT:
 			quit = true;
 			break;
@@ -151,7 +157,11 @@ bool Input::PreUpdate(float dt)
 				break;
 			}
 			if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-				engine->GetRenderer()->OnResize(event.window.data1, event.window.data2);
+			{
+				engine->GetWindow()->SetWidth(event.window.data1);
+				engine->GetWindow()->SetHeight(event.window.data2);
+			}
+			
 			break;
 		}
 		//case (SDL_DROPFILE): {      // In case if dropped file
@@ -217,4 +227,10 @@ bool Input::CleanUp()
 	appLog->AddLog("Quitting SDL input event subsystem\n");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+// Method to receive and manage events
+void Input::OnNotify(const Event& event)
+{
+	// Manage events
 }
