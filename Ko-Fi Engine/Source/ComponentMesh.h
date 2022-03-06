@@ -50,7 +50,7 @@ public:
 	AABB GetLocalAABB();
 
 	void GenerateGlobalBoundingBox();
-	AABB GetGlobalAABB();
+	AABB GetGlobalAABB() const;
 	
 	inline bool GetRenderMesh() const { return renderMesh; }
 	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
@@ -59,8 +59,7 @@ public:
 
 	bool InspectorDraw(PanelChooser* chooser);
 	// NEW - Using Space Partitioning
-	void GenerateBounds();
-	AABB GetGlobalAABB() const;
+	//AABB GetGlobalAABB();
 	void DrawAABB() const;
 	// -------------------
 
@@ -77,10 +76,7 @@ private:
 	float radius;
 
 	// Bounding boxes
-	//OBB obb;
-	//AABB aabb;
-
-	bool drawAABB = false;
+	AABB aabb;
 	OBB obb;
 };
 

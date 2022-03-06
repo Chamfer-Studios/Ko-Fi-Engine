@@ -3,7 +3,6 @@
 #include "Engine.h"
 #include "FSDefs.h"
 #include "Camera3D.h"
-#include "PanelChooser.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -13,6 +12,8 @@
 #include "Engine.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
+#include "PanelViewport.h"
+#include "Editor.h"
 
 #include "Importer.h"
 
@@ -102,8 +103,8 @@ ComponentMesh::~ComponentMesh()
 
 bool ComponentMesh::Start()
 {
-	//GenerateLocalBoundingBox();
-	GenerateBounds();
+	GenerateLocalBoundingBox();
+	//GenerateBounds();
 	return true;
 }
 
@@ -187,22 +188,17 @@ bool ComponentMesh::PostUpdate(float dt)
 				}
 			}
 
-		mesh->Draw(owner);
+			mesh->Draw(owner);
 
-		//draw bounding boxes
+			//draw bounding boxes
 
-		GenerateGlobalBoundingBox();
-		DrawBoundingBox(GetLocalAABB(), float3(1.0f, 1.0f, 0.0f));
-		 
-		//GenerateGlobalBoundingBox();
-		//DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
-		
-	if (drawAABB)
-		DrawAABB();
+			GenerateGlobalBoundingBox();
+			int GOID = 0;
 
-	//if (owner->active || owner->isParentSelected())
-	//	DrawOutline();
+			GOID = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 
+			if(owner == owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(GOID))
+				DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
 
 			glUseProgram(0);
 		}
@@ -279,8 +275,7 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 		RELEASE(this->mesh);
 
 	this->mesh = mesh;
-	GenerateBounds();
-
+	GenerateLocalBoundingBox();
 }
 
 uint ComponentMesh::GetVertices()
@@ -347,13 +342,13 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
-	mesh->localAABB.SetNegativeInfinity();
-	mesh->localAABB.Enclose(obb);
+	aabb.SetNegativeInfinity();
+	aabb.Enclose(obb);
 }
 
-AABB ComponentMesh::GetGlobalAABB()
+AABB ComponentMesh::GetGlobalAABB() const
 {
-	return mesh->localAABB;
+	return aabb;
 }
 
 void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
@@ -469,28 +464,13 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 //{
 //	this->renderAABB = newRenderAABB;
 //}
-void ComponentMesh::GenerateBounds()
-{
-	mesh->localAABB.SetNegativeInfinity();
-	//mesh->localAABB->Enclose(&mesh->vertices[0], vertices.size());
-	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
 
-
-	Sphere sphere;
-	sphere.r = 0.f;
-	sphere.pos = mesh->localAABB.CenterPoint();
-	sphere.Enclose(mesh->localAABB);
-
-	radius = sphere.r;
-	centerPoint = sphere.pos;
-}
-
-AABB ComponentMesh::GetGlobalAABB() const
-{
-	//AABB global = AABB(mesh->localAABB);
-	//global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
-	return mesh->localAABB;
-}
+//AABB ComponentMesh::GetGlobalAABB() const
+//{
+//	//AABB global = AABB(mesh->localAABB);
+//	//global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
+//	return mesh->localAABB;
+//}
 
 void ComponentMesh::DrawAABB() const
 {
