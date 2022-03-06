@@ -13,6 +13,8 @@
 #include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "Physics.h"
+#include "CollisionDetector.h"
 
 #include <iostream>
 #include <sstream>
@@ -34,6 +36,8 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	sceneManager = new SceneManager(this);
 	ui = new UI(this);
 	viewportBuffer = new ViewportFrameBuffer(this);
+	physics = new Physics(this);
+	collisionDetector = new CollisionDetector(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -43,7 +47,9 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fileSystem);
 	AddModule(sceneManager);
 	AddModule(ui);
+	AddModule(collisionDetector);
 	AddModule(viewportBuffer);
+	AddModule(physics);
 	AddModule(editor);
 
 	// Render last to swap buffer
@@ -406,7 +412,15 @@ ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
 	return this->viewportBuffer;
 }
 
+Physics* KoFiEngine::GetPhysics()const
+{
+	return this->physics;
+}
 UI* KoFiEngine::GetUI() const
 {
 	return this->ui;
+}
+CollisionDetector* KoFiEngine::GetCollisionDetector() const
+{
+	return this->collisionDetector;
 }

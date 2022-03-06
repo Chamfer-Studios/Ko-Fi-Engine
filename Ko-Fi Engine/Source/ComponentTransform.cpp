@@ -132,6 +132,11 @@ float4x4 ComponentTransform::GetGlobalTransform()
 	return transformMatrix;
 }
 
+void ComponentTransform::SetGlobalTransform(const float4x4& globalTransform)
+{
+	transformMatrix = globalTransform;
+}
+
 bool ComponentTransform::GetDirty() const
 {
 	return isDirty;

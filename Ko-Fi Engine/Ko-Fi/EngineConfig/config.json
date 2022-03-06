@@ -24,8 +24,10 @@
   "Input": null,
   "Editor": null,
   "SceneManager": null,
+  "CollisionDetector":  null,
   "ModelLoader": null,
   "ViewportFrameBuffer": null,
+  "Physics":  null,
   "Scripting": null,
   "UI": null
 }

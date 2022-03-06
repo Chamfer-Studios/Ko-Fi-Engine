@@ -7,6 +7,11 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentInfo.h"
+#include "ComponentCamera.h"
+#include "ComponentRigidBody.h"
+#include "ComponentCollider.h"
+#include "ComponentMaterial.h"
+#include "ComponentScript.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -122,6 +127,7 @@ void GameObject::DeleteComponent(Component* component)
 	auto componentIt = std::find(components.begin(), components.end(), component);
 	if (componentIt != components.end())
 	{
+		(*componentIt)->CleanUp();
 		components.erase(componentIt);
 		components.shrink_to_fit();
 	}
@@ -130,6 +136,66 @@ void GameObject::DeleteComponent(Component* component)
 void GameObject::AddComponent(Component* component)
 {
 	components.push_back(component);
+}
+
+void GameObject::AddComponentByType(ComponentType componentType)
+{
+	// Check if it is repeated
+	for (Component* component : components)
+	{
+		if (component->GetType() == componentType)
+		{
+			LOG_BOTH("Components cannot be duplicated!");
+			return;
+		}
+	}
+
+	
+
+	switch (componentType)
+	{
+		case ComponentType::TRANSFORM: 
+		{ 
+			this->CreateComponent<ComponentTransform>();
+			break;
+		}	
+		case ComponentType::MESH: 
+		{ 
+			this->CreateComponent<ComponentMesh>();
+			break;
+		}
+		case ComponentType::SCRIPT:
+		{
+			this->CreateComponent<ComponentScript>();
+			break;
+		}
+		case ComponentType::COLLIDER:
+		{
+			this->CreateComponent<ComponentCollider>();
+			break;
+		}
+		case ComponentType::MATERIAL: 
+		{ 
+			this->CreateComponent<ComponentMaterial>();
+			break;
+		}	
+		case ComponentType::CAMERA: 
+		{ 
+			this->CreateComponent<ComponentCamera>();
+			break;
+		}		
+		case ComponentType::INFO:
+		{
+			this->CreateComponent<ComponentInfo>();
+			break;
+		}
+		case ComponentType::RIGID_BODY: 
+		{ 
+			this->CreateComponent<ComponentRigidBody>();
+			break;
+		}	
+		
+	}
 }
 
 void GameObject::AttachChild(GameObject* child)
@@ -225,6 +291,17 @@ bool GameObject::HasChildrenWithUID(uint uid)
 		if ((*child)->uid == uid)
 			return true;
 	}
+	return false;
+}
+
+bool GameObject::HasParentWithUID(uint uid)
+{
+	while (parent != engine->GetSceneManager()->GetCurrentScene()->rootGo)
+	{
+		if (parent->uid = uid)
+			return true;
+	}
+
 	return false;
 }
 

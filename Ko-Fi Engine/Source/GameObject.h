@@ -11,6 +11,7 @@ class ComponentTransform;
 class ComponentMesh;
 class ComponentInfo;
 class ComponentScript;
+class ComponentCollider;
 
 class GameObject
 {
@@ -50,7 +51,7 @@ public:
 	// New way
 	void DeleteComponent(Component* component);
 	void AddComponent(Component* component);
-
+	void AddComponentByType(ComponentType componentType);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 
@@ -74,6 +75,7 @@ public:
 	uint GetParentUID() const;
 
 	bool HasChildrenWithUID(uint uid);
+	bool HasParentWithUID(uint uid);
 
 	KoFiEngine* GetEngine();
 
