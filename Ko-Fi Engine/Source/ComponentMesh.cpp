@@ -155,9 +155,19 @@ bool ComponentMesh::PostUpdate(float dt)
 			{
 				switch (uniform->type)
 				{
+				case GL_INT:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+				}
+				break;
 				case GL_FLOAT:
 				{
 					glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+				}
+				break;
+				case GL_BOOL:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<bool>*)uniform)->value);
 				}
 				break;
 				case GL_FLOAT_VEC2:
@@ -176,11 +186,6 @@ bool ComponentMesh::PostUpdate(float dt)
 				{
 					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
 					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
-				}
-				break;
-				case GL_INT:
-				{
-					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
 				}
 				break;
 				default:

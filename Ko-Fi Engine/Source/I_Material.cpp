@@ -197,10 +197,22 @@ bool I_Material::LoadUniforms(Material* material)
 			{
 				switch (type)
 				{
+				case GL_INT:
+				{
+					UniformT<int>* ui = new UniformT<int>(name, type, 0);
+					material->AddUniform(ui);
+				}
+				break;
 				case GL_FLOAT:
 				{
 					UniformT<float>* uf = new UniformT<float>(name, type, 0.0f);
 					material->AddUniform(uf);
+				}
+				break;
+				case GL_BOOL:
+				{
+					UniformT<bool>* ub = new UniformT<bool>(name, type, false);
+					material->AddUniform(ub);
 				}
 				break;
 				case GL_FLOAT_VEC2:
@@ -221,18 +233,12 @@ bool I_Material::LoadUniforms(Material* material)
 					material->AddUniform(uf4);
 				}
 				break;
-				case GL_INT:
+				case GL_FLOAT_MAT4:
 				{
-					UniformT<int>* ui = new UniformT<int>(name, type, 0);
-					material->AddUniform(ui);
+					UniformT<float4x4>* mat = new UniformT<float4x4>(name, type, float4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
+					material->AddUniform(mat);
 				}
 				break;
-				//case GL_BOOL:
-				//{
-				//	UniformT<bool>* ub = new UniformT<bool>(name, type, false);
-				//	material->AddUniform(ub);
-				//}
-				//break;
 				default:
 					break;
 				}

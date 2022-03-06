@@ -12,6 +12,7 @@
 #include "MathGeoLib/Math/float2.h"
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4.h"
+#include "MathGeoLib/Math/float4x4.h"
 
 #include "Assimp.h"
 
