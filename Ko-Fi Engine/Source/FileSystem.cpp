@@ -78,6 +78,12 @@ bool FileSystem::CleanUp()
 	return true;
 }
 
+// Method to receive and manage events
+void FileSystem::OnNotify(const Event& event)
+{
+	// Manage events
+}
+
 std::string FileSystem::OpenFile(const char* path) const
 {
 	std::string fileText;

@@ -15,6 +15,9 @@
 #include "Material.h"
 #include "Texture.h"
 #include "Editor.h"
+#include "Camera3D.h"
+#include "PanelViewport.h"
+#include "Log.h"
 
 #include "Globals.h"
 
@@ -111,6 +114,12 @@ bool SceneManager::CleanUp()
 	return ret;
 }
 
+// Method to receive and manage events
+void SceneManager::OnNotify(const Event& event)
+{
+	// Manage events
+}
+
 bool SceneManager::PrepareUpdate()
 {
 	bool ret = true;
@@ -190,9 +199,23 @@ void SceneManager::OnTick()
 	runtimeState = RuntimeState::TICK;
 	gameClockSpeed = timeScale;
 }
+void SceneManager::OnClick(SDL_Event event)
+{
+	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT) return;
 
+	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) return;
 
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	if (hit != nullptr)
+	{
+		CONSOLE_LOG("%s", hit->GetName());
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+	}
+	else {
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	}
 
+}
 //Json SceneManager::SaveComponentCanvas(ComponentCanvas* componentCanvas)
 //{
 //	Json jsonComponentTransform2D;

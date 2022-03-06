@@ -19,6 +19,8 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
 
 	void LookAt(const float3& Spot);
 	void CalculateViewMatrix();

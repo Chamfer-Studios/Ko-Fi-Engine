@@ -62,6 +62,12 @@ bool SceneIntro::Start()
 	// Load scene with a camera and several houses.
 	//engine->GetSceneManager()->LoadScene(this, "SceneIntro");
 
+	for (GameObject* go : this->gameObjectList)
+	{
+		go->Start();
+	}
+
+	ComputeQuadTree();
 	return ret;
 }
 
@@ -84,7 +90,14 @@ bool SceneIntro::Update(float dt)
 		go->Update(dt);
 	}
 	//example::NodeEditorShow();
+	if (ray.IsFinite())
+		//DrawDebugRay(ray);
 
+	if (sceneTree != nullptr && drawSceneTree)
+	{
+		ComputeQuadTree();
+		sceneTree->Draw();
+	}
 	return true;
 }
 
@@ -132,6 +145,8 @@ bool SceneIntro::PostUpdate(float dt)
 	gameObjectListToDelete.clear();
 
 	engine->GetRenderer()->DrawRay();
+
+
 	return true;
 }
 

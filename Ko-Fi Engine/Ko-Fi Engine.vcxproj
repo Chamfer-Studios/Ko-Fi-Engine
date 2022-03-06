@@ -237,6 +237,7 @@
     <ClCompile Include="Source\PanelNodeEditor.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
+    <ClCompile Include="Source\QuadTree3D.cpp" />
     <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
@@ -260,6 +261,7 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Event.h" />
     <ClInclude Include="Source\AdditionNode.h" />
     <ClInclude Include="Source\Assimp.h" />
     <ClInclude Include="Source\Camera3D.h" />
@@ -378,6 +380,7 @@
     <ClInclude Include="Source\I_Mesh.h" />
     <ClInclude Include="Source\I_Scene.h" />
     <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\Iterable.h" />
     <ClInclude Include="Source\I_Texture.h" />
     <ClInclude Include="Source\JsonHandler.h" />
     <ClInclude Include="Source\Light.h" />
@@ -398,6 +401,7 @@
     <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\PanelTextEditor.h" />
+    <ClInclude Include="Source\QuadTree3D.h" />
     <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\ResourceManager.h" />

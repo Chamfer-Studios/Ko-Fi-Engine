@@ -4,13 +4,15 @@
 #include "FSDefs.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
-#include "Primitive.h"
-#include "par_shapes.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "SceneManager.h"
+#include "Engine.h"
+#include "Camera3D.h"
+#include "PanelChooser.h"
 
 #include "Importer.h"
 
@@ -24,10 +26,6 @@
 #include <MathGeoLib/Math/float3.h>
 #include <MathGeoLib/Math/float4.h>
 
-#include "Primitive.h"
-#include "par_shapes.h"
-#include "Globals.h"
-#include "MathGeoLib/Math/float3.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
@@ -104,7 +102,8 @@ ComponentMesh::~ComponentMesh()
 
 bool ComponentMesh::Start()
 {
-	GenerateLocalBoundingBox();
+	//GenerateLocalBoundingBox();
+	GenerateBounds();
 	return true;
 }
 
@@ -188,7 +187,15 @@ bool ComponentMesh::PostUpdate(float dt)
 				}
 			}
 
-			mesh->Draw(owner);
+		mesh->Draw(owner);
+		//GenerateGlobalBoundingBox();
+		//DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
+		
+	if (drawAABB)
+		DrawAABB();
+
+	//if (owner->active || owner->isParentSelected())
+	//	DrawOutline();
 
 			GenerateGlobalBoundingBox();
 			DrawBoundingBox(mesh->localAABB, float3(1.0f, 0.0f, 0.0f));
@@ -268,6 +275,8 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 		RELEASE(this->mesh);
 
 	this->mesh = mesh;
+	GenerateBounds();
+
 }
 
 uint ComponentMesh::GetVertices()
@@ -329,7 +338,8 @@ AABB ComponentMesh::GetLocalAABB()
 void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
-	obb = GetLocalAABB();
+	obb.SetFrom(GetLocalAABB());
+	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
 	mesh->localAABB.SetNegativeInfinity();
@@ -438,11 +448,61 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 		bool vertex = GetVertexNormals();
 		if (ImGui::Checkbox("Vertex Normals", &vertex))
 			mesh->SetVertexNormals(vertex);
-
 		bool faces = GetFaceNormals();
 		if (ImGui::Checkbox("Faces Normals", &faces))
 			mesh->SetFaceNormals(faces);
 	}
-
 	return ret;
 }
+void ComponentMesh::GenerateBounds()
+{
+	mesh->localAABB.SetNegativeInfinity();
+	//mesh->localAABB->Enclose(&mesh->vertices[0], vertices.size());
+	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
+
+
+	Sphere sphere;
+	sphere.r = 0.f;
+	sphere.pos = mesh->localAABB.CenterPoint();
+	sphere.Enclose(mesh->localAABB);
+
+	radius = sphere.r;
+	centerPoint = sphere.pos;
+}
+
+AABB ComponentMesh::GetGlobalAABB() const
+{
+	AABB global = AABB(mesh->localAABB);
+	global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
+	return global;
+}
+
+void ComponentMesh::DrawAABB() const
+{
+	AABB aabb = GetGlobalAABB();
+	float3 corners[8];
+	aabb.GetCornerPoints(corners);
+
+	for (int i = 0; i < 8; i++)
+	{
+		glColor3f(1, 0.8, 0);
+		GLUquadric* quadric = gluNewQuadric();
+		glTranslatef(corners[i].x, corners[i].y, corners[i].z);
+		gluSphere(quadric, 0.05f, 8, 8);
+		glTranslatef(-corners[i].x, -corners[i].y, -corners[i].z);
+		gluDeleteQuadric(quadric);
+
+		for (int j = 0; j < 8; j++)
+		{
+			if (j == i) continue;
+			glBegin(GL_LINES);
+			glDisable(GL_LIGHTING);
+			glLineWidth(3.f);
+			glVertex3f(corners[i].x, corners[i].y, corners[i].z);
+			glVertex3f(corners[j].x, corners[j].y, corners[j].z);
+			glEnd();
+			glEnable(GL_LIGHTING);
+		}
+	}
+}
+
