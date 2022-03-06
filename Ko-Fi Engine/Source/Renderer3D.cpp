@@ -118,7 +118,7 @@ bool Renderer3D::Awake(Json configModule)
 	}
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
 
 	// Init the GLEW library
 	GLenum err = glewInit();
@@ -185,6 +185,12 @@ bool Renderer3D::CleanUp()
 	SDL_GL_DeleteContext(context);
 
 	return true;
+}
+
+// Method to receive and manage events
+void Renderer3D::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 bool Renderer3D::GetVsync() const

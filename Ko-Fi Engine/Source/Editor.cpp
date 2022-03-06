@@ -302,6 +302,12 @@ bool Editor::CleanUp()
 	return true;
 }
 
+// Method to receive and manage events
+void Editor::OnNotify(const Event& event)
+{
+	// Manage events
+}
+
 #include "ImGui.h"                // https://github.com/ocornut/imgui
 #include "imgui_markdown.h"       // https://github.com/juliettef/imgui_markdown
 #include "IconsFontAwesome5.h"    // https://github.com/juliettef/IconFontCppHeaders

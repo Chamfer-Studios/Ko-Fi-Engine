@@ -5,6 +5,7 @@
 #include "Editor.h"
 #include "SceneManager.h"
 #include "GameObject.h"
+#include "Log.h"
 
 // Helper to display a little (?) mark which shows a tooltip when hovered.
 // In your own code you may want to display an actual icon if you are using a merged icon fonts (see docs/FONTS.md)
@@ -60,13 +61,15 @@ bool PanelHierarchy::Update()
 
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+
+		//	DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo, flags);
 		for (int i = 0; i < editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().size(); ++i)
 		{
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-			
+
 			DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().at(i), flags);
 		}
-		
+
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 	}
@@ -85,11 +88,14 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 {
 	if (go->GetChildren().size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf;
-	if (ImGui::TreeNodeEx(go->GetName(),flags))
+	if (ImGui::TreeNodeEx(go->GetName(), flags))
 	{
 		DragNDrop(go);
 		if ((ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)))
+		{
 			editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
+			CONSOLE_LOG("%s || %d", go->name.c_str(), go->GetUID());
+		}
 		if (ImGui::IsItemClicked(1)) {
 			ImGui::OpenPopup("Test");
 		}
@@ -108,16 +114,16 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 						editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
 						editor->panelGameObjectInfo.selectedGameObjectID = -1;
 					}
-						
+
 				}
 			}
 			ImGui::EndPopup();
 		}
 		for (int i = 0; i < go->GetChildren().size(); i++)
 		{
-			
-			DisplayTree(go->GetChildren().at(i),flags);
-			
+
+			DisplayTree(go->GetChildren().at(i), flags);
+
 		}
 		ImGui::TreePop();
 

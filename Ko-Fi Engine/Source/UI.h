@@ -25,6 +25,7 @@ public:
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
+	void OnNotify(const Event& event) override;
 
 	float2 GetUINormalizedMousePosition();
 

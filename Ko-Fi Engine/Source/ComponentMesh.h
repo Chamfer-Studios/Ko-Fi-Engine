@@ -3,9 +3,9 @@
 
 #include "Component.h"
 #include "Mesh.h"
-#include "par_shapes.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
+#include "MathGeoLib/Geometry/Sphere.h"
 
 class ComponentTransform;
 class ComponentMaterial;
@@ -47,10 +47,10 @@ public:
 	bool GetFaceNormals() const;
 
 	void GenerateLocalBoundingBox();
-	AABB GetLocalAABB();
+	const AABB GetLocalAABB();
 
 	void GenerateGlobalBoundingBox();
-	AABB GetGlobalAABB();
+	const AABB GetGlobalAABB() const;
 	
 	inline bool GetRenderMesh() const { return renderMesh; }
 	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
@@ -58,6 +58,10 @@ public:
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
 
 	bool InspectorDraw(PanelChooser* chooser);
+	// NEW - Using Space Partitioning
+	//AABB GetGlobalAABB();
+	void DrawMouseSelection();
+	// -------------------
 
 private:
 	Mesh* mesh = nullptr;
@@ -72,6 +76,7 @@ private:
 	float radius;
 
 	// Bounding boxes
+	AABB aabb;
 	OBB obb;
 };
 

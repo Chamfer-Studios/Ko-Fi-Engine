@@ -11,6 +11,7 @@ class ComponentTransform;
 class ComponentMesh;
 class ComponentInfo;
 class ComponentScript;
+class ComponentCollider;
 
 class GameObject
 {
@@ -50,7 +51,7 @@ public:
 	// New way
 	void DeleteComponent(Component* component);
 	void AddComponent(Component* component);
-
+	void AddComponentByType(ComponentType componentType);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 
@@ -66,7 +67,7 @@ public:
 
 	ComponentTransform* GetTransform();
 	std::vector<Component*> GetComponents() const;
-
+	AABB BoundingAABB();
 	void SetUID(uint uid);
 	uint GetUID() const;
 
@@ -74,8 +75,10 @@ public:
 	uint GetParentUID() const;
 
 	bool HasChildrenWithUID(uint uid);
+	bool HasParentWithUID(uint uid);
 
 	KoFiEngine* GetEngine();
+
 
 public:
 	std::string name;
@@ -83,9 +86,9 @@ public:
 	int numScripts = 0;
 	bool is3D = true;
 
+	std::vector<GameObject*> children;
 private:
 	std::vector<Component*> components;
-	std::vector<GameObject*> children;
 	GameObject* parent = nullptr;
 	uint uid;
 	uint parentUid;

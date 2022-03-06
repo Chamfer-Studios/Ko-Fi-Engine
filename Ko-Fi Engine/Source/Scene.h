@@ -4,10 +4,17 @@
 #include "GameObject.h"
 #include "Importer.h"
 #include "Engine.h"
+#include "Editor.h"
+#include "QuadTree3D.h"
 #include "RNG.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
+
+#include "glew.h"
+#include "SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
 
 class Scene
 {
@@ -77,12 +84,15 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
 	{
-		GameObject* go = new GameObject(gameObjectList.size(), engine, name, is3D);
+		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
 		this->gameObjectList.push_back(go);
 		if (parent)
 			parent->AttachChild(go);
 		else
 			this->rootGo->AttachChild(go);
+
+		int GOID = go->GetUID();
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = GOID;
 
 		return go;
 	}
@@ -147,6 +157,27 @@ public:
 		}
 	}
 
+
+	template<class UnaryFunction>
+	void ApplyToObjects(UnaryFunction f);
+
+	void ComputeQuadTree()// Compute Space Partitioning
+	{
+		if (!sceneTreeIsDirty) return;
+
+		std::vector<GameObject*>* objects = new std::vector<GameObject*>();
+
+		if (sceneTree != nullptr) delete sceneTree;
+		sceneTree = new QuadTree3D(AABB(float3(-100, -100, -100), float3(100, 100, 100)));
+
+		ApplyToObjects([objects](GameObject* it) mutable {
+			objects->push_back(it);
+			});
+
+		sceneTree->AddObjects(*objects);
+		delete objects;
+	}
+
 public:
 	std::string name;
 	bool active;
@@ -157,8 +188,34 @@ public:
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
+	
+	//Space Partitioning
+	bool sceneTreeIsDirty = true;
+	bool drawSceneTree = false;
+	QuadTree3D* sceneTree = nullptr;
+
 
 	LineSegment ray;
+
+	// Space Partitioning Functions...
+	private:
+		template<class UnaryFunction>
+		void recursive_iterate(const GameObject* o, UnaryFunction f)
+		{
+			for (auto c = o->children.begin(); c != o->children.end(); ++c)
+			{
+				recursive_iterate(*c, f);
+				f(*c);
+			}
+		}
+
 };
 
-#endif // !__SCENE_H__
+template<class UnaryFunction>
+inline void Scene::ApplyToObjects(UnaryFunction f)
+{
+	recursive_iterate(rootGo, f);
+}
+
+
+#endif // __SCENE_H__

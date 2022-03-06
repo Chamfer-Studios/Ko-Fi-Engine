@@ -3,6 +3,8 @@
 #include "MathGeoLib/MathGeoLib.h"
 #include "GameObject.h"
 #include "Globals.h"
+#include "Engine.h"
+#include "SceneManager.h"
 
 ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 {
@@ -71,6 +73,7 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 void ComponentTransform::SetPosition(const float3& newPosition)
 {
 	position = newPosition;
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
 
@@ -79,6 +82,7 @@ void ComponentTransform::SetRotation(const float3& newRotation)
 	Quat rotationDelta = Quat::FromEulerXYZ(newRotation.x - rotationEuler.x, newRotation.y - rotationEuler.y, newRotation.z - rotationEuler.z);
 	rotation = rotation*rotationDelta;
 	rotationEuler = newRotation;
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
 
@@ -92,6 +96,7 @@ void ComponentTransform::SetRotationQuat(const Quat& newRotation)
 void ComponentTransform::SetScale(const float3& newScale)
 {
 	scale = newScale;
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
 
@@ -125,6 +130,11 @@ void ComponentTransform::RecomputeGlobalMatrix()
 float4x4 ComponentTransform::GetGlobalTransform()
 {
 	return transformMatrix;
+}
+
+void ComponentTransform::SetGlobalTransform(const float4x4& globalTransform)
+{
+	transformMatrix = globalTransform;
 }
 
 bool ComponentTransform::GetDirty() const

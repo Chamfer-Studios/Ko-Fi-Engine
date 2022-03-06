@@ -17,13 +17,14 @@ enum class ComponentType
 	CAMERA,
 	COLLIDER,
 	SCRIPT,
-	TRANSFORM,
-	INFO,
+	RIGID_BODY,
 	TRANSFORM2D,
 	CANVAS,
 	IMAGE,
 	BUTTON,
-	TEXT
+	TEXT,
+	TRANSFORM,
+	INFO
 };
 
 class Component
@@ -46,6 +47,7 @@ public:
 	virtual void Load(Json& json) {}
 
 	ComponentType GetType() { return type; }
+
 
 public:
 	bool active = true;

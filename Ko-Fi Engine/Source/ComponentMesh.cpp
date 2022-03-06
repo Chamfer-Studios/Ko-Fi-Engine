@@ -3,14 +3,18 @@
 #include "Engine.h"
 #include "FSDefs.h"
 #include "Camera3D.h"
-#include "PanelChooser.h"
-#include "Primitive.h"
-#include "par_shapes.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "SceneManager.h"
+#include "Engine.h"
+#include "Camera3D.h"
+#include "PanelChooser.h"
+#include "PanelViewport.h"
+#include "Editor.h"
+#include "Log.h"
 
 #include "Importer.h"
 
@@ -24,10 +28,6 @@
 #include <MathGeoLib/Math/float3.h>
 #include <MathGeoLib/Math/float4.h>
 
-#include "Primitive.h"
-#include "par_shapes.h"
-#include "Globals.h"
-#include "MathGeoLib/Math/float3.h"
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
@@ -105,6 +105,7 @@ ComponentMesh::~ComponentMesh()
 bool ComponentMesh::Start()
 {
 	GenerateLocalBoundingBox();
+	//GenerateBounds();
 	return true;
 }
 
@@ -190,8 +191,14 @@ bool ComponentMesh::PostUpdate(float dt)
 
 			mesh->Draw(owner);
 
+			//draw bounding boxes
+
 			GenerateGlobalBoundingBox();
-			DrawBoundingBox(mesh->localAABB, float3(1.0f, 0.0f, 0.0f));
+			int GOID = 0;
+
+			GOID = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
+
+			DrawMouseSelection(); // Draw AABB if Selected with Mosue
 
 			glUseProgram(0);
 		}
@@ -268,6 +275,7 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 		RELEASE(this->mesh);
 
 	this->mesh = mesh;
+	GenerateLocalBoundingBox();
 }
 
 uint ComponentMesh::GetVertices()
@@ -320,25 +328,27 @@ void ComponentMesh::GenerateLocalBoundingBox()
 	}
 }
 
-AABB ComponentMesh::GetLocalAABB()
+const AABB ComponentMesh::GetLocalAABB()
 {
 	GenerateLocalBoundingBox();
+
 	return mesh->localAABB;
 }
 
 void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
-	obb = GetLocalAABB();
+	obb.SetFrom(GetLocalAABB());
+	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
-	mesh->localAABB.SetNegativeInfinity();
-	mesh->localAABB.Enclose(obb);
+	aabb.SetNegativeInfinity();
+	aabb.Enclose(obb);
 }
 
-AABB ComponentMesh::GetGlobalAABB()
+const AABB ComponentMesh::GetGlobalAABB() const
 {
-	return mesh->localAABB;
+	return aabb;
 }
 
 void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
@@ -372,6 +382,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	//};
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
+
 	glBegin(GL_LINES);
 
 	// Bottom 1
@@ -417,12 +428,12 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glEnd();
 	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1.0f);
-}
 
+}
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
-	bool ret = true;
 
+	bool ret = true;
 	if (ImGui::CollapsingHeader("Mesh"))
 	{
 		ImGui::Text("Mesh Path: ");
@@ -438,11 +449,40 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 		bool vertex = GetVertexNormals();
 		if (ImGui::Checkbox("Vertex Normals", &vertex))
 			mesh->SetVertexNormals(vertex);
-
 		bool faces = GetFaceNormals();
 		if (ImGui::Checkbox("Faces Normals", &faces))
 			mesh->SetFaceNormals(faces);
 	}
-
 	return ret;
 }
+//bool ComponentMesh::GetRenderAABB()
+//{
+//	return renderAABB;
+//}
+//
+//void ComponentMesh::SetRenderAABB(bool newRenderAABB)
+//{
+//	this->renderAABB = newRenderAABB;
+//}
+
+//AABB ComponentMesh::GetGlobalAABB() const
+//{
+//	//AABB global = AABB(mesh->localAABB);
+//	//global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
+//	return mesh->localAABB;
+//}
+
+void ComponentMesh::DrawMouseSelection()
+{
+	int selectedId = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
+
+	if (selectedId == -1) return;
+
+
+	if ( selectedId == owner->GetUID()) // Draw Selected Object
+		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
+
+	else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
+		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
+}
+

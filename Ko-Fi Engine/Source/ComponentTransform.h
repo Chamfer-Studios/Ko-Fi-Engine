@@ -37,6 +37,7 @@ public:
 	void RecomputeGlobalMatrix();
 
 	float4x4 GetGlobalTransform();
+	void SetGlobalTransform(const float4x4& globalTransform);
 
 	bool GetDirty() const;
 	void SetDirty(bool isDirty);
