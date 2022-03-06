@@ -98,7 +98,8 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 		if (ImGui::Button("Run")) // This will be an event call
 		{
-			script(); // TODO: This doens't save changes done to the .lua file. We need to call load_file again!!!
+			script = handler->lua.load_file(path);
+			script();
 			isRunning = true;
 		}
 		if (isRunning)
