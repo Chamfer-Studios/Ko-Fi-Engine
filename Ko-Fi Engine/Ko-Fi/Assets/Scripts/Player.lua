@@ -2,7 +2,7 @@ print("Player.lua loaded")
 
 ------------------- Variables --------------------
 
-speed = 5  -- consider Start()
+speed = 50  -- consider Start()
 
 bullets = {}
 
@@ -60,8 +60,6 @@ function Update(dt)
 
 	if (spaceButton == KEY_STATE.KEY_DOWN) then
 		CreateBullet()
-		local components = gameObject:GetComponents() -- Try regular loop with [i]
-		print(components[3].type) -- return it as an int, can't associate back to enum (I don't know how to anyway)
 	end
 
 end
@@ -126,3 +124,7 @@ end
 --------------------------------------------------
 
 print("Player.lua compiled succesfully")
+
+-- Scraps
+--local components = gameObject:GetComponents()
+--print(components[3].type) -- return it as an int, can't associate back to enum (I don't know how to anyway)

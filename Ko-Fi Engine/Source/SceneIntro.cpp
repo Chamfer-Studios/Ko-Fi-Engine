@@ -117,11 +117,9 @@ bool SceneIntro::PostUpdate(float dt)
 		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 		componentMaterial->SetMaterial(material);
 		
-
 		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
-		componentScript->script = componentScript->handler->lua.load_file("Assets/Scripts/Bullet.lua");
-		componentScript->script();
-		componentScript->SetRunning(true);
+		componentScript->path = "Assets/Scripts/Bullet.lua";
+		componentScript->ReloadScript();
 		parent->GetComponent<ComponentScript>()->handler->lua["SetBulletDirection"](bullet);
 	}
 	gameObjectListToCreate.clear();

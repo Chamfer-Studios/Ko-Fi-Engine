@@ -73,9 +73,9 @@ public:
 			"active",		&GameObject::active,
 			"name",			&GameObject::name,
 			"GetParent",	&GameObject::GetParent,
-			"GetComponents",&GameObject::GetComponents,
+			"GetComponents",&GameObject::GetComponents,							// Kinda works... not very useful tho
 			"GetTransform", &GameObject::GetTransform/*,
-			"GetComponent", &GameObject::GetComponent<ComponentTransform>*/ // Further documentation needed to get this as a dynamic cast
+			"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
 
 
@@ -119,7 +119,7 @@ public:
 		return true;
 	}
 
-	KEY_STATE LuaGetInput(int button)
+	KEY_STATE LuaGetInput(int button) 
 	{
 		if (button < 4 && button > 0)
 			return gameObject->GetEngine()->GetInput()->GetMouseButton(button);

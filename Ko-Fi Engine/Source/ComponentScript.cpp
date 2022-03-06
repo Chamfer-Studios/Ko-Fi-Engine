@@ -49,7 +49,7 @@ bool ComponentScript::CleanUp()
 
 bool ComponentScript::Update(float dt)
 {
-	if (isRunning && active)
+	if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING && isScriptLoaded)
 	{
 		handler->lua["Update"](dt);
 	}
@@ -70,13 +70,15 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader(headerName.c_str()))
 	{
-
 		if (chooser->IsReadyToClose("LoadScript")) 
 		{
 			if (chooser->OnChooserClosed() != nullptr) 
 			{
 				path = chooser->OnChooserClosed();
-				script = handler->lua.load_file(path);
+				if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING)
+					ReloadScript();
+				else
+					script = handler->lua.load_file(path);
 			}
 		}
 		if (ImGui::Button("Select Script")) 
@@ -86,28 +88,15 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());
 
+		//float s = handler->lua["speed"];
+		//if (ImGui::DragFloat("Speed", &s))
+		//{
+		//	handler->lua["speed"] = s;
+		//}
 
-		if (isRunning)
+		if (ImGui::Button("Reload Script"))
 		{
-			float s = handler->lua["speed"];
-			if (ImGui::DragFloat("Speed", &s))
-			{
-				handler->lua["speed"] = s;
-			}
-		}
-
-		if (ImGui::Button("Run")) // This will be an event call
-		{
-			script = handler->lua.load_file(path);
-			script();
-			isRunning = true;
-		}
-		if (isRunning)
-		{
-			if (ImGui::Button("Stop")) // This will be an event call
-			{
-				isRunning = false;
-			}
+			ReloadScript();
 		}
 	}
 
@@ -115,16 +104,11 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-bool ComponentScript::LoadScript(std::string path)
+void ComponentScript::ReloadScript()
 {
-
-	return true;
-}
-
-void ComponentScript::SetRunning(const bool& setTo)
-{
-	if (setTo != isRunning)
-		isRunning = setTo;
+	script = handler->lua.load_file(path);
+	script();
+	isScriptLoaded = true;
 }
 
 void ComponentScript::Save(Json& json) const

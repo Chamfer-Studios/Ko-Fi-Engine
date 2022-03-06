@@ -12,6 +12,7 @@
 #include "ComponentImage.h"
 #include "ComponentButton.h"
 #include "ComponentText.h"
+#include "ComponentScript.h"
 #include "Material.h"
 #include "Texture.h"
 #include "Editor.h"
@@ -160,6 +161,15 @@ void SceneManager::OnPlay()
 
 	// Serialize scene and save it as a .json
 	Importer::GetInstance()->sceneImporter->Save(currentScene);
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		ComponentScript* script = go->GetComponent<ComponentScript>();
+		if (script != nullptr)
+		{
+			script->ReloadScript();
+		}
+	}
 }
 
 void SceneManager::OnPause()
