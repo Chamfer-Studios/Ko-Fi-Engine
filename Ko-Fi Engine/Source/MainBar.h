@@ -17,7 +17,7 @@ public:
 	bool Update();
 	bool PostUpdate();
 
-	void ImportModel();
+	void ChoosersListener();
 
 private:
 	Editor* editor;

@@ -42,7 +42,7 @@ void Resource::SetLibraryPathAndFile()
 		// TODO
 		break;
 	case Resource::Type::SCENE:
-		dir = SCENES_DIR;
+		dir = ASSETS_SCENES_DIR;
 		extension = SCENE_EXTENSION;
 		break;
 	case Resource::Type::SHADER:

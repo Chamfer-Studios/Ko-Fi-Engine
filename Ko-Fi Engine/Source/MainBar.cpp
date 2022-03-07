@@ -40,7 +40,7 @@ bool MainBar::PreUpdate()
 bool MainBar::Update()
 {
 	bool ret = true;
-	ImportModel();
+	ChoosersListener();
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -48,6 +48,14 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Import Model"))
 			{
 				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx");
+			}
+			if (ImGui::MenuItem("Save Scene"))
+			{
+				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene());
+			}
+			if (ImGui::MenuItem("Load Scene"))
+			{
+				editor->GetPanelChooser()->OpenPanel("LoadScene", "json");
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
@@ -156,7 +164,7 @@ bool MainBar::PostUpdate()
 	return true;
 }
 
-void MainBar::ImportModel()
+void MainBar::ChoosersListener()
 {
 	if (editor->GetPanelChooser()->IsReadyToClose("MainBar"))
 	{
@@ -164,6 +172,15 @@ void MainBar::ImportModel()
 		if (file != nullptr)
 		{
 			Importer::GetInstance()->sceneImporter->Import(file);
+		}
+	}
+	if (editor->GetPanelChooser()->IsReadyToClose("LoadScene"))
+	{
+		const char* file = editor->GetPanelChooser()->OnChooserClosed();
+		if (file != nullptr)
+		{
+			Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+
 		}
 	}
 }

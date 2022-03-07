@@ -1,0 +1,463 @@
+{
+    "SceneIntro": {
+        "active": true,
+        "game_objects_amount": 9,
+        "game_objects_list": [
+            {
+                "UID": 4294967295,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "name": "Root",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 132693171,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -5.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "name": "baker_house",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 1904092444,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Chimney.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.47040000557899475,
+                            0.47040000557899475,
+                            0.47040000557899475,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/Baker_house.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "name": "Chimney",
+                "parent_UID": 132693171
+            },
+            {
+                "UID": 654514414,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Baker_house.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.47040000557899475,
+                            0.47040000557899475,
+                            0.47040000557899475,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/Baker_house.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "name": "Baker_house",
+                "parent_UID": 132693171
+            },
+            {
+                "UID": 1224691976,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "name": "baker_house",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 589340608,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998807907104,
+                            0.9999998807907104
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Chimney.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.47040000557899475,
+                            0.47040000557899475,
+                            0.47040000557899475,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/Baker_house.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "name": "Chimney",
+                "parent_UID": 1224691976
+            },
+            {
+                "UID": 659909986,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998807907104,
+                            0.9999998807907104
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Baker_house.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.47040000557899475,
+                            0.47040000557899475,
+                            0.47040000557899475,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/Baker_house.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "name": "Baker_house",
+                "parent_UID": 1224691976
+            },
+            {
+                "UID": 1721304170,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "name": "rock_cliff",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 740182382,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.0,
+                            -13.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999999403953552,
+                            0.9999999403953552
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/CliffRock_low.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/cliff_rock.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Player.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    }
+                ],
+                "name": "CliffRock_low",
+                "parent_UID": 1721304170
+            }
+        ],
+        "name": "SceneIntro"
+    }
+}

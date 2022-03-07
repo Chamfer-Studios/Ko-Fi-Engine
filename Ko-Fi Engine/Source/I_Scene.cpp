@@ -59,10 +59,7 @@ bool I_Scene::Import(const char* path)
 		return false;
 	}
 
-	nodeName = path;
-	nodeName = nodeName.substr(nodeName.find_last_of("/\\") + 1);
-	std::string::size_type const p(nodeName.find_last_of('.'));
-	nodeName = nodeName.substr(0, p);
+	nodeName = Importer::GetInstance()->GetNameFromPath(path);
 
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo);
 
@@ -392,7 +389,7 @@ bool I_Scene::Save(Scene* scene)
 		}
 		jsonFile[name]["game_objects_list"].push_back(jsonGameObject);
 	}
-	std::string path = SCENES_DIR + std::string(name) + SCENE_EXTENSION;
+	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
 
 	ret = jsonHandler.SaveJson(jsonFile, path.c_str());
 
@@ -407,7 +404,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 	Json jsonFile;
 	Json jsonScene;
 
-	std::string path = SCENES_DIR + std::string(name) + SCENE_EXTENSION;
+	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
 	ret = jsonHandler.LoadJson(jsonFile, path.c_str());
 
 	if (!jsonFile.is_null())
