@@ -364,7 +364,6 @@
     <ClCompile Include="Source\QuadTree3D.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -1389,7 +1388,7 @@
     <ClInclude Include="Source\ComponentRigidBody.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-      <ClInclude Include="Source\Iterable.h">
+    <ClInclude Include="Source\Iterable.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\QuadTree3D.h">
@@ -1434,7 +1433,7 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\par_shapes.h">
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">

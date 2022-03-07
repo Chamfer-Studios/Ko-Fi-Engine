@@ -1,6 +1,6 @@
 ------------------- Variables --------------------
 
-speed = 5  -- consider Start()
+speed = 50  -- consider Start()
 
 bullets = {}
 
@@ -49,7 +49,7 @@ function Update(dt)
 		if (goingRight == true) then
 			rad = rad * (-1)
 		end
-		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
+		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x,  componentTransform:GetRotation().y,rad))
 	else
 		--gameObject:GetRigidBody():SetLinearVelocity(float3.new(0,0,0))   -- RigidBody Dependant
 	end

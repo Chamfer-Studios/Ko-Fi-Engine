@@ -45,10 +45,10 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(camera);
 	AddModule(fileSystem);
-	AddModule(sceneManager);
 	AddModule(ui);
 	AddModule(physics);
 	AddModule(collisionDetector);
+	AddModule(sceneManager);
 	AddModule(viewportBuffer);
 	AddModule(editor);
 

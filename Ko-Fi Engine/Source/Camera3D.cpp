@@ -23,10 +23,10 @@ Camera3D::Camera3D(KoFiEngine* engine) : Module()
 	this->engine = engine;
 
 	right = float3(1.0f, 0.0f, 0.0f);
-	up = float3(0.0f, 1.0f, 0.0f);
-	front = float3(0.0f, 0.0f, 1.0f);
+	up = float3(-0.000605105015f, 0.804563046f, 0.593866348f);
+	front = float3(-0.000820143265f, -0.593866587f, 0.804562271f);
 
-	position = float3(0.0f,5.0f,-15.0f);
+	position = float3(-3.65002513f, 153.790665f, -131.349442f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	CalculateViewMatrix();

@@ -68,6 +68,7 @@ bool SceneIntro::Start()
 	}
 
 	ComputeQuadTree();
+	
 	return ret;
 }
 
@@ -136,13 +137,15 @@ bool SceneIntro::PostUpdate(float dt)
 		//parent->GetComponent<ComponentScript>()->handler->lua["bullet"] = bullet;
 		//parent->GetComponent<ComponentScript>()->handler->lua.script("table.insert(bullets, bullet)"); //We will need something like this
 
-		bullet->GetTransform()->SetScale(float3(0.025, 0.05, 0.08));
+		bullet->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 		float3 pos = parent->GetTransform()->GetPosition();
-		bullet->GetTransform()->SetPosition(float3(pos.x, pos.y + 1, pos.z));
-		bullet->GetTransform()->SetRotation(parent->GetTransform()->GetRotation());
+		bullet->GetTransform()->SetPosition(float3(pos.x, pos.y+15, pos.z - 15));
+		float3 parentRot = parent->GetTransform()->GetRotation();
+		float3 rot = { parentRot.x-55,parentRot.y,parentRot.z };
+		bullet->GetTransform()->SetRotation(rot);
 
 		ComponentMesh* componentMesh = bullet->CreateComponent<ComponentMesh>();
-		Mesh* mesh = gameObjectList.at(2)->GetComponent<ComponentMesh>()->GetMesh();
+ 		Mesh* mesh = gameObjectList.at(6)->GetComponent<ComponentMesh>()->GetMesh();
 		componentMesh->SetMesh(mesh);
 
 		
