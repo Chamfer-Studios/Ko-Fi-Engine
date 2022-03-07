@@ -19,9 +19,9 @@ FileSystem::FileSystem(KoFiEngine* engine)
 	rootPath = rootPathString;
 
 	// Comment this for release path and uncomment when developing...
-	//rootPath = rootPath.parent_path().parent_path();
+	rootPath = rootPath.parent_path().parent_path();
 	// Comment this for release path and uncomment when developing...
-	//AddPath("/Ko-Fi Engine/Ko-Fi");
+	AddPath("/Ko-Fi Engine/Ko-Fi");
 	this->engine = engine;
 
 	CONSOLE_LOG("Filesystem: %s", rootPath.string());
