@@ -215,13 +215,12 @@ bool ComponentMesh::PostUpdate(float dt)
 			mesh->Draw(owner);
 
 			//draw bounding boxes
+			int GOID = 0;
 
+			GOID = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 			GenerateGlobalBoundingBox();
-
+		
 			DrawMouseSelection(); // Draw AABB if Selected with Mosue
-
-			glBindVertexArray(0);
-			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			glUseProgram(0);
 		}
 	}

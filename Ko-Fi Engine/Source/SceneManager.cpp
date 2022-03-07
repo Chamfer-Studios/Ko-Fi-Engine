@@ -210,3 +210,20 @@ void SceneManager::OnTick()
 	runtimeState = RuntimeState::TICK;
 	gameClockSpeed = timeScale;
 }
+
+void SceneManager::OnClick(SDL_Event event)
+{
+	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT) return;
+
+	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) return;
+
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	if (hit != nullptr)
+	{
+		CONSOLE_LOG("%s", hit->GetName());
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+	}
+	else {
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	}
+}

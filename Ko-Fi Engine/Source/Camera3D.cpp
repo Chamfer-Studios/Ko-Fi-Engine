@@ -368,7 +368,9 @@ GameObject* Camera3D::MousePicking()
 
 				float distance;
 				float3 intersectionPoint;
-				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
+				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
+
+				/*if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
 				{
 					for (GameObject* go : sceneGameObjects)
 					{
@@ -385,7 +387,7 @@ GameObject* Camera3D::MousePicking()
 						}
 					}
 					return gameObject;
-				}
+				}*/
 			}
 		}
 	}
