@@ -35,7 +35,7 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 		material->diffuseColor = Color(color.r, color.g, color.b, color.a);
 	}
 
-	std::string defaultPath = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+	std::string defaultPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 	material->SetShaderPath(defaultPath.c_str());
 
 	ret = LoadAndCreateShader(defaultPath.c_str(), material);
@@ -43,19 +43,19 @@ bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 	return ret;
 }
 
-bool I_Material::Save(const Material* material)
-{
-	bool ret = true;
-
-	return ret;
-}
-
-bool I_Material::Load(Material* material)
-{
-	bool ret = true;
-
-	return ret;
-}
+//bool I_Material::Save(const Material* material)
+//{
+//	bool ret = true;
+//
+//	return ret;
+//}
+//
+//bool I_Material::Load(Material* material)
+//{
+//	bool ret = true;
+//
+//	return ret;
+//}
 
 bool I_Material::LoadAndCreateShader(const char* shaderPath, Material* material)
 {
@@ -197,10 +197,22 @@ bool I_Material::LoadUniforms(Material* material)
 			{
 				switch (type)
 				{
+				case GL_INT:
+				{
+					UniformT<int>* ui = new UniformT<int>(name, type, 0);
+					material->AddUniform(ui);
+				}
+				break;
 				case GL_FLOAT:
 				{
 					UniformT<float>* uf = new UniformT<float>(name, type, 0.0f);
 					material->AddUniform(uf);
+				}
+				break;
+				case GL_BOOL:
+				{
+					UniformT<bool>* ub = new UniformT<bool>(name, type, false);
+					material->AddUniform(ub);
 				}
 				break;
 				case GL_FLOAT_VEC2:
@@ -221,16 +233,10 @@ bool I_Material::LoadUniforms(Material* material)
 					material->AddUniform(uf4);
 				}
 				break;
-				case GL_INT:
-				{
-					UniformT<int>* ui = new UniformT<int>(name, type, 0);
-					material->AddUniform(ui);
-				}
-				break;
-				//case GL_BOOL:
+				//case GL_FLOAT_MAT4:
 				//{
-				//	UniformT<bool>* ub = new UniformT<bool>(name, type, false);
-				//	material->AddUniform(ub);
+				//	UniformT<float4x4>* mat = new UniformT<float4x4>(name, type, float4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
+				//	material->AddUniform(mat);
 				//}
 				//break;
 				default:

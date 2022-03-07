@@ -8,9 +8,13 @@
 
 class KoFiEngine;
 
-class ComponentCanvas : public ComponentTransform2D {
+class ComponentCanvas : public ComponentTransform2D
+{
 public:
 	ComponentCanvas(GameObject* parent);
+
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 
 	bool Update(float dt) override;
 

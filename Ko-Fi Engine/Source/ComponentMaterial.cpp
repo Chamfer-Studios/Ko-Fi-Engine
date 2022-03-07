@@ -110,7 +110,8 @@ void ComponentMaterial::Load(Json& json)
 {
 	if (!json.empty())
 	{
-		material = new Material();
+		if (material == nullptr)
+			material = new Material();
 
 		//material->materialName = json["material_name"];
 		//material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
@@ -120,7 +121,7 @@ void ComponentMaterial::Load(Json& json)
 			material->SetShaderPath(shaderPath.c_str());
 		else
 		{
-			shaderPath = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+			shaderPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 			material->SetShaderPath(shaderPath.c_str());
 		}
 
@@ -129,7 +130,7 @@ void ComponentMaterial::Load(Json& json)
 			CONSOLE_LOG("[ERROR] Something went wrong loading the shader.");
 		}
 
-		std::vector<float> values = json["color"].get<std::vector<float>>();
+		std::vector<float> values = json.at("color").get<std::vector<float>>();
 		material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
 		values.clear();
 
@@ -337,7 +338,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 					material->SetShaderPath(path.c_str());
 				else
 				{
-					path = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+					path = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 					material->SetShaderPath(path.c_str());
 				}
 				Importer::GetInstance()->materialImporter->LoadAndCreateShader(path.c_str(), material);

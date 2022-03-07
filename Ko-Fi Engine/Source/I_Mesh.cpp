@@ -65,10 +65,10 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh)
 	{
 		mesh->texCoordSizeBytes = aiMesh->mNumVertices * sizeof(float) * 2;
 		mesh->texCoords = (float*)malloc(mesh->texCoordSizeBytes);
-		for (uint i = 0; i < aiMesh->mNumVertices; ++i)
+		for (uint j = 0; j < aiMesh->mNumVertices; ++j)
 		{
-			mesh->texCoords[i * 2] = aiMesh->mTextureCoords[0][i].x;
-			mesh->texCoords[i * 2 + 1] = aiMesh->mTextureCoords[0][i].y;
+			mesh->texCoords[j * 2] = aiMesh->mTextureCoords[0][j].x;
+			mesh->texCoords[j * 2 + 1] = 1.0f - aiMesh->mTextureCoords[0][j].y;
 		}
 
 		CONSOLE_LOG("[STATUS] Imported %u texture coordinates!", aiMesh->mNumVertices * 2);

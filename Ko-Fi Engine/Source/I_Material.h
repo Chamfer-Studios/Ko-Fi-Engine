@@ -12,6 +12,7 @@
 #include "MathGeoLib/Math/float2.h"
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4.h"
+#include "MathGeoLib/Math/float4x4.h"
 
 #include "Assimp.h"
 
@@ -33,8 +34,8 @@ public:
 	~I_Material();
 
 	bool Import(const aiMaterial* aiMaterial, Material* material);
-	bool Save(const Material* material);
-	bool Load(Material* material);
+	//bool Save(const Material* material);
+	//bool Load(Material* material);
 
 	bool LoadAndCreateShader(const char* shaderPath, Material* material);
 

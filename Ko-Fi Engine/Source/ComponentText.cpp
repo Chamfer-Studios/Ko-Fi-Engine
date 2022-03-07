@@ -21,6 +21,18 @@ ComponentText::~ComponentText()
 {
 }
 
+void ComponentText::Save(Json& json) const
+{
+	json["type"] = "text";
+	json["value"] = textValue;
+}
+
+void ComponentText::Load(Json& json)
+{
+	std::string value = json["value"].get<std::string>();
+	SetTextValue(value);
+}
+
 bool ComponentText::Update(float dt)
 {
 	return true;
