@@ -86,7 +86,6 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 	{
 		if (fullGOList[i]->GetComponent<ComponentMesh>() != nullptr && fullGOList[i]->GetComponent<ComponentCollider>() != nullptr)
 		{
-
 			if (fullGOList[i] == currentEntity)
 			{
 				continue;
@@ -94,11 +93,6 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 			
 			math::AABB newCollider = fullGOList[i]->GetComponent<ComponentMesh>()->GetGlobalAABB();
 			ColliderType newColliderType = fullGOList[i]->GetComponent<ComponentCollider>()->GetColliderType();
-
-			/*if (a.MinX() <= b.MaxX() && a.MaxX() >= b.MinX() &&
-				(a.MinY() <= b.MaxY() && a.MaxY() >= b.MinY()) &&
-				(a.MinZ() <= b.MaxZ() && a.MaxZ() >= b.MinZ()))
-			*/
 
 			if (currentEntityAABB.Intersects(newCollider))
 			{
@@ -118,10 +112,6 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 
 				math::float3 initialDistance = center1 - center2;
 
-				//TODO: hay que tener en cuenta la direccion de la que viene la colision para tenerla en cuenta a la hora de hacer los calculos
-				math::float2 finalDistanceXZ = math::float2((Size1.x/2 + Size2.x/2),(Size1.z/2 + Size2.z/2));
-				math::float3 wallCollisionTranslation = math::float3(finalDistanceXZ.x, 0, finalDistanceXZ.y) - math::float3(initialDistance.x, 0, initialDistance.z);
-
 				switch (newColliderType)
 				{
 				case ColliderType::FLOOR:
@@ -129,20 +119,55 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 					if (currentEntity->GetComponent<ComponentRigidBody>())
 					{
 						float finalDistanceY = math::Abs(Size1.y) / 2 + math::Abs(Size2.y) / 2;
-						float floorCollisionTranslation = finalDistanceY - initialDistance.y;
+						float floorCollisionTranslation = finalDistanceY - math::Abs(initialDistance.y);
 
+						//Move currentEntity out of the floor
 						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + float3(0, floorCollisionTranslation, 0);
 						currentEntity->GetTransform()->SetPosition(finalPosition);
 						
-						//eliminar velocidad en x
+						//Stop gravity
+						currentEntity->GetComponent<ComponentRigidBody>()->SetAffectGravity(false);
+
+						//lock Y axis at desired position
+						currentEntity->GetComponent<ComponentRigidBody>()->FreezePositionY(true);
 					}
 					break;
 				}
 				case ColliderType::WALL:
 				{	
+					bool leftCollision = false;
+					bool frontCollision = false;
+
 					if (currentEntity->GetComponent<ComponentRigidBody>())
 					{
-						//TODO: hay que tener en cuenta la direccion de la que viene la colision para tenerla en cuenta a la hora de hacer los calculos
+ 						math::float2 finalDistanceXZ = math::float2((Size1.x / 2 + Size2.x / 2), (Size1.z / 2 + Size2.z / 2));
+						math::float3 wallCollisionTranslation = math::float3(finalDistanceXZ.x, 0, finalDistanceXZ.y) - math::float3(math::Abs(initialDistance.x), 0, math::Abs(initialDistance.z));
+
+						if (center2.x > center1.x)	//collision comming from the left
+							leftCollision = true;	//translation.z negative
+						else						//collision comming from the right
+							leftCollision = false;	//translation.z positive
+
+						if (center2.z > center1.z)	//collision comming from the front
+							frontCollision = true;	//translation.z negative
+						else						//collision comming from the back
+							frontCollision = false; //translation.z positive
+
+						if (math::Abs(wallCollisionTranslation.x) < math::Abs(wallCollisionTranslation.z))
+						{
+							if(leftCollision)
+								wallCollisionTranslation = math::float3(-(math::Abs(wallCollisionTranslation.x)), .0f, .0f);
+							else
+								wallCollisionTranslation = math::float3(((math::Abs(wallCollisionTranslation.x))), .0f, .0f);
+						}
+						else
+						{
+							if(frontCollision)
+								wallCollisionTranslation = math::float3(0.f, .0f, (-(math::Abs(wallCollisionTranslation.z))));
+							else
+								wallCollisionTranslation = math::float3(0.f, .0f, ((math::Abs(wallCollisionTranslation.z))));
+						}
+
 						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + wallCollisionTranslation;
 						currentEntity->GetTransform()->SetPosition(finalPosition);
 					}
@@ -150,21 +175,21 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 				}
 				case ColliderType::ENEMY:
 				{
-					if (currentEntity->GetComponent<ComponentRigidBody>())
+					/*if (currentEntity->GetComponent<ComponentRigidBody>())
 					{
 						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + wallCollisionTranslation;
 						currentEntity->GetTransform()->SetPosition(finalPosition);
-					}
+					}*/
 
 					break;
 				}
 				case ColliderType::PLAYER:
 				{
-					if (currentEntity->GetComponent<ComponentRigidBody>())
+					/*if (currentEntity->GetComponent<ComponentRigidBody>())
 					{
 						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + wallCollisionTranslation;
 						currentEntity->GetTransform()->SetPosition(finalPosition);
-					}
+					}*/
 					break;
 				}
 				}
