@@ -51,6 +51,7 @@ struct ExampleAppLog
             ImGui::End();
             return;
         }
+        ImGui::End();
 
         // Options menu
         if (ImGui::BeginPopup("Options"))
