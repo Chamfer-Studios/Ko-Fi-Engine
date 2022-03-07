@@ -569,6 +569,26 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					textCmp->active = true;
 					textCmp->Load(jsonCmp);
 				}
+				else if (type == "rigidBody")
+				{
+					ComponentRigidBody* rbCmp = go->GetComponent<ComponentRigidBody>();
+					if (rbCmp == nullptr)
+					{
+						rbCmp = go->CreateComponent<ComponentRigidBody>();
+					}
+					rbCmp->active = true;
+					rbCmp->Load(jsonCmp);
+				}
+				else if (type == "collider")
+				{
+				ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
+				if (colCmp == nullptr)
+				{
+					colCmp = go->CreateComponent<ComponentCollider>();
+				}
+				colCmp->active = true;
+				colCmp->Load(jsonCmp);
+				}
 			}
 			if (!exists)
 				scene->gameObjectList.push_back(go);
