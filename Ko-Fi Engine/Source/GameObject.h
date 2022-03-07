@@ -77,7 +77,8 @@ public:
 	bool HasChildrenWithUID(uint uid);
 	bool HasParentWithUID(uint uid);
 
-	KoFiEngine* GetEngine();
+	KoFiEngine* GetEngine() const;
+	void SetEngine(KoFiEngine* engine);
 
 
 public:

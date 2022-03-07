@@ -27,6 +27,7 @@ GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D
 	this->engine = engine;
 
 	CreateComponent<ComponentInfo>();
+
 	is3D = _is3D;
 	if (is3D)
 		transform = CreateComponent<ComponentTransform>();
@@ -37,16 +38,14 @@ GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D
 GameObject::GameObject()
 {
 	active = true;
-	//LoadModel(path);
+
 	this->name = "GameObject " + std::to_string(uid);
 
 	this->uid = uid;
 	this->engine = engine;
 
 	CreateComponent<ComponentInfo>();
-		transform = CreateComponent<ComponentTransform>();
-
-
+	transform = CreateComponent<ComponentTransform>();
 
 	this->parent = nullptr;
 }
@@ -305,12 +304,16 @@ bool GameObject::HasParentWithUID(uint uid)
 	return false;
 }
 
+KoFiEngine* GameObject::GetEngine() const
+{
+	return engine;
+}
+
+void GameObject::SetEngine(KoFiEngine* engine)
+{
+	this->engine = engine;
+}
 AABB GameObject::BoundingAABB()
 {
 	return GetComponent<ComponentMesh>()->GetGlobalAABB();
-}
-
-KoFiEngine* GameObject::GetEngine()
-{
-	return engine;
 }

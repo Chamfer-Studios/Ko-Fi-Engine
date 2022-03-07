@@ -74,10 +74,11 @@ void PanelTextEditor::RenderWindow(bool* toggleEditText)
 			SaveFile(filePath);
 		}
 		textEditor.Render("##EditorWindow");
+
 	}
-
-
 	ImGui::End();
+
+
 }
 
 void PanelTextEditor::LoadFile(std::string path)

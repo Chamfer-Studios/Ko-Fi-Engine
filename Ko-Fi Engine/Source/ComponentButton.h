@@ -22,15 +22,15 @@ public:
 	ComponentButton(GameObject* parent);
 	~ComponentButton();
 
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
+
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	//SDL_Texture* LoadTexture(const char* path);
 	//SDL_Texture* const LoadSurface(SDL_Surface* surface);
-
-	//void OnLoad(const JSONReader& reader) override;
-	//void OnSave(JSONWriter& writer) const override;
 
 	Texture GetIdleTexture() { return idleOpenGLTexture; };
 	Texture GetHoverTexture() { return hoverOpenGLTexture; };
@@ -57,4 +57,3 @@ private:
 
 	BUTTON_STATE state = BUTTON_STATE::IDLE;
 };
-

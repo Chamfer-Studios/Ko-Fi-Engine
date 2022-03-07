@@ -26,6 +26,26 @@ ComponentButton::~ComponentButton()
 	FreeTextures(BUTTON_STATE::PRESSED);
 }
 
+void ComponentButton::Save(Json& json) const
+{
+	json["type"] = "button";
+	json["idleTexture"] = idleOpenGLTexture.path;
+	json["hoverTexture"] = hoverOpenGLTexture.path;
+	json["pressedTexture"] = pressedOpenGLTexture.path;
+}
+
+void ComponentButton::Load(Json& json)
+{
+	std::string path = json["idleTexture"].get<std::string>();
+	SetIdleTexture(path.c_str());
+
+	path = json["hoverTexture"].get<std::string>();
+	SetHoverTexture(path.c_str());
+
+	path = json["pressedTexture"].get<std::string>();
+	SetPressedTexture(path.c_str());
+}
+
 bool ComponentButton::Update(float dt)
 {
 	float2 mouseScreenPosition = { (float)owner->GetEngine()->GetInput()->GetMouseX(), (float)owner->GetEngine()->GetInput()->GetMouseY() };
