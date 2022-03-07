@@ -482,7 +482,7 @@ void ComponentMesh::DrawMouseSelection()
 	if ( selectedId == owner->GetUID()) // Draw Selected Object
 		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
 
-	else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
-		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
+	//else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
+	//	DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
 }
 

@@ -92,7 +92,7 @@ public:
 			this->rootGo->AttachChild(go);
 
 		int GOID = go->GetUID();
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = GOID;
+		//engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = GOID;
 
 		return go;
 	}
@@ -103,6 +103,8 @@ public:
 		{
 			if ((*it)->GetUID() == gameObject->GetUID())
 			{
+				if ((*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID == (*it)->GetUID())
+					(*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 				gameObjectList.erase(it);
 				break;
 			}
@@ -117,8 +119,6 @@ public:
 				for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
 				{
 					GameObject* child = (*ch);
-					GameObject* childParent = child->GetParent();
-					childParent = gameObject->GetParent();
 					parent->AttachChild(child);
 				}
 			}

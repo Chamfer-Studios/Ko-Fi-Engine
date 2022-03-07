@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
+#include "ComponentScript.h"
 #include "Renderer3D.h"
 #include "PanelViewport.h"
 
@@ -367,7 +368,24 @@ GameObject* Camera3D::MousePicking()
 
 				float distance;
 				float3 intersectionPoint;
-				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
+				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
+				{
+					for (GameObject* go : sceneGameObjects)
+					{
+						if (gameObject != go)
+						{
+							ComponentScript* script = go->GetComponent<ComponentScript>();
+							if (script != nullptr)
+							{
+								glBegin(GL_POINTS);
+								glVertex3f(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z);
+								glEnd();
+								script->handler->lua["destination"] = intersectionPoint; 
+							}
+						}
+					}
+					return gameObject;
+				}
 			}
 		}
 	}

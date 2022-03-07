@@ -12,6 +12,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentRigidBody.h"
 #include <lua.hpp>
 #include <sol.hpp>
 
@@ -74,7 +75,8 @@ public:
 			"name",			&GameObject::name,
 			"GetParent",	&GameObject::GetParent,
 			"GetComponents",&GameObject::GetComponents,							// Kinda works... not very useful tho
-			"GetTransform", &GameObject::GetTransform/*,
+			"GetTransform", &GameObject::GetTransform,
+			"GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>/*,
 			"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
 
@@ -103,6 +105,18 @@ public:
 			);
 
 
+		// Rigid Body structure
+		lua.new_usertype<ComponentRigidBody>("ComponentRigidBody",
+			sol::constructors<void(GameObject*)>(),
+			"IsStatic",				&ComponentRigidBody::IsStatic,
+			"IsKinematic",			&ComponentRigidBody::IsKinematic,
+			"SetStatic",			&ComponentRigidBody::SetStatic,
+			"SetDynamic",			&ComponentRigidBody::SetDynamic,
+			"SetLinearVelocity",	&ComponentRigidBody::SetLinearVelocity,
+			"FreezePositionY",		&ComponentRigidBody::FreezePositionY
+			);
+	
+
 		// Giving lua certain variables
 		lua["gameObject"] = gameObject;
 		lua["componentTransform"] = componentTransform;
@@ -126,10 +140,10 @@ public:
 
 		switch (button)
 		{
-			case 4: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_UP); }
-			case 5: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_LEFT); }
-			case 6: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_DOWN); }
-			case 7: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RIGHT); }
+			case 4: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_I); }
+			case 5: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_J); }
+			case 6: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K); }
+			case 7: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_L); }
 			case 8: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE); }
 		}
 	}

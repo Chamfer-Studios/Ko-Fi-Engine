@@ -1,13 +1,11 @@
-print("Player.lua loaded")
-
 ------------------- Variables --------------------
 
-speed = 50  -- consider Start()
+speed = 5  -- consider Start()
 
 bullets = {}
 
-GameState = require "Assets.Scripts.GameState"
-print(GameState:GetGameState())
+--GameState = require "Assets.Scripts.GameState"
+--print(GameState:GetGameState())
 
 -------------------- Methods ---------------------
 
@@ -36,23 +34,27 @@ function Update(dt)
 		goingRight = true
 	end
 	if (pos2D[1] ~= targetPos[1] or pos2D[2] ~= targetPos[2]) then
-		
 		-- Move
 		local d = Distance(pos2D, targetPos)
 		local vec2 = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
 		
 		vec2 = Normalize(vec2, d)
 		componentTransform:SetPosition(float3.new(pos2D[1] + vec2[1] * speed * dt, componentTransform:GetPosition().y, pos2D[2] + vec2[2] * speed * dt))
-		
+		--vec3 = float3.new(vec2[1] * speed * dt, 0, vec2[2] * speed * dt) -- RigidBody Dependant
+		--gameObject:GetRigidBody():FreezePositionY(true)				   -- RigidBody Dependant
+		--gameObject:GetRigidBody():SetLinearVelocity(vec3)				   -- RigidBody Dependant
+
 		a = { 0, 1 } 
 		rad = math.acos(a[1] * vec2[1] + a[2] * vec2[2])
 		if (goingRight == true) then
 			rad = rad * (-1)
 		end
-
 		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
+	else
+		--gameObject:GetRigidBody():SetLinearVelocity(float3.new(0,0,0))   -- RigidBody Dependant
 	end
 	----------------------------------------------------------------------------------------
+	--print(destination)
 
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
@@ -67,18 +69,17 @@ end
 -- Move to destination
 function MoveToDestination(dt)
 
-	local targetPos = { destination.x, destination.z }
+	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
-	local d = Distance(pos2D, targetPos)
-
+	local d = Distance(pos2D, targetPos2D)
+	print(d)
 	if (d > 0.025)
 		then --move
-			local vec2 = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
+			local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * speed * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * speed * dt))
 		else
 			destination = nil
 	end
-
 end
 
 -------------------- Setters ---------------------

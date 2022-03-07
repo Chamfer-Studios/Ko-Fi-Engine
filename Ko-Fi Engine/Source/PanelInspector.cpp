@@ -43,7 +43,7 @@ bool PanelInspector::Update()
 	{
 		// Current game object (the one we have selected at the moment)
 		GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->GetGameObject(editor->panelGameObjectInfo.selectedGameObjectID);
-		
+
 		for (Component* component : currentGameObject->GetComponents())
 		{
 			component->InspectorDraw(editor->GetPanelChooser());
