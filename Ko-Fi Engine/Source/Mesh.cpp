@@ -118,16 +118,6 @@ void Mesh::SetUpMeshBuffers()
 
 void Mesh::Draw(GameObject* owner)
 {
-	// Texture
-	if (ComponentMaterial* cMaterial = owner->GetComponent<ComponentMaterial>())
-	{
-		//for (Texture& tex : cMaterial->textures)
-		//{
-		//	glBindTexture(GL_TEXTURE_2D, tex.textureID);
-		//}
-		glBindTexture(GL_TEXTURE_2D, cMaterial->texture.GetTextureId());
-	}
-
 	glBindVertexArray(VAO);
 
 	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, 0);

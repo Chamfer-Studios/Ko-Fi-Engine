@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Engine.h"
 #include "FSDefs.h"
+//#include "Color.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
 
@@ -118,11 +119,19 @@ bool ComponentMesh::PostUpdate(float dt)
 
 	ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
 
-	if (cMat != nullptr)
+	if (cMat != nullptr && mesh != nullptr)
 	{
 		if (!cMat->active)
 		{
 			glDisable(GL_TEXTURE_2D);
+		}
+		else
+		{
+			//for (Texture& tex : cMaterial->textures)
+			//{
+			//	glBindTexture(GL_TEXTURE_2D, tex.textureID);
+			//}
+			glBindTexture(GL_TEXTURE_2D, cMat->texture.GetTextureId());
 		}
 
 		if (renderMesh)
@@ -149,6 +158,15 @@ bool ComponentMesh::PostUpdate(float dt)
 
 			this->time += 0.02f;
 			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
+
+			//if (cMat->texture.GetTextureId() == -1 && cMat->GetMaterial()->FindUniform("albedoTint"))
+			//{
+			//	Color color = cMat->GetMaterial()->diffuseColor;
+
+			//	Uniform* colorUf = cMat->GetMaterial()->FindUniform("albedoTint");
+			//	UniformT<float4>* uf = (UniformT<float4>*)colorUf;
+			//	uf->value = { color.r, color.g, color.b, color.a };
+			//}
 
 			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 			{
@@ -192,19 +210,21 @@ bool ComponentMesh::PostUpdate(float dt)
 				}
 			}
 
-		mesh->Draw(owner);
-		//GenerateGlobalBoundingBox();
-		//DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
-		
-	if (drawAABB)
-		DrawAABB();
+			mesh->Draw(owner);
+			//GenerateGlobalBoundingBox();
+			//DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
 
-	//if (owner->active || owner->isParentSelected())
-	//	DrawOutline();
+			if (drawAABB)
+				DrawAABB();
+
+			//if (owner->active || owner->isParentSelected())
+			//	DrawOutline();
 
 			GenerateGlobalBoundingBox();
 			DrawBoundingBox(mesh->localAABB, float3(1.0f, 0.0f, 0.0f));
 
+			glBindVertexArray(0);
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			glUseProgram(0);
 		}
 	}
@@ -232,8 +252,6 @@ void ComponentMesh::Save(Json& json) const
 	json["draw_vertex_normals"] = mesh->GetVertexNormals();
 	json["draw_face_normals"] = mesh->GetFaceNormals();
 }
-
-
 
 void ComponentMesh::Load(Json& json)
 {
@@ -441,7 +459,7 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
-	if (ImGui::CollapsingHeader("Mesh"))
+	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
 	{
 		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();

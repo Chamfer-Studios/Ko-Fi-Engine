@@ -198,12 +198,8 @@ bool Input::PreUpdate(float dt)
 							Texture texture = Texture();
 							Importer::GetInstance()->textureImporter->Import(tmp.c_str(), &texture);
 
-							ComponentMaterial* cMaterial = go->GetComponent<ComponentMaterial>();
-							if (cMaterial != nullptr)
-							{
-								cMaterial->texture = texture;
-								//cMaterial->textures.push_back(texture);
-							}
+							go->GetComponent<ComponentMaterial>()->texture = texture;
+							//cMaterial->textures.push_back(texture);
 						}
 					}
 				}

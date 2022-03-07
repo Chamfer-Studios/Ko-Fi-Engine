@@ -69,7 +69,7 @@ public:
 	void OnPause();
 	void OnResume();
 	void OnTick();
-	void OnClick(SDL_Event event);
+	//void OnClick(SDL_Event event);
 
 public:
 	bool active;

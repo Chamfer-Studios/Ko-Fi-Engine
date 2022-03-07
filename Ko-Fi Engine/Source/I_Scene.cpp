@@ -60,6 +60,8 @@ bool I_Scene::Import(const char* path)
 
 	nodeName = path;
 	nodeName = nodeName.substr(nodeName.find_last_of("/\\") + 1);
+	std::string::size_type const p(nodeName.find_last_of('.'));
+	nodeName = nodeName.substr(0, p);
 
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo);
 
@@ -210,10 +212,20 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
+	// Import Material to GameObject
+	ComponentMaterial* cMaterial = gameObj->CreateComponent<ComponentMaterial>();
+
+	if (cMaterial == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
+		return;
+	}
+
 	aiString aiTexturePath;
 	std::string texturePath;
 	Texture texture;
-	if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
+	//if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
+	if(assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
 		std::string textureFilename = aiTexturePath.C_Str();
 
@@ -222,21 +234,13 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		texturePath = ASSETS_TEXTURES_DIR + textureFilename;
 
 		texture = Texture();
-		Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
-	}
+		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
 
-	// Import Material to GameObject
-	ComponentMaterial* cMaterial = gameObj->CreateComponent<ComponentMaterial>();
-
-	if (cMaterial != nullptr)
-	{
-		//cMaterial->textures.push_back(texture);
-		cMaterial->texture = texture;
-	}
-	else
-	{
-		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
-		return;
+		if (ret)
+		{
+			//cMaterial->textures.push_back(texture);
+			cMaterial->texture = texture;
+		}
 	}
 
 	Material* material = new Material();
