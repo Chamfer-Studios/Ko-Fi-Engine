@@ -32,7 +32,8 @@ public:
 	inline const bool IsSleeping() { return dynamicBody->isSleeping(); }
 
 	// Serialization
-	//
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 
 	// On inspector draw
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)

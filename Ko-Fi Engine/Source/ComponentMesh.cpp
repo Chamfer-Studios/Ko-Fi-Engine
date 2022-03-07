@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Engine.h"
 #include "FSDefs.h"
+//#include "Color.h"
 #include "Camera3D.h"
 
 #include "GameObject.h"
@@ -120,11 +121,19 @@ bool ComponentMesh::PostUpdate(float dt)
 
 	ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
 
-	if (cMat != nullptr)
+	if (cMat != nullptr && mesh != nullptr)
 	{
 		if (!cMat->active)
 		{
 			glDisable(GL_TEXTURE_2D);
+		}
+		else
+		{
+			//for (Texture& tex : cMaterial->textures)
+			//{
+			//	glBindTexture(GL_TEXTURE_2D, tex.textureID);
+			//}
+			glBindTexture(GL_TEXTURE_2D, cMat->texture.GetTextureId());
 		}
 
 		if (renderMesh)
@@ -152,13 +161,32 @@ bool ComponentMesh::PostUpdate(float dt)
 			this->time += 0.02f;
 			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
 
+			//if (cMat->texture.GetTextureId() == -1 && cMat->GetMaterial()->FindUniform("albedoTint"))
+			//{
+			//	Color color = cMat->GetMaterial()->diffuseColor;
+
+			//	Uniform* colorUf = cMat->GetMaterial()->FindUniform("albedoTint");
+			//	UniformT<float4>* uf = (UniformT<float4>*)colorUf;
+			//	uf->value = { color.r, color.g, color.b, color.a };
+			//}
+
 			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 			{
 				switch (uniform->type)
 				{
+				case GL_INT:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+				}
+				break;
 				case GL_FLOAT:
 				{
 					glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+				}
+				break;
+				case GL_BOOL:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<bool>*)uniform)->value);
 				}
 				break;
 				case GL_FLOAT_VEC2:
@@ -179,11 +207,6 @@ bool ComponentMesh::PostUpdate(float dt)
 					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
 				}
 				break;
-				case GL_INT:
-				{
-					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
-				}
-				break;
 				default:
 					break;
 				}
@@ -192,14 +215,12 @@ bool ComponentMesh::PostUpdate(float dt)
 			mesh->Draw(owner);
 
 			//draw bounding boxes
-
-			GenerateGlobalBoundingBox();
 			int GOID = 0;
 
 			GOID = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
-
+			GenerateGlobalBoundingBox();
+		
 			DrawMouseSelection(); // Draw AABB if Selected with Mosue
-
 			glUseProgram(0);
 		}
 	}
@@ -228,45 +249,46 @@ void ComponentMesh::Save(Json& json) const
 	json["draw_face_normals"] = mesh->GetFaceNormals();
 }
 
-
-
 void ComponentMesh::Load(Json& json)
 {
-	int type = json["shape_type"];
-	Shape meshType = Shape::NONE;
-	switch (type)
+	if (mesh == nullptr)
 	{
-	case 0:
-		meshType = Shape::NONE;
-		break;
-	case 1:
-		meshType = Shape::CUBE;
-		break;
-	case 2:
-		meshType = Shape::SPHERE;
-		break;
-	case 3:
-		meshType = Shape::CYLINDER;
-		break;
-	case 4:
-		meshType = Shape::TORUS;
-		break;
-	case 5:
-		meshType = Shape::PLANE;
-		break;
-	case 6:
-		meshType = Shape::CONE;
-		break;
-	}
-	mesh->meshType = meshType;
+		int type = json.at("shape_type");
+		Shape meshType = Shape::NONE;
+		switch (type)
+		{
+		case 0:
+			meshType = Shape::NONE;
+			break;
+		case 1:
+			meshType = Shape::CUBE;
+			break;
+		case 2:
+			meshType = Shape::SPHERE;
+			break;
+		case 3:
+			meshType = Shape::CYLINDER;
+			break;
+		case 4:
+			meshType = Shape::TORUS;
+			break;
+		case 5:
+			meshType = Shape::PLANE;
+			break;
+		case 6:
+			meshType = Shape::CONE;
+			break;
+		}
+		mesh = new Mesh(meshType);
 
-	mesh = new Mesh(meshType);
-	std::string path = json["path"];
-	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh);
+		mesh->meshType = meshType;
+	}
+	std::string path = json.at("path");
+	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
 	mesh->path = path;
 
-	SetVertexNormals(json["draw_vertex_normals"]);
-	SetFaceNormals(json["draw_face_normals"]);
+	SetVertexNormals(json.at("draw_vertex_normals"));
+	SetFaceNormals(json.at("draw_face_normals"));
 }
 
 void ComponentMesh::SetMesh(Mesh* mesh)
@@ -434,7 +456,7 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
 
 	bool ret = true;
-	if (ImGui::CollapsingHeader("Mesh"))
+	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
 	{
 		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();
@@ -482,7 +504,7 @@ void ComponentMesh::DrawMouseSelection()
 	if ( selectedId == owner->GetUID()) // Draw Selected Object
 		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
 
-	else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
-		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
+	//else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
+	//	DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
 }
 

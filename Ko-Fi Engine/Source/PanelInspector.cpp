@@ -43,7 +43,9 @@ bool PanelInspector::Update()
 	{
 		// Current game object (the one we have selected at the moment)
 		GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->GetGameObject(editor->panelGameObjectInfo.selectedGameObjectID);
-		
+		/*if (currentGameObject->GetComponent<ComponentMesh>() != nullptr && (currentGameObject->GetComponent<ComponentMesh>()->GetMesh() != nullptr))
+			currentGameObject->GetComponent<ComponentMesh>()->DrawBoundingBox(currentGameObject->GetComponent<ComponentMesh>()->GetMesh()->localAABB, float3(1.0f, 0.0f, 0.0f));*/
+
 		for (Component* component : currentGameObject->GetComponents())
 		{
 			component->InspectorDraw(editor->GetPanelChooser());
@@ -58,16 +60,6 @@ bool PanelInspector::Update()
 
 		if ((ImGui::Button("ADD")))
 		{
-			//switch (componentType)
-			//{
-			//case (int)ComponentType::NONE: break;
-			//case (int)ComponentType::MESH: currentGameObject->CreateComponent<ComponentMesh>(); break;
-			//case (int)ComponentType::MATERIAL: currentGameObject->CreateComponent<ComponentMaterial>(); break;
-			////case (int)ComponentType::CAMERA: currentGameObject->CreateComponent<ComponentCamera>(); break;
-			////case (int)ComponentType::COLLIDER: currentGameObject->CreateComponent<ComponentCollider>(); break;
-			//case (int)ComponentType::SCRIPT: currentGameObject->CreateComponent<ComponentScript>(); break;
-			//case (int)ComponentType::RIGID_BODY: currentGameObject->CreateComponent<ComponentRigidBody>(); break;
-			//}
 			if (componentType != (int)ComponentType::NONE)
 			{
 				currentGameObject->AddComponentByType((ComponentType)componentType);

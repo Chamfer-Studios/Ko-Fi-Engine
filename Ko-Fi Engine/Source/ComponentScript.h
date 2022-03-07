@@ -8,6 +8,7 @@
 
 class GameObject;
 class ComponentTransform;
+using Json = nlohmann::json;
 
 class ComponentScript : public Component
 {
@@ -20,19 +21,18 @@ public:
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
-	bool LoadScript(std::string scriptPath);
-	void SetRunning(const bool& setTo);
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
+	void ReloadScript();
 
 public:
 	sol::load_result script; // Check if it can be private
 	Scripting* handler = nullptr;
+	std::string path = "";
 
 private:
-	std::string fileName;
-	std::string fullName;
 	int numScript;
-	bool isRunning = false; // Temp
-	bool scriptLoaded = false;
+	bool isScriptLoaded = false;
 
 };
 

@@ -39,7 +39,8 @@ public:
 	// -------------------------------------
 
 	// ----- Serialization -----------------
-	// Save and load done in ModuleSceneIntro.... TODO: Need to serialize every component different
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 	// -------------------------------------
 
 	// ----- Getters Setters ---------------

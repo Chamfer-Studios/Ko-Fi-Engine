@@ -91,6 +91,20 @@ bool ComponentCollider::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
+void ComponentCollider::Save(Json& json) const
+{
+	json["type"] = "collider";
+
+	json["is_trigger"] = isTrigger;
+	json["collider_type"] = (int)collType;
+}
+
+void ComponentCollider::Load(Json& json)
+{
+	isTrigger = json.at("is_trigger");
+	SetColliderType((ColliderType)json.at("collider_type"));
+}
+
 void ComponentCollider::SetColliderType(ColliderType type)
 {
 	collType = type;

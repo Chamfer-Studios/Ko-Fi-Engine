@@ -22,6 +22,9 @@ public:
 	ComponentText(GameObject* parent);
 	~ComponentText();
 
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
+
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;

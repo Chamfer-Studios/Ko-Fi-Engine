@@ -16,6 +16,15 @@
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
+#include "ComponentRigidBody.h"
+#include "ComponentCollider.h"
+#include "ComponentScript.h"
+#include "ComponentButton.h"
+#include "ComponentCanvas.h"
+#include "ComponentImage.h"
+#include "ComponentText.h"
+#include "ComponentTransform2D.h"
+
 
 #include "Mesh.h"
 #include "Texture.h"
@@ -53,8 +62,7 @@ bool I_Scene::Import(const char* path)
 		return false;
 	}
 
-	nodeName = path;
-	nodeName = nodeName.substr(nodeName.find_last_of("/\\") + 1);
+	nodeName = Importer::GetInstance()->GetNameFromPath(path);
 
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo);
 
@@ -205,10 +213,20 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
+	// Import Material to GameObject
+	ComponentMaterial* cMaterial = gameObj->CreateComponent<ComponentMaterial>();
+
+	if (cMaterial == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
+		return;
+	}
+
 	aiString aiTexturePath;
 	std::string texturePath;
 	Texture texture;
-	if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
+	//if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
+	if(assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
 		std::string textureFilename = aiTexturePath.C_Str();
 
@@ -217,21 +235,13 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		texturePath = ASSETS_TEXTURES_DIR + textureFilename;
 
 		texture = Texture();
-		Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
-	}
+		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
 
-	// Import Material to GameObject
-	ComponentMaterial* cMaterial = gameObj->CreateComponent<ComponentMaterial>();
-
-	if (cMaterial != nullptr)
-	{
-		//cMaterial->textures.push_back(texture);
-		cMaterial->texture = texture;
-	}
-	else
-	{
-		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
-		return;
+		if (ret)
+		{
+			//cMaterial->textures.push_back(texture);
+			cMaterial->texture = texture;
+		}
 	}
 
 	Material* material = new Material();
@@ -291,6 +301,8 @@ bool I_Scene::Save(Scene* scene)
 		// So, in order to keep track of parents and childrens, we will record the UID of the parent.
 		if (gameObject->GetParent() != nullptr)
 			jsonGameObject["parent_UID"] = gameObject->GetParent()->GetUID();
+		else
+			jsonGameObject["parent_UID"] = gameObject->GetUID();
 
 		std::vector<Component*> componentsList = gameObject->GetComponents();
 		jsonGameObject["components"] = Json::array();
@@ -337,6 +349,54 @@ bool I_Scene::Save(Scene* scene)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::RIGID_BODY:
+			{
+				ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
+				rigidBodyCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::COLLIDER:
+			{
+				ComponentCollider* collisionCmp = (ComponentCollider*)component;
+				collisionCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::SCRIPT:
+			{
+				ComponentScript* scriptCmp = (ComponentScript*)component;
+				scriptCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::TRANSFORM2D:
+			{
+				ComponentTransform2D* transform2DCmp = (ComponentTransform2D*)component;
+				transform2DCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::CANVAS:
+			{
+				ComponentCanvas* canvasCmp = (ComponentCanvas*)component;
+				canvasCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::IMAGE:
+			{
+				ComponentImage* imageCmp = (ComponentImage*)component;
+				imageCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::BUTTON:
+			{
+				ComponentButton* buttonCmp = (ComponentButton*)component;
+				buttonCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::TEXT:
+			{
+				ComponentText* textCmp = (ComponentText*)component;
+				textCmp->Save(jsonComponent);
+				break;
+			}
 			default:
 				break;
 			}
@@ -344,7 +404,7 @@ bool I_Scene::Save(Scene* scene)
 		}
 		jsonFile[name]["game_objects_list"].push_back(jsonGameObject);
 	}
-	std::string path = SCENES_DIR + std::string(name) + SCENE_EXTENSION;
+	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
 
 	ret = jsonHandler.SaveJson(jsonFile, path.c_str());
 
@@ -357,41 +417,55 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 	JsonHandler jsonHandler;
 	Json jsonFile;
+	Json jsonScene;
 
-	std::string path = SCENES_DIR + std::string(name) + SCENE_EXTENSION;
+	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
 	ret = jsonHandler.LoadJson(jsonFile, path.c_str());
 
 	if (!jsonFile.is_null())
 	{
 		ret = true;
-
+		jsonScene = jsonFile.at(name);
+		scene->name = jsonScene.at("name");
+		scene->active = jsonScene.at("active");
 		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
 		//{
 		//	(*goIt)->CleanUp();
 		//	RELEASE((*goIt));
 		//}
 
-
-
-		Json jsonGameObjects = jsonFile["game_objects_list"];
+		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
+			uint UID = jsonGo.at("UID");
+			GameObject* go = nullptr;
+			bool exists = false;
 
-			std::string name = jsonGo["name"];
-			bool active = jsonGo["active"];
-			uint UID = jsonGo["UID"];
-			uint parentUid = jsonGo["parent_UID"];
-			GameObject* go = new GameObject(UID, engine, name.c_str());
+			if (scene->GetGameObject(UID) != nullptr)
+			{
+				exists = true;
+				go = scene->GetGameObject(UID);
+				go->name = jsonGo.at("name");
+				go->SetUID(UID);
+				go->SetEngine(engine);
+			}
+			else
+			{
+				std::string name = jsonGo.at("name");
+				go = new GameObject(UID, engine, name.c_str());
+			}
+
+			go->active = jsonGo.at("active");
+			uint parentUid = jsonGo.at("parent_UID");
 			go->SetParentUID(parentUid);
-			go->active = active;
 
-			Json jsonCmp = jsonGo["components"];
+			Json jsonCmp = jsonGo.at("components");
 			for (const auto& cmpIt : jsonCmp.items())
 			{
 				Json jsonCmp = cmpIt.value();
-				bool active = jsonCmp["active"];
-				std::string type = jsonCmp["type"];
+				bool active = jsonCmp.at("active");
+				std::string type = jsonCmp.at("type");
 
 				if (type == "transform")
 				{
@@ -423,7 +497,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				{
 					ComponentInfo* infoCmp = go->GetComponent<ComponentInfo>();
 					infoCmp->active = true;
-					infoCmp->Load(jsonCmp);
+					infoCmp->Load(jsonCmp); //does nothing as of now
 				}
 				else if (type == "camera")
 				{
@@ -435,15 +509,96 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					cameraCmp->active = true;
 					cameraCmp->Load(jsonCmp);
 				}
+				else if (type == "script")
+				{
+					ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
+					if (scriptCmp == nullptr)
+					{
+						scriptCmp = go->CreateComponent<ComponentScript>();
+					}
+					scriptCmp->active = true;
+					scriptCmp->Load(jsonCmp);
+				}
+				else if (type == "transform2D")
+				{
+					ComponentTransform2D* transform2DCmp = go->GetComponent<ComponentTransform2D>();
+					if (transform2DCmp == nullptr)
+					{
+						transform2DCmp = go->CreateComponent<ComponentTransform2D>();
+					}
+					transform2DCmp->active = true;
+					transform2DCmp->Load(jsonCmp);
+				}
+				else if (type == "canvas")
+				{
+					ComponentCanvas* canvasCmp = go->GetComponent<ComponentCanvas>();
+					if (canvasCmp == nullptr)
+					{
+						canvasCmp = go->CreateComponent<ComponentCanvas>();
+					}
+					canvasCmp->active = true;
+					canvasCmp->Load(jsonCmp);
+				}
+				else if (type == "image")
+				{
+					ComponentImage* imageCmp = go->GetComponent<ComponentImage>();
+					if (imageCmp == nullptr)
+					{
+						imageCmp = go->CreateComponent<ComponentImage>();
+					}
+					imageCmp->active = true;
+					imageCmp->Load(jsonCmp);
+				}
+				else if (type == "button")
+				{
+					ComponentButton* buttonCmp = go->GetComponent<ComponentButton>();
+					if (buttonCmp == nullptr)
+					{
+						buttonCmp = go->CreateComponent<ComponentButton>();
+					}
+					buttonCmp->active = true;
+					buttonCmp->Load(jsonCmp);
+				}
+				else if (type == "text")
+				{
+					ComponentText* textCmp = go->GetComponent<ComponentText>();
+					if (textCmp == nullptr)
+					{
+						textCmp = go->CreateComponent<ComponentText>();
+					}
+					textCmp->active = true;
+					textCmp->Load(jsonCmp);
+				}
+				else if (type == "rigidBody")
+				{
+					ComponentRigidBody* rbCmp = go->GetComponent<ComponentRigidBody>();
+					if (rbCmp == nullptr)
+					{
+						rbCmp = go->CreateComponent<ComponentRigidBody>();
+					}
+					rbCmp->active = true;
+					rbCmp->Load(jsonCmp);
+				}
+				else if (type == "collider")
+				{
+				ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
+				if (colCmp == nullptr)
+				{
+					colCmp = go->CreateComponent<ComponentCollider>();
+				}
+				colCmp->active = true;
+				colCmp->Load(jsonCmp);
+				}
 			}
-			scene->gameObjectList.push_back(go);
+			if (!exists)
+				scene->gameObjectList.push_back(go);
 		}
 
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)
 			{
-				if ((*goIt)->GetParentUID() == (*childrenIt)->GetUID() && (*childrenIt)->GetUID() != -1)
+				if ((*goIt)->GetUID() == (*childrenIt)->GetParentUID() && (*childrenIt)->GetUID() != -1)
 				{
 					(*goIt)->AttachChild((*childrenIt));
 				}

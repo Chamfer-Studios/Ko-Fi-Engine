@@ -23,11 +23,11 @@ public:
 public:
 	ComponentTransform2D(GameObject* parent);
 
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
+
 	bool Update(float dt) override;
 	virtual bool InspectorDraw(PanelChooser* chooser) override;
-
-	//void OnLoad(const JSONReader& reader) override;
-	//void OnSave(JSONWriter& writer) const override;
 
 	// Setters
 	void SetPosition(const float2& newPosition);

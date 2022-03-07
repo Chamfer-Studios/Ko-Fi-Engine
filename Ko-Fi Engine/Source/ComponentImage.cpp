@@ -37,6 +37,27 @@ ComponentImage::~ComponentImage()
 
 }
 
+void ComponentImage::Save(Json& json) const
+{
+	json["type"] = "image";
+
+	json["texture"] = openGLTexture.path;
+	json["mask"] = {
+		mask.x,
+		mask.y
+	};
+}
+
+void ComponentImage::Load(Json& json)
+{
+	std::string path = json["texture"].get<std::string>();
+	SetTexture(path.c_str());
+
+	std::vector<float> values = json["mask"].get<std::vector<float>>();
+	mask.x = values[0];
+	mask.y = values[1];
+}
+
 bool ComponentImage::Update(float dt)
 {
 	return true;

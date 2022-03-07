@@ -80,6 +80,7 @@ void PanelRuntimeState::DrawRuntimePanel()
 
         ImGui::SameLine();
         ImGui::ColorEdit3("Bg", (float*)&camera->background, ImGuiColorEditFlags_NoInputs);*/
+
     }
     ImGui::End();
 }

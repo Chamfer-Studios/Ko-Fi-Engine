@@ -3,10 +3,13 @@
 #include "Editor.h"
 #include "Engine.h"
 #include "Camera3D.h"
+#include "SceneManager.h"
 #include "ViewportFrameBuffer.h"
 #include "Input.h"
 #include "Window.h"
 #include "Importer.h"
+#include "Texture.h"
+#include "ComponentMaterial.h"
 
 #include "Log.h"
 // Tools
@@ -38,8 +41,8 @@ bool PanelViewport::PreUpdate()
 
 bool PanelViewport::Update()
 {
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove))
+	//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove ))
 	{
 		editor->scenePanelOrigin = ImGui::GetWindowPos();
 		editor->scenePanelOrigin.x += ImGui::GetWindowContentRegionMin().x;
@@ -60,7 +63,7 @@ bool PanelViewport::Update()
 			engine->GetCamera3D()->aspectRatio = viewportSize.x / viewportSize.y;
 			engine->GetCamera3D()->RecalculateProjection();
 			engine->GetViewportFrameBuffer()->OnResize(viewportSize.x, viewportSize.y);
-	
+
 		}
 		editor->viewportSize = viewportSize;
 
@@ -76,16 +79,41 @@ bool PanelViewport::Update()
 			{
 				if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
 				{
-					const char* path = (const char*)payload->Data;
-					Importer::GetInstance()->sceneImporter->Import(path);
+					std::string path = (const char*)payload->Data;
+
+					if (path.find(".fbx") != std::string::npos)
+					{
+						Importer::GetInstance()->sceneImporter->Import(path.c_str());
+					}
+					else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos )
+					{
+						// Apply texture
+						if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+						{
+							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+
+							if (go->GetComponent<ComponentMaterial>())
+							{
+								Texture texture = Texture();
+								Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
+
+								go->GetComponent<ComponentMaterial>()->texture = texture;
+								//cMaterial->textures.push_back(texture);
+							}
+						}
+					}
+					else if (path.find(".json") != std::string::npos) {
+						
+						Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(path).c_str());
+					}
 				}
 			}
 			ImGui::EndDragDropTarget();
 		}
-	ImGui::End();
 	}
-	ImGui::PopStyleVar();
+	ImGui::End();
 
+	//ImGui::PopStyleVar();
 
 	return true;
 }
