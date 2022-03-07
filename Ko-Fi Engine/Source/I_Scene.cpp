@@ -16,6 +16,8 @@
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
+#include "ComponentRigidBody.h"
+#include "ComponentCollider.h"
 
 #include "Mesh.h"
 #include "Texture.h"
@@ -335,6 +337,18 @@ bool I_Scene::Save(Scene* scene)
 			{
 				ComponentCamera* cameraCmp = (ComponentCamera*)component;
 				cameraCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::RIGID_BODY:
+			{
+				ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
+				rigidBodyCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::COLLIDER:
+			{
+				ComponentCollider* collisionCmp = (ComponentCollider*)component;
+				collisionCmp->Save(jsonComponent);
 				break;
 			}
 			default:
