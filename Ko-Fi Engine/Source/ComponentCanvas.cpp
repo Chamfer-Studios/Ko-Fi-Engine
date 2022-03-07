@@ -13,6 +13,76 @@ ComponentCanvas::ComponentCanvas(GameObject* parent) : ComponentTransform2D(pare
 	logicalSize = { 1920, 1080 };
 }
 
+void ComponentCanvas::Save(Json& json) const
+{
+	json["type"] = "canvas";
+
+	json["position"] = {
+		GetPosition().x,
+		GetPosition().y,
+	};
+	json["rotation"] = {
+		GetRotation().x,
+		GetRotation().y,
+		GetRotation().z,
+	};
+	json["size"] = {
+		GetSize().x,
+		GetSize().y
+	};
+	json["pivot"] = {
+		GetPivot().x,
+		GetPivot().y
+	};
+	json["logicalSize"] = {
+		logicalSize.x,
+		logicalSize.y
+	};
+	json["anchor"] = (int)GetAnchor();
+}
+
+void ComponentCanvas::Load(Json& json)
+{
+	std::vector<float> values = json["position"].get<std::vector<float>>();
+	float2 position;
+	position.x = values[0];
+	position.y = values[1];
+
+	SetPosition(position);
+
+	values = json["rotation"].get<std::vector<float>>();
+	float3 rotation;
+	rotation.x = values[0];
+	rotation.y = values[1];
+	rotation.z = values[2];
+
+	SetRotation(rotation);
+
+	values = json["size"].get<std::vector<float>>();
+	float2 size;
+	size.x = values[0];
+	size.y = values[1];
+
+	SetSize(size);
+
+	values = json["pivot"].get<std::vector<float>>();
+	float2 pivot;
+	pivot.x = values[0];
+	pivot.y = values[1];
+
+	SetPivot(pivot);
+
+	values = json["logicalSize"].get<std::vector<float>>();
+	float2 logicalSize;
+	logicalSize.x = values[0];
+	logicalSize.y = values[1];
+
+	SetLogicalSize(logicalSize);
+
+	int anchor = json["anchor"].get<int>();
+	SetAnchor((ComponentTransform2D::Anchor)anchor);
+}
+
 bool ComponentCanvas::Update(float dt)
 {
 	return true;

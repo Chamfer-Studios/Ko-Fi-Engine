@@ -110,7 +110,8 @@ void ComponentMaterial::Load(Json& json)
 {
 	if (!json.empty())
 	{
-		material = new Material();
+		if (material == nullptr)
+			material = new Material();
 
 		//material->materialName = json["material_name"];
 		//material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
@@ -120,7 +121,7 @@ void ComponentMaterial::Load(Json& json)
 			material->SetShaderPath(shaderPath.c_str());
 		else
 		{
-			shaderPath = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+			shaderPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 			material->SetShaderPath(shaderPath.c_str());
 		}
 
@@ -129,7 +130,7 @@ void ComponentMaterial::Load(Json& json)
 			CONSOLE_LOG("[ERROR] Something went wrong loading the shader.");
 		}
 
-		std::vector<float> values = json["color"].get<std::vector<float>>();
+		std::vector<float> values = json.at("color").get<std::vector<float>>();
 		material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
 		values.clear();
 
@@ -313,6 +314,9 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 				//}
 				if (texture.textureID == currentTextureId)
 				{
+					texture.textureID = -1;
+					texture.SetTexturePath(nullptr);
+
 					Texture tex;
 					Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
 					texture = tex;
@@ -337,7 +341,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 					material->SetShaderPath(path.c_str());
 				else
 				{
-					path = SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+					path = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 					material->SetShaderPath(path.c_str());
 				}
 				Importer::GetInstance()->materialImporter->LoadAndCreateShader(path.c_str(), material);
@@ -349,7 +353,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
 		ImGui::Text("Material Texture:");
 		//for (Texture& tex : textures)
-		if(texture.textureID != -1)
+		if (texture.textureID != -1)
 		{
 			ImGui::Image((ImTextureID)texture.textureID, ImVec2(85, 85));
 			ImGui::SameLine();
@@ -370,9 +374,19 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			if (ImGui::Button("Delete Textures"))
 			{
 				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
+				texture.textureID = -1;
+				texture.SetTexturePath(nullptr);
 			}
 			ImGui::PopID();
 			ImGui::EndGroup();
+		}
+		else
+		{
+			if (ImGui::Button("Add Texture"))
+			{
+				panelChooser->OpenPanel("ChangeTexture", "png");
+				currentTextureId = texture.textureID;
+			}
 		}
 
 		//if (ImGui::Button("Add Texture"))
@@ -390,31 +404,31 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			case GL_FLOAT:
 			{
 				UniformT<float>* uf = (UniformT<float>*)uniform;
-				ImGui::DragFloat(uniform->name.c_str(), &uf->value, -10, 10);
+				ImGui::DragFloat(uniform->name.c_str(), &uf->value, 0.001f, 0.0f, 32.0f, "%.3f");
 			}
 			break;
 			case GL_FLOAT_VEC2:
 			{
 				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-				ImGui::DragFloat2(uniform->name.c_str(), uf2->value.ptr(), -10, 10);
+				ImGui::DragFloat2(uniform->name.c_str(), uf2->value.ptr(), 0.001f, 0.0f, 32.0f, "%.3f");
 			}
 			break;
 			case GL_FLOAT_VEC3:
 			{
 				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-				ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), -10, 10);
+				ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), 0.001f, 0.0f, 32.0f, "%.3f");
 			}
 			break;
 			case GL_FLOAT_VEC4:
 			{
 				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-				ImGui::DragFloat4(uniform->name.c_str(), uf4->value.ptr(), -10, 10);
+				ImGui::DragFloat4(uniform->name.c_str(), uf4->value.ptr(), 0.001f, 0.0f, 1.0f, "%.3f");
 			}
 			break;
 			case GL_INT:
 			{
 				UniformT<int>* ui = (UniformT<int>*)uniform;
-				ImGui::DragInt(uniform->name.c_str(), &ui->value, -10, 10);
+				ImGui::DragInt(uniform->name.c_str(), &ui->value, 0.001f, 0.0f, 255.0f, "%d");
 			}
 			break;
 			default:

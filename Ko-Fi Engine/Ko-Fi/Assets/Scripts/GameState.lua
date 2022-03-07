@@ -1,12 +1,24 @@
-print("GameStates.lua loaded")
+local GameState = {}
 
-function Update(dt)
-	print("Update2")
+GameState.GameState = {
+   STOP = 1,
+   STARTING = 2,
+   PLAYING = 3,
+   PAUSED = 4,
+}
 
-	rot = gameObject:GetParent():GetTransform():GetRotation()
-	rot.x = rot.x + 1
-	gameObject:GetParent():GetTransform():SetRotation(rot)
+gameState = GameState.GameState.STARTING
 
+function GameState.GetGameState()
+	return gameState
 end
 
-print("GameState.lua compiled")
+function GameState.SayHi()
+    print("Hello World!")
+end
+
+function Update(dt)
+	gameState = GameState.GameState.PAUSED
+end
+
+return GameState --.gameState

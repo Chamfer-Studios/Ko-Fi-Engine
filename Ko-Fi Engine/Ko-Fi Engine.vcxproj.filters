@@ -1442,15 +1442,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Source\Player.lua">
-      <Filter>Scripts</Filter>
-    </None>
-    <None Include="Source\GameState.lua">
-      <Filter>Scripts</Filter>
-    </None>
-    <None Include="Bullet.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <ClInclude Include="Source\ResourceManager.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
@@ -1535,5 +1526,16 @@
     <ClInclude Include="Source\ComponentRigidBody.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Player.lua">
+      <Filter>Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>
