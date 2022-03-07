@@ -16,6 +16,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
+#include "ComponentScript.h"
 #include "ComponentButton.h"
 #include "ComponentCanvas.h"
 #include "ComponentImage.h"
@@ -348,6 +349,12 @@ bool I_Scene::Save(Scene* scene)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::SCRIPT:
+			{
+				ComponentScript* scriptCmp = (ComponentScript*)component;
+				scriptCmp->Save(jsonComponent);
+				break;
+			}
 			case ComponentType::TRANSFORM2D:
 			{
 				ComponentTransform2D* transform2DCmp = (ComponentTransform2D*)component;
@@ -489,6 +496,16 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					cameraCmp->active = true;
 					cameraCmp->Load(jsonCmp);
+				}
+				else if (type == "script")
+				{
+					ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
+					if (scriptCmp == nullptr)
+					{
+						scriptCmp = go->CreateComponent<ComponentScript>();
+					}
+					scriptCmp->active = true;
+					scriptCmp->Load(jsonCmp);
 				}
 				else if (type == "transform2D")
 				{

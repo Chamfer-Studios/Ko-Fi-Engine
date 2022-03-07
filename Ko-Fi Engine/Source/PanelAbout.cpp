@@ -41,6 +41,7 @@ void PanelAbout::ShowAboutWindow(bool* toggleAboutPanel)
 		ImGui::End();
 		return;
 	}
+	ImGui::End();
 	ImGui::Text("Ko-Fi Engine 0.1 WIP");
 	ImGui::Separator();
 	ImGui::Text("By Alex Avila and Bosco Barber.");

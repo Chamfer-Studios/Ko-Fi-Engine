@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Importer.h"
 #include "Engine.h"
+#include "Editor.h"
 #include "QuadTree3D.h"
 #include "RNG.h"
 
@@ -90,6 +91,9 @@ public:
 		else
 			this->rootGo->AttachChild(go);
 
+		int GOID = go->GetUID();
+		//engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = GOID;
+
 		return go;
 	}
 
@@ -99,6 +103,8 @@ public:
 		{
 			if ((*it)->GetUID() == gameObject->GetUID())
 			{
+				if ((*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID == (*it)->GetUID())
+					(*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 				gameObjectList.erase(it);
 				break;
 			}
@@ -113,8 +119,6 @@ public:
 				for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
 				{
 					GameObject* child = (*ch);
-					GameObject* childParent = child->GetParent();
-					childParent = gameObject->GetParent();
 					parent->AttachChild(child);
 				}
 			}
@@ -180,8 +184,8 @@ public:
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
-	GameObject* selectedGameObject = nullptr;
 	std::vector<GameObject*> gameObjectListToCreate;
+	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
 	

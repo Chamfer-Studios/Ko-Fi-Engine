@@ -7,6 +7,11 @@
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentScript.h"
+#include "ComponentCamera.h"
+#include "ComponentInfo.h"
+#include "ComponentTransform.h"
+#include "ComponentCollider.h"
+#include "ComponentRigidBody.h"
 
 PanelInspector::PanelInspector(Editor* editor)
 {
@@ -47,47 +52,18 @@ bool PanelInspector::Update()
 		}
 
 		ImGui::Separator();
-		//const char* items[] = { "Material Component", "Mesh Component"};
-		const char* items[] = { "" };
-		static const char* current_item = NULL;
 
-		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script");
+		// Take care with the order in the combo, it has to follow the ComponentType enum class order
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody");
 
 		ImGui::SameLine();
 
 		if ((ImGui::Button("ADD")))
 		{
-			switch (componentType)
+			if (componentType != (int)ComponentType::NONE)
 			{
-			case (int)ComponentType::NONE: break;
-			case (int)ComponentType::MESH:
-			{
-				if (!currentGameObject->GetComponent<ComponentMesh>())
-					currentGameObject->CreateComponent<ComponentMesh>();
-				break;
-			}
-			case (int)ComponentType::MATERIAL:
-			{
-				if (!currentGameObject->GetComponent<ComponentMaterial>())
-					currentGameObject->CreateComponent<ComponentMaterial>();
-				break;
-			}
-			//case (int)ComponentType::CAMERA:
-			// {
-			// currentGameObject->CreateComponent<ComponentCamera>();
-			// break;
-			// }
-			//case (int)ComponentType::COLLIDER:
-			// {
-			// currentGameObject->CreateComponent<ComponentCollider>();
-			// break;
-			// }
-			case (int)ComponentType::SCRIPT:
-			{
-				if (!currentGameObject->GetComponent<ComponentScript>())
-					currentGameObject->CreateComponent<ComponentScript>();
-				break;
-			}
+				currentGameObject->AddComponentByType((ComponentType)componentType);
+				componentType = 0;
 			}
 		}
 	}

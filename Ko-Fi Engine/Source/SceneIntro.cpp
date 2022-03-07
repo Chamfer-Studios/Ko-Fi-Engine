@@ -111,9 +111,8 @@ bool SceneIntro::PostUpdate(float dt)
 	for (GameObject* parent : gameObjectListToCreate)
 	{
 		GameObject* bullet = CreateEmptyGameObject("Bullet");
-		parent->GetComponent<ComponentScript>()->handler->lua["bullet"] = bullet;
-		parent->GetComponent<ComponentScript>()->handler->lua.script("table.insert(bullets, bullet)");
-		parent->GetComponent<ComponentScript>()->handler->lua.script("print(bullets[1]:GetTransform():GetPosition().x)");
+		//parent->GetComponent<ComponentScript>()->handler->lua["bullet"] = bullet;
+		//parent->GetComponent<ComponentScript>()->handler->lua.script("table.insert(bullets, bullet)"); //We will need something like this
 
 		bullet->GetTransform()->SetScale(float3(0.025, 0.05, 0.08));
 		float3 pos = parent->GetTransform()->GetPosition();
@@ -131,14 +130,18 @@ bool SceneIntro::PostUpdate(float dt)
 		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 		componentMaterial->SetMaterial(material);
 		
-
 		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
-		componentScript->script = componentScript->handler->lua.load_file("Assets/Scripts/Bullet.lua");
-		componentScript->script();
-		componentScript->SetRunning(true);
+		componentScript->path = "Assets/Scripts/Bullet.lua";
+		componentScript->ReloadScript();
 		parent->GetComponent<ComponentScript>()->handler->lua["SetBulletDirection"](bullet);
 	}
 	gameObjectListToCreate.clear();
+	for (GameObject* gameObject : gameObjectListToDelete)
+	{
+		DeleteGameObject(gameObject);
+	}
+	gameObjectListToDelete.clear();
+
 	engine->GetRenderer()->DrawRay();
 
 

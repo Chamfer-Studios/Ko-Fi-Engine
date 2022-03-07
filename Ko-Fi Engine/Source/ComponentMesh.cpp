@@ -4,7 +4,6 @@
 #include "FSDefs.h"
 //#include "Color.h"
 #include "Camera3D.h"
-#include "PanelChooser.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -14,6 +13,9 @@
 #include "Engine.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
+#include "PanelViewport.h"
+#include "Editor.h"
+#include "Log.h"
 
 #include "Importer.h"
 
@@ -103,8 +105,8 @@ ComponentMesh::~ComponentMesh()
 
 bool ComponentMesh::Start()
 {
-	//GenerateLocalBoundingBox();
-	GenerateBounds();
+	GenerateLocalBoundingBox();
+	//GenerateBounds();
 	return true;
 }
 
@@ -211,17 +213,12 @@ bool ComponentMesh::PostUpdate(float dt)
 			}
 
 			mesh->Draw(owner);
-			//GenerateGlobalBoundingBox();
-			//DrawBoundingBox(aabb, float3(1.0f, 0.0f, 0.0f));
 
-			if (drawAABB)
-				DrawAABB();
-
-			//if (owner->active || owner->isParentSelected())
-			//	DrawOutline();
+			//draw bounding boxes
 
 			GenerateGlobalBoundingBox();
-			DrawBoundingBox(mesh->localAABB, float3(1.0f, 0.0f, 0.0f));
+
+			DrawMouseSelection(); // Draw AABB if Selected with Mosue
 
 			glBindVertexArray(0);
 			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -301,8 +298,7 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 		RELEASE(this->mesh);
 
 	this->mesh = mesh;
-	GenerateBounds();
-
+	GenerateLocalBoundingBox();
 }
 
 uint ComponentMesh::GetVertices()
@@ -355,9 +351,10 @@ void ComponentMesh::GenerateLocalBoundingBox()
 	}
 }
 
-AABB ComponentMesh::GetLocalAABB()
+const AABB ComponentMesh::GetLocalAABB()
 {
 	GenerateLocalBoundingBox();
+
 	return mesh->localAABB;
 }
 
@@ -368,13 +365,13 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
-	mesh->localAABB.SetNegativeInfinity();
-	mesh->localAABB.Enclose(obb);
+	aabb.SetNegativeInfinity();
+	aabb.Enclose(obb);
 }
 
-AABB ComponentMesh::GetGlobalAABB()
+const AABB ComponentMesh::GetGlobalAABB() const
 {
-	return mesh->localAABB;
+	return aabb;
 }
 
 void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
@@ -408,6 +405,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	//};
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
+
 	glBegin(GL_LINES);
 
 	// Bottom 1
@@ -453,12 +451,12 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glEnd();
 	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1.0f);
-}
 
+}
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
-	bool ret = true;
 
+	bool ret = true;
 	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
 	{
 		ImGui::Text("Mesh Path: ");
@@ -480,55 +478,34 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 	}
 	return ret;
 }
-void ComponentMesh::GenerateBounds()
+//bool ComponentMesh::GetRenderAABB()
+//{
+//	return renderAABB;
+//}
+//
+//void ComponentMesh::SetRenderAABB(bool newRenderAABB)
+//{
+//	this->renderAABB = newRenderAABB;
+//}
+
+//AABB ComponentMesh::GetGlobalAABB() const
+//{
+//	//AABB global = AABB(mesh->localAABB);
+//	//global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
+//	return mesh->localAABB;
+//}
+
+void ComponentMesh::DrawMouseSelection()
 {
-	mesh->localAABB.SetNegativeInfinity();
-	//mesh->localAABB->Enclose(&mesh->vertices[0], vertices.size());
-	mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
+	int selectedId = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
+
+	if (selectedId == -1) return;
 
 
-	Sphere sphere;
-	sphere.r = 0.f;
-	sphere.pos = mesh->localAABB.CenterPoint();
-	sphere.Enclose(mesh->localAABB);
+	if ( selectedId == owner->GetUID()) // Draw Selected Object
+		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
 
-	radius = sphere.r;
-	centerPoint = sphere.pos;
-}
-
-AABB ComponentMesh::GetGlobalAABB() const
-{
-	AABB global = AABB(mesh->localAABB);
-	global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
-	return global;
-}
-
-void ComponentMesh::DrawAABB() const
-{
-	AABB aabb = GetGlobalAABB();
-	float3 corners[8];
-	aabb.GetCornerPoints(corners);
-
-	for (int i = 0; i < 8; i++)
-	{
-		glColor3f(1, 0.8, 0);
-		GLUquadric* quadric = gluNewQuadric();
-		glTranslatef(corners[i].x, corners[i].y, corners[i].z);
-		gluSphere(quadric, 0.05f, 8, 8);
-		glTranslatef(-corners[i].x, -corners[i].y, -corners[i].z);
-		gluDeleteQuadric(quadric);
-
-		for (int j = 0; j < 8; j++)
-		{
-			if (j == i) continue;
-			glBegin(GL_LINES);
-			glDisable(GL_LIGHTING);
-			glLineWidth(3.f);
-			glVertex3f(corners[i].x, corners[i].y, corners[i].z);
-			glVertex3f(corners[j].x, corners[j].y, corners[j].z);
-			glEnd();
-			glEnable(GL_LIGHTING);
-		}
-	}
+	//else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
+	//	DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
 }
 

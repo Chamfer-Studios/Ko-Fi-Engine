@@ -1,8 +1,6 @@
 #ifndef __SCRIPTING_H__
 #define __SCRIPTING_H__
 
-
-
 #include "Globals.h"
 #include "Engine.h"
 #include "Input.h" 
@@ -14,6 +12,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentRigidBody.h"
 #include <lua.hpp>
 #include <sol.hpp>
 
@@ -24,22 +23,40 @@ public:
 
 	Scripting()
 	{
-		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, /*sol::lib::string,*/ sol::lib::debug);
+		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug);
 	}
 
 	~Scripting() {}
 
 	void SetUpVariableTypes()
 	{
-		// Here we give lua certain data structures and variables
+		// Giving lua certain data structures and functions
 
 		// KEY_STATE
 		lua.new_enum("KEY_STATE",
-			"KEY_IDLE",	  KEY_STATE::KEY_IDLE,
-			"KEY_DOWN",   KEY_STATE::KEY_DOWN,
-			"KEY_REPEAT", KEY_STATE::KEY_REPEAT,
-			"KEY_UP",     KEY_STATE::KEY_UP
+			"KEY_IDLE",		KEY_STATE::KEY_IDLE,
+			"KEY_DOWN",		KEY_STATE::KEY_DOWN,
+			"KEY_REPEAT",	KEY_STATE::KEY_REPEAT,
+			"KEY_UP",		KEY_STATE::KEY_UP
 			);
+
+
+		// ComponentType
+		lua.new_enum("ComponentType",
+			"NONE",			ComponentType::NONE,
+			"MESH",			ComponentType::MESH,
+			"MATERIAL",		ComponentType::MATERIAL,
+			"CAMERA",		ComponentType::CAMERA,
+			"COLLIDER",		ComponentType::COLLIDER,
+			"SCRIPT",		ComponentType::SCRIPT,
+			"TRANSFORM",	ComponentType::TRANSFORM,
+			"INFO",			ComponentType::INFO,
+			"TRANSFORM2D",	ComponentType::TRANSFORM2D,
+			"CANVAS",		ComponentType::CANVAS,
+			"IMAGE",		ComponentType::IMAGE,
+			"BUTTON",		ComponentType::BUTTON,
+			"TEXT",			ComponentType::TEXT
+		);
 
 
 		// float3 structure
@@ -50,17 +67,30 @@ public:
 			"z", &float3::z
 			);
 
-
+		
 		// GameObject structure
 		lua.new_usertype<GameObject>("GameObject",
 			sol::constructors<void()>(),
 			"active",		&GameObject::active,
 			"name",			&GameObject::name,
 			"GetParent",	&GameObject::GetParent,
-			"GetTransform", &GameObject::GetTransform
+			"GetComponents",&GameObject::GetComponents,							// Kinda works... not very useful tho
+			"GetTransform", &GameObject::GetTransform,
+			"GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>/*,
+			"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
 
-		
+
+		// Component structure
+		lua.new_usertype<Component>("Component",
+			sol::constructors<void(GameObject*)>(),
+			"active",	&Component::active,
+			"owner",	&Component::owner,
+			"type",		&Component::type,
+			"GetType",	&Component::GetType
+			);
+
+
 		// Transform structure
 		lua.new_usertype<ComponentTransform>("ComponentTransform",
 			sol::constructors<void(GameObject*)>(),
@@ -75,11 +105,25 @@ public:
 			);
 
 
-		// Transform
+		// Rigid Body structure
+		lua.new_usertype<ComponentRigidBody>("ComponentRigidBody",
+			sol::constructors<void(GameObject*)>(),
+			"IsStatic",				&ComponentRigidBody::IsStatic,
+			"IsKinematic",			&ComponentRigidBody::IsKinematic,
+			"SetStatic",			&ComponentRigidBody::SetStatic,
+			"SetDynamic",			&ComponentRigidBody::SetDynamic,
+			"SetLinearVelocity",	&ComponentRigidBody::SetLinearVelocity,
+			"FreezePositionY",		&ComponentRigidBody::FreezePositionY
+			);
+	
+
+		// Giving lua certain variables
 		lua["gameObject"] = gameObject;
 		lua["componentTransform"] = componentTransform;
-		lua.set_function("GetMouseButton", &Scripting::LuaGetMouseButton, this);
+		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
 		lua.set_function("CreateBullet", &Scripting::LuaCreateBullet, this);
+		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
+		lua.set_function("Find", &Scripting::LuaFind, this);
 	}
 
 	bool CleanUp()
@@ -89,17 +133,40 @@ public:
 		return true;
 	}
 
-	KEY_STATE LuaGetMouseButton(int button)
+	KEY_STATE LuaGetInput(int button) 
 	{
-		if (button < 5 && button > 0)
+		if (button < 4 && button > 0)
 			return gameObject->GetEngine()->GetInput()->GetMouseButton(button);
+
+		switch (button)
+		{
+			case 4: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_I); }
+			case 5: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_J); }
+			case 6: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K); }
+			case 7: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_L); }
+			case 8: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE); }
+		}
 	}
 
 	void LuaCreateBullet()
 	{
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.push_back(gameObject);
 	}
+
+	void DeleteGameObject()
+	{
+		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToDelete.push_back(gameObject);
+	}
 	
+	GameObject* LuaFind(std::string name)
+	{
+		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		{
+			if (go->name == name)
+				return go;
+		}
+		return nullptr;
+	}
 
 public:
 	sol::state lua;

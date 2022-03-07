@@ -10,6 +10,14 @@
 #include <gl/GLU.h>
 #include <iostream>
 
+
+#include "ComponentMaterial.h"
+#include "ComponentTransform.h"
+#include "GameObject.h"
+#include "Globals.h"
+
+#include "MathGeoLib/Math/float4x4.h"
+
 Mesh::Mesh(Shape shape)
 {
 	verticesSizeBytes = 0;
