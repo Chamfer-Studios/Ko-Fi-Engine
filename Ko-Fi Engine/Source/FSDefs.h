@@ -9,8 +9,8 @@
 #define ASSETS_SHADERS_DIR "Assets/Shaders/"
 #define ASSETS_FONTS_DIR "Assets/Fonts/"
 #define ASSETS_ICONS_DIR "Assets/Icons/"
+#define ASSETS_SCENES_DIR "Assets/Scenes/"
 
-#define SCENES_DIR "Scenes/"
 #define LIBRARY_DIR "Library/"
 #define MESHES_DIR "Library/Meshes/"
 #define MATERIALS_DIR "Library/Materials/"

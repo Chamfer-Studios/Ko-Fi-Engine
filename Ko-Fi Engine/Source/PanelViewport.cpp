@@ -85,7 +85,7 @@ bool PanelViewport::Update()
 					{
 						Importer::GetInstance()->sceneImporter->Import(path.c_str());
 					}
-					else if ((path.find(".jpg") || path.find(".png")) != std::string::npos)
+					else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos )
 					{
 						// Apply texture
 						if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
@@ -101,6 +101,10 @@ bool PanelViewport::Update()
 								//cMaterial->textures.push_back(texture);
 							}
 						}
+					}
+					else if (path.find(".json") != std::string::npos) {
+						
+						Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(path).c_str());
 					}
 				}
 			}

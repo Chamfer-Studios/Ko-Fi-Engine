@@ -17,6 +17,7 @@ public:
 	~Importer();
 
 	static Importer* GetInstance(KoFiEngine* e = nullptr);
+	std::string GetNameFromPath(std::string path);
 
 public:
 	I_Scene* sceneImporter = nullptr;
