@@ -126,6 +126,17 @@ bool ComponentRigidBody::Update(float dt)
 	return true;
 }
 
+void ComponentRigidBody::Save(Json& json) const 
+{ 
+	json["type"] = "rigidBody"; 
+
+	json["is_static"] = isStatic;
+}  
+
+void ComponentRigidBody::Load(Json& json) 
+{  
+	isStatic = json.at("is_static");
+}
 // Is called whenever a dynamic body attribute is changed
 void ComponentRigidBody::UpdatePhysicsValues()
 {

@@ -362,7 +362,8 @@ bool I_Scene::Save(Scene* scene)
 			{
 				ComponentCollider* collisionCmp = (ComponentCollider*)component;
 				collisionCmp->Save(jsonComponent);
-
+				break;
+			}
 			case ComponentType::SCRIPT:
 			{
 				ComponentScript* scriptCmp = (ComponentScript*)component;
@@ -401,7 +402,6 @@ bool I_Scene::Save(Scene* scene)
 			}
 			default:
 				break;
-			}
 			}
 			jsonGameObject["components"].push_back(jsonComponent);
 		}
