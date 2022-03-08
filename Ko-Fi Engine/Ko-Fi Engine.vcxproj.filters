@@ -1439,6 +1439,9 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\ResourceManager.h">
@@ -1458,9 +1461,6 @@
     </ClInclude>
     <ClInclude Include="Source\FSDefs.h">
       <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\par_shapes.h">
-      <Filter>Source\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Material.h">
       <Filter>Source\Importers</Filter>
