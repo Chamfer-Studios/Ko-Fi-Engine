@@ -1,0 +1,691 @@
+{
+    "SceneIntro": {
+        "active": true,
+        "game_objects_amount": 10,
+        "game_objects_list": [
+            {
+                "active": true,
+                "children_id_list": [
+                    1,
+                    2,
+                    3,
+                    7
+                ],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    }
+                ],
+                "id": -1,
+                "is3D": true,
+                "name": "Root",
+                "parent": null
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            5.0,
+                            0.10000000149011612,
+                            5.0
+                        ],
+                        "transform_matrix": [
+                            5.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.10000000149011612,
+                            0.0,
+                            0.0,
+                            0.0,
+                            5.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "transform_matrix_local": [
+                            5.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.10000000149011612,
+                            0.0,
+                            0.0,
+                            0.0,
+                            5.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/Meshes/Floor.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "materialName": "",
+                        "materialPath": "",
+                        "shaderPath": "Library/Shaders/default_shader.glsl",
+                        "textures": [
+                            {
+                                "path": "Assets/Textures/cliff_rock.png"
+                            }
+                        ],
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "id": 1,
+                "is3D": true,
+                "name": "Floor",
+                "parent": -1
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            7.0,
+                            0.20000000298023224,
+                            12.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            0.10000000149011612,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.10000000149011612,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            7.0,
+                            0.20000000298023224,
+                            12.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.10000000149011612,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            7.0,
+                            0.20000000298023224,
+                            12.0
+                        ]
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/Meshes/Water.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "materialName": "",
+                        "materialPath": "",
+                        "shaderPath": "Assets/Shaders/water_shader.glsl",
+                        "textures": [
+                            {
+                                "path": "Assets/Textures/cliff_rock.png"
+                            }
+                        ],
+                        "uniforms": [
+                            {
+                                "name": "customColorOne",
+                                "type": 35665,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 1.0
+                                }
+                            },
+                            {
+                                "name": "customColorThree",
+                                "type": 35665,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.5,
+                                    "z": 1.0
+                                }
+                            },
+                            {
+                                "name": "customColorTwo",
+                                "type": 35665,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
+                            {
+                                "name": "resolution",
+                                "type": 35664,
+                                "value": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
+                            {
+                                "name": "time",
+                                "type": 5126,
+                                "value": 0.0
+                            }
+                        ]
+                    }
+                ],
+                "id": 2,
+                "is3D": true,
+                "name": "Water",
+                "parent": -1
+            },
+            {
+                "active": true,
+                "children_id_list": [
+                    4,
+                    5
+                ],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.20000000298023224,
+                            13.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.20000000298023224,
+                            13.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.20000000298023224,
+                            13.0
+                        ]
+                    }
+                ],
+                "id": 3,
+                "is3D": true,
+                "name": "House",
+                "parent": -1
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.20000000298023224,
+                            13.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/Meshes/Chimney.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "materialName": "",
+                        "materialPath": "",
+                        "shaderPath": "Library/Shaders/default_shader.glsl",
+                        "textures": [
+                            {
+                                "path": "Assets/Textures/Baker_house.png"
+                            }
+                        ],
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "id": 4,
+                "is3D": true,
+                "name": "Chimney",
+                "parent": 3
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "component_type": "transform",
+                        "is_dirty": false,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.0,
+                            0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "transform_matrix": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.20000000298023224,
+                            13.0
+                        ],
+                        "transform_matrix_local": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "component_type": "mesh",
+                        "faces_normals": false,
+                        "mesh": "Library/Meshes/HouseBody.sugar",
+                        "path": "",
+                        "vertex_normals": false
+                    },
+                    {
+                        "component_type": "material",
+                        "materialName": "",
+                        "materialPath": "",
+                        "shaderPath": "Library/Shaders/default_shader.glsl",
+                        "textures": [
+                            {
+                                "path": "Assets/Textures/Baker_house.png"
+                            }
+                        ],
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "id": 5,
+                "is3D": true,
+                "name": "HouseBody",
+                "parent": 3
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "transform2d",
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ]
+                    },
+                    {
+                        "component_type": "image",
+                        "mask": [
+                            1.0,
+                            1.0
+                        ],
+                        "texture": "Assets/Textures/checker.png"
+                    }
+                ],
+                "id": 6,
+                "is3D": false,
+                "name": "Image",
+                "parent": 7
+            },
+            {
+                "active": true,
+                "children_id_list": [
+                    6,
+                    8,
+                    9
+                ],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "canvas",
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ]
+                    }
+                ],
+                "id": 7,
+                "is3D": false,
+                "name": "Canvas",
+                "parent": -1
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "transform2d",
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            17.0,
+                            -287.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1458.0,
+                            200.0
+                        ]
+                    },
+                    {
+                        "component_type": "text",
+                        "value": "Hello world!"
+                    }
+                ],
+                "id": 8,
+                "is3D": false,
+                "name": "Text",
+                "parent": 7
+            },
+            {
+                "active": true,
+                "children_id_list": [],
+                "components_list": [
+                    {
+                        "component_type": "info"
+                    },
+                    {
+                        "anchor": 4,
+                        "component_type": "transform2d",
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -359.0,
+                            288.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ]
+                    },
+                    {
+                        "component_type": "button",
+                        "hoverTexture": "Assets/Textures/baker_house.png",
+                        "idleTexture": "Assets/Textures/checker.png",
+                        "pressedTexture": "Assets/Textures/Building_V01_C.png"
+                    }
+                ],
+                "id": 9,
+                "is3D": false,
+                "name": "Button",
+                "parent": 7
+            }
+        ],
+        "name": "SceneIntro",
+        "root_go": -1
+    }
+}

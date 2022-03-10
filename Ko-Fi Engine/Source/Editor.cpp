@@ -52,15 +52,15 @@ Editor::Editor(KoFiEngine* engine)
 	panelChooser = new PanelChooser(this);
 	panelGameObject = new PanelInspector(this);
 	panelAssets = new PanelAssets(this);
-	panelNodeEditor = new PanelNodeEditor(this);
+	//panelNodeEditor = new PanelNodeEditor(this);
 	panelTextEditor = new PanelTextEditor(this);
 
 	// Panel instances with its own bool
-	if (panelsState.showGameWindow)
-	{
-		panelGame = new PanelGame(this);
-		AddPanel(panelGame);
-	}
+	/*if (panelsState.showGameWindow)
+	{*/
+		//panelGame = new PanelGame(this);
+		//AddPanel(panelGame);
+	/*}*/
 	if (panelsState.showViewportWindow)
 	{
 		panelViewport = new PanelViewport(this, engine);
@@ -211,6 +211,7 @@ bool Editor::Update(float dt)
 			ImGui::DockSpace(dockspaceId,ImVec2(0.0f,0.0f),ImGuiDockNodeFlags_PassthruCentralNode);
 			//ImGui::DockSpaceOverViewport(viewport);
 		}
+
 	}
 	ImGui::End();
 	ImGui::PopStyleVar();
@@ -291,7 +292,7 @@ bool Editor::CleanUp()
 	RELEASE(panelChooser);
 	RELEASE(panelGameObject);
 	RELEASE(panelViewport);
-	RELEASE(panelGame);
+	//RELEASE(panelGame);
 	RELEASE(panelRuntimeState);
 
 	ImGui_ImplOpenGL3_Shutdown();
@@ -300,6 +301,12 @@ bool Editor::CleanUp()
 	ImGui::DestroyContext();
 
 	return true;
+}
+
+// Method to receive and manage events
+void Editor::OnNotify(const Event& event)
+{
+	// Manage events
 }
 
 #include "ImGui.h"                // https://github.com/ocornut/imgui
@@ -458,11 +465,11 @@ void Editor::UpdatePanelsState()
 
 	if (panelsState.showGameWindow == true)
 	{
-		if (panelGame == nullptr)
+		/*if (panelGame == nullptr)
 		{
 			panelGame = new PanelGame(this);
 			AddPanel(panelGame);
-		}
+		}*/
 	}
 	else
 	{

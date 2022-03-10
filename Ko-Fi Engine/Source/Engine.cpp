@@ -8,10 +8,13 @@
 #include "Editor.h"
 #include "FileSystem.h"
 #include "ViewportFrameBuffer.h"
+#include "UI.h"
 #include "Importer.h"
-#include "Defs.h"
+#include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "Physics.h"
+#include "CollisionDetector.h"
 
 #include <iostream>
 #include <sstream>
@@ -23,7 +26,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 {
 	engineConfig = new EngineConfig();
 	PERF_START(ptimer);
-	Importer::GetInstance()->SetEngine(this);
+	Importer::GetInstance(this);
 	window = new Window(this);
 	fileSystem = new FileSystem(this);
 	input = new Input(this);
@@ -31,7 +34,10 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	renderer = new Renderer3D(this);
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
+	ui = new UI(this);
 	viewportBuffer = new ViewportFrameBuffer(this);
+	physics = new Physics(this);
+	collisionDetector = new CollisionDetector(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -39,6 +45,9 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(camera);
 	AddModule(fileSystem);
+	AddModule(ui);
+	AddModule(physics);
+	AddModule(collisionDetector);
 	AddModule(sceneManager);
 	AddModule(viewportBuffer);
 	AddModule(editor);
@@ -99,11 +108,11 @@ bool KoFiEngine::Awake()
 
 	if (ret == true)
 	{
-		std::list<Module*>::iterator item = modules.begin();;
+		std::list<Module*>::iterator item = modules.begin();
 
 		while (item != modules.end() && ret)
 		{
-			ret = (*item)->Awake(jsonConfig.at((*item)->name.GetString()));
+			ret = (*item)->Awake(jsonConfig.at((*item)->name));
 			item++;
 		}
 	}
@@ -401,4 +410,17 @@ FileSystem* KoFiEngine::GetFileSystem()const
 ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
 {
 	return this->viewportBuffer;
+}
+
+Physics* KoFiEngine::GetPhysics()const
+{
+	return this->physics;
+}
+UI* KoFiEngine::GetUI() const
+{
+	return this->ui;
+}
+CollisionDetector* KoFiEngine::GetCollisionDetector() const
+{
+	return this->collisionDetector;
 }

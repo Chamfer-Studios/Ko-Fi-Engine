@@ -1,9 +1,12 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-#include "SString.h"
+
+#include "SDL_events.h"
 
 #include "JsonHandler.h"
+#include "Event.h"
+#include <list>
 
 class GuiControl;
 enum class GuiControlState;
@@ -57,10 +60,39 @@ public:
 
 	virtual void OnGui() {}
 
+	virtual void OnClick(SDL_Event event) {}
+	// Methods to manage observers
+	void AddObserver(Module* observer)
+	{
+		observers.push_back(observer);
+	}
+
+	void RemoveObserver(Module* observer)
+	{
+		observers.remove(observer);
+	}
+
+	// Method to receive and manage events
+	virtual void OnNotify(const Event& event) = 0;
+
+protected:
+	// Method to notify events to other modules in order to manage them
+	void notify(const Event& event)
+	{
+		for (std::list<Module*>::iterator observer = observers.begin(); observer != observers.end(); observer++)
+		{
+			(*observer)->OnNotify(event);
+		}
+	}
+
 public:
-	SString name;
+	std::string name;
 	bool active;
 
+private:
+	// To keep track of the observers of each module
+	std::list<Module*> observers;
+	int numObservers;
 };
 
-#endif // __MODULE_H__
+#endif // !__MODULE_H__

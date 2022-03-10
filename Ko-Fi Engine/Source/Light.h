@@ -1,11 +1,10 @@
-#pragma once
-#ifndef LIGHT_H
-#define LIGHT_H
+#ifndef __LIGHT_H__
+#define __LIGHT_H__
 
 #include "Color.h"
 #include "glmath.h"
 
-struct Light	
+struct Light
 {
 	Light();
 
@@ -22,4 +21,4 @@ struct Light
 	bool on;
 };
 
-#endif //LIGHT_H
+#endif // !__LIGHT_H__

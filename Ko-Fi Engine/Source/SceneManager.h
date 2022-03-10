@@ -11,12 +11,16 @@
 class KoFiEngine;
 class SceneIntro;
 class GameObject;
-class JasonHandler;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentMaterial;
 class ComponentInfo;
 class ComponentCamera;
+class ComponentCanvas;
+class ComponentTransform2D;
+class ComponentText;
+class ComponentImage;
+class ComponentButton;
 
 enum class RuntimeState
 {
@@ -50,6 +54,9 @@ public:
 	// Called before quitting
 	virtual bool CleanUp();
 
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
+
 	bool PrepareUpdate();
 	bool FinishUpdate();
 
@@ -62,20 +69,7 @@ public:
 	void OnPause();
 	void OnResume();
 	void OnTick();
-
-	// Serialization functions
-	bool SaveScene(Scene* scene);
-	Json SaveComponentTransform(ComponentTransform* componentTransform);
-	Json SaveComponentMesh(ComponentMesh* componentMesh);
-	Json SaveComponentMaterial(ComponentMaterial* componentMaterial);
-	Json SaveComponentInfo(ComponentInfo* componentInfo);
-	Json SaveComponentCamera(ComponentCamera* componentCamera);
-	bool LoadScene(Scene* scene, const char* sceneName);
-	void LoadComponentTransform(ComponentTransform* componentTransform, Json jsonComponentTransform);
-	void LoadComponentMesh(ComponentMesh* componentMesh, Json jsonComponentMesh);
-	void LoadComponentInfo(ComponentInfo* componentInfo, Json jsonComponentInfo);
-	void LoadComponentCamera(ComponentCamera* componentCamera, Json jsonComponentCamera);
-
+	void OnClick(SDL_Event event);
 public:
 	bool active;
 
@@ -106,8 +100,6 @@ private:
 	// --------------------------------------------------
 	
 	RuntimeState runtimeState = RuntimeState::STOPPED;
-
-	JsonHandler jsonHandler;
 };
 
-#endif // __SCENE_MANAGER_H__
+#endif // !__SCENE_MANAGER_H__

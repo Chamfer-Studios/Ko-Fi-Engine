@@ -2,6 +2,7 @@
 #define __WINDOW_H__
 
 #include "Module.h"
+#include "Globals.h"
 
 struct SDL_Window;
 struct SDL_Surface;
@@ -21,7 +22,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Changae title
+	// Method to receive and manage events
+	void OnNotify(const Event& event);
+
+	// Change title
 	void SetTitle(const char* title);
 
 	void AdjustBrightness(float brightness);
@@ -57,9 +61,9 @@ public:
 	SDL_Surface* screenSurface;
 
 private:
-	SString title;
-	uint width;
-	uint height;
+	std::string title;
+	uint width = SCREEN_WIDTH;
+	uint height = SCREEN_HEIGHT;
 	uint scale;
 	float brightness;
 	bool fullscreen = false;
@@ -71,4 +75,4 @@ private:
 	KoFiEngine* engine = nullptr;
 };
 
-#endif // __WINDOW_H__
+#endif // !__WINDOW_H__

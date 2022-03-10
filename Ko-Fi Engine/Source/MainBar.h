@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __MAINBAR_H__
+#define __MAINBAR_H__
+
 #include "Panel.h"
 
 class Editor;
@@ -15,9 +17,11 @@ public:
 	bool Update();
 	bool PostUpdate();
 
-	void ImportModel();
+	void ChoosersListener();
 
 private:
 	Editor* editor;
 	bool loadingModel = false;
 };
+
+#endif // !__MAINBAR_H__

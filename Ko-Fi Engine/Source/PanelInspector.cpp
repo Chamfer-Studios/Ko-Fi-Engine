@@ -6,6 +6,12 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
+#include "ComponentScript.h"
+#include "ComponentCamera.h"
+#include "ComponentInfo.h"
+#include "ComponentTransform.h"
+#include "ComponentCollider.h"
+#include "ComponentRigidBody.h"
 
 PanelInspector::PanelInspector(Editor* editor)
 {
@@ -31,38 +37,34 @@ bool PanelInspector::Update()
 {
 	// Panel game object info. to manage the options of the current game object
 	PanelGameObjectInfo panelGameObjectInfo = editor->panelGameObjectInfo;
+
 	ImGui::Begin("Inspector");
 	if (panelGameObjectInfo.selectedGameObjectID != -1)
 	{
 		// Current game object (the one we have selected at the moment)
 		GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->GetGameObject(editor->panelGameObjectInfo.selectedGameObjectID);
+		/*if (currentGameObject->GetComponent<ComponentMesh>() != nullptr && (currentGameObject->GetComponent<ComponentMesh>()->GetMesh() != nullptr))
+			currentGameObject->GetComponent<ComponentMesh>()->DrawBoundingBox(currentGameObject->GetComponent<ComponentMesh>()->GetMesh()->localAABB, float3(1.0f, 0.0f, 0.0f));*/
+
 		for (Component* component : currentGameObject->GetComponents())
 		{
 			component->InspectorDraw(editor->GetPanelChooser());
 		}
 
 		ImGui::Separator();
-		//const char* items[] = { "Material Component", "Mesh Component"};
-		const char* items[] = { ""};
-		static const char* current_item = NULL;
 
-		if (ImGui::BeginCombo("##combo", "Add Component")) // The second parameter is the label previewed before opening the combo.
+		// Take care with the order in the combo, it has to follow the ComponentType enum class order
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody");
+
+		ImGui::SameLine();
+
+		if ((ImGui::Button("ADD")))
 		{
-			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+			if (componentType != (int)ComponentType::NONE)
 			{
-				if (ImGui::Selectable(items[n]))
-				{
-					current_item = items[n];
-					if (current_item == "Material Component") {
-						bool alreadyExists = currentGameObject->GetComponent<ComponentMaterial>();
-						if(!alreadyExists)
-						currentGameObject->CreateComponent<ComponentMaterial>();
-					}
-					
-				}
-					
+				currentGameObject->AddComponentByType((ComponentType)componentType);
+				componentType = 0;
 			}
-			ImGui::EndCombo();
 		}
 	}
 

@@ -1,10 +1,10 @@
-#pragma once
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
 #include "Module.h"
 #include "EngineConfig.h"
 #include "JsonHandler.h"
+#include "Iterable.h"
 #include <list>
 
 // Modules
@@ -16,6 +16,9 @@ class Camera3D;
 class Editor;
 class FileSystem;
 class ViewportFrameBuffer;
+class Physics;
+class UI;
+class CollisionDetector;
 
 class KoFiEngine
 {
@@ -55,6 +58,9 @@ public:
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
 	ViewportFrameBuffer* GetViewportFrameBuffer() const;
+	Physics* GetPhysics() const;
+	UI* GetUI() const;
+	CollisionDetector* GetCollisionDetector() const;
 
 private:
 	// Add a new module to handle
@@ -88,6 +94,9 @@ private:
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
 	ViewportFrameBuffer* viewportBuffer = nullptr;
+	Physics* physics = nullptr;
+	UI* ui = nullptr;
+	CollisionDetector* collisionDetector = nullptr;
 
 private:
 	int argc;
@@ -99,6 +108,12 @@ private:
 	EngineConfig* engineConfig;
 
 	JsonHandler jsonHandler;
+
+public:
+	auto AllModules() -> decltype(make_iterable(modules.begin(), modules.end()))
+	{
+		return make_iterable(modules.begin(), modules.end());
+	}
 };
 
-#endif //__ENGINE_H__
+#endif // !__ENGINE_H__

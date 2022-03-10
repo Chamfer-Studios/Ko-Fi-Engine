@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PANEL_INSPECTOR_H__
+#define __PANEL_INSPECTOR_H__
+
 #include "Panel.h"
 
 class Editor;
@@ -17,9 +19,13 @@ public:
 private:
 	// Needed modules
 	Editor* editor = nullptr;
+	int componentType;
 
 	// Bools for the different options
 	bool debugOptions = false;
-		bool drawVertexNormals = false;
-		bool drawFacesNormals = false;
+	bool drawVertexNormals = false;
+	bool drawFacesNormals = false;
+
 };
+
+#endif // !__PANEL_INSPECTOR_H__

@@ -9,6 +9,12 @@
 #include "Primitive.h"
 #include "Importer.h"
 #include "ComponentCamera.h"
+#include "ComponentCanvas.h"
+#include "ComponentTransform2D.h"
+#include "ComponentMaterial.h"
+#include "ComponentImage.h"
+#include "ComponentButton.h"
+#include "ComponentText.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -34,7 +40,7 @@ bool MainBar::PreUpdate()
 bool MainBar::Update()
 {
 	bool ret = true;
-	ImportModel();
+	ChoosersListener();
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -42,6 +48,14 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Import Model"))
 			{
 				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx");
+			}
+			if (ImGui::MenuItem("Save Scene"))
+			{
+				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene());
+			}
+			if (ImGui::MenuItem("Load Scene"))
+			{
+				editor->GetPanelChooser()->OpenPanel("LoadScene", "json");
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
@@ -65,16 +79,12 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Create Game Object"))
 			{
-
 				editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-
 			}
 			if (ImGui::MenuItem("Create Camera"))
 			{
-
-				GameObject* camera = Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
-				camera->CreateComponent<ComponentCamera>();
-
+				//GameObject* camera = Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
+				//camera->CreateComponent<ComponentCamera>();
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
@@ -104,6 +114,33 @@ bool MainBar::Update()
 				}
 				ImGui::EndMenu();
 			}
+			if (ImGui::BeginMenu("UI"))
+			{
+				if (ImGui::MenuItem("Canvas")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr,nullptr, false);
+					go->SetName("Canvas");
+					go->CreateComponent<ComponentCanvas>();
+				}
+				if (ImGui::MenuItem("Image")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+					go->SetName("Image");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentImage>();
+				}
+				if (ImGui::MenuItem("Button")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+					go->SetName("Button");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentButton>();
+				}
+				if (ImGui::MenuItem("Text")) {
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+					go->SetName("Text");
+					go->CreateComponent<ComponentTransform2D>();
+					go->CreateComponent<ComponentText>();
+				}
+				ImGui::EndMenu();
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -127,16 +164,23 @@ bool MainBar::PostUpdate()
 	return true;
 }
 
-void MainBar::ImportModel() {
-
-
+void MainBar::ChoosersListener()
+{
 	if (editor->GetPanelChooser()->IsReadyToClose("MainBar"))
 	{
 		const char* file = editor->GetPanelChooser()->OnChooserClosed();
 		if (file != nullptr)
 		{
-			Importer::GetInstance()->ImportModel(file);
-			//editor->engine->GetFileSystem()->GameObjectFromMesh(newFile.c_str(), editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList);
+			Importer::GetInstance()->sceneImporter->Import(file);
+		}
+	}
+	if (editor->GetPanelChooser()->IsReadyToClose("LoadScene"))
+	{
+		const char* file = editor->GetPanelChooser()->OnChooserClosed();
+		if (file != nullptr)
+		{
+			Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+
 		}
 	}
 }

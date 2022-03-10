@@ -1,8 +1,11 @@
-#pragma once
+#ifndef __MATERIAL_NODE_H__
+#define __MATERIAL_NODE_H__
+
 #include "Node.h"
 #include "MathGeoLib/Math/float4.h"
-class MaterialNode : public Node {
 
+class MaterialNode : public Node
+{
 public: 
 	MaterialNode(const char* name, const NodeType t, const int id) : Node(name,t,id) {}
 	~MaterialNode(){}
@@ -28,12 +31,13 @@ public:
 		ImGui::TextUnformatted("Ambient Occlusion");
 		ImNodes::EndInputAttribute();
 		ImNodes::EndNode();
-
 	}
+
 private:
 	float4 albedoColor = { 1.0f,1.0f,1.0f,1.0f };
 	float metallic = 0;
 	float roughness = 0;
 	float ambientOcclusion = 0;
-
 };
+
+#endif // !__MATERIAL_NODE_H__

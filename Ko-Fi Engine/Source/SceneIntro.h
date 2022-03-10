@@ -1,9 +1,7 @@
-#pragma once
-#ifndef SCENE_INTRO_H
-#define SCENE_INTRO_H
+#ifndef __SCENE_INTRO_H__
+#define __SCENE_INTRO_H__
 
 #include "Scene.h"
-//#include "Globals.h"
 #include "JsonHandler.h"
 
 #define MAX_SNAKE 2
@@ -39,40 +37,4 @@ private:
 	GameObject* camera = nullptr;
 };
 
-// TMP
-/////////////////////////////////////////////////////////////
-
-#include "par_shapes.h"
-
-class TMPPlane
-{
-public:
-	TMPPlane(uint uid);
-	~TMPPlane();
-
-	void GenerateBuffers();
-
-private:
-	void CopyParMesh(par_shapes_mesh* parMesh);
-
-public:
-	uint uid = 0;
-
-	uint vertexNum = 0;
-	std::vector<float3> vertices;
-
-	uint normalNum = 0;
-	std::vector<float3> normals;
-
-	std::vector<float2> texCoords;
-
-	uint indexNum = 0;
-	std::vector<uint> indices;
-
-	uint vertexBuf = 0;
-	uint indexBuf = 0;
-	uint textureBuf = 0;
-	uint normalsBuf = 0;
-};
-
-#endif SCENE_INTRO_H // SCENE_INTRO_H
+#endif // !__SCENE_INTRO_H__

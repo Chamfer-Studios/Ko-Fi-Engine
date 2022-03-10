@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __GRAPH_H__
+#define __GRAPH_H__
 
 #include <algorithm>
 #include <cassert>
@@ -355,3 +356,5 @@ void dfs_traverse(const Graph<NodeType>& graph, const int start_node, Visitor vi
     }
 }
 } // namespace example
+
+#endif // !__GRAPH_H__

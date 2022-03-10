@@ -4,9 +4,17 @@
 #include "GameObject.h"
 #include "Importer.h"
 #include "Engine.h"
+#include "Editor.h"
+#include "QuadTree3D.h"
+#include "RNG.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
+
+#include "glew.h"
+#include "SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
 
 class Scene
 {
@@ -61,11 +69,11 @@ public:
 		return true;
 	}
 
-	GameObject* GetGameObject(int id)
+	GameObject* GetGameObject(int uid)
 	{
 		for (GameObject* go : gameObjectList)
 		{
-			if (go->GetId() == id)
+			if (go->GetUID() == uid)
 			{
 				return go;
 			}
@@ -74,11 +82,17 @@ public:
 		return nullptr;
 	}
 
-	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr)
+	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
 	{
-		GameObject* go = new GameObject(gameObjectList.size(), engine);
+		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
 		this->gameObjectList.push_back(go);
-		this->rootGo->AttachChild(go);
+		if (parent)
+			parent->AttachChild(go);
+		else
+			this->rootGo->AttachChild(go);
+
+		int GOID = go->GetUID();
+		//engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = GOID;
 
 		return go;
 	}
@@ -87,8 +101,10 @@ public:
 	{
 		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
 		{
-			if ((*it)->GetId() == gameObject->GetId())
+			if ((*it)->GetUID() == gameObject->GetUID())
 			{
+				if ((*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID == (*it)->GetUID())
+					(*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 				gameObjectList.erase(it);
 				break;
 			}
@@ -103,8 +119,6 @@ public:
 				for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
 				{
 					GameObject* child = (*ch);
-					GameObject* childParent = child->GetParent();
-					childParent = gameObject->GetParent();
 					parent->AttachChild(child);
 				}
 			}
@@ -143,16 +157,65 @@ public:
 		}
 	}
 
+
+	template<class UnaryFunction>
+	void ApplyToObjects(UnaryFunction f);
+
+	void ComputeQuadTree()// Compute Space Partitioning
+	{
+		if (!sceneTreeIsDirty) return;
+
+		std::vector<GameObject*>* objects = new std::vector<GameObject*>();
+
+		if (sceneTree != nullptr) delete sceneTree;
+		sceneTree = new QuadTree3D(AABB(float3(-100, -100, -100), float3(100, 100, 100)));
+
+		ApplyToObjects([objects](GameObject* it) mutable {
+			objects->push_back(it);
+			});
+
+		sceneTree->AddObjects(*objects);
+		delete objects;
+	}
+
 public:
-	SString name;
+	std::string name;
 	bool active;
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
+	std::vector<GameObject*> gameObjectListToCreate;
+	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
+	
+	//Space Partitioning
+	bool sceneTreeIsDirty = true;
+	bool drawSceneTree = false;
+	QuadTree3D* sceneTree = nullptr;
+
 
 	LineSegment ray;
+
+	// Space Partitioning Functions...
+	private:
+		template<class UnaryFunction>
+		void recursive_iterate(const GameObject* o, UnaryFunction f)
+		{
+			for (auto c = o->children.begin(); c != o->children.end(); ++c)
+			{
+				recursive_iterate(*c, f);
+				f(*c);
+			}
+		}
+
 };
+
+template<class UnaryFunction>
+inline void Scene::ApplyToObjects(UnaryFunction f)
+{
+	recursive_iterate(rootGo, f);
+}
+
 
 #endif // __SCENE_H__
