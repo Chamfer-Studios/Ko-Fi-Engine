@@ -23,7 +23,7 @@ float ParticleModule::GetPercentage(Particle* p)
 
 EmitterDefault::EmitterDefault()
 {
-	type = Type::DEFAULT;
+	type = ParticleModuleType::DEFAULT;
 }
 
 void EmitterDefault::Spawn(Particle* particle, EmitterInstance* emitter)
@@ -52,7 +52,7 @@ bool EmitterDefault::Update(float dt, EmitterInstance* emitter)
 
 EmitterMovement::EmitterMovement()
 {
-	type = Type::MOVEMENT;
+	type = ParticleModuleType::MOVEMENT;
 }
 
 void EmitterMovement::Spawn(Particle* particle, EmitterInstance* emitter)
@@ -79,7 +79,7 @@ bool EmitterMovement::Update(float dt, EmitterInstance* emitter)
 
 EmitterColor::EmitterColor()
 {
-	type = Type::COLOR;
+	type = ParticleModuleType::COLOR;
 }
 
 void EmitterColor::Spawn(Particle* particle, EmitterInstance* emitter)
@@ -131,16 +131,16 @@ bool EmitterColor::EditColor(FadeColor& color, uint pos)
 {
 	bool ret = true;
 	ImVec4 vecColor = ImVec4(color.color.r, color.color.g, color.color.b, color.color.a);
-	if (ImGui::ColorButton("Color", vecColor, ImGuiColorEditFlags_None, ImVec2(100, 20)));
+	//if (ImGui::ColorButton("Color", vecColor, ImGuiColorEditFlags_None, ImVec2(100, 20)));
 
 
-	ImGui::SameLine();
-	ImGui::TextUnformatted("Color");
+	//ImGui::SameLine();
+	//ImGui::TextUnformatted("Color");
 	if (pos > 0)
 	{
 		std::string colorStr = "Remove Color ";
 		colorStr.append(std::to_string(pos));
-		if (ImGui::Button(colorStr.data(), ImVec2(125, 25))) ret = false;
+		if (ImGui::Button(colorStr.c_str(), ImVec2(125, 25))) ret = false;
 	}
 
 	ImGui::ColorEdit4("Color", &color.color.a, ImGuiColorEditFlags_AlphaBar);
@@ -150,7 +150,7 @@ bool EmitterColor::EditColor(FadeColor& color, uint pos)
 
 EmitterSize::EmitterSize()
 {
-	type = Type::SIZE;
+	type = ParticleModuleType::SIZE;
 }
 
 void EmitterSize::Spawn(Particle* particle, EmitterInstance* emitter)

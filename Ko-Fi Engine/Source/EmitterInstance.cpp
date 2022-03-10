@@ -1,4 +1,6 @@
 #include "EmitterInstance.h"
+#include "ParticleModule.h"
+#include "Texture.h"
 
 EmitterInstance::EmitterInstance(Emitter* e, ComponentParticle* cp) : emitter(e),component(cp)
 {

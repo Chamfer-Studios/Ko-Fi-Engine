@@ -36,10 +36,10 @@ struct FadeColor
 	FadeColor() : color(Color()), pos(0.0f)
 	{}
 
-	FadeColor(Color c, float p, bool change) : color(c), pos(p)
+	FadeColor(Color c, float p) : color(c), pos(p)
 	{}
 
-	FadeColor(float r, float g, float b, float a, float p, bool change) : color(Color(r, g, b, a)), pos(p)
+	FadeColor(float r, float g, float b, float a, float p) : color(Color(r, g, b, a)), pos(p)
 	{}
 
 	bool operator == (const FadeColor& fc)

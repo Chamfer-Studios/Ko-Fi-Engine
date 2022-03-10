@@ -7,17 +7,18 @@
 class Particle;
 class EmitterInstance;
 
-class ParticleModule
-{
-public:
-	enum class Type
+	enum class ParticleModuleType
 	{
-		NONE,
+		NONE = 0,
 		DEFAULT,
 		MOVEMENT,
 		COLOR,
 		SIZE
 	};
+
+class ParticleModule
+{
+public:
 
 	ParticleModule();
 	~ParticleModule();
@@ -26,7 +27,7 @@ public:
 	float GetPercentage(Particle* p);
 
 public:
-	Type type = Type::NONE;
+	ParticleModuleType type = ParticleModuleType::NONE;
 	//Emitter* emitter = nullptr;
 	bool disable = false;
 };

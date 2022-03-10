@@ -5,10 +5,10 @@
 #include "EmitterInstance.h"
 #include "Emitter.h"
 #include "SceneIntro.h"
+#include "Color.h"
 
 class EmitterInstance;
 class Emitter;
-class TMPPlane;
 
 class ComponentParticle : public Component
 {
@@ -30,6 +30,8 @@ public:
 public:
 	std::vector<EmitterInstance*> emitterInstances;
 	std::vector<Emitter*> emitters;
+	int moduleToAdd = 0;
+	FadeColor colorToAdd;
 };
 
 #endif // __COMPONENT_PARTICLE_H__

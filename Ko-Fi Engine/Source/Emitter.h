@@ -4,15 +4,14 @@
 #include <vector>
 #include <string>
 #include "Globals.h"
-#include "ParticleModule.h"
-#include "Texture.h"
 
-class Texture;
+enum class ParticleModuleType;
 class ParticleModule;
 class EmitterDefault;
 class EmitterMovement;
 class EmitterColor;
 class EmitterSize;
+class Texture;
 
 class Emitter
 {
@@ -42,6 +41,7 @@ public:
 	}
 
 	void AddModule(ParticleModule* m);
+	void AddModuleByType(ParticleModuleType type);
 	void DeleteModule(ParticleModule* m);
 
 public:
