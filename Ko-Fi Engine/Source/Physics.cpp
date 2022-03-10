@@ -1,7 +1,5 @@
 #include "Physics.h"
 
-#include "PxPhysicsAPI.h"
-
 // Module constructor
 Physics::Physics(KoFiEngine* engine) : Module()
 {
@@ -14,6 +12,7 @@ Physics::~Physics()
 {
 }
 
+// Serialization: Not used, scene gravity is not serialized
 bool Physics::Awake(Json configModule)
 {
 	return true;
@@ -32,6 +31,7 @@ bool Physics::Start()
 	return ret;
 }
 
+// Not used
 bool Physics::PreUpdate(float dt)
 {
 	return true;
@@ -41,12 +41,13 @@ bool Physics::Update(float dt)
 {
 	if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING || engine->GetSceneManager()->GetState() == RuntimeState::PAUSED)
 	{
-		inGame = true;
+		isSimulating = true;
 	}
-	else inGame = false;
+	else isSimulating = false;
 
-	if (scene && inGame)
+	if (scene && isSimulating)
 	{
+		// TODO: WE HAVE TO PASS AS A PARAMETER TO SIMULATE THE GAME DT, NOT THE GENERAL ENGINE DT
 		scene->simulate(dt);
 		scene->fetchResults(true);
 	}
@@ -54,6 +55,7 @@ bool Physics::Update(float dt)
 	return true;
 }
 
+// Not used
 bool Physics::PostUpdate(float dt)
 {
 	return true;
@@ -79,6 +81,7 @@ bool Physics::CleanUp()
 	return true;
 }
 
+// Not used
 void Physics::OnNotify(const Event& event)
 {
 }

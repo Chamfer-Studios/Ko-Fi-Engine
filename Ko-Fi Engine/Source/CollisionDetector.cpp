@@ -126,7 +126,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 						currentEntity->GetTransform()->SetPosition(finalPosition);
 						
 						//Stop gravity
-						currentEntity->GetComponent<ComponentRigidBody>()->SetAffectGravity(false);
+						currentEntity->GetComponent<ComponentRigidBody>()->SetUseGravity(false);
 
 						//lock Y axis at desired position
 						currentEntity->GetComponent<ComponentRigidBody>()->FreezePositionY(true);

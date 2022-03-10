@@ -8,7 +8,7 @@
 #include "Engine.h"
 #include "SceneManager.h"
 
-
+#include "PxPhysicsAPI.h"
 
 namespace physx
 {
@@ -36,29 +36,34 @@ public:
 	Physics(KoFiEngine* engine); // Module constructor
 	~Physics(); // Module destructor
 
-	bool Awake(Json configModule);
+	// TODO: Serialization -------------------------------
+	bool Awake(Json configModule); // Not used, scene gravity is not serialized
+	// --------------------------------------------------
 	bool Start();
-	bool PreUpdate(float dt);
+	bool PreUpdate(float dt); // Not used
 	bool Update(float dt);
-	bool PostUpdate(float dt);
+	bool PostUpdate(float dt); // Not used
 	bool CleanUp();
-	void OnNotify(const Event& event);
+	void OnNotify(const Event& event); // Not used
+
 	bool InitializePhysX();
 
 	void AddActor(physx::PxActor* actor, GameObject* owner);
 	void DeleteActor(physx::PxActor* actor);
 	inline const std::map<physx::PxRigidActor*, GameObject*> GetActors() { return actors; }
 
-
 	// Getters & setters
 	inline physx::PxPhysics* GetPxPhysics() const { return physics; }
 
-	inline bool GetInGame() { return inGame; }
+	inline bool IsSimulating() { return isSimulating; }
+
+	inline float GetGravity() const { return gravity; }
+	inline void SetGravity(const float newGravity) { gravity = newGravity; scene->setGravity(physx::PxVec3(0.0f, -gravity, 0.0f)); }
 
 private:
 	KoFiEngine* engine = nullptr;
 
-	bool inGame = false;
+	bool isSimulating = false;
 
 	std::map<physx::PxRigidActor*, GameObject*> actors;
 
@@ -67,9 +72,10 @@ private:
 	physx::PxCooking* cooking = nullptr;
 	physx::PxScene* scene = nullptr;
 
-	float gravity = 0.2f;
-
 	physx::PxU32 nbThreads = 4;
+
+	// Modificable physics attributes
+	float gravity = 0.2f;
 };
 
 #endif // !__MODULE_PHYSICS_H__
