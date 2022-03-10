@@ -9,7 +9,6 @@
 class GameObject;
 struct PhysBody3D;
 struct PhysMotor3D;
-class TMPPlane;
 
 class SceneIntro : public Scene
 {
@@ -24,9 +23,6 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-
-public:
-	TMPPlane* plane = nullptr;
 
 private:
 	int random = 0;

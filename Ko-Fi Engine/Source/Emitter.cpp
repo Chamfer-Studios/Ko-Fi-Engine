@@ -4,7 +4,7 @@ Emitter::Emitter()
 {
 	texture = new Texture();
 	path = "Assets\Textures\firework_projectile.png";
-	texture->SetUpTexture(path);
+	Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
 	CreateModule<EmitterDefault>();
 }
 

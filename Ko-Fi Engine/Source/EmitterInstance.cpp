@@ -44,7 +44,7 @@ bool EmitterInstance::Update(float dt)
 	{
 		for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
 		{
-			(*it)->Draw(emitter->texture->GetTextureId(), component->plane->indexNum);
+			(*it)->Draw(emitter->texture->GetTextureId(), 0);
 		}
 	}
 	return true;
@@ -67,9 +67,9 @@ void EmitterInstance::SpawnParticle()
 
 void EmitterInstance::KillParticles()
 {
-	for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
+	for (auto it : particles)
 	{
-		(*it)->active = false;
+		it->active = false;
 	}
 }
 

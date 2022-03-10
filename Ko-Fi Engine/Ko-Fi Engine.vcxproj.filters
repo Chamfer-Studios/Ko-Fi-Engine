@@ -855,7 +855,7 @@
     </ClInclude>
     <ClInclude Include="Source\ParticleModule.h">
       <Filter>Source\Helpers\Particles</Filter>
-    </ClCompile>
+    </ClInclude>
     <ClInclude Include="Source\External\PhysX_4.1\include\geomutils\GuContactBuffer.h">
       <Filter>Libs\PhysX</Filter>
     </ClInclude>

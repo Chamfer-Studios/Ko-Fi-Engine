@@ -1,6 +1,4 @@
 #include "ComponentParticle.h"
-#include "SceneManager.h"
-#include "SceneIntro.h"
 
 ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 {
@@ -16,13 +14,6 @@ ComponentParticle::~ComponentParticle()
 
 bool ComponentParticle::Start()
 {
-	Scene* s = owner->GetEngine()->GetSceneManager()->GetCurrentScene();
-	if (s->name == "SceneIntro")
-	{
-		SceneIntro* sI = (SceneIntro*)s;
-		plane = sI->plane;
-	}
-
 	Emitter* e = new Emitter();
 	emitters.push_back(e);
 	EmitterInstance* eI = new EmitterInstance(e, this);
@@ -72,12 +63,13 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
-	if (ImGui::CollapsingHeader("Particle System")) {
+	if (ImGui::CollapsingHeader("Particle System"))
+	{
 		ImGui::Text("Emitters: %d", emitters.size());
 		for (Emitter* emitter : emitters)
 		{
 			ImGui::Text("%s", emitter->name);
-			if (ImGui::TreeNode("Modules"))
+			if (ImGui::CollapsingHeader("Modules"))
 			{
 				for (ParticleModule* module : emitter->modules)
 				{
@@ -203,7 +195,6 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						break;
 					}
 				}
-				ImGui::TreePop();
 			}
 		}
 	}

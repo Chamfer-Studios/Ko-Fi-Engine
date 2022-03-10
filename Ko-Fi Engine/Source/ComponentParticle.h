@@ -30,7 +30,6 @@ public:
 public:
 	std::vector<EmitterInstance*> emitterInstances;
 	std::vector<Emitter*> emitters;
-	TMPPlane* plane = nullptr;
 };
 
 #endif // __COMPONENT_PARTICLE_H__

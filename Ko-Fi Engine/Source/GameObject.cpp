@@ -164,6 +164,11 @@ void GameObject::AddComponentByType(ComponentType componentType)
 			this->CreateComponent<ComponentMesh>();
 			break;
 		}
+		case ComponentType::PARTICLE:
+		{
+			this->CreateComponent<ComponentParticle>();
+			break;
+		}
 		case ComponentType::SCRIPT:
 		{
 			this->CreateComponent<ComponentScript>();
