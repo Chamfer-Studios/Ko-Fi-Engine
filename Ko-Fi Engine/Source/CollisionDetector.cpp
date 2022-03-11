@@ -27,7 +27,6 @@ CollisionDetector::~CollisionDetector()
 bool CollisionDetector::Update(float dt)
 {
 	//TODO: timed updates?
-
 	for (int i = 0; i < collidableEntities.size(); i++)
 	{
 		CheckCollisions(collidableEntities[i]);
@@ -97,7 +96,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 			if (currentEntityAABB.Intersects(newCollider))
 			{
 				//call corresponding event depending on collider type
-				std::cout<<"intersectioooooon";
+				std::cout<<"intersectioooooon\n";
 
 				//set new collision for the inspector properties
 				currentEntity->GetComponent<ComponentCollider>()->SetNewCollision(fullGOList[i]);
@@ -124,6 +123,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 						//Move currentEntity out of the floor
 						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + float3(0, floorCollisionTranslation, 0);
 						currentEntity->GetTransform()->SetPosition(finalPosition);
+						currentEntity->GetComponent<ComponentRigidBody>()->TransformUpdatesRigidBody();
 						
 						//Stop gravity
 						currentEntity->GetComponent<ComponentRigidBody>()->SetUseGravity(false);
@@ -170,6 +170,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 
 						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + wallCollisionTranslation;
 						currentEntity->GetTransform()->SetPosition(finalPosition);
+						currentEntity->GetComponent<ComponentRigidBody>()->TransformUpdatesRigidBody();
 					}
 					break;
 				}

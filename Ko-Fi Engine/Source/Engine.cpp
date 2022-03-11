@@ -42,11 +42,11 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(window);
+	AddModule(physics);
 	AddModule(input);
 	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(ui);
-	AddModule(physics);
 	AddModule(collisionDetector);
 	AddModule(sceneManager);
 	AddModule(viewportBuffer);

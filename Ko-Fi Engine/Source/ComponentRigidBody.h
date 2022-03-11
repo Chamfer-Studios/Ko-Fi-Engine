@@ -27,8 +27,15 @@ public:
 	// Called whenever a rigid body attribute is changed
 	void UpdatePhysicsValues(); 
 
+	bool TransformUpdatesRigidBody();
+	bool RigidBodyUpdatesTransform();
+
 	inline void	AddForce(physx::PxVec3 force, physx::PxForceMode::Enum forceMode) { if (dynamicBody) dynamicBody->addForce(force, forceMode); }
 	inline void	AddTorque(physx::PxVec3 force, physx::PxForceMode::Enum forceMode) { if (dynamicBody) dynamicBody->addTorque(force, forceMode); }
+
+	void Set2DVelocity(float2 vel);
+
+	void StopMovement();
 
 	inline const bool IsSleeping() { return dynamicBody->isSleeping(); }
 
@@ -41,8 +48,6 @@ public:
 
 	// Getters & setters
 	inline const physx::PxRigidActor* GetRigidBody() { if (isKinematic) return staticBody; else return dynamicBody; }
-
-
 
 	inline const float3 GetLinearVelocity() { return linearVel; }
 	inline void SetLinearVelocity(const float3 newLinearVel) { linearVel = newLinearVel; hasUpdated = true; }
@@ -65,6 +70,8 @@ public:
 	inline bool IsKinematic() const { return isKinematic; }
 	void SetStatic();
 	void SetDynamic();
+	void CreateDynamic();
+	void CreateStatic();
 
 	inline void FreezePositionX(bool freeze) { freezePositionX = freeze; hasUpdated = true; }
 	inline void FreezePositionY(bool freeze) { freezePositionY = freeze; hasUpdated = true; }

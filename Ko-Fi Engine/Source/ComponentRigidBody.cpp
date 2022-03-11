@@ -4,26 +4,7 @@ ComponentRigidBody::ComponentRigidBody(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
 
-	float3 pos = owner->GetTransform()->GetPosition();
-	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
-
-	physx::PxTransform pxTransform;
-	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
-	pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
-
-	// Create physx rigid dynamic body and add it to the physics actor vector
-	dynamicBody = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createRigidDynamic(pxTransform);
-	if (!dynamicBody)
-	{
-		owner->DeleteComponent(this);
-
-		LOG_BOTH("Could not create rigid body!!\n");
-		return;
-	}
-	owner->GetEngine()->GetPhysics()->AddActor(dynamicBody, owner);
-
-	// We apply first physics to the actor before it is added to the actor vector
-	UpdatePhysicsValues();
+	CreateDynamic();
 }
 
 ComponentRigidBody::~ComponentRigidBody()
@@ -42,111 +23,38 @@ ComponentRigidBody::~ComponentRigidBody()
 
 bool ComponentRigidBody::Update(float dt)
 {
-	// Check each frame if rigid body attributes have a pending update
-	if (hasUpdated)
-		UpdatePhysicsValues();
+	bool ret = true;
 
-	/*			update() pseudocode:
-	if simulating (if its in play mode)
+
+
+	if (owner->GetEngine()->GetPhysics()->IsSimulating())
 	{
-		if (IsKinematic)
+		if (isKinematic)
 		{
-			Rigidbody transform should change the go transform
-		}
-		else // if its static
-		{
-			Go transform should change the rigid body transform
-		}
 
+			ret = RigidBodyUpdatesTransform();
+
+			physx::PxVec3 lVel = dynamicBody->getLinearVelocity();
+			if (lVel.y > 30.0f) lVel.y = 30.0f;
+			linearVel = { lVel.x, lVel.y, lVel.z };
+			physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
+			angularVel = { aVel.x, aVel.y, aVel.z };
+
+			// Check each frame if rigid body attributes have a pending update
+			if (hasUpdated)
+				UpdatePhysicsValues();
+		}
+		else
+		{
+			ret = TransformUpdatesRigidBody();
+		}
 	}
-	else (engine mode)
+	else // If it's in the engine without play mode
 	{
-		Go transform should change the rigid body transform
+		ret = TransformUpdatesRigidBody();
 	}
-	*/
 
-
-	// This is old bugged code, we need to make a new one
-
-	//// If it's not simulating, skip the update
-	//if (!owner->GetEngine()->GetPhysics()->IsSimulating())
-	//{
-	//	physx::PxRigidActor* body = nullptr;
-
-	//	if (isKinematic)
-	//		body = dynamicBody;
-	//	else body = staticBody;
-
-	//	if (!body)
-	//		return true;
-
-	//	// Update rigid body by the GO's transform movement
-	//	owner->GetEngine()->GetPhysics()->DeleteActor(body);
-
-	//	float3 pos = owner->GetTransform()->GetPosition();
-	//	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
-
-	//	physx::PxTransform pxTransform;
-	//	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
-	//	pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
-	//	body->setGlobalPose(pxTransform, true);
-
-	//	owner->GetEngine()->GetPhysics()->AddActor(body, owner);
-
-	//	return true;
-	//}
-
-	//if (isKinematic)
-	//{
-	//	if (dynamicBody)
-	//	{
-	//		// Update GO transform by the actor's movement
-	//		physx::PxRigidActor* dynBody = nullptr;
-	//		dynBody = dynamicBody;
-
-	//		if (!dynBody)
-	//			return true;
-
-	//		physx::PxTransform transform = dynBody->getGlobalPose();
-	//		float3 position = float3(transform.p.x, transform.p.y, transform.p.z);
-	//		Quat rotation = Quat(transform.q.x, transform.q.y, transform.q.z, transform.q.w);
-	//		float3 scale = owner->GetTransform()->GetScale();
-
-	//		float4x4 newTransform = float4x4::FromTRS(position, rotation, scale);
-	//		owner->GetTransform()->SetPosition(position);
-	//		owner->GetTransform()->SetRotation(float3(rotation.x, rotation.y, rotation.z));
-	//		owner->GetTransform()->SetScale(scale);
-
-	//		// Set velocities
-	//		physx::PxVec3 lVel = dynamicBody->getLinearVelocity();
-	//		linearVel = { lVel.x, lVel.y, lVel.z };
-	//		physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
-	//		angularVel = { aVel.x, aVel.y, aVel.z };
-	//	}
-	//}
-	//else // is a static object
-	//{
-	//	// Update rigid body by the GO's transform movement
-	//	physx::PxRigidActor* stBody = nullptr;
-	//	stBody = staticBody;
-
-	//	if (!stBody)
-	//		return true;
-
-	//	owner->GetEngine()->GetPhysics()->DeleteActor(stBody);
-
-	//	float3 pos = owner->GetTransform()->GetPosition();
-	//	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
-
-	//	physx::PxTransform pxTransform;
-	//	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
-	//	pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
-	//	stBody->setGlobalPose(pxTransform, true);
-
-	//	owner->GetEngine()->GetPhysics()->AddActor(stBody, owner);
-	//}
-
-	return true;
+	return ret;
 }
 
 // Called whenever a rigid body attribute is changed
@@ -167,6 +75,7 @@ void ComponentRigidBody::UpdatePhysicsValues()
 
 		// Set velocities
 		dynamicBody->setLinearVelocity(physx::PxVec3(linearVel.x, linearVel.y, linearVel.z));
+		physx::PxVec3 asd = dynamicBody->getLinearVelocity();
 		dynamicBody->setAngularVelocity(physx::PxVec3(angularVel.x, angularVel.y, angularVel.z));
 		dynamicBody->setLinearDamping(linearDamping);
 		dynamicBody->setAngularDamping(angularDamping);
@@ -199,6 +108,81 @@ void ComponentRigidBody::UpdatePhysicsValues()
 	}
 
 	hasUpdated = false;
+}
+
+// Update rigid body by the owner's transform
+bool ComponentRigidBody::TransformUpdatesRigidBody()
+{
+	physx::PxRigidActor* body = nullptr;
+	if (isKinematic)
+		body = dynamicBody;
+	else body = staticBody;
+
+	if (!body)
+		return false;
+
+	owner->GetEngine()->GetPhysics()->DeleteActor(body);
+
+	float3 pos = owner->GetTransform()->GetPosition();
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+
+	physx::PxTransform pxTransform;
+	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
+	pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
+	body->setGlobalPose(pxTransform, true);
+
+	owner->GetEngine()->GetPhysics()->AddActor(body, owner);
+
+	return true;
+}
+
+bool ComponentRigidBody::RigidBodyUpdatesTransform()
+{
+	physx::PxRigidActor* body = nullptr;
+	if (isKinematic)
+		body = dynamicBody;
+	else body = staticBody;
+
+	if (!body)
+		return false;
+
+	physx::PxTransform transform = body->getGlobalPose();
+	float3 position = float3(transform.p.x, transform.p.y, transform.p.z);
+	Quat rotation = Quat(transform.q.x, transform.q.y, transform.q.z, transform.q.w);
+	float3 rot = rotation.ToEulerXYZ();
+	float3 scale = owner->GetTransform()->GetScale();
+
+	//float4x4 newTransform = float4x4::FromTRS(position, rotation, scale);
+	//owner->GetTransform()->SetGlobalTransform(newTransform);
+	owner->GetTransform()->SetPosition(position);
+	owner->GetTransform()->SetRotation(rot);
+	owner->GetTransform()->SetScale(scale);
+
+	return true;
+}
+
+void ComponentRigidBody::Set2DVelocity(float2 vel)
+{
+	linearVel.x = vel.x;
+	linearVel.z = vel.y;
+	if (dynamicBody)
+	{
+		dynamicBody->setLinearVelocity(physx::PxVec3(linearVel.x, linearVel.y, linearVel.z));
+	}
+}
+
+void ComponentRigidBody::StopMovement()
+{
+	if (!isKinematic)
+		return;
+
+	dynamicBody->setLinearVelocity(physx::PxVec3(0, 0, 0));
+	dynamicBody->setAngularVelocity(physx::PxVec3(0, 0, 0));
+
+	physx::PxVec3 lVel = dynamicBody->getLinearVelocity();
+	linearVel = { lVel.x, lVel.y, lVel.z };
+	physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
+	angularVel = { aVel.x, aVel.y, aVel.z };
 }
 
 // Serialization 
@@ -240,8 +224,8 @@ void ComponentRigidBody::Load(Json& json)
 	owner->GetEngine()->GetPhysics()->SetGravity(grav);
 
 	if (isKinematic)
-		SetDynamic();
-	else SetStatic();
+		CreateDynamic();
+	else CreateStatic();
 
 	hasUpdated = true;
 }
@@ -278,8 +262,6 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			ImGui::Separator();
 		}
 
-		// TODO: Serialize the rest of the component
-
 		return ret;
 	}
 	else 
@@ -308,7 +290,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 				owner->GetEngine()->GetPhysics()->SetGravity(9.81f);
 			ImGui::Separator();
 
-			// TODO: Serialize the rest of the component
+			// Dynamic body attributes
 			ImGui::Text("Mass");
 			ImGui::SameLine();
 			float newMass = mass;
@@ -320,7 +302,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			ImGui::Text("Density");
 			ImGui::SameLine();
 			float newDen = density;
-			if (ImGui::DragFloat("##mass", &newDen, 0.1f, 0.0f, 20.0f))
+			if (ImGui::DragFloat("##density", &newDen, 0.1f, 0.0f, 20.0f))
 			{
 				density = newDen;
 				hasUpdated = true;
@@ -329,23 +311,23 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			{
 				ImGui::Text("Freeze position	");
 				ImGui::SameLine();
-				if (ImGui::Checkbox("X", &freezePositionX))
+				if (ImGui::Checkbox("X##X", &freezePositionX))
 					hasUpdated = true;
 				ImGui::SameLine();
-				if (ImGui::Checkbox("Y", &freezePositionY))
+				if (ImGui::Checkbox("Y##Y", &freezePositionY))
 					hasUpdated = true;
 				ImGui::SameLine();
-				if (ImGui::Checkbox("Z", &freezePositionZ))
+				if (ImGui::Checkbox("Z##Z", &freezePositionZ))
 					hasUpdated = true;
 				ImGui::Text("Freeze rotation	");
 				ImGui::SameLine();
-				if (ImGui::Checkbox("X", &freezeRotationX))
+				if (ImGui::Checkbox("X##X2", &freezeRotationX))
 					hasUpdated = true;
 				ImGui::SameLine();
-				if (ImGui::Checkbox("Y", &freezeRotationY))
+				if (ImGui::Checkbox("Y##Y2", &freezeRotationY))
 					hasUpdated = true;
 				ImGui::SameLine();
-				if (ImGui::Checkbox("Z", &freezeRotationZ))
+				if (ImGui::Checkbox("Z##Z2", &freezeRotationZ))
 					hasUpdated = true;
 			}
 		}
@@ -451,4 +433,52 @@ void ComponentRigidBody::SetDynamic()
 	{
 		LOG_BOTH("Static body didn't exist when trying to SetDynamic()\n");
 	}
+}
+
+void ComponentRigidBody::CreateDynamic()
+{
+	float3 pos = owner->GetTransform()->GetPosition();
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+
+	physx::PxTransform pxTransform;
+	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
+	pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
+
+	// Create physx rigid dynamic body and add it to the physics actor vector
+	dynamicBody = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createRigidDynamic(pxTransform);
+	if (!dynamicBody)
+	{
+		owner->DeleteComponent(this);
+
+		LOG_BOTH("Could not create rigid body!!\n");
+		return;
+	}
+	/*owner->GetEngine()->GetPhysics()->AddActor(dynamicBody, owner);*/
+
+	// We apply first physics to the actor before it is added to the actor vector
+	UpdatePhysicsValues();
+}
+
+void ComponentRigidBody::CreateStatic()
+{
+	float3 pos = owner->GetTransform()->GetPosition();
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+
+	physx::PxTransform pxTransform;
+	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
+	pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
+
+	// Create physx rigid dynamic body and add it to the physics actor vector
+	staticBody = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createRigidStatic(pxTransform);
+	if (!staticBody)
+	{
+		owner->DeleteComponent(this);
+
+		LOG_BOTH("Could not create static rigid body!!\n");
+		return;
+	}
+	/*owner->GetEngine()->GetPhysics()->AddActor(dynamicBody, owner);*/
+
+	// We apply first physics to the actor before it is added to the actor vector
+	UpdatePhysicsValues();
 }
