@@ -1,5 +1,9 @@
 #include "ComponentParticle.h"
 #include "ParticleModule.h"
+#include "Renderer3D.h"
+#include "Engine.h"
+
+#include "MathGeoLib/Math/float4x4.h"
 
 ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 {
@@ -29,9 +33,15 @@ bool ComponentParticle::Update(float dt)
 	//	(*it)->Update(dt);
 	//}
 
-	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
+	for (auto it : emitterInstances)
 	{
-		(*it)->Update(dt);
+		it->Update(dt);
+		for (auto particle : it->particles)
+		{
+			owner->GetEngine()->GetRenderer()->AddParticle( nullptr, particle->CurrentColor,
+				float4x4::FromTRS(particle->position, particle->rotation, particle->scale), 
+				particle->distanceToCamera);
+		}
 	}
 
 	return true;

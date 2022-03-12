@@ -13,6 +13,7 @@
 #include "Camera3D.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
+#include "Texture.h"
 
 #include "UI.h"
 
@@ -248,4 +249,82 @@ void Renderer3D::SetRay(LineSegment ray)
 LineSegment Renderer3D::GetRay()
 {
 	return ray;
+}
+
+void Renderer3D::AddParticle(Texture* tex, Color color, const float4x4 transform, float distanceToCamera)
+{
+	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
+	particles.insert(std::map<float, ParticleRenderer>::value_type(distanceToCamera, pRenderer));
+}
+
+void Renderer3D::RenderParticles()
+{
+	for (auto particle : particles)
+	{
+		particle.second.Render();
+	}
+}
+
+ParticleRenderer::ParticleRenderer(Texture* tex, Color color, const float4x4 transform):
+tex(tex),
+color(color),
+transform(transform)
+{
+
+}
+
+void ParticleRenderer::Render()
+{
+	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA_TEST);
+
+	if (tex != nullptr && tex->GetTextureId() != 0)
+		glBindTexture(GL_TEXTURE_2D, tex->GetTextureId());
+
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	glPushMatrix();
+	glMultMatrixf((float*)transform.Transposed().ptr());
+
+	/*glDepthFunc(GL_LEQUAL);
+	glDepthMask(GL_FALSE);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glDrawElements(GL_TRIANGLES, indexNum, GL_UNSIGNED_INT, NULL);
+
+	glDepthFunc(GL_LESS);
+	glDepthMask(GL_TRUE);*/
+
+	//Drawing to tris in direct mode
+	glBegin(GL_TRIANGLES);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-.5f, -.5f, .0f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+
+	glEnd();
+	glPopMatrix();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_NORMAL_ARRAY, 0);
+	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glDisable(GL_BLEND);
+	glDisable(GL_ALPHA_TEST);
 }

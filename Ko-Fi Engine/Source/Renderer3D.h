@@ -6,12 +6,29 @@
 #include "glmath.h"
 #include "Light.h"
 #include "SDL_video.h"
+#include "MathGeoLib/Math/float4x4.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
 
 #define MAX_LIGHTS 8
 
 class GameObject;
+class Texture;
+
+struct ParticleRenderer
+{
+	ParticleRenderer(Texture* tex, Color color, const float4x4 transform);
+
+	void Render();
+	//void LoadBuffers(); drawing in direct mode, not necessary
+
+	//uint		VAO;
+
+	Texture* tex;
+	//R_Shader* shader;
+	Color		color;
+	float4x4	transform;
+};
 
 class Renderer3D : public Module
 {
@@ -35,6 +52,9 @@ public:
 	void SetRay(LineSegment ray);
 	LineSegment GetRay();
 
+	void AddParticle(Texture* tex, Color color, const float4x4 transform, float distanceToCamera);
+	void RenderParticles();
+
 public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
@@ -47,6 +67,9 @@ private:
 
 	// Debug ray for mouse picking
 	LineSegment ray;
+
+	//Particle Map
+	std::map<float, ParticleRenderer> particles;
 };
 
 #endif // !__RENDERER_3D_H__

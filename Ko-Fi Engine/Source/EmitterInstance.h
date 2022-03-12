@@ -19,6 +19,8 @@ public:
 
 	bool Update(float dt);
 
+	void DrawParticles();
+
 	void SpawnParticle();
 	void KillParticles();
 	void SetParticleEmission(bool set);

@@ -37,13 +37,19 @@ bool Particle::Update(float dt)
 
 void Particle::Draw(uint id, uint indexNum)
 {
-	glBindTexture(GL_TEXTURE_2D,id);
+	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA_TEST);
+
+	if (id != 0)
+		glBindTexture(GL_TEXTURE_2D,id);
+	
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 	float4x4 t = float4x4::FromTRS(position, rotation, scale);
 	glPushMatrix();
 	glMultMatrixf((float*)t.Transposed().ptr());
 
-	glDepthFunc(GL_LEQUAL);
+	/*glDepthFunc(GL_LEQUAL);
 	glDepthMask(GL_FALSE);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -51,7 +57,29 @@ void Particle::Draw(uint id, uint indexNum)
 	glDrawElements(GL_TRIANGLES, indexNum, GL_UNSIGNED_INT, NULL);
 
 	glDepthFunc(GL_LESS);
-	glDepthMask(GL_TRUE);
+	glDepthMask(GL_TRUE);*/
+
+
+	//Drawing to tris in direct mode
+	glBegin(GL_TRIANGLES);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-.5f, -.5f, .0f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+
+	glEnd();
+	glPopMatrix();
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -64,5 +92,8 @@ void Particle::Draw(uint id, uint indexNum)
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glDisable(GL_BLEND);
+	glDisable(GL_ALPHA_TEST);
 
 }

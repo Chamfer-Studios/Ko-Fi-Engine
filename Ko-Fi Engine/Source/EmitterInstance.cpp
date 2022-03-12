@@ -42,14 +42,29 @@ bool EmitterInstance::Update(float dt)
 	}
 
 	// TODO: DRAW HERE THE IMAGE
-	if (emitter->texture != nullptr)
+	/*if (emitter->texture != nullptr)
 	{
 		for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
 		{
 			(*it)->Draw(emitter->texture->GetTextureId(), 0);
 		}
 	}
+	else
+	{
+		for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
+		{
+			(*it)->Draw(0, 0);
+		}
+	}*/
 	return true;
+}
+
+void EmitterInstance::DrawParticles()
+{
+	for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
+	{
+		(*it)->Draw(0, 0);
+	}
 }
 
 void EmitterInstance::SpawnParticle()

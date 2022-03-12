@@ -11,10 +11,12 @@
 #include "ComponentCamera.h"
 #include "SceneManager.h"
 #include "Engine.h"
+#include "Renderer3D.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
 #include "PanelViewport.h"
 #include "Editor.h"
+#include "EmitterInstance.h"
 #include "Log.h"
 
 #include "Importer.h"
@@ -115,7 +117,7 @@ bool ComponentMesh::Update(float dt)
 	return true;
 }
 
-bool ComponentMesh::PostUpdate(float dt)
+bool ComponentMesh::PostUpdate(float dt) //AKA the real render
 {
 	bool ret = true;
 
@@ -210,7 +212,7 @@ bool ComponentMesh::PostUpdate(float dt)
 				default:
 					break;
 				}
-			}
+			}		
 
 			mesh->Draw(owner);
 
@@ -221,7 +223,10 @@ bool ComponentMesh::PostUpdate(float dt)
 			GenerateGlobalBoundingBox();
 		
 			DrawMouseSelection(); // Draw AABB if Selected with Mosue
+
 			glUseProgram(0);
+
+			owner->GetEngine()->GetRenderer()->RenderParticles();
 		}
 	}
 	return ret;
