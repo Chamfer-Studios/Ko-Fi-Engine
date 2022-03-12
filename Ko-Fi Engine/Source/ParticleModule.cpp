@@ -127,26 +127,26 @@ Color EmitterColor::ColorLerp(float current)
 	return Color(1.0f,1.0f,1.0f,1.0f);
 }
 
-bool EmitterColor::EditColor(FadeColor& color, uint pos)
-{
-	bool ret = true;
-	ImVec4 vecColor = ImVec4(color.color.r, color.color.g, color.color.b, color.color.a);
-	//if (ImGui::ColorButton("Color", vecColor, ImGuiColorEditFlags_None, ImVec2(100, 20)));
-
-
-	//ImGui::SameLine();
-	//ImGui::TextUnformatted("Color");
-	if (pos > 0)
-	{
-		std::string colorStr = "Remove Color ";
-		colorStr.append(std::to_string(pos));
-		if (ImGui::Button(colorStr.c_str(), ImVec2(125, 25))) ret = false;
-	}
-
-	ImGui::ColorEdit4("Color", &color.color.a, ImGuiColorEditFlags_AlphaBar);
-
-	return ret;
-}
+//bool EmitterColor::EditColor(FadeColor& color, uint pos)
+//{
+//	bool ret = true;
+//	ImVec4 vecColor = ImVec4(color.color.r, color.color.g, color.color.b, color.color.a);
+//	//if (ImGui::ColorButton("Color", vecColor, ImGuiColorEditFlags_None, ImVec2(100, 20)));
+//
+//
+//	//ImGui::SameLine();
+//	//ImGui::TextUnformatted("Color");
+//	if (pos > 0)
+//	{
+//		std::string colorStr = "Remove Color ";
+//		colorStr.append(std::to_string(pos));
+//		if (ImGui::Button(colorStr.c_str(), ImVec2(125, 25))) ret = false;
+//	}
+//
+//	ImGui::ColorEdit4("Color", &color.color.a, ImGuiColorEditFlags_AlphaBar);
+//
+//	return ret;
+//}
 
 EmitterSize::EmitterSize()
 {

@@ -26,12 +26,12 @@ public:
 	void ClearParticles();
 	void StopParticleSpawn();
 	void ResumeParticleSpawn();
+	void InspectorDrawColor(FadeColor& color, int index);
 
 public:
 	std::vector<EmitterInstance*> emitterInstances;
 	std::vector<Emitter*> emitters;
 	int moduleToAdd = 0;
-	FadeColor colorToAdd;
 };
 
 #endif // __COMPONENT_PARTICLE_H__

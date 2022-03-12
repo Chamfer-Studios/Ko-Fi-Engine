@@ -2,11 +2,14 @@
 #include "ParticleModule.h"
 #include "Renderer3D.h"
 #include "Engine.h"
+#include "Log.h"
 
 #include "MathGeoLib/Math/float4x4.h"
 
 ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 {
+	type = ComponentType::PARTICLE;
+
 	emitterInstances.clear();
 	emitters.clear();
 }
@@ -19,9 +22,6 @@ bool ComponentParticle::Start()
 {
 	Emitter* e = new Emitter();
 	emitters.push_back(e);
-	EmitterInstance* eI = new EmitterInstance(e, this);
-	emitterInstances.push_back(eI);
-	colorToAdd = FadeColor(Color(0.0f, 0.0f, 0.0f, 255.0f), 0.5f);
 	return true;
 }
 
@@ -73,7 +73,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
-	if (ImGui::CollapsingHeader("Particle System"))
+	if (ImGui::CollapsingHeader("Particle System", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Text("Emitters: %d", emitters.size());
 
@@ -91,7 +91,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 				switch (module->type)
 				{
 				case ParticleModuleType::DEFAULT:
-					if (ImGui::CollapsingHeader("Default"))
+					if (ImGui::CollapsingHeader("Default", ImGuiTreeNodeFlags_DefaultOpen))
 					{
 						EmitterDefault* e = (EmitterDefault*)module;
 						float timer = e->timer;
@@ -112,123 +112,92 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					}
 					break;
 				case ParticleModuleType::MOVEMENT:
-					if (ImGui::CollapsingHeader("Movement"))
+					if (ImGui::CollapsingHeader("Movement", ImGuiTreeNodeFlags_DefaultOpen))
 					{
 						EmitterMovement* e = (EmitterMovement*)module;
+
 						float initialIntensity = e->initialIntensity;
-						if (ImGui::InputFloat("InitialIntensity: ", &initialIntensity, 0.0f, 100.0f))
+						if (ImGui::DragFloat("InitialIntensity: ", &initialIntensity,0.1f, 0.0f, 100.0f,"%.1f"))
 						{
 							e->initialIntensity = initialIntensity;
 						}
 						float finalIntensity = e->finalIntensity;
-						if (ImGui::InputFloat("FinalIntensity: ", &finalIntensity, 0.0f, 25.0f))
+						if (ImGui::DragFloat("FinalIntensity: ", &finalIntensity,0.1f, 0.0f, 25.0f,"%.1f"))
 						{
 							e->finalIntensity = finalIntensity;
 						}
 
 						ImGui::Separator();
 
-						float initialDirection[4] = { e->initialDirection.x,e->initialDirection.y,e->initialDirection.z,1.0f };
-						if (ImGui::DragFloat3("initialDirection", initialDirection, 0.1f, -10000.0f, 10000.0f))
+						float initialDirection[3] = { e->initialDirection.x,e->initialDirection.y,e->initialDirection.z };
+						if (ImGui::DragFloat3("initialDirection", initialDirection, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 						{
 							e->initialDirection = { initialDirection[0],initialDirection[1],initialDirection[2] };
 						}
-						float finalDirection[4] = { e->finalDirection.x,e->finalDirection.y,e->finalDirection.z,1.0f };
-						if (ImGui::DragFloat3("finalDirection", finalDirection, 0.1f, -10000.0f, 10000.0f))
+						float finalDirection[3] = { e->finalDirection.x,e->finalDirection.y,e->finalDirection.z };
+						if (ImGui::DragFloat3("finalDirection", finalDirection, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 						{
 							e->finalDirection = { finalDirection[0],finalDirection[1],finalDirection[2] };
 						}
 
 						ImGui::Separator();
 
-						float initialPosition[4] = { e->initialPosition.x,e->initialPosition.y,e->initialPosition.z,1.0f };
-						if (ImGui::DragFloat3("initialPosition", initialPosition, 0.1f, -10000.0f, 10000.0f))
+						float initialPosition[3] = { e->initialPosition.x,e->initialPosition.y,e->initialPosition.z };
+						if (ImGui::DragFloat3("initialPosition", initialPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 						{
 							e->initialPosition = { initialPosition[0],initialPosition[1],initialPosition[2] };
 						}
-						float finalPosition[4] = { e->finalPosition.x,e->finalPosition.y,e->finalPosition.z,1.0f };
-						if (ImGui::DragFloat3("finalPosition", finalPosition, 0.1f, -10000.0f, 10000.0f))
+						float finalPosition[3] = { e->finalPosition.x,e->finalPosition.y,e->finalPosition.z };
+						if (ImGui::DragFloat3("finalPosition", finalPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 						{
 							e->finalPosition = { finalPosition[0],finalPosition[1],finalPosition[2] };
 						}
 
 						ImGui::Separator();
 
-						float initialAcceleration[4] = { e->initialAcceleration.x,e->initialAcceleration.y,e->initialAcceleration.z,1.0f };
-						if (ImGui::DragFloat3("initialAcceleration", initialAcceleration, 0.1f, -10000.0f, 10000.0f))
+						float initialAcceleration[3] = { e->initialAcceleration.x,e->initialAcceleration.y,e->initialAcceleration.z };
+						if (ImGui::DragFloat3("initialAcceleration", initialAcceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 						{
 							e->initialAcceleration = { initialAcceleration[0],initialAcceleration[1],initialAcceleration[2] };
 						}
-						float finalAcceleration[4] = { e->finalAcceleration.x,e->finalAcceleration.y,e->finalAcceleration.z,1.0f };
-						if (ImGui::DragFloat3("finalAcceleration", finalAcceleration, 0.1f, -10000.0f, 10000.0f))
+						float finalAcceleration[3] = { e->finalAcceleration.x,e->finalAcceleration.y,e->finalAcceleration.z };
+						if (ImGui::DragFloat3("finalAcceleration", finalAcceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 						{
 							e->finalAcceleration = { finalAcceleration[0],finalAcceleration[1],finalAcceleration[2] };
 						}
 					}
 					break;
 				case ParticleModuleType::COLOR:
-					if (ImGui::CollapsingHeader("Color"))
+					if (ImGui::CollapsingHeader("Color", ImGuiTreeNodeFlags_DefaultOpen))
 					{
 						EmitterColor* e = (EmitterColor*)module;
-						uint posList = 0u;
-						for (auto color : e->colorOverTime)
+						ImGui::Text("Colors: %d", e->colorOverTime.size());
+
+						ImGui::Separator();
+
+						int posList = 0;
+						for (std::vector<FadeColor>::iterator color = e->colorOverTime.begin(); color < e->colorOverTime.end(); ++color)
 						{
-							ImVec4 vecColor = ImVec4(color.color.r, color.color.g, color.color.b, color.color.a);
-							//if (ImGui::ColorButton("Color", vecColor, ImGuiColorEditFlags_None, ImVec2(100, 20)));
-
-
-							//ImGui::SameLine();
-							//ImGui::TextUnformatted("Color");
-							//if (color.pos > 0)
-							//{
-								std::string colorStr = "Remove Color ";
-								colorStr.append(std::to_string(color.pos));
-								if (ImGui::Button(colorStr.c_str(), ImVec2(125, 25))) ret = false;
-							//}
-
-							ImGui::ColorEdit4("Color", &color.color.a, ImGuiColorEditFlags_AlphaBar);
-							//e->EditColor((*color));
-							//if (color == e->colorOverTime.begin())
-							//{
-							//	if (!e->EditColor((*color))) break;
-							//}
-							//else
-							//{
-							//	if (!e->EditColor((*color), posList)) e->colorOverTime.erase(++color);
-							//}
+							InspectorDrawColor((*color), posList);
 							++posList;
 						}
-						if (ImGui::CollapsingHeader("Add Color"))
+						if (ImGui::Button("Add Color"))
 						{
-							float color[4] = { colorToAdd.color.r,colorToAdd.color.g,colorToAdd.color.b,colorToAdd.color.a };
-							if (ImGui::DragFloat4("color", color, 0.1f, -10000.0f, 10000.0f))
-							{
-								colorToAdd.color = Color(color[0], color[1], color[2], color[3]);
-							}
-							float pos = colorToAdd.pos;
-							if (ImGui::InputFloat("position: ", &pos, 0.0f, 25.0f))
-							{
-								colorToAdd.pos = pos;
-							}
-							if (ImGui::Button("Add"))
-							{
-								e->colorOverTime.push_back(colorToAdd);
-								colorToAdd = FadeColor(Color(0.0f, 0.0f, 0.0f, 255.0f), 0.5f);
-							}
+							e->colorOverTime.push_back(FadeColor(Color(0.0f, 0.0f, 0.0f, 1.0f), 0.5f));
 						}
 					}
 					break;
 				case ParticleModuleType::SIZE:
-					if (ImGui::CollapsingHeader("Size"))
+					if (ImGui::CollapsingHeader("Size", ImGuiTreeNodeFlags_DefaultOpen))
 					{
 						EmitterSize* e = (EmitterSize*)module;
-						float initialSize[4] = { e->initialSize.x,e->initialSize.y,e->initialSize.z,1.0f };
-						if (ImGui::DragFloat3("initialSize", initialSize, 0.1f, -10000.0f, 10000.0f))
+						float initialSize[3] = { e->initialSize.x,e->initialSize.y,e->initialSize.z };
+						if (ImGui::DragFloat3("initialSize", initialSize, 0.1f, -10000.0f, 10000.0f,"%.1f"))
 						{
 							e->initialSize = { initialSize[0],initialSize[1],initialSize[2] };
 						}
-						float finalSize[4] = { e->finalSize.x,e->finalSize.y,e->finalSize.z,1.0f };
-						if (ImGui::DragFloat3("finalSize", finalSize, 0.1f, -10000.0f, 10000.0f))
+						float finalSize[3] = { e->finalSize.x,e->finalSize.y,e->finalSize.z };
+						if (ImGui::DragFloat3("finalSize", finalSize, 0.1f, -10000.0f, 10000.0f,"%f.1f"))
 						{
 							e->finalSize = { finalSize[0],finalSize[1],finalSize[2] };
 						}
@@ -239,7 +208,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 				}
 
 			}
-			ImGui::Combo("##combo", &moduleToAdd, "Add Module\0Movement\0Color\0Size");
+			ImGui::Combo("##modules", &moduleToAdd, "Add Module\0Movement\0Color\0Size");
 
 			ImGui::SameLine();
 
@@ -262,6 +231,25 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 		}
 	}
 	return ret;
+}
+
+void ComponentParticle::InspectorDrawColor(FadeColor& color,int index)
+{
+	float c[4] = { color.color.r,color.color.g,color.color.b,color.color.a };
+	std::string colorName = "Color " + std::to_string(index);
+	if (ImGui::ColorEdit4(colorName.c_str(), c))
+	{
+		color.color.r = c[0];
+		color.color.g = c[1];
+		color.color.b = c[2];
+		color.color.a = c[3];
+	}
+	float p = color.pos;
+	std::string positionName = "Position " + std::to_string(index);
+	if (ImGui::DragFloat(positionName.c_str(), &p, 0.005f, 0.0f, 1.0f, "%.3f"))
+	{
+		color.pos = p;
+	}
 }
 
 void ComponentParticle::ClearParticles()

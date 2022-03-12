@@ -4,15 +4,20 @@
 #include "Primitive.h"
 #include "Globals.h"
 
-#include "ComponentTransform.h"
 #include "ComponentMesh.h"
-#include "ComponentInfo.h"
+#include "ComponentMaterial.h"
 #include "ComponentParticle.h"
 #include "ComponentCamera.h"
-#include "ComponentRigidBody.h"
 #include "ComponentCollider.h"
-#include "ComponentMaterial.h"
 #include "ComponentScript.h"
+#include "ComponentRigidBody.h"
+#include "ComponentTransform2D.h"
+#include "ComponentCanvas.h"
+#include "ComponentImage.h"
+#include "ComponentButton.h"
+#include "ComponentText.h"
+#include "ComponentTransform.h"
+#include "ComponentInfo.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -26,7 +31,6 @@ GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D
 
 	this->uid = uid;
 	this->engine = engine;
-
 	CreateComponent<ComponentInfo>();
 
 	is3D = _is3D;
@@ -135,10 +139,19 @@ void GameObject::DeleteComponent(Component* component)
 
 void GameObject::AddComponent(Component* component)
 {
+	// Check if it is repeated
+	for (Component* c : components)
+	{
+		if (c->GetType() == component->GetType())
+		{
+			LOG_BOTH("Components cannot be duplicated!");
+			return;
+		}
+	}
 	components.push_back(component);
 }
 
-void GameObject::AddComponentByType(ComponentType componentType)
+Component* GameObject::AddComponentByType(ComponentType componentType)
 {
 	// Check if it is repeated
 	for (Component* component : components)
@@ -146,61 +159,86 @@ void GameObject::AddComponentByType(ComponentType componentType)
 		if (component->GetType() == componentType)
 		{
 			LOG_BOTH("Components cannot be duplicated!");
-			return;
+			return component;
 		}
 	}
 
-	
-
+	Component* c = nullptr;
 	switch (componentType)
 	{
-		case ComponentType::TRANSFORM: 
-		{ 
-			this->CreateComponent<ComponentTransform>();
+		case ComponentType::MESH:
+		{
+			c = this->CreateComponent<ComponentMesh>();
 			break;
-		}	
-		case ComponentType::MESH: 
-		{ 
-			this->CreateComponent<ComponentMesh>();
+		}
+		case ComponentType::MATERIAL:
+		{
+			c = this->CreateComponent<ComponentMaterial>();
 			break;
 		}
 		case ComponentType::PARTICLE:
 		{
-			this->CreateComponent<ComponentParticle>();
+			c = this->CreateComponent<ComponentParticle>();
 			break;
 		}
-		case ComponentType::SCRIPT:
+		case ComponentType::CAMERA:
 		{
-			this->CreateComponent<ComponentScript>();
+			c = this->CreateComponent<ComponentCamera>();
 			break;
 		}
 		case ComponentType::COLLIDER:
 		{
-			this->CreateComponent<ComponentCollider>();
+			c = this->CreateComponent<ComponentCollider>();
 			break;
 		}
-		case ComponentType::MATERIAL: 
-		{ 
-			this->CreateComponent<ComponentMaterial>();
+		case ComponentType::SCRIPT:
+		{
+			c = this->CreateComponent<ComponentScript>();
 			break;
-		}	
-		case ComponentType::CAMERA: 
-		{ 
-			this->CreateComponent<ComponentCamera>();
+		}
+		case ComponentType::RIGID_BODY:
+		{
+			c = this->CreateComponent<ComponentRigidBody>();
 			break;
-		}		
+		}
+		case ComponentType::TRANSFORM2D:
+		{
+			c = this->CreateComponent<ComponentTransform2D>();
+			break;
+		}
+		case ComponentType::CANVAS:
+		{
+			c = this->CreateComponent<ComponentCanvas>();
+			break;
+		}
+		case ComponentType::IMAGE:
+		{
+			c = this->CreateComponent<ComponentImage>();
+			break;
+		}
+		case ComponentType::BUTTON:
+		{
+			c = this->CreateComponent<ComponentButton>();
+			break;
+		}
+		case ComponentType::TEXT:
+		{
+			c = this->CreateComponent<ComponentText>();
+			break;
+		}
+		case ComponentType::TRANSFORM:
+		{
+			c = this->CreateComponent<ComponentTransform>();
+			break;
+		}
 		case ComponentType::INFO:
 		{
-			this->CreateComponent<ComponentInfo>();
+			c = this->CreateComponent<ComponentInfo>();
 			break;
 		}
-		case ComponentType::RIGID_BODY: 
-		{ 
-			this->CreateComponent<ComponentRigidBody>();
-			break;
-		}	
-		
 	}
+	c->Start();
+	return c;
 }
 
 void GameObject::AttachChild(GameObject* child)

@@ -119,25 +119,25 @@ bool MainBar::Update()
 				if (ImGui::MenuItem("Canvas")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr,nullptr, false);
 					go->SetName("Canvas");
-					go->CreateComponent<ComponentCanvas>();
+					go->AddComponentByType(ComponentType::CANVAS);//CreateComponent<ComponentCanvas>();
 				}
 				if (ImGui::MenuItem("Image")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Image");
-					go->CreateComponent<ComponentTransform2D>();
-					go->CreateComponent<ComponentImage>();
+					go->AddComponentByType(ComponentType::TRANSFORM2D);//CreateComponent<ComponentTransform2D>();
+					go->AddComponentByType(ComponentType::IMAGE);//CreateComponent<ComponentImage>();
 				}
 				if (ImGui::MenuItem("Button")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Button");
-					go->CreateComponent<ComponentTransform2D>();
-					go->CreateComponent<ComponentButton>();
+					go->AddComponentByType(ComponentType::TRANSFORM2D);//CreateComponent<ComponentTransform2D>();
+					go->AddComponentByType(ComponentType::BUTTON);//CreateComponent<ComponentButton>();
 				}
 				if (ImGui::MenuItem("Text")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Text");
-					go->CreateComponent<ComponentTransform2D>();
-					go->CreateComponent<ComponentText>();
+					go->AddComponentByType(ComponentType::TRANSFORM2D);//CreateComponent<ComponentTransform2D>();
+					go->AddComponentByType(ComponentType::TEXT);//CreateComponent<ComponentText>();
 				}
 				ImGui::EndMenu();
 			}
