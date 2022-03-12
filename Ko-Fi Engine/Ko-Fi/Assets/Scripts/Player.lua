@@ -1,10 +1,11 @@
 ------------------- Variables --------------------
 
-speed = 50  -- consider Start()
+speed = 25  -- consider Start()
 
 bullets = {}
 
 --GameState = require "Assets.Scripts.GameState"
+--GameState:Update(1)
 --print(GameState:GetGameState())
 
 -------------------- Methods ---------------------
@@ -49,7 +50,7 @@ function Update(dt)
 		if (goingRight == true) then
 			rad = rad * (-1)
 		end
-		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x,  componentTransform:GetRotation().y,rad))
+		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y,rad))
 	else
 		--gameObject:GetRigidBody():SetLinearVelocity(float3.new(0,0,0))   -- RigidBody Dependant
 	end
@@ -63,7 +64,6 @@ function Update(dt)
 	if (spaceButton == KEY_STATE.KEY_DOWN) then
 		CreateBullet()
 	end
-
 end
 
 -- Move to destination
@@ -72,8 +72,10 @@ function MoveToDestination(dt)
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local d = Distance(pos2D, targetPos2D)
-	print(d)
-	if (d > 0.025)
+	--print("Pos 2D: " .. pos2D[1], pos2D[2])
+	--print("Target pos 2D: " .. targetPos2D[1], targetPos2D[2])
+	--print("Distance: " .. d)
+	if (d > 0.25)
 		then --move
 			local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * speed * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * speed * dt))

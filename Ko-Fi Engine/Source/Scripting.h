@@ -13,9 +13,7 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentRigidBody.h"
-#include <lua.hpp>
-#include <sol.hpp>
-
+#include "ComponentScript.h"
 
 class Scripting
 {
@@ -124,6 +122,7 @@ public:
 		lua.set_function("CreateBullet", &Scripting::LuaCreateBullet, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
 		lua.set_function("Find", &Scripting::LuaFind, this);
+		lua.set_function("GetInt", &Scripting::LuaGetInt, this);
 	}
 
 	bool CleanUp()
@@ -166,6 +165,24 @@ public:
 				return go;
 		}
 		return nullptr;
+	}
+
+	int LuaGetInt(std::string path, std::string variable)
+	{
+		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		{
+			ComponentScript* script = go->GetComponent<ComponentScript>();
+			if (script)
+			{
+				if (path == script->path.substr(script->path.find_last_of('/') + 1))//path.substr(path.find_last_of('/') + 1
+				{
+					int abc = (int)script->handler->lua[variable.c_str()];
+					return abc;
+				}
+			}
+		}
+
+		return -999;
 	}
 
 public:

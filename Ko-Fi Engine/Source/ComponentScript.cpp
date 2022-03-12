@@ -1,3 +1,4 @@
+#include "Scripting.h"
 #include "ComponentScript.h"
 #include "Engine.h"
 

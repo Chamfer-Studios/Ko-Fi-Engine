@@ -1,5 +1,5 @@
 local GameState = {}
-
+abc = 33
 GameState.GameState = {
    STOP = 1,
    STARTING = 2,

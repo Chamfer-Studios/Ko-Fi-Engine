@@ -97,7 +97,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 			if (currentEntityAABB.Intersects(newCollider))
 			{
 				//call corresponding event depending on collider type
-				std::cout<<"intersectioooooon";
+				//std::cout<<"intersectioooooon";
 
 				//set new collision for the inspector properties
 				currentEntity->GetComponent<ComponentCollider>()->SetNewCollision(fullGOList[i]);

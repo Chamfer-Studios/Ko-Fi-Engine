@@ -213,17 +213,24 @@ void SceneManager::OnTick()
 
 void SceneManager::OnClick(SDL_Event event)
 {
-	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT) return;
+	if (event.button.type != SDL_MOUSEBUTTONDOWN) return;
 
 	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) return;
 
-	GameObject* hit = engine->GetCamera3D()->MousePicking();
-	if (hit != nullptr)
+	if (event.button.button == SDL_BUTTON_LEFT)
 	{
-		CONSOLE_LOG("%s", hit->GetName());
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+		GameObject* hit = engine->GetCamera3D()->MousePicking();
+		if (hit != nullptr)
+		{
+			CONSOLE_LOG("%s", hit->GetName());
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+		}
+		else {
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+		}
 	}
-	else {
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	else if (event.button.button == SDL_BUTTON_RIGHT)
+	{
+		engine->GetCamera3D()->MousePicking(true);
 	}
 }

@@ -10,6 +10,7 @@
 #include "ComponentScript.h"
 #include "Renderer3D.h"
 #include "PanelViewport.h"
+#include "Scripting.h"
 
 #include "SDL.h"
 #include "Log.h"
@@ -289,7 +290,7 @@ void Camera3D::OnGui()
 //	RecalculateProjection();
 //}
 
-GameObject* Camera3D::MousePicking()
+GameObject* Camera3D::MousePicking(const bool& isRightButton)
 {
 	float normalX = engine->GetEditor()->mouseScenePosition.x / engine->GetEditor()->lastViewportSize.x;
 	float normalY = engine->GetEditor()->mouseScenePosition.y / engine->GetEditor()->lastViewportSize.y;
@@ -298,6 +299,8 @@ GameObject* Camera3D::MousePicking()
 	normalY = -(normalY - 0.5f) * 2.0f;
 	CONSOLE_LOG("%f", normalX);
 	CONSOLE_LOG("%f", normalY);
+
+	//printf("Mouse X: %f, Mouse Y: %f\n", normalX, normalY);
 
 	LineSegment newRay = cameraFrustum.UnProjectLineSegment(normalX, normalY);
 	engine->GetSceneManager()->GetCurrentScene()->ray = newRay;
@@ -368,10 +371,13 @@ GameObject* Camera3D::MousePicking()
 
 				float distance;
 				float3 intersectionPoint;
-				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
+				//if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
 
-				/*if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
+				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
 				{
+					if (!isRightButton)
+						return gameObject;
+
 					for (GameObject* go : sceneGameObjects)
 					{
 						if (gameObject != go)
@@ -379,15 +385,17 @@ GameObject* Camera3D::MousePicking()
 							ComponentScript* script = go->GetComponent<ComponentScript>();
 							if (script != nullptr)
 							{
-								glBegin(GL_POINTS);
-								glVertex3f(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z);
-								glEnd();
-								script->handler->lua["destination"] = intersectionPoint; 
+								if (script->path.substr(script->path.find_last_of('/') + 1) == "Player.lua")
+								{
+									intersectionPoint.x *= gameObject->GetTransform()->GetScale().x;
+									intersectionPoint.y *= gameObject->GetTransform()->GetScale().y;
+									intersectionPoint.z *= gameObject->GetTransform()->GetScale().z;
+									script->handler->lua["destination"] = intersectionPoint;
+								}
 							}
 						}
 					}
-					return gameObject;
-				}*/
+				}
 			}
 		}
 	}

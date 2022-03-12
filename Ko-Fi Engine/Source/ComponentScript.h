@@ -1,16 +1,16 @@
-#pragma once
 #ifndef __COMPONENT_SCRIPT_H__
 #define __COMPONENT_SCRIPT_H__
 
 #include "Component.h"
-
-#include "Scripting.h"
+#include <lua.hpp>
+#include <sol.hpp>
 
 class GameObject;
 class ComponentTransform;
 using Json = nlohmann::json;
 
-class ComponentScript : public Component
+class Scripting;
+class ComponentScript : public Component 
 {
 public:
 	ComponentScript(GameObject* gameObject);
