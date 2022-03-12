@@ -128,7 +128,7 @@ void Mesh::Draw(GameObject* owner)
 {
 	glBindVertexArray(VAO);
 
-	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
 
 	DebugDraw();
 
