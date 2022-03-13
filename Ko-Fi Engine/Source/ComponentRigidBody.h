@@ -47,7 +47,7 @@ public:
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 
 	// Getters & setters
-	inline const physx::PxRigidActor* GetRigidBody() { if (isKinematic) return staticBody; else return dynamicBody; }
+	inline physx::PxRigidActor* GetRigidBody() { if (isKinematic) return staticBody; else return dynamicBody; }
 
 	inline const float3 GetLinearVelocity() { return linearVel; }
 	inline void SetLinearVelocity(const float3 newLinearVel) { linearVel = newLinearVel; hasUpdated = true; }

@@ -12,6 +12,7 @@
 #include "ComponentCollider.h"
 #include "ComponentMaterial.h"
 #include "ComponentScript.h"
+#include "C_Collider.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -193,7 +194,12 @@ void GameObject::AddComponentByType(ComponentType componentType)
 			this->CreateComponent<ComponentRigidBody>();
 			break;
 		}	
-		
+		case ComponentType::COLLIDER2:
+		{
+			/*this->CreateComponent<ComponentCollider2>();*/
+			ComponentCollider2* cmpColl2 = new ComponentCollider2(this, ColliderType2::BOX);
+			break;
+		}
 	}
 }
 

@@ -47,7 +47,7 @@ bool Physics::Update(float dt)
 
 	if (scene && isSimulating)
 	{
-		// TODO: WE HAVE TO PASS AS A PARAMETER TO SIMULATE THE GAME DT, NOT THE GENERAL ENGINE DT
+		// TODO: WE HAVE TO PASS AS A PARAMETER THE GAME DT, NOT THE ENGINE DT
 		scene->simulate(dt);
 		scene->fetchResults(true);
 	}
