@@ -60,6 +60,8 @@ public:
 	void UpdatePanelsState();
 	void OpenTextEditor(std::string path);
 
+	bool MouseOnScene();
+
 	template<class T> T* GetPanel()
 	{
 		T* panel = nullptr;

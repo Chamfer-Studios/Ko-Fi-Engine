@@ -23,6 +23,7 @@
 #include "PanelAssets.h"
 #include "PanelTextEditor.h"
 #include "PanelNodeEditor.h"
+#include "ImGuizmo.h"
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
 
@@ -129,7 +130,7 @@ bool Editor::Awake(Json configModule)
 
 	// FIXME: The list of meshes should be in scene intro.
 	//input->gameObjects = &gameObjects;
-
+	ImGuizmo::Enable(true);
 	return ret;
 }
 
@@ -142,6 +143,7 @@ bool Editor::Start()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImNodes::CreateContext();
+	//ImGuizmo::SetImGuiContext(ImGui::GetCurrentContext());
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
 
@@ -172,6 +174,7 @@ bool Editor::PreUpdate(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 
 	// Panels PreUpdate
 	if (ret == true)
@@ -485,6 +488,12 @@ void Editor::OpenTextEditor(std::string path)
 {
 	toggleTextEditor = true;
 	panelTextEditor->LoadFile(path);
+}
+
+bool Editor::MouseOnScene()
+{
+	return mouseScenePosition.x > 0 && mouseScenePosition.x < viewportSize.x
+		&& mouseScenePosition.y > 0 && mouseScenePosition.y < viewportSize.y;
 }
 
 

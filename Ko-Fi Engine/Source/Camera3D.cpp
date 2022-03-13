@@ -296,8 +296,8 @@ GameObject* Camera3D::MousePicking()
 
 	normalX = (normalX - 0.5f) * 2.0f;
 	normalY = -(normalY - 0.5f) * 2.0f;
-	CONSOLE_LOG("%f", normalX);
-	CONSOLE_LOG("%f", normalY);
+	/*CONSOLE_LOG("x: %f", normalX);
+	CONSOLE_LOG("y: %f", normalY);*/
 
 	LineSegment newRay = cameraFrustum.UnProjectLineSegment(normalX, normalY);
 	engine->GetSceneManager()->GetCurrentScene()->ray = newRay;
