@@ -16,7 +16,7 @@ class Texture;
 class Emitter
 {
 public:
-	Emitter();
+	Emitter(const char* name = "Emitter");
 	~Emitter();
 
 	bool Update(float dt);
@@ -47,9 +47,8 @@ public:
 public:
 	uint maxParticles = 50;
 	std::vector<ParticleModule*> modules;
-	std::string name = "Particle Emitter";
+	std::string name = "Emitter";
 	Texture* texture = nullptr;
-	std::string path = "none";
 };
 
 #endif // !__EMITTER_H__

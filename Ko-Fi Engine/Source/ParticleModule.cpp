@@ -14,6 +14,14 @@ ParticleModule::ParticleModule()
 ParticleModule::~ParticleModule()
 {}
 
+void ParticleModule::Spawn(Particle* particle, EmitterInstance* emitter)
+{}
+
+bool ParticleModule::Update(float dt, EmitterInstance* emitter)
+{
+	return true;
+}
+
 float ParticleModule::GetPercentage(Particle* p)
 {
 	return (p->lifeTime / p->maxLifetime);
@@ -80,6 +88,7 @@ bool EmitterMovement::Update(float dt, EmitterInstance* emitter)
 EmitterColor::EmitterColor()
 {
 	type = ParticleModuleType::COLOR;
+	colorOverTime.push_back(FadeColor());
 }
 
 void EmitterColor::Spawn(Particle* particle, EmitterInstance* emitter)

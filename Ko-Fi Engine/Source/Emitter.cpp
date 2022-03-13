@@ -2,8 +2,9 @@
 #include "Texture.h"
 #include "ParticleModule.h"
 
-Emitter::Emitter()
+Emitter::Emitter(const char* newName)
 {
+	name = newName;
 	texture = nullptr; //new Texture();
 	//path = "Assets\Textures\firework_projectile.png";
 	//Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);

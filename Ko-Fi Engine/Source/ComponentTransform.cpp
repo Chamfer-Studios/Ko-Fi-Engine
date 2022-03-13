@@ -20,7 +20,11 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 }
 
 ComponentTransform::~ComponentTransform()
+{}
+
+bool ComponentTransform::CleanUp()
 {
+	return true;
 }
 
 bool ComponentTransform::Update(float dt)

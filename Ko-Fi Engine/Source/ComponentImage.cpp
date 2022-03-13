@@ -34,7 +34,13 @@ ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 
 ComponentImage::~ComponentImage()
 {
+	FreeTextures();
+}
 
+bool ComponentImage::CleanUp()
+{
+	FreeTextures();
+	return true;
 }
 
 void ComponentImage::Save(Json& json) const

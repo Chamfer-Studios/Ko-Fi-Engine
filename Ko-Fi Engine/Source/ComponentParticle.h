@@ -21,12 +21,16 @@ public:
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
-	// TODO: Save & Load
-	bool InspectorDraw(PanelChooser* chooser);
+
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
+
+	bool InspectorDraw(PanelChooser* chooser) override;
+	void InspectorDrawColor(std::string emitterName,FadeColor& color, int index);
+
 	void ClearParticles();
 	void StopParticleSpawn();
 	void ResumeParticleSpawn();
-	void InspectorDrawColor(FadeColor& color, int index);
 
 public:
 	std::vector<EmitterInstance*> emitterInstances;

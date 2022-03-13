@@ -20,6 +20,9 @@ public:
 	ComponentMaterial(GameObject* parent);
 	~ComponentMaterial();
 
+	bool Update(float dt) override;
+	bool CleanUp() override;
+
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
@@ -28,7 +31,7 @@ public:
 
 	void LoadMaterial(const char* path = "");
 
-	bool InspectorDraw(PanelChooser* chooser);
+	bool InspectorDraw(PanelChooser* chooser) override;
 
 	bool LoadDefaultMaterial();
 
