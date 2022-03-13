@@ -1,5 +1,5 @@
 // https://github.com/CedricGuillemet/ImGuizmo
-// v 1.84 WIP
+// v 1.83
 //
 // The MIT License(MIT)
 //
@@ -54,7 +54,6 @@ namespace ImSequencer
       virtual int GetItemTypeCount() const { return 0; }
       virtual const char* GetItemTypeName(int /*typeIndex*/) const { return ""; }
       virtual const char* GetItemLabel(int /*index*/) const { return ""; }
-      virtual const char* GetCollapseFmt() const { return "%d Frames / %d entries"; }
 
       virtual void Get(int index, int** start, int** end, int* type, unsigned int* color) = 0;
       virtual void Add(int /*type*/) {}

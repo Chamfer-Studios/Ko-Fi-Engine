@@ -66,6 +66,7 @@ bool SceneManager::Start()
 
 	currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 	currentGizmoMode = ImGuizmo::MODE::WORLD;
+	//ImGuizmo::SetGizmoSizeClipSpace(0.1f);
 	return ret;
 }
 
@@ -87,7 +88,7 @@ bool SceneManager::PreUpdate(float dt)
 bool SceneManager::Update(float dt)
 {
 	bool ret = true;
-
+	
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->Update(dt);
@@ -106,7 +107,7 @@ bool SceneManager::PostUpdate(float dt)
 	}
 
 	FinishUpdate();
-
+	GuizmoTransformation();
 	return ret;
 }
 
@@ -225,22 +226,16 @@ void SceneManager::OnClick(SDL_Event event)
 {
 	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT ) return;
 	
-	if (ImGuizmo::IsUsing())
-		int a = 0;
-
-	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) return;
-
-	//if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
-	//	return;
-
+	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() || ImGuizmo::IsOver()) return;
+	
+	// Mouse Picking
 	GameObject* hit = engine->GetCamera3D()->MousePicking();
 	if (hit != nullptr)
 	{
-	//	CONSOLE_LOG("%s", hit->GetName());
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();// Select Object Hit
 	}
 	else {
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1; // else, diselect by choosing the root.
 	}
 }
 

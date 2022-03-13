@@ -1,5 +1,5 @@
 // https://github.com/CedricGuillemet/ImGuizmo
-// v 1.84 WIP
+// v 1.83
 //
 // The MIT License(MIT)
 //
@@ -111,11 +111,7 @@ void EditTransform(const Camera& camera, matrix_t& matrix)
 #define IMGUI_API
 #endif
 
-#ifndef IMGUIZMO_NAMESPACE
-#define IMGUIZMO_NAMESPACE ImGuizmo
-#endif
-
-namespace IMGUIZMO_NAMESPACE
+namespace ImGuizmo
 {
    // call inside your own window and before Manipulate() in order to draw gizmo to that window.
    // Or pass a specific ImDrawList to draw to (e.g. ImGui::GetForegroundDrawList()).
@@ -180,15 +176,9 @@ namespace IMGUIZMO_NAMESPACE
       SCALE_Y          = (1u << 8),
       SCALE_Z          = (1u << 9),
       BOUNDS           = (1u << 10),
-      SCALE_XU         = (1u << 11),
-      SCALE_YU         = (1u << 12),
-      SCALE_ZU         = (1u << 13),
-
       TRANSLATE = TRANSLATE_X | TRANSLATE_Y | TRANSLATE_Z,
       ROTATE = ROTATE_X | ROTATE_Y | ROTATE_Z | ROTATE_SCREEN,
-      SCALE = SCALE_X | SCALE_Y | SCALE_Z,
-      SCALEU = SCALE_XU | SCALE_YU | SCALE_ZU, // universal
-      UNIVERSAL = TRANSLATE | ROTATE | SCALEU
+      SCALE = SCALE_X | SCALE_Y | SCALE_Z
    };
 
    inline OPERATION operator|(OPERATION lhs, OPERATION rhs)

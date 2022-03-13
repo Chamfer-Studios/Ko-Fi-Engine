@@ -37,7 +37,6 @@ bool ComponentTransform::Update(float dt)
 		owner->PropagateTransform();
 		isDirty = false;
 	}
-	owner->GetEngine()->GetSceneManager()->GuizmoTransformation();
 	return true;
 }
 
