@@ -81,11 +81,20 @@ function MoveToDestination(dt)
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local d = Distance(pos2D, targetPos2D)
+	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 
 	if (d > 0.25)
-		then --move
-			local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
+		then 
+			--movement
 			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * speed * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * speed * dt))
+
+			--rotation
+			vec2 = Normalize(vec2, d)
+			local rad = math.acos(vec2[2])
+			if(vec2[1] < 0)then
+				rad = rad * (-1)
+			end
+			componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
 		else
 			destination = nil
 	end

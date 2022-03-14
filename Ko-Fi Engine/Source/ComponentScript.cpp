@@ -70,7 +70,7 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 	std::string headerName = "Script" + std::to_string(numScript);
 
-	if (ImGui::CollapsingHeader(headerName.c_str()))
+	if (ImGui::CollapsingHeader(headerName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (chooser->IsReadyToClose("LoadScript")) 
 		{
