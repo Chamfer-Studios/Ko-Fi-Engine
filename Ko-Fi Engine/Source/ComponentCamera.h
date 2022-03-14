@@ -15,7 +15,7 @@ using Json = nlohmann::json;
 class ComponentCamera : public Component
 {
 public:
-	ComponentCamera(GameObject* gameObject);
+	ComponentCamera(GameObject* parent);
 	~ComponentCamera();
 
 	bool Start() override;

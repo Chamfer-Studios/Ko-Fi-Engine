@@ -12,6 +12,7 @@
 #include "ComponentCollider.h"
 #include "ComponentMaterial.h"
 #include "ComponentScript.h"
+#include "C_AudioSource.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -149,8 +150,6 @@ void GameObject::AddComponentByType(ComponentType componentType)
 		}
 	}
 
-	
-
 	switch (componentType)
 	{
 		case ComponentType::TRANSFORM: 
@@ -192,8 +191,12 @@ void GameObject::AddComponentByType(ComponentType componentType)
 		{ 
 			this->CreateComponent<ComponentRigidBody>();
 			break;
-		}	
-		
+		}
+		case ComponentType::AUDIO_SOURCE:
+		{
+			this->CreateComponent<C_AudioSource>();
+			break;
+		}
 	}
 }
 

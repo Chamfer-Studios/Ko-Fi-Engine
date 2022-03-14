@@ -110,6 +110,9 @@
     <Filter Include="Libs\SDL_ttf">
       <UniqueIdentifier>{7d8ca1e5-eefd-4c67-a8f4-310da73f01b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Components\Audio">
+      <UniqueIdentifier>{3d499aa0-c255-4528-9686-25779eaba5c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -435,6 +438,15 @@
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentRigidBody.cpp" />
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Track.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_AudioSource.cpp">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1439,6 +1451,33 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\R_Track.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_Audio.h">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_AudioSource.h">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_AudioSpacial.h">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_AudioSwitch.h">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Track.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\ResourceManager.h">
@@ -1458,9 +1497,6 @@
     </ClInclude>
     <ClInclude Include="Source\FSDefs.h">
       <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\par_shapes.h">
-      <Filter>Source\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Material.h">
       <Filter>Source\Importers</Filter>
@@ -1497,9 +1533,6 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentImage.h">
       <Filter>Source\GameObject\Components\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\par_shapes.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\IconsFontAwesome5.h">
       <Filter>Source\Utils</Filter>
