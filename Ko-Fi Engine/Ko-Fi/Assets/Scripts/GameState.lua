@@ -17,6 +17,10 @@ function GameState.SayHi()
     print("Hello World!")
 end
 
+function Start()
+	
+end
+
 function Update(dt)
 	gameState = GameState.GameState.PAUSED
 end

@@ -38,6 +38,7 @@ bool ComponentScript::Start()
 {
 	bool ret = true;
 
+	ReloadScript();  // For loading scenes
 
 	return ret;
 }
@@ -76,10 +77,7 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 			if (chooser->OnChooserClosed() != nullptr) 
 			{
 				path = chooser->OnChooserClosed();
-				if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING)
-					ReloadScript();
-				else
-					script = handler->lua.load_file(path);
+				ReloadScript();
 			}
 		}
 		if (ImGui::Button("Select Script")) 
@@ -89,11 +87,28 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());
 
-		//float s = handler->lua["speed"];
-		//if (ImGui::DragFloat("Speed", &s))
-		//{
-		//	handler->lua["speed"] = s;
-		//}
+		for (InspectorVariable* variable : inspectorVariables)
+		{
+			if (variable->type == INSPECTOR_NO_TYPE)
+				continue;
+			
+			switch (variable->type)
+			{
+				case INSPECTOR_INT:
+				{
+					if (ImGui::DragInt(variable->name.c_str(), &std::get<int>(variable->value)))
+					{
+						handler->lua[variable->name.c_str()] = std::get<int>(variable->value);
+					}
+					break;
+				}
+				case INSPECTOR_FLOAT:
+				{
+					ImGui::DragFloat(variable->name.c_str(), &std::get<float>(variable->value));
+					break;
+				}
+			}
+		}
 
 		if (ImGui::Button("Reload Script"))
 		{
@@ -107,6 +122,8 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 void ComponentScript::ReloadScript()
 {
+	if (path == "")
+		return;
 	script = handler->lua.load_file(path);
 	script();
 	isScriptLoaded = true;

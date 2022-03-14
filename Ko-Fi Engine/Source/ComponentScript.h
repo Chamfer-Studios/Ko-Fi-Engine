@@ -10,6 +10,8 @@ class ComponentTransform;
 using Json = nlohmann::json;
 
 class Scripting;
+class InspectorVariable;
+
 class ComponentScript : public Component 
 {
 public:
@@ -29,6 +31,7 @@ public:
 	sol::load_result script; // Check if it can be private
 	Scripting* handler = nullptr;
 	std::string path = "";
+	std::vector<InspectorVariable*> inspectorVariables;
 
 private:
 	int numScript;

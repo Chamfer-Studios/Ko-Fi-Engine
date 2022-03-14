@@ -4,11 +4,18 @@ speed = 25  -- consider Start()
 
 bullets = {}
 
+local type = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+newVariable = InspectorVariable.new("speed", type, speed)
+NewVariable(newVariable)
+
 --GameState = require "Assets.Scripts.GameState"
 --GameState:Update(1)
 --print(GameState:GetGameState())
 
 -------------------- Methods ---------------------
+function Start()
+	destination = nil
+end
 
 -- Called each loop iteration
 function Update(dt)
@@ -63,6 +70,8 @@ function Update(dt)
 
 	if (spaceButton == KEY_STATE.KEY_DOWN) then
 		CreateBullet()
+		
+		print(newVariable.value)
 	end
 end
 
@@ -72,9 +81,7 @@ function MoveToDestination(dt)
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local d = Distance(pos2D, targetPos2D)
-	--print("Pos 2D: " .. pos2D[1], pos2D[2])
-	--print("Target pos 2D: " .. targetPos2D[1], targetPos2D[2])
-	--print("Distance: " .. d)
+
 	if (d > 0.25)
 		then --move
 			local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
@@ -94,7 +101,7 @@ function SetTarget(tar)
 	target = tar
 end
 
-function SetBulletDirection(bullet, parent)
+function SetBulletDirection(bullet)
 	
 	local playerPos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local bulletPos2D = { bullet:GetTransform():GetPosition().x, bullet:GetTransform():GetPosition().z }
@@ -102,7 +109,7 @@ function SetBulletDirection(bullet, parent)
 	local dir = { bulletPos2D[1] - playerPos2D[1], bulletPos2D[2] - playerPos2D[2] }
 	dir = Normalize(dir, dist)
 	dir3 = float3.new(dir[1], 0, dir[2])
-
+	
 	bullet:GetTransform():SetFront(dir3)
 
 end

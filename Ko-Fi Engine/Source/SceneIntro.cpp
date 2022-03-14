@@ -160,7 +160,7 @@ bool SceneIntro::PostUpdate(float dt)
 		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
 		componentScript->path = "Assets/Scripts/Bullet.lua";
 		componentScript->ReloadScript();
-		parent->GetComponent<ComponentScript>()->handler->lua["SetBulletDirection"](bullet);
+		componentScript->handler->lua["Start"]();
 	}
 	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)
