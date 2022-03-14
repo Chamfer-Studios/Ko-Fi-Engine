@@ -6,13 +6,45 @@
 #include "GameObject.h"
 #include "SDL_ttf.h"
 
-
 #include "glew.h"
 #include <vector>
+#include "MathGeoLib/Geometry/Frustum.h"
 
 #include "SDL.h"
 
 class ComponentCamera;
+class Texture;
+
+class Shadert
+{
+public:
+	unsigned int ID;
+
+	Shadert();
+
+	void Begin();
+	void End();
+
+private:
+	void CheckCompileErrors(uint shader, std::string type);
+};
+
+class MyPlane
+{
+public:
+	MyPlane();
+	~MyPlane();
+	void DrawPlane2D(Texture* texture);
+public:
+	unsigned int vertexBufferId = 0;
+	unsigned int textureBufferId = 0;
+	unsigned int indexBufferId = 0;
+	GameObject* owner;
+public:
+	std::vector<unsigned int> indices;
+	std::vector<float2> texCoords;
+	std::vector<float3> vertices;
+};
 
 class UI : public Module
 {
@@ -38,6 +70,7 @@ public:
 public:
 	GLint uiCameraViewport[4] = { 0, 0, 0, 0 };
 	TTF_Font* rubik = nullptr;
+	MyPlane* drawablePlane = nullptr;
 private:
 	KoFiEngine* engine = nullptr;
 

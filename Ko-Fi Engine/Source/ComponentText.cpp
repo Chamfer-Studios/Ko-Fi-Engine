@@ -19,6 +19,7 @@ ComponentText::ComponentText(GameObject* parent) : Component(parent)
 
 ComponentText::~ComponentText()
 {
+	FreeTextures();
 }
 
 void ComponentText::Save(Json& json) const
@@ -86,69 +87,14 @@ void ComponentText::SetTextValue(std::string newValue)
 		appLog->AddLog("%s\n", SDL_GetError());
 
 	SDL_Surface* dstSurface = SDL_CreateRGBSurface(0, (srcSurface != nullptr ? srcSurface->w : 100), (srcSurface != nullptr ? srcSurface->h : 100), 32, 0xff, 0xff00, 0xff0000, 0xff000000);
-	if (srcSurface != nullptr) {
-		SDL_BlitSurface(srcSurface, NULL, dstSurface, NULL);
-	}
-	else {
-		SDL_Rect rect = { 0, 0, dstSurface->w, dstSurface->h };
-		Uint32 black = (255 << 24) + (0 << 16) + (0 << 8) + (0);
-		SDL_FillRect(dstSurface, &rect, black);
-	}
-
-	FILE* dstSurfaceFile = fopen("Assets/outputdst.txt", "wt");
-	int i, j, k = 0;
-	for (i = 0; i < dstSurface->w; i++)
-	{
-		for (j = 0; j < dstSurface->h; j++)
-		{
-			fprintf(dstSurfaceFile, "%u %u %u %u ", (unsigned int)((unsigned char*)dstSurface->pixels)[k], (unsigned int)((unsigned char*)dstSurface->pixels)[k + 1], (unsigned int)((unsigned char*)dstSurface->pixels)[k + 2], (unsigned int)((unsigned char*)dstSurface->pixels)[k + 3]);
-			k = k + 4;
-		}
-		fprintf(dstSurfaceFile, "\n");
-	}
 
 	texW = dstSurface->w;
 	texH = dstSurface->h;
 
-	openGLTexture = SurfaceToOpenGLTexture(dstSurface);
-	//SDLTexture = SurfaceToSDLTexture(dstSurface);
-
-	SaveToFile(dstSurface->w, dstSurface->h);
+	openGLTexture = SurfaceToOpenGLTexture(srcSurface);
 
 	SDL_FreeSurface(srcSurface);
 	SDL_FreeSurface(dstSurface);
-}
-
-void ComponentText::SaveToFile(int width, int height)
-{
-	FILE* output_image;
-	int output_width, output_height;
-
-	output_width = width;
-	output_height = height;
-
-	/// READ THE PIXELS VALUES from FBO AND SAVE TO A .PPM FILE
-	int             i, j, k;
-	unsigned char* pixels = (unsigned char*)malloc(output_width * output_height * 4);
-
-	/// READ THE CONTENT FROM THE FBO
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
-	glReadBuffer(GL_COLOR_ATTACHMENT0);
-	glReadPixels(0, 0, output_width, output_height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-
-	output_image = fopen("Assets/output.txt", "wt");
-
-	k = 0;
-	for (i = 0; i < output_width; i++)
-	{
-		for (j = 0; j < output_height; j++)
-		{
-			fprintf(output_image, "%u %u %u %u ", (unsigned int)pixels[k], (unsigned int)pixels[k + 1], (unsigned int)pixels[k + 2], (unsigned int)pixels[k + 3]);
-			k = k + 4;
-		}
-		fprintf(output_image, "\n");
-	}
-	free(pixels);
 }
 
 GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)
@@ -177,31 +123,16 @@ GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)
 
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
+	glDisable(GL_BLEND);
 
 	return id;
 }
 
-SDL_Texture* ComponentText::SurfaceToSDLTexture(SDL_Surface* surface)
-{
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(owner->GetEngine()->GetUI()->renderer, surface);
-
-	if (texture == NULL)
-	{
-		appLog->AddLog("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
-	}
-	else
-	{
-		owner->GetEngine()->GetUI()->loadedTextures.push_back(texture);
-	}
-
-	return texture;
-}
-
 void ComponentText::FreeTextures()
 {
-	//if (SDLTexture != nullptr)
-	//	SDL_DestroyTexture(SDLTexture);
 	if (openGLTexture != 0)
 		glDeleteTextures(1, &openGLTexture);
 }

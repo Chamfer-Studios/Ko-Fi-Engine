@@ -32,8 +32,6 @@ public:
 	void SetTextValue(std::string newValue);
 	std::string GetTextValue() { return textValue; };
 
-	void SaveToFile(int width, int height);
-
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 
