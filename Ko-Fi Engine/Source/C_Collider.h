@@ -9,10 +9,10 @@
 
 enum class ColliderType2
 {
+	NONE,
 	BOX,
 	SPHERE,
-	CAPSULE,
-	NONE
+	CAPSULE
 };
 
 class ComponentCollider2 : public Component
@@ -40,11 +40,15 @@ public:
 	inline void SetIsTrigger(const bool isTrigger) { this->isTrigger = isTrigger; }
 
 private:
+	const char* ColliderTypeToString(const ColliderType2 collType);
+
 	physx::PxShape* shape = nullptr;
 
+	bool enabled = true;
 	bool isTrigger = false;
 
 	ColliderType2 colliderType = ColliderType2::NONE;
+	int colliderTypeInt = 0;
 
 };
 
