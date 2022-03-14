@@ -41,24 +41,9 @@ bool ComponentText::Update(float dt)
 
 bool ComponentText::PostUpdate(float dt)
 {
-	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
-
-	SDL_Rect rect;
-
-	rect.x = 0;
-	rect.y = 0;
-	rect.w = texW;
-	rect.h = texH;
-
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
-	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture, 0);
-
-	float2 normalizedPosition = cTransform->GetNormalizedPosition(true);
-	float2 normalizedSize = cTransform->GetNormalizedSize(true);
-
-	float2 lowerLeft = { normalizedPosition.x, normalizedPosition.y };
-	float2 upperRight = { lowerLeft.x + normalizedSize.x, lowerLeft.y + normalizedSize.y };
-	glBlitFramebuffer(0, 0, rect.w, rect.h, lowerLeft.x, lowerLeft.y, upperRight.x, upperRight.y, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+	owner->GetEngine()->GetUI()->PrepareUIRender(owner);
+	owner->GetEngine()->GetUI()->drawablePlane->DrawPlane2D(openGLTexture);
+	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
 }
@@ -78,23 +63,35 @@ void ComponentText::SetTextValue(std::string newValue)
 {
 	FreeTextures();
 
+	glEnable(GL_BLEND);
+	glDisable(GL_DEPTH_TEST);
+
 	textValue = newValue;
 	SDL_Color color = { 255, 255, 255, 255 };
-	uint colorAsDecimal = (color.r << 24) + (color.g << 16) + (color.b << 8) + (color.a);
+	//uint colorAsDecimal = (color.r << 24) + (color.g << 16) + (color.b << 8) + (color.a);
 	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(owner->GetEngine()->GetUI()->rubik, textValue.c_str(), color);
 
 	if (srcSurface == nullptr)
 		appLog->AddLog("%s\n", SDL_GetError());
 
-	SDL_Surface* dstSurface = SDL_CreateRGBSurface(0, (srcSurface != nullptr ? srcSurface->w : 100), (srcSurface != nullptr ? srcSurface->h : 100), 32, 0xff, 0xff00, 0xff0000, 0xff000000);
+	//SDL_Surface* dstSurface = SDL_CreateRGBSurface(0, (srcSurface != nullptr ? srcSurface->w : 100), (srcSurface != nullptr ? srcSurface->h : 100), 32, 0xff, 0xff00, 0xff0000, 0xff000000);
+
+	/*if (srcSurface != nullptr) {
+		SDL_BlitSurface(srcSurface, NULL, dstSurface, NULL);
+	}
+	else {
+		SDL_Rect rect = { 0, 0, dstSurface->w, dstSurface->h };
+		Uint32 black = (255 << 24) + (0 << 16) + (0 << 8) + (0);
+		SDL_FillRect(dstSurface, &rect, black);
+	}
 
 	texW = dstSurface->w;
-	texH = dstSurface->h;
+	texH = dstSurface->h;*/
 
 	openGLTexture = SurfaceToOpenGLTexture(srcSurface);
 
 	SDL_FreeSurface(srcSurface);
-	SDL_FreeSurface(dstSurface);
+	//SDL_FreeSurface(dstSurface);
 }
 
 GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)
@@ -123,10 +120,12 @@ GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)
 
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
-	glDisable(GL_BLEND);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return id;
 }

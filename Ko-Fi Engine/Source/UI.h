@@ -35,6 +35,7 @@ public:
 	MyPlane();
 	~MyPlane();
 	void DrawPlane2D(Texture* texture);
+	void DrawPlane2D(unsigned int texture);
 public:
 	unsigned int vertexBufferId = 0;
 	unsigned int textureBufferId = 0;
@@ -59,6 +60,9 @@ public:
 	bool CleanUp() override;
 	void OnNotify(const Event& event) override;
 
+	void PrepareUIRender(GameObject* owner);
+	void EndUIRender();
+
 	float2 GetUINormalizedMousePosition();
 
 	SDL_Renderer* renderer = nullptr;
@@ -68,11 +72,13 @@ public:
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 public:
-	GLint uiCameraViewport[4] = { 0, 0, 0, 0 };
 	TTF_Font* rubik = nullptr;
 	MyPlane* drawablePlane = nullptr;
 private:
 	KoFiEngine* engine = nullptr;
 
-
+	float3 right;
+	float3 up;
+	float3 front;
+	float3 position;
 };

@@ -132,13 +132,6 @@ MyPlane::MyPlane() {
 	indices.push_back(2);
 	indices.push_back(1);
 
-	indices.push_back(2);
-	indices.push_back(1);
-	indices.push_back(0);
-	indices.push_back(1);
-	indices.push_back(2);
-	indices.push_back(3);
-
 	glGenBuffers(1, &vertexBufferId);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
@@ -158,6 +151,14 @@ MyPlane::~MyPlane()
 
 void MyPlane::DrawPlane2D(Texture* texture)
 {
+	if (texture->width != -1 && texture->height != -1)
+		DrawPlane2D(texture->GetTextureId());
+	else
+		DrawPlane2D((unsigned int)0);
+}
+
+void MyPlane::DrawPlane2D(unsigned int texture) {
+	if (texture == 0) return;
 	ComponentTransform2D* cTransform = owner->GetComponent<ComponentTransform2D>();
 
 	float2 normalizedPosition = cTransform->GetNormalizedPosition();
@@ -170,11 +171,9 @@ void MyPlane::DrawPlane2D(Texture* texture)
 
 	math::float4x4 transform = float4x4::FromTRS(position3d, quaternion3d, size3d);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
-
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	if (texture->width != -1 && texture->height != -1) {
+	if (texture != 0) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
@@ -183,8 +182,8 @@ void MyPlane::DrawPlane2D(Texture* texture)
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	if (texture->width != -1 && texture->height != -1)
-		glBindTexture(GL_TEXTURE_2D, texture->GetTextureId());
+	if (texture != 0)
+		glBindTexture(GL_TEXTURE_2D, texture);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
 
@@ -197,7 +196,7 @@ void MyPlane::DrawPlane2D(Texture* texture)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	if (texture->width != -1 && texture->height != -1) {
+	if (texture != 0) {
 		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
@@ -253,6 +252,62 @@ bool UI::CleanUp()
 
 void UI::OnNotify(const Event& event)
 {
+}
+
+void UI::PrepareUIRender(GameObject* owner)
+{
+	right = engine->GetCamera3D()->right;
+	up = engine->GetCamera3D()->up;
+	front = engine->GetCamera3D()->front;
+	position = engine->GetCamera3D()->position;
+
+	engine->GetCamera3D()->position = { 0, 0, 0 };
+	engine->GetCamera3D()->LookAt({ 0, 0, 1 });
+
+	engine->GetCamera3D()->projectionIsDirty = true;
+	engine->GetCamera3D()->CalculateViewMatrix(true);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
+
+	//glClear(GL_COLOR_BUFFER_BIT);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
+
+	//glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	glDisable(GL_LIGHTING);
+
+	drawablePlane->owner = owner;
+}
+
+void UI::EndUIRender()
+{
+	drawablePlane->owner = nullptr;
+
+	glEnable(GL_LIGHTING);
+
+	//glColor3f(255, 255, 255);
+	glDisable(GL_BLEND);
+
+	glPopMatrix();
+
+	engine->GetCamera3D()->right = right;
+	engine->GetCamera3D()->up = up;
+	engine->GetCamera3D()->front = front;
+	engine->GetCamera3D()->position = position;
+
+	engine->GetCamera3D()->projectionIsDirty = true;
+	engine->GetCamera3D()->CalculateViewMatrix(false);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
 }
 
 float2 UI::GetUINormalizedMousePosition()

@@ -66,62 +66,9 @@ bool ComponentImage::Update(float dt)
 
 bool ComponentImage::PostUpdate(float dt)
 {
-	/*Frustum frustum;
-	frustum.pos = owner->GetEngine()->GetCamera3D()->cameraFrustum.pos;
-	frustum.front = owner->GetEngine()->GetCamera3D()->cameraFrustum.front;
-	frustum.up = owner->GetEngine()->GetCamera3D()->cameraFrustum.up;
-	frustum.type = FrustumType::OrthographicFrustum;
-
-	frustum.orthographicWidth = owner->GetEngine()->GetEditor()->lastViewportSize.x;
-	frustum.orthographicHeight = owner->GetEngine()->GetEditor()->lastViewportSize.y;
-	frustum.nearPlaneDistance = -1.0f;
-	frustum.farPlaneDistance = 1000.0f;*/
-
-	/*float3 right = owner->GetEngine()->GetCamera3D()->right;
-	float3 up = owner->GetEngine()->GetCamera3D()->up;
-	float3 front = owner->GetEngine()->GetCamera3D()->front;
-	float3 position = owner->GetEngine()->GetCamera3D()->position;
-
-	owner->GetEngine()->GetCamera3D()->position = { 0, 0, 0 };
-	owner->GetEngine()->GetCamera3D()->LookAt({ 0, 0, 1 });
-
-	owner->GetEngine()->GetCamera3D()->projectionIsDirty = true;
-	owner->GetEngine()->GetCamera3D()->CalculateViewMatrix();*/
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-
-	glDisable(GL_LIGHTING);
-
-	GLint viewport[4];
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(viewport[0], viewport[2], viewport[1], viewport[3], 1, 1000);
-
-	owner->GetEngine()->GetUI()->drawablePlane->owner = this->owner;
+	owner->GetEngine()->GetUI()->PrepareUIRender(owner);
 	owner->GetEngine()->GetUI()->drawablePlane->DrawPlane2D(&openGLTexture);
-	owner->GetEngine()->GetUI()->drawablePlane->owner = nullptr;
-
-	/*owner->GetEngine()->GetCamera3D()->right = right;
-	owner->GetEngine()->GetCamera3D()->up = up;
-	owner->GetEngine()->GetCamera3D()->front = front;
-	owner->GetEngine()->GetCamera3D()->position = position;
-
-	owner->GetEngine()->GetCamera3D()->projectionIsDirty = true;
-	owner->GetEngine()->GetCamera3D()->CalculateViewMatrix();*/
-
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadMatrixf(owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadMatrixf(owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-
-	glEnable(GL_LIGHTING);
-
-	glDisable(GL_ALPHA_TEST);
-	glColor3f(255, 255, 255);
+	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
 }
