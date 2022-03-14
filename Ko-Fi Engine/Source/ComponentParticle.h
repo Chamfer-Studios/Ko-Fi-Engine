@@ -31,6 +31,8 @@ public:
 	void ClearParticles();
 	void StopParticleSpawn();
 	void ResumeParticleSpawn();
+private:
+	void NewEmitterName(std::string& name, int n = 1);
 
 public:
 	std::vector<EmitterInstance*> emitterInstances;

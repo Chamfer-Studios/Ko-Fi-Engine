@@ -84,16 +84,9 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 
 		if (ImGui::Button("Add Emitter"))
 		{
-			Emitter* e = nullptr;
-			if (emitters.size() > 0)
-			{
-				std::string name = "Emitter " + std::to_string(emitters.size() + 1);
-				e = new Emitter(name.c_str());
-			}
-			else
-			{
-				e = new Emitter();
-			}
+			std::string name = "Emitter";
+			NewEmitterName(name);
+			Emitter* e = new Emitter(name.c_str());
 			emitters.push_back(e);
 		}
 
@@ -103,8 +96,8 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 		for (Emitter* emitter : emitters)
 		{
 			std::string emitterName = "##Emitter" + std::to_string(emitterAt);
-			std::string emitterNameDots = "Emitter " + std::to_string(emitterAt) + " Name:";
-			ImGui::Text(emitterNameDots.c_str());
+			//std::string emitterNameDots = "Emitter " + std::to_string(emitterAt) + " Name:";
+			ImGui::Text("Name:");
 			ImGui::SameLine();
 			ImGui::InputText(emitterName.c_str(), &(emitter->name));
 
@@ -268,6 +261,19 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						{
 							e->finalAcceleration = { finalAcceleration[0],finalAcceleration[1],finalAcceleration[2] };
 						}
+
+						std::string deleteEmitter = emitter->name + " - Delete Module Movement";
+						if (ImGui::Button(deleteEmitter.c_str()))
+						{
+							for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
+							{
+								if ((*it)->type == ParticleModuleType::MOVEMENT)
+								{
+									emitter->modules.erase(it);
+									break;
+								}
+							}
+						}
 					}
 					break;
 				case ParticleModuleType::COLOR:
@@ -283,6 +289,14 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						for (std::vector<FadeColor>::iterator color = e->colorOverTime.begin(); color < e->colorOverTime.end(); ++color)
 						{
 							InspectorDrawColor(emitter->name,(*color), posList);
+
+							std::string deleteColor = emitter->name + " - Delete Color " + std::to_string(posList + 1);
+							if (ImGui::Button(deleteColor.c_str()))
+							{
+								e->colorOverTime.erase(color);
+								break;
+							}
+
 							if (color != e->colorOverTime.end())
 							{
 								ImGui::Spacing();
@@ -294,6 +308,19 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						if (ImGui::Button(addColorName.c_str()))
 						{
 							e->colorOverTime.push_back(FadeColor());
+						}
+
+						std::string deleteEmitter = emitter->name + " - Delete Module Color";
+						if (ImGui::Button(deleteEmitter.c_str()))
+						{
+							for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
+							{
+								if ((*it)->type == ParticleModuleType::COLOR)
+								{
+									emitter->modules.erase(it);
+									break;
+								}
+							}
 						}
 					}
 					break;
@@ -308,11 +335,25 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						{
 							e->initialSize = { initialSize[0],initialSize[1],initialSize[2] };
 						}
+
 						float finalSize[3] = { e->finalSize.x,e->finalSize.y,e->finalSize.z };
 						std::string fSizeName = emitter->name + " - FinalSize";
 						if (ImGui::DragFloat3(fSizeName.c_str(), finalSize, 0.1f, -10000.0f, 10000.0f,"%.1f"))
 						{
 							e->finalSize = { finalSize[0],finalSize[1],finalSize[2] };
+						}
+
+						std::string deleteEmitter = emitter->name + " - Delete Module Size";
+						if (ImGui::Button(deleteEmitter.c_str()))
+						{
+							for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
+							{
+								if ((*it)->type == ParticleModuleType::SIZE)
+								{
+									emitter->modules.erase(it);
+									break;
+								}
+							}
 						}
 					}
 					break;
@@ -320,6 +361,20 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					break;
 				}
 			}
+
+			std::string deleteEmitter = "Delete " + emitter->name;
+			if (ImGui::Button(deleteEmitter.c_str()))
+			{
+				for (std::vector<Emitter*>::iterator it = emitters.begin(); it < emitters.end(); ++it)
+				{
+					if((*it) == emitter)
+					{
+						emitters.erase(it);
+						break;
+					}
+				}
+			}
+
 			if (emitter != emitters.back())
 			{
 				ImGui::Separator();
@@ -333,7 +388,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 void ComponentParticle::InspectorDrawColor(std::string emitterName,FadeColor& color,int index)
 {
 	float c[4] = { color.color.r,color.color.g,color.color.b,color.color.a };
-	std::string colorName = emitterName + " - Color " + std::to_string(index);
+	std::string colorName = emitterName + " - Color " + std::to_string(index + 1);
 	if (ImGui::ColorEdit4(colorName.c_str(), c))
 	{
 		color.color.r = c[0];
@@ -342,7 +397,7 @@ void ComponentParticle::InspectorDrawColor(std::string emitterName,FadeColor& co
 		color.color.a = c[3];
 	}
 	float p = color.pos;
-	std::string positionName = emitterName + " - Position " + std::to_string(index);
+	std::string positionName = emitterName + " - Position " + std::to_string(index + 1);
 	if (ImGui::DragFloat(positionName.c_str(), &p, 0.005f, 0.0f, 1.0f, "%.3f"))
 	{
 		color.pos = p;
@@ -370,6 +425,19 @@ void ComponentParticle::ResumeParticleSpawn()
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
 	{
 		(*it)->SetParticleEmission(true);
+	}
+}
+
+void ComponentParticle::NewEmitterName(std::string& name,int n)
+{
+	for (auto emitter : emitters)
+	{
+		if (emitter->name == name)
+		{
+			++n;
+			name = "Emitter " + std::to_string(n);
+			NewEmitterName(name, n);
+		}
 	}
 }
 
