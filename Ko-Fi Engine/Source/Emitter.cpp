@@ -1,20 +1,17 @@
 #include "Emitter.h"
-#include "Texture.h"
 #include "ParticleModule.h"
 
 Emitter::Emitter(const char* newName)
 {
 	name = newName;
-	texture = nullptr; //new Texture();
+	texture = Texture(); //new Texture();
 	//path = "Assets\Textures\firework_projectile.png";
 	//Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
 	modules.push_back(CreateModule<EmitterDefault>());
 }
 
 Emitter::~Emitter()
-{
-	texture = nullptr;
-}
+{}
 
 bool Emitter::Update(float dt)
 {

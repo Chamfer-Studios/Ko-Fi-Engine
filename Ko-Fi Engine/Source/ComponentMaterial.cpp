@@ -386,7 +386,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 
 			ImGui::PushID(texture.textureID << 16);
 
-			if (ImGui::Button("Delete Textures"))
+			if (ImGui::Button("Delete Texture"))
 			{
 				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
 				texture.textureID = -1;

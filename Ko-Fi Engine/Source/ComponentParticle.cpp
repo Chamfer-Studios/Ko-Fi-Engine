@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "imgui_stdlib.h"
 #include "Texture.h"
+#include "PanelChooser.h"
 
 #include "MathGeoLib/Math/float4x4.h"
 
@@ -105,8 +106,64 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 			std::string emitterNameDots = "Emitter " + std::to_string(emitterAt) + " Name:";
 			ImGui::Text(emitterNameDots.c_str());
 			ImGui::SameLine();
-			//emitterName = "Emitter" + std::to_string(emitterAt);
 			ImGui::InputText(emitterName.c_str(), &(emitter->name));
+
+			std::string changeTexture = "Change Texture to " + emitter->name;
+			if (chooser->IsReadyToClose(changeTexture.c_str()))
+			{
+				if (chooser->OnChooserClosed() != nullptr)
+				{
+					std::string path = chooser->OnChooserClosed();
+					if (emitter->texture.textureID == currentTextureId)
+					{
+						emitter->texture.textureID = -1;
+						emitter->texture.SetTexturePath(nullptr);
+
+						Texture tex = Texture();
+						Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
+						emitter->texture = tex;
+					}
+				}
+			}
+
+			ImGui::Text("Material Texture:");
+			if (emitter->texture.textureID != -1)
+			{
+				ImGui::Image((ImTextureID)emitter->texture.textureID, ImVec2(85, 85));
+				ImGui::SameLine();
+				ImGui::BeginGroup();
+				ImGui::Text(emitter->texture.GetTexturePath());
+				ImGui::PushID(emitter->texture.textureID << 8);
+
+				std::string changeTexture = "Change Texture to " + emitter->name;
+				if (ImGui::Button(changeTexture.c_str()))
+				{
+					chooser->OpenPanel(changeTexture.c_str(), "png");
+					currentTextureId = emitter->texture.textureID;
+				}
+
+				ImGui::PopID();
+				ImGui::PushID(emitter->texture.textureID << 16);
+
+				std::string deleteTexture = "Delete Texture to " + emitter->name;
+				if (ImGui::Button(deleteTexture.c_str()))
+				{
+					emitter->texture.textureID = -1;
+					emitter->texture.SetTexturePath(nullptr);
+				}
+				ImGui::PopID();
+				ImGui::EndGroup();
+			}
+			else
+			{
+				std::string addTexture = "Add Texture to " + emitter->name;
+				if (ImGui::Button(addTexture.c_str()))
+				{
+					std::string changeTexture = "Change Texture to " + emitter->name;
+					chooser->OpenPanel(changeTexture.c_str(), "png");
+					currentTextureId = emitter->texture.textureID;
+				}
+			}
 
 			emitterName.append("Modules");
 			std::string addName = "Add Module to " + emitter->name;
@@ -324,7 +381,7 @@ void ComponentParticle::Save(Json& json) const
 	{
 		jsonEmitter["maxParticles"] = e->maxParticles;
 		jsonEmitter["name"] = e->name;
-		jsonEmitter["texture_path"] = e->texture->path;
+		jsonEmitter["texture_path"] = e->texture.path;
 		Json jsonModule;
 		for (auto m : e->modules)
 		{
@@ -391,9 +448,9 @@ void ComponentParticle::Load(Json& json)
 		{
 			Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
 			e->maxParticles = emitter.value().at("maxParticles");
-			e->texture = new Texture();
-			e->texture->path = emitter.value().at("texture_path");
-			Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), e->texture);
+			e->texture = Texture();
+			e->texture.path = emitter.value().at("texture_path");
+			Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), &e->texture);
 			for (const auto& pModule : emitter.value().at("modules").items())
 			{
 				ParticleModule* m = nullptr;
