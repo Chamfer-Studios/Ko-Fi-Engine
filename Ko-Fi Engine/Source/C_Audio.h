@@ -3,6 +3,7 @@
 
 #include "al.h"
 #include "alc.h"
+#include "alext.h"
 
 #include "Component.h"
 

@@ -447,6 +447,9 @@
     <ClCompile Include="Source\C_AudioSource.cpp">
       <Filter>Source\GameObject\Components\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Source\dr_wav_impl.c">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1474,6 +1477,9 @@
     </ClInclude>
     <ClInclude Include="Source\I_Track.h">
       <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>

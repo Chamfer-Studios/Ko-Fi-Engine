@@ -3,12 +3,14 @@
 
 #include "al.h"
 #include "alc.h"
+#include "alext.h"
 #include "efx.h"
 #include "efx-creative.h"
+#include "efx-presets.h"
 
-#include <dr_wav.h>
-#include <dr_mp3.h>
-#include <dr_flac.h>
+#include "dr_wav.h"
+#include "dr_mp3.h"
+#include "dr_flac.h"
 
 #include "Log.h"
 #include "Importer.h"

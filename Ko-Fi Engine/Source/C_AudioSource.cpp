@@ -3,8 +3,17 @@
 #include "SceneManager.h"
 #include "Globals.h"
 #include "GameObject.h"
-
+#include "ImGuiAppLog.h"
+#include "PanelChooser.h"
+#include "Importer.h"
 #include "MathGeoLib/Math/MathFunc.h"
+
+#include "al.h"
+#include "alc.h"
+#include "alext.h"
+#include "efx.h"
+#include "efx-creative.h"
+#include "efx-presets.h"
 
 C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 {
@@ -13,16 +22,10 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
     track = nullptr;
 
     volume = 100.0f;
-    SetVolume(volume);
-
     pan = 0.0f;
-    SetPanning(pan);
-
     transpose = 0.0f;
-    SetTranspose(transpose);
 
     loop = false;
-    SetLoop(loop);
 
     offset = 0.0f;
 
@@ -36,16 +39,10 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 C_AudioSource::C_AudioSource(GameObject* parent, float volume, float pan, float transpose, bool mute, bool playOnStart, bool loop, bool bypass) : C_Audio(parent)
 {
     this->volume = volume;
-    SetVolume(volume);
-
     this->pan = pan;
-    SetPanning(pan);
-
     this->transpose = transpose;
-    SetTranspose(transpose);
 
     this->loop = loop;
-    SetLoop(loop);
 
     offset = 0.0f;
 
@@ -97,8 +94,45 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
 
     if (ImGui::CollapsingHeader("Audio Source"))
     {
+        if (chooser->IsReadyToClose("Add Track"))
+        {
+            if (chooser->OnChooserClosed() != nullptr)
+            {
+                std::string path = chooser->OnChooserClosed();
 
+                if (!path.empty())
+                {
+                    track = new R_Track();
+                    Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
+                    track->source = CreateAudioSource(track->buffer, false);
+
+                    SetVolume(volume);
+                    SetPanning(pan);
+                    SetTranspose(transpose);
+                }
+            }
+        }
+
+        if (track != nullptr)
+        {
+            ImGui::SameLine();
+            ImGui::Spacing();
+            ImGui::Text("Options");
+            if (ImGui::Checkbox("Mute", &mute)) SetVolume(volume);
+            ImGui::Checkbox("Play on start", &playOnStart);
+            if (ImGui::Checkbox("Loop", &loop)) SetLoop(loop);
+        }
+        else
+        {
+            if (ImGui::Button("Add Track"))
+            {
+                chooser->OpenPanel("Add Track", "wav");
+            }
+        }
     }
+
+    if (track != nullptr)
+        UpdatePlayState();
 
     return ret;
 }

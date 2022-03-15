@@ -312,7 +312,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 				//		textures.push_back(texture);
 				//	}
 				//}
-				if (texture.textureID == currentTextureId)
+				if (!path.empty() && texture.textureID == currentTextureId)
 				{
 					texture.textureID = -1;
 					texture.SetTexturePath(nullptr);
