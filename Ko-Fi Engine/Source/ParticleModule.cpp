@@ -14,6 +14,14 @@ ParticleModule::ParticleModule()
 ParticleModule::~ParticleModule()
 {}
 
+void ParticleModule::Spawn(Particle* particle, EmitterInstance* emitter)
+{}
+
+bool ParticleModule::Update(float dt, EmitterInstance* emitter)
+{
+	return true;
+}
+
 float ParticleModule::GetPercentage(Particle* p)
 {
 	return (p->lifeTime / p->maxLifetime);
@@ -80,6 +88,7 @@ bool EmitterMovement::Update(float dt, EmitterInstance* emitter)
 EmitterColor::EmitterColor()
 {
 	type = ParticleModuleType::COLOR;
+	colorOverTime.push_back(FadeColor());
 }
 
 void EmitterColor::Spawn(Particle* particle, EmitterInstance* emitter)
@@ -127,26 +136,26 @@ Color EmitterColor::ColorLerp(float current)
 	return Color(1.0f,1.0f,1.0f,1.0f);
 }
 
-bool EmitterColor::EditColor(FadeColor& color, uint pos)
-{
-	bool ret = true;
-	ImVec4 vecColor = ImVec4(color.color.r, color.color.g, color.color.b, color.color.a);
-	//if (ImGui::ColorButton("Color", vecColor, ImGuiColorEditFlags_None, ImVec2(100, 20)));
-
-
-	//ImGui::SameLine();
-	//ImGui::TextUnformatted("Color");
-	if (pos > 0)
-	{
-		std::string colorStr = "Remove Color ";
-		colorStr.append(std::to_string(pos));
-		if (ImGui::Button(colorStr.c_str(), ImVec2(125, 25))) ret = false;
-	}
-
-	ImGui::ColorEdit4("Color", &color.color.a, ImGuiColorEditFlags_AlphaBar);
-
-	return ret;
-}
+//bool EmitterColor::EditColor(FadeColor& color, uint pos)
+//{
+//	bool ret = true;
+//	ImVec4 vecColor = ImVec4(color.color.r, color.color.g, color.color.b, color.color.a);
+//	//if (ImGui::ColorButton("Color", vecColor, ImGuiColorEditFlags_None, ImVec2(100, 20)));
+//
+//
+//	//ImGui::SameLine();
+//	//ImGui::TextUnformatted("Color");
+//	if (pos > 0)
+//	{
+//		std::string colorStr = "Remove Color ";
+//		colorStr.append(std::to_string(pos));
+//		if (ImGui::Button(colorStr.c_str(), ImVec2(125, 25))) ret = false;
+//	}
+//
+//	ImGui::ColorEdit4("Color", &color.color.a, ImGuiColorEditFlags_AlphaBar);
+//
+//	return ret;
+//}
 
 EmitterSize::EmitterSize()
 {

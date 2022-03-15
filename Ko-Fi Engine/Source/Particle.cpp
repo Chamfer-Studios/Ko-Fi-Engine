@@ -81,17 +81,17 @@ void Particle::Draw(uint id, uint indexNum)
 	glPopMatrix();
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
-	glPopMatrix();
+	//glPopMatrix();
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_NORMAL_ARRAY, 0);
-	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_NORMAL_ARRAY, 0);
+	//glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glDisable(GL_BLEND);
 	glDisable(GL_ALPHA_TEST);

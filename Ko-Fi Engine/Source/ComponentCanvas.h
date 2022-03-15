@@ -12,11 +12,13 @@ class ComponentCanvas : public ComponentTransform2D
 {
 public:
 	ComponentCanvas(GameObject* parent);
+	~ComponentCanvas();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
 	bool Update(float dt) override;
+	bool CleanUp() override;
 
 	bool InspectorDraw(PanelChooser* chooser) override;
 

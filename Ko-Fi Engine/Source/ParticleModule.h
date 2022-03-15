@@ -22,8 +22,8 @@ public:
 
 	ParticleModule();
 	~ParticleModule();
-	virtual void Spawn(Particle* particle, EmitterInstance* emitter) = 0;
-	virtual bool Update(float dt, EmitterInstance* emitter) = 0;
+	virtual void Spawn(Particle* particle, EmitterInstance* emitter);
+	virtual bool Update(float dt, EmitterInstance* emitter);
 	float GetPercentage(Particle* p);
 
 public:
@@ -78,7 +78,7 @@ public:
 	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);
 	Color ColorLerp(float current);
-	bool EditColor(FadeColor& color, uint pos = 0);
+	//bool EditColor(FadeColor& color, uint pos = 0);
 
 public:
 	std::vector<FadeColor> colorOverTime;

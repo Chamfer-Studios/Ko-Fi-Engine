@@ -30,6 +30,21 @@ ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 
 ComponentMaterial::~ComponentMaterial()
 {
+	if(material != nullptr)
+		RELEASE(material);
+}
+
+bool ComponentMaterial::CleanUp()
+{
+	if(material != nullptr)
+		RELEASE(material);
+
+	return true;
+}
+
+bool ComponentMaterial::Update(float dt)
+{
+	return true;
 }
 
 void ComponentMaterial::Save(Json& json) const
@@ -371,7 +386,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 
 			ImGui::PushID(texture.textureID << 16);
 
-			if (ImGui::Button("Delete Textures"))
+			if (ImGui::Button("Delete Texture"))
 			{
 				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
 				texture.textureID = -1;

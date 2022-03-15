@@ -22,11 +22,13 @@ public:
 	};
 public:
 	ComponentTransform2D(GameObject* parent);
+	~ComponentTransform2D();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
 	bool Update(float dt) override;
+	bool CleanUp() override;
 	virtual bool InspectorDraw(PanelChooser* chooser) override;
 
 	// Setters

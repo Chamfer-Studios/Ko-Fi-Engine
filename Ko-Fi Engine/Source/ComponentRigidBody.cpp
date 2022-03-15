@@ -39,6 +39,21 @@ ComponentRigidBody::~ComponentRigidBody()
 	}
 }
 
+bool ComponentRigidBody::CleanUp()
+{
+	if (dynamicBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
+		dynamicBody->release();
+	}
+	if (staticBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
+		staticBody->release();
+	}
+	return true;
+}
+
 bool ComponentRigidBody::Update(float dt)
 {
 	// If it's not simulating, skip the update
@@ -185,7 +200,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 
 	if (IsStatic())
 	{
-		if (ImGui::CollapsingHeader("Static body", ImGuiTreeNodeFlags_DefaultOpen))
+		if (ImGui::CollapsingHeader("Static body"))
 		{
 			if (ImGui::Button("Make Dynamic"))
 				SetDynamic();
@@ -194,7 +209,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 		return ret;
 	}
 
-	if (ImGui::CollapsingHeader("Rigid body", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("Rigid body"))
 	{
 		if (ImGui::Button("Make Static"))
 			SetStatic();

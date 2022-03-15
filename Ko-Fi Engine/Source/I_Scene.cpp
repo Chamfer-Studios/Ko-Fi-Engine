@@ -195,7 +195,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		return;
 	}
 
-	ComponentMesh* cMesh = gameObj->CreateComponent<ComponentMesh>();
+	ComponentMesh* cMesh = (ComponentMesh*)gameObj->AddComponentByType(ComponentType::MESH);//CreateComponent<ComponentMesh>();
 	if (cMesh != nullptr)
 		cMesh->SetMesh(mesh);
 	else
@@ -214,7 +214,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	}
 
 	// Import Material to GameObject
-	ComponentMaterial* cMaterial = gameObj->CreateComponent<ComponentMaterial>();
+	ComponentMaterial* cMaterial = (ComponentMaterial*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<ComponentMaterial>();
 
 	if (cMaterial == nullptr)
 	{
@@ -478,7 +478,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentMesh* meshCmp = go->GetComponent<ComponentMesh>();
 					if (meshCmp == nullptr)
 					{
-						meshCmp = go->CreateComponent<ComponentMesh>();
+						meshCmp = (ComponentMesh*)go->AddComponentByType(ComponentType::MESH);//CreateComponent<ComponentMesh>();
 					}
 					meshCmp->active = true;
 					meshCmp->Load(jsonCmp);
@@ -488,14 +488,14 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentMaterial* materialCmp = go->GetComponent<ComponentMaterial>();
 					if (materialCmp == nullptr)
 					{
-						materialCmp = go->CreateComponent<ComponentMaterial>();
+						materialCmp = (ComponentMaterial*)go->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<ComponentMaterial>();
 					}
 					materialCmp->active = true;
 					materialCmp->Load(jsonCmp);
 				}
 				else if (type == "info")
 				{
-					ComponentInfo* infoCmp = go->GetComponent<ComponentInfo>();
+					ComponentInfo* infoCmp = (ComponentInfo*)go->AddComponentByType(ComponentType::INFO);//GetComponent<ComponentInfo>();
 					infoCmp->active = true;
 					infoCmp->Load(jsonCmp); //does nothing as of now
 				}
@@ -504,7 +504,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentCamera* cameraCmp = go->GetComponent<ComponentCamera>();
 					if (cameraCmp == nullptr)
 					{
-						cameraCmp = go->CreateComponent<ComponentCamera>();
+						cameraCmp = (ComponentCamera*)go->AddComponentByType(ComponentType::CAMERA);//CreateComponent<ComponentCamera>();
 					}
 					cameraCmp->active = true;
 					cameraCmp->Load(jsonCmp);
@@ -514,7 +514,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
 					if (scriptCmp == nullptr)
 					{
-						scriptCmp = go->CreateComponent<ComponentScript>();
+						scriptCmp = (ComponentScript*)go->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
 					}
 					scriptCmp->active = true;
 					scriptCmp->Load(jsonCmp);
@@ -524,7 +524,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentTransform2D* transform2DCmp = go->GetComponent<ComponentTransform2D>();
 					if (transform2DCmp == nullptr)
 					{
-						transform2DCmp = go->CreateComponent<ComponentTransform2D>();
+						transform2DCmp = (ComponentTransform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);//CreateComponent<ComponentTransform2D>();
 					}
 					transform2DCmp->active = true;
 					transform2DCmp->Load(jsonCmp);
@@ -534,7 +534,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentCanvas* canvasCmp = go->GetComponent<ComponentCanvas>();
 					if (canvasCmp == nullptr)
 					{
-						canvasCmp = go->CreateComponent<ComponentCanvas>();
+						canvasCmp = (ComponentCanvas*)go->AddComponentByType(ComponentType::CANVAS);//CreateComponent<ComponentCanvas>();
 					}
 					canvasCmp->active = true;
 					canvasCmp->Load(jsonCmp);
@@ -544,7 +544,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentImage* imageCmp = go->GetComponent<ComponentImage>();
 					if (imageCmp == nullptr)
 					{
-						imageCmp = go->CreateComponent<ComponentImage>();
+						imageCmp = (ComponentImage*)go->AddComponentByType(ComponentType::IMAGE);//CreateComponent<ComponentImage>();
 					}
 					imageCmp->active = true;
 					imageCmp->Load(jsonCmp);
@@ -554,7 +554,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentButton* buttonCmp = go->GetComponent<ComponentButton>();
 					if (buttonCmp == nullptr)
 					{
-						buttonCmp = go->CreateComponent<ComponentButton>();
+						buttonCmp = (ComponentButton*)go->AddComponentByType(ComponentType::BUTTON);//CreateComponent<ComponentButton>();
 					}
 					buttonCmp->active = true;
 					buttonCmp->Load(jsonCmp);
@@ -564,7 +564,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentText* textCmp = go->GetComponent<ComponentText>();
 					if (textCmp == nullptr)
 					{
-						textCmp = go->CreateComponent<ComponentText>();
+						textCmp = (ComponentText*)go->AddComponentByType(ComponentType::TEXT);//CreateComponent<ComponentText>();
 					}
 					textCmp->active = true;
 					textCmp->Load(jsonCmp);
@@ -574,7 +574,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentRigidBody* rbCmp = go->GetComponent<ComponentRigidBody>();
 					if (rbCmp == nullptr)
 					{
-						rbCmp = go->CreateComponent<ComponentRigidBody>();
+						rbCmp = (ComponentRigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);//CreateComponent<ComponentRigidBody>();
 					}
 					rbCmp->active = true;
 					rbCmp->Load(jsonCmp);
@@ -584,7 +584,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
 				if (colCmp == nullptr)
 				{
-					colCmp = go->CreateComponent<ComponentCollider>();
+					colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);//CreateComponent<ComponentCollider>();
 				}
 				colCmp->active = true;
 				colCmp->Load(jsonCmp);

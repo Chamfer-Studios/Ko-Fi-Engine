@@ -37,7 +37,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	LCG random;
 	uint uid = random.Int();
 	GameObject * g = this->CreateEmptyGameObject("Particle Test");
-	g->CreateComponent<ComponentParticle>();
+	g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
 }
 
 SceneIntro::~SceneIntro()
@@ -131,18 +131,18 @@ bool SceneIntro::PostUpdate(float dt)
 		float3 rot = { parentRot.x-55,parentRot.y,parentRot.z };
 		bullet->GetTransform()->SetRotation(rot);
 
-		ComponentMesh* componentMesh = bullet->CreateComponent<ComponentMesh>();
+		ComponentMesh* componentMesh = (ComponentMesh*)bullet->AddComponentByType(ComponentType::MESH);//CreateComponent<ComponentMesh>();
  		Mesh* mesh = gameObjectList.at(6)->GetComponent<ComponentMesh>()->GetMesh();
 		componentMesh->SetMesh(mesh);
 
 		
-		ComponentMaterial* componentMaterial = bullet->CreateComponent<ComponentMaterial>();
+		ComponentMaterial* componentMaterial = (ComponentMaterial*)bullet->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<ComponentMaterial>();
 		Importer::GetInstance()->textureImporter->Import(nullptr,&componentMaterial->texture);
 		Material* material = new Material();
 		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 		componentMaterial->SetMaterial(material);
 		
-		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
+		ComponentScript* componentScript = (ComponentScript*)bullet->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
 		componentScript->path = "Assets/Scripts/Bullet.lua";
 		componentScript->ReloadScript();
 		parent->GetComponent<ComponentScript>()->handler->lua["SetBulletDirection"](bullet);

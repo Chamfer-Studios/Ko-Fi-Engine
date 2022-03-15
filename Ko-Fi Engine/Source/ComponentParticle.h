@@ -21,17 +21,24 @@ public:
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
-	// TODO: Save & Load
-	bool InspectorDraw(PanelChooser* chooser);
+
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
+
+	bool InspectorDraw(PanelChooser* chooser) override;
+	void InspectorDrawColor(std::string emitterName,FadeColor& color, int index);
+
 	void ClearParticles();
 	void StopParticleSpawn();
 	void ResumeParticleSpawn();
+private:
+	void NewEmitterName(std::string& name, int n = 1);
 
 public:
 	std::vector<EmitterInstance*> emitterInstances;
 	std::vector<Emitter*> emitters;
 	int moduleToAdd = 0;
-	FadeColor colorToAdd;
+	int currentTextureId = 0;
 };
 
 #endif // __COMPONENT_PARTICLE_H__

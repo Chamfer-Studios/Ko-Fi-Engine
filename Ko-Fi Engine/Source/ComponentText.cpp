@@ -19,6 +19,13 @@ ComponentText::ComponentText(GameObject* parent) : Component(parent)
 
 ComponentText::~ComponentText()
 {
+	FreeTextures();
+}
+
+bool ComponentText::CleanUp()
+{
+	FreeTextures();
+	return true;
 }
 
 void ComponentText::Save(Json& json) const
