@@ -58,6 +58,17 @@ public:
 		return true;
 	}
 
+	// Engine config serialization --------------------------------------
+	virtual bool SaveConfiguration(Json configModule) const
+	{
+		return true;
+	}
+	virtual bool LoadConfiguration(Json configModule)
+	{
+		return true;
+	}
+	// ------------------------------------------------------------------
+
 	virtual void OnGui() {}
 
 	virtual void OnClick(SDL_Event event) {}

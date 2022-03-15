@@ -303,6 +303,69 @@ int KoFiEngine::GetArgc() const
 	return argc;
 }
 
+bool KoFiEngine::SaveConfiguration() const
+{
+	bool ret = true;
+
+	Json jsonConfig;
+	Json jsonConfigEngine;
+
+	// ---------------------- THIS IS LOADING, WE HAVE TO DO THE INVERSE OF THESE -------------------------- //
+
+	///*config = LoadConfig(configFile);*/
+	//ret = jsonHandler.LoadJson(jsonConfig, "EngineConfig/config.json");
+
+	////if (config.empty() == false)
+	////{
+	////	ret = true;
+	////	configApp = config.child("app");
+	//if (!jsonConfig.empty())
+	//{
+	//	ret = true;
+	//	jsonConfigEngine = jsonConfig.at("Engine");
+
+	//	engineConfig->title = jsonConfigEngine.at("Title").get<std::string>().c_str();
+	//	engineConfig->organization = jsonConfigEngine.at("Organization").dump(4).c_str();
+	//	engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
+	//	if (engineConfig->maxFps > 0) engineConfig->cappedMs = 1000 / engineConfig->maxFps;
+	//}
+
+	//if (ret == true)
+	//{
+	//	std::list<Module*>::iterator item = modules.begin();
+
+	//	while (item != modules.end() && ret)
+	//	{
+	//		ret = (*item)->Awake(jsonConfig.at((*item)->name));
+	//		item++;
+	//	}
+	//}
+	// 
+	// -------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+	//if (ret == true)
+	//{
+	//	std::list<Module*>::iterator item = modules.begin();
+
+	//	while (item != modules.end() && ret)
+	//	{
+	//		/*ret = (*item)->Awake(jsonConfig.at((*item)->name));*/
+	//		// Call every module save configuration
+	//		(*item)->SaveConfiguration((*item)->name));
+	//		item++;
+	//	}
+	//}
+
+	return ret;
+}
+
 // ---------------------------------------
 const char* KoFiEngine::GetArgv(int index) const
 {

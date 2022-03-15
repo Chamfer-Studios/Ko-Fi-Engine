@@ -22,6 +22,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json configModule) const override; // TODO: Save is not done in any module
+	bool LoadConfiguration(Json configModule) override; // TODO: Load is done only in some modules (in Awake())
+	// ------------------------------------------------------------------
+
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 

@@ -27,6 +27,9 @@ bool Window::Awake(Json configModule)
 	appLog->AddLog("Init SDL window & surface\n");
 	bool ret = true;
 
+	// TODO: Load all config data with this function
+	LoadConfiguration(configModule);
+
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		CONSOLE_LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -139,6 +142,16 @@ bool Window::CleanUp()
 
 	// Quit SDL subsystems
 	SDL_Quit();
+	return true;
+}
+
+bool Window::SaveConfiguration(Json configModule) const
+{
+	return true;
+}
+
+bool Window::LoadConfiguration(Json configModule)
+{
 	return true;
 }
 

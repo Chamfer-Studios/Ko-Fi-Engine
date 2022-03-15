@@ -435,6 +435,9 @@
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentRigidBody.cpp" />
+    <ClCompile Include="Source\PanelSettings.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1442,6 +1445,12 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelSettings.h">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\ResourceManager.h">
@@ -1497,9 +1506,6 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentImage.h">
       <Filter>Source\GameObject\Components\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\par_shapes.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\IconsFontAwesome5.h">
       <Filter>Source\Utils</Filter>
