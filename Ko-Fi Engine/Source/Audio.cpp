@@ -1,5 +1,6 @@
 #include "Audio.h"
 #include "Log.h"
+#include "ImGuiAppLog.h"
 
 #define OpenAL_ErrorCheck(message)\
 {\
@@ -14,8 +15,11 @@
 FUNCTION_CALL;\
 OpenAL_ErrorCheck(FUNCTION_CALL)
 
-Audio::Audio()
+Audio::Audio(KoFiEngine* engine)
 {
+	name = "Audio";
+	this->engine = engine;
+
 	context = nullptr;
 	device = nullptr;
 }
@@ -27,6 +31,9 @@ Audio::~Audio()
 
 bool Audio::Start()
 {
+	CONSOLE_LOG("Initializing Audio System...");
+	appLog->AddLog("Initializing Audio System...\n");
+
 	device = alcOpenDevice(NULL);
 	if (!device)
 		CONSOLE_LOG("Failed to get the default device for OpenAL");

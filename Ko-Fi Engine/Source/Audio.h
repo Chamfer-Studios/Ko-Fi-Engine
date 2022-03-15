@@ -15,7 +15,7 @@ class Audio : public Module
 {
 public:
 
-    Audio();
+    Audio(KoFiEngine* engine);
     ~Audio();
 
     bool Start();
@@ -30,6 +30,9 @@ private:
     void ListAudioDevices(const ALCchar* devices);
 
 private:
+
+    KoFiEngine* engine = nullptr;
+
     ALCdevice* device;
     ALCcontext* context;
 };

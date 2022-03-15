@@ -38,6 +38,8 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 
 C_AudioSource::C_AudioSource(GameObject* parent, float volume, float pan, float transpose, bool mute, bool playOnStart, bool loop, bool bypass) : C_Audio(parent)
 {
+    track = nullptr;
+
     this->volume = volume;
     this->pan = pan;
     this->transpose = transpose;
@@ -115,12 +117,32 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
 
         if (track != nullptr)
         {
+            bool mono = track->channels == 1;
+
+            ImGui::Text("Track Name: %s", track->name.c_str());
+            ImGui::Spacing();
+            ImGui::Text("Sample Rate: %d kHz (%d-Bits)", track->sampleRate, track->bits);
+            ImGui::Spacing();
+            ImGui::Text("Channels: %d", track->channels);
+            if (!mono)
+            {
+                ImGui::SameLine();
+                ImGui::Text("(No Pan)");
+            }
+
+            ImGui::Separator();
+
             ImGui::SameLine();
             ImGui::Spacing();
             ImGui::Text("Options");
-            if (ImGui::Checkbox("Mute", &mute)) SetVolume(volume);
+
+            if (ImGui::Checkbox("Mute", &mute))
+                SetVolume(volume);
+
             ImGui::Checkbox("Play on start", &playOnStart);
-            if (ImGui::Checkbox("Loop", &loop)) SetLoop(loop);
+
+            if (ImGui::Checkbox("Loop", &loop))
+                SetLoop(loop);
         }
         else
         {

@@ -397,42 +397,45 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::Button("Change Shader"))
 			panelChooser->OpenPanel("ChangeShader", "glsl");
 
-		for (Uniform* uniform : material->uniforms)
+		if (material != nullptr)
 		{
-			switch (uniform->type)
+			for (Uniform* uniform : material->uniforms)
 			{
-			case GL_FLOAT:
-			{
-				UniformT<float>* uf = (UniformT<float>*)uniform;
-				ImGui::DragFloat(uniform->name.c_str(), &uf->value, 0.001f, 0.0f, 32.0f, "%.3f");
-			}
-			break;
-			case GL_FLOAT_VEC2:
-			{
-				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-				ImGui::DragFloat2(uniform->name.c_str(), uf2->value.ptr(), 0.001f, 0.0f, 32.0f, "%.3f");
-			}
-			break;
-			case GL_FLOAT_VEC3:
-			{
-				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-				ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), 0.001f, 0.0f, 32.0f, "%.3f");
-			}
-			break;
-			case GL_FLOAT_VEC4:
-			{
-				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-				ImGui::DragFloat4(uniform->name.c_str(), uf4->value.ptr(), 0.001f, 0.0f, 1.0f, "%.3f");
-			}
-			break;
-			case GL_INT:
-			{
-				UniformT<int>* ui = (UniformT<int>*)uniform;
-				ImGui::DragInt(uniform->name.c_str(), &ui->value, 0.001f, 0.0f, 255.0f, "%d");
-			}
-			break;
-			default:
+				switch (uniform->type)
+				{
+				case GL_FLOAT:
+				{
+					UniformT<float>* uf = (UniformT<float>*)uniform;
+					ImGui::DragFloat(uniform->name.c_str(), &uf->value, 0.001f, 0.0f, 32.0f, "%.3f");
+				}
 				break;
+				case GL_FLOAT_VEC2:
+				{
+					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+					ImGui::DragFloat2(uniform->name.c_str(), uf2->value.ptr(), 0.001f, 0.0f, 32.0f, "%.3f");
+				}
+				break;
+				case GL_FLOAT_VEC3:
+				{
+					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+					ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), 0.001f, 0.0f, 32.0f, "%.3f");
+				}
+				break;
+				case GL_FLOAT_VEC4:
+				{
+					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+					ImGui::DragFloat4(uniform->name.c_str(), uf4->value.ptr(), 0.001f, 0.0f, 1.0f, "%.3f");
+				}
+				break;
+				case GL_INT:
+				{
+					UniformT<int>* ui = (UniformT<int>*)uniform;
+					ImGui::DragInt(uniform->name.c_str(), &ui->value, 0.001f, 0.0f, 255.0f, "%d");
+				}
+				break;
+				default:
+					break;
+				}
 			}
 		}
 	}
