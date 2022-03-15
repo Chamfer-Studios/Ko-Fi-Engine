@@ -143,6 +143,19 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
 
             if (ImGui::Checkbox("Loop", &loop))
                 SetLoop(loop);
+
+            ImGui::Spacing();
+            ImGui::Spacing();
+
+            std::string action;
+            play ? action = "Stop" : action = "Play";
+            if (ImGui::Button(action.c_str()))
+            {
+                float time = track->duration * offset;
+                play ? StopAudio(track->source) : PlayAudio(track->source, time);
+            }
+
+            ImGui::SliderFloat("Offset", &offset, 0.0f, 1.0f);
         }
         else
         {
