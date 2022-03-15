@@ -1,38 +1,81 @@
 #include "C_Collider.h"
 
-ComponentCollider2::ComponentCollider2(GameObject* parent, ColliderType2 collType) : Component(parent)
+ComponentCollider2::ComponentCollider2(GameObject* parent, ColliderShape collType) : Component(parent)
 {
 	type = ComponentType::COLLIDER2;
 
-	colliderType = collType;
+	colliderShape = collType;
 }
 
 ComponentCollider2::~ComponentCollider2()
 {
 	if (shape)
+	{
+		if (owner->GetComponent<ComponentRigidBody>())
+			owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);
 		shape->release();
-
-	shape = nullptr;
+		shape = nullptr;
+	}
 }
 
 bool ComponentCollider2::Update(float dt)
 {
-	return true;
-}
+	bool ret = true;
 
-bool ComponentCollider2::CleanUp()
-{
-	return true;
-}
-
-void ComponentCollider2::CreateCollider(ColliderType2 collType)
-{
-	// Delete attached current shape. We will create it afterwards
-	if (shape)
+	if (toUpdate)
 	{
-		shape->release();
-		shape = nullptr;
+		ret = UpdateCollider();
+		toUpdate = false;
 	}
+
+	return ret;
+}
+
+// TODO: Separate updating between shape and state
+bool ComponentCollider2::UpdateCollider()
+{
+	bool ret = true;
+
+	owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);
+
+	// SHAPE UPDATE
+	shape->release();
+	switch (GetColliderShape())
+	{
+	case ColliderShape::BOX:
+
+		break;
+	case ColliderShape::SPHERE:
+
+		break;
+	case ColliderShape::CAPSULE:
+
+		break;
+	default:
+		break;
+	}
+
+	// STATE UPDATE
+	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
+
+	physx::PxFilterData filterData;
+	filterData.word0 = (int)GetCollisionLayer();
+
+	shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+	shape->setSimulationFilterData(filterData);
+	shape->setQueryFilterData(filterData);
+
+	owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
+
+	return ret;
+}
+
+void ComponentCollider2::CreateCollider(ColliderShape collType)
+{
+	// SHAPE CREATION
+	if (shape)
+		shape->release();
 
 	// If a rigid body is not created, then create it
 	// If it is already created, update the actor list (removing and creating again)
@@ -43,29 +86,31 @@ void ComponentCollider2::CreateCollider(ColliderType2 collType)
 
 	switch (collType)
 	{
-	case ColliderType2::BOX:
-	{
+	case ColliderShape::BOX:
 
 		break;
-	}
-	case ColliderType2::SPHERE:
-	{
+	case ColliderShape::SPHERE:
 
 		break;
-	}
-	case ColliderType2::CAPSULE:
-	{
+	case ColliderShape::CAPSULE:
 
 		break;
-	}
 	default:
-	{
-
 		break;
 	}
-	}
 
+	// STATE CREATION
+	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
 
+	physx::PxFilterData filterData;
+	filterData.word0 = (int)GetCollisionLayer();
+
+	shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+	shape->setSimulationFilterData(filterData);
+	shape->setQueryFilterData(filterData);
+
+	owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
 
 	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
 }
@@ -75,14 +120,16 @@ void ComponentCollider2::Save(Json& json) const
 {
 	json["type"] = "collider2";
 
-	json["collider_type"] = (int)colliderType;
+	json["collider_type"] = (int)colliderShape;
+	json["collision_layer"] = (int)collisionLayer;
 
 	json["enabled"] = enabled;
 	json["is_trigger"] = isTrigger;
 }
 void ComponentCollider2::Load(Json& json)
 {
-	SetColliderType((ColliderType2)json.at("collider_type"));
+	SetColliderShape((ColliderShape)json.at("collider_type"));
+	SetCollisionLayer((CollisionLayer)json.at("collision_layer"));
 
 	enabled = json.at("enabled");
 	isTrigger = json.at("is_trigger");
@@ -95,47 +142,92 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Component Collider (physx)"))
 	{
-		// Take care with the order in the combo, it has to follow the ColliderType2 enum class order
-		ImGui::Combo("##combocollider", &colliderTypeInt, "Add Collider\0Box\0Sphere\0Capsule");
-
+		// COLLIDER SHAPE -----------------------------------------------------------------------------------------------
+		ImGui::Text("Collider Shape:");
+		// Take care with the order in the combo, it has to follow the ColliderShape enum class order
+		ImGui::Combo("##combocollidershape", &colliderShapeInt, "Add Collider\0Box\0Sphere\0Capsule");
 		ImGui::SameLine();
-
-		if ((ImGui::Button("Assign")))
+		if ((ImGui::Button("Assign##collidershape")))
 		{
-			switch (colliderTypeInt)
+			switch (colliderShapeInt)
 			{
-			case (int)ColliderType2::NONE: break;
-			case (int)ColliderType2::BOX: SetColliderType((ColliderType2)colliderTypeInt); break;
-			case (int)ColliderType2::SPHERE: SetColliderType((ColliderType2)colliderTypeInt); break;
-			case (int)ColliderType2::CAPSULE: SetColliderType((ColliderType2)colliderTypeInt); break;
+			case (int)ColliderShape::NONE: break;
+			case (int)ColliderShape::BOX: SetColliderShape((ColliderShape)colliderShapeInt); break;
+			case (int)ColliderShape::SPHERE: SetColliderShape((ColliderShape)colliderShapeInt); break;
+			case (int)ColliderShape::CAPSULE: SetColliderShape((ColliderShape)colliderShapeInt); break;
 			}
-			colliderTypeInt = 0; // This will reset the button to default when clicked (Add collider == NONE in enum)
+			colliderShapeInt = 0; // This will reset the button to default when clicked
 		}
-
-		ImGui::Text("Current collider: ");
+		ImGui::Text("Current collider shape: ");
 		ImGui::SameLine();
-		ImGui::Text("%s", ColliderTypeToString(colliderType));
+		ImGui::Text("%s", GetColliderShapeString());
 
 		ImGui::Separator();
 
+		// COLLISION LAYER -----------------------------------------------------------------------------------------------
+		ImGui::Text("Collison Layer:");
+		// Take care with the order in the combo, it has to follow the CollisionLayer enum class order
+		ImGui::Combo("##combocollisionlayer", &collisionLayerInt, "Default\0Player\0Enemy\0Bullet\0Terrain");
+		ImGui::SameLine();
+		if ((ImGui::Button("Assign##collisionlayer")))
+		{
+			switch (collisionLayerInt)
+			{
+			case (int)CollisionLayer::DEFAULT: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
+			case (int)CollisionLayer::PLAYER: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
+			case (int)CollisionLayer::ENEMY: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
+			case (int)CollisionLayer::BULLET: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
+			case (int)CollisionLayer::TERRAIN: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
+			}
+			collisionLayerInt = 0; // This will reset the button to default when clicked
+		}
+		ImGui::Text("Current collision layer: ");
+		ImGui::SameLine();
+		ImGui::Text("%s", GetCollisionLayerString());
+
+		ImGui::Separator();
+
+		// ATTRIBUTES -----------------------------------------------------------------------------------------------
 		if (ImGui::Checkbox("Enable##", &enabled));
 		if (ImGui::Checkbox("IsTrigger##", &isTrigger));
 	}
+
 	return ret;
 }
 
-const char* ComponentCollider2::ColliderTypeToString(const ColliderType2 collType)
+// Private methods
+const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collShape)
 {
-	switch (collType)
+	switch (collShape)
 	{
-	case ColliderType2::BOX:
+	case ColliderShape::BOX:
 		return "BOX";
-	case ColliderType2::CAPSULE:
+	case ColliderShape::CAPSULE:
 		return "CAPSULE";
-	case ColliderType2::SPHERE:
+	case ColliderShape::SPHERE:
 		return "SPHERE";
 	default:
-		return nullptr;
+		return "ERROR, NO COLLIDER SHAPE";
 	}
-	return nullptr;
+	return "ERROR, NO COLLIDER SHAPE";
 }
+const char* ComponentCollider2::CollisionLayerToString(const CollisionLayer collLayer)
+{
+	switch (collLayer)
+	{
+	case CollisionLayer::DEFAULT:
+		return "DEFAULT";
+	case CollisionLayer::PLAYER:
+		return "PLAYER";
+	case CollisionLayer::ENEMY:
+		return "ENEMY";
+	case CollisionLayer::BULLET:
+		return "BULLET";
+	case CollisionLayer::TERRAIN:
+		return "TERRAIN";
+	default:
+		return "ERROR, NO COLLISION LAYER";
+	}
+	return "ERROR, NO COLLISION LAYER";
+}
+

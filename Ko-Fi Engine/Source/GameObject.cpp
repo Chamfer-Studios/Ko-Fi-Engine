@@ -197,7 +197,7 @@ void GameObject::AddComponentByType(ComponentType componentType)
 		case ComponentType::COLLIDER2:
 		{
 			/*this->CreateComponent<ComponentCollider2>();*/
-			ComponentCollider2* cmpColl2 = new ComponentCollider2(this, ColliderType2::BOX);
+			ComponentCollider2* cmpColl2 = new ComponentCollider2(this, ColliderShape::BOX);
 			break;
 		}
 	}
