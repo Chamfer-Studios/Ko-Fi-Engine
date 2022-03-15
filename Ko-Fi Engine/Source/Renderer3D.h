@@ -15,17 +15,24 @@
 class GameObject;
 class Texture;
 
+const float ParticlesCoords[] = {
+1, 1,
+1, 0,
+0, 0,
+1, 0,
+};
+
 struct ParticleRenderer
 {
 	ParticleRenderer(Texture* tex, Color color, const float4x4 transform);
 
-	void Render();
-	//void LoadBuffers(); drawing in direct mode, not necessary
+	//void Render();
+	void LoadBuffers(); 
 
-	//uint		VAO;
+	uint		VAO;
+	uint		shaderID;
 
-	Texture* tex;
-	//R_Shader* shader;
+	Texture*	tex;
 	Color		color;
 	float4x4	transform;
 };
@@ -53,7 +60,8 @@ public:
 	LineSegment GetRay();
 
 	void AddParticle(Texture* tex, Color color, const float4x4 transform, float distanceToCamera);
-	void RenderParticles();
+	void RenderParticle(ParticleRenderer* particle);
+	void RenderAllParticles();
 
 public:
 	Light lights[MAX_LIGHTS];
@@ -69,6 +77,7 @@ private:
 	LineSegment ray;
 
 	//Particle Map
+	uint particleShader = 0;
 	std::map<float, ParticleRenderer> particles;
 };
 

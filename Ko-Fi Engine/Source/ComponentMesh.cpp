@@ -226,7 +226,7 @@ bool ComponentMesh::PostUpdate(float dt) //AKA the real render
 
 			glUseProgram(0);
 
-			owner->GetEngine()->GetRenderer()->RenderParticles();
+			owner->GetEngine()->GetRenderer()->RenderAllParticles();
 		}
 	}
 	return ret;
