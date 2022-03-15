@@ -23,8 +23,8 @@ public:
 	bool CleanUp();
 
 	// Engine config serialization --------------------------------------
-	bool SaveConfiguration(Json configModule) const override; // TODO: Save is not done in any module
-	bool LoadConfiguration(Json configModule) override; // TODO: Load is done only in some modules (in Awake())
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override; 
 	// ------------------------------------------------------------------
 
 	// Method to receive and manage events
@@ -46,6 +46,7 @@ public:
 	bool GetBorderless() const;
 	uint GetRefreshRate() const;
 	const char* GetIcon() const;
+	const char* GetTitle() const;
 	void SetFullscreen(bool fullscreen);
 	void SetFullscreenDesktop(bool fullscreenDesktop);
 	void SetResizable(bool resizable);

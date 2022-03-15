@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "Editor.h"
 #include "FileSystem.h"
+#include "FSDefs.h"
 #include "ViewportFrameBuffer.h"
 #include "UI.h"
 #include "Importer.h"
@@ -100,6 +101,8 @@ bool KoFiEngine::Awake()
 		ret = true;
 		jsonConfigEngine = jsonConfig.at("Engine");
 
+		engineConfig->authors = jsonConfigEngine.at("Authors").get<std::string>().c_str();
+		engineConfig->license = jsonConfigEngine.at("License").get<std::string>().c_str();
 		engineConfig->title = jsonConfigEngine.at("Title").get<std::string>().c_str();
 		engineConfig->organization = jsonConfigEngine.at("Organization").dump(4).c_str();
 		engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
@@ -306,62 +309,25 @@ int KoFiEngine::GetArgc() const
 bool KoFiEngine::SaveConfiguration() const
 {
 	bool ret = true;
-
+	JsonHandler jsonHandler;
 	Json jsonConfig;
-	Json jsonConfigEngine;
+	Json configEngine;
+	configEngine["Authors"] = engineConfig->authors;
+	configEngine["License"] = engineConfig->license;
+	configEngine["Organization"] = engineConfig->organization;
+	configEngine["Title"] = engineConfig->title;
+	configEngine["MaxFPS"] = engineConfig->maxFps;
+	jsonConfig["Engine"]=configEngine;
 
-	// ---------------------- THIS IS LOADING, WE HAVE TO DO THE INVERSE OF THESE -------------------------- //
-
-	///*config = LoadConfig(configFile);*/
-	//ret = jsonHandler.LoadJson(jsonConfig, "EngineConfig/config.json");
-
-	////if (config.empty() == false)
-	////{
-	////	ret = true;
-	////	configApp = config.child("app");
-	//if (!jsonConfig.empty())
-	//{
-	//	ret = true;
-	//	jsonConfigEngine = jsonConfig.at("Engine");
-
-	//	engineConfig->title = jsonConfigEngine.at("Title").get<std::string>().c_str();
-	//	engineConfig->organization = jsonConfigEngine.at("Organization").dump(4).c_str();
-	//	engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
-	//	if (engineConfig->maxFps > 0) engineConfig->cappedMs = 1000 / engineConfig->maxFps;
-	//}
-
-	//if (ret == true)
-	//{
-	//	std::list<Module*>::iterator item = modules.begin();
-
-	//	while (item != modules.end() && ret)
-	//	{
-	//		ret = (*item)->Awake(jsonConfig.at((*item)->name));
-	//		item++;
-	//	}
-	//}
-	// 
-	// -------------------------------------------------------------------------------------------------------
+	for (Module* module : modules)
+	{
+		Json configModule;
+		module->SaveConfiguration(configModule);
+		jsonConfig[module->name.c_str()] = configModule;
+	}
 
 
-
-
-
-
-
-
-	//if (ret == true)
-	//{
-	//	std::list<Module*>::iterator item = modules.begin();
-
-	//	while (item != modules.end() && ret)
-	//	{
-	//		/*ret = (*item)->Awake(jsonConfig.at((*item)->name));*/
-	//		// Call every module save configuration
-	//		(*item)->SaveConfiguration((*item)->name));
-	//		item++;
-	//	}
-	//}
+	jsonHandler.SaveJson(jsonConfig, "EngineConfig/config.json");
 
 	return ret;
 }

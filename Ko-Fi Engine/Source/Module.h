@@ -59,11 +59,11 @@ public:
 	}
 
 	// Engine config serialization --------------------------------------
-	virtual bool SaveConfiguration(Json configModule) const
+	virtual bool SaveConfiguration(Json& configModule) const
 	{
 		return true;
 	}
-	virtual bool LoadConfiguration(Json configModule)
+	virtual bool LoadConfiguration(Json& configModule)
 	{
 		return true;
 	}
