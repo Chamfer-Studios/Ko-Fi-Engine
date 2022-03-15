@@ -57,6 +57,10 @@ bool MainBar::Update()
 			{
 				editor->GetPanelChooser()->OpenPanel("LoadScene", "json");
 			}
+			if (ImGui::MenuItem("Settings"))
+			{
+				editor->toggleSettingsPanel = true;
+			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
 				std::vector<GameObject*> gameObjectList = editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList;

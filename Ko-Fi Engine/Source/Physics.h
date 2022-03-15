@@ -44,8 +44,11 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt); // Not used
 	bool CleanUp();
-	void OnNotify(const Event& event); // Not used
-
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+	void OnNotify(const Event& event);
 	bool InitializePhysX();
 
 	void AddActor(physx::PxActor* actor, GameObject* owner);

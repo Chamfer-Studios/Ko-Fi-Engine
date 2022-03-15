@@ -187,6 +187,17 @@ bool Renderer3D::CleanUp()
 	return true;
 }
 
+bool Renderer3D::SaveConfiguration(Json& configModule) const
+{
+	configModule["Vsync"] = vsync;
+	return true;
+}
+
+bool Renderer3D::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
 // Method to receive and manage events
 void Renderer3D::OnNotify(const Event& event)
 {

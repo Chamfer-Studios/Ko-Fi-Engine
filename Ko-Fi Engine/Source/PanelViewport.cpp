@@ -41,8 +41,8 @@ bool PanelViewport::PreUpdate()
 
 bool PanelViewport::Update()
 {
-	//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove ))
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		editor->scenePanelOrigin = ImGui::GetWindowPos();
 		editor->scenePanelOrigin.x += ImGui::GetWindowContentRegionMin().x;
@@ -56,6 +56,7 @@ bool PanelViewport::Update()
 
 
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
+		viewportSize.y -= 26; // Make the viewport substract 26 pixels from the imgui window (corresponds to the imgui viewport header)
 
 		if (viewportSize.x != editor->lastViewportSize.x || viewportSize.y != editor->lastViewportSize.y)
 		{
@@ -113,7 +114,7 @@ bool PanelViewport::Update()
 	}
 	ImGui::End();
 
-	//ImGui::PopStyleVar();
+	ImGui::PopStyleVar();
 
 	return true;
 }

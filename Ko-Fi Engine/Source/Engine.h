@@ -44,6 +44,10 @@ public:
 	// Exposing some properties for reading
 	int GetArgc() const;
 
+	// Engine config serialization
+	bool SaveConfiguration() const;
+	//bool LoadConfiguration(Json configModule); // It is done in the awake's function
+
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;

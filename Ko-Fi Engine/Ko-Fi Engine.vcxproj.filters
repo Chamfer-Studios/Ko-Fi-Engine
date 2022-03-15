@@ -438,6 +438,9 @@
     <ClCompile Include="Source\C_Collider.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PanelSettings.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1451,8 +1454,8 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\PanelSettings.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

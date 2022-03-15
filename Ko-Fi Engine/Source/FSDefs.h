@@ -17,6 +17,8 @@
 #define TEXTURES_DIR "Library/Textures/"
 #define SHADERS_DIR "Library/Shaders/"
 
+#define CONFIG_DIR "EngineConfig/"
+
 // EXTENSIONS
 #define MESH_EXTENSION ".sugar"
 #define MATERIAL_EXTENSION ".milk"
