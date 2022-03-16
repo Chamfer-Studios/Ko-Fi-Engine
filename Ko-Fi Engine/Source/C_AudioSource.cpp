@@ -107,6 +107,9 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
 
                 if (!path.empty())
                 {
+                    if (track != nullptr)
+                        RELEASE(track);
+
                     track = new R_Track();
                     Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
                     track->source = CreateAudioSource(track->buffer, false);
@@ -121,6 +124,11 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
         if (track != nullptr)
         {
             bool mono = track->channels == 1;
+
+            if (ImGui::Button("Change Track"))
+            {
+                chooser->OpenPanel("Add Track", "wav");
+            }
 
             ImGui::Text("Track Name: %s", track->name.c_str());
             ImGui::Spacing();
