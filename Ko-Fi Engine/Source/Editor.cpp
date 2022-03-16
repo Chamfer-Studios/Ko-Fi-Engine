@@ -76,12 +76,12 @@ Editor::Editor(KoFiEngine* engine)
 
 	//AddPanel(mainMenuBar);
 	AddPanel(panelHierarchy);
-	AddPanel(panelConfig);
+	//AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);
 	AddPanel(panelSettings);
 	AddPanel(panelChooser);
-	//AddPanel(panelGameObject);
+	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
@@ -485,10 +485,10 @@ void Editor::UpdatePanelsState()
 	}
 }
 
-void Editor::OpenTextEditor(std::string path)
+void Editor::OpenTextEditor(std::string path, const char* ext)
 {
 	toggleTextEditor = true;
-	panelTextEditor->LoadFile(path);
+	panelTextEditor->LoadFile(path,ext);
 }
 
 

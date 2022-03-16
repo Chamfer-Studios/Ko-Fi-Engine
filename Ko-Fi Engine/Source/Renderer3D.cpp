@@ -153,7 +153,7 @@ bool Renderer3D::Awake(Json configModule)
 bool Renderer3D::PreUpdate(float dt)
 {
 	SDL_RenderClear(engine->GetUI()->renderer);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glMatrixMode(GL_PROJECTION);

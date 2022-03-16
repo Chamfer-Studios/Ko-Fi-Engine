@@ -38,8 +38,8 @@ public:
 	float verticalFOV = 60.f;
 	float nearPlaneDistance = 0.1f;
 	float farPlaneDistance = 5000.f;
-	float cameraSensitivity = .1f;
-	float cameraSpeed = 30.f;
+	float cameraSensitivity = .2f;
+	float cameraSpeed = 40.f;
 	bool projectionIsDirty = false;
 
 private:
