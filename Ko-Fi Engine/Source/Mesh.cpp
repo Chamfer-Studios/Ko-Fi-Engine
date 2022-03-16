@@ -132,6 +132,8 @@ void Mesh::Draw(GameObject* owner)
 
 	DebugDraw();
 
+	glBindVertexArray(0);
+
 	// Unbind Texture
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

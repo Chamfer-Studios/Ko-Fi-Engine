@@ -130,18 +130,21 @@ bool MainBar::Update()
 					go->SetName("Image");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentImage>();
+					//go->CreateComponent<ComponentMaterial>();
 				}
 				if (ImGui::MenuItem("Button")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Button");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentButton>();
+					//go->CreateComponent<ComponentMaterial>();
 				}
 				if (ImGui::MenuItem("Text")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Text");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentText>();
+					//go->CreateComponent<ComponentMaterial>();
 				}
 				ImGui::EndMenu();
 			}

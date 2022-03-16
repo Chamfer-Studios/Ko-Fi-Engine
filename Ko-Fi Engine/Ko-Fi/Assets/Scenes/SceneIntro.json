@@ -1,7 +1,7 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 14,
+        "game_objects_amount": 15,
         "game_objects_list": [
             {
                 "UID": 4294967295,
@@ -127,9 +127,9 @@
                             0.4999999701976776
                         ],
                         "scale": [
-                            30.000144958496094,
-                            1.0000089406967163,
-                            30.000144958496094
+                            30.00015640258789,
+                            1.0000096559524536,
+                            30.00015640258789
                         ],
                         "type": "transform"
                     },
@@ -198,8 +198,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999976754188538,
-                            29.999927520751953
+                            0.9999974966049194,
+                            29.999921798706055
                         ],
                         "type": "transform"
                     },
@@ -268,8 +268,8 @@
                         ],
                         "scale": [
                             1.0,
-                            0.9999977350234985,
-                            0.9999977350234985
+                            0.9999975562095642,
+                            0.9999975562095642
                         ],
                         "type": "transform"
                     },
@@ -349,8 +349,8 @@
                         ],
                         "scale": [
                             10.0,
-                            19.99993133544922,
-                            0.9999977946281433
+                            19.99992561340332,
+                            0.999997615814209
                         ],
                         "type": "transform"
                     },
@@ -461,127 +461,6 @@
                 "parent_UID": 4294967295
             },
             {
-                "UID": 1037610866,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "logicalSize": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": "canvas"
-                    }
-                ],
-                "name": "Canvas",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 303700353,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.0,
-                            1.0
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            276.0,
-                            -672.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "mask": [
-                            1.0,
-                            1.0
-                        ],
-                        "texture": "Assets/HUD/character_abilities_v1.2.png",
-                        "type": "image"
-                    }
-                ],
-                "name": "Image",
-                "parent_UID": 1037610866
-            },
-            {
                 "UID": 1168295805,
                 "active": true,
                 "components": [
@@ -603,9 +482,9 @@
                             0.5000000596046448
                         ],
                         "scale": [
-                            30.000080108642578,
-                            1.000002384185791,
-                            30.000080108642578
+                            30.00011444091797,
+                            1.000003457069397,
+                            30.00011444091797
                         ],
                         "type": "transform"
                     },
@@ -706,8 +585,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999998807907104,
-                            29.999996185302734
+                            0.9999997019767761,
+                            29.999990463256836
                         ],
                         "type": "transform"
                     },
@@ -802,8 +681,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999999403953552,
-                            29.999998092651367
+                            0.9999997615814209,
+                            29.99999237060547
                         ],
                         "type": "transform"
                     },
@@ -848,6 +727,166 @@
                 ],
                 "name": "CliffRock_low",
                 "parent_UID": 1386708608
+            },
+            {
+                "UID": 1739788079,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": "canvas"
+                    }
+                ],
+                "name": "Canvas",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 1265706318,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "anchor": 3,
+                        "pivot": [
+                            0.0,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            365.0,
+                            973.0
+                        ],
+                        "type": "transform2D"
+                    },
+                    {
+                        "active": true,
+                        "mask": [
+                            1.0,
+                            1.0
+                        ],
+                        "texture": "Assets/HUD/character_abilities_v1.2.png",
+                        "type": "image"
+                    }
+                ],
+                "name": "Image",
+                "parent_UID": 1739788079
+            },
+            {
+                "UID": 1846450480,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "anchor": 0,
+                        "pivot": [
+                            0.0,
+                            1.0
+                        ],
+                        "position": [
+                            25.0,
+                            4.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            558.0,
+                            112.0
+                        ],
+                        "type": "transform2D"
+                    },
+                    {
+                        "active": true,
+                        "type": "text",
+                        "value": "Score: 0"
+                    }
+                ],
+                "name": "Text",
+                "parent_UID": 1739788079
             }
         ],
         "name": "SceneIntro"
