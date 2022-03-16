@@ -18,22 +18,22 @@ public:
 	bool Update(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
-	bool GetPlayOnStart() const { return playOnStart; }
+	inline bool GetPlayOnStart() const { return playOnStart; }
 
-	bool GetMute() const { return mute; }
+	inline bool GetMute() const { return mute; }
 
 	void SetLoop(bool active);
-	bool GetLoop() const { return loop; }
+	inline bool GetLoop() const { return loop; }
 
 	//bool GetBypass() const { return bypass; }
 
-	float GetVolume() const { return volume; }
+	inline float GetVolume() const { return volume; }
 
 	void SetPanning(float pan);
-	float GetPan() const { return pan; }
+	inline float GetPan() const { return pan; }
 
 	void SetTranspose(float transpose);
-	float GetTranspose() const { return transpose; }
+	inline float GetTranspose() const { return transpose; }
 
 	void UpdatePlayState();
 
