@@ -54,7 +54,7 @@ bool PanelInspector::Update()
 		ImGui::Separator();
 
 		// Take care with the order in the combo, it has to follow the ComponentType enum class order
-		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody\0Audio Source");
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody\0Audio Source\0Audio Switch");
 
 		ImGui::SameLine();
 

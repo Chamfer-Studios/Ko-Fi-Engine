@@ -13,6 +13,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentScript.h"
 #include "C_AudioSource.h"
+#include "C_AudioSwitch.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -195,6 +196,11 @@ void GameObject::AddComponentByType(ComponentType componentType)
 		case ComponentType::AUDIO_SOURCE:
 		{
 			this->CreateComponent<C_AudioSource>();
+			break;
+		}
+		case ComponentType::AUDIO_SWITCH:
+		{
+			//this->CreateComponent<C_AudioSwitch>();
 			break;
 		}
 	}

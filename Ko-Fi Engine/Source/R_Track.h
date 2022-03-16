@@ -86,11 +86,6 @@ public:
 		}
 	}
 
-	bool IsTrackLoaded()
-	{
-		return (channels != 0);
-	}
-
 public:
 	unsigned int channels = 0;
 	unsigned int sampleRate = 44100;

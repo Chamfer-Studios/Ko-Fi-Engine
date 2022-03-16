@@ -184,6 +184,7 @@
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\ComponentTransform2D.cpp" />
     <ClCompile Include="Source\C_AudioSource.cpp" />
+    <ClCompile Include="Source\C_AudioSwitch.cpp" />
     <ClCompile Include="Source\dr_wav_impl.c" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />

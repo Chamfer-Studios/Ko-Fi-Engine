@@ -22,8 +22,8 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
     track = nullptr;
 
     volume = 100.0f;
-    pan = 0.0f;
-    transpose = 0.0f;
+    //pan = 0.0f;
+    //transpose = 0.0f;
 
     loop = false;
 
@@ -36,23 +36,23 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
     //bypass = false;
 }
 
-C_AudioSource::C_AudioSource(GameObject* parent, float volume, float pan, float transpose, bool mute, bool playOnStart, bool loop, bool bypass) : C_Audio(parent)
+C_AudioSource::C_AudioSource(GameObject* parent, float volume, bool mute, bool playOnStart, bool loop) : C_Audio(parent)
 {
+    type = ComponentType::AUDIO_SOURCE;
+
     track = nullptr;
 
     this->volume = volume;
-    this->pan = pan;
-    this->transpose = transpose;
-
+    //this->pan = pan;
+    //this->transpose = transpose;
+    this->mute = mute;
+    this->playOnStart = playOnStart;
     this->loop = loop;
-
-    offset = 0.0f;
+    //this->bypass = bypass;
 
     play = false;
-    playOnStart = true;
 
-    mute = false;
-    bypass = false;
+    offset = 0.0f;
 }
 
 C_AudioSource::~C_AudioSource()
@@ -65,6 +65,9 @@ C_AudioSource::~C_AudioSource()
 bool C_AudioSource::Start()
 {
     StopAudio(track->source);
+
+    if (playOnStart)
+        PlayAudio(track->source);
 
     return true;
 }
@@ -115,8 +118,8 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
                     track->source = CreateAudioSource(track->buffer, false);
 
                     SetVolume(volume);
-                    SetPanning(pan);
-                    SetTranspose(transpose);
+                    //SetPanning(pan);
+                    //SetTranspose(transpose);
                 }
             }
         }
@@ -130,7 +133,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
                 chooser->OpenPanel("Add Track", "wav");
             }
 
-            ImGui::Text("Track Name: %s", track->name.c_str());
+            ImGui::Text("Track Name: %s", track->GetTrackName());
             ImGui::Spacing();
             ImGui::Text("Sample Rate: %d kHz (%d-Bits)", track->sampleRate, track->bits);
             ImGui::Spacing();
@@ -183,12 +186,24 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
     return ret;
 }
 
+void C_AudioSource::UpdatePlayState()
+{
+    ALint sourceState;
+    alGetSourcei(track->source, AL_SOURCE_STATE, &sourceState);
+    (sourceState == AL_PLAYING) ? play = true : play = false;
+}
+
+void C_AudioSource::SetLoop(bool active)
+{
+    alSourcei(track->source, AL_LOOPING, active);
+}
+
 // Range [0 - 100]
 void C_AudioSource::SetVolume(float volume)
 {
     if (mute)
     {
-        alSourcef(track->source, AL_GAIN, 0);
+        alSourcef(track->source, AL_GAIN, 0.0f);
         return;
     }
 
@@ -197,38 +212,26 @@ void C_AudioSource::SetVolume(float volume)
     if (volume > 99.0f)
         volume = 100.0f;
 
-    alSourcef(track->source, AL_GAIN, volume / 100);
+    alSourcef(track->source, AL_GAIN, volume / 100.0f);
 }
 
-void C_AudioSource::SetPanning(float pan)
-{
-    alSource3f(track->source, AL_POSITION, pan, 0, -sqrtf(1.0f - pan * pan));
-}
+//void C_AudioSource::SetPanning(float pan)
+//{
+//    alSource3f(track->source, AL_POSITION, pan, 0, -sqrtf(1.0f - pan * pan));
+//}
 
-void C_AudioSource::SetTranspose(float transpose)
-{
-    transpose = exp(0.0577623f * transpose);
-
-    if (transpose > 4.0f)
-        transpose = 4.0f;
-
-    if (transpose < 0.25f)
-        transpose = 0.25f;
-
-    if (transpose > 0.98f && transpose < 1.02f)
-        transpose = 1.0f;
-
-    alSourcef(track->source, AL_PITCH, transpose);
-}
-
-void C_AudioSource::SetLoop(bool active)
-{
-    alSourcei(track->source, AL_LOOPING, active);
-}
-
-void C_AudioSource::UpdatePlayState()
-{
-    ALint sourceState;
-    alGetSourcei(track->source, AL_SOURCE_STATE, &sourceState);
-    (sourceState == AL_PLAYING) ? play = true : play = false;
-}
+//void C_AudioSource::SetTranspose(float transpose)
+//{
+//    transpose = exp(0.0577623f * transpose);
+//
+//    if (transpose > 4.0f)
+//        transpose = 4.0f;
+//
+//    if (transpose < 0.25f)
+//        transpose = 0.25f;
+//
+//    if (transpose > 0.98f && transpose < 1.02f)
+//        transpose = 1.0f;
+//
+//    alSourcef(track->source, AL_PITCH, transpose);
+//}
