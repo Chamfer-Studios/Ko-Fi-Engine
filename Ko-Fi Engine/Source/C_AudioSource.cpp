@@ -66,15 +66,18 @@ bool C_AudioSource::Start()
 {
     StopAudio(track->source);
 
-    if (playOnStart)
-        PlayAudio(track->source);
-
     return true;
 }
 
 bool C_AudioSource::Update(float dt)
 {
     bool ret = true;
+
+    if (playOnStart && track != nullptr && owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING)
+    {
+        PlayAudio(track->source);
+        playOnStart = false;
+    }
 
     if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)
         return true;
