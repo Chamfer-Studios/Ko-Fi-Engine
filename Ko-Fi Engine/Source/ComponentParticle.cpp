@@ -88,22 +88,45 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 	{
 		if (resource != nullptr)
 		{
+			ImGui::Text("Resource Name:");
+			ImGui::SameLine();
+			ImGui::InputText("##Resource",&(resource->name));
+
 			ImGui::Text("Emitters: %d", resource->emitters.size());
 
+			std::string addEmitterName = "Add Emitter to " + resource->name;
+			ImGui::Combo("##Emitter Combo", &emitterToAdd, "Add Emitter\0New Emitter");
 			ImGui::SameLine();
-
-			//Combo to select either an existing resource or create a new one
-
-			if (ImGui::Button("Add Emitter")) 
+			if ((ImGui::Button(addEmitterName.c_str())))
 			{
-				std::string name = "Emitter";
-				NewEmitterName(name);
-				Emitter* e = new Emitter(name.c_str());
-				resource->emitters.push_back(e);
-				EmitterInstance* ei = new EmitterInstance(e, this);
-				ei->Init();
-				emitterInstances.push_back(ei);
+				//TODO: Check all emitters that are loaded
+				if (emitterToAdd == 1)
+				{
+					CONSOLE_LOG("%d", emitterToAdd);
+					std::string name = "Emitter";
+					NewEmitterName(name);
+					Emitter* e = new Emitter(name.c_str());
+					resource->emitters.push_back(e);
+					EmitterInstance* ei = new EmitterInstance(e, this);
+					ei->Init();
+					emitterInstances.push_back(ei);
+				}
 			}
+			//what we had before, don't delete
+			//ImGui::SameLine();
+
+			////Combo to select either an existing resource or create a new one
+
+			//if (ImGui::Button("Add Emitter")) 
+			//{
+			//	std::string name = "Emitter";
+			//	NewEmitterName(name);
+			//	Emitter* e = new Emitter(name.c_str());
+			//	resource->emitters.push_back(e);
+			//	EmitterInstance* ei = new EmitterInstance(e, this);
+			//	ei->Init();
+			//	emitterInstances.push_back(ei);
+			//}
 
 			ImGui::Text("Emitter Instances: %d", emitterInstances.size());
 
@@ -186,10 +209,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 				{
 					++moduleToAdd;
 					if (moduleToAdd != (int)ComponentType::NONE)
-					{
 						emitter->AddModuleByType((ParticleModuleType)moduleToAdd);
-						moduleToAdd = 0;
-					}
 				}
 
 				for (ParticleModule* module : emitter->modules)
@@ -474,9 +494,11 @@ void ComponentParticle::NewEmitterName(std::string& name, int n)
 void ComponentParticle::Save(Json& json) const
 {
 	json["type"] = "particle";
-	Json jsonEmitter;
+	Json jsonResource;
 	if (resource != nullptr)
 	{
+		jsonResource["name"] = resource->name;
+		Json jsonEmitter;
 		for (auto e : resource->emitters)
 		{
 			jsonEmitter["maxParticles"] = e->maxParticles;
@@ -537,8 +559,9 @@ void ComponentParticle::Save(Json& json) const
 				jsonEmitter["modules"].push_back(jsonModule);
 				jsonModule.clear();
 			}
-			json["emitters"].push_back(jsonEmitter);
+			jsonResource["emitters"].push_back(jsonEmitter);
 		}
+		json["resource"].push_back(jsonResource);
 	}
 }
 
@@ -550,96 +573,114 @@ void ComponentParticle::Load(Json& json)
 			resource = new ParticleResource();
 
 		resource->emitters.clear();
-		for (const auto& emitter : json.at("emitters").items())
+		for (const auto& r : json.at("resource").items())
 		{
-			emitterInstances.clear();
-			Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
-			EmitterInstance* ei = new EmitterInstance(e, this);
-			emitterInstances.push_back(ei);
-			ei->Init();
-			e->maxParticles = emitter.value().at("maxParticles");
-			e->texture = Texture();
-			e->texture.path = emitter.value().at("texture_path");
-			if (e->texture.path != "")
-				Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), &e->texture);
+			//emitterInstances.clear();
+			//Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
+			//EmitterInstance* ei = new EmitterInstance(e, this);
+			//emitterInstances.push_back(ei);
+			//ei->Init();
+			//e->maxParticles = emitter.value().at("maxParticles");
+			//e->texture = Texture();
+			//e->texture.path = emitter.value().at("texture_path");
+			//if (e->texture.path != "")
+			//	Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), &e->texture);
 
-			e->modules.clear();
-			for (const auto& pModule : emitter.value().at("modules").items())
+			//e->modules.clear();
+			//for (const auto& pModule : emitter.value().at("modules").items())
+			resource->name = r.value().at("name").get<std::string>();
+
+			for (const auto& emitter : r.value().at("emitters").items())
 			{
-				ParticleModule* m = nullptr;
-				int type = pModule.value().at("type");
-				switch (type)
+				emitterInstances.clear();
+				Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
+				EmitterInstance* ei = new EmitterInstance(e, this);
+				emitterInstances.push_back(ei);
+				ei->Init();
+				e->maxParticles = emitter.value().at("maxParticles");
+				e->texture = Texture();
+				e->texture.path = emitter.value().at("texture_path").get<std::string>();
+				if (e->texture.path != "")
+					Importer::GetInstance()->textureImporter->Import(e->texture.path.c_str(), &e->texture);
+
+				e->modules.clear();
+				for (const auto& pModule : emitter.value().at("modules").items())
 				{
-				case 1:
-				{
-					EmitterDefault* mDefault = new EmitterDefault();
-					mDefault->timer = pModule.value().at("timer");
-					mDefault->spawnTime = pModule.value().at("spawnTime");
-					mDefault->initialLifetime = pModule.value().at("initialLifetime");
-					m = mDefault;
-					break;
-				}
-				case 2:
-				{
-					EmitterMovement* mMovement = new EmitterMovement();
-					mMovement->initialIntensity = pModule.value().at("initialIntensity");
-					mMovement->finalIntensity = pModule.value().at("finalIntensity");
-					std::vector<float> values = pModule.value().at("initialDirection").get<std::vector<float>>();
-					mMovement->initialDirection = { values[0],values[1],values[2] };
-					values.clear();
-					values = pModule.value().at("finalDirection").get<std::vector<float>>();
-					mMovement->finalDirection = { values[0],values[1],values[2] };
-					values.clear();
-					values = pModule.value().at("initialPosition").get<std::vector<float>>();
-					mMovement->initialPosition = { values[0],values[1],values[2] };
-					values.clear();
-					values = pModule.value().at("finalPosition").get<std::vector<float>>();
-					mMovement->finalPosition = { values[0],values[1],values[2] };
-					values.clear();
-					values = pModule.value().at("initialAcceleration").get<std::vector<float>>();
-					mMovement->initialAcceleration = { values[0],values[1],values[2] };
-					values.clear();
-					values = pModule.value().at("finalAcceleration").get<std::vector<float>>();
-					mMovement->finalAcceleration = { values[0],values[1],values[2] };
-					values.clear();
-					m = mMovement;
-					break;
-				}
-				case 3:
-				{
-					EmitterColor* mColor = new EmitterColor();
-					mColor->colorOverTime.clear();
-					for (const auto& c : pModule.value().at("colors").items())
+					ParticleModule* m = nullptr;
+					int type = pModule.value().at("type");
+					switch (type)
 					{
-						FadeColor fc = FadeColor();
-						std::vector<float> values = c.value().at("color").get<std::vector<float>>();
-						fc.color = Color(values[0], values[1], values[2], values[3]);
-						values.clear();
-						fc.pos = c.value().at("position");
-						mColor->colorOverTime.push_back(fc);
+					case 1:
+					{
+						EmitterDefault* mDefault = new EmitterDefault();
+						mDefault->timer = pModule.value().at("timer");
+						mDefault->spawnTime = pModule.value().at("spawnTime");
+						mDefault->initialLifetime = pModule.value().at("initialLifetime");
+						m = mDefault;
+						break;
 					}
-					m = mColor;
-					break;
+					case 2:
+					{
+						EmitterMovement* mMovement = new EmitterMovement();
+						mMovement->initialIntensity = pModule.value().at("initialIntensity");
+						mMovement->finalIntensity = pModule.value().at("finalIntensity");
+						std::vector<float> values = pModule.value().at("initialDirection").get<std::vector<float>>();
+						mMovement->initialDirection = { values[0],values[1],values[2] };
+						values.clear();
+						values = pModule.value().at("finalDirection").get<std::vector<float>>();
+						mMovement->finalDirection = { values[0],values[1],values[2] };
+						values.clear();
+						values = pModule.value().at("initialPosition").get<std::vector<float>>();
+						mMovement->initialPosition = { values[0],values[1],values[2] };
+						values.clear();
+						values = pModule.value().at("finalPosition").get<std::vector<float>>();
+						mMovement->finalPosition = { values[0],values[1],values[2] };
+						values.clear();
+						values = pModule.value().at("initialAcceleration").get<std::vector<float>>();
+						mMovement->initialAcceleration = { values[0],values[1],values[2] };
+						values.clear();
+						values = pModule.value().at("finalAcceleration").get<std::vector<float>>();
+						mMovement->finalAcceleration = { values[0],values[1],values[2] };
+						values.clear();
+						m = mMovement;
+						break;
+					}
+					case 3:
+					{
+						EmitterColor* mColor = new EmitterColor();
+						mColor->colorOverTime.clear();
+						for (const auto& c : pModule.value().at("colors").items())
+						{
+							FadeColor fc = FadeColor();
+							std::vector<float> values = c.value().at("color").get<std::vector<float>>();
+							fc.color = Color(values[0], values[1], values[2], values[3]);
+							values.clear();
+							fc.pos = c.value().at("position");
+							mColor->colorOverTime.push_back(fc);
+						}
+						m = mColor;
+						break;
+					}
+					case 4:
+					{
+						EmitterSize* mSize = new EmitterSize();
+						std::vector<float> values = pModule.value().at("initialSize").get<std::vector<float>>();
+						mSize->initialSize = { values[0],values[1],values[2] };
+						values.clear();
+						values = pModule.value().at("finalSize").get<std::vector<float>>();
+						mSize->finalSize = { values[0],values[1],values[2] };
+						values.clear();
+						m = mSize;
+						break;
+					}
+					default:
+						break;
+					}
+					if (m != nullptr)
+						e->modules.push_back(m);
 				}
-				case 4:
-				{
-					EmitterSize* mSize = new EmitterSize();
-					std::vector<float> values = pModule.value().at("initialSize").get<std::vector<float>>();
-					mSize->initialSize = { values[0],values[1],values[2] };
-					values.clear();
-					values = pModule.value().at("finalSize").get<std::vector<float>>();
-					mSize->finalSize = { values[0],values[1],values[2] };
-					values.clear();
-					m = mSize;
-					break;
-				}
-				default:
-					break;
-				}
-				if(m != nullptr)
-					e->modules.push_back(m);
+				resource->emitters.push_back(e);
 			}
-			resource->emitters.push_back(e);
 		}
 	}
 }

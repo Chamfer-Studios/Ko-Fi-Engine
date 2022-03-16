@@ -13,6 +13,7 @@ public:
 
 public:
 	std::vector<Emitter*> emitters;
+	std::string name;
 };
 
 #endif // !__PARTICLE_RESOURCE_H__

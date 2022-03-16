@@ -132,11 +132,11 @@ Color EmitterColor::ColorLerp(float current)
 		{
 			return colorOverTime.at(i).color;
 		}
-		else if (i = 0 && colorOverTime.at(i).pos > current)
+		else if (i == 0 && colorOverTime.at(i).pos > current)
 		{
 			return colorOverTime.at(i).color;
 		}
-		else if (i = colorOverTime.size() && colorOverTime.at(i).pos < current)
+		else if (i == colorOverTime.size() && colorOverTime.at(i).pos < current)
 		{
 			return colorOverTime.at(i).color;
 		}

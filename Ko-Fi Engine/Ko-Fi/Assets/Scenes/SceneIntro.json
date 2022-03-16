@@ -324,68 +324,73 @@
                     },
                     {
                         "active": true,
-                        "emitters": [
+                        "resource": [
                             {
-                                "maxParticles": 50,
-                                "modules": [
+                                "name": "Test",
+                                "emitters": [
                                     {
-                                        "initialLifetime": 1.0,
-                                        "spawnTime": 2.0,
-                                        "timer": 5.0,
-                                        "type": 1
-                                    },
-                                    {
-                                        "colors": [
+                                        "maxParticles": 50,
+                                        "modules": [
                                             {
-                                                "color": [
-                                                    0.0,
-                                                    0.0,
-                                                    0.0,
+                                                "initialLifetime": 1.0,
+                                                "spawnTime": 2.0,
+                                                "timer": 5.0,
+                                                "type": 1
+                                            },
+                                            {
+                                                "colors": [
+                                                    {
+                                                        "color": [
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                            1.0
+                                                        ],
+                                                        "position": 0.5
+                                                    }
+                                                ],
+                                                "type": 3
+                                            },
+                                            {
+                                                "finalAcceleration": [
+                                                    1.0,
+                                                    1.0,
                                                     1.0
                                                 ],
-                                                "position": 0.5
+                                                "finalDirection": [
+                                                    -1.0,
+                                                    -1.0,
+                                                    -1.0
+                                                ],
+                                                "finalIntensity": 3.0,
+                                                "finalPosition": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "initialAcceleration": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "initialDirection": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ],
+                                                "initialIntensity": 1.0,
+                                                "initialPosition": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "type": 2
                                             }
                                         ],
-                                        "type": 3
-                                    },
-                                    {
-                                        "finalAcceleration": [
-                                            1.0,
-                                            1.0,
-                                            1.0
-                                        ],
-                                        "finalDirection": [
-                                            -1.0,
-                                            -1.0,
-                                            -1.0
-                                        ],
-                                        "finalIntensity": 3.0,
-                                        "finalPosition": [
-                                            0.0,
-                                            0.0,
-                                            0.0
-                                        ],
-                                        "initialAcceleration": [
-                                            0.0,
-                                            0.0,
-                                            0.0
-                                        ],
-                                        "initialDirection": [
-                                            1.0,
-                                            1.0,
-                                            1.0
-                                        ],
-                                        "initialIntensity": 1.0,
-                                        "initialPosition": [
-                                            0.0,
-                                            0.0,
-                                            0.0
-                                        ],
-                                        "type": 2
+                                        "name": "Emitter",
+                                        "texture_path": ""
                                     }
-                                ],
-                                "name": "Emitter",
-                                "texture_path": ""
+                                ]
                             }
                         ],
                         "type": "particle"

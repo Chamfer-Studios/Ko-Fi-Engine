@@ -372,5 +372,3 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glDisable(GL_BLEND);
 	glDisable(GL_ALPHA_TEST);
 }
-
-

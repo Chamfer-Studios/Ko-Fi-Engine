@@ -49,7 +49,6 @@ public:
 
 	ComponentType GetType() { return type; }
 
-
 public:
 	bool active = true;
 	GameObject* owner;

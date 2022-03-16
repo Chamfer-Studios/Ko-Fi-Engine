@@ -3,6 +3,7 @@
 ParticleResource::ParticleResource()
 {
 	emitters.clear();
+	name.clear();
 }
 
 ParticleResource::~ParticleResource()
@@ -14,6 +15,7 @@ ParticleResource::~ParticleResource()
 			it = emitters.erase(it);
 		}
 	}
+	name.clear();
 }
 
 bool ParticleResource::CleanUp()
@@ -22,5 +24,6 @@ bool ParticleResource::CleanUp()
 	{
 		it = emitters.erase(it);
 	}
+	name.clear();
 	return true;
 }
