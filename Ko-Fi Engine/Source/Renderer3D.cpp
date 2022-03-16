@@ -155,7 +155,16 @@ bool Renderer3D::PreUpdate(float dt)
 	SDL_RenderClear(engine->GetUI()->renderer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	engine->GetCamera3D()->projectionIsDirty = true;
+	engine->GetCamera3D()->CalculateViewMatrix();
+	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
 	// light 0 on cam pos
 	lights[0].SetPos(engine->GetCamera3D()->position.x, engine->GetCamera3D()->position.y, engine->GetCamera3D()->position.z);
 
@@ -226,8 +235,7 @@ void Renderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
+	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

@@ -81,7 +81,7 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelAbout);
 	AddPanel(panelSettings);
 	AddPanel(panelChooser);
-	AddPanel(panelGameObject);
+	//AddPanel(panelGameObject);
 	AddPanel(panelAssets);
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);

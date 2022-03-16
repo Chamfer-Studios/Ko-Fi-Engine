@@ -56,8 +56,6 @@ bool Camera3D::Update(float dt)
 
 	float3 newPos(0, 0, 0);
 	float speed = cameraSpeed * dt;
-	bool isWindowFocused = engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused();
-	if (!isWindowFocused) return true;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
 
