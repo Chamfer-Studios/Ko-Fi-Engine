@@ -24,6 +24,7 @@
 #include "ComponentImage.h"
 #include "ComponentText.h"
 #include "ComponentTransform2D.h"
+#include "ComponentParticle.h"
 
 
 #include "Mesh.h"
@@ -317,12 +318,8 @@ bool I_Scene::Save(Scene* scene)
 			switch (component->GetType())
 			{
 			case ComponentType::NONE:
-				jsonComponent["type"] = "NONE";
-				break;
-			case ComponentType::TRANSFORM:
 			{
-				ComponentTransform* transformCmp = (ComponentTransform*)component;
-				transformCmp->Save(jsonComponent);
+				jsonComponent["type"] = "NONE";
 				break;
 			}
 			case ComponentType::MESH:
@@ -337,22 +334,16 @@ bool I_Scene::Save(Scene* scene)
 				materialCmp->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::INFO:
+			case ComponentType::PARTICLE:
 			{
-				ComponentInfo* infoCmp = (ComponentInfo*)component;
-				infoCmp->Save(jsonComponent);
+				ComponentParticle* particleCmp = (ComponentParticle*)component;
+				particleCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::CAMERA:
 			{
 				ComponentCamera* cameraCmp = (ComponentCamera*)component;
 				cameraCmp->Save(jsonComponent);
-				break;
-			}
-			case ComponentType::RIGID_BODY:
-			{
-				ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
-				rigidBodyCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::COLLIDER:
@@ -365,6 +356,12 @@ bool I_Scene::Save(Scene* scene)
 			{
 				ComponentScript* scriptCmp = (ComponentScript*)component;
 				scriptCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::RIGID_BODY:
+			{
+				ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
+				rigidBodyCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::TRANSFORM2D:
@@ -395,6 +392,18 @@ bool I_Scene::Save(Scene* scene)
 			{
 				ComponentText* textCmp = (ComponentText*)component;
 				textCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::TRANSFORM:
+			{
+				ComponentTransform* transformCmp = (ComponentTransform*)component;
+				transformCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::INFO:
+			{
+				ComponentInfo* infoCmp = (ComponentInfo*)component;
+				infoCmp->Save(jsonComponent);
 				break;
 			}
 			default:
@@ -581,13 +590,23 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				}
 				else if (type == "collider")
 				{
-				ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
-				if (colCmp == nullptr)
-				{
-					colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);//CreateComponent<ComponentCollider>();
+					ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
+					if (colCmp == nullptr)
+					{
+						colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);//CreateComponent<ComponentCollider>();
+					}
+					colCmp->active = true;
+					colCmp->Load(jsonCmp);
 				}
-				colCmp->active = true;
-				colCmp->Load(jsonCmp);
+				else if (type == "particle")
+				{
+					ComponentParticle* partCmp = go->GetComponent<ComponentParticle>();
+					if (partCmp == nullptr)
+					{
+						partCmp = (ComponentParticle*)go->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentCollider>();
+					}
+					partCmp->active = true;
+					partCmp->Load(jsonCmp);
 				}
 			}
 			if (!exists)

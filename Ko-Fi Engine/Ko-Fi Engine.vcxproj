@@ -254,6 +254,7 @@
     <ClCompile Include="Source\ComponentParticle.cpp" />
     <ClCompile Include="Source\ParticleModule.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
+    <ClCompile Include="Source\ParticleResource.cpp" />
     <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
@@ -605,6 +606,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\ParticleResource.h" />
     <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />

@@ -85,8 +85,7 @@
     </Filter>
     <Filter Include="Source\Helpers\Particles">
       <UniqueIdentifier>{fdcdaa78-ce37-43e6-bc8e-4a0a368d8e0c}</UniqueIdentifier>
-          </Filter>
-
+    </Filter>
     <Filter Include="Libs\PhysX">
       <UniqueIdentifier>{d0f948d0-4ad2-4262-9a39-3321cdcb7606}</UniqueIdentifier>
     </Filter>
@@ -377,7 +376,6 @@
     <ClCompile Include="Source\ParticleModule.cpp">
       <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
-
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Source\Physics</Filter>
     </ClCompile>
@@ -458,6 +456,10 @@
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentRigidBody.cpp" />
+    <ClCompile Include="Source\par_shapes.cpp" />
+    <ClCompile Include="Source\ParticleResource.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1476,6 +1478,12 @@
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleResource.h">
+      <Filter>Source\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

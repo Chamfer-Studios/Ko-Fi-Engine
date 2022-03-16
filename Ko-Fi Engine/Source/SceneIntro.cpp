@@ -34,10 +34,10 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
 
-	LCG random;
-	uint uid = random.Int();
-	GameObject * g = this->CreateEmptyGameObject("Particle Test");
-	g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
+	//LCG random;
+	//uint uid = random.Int();
+	//GameObject * g = this->CreateEmptyGameObject("Particle Test");
+	//g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
 }
 
 SceneIntro::~SceneIntro()

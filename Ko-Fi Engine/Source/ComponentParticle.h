@@ -3,12 +3,11 @@
 
 #include "Component.h"
 #include "EmitterInstance.h"
-#include "Emitter.h"
 #include "SceneIntro.h"
 #include "Color.h"
 
 class EmitterInstance;
-class Emitter;
+class ParticleResource;
 
 class ComponentParticle : public Component
 {
@@ -36,7 +35,7 @@ private:
 
 public:
 	std::vector<EmitterInstance*> emitterInstances;
-	std::vector<Emitter*> emitters;
+	ParticleResource* resource = nullptr;
 	int moduleToAdd = 0;
 	int currentTextureId = 0;
 };

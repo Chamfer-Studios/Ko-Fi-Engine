@@ -29,11 +29,6 @@ bool EmitterInstance::Update(float dt)
 				break;
 			}
 		}
-		// MAYBE????????
-		//else
-		//{
-		//	(*it)->Update(dt);
-		//}
 	}
 
 	for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
