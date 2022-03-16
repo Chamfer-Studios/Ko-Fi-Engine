@@ -56,15 +56,6 @@ bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::InputText("Value", &(textValue))) {
 			SetTextValue(textValue);
 		}
-
-		if (openGLTexture == 0) // Supposedly there is no textureId = 0 in textures array
-		{
-			ImGui::Text("None");
-		}
-		else
-		{
-			ImGui::Image((ImTextureID)openGLTexture, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
-		}
 	}
 
 	return true;
