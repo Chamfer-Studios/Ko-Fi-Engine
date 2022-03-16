@@ -1,7 +1,7 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 15,
+        "game_objects_amount": 16,
         "game_objects_list": [
             {
                 "UID": 4294967295,
@@ -127,9 +127,9 @@
                             0.4999999701976776
                         ],
                         "scale": [
-                            30.00015640258789,
-                            1.0000096559524536,
-                            30.00015640258789
+                            30.000263214111328,
+                            1.0000163316726685,
+                            30.000263214111328
                         ],
                         "type": "transform"
                     },
@@ -198,8 +198,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999974966049194,
-                            29.999921798706055
+                            0.9999958276748657,
+                            29.999868392944336
                         ],
                         "type": "transform"
                     },
@@ -268,8 +268,8 @@
                         ],
                         "scale": [
                             1.0,
-                            0.9999975562095642,
-                            0.9999975562095642
+                            0.9999958872795105,
+                            0.9999958872795105
                         ],
                         "type": "transform"
                     },
@@ -349,8 +349,8 @@
                         ],
                         "scale": [
                             10.0,
-                            19.99992561340332,
-                            0.999997615814209
+                            19.9998722076416,
+                            0.9999959468841553
                         ],
                         "type": "transform"
                     },
@@ -482,9 +482,9 @@
                             0.5000000596046448
                         ],
                         "scale": [
-                            30.00011444091797,
-                            1.000003457069397,
-                            30.00011444091797
+                            30.00043487548828,
+                            1.0000134706497192,
+                            30.00043487548828
                         ],
                         "type": "transform"
                     },
@@ -585,8 +585,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999997019767761,
-                            29.999990463256836
+                            0.9999980330467224,
+                            29.999937057495117
                         ],
                         "type": "transform"
                     },
@@ -681,8 +681,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999997615814209,
-                            29.99999237060547
+                            0.9999980926513672,
+                            29.99993896484375
                         ],
                         "type": "transform"
                     },
@@ -819,7 +819,7 @@
                         "anchor": 3,
                         "pivot": [
                             0.0,
-                            0.5
+                            0.46000000834465027
                         ],
                         "position": [
                             0.0,
@@ -859,13 +859,33 @@
                     },
                     {
                         "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
                         "anchor": 0,
                         "pivot": [
                             0.0,
                             1.0
                         ],
                         "position": [
-                            25.0,
+                            67.0,
                             4.0
                         ],
                         "rotation": [
@@ -874,7 +894,7 @@
                             0.0
                         ],
                         "size": [
-                            558.0,
+                            112.0,
                             112.0
                         ],
                         "type": "transform2D"
@@ -882,11 +902,98 @@
                     {
                         "active": true,
                         "type": "text",
-                        "value": "Score: 0"
+                        "value": "0"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/TextScript.lua",
+                        "script_number": 1,
+                        "type": "script"
                     }
                 ],
                 "name": "Text",
                 "parent_UID": 1739788079
+            },
+            {
+                "UID": 1047998249,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -38.0,
+                            0.3562670350074768,
+                            11.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            -3.654919700224468e-10,
+                            -5.472506448001013e-09,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999987483024597,
+                            0.9999987483024597
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Character2.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/mc_base_color.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "active": true,
+                        "collider_type": 1,
+                        "is_trigger": false,
+                        "type": "collider"
+                    },
+                    {
+                        "active": true,
+                        "is_static": true,
+                        "type": "rigidBody"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Player.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    }
+                ],
+                "name": "Character2",
+                "parent_UID": 4294967295
             }
         ],
         "name": "SceneIntro"

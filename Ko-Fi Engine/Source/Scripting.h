@@ -14,6 +14,7 @@
 #include "ComponentTransform.h"
 #include "ComponentRigidBody.h"
 #include "ComponentScript.h"
+#include "ComponentText.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -30,6 +31,8 @@ enum INSPECTOR_VARIABLE_TYPE
 enum ItemType
 {
 	ITEM_NO_TYPE,
+
+	ITEM_HAND,
 	ITEM_KNIFE,
 	ITEM_GUN
 };
@@ -59,7 +62,7 @@ public:
 
 	Scripting()
 	{
-		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug);
+		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug, sol::lib::string);
 	}
 
 	~Scripting() {}
@@ -106,6 +109,7 @@ public:
 		// ItemType
 		lua.new_enum("ItemType",
 			"ITEM_NO_TYPE", ItemType::ITEM_NO_TYPE,
+			"ITEM_HAND",	ItemType::ITEM_HAND,
 			"ITEM_KNIFE",	ItemType::ITEM_KNIFE,
 			"ITEM_GUN",		ItemType::ITEM_GUN
 			);
@@ -123,13 +127,14 @@ public:
 		// GameObject structure
 		lua.new_usertype<GameObject>("GameObject",
 			sol::constructors<void()>(),
-			"active",		&GameObject::active,
-			"name",			&GameObject::name,
-			"GetParent",	&GameObject::GetParent,
-			"GetComponents",&GameObject::GetComponents,							// Kinda works... not very useful tho
-			"GetTransform", &GameObject::GetTransform,
-			"GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>,
-			"IsSelected",	&GameObject::IsSelected
+			"active",			&GameObject::active,
+			"name",				&GameObject::name,
+			"GetParent",		&GameObject::GetParent,
+			"GetComponents",	&GameObject::GetComponents,							// Kinda works... not very useful tho
+			"GetTransform",		&GameObject::GetTransform,
+			"GetRigidBody",		&GameObject::GetComponent<ComponentRigidBody>,
+			"GetText",			&GameObject::GetComponent<ComponentText>,
+			"IsSelected",		&GameObject::IsSelected
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
 
@@ -155,6 +160,13 @@ public:
 			"SetFront",	   &ComponentTransform::SetFront
 			);
 
+		// Component Text
+		lua.new_usertype<ComponentText>("ComponentText",
+			sol::constructors<void(GameObject*)>(),
+			"GetTextValue", &ComponentText::GetTextValue,
+			"SetTextValue", &ComponentText::SetTextValue
+			);
+		
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
 			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string>)>(),
@@ -210,13 +222,12 @@ public:
 
 		switch (button)
 		{
-			case 4:	 { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_I); }
-			case 5:	 { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_J); }
-			case 6:	 { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K); }
-			case 7:	 { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_L); }
-			case 8:	 { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE); }
-			case 9:	 { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Z); }
-			case 10: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X); }
+			case 4: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE); }
+			case 5:	{ return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H); }
+			case 6:	{ return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K); }
+			case 7: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_G); }
+			case 8: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X); }
+			case 9: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_C); }
 		}
 	}
 

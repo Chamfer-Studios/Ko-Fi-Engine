@@ -1442,6 +1442,9 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\ResourceManager.h">
@@ -1498,9 +1501,6 @@
     <ClInclude Include="Source\ComponentImage.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\par_shapes.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\IconsFontAwesome5.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
@@ -1534,6 +1534,9 @@
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Player.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>

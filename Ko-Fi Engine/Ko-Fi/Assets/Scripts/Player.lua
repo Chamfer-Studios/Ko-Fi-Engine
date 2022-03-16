@@ -1,8 +1,15 @@
 ------------------- Variables --------------------
 
+State = {
+   IDLE = 1,
+   CROUCH = 2,
+   PRONE = 3,
+}
+
+currentState = State.IDLE
 speed = 25  -- consider Start()
 isDoubleShot = false
-isStanding = true
+hp = 3
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
@@ -11,10 +18,6 @@ NewVariable(speedIV)
 local isDoubleShotIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 isDoubleShotIV = InspectorVariable.new("isDoubleShot", isDoubleShotIVT, isDoubleShot)
 NewVariable(isDoubleShotIV)
-
-local isStandingIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-isStandingIV = InspectorVariable.new("isStanding", isStandingIVT, isStanding)
-NewVariable(isStandingIV)
 
 local currentItemType = ItemType.ITEM_GUN
 currentItemDamage = 5
@@ -36,16 +39,32 @@ function Update(dt)
 	end
 	if (gameObject:IsSelected() == true)
 		then --Gather Inputs
-			if (GetInput(1) == KEY_STATE.KEY_DOWN) then
-				currentItem.type = ItemType.ITEM_NO_TYPE
+			if (GetInput(5) == KEY_STATE.KEY_DOWN) then
+				currentItem.type = ItemType.ITEM_HAND
 			end
-			if (GetInput(9) == KEY_STATE.KEY_DOWN) then
-				currentItem.type = ItemType.ITEM_GUN
-			end
-			if (GetInput(10) == KEY_STATE.KEY_DOWN) then
+			if (GetInput(6) == KEY_STATE.KEY_DOWN) then
 				currentItem.type = ItemType.ITEM_KNIFE
-			end		
+			end
+			if (GetInput(7) == KEY_STATE.KEY_DOWN) then
+				currentItem.type = ItemType.ITEM_GUN
+			end	
 			if (GetInput(8) == KEY_STATE.KEY_DOWN) 
+				then
+					if (currentState == State.CROUCH) then
+						currentState = State.IDLE
+					else
+						currentState = State.CROUCH
+					end
+			end	
+			if (GetInput(9) == KEY_STATE.KEY_DOWN) 
+				then
+					if (currentState == State.PRONE) then
+						currentState = State.IDLE
+					else
+						currentState = State.PRONE
+					end	
+			end
+			if (GetInput(4) == KEY_STATE.KEY_DOWN) 
 				then
 					if (currentItem.type == ItemType.ITEM_GUN) then
 						CreateBullet()
@@ -66,10 +85,18 @@ function MoveToDestination(dt)
 	local d = Distance(pos2D, targetPos2D)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 
-	if (d > 0.25)
+	if (d > 0.5)
 		then 
+			local s = speed
+
+			if (currentState == State.CROUCH) then
+				s = speed * 0.66
+			elseif (currentState == State.PRONE) then
+				s = speed * 0.33
+			end
+
 			--movement
-			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * speed * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * speed * dt))
+			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * s * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * s * dt))
 
 			--rotation
 			vec2 = Normalize(vec2, d)
@@ -77,12 +104,7 @@ function MoveToDestination(dt)
 			if(vec2[1] < 0)	then
 				rad = rad * (-1)
 			end
-			if (isStanding == true) 
-				then		
-					componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
-				else
-					componentTransform:SetRotation(float3.new(0, rad, componentTransform:GetRotation().z))	
-			end
+			componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
 		else
 			destination = nil
 	end
