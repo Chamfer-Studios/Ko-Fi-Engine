@@ -15,6 +15,7 @@
 #include "PanelConfiguration.h"
 #include "PanelLog.h"
 #include "PanelAbout.h"
+#include "PanelSettings.h"
 #include "PanelChooser.h"
 #include "PanelInspector.h"
 #include "PanelViewport.h"
@@ -49,6 +50,7 @@ Editor::Editor(KoFiEngine* engine)
 	panelConfig = new PanelConfiguration(this, engine->GetEngineConfig());
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
+	panelSettings = new PanelSettings(this);
 	panelChooser = new PanelChooser(this);
 	panelGameObject = new PanelInspector(this);
 	panelAssets = new PanelAssets(this);
@@ -72,11 +74,12 @@ Editor::Editor(KoFiEngine* engine)
 	panelRuntimeState = new PanelRuntimeState(this, engine);
 	AddPanel(panelRuntimeState);
 
-	AddPanel(mainMenuBar);
+	//AddPanel(mainMenuBar);
 	AddPanel(panelHierarchy);
-	AddPanel(panelConfig);
+	//AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);
+	AddPanel(panelSettings);
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
@@ -218,7 +221,7 @@ bool Editor::Update(float dt)
 
 	// Update panels state
 	UpdatePanelsState();
-
+	mainMenuBar->Update();
 	// Panels Update
 	if (ret == true)
 	{
@@ -289,6 +292,7 @@ bool Editor::CleanUp()
 	RELEASE(panelConfig);
 	RELEASE(panelLog);
 	RELEASE(panelAbout);
+	RELEASE(panelSettings);
 	RELEASE(panelChooser);
 	RELEASE(panelGameObject);
 	RELEASE(panelViewport);
@@ -481,10 +485,10 @@ void Editor::UpdatePanelsState()
 	}
 }
 
-void Editor::OpenTextEditor(std::string path)
+void Editor::OpenTextEditor(std::string path, const char* ext)
 {
 	toggleTextEditor = true;
-	panelTextEditor->LoadFile(path);
+	panelTextEditor->LoadFile(path,ext);
 }
 
 

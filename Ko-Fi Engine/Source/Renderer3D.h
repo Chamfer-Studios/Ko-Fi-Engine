@@ -23,6 +23,10 @@ public:
 	bool PreUpdate(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
