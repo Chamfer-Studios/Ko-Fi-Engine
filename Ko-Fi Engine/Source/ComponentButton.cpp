@@ -98,7 +98,7 @@ bool ComponentButton::PostUpdate(float dt)
 	}
 
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	drawablePlane->DrawPlane2D(&openGLTexture, { 255, 0, 0 });
+	drawablePlane->DrawPlane2D(&openGLTexture, { 255, 255, 255 });
 	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
