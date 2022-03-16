@@ -15,24 +15,10 @@
 class ComponentCamera;
 class Texture;
 
-class Shadert
-{
-public:
-	unsigned int ID;
-
-	Shadert();
-
-	void Begin();
-	void End();
-
-private:
-	void CheckCompileErrors(uint shader, std::string type);
-};
-
 class MyPlane
 {
 public:
-	MyPlane();
+	MyPlane(GameObject* owner);
 	~MyPlane();
 	void DrawPlane2D(Texture* texture);
 	void DrawPlane2D(unsigned int texture);
@@ -60,7 +46,7 @@ public:
 	bool CleanUp() override;
 	void OnNotify(const Event& event) override;
 
-	void PrepareUIRender(GameObject* owner);
+	void PrepareUIRender();
 	void EndUIRender();
 
 	float2 GetUINormalizedMousePosition();
@@ -73,7 +59,6 @@ public:
 	//void OnSave(JSONWriter& writer) const override;
 public:
 	TTF_Font* rubik = nullptr;
-	MyPlane* drawablePlane = nullptr;
 private:
 	KoFiEngine* engine = nullptr;
 

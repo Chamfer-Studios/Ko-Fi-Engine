@@ -15,10 +15,12 @@ ComponentText::ComponentText(GameObject* parent) : Component(parent)
 	type = ComponentType::TEXT;
 	SetTextValue("Hello world!");
 	glGenFramebuffers(1, &fboId);
+	drawablePlane = new MyPlane(owner);
 }
 
 ComponentText::~ComponentText()
 {
+	delete drawablePlane;
 	FreeTextures();
 }
 
@@ -41,8 +43,8 @@ bool ComponentText::Update(float dt)
 
 bool ComponentText::PostUpdate(float dt)
 {
-	owner->GetEngine()->GetUI()->PrepareUIRender(owner);
-	owner->GetEngine()->GetUI()->drawablePlane->DrawPlane2D(openGLTexture);
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	drawablePlane->DrawPlane2D(openGLTexture);
 	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
@@ -77,7 +79,6 @@ void ComponentText::SetTextValue(std::string newValue)
 
 	textValue = newValue;
 	SDL_Color color = { 255, 255, 255, 255 };
-	//uint colorAsDecimal = (color.r << 24) + (color.g << 16) + (color.b << 8) + (color.a);
 	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(owner->GetEngine()->GetUI()->rubik, textValue.c_str(), color);
 
 	if (srcSurface == nullptr)

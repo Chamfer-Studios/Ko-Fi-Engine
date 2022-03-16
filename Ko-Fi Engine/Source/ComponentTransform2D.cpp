@@ -104,9 +104,11 @@ bool ComponentTransform2D::InspectorDraw(PanelChooser* chooser)
 			SetPivot(newPivot);
 		}
 		float3 newRotation = GetRotation();
-		if (ImGui::DragFloat3("Rotation", &newRotation[0], 0.5f, 0.f, 360.f)) // ROTATION
+		float3 newRotationDeg = float3(newRotation.x * RADTODEG, newRotation.y * RADTODEG, newRotation.z * RADTODEG);
+		if (ImGui::DragFloat3("Rotation", &newRotationDeg[0], 1.0f, 0.f, 360.f)) // ROTATION
 		{
-			SetRotation(newRotation);
+			float3 newRotationRad = float3(newRotationDeg.x * DEGTORAD, newRotationDeg.y * DEGTORAD, newRotationDeg.z * DEGTORAD);
+			SetRotation(newRotationRad);
 		}
 		float2 newSize = GetSize();
 		if (ImGui::DragFloat2("Size", &newSize[0])) //SIZE
@@ -147,10 +149,11 @@ void ComponentTransform2D::SetAnchor(const Anchor& newAnchor)
 float2 ComponentTransform2D::GetNormalizedPosition(bool invertY)
 {
 	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
-	if (parentTransform == nullptr) return position;
+	if (parentTransform == nullptr) return float2(position.x, position.y);
 
 	float2 normalizedPosition = GetCanvas()->LogicalToViewport(position);
-	return normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset(invertY);
+	normalizedPosition = normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset(invertY);
+	return float2(normalizedPosition.x, normalizedPosition.y);
 }
 
 float2 ComponentTransform2D::GetNormalizedSize(bool invertY)

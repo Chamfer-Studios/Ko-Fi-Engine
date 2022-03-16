@@ -31,11 +31,12 @@ ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::IMAGE;
 	glGenFramebuffers(1, &fboId);
+	drawablePlane = new MyPlane(owner);
 }
 
 ComponentImage::~ComponentImage()
 {
-
+	delete drawablePlane;
 }
 
 void ComponentImage::Save(Json& json) const
@@ -66,8 +67,8 @@ bool ComponentImage::Update(float dt)
 
 bool ComponentImage::PostUpdate(float dt)
 {
-	owner->GetEngine()->GetUI()->PrepareUIRender(owner);
-	owner->GetEngine()->GetUI()->drawablePlane->DrawPlane2D(&openGLTexture);
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	drawablePlane->DrawPlane2D(&openGLTexture);
 	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
@@ -100,7 +101,16 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 			panelChooser->OpenPanel("AddTextureImage", "png");
 		}
 
-		ImGui::DragFloat2("Mask", &mask[0], 0.005f, 0.0f, 1.0f);
+		if (ImGui::DragFloat2("Mask", &mask[0], 0.005f, 0.0f, 1.0f)) {
+			drawablePlane->texCoords.clear();
+			drawablePlane->texCoords.push_back({ 0, mask.y });
+			drawablePlane->texCoords.push_back({ 0, 0 });
+			drawablePlane->texCoords.push_back({ mask.x, mask.y });
+			drawablePlane->texCoords.push_back({ mask.x, 0 });
+
+			glBindBuffer(GL_ARRAY_BUFFER, drawablePlane->textureBufferId);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * drawablePlane->texCoords.size(), &drawablePlane->texCoords[0], GL_STATIC_DRAW);
+		}
 	}
 
 	return true;

@@ -114,12 +114,12 @@ float2 ComponentCanvas::GetNormalizedPosition(bool invertY)
 	return position;
 }
 
-float2 ComponentCanvas::LogicalToViewport(float2 vec)
+float2 ComponentCanvas::LogicalToViewport(float2 vec) // GOOD
 {
 	return { vec.x / logicalSize.x * owner->GetEngine()->GetEditor()->lastViewportSize.x, vec.y / logicalSize.y * owner->GetEngine()->GetEditor()->lastViewportSize.y };
 }
 
-float2 ComponentCanvas::ViewportToLogical(float2 vec)
+float2 ComponentCanvas::ViewportToLogical(float2 vec) // GOOD
 {
 	return { vec.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * logicalSize.x, vec.y / owner->GetEngine()->GetEditor()->lastViewportSize.y * logicalSize.y};
 }

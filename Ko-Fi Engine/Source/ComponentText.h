@@ -16,6 +16,7 @@
 
 class SDL_Texture;
 class SDL_Surface;
+class MyPlane;
 
 class ComponentText : public Component {
 public:
@@ -49,5 +50,7 @@ private:
 	std::string textValue = "HELLO WORLD!";
 
 	GLuint fboId = 0;
+
+	MyPlane* drawablePlane = nullptr;
 };
 
