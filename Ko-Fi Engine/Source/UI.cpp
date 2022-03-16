@@ -67,15 +67,15 @@ MyPlane::~MyPlane()
 {
 }
 
-void MyPlane::DrawPlane2D(Texture* texture)
+void MyPlane::DrawPlane2D(Texture* texture, SDL_Color color)
 {
 	if (texture->width != -1 && texture->height != -1)
-		DrawPlane2D(texture->GetTextureId());
+		DrawPlane2D(texture->GetTextureId(), color);
 	else
-		DrawPlane2D((unsigned int)0);
+		DrawPlane2D((unsigned int)0, color);
 }
 
-void MyPlane::DrawPlane2D(unsigned int texture) {
+void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 	if (texture == 0) return;
 	ComponentTransform2D* cTransform = owner->GetComponent<ComponentTransform2D>();
 
@@ -107,7 +107,7 @@ void MyPlane::DrawPlane2D(unsigned int texture) {
 
 	glPushMatrix();
 	glMultMatrixf(transform.Transposed().ptr());
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glColor3f(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
 	glPopMatrix();
 

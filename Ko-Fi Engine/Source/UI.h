@@ -20,8 +20,8 @@ class MyPlane
 public:
 	MyPlane(GameObject* owner);
 	~MyPlane();
-	void DrawPlane2D(Texture* texture);
-	void DrawPlane2D(unsigned int texture);
+	void DrawPlane2D(Texture* texture, SDL_Color color);
+	void DrawPlane2D(unsigned int texture, SDL_Color color);
 public:
 	unsigned int vertexBufferId = 0;
 	unsigned int textureBufferId = 0;

@@ -68,7 +68,7 @@ bool ComponentImage::Update(float dt)
 bool ComponentImage::PostUpdate(float dt)
 {
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	drawablePlane->DrawPlane2D(&openGLTexture);
+	drawablePlane->DrawPlane2D(&openGLTexture, { 255, 255, 255 });
 	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
