@@ -23,8 +23,8 @@ public:
 	void OnNotify(const Event& event);
 
 	void LookAt(const float3& Spot);
-	void CalculateViewMatrix();
-	void RecalculateProjection();
+	void CalculateViewMatrix(bool ortho = false);
+	void RecalculateProjection(bool ortho = false);
 	void OnGui() override;
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;

@@ -156,9 +156,6 @@ bool Renderer3D::PreUpdate(float dt)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
-
 	// light 0 on cam pos
 	lights[0].SetPos(engine->GetCamera3D()->position.x, engine->GetCamera3D()->position.y, engine->GetCamera3D()->position.z);
 

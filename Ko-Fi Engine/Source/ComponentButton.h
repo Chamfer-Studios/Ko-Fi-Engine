@@ -16,6 +16,7 @@
 
 class SDL_Texture;
 class SDL_Surface;
+class MyPlane;
 
 class ComponentButton : public Component {
 public:
@@ -56,4 +57,6 @@ private:
 	Texture pressedOpenGLTexture;
 
 	BUTTON_STATE state = BUTTON_STATE::IDLE;
+
+	MyPlane* drawablePlane = nullptr;
 };
