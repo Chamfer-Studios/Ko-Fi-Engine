@@ -224,9 +224,10 @@ bool ComponentMesh::PostUpdate(float dt) //AKA the real render
 		
 			DrawMouseSelection(); // Draw AABB if Selected with Mosue
 
+			owner->GetEngine()->GetRenderer()->RenderAllParticles();
+
 			glUseProgram(0);
 
-			owner->GetEngine()->GetRenderer()->RenderAllParticles();
 		}
 	}
 	return ret;

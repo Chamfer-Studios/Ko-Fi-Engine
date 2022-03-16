@@ -12,25 +12,15 @@
 
 ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 {
-	type = ComponentType::PARTICLE;
 
+	type = ComponentType::PARTICLE;
 	resource = new ParticleResource();
 	emitterInstances.clear();
 }
 
 ComponentParticle::~ComponentParticle()
-{}
-
-bool ComponentParticle::CleanUp()
 {
-	//DELETE TEXTURES
 
-	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
-	{
-		it = emitterInstances.erase(it);
-	}
-
-	return true;
 }
 
 bool ComponentParticle::Start()
@@ -39,7 +29,11 @@ bool ComponentParticle::Start()
 	{
 		Emitter* e = new Emitter();
 		resource->emitters.push_back(e);
+		EmitterInstance* eI = new EmitterInstance(e, this);
+		emitterInstances.push_back(eI);
+		eI->Init(e, this);
 	}
+
 	return true;
 }
 
@@ -53,12 +47,13 @@ bool ComponentParticle::Update(float dt)
 
 	for (auto it : emitterInstances)
 	{
-		it->Update(dt);
+		it->Update(dt); //kill inactive and update emitter instances
+
 		for (auto particle : it->particles)
 		{
-			owner->GetEngine()->GetRenderer()->AddParticle( nullptr, particle->CurrentColor,
-				float4x4::FromTRS(particle->position, particle->rotation, particle->scale), 
-				particle->distanceToCamera);
+			owner->GetEngine()->GetRenderer()->AddParticle( nullptr, particle.CurrentColor,
+				float4x4::FromTRS(particle.position, particle.rotation, particle.scale), 
+				particle.distanceToCamera);
 		}
 	}
 
@@ -70,6 +65,21 @@ bool ComponentParticle::PostUpdate(float dt)
 	return true;
 }
 
+bool ComponentParticle::CleanUp()
+{
+	//DELETE TEXTURES
+
+	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
+	{
+		it = emitterInstances.erase(it);
+	}
+
+	//TODO: refs -1
+	resource->CleanUp();
+	RELEASE(resource);
+
+	return true;
+}
 
 bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 {
@@ -390,7 +400,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-void ComponentParticle::InspectorDrawColor(std::string emitterName,FadeColor& color,int index)
+void ComponentParticle::InspectorDrawColor(std::string emitterName, FadeColor& color, int index)
 {
 	float c[4] = { color.color.r,color.color.g,color.color.b,color.color.a };
 	std::string colorName = emitterName + " - Color " + std::to_string(index + 1);
@@ -433,7 +443,7 @@ void ComponentParticle::ResumeParticleSpawn()
 	}
 }
 
-void ComponentParticle::NewEmitterName(std::string& name,int n)
+void ComponentParticle::NewEmitterName(std::string& name, int n)
 {
 	for (auto emitter : resource->emitters)
 	{

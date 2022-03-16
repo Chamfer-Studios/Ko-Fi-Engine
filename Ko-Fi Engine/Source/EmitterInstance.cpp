@@ -12,53 +12,38 @@ EmitterInstance::EmitterInstance(Emitter* e, ComponentParticle* cp) : emitter(e)
 EmitterInstance::~EmitterInstance()
 {}
 
+void EmitterInstance::Init(Emitter* e, ComponentParticle* cp)
+{
+	particles.resize(emitter->maxParticles);
+
+	particleIndices = new unsigned int[emitter->maxParticles];
+
+	for (uint i = 0; i < emitter->maxParticles; ++i)
+	{
+		particleIndices[i] = i;
+	}
+}
+
 bool EmitterInstance::Update(float dt)
 {
-	for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
-	{
-		if (!(*it)->active)
-		{
-			it = particles.erase(it);
-			--activeParticles;
-			if (it == particles.begin())
-			{
-				--it;
-			}
-			else if (it == particles.end())
-			{
-				break;
-			}
-		}
-	}
+	KillDeadParticles();
 
+	//update modules
 	for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
 	{
 		(*it)->Update(dt, this);
 	}
 
-	// TODO: DRAW HERE THE IMAGE
-	/*if (emitter->texture != nullptr)
-	{
-		for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
-		{
-			(*it)->Draw(emitter->texture->GetTextureId(), 0);
-		}
-	}
-	else
-	{
-		for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
-		{
-			(*it)->Draw(0, 0);
-		}
-	}*/
+	//add particle to render list
+	//it is done at the component particle
 	return true;
 }
 
 void EmitterInstance::DrawParticles()
 {
-	for (std::vector<Particle*>::iterator it = particles.begin(); it < particles.end(); ++it)
+	for (std::vector<Particle>::iterator it = particles.begin(); it < particles.end(); ++it)
 	{
-		(*it)->Draw(0, 0);
+		it->Draw(0, 0);
 	}
 }
 
@@ -68,12 +53,37 @@ void EmitterInstance::SpawnParticle()
 	{
 		return;
 	}
-	Particle* p = new Particle();
-	particles.push_back(p);
-	++activeParticles;
-	for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
+
+	unsigned int particleIndex = particleIndices[activeParticles];
+	Particle* particle = &particles[particleIndex];
+
+	for (unsigned int i = 0; i < emitter->modules.size(); i++)
 	{
-		(*it)->Spawn(p, this);
+		emitter->modules[i]->Spawn(particle, this);
+	}
+
+	++activeParticles;
+}
+
+void EmitterInstance::KillDeadParticles()
+{
+	//loop through every active particles to see if they are still active. In case one is inactive,
+	//swap the new dead particle with the last particle alive and subtract 1 to activeParticles.
+	for (int i = (activeParticles - 1); i >= 0; --i)
+	{
+		unsigned int particleIndex = particleIndices[i];
+		Particle* particle = &particles[particleIndex];
+
+		if (particle->lifeTime >= particle->maxLifetime)
+		{
+			if (i != (activeParticles - 1)) //if the last active particle is not active, skip the unnecesary changes
+			{
+				particleIndices[i] = particleIndices[activeParticles - 1];
+				particleIndices[activeParticles - 1] = particleIndex;
+			}
+
+			--activeParticles;
+		}
 	}
 }
 
@@ -81,7 +91,7 @@ void EmitterInstance::KillParticles()
 {
 	for (auto it : particles)
 	{
-		it->active = false;
+		it.active = false;
 	}
 }
 

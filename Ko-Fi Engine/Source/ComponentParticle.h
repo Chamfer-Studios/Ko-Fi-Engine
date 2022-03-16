@@ -15,7 +15,6 @@ public:
 	ComponentParticle(GameObject* parent);
 	~ComponentParticle();
 
-
 	bool Start() override;
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
@@ -38,6 +37,7 @@ public:
 	ParticleResource* resource = nullptr;
 	int moduleToAdd = 0;
 	int currentTextureId = 0;
+	
 };
 
 #endif // __COMPONENT_PARTICLE_H__

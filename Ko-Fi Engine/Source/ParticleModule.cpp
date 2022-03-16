@@ -52,9 +52,9 @@ bool EmitterDefault::Update(float dt, EmitterInstance* emitter)
 		emitter->SpawnParticle();
 		timer = 0;
 	}
-	for (std::vector<Particle*>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
+	for (std::vector<Particle>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
 	{
-		(*it)->lifeTime += dt;
+		(it)->lifeTime += dt;
 	}
 }
 
@@ -78,10 +78,10 @@ bool EmitterMovement::Update(float dt, EmitterInstance* emitter)
 	{
 		return true;
 	}
-	for (std::vector<Particle*>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
+	for (std::vector<Particle>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
 	{
-		(*it)->velocity += (*it)->acceleration;
-		(*it)->position += (*it)->velocity * dt;
+		it->velocity += it->acceleration;
+		it->position += it->velocity * dt;
 	}
 }
 
@@ -102,9 +102,9 @@ bool EmitterColor::Update(float dt, EmitterInstance* emitter)
 	{
 		return true;
 	}
-	for (std::vector<Particle*>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
+	for (std::vector<Particle>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
 	{
-		(*it)->CurrentColor = ColorLerp(GetPercentage((*it)));
+		(it)->CurrentColor = ColorLerp(GetPercentage(&(*it)));
 	}
 }
 
@@ -174,9 +174,9 @@ bool EmitterSize::Update(float dt, EmitterInstance* emitter)
 	{
 		return true;
 	}
-	for (std::vector<Particle*>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
+	for (std::vector<Particle>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
 	{
-		float p = GetPercentage((*it));
-		(*it)->scale = (*it)->scale.Lerp(initialSize, finalSize, p);
+		float p = GetPercentage(&(*it));
+		it->scale = it->scale.Lerp(initialSize, finalSize, p);
 	}
 }
