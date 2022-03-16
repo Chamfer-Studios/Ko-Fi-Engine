@@ -12,7 +12,6 @@
 
 ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 {
-
 	type = ComponentType::PARTICLE;
 	resource = new ParticleResource();
 	emitterInstances.clear();
@@ -31,7 +30,7 @@ bool ComponentParticle::Start()
 		resource->emitters.push_back(e);
 		EmitterInstance* eI = new EmitterInstance(e, this);
 		emitterInstances.push_back(eI);
-		eI->Init(e, this);
+		eI->Init();
 	}
 
 	return true;
@@ -93,13 +92,21 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 
 			ImGui::SameLine();
 
-			if (ImGui::Button("Add Emitter"))
+			//Combo to select either an existing resource or create a new one
+
+			if (ImGui::Button("Add Emitter")) 
 			{
 				std::string name = "Emitter";
 				NewEmitterName(name);
 				Emitter* e = new Emitter(name.c_str());
 				resource->emitters.push_back(e);
+				EmitterInstance* ei = new EmitterInstance(e, this);
+				ei->Init();
+				emitterInstances.push_back(ei);
 			}
+
+			ImGui::Text("Emitter Instances: %d", emitterInstances.size());
+
 			if(resource->emitters.size() > 0)
 				ImGui::Separator();
 
@@ -380,6 +387,14 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					{
 						if ((*it) == emitter)
 						{
+							for (std::vector<EmitterInstance*>::iterator yt = emitterInstances.begin(); yt < emitterInstances.end(); ++yt)
+							{
+								if ((*yt)->emitter == emitter)
+								{
+									emitterInstances.erase(yt);
+								}
+									
+							}
 							resource->emitters.erase(it);
 							break;
 						}
@@ -537,7 +552,11 @@ void ComponentParticle::Load(Json& json)
 		resource->emitters.clear();
 		for (const auto& emitter : json.at("emitters").items())
 		{
+			emitterInstances.clear();
 			Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
+			EmitterInstance* ei = new EmitterInstance(e, this);
+			emitterInstances.push_back(ei);
+			ei->Init();
 			e->maxParticles = emitter.value().at("maxParticles");
 			e->texture = Texture();
 			e->texture.path = emitter.value().at("texture_path");

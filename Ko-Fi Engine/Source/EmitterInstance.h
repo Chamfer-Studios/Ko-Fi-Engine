@@ -17,7 +17,7 @@ public:
 	EmitterInstance(Emitter* e, ComponentParticle* cp);
 	~EmitterInstance();
 	
-	void Init(Emitter* e, ComponentParticle* cp);
+	void Init();
 	bool Update(float dt);
 
 	void DrawParticles();

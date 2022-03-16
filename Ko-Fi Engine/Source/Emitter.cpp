@@ -8,6 +8,9 @@ Emitter::Emitter(const char* newName)
 	//path = "Assets\Textures\firework_projectile.png";
 	//Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
 	modules.push_back(CreateModule<EmitterDefault>());
+	modules.push_back(CreateModule<EmitterMovement>());
+	modules.push_back(CreateModule<EmitterSize>());
+
 }
 
 Emitter::~Emitter()
@@ -75,4 +78,6 @@ void Emitter::AddModuleByType(ParticleModuleType type)
 		break;
 	}
 	}
+
+	//emitterinstances refresh 
 }

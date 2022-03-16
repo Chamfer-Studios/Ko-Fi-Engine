@@ -264,6 +264,8 @@ void Renderer3D::RenderAllParticles()
 	{
 		RenderParticle(&particle.second);
 	}
+
+	particles.clear();
 }
 
 ParticleRenderer::ParticleRenderer(Texture* tex, Color color, const float4x4 transform):

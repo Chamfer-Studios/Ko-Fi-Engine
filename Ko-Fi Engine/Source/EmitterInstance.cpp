@@ -12,7 +12,7 @@ EmitterInstance::EmitterInstance(Emitter* e, ComponentParticle* cp) : emitter(e)
 EmitterInstance::~EmitterInstance()
 {}
 
-void EmitterInstance::Init(Emitter* e, ComponentParticle* cp)
+void EmitterInstance::Init()
 {
 	particles.resize(emitter->maxParticles);
 

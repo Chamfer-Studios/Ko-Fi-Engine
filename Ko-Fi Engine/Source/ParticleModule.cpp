@@ -2,6 +2,7 @@
 #include <vector>
 #include "MathGeoLib/Algorithm/Random/LCG.h"
 #include "MathGeoLib/Math/MathFunc.h"
+#include "Camera3D.h"
 
 ParticleModule::ParticleModule()
 {
@@ -36,6 +37,10 @@ EmitterDefault::EmitterDefault()
 
 void EmitterDefault::Spawn(Particle* particle, EmitterInstance* emitter)
 {
+	GameObject* go = emitter->component->owner;
+
+	particle->position = go->GetTransform()->GetGlobalTransform().TranslatePart();
+
 	particle->maxLifetime = initialLifetime;
 	particle->lifeTime = 0.0f;
 }
@@ -52,9 +57,14 @@ bool EmitterDefault::Update(float dt, EmitterInstance* emitter)
 		emitter->SpawnParticle();
 		timer = 0;
 	}
-	for (std::vector<Particle>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
+	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
-		(it)->lifeTime += dt;
+		unsigned int particleIndex = emitter->particleIndices[i];
+		Particle* particle = &emitter->particles[particleIndex];
+
+		emitter->particles[i].lifeTime += dt;
+		particle->distanceToCamera = float3(emitter->component->owner->GetEngine()->GetCamera3D()->
+			cameraFrustum.WorldMatrix().TranslatePart() - particle->position).LengthSq();
 	}
 }
 
@@ -78,10 +88,13 @@ bool EmitterMovement::Update(float dt, EmitterInstance* emitter)
 	{
 		return true;
 	}
-	for (std::vector<Particle>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
+	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
-		it->velocity += it->acceleration;
-		it->position += it->velocity * dt;
+		unsigned int particleIndex = emitter->particleIndices[i];
+		Particle* particle = &emitter->particles[particleIndex];
+
+		particle->velocity += particle->acceleration;
+		particle->position += particle->velocity * dt;
 	}
 }
 
@@ -102,9 +115,12 @@ bool EmitterColor::Update(float dt, EmitterInstance* emitter)
 	{
 		return true;
 	}
-	for (std::vector<Particle>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
+	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
-		(it)->CurrentColor = ColorLerp(GetPercentage(&(*it)));
+		unsigned int particleIndex = emitter->particleIndices[i];
+		Particle* particle = &emitter->particles[particleIndex];
+
+		particle->CurrentColor = ColorLerp(GetPercentage(&emitter->particles[i]));
 	}
 }
 
@@ -174,9 +190,12 @@ bool EmitterSize::Update(float dt, EmitterInstance* emitter)
 	{
 		return true;
 	}
-	for (std::vector<Particle>::iterator it = emitter->particles.begin(); it < emitter->particles.end(); ++it)
+	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
-		float p = GetPercentage(&(*it));
-		it->scale = it->scale.Lerp(initialSize, finalSize, p);
+		unsigned int particleIndex = emitter->particleIndices[i];
+		Particle* particle = &emitter->particles[particleIndex];
+
+		float p = GetPercentage(particle);
+		particle->scale = particle->scale.Lerp(initialSize, finalSize, p);
 	}
 }
