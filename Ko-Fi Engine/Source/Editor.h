@@ -59,7 +59,7 @@ public:
 	void Markdown(const std::string& markdown_);
 	void MarkdownExample();
 	void UpdatePanelsState();
-	void OpenTextEditor(std::string path);
+	void OpenTextEditor(std::string path,const char* ext = nullptr);
 
 	template<class T> T* GetPanel()
 	{

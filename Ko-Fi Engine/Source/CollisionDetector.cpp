@@ -77,6 +77,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 {
 	std::vector<GameObject*> fullGOList = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
+	if (currentEntity->GetComponent<ComponentMesh>() == nullptr) return;
 	currentEntity->GetComponent<ComponentMesh>()->GenerateGlobalBoundingBox();
 	math::AABB currentEntityAABB = currentEntity->GetComponent<ComponentMesh>()->GetGlobalAABB();
 	ColliderType currentType = currentEntity->GetComponent<ComponentCollider>()->GetColliderType();

@@ -23,8 +23,8 @@ public:
 	void OnNotify(const Event& event);
 
 	void LookAt(const float3& Spot);
-	void CalculateViewMatrix();
-	void RecalculateProjection();
+	void CalculateViewMatrix(bool ortho = false);
+	void RecalculateProjection(bool ortho = false);
 	void OnGui() override;
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;
@@ -38,8 +38,8 @@ public:
 	float verticalFOV = 60.f;
 	float nearPlaneDistance = 0.1f;
 	float farPlaneDistance = 5000.f;
-	float cameraSensitivity = .1f;
-	float cameraSpeed = 30.f;
+	float cameraSensitivity = .2f;
+	float cameraSpeed = 40.f;
 	bool projectionIsDirty = false;
 
 private:

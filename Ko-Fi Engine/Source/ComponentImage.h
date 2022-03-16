@@ -17,6 +17,7 @@
 
 class SDL_Texture;
 class SDL_Surface;
+class MyPlane;
 
 class ComponentImage : public Component {
 public:
@@ -46,6 +47,7 @@ private:
 
 	float2 mask = { 1.0f, 1.0f };
 	GLuint fboId = 0;
+	MyPlane* drawablePlane = nullptr;
 };
 
 #endif

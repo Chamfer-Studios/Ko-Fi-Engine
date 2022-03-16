@@ -6,13 +6,32 @@
 #include "GameObject.h"
 #include "SDL_ttf.h"
 
-
 #include "glew.h"
 #include <vector>
+#include "MathGeoLib/Geometry/Frustum.h"
 
 #include "SDL.h"
 
 class ComponentCamera;
+class Texture;
+
+class MyPlane
+{
+public:
+	MyPlane(GameObject* owner);
+	~MyPlane();
+	void DrawPlane2D(Texture* texture, SDL_Color color);
+	void DrawPlane2D(unsigned int texture, SDL_Color color);
+public:
+	unsigned int vertexBufferId = 0;
+	unsigned int textureBufferId = 0;
+	unsigned int indexBufferId = 0;
+	GameObject* owner;
+public:
+	std::vector<unsigned int> indices;
+	std::vector<float2> texCoords;
+	std::vector<float3> vertices;
+};
 
 class UI : public Module
 {
@@ -27,6 +46,9 @@ public:
 	bool CleanUp() override;
 	void OnNotify(const Event& event) override;
 
+	void PrepareUIRender();
+	void EndUIRender();
+
 	float2 GetUINormalizedMousePosition();
 
 	SDL_Renderer* renderer = nullptr;
@@ -36,10 +58,12 @@ public:
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
 public:
-	GLint uiCameraViewport[4] = { 0, 0, 0, 0 };
 	TTF_Font* rubik = nullptr;
 private:
 	KoFiEngine* engine = nullptr;
 
-
+	float3 right;
+	float3 up;
+	float3 front;
+	float3 position;
 };
