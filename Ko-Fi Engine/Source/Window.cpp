@@ -27,6 +27,9 @@ bool Window::Awake(Json configModule)
 	appLog->AddLog("Init SDL window & surface\n");
 	bool ret = true;
 
+	// TODO: Load all config data with this function
+	LoadConfiguration(configModule);
+
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		CONSOLE_LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -68,6 +71,7 @@ bool Window::Awake(Json configModule)
 
 			//Set window rezisable
 			SetResizable(true);
+			SetTitle(engine->GetTitle());
 			std::string iconFile = configModule.at("Icon");
 			if (iconFile.size() > 1)
 				SetIcon(iconFile.c_str());
@@ -142,6 +146,25 @@ bool Window::CleanUp()
 	return true;
 }
 
+bool Window::SaveConfiguration(Json& configModule) const
+{
+	configModule["Width"] = GetWidth();
+	configModule["Height"] = GetHeight();
+	configModule["Scale"] = GetScale();
+	configModule["Fullscreen"] = GetFullscreen();
+	configModule["FullscreenDesktop"] = GetFullscreenDesktop();
+	configModule["Resizable"] = GetResizable();
+	configModule["Borderless"] = GetBorderless();
+	configModule["Title"] = GetTitle();
+	configModule["Icon"] = GetIcon();
+	return true;
+}
+
+bool Window::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
 // Method to receive and manage events
 void Window::OnNotify(const Event& event)
 {
@@ -153,6 +176,7 @@ void Window::SetTitle(const char* new_title)
 {
 	//title.create(new_title);
 	SDL_SetWindowTitle(window, new_title);
+	title = new_title;
 }
 
 void Window::AdjustBrightness(float brightness)
@@ -220,6 +244,11 @@ uint Window::GetRefreshRate() const
 const char* Window::GetIcon() const
 {
 	return iconFile.c_str();
+}
+
+const char* Window::GetTitle() const
+{
+	return SDL_GetWindowTitle(this->window);
 }
 
 void Window::SetFullscreen(bool fullscreen)

@@ -79,6 +79,18 @@ bool Physics::CleanUp()
 	return true;
 }
 
+bool Physics::SaveConfiguration(Json& configModule) const
+{
+	configModule["Gravity"] =  gravity;
+	return true;
+}
+
+bool Physics::LoadConfiguration(Json& configModule)
+{
+	gravity = configModule["Gravity"];
+	return true;
+}
+
 void Physics::OnNotify(const Event& event)
 {
 }

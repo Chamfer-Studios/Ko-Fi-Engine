@@ -204,10 +204,7 @@ void GameObject::AttachChild(GameObject* child)
 
 	child->parent = this;
 	children.push_back(child);
-	if (child->transform != nullptr) {
-		child->transform->NewAttachment();
-		child->PropagateTransform();
-	}
+
 }
 
 void GameObject::RemoveChild(GameObject* child)

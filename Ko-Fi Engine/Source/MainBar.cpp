@@ -49,13 +49,17 @@ bool MainBar::Update()
 			{
 				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx");
 			}
-			if (ImGui::MenuItem("Save Scene"))
+			if (ImGui::MenuItem("Save Scene As"))
 			{
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene());
+				openSaveAsPopup = true;
 			}
 			if (ImGui::MenuItem("Load Scene"))
 			{
 				editor->GetPanelChooser()->OpenPanel("LoadScene", "json");
+			}
+			if (ImGui::MenuItem("Settings"))
+			{
+				editor->toggleSettingsPanel = true;
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
@@ -146,6 +150,7 @@ bool MainBar::Update()
 			}
 			ImGui::EndMenu();
 		}
+		
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("About"))
@@ -157,6 +162,20 @@ bool MainBar::Update()
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
+		if (openSaveAsPopup)
+		{
+			ImGui::OpenPopup("SaveSceneAsPopup");
+		}
+		if (ImGui::BeginPopupModal("SaveSceneAsPopup",&openSaveAsPopup))
+		{
+
+			ImGui::InputText("Scene name", saveAsSceneName,150);
+			if (ImGui::Button("Save##") && saveAsSceneName != nullptr && saveAsSceneName != "") {
+				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName);
+				openSaveAsPopup = false;
+			}
+			ImGui::EndPopup();
+		}
 	}
 
 	return ret;

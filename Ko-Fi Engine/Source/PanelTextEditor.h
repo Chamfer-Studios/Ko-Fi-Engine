@@ -17,7 +17,7 @@ public:
 	bool Update();
 	bool PostUpdate();
 	void RenderWindow(bool* toggleEditText);
-	void LoadFile(std::string path = "");
+	void LoadFile(std::string path = "",std::string ext = nullptr);
 	void SaveFile(std::string path);
 	void Focus();
 private:
