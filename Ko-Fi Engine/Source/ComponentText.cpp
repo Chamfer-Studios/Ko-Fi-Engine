@@ -54,6 +54,15 @@ bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::InputText("Value", &(textValue))) {
 			SetTextValue(textValue);
 		}
+
+		if (openGLTexture == 0) // Supposedly there is no textureId = 0 in textures array
+		{
+			ImGui::Text("None");
+		}
+		else
+		{
+			ImGui::Image((ImTextureID)openGLTexture, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
+		}
 	}
 
 	return true;
@@ -74,9 +83,9 @@ void ComponentText::SetTextValue(std::string newValue)
 	if (srcSurface == nullptr)
 		appLog->AddLog("%s\n", SDL_GetError());
 
-	//SDL_Surface* dstSurface = SDL_CreateRGBSurface(0, (srcSurface != nullptr ? srcSurface->w : 100), (srcSurface != nullptr ? srcSurface->h : 100), 32, 0xff, 0xff00, 0xff0000, 0xff000000);
+	SDL_Surface* dstSurface = SDL_CreateRGBSurface(0, (srcSurface != nullptr ? srcSurface->w : 100), (srcSurface != nullptr ? srcSurface->h : 100), 32, 0xff, 0xff00, 0xff0000, 0xff000000);
 
-	/*if (srcSurface != nullptr) {
+	if (srcSurface != nullptr) {
 		SDL_BlitSurface(srcSurface, NULL, dstSurface, NULL);
 	}
 	else {
@@ -85,13 +94,10 @@ void ComponentText::SetTextValue(std::string newValue)
 		SDL_FillRect(dstSurface, &rect, black);
 	}
 
-	texW = dstSurface->w;
-	texH = dstSurface->h;*/
-
-	openGLTexture = SurfaceToOpenGLTexture(srcSurface);
+	openGLTexture = SurfaceToOpenGLTexture(dstSurface);
 
 	SDL_FreeSurface(srcSurface);
-	//SDL_FreeSurface(dstSurface);
+	SDL_FreeSurface(dstSurface);
 }
 
 GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)
@@ -120,7 +126,7 @@ GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)
 
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
