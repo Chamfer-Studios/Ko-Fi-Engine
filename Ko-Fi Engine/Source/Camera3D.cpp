@@ -380,7 +380,7 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 
 					for (GameObject* go : sceneGameObjects)
 					{
-						if (gameObject != go)
+						if (gameObject != go && engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == go->GetUID())
 						{
 							ComponentScript* script = go->GetComponent<ComponentScript>();
 							if (script != nullptr)

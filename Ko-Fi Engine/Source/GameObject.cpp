@@ -317,3 +317,8 @@ AABB GameObject::BoundingAABB()
 {
 	return GetComponent<ComponentMesh>()->GetGlobalAABB();
 }
+
+bool GameObject::IsSelected()
+{
+	return engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == uid;
+}

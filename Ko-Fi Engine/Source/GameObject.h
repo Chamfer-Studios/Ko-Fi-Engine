@@ -80,6 +80,7 @@ public:
 	KoFiEngine* GetEngine() const;
 	void SetEngine(KoFiEngine* engine);
 
+	bool IsSelected();
 
 public:
 	std::string name;
