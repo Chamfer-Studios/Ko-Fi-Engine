@@ -15,6 +15,7 @@
 #include "ComponentImage.h"
 #include "ComponentButton.h"
 #include "ComponentText.h"
+#include "ComponentCamera.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -85,6 +86,10 @@ bool MainBar::Update()
 			{
 				//GameObject* camera = Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
 				//camera->CreateComponent<ComponentCamera>();
+
+				GameObject* camera = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("camera");
+				camera->CreateComponent<ComponentCamera>();
+
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{

@@ -10,13 +10,16 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
+#include "Camera3D.h"
+
 #include "glew.h"
 #include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
+ComponentCamera::ComponentCamera(GameObject* parent, bool engineCamera) : Component(parent)
 {
+	this->engineCamera = engineCamera;
 	type = ComponentType::CAMERA;
 
 	right = float3(1.0f, 0.0f, 0.0f);
@@ -26,7 +29,8 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	position = float3(0.0f, 5.0f, -15.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
-	componentTransform = owner->GetTransform();
+	if(!engineCamera)
+		componentTransform = owner->GetTransform();
 
 	CalculateViewMatrix();
 }
@@ -58,19 +62,22 @@ bool ComponentCamera::CleanUp()
 bool ComponentCamera::Update(float dt)
 {
 	// Add update functionality when we are able to change the main camera.
+	if (!engineCamera)
+	{
+		position = componentTransform->GetPosition();
 
-	position = componentTransform->GetPosition();
+		up = componentTransform->Up();
+		front = componentTransform->Front();
+		//right = componentTransform->Right();
 
-	up = componentTransform->Up();
-	front = componentTransform->Front();
-	//right = componentTransform->Right();
-
-	CalculateViewMatrix();
+		CalculateViewMatrix();
 	
-	if (drawFrustum)
-		DrawFrustum();
-	if (frustumCulling)
-		FrustumCulling();
+		if (drawFrustum)
+			DrawFrustum();
+		if (frustumCulling)
+			FrustumCulling();
+
+	}
 
 	return true;
 }
@@ -133,9 +140,18 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 		{
 			ResetFrustumCulling();
 		}
+		if (ImGui::Checkbox("Set As Main Camera", &mainCamera))
+		{
+			owner->GetEngine()->GetCamera3D()->camera = this;
+		}
 	}
 
 	return ret;
+}
+
+void ComponentCamera::SetAsMainCamera()
+{
+
 }
 
 void ComponentCamera::Save(Json& json) const

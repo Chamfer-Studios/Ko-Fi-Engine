@@ -147,13 +147,13 @@ bool ComponentMesh::PostUpdate(float dt)
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
-			glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
 			GLint view_location = glGetUniformLocation(shader, "view");
-			glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->camera->viewMatrix.Transposed().ptr());
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->camera->viewMatrix.Transposed().ptr());
 
 			float2 resolution = float2(1080.0f, 720.0f);
 			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());

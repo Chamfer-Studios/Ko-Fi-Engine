@@ -15,7 +15,7 @@ using Json = nlohmann::json;
 class ComponentCamera : public Component
 {
 public:
-	ComponentCamera(GameObject* gameObject);
+	ComponentCamera(GameObject* gameObject, bool engineCamera = false);
 	~ComponentCamera();
 
 	bool Start() override;
@@ -26,6 +26,7 @@ public:
 	void CalculateViewMatrix();
 	void RecalculateProjection();
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
+	void SetAsMainCamera();
 	// At the moment, all components are serialized (saved and loaded) in the same place (SceneManager),
 	// but we will consider to have functions in each of them in the future for better code organization.
 	//void OnSave(JSONWriter& writer) const override;
@@ -38,23 +39,26 @@ public:
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
-	float3 right, up, front, position, reference, rotation;
+	float3 right, up, front, position, reference;
 	Frustum cameraFrustum;
 	float4x4 viewMatrix;
 	float aspectRatio = 1.f;
 	float verticalFOV = 60.f;
 	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 100.f;
-	float cameraSensitivity = .5f;
-	float cameraSpeed = 60.f;
-	bool projectionIsDirty = true;
+	float farPlaneDistance = 5000.f;
+	float cameraSensitivity = .1f;
+	float cameraSpeed = 30.f;
+	bool projectionIsDirty = false;
 
 	// Debug bools
 	bool drawFrustum = true;
 	bool frustumCulling = false;
 
-private:
+	bool mainCamera = false;
+	bool engineCamera = false;
+
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
+private:
 
 	ComponentTransform* componentTransform = nullptr;
 };
