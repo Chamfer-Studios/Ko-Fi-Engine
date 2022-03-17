@@ -47,12 +47,15 @@ bool ComponentParticle::Update(float dt)
 	for (auto it : emitterInstances)
 	{
 		it->Update(dt); //kill inactive and update emitter instances
-
-		for (auto particle : it->particles)
+		
+		for (unsigned int i = 0; i < it->activeParticles; i++)
 		{
-			owner->GetEngine()->GetRenderer()->AddParticle( nullptr, particle.CurrentColor,
-				float4x4::FromTRS(particle.position, particle.rotation, particle.scale), 
-				particle.distanceToCamera);
+			unsigned int particleIndex = it->particleIndices[i];
+			Particle* particle = &it->particles[particleIndex];
+		
+			owner->GetEngine()->GetRenderer()->AddParticle( nullptr, particle->CurrentColor,
+				float4x4::FromTRS(particle->position, particle->rotation, particle->scale), 
+				particle->distanceToCamera);
 		}
 	}
 

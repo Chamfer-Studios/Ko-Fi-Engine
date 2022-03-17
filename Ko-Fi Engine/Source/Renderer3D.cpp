@@ -158,6 +158,7 @@ bool Renderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
+
 	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
 
 	// light 0 on cam pos
@@ -337,9 +338,17 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 
 	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);
 
+	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-	glMultMatrixf(particle->transform.ptr());
 
+	glLoadIdentity();
+
+	//glMultMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());	// proj
+															// *
+	glMultMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());	// view
+															// *
+	glMultMatrixf(particle->transform.Transposed().ptr());	// model
+	
 	//Drawing to tris in direct mode
 	glBegin(GL_TRIANGLES);
 
@@ -358,9 +367,9 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glVertex3f(-.5f, .5f, .0f);
 
 	glEnd();
-	glPopMatrix();
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	glPopMatrix();
 	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//glBindBuffer(GL_NORMAL_ARRAY, 0);
 	//glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
