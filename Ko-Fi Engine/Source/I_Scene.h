@@ -23,7 +23,7 @@ public:
 	bool Save(Scene* scene);
 	bool Load(Scene* scene, const char* name);
 
-	GameObject* ImportModel(const char* path);
+	GameObject* ImportModel(const char* name, const char* path);
 
 private:
 	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent);

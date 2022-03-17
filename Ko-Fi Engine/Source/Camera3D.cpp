@@ -51,75 +51,34 @@ bool Camera3D::Start()
 // -----------------------------------------------------------------
 bool Camera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movement frame rate independant!
-
-	float3 newPos(0, 0, 0);
-	float speed = cameraSpeed * dt;
 	bool isWindowFocused = engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused();
 	if (!isWindowFocused) return true;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
+	CheckKeyInputs(dt);
+	CheckMouseMotion();
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
+	CalculateViewMatrix();
 
-	// Focus --> NEEDS TO BE FIXED... SOME (MESH) FUNCTIONS DEPEND ON A PRIMITIVE LIBRARY WE STILL DON'T HAVE IMPLEMENTED.
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN )
-	{
-		// TO DO: Manage current object selection by the game object itself! Not by its index...
-		if (/*engine->GetEditor()->gameobjectSelected != nullptr <-- Should be this way*/
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
-		{
-			// If we change the previous TO DO, this will be no longer needed...
-			GameObject* gameObjectSelected =
-				engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+	return true;
+}
 
-			if (ComponentMesh* mesh = /*App->editor->gameobjectSelected->GetComponent<ComponentMesh>()*/
-				gameObjectSelected->GetComponent<ComponentMesh>())
-			{
-				const float3 meshCenter = mesh->GetCenterPointInWorldCoords(); // FIX THIS FUNCTION
-				LookAt(meshCenter);
-				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
-				const float currentDistance = meshCenter.Distance(position);
-				const float desiredDistance = (meshRadius * 2) / atan(cameraFrustum.horizontalFov);
-				position = position + front * (currentDistance - desiredDistance);
-			}
-			else
-			{
-				ComponentTransform* transform = gameObjectSelected->GetTransform();
-				if (transform != nullptr)
-					LookAt(gameObjectSelected->GetTransform()->GetPosition());
-			}
-		}
-	}
+// -----------------------------------------------------------------
+bool Camera3D::CleanUp()
+{
+	CONSOLE_LOG("Cleaning camera");
+	appLog->AddLog("Cleaning camera\n");
 
-	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
-	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
-	{
-		ComponentTransform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform();
-		if (transform != nullptr) {
-			spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().x;
-			spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
-			spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
-		}
-	}
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN )
-	{
-		LookAt(float3(5, 5, 5));
-	}
+	return true;
+}
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += front * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= front * speed;
+// Method to receive and manage events
+void Camera3D::OnNotify(const Event& event)
+{
+	// Manage events
+}
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += right * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
-
-	if (engine->GetInput()->GetMouseZ() > 0 ) newPos += front * speed * 2;
-	if (engine->GetInput()->GetMouseZ() < 0 ) newPos -= front * speed * 2;
-
-	position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
-
+void Camera3D::CheckMouseMotion()
+{
 	// Mouse motion ----------------
 
 	bool hasRotated = false;
@@ -188,25 +147,28 @@ bool Camera3D::Update(float dt)
 	}
 
 	!hasRotated ? lastDeltaX = lastDeltaY = 0.f : 0.f;
-
-	CalculateViewMatrix();
-
-	return true;
 }
 
-// -----------------------------------------------------------------
-bool Camera3D::CleanUp()
+void Camera3D::CheckKeyInputs(float dt)
 {
-	CONSOLE_LOG("Cleaning camera");
-	appLog->AddLog("Cleaning camera\n");
+	float3 newPos(0, 0, 0);
+	float speed = cameraSpeed * dt;
 
-	return true;
-}
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
 
-// Method to receive and manage events
-void Camera3D::OnNotify(const Event& event)
-{
-	// Manage events
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += front * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= front * speed;
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += right * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
+
+	if (engine->GetInput()->GetMouseZ() > 0) newPos += front * speed * 2;
+	if (engine->GetInput()->GetMouseZ() < 0) newPos -= front * speed * 2;
+
+	position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
 }
 
 // -----------------------------------------------------------------

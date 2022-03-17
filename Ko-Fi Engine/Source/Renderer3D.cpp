@@ -249,3 +249,17 @@ LineSegment Renderer3D::GetRay()
 {
 	return ray;
 }
+
+void Renderer3D::SetActiveCamera(ComponentCamera* camera)
+{
+	
+}
+
+void Renderer3D::SetCullingCamera(ComponentCamera* camera)
+{
+}
+
+ComponentCamera* Renderer3D::GetActiveCamera()
+{
+	return camera;
+}

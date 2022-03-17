@@ -95,6 +95,15 @@ void ComponentTransform::SetRotation(const float3& newRotation)
 	isDirty = true;
 }
 
+//void ComponentTransform::SetRotation(const float3x3& newRotation)
+//{
+//	Quat rotationDelta = Quat::FromEulerXYZ(newRotation. - rotationEuler.x, newRotation.y - rotationEuler.y, newRotation.z - rotationEuler.z);
+//	rotation = rotation * rotationDelta;
+//	rotationEuler = newRotation;
+//	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
+//	isDirty = true;
+//}
+
 void ComponentTransform::SetRotationQuat(const Quat& newRotation)
 {
 	this->rotation = newRotation;
@@ -144,6 +153,12 @@ float4x4 ComponentTransform::GetGlobalTransform()
 void ComponentTransform::SetGlobalTransform(const float4x4& globalTransform)
 {
 	transformMatrix = globalTransform;
+	//RecomputeGlobalMatrix();
+	//transformMatrix = globalTransform;
+	//SetPosition(globalTransform.TranslatePart());
+	//float3 newRotationEuler = float3()
+	//SetRotation(globalTransform.RotatePart().ToEulerXYZ());
+	//SetScale(globalTransform.Col3(2).Normalized());
 }
 
 bool ComponentTransform::GetDirty() const
