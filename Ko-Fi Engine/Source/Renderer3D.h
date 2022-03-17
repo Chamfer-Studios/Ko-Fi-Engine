@@ -38,7 +38,7 @@ public:
 	
 	//Render Functions
 	void RenderScene();
-	void RenderMeshes();
+	void RenderMeshes(GameObject* go);
 
 	void OnNotify(const Event& event);
 
@@ -66,6 +66,8 @@ private:
 
 	// Debug ray for mouse picking
 	LineSegment ray;
+	float timeWaterShader = 0;
+
 };
 
 #endif // !__RENDERER_3D_H__

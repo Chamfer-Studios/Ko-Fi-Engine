@@ -11,8 +11,17 @@
 #include "Window.h"
 #include "Engine.h"
 #include "Camera3D.h"
+#include "SceneManager.h"
+#include "ViewportFrameBuffer.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
+
+#include "GameObject.h"
+#include "ComponentTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
+#include "Material.h"
+
 
 #include "UI.h"
 
@@ -75,9 +84,7 @@ bool Renderer3D::PreUpdate(float dt)
 bool Renderer3D::PostUpdate(float dt)
 {
 	RenderScene();
-	SDL_GL_SwapWindow(engine->GetWindow()->window);
-	SDL_SetRenderDrawColor(engine->GetUI()->renderer, 0, 0, 0, 0);
-	//SDL_RenderPresent(engine->GetUI()->renderer);
+	glBindRenderbuffer(GL_RENDERBUFFER, engine->GetViewportFrameBuffer()->renderBufferoutput);
 	return true;
 }
 
@@ -212,11 +219,106 @@ void Renderer3D::RecalculateProjectionMatrix()
 
 void Renderer3D::RenderScene()
 {
-	RenderMeshes();
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+		if (cMesh)
+		{
+			RenderMeshes(go);
+		}
+	}
 }
 
-void Renderer3D::RenderMeshes()
+void Renderer3D::RenderMeshes(GameObject* go)
 {
+	//Get needed variables
+	ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
+	ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+	Mesh* mesh = cMesh->GetMesh();
+	//Check textures
+	if (cMat && mesh)
+	{
+		if (!cMat->active)
+		{
+			glDisable(GL_TEXTURE_2D);
+		}
+		else
+		{
+			glBindTexture(GL_TEXTURE_2D, cMat->texture.GetTextureId());
+		}
+	}
+	//Set Shaders
+	if (cMesh->GetRenderMesh())
+	{
+		uint shader = cMat->GetMaterial()->shaderProgramID;
+		if (shader != 0)
+		{
+			glUseProgram(shader);
+			// Passing Shader Uniforms
+			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+			GLint view_location = glGetUniformLocation(shader, "view");
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->viewMatrix.Transposed().ptr());
+
+
+			GLint projection_location = glGetUniformLocation(shader, "projection");
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+
+			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->viewMatrix.Transposed().ptr());
+
+			float2 resolution = float2(1080.0f, 720.0f);
+			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+
+			this->timeWaterShader += 0.02f;
+			glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
+			//Pass all varibale uniforms from the material to the shader
+			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
+			{
+				switch (uniform->type)
+				{
+				case GL_INT:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+				}
+				break;
+				case GL_FLOAT:
+				{
+					glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+				}
+				break;
+				case GL_BOOL:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<bool>*)uniform)->value);
+				}
+				break;
+				case GL_FLOAT_VEC2:
+				{
+					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+					glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
+				}
+				break;
+				case GL_FLOAT_VEC3:
+				{
+					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+					glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
+				}
+				break;
+				case GL_FLOAT_VEC4:
+				{
+					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
+				}
+				break;
+				default:
+					break;
+				}
+			}
+			//Draw Mesh
+			mesh->Draw();
+			glUseProgram(0);
+		}
+	}
 }
 
 // Method to receive and manage events

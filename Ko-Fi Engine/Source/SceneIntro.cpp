@@ -80,12 +80,6 @@ bool SceneIntro::PreUpdate(float dt)
 			go->PreUpdate();
 	}
 
-	for (GameObject* go : this->gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
-			go->PreUpdate();
-	}
-
 	return true;
 }
 
@@ -95,12 +89,6 @@ bool SceneIntro::Update(float dt)
 	for (GameObject* go : this->gameObjectList)
 	{
 		if (go->GetComponent<ComponentTransform2D>() == nullptr)
-			go->Update(dt);
-	}
-
-	for (GameObject* go : this->gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
 			go->Update(dt);
 	}
 
@@ -125,11 +113,6 @@ bool SceneIntro::PostUpdate(float dt)
 			go->PostUpdate(dt); 
 	}
 
-	for (GameObject* go : gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
-			go->PostUpdate(dt);
-	}
 
 	for (GameObject* parent : gameObjectListToCreate)
 	{
