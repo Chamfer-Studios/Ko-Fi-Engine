@@ -104,12 +104,12 @@ float2 ComponentCanvas::GetLogicalSize()
 	return logicalSize;
 }
 
-float2 ComponentCanvas::GetNormalizedSize(bool invertY)
+float2 ComponentCanvas::GetNormalizedSize()
 {
 	return LogicalToViewport(logicalSize);
 }
 
-float2 ComponentCanvas::GetNormalizedPosition(bool invertY)
+float2 ComponentCanvas::GetNormalizedPosition()
 {
 	return position;
 }
@@ -134,17 +134,3 @@ float2 ComponentCanvas::ScreenToLogical(float2 vec)
 	float2 mouseViewportPosition = ScreenToViewport(vec);
 	return { mouseViewportPosition.x / owner->GetEngine()->GetEditor()->lastViewportSize.x * logicalSize.x, mouseViewportPosition.y / owner->GetEngine()->GetEditor()->lastViewportSize.y * logicalSize.y };
 }
-
-/*void ComponentCanvas::OnLoad(const JSONReader& reader)
-{
-}
-
-void ComponentCanvas::OnSave(JSONWriter& writer) const
-{
-	writer.String("Canvas");
-	writer.StartObject();
-
-	// Saving button state
-
-	writer.EndObject();
-}*/

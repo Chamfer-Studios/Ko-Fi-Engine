@@ -50,7 +50,5 @@ private:
 	std::string textValue = "HELLO WORLD!";
 
 	GLuint fboId = 0;
-
-	MyPlane* drawablePlane = nullptr;
 };
 

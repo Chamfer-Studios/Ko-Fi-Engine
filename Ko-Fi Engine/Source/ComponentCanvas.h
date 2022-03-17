@@ -22,8 +22,8 @@ public:
 
 	void SetLogicalSize(float2 _newVal) { logicalSize = _newVal; };
 	float2 GetLogicalSize();
-	float2 GetNormalizedSize(bool invertY = false) override;
-	float2 GetNormalizedPosition(bool invertY = false) override;
+	float2 GetNormalizedSize() override;
+	float2 GetNormalizedPosition() override;
 
 	float2 LogicalToViewport(float2 vec);
 	float2 ViewportToLogical(float2 vec);

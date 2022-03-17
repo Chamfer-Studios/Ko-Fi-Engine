@@ -17,7 +17,6 @@ ComponentButton::ComponentButton(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::BUTTON;
 	glGenFramebuffers(1, &fboId);
-	drawablePlane = new MyPlane(owner);
 }
 
 ComponentButton::~ComponentButton()
@@ -25,7 +24,6 @@ ComponentButton::~ComponentButton()
 	FreeTextures(BUTTON_STATE::IDLE);
 	FreeTextures(BUTTON_STATE::HOVER);
 	FreeTextures(BUTTON_STATE::PRESSED);
-	delete drawablePlane;
 }
 
 void ComponentButton::Save(Json& json) const
@@ -98,7 +96,7 @@ bool ComponentButton::PostUpdate(float dt)
 	}
 
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	drawablePlane->DrawPlane2D(&openGLTexture, { 255, 255, 255 });
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), {255, 255, 255});
 	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
