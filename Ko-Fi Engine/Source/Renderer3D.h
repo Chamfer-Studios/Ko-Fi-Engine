@@ -7,8 +7,6 @@
 #include "Light.h"
 #include "SDL_video.h"
 
-#include "ComponentCamera.h"
-
 #include "MathGeoLib/Geometry/LineSegment.h"
 
 #define MAX_LIGHTS 8
@@ -37,24 +35,13 @@ public:
 	void SetRay(LineSegment ray);
 	LineSegment GetRay();
 
-	//CAMERA
-	void SetActiveCamera(ComponentCamera* camera);
-	void SetCullingCamera(ComponentCamera* camera);
-
-	ComponentCamera* GetActiveCamera(); // Getter
-
 public:
-	ComponentCamera* camera = nullptr;
-	ComponentCamera* culling_camera = nullptr;
-
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 private:
-
-
 	bool vsync = false;
 	KoFiEngine* engine = nullptr;
 

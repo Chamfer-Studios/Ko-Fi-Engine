@@ -52,10 +52,10 @@ public:
 	// Debug bools
 	bool drawFrustum = true;
 	bool frustumCulling = false;
-	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
 private:
-	bool mainCamera = false;
+	float lastDeltaX = 0.f, lastDeltaY = 0.f;
+
 	ComponentTransform* componentTransform = nullptr;
 };
 

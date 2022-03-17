@@ -19,7 +19,6 @@ public:
 
 	void SetPosition(const float3& newPosition);
 	void SetRotation(const float3& newRotation);
-	//void SetRotation(const float3x3& newRotation);
 	void SetRotationQuat(const Quat& newRotation);
 	void SetScale(const float3& newScale);
 

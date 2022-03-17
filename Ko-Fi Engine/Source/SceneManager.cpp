@@ -252,19 +252,17 @@ void SceneManager::GuizmoTransformation()
 	float tempTransform[16];
 	memcpy(tempTransform, objectTransform.ptr(), 16 * sizeof(float));
 
-
+	int winX, winY;
+	engine->GetWindow()->GetPosition(winX, winY);
 	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
 	ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, currentGizmoOperation != ImGuizmo::OPERATION::SCALE ? currentGizmoMode : ImGuizmo::MODE::LOCAL, tempTransform);
-	
-	if (ImGuizmo::IsUsing()) // while using guizmo
+
+	if (ImGuizmo::IsUsing())
 	{
 		float4x4 newTransform;
 		newTransform.Set(tempTransform);
 		objectTransform = newTransform.Transposed();
 		selectedGameObject->GetComponent<ComponentTransform>()->SetGlobalTransform(objectTransform);
-
-
-		
 	}
 }
 

@@ -106,7 +106,6 @@ bool I_Mesh::Save(const Mesh* mesh, const char* path)
 	return false;
 }
 
-// Json Path, not fbx path.
 bool I_Mesh::Load(const char* path, Mesh* mesh)
 {
 	std::ifstream file;

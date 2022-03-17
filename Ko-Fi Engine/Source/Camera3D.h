@@ -8,7 +8,6 @@
 #include "MathGeoLib/Geometry/Frustum.h"
 #include "glmath.h"
 
-#include "ComponentCamera.h"
 class GameObject;
 
 class Camera3D : public Module
@@ -23,9 +22,6 @@ public:
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
-	void CheckMouseMotion();
-	void CheckKeyInputs(float dt);
-
 	void LookAt(const float3& Spot);
 	void CalculateViewMatrix();
 	void RecalculateProjection();
@@ -35,17 +31,16 @@ public:
 	GameObject* MousePicking();
 
 public:
-	ComponentCamera* camera = nullptr;
 	float3 right, up, front, position, reference;
 	Frustum cameraFrustum;
 	float4x4 viewMatrix;
 	float aspectRatio = 1.f;
 	float verticalFOV = 60.f;
 	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 100.f;
-	float cameraSensitivity = .5f;
-	float cameraSpeed = 60.f;
-	bool projectionIsDirty = true;
+	float farPlaneDistance = 5000.f;
+	float cameraSensitivity = .1f;
+	float cameraSpeed = 30.f;
+	bool projectionIsDirty = false;
 
 private:
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;

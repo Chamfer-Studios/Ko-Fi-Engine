@@ -1,7 +1,6 @@
 #include "ComponentCamera.h"
 #include "Engine.h"
 #include "SceneManager.h"
-#include "Camera3D.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -133,10 +132,6 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Frustum culling", &frustumCulling))
 		{
 			ResetFrustumCulling();
-		}
-		if (ImGui::Checkbox("Set Main Camera", &mainCamera))
-		{
-			//mainCamera ? Engine->renderer3D->SetActiveCamera(camera) : Engine->renderer3D->SetActiveCamera(nullptr);
 		}
 	}
 

@@ -71,11 +71,10 @@ bool I_Scene::Import(const char* path)
 	return true;
 }
 
-GameObject* I_Scene::ImportModel(const char* name, const char* path)
+GameObject* I_Scene::ImportModel(const char* path)
 {
 	// TODO: WE SHOULD CHANGE THIS
-	GameObject* tmp = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(name);
-	
+	GameObject* tmp = nullptr;
 	return tmp;
 }
 
