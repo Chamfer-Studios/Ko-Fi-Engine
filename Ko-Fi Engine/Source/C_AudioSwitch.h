@@ -8,46 +8,6 @@ using Json = nlohmann::json;
 
 class GameObject;
 
-class TrackInstance
-{
-public:
-
-    TrackInstance();
-    TrackInstance(float volume, bool mute, bool playOnStart, bool loop, const char* path = nullptr);
-    ~TrackInstance();
-
-    //void Delete();
-
-    inline void SetTrack(R_Track* track) { this->track = track; }
-
-    inline bool GetPlayOnStart() const { return playOnStart; }
-    inline bool GetMute() const { return mute; }
-    inline bool GetLoop() const { return loop; }
-    inline float GetVolume() const { return volume; }
-
-    inline bool IsTrackLoaded() { return (track->channels != 0); }
-
-    //inline bool GetBypass() const { return bypass; }
-
-    //inline float GetPan() const { return pan; }
-
-    //inline float GetTranspose() const { return transpose; }
-
-public:
-    R_Track* track;
-
-    bool play = false;
-
-    bool playOnStart = false, loop = false, mute = false;
-
-    float volume = 100.0f, offset = 0.0f;
-
-    //float pan = 0.0f, transpose = 0.0f;
-    //bool bypass = false;
-
-    //bool knobReminder1 = false, knobReminder2 = false;
-};
-
 class C_AudioSwitch : public C_Audio
 {
 public:
@@ -67,6 +27,8 @@ public:
 
     void DisablePlayOnStart();
 
+    // G
+
 private:
     int totalTracks = 1;
 
@@ -77,11 +39,11 @@ private:
     float switchTime = 0.0f;
     float pauseDifference = 0.0f;
 
-    TrackInstance* oldTrack = nullptr;
-    TrackInstance* newTrack = nullptr;
-    TrackInstance* playingTrack = nullptr;
+    R_Track* oldTrack = nullptr;
+    R_Track* newTrack = nullptr;
+    R_Track* playingTrack = nullptr;
 
-    std::vector<TrackInstance*> tracks;
+    std::vector<R_Track*> tracks;
 };
 
 #endif // !__C_AUDIO_SWITCH_H__

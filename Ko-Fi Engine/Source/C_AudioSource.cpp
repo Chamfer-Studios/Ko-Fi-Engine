@@ -1,12 +1,10 @@
 #include "C_AudioSource.h"
-#include "R_Track.h"
 #include "SceneManager.h"
 #include "Globals.h"
 #include "GameObject.h"
 #include "ImGuiAppLog.h"
 #include "PanelChooser.h"
 #include "Importer.h"
-#include "MathGeoLib/Math/MathFunc.h"
 
 #include "al.h"
 #include "alc.h"
@@ -20,39 +18,6 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
     type = ComponentType::AUDIO_SOURCE;
 
     track = nullptr;
-
-    volume = 100.0f;
-    //pan = 0.0f;
-    //transpose = 0.0f;
-
-    loop = false;
-
-    offset = 0.0f;
-
-    play = false;
-    playOnStart = true;
-
-    mute = false;
-    //bypass = false;
-}
-
-C_AudioSource::C_AudioSource(GameObject* parent, float volume, bool mute, bool playOnStart, bool loop) : C_Audio(parent)
-{
-    type = ComponentType::AUDIO_SOURCE;
-
-    track = nullptr;
-
-    this->volume = volume;
-    //this->pan = pan;
-    //this->transpose = transpose;
-    this->mute = mute;
-    this->playOnStart = playOnStart;
-    this->loop = loop;
-    //this->bypass = bypass;
-
-    play = false;
-
-    offset = 0.0f;
 }
 
 C_AudioSource::~C_AudioSource()
@@ -64,10 +29,13 @@ C_AudioSource::~C_AudioSource()
 
 bool C_AudioSource::Start()
 {
-    StopAudio(track->source);
+    if (track != nullptr)
+    {
+        StopAudio(track->source);
 
-    if (playOnStart)
-        PlayAudio(track->source);
+        if (track->playOnStart)
+            PlayAudio(track->source);
+    }
 
     return true;
 }
@@ -76,22 +44,25 @@ bool C_AudioSource::Update(float dt)
 {
     bool ret = true;
 
-    if (playOnStart && track != nullptr && owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING)
+    if (track != nullptr)
     {
-        PlayAudio(track->source);
-        playOnStart = false;
+        if (track->playOnStart && owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING)
+        {
+            PlayAudio(track->source);
+            track->playOnStart = false;
+        }
+
+        if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+        {
+            PauseAudio(track->source);
+            return true;
+        }
+
+        ResumeAudio(track->source);
     }
 
     if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)
         return true;
-
-    if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
-    {
-        PauseAudio(track->source);
-        return true;
-    }
-
-    ResumeAudio(track->source);
 
     return true;
 }
@@ -117,7 +88,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
                     Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
                     track->source = CreateAudioSource(track->buffer, false);
 
-                    SetVolume(volume);
+                    track->SetVolume(track->volume);
                     //SetPanning(pan);
                     //SetTranspose(transpose);
                 }
@@ -150,26 +121,26 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             ImGui::Spacing();
             ImGui::Text("Options");
 
-            if (ImGui::Checkbox("Mute", &mute))
-                SetVolume(volume);
+            if (ImGui::Checkbox("Mute", &track->mute))
+                track->SetVolume(track->volume);
 
-            ImGui::Checkbox("Play on start", &playOnStart);
+            ImGui::Checkbox("Play on start", &track->playOnStart);
 
-            if (ImGui::Checkbox("Loop", &loop))
-                SetLoop(loop);
+            if (ImGui::Checkbox("Loop", &track->loop))
+                track->SetLoop(track->loop);
 
             ImGui::Spacing();
             ImGui::Spacing();
 
             std::string action;
-            play ? action = "Stop" : action = "Play";
+            track->play ? action = "Stop" : action = "Play";
             if (ImGui::Button(action.c_str()))
             {
-                float time = track->duration * offset;
-                play ? StopAudio(track->source) : PlayAudio(track->source, time);
+                float time = track->duration * track->offset;
+                track->play ? StopAudio(track->source) : PlayAudio(track->source, time);
             }
 
-            ImGui::SliderFloat("Offset", &offset, 0.0f, 1.0f);
+            ImGui::SliderFloat("Offset", &track->offset, 0.0f, 1.0f);
         }
         else
         {
@@ -190,48 +161,5 @@ void C_AudioSource::UpdatePlayState()
 {
     ALint sourceState;
     alGetSourcei(track->source, AL_SOURCE_STATE, &sourceState);
-    (sourceState == AL_PLAYING) ? play = true : play = false;
+    (sourceState == AL_PLAYING) ? track->play = true : track->play = false;
 }
-
-void C_AudioSource::SetLoop(bool active)
-{
-    alSourcei(track->source, AL_LOOPING, active);
-}
-
-// Range [0 - 100]
-void C_AudioSource::SetVolume(float volume)
-{
-    if (mute)
-    {
-        alSourcef(track->source, AL_GAIN, 0.0f);
-        return;
-    }
-
-    volume = Pow(volume, 2.5f) / 1000.0f;
-
-    if (volume > 99.0f)
-        volume = 100.0f;
-
-    alSourcef(track->source, AL_GAIN, volume / 100.0f);
-}
-
-//void C_AudioSource::SetPanning(float pan)
-//{
-//    alSource3f(track->source, AL_POSITION, pan, 0, -sqrtf(1.0f - pan * pan));
-//}
-
-//void C_AudioSource::SetTranspose(float transpose)
-//{
-//    transpose = exp(0.0577623f * transpose);
-//
-//    if (transpose > 4.0f)
-//        transpose = 4.0f;
-//
-//    if (transpose < 0.25f)
-//        transpose = 0.25f;
-//
-//    if (transpose > 0.98f && transpose < 1.02f)
-//        transpose = 1.0f;
-//
-//    alSourcef(track->source, AL_PITCH, transpose);
-//}

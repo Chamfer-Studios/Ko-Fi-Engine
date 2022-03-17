@@ -3,8 +3,10 @@
 
 #include "al.h"
 #include "alc.h"
+#include "alext.h"
 #include "efx.h"
 #include "efx-creative.h"
+#include "efx-presets.h"
 
 #include <dr_wav.h>
 #include <dr_mp3.h>
@@ -38,55 +40,55 @@ enum class AudioFormat
 class R_Track
 {
 public:
-	R_Track()
-	{
-		channels = 0;
-		sampleRate = 44100;
-		bits = 16;
-		duration = 0.0f;
-		format = AudioFormat::NONE;
-		buffer = 0;
-		source = 0;
+	R_Track();
+	R_Track(float volume, bool mute, bool playOnStart, bool loop);
+	~R_Track();
 
-		totalPCMFrameCountWav = 0;
-		totalPCMFrameCountMp3 = 0;
-		totalPCMFrameCountFlac = 0;
-	}
+	uint64_t GetTotalSamples() const;
+	void SetPCMFrameCount(drwav_uint64 value);
 
-	~R_Track()
-	{
-		alec(alDeleteSources(1, &source));
-		alec(alDeleteSources(1, &buffer));
-	}
+	inline bool IsTrackLoaded() { return channels != 0; }
 
+	inline void SetTrackPath(const char* path) { this->path = path; }
 	inline const char* GetTrackPath() const { return path.c_str(); }
+	inline void SetTrackName(const char* name) { this->name = name; }
 	inline const char* GetTrackName() const { return name.c_str(); }
 
-    // Methods
-	uint64_t GetTotalSamples() const
-	{
-		uint64_t ret = 0;
+	inline void SetPlayOnStart(bool playOnStart) { this->playOnStart = playOnStart; }
+	inline bool GetPlayOnStart() const { return playOnStart; }
 
-		switch (format)
-		{
-		case AudioFormat::WAV: ret = totalPCMFrameCountWav * channels; break;
-		case AudioFormat::MP3: ret = totalPCMFrameCountMp3 * channels; break;
-		case AudioFormat::FLAC: ret = totalPCMFrameCountFlac * channels; break;
-		}
-		return ret;
-	}
+	inline void SetMute(bool mute) { this->mute = mute; }
+	inline bool GetMute() const { return mute; }
 
-	void SetPCMFrameCount(drwav_uint64 value)
-	{
-		switch (format)
-		{
-		case AudioFormat::WAV: totalPCMFrameCountWav = value; break;
-		case AudioFormat::MP3: totalPCMFrameCountMp3 = (drmp3_uint64)value; break;
-		case AudioFormat::FLAC: totalPCMFrameCountFlac = (drflac_uint64)value; break;
-		}
-	}
+	void SetLoop(bool active);
+	inline bool GetLoop() const { return loop; }
+
+	void SetVolume(float volume);
+	inline float GetVolume() const { return volume; }
+
+	//inline void SetBypass(bool bypass) { this->bypass = bypass; }
+	//inline bool GetBypass() const { return bypass; }
+
+	//void SetPanning(float pan);
+	//inline float GetPan() const { return pan; }
+
+	//void SetTranspose(float transpose);
+	//inline float GetTranspose() const { return transpose; }
 
 public:
+	std::string path;
+	std::string name;
+
+	float volume = 100.0f, offset = 0.0f;
+
+	bool play = false;
+
+	bool playOnStart = true, loop = false, mute = false;
+
+	//bool knobReminder1 = false, knobReminder2 = false;
+	//float pan = 0.0f, transpose = 0.0f; 
+	//bool bypass = false;
+
 	unsigned int channels = 0;
 	unsigned int sampleRate = 44100;
 	unsigned int bits = 16;
@@ -98,9 +100,6 @@ public:
 	ALuint source;
 
 	std::vector<uint16_t> pcmData;
-
-	std::string path;
-	std::string name;
 
 private:
 	drwav_uint64 totalPCMFrameCountWav = 0;

@@ -30,6 +30,8 @@ SceneManager::SceneManager(KoFiEngine* engine)
 	sceneIntro = new SceneIntro(engine);
 	AddScene(sceneIntro);
 	currentScene = sceneIntro;
+
+	gameTime = 0.0f;
 }
 
 SceneManager::~SceneManager()
@@ -131,6 +133,7 @@ bool SceneManager::PrepareUpdate()
 		frameCount++;
 		time += timer.ReadSec();
 		gameDt = timer.ReadSec() * gameClockSpeed;
+		gameTime += gameDt;
 		timer.Start();
 	}
 
@@ -168,6 +171,8 @@ void SceneManager::OnPlay()
 	runtimeState = RuntimeState::PLAYING;
 	gameClockSpeed = timeScale;
 
+	gameTime = 0.0f;
+
 	// Serialize scene and save it as a .json
 	Importer::GetInstance()->sceneImporter->Save(currentScene);
 
@@ -193,6 +198,7 @@ void SceneManager::OnStop()
 	gameClockSpeed = 0.0f;
 	frameCount = 0;
 	time = 0.0f;
+	gameTime = 0.0f;
 
 	Importer::GetInstance()->sceneImporter->Load(currentScene,currentScene->name.c_str());
 	// Load the scene we saved before in .json

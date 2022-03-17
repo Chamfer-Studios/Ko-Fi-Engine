@@ -13,42 +13,6 @@
 #include "efx-creative.h"
 #include "efx-presets.h"
 
-TrackInstance::TrackInstance()
-{
-    track = nullptr;
-
-    play = false;
-    playOnStart = false;
-    loop = false;
-    mute = false;
-    volume = 100.0f;
-    offset = 0.0f;
-}
-
-TrackInstance::TrackInstance(float volume, bool mute, bool playOnStart, bool loop, const char* path)
-{
-    track = nullptr;
-
-    this->volume = volume;
-    this->mute = mute;
-    this->playOnStart = playOnStart;
-    this->loop = loop;
-
-    if (path != nullptr)
-        this->track->path = path;
-}
-
-TrackInstance::~TrackInstance()
-{
-    RELEASE(track);
-}
-
-//void TrackInstance::Delete()
-//{
-//
-//}
-
-//////////////////////////////////////////////////////////////////
 C_AudioSwitch::C_AudioSwitch(GameObject* parent) : C_Audio(parent)
 {
 	type = ComponentType::AUDIO_SWITCH;
@@ -89,7 +53,7 @@ C_AudioSwitch::~C_AudioSwitch()
     for (uint i = 0; i < tracks.size(); ++i)
     {
         if (tracks[i]->IsTrackLoaded())
-            StopAudio(tracks[i]->track->source);
+            StopAudio(tracks[i]->source);
 
         RELEASE(tracks[i]);
     }
@@ -104,11 +68,11 @@ bool C_AudioSwitch::Start()
     {
         if (tracks[i]->IsTrackLoaded())
         {
-            StopAudio(tracks[i]->track->source);
+            StopAudio(tracks[i]->source);
             if (tracks[i]->GetPlayOnStart())
             {
                 playingTrack = tracks[i];
-                PlayAudio(tracks[i]->track->source);
+                PlayAudio(tracks[i]->source);
             }
         }
     }
@@ -131,11 +95,11 @@ bool C_AudioSwitch::Update(float dt)
     {
         if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
         {
-            PauseAudio(tracks[i]->track->source);
-            //if (switching) pauseDifference = gameTimer->RealReadSec() - switchTime;
+            PauseAudio(tracks[i]->source);
+            if (switching) pauseDifference = owner->GetEngine()->GetSceneManager()->GetTotalGameTime() - switchTime;
             continue;
         }
-        ResumeAudio(tracks[i]->track->source);
+        ResumeAudio(tracks[i]->source);
     }
     UpdatePlayState();
 }
@@ -152,7 +116,7 @@ void C_AudioSwitch::UpdatePlayState()
         if (tracks[i]->IsTrackLoaded())
         {
             ALint sourceState;
-            alGetSourcei(tracks[i]->track->source, AL_SOURCE_STATE, &sourceState);
+            alGetSourcei(tracks[i]->source, AL_SOURCE_STATE, &sourceState);
             (sourceState == AL_PLAYING) ? tracks[i]->play = true : tracks[i]->play = false;
         }
     }
@@ -164,43 +128,46 @@ void C_AudioSwitch::SwitchFade(float fadeSeconds)
     {
         if (!newTrack->play)
         {
-            PlayAudio(newTrack->track->source);
-            alSourcef(newTrack->track->source, AL_GAIN, 0.0f);
+            PlayAudio(newTrack->source);
+            alSourcef(newTrack->source, AL_GAIN, 0.0f);
         }
 
         if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
         {
-           //switchTime = gameTimer->RealReadSec() - pauseDifference;
+            switchTime = owner->GetEngine()->GetSceneManager()->GetTotalGameTime() - pauseDifference;
             return;
         }
 
-        //float t = gameTimer->RealReadSec() - switchTime;
-        //float d = fadeSeconds;
-        //if (t > d)
-        //{
-        //    switching = false; // Stop source
-        //    StopAudio(oldTrack->track.source);
-        //    SetVolume(oldTrack->volume, oldTrack);
-        //    SetVolume(newTrack->volume, newTrack);
-        //    playingTrack = newTrack;
-        //    oldTrack = nullptr;
-        //    newTrack = nullptr;
-        //    pauseDifference = 0;
-        //}
-        //else
-        //{
-        //    float volume = oldTrack->volume;
-        //    volume = Pow(volume, 2.5f) / 1000.0f;
-        //    if (volume > 99.0f) volume = 100.0f;
-        //    volume = (volume / 100) * (1.0f - t / d);
-        //    alSourcef(oldTrack->track.source, AL_GAIN, volume);
+        float t = owner->GetEngine()->GetSceneManager()->GetTotalGameTime() - switchTime;
+        float d = fadeSeconds;
+        if (t > d)
+        {
+            switching = false; // Stop source
+            StopAudio(oldTrack->source);
+            oldTrack->SetVolume(oldTrack->volume);
 
-        //    float nvolume = newTrack->volume;
-        //    nvolume = Pow(nvolume, 2.5f) / 1000.0f;
-        //    if (nvolume > 99.0f) nvolume = 100.0f;
-        //    nvolume = (nvolume / 100) * (t / d);
-        //    alSourcef(newTrack->track.source, AL_GAIN, nvolume);
-        //}
+            newTrack->SetVolume(newTrack->volume);
+
+            playingTrack = newTrack;
+
+            oldTrack = nullptr;
+            newTrack = nullptr;
+            pauseDifference = 0;
+        }
+        else
+        {
+            float volume = oldTrack->volume;
+            volume = Pow(volume, 2.5f) / 1000.0f;
+            if (volume > 99.0f) volume = 100.0f;
+            volume = (volume / 100) * (1.0f - t / d);
+            alSourcef(oldTrack->source, AL_GAIN, volume);
+
+            float nvolume = newTrack->volume;
+            nvolume = Pow(nvolume, 2.5f) / 1000.0f;
+            if (nvolume > 99.0f) nvolume = 100.0f;
+            nvolume = (nvolume / 100) * (t / d);
+            alSourcef(newTrack->source, AL_GAIN, nvolume);
+        }
     }
 }
 
@@ -209,7 +176,7 @@ void C_AudioSwitch::StopAllTracks()
     for (uint i = 0; i < tracks.size(); ++i)
     {
         if (tracks[i]->IsTrackLoaded())
-            StopAudio(tracks[i]->track->source);
+            StopAudio(tracks[i]->source);
     }
 }
 
