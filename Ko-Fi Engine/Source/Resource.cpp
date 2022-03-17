@@ -39,7 +39,8 @@ void Resource::SetLibraryPathAndFile()
 		extension = MESH_EXTENSION;
 		break;
 	case Resource::Type::TEXTURE:
-		// TODO
+		dir = TEXTURES_DIR;
+		extension = TEXTURE_EXTENSION;
 		break;
 	case Resource::Type::SCENE:
 		dir = ASSETS_SCENES_DIR;
@@ -49,6 +50,10 @@ void Resource::SetLibraryPathAndFile()
 		dir = SHADERS_DIR;
 		extension = SHADER_EXTENSION;
 		break;
+	case Resource::Type::FONT:
+		dir = FONT_DIR;
+		extension = FONT_EXTENSION;
+		break;
 	case Resource::Type::UNKNOWN:
 		break;
 	default:
@@ -57,6 +62,12 @@ void Resource::SetLibraryPathAndFile()
 
 	libraryPath = dir + file + extension;
 	libraryFile = file + extension;
+}
+
+void Resource::SetAssetsPathAndFile(const char* path,const char* file)
+{
+	assetPath = path;
+	assetFile = file;
 }
 
 //bool Resource::HasResource(UID uid) const

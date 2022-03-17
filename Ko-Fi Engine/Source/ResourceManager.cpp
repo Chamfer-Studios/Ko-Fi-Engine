@@ -1,6 +1,9 @@
 #include "ResourceManager.h"
 #include "Engine.h"
 #include "Log.h"
+#include "RNG.h"
+#include "FSDefs.h"
+#include "Importer.h"
 
 ResourceManager::ResourceManager(KoFiEngine* engine) : Module(),
 fileRefreshRate(0.0f),
@@ -72,10 +75,28 @@ bool ResourceManager::CleanUp()
 
 UID ResourceManager::ImportFile(const char* assetPath)
 {
-	// TODO: Get type based on file extension
+	if (assetPath == nullptr)
+	{
+		LOG_BOTH("Error loading file, file path was nullptr.");
+		return -1;
+	}
+	std::string path = assetPath;
+	std::string extension = path.substr(path.find_last_of(".") + 1);
+	Resource::Type type = GetTypeFromExtension(extension.c_str());
 
-	Resource* resource = CreateNewResource(assetPath, Resource::Type::MESH);
-	UID ret = 0; // What will be returned
+	if (type == Resource::Type::UNKNOWN)
+	{
+		LOG_BOTH("Error loading file, unkown file type.");
+		return -1;
+	}
+
+	std::string cleanPath = GetValidPath(assetPath);
+	if (cleanPath.c_str() == nullptr)
+	{
+		LOG_BOTH("Error loading file, couldn't validate path.");
+		return -1;
+	}
+	Resource* resource = CreateNewResource(cleanPath.c_str(), type);
 
 	// TODO: Load from filesystem
 	//char* fileBuffer = engine->filesystem->Load(assetPath);
@@ -83,16 +104,19 @@ UID ResourceManager::ImportFile(const char* assetPath)
 	switch (resource->GetType())
 	{
 	case Resource::Type::MESH:
-		// TODO: Import Mesh
+		//Importer::GetInstance()->meshImporter->Import(fileBuffer, (Mesh*)resource);
 		break;
 	case Resource::Type::TEXTURE:
-		// TODO: Import Texture
+		//Importer::GetInstance()->textureImporter->Import(fileBuffer, (Texture*)resource);
 		break;
 	case Resource::Type::SCENE:
-		// TODO: Import Scene
+		//Importer::GetInstance()->sceneImporter->Import(fileBuffer);
 		break;
 	case Resource::Type::SHADER:
 		// TODO: Import Shader
+		break;
+	case Resource::Type::FONT:
+		// TODO: Import Font
 		break;
 	case Resource::Type::UNKNOWN:
 		break;
@@ -101,53 +125,25 @@ UID ResourceManager::ImportFile(const char* assetPath)
 	}
 
 	// TODO: Save the Resource
-	//SaveResource(resource);
+	SaveResource(resource);
 
 	// Get the UID Resource to return
-	ret = resource->GetUID();
+	UID ret = resource->GetUID();
 
 	// TODO: Unload the resource after importing, we should only use the ID
 	//RELEASE_ARRAY(fileBuffer);
-	//UnloadResource(resource);
+	UnloadResource(resource);
 
 	return ret;
 }
 
 Resource* ResourceManager::CreateNewResource(const char* assetPath, Resource::Type type)
 {
-	Resource* ret = nullptr;
-	UID uid = 0; // uid = GenerateNewUID()
+	Resource* ret = new Resource(type);
 
-	switch (type)
-	{
-	case Resource::Type::MESH:
-		// TODO: Create Mesh Resource
-		break;
-	case Resource::Type::TEXTURE:
-		// TODO: Create Texture Resource
-		break;
-	case Resource::Type::SCENE:
-		// TODO: Create Scene Resource
-		break;
-	case Resource::Type::SHADER:
-		// TODO: Create Shader Resource
-		break;
-	case Resource::Type::UNKNOWN:
-		break;
-	default:
-		break;
-	}
-
-	if (ret != nullptr)
-	{
-		// TODO: Put the created resource in the map
-		//resourcesMap[uid] = ret;
-
-		// TODO: Save assetPath and generate a library path
-		//resource->assetPath = assetPath;
-		//resource->libraryPath = GenerateLibraryPath(resource);
-	}
-
+	resourcesMap[ret->uid] = ret;
+	ret->SetAssetsPathAndFile(assetPath,GetFileName(assetPath));
+	ret->SetLibraryPathAndFile();
 	return ret;
 }
 
@@ -156,21 +152,144 @@ Resource* ResourceManager::RequestResource(UID uid)
 	// Find if the resource is already loaded
 	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
 
-	if (it != resourcesMap.end()) {
-		// TODO
-		//it->second->referenceCount++;
-		//return it->second;
+	if (it != resourcesMap.end())
+	{
+		it->second->referenceCount++;
+		return it->second;
 	}
 
 	// TODO: Find the library file (if exists) and load the custom file format
-	// return TryToLoadResource();
-
+	std::map<UID, std::string>::iterator libIt = library.find(uid);
+	if (libIt != library.end())
+	{
+		Resource* r = GetResourceFromLibrary(libIt->second.c_str());
+		return r;
+	}
+	LOG_BOTH("FUCK YOU IT DOESNT EXIST");
 	return nullptr;
+}
+
+void ResourceManager::SaveResource(Resource* resource)
+{
+	if (resource == nullptr)
+	{
+		LOG_BOTH("Error saving resource, resource was nullptr.");
+		return;
+	}
+
+	switch (resource->type)
+	{
+	case Resource::Type::MESH:
+		Importer::GetInstance()->meshImporter->Save((Mesh*)resource, resource->libraryPath.c_str());
+		break;
+	case Resource::Type::TEXTURE:
+		// It doesnt have a save?
+		break;
+	case Resource::Type::SCENE:
+		Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
+		break;
+	case Resource::Type::SHADER:
+		//TODO: Save Shader
+		break;
+	case Resource::Type::FONT:
+		//TODO: Save Font
+		break;
+	default:
+		break;
+	}
+}
+
+void ResourceManager::UnloadResource(Resource* resource)
+{
+	UID uid = resource->uid;
+	resource->CleanUp();
+	RELEASE(resource);
+	if (resourcesMap.find(uid) != resourcesMap.end())
+		resourcesMap.erase(uid);
+}
+
+Resource* ResourceManager::GetResourceFromLibrary(const char* libraryPath)
+{
+	if (libraryPath == nullptr)
+	{
+		LOG_BOTH("Error getting resource, library path was nullptr.");
+		return nullptr;
+	}
+
+	UID uid = LoadFromLibrary(libraryPath);
+	return nullptr;
+}
+
+UID ResourceManager::LoadFromLibrary(const char* libraryPath)
+{
+	std::string cleanPath = GetValidPath(libraryPath);
+	if (cleanPath.c_str() == nullptr)
+	{
+		LOG_BOTH("Error loading from library, couldn't validate path.");
+		return -1;
+	}
+
+	//TODO: Wtf do i do now?
+	return -1;
 }
 
 Resource::Type ResourceManager::GetTypeFromExtension(const char* extension) const
 {
-	Resource::Type ret = Resource::Type::MESH;
+	Resource::Type ret = Resource::Type::UNKNOWN;
+
+	//LUA?
+	if (extension == "png" || extension == "PNG")
+	{
+		ret = Resource::Type::TEXTURE;
+	}
+	else if (extension == "fbx" || extension == "FBX")
+	{
+		ret = Resource::Type::MESH;
+	}
+	else if (extension == "json" || extension == "JSON")
+	{
+		ret = Resource::Type::SCENE;
+	}
+	else if (extension == "glsl" || extension == "GLSL")
+	{
+		ret = Resource::Type::SHADER;
+	}
+	else if (extension == "ttf" || extension == "TTF")
+	{
+		ret = Resource::Type::FONT;
+	}
 
 	return ret;
+}
+
+const char* ResourceManager::GetValidPath(const char* path) const
+{
+	std::string normalizedPath = path;
+
+	for (uint i = 0; i < normalizedPath.size(); ++i)
+	{
+		if (normalizedPath[i] == '\\')
+		{
+			normalizedPath[i] = '/';
+		}
+	}
+
+	size_t assetStart = normalizedPath.find("Assets");
+	size_t libraryStart = normalizedPath.find("Library");
+	std::string resultPath;
+	if (assetStart != std::string::npos)
+		resultPath = normalizedPath.substr(assetStart, normalizedPath.size());
+	else if (libraryStart != std::string::npos)
+		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size());
+	else
+		LOG_BOTH("ERROR: Couldn't validate path.");
+
+	return resultPath.c_str();
+}
+
+const char* ResourceManager::GetFileName(const char* path) const
+{
+	std::string p = path;
+	std::string name = p.substr(p.find_last_of("/")+1, p.size());
+	return name.c_str();
 }

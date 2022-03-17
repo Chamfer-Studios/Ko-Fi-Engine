@@ -9,6 +9,7 @@
 //#include "Resource.h"
 #include "par_shapes.h"
 #include "Globals.h"
+#include "Resource.h"
 
 class GameObject;
 
@@ -23,7 +24,7 @@ enum class Shape
 	CONE
 };
 
-class Mesh
+class Mesh : public Resource
 {
 public:
 	Mesh(Shape shape = Shape::NONE);

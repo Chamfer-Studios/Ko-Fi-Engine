@@ -17,11 +17,16 @@ public:
 
 	//uint Find(const char* assetPath) const;
 	UID ImportFile(const char* assetPath);
-	//uint GenerateNewUID();
+	void SaveResource(Resource* resource);
+	void UnloadResource(Resource* resource);
+	Resource* GetResourceFromLibrary(const char* libraryPath);
+	UID LoadFromLibrary(const char* libraryPath);
 
 	//const Resource* RequestResource(uint uid) const;
 	Resource* RequestResource(UID uid);
 	Resource::Type GetTypeFromExtension(const char* extension) const;
+	const char* GetValidPath(const char* path) const;
+	const char* GetFileName(const char* path) const;
 
 	//void ReleaseResource(uint uid);
 

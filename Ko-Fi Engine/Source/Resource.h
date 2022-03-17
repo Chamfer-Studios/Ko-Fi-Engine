@@ -14,7 +14,9 @@ public:
 		TEXTURE,
 		SCENE,
 		SHADER,
-		UNKNOWN,
+		FONT,
+		//PARTICLE
+		UNKNOWN
 	};
 
 	Resource() {}
@@ -43,7 +45,7 @@ public:
 	inline void SetLibraryFile(const char* libraryFile) { this->libraryFile = libraryFile; }
 
 	void SetLibraryPathAndFile();
-
+	void SetAssetsPathAndFile(const char* path, const char* file);
 	//bool HasResource(UID uid) const;
 
 	//bool LoadToMemory();

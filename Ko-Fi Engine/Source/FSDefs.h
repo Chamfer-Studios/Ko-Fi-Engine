@@ -16,11 +16,14 @@
 #define MATERIALS_DIR "Library/Materials/"
 #define TEXTURES_DIR "Library/Textures/"
 #define SHADERS_DIR "Library/Shaders/"
+#define FONT_DIR "Library/Fonts/"
 
 // EXTENSIONS
 #define MESH_EXTENSION ".sugar"
 #define MATERIAL_EXTENSION ".milk"
 #define SHADER_EXTENSION ".glsl"
 #define SCENE_EXTENSION ".json"
+#define FONT_EXTENSION ".ttf"		//not sure
+#define TEXTURE_EXTENSION ".png"	//not sure
 
 #endif // !__FSDIRECTORIES_H__
