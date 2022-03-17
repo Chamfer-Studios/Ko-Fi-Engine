@@ -57,9 +57,8 @@ bool Renderer3D::PreUpdate(float dt)
 			currentCamera->CalculateViewMatrix();
 		}
 			
-		
+		glLoadMatrixf((GLfloat*)currentCamera->viewMatrix.Transposed().ptr());
 	}
-	glLoadMatrixf((GLfloat*)currentCamera->viewMatrix.Transposed().ptr());
 	float3 cameraPos = float3::zero;
 	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
 	if (engine->GetCamera3D())
@@ -75,6 +74,7 @@ bool Renderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 bool Renderer3D::PostUpdate(float dt)
 {
+	RenderScene();
 	SDL_GL_SwapWindow(engine->GetWindow()->window);
 	SDL_SetRenderDrawColor(engine->GetUI()->renderer, 0, 0, 0, 0);
 	//SDL_RenderPresent(engine->GetUI()->renderer);
@@ -208,6 +208,15 @@ void Renderer3D::RecalculateProjectionMatrix()
 	}
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void Renderer3D::RenderScene()
+{
+	RenderMeshes();
+}
+
+void Renderer3D::RenderMeshes()
+{
 }
 
 // Method to receive and manage events

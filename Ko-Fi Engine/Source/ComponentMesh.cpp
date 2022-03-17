@@ -214,10 +214,7 @@ bool ComponentMesh::PostUpdate(float dt)
 
 			mesh->Draw(owner);
 
-			//draw bounding boxes
-			int GOID = 0;
 
-			GOID = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 			
 			glUseProgram(0);
 			GenerateGlobalBoundingBox();
@@ -376,33 +373,6 @@ const AABB ComponentMesh::GetGlobalAABB() const
 
 void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 {
-	//float vertices[] = {
-	//aabb.MinX(), aabb.MinY(), aabb.MinZ(),
-	//aabb.MaxX(), aabb.MinY(), aabb.MinZ(),
-	//aabb.MinX(), aabb.MinY(), aabb.MinZ(),
-	//aabb.MinX(), aabb.MaxY(), aabb.MinZ(),
-	//aabb.MinX(), aabb.MinY(), aabb.MinZ(),
-	//aabb.MinX(), aabb.MinY(), aabb.MaxZ(),
-	//aabb.MaxX(), aabb.MinY(), aabb.MaxZ(),
-	//aabb.MinX(), aabb.MinY(), aabb.MaxZ(),
-	//aabb.MaxX(), aabb.MinY(), aabb.MaxZ(),
-	//aabb.MaxX(), aabb.MaxY(), aabb.MaxZ(),
-	//aabb.MaxX(), aabb.MinY(), aabb.MaxZ(),
-	//aabb.MaxX(), aabb.MinY(), aabb.MinZ(),
-	//aabb.MaxX(), aabb.MaxY(), aabb.MinZ(),
-	//aabb.MinX(), aabb.MaxY(), aabb.MinZ(),
-	//aabb.MaxX(), aabb.MaxY(), aabb.MinZ(),
-	//aabb.MaxX(), aabb.MinY(), aabb.MinZ(),
-	//aabb.MaxX(), aabb.MaxY(), aabb.MinZ(),
-	//aabb.MaxX(), aabb.MaxY(), aabb.MaxZ(),
-	//aabb.MinX(), aabb.MaxY(), aabb.MaxZ(),
-	//aabb.MaxX(), aabb.MaxY(), aabb.MaxZ(),
-	//aabb.MinX(), aabb.MaxY(), aabb.MaxZ(),
-	//aabb.MinX(), aabb.MinY(), aabb.MaxZ(),
-	//aabb.MinX(), aabb.MaxY(), aabb.MaxZ(),
-	//aabb.MinX(), aabb.MaxY(), aabb.MinZ(),
-
-	//};
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
 	glPushMatrix();

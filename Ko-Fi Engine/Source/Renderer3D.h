@@ -36,12 +36,18 @@ public:
 	void SetGLFlag(GLenum flag, bool setTo);
 	void RecalculateProjectionMatrix();
 	
+	//Render Functions
+	void RenderScene();
+	void RenderMeshes();
+
 	void OnNotify(const Event& event);
 
 
 	bool GetVsync() const;
 	void SetVsync(bool vsync);
 	void OnResize();
+
+	
 
 	// Debug ray for mouse picking
 	void DrawRay();
