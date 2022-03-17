@@ -15,12 +15,10 @@ ComponentText::ComponentText(GameObject* parent) : Component(parent)
 	type = ComponentType::TEXT;
 	SetTextValue("Hello world!");
 	glGenFramebuffers(1, &fboId);
-	drawablePlane = new MyPlane(owner);
 }
 
 ComponentText::~ComponentText()
 {
-	delete drawablePlane;
 	FreeTextures();
 }
 
@@ -44,7 +42,7 @@ bool ComponentText::Update(float dt)
 bool ComponentText::PostUpdate(float dt)
 {
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	drawablePlane->DrawPlane2D(openGLTexture, { 255, 255, 255 });
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture, {255, 255, 255});
 	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
@@ -87,6 +85,10 @@ void ComponentText::SetTextValue(std::string newValue)
 	}
 
 	openGLTexture = SurfaceToOpenGLTexture(dstSurface);
+
+	int w, h;
+	TTF_SizeUTF8(owner->GetEngine()->GetUI()->rubik, newValue.c_str(), &w, &h);
+	owner->GetComponent<ComponentTransform2D>()->SetSize({ (float)w, (float)h });
 
 	SDL_FreeSurface(srcSurface);
 	SDL_FreeSurface(dstSurface);

@@ -30,13 +30,10 @@
 ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::IMAGE;
-	glGenFramebuffers(1, &fboId);
-	drawablePlane = new MyPlane(owner);
 }
 
 ComponentImage::~ComponentImage()
 {
-	delete drawablePlane;
 }
 
 void ComponentImage::Save(Json& json) const
@@ -44,10 +41,10 @@ void ComponentImage::Save(Json& json) const
 	json["type"] = "image";
 
 	json["texture"] = openGLTexture.path;
-	json["mask"] = {
-		mask.x,
-		mask.y
-	};
+	//json["mask"] = {
+	//	mask.x,
+	//	mask.y
+	//};
 }
 
 void ComponentImage::Load(Json& json)
@@ -55,9 +52,9 @@ void ComponentImage::Load(Json& json)
 	std::string path = json["texture"].get<std::string>();
 	SetTexture(path.c_str());
 
-	std::vector<float> values = json["mask"].get<std::vector<float>>();
-	mask.x = values[0];
-	mask.y = values[1];
+	//std::vector<float> values = json["mask"].get<std::vector<float>>();
+	//mask.x = values[0];
+	//mask.y = values[1];
 }
 
 bool ComponentImage::Update(float dt)
@@ -68,7 +65,7 @@ bool ComponentImage::Update(float dt)
 bool ComponentImage::PostUpdate(float dt)
 {
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	drawablePlane->DrawPlane2D(&openGLTexture, { 255, 255, 255 });
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), {255, 255, 255});
 	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
@@ -99,17 +96,6 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 
 		if (ImGui::Button("Set Texture")) {
 			panelChooser->OpenPanel("AddTextureImage", "png");
-		}
-
-		if (ImGui::DragFloat2("Mask", &mask[0], 0.005f, 0.0f, 1.0f)) {
-			drawablePlane->texCoords.clear();
-			drawablePlane->texCoords.push_back({ 0, mask.y });
-			drawablePlane->texCoords.push_back({ 0, 0 });
-			drawablePlane->texCoords.push_back({ mask.x, mask.y });
-			drawablePlane->texCoords.push_back({ mask.x, 0 });
-
-			glBindBuffer(GL_ARRAY_BUFFER, drawablePlane->textureBufferId);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * drawablePlane->texCoords.size(), &drawablePlane->texCoords[0], GL_STATIC_DRAW);
 		}
 	}
 

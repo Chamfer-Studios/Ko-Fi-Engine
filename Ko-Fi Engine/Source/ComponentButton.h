@@ -57,6 +57,4 @@ private:
 	Texture pressedOpenGLTexture;
 
 	BUTTON_STATE state = BUTTON_STATE::IDLE;
-
-	MyPlane* drawablePlane = nullptr;
 };
