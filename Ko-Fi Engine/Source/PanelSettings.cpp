@@ -3,6 +3,8 @@
 #include "Editor.h"
 #include "Engine.h"
 #include "Window.h"
+#include "Renderer3D.h"
+#include "SceneManager.h"
 
 
 PanelSettings::PanelSettings(Editor* editor)
@@ -45,7 +47,7 @@ void PanelSettings::ShowPanel(bool* toggleSettingsPanel)
     {
         if(ImGui::CollapsingHeader("Window##"))
         {
-            ImGui::Combo("##resolutionCombo", &currentResolution, "Select Resolution\0R1024x768\0R1920x1080\0R1280x720");
+            ImGui::Combo("##resolutionCombo", &currentResolution, "Select Resolution\0 1024x768\0 1920x1080\0 1280x720");
                 
             ImGui::SameLine();
             if(ImGui::Button("SetResolution##"))
@@ -74,6 +76,19 @@ void PanelSettings::ShowPanel(bool* toggleSettingsPanel)
               
                 }
 
+                editor->engine->SaveConfiguration();
+            }
+        }
+        if (ImGui::CollapsingHeader("Renderer##"))
+        {
+            bool vsync = editor->engine->GetRenderer()->GetVsync();
+            if (ImGui::Checkbox("V-Sync", &vsync))
+            {
+                editor->engine->GetRenderer()->SetVsync(vsync);
+                editor->engine->SaveConfiguration();
+
+            }
+            if (ImGui::Checkbox("Draw scene partition tree", &editor->engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {
                 editor->engine->SaveConfiguration();
             }
         }
