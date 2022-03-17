@@ -36,115 +36,9 @@ bool Renderer3D::Awake(Json configModule)
 	CONSOLE_LOG("Creating 3D Renderer context");
 	appLog->AddLog("Creating 3D Renderer context\n");
 	bool ret = true;
-
-	// Create context
-
-	context = SDL_GL_CreateContext(engine->GetWindow()->window);
-	if (context == NULL)
-	{
-		CONSOLE_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
-		appLog->AddLog("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
-		ret = false;
-	}
-
-	if (ret == true)
-	{
-		// Use Vsync
-		vsync = configModule.at("Vsync");
-		SetVsync(vsync);
-
-		// Initialize Projection Matrix
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-
-		// Check for error
-		GLenum error = glGetError();
-		if (error != GL_NO_ERROR)
-		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
-
-		// Initialize Modelview Matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-
-		// Check for error
-		error = glGetError();
-		if (error != GL_NO_ERROR)
-		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
-
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-		glClearDepth(1.0f);
-
-		// Initialize clear color
-		glClearColor(0.f, 0.f, 0.f, 1.f);
-
-		// Check for error
-		error = glGetError();
-		if (error != GL_NO_ERROR)
-		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
-
-		GLfloat LightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
-
-		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
-		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
-		lights[0].SetPos(0.0f, 0.0f, 2.5f);
-		lights[0].Init();
-
-		GLfloat MaterialAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
-
-		GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
-
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
-	}
-
-	// Projection matrix for
-	OnResize(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-
-	// Init the GLEW library
-	GLenum err = glewInit();
-	if (err != GLEW_OK)
-	{
-		CONSOLE_LOG("Glew library could not be initiated! Glew Error: %s\n", glewGetErrorString(err));
-		appLog->AddLog("Glew library could not be initiated! GLEW Error: %s\n", glewGetErrorString(err));
-		ret = false;
-	}
-
-	if (err == GLEW_OK)
-	{
-		CONSOLE_LOG("Using Glew %s\n", glewGetString(GLEW_VERSION));
-		appLog->AddLog("Using Glew %s\n", glewGetString(GLEW_VERSION));
-
-		// Current hardware and driver capabilities
-		CONSOLE_LOG("Vendor: %s", glGetString(GL_VENDOR));
-		CONSOLE_LOG("Renderer: %s", glGetString(GL_RENDERER));
-		CONSOLE_LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		CONSOLE_LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-		appLog->AddLog("Vendor: %s\n", glGetString(GL_VENDOR));
-		appLog->AddLog("Renderer: %s\n", glGetString(GL_RENDERER));
-		appLog->AddLog("OpenGL version supported %s\n", glGetString(GL_VERSION));
-		appLog->AddLog("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-	}
+	ret = InitOpenGL();
+	OnResize();
+	SetVsync(configModule["Vsync"].get<bool>());
 
 	return ret;
 }
@@ -152,25 +46,30 @@ bool Renderer3D::Awake(Json configModule)
 // PreUpdate: clear buffer
 bool Renderer3D::PreUpdate(float dt)
 {
-	SDL_RenderClear(engine->GetUI()->renderer);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	bool ret = true;
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	engine->GetCamera3D()->projectionIsDirty = true;
-	engine->GetCamera3D()->CalculateViewMatrix();
-	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
-	// light 0 on cam pos
-	lights[0].SetPos(engine->GetCamera3D()->position.x, engine->GetCamera3D()->position.y, engine->GetCamera3D()->position.z);
-
-	for (uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
-	return true;
+	Camera3D* currentCamera = engine->GetCamera3D();
+	if (currentCamera)
+	{
+		if (currentCamera->projectionIsDirty) {
+			RecalculateProjectionMatrix();
+			currentCamera->CalculateViewMatrix();
+		}
+			
+		
+	}
+	glLoadMatrixf((GLfloat*)currentCamera->viewMatrix.Transposed().ptr());
+	float3 cameraPos = float3::zero;
+	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
+	if (engine->GetCamera3D())
+	{
+		cameraPos = engine->GetCamera3D()->position;
+	}
+	else {
+		cameraPos = float3(0.0f, 20.0f, 0.0f);
+	}
+	return ret;
 }
 
 // PostUpdate present buffer to screen
@@ -204,6 +103,113 @@ bool Renderer3D::LoadConfiguration(Json& configModule)
 	return true;
 }
 
+bool Renderer3D::InitOpenGL()
+{
+	bool ret = true;
+	context = SDL_GL_CreateContext(engine->GetWindow()->GetWindow());
+	int contextMajorVersion, contextMinorVersion;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &contextMajorVersion);
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &contextMinorVersion);
+	if (!context)
+	{
+		CONSOLE_LOG("[ERROR] OpenGL context could not be created! SDL_ERROR: %s\n", SDL_GetError());
+		ret = false;
+	}
+	ret = InitGlew();
+	if (ret)
+	{
+		if (this->vsync) 
+		{
+			SDL_GL_SetSwapInterval(1) < 0 ?
+				CONSOLE_LOG("[ERROR] Unable to set Vsync! SDL Error: %s\n", SDL_GetError()) : CONSOLE_LOG("[STATUS] Vsync is activated!");
+		}
+		else
+		{
+			SDL_GL_SetSwapInterval(0) < 0 ?
+				CONSOLE_LOG("[ERROR] Unable to set frame update interval to immediate! SDL Error: %s\n", SDL_GetError()) : CONSOLE_LOG("[STATUS] Vsync is deactivated!");
+		}
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		glClearDepth(1.0f);
+		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		GLfloat LightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
+
+		lights[0].ref = GL_LIGHT0;
+		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
+		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
+		lights[0].SetPos(0.0f, 0.0f, 2.5f);
+		lights[0].Init();
+
+		GLfloat MaterialAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
+
+		GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
+
+		SetGLFlag(GL_DEPTH_TEST, true);
+		SetGLFlag(GL_CULL_FACE, true);
+		lights[0].Active(true);
+		SetGLFlag(GL_LIGHTING, true);
+		SetGLFlag(GL_COLOR_MATERIAL, true);
+		SetGLFlag(GL_TEXTURE_2D, true);
+
+
+
+		GLenum err = glGetError();
+		while (err != GL_NO_ERROR)
+		{
+			CONSOLE_LOG("OpenGl error: %d", err);
+			err = glGetError();
+		}
+	}
+
+	return ret;
+}
+
+bool Renderer3D::InitGlew()
+{
+	bool ret = true;
+
+	// Initializing glew.
+	GLuint GLEWerr = glewInit();
+	if (GLEWerr != GLEW_OK)
+	{
+		CONSOLE_LOG("[ERROR] GLEW could not initialize!: %s\n", glewGetErrorString(GLEWerr));
+		ret = false;
+	}
+	return ret;
+}
+
+void Renderer3D::SetGLFlag(GLenum flag, bool setTo)
+{
+	if (setTo != (bool)glIsEnabled(flag))
+	{
+		setTo ? glEnable(flag) : glDisable(flag);
+	}
+}
+
+void Renderer3D::RecalculateProjectionMatrix()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	if (engine->GetCamera3D())
+	{
+		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Renderer3D: Could not recalculate the projection matrix!Error : Current Camera was nullptr.");
+	}
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
 // Method to receive and manage events
 void Renderer3D::OnNotify(const Event& event)
 {
@@ -229,16 +235,21 @@ void Renderer3D::SetVsync(bool vsync)
 	}
 }
 
-void Renderer3D::OnResize(int width, int height)
+void Renderer3D::OnResize()
 {
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+	if (engine->GetCamera3D())
+	{
+		//engine->GetCamera3D()->aspectRatio = engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight();
+		engine->GetCamera3D()->SetAspectRatio(engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight());
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Renderer 3D: Could not recalculate the aspect ratio! Error: Current Camera was nullptr.");
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glLoadMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	}
+	RecalculateProjectionMatrix();
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 }
 
 // Debug ray for mouse picking

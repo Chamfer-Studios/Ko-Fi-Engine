@@ -404,3 +404,11 @@ GameObject* Camera3D::MousePicking()
 
 	return nullptr;
 }
+
+void Camera3D::SetAspectRatio(const float& aspectRatio)
+{
+	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
+	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
+	this->projectionIsDirty = true;
+	RecalculateProjection();
+}

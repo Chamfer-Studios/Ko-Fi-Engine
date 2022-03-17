@@ -29,6 +29,7 @@ public:
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;
 	GameObject* MousePicking();
+	void SetAspectRatio(const float& aspectRatio);
 
 public:
 	float3 right, up, front, position, reference;

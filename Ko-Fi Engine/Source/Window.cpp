@@ -280,7 +280,7 @@ void Window::SetWidth(int width)
 	SDL_assert(width >= 0);
 	this->width = (uint)width;
 	SDL_SetWindowSize(window, width, height);
-	engine->GetRenderer()->OnResize(width, height);
+	engine->GetRenderer()->OnResize();
 }
 
 void Window::SetHeight(int height)
@@ -288,7 +288,7 @@ void Window::SetHeight(int height)
 	SDL_assert(height >= 0);
 	this->height = (uint)height;
 	SDL_SetWindowSize(window, width, height);
-	engine->GetRenderer()->OnResize(width, height);
+	engine->GetRenderer()->OnResize();
 }
 
 void Window::SetIcon(const char* file)

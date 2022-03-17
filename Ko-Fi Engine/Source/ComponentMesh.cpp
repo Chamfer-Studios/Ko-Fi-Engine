@@ -405,7 +405,8 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	//};
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
-
+	glPushMatrix();
+	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
 	glBegin(GL_LINES);
 
 	// Bottom 1
@@ -451,6 +452,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glEnd();
 	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1.0f);
+	glPopMatrix();
 
 }
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
