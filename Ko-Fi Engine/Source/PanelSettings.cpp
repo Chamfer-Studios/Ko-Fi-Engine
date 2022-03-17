@@ -3,6 +3,7 @@
 #include "Editor.h"
 #include "Engine.h"
 #include "Window.h"
+#include "Physics.h"
 
 
 PanelSettings::PanelSettings(Editor* editor)
@@ -77,7 +78,22 @@ void PanelSettings::ShowPanel(bool* toggleSettingsPanel)
                 editor->engine->SaveConfiguration();
             }
         }
-
+        if (ImGui::CollapsingHeader("Physics##"))
+        {
+            ImGui::Text("Scene gravity");
+            ImGui::SameLine();
+            float grav = editor->engine->GetPhysics()->GetGravity();
+            if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f))
+            {
+                editor->engine->GetPhysics()->SetGravity(grav);
+                editor->engine->SaveConfiguration();
+            }
+            if (ImGui::Button("Default gravity##"))
+            {
+                editor->engine->GetPhysics()->SetGravity(9.81f);
+                editor->engine->SaveConfiguration();
+            }
+        }
     }
     ImGui::End();
 }

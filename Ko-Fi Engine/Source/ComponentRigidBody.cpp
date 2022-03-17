@@ -4,7 +4,10 @@ ComponentRigidBody::ComponentRigidBody(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
 
-	CreateDynamic();
+	if (!isStatic)
+		CreateDynamic();
+	else
+		CreateStatic();
 }
 
 ComponentRigidBody::~ComponentRigidBody()
@@ -25,19 +28,17 @@ bool ComponentRigidBody::Update(float dt)
 {
 	bool ret = true;
 
-
-
 	if (owner->GetEngine()->GetPhysics()->IsSimulating())
 	{
-		if (isKinematic)
+		if (!isStatic)
 		{
-
 			ret = RigidBodyUpdatesTransform();
 
 			physx::PxVec3 lVel = dynamicBody->getLinearVelocity();
+			physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
+			// Speed limiters
 			if (lVel.y > 30.0f) lVel.y = 30.0f;
 			linearVel = { lVel.x, lVel.y, lVel.z };
-			physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
 			angularVel = { aVel.x, aVel.y, aVel.z };
 
 			// Check each frame if rigid body attributes have a pending update
@@ -60,22 +61,22 @@ bool ComponentRigidBody::Update(float dt)
 // Called whenever a rigid body attribute is changed
 void ComponentRigidBody::UpdatePhysicsValues()
 {
-	if (isKinematic)
+	if (!isStatic)
 	{
 		// Delete the actor in the scene, to create a newer updated version
-		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
+		if (dynamicBody)
+			owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
 
 		// Set mass & density
-		dynamicBody->setMass(mass);
 		physx::PxRigidBodyExt::updateMassAndInertia(*dynamicBody, density);
+		dynamicBody->setMass(mass);
 
 		// Set gravity & static/kinematic
 		dynamicBody->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, !useGravity);
-		dynamicBody->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, !isKinematic);
+		dynamicBody->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, isKinematic);
 
 		// Set velocities
 		dynamicBody->setLinearVelocity(physx::PxVec3(linearVel.x, linearVel.y, linearVel.z));
-		physx::PxVec3 asd = dynamicBody->getLinearVelocity();
 		dynamicBody->setAngularVelocity(physx::PxVec3(angularVel.x, angularVel.y, angularVel.z));
 		dynamicBody->setLinearDamping(linearDamping);
 		dynamicBody->setAngularDamping(angularDamping);
@@ -98,7 +99,8 @@ void ComponentRigidBody::UpdatePhysicsValues()
 	else
 	{
 		// Delete the actor in the scene, to create a newer updated version
-		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
+		if (staticBody)
+			owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
 
 		// Set gravity & static/kinematic
 		staticBody->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, !useGravity);
@@ -114,7 +116,7 @@ void ComponentRigidBody::UpdatePhysicsValues()
 bool ComponentRigidBody::TransformUpdatesRigidBody()
 {
 	physx::PxRigidActor* body = nullptr;
-	if (isKinematic)
+	if (!isStatic)
 		body = dynamicBody;
 	else body = staticBody;
 
@@ -139,7 +141,7 @@ bool ComponentRigidBody::TransformUpdatesRigidBody()
 bool ComponentRigidBody::RigidBodyUpdatesTransform()
 {
 	physx::PxRigidActor* body = nullptr;
-	if (isKinematic)
+	if (!isStatic)
 		body = dynamicBody;
 	else body = staticBody;
 
@@ -152,8 +154,6 @@ bool ComponentRigidBody::RigidBodyUpdatesTransform()
 	float3 rot = rotation.ToEulerXYZ();
 	float3 scale = owner->GetTransform()->GetScale();
 
-	//float4x4 newTransform = float4x4::FromTRS(position, rotation, scale);
-	//owner->GetTransform()->SetGlobalTransform(newTransform);
 	owner->GetTransform()->SetPosition(position);
 	owner->GetTransform()->SetRotation(rot);
 	owner->GetTransform()->SetScale(scale);
@@ -173,7 +173,7 @@ void ComponentRigidBody::Set2DVelocity(float2 vel)
 
 void ComponentRigidBody::StopMovement()
 {
-	if (!isKinematic)
+	if (isStatic)
 		return;
 
 	dynamicBody->setLinearVelocity(physx::PxVec3(0, 0, 0));
@@ -190,11 +190,17 @@ void ComponentRigidBody::Save(Json& json) const
 {
 	json["type"] = "rigidBody";
 
+	json["is_static"] = isStatic;
 	json["is_kinematic"] = isKinematic;
 	json["use_gravity"] = useGravity;
 
 	json["mass"] = mass;
 	json["density"] = density;
+
+	json["linear_velocity"] = { linearVel.x, linearVel.y, linearVel.z };
+	json["linear_damping"] = linearDamping;
+	json["angular_velocity"] = { angularVel.x, angularVel.y, angularVel.z };
+	json["angular_damping"] = angularDamping;
 
 	json["freeze_position_x"] = freezePositionX;
 	json["freeze_position_y"] = freezePositionY;
@@ -202,16 +208,24 @@ void ComponentRigidBody::Save(Json& json) const
 	json["freeze_rotation_x"] = freezeRotationX;
 	json["freeze_rotation_y"] = freezeRotationY;
 	json["freeze_rotation_z"] = freezeRotationZ;
-
-	json["gravity"] = owner->GetEngine()->GetPhysics()->GetGravity();
 }
 void ComponentRigidBody::Load(Json& json)
 {
+	isStatic = json.at("is_static");
 	isKinematic = json.at("is_kinematic");
 	useGravity = json.at("use_gravity");
 
 	mass = json.at("mass");
 	density = json.at("density");
+
+	std::vector<float> values = json.at("linear_velocity").get<std::vector<float>>();
+	linearVel = float3(values[0], values[1], values[2]);
+	values.clear();
+	linearDamping = json.at("linear_damping");
+	values = json.at("angular_velocity").get<std::vector<float>>();
+	angularVel = float3(values[0], values[1], values[2]);
+	values.clear();
+	angularDamping = json.at("angular_damping");
 
 	freezePositionX = json.at("freeze_position_x");
 	freezePositionY = json.at("freeze_position_y");
@@ -220,10 +234,7 @@ void ComponentRigidBody::Load(Json& json)
 	freezeRotationY = json.at("freeze_rotation_y");
 	freezeRotationZ = json.at("freeze_rotation_z");
 
-	float grav = json.at("gravity");
-	owner->GetEngine()->GetPhysics()->SetGravity(grav);
-
-	if (isKinematic)
+	if (!isStatic)
 		CreateDynamic();
 	else CreateStatic();
 
@@ -235,82 +246,20 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
-	if (IsStatic())
+	if (isStatic)
 	{
 		if (ImGui::CollapsingHeader("Static body"))
 		{
+			// ---------------------------------------------------------------------------------
 			if (ImGui::Button("Make Dynamic"))
 				SetDynamic();
-
-			// Inspector's gravity
 			ImGui::Separator();
-			ImGui::Text("Use gravity");
-			ImGui::SameLine();
-			if (ImGui::Checkbox("##gravstatic", &useGravity))
-			{
-				hasUpdated = true;
-			}
-			ImGui::Text("Scene gravity");
-			ImGui::SameLine();
-			float grav = owner->GetEngine()->GetPhysics()->GetGravity();
-			if (ImGui::DragFloat("##gravfloatstatic", &grav, 0.1f, -10.0f, 10.0f))
-			{
-				owner->GetEngine()->GetPhysics()->SetGravity(grav);
-			}
-			if (ImGui::Button("Default gravity"))
-				owner->GetEngine()->GetPhysics()->SetGravity(9.81f);
-			ImGui::Separator();
-		}
-
-		return ret;
-	}
-	else 
-	{
-		if (ImGui::CollapsingHeader("Rigid body"))
-		{
-			if (ImGui::Button("Make Static"))
-				SetStatic();
+			// ---------------------------------------------------------------------------------
 			
-			// Inspector's gravity
-			ImGui::Separator();
-			ImGui::Text("Use gravity");
-			ImGui::SameLine();
-			if (ImGui::Checkbox("##gravdyn", &useGravity))
+			// ---------------------------------------------------------------------------------
+			if (ImGui::TreeNodeEx("Constraints"))
 			{
-				hasUpdated = true;
-			}
-			ImGui::Text("Scene gravity");
-			ImGui::SameLine();
-			float grav = owner->GetEngine()->GetPhysics()->GetGravity();
-			if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f))
-			{
-				owner->GetEngine()->GetPhysics()->SetGravity(grav);
-			}
-			if (ImGui::Button("Default gravity"))
-				owner->GetEngine()->GetPhysics()->SetGravity(9.81f);
-			ImGui::Separator();
-
-			// Dynamic body attributes
-			ImGui::Text("Mass");
-			ImGui::SameLine();
-			float newMass = mass;
-			if (ImGui::DragFloat("##mass", &newMass, 0.1f, 0.0f, 20.0f))
-			{
-				mass = newMass;
-				hasUpdated = true;
-			}
-			ImGui::Text("Density");
-			ImGui::SameLine();
-			float newDen = density;
-			if (ImGui::DragFloat("##density", &newDen, 0.1f, 0.0f, 20.0f))
-			{
-				density = newDen;
-				hasUpdated = true;
-			}
-			if (ImGui::CollapsingHeader("Constraints"))
-			{
-				ImGui::Text("Freeze position	");
-				ImGui::SameLine();
+				ImGui::Text("Freeze position:");
 				if (ImGui::Checkbox("X##X", &freezePositionX))
 					hasUpdated = true;
 				ImGui::SameLine();
@@ -319,8 +268,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Z##Z", &freezePositionZ))
 					hasUpdated = true;
-				ImGui::Text("Freeze rotation	");
-				ImGui::SameLine();
+				ImGui::Text("Freeze rotation:");
 				if (ImGui::Checkbox("X##X2", &freezeRotationX))
 					hasUpdated = true;
 				ImGui::SameLine();
@@ -329,7 +277,106 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Z##Z2", &freezeRotationZ))
 					hasUpdated = true;
+
+				ImGui::TreePop();
 			}
+			ImGui::Separator();
+			// ---------------------------------------------------------------------------------
+		}
+	}
+	else 
+	{
+		if (ImGui::CollapsingHeader("Rigid body"))
+		{
+			// ---------------------------------------------------------------------------------
+			if (ImGui::Button("Make Static"))
+				SetStatic();
+			ImGui::Separator();
+			// ---------------------------------------------------------------------------------
+
+			// ---------------------------------------------------------------------------------
+			ImGui::Text("Use gravity");
+			ImGui::SameLine();
+			bool newUseGravity = useGravity;
+			if (ImGui::Checkbox("##useGravity", &newUseGravity))
+				SetUseGravity(newUseGravity);
+
+			ImGui::Text("Is Kinematic");
+			ImGui::SameLine();
+			bool newIsKinematic = isKinematic;
+			if (ImGui::Checkbox("##isKinematic", &newIsKinematic))
+				SetKinematic(newIsKinematic);
+
+			ImGui::Text("Mass");
+			ImGui::SameLine();
+			float newMass = mass;
+			if (ImGui::DragFloat("##mass", &newMass, 0.1f, 0.0f, 20.0f))
+				SetMass(newMass);
+
+			ImGui::Text("Density");
+			ImGui::SameLine();
+			float newDen = density;
+			if (ImGui::DragFloat("##density", &newDen, 0.1f, 0.0f, 20.0f))
+				SetDensity(newDen);
+			ImGui::Separator();
+			// ---------------------------------------------------------------------------------
+
+			// ---------------------------------------------------------------------------------
+			if (ImGui::TreeNodeEx("Constraints"))
+			{
+				ImGui::Text("Freeze position:");
+				if (ImGui::Checkbox("X##X", &freezePositionX))
+					hasUpdated = true;
+				ImGui::SameLine();
+				if (ImGui::Checkbox("Y##Y", &freezePositionY))
+					hasUpdated = true;
+				ImGui::SameLine();
+				if (ImGui::Checkbox("Z##Z", &freezePositionZ))
+					hasUpdated = true;
+				ImGui::Text("Freeze rotation:");
+				if (ImGui::Checkbox("X##X2", &freezeRotationX))
+					hasUpdated = true;
+				ImGui::SameLine();
+				if (ImGui::Checkbox("Y##Y2", &freezeRotationY))
+					hasUpdated = true;
+				ImGui::SameLine();
+				if (ImGui::Checkbox("Z##Z2", &freezeRotationZ))
+					hasUpdated = true;
+				ImGui::TreePop();
+			}
+			ImGui::Separator();
+			// ---------------------------------------------------------------------------------
+
+			// ---------------------------------------------------------------------------------
+			if (ImGui::TreeNodeEx("Velocity info (read only)"))
+			{
+				ImGui::Text("Speed");
+				ImGui::SameLine();
+				float speed = GetSpeed();
+				ImGui::DragFloat("##speed", &speed, 0.1f, ImGuiInputTextFlags_ReadOnly);
+				ImGui::Text("Linear Velocity");
+				ImGui::SameLine();
+				float3 vel2 = GetLinearVelocity();
+				float vel[3] = { vel2.x, vel2.y, vel2.z };
+				ImGui::InputFloat3("##linearvelinput", vel, "%.3f", ImGuiInputTextFlags_ReadOnly);
+				ImGui::Text("Linear Damping");
+				ImGui::SameLine();
+				float newLinDamp = GetLinearDamping();
+				ImGui::DragFloat("##lineardamping", &newLinDamp, 0.1f, ImGuiInputTextFlags_ReadOnly);
+				ImGui::Text("Angular Velocity");
+				ImGui::SameLine();
+				vel2 = GetAngularVelocity();
+				float angVel[3] = { vel2.x, vel2.y, vel2.z };
+				ImGui::InputFloat3("##angularvelinput", angVel, "%.3f", ImGuiInputTextFlags_ReadOnly);
+				ImGui::Text("Angular Damping");
+				ImGui::SameLine();
+				float newAngDamp = GetAngularDamping();
+				ImGui::DragFloat("##angulardamping", &newAngDamp, 0.1f, ImGuiInputTextFlags_ReadOnly);
+
+				ImGui::TreePop();
+			}
+			ImGui::Separator();
+			// ---------------------------------------------------------------------------------
 		}
 	}
 
@@ -339,6 +386,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 
 void ComponentRigidBody::SetStatic()
 {
+	isStatic = true;
 	isKinematic = false;
 	useGravity = false;
 	hasUpdated = true;
@@ -388,7 +436,8 @@ void ComponentRigidBody::SetStatic()
 
 void ComponentRigidBody::SetDynamic()
 {
-	isKinematic = true;
+	isStatic = false;
+	isKinematic = false;
 	useGravity = true;
 	hasUpdated = true;
 
@@ -437,6 +486,9 @@ void ComponentRigidBody::SetDynamic()
 
 void ComponentRigidBody::CreateDynamic()
 {
+	isStatic = false;
+	hasUpdated = true;
+
 	float3 pos = owner->GetTransform()->GetPosition();
 	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
 
@@ -453,14 +505,13 @@ void ComponentRigidBody::CreateDynamic()
 		LOG_BOTH("Could not create rigid body!!\n");
 		return;
 	}
-	/*owner->GetEngine()->GetPhysics()->AddActor(dynamicBody, owner);*/
-
-	// We apply first physics to the actor before it is added to the actor vector
-	UpdatePhysicsValues();
 }
 
 void ComponentRigidBody::CreateStatic()
 {
+	isStatic = true;
+	hasUpdated = true;
+
 	float3 pos = owner->GetTransform()->GetPosition();
 	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
 
@@ -477,8 +528,4 @@ void ComponentRigidBody::CreateStatic()
 		LOG_BOTH("Could not create static rigid body!!\n");
 		return;
 	}
-	/*owner->GetEngine()->GetPhysics()->AddActor(dynamicBody, owner);*/
-
-	// We apply first physics to the actor before it is added to the actor vector
-	UpdatePhysicsValues();
 }

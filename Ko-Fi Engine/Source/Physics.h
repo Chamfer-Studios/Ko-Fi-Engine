@@ -40,9 +40,7 @@ public:
 	bool Awake(Json configModule); // Not used, scene gravity is not serialized
 	// --------------------------------------------------
 	bool Start();
-	bool PreUpdate(float dt); // Not used
 	bool Update(float dt);
-	bool PostUpdate(float dt); // Not used
 	bool CleanUp();
 	// Engine config serialization --------------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
@@ -78,7 +76,7 @@ private:
 	physx::PxU32 nbThreads = 4;
 
 	// Modificable physics attributes
-	float gravity = 0.2f;
+	float gravity = 9.81f;
 };
 
 #endif // !__MODULE_PHYSICS_H__

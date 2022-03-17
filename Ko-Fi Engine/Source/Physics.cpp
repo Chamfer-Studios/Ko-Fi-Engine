@@ -12,10 +12,13 @@ Physics::~Physics()
 {
 }
 
-// Serialization: Not used, scene gravity is not serialized
 bool Physics::Awake(Json configModule)
 {
-	return true;
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
 }
 
 bool Physics::Start()
@@ -29,12 +32,6 @@ bool Physics::Start()
 	LOG_BOTH("Finished initializing Module Physics ---------------------------------------");
 
 	return ret;
-}
-
-// Not used
-bool Physics::PreUpdate(float dt)
-{
-	return true;
 }
 
 bool Physics::Update(float dt)
@@ -52,12 +49,6 @@ bool Physics::Update(float dt)
 		scene->fetchResults(true);
 	}
 
-	return true;
-}
-
-// Not used
-bool Physics::PostUpdate(float dt)
-{
 	return true;
 }
 

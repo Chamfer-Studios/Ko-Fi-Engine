@@ -47,8 +47,9 @@ public:
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 
 	// Getters & setters
-	inline physx::PxRigidActor* GetRigidBody() { if (isKinematic) return staticBody; else return dynamicBody; }
+	inline physx::PxRigidActor* GetRigidBody() { if (isStatic) return staticBody; else return dynamicBody; }
 
+	inline const float GetSpeed() { return linearVel.Length(); }
 	inline const float3 GetLinearVelocity() { return linearVel; }
 	inline void SetLinearVelocity(const float3 newLinearVel) { linearVel = newLinearVel; hasUpdated = true; }
 	inline const float3 GetAngularVelocity() { return angularVel; }
@@ -58,7 +59,6 @@ public:
 	inline const float GetAngularDamping() { return angularDamping; }
 	inline void SetAngularDamping(const float newAngularDamping) { angularDamping = newAngularDamping; hasUpdated = true; }
 
-	// Rigid body modificable attributes getters & setters
 	inline const float GetMass() { return mass; }
 	inline void SetMass(const float newMass) { mass = newMass; hasUpdated = true; }
 	inline const float GetDensity() { return density; }
@@ -66,8 +66,10 @@ public:
 
 	inline const bool GetUseGravity() { return useGravity; }
 	inline void SetUseGravity(const bool newGravity) { useGravity = newGravity; hasUpdated = true; }
-	inline bool IsStatic() const { return !isKinematic; }
 	inline bool IsKinematic() const { return isKinematic; }
+	inline void SetKinematic(const bool newIsKinematic) { isKinematic = newIsKinematic; hasUpdated = true; }
+	inline bool IsStatic() const { return isStatic; }
+	inline bool IsDynamic() const { return !isStatic; }
 	void SetStatic();
 	void SetDynamic();
 	void CreateDynamic();
@@ -96,7 +98,8 @@ private:
 	float density = 1.0f;
 
 	bool useGravity = true;
-	bool isKinematic = true;
+	bool isStatic = false;
+	bool isKinematic = false;
 
 	bool freezePositionX = false;
 	bool freezePositionY = false;
