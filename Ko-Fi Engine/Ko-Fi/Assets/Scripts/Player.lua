@@ -9,7 +9,7 @@ State = {
 currentState = State.IDLE
 speed = 25  -- consider Start()
 isDoubleShot = false
-hp = 3
+bullets = 10
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
@@ -64,10 +64,14 @@ function Update(dt)
 						currentState = State.PRONE
 					end	
 			end
+			if (GetInput(10) == KEY_STATE.KEY_DOWN) then
+				Reload()
+			end
 			if (GetInput(4) == KEY_STATE.KEY_DOWN) 
 				then
-					if (currentItem.type == ItemType.ITEM_GUN) then
+					if (currentItem.type == ItemType.ITEM_GUN and bullets > 0) then
 						CreateBullet()
+						bullets = bullets - 1
 					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
 						print("Knife used")
 					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
@@ -88,17 +92,16 @@ function MoveToDestination(dt)
 	if (d > 0.5)
 		then 
 			local s = speed
-
 			if (currentState == State.CROUCH) then
 				s = speed * 0.66
 			elseif (currentState == State.PRONE) then
 				s = speed * 0.33
 			end
 
-			--movement
+			-- Movement
 			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * s * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * s * dt))
 
-			--rotation
+			-- Rotation
 			vec2 = Normalize(vec2, d)
 			local rad = math.acos(vec2[2])
 			if(vec2[1] < 0)	then
@@ -108,6 +111,10 @@ function MoveToDestination(dt)
 		else
 			destination = nil
 	end
+end
+
+function Reload()
+	bullets = 10
 end
 
 -------------------- Setters ---------------------
