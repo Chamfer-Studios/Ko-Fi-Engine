@@ -172,7 +172,7 @@ float2 ComponentTransform2D::GetNormalizedPosition()
 	normalizedPosition = normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset();
 
 	float2 normalizedSize = GetCanvas()->LogicalToViewport(size);
-	return float2(normalizedPosition.x - (1.0f - mask.x) * (normalizedSize.x * pivot.x), normalizedPosition.y - (1.0f - mask.y) * (normalizedSize.y * pivot.y));
+	return float2(normalizedPosition.x - (1.0f - mask.x) * (normalizedSize.x * pivot.x), normalizedPosition.y - (1.0f - mask.y) * (normalizedSize.y * pivot.y)); // VODOO
 }
 
 float2 ComponentTransform2D::GetNormalizedSize()
