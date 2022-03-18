@@ -209,10 +209,7 @@ void GameObject::AttachChild(GameObject* child)
 
 	child->parent = this;
 	children.push_back(child);
-	if (child->transform != nullptr) {
-		child->transform->NewAttachment();
-		child->PropagateTransform();
-	}
+
 }
 
 void GameObject::RemoveChild(GameObject* child)
@@ -621,4 +618,9 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		this->AttachChild(go);
 	}
 	return true;
+}
+
+bool GameObject::IsSelected()
+{
+	return engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == uid;
 }

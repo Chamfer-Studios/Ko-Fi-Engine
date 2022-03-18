@@ -145,12 +145,12 @@ bool ComponentMesh::PostUpdate(float dt)
 			// Matrices
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+			GLint view_location = glGetUniformLocation(shader, "view");
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
+
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-
-			GLint view_location = glGetUniformLocation(shader, "view");
-			glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
 			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
@@ -218,10 +218,11 @@ bool ComponentMesh::PostUpdate(float dt)
 			int GOID = 0;
 
 			GOID = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
-			GenerateGlobalBoundingBox();
-		
-			DrawMouseSelection(); // Draw AABB if Selected with Mosue
+			
 			glUseProgram(0);
+			GenerateGlobalBoundingBox();
+
+			DrawMouseSelection(); // Draw AABB if Selected with Mosue
 		}
 	}
 	return ret;

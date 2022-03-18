@@ -272,14 +272,14 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	//}
 }
 
-bool I_Scene::Save(Scene* scene)
+bool I_Scene::Save(Scene* scene,const char* customName)
 {
 	bool ret = false;
 
 	JsonHandler jsonHandler;
 	Json jsonFile;
 
-	const char* name = scene->name.c_str();
+	const char* name = customName == nullptr? scene->name.c_str(): customName;
 	std::vector<GameObject*> gameObjectList = scene->gameObjectList;
 
 	jsonFile[name];

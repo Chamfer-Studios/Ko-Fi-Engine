@@ -57,9 +57,10 @@ bool Camera3D::Update(float dt)
 
 	float3 newPos(0, 0, 0);
 	float speed = cameraSpeed * dt;
-	bool isWindowFocused = engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused();
-	if (!isWindowFocused) return true;
-
+	
+	if (engine->GetEditor()->GetPanel<PanelViewport>())
+		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
+			return true;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
@@ -223,10 +224,10 @@ void Camera3D::LookAt(const float3& point)
 }
 
 // -----------------------------------------------------------------
-void Camera3D::CalculateViewMatrix()
+void Camera3D::CalculateViewMatrix(bool ortho)
 {
 	if (projectionIsDirty)
-		RecalculateProjection();
+		RecalculateProjection(ortho);
 
 	cameraFrustum.pos = position;
 	cameraFrustum.front = front.Normalized();
@@ -236,13 +237,22 @@ void Camera3D::CalculateViewMatrix()
 	viewMatrix = cameraFrustum.ViewMatrix();
 }
 
-void Camera3D::RecalculateProjection()
+void Camera3D::RecalculateProjection(bool ortho)
 {
-	cameraFrustum.type = FrustumType::PerspectiveFrustum;
-	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-	cameraFrustum.farPlaneDistance = farPlaneDistance;
-	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
-	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+	if (!ortho) {
+		cameraFrustum.type = FrustumType::PerspectiveFrustum;
+		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+		cameraFrustum.farPlaneDistance = farPlaneDistance;
+		cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
+		cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+	}
+	else {
+		cameraFrustum.type = FrustumType::OrthographicFrustum;
+		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+		cameraFrustum.farPlaneDistance = farPlaneDistance;
+		cameraFrustum.orthographicWidth = engine->GetEditor()->lastViewportSize.x;
+		cameraFrustum.orthographicHeight = engine->GetEditor()->lastViewportSize.y;
+	}
 }
 
 void Camera3D::OnGui()
@@ -380,7 +390,7 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 
 					for (GameObject* go : sceneGameObjects)
 					{
-						if (gameObject != go)
+						if (gameObject != go && engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == go->GetUID())
 						{
 							ComponentScript* script = go->GetComponent<ComponentScript>();
 							if (script != nullptr)

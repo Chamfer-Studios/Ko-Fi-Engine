@@ -12,6 +12,8 @@ public:
 
 	EngineConfig()
 	{
+		authors = "";
+		license = "";
 		title = "";
 		organization = "";
 		frameCount = 0;
@@ -21,6 +23,8 @@ public:
 		cappedMs = -1;
 	}
 
+	std::string authors;
+	std::string license;
 	std::string title;
 	std::string organization;
 	uint64 frameCount = 0;

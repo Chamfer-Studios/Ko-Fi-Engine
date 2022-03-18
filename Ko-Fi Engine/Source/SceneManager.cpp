@@ -19,6 +19,7 @@
 #include "Camera3D.h"
 #include "PanelViewport.h"
 #include "Log.h"
+#include "Scripting.h"
 
 #include "Globals.h"
 
@@ -177,6 +178,7 @@ void SceneManager::OnPlay()
 		if (script != nullptr)
 		{
 			script->ReloadScript();
+			script->handler->lua["Start"]();
 		}
 	}
 }

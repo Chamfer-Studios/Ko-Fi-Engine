@@ -79,12 +79,13 @@ public:
 
 	KoFiEngine* GetEngine() const;
 	void SetEngine(KoFiEngine* engine);
-
+	
 	bool PrefabSaveJson();
 	bool PrefabSave(Json& jsonFile);
 	bool LoadPrefabJson(const char* path);
 	bool LoadPrefab(Json& jsonFile);
 
+	bool IsSelected();
 
 public:
 	std::string name;
