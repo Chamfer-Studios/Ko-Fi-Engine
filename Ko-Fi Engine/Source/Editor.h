@@ -22,6 +22,7 @@ class PanelAssets;
 class PanelNodeEditor;
 class PanelTextEditor;
 class PanelSettings;
+class PanelNavigation;
 
 class GameObject;
 
@@ -110,6 +111,7 @@ private:
 	PanelNodeEditor* panelNodeEditor = nullptr;
 	PanelTextEditor* panelTextEditor = nullptr;
 	PanelSettings* panelSettings = nullptr;
+	PanelNavigation* panelNavigation = nullptr;
 	
 	bool isSceneWindowClicked = false;
 

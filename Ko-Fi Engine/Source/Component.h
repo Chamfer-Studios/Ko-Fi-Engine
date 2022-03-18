@@ -24,6 +24,7 @@ enum class ComponentType
 	BUTTON,
 	TEXT,
 	TRANSFORM,
+	WALKABLE,
 	INFO
 };
 

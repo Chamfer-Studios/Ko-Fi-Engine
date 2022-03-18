@@ -12,6 +12,7 @@
 #include "ComponentCollider.h"
 #include "ComponentMaterial.h"
 #include "ComponentScript.h"
+#include "ComponentWalkable.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -193,6 +194,11 @@ void GameObject::AddComponentByType(ComponentType componentType)
 			this->CreateComponent<ComponentRigidBody>();
 			break;
 		}	
+		case ComponentType::WALKABLE:
+		{
+			this->CreateComponent<ComponentWalkable>();
+			break;
+		}
 		
 	}
 }

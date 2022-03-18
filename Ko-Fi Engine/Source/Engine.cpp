@@ -16,6 +16,7 @@
 #include "ImGuiAppLog.h"
 #include "Physics.h"
 #include "CollisionDetector.h"
+#include "Navigation.h"
 
 #include <iostream>
 #include <sstream>
@@ -39,6 +40,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new Physics(this);
 	collisionDetector = new CollisionDetector(this);
+	navigation = new Navigation(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -49,6 +51,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(ui);
 	AddModule(physics);
 	AddModule(collisionDetector);
+	AddModule(navigation);
 	AddModule(sceneManager);
 	AddModule(viewportBuffer);
 	AddModule(editor);
@@ -452,4 +455,9 @@ UI* KoFiEngine::GetUI() const
 CollisionDetector* KoFiEngine::GetCollisionDetector() const
 {
 	return this->collisionDetector;
+}
+
+Navigation* KoFiEngine::GetNavigation() const
+{
+	return this->navigation;
 }

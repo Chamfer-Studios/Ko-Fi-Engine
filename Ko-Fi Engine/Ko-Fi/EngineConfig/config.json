@@ -19,6 +19,7 @@
     },
     "SceneManager": null,
     "UI": null,
+    "Navigation": null,
     "ViewportFrameBuffer": null,
     "Window": {
         "Borderless": false,
