@@ -68,13 +68,31 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh)
 		for (uint j = 0; j < aiMesh->mNumVertices; ++j)
 		{
 			mesh->texCoords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-			mesh->texCoords[j * 2 + 1] = 1.0f - aiMesh->mTextureCoords[0][j].y;
+			mesh->texCoords[j * 2 + 1] =  aiMesh->mTextureCoords[0][j].y;
 		}
 
 		CONSOLE_LOG("[STATUS] Imported %u texture coordinates!", aiMesh->mNumVertices * 2);
 	}
 	else
 		mesh->texCoords = 0;
+	
+
+	if (aiMesh->HasBones())
+	{
+		for (int i = 0; i < aiMesh->mNumBones; i++)
+		{
+			
+
+			aiBone* bone = aiMesh->mBones[i];
+			for (int j = 0; j < bone->mNumWeights; j++)
+			{
+				
+				const aiVertexWeight& vw = bone->mWeights[j];
+				bones.resize(aiMesh->mNumVertices*4);
+				CONSOLE_LOG("%d: vertex id %d weight %.2f\n",j,vw.mVertexId,vw.mWeight);
+			}
+		}
+	}
 
 	mesh->SetUpMeshBuffers();
 

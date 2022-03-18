@@ -53,8 +53,7 @@ bool I_Scene::Import(const char* path)
 
 	if (path == nullptr)
 		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
-
-	const aiScene* assimpScene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* assimpScene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs );
 
 	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
 	{

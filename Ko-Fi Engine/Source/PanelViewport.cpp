@@ -83,7 +83,7 @@ bool PanelViewport::Update()
 				{
 					std::string path = (const char*)payload->Data;
 
-					if (path.find(".fbx") != std::string::npos)
+					if (path.find(".fbx") != std::string::npos || path.find(".md5mesh") != std::string::npos)
 					{
 						Importer::GetInstance()->sceneImporter->Import(path.c_str());
 					}

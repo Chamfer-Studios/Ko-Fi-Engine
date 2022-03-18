@@ -68,7 +68,7 @@ void PanelChooser::ShowPanel(const char* path,const char* extension)
 			chooserState = READY_TO_CLOSE;
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
-		const char* extensions[] = { "fbx", "bmp","png","jpg","glsl","milk","mat"};
+		const char* extensions[] = {"obj","md5mesh", "fbx", "bmp","png","jpg","glsl","milk","mat"};
 		ImGui::PushItemWidth(50.0f);
 		if (ImGui::BeginCombo("##combo", currentExtension)) // The second parameter is the label previewed before opening the combo.
 		{

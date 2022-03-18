@@ -97,16 +97,16 @@ void Mesh::SetUpMeshBuffers()
 	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
 	glBufferData(GL_ARRAY_BUFFER, verticesSizeBytes, vertices, GL_STATIC_DRAW);
 	// Add vertex position attribute to the vertex array object (VAO)
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(POSITION_LOCATION);
 
 	// Normals
 	glGenBuffers(1, &idNormal);
 	glBindBuffer(GL_ARRAY_BUFFER, idNormal);
 	glBufferData(GL_ARRAY_BUFFER, normalsSizeBytes, normals, GL_STATIC_DRAW);
 	// Add normals attribute to the vertex array object (VAO)
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(NORMAL_LOCATION);
 
 	// Texture coords
 	if (texCoords)
@@ -114,8 +114,8 @@ void Mesh::SetUpMeshBuffers()
 		glGenBuffers(1, &idTexCoord);
 		glBindBuffer(GL_ARRAY_BUFFER, idTexCoord);
 		glBufferData(GL_ARRAY_BUFFER, texCoordSizeBytes, texCoords, GL_STATIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(TEX_COORD_LOCATION);
 	}
 
 	// Unbind any vertex array we have binded before.
