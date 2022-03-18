@@ -340,12 +340,11 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-
 	glLoadIdentity();
 
-	//glMultMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());	// proj
+	//glMultMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());// proj
 															// *
-	glMultMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());	// view
+	glMultMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());// view
 															// *
 	glMultMatrixf(particle->transform.Transposed().ptr());	// model
 	

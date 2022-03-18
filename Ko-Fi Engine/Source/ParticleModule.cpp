@@ -77,9 +77,19 @@ void EmitterMovement::Spawn(Particle* particle, EmitterInstance* emitter)
 {
 	LCG random;
 	particle->direction = particle->direction.Lerp(initialDirection, finalDirection, random.Float());
+
+	float directionX = math::Lerp(initialDirection.x, finalDirection.x, random.Float());
+	float directionY = math::Lerp(initialDirection.y, finalDirection.y, random.Float());
+	float directionZ = math::Lerp(initialDirection.z, finalDirection.z, random.Float());
+	particle->direction = float3(directionX, directionY, directionZ);
+
 	particle->intensity = math::Lerp(initialIntensity,finalIntensity,random.Float());
 	particle->velocity = particle->direction * particle->intensity;
-	particle->acceleration = particle->acceleration.Lerp(initialAcceleration, finalAcceleration, random.Float());
+
+	float accelerationX = math::Lerp(initialAcceleration.x, finalAcceleration.x, random.Float());
+	float accelerationY = math::Lerp(initialAcceleration.y, finalAcceleration.y, random.Float());
+	float accelerationZ = math::Lerp(initialAcceleration.z, finalAcceleration.z, random.Float());
+	particle->acceleration = float3(accelerationX, accelerationY, accelerationZ);
 }
 
 bool EmitterMovement::Update(float dt, EmitterInstance* emitter)
