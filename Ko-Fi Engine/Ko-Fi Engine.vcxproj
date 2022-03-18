@@ -250,6 +250,7 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\PanelAssets.cpp" />
+    <ClCompile Include="Source\PanelCameraViewport.cpp" />
     <ClCompile Include="Source\PanelGame.cpp" />
     <ClCompile Include="Source\PanelNodeEditor.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
@@ -608,6 +609,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\PanelCameraViewport.h" />
     <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />

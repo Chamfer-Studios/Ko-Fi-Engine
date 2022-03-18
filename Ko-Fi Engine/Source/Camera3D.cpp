@@ -33,11 +33,6 @@ bool Camera3D::Start()
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
 
-	GameObject* cameraobj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("MainCamera");
-	cameraobj->CreateComponent<ComponentCamera>();
-	cameraobj->GetComponent<ComponentCamera>()->mainCamera = true;
-	SetGameCamera(cameraobj->GetComponent<ComponentCamera>());
-
 	engineCamera = new ComponentCamera(nullptr, true);
 	engineCamera->isEngineCamera = true;
 	
@@ -78,7 +73,9 @@ bool Camera3D::CleanUp()
 {
 	CONSOLE_LOG("Cleaning camera");
 	appLog->AddLog("Cleaning camera\n");
-
+	//RELEASE(currentCamera);
+	//RELEASE(engineCamera);
+	//RELEASE(gameCamera);
 	return true;
 }
 

@@ -26,6 +26,7 @@ public:
 	uint frameBuffer = 0;
 	uint renderBufferoutput = 0;
 	uint textureBuffer = 0;
+	uint textureBuffer2 = 0;
 	bool show_viewport_window = true;
 
 	KoFiEngine* engine = nullptr;

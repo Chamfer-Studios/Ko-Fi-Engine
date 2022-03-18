@@ -26,7 +26,6 @@ public:
 	void CalculateViewMatrix();
 	void RecalculateProjection();
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
-	void SetAsMainCamera();
 	// At the moment, all components are serialized (saved and loaded) in the same place (SceneManager),
 	// but we will consider to have functions in each of them in the future for better code organization.
 	//void OnSave(JSONWriter& writer) const override;
@@ -54,7 +53,7 @@ public:
 	bool drawFrustum = true;
 	bool frustumCulling = false;
 
-	bool mainCamera = false;
+	bool isMainCamera = false;
 	bool isEngineCamera = false;
 
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;

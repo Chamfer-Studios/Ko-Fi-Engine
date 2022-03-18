@@ -152,20 +152,13 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 		{
 			ResetFrustumCulling();
 		}
-		if (ImGui::Checkbox("Set As Main Camera", &mainCamera))
+		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
 		{
 			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 		}
 	}
 
 	return ret;
-}
-
-void ComponentCamera::SetAsMainCamera()
-{
-	owner->GetEngine()->GetCamera3D()->currentCamera = this;
-
-
 }
 
 void ComponentCamera::Save(Json& json) const
@@ -176,6 +169,7 @@ void ComponentCamera::Save(Json& json) const
 	json["far_plane_distance"] = farPlaneDistance;
 	json["draw_frustum"] = drawFrustum;
 	json["frustum_culling"] = frustumCulling;
+	json["isMainCamera"] = isMainCamera;
 }
 
 void ComponentCamera::Load(Json& json)
@@ -185,6 +179,9 @@ void ComponentCamera::Load(Json& json)
 	farPlaneDistance = json.at("far_plane_distance");
 	drawFrustum = json.at("draw_frustum");
 	frustumCulling = json.at("frustum_culling");
+	isMainCamera = json.at("isMainCamera");
+	if(isMainCamera)
+		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 }
 
 //void ModuleCamera3D::OnSave(JSONWriter& writer) const

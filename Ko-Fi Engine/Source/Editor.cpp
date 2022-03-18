@@ -18,6 +18,7 @@
 #include "PanelChooser.h"
 #include "PanelInspector.h"
 #include "PanelViewport.h"
+#include "PanelCameraViewport.h"
 #include "PanelGame.h"
 #include "PanelRuntimeState.h"
 #include "PanelAssets.h"
@@ -66,6 +67,11 @@ Editor::Editor(KoFiEngine* engine)
 	{
 		panelViewport = new PanelViewport(this, engine);
 		AddPanel(panelViewport);
+	}
+	if (panelsState.showCameraViewportWindow)
+	{
+		panelCameraViewport = new PanelCameraViewport(this, engine);
+		AddPanel(panelCameraViewport);
 	}
 	//------------------------------------
 	

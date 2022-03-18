@@ -27,6 +27,7 @@ bool ViewportFrameBuffer::Start()
 	glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glGenTextures(1, &textureBuffer);
+	//glGenTextures(1, &textureBuffer2);
 	glBindTexture(GL_TEXTURE_2D, textureBuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
