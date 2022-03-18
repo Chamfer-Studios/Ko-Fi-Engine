@@ -19,14 +19,14 @@ public:
 	I_Scene(KoFiEngine* engine);
 	~I_Scene();
 
-	bool Import(const char* path);
+	bool Import(const char* path, bool isPrefab = false);
 	bool Save(Scene* scene);
 	bool Load(Scene* scene, const char* name);
 
 	GameObject* ImportModel(const char* path);
 
 private:
-	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent);
+	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab = false);
 
 	const aiNode* ImportTransform(const aiNode* assimpNode, GameObject* gameObj);
 	bool IsDummyNode(const aiNode& assimpNode);
