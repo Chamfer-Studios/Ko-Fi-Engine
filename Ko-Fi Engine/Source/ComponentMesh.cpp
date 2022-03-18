@@ -40,73 +40,17 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 	time = 0.0f;
 }
 
-//ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
-//{
-//	switch (shape)
-//	{
-//	case Shape::CUBE:
-//		CopyParMesh(par_shapes_create_cube());
-//		break;
-//	case Shape::CYLINDER:
-//		CopyParMesh(par_shapes_create_cylinder(20, 20));
-//		break;
-//	case Shape::SPHERE:
-//		CopyParMesh(par_shapes_create_parametric_sphere(20, 20));
-//		break;
-//	}
-//}
-
-////ComponentMesh::ComponentMesh(GameObject* owner,COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
-////{
-////	this->subtype = subtype;
-////	this->owner = owner;
-////}
-////
-////ComponentMesh::ComponentMesh(GameObject* owner,std::string path) : Component(COMPONENT_TYPE::COMPONENT_MESH)
-////{
-////	this->path = path;
-////	LoadMesh(this->path.c_str());
-////	this->subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
-////	this->owner = owner;
-////}
 
 ComponentMesh::~ComponentMesh()
 {
 	RELEASE(mesh);
 }
 
-//void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
-//{
-//		this->mesh->num_vertices = parMesh->npoints;
-//		this->mesh->num_indices = parMesh->ntriangles * 3;
-//		this->mesh->num_normals = parMesh->ntriangles;
-//		this->mesh->vertices = new float[this->mesh->num_vertices * 3];
-//		this->mesh->normals = new float[this->mesh->num_normals * 3];
-//		this->mesh->indices = new uint[this->mesh->num_indices];
-//		par_shapes_compute_normals(parMesh);
-//		for (size_t i = 0; i < mesh->num_vertices; ++i)
-//		{
-//			memcpy(&mesh->vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);
-//			memcpy(&mesh->normals[i], &parMesh->normals[i * 3], sizeof(float) * 3);
-//		}
-//		for (size_t i = 0; i < mesh->num_indices; ++i)
-//		{
-//			mesh->indices[i] = parMesh->triangles[i];
-//		}
-//		memcpy(&mesh->normals[0], parMesh->normals, mesh->num_vertices);
-//
-//		par_shapes_free_mesh(parMesh);
-//
-//		mesh->SetUpMeshBuffers();
-//		//GenerateBuffers();
-//		//ComputeNormals();
-//		//GenerateBounds();
-//}
+
 
 bool ComponentMesh::Start()
 {
 	GenerateLocalBoundingBox();
-	//GenerateBounds();
 	return true;
 }
 
@@ -119,9 +63,7 @@ bool ComponentMesh::PostUpdate(float dt)
 {
 	bool ret = true;
 
-			GenerateGlobalBoundingBox();
 
-			DrawMouseSelection(); // Draw AABB if Selected with Mosue
 	return ret;
 }
 
@@ -350,34 +292,5 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 	}
 	return ret;
 }
-//bool ComponentMesh::GetRenderAABB()
-//{
-//	return renderAABB;
-//}
-//
-//void ComponentMesh::SetRenderAABB(bool newRenderAABB)
-//{
-//	this->renderAABB = newRenderAABB;
-//}
 
-//AABB ComponentMesh::GetGlobalAABB() const
-//{
-//	//AABB global = AABB(mesh->localAABB);
-//	//global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
-//	return mesh->localAABB;
-//}
-
-void ComponentMesh::DrawMouseSelection()
-{
-	int selectedId = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
-
-	if (selectedId == -1) return;
-
-
-	if ( selectedId == owner->GetUID()) // Draw Selected Object
-		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
-
-	//else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
-	//	DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
-}
 

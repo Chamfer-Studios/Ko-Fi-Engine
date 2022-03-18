@@ -13,7 +13,7 @@
 
 class GameObject;
 typedef unsigned int GLenum;
-
+class ComponentMesh;
 class Renderer3D : public Module
 {
 public:
@@ -35,10 +35,12 @@ public:
 	bool InitOpenGL();
 	bool InitGlew();
 	void SetGLFlag(GLenum flag, bool setTo);
+	void PassProjectionAndViewToRenderer();
 	void RecalculateProjectionMatrix();
 	
 	//Render Functions
 	void RenderScene();
+	void RenderBoundingBox(ComponentMesh* cMesh);
 	void RenderMeshes(GameObject* go);
 
 	void OnNotify(const Event& event);

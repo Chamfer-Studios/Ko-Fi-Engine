@@ -12,7 +12,6 @@
 #include "Engine.h"
 #include "Camera3D.h"
 #include "SceneManager.h"
-#include "ViewportFrameBuffer.h"
 #include "Editor.h"
 #include "Input.h"
 #include "ImGuiAppLog.h"
@@ -66,29 +65,6 @@ bool Renderer3D::Awake(Json configModule)
 bool Renderer3D::PreUpdate(float dt)
 {
 	bool ret = true;
-
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
-	Camera3D* currentCamera = engine->GetCamera3D();
-	if (currentCamera)
-	{
-		if (currentCamera->projectionIsDirty) {
-			RecalculateProjectionMatrix();
-			currentCamera->CalculateViewMatrix();
-		}
-			
-		glLoadMatrixf((GLfloat*)currentCamera->viewMatrix.Transposed().ptr());
-	}
-	float3 cameraPos = float3::zero;
-	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
-	if (engine->GetCamera3D())
-	{
-		cameraPos = engine->GetCamera3D()->position;
-	}
-	else {
-		cameraPos = float3(0.0f, 20.0f, 0.0f);
-	}
-
 	PrepareFrameBuffers();
 
 	return ret;
@@ -102,6 +78,7 @@ bool Renderer3D::Update(float dt)
 // PostUpdate present buffer to screen
 bool Renderer3D::PostUpdate(float dt)
 {
+	PassProjectionAndViewToRenderer();
 	RenderScene();
 	UnbindFrameBuffers();
 	SDL_GL_SwapWindow(engine->GetWindow()->GetWindow());
@@ -222,6 +199,31 @@ void Renderer3D::SetGLFlag(GLenum flag, bool setTo)
 	}
 }
 
+void Renderer3D::PassProjectionAndViewToRenderer()
+{
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	Camera3D* currentCamera = engine->GetCamera3D();
+	if (currentCamera)
+	{
+		if (currentCamera->projectionIsDirty) {
+			RecalculateProjectionMatrix();
+			currentCamera->CalculateViewMatrix();
+		}
+
+		glLoadMatrixf((GLfloat*)currentCamera->viewMatrix.Transposed().ptr());
+	}
+	float3 cameraPos = float3::zero;
+	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
+	if (engine->GetCamera3D())
+	{
+		cameraPos = engine->GetCamera3D()->position;
+	}
+	else {
+		cameraPos = float3(0.0f, 20.0f, 0.0f);
+	}
+}
+
 void Renderer3D::RecalculateProjectionMatrix()
 {
 	glMatrixMode(GL_PROJECTION);
@@ -246,8 +248,18 @@ void Renderer3D::RenderScene()
 		if (cMesh)
 		{
 			RenderMeshes(go);
+			RenderBoundingBox(cMesh);
 		}
 	}
+}
+
+void Renderer3D::RenderBoundingBox(ComponentMesh* cMesh)
+{
+	cMesh->GenerateGlobalBoundingBox();
+	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
+	if (selectedId == -1) return;
+	if (selectedId == cMesh->owner->GetUID())
+		cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
 }
 
 void Renderer3D::RenderMeshes(GameObject* go)
@@ -338,6 +350,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);
+			
 		}
 	}
 }

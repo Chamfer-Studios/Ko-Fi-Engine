@@ -435,11 +435,6 @@ FileSystem* KoFiEngine::GetFileSystem()const
 	return this->fileSystem;
 }
 
-ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
-{
-	return this->viewportBuffer;
-}
-
 Physics* KoFiEngine::GetPhysics()const
 {
 	return this->physics;
