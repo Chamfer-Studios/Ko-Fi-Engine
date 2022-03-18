@@ -63,6 +63,8 @@ bool EmitterDefault::Update(float dt, EmitterInstance* emitter)
 		Particle* particle = &emitter->particles[particleIndex];
 
 		emitter->particles[i].lifeTime += dt;
+		if (emitter->particles[i].lifeTime >= emitter->particles[i].maxLifetime)
+			emitter->particles[i].lifeTime = emitter->particles[i].maxLifetime;
 		particle->distanceToCamera = float3(emitter->component->owner->GetEngine()->GetCamera3D()->
 			cameraFrustum.WorldMatrix().TranslatePart() - particle->position).LengthSq();
 	}
@@ -136,16 +138,16 @@ Color EmitterColor::ColorLerp(float current)
 		{
 			return colorOverTime.at(i).color;
 		}
-		else if (i == colorOverTime.size() && colorOverTime.at(i).pos < current)
+		else if (i == (colorOverTime.size()-1) && colorOverTime.at(i).pos < current)
 		{
 			return colorOverTime.at(i).color;
 		}
 		else if (colorOverTime.at(i).pos > current && colorOverTime.at(i-1).pos < current)
 		{
 			float r = math::Lerp(colorOverTime.at(i - 1).color.r, colorOverTime.at(i).color.r, current);
-			float g = math::Lerp(colorOverTime.at(i - 1).color.r, colorOverTime.at(i).color.r, current);
-			float b = math::Lerp(colorOverTime.at(i - 1).color.r, colorOverTime.at(i).color.r, current);
-			float a = math::Lerp(colorOverTime.at(i - 1).color.r, colorOverTime.at(i).color.r, current);
+			float g = math::Lerp(colorOverTime.at(i - 1).color.g, colorOverTime.at(i).color.g, current);
+			float b = math::Lerp(colorOverTime.at(i - 1).color.b, colorOverTime.at(i).color.b, current);
+			float a = math::Lerp(colorOverTime.at(i - 1).color.a, colorOverTime.at(i).color.a, current);
 			return Color(r, g, b, a);
 		}
 	}
