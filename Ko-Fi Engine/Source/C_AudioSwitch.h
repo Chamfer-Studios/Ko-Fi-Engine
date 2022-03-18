@@ -38,7 +38,7 @@ private:
     int totalTracks = 0;
 
     bool switching = false;
-    int nextSwitchTrack = 1;
+    int nextSwitchTrack = 0;
 
     float fadeTime = 2.0f;
     float switchTime = 0.0f;
@@ -49,8 +49,6 @@ private:
     R_Track* playingTrack = nullptr;
 
     std::vector<R_Track*> tracks;
-
-    std::string trackNaming[10] = { "Track 1", "Track 2", "Track 3", "Track 4", "Track 5", "Track 6", "Track 7", "Track 8", "Track 9", "Track 10" };
 };
 
 #endif // !__C_AUDIO_SWITCH_H__

@@ -137,7 +137,6 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
                 track->SetLoop(track->loop);
 
             ImGui::Spacing();
-            ImGui::Spacing();
 
             std::string action;
             track->play ? action = "Stop" : action = "Play";

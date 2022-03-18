@@ -1,6 +1,7 @@
 #include "C_AudioSwitch.h"
 #include "SceneManager.h"
 #include "Globals.h"
+#include "Log.h"
 #include "GameObject.h"
 #include "ImGuiAppLog.h"
 #include "PanelChooser.h"
@@ -20,7 +21,7 @@ C_AudioSwitch::C_AudioSwitch(GameObject* parent) : C_Audio(parent)
     totalTracks = 0;
 
     switching = false;
-    nextSwitchTrack = 1;
+    nextSwitchTrack = 0;
 
     fadeTime = 2.0f;
     switchTime = 0.0f;
@@ -144,35 +145,43 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
             ImGui::TableSetColumnIndex(0);
             ImGui::TableSetColumnIndex(1);
 
-            // SWITCH BUTTON
-            if (ImGui::Button("Switch To") && !switching)
+            if (totalTracks > 0)
             {
-                SwitchTrack(nextSwitchTrack - 1);
-            }
-            ImGui::SameLine();
-            ImGui::DragInt("##Switch", &nextSwitchTrack, 1, 1, tracks.size(), "Track %d");
-
-            ImGui::Spacing();
-
-            ImGui::Text("Fade Time "); ImGui::SameLine(73);
-            ImGui::SameLine(87);
-
-            ImGui::DragFloat("##FadeTime", &fadeTime, 0.1f, 0.1f, 10.0f, "%.2f sec");
-
-            ImGui::Spacing();
-            ImGui::Spacing();
-
-            // STOP TRACK
-            if (IsAnyTrackPlaying())
-            {
-                if (ImGui::Button("Stop Track"))
+                if (totalTracks > 1)
                 {
-                    StopAllTracks();
-                    playingTrack = nullptr;
+                    // SWITCH BUTTON
+                    if (ImGui::Button("Switch To") && !switching)
+                    {
+                        SwitchTrack(nextSwitchTrack);
+                    }
+                    ImGui::SameLine();
+                    ImGui::DragInt("##Switch", &nextSwitchTrack, 1, 0, tracks.size() - 1, "Track %d");
+
+                    ImGui::Spacing();
+                    ImGui::Separator();
+
+                    ImGui::Text("Fade Time "); ImGui::SameLine(73);
+                    ImGui::SameLine(87);
+
+                    ImGui::DragFloat("##FadeTime", &fadeTime, 0.1f, 0.1f, 10.0f, "%.2f sec");
+
+                    ImGui::Spacing();
+                    ImGui::Spacing();
+                    ImGui::Separator();
                 }
 
-                ImGui::Spacing();
-                ImGui::Spacing();
+                // STOP TRACK
+                if (IsAnyTrackPlaying())
+                {
+                    if (ImGui::Button("Stop Track"))
+                    {
+                        StopAllTracks();
+                        playingTrack = nullptr;
+                    }
+
+                    ImGui::Spacing();
+                    ImGui::Spacing();
+                }
             }
 
             // TRACK LIST
@@ -189,34 +198,33 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                 ImGui::PushID(i + 50);
 
                 R_Track* index = tracks[i];
-                if (tracks.size() >= 1)
+
+                if (index == nullptr)
                 {
-                    if (ImGui::Button("X"))
-                    {
-                        totalTracks--;
+                    CONSOLE_LOG("[ERROR] Fatal Error iterating tracks. Equals nullptr.");
+                    return ret;
+                }
 
-                        if (nextSwitchTrack > 1)
-                            nextSwitchTrack--;
+                if (ImGui::Button("Delete"))
+                {
+                    totalTracks--;
 
-                        StopAudio(index->source);
-                        RELEASE(index);
-                        tracks.erase(tracks.begin() + i);
+                    if (nextSwitchTrack > i && nextSwitchTrack != 0)
+                        nextSwitchTrack--;
 
-                        ImGui::PopID();
-                        ImGui::SameLine();
-                        continue;
-                    }
+                    StopAudio(index->source);
+                    tracks.erase(tracks.begin() + i);
+                    RELEASE(index);
+
+                    ImGui::PopID();
                     ImGui::SameLine();
+                    continue;
                 }
 
-                std::string trackName = trackNaming[i];
-                if (!index->IsTrackLoaded()) // If track isn't loaded
-                {
-                    ImGui::PushStyleColor(ImGuiCol_Header, ImVec4{ 0.7f, 0, 0, 0.2f });
-                    trackName += " (no audio)";
-                }
+                ImGui::SameLine();
 
-                if (ImGui::CollapsingHeader(trackName.c_str(), ImGuiTreeNodeFlags_Framed))
+                std::string name = "Track " + std::to_string(i) + ": " + index->name.c_str();
+                if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_Framed))
                 {
                     if (ImGui::BeginTable("TrackInsights", 2))
                     {
@@ -230,8 +238,6 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
                         if (index->IsTrackLoaded()) // If track is loaded
                         {
-                            ImGui::SameLine();
-                            ImGui::Spacing();
                             ImGui::Text("Options");
 
                             if (ImGui::Checkbox("Mute", &index->mute))
@@ -245,6 +251,16 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
                             if (ImGui::Checkbox("Loop", &index->loop))
                                 tracks[i]->SetLoop(index->loop);
+
+                            ImGui::Spacing();
+
+                            std::string action;
+                            index->play ? action = "Stop" : action = "Play";
+                            if (ImGui::Button(action.c_str()))
+                            {
+                                float time = index->duration * index->offset;
+                                index->play ? StopAudio(index->source) : PlayAudio(index->source, time);
+                            }
                         }
                     }
                     ImGui::EndTable();
