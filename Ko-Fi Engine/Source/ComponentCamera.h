@@ -15,7 +15,7 @@ using Json = nlohmann::json;
 class ComponentCamera : public Component
 {
 public:
-	ComponentCamera(GameObject* gameObject, bool engineCamera = false);
+	ComponentCamera(GameObject* gameObject, bool isEngineCamera = false);
 	~ComponentCamera();
 
 	bool Start() override;
@@ -45,22 +45,23 @@ public:
 	float aspectRatio = 1.f;
 	float verticalFOV = 60.f;
 	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 5000.f;
-	float cameraSensitivity = .1f;
-	float cameraSpeed = 30.f;
-	bool projectionIsDirty = false;
+	float farPlaneDistance = 100.f;
+	float cameraSensitivity = .5f;
+	float cameraSpeed = 60.f;
+	bool projectionIsDirty = true;
 
 	// Debug bools
 	bool drawFrustum = true;
 	bool frustumCulling = false;
 
 	bool mainCamera = false;
-	bool engineCamera = false;
+	bool isEngineCamera = false;
 
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 private:
 
 	ComponentTransform* componentTransform = nullptr;
+	
 };
 
 #endif // !__COMPONENT_CAMERA_H__

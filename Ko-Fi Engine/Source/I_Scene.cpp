@@ -502,6 +502,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				else if (type == "camera")
 				{
 					ComponentCamera* cameraCmp = go->GetComponent<ComponentCamera>();
+					go->SetName("IScene");
 					if (cameraCmp == nullptr)
 					{
 						cameraCmp = go->CreateComponent<ComponentCamera>();

@@ -24,14 +24,22 @@ public:
 	void OnNotify(const Event& event);
 
 	void OnGui() override;
+	void OnPlay();
+	void OnStop();
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;
+
+	void CheckInput(float dt);
+	void CheckMouseMotion();
+
+	void SetGameCamera(ComponentCamera* gameCamera);
+
 	GameObject* MousePicking();
 
 public:
-	ComponentCamera* camera = nullptr;
-	ComponentCamera* engineCamera = nullptr;
-
+	ComponentCamera* currentCamera = nullptr; // The camera that will display on screen
+	ComponentCamera* engineCamera = nullptr; // The engine camera, asigning this to currentCamera will display de engine camera
+	ComponentCamera* gameCamera = nullptr; // The game camera, asigning this to currentCamera will display de game camera
 
 private:
 

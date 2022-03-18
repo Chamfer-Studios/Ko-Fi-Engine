@@ -17,10 +17,22 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-ComponentCamera::ComponentCamera(GameObject* parent, bool engineCamera) : Component(parent)
+ComponentCamera::ComponentCamera(GameObject* parent, bool isEngineCamera) : Component(parent)
 {
-	this->engineCamera = engineCamera;
+	this->isEngineCamera = isEngineCamera;
 	type = ComponentType::CAMERA;
+
+	if (isEngineCamera)
+	{
+		aspectRatio = 1.f;
+		verticalFOV = 60.f;
+		nearPlaneDistance = 0.1f;
+		farPlaneDistance = 5000.f;
+		cameraSensitivity = .1f;
+		cameraSpeed = 30.f;
+	}
+	if (!isEngineCamera)
+		componentTransform = owner->GetTransform();
 
 	right = float3(1.0f, 0.0f, 0.0f);
 	up = float3(0.0f, 1.0f, 0.0f);
@@ -29,10 +41,10 @@ ComponentCamera::ComponentCamera(GameObject* parent, bool engineCamera) : Compon
 	position = float3(0.0f, 5.0f, -15.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
-	if(!engineCamera)
-		componentTransform = owner->GetTransform();
+	LookAt(float3::zero);
 
 	CalculateViewMatrix();
+
 }
 
 ComponentCamera::~ComponentCamera()
@@ -62,7 +74,7 @@ bool ComponentCamera::CleanUp()
 bool ComponentCamera::Update(float dt)
 {
 	// Add update functionality when we are able to change the main camera.
-	if (!engineCamera)
+	if (!isEngineCamera)
 	{
 		position = componentTransform->GetPosition();
 
@@ -71,7 +83,7 @@ bool ComponentCamera::Update(float dt)
 		//right = componentTransform->Right();
 
 		CalculateViewMatrix();
-	
+
 		if (drawFrustum)
 			DrawFrustum();
 		if (frustumCulling)
@@ -118,7 +130,7 @@ void ComponentCamera::RecalculateProjection()
 bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
-	
+
 	if (ImGui::CollapsingHeader("Editor Camera"))
 	{
 		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
@@ -142,7 +154,7 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 		}
 		if (ImGui::Checkbox("Set As Main Camera", &mainCamera))
 		{
-			owner->GetEngine()->GetCamera3D()->camera = this;
+			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 		}
 	}
 
@@ -151,6 +163,8 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 
 void ComponentCamera::SetAsMainCamera()
 {
+	owner->GetEngine()->GetCamera3D()->currentCamera = this;
+
 
 }
 
@@ -203,6 +217,9 @@ void ComponentCamera::DrawFrustum() const
 {
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
+	glPushMatrix();
+	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
+	//Draw Operations
 
 	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(3.5f);
@@ -245,6 +262,7 @@ void ComponentCamera::DrawFrustum() const
 	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
 
 	glEnd();
+	glPopMatrix();
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.0f);
@@ -278,7 +296,7 @@ void ComponentCamera::FrustumCulling()
 	{
 		GameObject* gameObject = (*go);
 		ComponentMesh* componentMesh = gameObject->GetComponent<ComponentMesh>();
-		
+
 		if (componentMesh == nullptr || gameObject == owner)
 			continue;
 

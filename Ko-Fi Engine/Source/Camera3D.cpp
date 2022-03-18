@@ -32,21 +32,26 @@ bool Camera3D::Start()
 {
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
-	GameObject* cameraobj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Camera");
+
+	GameObject* cameraobj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("MainCamera");
 	cameraobj->CreateComponent<ComponentCamera>();
+	cameraobj->GetComponent<ComponentCamera>()->mainCamera = true;
+	SetGameCamera(cameraobj->GetComponent<ComponentCamera>());
 
-	camera = engineCamera = cameraobj->GetComponent<ComponentCamera>();
-	camera->engineCamera = true;
-	camera->right = engineCamera->right = float3(1.0f, 0.0f, 0.0f);
-	camera->up = float3(-0.000605105015f, 0.804563046f, 0.593866348f);
-	camera->front = float3(-0.000820143265f, -0.593866587f, 0.804562271f);
+	engineCamera = new ComponentCamera(nullptr, true);
+	engineCamera->isEngineCamera = true;
+	
+	currentCamera = engineCamera;
+	currentCamera->right = float3(1.0f, 0.0f, 0.0f);
+	currentCamera->up = float3(-0.000605105015f, 0.804563046f, 0.593866348f);
+	currentCamera->front = float3(-0.000820143265f, -0.593866587f, 0.804562271f);
 
-	camera->position = float3(-3.65002513f, 153.790665f, -131.349442f);
-	camera->reference = float3(0.0f, 0.0f, 0.0f);
+	currentCamera->position = float3(-3.65002513f, 153.790665f, -131.349442f);
+	currentCamera->reference = float3(0.0f, 0.0f, 0.0f);
 
-	camera->CalculateViewMatrix();
+	currentCamera->CalculateViewMatrix();
 
-	camera->LookAt(float3::zero);
+	currentCamera->LookAt(float3::zero);
 
 	bool ret = true;
 
@@ -56,148 +61,15 @@ bool Camera3D::Start()
 // -----------------------------------------------------------------
 bool Camera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movement frame rate independant!
+	bool isWindowFocused = engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused();
+	if (!isWindowFocused) return true;
 
-	if (camera->engineCamera)
+	if (currentCamera->isEngineCamera)
 	{
-		float3 newPos(0, 0, 0);
-		float speed = camera->cameraSpeed * dt;
-		bool isWindowFocused = engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused();
-		if (!isWindowFocused) return true;
-
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
-
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
-
-		// Focus --> NEEDS TO BE FIXED... SOME (MESH) FUNCTIONS DEPEND ON A PRIMITIVE LIBRARY WE STILL DON'T HAVE IMPLEMENTED.
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-		{
-			// TO DO: Manage current object selection by the game object itself! Not by its index...
-			if (/*engine->GetEditor()->gameobjectSelected != nullptr <-- Should be this way*/
-				engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
-			{
-				// If we change the previous TO DO, this will be no longer needed...
-				GameObject* gameObjectSelected =
-					engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-
-				if (ComponentMesh* mesh = /*App->editor->gameobjectSelected->GetComponent<ComponentMesh>()*/
-					gameObjectSelected->GetComponent<ComponentMesh>())
-				{
-					const float3 meshCenter = mesh->GetCenterPointInWorldCoords(); // FIX THIS FUNCTION
-					camera->LookAt(meshCenter);
-					const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
-					const float currentDistance = meshCenter.Distance(camera->position);
-					const float desiredDistance = (meshRadius * 2) / atan(camera->cameraFrustum.horizontalFov);
-					camera->position = camera->position + camera->front * (currentDistance - desiredDistance);
-				}
-				else
-				{
-					ComponentTransform* transform = gameObjectSelected->GetTransform();
-					if (transform != nullptr)
-						camera->LookAt(gameObjectSelected->GetTransform()->GetPosition());
-				}
-			}
-		}
-
-		vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
-		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
-		{
-			ComponentTransform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform();
-			if (transform != nullptr) {
-				spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().x;
-				spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
-				spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
-			}
-		}
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-		{
-			camera->LookAt(float3(5, 5, 5));
-		}
-
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += camera->front * speed;
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= camera->front * speed;
-
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += camera->right * speed;
-		if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= camera->right * speed;
-
-		if (engine->GetInput()->GetMouseZ() > 0) newPos += camera->front * speed * 2;
-		if (engine->GetInput()->GetMouseZ() < 0) newPos -= camera->front * speed * 2;
-
-		camera->position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
-
-		// Mouse motion ----------------
-
-		bool hasRotated = false;
-
-		if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-		{
-			int dx = -engine->GetInput()->GetMouseXMotion();
-			int dy = -engine->GetInput()->GetMouseYMotion();
-
-			if (engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) {
-				if (/*engine->GetEditor()->gameobjectSelected != nullptr*/
-					engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
-				{
-					const float newDeltaX = (float)dx * camera->cameraSensitivity;
-					const float newDeltaY = (float)dy * camera->cameraSensitivity;
-
-					camera->reference = /*engine->GetEditor()->gameobjectSelected->transform->GetPosition()*/
-						engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()
-							->panelGameObjectInfo.selectedGameObjectID)->GetComponent<ComponentTransform>()->GetPosition();
-					Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
-
-					if (abs(camera->up.y) < 0.3f) // Avoid gimball lock on up & down apex
-					{
-						if (camera->position.y > camera->reference.y && newDeltaY < 0.f)
-							orbitMat = orbitMat * math::Quat::RotateAxisAngle(camera->right, newDeltaY * .1f);
-						if (camera->position.y < camera->reference.y && newDeltaY > 0.f)
-							orbitMat = orbitMat * math::Quat::RotateAxisAngle(camera->right, newDeltaY * .1f);
-					}
-					else
-					{
-						orbitMat = orbitMat * math::Quat::RotateAxisAngle(camera->right, newDeltaY * .1f);
-					}
-
-					camera->position = orbitMat * (camera->position - camera->reference) + camera->reference;
-
-					camera->CalculateViewMatrix();
-					camera->LookAt(camera->reference);
-				}
-			}
-			else
-			{
-				if (dx != 0)
-				{
-					const float newDeltaX = (float)dx * camera->cameraSensitivity;
-					float deltaX = newDeltaX + 0.95f * (camera->lastDeltaX - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
-					camera->lastDeltaX = deltaX;
-					Quat rotateY = Quat::RotateY(camera->up.y >= 0.f ? deltaX * .1f : -deltaX * .1f);
-					camera->up = rotateY * camera->up;
-					camera->front = rotateY * camera->front;
-					camera->CalculateViewMatrix();
-					hasRotated = true;
-				}
-
-				if (dy != 0)
-				{
-					const float newDeltaY = (float)dy * camera->cameraSensitivity;
-					float deltaY = newDeltaY + 0.95f * (camera->lastDeltaY - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
-					camera->lastDeltaY = deltaY;
-					Quat rotateX = Quat::RotateAxisAngle(camera->right, -deltaY * .1f);
-					camera->up = rotateX * camera->up;
-					camera->front = rotateX * camera->front;
-					camera->CalculateViewMatrix();
-					hasRotated = true;
-				}
-			}
-		}
-
-		!hasRotated ? camera->lastDeltaX = camera->lastDeltaY = 0.f : 0.f;
-
-		camera->CalculateViewMatrix();
+		CheckInput(dt);
+		CheckMouseMotion();
 	}
+
 	return true;
 }
 
@@ -220,19 +92,176 @@ void Camera3D::OnGui()
 {
 	if (ImGui::CollapsingHeader("Editor Camera"))
 	{
-		if (ImGui::DragFloat("Vertical fov", &camera->verticalFOV))
+		if (ImGui::DragFloat("Vertical fov", &currentCamera->verticalFOV))
 		{
-			camera->projectionIsDirty = true;
+			currentCamera->projectionIsDirty = true;
 		}
-		if (ImGui::DragFloat("Near plane distance", &camera->nearPlaneDistance))
+		if (ImGui::DragFloat("Near plane distance", &currentCamera->nearPlaneDistance))
 		{
-			camera->projectionIsDirty = true;
+			currentCamera->projectionIsDirty = true;
 		}
-		if (ImGui::DragFloat("Far plane distance", &camera->farPlaneDistance))
+		if (ImGui::DragFloat("Far plane distance", &currentCamera->farPlaneDistance))
 		{
-			camera->projectionIsDirty = true;
+			currentCamera->projectionIsDirty = true;
 		}
 	}
+}
+
+void Camera3D::CheckInput(float dt)
+{
+	float3 newPos(0, 0, 0);
+	float speed = currentCamera->cameraSpeed * dt;
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
+
+	// Focus --> NEEDS TO BE FIXED... SOME (MESH) FUNCTIONS DEPEND ON A PRIMITIVE LIBRARY WE STILL DON'T HAVE IMPLEMENTED.
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		// TO DO: Manage current object selection by the game object itself! Not by its index...
+		if (/*engine->GetEditor()->gameobjectSelected != nullptr <-- Should be this way*/
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+		{
+			// If we change the previous TO DO, this will be no longer needed...
+			GameObject* gameObjectSelected =
+				engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+
+			if (ComponentMesh* mesh = /*App->editor->gameobjectSelected->GetComponent<ComponentMesh>()*/
+				gameObjectSelected->GetComponent<ComponentMesh>())
+			{
+				const float3 meshCenter = mesh->GetCenterPointInWorldCoords(); // FIX THIS FUNCTION
+				currentCamera->LookAt(meshCenter);
+				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
+				const float currentDistance = meshCenter.Distance(currentCamera->position);
+				const float desiredDistance = (meshRadius * 2) / atan(currentCamera->cameraFrustum.horizontalFov);
+				currentCamera->position = currentCamera->position + currentCamera->front * (currentDistance - desiredDistance);
+			}
+			else
+			{
+				ComponentTransform* transform = gameObjectSelected->GetTransform();
+				if (transform != nullptr)
+					currentCamera->LookAt(gameObjectSelected->GetTransform()->GetPosition());
+			}
+		}
+	}
+
+	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+	{
+		ComponentTransform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform();
+		if (transform != nullptr) {
+			spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().x;
+			spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
+			spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
+		}
+	}
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		currentCamera->LookAt(float3(5, 5, 5));
+	}
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += currentCamera->front * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= currentCamera->front * speed;
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += currentCamera->right * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= currentCamera->right * speed;
+
+	if (engine->GetInput()->GetMouseZ() > 0) newPos += currentCamera->front * speed * 2;
+	if (engine->GetInput()->GetMouseZ() < 0) newPos -= currentCamera->front * speed * 2;
+
+	currentCamera->position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
+}
+
+void Camera3D::CheckMouseMotion()
+{
+
+	// Mouse motion ----------------
+
+	bool hasRotated = false;
+
+	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
+		int dx = -engine->GetInput()->GetMouseXMotion();
+		int dy = -engine->GetInput()->GetMouseYMotion();
+
+		if (engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) {
+			if (/*engine->GetEditor()->gameobjectSelected != nullptr*/
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+			{
+				const float newDeltaX = (float)dx * currentCamera->cameraSensitivity;
+				const float newDeltaY = (float)dy * currentCamera->cameraSensitivity;
+
+				currentCamera->reference = /*engine->GetEditor()->gameobjectSelected->transform->GetPosition()*/
+					engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()
+						->panelGameObjectInfo.selectedGameObjectID)->GetComponent<ComponentTransform>()->GetPosition();
+				Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
+
+				if (abs(currentCamera->up.y) < 0.3f) // Avoid gimball lock on up & down apex
+				{
+					if (currentCamera->position.y > currentCamera->reference.y && newDeltaY < 0.f)
+						orbitMat = orbitMat * math::Quat::RotateAxisAngle(currentCamera->right, newDeltaY * .1f);
+					if (currentCamera->position.y < currentCamera->reference.y && newDeltaY > 0.f)
+						orbitMat = orbitMat * math::Quat::RotateAxisAngle(currentCamera->right, newDeltaY * .1f);
+				}
+				else
+				{
+					orbitMat = orbitMat * math::Quat::RotateAxisAngle(currentCamera->right, newDeltaY * .1f);
+				}
+
+				currentCamera->position = orbitMat * (currentCamera->position - currentCamera->reference) + currentCamera->reference;
+
+				currentCamera->CalculateViewMatrix();
+				currentCamera->LookAt(currentCamera->reference);
+			}
+		}
+		else
+		{
+			if (dx != 0)
+			{
+				const float newDeltaX = (float)dx * currentCamera->cameraSensitivity;
+				float deltaX = newDeltaX + 0.95f * (currentCamera->lastDeltaX - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
+				currentCamera->lastDeltaX = deltaX;
+				Quat rotateY = Quat::RotateY(currentCamera->up.y >= 0.f ? deltaX * .1f : -deltaX * .1f);
+				currentCamera->up = rotateY * currentCamera->up;
+				currentCamera->front = rotateY * currentCamera->front;
+				currentCamera->CalculateViewMatrix();
+				hasRotated = true;
+			}
+
+			if (dy != 0)
+			{
+				const float newDeltaY = (float)dy * currentCamera->cameraSensitivity;
+				float deltaY = newDeltaY + 0.95f * (currentCamera->lastDeltaY - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
+				currentCamera->lastDeltaY = deltaY;
+				Quat rotateX = Quat::RotateAxisAngle(currentCamera->right, -deltaY * .1f);
+				currentCamera->up = rotateX * currentCamera->up;
+				currentCamera->front = rotateX * currentCamera->front;
+				currentCamera->CalculateViewMatrix();
+				hasRotated = true;
+			}
+		}
+	}
+
+	!hasRotated ? currentCamera->lastDeltaX = currentCamera->lastDeltaY = 0.f : 0.f;
+
+	currentCamera->CalculateViewMatrix();
+}
+
+void Camera3D::OnPlay()
+{
+	currentCamera = gameCamera;
+}
+
+void Camera3D::OnStop()
+{
+	currentCamera = engineCamera;
+}
+
+void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
+{
+	this->gameCamera = gameCamera;
 }
 
 //void Camera3D::OnSave(JSONWriter& writer) const
@@ -271,7 +300,7 @@ GameObject* Camera3D::MousePicking()
 	/*CONSOLE_LOG("x: %f", normalX);
 	CONSOLE_LOG("y: %f", normalY);*/
 
-	LineSegment newRay = camera->cameraFrustum.UnProjectLineSegment(normalX, normalY);
+	LineSegment newRay = currentCamera->cameraFrustum.UnProjectLineSegment(normalX, normalY);
 	engine->GetSceneManager()->GetCurrentScene()->ray = newRay;
 
 	std::vector<GameObject*> sceneGameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
@@ -354,7 +383,7 @@ GameObject* Camera3D::MousePicking()
 								glBegin(GL_POINTS);
 								glVertex3f(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z);
 								glEnd();
-								script->handler->lua["destination"] = intersectionPoint; 
+								script->handler->lua["destination"] = intersectionPoint;
 							}
 						}
 					}

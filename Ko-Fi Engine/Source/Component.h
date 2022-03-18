@@ -51,7 +51,7 @@ public:
 
 public:
 	bool active = true;
-	GameObject* owner;
+	GameObject* owner = nullptr;
 	ComponentType type;
 };
 
