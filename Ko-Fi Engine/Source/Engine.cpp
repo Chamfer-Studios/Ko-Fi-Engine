@@ -8,7 +8,6 @@
 #include "Editor.h"
 #include "FileSystem.h"
 #include "FSDefs.h"
-#include "ViewportFrameBuffer.h"
 #include "UI.h"
 #include "Importer.h"
 #include "Globals.h"
@@ -50,7 +49,6 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	AddModule(collisionDetector);
 	AddModule(sceneManager);
-	//AddModule(viewportBuffer);
 
 	// Render last to swap buffer
 	AddModule(renderer);

@@ -260,7 +260,6 @@
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\UI.cpp" />
-    <ClCompile Include="Source\ViewportFrameBuffer.cpp" />
     <ClCompile Include="Source\PanelAbout.cpp" />
     <ClCompile Include="Source\PanelChooser.cpp" />
     <ClCompile Include="Source\PanelConfiguration.cpp" />
@@ -617,7 +616,6 @@
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Vec1Node.h" />
-    <ClInclude Include="Source\ViewportFrameBuffer.h" />
     <ClInclude Include="Source\Panel.h" />
     <ClInclude Include="Source\PanelAbout.h" />
     <ClInclude Include="Source\PanelChooser.h" />
