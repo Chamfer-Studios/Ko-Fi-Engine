@@ -591,7 +591,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentCollider2* collCmp = go->GetComponent<ComponentCollider2>();
 					if (collCmp == nullptr)
 					{
-						collCmp = new ComponentCollider2(go, ColliderShape::BOX);
+						collCmp = new ComponentCollider2(go, ColliderShape::NONE);
 					}
 					collCmp->active = true;
 					collCmp->Load(jsonCmp);

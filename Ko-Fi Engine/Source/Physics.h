@@ -19,6 +19,7 @@ namespace physx
 	class PxScene;
 	class PxMaterial;
 	class PxActor;
+	class PxShape;
 	class PxActorShape;
 	class PxRigidActor;
 	class PxRigidStatic;
@@ -54,12 +55,17 @@ public:
 	inline const std::map<physx::PxRigidActor*, GameObject*> GetActors() { return actors; }
 
 	// Getters & setters
-	inline physx::PxPhysics* GetPxPhysics() const { return physics; }
+	inline physx::PxPhysics* GetPxPhysics() { 
+		return physics; 
+	}
+	inline physx::PxMaterial* GetPxMaterial() const { return material; }
 
 	inline bool IsSimulating() { return isSimulating; }
 
 	inline float GetGravity() const { return gravity; }
 	inline void SetGravity(const float newGravity) { gravity = newGravity; scene->setGravity(physx::PxVec3(0.0f, -gravity, 0.0f)); }
+	inline int GetNbThreads() const { return nbThreads; }
+	inline void SetNbThreads(const float newNbThreads) { nbThreads = newNbThreads; }
 
 private:
 	KoFiEngine* engine = nullptr;

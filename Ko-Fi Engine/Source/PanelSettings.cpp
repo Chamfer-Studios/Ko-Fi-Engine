@@ -80,10 +80,19 @@ void PanelSettings::ShowPanel(bool* toggleSettingsPanel)
         }
         if (ImGui::CollapsingHeader("Physics##"))
         {
+            ImGui::Text("Number of threads");
+            ImGui::SameLine();
+            int newNbThreads = editor->engine->GetPhysics()->GetNbThreads();
+            if (ImGui::DragInt("##drag_threads", &newNbThreads, 0.1f, 0.0f, 16.0f))
+            {
+                editor->engine->GetPhysics()->SetNbThreads(newNbThreads);
+                editor->engine->SaveConfiguration();
+            }
+            ImGui::Separator();
             ImGui::Text("Scene gravity");
             ImGui::SameLine();
             float grav = editor->engine->GetPhysics()->GetGravity();
-            if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f))
+            if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f, "%.2f"))
             {
                 editor->engine->GetPhysics()->SetGravity(grav);
                 editor->engine->SaveConfiguration();

@@ -280,7 +280,6 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 
 				ImGui::TreePop();
 			}
-			ImGui::Separator();
 			// ---------------------------------------------------------------------------------
 		}
 	}
@@ -310,13 +309,13 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			ImGui::Text("Mass");
 			ImGui::SameLine();
 			float newMass = mass;
-			if (ImGui::DragFloat("##mass", &newMass, 0.1f, 0.0f, 20.0f))
+			if (ImGui::DragFloat("##mass", &newMass, 0.1f, 0.01f, 20.0f))
 				SetMass(newMass);
 
 			ImGui::Text("Density");
 			ImGui::SameLine();
 			float newDen = density;
-			if (ImGui::DragFloat("##density", &newDen, 0.1f, 0.0f, 20.0f))
+			if (ImGui::DragFloat("##density", &newDen, 0.1f, 0.01f, 20.0f))
 				SetDensity(newDen);
 			ImGui::Separator();
 			// ---------------------------------------------------------------------------------
@@ -375,7 +374,6 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 
 				ImGui::TreePop();
 			}
-			ImGui::Separator();
 			// ---------------------------------------------------------------------------------
 		}
 	}

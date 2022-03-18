@@ -62,8 +62,8 @@ bool Physics::CleanUp()
 		physics->release();
 	if (cooking)
 		cooking->release();
-	if (scene)
-		scene->release();
+	/*if (scene)
+		scene->release();*/
 
 	foundation = nullptr;
 	physics = nullptr;
@@ -76,13 +76,15 @@ bool Physics::CleanUp()
 
 bool Physics::SaveConfiguration(Json& configModule) const
 {
-	configModule["Gravity"] =  gravity;
+	configModule["gravity"] =  gravity;
+	configModule["number_threads"] = nbThreads;
 	return true;
 }
 
 bool Physics::LoadConfiguration(Json& configModule)
 {
-	gravity = configModule["Gravity"];
+	gravity = configModule["gravity"];
+	nbThreads = configModule["number_threads"];
 	return true;
 }
 
@@ -102,7 +104,6 @@ bool Physics::InitializePhysX()
 		LOG_BOTH("PxCreateFoundation failed!");
 		return false;
 	}
-	LOG_BOTH("PxCreateFoundation returned successfully!");
 
 	// Top-level PxPhysics object creation
 	bool recordMemoryAllocations = true;
@@ -112,7 +113,6 @@ bool Physics::InitializePhysX()
 		LOG_BOTH("PxCreatePhysics failed!");
 		return false;
 	}
-	LOG_BOTH("PxCreatePhysics returned successfully!");
 
 	// Cooking creation
 	cooking = PxCreateCooking(PX_PHYSICS_VERSION, *foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
@@ -128,13 +128,12 @@ bool Physics::InitializePhysX()
 	sceneDesc.bounceThresholdVelocity = gravity * 0.25f;
 	if (!sceneDesc.cpuDispatcher)
 	{
-		physx::PxCpuDispatcher* _cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(nbThreads);
+		physx::PxCpuDispatcher* _cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(/*nbThreads*/4);
 		if (!_cpuDispatcher)
 		{
 			LOG_BOTH("PxDefaultCpuDispatcherCreate failed!");
 			return false;
 		}
-		LOG_BOTH("PxDefaultCpuDispatcherCreate returned successfully!");
 		sceneDesc.cpuDispatcher = _cpuDispatcher;
 	}
 

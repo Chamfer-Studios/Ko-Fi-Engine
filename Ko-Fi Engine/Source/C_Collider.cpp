@@ -1,10 +1,19 @@
 #include "C_Collider.h"
 
+#include "GameObject.h"
+
+#include "ComponentRigidBody.h"
+#include "ComponentMesh.h"
+
+#include "Physics.h"
+#include "PxPhysicsAPI.h"
+
 ComponentCollider2::ComponentCollider2(GameObject* parent, ColliderShape collType) : Component(parent)
 {
 	type = ComponentType::COLLIDER2;
-
 	colliderShape = collType;
+
+	CreateCollider(colliderShape);
 }
 
 ComponentCollider2::~ComponentCollider2()
@@ -36,37 +45,50 @@ bool ComponentCollider2::UpdateCollider()
 {
 	bool ret = true;
 
-	owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);
+	CreateCollider(colliderShape);
+	//// SHAPE UPDATE
+	//if(shape)
+	//	shape->release();
 
-	// SHAPE UPDATE
-	shape->release();
-	switch (GetColliderShape())
-	{
-	case ColliderShape::BOX:
+	//if (owner->GetComponent<ComponentMesh>())
+	//	boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
 
-		break;
-	case ColliderShape::SPHERE:
+	//physx::PxVec3 localPos;
+	//physx::PxBoxGeometry boxGeometry(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
 
-		break;
-	case ColliderShape::CAPSULE:
+	//switch (GetColliderShape())
+	//{
+	//case ColliderShape::BOX:
+	//	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
-		break;
-	default:
-		break;
-	}
+	//	localPos = physx::PxVec3(centerPosition.x, centerPosition.y + boxCollSize.y / 2, centerPosition.z);
+	//	shape->setLocalPose(physx::PxTransform(localPos));
+	//	break;
+	//case ColliderShape::SPHERE:
 
-	// STATE UPDATE
-	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
-	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
+	//	break;
+	//case ColliderShape::CAPSULE:
 
-	physx::PxFilterData filterData;
-	filterData.word0 = (int)GetCollisionLayer();
+	//	break;
+	//default:
+	//	break;
+	//}
 
-	shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-	shape->setSimulationFilterData(filterData);
-	shape->setQueryFilterData(filterData);
+	//// STATE UPDATE
+	//if (shape)
+	//{
+	//	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+	//	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
 
-	owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
+	//	physx::PxFilterData filterData;
+	//	filterData.word0 = (int)GetCollisionLayer();
+
+	//	shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+	//	shape->setSimulationFilterData(filterData);
+	//	shape->setQueryFilterData(filterData);
+
+	//	owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
+	//}
 
 	return ret;
 }
@@ -76,20 +98,33 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 	// SHAPE CREATION
 	if (shape)
 		shape->release();
+	if (shape)
+		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);
 
 	// If a rigid body is not created, then create it
 	// If it is already created, update the actor list (removing and creating again)
-	if (!owner->GetComponent<ComponentRigidBody>())
+	/*if (!owner->GetComponent<ComponentRigidBody>())
 		owner->CreateComponent<ComponentRigidBody>();
-	else
-		owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody());
+	else*/
+	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody());
+
+	if (owner->GetComponent<ComponentMesh>())
+		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
+	
+
+	physx::PxVec3 localPos;
+	physx::PxTransform a;
+	physx::PxBoxGeometry boxGeometry(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
 
 	switch (collType)
 	{
 	case ColliderShape::BOX:
-		//float3 size = boxCollSize;
-		//physx::PxBoxGeometry boxGeometry(size.x / 2, size.y / 2, size.z / 2);
-		//shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, physx::PxMaterial(0, 0, 0));
+		shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
+
+		localPos = physx::PxVec3(centerPosition.x, centerPosition.y + boxCollSize.y / 2, centerPosition.z);
+		shape->setLocalPose(physx::PxTransform(localPos));
+		a = shape->getLocalPose();
+
 		break;
 	case ColliderShape::SPHERE:
 
@@ -102,17 +137,21 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 	}
 
 	// STATE CREATION
-	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
-	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
+	if (shape)
+	{
+		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+		shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
 
-	physx::PxFilterData filterData;
-	filterData.word0 = (int)GetCollisionLayer();
+		physx::PxFilterData filterData;
+		filterData.word0 = (int)GetCollisionLayer();
 
-	shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-	shape->setSimulationFilterData(filterData);
-	shape->setQueryFilterData(filterData);
+		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+		//shape->setSimulationFilterData(filterData);
+		//shape->setQueryFilterData(filterData);
 
-	owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
+		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
+	}
+
 
 	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
 }
@@ -127,14 +166,28 @@ void ComponentCollider2::Save(Json& json) const
 
 	json["enabled"] = enabled;
 	json["is_trigger"] = isTrigger;
+	json["draw_collider"] = drawCollider;
+
+	json["box_collider_size"] = { boxCollSize.x, boxCollSize.y, boxCollSize.z };
+	json["center_position"] = { centerPosition.x, centerPosition.y, centerPosition.z };
 }
 void ComponentCollider2::Load(Json& json)
 {
-	SetColliderShape((ColliderShape)json.at("collider_type"));
-	SetCollisionLayer((CollisionLayer)json.at("collision_layer"));
+	colliderShape = (ColliderShape)json.at("collider_type");
+	collisionLayer = (CollisionLayer)json.at("collision_layer");
 
 	enabled = json.at("enabled");
 	isTrigger = json.at("is_trigger");
+	drawCollider = json.at("draw_collider");
+
+	std::vector<float> values = json.at("box_collider_size").get<std::vector<float>>();
+	boxCollSize = float3(values[0], values[1], values[2]);
+	values.clear();
+	values = json.at("center_position").get<std::vector<float>>();
+	centerPosition = float3(values[0], values[1], values[2]);
+	values.clear();
+
+	hasUpdated = true;
 }
 
 // On inspector draw
@@ -159,6 +212,7 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 			case (int)ColliderShape::CAPSULE: SetColliderShape((ColliderShape)colliderShapeInt); break;
 			}
 			colliderShapeInt = 0; // This will reset the button to default when clicked
+			hasUpdated = true;
 		}
 		ImGui::Text("Current collider shape: ");
 		ImGui::SameLine();
@@ -182,16 +236,20 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 			case (int)CollisionLayer::TERRAIN: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
 			}
 			collisionLayerInt = 0; // This will reset the button to default when clicked
+			hasUpdated = true;
 		}
 		ImGui::Text("Current collision layer: ");
 		ImGui::SameLine();
 		ImGui::Text("%s", GetCollisionLayerString());
-
 		ImGui::Separator();
 
 		// ATTRIBUTES -----------------------------------------------------------------------------------------------
-		if (ImGui::Checkbox("Enable##", &enabled));
-		if (ImGui::Checkbox("IsTrigger##", &isTrigger));
+		if (ImGui::Checkbox("Enable##", &enabled)) hasUpdated = true;
+		if (ImGui::Checkbox("IsTrigger##", &isTrigger)) hasUpdated = true;
+		if (ImGui::Checkbox("Draw Collider##", &drawCollider)) hasUpdated = true;
+
+		// COLLIDER CENTER POS & SIZE ----------------------------------------------------------------------------------------
+		float newSize[3] = { boxCollSize.x, boxCollSize.y, boxCollSize.z };
 	}
 
 	return ret;
@@ -209,7 +267,7 @@ const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collSh
 	case ColliderShape::SPHERE:
 		return "SPHERE";
 	default:
-		return "ERROR, NO COLLIDER SHAPE";
+		return "NONE";
 	}
 	return "ERROR, NO COLLIDER SHAPE";
 }

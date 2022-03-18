@@ -1,13 +1,9 @@
 #ifndef __C_COLLIDER_H__
 #define __C_COLLIDER_H__
 
-#include "GameObject.h"
 #include "Component.h"
-#include "ComponentRigidBody.h"
-
 #include "Physics.h"
 #include "MathGeoLib/Math/float3.h"
-#include "PxPhysicsAPI.h"
 
 enum class ColliderShape
 {
@@ -60,6 +56,13 @@ public:
 	inline void SetCollSize(const float3 size) { boxCollSize = size; hasUpdated = true; }
 	inline void SetCollSize(const float x, const float y, const float z) { boxCollSize = float3(x, y, z); hasUpdated = true; }
 
+	inline const float3 GetCenterPosition() { return centerPosition; }
+	inline void SetCenterPosition(const float3 newCenterPos) { centerPosition = newCenterPos; hasUpdated = true; }
+	inline void SetCenterPosition(const float x, const float y, const float z) { centerPosition = float3(x, y, z); hasUpdated = true; }
+
+	inline const bool GetDrawCollider() { return drawCollider; }
+	inline void SetDrawCollider(const bool newDrawCollider) { drawCollider = newDrawCollider; }
+
 private:
 	// Private methods
 	const char* ColliderShapeToString(const ColliderShape collType);
@@ -79,6 +82,9 @@ private:
 	int collisionLayerInt = 0;
 
 	float3 boxCollSize = float3(5, 5, 5);
+	float3 centerPosition = float3(0, 0, 0);
+
+	bool drawCollider = false;
 };
 
 #endif // !__C_COLLIDER_H__
