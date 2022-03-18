@@ -84,7 +84,7 @@ bool Renderer3D::PreUpdate(float dt)
 bool Renderer3D::PostUpdate(float dt)
 {
 	RenderScene();
-	glBindRenderbuffer(GL_RENDERBUFFER, engine->GetViewportFrameBuffer()->renderBufferoutput);
+	SDL_GL_SwapWindow(engine->GetWindow()->GetWindow());
 	return true;
 }
 
