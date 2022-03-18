@@ -262,7 +262,7 @@ void SceneManager::GuizmoTransformation()
 		float4x4 newTransform;
 		newTransform.Set(tempTransform);
 		objectTransform = newTransform.Transposed();
-		selectedGameObject->GetComponent<ComponentTransform>()->SetGlobalTransform(objectTransform);
+		selectedGameObject->GetComponent<ComponentTransform>()->UpdateGuizmoParameters(objectTransform);
 	}
 }
 

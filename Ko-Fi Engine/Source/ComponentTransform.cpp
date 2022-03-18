@@ -136,6 +136,18 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	}
 }
 
+void ComponentTransform::UpdateGuizmoParameters(float4x4& transformMatrix)
+{
+	float3 position;
+	Quat rotation;
+	float3 scale;
+	transformMatrix.Decompose(position, rotation, scale);
+	
+	SetPosition(position);
+	SetRotationQuat(rotation);
+	SetScale(scale);
+}
+
 float4x4 ComponentTransform::GetGlobalTransform()
 {
 	return transformMatrix;
@@ -144,6 +156,7 @@ float4x4 ComponentTransform::GetGlobalTransform()
 void ComponentTransform::SetGlobalTransform(const float4x4& globalTransform)
 {
 	transformMatrix = globalTransform;
+
 }
 
 bool ComponentTransform::GetDirty() const
