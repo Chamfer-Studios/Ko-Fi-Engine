@@ -71,6 +71,7 @@ private:
 	physx::PxFoundation* foundation = nullptr;
 	physx::PxPhysics* physics = nullptr;
 	physx::PxCooking* cooking = nullptr;
+	physx::PxMaterial* material = nullptr;
 	physx::PxScene* scene = nullptr;
 
 	physx::PxU32 nbThreads = 4;

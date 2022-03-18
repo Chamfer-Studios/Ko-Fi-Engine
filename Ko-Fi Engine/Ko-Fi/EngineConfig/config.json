@@ -12,7 +12,8 @@
     "Input": null,
     "ModelLoader": null,
     "Physics": {
-        "Gravity": 9.8100004196167
+        "Gravity": 9.8100004196167,
+        "number_threads": 4
     },
     "Renderer3D": {
         "Vsync": true

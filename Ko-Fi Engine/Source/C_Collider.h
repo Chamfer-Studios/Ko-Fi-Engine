@@ -47,18 +47,18 @@ public:
 	// Getters & setters
 	inline const ColliderShape GetColliderShape() { return colliderShape; }
 	inline const const char* GetColliderShapeString() { return ColliderShapeToString(colliderShape); }
-	inline void SetColliderShape(const ColliderShape colliderShape) { if (colliderShape == this->colliderShape) return; this->colliderShape = colliderShape; toUpdate = true; } // We will have to delete actual shape and re-do again a new one
+	inline void SetColliderShape(const ColliderShape colliderShape) { if (colliderShape == this->colliderShape) return; this->colliderShape = colliderShape; hasUpdated = true; } // We will have to delete actual shape and re-do again a new one
 	
 	inline const CollisionLayer GetCollisionLayer() { return collisionLayer; }
 	inline const const char* GetCollisionLayerString() { return CollisionLayerToString(collisionLayer); }
-	inline void SetCollisionLayer(const CollisionLayer collisionLayer) { if (collisionLayer == this->collisionLayer) return; this->collisionLayer = collisionLayer; toUpdate = true; }
+	inline void SetCollisionLayer(const CollisionLayer collisionLayer) { if (collisionLayer == this->collisionLayer) return; this->collisionLayer = collisionLayer; hasUpdated = true; }
 	
 	inline const bool IsTrigger() { return isTrigger; }
-	inline void SetIsTrigger(const bool isTrigger) { this->isTrigger = isTrigger; toUpdate = true; }
+	inline void SetIsTrigger(const bool isTrigger) { this->isTrigger = isTrigger; hasUpdated = true; }
 	
 	inline const float3 GetCollSize() { return boxCollSize; }
-	inline void SetCollSize(const float3 size) { boxCollSize = size; toUpdate = true; }
-	inline void SetCollSize(const float x, const float y, const float z) { boxCollSize = float3(x, y, z); toUpdate = true; }
+	inline void SetCollSize(const float3 size) { boxCollSize = size; hasUpdated = true; }
+	inline void SetCollSize(const float x, const float y, const float z) { boxCollSize = float3(x, y, z); hasUpdated = true; }
 
 private:
 	// Private methods
@@ -66,7 +66,7 @@ private:
 	const char* CollisionLayerToString(const CollisionLayer collLayer);
 
 	// Collider attributes
-	bool toUpdate = false;
+	bool hasUpdated = false;
 	physx::PxShape* shape = nullptr;
 
 	bool enabled = true;
@@ -78,7 +78,7 @@ private:
 	CollisionLayer collisionLayer = CollisionLayer::DEFAULT;
 	int collisionLayerInt = 0;
 
-	float3 boxCollSize = float3(1, 1, 1);
+	float3 boxCollSize = float3(5, 5, 5);
 };
 
 #endif // !__C_COLLIDER_H__

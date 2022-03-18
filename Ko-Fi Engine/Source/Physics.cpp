@@ -56,17 +56,19 @@ bool Physics::CleanUp()
 {
 	if (foundation)
 		foundation->release();
+	if (material)
+		material->release();
 	if (physics)
 		physics->release();
 	if (cooking)
 		cooking->release();
-	// This pointer release crashes at cleaning, I suppose it is due physx itself does its own cleanup or something
-	/*if (scene)
-		scene->release();*/
+	if (scene)
+		scene->release();
 
 	foundation = nullptr;
 	physics = nullptr;
 	cooking = nullptr;
+	material = nullptr;
 	scene = nullptr;
 
 	return true;
@@ -119,7 +121,6 @@ bool Physics::InitializePhysX()
 		LOG_BOTH("PxCreateCooking failed!");
 		return false;
 	}
-	LOG_BOTH("PxCreateCooking returned successfully!");
 
 	// Scene description creation
 	physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
@@ -144,7 +145,8 @@ bool Physics::InitializePhysX()
 		LOG_BOTH("createScene failed!");
 		return false;
 	}
-	LOG_BOTH("createScene returned successfully!");
+
+	material = physics->createMaterial(0, 0, 0);
 
 	return true;
 }

@@ -22,10 +22,10 @@ bool ComponentCollider2::Update(float dt)
 {
 	bool ret = true;
 
-	if (toUpdate)
+	if (hasUpdated)
 	{
 		ret = UpdateCollider();
-		toUpdate = false;
+		hasUpdated = false;
 	}
 
 	return ret;
@@ -87,7 +87,9 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 	switch (collType)
 	{
 	case ColliderShape::BOX:
-
+		//float3 size = boxCollSize;
+		//physx::PxBoxGeometry boxGeometry(size.x / 2, size.y / 2, size.z / 2);
+		//shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, physx::PxMaterial(0, 0, 0));
 		break;
 	case ColliderShape::SPHERE:
 
