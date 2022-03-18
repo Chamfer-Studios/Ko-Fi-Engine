@@ -36,7 +36,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
 	ui = new UI(this);
-	viewportBuffer = new ViewportFrameBuffer(this);
+	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new Physics(this);
 	collisionDetector = new CollisionDetector(this);
 
@@ -50,11 +50,12 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	AddModule(collisionDetector);
 	AddModule(sceneManager);
-	AddModule(viewportBuffer);
-	AddModule(editor);
+	//AddModule(viewportBuffer);
 
 	// Render last to swap buffer
 	AddModule(renderer);
+	// CHANGE THAT FOR THE SAKE OF GOD
+	AddModule(editor);
 
 	PERF_PEEK(ptimer);
 }

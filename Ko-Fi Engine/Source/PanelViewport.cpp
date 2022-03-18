@@ -4,10 +4,11 @@
 #include "Engine.h"
 #include "Camera3D.h"
 #include "SceneManager.h"
-#include "ViewportFrameBuffer.h"
+//#include "ViewportFrameBuffer.h"
 #include "Input.h"
 #include "Window.h"
 #include "Importer.h"
+#include "Renderer3D.h"
 #include "Texture.h"
 #include "ComponentMaterial.h"
 
@@ -63,12 +64,12 @@ bool PanelViewport::Update()
 			editor->lastViewportSize = viewportSize;
 			engine->GetCamera3D()->aspectRatio = viewportSize.x / viewportSize.y;
 			engine->GetCamera3D()->RecalculateProjection();
-			engine->GetViewportFrameBuffer()->OnResize(viewportSize.x, viewportSize.y);
+			engine->GetRenderer()->ResizeFrameBuffers(viewportSize.x, viewportSize.y);
 
 		}
 		editor->viewportSize = viewportSize;
 
-		ImGui::Image((ImTextureID)engine->GetViewportFrameBuffer()->textureBuffer, viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+		ImGui::Image((ImTextureID)engine->GetRenderer()->GetTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 
 		if (ImGui::IsMouseClicked(1)) ImGui::SetWindowFocus();
 		isFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
@@ -127,4 +128,9 @@ bool PanelViewport::PostUpdate()
 bool PanelViewport::IsWindowFocused()
 {
 	return isFocused;
+}
+
+void PanelViewport::SetIsFocused(bool isFocused)
+{
+	this->isFocused = isFocused;
 }

@@ -485,10 +485,13 @@ void Editor::UpdatePanelsState()
 	}
 }
 
+std::list<Panel*> Editor::GetPanels()
+{
+	return panels;
+}
+
 void Editor::OpenTextEditor(std::string path, const char* ext)
 {
 	toggleTextEditor = true;
 	panelTextEditor->LoadFile(path,ext);
 }
-
-

@@ -13,8 +13,15 @@
 #include "Camera3D.h"
 #include "SceneManager.h"
 #include "ViewportFrameBuffer.h"
+#include "Editor.h"
+#include "Input.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
+
+#include <imgui.h>
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_internal.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -22,6 +29,7 @@
 #include "ComponentMaterial.h"
 #include "Material.h"
 
+#include "PanelViewport.h"
 
 #include "UI.h"
 
@@ -49,6 +57,8 @@ bool Renderer3D::Awake(Json configModule)
 	OnResize();
 	SetVsync(configModule["Vsync"].get<bool>());
 
+	InitFrameBuffers();
+
 	return ret;
 }
 
@@ -56,6 +66,7 @@ bool Renderer3D::Awake(Json configModule)
 bool Renderer3D::PreUpdate(float dt)
 {
 	bool ret = true;
+
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	Camera3D* currentCamera = engine->GetCamera3D();
@@ -77,14 +88,24 @@ bool Renderer3D::PreUpdate(float dt)
 	else {
 		cameraPos = float3(0.0f, 20.0f, 0.0f);
 	}
+
+	PrepareFrameBuffers();
+
 	return ret;
+}
+
+bool Renderer3D::Update(float dt)
+{
+	return true;
 }
 
 // PostUpdate present buffer to screen
 bool Renderer3D::PostUpdate(float dt)
 {
 	RenderScene();
+	UnbindFrameBuffers();
 	SDL_GL_SwapWindow(engine->GetWindow()->GetWindow());
+
 	return true;
 }
 
@@ -95,6 +116,8 @@ bool Renderer3D::CleanUp()
 	appLog->AddLog("Destroying 3D Renderer\n");
 
 	SDL_GL_DeleteContext(context);
+
+	ReleaseFrameBuffers();
 
 	return true;
 }
@@ -165,8 +188,6 @@ bool Renderer3D::InitOpenGL()
 		SetGLFlag(GL_LIGHTING, true);
 		SetGLFlag(GL_COLOR_MATERIAL, true);
 		SetGLFlag(GL_TEXTURE_2D, true);
-
-
 
 		GLenum err = glGetError();
 		while (err != GL_NO_ERROR)
@@ -357,10 +378,8 @@ void Renderer3D::OnResize()
 	else
 	{
 		CONSOLE_LOG("[ERROR] Renderer 3D: Could not recalculate the aspect ratio! Error: Current Camera was nullptr.");
-
 	}
 	RecalculateProjectionMatrix();
-
 }
 
 // Debug ray for mouse picking
@@ -386,4 +405,74 @@ void Renderer3D::SetRay(LineSegment ray)
 LineSegment Renderer3D::GetRay()
 {
 	return ray;
+}
+
+void Renderer3D::InitFrameBuffers()
+{
+	show_viewport_window = true;
+
+	glGenFramebuffers(1, &frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glGenTextures(1, &textureBuffer);
+	glBindTexture(GL_TEXTURE_2D, textureBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glBindTexture(GL_TEXTURE_2D, 0); //Unbind texture
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBuffer, 0);
+
+	//Render Buffers
+	glGenRenderbuffers(1, &renderBufferoutput);
+	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
+
+	//Bind tex data with render buffers
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderBufferoutput);
+
+	//After binding tex data, we must unbind renderbuffer and framebuffer not usefull anymore
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer3D::PrepareFrameBuffers()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Renderer3D::UnbindFrameBuffers()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer3D::ResizeFrameBuffers(int width, int height)
+{
+	glViewport(0, 0, width, height);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glBindTexture(GL_TEXTURE_2D, textureBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Renderer3D::ReleaseFrameBuffers()
+{
+	if (textureBuffer != 0) glDeleteTextures(1, &textureBuffer);
+	if (frameBuffer != 0) glDeleteFramebuffers(1, &frameBuffer);
+	if (renderBufferoutput != 0) glDeleteRenderbuffers(1, &renderBufferoutput);
+}
+
+uint Renderer3D::GetTextureBuffer()
+{
+	return textureBuffer;
 }
