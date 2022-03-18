@@ -21,16 +21,21 @@ public:
 
     void UpdatePlayState();
 
+    void SwitchTrack(int newTrackIndex);
     void SwitchFade(float fadeSeconds);
 
-    void StopAllTracks();
+    bool IsAnyTrackPlaying() const;
+    R_Track* GetPlayingTrack() const;
 
+    void StopAllTracks();
     void DisablePlayOnStart();
 
-    // G
+    inline int GetTotalTracks() const { return totalTracks; }
+    inline int GetNextSwitchTrack() const { return nextSwitchTrack; }
+    inline float GetFadeTime() const { return fadeTime; }
 
 private:
-    int totalTracks = 1;
+    int totalTracks = 0;
 
     bool switching = false;
     int nextSwitchTrack = 1;
@@ -44,6 +49,8 @@ private:
     R_Track* playingTrack = nullptr;
 
     std::vector<R_Track*> tracks;
+
+    std::string trackNaming[10] = { "Track 1", "Track 2", "Track 3", "Track 4", "Track 5", "Track 6", "Track 7", "Track 8", "Track 9", "Track 10" };
 };
 
 #endif // !__C_AUDIO_SWITCH_H__

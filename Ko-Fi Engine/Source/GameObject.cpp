@@ -200,7 +200,7 @@ void GameObject::AddComponentByType(ComponentType componentType)
 		}
 		case ComponentType::AUDIO_SWITCH:
 		{
-			//this->CreateComponent<C_AudioSwitch>();
+			this->CreateComponent<C_AudioSwitch>();
 			break;
 		}
 	}

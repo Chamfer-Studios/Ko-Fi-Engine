@@ -103,6 +103,13 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             {
                 chooser->OpenPanel("Add Track", "wav");
             }
+            ImGui::SameLine();
+            if (ImGui::Button("Delete Track"))
+            {
+                RELEASE(track);
+                return ret;
+            }
+            ImGui::Spacing();
 
             ImGui::Text("Track Name: %s", track->GetTrackName());
             ImGui::Spacing();
