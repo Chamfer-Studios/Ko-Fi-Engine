@@ -176,6 +176,7 @@ void ComponentScript::ReloadScript()
 {
 	if (path == "")
 		return;
+	inspectorVariables.clear();
 	script = handler->lua.load_file(path);
 	script();
 	isScriptLoaded = true;

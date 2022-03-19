@@ -11,6 +11,7 @@ speed = 25  -- consider Start()
 isDoubleShot = false
 bullets = 10
 
+
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
@@ -18,6 +19,7 @@ NewVariable(speedIV)
 local isDoubleShotIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 isDoubleShotIV = InspectorVariable.new("isDoubleShot", isDoubleShotIVT, isDoubleShot)
 NewVariable(isDoubleShotIV)
+
 
 local currentItemType = ItemType.ITEM_GUN
 currentItemDamage = 5
@@ -72,6 +74,10 @@ function Update(dt)
 					if (currentItem.type == ItemType.ITEM_GUN and bullets > 0) then
 						CreateBullet()
 						bullets = bullets - 1
+						if (isDoubleShot and bullets > 0) then
+							CreateBullet()
+							bullets = bullets - 1
+						end
 					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
 						print("Knife used")
 					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
