@@ -452,6 +452,7 @@
     </ClCompile>
     <ClCompile Include="Source\PanelCameraViewport.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    <ClCompile Include="Source\C_Collider.cpp">
     </ClCompile>
     <ClCompile Include="Source\PanelSettings.cpp">
       <Filter>Source\Editor\Panels</Filter>
@@ -1471,6 +1472,9 @@
     </ClInclude>
     <ClInclude Include="Source\PanelCameraViewport.h">
       <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_Collider.h">
+      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>

@@ -22,6 +22,7 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 
 ComponentTransform::~ComponentTransform()
 {
+
 }
 
 bool ComponentTransform::Update(float dt)
