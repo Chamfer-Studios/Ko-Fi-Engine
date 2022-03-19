@@ -40,73 +40,17 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 	time = 0.0f;
 }
 
-//ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
-//{
-//	switch (shape)
-//	{
-//	case Shape::CUBE:
-//		CopyParMesh(par_shapes_create_cube());
-//		break;
-//	case Shape::CYLINDER:
-//		CopyParMesh(par_shapes_create_cylinder(20, 20));
-//		break;
-//	case Shape::SPHERE:
-//		CopyParMesh(par_shapes_create_parametric_sphere(20, 20));
-//		break;
-//	}
-//}
-
-////ComponentMesh::ComponentMesh(GameObject* owner,COMPONENT_SUBTYPE subtype) : Component(COMPONENT_TYPE::COMPONENT_MESH)
-////{
-////	this->subtype = subtype;
-////	this->owner = owner;
-////}
-////
-////ComponentMesh::ComponentMesh(GameObject* owner,std::string path) : Component(COMPONENT_TYPE::COMPONENT_MESH)
-////{
-////	this->path = path;
-////	LoadMesh(this->path.c_str());
-////	this->subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
-////	this->owner = owner;
-////}
 
 ComponentMesh::~ComponentMesh()
 {
 	RELEASE(mesh);
 }
 
-//void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
-//{
-//		this->mesh->num_vertices = parMesh->npoints;
-//		this->mesh->num_indices = parMesh->ntriangles * 3;
-//		this->mesh->num_normals = parMesh->ntriangles;
-//		this->mesh->vertices = new float[this->mesh->num_vertices * 3];
-//		this->mesh->normals = new float[this->mesh->num_normals * 3];
-//		this->mesh->indices = new uint[this->mesh->num_indices];
-//		par_shapes_compute_normals(parMesh);
-//		for (size_t i = 0; i < mesh->num_vertices; ++i)
-//		{
-//			memcpy(&mesh->vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);
-//			memcpy(&mesh->normals[i], &parMesh->normals[i * 3], sizeof(float) * 3);
-//		}
-//		for (size_t i = 0; i < mesh->num_indices; ++i)
-//		{
-//			mesh->indices[i] = parMesh->triangles[i];
-//		}
-//		memcpy(&mesh->normals[0], parMesh->normals, mesh->num_vertices);
-//
-//		par_shapes_free_mesh(parMesh);
-//
-//		mesh->SetUpMeshBuffers();
-//		//GenerateBuffers();
-//		//ComputeNormals();
-//		//GenerateBounds();
-//}
+
 
 bool ComponentMesh::Start()
 {
 	GenerateLocalBoundingBox();
-	//GenerateBounds();
 	return true;
 }
 
@@ -119,109 +63,7 @@ bool ComponentMesh::PostUpdate(float dt)
 {
 	bool ret = true;
 
-	ComponentMaterial* cMat = owner->GetComponent<ComponentMaterial>();
 
-	if (cMat != nullptr && mesh != nullptr)
-	{
-		if (!cMat->active)
-		{
-			glDisable(GL_TEXTURE_2D);
-		}
-		else
-		{
-			//for (Texture& tex : cMaterial->textures)
-			//{
-			//	glBindTexture(GL_TEXTURE_2D, tex.textureID);
-			//}
-			glBindTexture(GL_TEXTURE_2D, cMat->texture.GetTextureId());
-		}
-
-		if (renderMesh)
-		{
-			uint shader = cMat->GetMaterial()->shaderProgramID;
-
-			glUseProgram(shader);
-
-			// Matrices
-			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
-			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
-			GLint view_location = glGetUniformLocation(shader, "view");
-			glUniformMatrix4fv(view_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-
-
-			GLint projection_location = glGetUniformLocation(shader, "projection");
-			glUniformMatrix4fv(projection_location, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-
-			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, owner->GetEngine()->GetCamera3D()->viewMatrix.Transposed().ptr());
-
-			float2 resolution = float2(1080.0f, 720.0f);
-			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
-
-			this->time += 0.02f;
-			glUniform1f(glGetUniformLocation(shader, "time"), this->time);
-
-			//if (cMat->texture.GetTextureId() == -1 && cMat->GetMaterial()->FindUniform("albedoTint"))
-			//{
-			//	Color color = cMat->GetMaterial()->diffuseColor;
-
-			//	Uniform* colorUf = cMat->GetMaterial()->FindUniform("albedoTint");
-			//	UniformT<float4>* uf = (UniformT<float4>*)colorUf;
-			//	uf->value = { color.r, color.g, color.b, color.a };
-			//}
-
-			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
-			{
-				switch (uniform->type)
-				{
-				case GL_INT:
-				{
-					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
-				}
-				break;
-				case GL_FLOAT:
-				{
-					glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
-				}
-				break;
-				case GL_BOOL:
-				{
-					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<bool>*)uniform)->value);
-				}
-				break;
-				case GL_FLOAT_VEC2:
-				{
-					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-					glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
-				}
-				break;
-				case GL_FLOAT_VEC3:
-				{
-					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-					glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
-				}
-				break;
-				case GL_FLOAT_VEC4:
-				{
-					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
-				}
-				break;
-				default:
-					break;
-				}
-			}
-
-			mesh->Draw(owner);
-
-
-			
-			glUseProgram(0);
-			GenerateGlobalBoundingBox();
-
-			DrawMouseSelection(); // Draw AABB if Selected with Mosue
-		}
-	}
 	return ret;
 }
 
@@ -450,34 +292,5 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 	}
 	return ret;
 }
-//bool ComponentMesh::GetRenderAABB()
-//{
-//	return renderAABB;
-//}
-//
-//void ComponentMesh::SetRenderAABB(bool newRenderAABB)
-//{
-//	this->renderAABB = newRenderAABB;
-//}
 
-//AABB ComponentMesh::GetGlobalAABB() const
-//{
-//	//AABB global = AABB(mesh->localAABB);
-//	//global.Translate(owner->GetComponent<ComponentTransform>()->GetPosition());
-//	return mesh->localAABB;
-//}
-
-void ComponentMesh::DrawMouseSelection()
-{
-	int selectedId = owner->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
-
-	if (selectedId == -1) return;
-
-
-	if ( selectedId == owner->GetUID()) // Draw Selected Object
-		DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
-
-	//else if(owner->HasParentWithUID(selectedId) && selectedId != owner->GetUID()) // Check if has Parent
-	//	DrawBoundingBox(GetLocalAABB(), float3(0.0f, 1.0f, 1.0f));
-}
 

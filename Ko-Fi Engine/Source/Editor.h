@@ -61,6 +61,7 @@ public:
 	void UpdatePanelsState();
 	void OpenTextEditor(std::string path,const char* ext = nullptr);
 
+	std::list<Panel*> GetPanels();
 	template<class T> T* GetPanel()
 	{
 		T* panel = nullptr;

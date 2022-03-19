@@ -124,7 +124,7 @@ void Mesh::SetUpMeshBuffers()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Mesh::Draw(GameObject* owner)
+void Mesh::Draw()
 {
 	glBindVertexArray(VAO);
 

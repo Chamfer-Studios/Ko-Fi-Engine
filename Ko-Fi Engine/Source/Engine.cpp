@@ -8,7 +8,6 @@
 #include "Editor.h"
 #include "FileSystem.h"
 #include "FSDefs.h"
-#include "ViewportFrameBuffer.h"
 #include "UI.h"
 #include "Importer.h"
 #include "Globals.h"
@@ -36,7 +35,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
 	ui = new UI(this);
-	viewportBuffer = new ViewportFrameBuffer(this);
+	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new Physics(this);
 	collisionDetector = new CollisionDetector(this);
 
@@ -50,11 +49,11 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	AddModule(collisionDetector);
 	AddModule(sceneManager);
-	AddModule(viewportBuffer);
-	AddModule(editor);
 
 	// Render last to swap buffer
 	AddModule(renderer);
+	// CHANGE THAT FOR THE SAKE OF GOD
+	AddModule(editor);
 
 	PERF_PEEK(ptimer);
 }
@@ -434,11 +433,6 @@ Editor* KoFiEngine::GetEditor()const
 FileSystem* KoFiEngine::GetFileSystem()const
 {
 	return this->fileSystem;
-}
-
-ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
-{
-	return this->viewportBuffer;
 }
 
 Physics* KoFiEngine::GetPhysics()const

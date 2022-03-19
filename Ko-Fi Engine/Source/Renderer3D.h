@@ -13,7 +13,7 @@
 
 class GameObject;
 typedef unsigned int GLenum;
-
+class ComponentMesh;
 class Renderer3D : public Module
 {
 public:
@@ -22,6 +22,7 @@ public:
 
 	bool Awake(Json configModule);
 	bool PreUpdate(float dt);
+	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
@@ -34,25 +35,33 @@ public:
 	bool InitOpenGL();
 	bool InitGlew();
 	void SetGLFlag(GLenum flag, bool setTo);
+	void PassProjectionAndViewToRenderer();
 	void RecalculateProjectionMatrix();
 	
 	//Render Functions
 	void RenderScene();
-	void RenderMeshes();
+	void RenderBoundingBox(ComponentMesh* cMesh);
+	void RenderMeshes(GameObject* go);
 
 	void OnNotify(const Event& event);
-
 
 	bool GetVsync() const;
 	void SetVsync(bool vsync);
 	void OnResize();
 
-	
-
 	// Debug ray for mouse picking
 	void DrawRay();
 	void SetRay(LineSegment ray);
 	LineSegment GetRay();
+
+	// Viewport frame buffer methods
+	void InitFrameBuffers();
+	void PrepareFrameBuffers();
+	void UnbindFrameBuffers();
+	void ResizeFrameBuffers(int width, int height);
+	void ReleaseFrameBuffers();
+
+	uint GetTextureBuffer();
 
 public:
 	Light lights[MAX_LIGHTS];
@@ -66,6 +75,13 @@ private:
 
 	// Debug ray for mouse picking
 	LineSegment ray;
+	float timeWaterShader = 0;
+
+	// Viewport frame buffer
+	uint frameBuffer = 0;
+	uint renderBufferoutput = 0;
+	uint textureBuffer = 0;
+	bool show_viewport_window = true;
 };
 
 #endif // !__RENDERER_3D_H__
