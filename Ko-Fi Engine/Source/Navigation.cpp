@@ -220,7 +220,7 @@ std::vector<GameObject*> Navigation::CollectWalkableObjects()
 	std::vector<GameObject*> res;
 
 	for (auto o : list) {
-		if (o->GetComponent<ComponentWalkable>() != nullptr) {
+		if (o->GetComponent<ComponentTransform>() != nullptr) {
 			res.push_back(o);
 		}
 	}

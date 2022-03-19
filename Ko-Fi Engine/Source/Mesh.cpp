@@ -184,17 +184,21 @@ Mesh* Mesh::MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transform
 	ret->verticesSizeBytes = verticesSizeBytes;
 	ret->indicesSizeBytes = indicesSizeBytes;
 
-	int verticesBytesOffset = 0;
-	int indicesBytesOffset = 0;
 	int indicesOffset = 0;
+	std::vector<float> outputVertices;
 	std::vector<unsigned int> outputIndices;
 	for (int i = 0; i < meshes.size(); i++) {
 		Mesh* m = meshes[i];
 		float4x4 t = transformations[i];
 
 		float* vertices = m->GetTransformedVertices(t);
-		memcpy(ret->vertices + verticesBytesOffset, vertices, m->verticesSizeBytes);
-		verticesBytesOffset += m->verticesSizeBytes;
+
+		for (int i = 0; i < m->verticesSizeBytes / sizeof(float); i++) {
+			outputVertices.push_back(vertices[i]);
+		}
+
+		//memcpy(ret->vertices + verticesBytesOffset, vertices, m->verticesSizeBytes);
+		//verticesBytesOffset += m->verticesSizeBytes;
 
 		for (int i = 0; i < m->indicesSizeBytes / sizeof(unsigned int); i++) {
 			outputIndices.push_back(m->indices[i] + indicesOffset);
@@ -203,6 +207,10 @@ Mesh* Mesh::MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transform
 		indicesOffset += m->verticesSizeBytes / sizeof(float3);
 
 		free(vertices);
+	}
+
+	for (int i = 0; i < outputVertices.size(); i++) {
+		ret->vertices[i] = outputVertices[i];
 	}
 
 	for (int i = 0; i < outputIndices.size(); i++) {
