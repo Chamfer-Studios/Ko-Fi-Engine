@@ -21,7 +21,7 @@
 #define MAX_NUM_BONES_PER_VERTEX 4
 
 class GameObject;
-
+class aiBone;
 enum class Shape
 {
 	NONE,
@@ -35,17 +35,17 @@ enum class Shape
 
 struct VertexBoneData
 {
-	uint BoneIDs[MAX_NUM_BONES_PER_VERTEX] = { 0 };
-	float Weights[MAX_NUM_BONES_PER_VERTEX] = { 0.0f };
+	uint boneIDs[MAX_NUM_BONES_PER_VERTEX] = { 0 };
+	float weights[MAX_NUM_BONES_PER_VERTEX] = { 0.0f };
 	VertexBoneData() {}
 	void AddBoneData(uint boneID, float weight)
 	{
-		for (uint i = 0; i < ARRAY_SIZE_IN_ELEMENTS(BoneIDs); ++i) 
+		for (uint i = 0; i < ARRAY_SIZE_IN_ELEMENTS(boneIDs); i++)
 		{
-			if (Weights[i] == 0.0)
+			if (weights[i] == 0.0)
 			{
-				BoneIDs[i] = boneID;
-				Weights[i] = weight;
+				boneIDs[i] = boneID;
+				weights[i] = weight;
 				CONSOLE_LOG("bone %d weight %f index %i\n",boneID,weight,i);
 				return;
 			}
@@ -93,7 +93,7 @@ public:
 	// Texture coordinates
 	uint idTexCoord = 0;
 	float* texCoords = nullptr;
-	
+	uint idBones = 0;
 	std::vector<VertexBoneData> bones;
 
 	std::map<std::string, uint> boneNameToIndexMap;

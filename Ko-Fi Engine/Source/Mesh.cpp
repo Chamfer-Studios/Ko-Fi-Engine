@@ -118,6 +118,13 @@ void Mesh::SetUpMeshBuffers()
 		glEnableVertexAttribArray(TEX_COORD_LOCATION);
 	}
 
+	glGenBuffers(1, &idBones);
+	glBindBuffer(GL_ARRAY_BUFFER, idBones);
+	glBufferData(GL_ARRAY_BUFFER,sizeof(bones[0])*bones.size(),&bones[0],GL_STATIC_DRAW);
+	glEnableVertexAttribArray(BONE_LOCATION);
+	glVertexAttribPointer(BONE_LOCATION, MAX_NUM_BONES_PER_VERTEX, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (void*)0);
+	glEnableVertexAttribArray(WEIGHT_LOCATION);
+	glVertexAttribPointer(WEIGHT_LOCATION, MAX_NUM_BONES_PER_VERTEX, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)(MAX_NUM_BONES_PER_VERTEX * sizeof(int32_t)));
 	// Unbind any vertex array we have binded before.
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

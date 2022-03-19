@@ -1,7 +1,6 @@
 #include "I_Mesh.h"
 #include "Globals.h"
 #include "Log.h"
-
 #include "Mesh.h"
 
 #include <fstream>
@@ -79,16 +78,21 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh)
 
 	if (aiMesh->HasBones())
 	{
+		uint numVertices = mesh->verticesSizeBytes / (sizeof(float) * 3);
+		mesh->bones.resize(numVertices);
+		//Load mesh bones
 		for (int i = 0; i < aiMesh->mNumBones; i++)
 		{
 			
-
+			//load single bone
 			aiBone* bone = aiMesh->mBones[i];
+			int boneId = GetBoneId(bone,mesh->boneNameToIndexMap);
 			for (int j = 0; j < bone->mNumWeights; j++)
 			{
 				
 				const aiVertexWeight& vw = bone->mWeights[j];
-				bones.resize(aiMesh->mNumVertices*4);
+				uint globalVertexID = bone->mWeights[j].mVertexId;
+				mesh->bones[globalVertexID].AddBoneData(boneId, vw.mWeight);
 				CONSOLE_LOG("%d: vertex id %d weight %.2f\n",j,vw.mVertexId,vw.mWeight);
 			}
 		}
@@ -154,4 +158,20 @@ bool I_Mesh::Load(const char* path, Mesh* mesh)
 		return true;
 	}
 	return false;
+}
+
+int I_Mesh::GetBoneId(const aiBone* pBone, std::map<std::string, uint>& boneNameToIndexMap)
+{
+	int boneIndex = 0;
+	std::string boneName(pBone->mName.C_Str());
+	if (boneNameToIndexMap.find(boneName) == boneNameToIndexMap.end())
+	{
+		boneIndex = (int)boneNameToIndexMap.size();
+		boneNameToIndexMap[boneName] = boneIndex;
+	}
+	else
+	{
+		boneIndex = boneNameToIndexMap[boneName];
+	}
+	return boneIndex;
 }
