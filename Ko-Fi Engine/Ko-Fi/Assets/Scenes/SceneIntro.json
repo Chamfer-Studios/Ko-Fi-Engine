@@ -355,8 +355,30 @@
                     },
                     {
                         "active": true,
-                        "is_static": true,
-                        "type": "rigidBody"
+                        "angular_damping": 0.0,
+                        "angular_velocity": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "density": 1.0,
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "is_kinematic": false,
+                        "is_static": false,
+                        "linear_damping": 0.0,
+                        "linear_velocity": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "mass": 5.0,
+                        "type": "rigidBody",
+                        "use_gravity": true
                     },
                     {
                         "active": true,

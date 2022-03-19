@@ -452,6 +452,7 @@
     </ClCompile>
     <ClCompile Include="Source\PanelCameraViewport.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
     <ClCompile Include="Source\C_Collider.cpp">
     </ClCompile>
     <ClCompile Include="Source\PanelSettings.cpp">
