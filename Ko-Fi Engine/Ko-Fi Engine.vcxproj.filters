@@ -98,9 +98,6 @@
     <Filter Include="Source\Resources">
       <UniqueIdentifier>{b584c71f-4e5f-403c-ac2d-424816ead254}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Importers">
-      <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\GameObject\Components\UI">
       <UniqueIdentifier>{f14257b0-f5e3-4dcf-9d8e-c73dcdec444c}</UniqueIdentifier>
     </Filter>
@@ -109,6 +106,12 @@
     </Filter>
     <Filter Include="Libs\SDL_ttf">
       <UniqueIdentifier>{7d8ca1e5-eefd-4c67-a8f4-310da73f01b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\ImGuizmo">
+      <UniqueIdentifier>{81e980dd-0834-4dc1-9f44-2fc93aa38da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Helpers\Importers">
+      <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -386,19 +389,19 @@
       <Filter>Source\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Material.cpp">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Mesh.cpp">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Texture.cpp">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Scene.cpp">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Importer.cpp">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Material.cpp">
       <Filter>Source\Resources</Filter>
@@ -432,6 +435,26 @@
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentRigidBody.cpp" />
+    <ClCompile Include="Source\External\ImGuizmo\include\GraphEditor.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\ImGuizmo\include\ImCurveEdit.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\ImGuizmo\include\ImGradient.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\ImGuizmo\include\ImGuizmo.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\ImGuizmo\include\ImSequencer.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelCameraViewport.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_Collider.cpp">
+    </ClCompile>
     <ClCompile Include="Source\PanelSettings.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
@@ -1430,23 +1453,35 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\External\ImGuizmo\include\GraphEditor.h">
+      <Filter>Libs\ImGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImCurveEdit.h">
+      <Filter>Libs\ImGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImGradient.h">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImGuizmo.h">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImSequencer.h">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImZoomSlider.h">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelCameraViewport.h">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_Collider.h">
+      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelSettings.h">
       <Filter>Source\Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1469,22 +1504,22 @@
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Material.h">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Mesh.h">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Texture.h">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Scene.h">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentMesh.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Importer.h">
-      <Filter>Source\Importers</Filter>
+      <Filter>Source\Helpers\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\MathGeoTransform.h">
       <Filter>Source\Utils</Filter>

@@ -42,11 +42,11 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(window);
+	AddModule(physics);
 	AddModule(input);
 	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(ui);
-	AddModule(physics);
 	AddModule(collisionDetector);
 	AddModule(sceneManager);
 
@@ -103,7 +103,7 @@ bool KoFiEngine::Awake()
 		engineConfig->authors = jsonConfigEngine.at("Authors").get<std::string>().c_str();
 		engineConfig->license = jsonConfigEngine.at("License").get<std::string>().c_str();
 		engineConfig->title = jsonConfigEngine.at("Title").get<std::string>().c_str();
-		engineConfig->organization = jsonConfigEngine.at("Organization").dump(4).c_str();
+		engineConfig->organization = jsonConfigEngine.at("Organization").get<std::string>().c_str();
 		engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
 		if (engineConfig->maxFps > 0) engineConfig->cappedMs = 1000 / engineConfig->maxFps;
 	}

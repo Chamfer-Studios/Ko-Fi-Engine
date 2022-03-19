@@ -10,14 +10,29 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
+#include "Camera3D.h"
+
 #include "glew.h"
 #include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
+ComponentCamera::ComponentCamera(GameObject* parent, bool isEngineCamera) : Component(parent)
 {
+	this->isEngineCamera = isEngineCamera;
 	type = ComponentType::CAMERA;
+
+	if (isEngineCamera)
+	{
+		aspectRatio = 1.f;
+		verticalFOV = 60.f;
+		nearPlaneDistance = 0.1f;
+		farPlaneDistance = 5000.f;
+		cameraSensitivity = .1f;
+		cameraSpeed = 30.f;
+	}
+	if (!isEngineCamera)
+		componentTransform = owner->GetTransform();
 
 	right = float3(1.0f, 0.0f, 0.0f);
 	up = float3(0.0f, 1.0f, 0.0f);
@@ -26,9 +41,10 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	position = float3(0.0f, 5.0f, -15.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
-	componentTransform = owner->GetTransform();
+	LookAt(float3::zero);
 
 	CalculateViewMatrix();
+
 }
 
 ComponentCamera::~ComponentCamera()
@@ -58,19 +74,20 @@ bool ComponentCamera::CleanUp()
 bool ComponentCamera::Update(float dt)
 {
 	// Add update functionality when we are able to change the main camera.
+	if (!isEngineCamera)
+	{
+		position = componentTransform->GetPosition();
 
-	position = componentTransform->GetPosition();
+		up = componentTransform->Up();
+		front = componentTransform->Front();
+		//right = componentTransform->Right();
 
-	up = componentTransform->Up();
-	front = componentTransform->Front();
-	//right = componentTransform->Right();
+		CalculateViewMatrix();
 
-	CalculateViewMatrix();
-	
-	if (drawFrustum)
-		DrawFrustum();
-	if (frustumCulling)
-		FrustumCulling();
+		if (frustumCulling)
+			FrustumCulling();
+
+	}
 
 	return true;
 }
@@ -111,7 +128,7 @@ void ComponentCamera::RecalculateProjection()
 bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
-	
+
 	if (ImGui::CollapsingHeader("Editor Camera"))
 	{
 		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
@@ -133,6 +150,10 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 		{
 			ResetFrustumCulling();
 		}
+		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
+		{
+			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
+		}
 	}
 
 	return ret;
@@ -146,6 +167,7 @@ void ComponentCamera::Save(Json& json) const
 	json["far_plane_distance"] = farPlaneDistance;
 	json["draw_frustum"] = drawFrustum;
 	json["frustum_culling"] = frustumCulling;
+	json["isMainCamera"] = isMainCamera;
 }
 
 void ComponentCamera::Load(Json& json)
@@ -155,6 +177,9 @@ void ComponentCamera::Load(Json& json)
 	farPlaneDistance = json.at("far_plane_distance");
 	drawFrustum = json.at("draw_frustum");
 	frustumCulling = json.at("frustum_culling");
+	isMainCamera = json.at("isMainCamera");
+	if(isMainCamera)
+		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 }
 
 //void ModuleCamera3D::OnSave(JSONWriter& writer) const
@@ -185,8 +210,12 @@ void ComponentCamera::Load(Json& json)
 
 void ComponentCamera::DrawFrustum() const
 {
+	glPushMatrix();
+	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
+
+	//Draw Operations
 
 	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(3.5f);
@@ -229,9 +258,10 @@ void ComponentCamera::DrawFrustum() const
 	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
 
 	glEnd();
-
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.0f);
+	glPopMatrix();
+
 }
 
 bool ComponentCamera::ClipsWithBBox(const AABB& refBox) const
@@ -262,7 +292,7 @@ void ComponentCamera::FrustumCulling()
 	{
 		GameObject* gameObject = (*go);
 		ComponentMesh* componentMesh = gameObject->GetComponent<ComponentMesh>();
-		
+
 		if (componentMesh == nullptr || gameObject == owner)
 			continue;
 
@@ -288,4 +318,12 @@ void ComponentCamera::ResetFrustumCulling()
 		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
 			componentMesh->SetRenderMesh(true);
 	}
+}
+
+void ComponentCamera::SetAspectRatio(const float& aspectRatio)
+{
+	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
+	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
+	this->projectionIsDirty = true;
+	RecalculateProjection();
 }

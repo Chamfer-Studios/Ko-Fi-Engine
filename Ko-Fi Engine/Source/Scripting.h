@@ -67,6 +67,13 @@ public:
 			"z", &float3::z
 			);
 
+		// float2 structure
+		lua.new_usertype<float2>("float2",
+			sol::constructors<void(), void(float, float)>(),
+			"x", &float2::x,
+			"y", &float2::y
+			);
+
 		
 		// GameObject structure
 		lua.new_usertype<GameObject>("GameObject",
@@ -113,7 +120,8 @@ public:
 			"SetStatic",			&ComponentRigidBody::SetStatic,
 			"SetDynamic",			&ComponentRigidBody::SetDynamic,
 			"SetLinearVelocity",	&ComponentRigidBody::SetLinearVelocity,
-			"FreezePositionY",		&ComponentRigidBody::FreezePositionY
+			"FreezePositionY",		&ComponentRigidBody::FreezePositionY,
+			"Set2DVelocity",	&ComponentRigidBody::Set2DVelocity
 			);
 	
 

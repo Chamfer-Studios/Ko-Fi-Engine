@@ -3,6 +3,7 @@
 #include "Editor.h"
 #include "Engine.h"
 #include "SceneManager.h"
+#include "Camera3D.h"
 #include "Input.h"
 
 PanelRuntimeState::PanelRuntimeState(Editor* editor, KoFiEngine* engine)
@@ -44,6 +45,7 @@ void PanelRuntimeState::DrawRuntimePanel()
     {
         SceneManager* sceneManager = engine->GetSceneManager();
         Editor* editor = engine->GetEditor();
+        Camera3D* camera = engine->GetCamera3D();
         Input* input = engine->GetInput();
         RuntimeState state = sceneManager->GetState();
 
@@ -66,12 +68,16 @@ void PanelRuntimeState::DrawRuntimePanel()
             {
                 sceneManager->OnPlay();
                 editor->OnPlay();
+                camera->OnPlay();
             }
         }
         else
         {
             if (ImGui::Button("STOP", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+            {
                 sceneManager->OnStop();
+                camera->OnStop();
+            }
         }
 
         // ADD THESE FEATURES IN THE FUTURE! (And more...)

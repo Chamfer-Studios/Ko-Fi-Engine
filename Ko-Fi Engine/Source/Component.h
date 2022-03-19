@@ -18,6 +18,7 @@ enum class ComponentType
 	COLLIDER,
 	SCRIPT,
 	RIGID_BODY,
+	COLLIDER2,
 	TRANSFORM2D,
 	CANVAS,
 	IMAGE,
@@ -31,6 +32,7 @@ class Component
 {
 public:
 	Component(GameObject* parent);
+	virtual ~Component(){};
 
 	virtual void Enable() { active = true; }
 	virtual bool Start() { return true; }
@@ -51,7 +53,7 @@ public:
 
 public:
 	bool active = true;
-	GameObject* owner;
+	GameObject* owner = nullptr;
 	ComponentType type;
 };
 

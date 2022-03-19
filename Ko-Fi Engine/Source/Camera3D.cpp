@@ -22,14 +22,6 @@ Camera3D::Camera3D(KoFiEngine* engine) : Module()
 	name = "Camera";
 	this->engine = engine;
 
-	right = float3(1.0f, 0.0f, 0.0f);
-	up = float3(-0.000605105015f, 0.804563046f, 0.593866348f);
-	front = float3(-0.000820143265f, -0.593866587f, 0.804562271f);
-
-	position = float3(-3.65002513f, 153.790665f, -131.349442f);
-	reference = float3(0.0f, 0.0f, 0.0f);
-
-	CalculateViewMatrix();
 }
 
 Camera3D::~Camera3D()
@@ -41,7 +33,20 @@ bool Camera3D::Start()
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
 
-	LookAt(float3::zero);
+	engineCamera = new ComponentCamera(nullptr, true);
+	engineCamera->isEngineCamera = true;
+	
+	currentCamera = engineCamera;
+	currentCamera->right = float3(1.0f, 0.0f, 0.0f);
+	currentCamera->up = float3(-0.000605105015f, 0.804563046f, 0.593866348f);
+	currentCamera->front = float3(-0.000820143265f, -0.593866587f, 0.804562271f);
+
+	currentCamera->position = float3(-3.65002513f, 153.790665f, -131.349442f);
+	currentCamera->reference = float3(0.0f, 0.0f, 0.0f);
+
+	currentCamera->CalculateViewMatrix();
+
+	currentCamera->LookAt(float3::zero);
 
 	bool ret = true;
 
@@ -51,22 +56,67 @@ bool Camera3D::Start()
 // -----------------------------------------------------------------
 bool Camera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movement frame rate independant!
-
-	float3 newPos(0, 0, 0);
-	float speed = cameraSpeed * dt;
-	
 	if (engine->GetEditor()->GetPanel<PanelViewport>())
 		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
 			return true;
+
+	if (currentCamera->isEngineCamera)
+	{
+		CheckInput(dt);
+		CheckMouseMotion();
+	}
+
+	return true;
+}
+
+// -----------------------------------------------------------------
+bool Camera3D::CleanUp()
+{
+	CONSOLE_LOG("Cleaning camera");
+	appLog->AddLog("Cleaning camera\n");
+	//RELEASE(currentCamera);
+	//RELEASE(engineCamera);
+	//RELEASE(gameCamera);
+	return true;
+}
+
+// Method to receive and manage events
+void Camera3D::OnNotify(const Event& event)
+{
+	// Manage events
+}
+
+void Camera3D::OnGui()
+{
+	if (ImGui::CollapsingHeader("Editor Camera"))
+	{
+		if (ImGui::DragFloat("Vertical fov", &currentCamera->verticalFOV))
+		{
+			currentCamera->projectionIsDirty = true;
+		}
+		if (ImGui::DragFloat("Near plane distance", &currentCamera->nearPlaneDistance))
+		{
+			currentCamera->projectionIsDirty = true;
+		}
+		if (ImGui::DragFloat("Far plane distance", &currentCamera->farPlaneDistance))
+		{
+			currentCamera->projectionIsDirty = true;
+		}
+	}
+}
+
+void Camera3D::CheckInput(float dt)
+{
+	float3 newPos(0, 0, 0);
+	float speed = currentCamera->cameraSpeed * dt;
+
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
 
 	// Focus --> NEEDS TO BE FIXED... SOME (MESH) FUNCTIONS DEPEND ON A PRIMITIVE LIBRARY WE STILL DON'T HAVE IMPLEMENTED.
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN )
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
 		// TO DO: Manage current object selection by the game object itself! Not by its index...
 		if (/*engine->GetEditor()->gameobjectSelected != nullptr <-- Should be this way*/
@@ -80,17 +130,17 @@ bool Camera3D::Update(float dt)
 				gameObjectSelected->GetComponent<ComponentMesh>())
 			{
 				const float3 meshCenter = mesh->GetCenterPointInWorldCoords(); // FIX THIS FUNCTION
-				LookAt(meshCenter);
+				currentCamera->LookAt(meshCenter);
 				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
-				const float currentDistance = meshCenter.Distance(position);
-				const float desiredDistance = (meshRadius * 2) / atan(cameraFrustum.horizontalFov);
-				position = position + front * (currentDistance - desiredDistance);
+				const float currentDistance = meshCenter.Distance(currentCamera->position);
+				const float desiredDistance = (meshRadius * 2) / atan(currentCamera->cameraFrustum.horizontalFov);
+				currentCamera->position = currentCamera->position + currentCamera->front * (currentDistance - desiredDistance);
 			}
 			else
 			{
 				ComponentTransform* transform = gameObjectSelected->GetTransform();
 				if (transform != nullptr)
-					LookAt(gameObjectSelected->GetTransform()->GetPosition());
+					currentCamera->LookAt(gameObjectSelected->GetTransform()->GetPosition());
 			}
 		}
 	}
@@ -105,21 +155,25 @@ bool Camera3D::Update(float dt)
 			spot.z = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().z;
 		}
 	}
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN )
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		LookAt(float3(5, 5, 5));
+		currentCamera->LookAt(float3(5, 5, 5));
 	}
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += front * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= front * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += currentCamera->front * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= currentCamera->front * speed;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += right * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += currentCamera->right * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= currentCamera->right * speed;
 
-	if (engine->GetInput()->GetMouseZ() > 0 ) newPos += front * speed * 2;
-	if (engine->GetInput()->GetMouseZ() < 0 ) newPos -= front * speed * 2;
+	if (engine->GetInput()->GetMouseZ() > 0) newPos += currentCamera->front * speed * 2;
+	if (engine->GetInput()->GetMouseZ() < 0) newPos -= currentCamera->front * speed * 2;
 
-	position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
+	currentCamera->position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
+}
+
+void Camera3D::CheckMouseMotion()
+{
 
 	// Mouse motion ----------------
 
@@ -134,143 +188,78 @@ bool Camera3D::Update(float dt)
 			if (/*engine->GetEditor()->gameobjectSelected != nullptr*/
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
 			{
-				const float newDeltaX = (float)dx * cameraSensitivity;
-				const float newDeltaY = (float)dy * cameraSensitivity;
+				const float newDeltaX = (float)dx * currentCamera->cameraSensitivity;
+				const float newDeltaY = (float)dy * currentCamera->cameraSensitivity;
 
-				reference = /*engine->GetEditor()->gameobjectSelected->transform->GetPosition()*/
+				currentCamera->reference = /*engine->GetEditor()->gameobjectSelected->transform->GetPosition()*/
 					engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()
 						->panelGameObjectInfo.selectedGameObjectID)->GetComponent<ComponentTransform>()->GetPosition();
 				Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
 
-				if (abs(up.y) < 0.3f) // Avoid gimball lock on up & down apex
+				if (abs(currentCamera->up.y) < 0.3f) // Avoid gimball lock on up & down apex
 				{
-					if (position.y > reference.y && newDeltaY < 0.f)
-						orbitMat = orbitMat * math::Quat::RotateAxisAngle(right, newDeltaY * .1f);
-					if (position.y < reference.y && newDeltaY > 0.f)
-						orbitMat = orbitMat * math::Quat::RotateAxisAngle(right, newDeltaY * .1f);
+					if (currentCamera->position.y > currentCamera->reference.y && newDeltaY < 0.f)
+						orbitMat = orbitMat * math::Quat::RotateAxisAngle(currentCamera->right, newDeltaY * .1f);
+					if (currentCamera->position.y < currentCamera->reference.y && newDeltaY > 0.f)
+						orbitMat = orbitMat * math::Quat::RotateAxisAngle(currentCamera->right, newDeltaY * .1f);
 				}
 				else
 				{
-					orbitMat = orbitMat * math::Quat::RotateAxisAngle(right, newDeltaY * .1f);
+					orbitMat = orbitMat * math::Quat::RotateAxisAngle(currentCamera->right, newDeltaY * .1f);
 				}
 
-				position = orbitMat * (position - reference) + reference;
+				currentCamera->position = orbitMat * (currentCamera->position - currentCamera->reference) + currentCamera->reference;
 
-				CalculateViewMatrix();
-				LookAt(reference);
+				currentCamera->CalculateViewMatrix();
+				currentCamera->LookAt(currentCamera->reference);
 			}
 		}
 		else
 		{
 			if (dx != 0)
 			{
-				const float newDeltaX = (float)dx * cameraSensitivity;
-				float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
-				lastDeltaX = deltaX;
-				Quat rotateY = Quat::RotateY(up.y >= 0.f ? deltaX * .1f : -deltaX * .1f);
-				up = rotateY * up;
-				front = rotateY * front;
-				CalculateViewMatrix();
+				const float newDeltaX = (float)dx * currentCamera->cameraSensitivity;
+				float deltaX = newDeltaX + 0.95f * (currentCamera->lastDeltaX - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
+				currentCamera->lastDeltaX = deltaX;
+				Quat rotateY = Quat::RotateY(currentCamera->up.y >= 0.f ? deltaX * .1f : -deltaX * .1f);
+				currentCamera->up = rotateY * currentCamera->up;
+				currentCamera->front = rotateY * currentCamera->front;
+				currentCamera->CalculateViewMatrix();
 				hasRotated = true;
 			}
 
 			if (dy != 0)
 			{
-				const float newDeltaY = (float)dy * cameraSensitivity;
-				float deltaY = newDeltaY + 0.95f * (lastDeltaY - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
-				lastDeltaY = deltaY;
-				Quat rotateX = Quat::RotateAxisAngle(right, -deltaY * .1f);
-				up = rotateX * up;
-				front = rotateX * front;
-				CalculateViewMatrix();
+				const float newDeltaY = (float)dy * currentCamera->cameraSensitivity;
+				float deltaY = newDeltaY + 0.95f * (currentCamera->lastDeltaY - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
+				currentCamera->lastDeltaY = deltaY;
+				Quat rotateX = Quat::RotateAxisAngle(currentCamera->right, -deltaY * .1f);
+				currentCamera->up = rotateX * currentCamera->up;
+				currentCamera->front = rotateX * currentCamera->front;
+				currentCamera->CalculateViewMatrix();
 				hasRotated = true;
 			}
 		}
 	}
 
-	!hasRotated ? lastDeltaX = lastDeltaY = 0.f : 0.f;
+	!hasRotated ? currentCamera->lastDeltaX = currentCamera->lastDeltaY = 0.f : 0.f;
 
-	CalculateViewMatrix();
-
-	return true;
+	currentCamera->CalculateViewMatrix();
 }
 
-// -----------------------------------------------------------------
-bool Camera3D::CleanUp()
+void Camera3D::OnPlay()
 {
-	CONSOLE_LOG("Cleaning camera");
-	appLog->AddLog("Cleaning camera\n");
-
-	return true;
+	currentCamera = gameCamera;
 }
 
-// Method to receive and manage events
-void Camera3D::OnNotify(const Event& event)
+void Camera3D::OnStop()
 {
-	// Manage events
+	currentCamera = engineCamera;
 }
 
-// -----------------------------------------------------------------
-void Camera3D::LookAt(const float3& point)
+void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
 {
-	reference = point;
-
-	front = (reference - position).Normalized();
-	right = float3(0.0f, 1.0f, 0.0f).Cross(front).Normalized();
-	up = front.Cross(right);
-
-	CalculateViewMatrix();
-}
-
-// -----------------------------------------------------------------
-void Camera3D::CalculateViewMatrix(bool ortho)
-{
-	if (projectionIsDirty)
-		RecalculateProjection(ortho);
-
-	cameraFrustum.pos = position;
-	cameraFrustum.front = front.Normalized();
-	cameraFrustum.up = up.Normalized();
-	float3::Orthonormalize(cameraFrustum.front, cameraFrustum.up);
-	right = up.Cross(front);
-	viewMatrix = cameraFrustum.ViewMatrix();
-}
-
-void Camera3D::RecalculateProjection(bool ortho)
-{
-	if (!ortho) {
-		cameraFrustum.type = FrustumType::PerspectiveFrustum;
-		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-		cameraFrustum.farPlaneDistance = farPlaneDistance;
-		cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
-		cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
-	}
-	else {
-		cameraFrustum.type = FrustumType::OrthographicFrustum;
-		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-		cameraFrustum.farPlaneDistance = farPlaneDistance;
-		cameraFrustum.orthographicWidth = engine->GetEditor()->lastViewportSize.x;
-		cameraFrustum.orthographicHeight = engine->GetEditor()->lastViewportSize.y;
-	}
-}
-
-void Camera3D::OnGui()
-{
-	if (ImGui::CollapsingHeader("Editor Camera"))
-	{
-		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
-		{
-			projectionIsDirty = true;
-		}
-		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
-		{
-			projectionIsDirty = true;
-		}
-		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
-		{
-			projectionIsDirty = true;
-		}
-	}
+	this->gameCamera = gameCamera;
 }
 
 void Camera3D::OnClick(SDL_Event event)
@@ -325,10 +314,10 @@ GameObject* Camera3D::MousePicking()
 
 	normalX = (normalX - 0.5f) * 2.0f;
 	normalY = -(normalY - 0.5f) * 2.0f;
-	CONSOLE_LOG("%f", normalX);
-	CONSOLE_LOG("%f", normalY);
+	/*CONSOLE_LOG("x: %f", normalX);
+	CONSOLE_LOG("y: %f", normalY);*/
 
-	LineSegment newRay = cameraFrustum.UnProjectLineSegment(normalX, normalY);
+	LineSegment newRay = currentCamera->cameraFrustum.UnProjectLineSegment(normalX, normalY);
 	engine->GetSceneManager()->GetCurrentScene()->ray = newRay;
 
 	std::vector<GameObject*> sceneGameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
@@ -411,7 +400,7 @@ GameObject* Camera3D::MousePicking()
 								glBegin(GL_POINTS);
 								glVertex3f(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z);
 								glEnd();
-								script->handler->lua["destination"] = intersectionPoint; 
+								script->handler->lua["destination"] = intersectionPoint;
 							}
 						}
 					}
@@ -422,12 +411,4 @@ GameObject* Camera3D::MousePicking()
 	}
 
 	return nullptr;
-}
-
-void Camera3D::SetAspectRatio(const float& aspectRatio)
-{
-	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
-	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
-	this->projectionIsDirty = true;
-	RecalculateProjection();
 }

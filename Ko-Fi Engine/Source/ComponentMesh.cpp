@@ -225,6 +225,8 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
 	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
 
+	aabb.Size();
+
 	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
 	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 
@@ -264,6 +266,8 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glEnd();
 	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1.0f);
+	glPopMatrix();
+
 	glPopMatrix();
 
 }

@@ -16,6 +16,7 @@ class PanelAbout;
 class PanelChooser;
 class PanelInspector;
 class PanelViewport;
+class PanelCameraViewport;
 class PanelGame;
 class PanelRuntimeState;
 class PanelAssets;
@@ -35,6 +36,7 @@ struct PanelGameObjectInfo
 struct PanelsState
 {
 	bool showViewportWindow = true;
+	bool showCameraViewportWindow = true;
 	bool showGameWindow = true;
 };
 
@@ -61,6 +63,8 @@ public:
 	void MarkdownExample();
 	void UpdatePanelsState();
 	void OpenTextEditor(std::string path,const char* ext = nullptr);
+
+	bool MouseOnScene();
 
 	std::list<Panel*> GetPanels();
 	template<class T> T* GetPanel()
@@ -107,6 +111,7 @@ private:
 	PanelInspector* panelGameObject = nullptr;
 	PanelGame* panelGame = nullptr;
 	PanelViewport* panelViewport = nullptr;
+	PanelCameraViewport* panelCameraViewport = nullptr;
 	PanelRuntimeState* panelRuntimeState = nullptr;
 	PanelAssets* panelAssets = nullptr;
 	PanelNodeEditor* panelNodeEditor = nullptr;

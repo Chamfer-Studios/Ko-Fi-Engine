@@ -19,11 +19,13 @@
 #include "PanelChooser.h"
 #include "PanelInspector.h"
 #include "PanelViewport.h"
+#include "PanelCameraViewport.h"
 #include "PanelGame.h"
 #include "PanelRuntimeState.h"
 #include "PanelAssets.h"
 #include "PanelTextEditor.h"
 #include "PanelNodeEditor.h"
+#include "ImGuizmo.h"
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
 
@@ -67,6 +69,11 @@ Editor::Editor(KoFiEngine* engine)
 	{
 		panelViewport = new PanelViewport(this, engine);
 		AddPanel(panelViewport);
+	}
+	if (panelsState.showCameraViewportWindow)
+	{
+		panelCameraViewport = new PanelCameraViewport(this, engine);
+		AddPanel(panelCameraViewport);
 	}
 	//------------------------------------
 	
@@ -132,7 +139,7 @@ bool Editor::Awake(Json configModule)
 
 	// FIXME: The list of meshes should be in scene intro.
 	//input->gameObjects = &gameObjects;
-
+	ImGuizmo::Enable(true);
 	return ret;
 }
 
@@ -145,6 +152,7 @@ bool Editor::Start()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImNodes::CreateContext();
+	//ImGuizmo::SetImGuiContext(ImGui::GetCurrentContext());
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
 
@@ -175,6 +183,7 @@ bool Editor::PreUpdate(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 
 	// Panels PreUpdate
 	if (ret == true)
@@ -494,6 +503,13 @@ std::list<Panel*> Editor::GetPanels()
 {
 	return panels;
 }
+
+bool Editor::MouseOnScene()
+{
+	return mouseScenePosition.x > 0 && mouseScenePosition.x < viewportSize.x
+		&& mouseScenePosition.y > 0 && mouseScenePosition.y < viewportSize.y;
+}
+
 
 void Editor::OpenTextEditor(std::string path, const char* ext)
 {
