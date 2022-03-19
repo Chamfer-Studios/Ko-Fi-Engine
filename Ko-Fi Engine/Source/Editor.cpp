@@ -313,6 +313,11 @@ void Editor::OnNotify(const Event& event)
 	// Manage events
 }
 
+void Editor::OnPlay()
+{
+	panelGameObjectInfo.selectedGameObjectID = -1;
+}
+
 #include "ImGui.h"                // https://github.com/ocornut/imgui
 #include "imgui_markdown.h"       // https://github.com/juliettef/imgui_markdown
 #include "IconsFontAwesome5.h"    // https://github.com/juliettef/IconFontCppHeaders

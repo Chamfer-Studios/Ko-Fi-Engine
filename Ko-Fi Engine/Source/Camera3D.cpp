@@ -273,6 +273,25 @@ void Camera3D::OnGui()
 	}
 }
 
+void Camera3D::OnClick(SDL_Event event)
+{
+	if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING) return;
+	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT) return;
+	if (engine->GetEditor()->GetPanel<PanelViewport>())
+		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
+			return;
+
+	GameObject* hit = MousePicking();
+	if (hit != nullptr)
+	{
+		CONSOLE_LOG("%s", hit->GetName());
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+	}
+	else {
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	}
+}
+
 //void Camera3D::OnSave(JSONWriter& writer) const
 //{
 //	writer.String("camera");

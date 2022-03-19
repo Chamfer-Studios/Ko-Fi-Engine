@@ -26,6 +26,8 @@ public:
 	void CalculateViewMatrix(bool ortho = false);
 	void RecalculateProjection(bool ortho = false);
 	void OnGui() override;
+	void OnClick(SDL_Event event);
+
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;
 	GameObject* MousePicking();

@@ -43,6 +43,7 @@ void PanelRuntimeState::DrawRuntimePanel()
     if (ImGui::Begin("Game state"/*, ImVec2(405, 38), true, ImGuiWindowFlags_NoMove*/))
     {
         SceneManager* sceneManager = engine->GetSceneManager();
+        Editor* editor = engine->GetEditor();
         Input* input = engine->GetInput();
         RuntimeState state = sceneManager->GetState();
 
@@ -62,7 +63,10 @@ void PanelRuntimeState::DrawRuntimePanel()
         if (state != RuntimeState::PLAYING && state != RuntimeState::PAUSED)
         {
             if (ImGui::Button("PLAY", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+            {
                 sceneManager->OnPlay();
+                editor->OnPlay();
+            }
         }
         else
         {

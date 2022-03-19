@@ -52,6 +52,7 @@ public:
 	bool CleanUp();
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
+	void OnPlay();
 
 	void AddPanel(Panel* panel);
 	void RemovePanel(Panel* panel);
