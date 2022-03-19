@@ -56,8 +56,9 @@ bool Camera3D::Start()
 // -----------------------------------------------------------------
 bool Camera3D::Update(float dt)
 {
-	bool isWindowFocused = engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused();
-	if (!isWindowFocused) return true;
+	if (engine->GetEditor()->GetPanel<PanelViewport>())
+		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
+			return true;
 
 	if (currentCamera->isEngineCamera)
 	{

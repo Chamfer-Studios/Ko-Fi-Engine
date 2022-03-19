@@ -40,19 +40,25 @@ bool PanelCameraViewport::PreUpdate()
 
 bool PanelCameraViewport::Update()
 {
-	if (ImGui::Begin("Camera Preview", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar))
-	{
-		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
-		
-		ImGui::Image((ImTextureID)engine->GetRenderer()->GetTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
-
-	}
-	ImGui::End();
+	if (editor->panelsState.showCameraViewportWindow) RenderPanel(&editor->panelsState.showCameraViewportWindow);
 
 	return true;
 }
 
 bool PanelCameraViewport::PostUpdate()
 {
+	return true;
+}
+
+bool PanelCameraViewport::RenderPanel(bool* showPanel )
+{
+	if (ImGui::Begin("Camera Preview", showPanel, ImGuiWindowFlags_NoScrollbar))
+	{
+		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
+
+		ImGui::Image((ImTextureID)engine->GetRenderer()->GetTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+
+	}
+	ImGui::End();
 	return true;
 }

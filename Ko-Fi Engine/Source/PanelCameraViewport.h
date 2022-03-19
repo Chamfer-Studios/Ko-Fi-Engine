@@ -16,6 +16,7 @@ public:
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
+	bool RenderPanel(bool* showPanel);
 
 private:
 

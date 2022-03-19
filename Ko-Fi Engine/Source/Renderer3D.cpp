@@ -125,7 +125,7 @@ bool Renderer3D::InitOpenGL()
 	ret = InitGlew();
 	if (ret)
 	{
-		if (this->vsync) 
+		if (this->vsync)
 		{
 			SDL_GL_SetSwapInterval(1) < 0 ?
 				CONSOLE_LOG("[ERROR] Unable to set Vsync! SDL Error: %s\n", SDL_GetError()) : CONSOLE_LOG("[STATUS] Vsync is activated!");
@@ -250,6 +250,15 @@ void Renderer3D::RenderScene()
 			RenderMeshes(go);
 			RenderBoundingBox(cMesh);
 		}
+		ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
+		if (cCamera) {
+			if (!cCamera->isEngineCamera && cCamera->drawFrustum)
+			{
+				cCamera->DrawFrustum();
+			}
+
+		}
+
 	}
 }
 
@@ -350,7 +359,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);
-			
+
 		}
 	}
 }
@@ -373,9 +382,9 @@ void Renderer3D::SetVsync(bool vsync)
 		this->vsync = vsync;
 		if (SDL_GL_SetSwapInterval(vsync ? 1 : 0) < 0) {
 			CONSOLE_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
-			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n",SDL_GetError());
+			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 		}
-		
+
 		SDL_GL_GetSwapInterval() ? appLog->AddLog("Vsync Started\n") : appLog->AddLog("Vsync Stopped\n");;
 	}
 }

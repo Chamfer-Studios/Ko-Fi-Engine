@@ -84,8 +84,6 @@ bool ComponentCamera::Update(float dt)
 
 		CalculateViewMatrix();
 
-		if (drawFrustum)
-			DrawFrustum();
 		if (frustumCulling)
 			FrustumCulling();
 
@@ -212,10 +210,11 @@ void ComponentCamera::Load(Json& json)
 
 void ComponentCamera::DrawFrustum() const
 {
-	float3 cornerPoints[8];
-	cameraFrustum.GetCornerPoints(cornerPoints);
 	glPushMatrix();
 	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
+	float3 cornerPoints[8];
+	cameraFrustum.GetCornerPoints(cornerPoints);
+
 	//Draw Operations
 
 	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
@@ -259,10 +258,10 @@ void ComponentCamera::DrawFrustum() const
 	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
 
 	glEnd();
-	glPopMatrix();
-
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.0f);
+	glPopMatrix();
+
 }
 
 bool ComponentCamera::ClipsWithBBox(const AABB& refBox) const
