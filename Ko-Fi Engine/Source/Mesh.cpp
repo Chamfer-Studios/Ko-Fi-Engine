@@ -10,6 +10,8 @@
 #include <gl/GLU.h>
 #include <iostream>
 
+#include "MathGeoLib/Math/float4.h"
+#include "MathGeoLib/Math/float4x4.h"
 
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
@@ -146,6 +148,24 @@ void Mesh::DebugDraw()
 
 	if (drawFaceNormals)
 		DrawFaceNormals();
+}
+
+float* Mesh::GetTransformedVertices(float4x4 transform)
+{
+	float* ret = (float*)malloc(verticesSizeBytes);
+
+	int nvf = verticesSizeBytes / sizeof(float);
+	for (int i = 0; i < nvf; i += 3) {
+		float3 v = { vertices[i], vertices[i + 1], vertices[i + 2] };
+		float4 e = { v.x, v.y, v.z, 1 };
+		float4 t = transform * e;
+		float3 homogenized = { t.x / t.w, t.y / t.w, t.z / t.w };
+		ret[i] = homogenized.x;
+		ret[i + 1] = homogenized.y;
+		ret[i + 2] = homogenized.z;
+	}
+
+	return ret;
 }
 
 void Mesh::DrawVertexNormals() const

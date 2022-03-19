@@ -41,6 +41,8 @@ public:
 	inline void SetFaceNormals(bool faces) { drawFaceNormals = faces; }
 	inline bool GetFaceNormals() const { return drawFaceNormals; }
 
+	float* GetTransformedVertices(float4x4 transform);
+
 	// Size in Bytes
 	unsigned verticesSizeBytes = 0;
 	unsigned normalsSizeBytes = 0;

@@ -8,6 +8,7 @@
 
 #include "ComponentWalkable.h"
 #include "ComponentMesh.h"
+#include "ComponentTransform.h"
 #include "Mesh.h"
 
 Navigation::Navigation(KoFiEngine* engine) : Module()
@@ -39,12 +40,10 @@ bool Navigation::PostUpdate(float dt)
 {
 	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
 
-	return true;
-
 	if (navMesh == nullptr) return true;
 
-	glLineWidth(2.0f);
 	glBegin(GL_LINES);
+	glLineWidth(2.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
 	for (int i = 0; i < navMesh->nmeshes; ++i)
@@ -59,10 +58,22 @@ bool Navigation::PostUpdate(float dt)
 		// Iterate the sub-mesh's triangles.
 		for (int j = 0; j < ntris; ++j)
 		{
-			const float x = verts[tris[j * 4 + 0] * 3];
-			const float y = verts[tris[j * 4 + 1] * 3];
-			const float z = verts[tris[j * 4 + 2] * 3];
-			glVertex3f(x, y, z);
+			const float x1 = verts[tris[j * 4 + 0] * 3 + 0];
+			const float y1 = verts[tris[j * 4 + 0] * 3 + 1];
+			const float z1 = verts[tris[j * 4 + 0] * 3 + 2];
+			const float x2 = verts[tris[j * 4 + 1] * 3 + 0];
+			const float y2 = verts[tris[j * 4 + 1] * 3 + 1];
+			const float z2 = verts[tris[j * 4 + 1] * 3 + 2];
+			const float x3 = verts[tris[j * 4 + 2] * 3 + 0];
+			const float y3 = verts[tris[j * 4 + 2] * 3 + 1];
+			const float z3 = verts[tris[j * 4 + 2] * 3 + 2];
+
+			glVertex3f(x1, y1, z1);
+			glVertex3f(x2, y2, z2);
+			glVertex3f(x2, y2, z2);
+			glVertex3f(x3, y3, z3);
+			glVertex3f(x3, y3, z3);
+			glVertex3f(x1, y1, z1);
 		}
 	}
 
@@ -91,8 +102,9 @@ void Navigation::ComputeNavmesh()
 	if (walkableMeshes.size() == 0) return;
 
 	GameObject* walkable = walkableMeshes[0];
+	ComponentTransform* cTransform = walkable->GetComponent<ComponentTransform>();
 	ComponentMesh* cMesh = walkable->GetComponent<ComponentMesh>();
-	float* vertices = cMesh->GetMesh()->vertices;
+	float* vertices = cMesh->GetMesh()->GetTransformedVertices(cTransform->GetGlobalTransform());
 	int nv = cMesh->GetMesh()->verticesSizeBytes / (sizeof(float) * 3);
 	int* tris = (int*)cMesh->GetMesh()->indices;
 	int nt = cMesh->GetMesh()->indicesSizeBytes / sizeof(uint) / 3;
@@ -111,18 +123,18 @@ void Navigation::ComputeNavmesh()
 	config->bmax[1] = bMax[1];
 	config->bmax[2] = bMax[2];
 
-	config->cs = 0.3f;
-	config->ch = 0.2f;
+	config->cs = 5.f;
+	config->ch = 2.f;
 	config->walkableSlopeAngle = 45;
 	config->walkableClimb = 1;
 	config->walkableHeight = 2;
 	config->walkableRadius = 2;
-	config->minRegionArea = 0.5f;
-	config->mergeRegionArea = 1.5f;
-	config->borderSize = 1.5f;
-	config->maxEdgeLen = 1.2f;
+	config->minRegionArea = 2.f;
+	config->mergeRegionArea = 2.f;
+	config->borderSize = 0.2f;
+	config->maxEdgeLen = 30.f;
 	config->maxVertsPerPoly = 6;
-	config->detailSampleMaxError = 1.0f;
+	config->detailSampleMaxError = .5f;
 	config->detailSampleDist = 1.0f;
 
 	int w, h;
@@ -139,7 +151,7 @@ void Navigation::ComputeNavmesh()
 	unsigned char* areas = new unsigned char[nt];
 	memset(areas, 0, nt * sizeof(unsigned char));
 	rcMarkWalkableTriangles(context, config->walkableSlopeAngle, vertices, nv, tris, nt, areas);
-	if (!rcRasterizeTriangles(context, vertices, areas, nt, *heightfield)) {
+	if (!rcRasterizeTriangles(context, vertices, nv, tris, areas, nt, *heightfield, config->walkableClimb)) {
 		appLog->AddLog("Could not rasterize triangles!");
 	}
 	rcFilterLowHangingWalkableObstacles(context, config->walkableClimb, *heightfield);
