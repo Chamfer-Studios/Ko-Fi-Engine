@@ -17,13 +17,14 @@ Resource::~Resource()
 
 }
 
-void Resource::CleanUp()
+bool Resource::CleanUp()
 {
 	assetPath.clear();
 	libraryPath.clear();
 
 	assetPath.shrink_to_fit();
 	libraryPath.shrink_to_fit();
+	return true;
 }
 
 void Resource::SetLibraryPathAndFile()

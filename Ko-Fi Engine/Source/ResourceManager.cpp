@@ -169,6 +169,16 @@ Resource* ResourceManager::RequestResource(UID uid)
 	return nullptr;
 }
 
+UID ResourceManager::Find(const char* assetPath) const
+{
+	for (auto r : resourcesMap)
+	{
+		if (r.second->assetPath == assetPath)
+			return r.first;
+	}
+	return -1;
+}
+
 void ResourceManager::SaveResource(Resource* resource)
 {
 	if (resource == nullptr)
@@ -182,14 +192,8 @@ void ResourceManager::SaveResource(Resource* resource)
 	case Resource::Type::MESH:
 		Importer::GetInstance()->meshImporter->Save((Mesh*)resource, resource->libraryPath.c_str());
 		break;
-	case Resource::Type::TEXTURE:
-		// It doesnt have a save?
-		break;
 	case Resource::Type::SCENE:
 		Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
-		break;
-	case Resource::Type::SHADER:
-		//TODO: Save Shader
 		break;
 	case Resource::Type::FONT:
 		//TODO: Save Font
@@ -204,6 +208,15 @@ void ResourceManager::UnloadResource(Resource* resource)
 	UID uid = resource->uid;
 	resource->CleanUp();
 	RELEASE(resource);
+	if (resourcesMap.find(uid) != resourcesMap.end())
+		resourcesMap.erase(uid);
+}
+
+void ResourceManager::UnloadResource(UID uid)
+{
+	Resource* r = resourcesMap[uid];
+	r->CleanUp();
+	RELEASE(r);
 	if (resourcesMap.find(uid) != resourcesMap.end())
 		resourcesMap.erase(uid);
 }

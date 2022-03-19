@@ -15,20 +15,19 @@ public:
 	bool PreUpdate(float dt);
 	bool CleanUp();
 
-	//uint Find(const char* assetPath) const;
 	UID ImportFile(const char* assetPath);
 	void SaveResource(Resource* resource);
+	void UnloadResource(UID uid);
 	void UnloadResource(Resource* resource);
 	Resource* GetResourceFromLibrary(const char* libraryPath);
 	UID LoadFromLibrary(const char* libraryPath);
 
-	//const Resource* RequestResource(uint uid) const;
+	//const Resource* RequestResource(uint uid) const;			Can't do it because of the maps
+	UID Find(const char* assetPath) const;
 	Resource* RequestResource(UID uid);
 	Resource::Type GetTypeFromExtension(const char* extension) const;
 	const char* GetValidPath(const char* path) const;
 	const char* GetFileName(const char* path) const;
-
-	//void ReleaseResource(uint uid);
 
 private:
 	Resource* CreateNewResource(const char* assetPath, Resource::Type type);

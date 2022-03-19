@@ -23,7 +23,7 @@ public:
 	Resource(Resource::Type type);
 	virtual ~Resource();
 
-	virtual void CleanUp();
+	virtual bool CleanUp();
 
 	inline Resource::Type GetType() const { return type; }
 

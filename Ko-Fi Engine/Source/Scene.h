@@ -7,6 +7,7 @@
 #include "Editor.h"
 #include "QuadTree3D.h"
 #include "RNG.h"
+#include "Resource.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
@@ -16,7 +17,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-class Scene
+class Scene : public Resource
 {
 public:
 	Scene() : active(false)

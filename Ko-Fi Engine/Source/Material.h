@@ -5,6 +5,7 @@
 #include <vector>
 #include "Globals.h"
 #include "Color.h"
+#include "Resource.h"
 
 struct Uniform
 {
@@ -20,7 +21,7 @@ struct UniformT : public Uniform
 	T value;
 };
 
-class Material
+class Material : public Resource
 {
 public:
 	Material();
