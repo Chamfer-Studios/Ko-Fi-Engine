@@ -67,7 +67,7 @@ bool PanelHierarchy::Update()
 		{
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 
-			DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().at(i), flags);
+			DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.at(i), flags);
 		}
 
 		if (alignLabelWithCurrentXPosition)

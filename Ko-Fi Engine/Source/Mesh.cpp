@@ -124,13 +124,15 @@ void Mesh::SetUpMeshBuffers()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Mesh::Draw(GameObject* owner)
+void Mesh::Draw()
 {
 	glBindVertexArray(VAO);
 
 	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, 0);
 
 	DebugDraw();
+
+	glBindVertexArray(0);
 
 	// Unbind Texture
 	glBindTexture(GL_TEXTURE_2D, 0);

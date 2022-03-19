@@ -95,24 +95,9 @@ bool ComponentButton::PostUpdate(float dt)
 		break;
 	}
 
-	ComponentTransform2D* cTransform = this->owner->GetComponent<ComponentTransform2D>();
-
-	SDL_Rect rect;
-
-	rect.x = 0;
-	rect.y = 0;
-	rect.w = openGLTexture.GetTextureWidth();
-	rect.h = openGLTexture.GetTextureHeight();
-
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, fboId);
-	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, openGLTexture.GetTextureId(), 0);
-
-	float2 normalizedPosition = cTransform->GetNormalizedPosition();
-	float2 normalizedSize = cTransform->GetNormalizedSize();
-
-	float2 lowerLeft = { normalizedPosition.x, normalizedPosition.y };
-	float2 upperRight = { lowerLeft.x + normalizedSize.x, lowerLeft.y + normalizedSize.y };
-	glBlitFramebuffer(0, 0, rect.w, rect.h, lowerLeft.x, lowerLeft.y, upperRight.x, upperRight.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), {255, 255, 255});
+	owner->GetEngine()->GetUI()->EndUIRender();
 
 	return true;
 }

@@ -17,6 +17,7 @@
 
 class SDL_Texture;
 class SDL_Surface;
+class MyPlane;
 
 class ComponentImage : public Component {
 public:
@@ -34,7 +35,6 @@ public:
 	//SDL_Texture* const LoadSurface(SDL_Surface* surface);
 
 	void SetTexture(const char* path);
-	float2 GetMask() { return mask; };
 
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;
@@ -43,9 +43,6 @@ public:
 
 private:
 	void FreeTextures();
-
-	float2 mask = { 1.0f, 1.0f };
-	GLuint fboId = 0;
 };
 
 #endif

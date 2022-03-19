@@ -20,7 +20,7 @@ public:
 	~I_Scene();
 
 	bool Import(const char* path);
-	bool Save(Scene* scene);
+	bool Save(Scene* scene, const char* name = nullptr);
 	bool Load(Scene* scene, const char* name);
 
 	GameObject* ImportModel(const char* path);

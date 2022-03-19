@@ -16,6 +16,7 @@
 
 class SDL_Texture;
 class SDL_Surface;
+class MyPlane;
 
 class ComponentText : public Component {
 public:
@@ -31,8 +32,6 @@ public:
 
 	void SetTextValue(std::string newValue);
 	std::string GetTextValue() { return textValue; };
-
-	void SaveToFile(int width, int height);
 
 	//void OnLoad(const JSONReader& reader) override;
 	//void OnSave(JSONWriter& writer) const override;

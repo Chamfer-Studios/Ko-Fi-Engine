@@ -67,9 +67,9 @@ bool PanelAssets::Update()
 			else {
 
 				std::string ext = path.extension().string();
-				if (ext == ".milk" || ext == ".cream" || ext == ".txt" || ext == ".glsl" || ext == ".mat") {
+				if (ext == ".milk" || ext == ".cream" || ext == ".txt" || ext == ".glsl" || ext == ".mat" || ext == ".lua") {
 				
-					editor->OpenTextEditor(path.string());
+					editor->OpenTextEditor(path.string(),ext.c_str());
 					PanelTextEditor* panel = editor->GetPanel<PanelTextEditor>();
 					panel->Focus();
 				}

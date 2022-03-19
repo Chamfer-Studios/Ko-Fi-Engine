@@ -81,7 +81,7 @@ void PanelTextEditor::RenderWindow(bool* toggleEditText)
 
 }
 
-void PanelTextEditor::LoadFile(std::string path)
+void PanelTextEditor::LoadFile(std::string path,std::string ext)
 {
 	if (path.empty()) {
 		editor->GetPanelChooser()->OpenPanel("TextEditor", "glsl");
@@ -90,7 +90,16 @@ void PanelTextEditor::LoadFile(std::string path)
 		this->filePath = path;
 		std::string text = editor->engine->GetFileSystem()->OpenFile(filePath.c_str());
 		textEditor.SetText(text);
-		
+		if (ext == ".lua")
+		{
+			textEditor.SetLanguageDefinition(TextEditor::LanguageDefinition::Lua());
+		}
+		else
+		{
+			textEditor.SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
+		}
+
+
 	}
 
 }

@@ -7,7 +7,7 @@
 #include "SceneManager.h"
 #include "Editor.h"
 #include "FileSystem.h"
-#include "ViewportFrameBuffer.h"
+#include "FSDefs.h"
 #include "UI.h"
 #include "Importer.h"
 #include "Globals.h"
@@ -35,7 +35,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
 	ui = new UI(this);
-	viewportBuffer = new ViewportFrameBuffer(this);
+	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new Physics(this);
 	collisionDetector = new CollisionDetector(this);
 
@@ -49,11 +49,11 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	AddModule(collisionDetector);
 	AddModule(sceneManager);
-	AddModule(viewportBuffer);
-	AddModule(editor);
 
 	// Render last to swap buffer
 	AddModule(renderer);
+	// CHANGE THAT FOR THE SAKE OF GOD
+	AddModule(editor);
 
 	PERF_PEEK(ptimer);
 }
@@ -100,6 +100,8 @@ bool KoFiEngine::Awake()
 		ret = true;
 		jsonConfigEngine = jsonConfig.at("Engine");
 
+		engineConfig->authors = jsonConfigEngine.at("Authors").get<std::string>().c_str();
+		engineConfig->license = jsonConfigEngine.at("License").get<std::string>().c_str();
 		engineConfig->title = jsonConfigEngine.at("Title").get<std::string>().c_str();
 		engineConfig->organization = jsonConfigEngine.at("Organization").dump(4).c_str();
 		engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
@@ -303,6 +305,32 @@ int KoFiEngine::GetArgc() const
 	return argc;
 }
 
+bool KoFiEngine::SaveConfiguration() const
+{
+	bool ret = true;
+	JsonHandler jsonHandler;
+	Json jsonConfig;
+	Json configEngine;
+	configEngine["Authors"] = engineConfig->authors;
+	configEngine["License"] = engineConfig->license;
+	configEngine["Organization"] = engineConfig->organization;
+	configEngine["Title"] = engineConfig->title;
+	configEngine["MaxFPS"] = engineConfig->maxFps;
+	jsonConfig["Engine"]=configEngine;
+
+	for (Module* module : modules)
+	{
+		Json configModule;
+		module->SaveConfiguration(configModule);
+		jsonConfig[module->name.c_str()] = configModule;
+	}
+
+
+	jsonHandler.SaveJson(jsonConfig, "EngineConfig/config.json");
+
+	return ret;
+}
+
 // ---------------------------------------
 const char* KoFiEngine::GetArgv(int index) const
 {
@@ -405,11 +433,6 @@ Editor* KoFiEngine::GetEditor()const
 FileSystem* KoFiEngine::GetFileSystem()const
 {
 	return this->fileSystem;
-}
-
-ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
-{
-	return this->viewportBuffer;
 }
 
 Physics* KoFiEngine::GetPhysics()const

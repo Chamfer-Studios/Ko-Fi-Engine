@@ -15,7 +15,6 @@ class Renderer3D;
 class Camera3D;
 class Editor;
 class FileSystem;
-class ViewportFrameBuffer;
 class Physics;
 class UI;
 class CollisionDetector;
@@ -44,6 +43,10 @@ public:
 	// Exposing some properties for reading
 	int GetArgc() const;
 
+	// Engine config serialization
+	bool SaveConfiguration() const;
+	//bool LoadConfiguration(Json configModule); // It is done in the awake's function
+
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
@@ -57,7 +60,6 @@ public:
 	Camera3D* GetCamera3D() const;
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
-	ViewportFrameBuffer* GetViewportFrameBuffer() const;
 	Physics* GetPhysics() const;
 	UI* GetUI() const;
 	CollisionDetector* GetCollisionDetector() const;
@@ -93,7 +95,6 @@ private:
 	Camera3D* camera = nullptr;
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
-	ViewportFrameBuffer* viewportBuffer = nullptr;
 	Physics* physics = nullptr;
 	UI* ui = nullptr;
 	CollisionDetector* collisionDetector = nullptr;

@@ -46,7 +46,7 @@ bool I_Texture::Import(const char* path, Texture* texture)
 		return true;
 	}
 
-	unsigned char* pixels = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb);
+	unsigned char* pixels = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb_alpha);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	if (texture->textureID == -1)
@@ -62,11 +62,11 @@ bool I_Texture::Import(const char* path, Texture* texture)
 
 	if (pixels)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->width, texture->height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
-		appLog->AddLog("%s", "Texture Image not loaded correctly");
+		appLog->AddLog("%s", "Texture Image not loaded correctly: %s\n", path);
 
 	stbi_image_free(pixels);
 
