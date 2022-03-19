@@ -40,7 +40,7 @@ bool PanelCameraViewport::PreUpdate()
 
 bool PanelCameraViewport::Update()
 {
-	if (ImGui::Begin("Camera Preview", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove))
+	if (ImGui::Begin("Camera Preview", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar))
 	{
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
 		
