@@ -43,6 +43,8 @@ public:
 
 	float* GetTransformedVertices(float4x4 transform);
 
+	static Mesh* MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transformations);
+
 	// Size in Bytes
 	unsigned verticesSizeBytes = 0;
 	unsigned normalsSizeBytes = 0;

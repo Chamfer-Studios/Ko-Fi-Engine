@@ -8,6 +8,7 @@
 
 class GameObject;
 class rcPolyMeshDetail;
+class Mesh;
 
 class Navigation : public Module
 {
@@ -23,11 +24,11 @@ public:
 	void OnNotify(const Event& event) override;
 
 	void ComputeNavmesh();
-	std::vector<GameObject*> CollectWalkableMeshes();
-	void GameObjectMeshUnion(std::vector<GameObject*> objects, float** vertices, int* nv);
+	std::vector<GameObject*> CollectWalkableObjects();
 
 	void OnGui() override;
 private:
+	rcPolyMeshDetail* ComputeNavmesh(Mesh* mesh);
 	KoFiEngine* engine = nullptr;
 	rcPolyMeshDetail* navMesh = nullptr;
 };

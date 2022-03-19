@@ -91,32 +91,44 @@ bool Navigation::CleanUp()
 
 void Navigation::OnNotify(const Event& event)
 {
+
 }
 
 void Navigation::ComputeNavmesh()
+{
+	std::vector<GameObject*> walkableObjects = CollectWalkableObjects();
+	std::vector<Mesh*> meshes;
+	std::vector<float4x4> transforms;
+
+	for (auto go : walkableObjects) {
+		ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+		ComponentTransform* cTransform = go->GetComponent<ComponentTransform>();
+		if (cMesh != nullptr && cTransform != nullptr) {
+			meshes.push_back(cMesh->GetMesh());
+			transforms.push_back(cTransform->GetGlobalTransform());
+		}
+	}
+
+	Mesh* combined = Mesh::MeshUnion(meshes, transforms);
+
+	navMesh = ComputeNavmesh(combined);
+}
+
+rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 {
 	// https://wiki.jmonkeyengine.org/docs/3.4/contributions/ai/recast.html
 	// https://github.com/recastnavigation/recastnavigation/blob/c5cbd53024c8a9d8d097a4371215e3342d2fdc87/RecastDemo/Source/Sample_SoloMesh.cpp
 
 	rcConfig* config = new rcConfig();
 
-	std::vector<GameObject*> walkableMeshes = CollectWalkableMeshes();
-	if (walkableMeshes.size() == 0) return;
-
-	GameObject* walkable = walkableMeshes[0];
-	ComponentTransform* cTransform = walkable->GetComponent<ComponentTransform>();
-	ComponentMesh* cMesh = walkable->GetComponent<ComponentMesh>();
-	float* vertices = cMesh->GetMesh()->GetTransformedVertices(cTransform->GetGlobalTransform());
-	int nv = cMesh->GetMesh()->verticesSizeBytes / (sizeof(float) * 3);
-	int* tris = (int*)cMesh->GetMesh()->indices;
-	int nt = cMesh->GetMesh()->indicesSizeBytes / sizeof(uint) / 3;
+	float* vertices = mesh->vertices;
+	int nv = mesh->verticesSizeBytes / (sizeof(float) * 3);
+	int* tris = (int*)mesh->indices;
+	int nt = mesh->indicesSizeBytes / sizeof(uint) / 3;
 
 	float bMin[3] = {0, 0, 0};
 	float bMax[3] = {0, 0, 0};
-	rcCalcBounds(cMesh->GetMesh()->vertices, cMesh->GetMesh()->verticesSizeBytes / (sizeof(float) * 3), bMin, bMax);
-	if (bMin != nullptr && bMax != nullptr) {
-		appLog->AddLog("%f, %f, %f ... %f, %f, %f\n", bMin[0], bMin[1], bMin[2], bMax[0], bMax[1], bMax[2]);
-	}
+	rcCalcBounds(vertices, mesh->verticesSizeBytes / (sizeof(float) * 3), bMin, bMax);
 
 	config->bmin[0] = bMin[0];
 	config->bmin[1] = bMin[1];
@@ -147,7 +159,7 @@ void Navigation::ComputeNavmesh()
 	rcHeightfield* heightfield = rcAllocHeightfield();
 	if (!rcCreateHeightfield(context, *heightfield, w, h, bMin, bMax, config->cs, config->ch)) {
 		appLog->AddLog("Could not create heightfield!\n");
-		return;
+		return nullptr;
 	}
 
 	unsigned char* areas = new unsigned char[nt];
@@ -163,46 +175,46 @@ void Navigation::ComputeNavmesh()
 	rcCompactHeightfield* compactHeightfield = rcAllocCompactHeightfield();
 	if (!rcBuildCompactHeightfield(context, config->walkableHeight, config->walkableClimb, *heightfield, *compactHeightfield)) {
 		appLog->AddLog("Could not build compact data!\n");
-		return;
+		return nullptr;
 	}
 
 	if (!rcErodeWalkableArea(context, config->walkableRadius, *compactHeightfield)) {
 		appLog->AddLog("Could not erode!\n");
-		return;
+		return nullptr;
 	}
 
 	if (!rcBuildDistanceField(context, *compactHeightfield)) {
 		appLog->AddLog("Could not build distance field!\n");
-		return;
+		return nullptr;
 	}
 
 	if (!rcBuildRegions(context, *compactHeightfield, config->borderSize, config->minRegionArea, config->mergeRegionArea)) {
 		appLog->AddLog("Could not build watershed regions!\n");
-		return;
+		return nullptr;
 	}
 
 	rcContourSet* contourSet = rcAllocContourSet();
 	if (!rcBuildContours(context, *compactHeightfield, 2.0f, config->maxEdgeLen, *contourSet)) {
 		appLog->AddLog("Could not create contours!\n");
-		return;
+		return nullptr;
 	}
 
 	rcPolyMesh* polyMesh = rcAllocPolyMesh();
 	if (!rcBuildPolyMesh(context, *contourSet, config->maxVertsPerPoly, *polyMesh)) {
 		appLog->AddLog("Could not triangulate contours!\n");
-		return;
+		return nullptr;
 	}
 
 	rcPolyMeshDetail* polyMeshDetail = rcAllocPolyMeshDetail();
 	if (!rcBuildPolyMeshDetail(context, *polyMesh, *compactHeightfield, config->detailSampleDist, config->detailSampleMaxError, *polyMeshDetail)) {
 		appLog->AddLog("Could not build detail mesh!\n");
-		return;
+		return nullptr;
 	}
 
-	navMesh = polyMeshDetail;
+	return polyMeshDetail;
 }
 
-std::vector<GameObject*> Navigation::CollectWalkableMeshes()
+std::vector<GameObject*> Navigation::CollectWalkableObjects()
 {
 	std::vector<GameObject*> list = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
 	std::vector<GameObject*> res;
@@ -214,26 +226,6 @@ std::vector<GameObject*> Navigation::CollectWalkableMeshes()
 	}
 
 	return res;
-}
-
-void Navigation::GameObjectMeshUnion(std::vector<GameObject*> objects, float** vertices, int* nv)
-{
-	*nv = 0;
-	for (auto o : objects) {
-		ComponentMesh* cMesh = o->GetComponent<ComponentMesh>();
-		if (cMesh == nullptr) continue;
-		*nv += cMesh->GetMesh()->verticesSizeBytes / (sizeof(float) * 3);
-	}
-
-	*vertices = (float*)malloc(*nv * sizeof(float) * 3);
-
-	unsigned int index = 0;
-	for (auto o : objects) {
-		ComponentMesh* cMesh = o->GetComponent<ComponentMesh>();
-		if (cMesh == nullptr) continue;
-		memcpy(*vertices + index, cMesh->GetMesh()->vertices, cMesh->GetMesh()->verticesSizeBytes);
-		index += cMesh->GetMesh()->verticesSizeBytes;
-	}
 }
 
 void Navigation::OnGui()

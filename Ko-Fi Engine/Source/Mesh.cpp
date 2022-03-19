@@ -168,6 +168,50 @@ float* Mesh::GetTransformedVertices(float4x4 transform)
 	return ret;
 }
 
+Mesh* Mesh::MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transformations)
+{
+	Mesh* ret = new Mesh();
+
+	int verticesSizeBytes = 0;
+	int indicesSizeBytes = 0;
+	for (auto m : meshes) {
+		verticesSizeBytes += m->verticesSizeBytes;
+		indicesSizeBytes += m->indicesSizeBytes;
+	}
+
+	ret->vertices = (float*)malloc(verticesSizeBytes);
+	ret->indices = (unsigned int*)malloc(indicesSizeBytes);
+	ret->verticesSizeBytes = verticesSizeBytes;
+	ret->indicesSizeBytes = indicesSizeBytes;
+
+	int verticesBytesOffset = 0;
+	int indicesBytesOffset = 0;
+	int indicesOffset = 0;
+	std::vector<unsigned int> outputIndices;
+	for (int i = 0; i < meshes.size(); i++) {
+		Mesh* m = meshes[i];
+		float4x4 t = transformations[i];
+
+		float* vertices = m->GetTransformedVertices(t);
+		memcpy(ret->vertices + verticesBytesOffset, vertices, m->verticesSizeBytes);
+		verticesBytesOffset += m->verticesSizeBytes;
+
+		for (int i = 0; i < m->indicesSizeBytes / sizeof(unsigned int); i++) {
+			outputIndices.push_back(m->indices[i] + indicesOffset);
+		}
+
+		indicesOffset += m->verticesSizeBytes / sizeof(float3);
+
+		free(vertices);
+	}
+
+	for (int i = 0; i < outputIndices.size(); i++) {
+		ret->indices[i] = outputIndices[i];
+	}
+
+	return ret;
+}
+
 void Mesh::DrawVertexNormals() const
 {
 	if (idNormal == -1 || normals == nullptr)
