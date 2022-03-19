@@ -80,13 +80,20 @@ public:
 
 	KoFiEngine* GetEngine() const;
 	void SetEngine(KoFiEngine* engine);
+	
+	bool PrefabSaveJson();
+	bool PrefabSave(Json& jsonFile);
+	bool LoadPrefabJson(const char* path);
+	bool LoadPrefab(Json& jsonFile);
 
+	bool IsSelected();
 
 public:
 	std::string name;
 	bool active = true;
 	int numScripts = 0;
 	bool is3D = true;
+	bool isPrefab = false;
 
 	std::vector<GameObject*> children;
 private:

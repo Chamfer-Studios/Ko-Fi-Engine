@@ -18,3 +18,18 @@ function Update(dt)
 end
 
 --------------------------------------------------
+
+function Normalize(vec, distance)
+    
+	vec[1] = vec[1] / distance
+	vec[2] = vec[2] / distance
+
+	return vec
+end
+
+function Distance(a, b)
+
+    local dx, dy = a[1] - b[1], a[2] - b[2]
+    return math.sqrt(dx * dx + dy * dy)
+
+end

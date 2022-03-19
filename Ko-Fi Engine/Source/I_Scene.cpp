@@ -46,7 +46,7 @@ I_Scene::~I_Scene()
 
 }
 
-bool I_Scene::Import(const char* path)
+bool I_Scene::Import(const char* path, bool isPrefab)
 {
 	CONSOLE_LOG("[STATUS] Importer: Importing Scene: %s", path);
 
@@ -65,7 +65,7 @@ bool I_Scene::Import(const char* path)
 
 	nodeName = Importer::GetInstance()->GetNameFromPath(path);
 
-	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo);
+	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo, isPrefab);
 
 	//ImportAnimations(assimpScene, mesh);
 
@@ -79,12 +79,14 @@ GameObject* I_Scene::ImportModel(const char* path)
 	return tmp;
 }
 
-void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent)
+void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab)
 {
 	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 
 	assimpNode = ImportTransform(assimpNode, gameObj);
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
+
+	if (isPrefab = true) gameObj->isPrefab = true;
 
 	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
 	gameObj->SetName(nodeName.c_str());

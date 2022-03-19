@@ -35,8 +35,8 @@ public:
 	void CheckMouseMotion();
 
 	void SetGameCamera(ComponentCamera* gameCamera);
-
-	GameObject* MousePicking();
+	
+	GameObject* MousePicking(const bool& isRightButton = false);
 
 public:
 	ComponentCamera* currentCamera = nullptr; // The camera that will display on screen

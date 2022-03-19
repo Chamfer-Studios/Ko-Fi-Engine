@@ -12,6 +12,8 @@
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
 #include "ComponentScript.h"
+#include "Scripting.h" // Consider moving this to Globals.h or smth
+#include "ComponentTransform.h"
 #include "Material.h"
 #include "ComponentTransform2D.h"
 #include "GameObject.h"
@@ -141,7 +143,7 @@ bool SceneIntro::PostUpdate(float dt)
 		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
 		componentScript->path = "Assets/Scripts/Bullet.lua";
 		componentScript->ReloadScript();
-		parent->GetComponent<ComponentScript>()->handler->lua["SetBulletDirection"](bullet);
+		componentScript->handler->lua["Start"]();
 	}
 	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)

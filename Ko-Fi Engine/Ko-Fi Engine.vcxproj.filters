@@ -1480,9 +1480,6 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PanelSettings.h">
-      <Filter>Source\Editor\Panels</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\ResourceManager.h">
@@ -1572,6 +1569,9 @@
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Player.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>

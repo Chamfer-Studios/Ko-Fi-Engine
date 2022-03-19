@@ -13,9 +13,48 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentRigidBody.h"
-#include <lua.hpp>
-#include <sol.hpp>
+#include "ComponentScript.h"
+#include "ComponentText.h"
 
+enum INSPECTOR_VARIABLE_TYPE
+{
+	INSPECTOR_NO_TYPE,
+	INSPECTOR_INT,
+	INSPECTOR_FLOAT,
+	INSPECTOR_FLOAT2,
+	INSPECTOR_FLOAT3,
+	INSPECTOR_BOOL,
+	INSPECTOR_STRING,
+	INSPECTOR_TO_STRING
+};
+
+enum ItemType
+{
+	ITEM_NO_TYPE,
+
+	ITEM_HAND,
+	ITEM_KNIFE,
+	ITEM_GUN
+};
+
+class InspectorVariable
+{
+public:
+	std::string name;
+	INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
+	std::variant<int, float, float2, float3, bool, std::string> value;
+
+	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string> value) : name(name), type(type), value(value) {}
+};
+
+class Item
+{ // Needs porper structure !!
+public:
+	ItemType type = ITEM_NO_TYPE;
+	int damage;
+
+	Item(ItemType type, int damage) : type(type), damage(damage) {}
+};
 
 class Scripting
 {
@@ -23,23 +62,22 @@ public:
 
 	Scripting()
 	{
-		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug);
+		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug, sol::lib::string);
 	}
 
 	~Scripting() {}
 
 	void SetUpVariableTypes()
 	{
-		// Giving lua certain data structures and functions
-
+			/// Lua data structures and functions
+			/// Enums:
 		// KEY_STATE
 		lua.new_enum("KEY_STATE",
 			"KEY_IDLE",		KEY_STATE::KEY_IDLE,
 			"KEY_DOWN",		KEY_STATE::KEY_DOWN,
 			"KEY_REPEAT",	KEY_STATE::KEY_REPEAT,
 			"KEY_UP",		KEY_STATE::KEY_UP
-			);
-
+		);
 
 		// ComponentType
 		lua.new_enum("ComponentType",
@@ -58,7 +96,26 @@ public:
 			"TEXT",			ComponentType::TEXT
 		);
 
+		// INSPECTOR_VARIABLE_TYPE
+		lua.new_enum("INSPECTOR_VARIABLE_TYPE",
+			"INSPECTOR_NO_TYPE",	INSPECTOR_VARIABLE_TYPE::INSPECTOR_NO_TYPE,
+			"INSPECTOR_INT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT,
+			"INSPECTOR_FLOAT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT,
+			"INSPECTOR_FLOAT2",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2,
+			"INSPECTOR_FLOAT3",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3,
+			"INSPECTOR_BOOL",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL
+		);
 
+		// ItemType
+		lua.new_enum("ItemType",
+			"ITEM_NO_TYPE", ItemType::ITEM_NO_TYPE,
+			"ITEM_HAND",	ItemType::ITEM_HAND,
+			"ITEM_KNIFE",	ItemType::ITEM_KNIFE,
+			"ITEM_GUN",		ItemType::ITEM_GUN
+			);
+
+
+			/// Classes:
 		// float3 structure
 		lua.new_usertype<float3>("float3",
 			sol::constructors<void(), void(float, float, float)>(),
@@ -78,15 +135,16 @@ public:
 		// GameObject structure
 		lua.new_usertype<GameObject>("GameObject",
 			sol::constructors<void()>(),
-			"active",		&GameObject::active,
-			"name",			&GameObject::name,
-			"GetParent",	&GameObject::GetParent,
-			"GetComponents",&GameObject::GetComponents,							// Kinda works... not very useful tho
-			"GetTransform", &GameObject::GetTransform,
-			"GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>/*,
-			"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
+			"active",			&GameObject::active,
+			"name",				&GameObject::name,
+			"GetParent",		&GameObject::GetParent,
+			"GetComponents",	&GameObject::GetComponents,							// Kinda works... not very useful tho
+			"GetTransform",		&GameObject::GetTransform,
+			"GetRigidBody",		&GameObject::GetComponent<ComponentRigidBody>,
+			"GetText",			&GameObject::GetComponent<ComponentText>,
+			"IsSelected",		&GameObject::IsSelected
+			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
-
 
 		// Component structure
 		lua.new_usertype<Component>("Component",
@@ -96,7 +154,6 @@ public:
 			"type",		&Component::type,
 			"GetType",	&Component::GetType
 			);
-
 
 		// Transform structure
 		lua.new_usertype<ComponentTransform>("ComponentTransform",
@@ -111,7 +168,21 @@ public:
 			"SetFront",	   &ComponentTransform::SetFront
 			);
 
-
+		// Component Text
+		lua.new_usertype<ComponentText>("ComponentText",
+			sol::constructors<void(GameObject*)>(),
+			"GetTextValue", &ComponentText::GetTextValue,
+			"SetTextValue", &ComponentText::SetTextValue
+			);
+		
+		// Inspector Variables
+		lua.new_usertype<InspectorVariable>("InspectorVariable",
+			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string>)>(),
+			"name",		&InspectorVariable::name,
+			"type",		&InspectorVariable::type,
+			"value",	&InspectorVariable::value
+			);
+	
 		// Rigid Body structure
 		lua.new_usertype<ComponentRigidBody>("ComponentRigidBody",
 			sol::constructors<void(GameObject*)>(),
@@ -123,15 +194,27 @@ public:
 			"FreezePositionY",		&ComponentRigidBody::FreezePositionY,
 			"Set2DVelocity",	&ComponentRigidBody::Set2DVelocity
 			);
-	
 
-		// Giving lua certain variables
+		// Item
+		lua.new_usertype<Item>("Item",
+			sol::constructors<void(ItemType, int)>(),
+			"type",		&Item::type,
+			"damage",	&Item::damage
+			);
+
+
+			/// Variables
 		lua["gameObject"] = gameObject;
 		lua["componentTransform"] = componentTransform;
-		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
-		lua.set_function("CreateBullet", &Scripting::LuaCreateBullet, this);
-		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
-		lua.set_function("Find", &Scripting::LuaFind, this);
+		
+
+			/// Functions
+		lua.set_function("GetInput",			&Scripting::LuaGetInput, this);
+		lua.set_function("CreateBullet",		&Scripting::LuaCreateBullet, this);
+		lua.set_function("DeleteGameObject",	&Scripting::DeleteGameObject, this);
+		lua.set_function("Find",				&Scripting::LuaFind, this);
+		lua.set_function("GetInt",				&Scripting::LuaGetInt, this);
+		lua.set_function("NewVariable",			&Scripting::LuaNewVariable, this);
 	}
 
 	bool CleanUp()
@@ -148,11 +231,13 @@ public:
 
 		switch (button)
 		{
-			case 4: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_I); }
-			case 5: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_J); }
-			case 6: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K); }
-			case 7: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_L); }
-			case 8: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE); }
+			case 4:  { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE); }
+			case 5:	 { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H); }
+			case 6:	 { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K); }
+			case 7:  { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_G); }
+			case 8:  { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X); }
+			case 9:  { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_C); }
+			case 10: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_R); }
 		}
 	}
 
@@ -174,6 +259,30 @@ public:
 				return go;
 		}
 		return nullptr;
+	}
+
+	int LuaGetInt(std::string path, std::string variable)
+	{
+		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		{
+			ComponentScript* script = go->GetComponent<ComponentScript>();
+			if (script)
+			{
+				if (path == script->path.substr(script->path.find_last_of('/') + 1))
+				{
+					int abc = (int)script->handler->lua[variable.c_str()];
+					return abc;
+				}
+			}
+		}
+
+		return -999;
+	}
+
+	void LuaNewVariable(InspectorVariable* inspectorVariable)
+	{
+		ComponentScript* script = gameObject->GetComponent<ComponentScript>();
+		script->inspectorVariables.push_back(inspectorVariable);
 	}
 
 public:

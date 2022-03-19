@@ -1,5 +1,5 @@
 local GameState = {}
-
+abc = 33
 GameState.GameState = {
    STOP = 1,
    STARTING = 2,
@@ -15,6 +15,10 @@ end
 
 function GameState.SayHi()
     print("Hello World!")
+end
+
+function Start()
+	
 end
 
 function Update(dt)

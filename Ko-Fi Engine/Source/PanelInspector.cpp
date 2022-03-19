@@ -46,6 +46,14 @@ bool PanelInspector::Update()
 		/*if (currentGameObject->GetComponent<ComponentMesh>() != nullptr && (currentGameObject->GetComponent<ComponentMesh>()->GetMesh() != nullptr))
 			currentGameObject->GetComponent<ComponentMesh>()->DrawBoundingBox(currentGameObject->GetComponent<ComponentMesh>()->GetMesh()->localAABB, float3(1.0f, 0.0f, 0.0f));*/
 
+		if (currentGameObject->isPrefab)
+		{
+			if (ImGui::Button("Update Changes"))
+			{
+				currentGameObject->PrefabSaveJson();
+			}
+		}
+		
 		for (Component* component : currentGameObject->GetComponents())
 		{
 			component->InspectorDraw(editor->GetPanelChooser());

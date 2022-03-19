@@ -10,6 +10,7 @@
 #include "ComponentScript.h"
 #include "Renderer3D.h"
 #include "PanelViewport.h"
+#include "Scripting.h"
 
 #include "SDL.h"
 #include "Log.h"
@@ -270,15 +271,23 @@ void Camera3D::OnClick(SDL_Event event)
 		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
 			return;
 
-	GameObject* hit = MousePicking();
-	if (hit != nullptr)
+if (event.button.button == SDL_BUTTON_LEFT)
 	{
-		CONSOLE_LOG("%s", hit->GetName());
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+		GameObject* hit = engine->GetCamera3D()->MousePicking();
+		if (hit != nullptr)
+		{
+			CONSOLE_LOG("%s", hit->GetName());
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+		}
+		else {
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+		}
 	}
-	else {
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	else if (event.button.button == SDL_BUTTON_RIGHT)
+	{
+		engine->GetCamera3D()->MousePicking(true);
 	}
+
 }
 
 //void Camera3D::OnSave(JSONWriter& writer) const
@@ -307,7 +316,7 @@ void Camera3D::OnClick(SDL_Event event)
 //	RecalculateProjection();
 //}
 
-GameObject* Camera3D::MousePicking()
+GameObject* Camera3D::MousePicking(const bool& isRightButton)
 {
 	float normalX = engine->GetEditor()->mouseScenePosition.x / engine->GetEditor()->lastViewportSize.x;
 	float normalY = engine->GetEditor()->mouseScenePosition.y / engine->GetEditor()->lastViewportSize.y;
@@ -386,26 +395,31 @@ GameObject* Camera3D::MousePicking()
 
 				float distance;
 				float3 intersectionPoint;
-				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
+				//if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
 
-				/*if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
+				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
 				{
+					if (!isRightButton)
+						return gameObject;
+
 					for (GameObject* go : sceneGameObjects)
 					{
-						if (gameObject != go)
+						if (gameObject != go && engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == go->GetUID())
 						{
 							ComponentScript* script = go->GetComponent<ComponentScript>();
 							if (script != nullptr)
 							{
-								glBegin(GL_POINTS);
-								glVertex3f(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z);
-								glEnd();
-								script->handler->lua["destination"] = intersectionPoint;
+								if (script->path.substr(script->path.find_last_of('/') + 1) == "Player.lua")
+								{
+									intersectionPoint.x *= gameObject->GetTransform()->GetScale().x;
+									intersectionPoint.y *= gameObject->GetTransform()->GetScale().y;
+									intersectionPoint.z *= gameObject->GetTransform()->GetScale().z;
+									script->handler->lua["destination"] = intersectionPoint;
+								}
 							}
 						}
 					}
-					return gameObject;
-				}*/
+				}
 			}
 		}
 	}
