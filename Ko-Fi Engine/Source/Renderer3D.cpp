@@ -244,20 +244,24 @@ void Renderer3D::RenderScene()
 {
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
-		ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
-		if (cMesh)
+		if (go->active)
 		{
-			RenderMeshes(go);
-			RenderBoundingBox(cMesh);
-		}
-		ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
-		if (cCamera) {
-			if (!cCamera->isEngineCamera && cCamera->drawFrustum)
+			ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+			if (cMesh)
 			{
-				cCamera->DrawFrustum();
+				RenderMeshes(go);
+				RenderBoundingBox(cMesh);
 			}
+			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
+			if (cCamera) {
+				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
+				{
+					cCamera->DrawFrustum();
+				}
 
+			}
 		}
+		
 
 	}
 }

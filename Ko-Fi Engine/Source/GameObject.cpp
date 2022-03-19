@@ -89,13 +89,12 @@ bool GameObject::Update(float dt)
 bool GameObject::PostUpdate(float dt)
 {
 	bool ret = true;
-	if (active)
-	{
+
 		for (Component* component : components)
 		{
 			ret = component->PostUpdate(dt);
 		}
-	}
+	
 	return ret;
 }
 
