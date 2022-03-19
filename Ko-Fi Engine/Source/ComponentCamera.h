@@ -15,7 +15,7 @@ using Json = nlohmann::json;
 class ComponentCamera : public Component
 {
 public:
-	ComponentCamera(GameObject* gameObject);
+	ComponentCamera(GameObject* gameObject, bool isEngineCamera = false);
 	~ComponentCamera();
 
 	bool Start() override;
@@ -35,10 +35,12 @@ public:
 	bool ClipsWithBBox(const AABB& refBox) const;
 	void FrustumCulling();
 	void ResetFrustumCulling();
+	void SetAspectRatio(const float& aspectRatio);
+
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
-	float3 right, up, front, position, reference, rotation;
+	float3 right, up, front, position, reference;
 	Frustum cameraFrustum;
 	float4x4 viewMatrix;
 	float aspectRatio = 1.f;
@@ -53,10 +55,14 @@ public:
 	bool drawFrustum = true;
 	bool frustumCulling = false;
 
-private:
+	bool isMainCamera = false;
+	bool isEngineCamera = false;
+
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
+private:
 
 	ComponentTransform* componentTransform = nullptr;
+	
 };
 
 #endif // !__COMPONENT_CAMERA_H__

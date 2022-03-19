@@ -16,6 +16,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
 #include "ComponentCamera.h"
+#include "C_Collider.h"
 #include "ComponentRigidBody.h"
 #include "ComponentCollider.h"
 #include "ComponentScript.h"
@@ -348,6 +349,12 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::COLLIDER2:
+			{
+				ComponentCollider2* collCmp = (ComponentCollider2*)component;
+				collCmp->Save(jsonComponent);
+				break;
+			}
 			case ComponentType::RIGID_BODY:
 			{
 				ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
@@ -577,6 +584,16 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					rbCmp->active = true;
 					rbCmp->Load(jsonCmp);
+				}
+				else if (type == "collider2")
+				{
+					ComponentCollider2* collCmp = go->GetComponent<ComponentCollider2>();
+					if (collCmp == nullptr)
+					{
+						collCmp = new ComponentCollider2(go, ColliderShape::NONE);
+					}
+					collCmp->active = true;
+					collCmp->Load(jsonCmp);
 				}
 				else if (type == "collider")
 				{

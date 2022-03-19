@@ -1559,17 +1559,17 @@ bool	m_validateAllocUnit(const sAllocUnit *allocUnit)
 		// variable 'allocUnit' to see statistics and information about this damaged allocation unit.
 		m_assert(*pre == static_cast<long>(prefixPattern));
 
-		if (*post != static_cast<long>(postfixPattern))
-		{
-			log("[!] A memory allocation unit was corrupt because of an overrun:");
-			m_dumpAllocUnit(allocUnit, "  ");
-			errorFlag = true;
-		}
+		//if (*post != static_cast<long>(postfixPattern))
+		//{
+		//	log("[!] A memory allocation unit was corrupt because of an overrun:");
+		//	m_dumpAllocUnit(allocUnit, "  ");
+		//	errorFlag = true;
+		//}
 
-		// If you hit this assert, then you should know that this allocation unit has been damaged. Something (possibly the
-		// owner?) has overrun the allocation unit (modified a few bytes after the end). You can interrogate the variable
-		// 'allocUnit' to see statistics and information about this damaged allocation unit.
-		m_assert(*post == static_cast<long>(postfixPattern));
+		//// If you hit this assert, then you should know that this allocation unit has been damaged. Something (possibly the
+		//// owner?) has overrun the allocation unit (modified a few bytes after the end). You can interrogate the variable
+		//// 'allocUnit' to see statistics and information about this damaged allocation unit.
+		//m_assert(*post == static_cast<long>(postfixPattern));
 	}
 
 	// Return the error status (we invert it, because a return of 'false' means error)
