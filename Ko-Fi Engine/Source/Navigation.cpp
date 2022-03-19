@@ -45,6 +45,7 @@ bool Navigation::PostUpdate(float dt)
 	glBegin(GL_LINES);
 	glLineWidth(2.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
+	glDisable(GL_LIGHTING);
 
 	for (int i = 0; i < navMesh->nmeshes; ++i)
 	{
@@ -77,6 +78,7 @@ bool Navigation::PostUpdate(float dt)
 		}
 	}
 
+	glEnable(GL_LIGHTING);
 	glEnd();
 
 	return true;
@@ -123,18 +125,18 @@ void Navigation::ComputeNavmesh()
 	config->bmax[1] = bMax[1];
 	config->bmax[2] = bMax[2];
 
-	config->cs = 5.f;
-	config->ch = 2.f;
+	config->cs = 10.f;
+	config->ch = 3.f;
 	config->walkableSlopeAngle = 45;
 	config->walkableClimb = 1;
 	config->walkableHeight = 2;
 	config->walkableRadius = 2;
 	config->minRegionArea = 2.f;
 	config->mergeRegionArea = 2.f;
-	config->borderSize = 0.2f;
+	config->borderSize = 1.5f;
 	config->maxEdgeLen = 30.f;
-	config->maxVertsPerPoly = 6;
-	config->detailSampleMaxError = .5f;
+	config->maxVertsPerPoly = 12;
+	config->detailSampleMaxError = 1.0f;
 	config->detailSampleDist = 1.0f;
 
 	int w, h;
