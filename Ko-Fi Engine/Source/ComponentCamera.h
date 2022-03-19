@@ -35,6 +35,8 @@ public:
 	bool ClipsWithBBox(const AABB& refBox) const;
 	void FrustumCulling();
 	void ResetFrustumCulling();
+	void SetAspectRatio(const float& aspectRatio);
+
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 

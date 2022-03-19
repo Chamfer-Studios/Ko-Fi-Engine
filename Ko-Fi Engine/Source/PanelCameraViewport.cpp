@@ -4,10 +4,10 @@
 #include "Engine.h"
 #include "Camera3D.h"
 #include "SceneManager.h"
-#include "ViewportFrameBuffer.h"
 #include "Input.h"
 #include "Window.h"
 #include "Importer.h"
+#include "Renderer3D.h"
 #include "Texture.h"
 #include "ComponentMaterial.h"
 
@@ -44,7 +44,7 @@ bool PanelCameraViewport::Update()
 	{
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
 		
-		ImGui::Image((ImTextureID)engine->GetViewportFrameBuffer()->textureBuffer, viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+		ImGui::Image((ImTextureID)engine->GetRenderer()->GetTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 
 	}
 	ImGui::End();

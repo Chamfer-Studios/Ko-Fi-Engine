@@ -203,21 +203,21 @@ void Renderer3D::PassProjectionAndViewToRenderer()
 {
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
-	Camera3D* currentCamera = engine->GetCamera3D();
-	if (currentCamera)
+	Camera3D* currentCamera3D = engine->GetCamera3D();
+	if (currentCamera3D)
 	{
-		if (currentCamera->projectionIsDirty) {
+		if (currentCamera3D->currentCamera->projectionIsDirty) {
 			RecalculateProjectionMatrix();
-			currentCamera->CalculateViewMatrix();
+			currentCamera3D->currentCamera->CalculateViewMatrix();
 		}
 
-		glLoadMatrixf((GLfloat*)currentCamera->viewMatrix.Transposed().ptr());
+		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->viewMatrix.Transposed().ptr());
 	}
 	float3 cameraPos = float3::zero;
 	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
-	if (engine->GetCamera3D())
+	if (engine->GetCamera3D()->currentCamera)
 	{
-		cameraPos = engine->GetCamera3D()->position;
+		cameraPos = engine->GetCamera3D()->currentCamera->position;
 	}
 	else {
 		cameraPos = float3(0.0f, 20.0f, 0.0f);
@@ -228,9 +228,9 @@ void Renderer3D::RecalculateProjectionMatrix()
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	if (engine->GetCamera3D())
+	if (engine->GetCamera3D()->currentCamera)
 	{
-		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	}
 	else
 	{
@@ -291,14 +291,14 @@ void Renderer3D::RenderMeshes(GameObject* go)
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 			GLint view_location = glGetUniformLocation(shader, "view");
-			glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
-			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 
 			float2 resolution = float2(1080.0f, 720.0f);
 			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
@@ -383,10 +383,10 @@ void Renderer3D::SetVsync(bool vsync)
 void Renderer3D::OnResize()
 {
 	glViewport(0, 0, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-	if (engine->GetCamera3D())
+	if (engine->GetCamera3D()->currentCamera)
 	{
 		//engine->GetCamera3D()->aspectRatio = engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight();
-		engine->GetCamera3D()->SetAspectRatio(engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight());
+		engine->GetCamera3D()->currentCamera->SetAspectRatio(engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight());
 	}
 	else
 	{

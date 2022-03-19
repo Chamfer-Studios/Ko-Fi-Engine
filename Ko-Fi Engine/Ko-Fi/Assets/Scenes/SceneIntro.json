@@ -612,10 +612,6 @@
                     },
                     {
                         "active": true,
-                        "mask": [
-                            1.0,
-                            1.0
-                        ],
                         "texture": "Assets/HUD/character_abilities_v1.2.png",
                         "type": "image"
                     }

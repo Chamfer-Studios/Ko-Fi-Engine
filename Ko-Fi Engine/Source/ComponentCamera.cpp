@@ -320,3 +320,11 @@ void ComponentCamera::ResetFrustumCulling()
 			componentMesh->SetRenderMesh(true);
 	}
 }
+
+void ComponentCamera::SetAspectRatio(const float& aspectRatio)
+{
+	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
+	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
+	this->projectionIsDirty = true;
+	RecalculateProjection();
+}
