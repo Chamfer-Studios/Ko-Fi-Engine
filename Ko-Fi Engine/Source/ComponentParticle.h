@@ -38,6 +38,7 @@ public:
 	int moduleToAdd = 0;
 	int emitterToAdd = 0;
 	int currentTextureId = 0;
+	int billboardingType = 0;
 	
 };
 

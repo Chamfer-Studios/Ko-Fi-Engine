@@ -295,44 +295,47 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 {
 	//glEnable(GL_BLEND);
 	//glEnable(GL_ALPHA_TEST);
-
+	//
 	//glUseProgram(particle->shaderID);
-
+	//
 	//if(particle->tex)
 	//	glBindTexture(GL_TEXTURE_2D, particle->tex->GetTextureId());
 	//else
 	//	glDisable(GL_TEXTURE_2D);
-
+	//
 	//// Matrices
 	//GLint model_matrix = glGetUniformLocation(particle->shaderID, "modelMatrix");
 	//glUniformMatrix4fv(model_matrix, 1, GL_FALSE, particle->transform.Transposed().ptr());
-
+	//
 	//GLint projection_location = glGetUniformLocation(particle->shaderID, "projectionMatrix");
 	//glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-
+	//
 	//GLint view_location = glGetUniformLocation(particle->shaderID, "viewMatrix");
 	//glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->viewMatrix.Transposed().ptr());
-
+	//
 	//glUniform4fv(glGetUniformLocation(particle->shaderID, "color"), 1, (GLfloat*)&particle->color);
-
+	//
 	//glBindBuffer(GL_ARRAY_BUFFER, particle->VAO);
-
+	//
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
-
+	//
 	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	//
 	//glBindTexture(GL_TEXTURE_2D, 0);
-
+	//
 	//glUseProgram(0);
-
+	//
 	//glDisable(GL_BLEND);
 	//glDisable(GL_ALPHA_TEST);
 
 	glEnable(GL_BLEND);
 	glEnable(GL_ALPHA_TEST);
 	
-	if(particle->tex)
+	if (particle->tex)
+	{
+		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, particle->tex->GetTextureId());
+	}
 	else
 		glDisable(GL_TEXTURE_2D);
 
@@ -369,11 +372,12 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glPopMatrix();
+
 	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//glBindBuffer(GL_NORMAL_ARRAY, 0);
 	//glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	//
 	//glDisableClientState(GL_VERTEX_ARRAY);
 	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 

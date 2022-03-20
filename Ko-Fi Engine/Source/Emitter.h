@@ -12,6 +12,7 @@ class EmitterDefault;
 class EmitterMovement;
 class EmitterColor;
 class EmitterSize;
+class ParticleBillboarding;
 //class Texture;
 
 class Emitter

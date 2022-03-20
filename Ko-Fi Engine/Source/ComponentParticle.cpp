@@ -53,7 +53,7 @@ bool ComponentParticle::Update(float dt)
 			unsigned int particleIndex = it->particleIndices[i];
 			Particle* particle = &it->particles[particleIndex];
 		
-			owner->GetEngine()->GetRenderer()->AddParticle( nullptr, particle->CurrentColor,
+			owner->GetEngine()->GetRenderer()->AddParticle( &it->emitter->texture, particle->CurrentColor,
 				float4x4::FromTRS(particle->position, particle->rotation, particle->scale), 
 				particle->distanceToCamera);
 		}
@@ -206,7 +206,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 				std::string addName = "Add Module to " + emitter->name;
 				ImGui::Text("Modules: %d", emitter->modules.size());
 
-				ImGui::Combo(emitterName.c_str(), &moduleToAdd, "Add Module\0Movement\0Color\0Size");
+				ImGui::Combo(emitterName.c_str(), &moduleToAdd, "Add Module\0Movement\0Color\0Size\0Billboarding");
 				ImGui::SameLine();
 				if ((ImGui::Button(addName.c_str())))
 				{
@@ -398,6 +398,21 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 							}
 						}
 						break;
+					case ParticleModuleType::BILLBOARDING:
+						moduleName.append(" Billboarding");
+						if (ImGui::CollapsingHeader(moduleName.c_str()))
+						{
+							ParticleBillboarding* particleBillboarding = (ParticleBillboarding*)module;
+
+							ImGui::Combo("Billboarding##", &billboardingType, "Screen Aligned\0World Aligned\0X-Axis Aligned\0Y-Axis Aligned\0Z-Axis Aligned");
+							ImGui::SameLine();
+							if ((ImGui::Button("SELECT"))) { particleBillboarding->billboardingType = (ParticleBillboarding::BillboardingType)billboardingType; }
+
+							bool hideModule = particleBillboarding->hideBillboarding;
+							bool deleteModule = particleBillboarding->eraseBillboarding;
+							if (ImGui::Checkbox("Hide Billboarding", &hideModule)) { particleBillboarding->hideBillboarding = hideModule; }
+							if (ImGui::Checkbox("Delete Billboarding", &deleteModule)) { particleBillboarding->eraseBillboarding = deleteModule; }
+						}
 					default:
 						break;
 					}

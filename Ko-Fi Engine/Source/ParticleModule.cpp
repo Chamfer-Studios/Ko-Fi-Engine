@@ -211,3 +211,78 @@ bool EmitterSize::Update(float dt, EmitterInstance* emitter)
 		particle->scale = particle->scale.Lerp(initialSize, finalSize, p);
 	}
 }
+
+ParticleBillboarding::ParticleBillboarding()
+{
+	type = ParticleModuleType::BILLBOARDING;
+}
+
+void ParticleBillboarding::Spawn(EmitterInstance* emitter, Particle* particle)
+{
+	particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetEngine()->GetCamera3D()->cameraFrustum.WorldMatrix());
+}
+
+bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
+{
+	if (disable)
+	{
+		return true;
+	}
+	for (unsigned int i = 0; i < emitter->activeParticles; ++i)
+	{
+		unsigned int particleIndex = emitter->particleIndices[i];
+		Particle* particle = &emitter->particles[particleIndex];
+
+		particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetEngine()->GetCamera3D()->cameraFrustum.WorldMatrix());
+	}
+
+}
+
+Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, const float4x4& cameraTransform)
+{
+	float3 N, U, _U, R;
+	float3 direction = float3(cameraTransform.TranslatePart() - position).Normalized(); //normalized vector between the camera and gameobject position
+
+	switch (billboardingType)
+	{
+	case(BillboardingType::ScreenAligned):
+	{
+		N = cameraTransform.WorldZ().Normalized().Neg();	// N is the inverse of the camera +Z
+		U = cameraTransform.WorldY().Normalized();			// U is the up vector from the camera (already perpendicular to N)
+		R = U.Cross(N).Normalized();						// R is the cross product between  U and N
+	}
+	break;
+	case(BillboardingType::WorldAligned):
+	{
+		N = direction;										// N is the direction
+		_U = cameraTransform.WorldY().Normalized();			// _U is the up vector form the camera, only used to calculate R
+		R = _U.Cross(N).Normalized();						// R is the cross product between U and N
+		U = N.Cross(R).Normalized();						// U is the cross product between N and R
+	}
+	break;
+	case(BillboardingType::XAxisAligned):
+	{
+		R = float3::unitX;									// R = (1,0,0)
+		U = direction.Cross(R).Normalized();				// U cross between R and direction
+		N = R.Cross(U).Normalized();						// N faces the camera
+	}
+	break;
+	case(BillboardingType::YAxisAligned):
+	{
+		U = float3::unitY;
+		R = U.Cross(direction).Normalized();
+		N = R.Cross(U).Normalized();
+	}
+	break;
+	case(BillboardingType::ZAxisAligned):
+	{
+		N = float3::unitZ;
+		R = direction.Cross(N).Normalized();
+		U = N.Cross(R).Normalized();
+	}
+	break;
+	}
+	float3x3 result = float3x3(R, U, N);
+
+	return result.ToQuat();
+}
