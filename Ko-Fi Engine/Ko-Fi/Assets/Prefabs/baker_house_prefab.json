@@ -1,9 +1,7 @@
 {
-    "UID": 295539977,
     "active": true,
     "children": [
         {
-            "UID": 747916810,
             "active": true,
             "children": [],
             "components": [
@@ -25,9 +23,9 @@
                         0.7071067094802856
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        100.0,
+                        100.0,
+                        100.0
                     ],
                     "type": "transform"
                 },
@@ -47,15 +45,32 @@
                         0.47040000557899475,
                         1.0
                     ],
-                    "shader_path": "Assets/Shaders/default_shader.glsl",
+                    "shader_path": "Assets/Shaders/water_shader.glsl",
                     "texture_path": "Assets/Textures/Baker_house.png",
                     "type": "material",
                     "uniforms": [
                         {
-                            "name": "albedoTint",
-                            "type": 35666,
+                            "name": "customColorOne",
+                            "type": 35665,
                             "value": {
-                                "w": 1.0,
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            }
+                        },
+                        {
+                            "name": "customColorThree",
+                            "type": 35665,
+                            "value": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            }
+                        },
+                        {
+                            "name": "customColorTwo",
+                            "type": 35665,
+                            "value": {
                                 "x": 1.0,
                                 "y": 1.0,
                                 "z": 1.0
@@ -65,11 +80,9 @@
                 }
             ],
             "isPrefab": true,
-            "name": "Chimney",
-            "parent_UID": 295539977
+            "name": "Chimney"
         },
         {
-            "UID": 680240201,
             "active": true,
             "children": [],
             "components": [
@@ -80,20 +93,20 @@
                 {
                     "active": true,
                     "position": [
-                        0.0,
-                        0.0,
-                        0.0
+                        54.64067077636719,
+                        32.01030731201172,
+                        -113.5264892578125
                     ],
                     "rotation": [
                         -0.7071068286895752,
                         0.0,
                         0.0,
-                        0.7071067094802856
+                        0.7071067690849304
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        100.0,
+                        99.99996185302734,
+                        99.99996185302734
                     ],
                     "type": "transform"
                 },
@@ -131,8 +144,7 @@
                 }
             ],
             "isPrefab": true,
-            "name": "Baker_house",
-            "parent_UID": 295539977
+            "name": "Baker_house"
         }
     ],
     "components": [
@@ -143,8 +155,8 @@
         {
             "active": true,
             "position": [
-                0.0,
-                0.0,
+                464.0,
+                -1.0,
                 0.0
             ],
             "rotation": [
@@ -162,6 +174,5 @@
         }
     ],
     "isPrefab": true,
-    "name": "baker_house",
-    "parent_UID": 4294967295
+    "name": "baker_house"
 }
