@@ -1,6 +1,6 @@
 ------------------- Variables --------------------
 
-speed = 50  -- consider Start()
+speed = 500  -- consider Start()
 
 bullets = {}
 
@@ -39,10 +39,10 @@ function Update(dt)
 		local vec2 = { targetPos[1] - pos2D[1], targetPos[2] - pos2D[2] }
 		
 		vec2 = Normalize(vec2, d)
-		componentTransform:SetPosition(float3.new(pos2D[1] + vec2[1] * speed * dt, componentTransform:GetPosition().y, pos2D[2] + vec2[2] * speed * dt))
-		--vec3 = float3.new(vec2[1] * speed * dt, 0, vec2[2] * speed * dt) -- RigidBody Dependant
+		--componentTransform:SetPosition(float3.new(pos2D[1] + vec2[1] * speed * dt, componentTransform:GetPosition().y, pos2D[2] + vec2[2] * speed * dt))
+		vec3 = float3.new(vec2[1] * speed * dt, 0, vec2[2] * speed * dt) -- RigidBody Dependant
 		--gameObject:GetRigidBody():FreezePositionY(true)				   -- RigidBody Dependant
-		--gameObject:GetRigidBody():SetLinearVelocity(vec3)				   -- RigidBody Dependant
+		gameObject:GetRigidBody():Set2DVelocity(float2.new(vec2[1] * speed * dt, vec2[2] * speed * dt))				   -- RigidBody Dependant
 
 		a = { 0, 1 } 
 		rad = math.acos(a[1] * vec2[1] + a[2] * vec2[2])
@@ -51,7 +51,7 @@ function Update(dt)
 		end
 		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x,  componentTransform:GetRotation().y,rad))
 	else
-		--gameObject:GetRigidBody():SetLinearVelocity(float3.new(0,0,0))   -- RigidBody Dependant
+		gameObject:GetRigidBody():Set2DVelocity(float2.new(0,0))   -- RigidBody Dependant
 	end
 	----------------------------------------------------------------------------------------
 	--print(destination)

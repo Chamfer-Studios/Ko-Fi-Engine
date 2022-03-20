@@ -36,6 +36,8 @@ public:
 
 	void RecomputeGlobalMatrix();
 
+	void UpdateGuizmoParameters(float4x4& transformMatrix);
+
 	float4x4 GetGlobalTransform();
 	void SetGlobalTransform(const float4x4& globalTransform);
 

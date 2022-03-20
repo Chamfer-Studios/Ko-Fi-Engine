@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Engine.h"
 #include "SceneManager.h"
+#include "ComponentCamera.h"
 
 ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 {
@@ -21,6 +22,7 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 
 ComponentTransform::~ComponentTransform()
 {
+
 }
 
 bool ComponentTransform::Update(float dt)
@@ -44,6 +46,14 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Transform"))
 	{
+		if (ImGui::RadioButton("Translate", owner->GetEngine()->GetSceneManager()->GetGizmoOperation() == ImGuizmo::TRANSLATE)) owner->GetEngine()->GetSceneManager()->SetGizmoOperation(ImGuizmo::TRANSLATE);
+		ImGui::SameLine();
+		if (ImGui::RadioButton("Rotate", owner->GetEngine()->GetSceneManager()->GetGizmoOperation() == ImGuizmo::ROTATE)) owner->GetEngine()->GetSceneManager()->SetGizmoOperation(ImGuizmo::ROTATE);
+		if (owner->GetComponent<ComponentCamera>() == nullptr)
+		{
+			ImGui::SameLine();
+			if (ImGui::RadioButton("Scale", owner->GetEngine()->GetSceneManager()->GetGizmoOperation() == ImGuizmo::SCALE)) owner->GetEngine()->GetSceneManager()->SetGizmoOperation(ImGuizmo::SCALE);
+		}
 		float3 newPosition = position;
 		if (ImGui::DragFloat3("Location", &newPosition[0]))
 		{
@@ -127,6 +137,18 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	}
 }
 
+void ComponentTransform::UpdateGuizmoParameters(float4x4& transformMatrix)
+{
+	float3 position;
+	Quat rotation;
+	float3 scale;
+	transformMatrix.Decompose(position, rotation, scale);
+	
+	SetPosition(position);
+	SetRotationQuat(rotation);
+	SetScale(scale);
+}
+
 float4x4 ComponentTransform::GetGlobalTransform()
 {
 	return transformMatrix;
@@ -135,6 +157,7 @@ float4x4 ComponentTransform::GetGlobalTransform()
 void ComponentTransform::SetGlobalTransform(const float4x4& globalTransform)
 {
 	transformMatrix = globalTransform;
+
 }
 
 bool ComponentTransform::GetDirty() const

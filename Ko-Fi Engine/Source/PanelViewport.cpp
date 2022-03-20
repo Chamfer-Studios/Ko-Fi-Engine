@@ -62,8 +62,8 @@ bool PanelViewport::Update()
 		if (viewportSize.x != editor->lastViewportSize.x || viewportSize.y != editor->lastViewportSize.y)
 		{
 			editor->lastViewportSize = viewportSize;
-			engine->GetCamera3D()->aspectRatio = viewportSize.x / viewportSize.y;
-			engine->GetCamera3D()->RecalculateProjection();
+			engine->GetCamera3D()->currentCamera->aspectRatio = viewportSize.x / viewportSize.y;
+			engine->GetCamera3D()->currentCamera->RecalculateProjection();
 			engine->GetRenderer()->ResizeFrameBuffers(viewportSize.x, viewportSize.y);
 
 		}
