@@ -181,20 +181,15 @@ void UI::PrepareUIRender()
 	engine->GetCamera3D()->currentCamera->LookAt({ offset.x, offset.y, -1 });
 
 	engine->GetCamera3D()->currentCamera->projectionIsDirty = true;
-	engine->GetCamera3D()->currentCamera->CalculateViewMatrix();
+	engine->GetCamera3D()->currentCamera->CalculateViewMatrix(true);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 
-	//glClear(GL_COLOR_BUFFER_BIT);
-
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
-
-	//glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 	glDisable(GL_LIGHTING);
 }

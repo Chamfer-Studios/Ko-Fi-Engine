@@ -296,6 +296,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 		jsonGameObject["name"] = gameObject->GetName();
 		jsonGameObject["active"] = gameObject->active;
 		jsonGameObject["UID"] = gameObject->GetUID();
+		jsonGameObject["is3D"] = gameObject->is3D;
 
 		// We don't want to save also its children here.
 		// We will arrive and create them when they get here with the loop.
@@ -446,6 +447,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		{
 			Json jsonGo = goIt.value();
 			uint UID = jsonGo.at("UID");
+			bool is3D = true;
+			if (jsonGo.find("is3D") != jsonGo.end()) {
+				is3D = jsonGo.at("is3D");
+			}
 			GameObject* go = nullptr;
 			bool exists = false;
 
@@ -456,11 +461,12 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				go->name = jsonGo.at("name");
 				go->SetUID(UID);
 				go->SetEngine(engine);
+				go->is3D = is3D;
 			}
 			else
 			{
 				std::string name = jsonGo.at("name");
-				go = new GameObject(UID, engine, name.c_str());
+				go = new GameObject(UID, engine, name.c_str(), is3D);
 			}
 
 			go->active = jsonGo.at("active");
