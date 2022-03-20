@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "ComponentTransform2D.h"
+#include "ComponentRenderedUI.h"
 
 #include "Texture.h"
 
@@ -19,7 +20,7 @@ class SDL_Texture;
 class SDL_Surface;
 class MyPlane;
 
-class ComponentImage : public Component {
+class ComponentImage : public ComponentRenderedUI {
 public:
 	ComponentImage(GameObject* parent);
 	~ComponentImage();
@@ -31,13 +32,9 @@ public:
 	bool PostUpdate(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
-	//SDL_Texture* LoadTexture(const char* path);
-	//SDL_Texture* const LoadSurface(SDL_Surface* surface);
-
 	void SetTexture(const char* path);
 
-	//void OnLoad(const JSONReader& reader) override;
-	//void OnSave(JSONWriter& writer) const override;
+	void Draw() override;
 
 	Texture openGLTexture;
 

@@ -43,6 +43,8 @@ public:
 	void RenderBoundingBox(ComponentMesh* cMesh);
 	void RenderMeshes(GameObject* go);
 
+	void RenderUI(GameObject* go);
+
 	void OnNotify(const Event& event);
 
 	bool GetVsync() const;

@@ -27,7 +27,7 @@
 #include "glew.h"
 #include <vector>
 
-ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
+ComponentImage::ComponentImage(GameObject* parent) : ComponentRenderedUI(parent)
 {
 	type = ComponentType::IMAGE;
 }
@@ -41,20 +41,12 @@ void ComponentImage::Save(Json& json) const
 	json["type"] = "image";
 
 	json["texture"] = openGLTexture.path;
-	//json["mask"] = {
-	//	mask.x,
-	//	mask.y
-	//};
 }
 
 void ComponentImage::Load(Json& json)
 {
 	std::string path = json["texture"].get<std::string>();
 	SetTexture(path.c_str());
-
-	//std::vector<float> values = json["mask"].get<std::vector<float>>();
-	//mask.x = values[0];
-	//mask.y = values[1];
 }
 
 bool ComponentImage::Update(float dt)
@@ -64,10 +56,6 @@ bool ComponentImage::Update(float dt)
 
 bool ComponentImage::PostUpdate(float dt)
 {
-	owner->GetEngine()->GetUI()->PrepareUIRender();
-	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), {255, 255, 255});
-	owner->GetEngine()->GetUI()->EndUIRender();
-
 	return true;
 }
 
@@ -106,6 +94,13 @@ void ComponentImage::SetTexture(const char* path)
 {
 	FreeTextures();
 	Importer::GetInstance()->textureImporter->Import(path, &openGLTexture);
+}
+
+void ComponentImage::Draw()
+{
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
+	owner->GetEngine()->GetUI()->EndUIRender();
 }
 
 void ComponentImage::FreeTextures()

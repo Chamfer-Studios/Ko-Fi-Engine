@@ -13,10 +13,9 @@
 #include "Input.h"
 #include "Importer.h"
 
-ComponentButton::ComponentButton(GameObject* parent) : Component(parent)
+ComponentButton::ComponentButton(GameObject* parent) : ComponentRenderedUI(parent)
 {
 	type = ComponentType::BUTTON;
-	glGenFramebuffers(1, &fboId);
 }
 
 ComponentButton::~ComponentButton()
@@ -77,28 +76,6 @@ bool ComponentButton::Update(float dt)
 
 bool ComponentButton::PostUpdate(float dt)
 {
-	//SDL_Texture* SDLTexture = nullptr;
-	Texture openGLTexture;
-
-	switch (state) {
-	case BUTTON_STATE::IDLE:
-		//SDLTexture = idleSDLTexture;
-		openGLTexture = idleOpenGLTexture;
-		break;
-	case BUTTON_STATE::HOVER:
-		//SDLTexture = hoverSDLTexture;
-		openGLTexture = hoverOpenGLTexture;
-		break;
-	case BUTTON_STATE::PRESSED:
-		//SDLTexture = pressedSDLTexture;
-		openGLTexture = pressedOpenGLTexture;
-		break;
-	}
-
-	owner->GetEngine()->GetUI()->PrepareUIRender();
-	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), {255, 255, 255});
-	owner->GetEngine()->GetUI()->EndUIRender();
-
 	return true;
 }
 
@@ -181,39 +158,26 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-/*SDL_Texture* ComponentButton::LoadTexture(const char* path)
+void ComponentButton::Draw()
 {
-	SDL_Texture* texture = NULL;
-	SDL_Surface* surface = IMG_Load(path);
+	Texture openGLTexture;
 
-	if (surface == NULL)
-	{
-		appLog->AddLog("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
-	}
-	else
-	{
-		texture = LoadSurface(surface);
-		SDL_FreeSurface(surface);
+	switch (state) {
+	case BUTTON_STATE::IDLE:
+		openGLTexture = idleOpenGLTexture;
+		break;
+	case BUTTON_STATE::HOVER:
+		openGLTexture = hoverOpenGLTexture;
+		break;
+	case BUTTON_STATE::PRESSED:
+		openGLTexture = pressedOpenGLTexture;
+		break;
 	}
 
-	return texture;
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
+	owner->GetEngine()->GetUI()->EndUIRender();
 }
-
-SDL_Texture* const ComponentButton::LoadSurface(SDL_Surface* surface)
-{
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(owner->GetEngine()->GetUI()->renderer, surface);
-
-	if (texture == NULL)
-	{
-		appLog->AddLog("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
-	}
-	else
-	{
-		owner->GetEngine()->GetUI()->loadedTextures.push_back(texture);
-	}
-
-	return texture;
-}*/
 
 void ComponentButton::SetIdleTexture(const char* path)
 {
