@@ -356,12 +356,6 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				collCmp->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::RIGID_BODY:
-			{
-				ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
-				rigidBodyCmp->Save(jsonComponent);
-				break;
-			}
 			case ComponentType::COLLIDER:
 			{
 				ComponentCollider* collisionCmp = (ComponentCollider*)component;

@@ -82,7 +82,7 @@ public:
 	bool LoadPrefab(Json& jsonFile);
 
 	bool IsSelected();
-private:
+public:
 	template<class T> T* CreateComponent()
 	{
 		T* newComponent = new T(this);

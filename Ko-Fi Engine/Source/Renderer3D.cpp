@@ -269,6 +269,7 @@ void Renderer3D::RenderScene()
 				}
 
 			}
+			RenderAllParticles();
 		}
 		
 
@@ -520,7 +521,6 @@ uint Renderer3D::GetTextureBuffer()
 void Renderer3D::AddParticle(Texture* tex, Color color, const float4x4 transform, float distanceToCamera)
 {
 	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
-	pRenderer.shaderID = particleShader;
 	particles.insert(std::map<float, ParticleRenderer>::value_type(distanceToCamera, pRenderer));
 }
 
@@ -537,24 +537,11 @@ void Renderer3D::RenderAllParticles()
 ParticleRenderer::ParticleRenderer(Texture* tex, Color color, const float4x4 transform):
 tex(tex),
 color(color),
-transform(transform),
-VAO(0),
-shaderID(0)
+transform(transform)
 {
 
 }
 
-void ParticleRenderer::LoadBuffers()
-{
-	glGenBuffers(1, &VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VAO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ParticlesCoords), ParticlesCoords, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (GLvoid*)0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
 
 void Renderer3D::RenderParticle(ParticleRenderer* particle)
 {
@@ -612,7 +599,7 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 
 	//glMultMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());// proj
 															// *
-	glMultMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());// view
+	glMultMatrixf(engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());// view
 															// *
 	glMultMatrixf(particle->transform.Transposed().ptr());	// model
 	
