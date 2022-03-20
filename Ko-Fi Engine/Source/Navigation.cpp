@@ -9,6 +9,9 @@
 #include "ComponentWalkable.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
+#include "DetourNavMeshBuilder.h"
+#include "DetourNavMeshQuery.h"
+#include "DetourNavMesh.h"
 #include "Mesh.h"
 
 Navigation::Navigation(KoFiEngine* engine) : Module()
@@ -40,22 +43,22 @@ bool Navigation::PostUpdate(float dt)
 {
 	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
 
-	if (navMesh == nullptr) return true;
+	if (navMeshDetail == nullptr) return true;
 
 	glBegin(GL_LINES);
 	glLineWidth(2.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glDisable(GL_LIGHTING);
 
-	for (int i = 0; i < navMesh->nmeshes; ++i)
+	for (int i = 0; i < navMeshDetail->nmeshes; ++i)
 	{
-		const unsigned int* meshDef = &navMesh->meshes[i * 4];
+		const unsigned int* meshDef = &navMeshDetail->meshes[i * 4];
 		const unsigned int baseVerts = meshDef[0];
 		const unsigned int baseTri = meshDef[2];
 		const int ntris = (int)meshDef[3];
 
-		const float* verts = &navMesh->verts[baseVerts * 3];
-		const unsigned char* tris = &navMesh->tris[baseTri * 4];
+		const float* verts = &navMeshDetail->verts[baseVerts * 3];
+		const unsigned char* tris = &navMeshDetail->tris[baseTri * 4];
 		// Iterate the sub-mesh's triangles.
 		for (int j = 0; j < ntris; ++j)
 		{
@@ -111,7 +114,63 @@ void Navigation::ComputeNavmesh()
 
 	Mesh* combined = Mesh::MeshUnion(meshes, transforms);
 
-	navMesh = ComputeNavmesh(combined);
+	navMeshDetail = ComputeNavmesh(combined);
+}
+
+void Navigation::PrepareDetour()
+{
+	if (navMeshDetail == nullptr) return;
+
+	for (int i = 0; i < navMesh->npolys; ++i)
+	{
+		if (navMesh->areas[i] == RC_WALKABLE_AREA)
+			navMesh->areas[i] = SAMPLE_POLYAREA_GROUND;
+
+		if (navMesh->areas[i] == SAMPLE_POLYAREA_GROUND)
+		{
+			navMesh->flags[i] = SAMPLE_POLYFLAGS_WALK;
+		}
+	}
+
+	dtNavMeshCreateParams dtNavMeshCreateParams;
+	memset(&dtNavMeshCreateParams, 0, sizeof(dtNavMeshCreateParams));
+	dtNavMeshCreateParams.verts = navMesh->verts;
+	dtNavMeshCreateParams.vertCount = navMesh->nverts;
+	dtNavMeshCreateParams.polys = navMesh->polys;
+	dtNavMeshCreateParams.polyAreas = navMesh->areas;
+	dtNavMeshCreateParams.polyFlags = navMesh->flags;
+	dtNavMeshCreateParams.polyCount = navMesh->npolys;
+	dtNavMeshCreateParams.nvp = navMesh->nvp;
+
+	dtNavMeshCreateParams.detailMeshes = navMeshDetail->meshes;
+	dtNavMeshCreateParams.detailVerts = navMeshDetail->verts;
+	dtNavMeshCreateParams.detailVertsCount = navMeshDetail->nverts;
+	dtNavMeshCreateParams.detailTris = navMeshDetail->tris;
+	dtNavMeshCreateParams.detailTriCount = navMeshDetail->ntris;
+
+	dtNavMeshCreateParams.offMeshConCount = 0;
+
+	dtNavMeshCreateParams.walkableHeight = 2.0f;
+	dtNavMeshCreateParams.walkableClimb = 0.0f;
+	dtNavMeshCreateParams.walkableRadius = 0.5f; // TODO
+
+	rcVcopy(dtNavMeshCreateParams.bmin, navMesh->bmin);
+	rcVcopy(dtNavMeshCreateParams.bmax, navMesh->bmax);
+	dtNavMeshCreateParams.cs = .3f;
+	dtNavMeshCreateParams.ch = .3f; // TODO
+	dtNavMeshCreateParams.buildBvTree = true;
+
+	unsigned char* data = nullptr;
+	int dataSize = 0;
+	dtCreateNavMeshData(&dtNavMeshCreateParams, &data, &dataSize);
+
+	if (dataSize == 0) return;
+
+	dtNavMesh = dtAllocNavMesh();
+	if (!dtStatusSucceed(dtNavMesh->init(data, dataSize, DT_TILE_FREE_DATA))) {
+		appLog->AddLog("Could not create DT navmesh!");
+		return;
+	}
 }
 
 rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
@@ -137,18 +196,18 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 	config->bmax[1] = bMax[1];
 	config->bmax[2] = bMax[2];
 
-	config->cs = 10.f;
-	config->ch = 3.f;
+	config->cs = .3f;
+	config->ch = .3f;
 	config->walkableSlopeAngle = 45;
-	config->walkableClimb = 1;
+	config->walkableClimb = 0.0f;
 	config->walkableHeight = 2;
-	config->walkableRadius = 2;
+	config->walkableRadius = 0.5;
 	config->minRegionArea = 2.f;
 	config->mergeRegionArea = 2.f;
-	config->borderSize = 1.5f;
+	config->borderSize = 0.5f;
 	config->maxEdgeLen = 30.f;
-	config->maxVertsPerPoly = 12;
-	config->detailSampleMaxError = 1.0f;
+	config->maxVertsPerPoly = 6;
+	config->detailSampleMaxError = 0.1f;
 	config->detailSampleDist = 1.0f;
 
 	int w, h;
@@ -168,6 +227,7 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 	if (!rcRasterizeTriangles(context, vertices, nv, tris, areas, nt, *heightfield, config->walkableClimb)) {
 		appLog->AddLog("Could not rasterize triangles!");
 	}
+
 	rcFilterLowHangingWalkableObstacles(context, config->walkableClimb, *heightfield);
 	rcFilterLedgeSpans(context, config->walkableHeight, config->walkableClimb, *heightfield);
 	rcFilterWalkableLowHeightSpans(context, config->walkableHeight, *heightfield);
@@ -199,14 +259,14 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 		return nullptr;
 	}
 
-	rcPolyMesh* polyMesh = rcAllocPolyMesh();
-	if (!rcBuildPolyMesh(context, *contourSet, config->maxVertsPerPoly, *polyMesh)) {
+	navMesh = rcAllocPolyMesh();
+	if (!rcBuildPolyMesh(context, *contourSet, config->maxVertsPerPoly, *navMesh)) {
 		appLog->AddLog("Could not triangulate contours!\n");
 		return nullptr;
 	}
 
 	rcPolyMeshDetail* polyMeshDetail = rcAllocPolyMeshDetail();
-	if (!rcBuildPolyMeshDetail(context, *polyMesh, *compactHeightfield, config->detailSampleDist, config->detailSampleMaxError, *polyMeshDetail)) {
+	if (!rcBuildPolyMeshDetail(context, *navMesh, *compactHeightfield, config->detailSampleDist, config->detailSampleMaxError, *polyMeshDetail)) {
 		appLog->AddLog("Could not build detail mesh!\n");
 		return nullptr;
 	}
@@ -226,6 +286,44 @@ std::vector<GameObject*> Navigation::CollectWalkableObjects()
 	}
 
 	return res;
+}
+
+void Navigation::FindPath(float3 origin, float3 destination, float3** path, int maxLength, int* actualLength)
+{
+	if (dtNavMesh == nullptr) return;
+
+	dtNavMeshQuery* query = dtAllocNavMeshQuery();
+
+	query->init(dtNavMesh, maxLength);
+
+	float extents[3] = { 5, 5, 5 };
+	dtQueryFilter* filter = new dtQueryFilter();
+
+	dtPolyRef originPoly;
+	float originArray[3] = { origin.x, origin.y, origin.z };
+	float originPolyPos[3] = { 0, 0, 0 };
+	query->findNearestPoly(originArray, extents, filter, &originPoly, originPolyPos);
+
+	dtPolyRef destinationPoly;
+	float destinationArray[3] = { destination.x, destination.y, destination.z };
+	float destinationPolyPos[3] = { 0, 0, 0 };
+	query->findNearestPoly(destinationArray, extents, filter, &destinationPoly, destinationPolyPos);
+
+	dtPolyRef* polyPath = (dtPolyRef*)malloc(sizeof(dtPolyRef*) * maxLength);
+	memset(polyPath, 0, sizeof(dtPolyRef) * maxLength);
+	query->findPath(originPoly, destinationPoly, originPolyPos, destinationPolyPos, filter, polyPath, actualLength, maxLength);
+
+	*path = (float3*)malloc(sizeof(float3) * *actualLength);
+	float3 currentPos = origin;
+	for (int i = 0; i < *actualLength; i++) {
+		dtPolyRef currentPoly = polyPath[i];
+		float nextPos[3] = { 0, 0, 0 };
+		bool _p;
+		query->closestPointOnPoly(currentPoly, &currentPos[0], nextPos, &_p);
+		float3 nextPosAsF3 = float3(nextPos[0], nextPos[1], nextPos[2]);
+		(*path)[i] = nextPosAsF3;
+		currentPos = nextPosAsF3;
+	}
 }
 
 void Navigation::OnGui()

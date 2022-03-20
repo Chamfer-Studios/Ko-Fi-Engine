@@ -13,6 +13,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentScript.h"
 #include "ComponentWalkable.h"
+#include "ComponentFollowPath.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -197,6 +198,11 @@ void GameObject::AddComponentByType(ComponentType componentType)
 		case ComponentType::WALKABLE:
 		{
 			this->CreateComponent<ComponentWalkable>();
+			break;
+		}
+		case ComponentType::FOLLOW_PATH:
+		{
+			this->CreateComponent<ComponentFollowPath>();
 			break;
 		}
 		

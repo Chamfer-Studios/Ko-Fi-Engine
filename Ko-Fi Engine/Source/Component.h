@@ -25,6 +25,7 @@ enum class ComponentType
 	TEXT,
 	TRANSFORM,
 	WALKABLE,
+	FOLLOW_PATH,
 	INFO
 };
 

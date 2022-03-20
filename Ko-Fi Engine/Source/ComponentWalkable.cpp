@@ -5,6 +5,15 @@ ComponentWalkable::ComponentWalkable(GameObject* parent) : Component(parent)
 	type = ComponentType::WALKABLE;
 }
 
+void ComponentWalkable::Save(Json& json) const
+{
+	json["type"] = "walkable";
+}
+
+void ComponentWalkable::Load(Json& json)
+{
+}
+
 bool ComponentWalkable::Update(float dt)
 {
 	return true;

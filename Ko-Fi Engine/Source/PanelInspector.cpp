@@ -13,6 +13,8 @@
 #include "ComponentCollider.h"
 #include "ComponentRigidBody.h"
 
+#include <queue>
+
 PanelInspector::PanelInspector(Editor* editor)
 {
 	this->editor = editor;
@@ -54,7 +56,7 @@ bool PanelInspector::Update()
 		ImGui::Separator();
 
 		// Take care with the order in the combo, it has to follow the ComponentType enum class order
-		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody\0Transform 2D\0Canvas\0Image\0Button\0Text\0Transform\0Walkable");
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody\0Transform 2D\0Canvas\0Image\0Button\0Text\0Transform\0Walkable\0Follow Path");
 
 		ImGui::SameLine();
 
@@ -63,6 +65,31 @@ bool PanelInspector::Update()
 			if (componentType != (int)ComponentType::NONE)
 			{
 				currentGameObject->AddComponentByType((ComponentType)componentType);
+				componentType = 0;
+			}
+		}
+
+		if ((ImGui::Button("ADD TO CHILDREN")))
+		{
+			if (componentType != (int)ComponentType::NONE)
+			{
+				std::queue<GameObject*> q;
+
+				for (auto o : currentGameObject->children) {
+					q.push(o);
+				}
+
+				while (!q.empty()) {
+					GameObject* go = q.front();
+					q.pop();
+
+					for (auto c : go->children) {
+						q.push(c);
+					}
+
+					go->AddComponentByType((ComponentType)componentType);
+				}
+
 				componentType = 0;
 			}
 		}

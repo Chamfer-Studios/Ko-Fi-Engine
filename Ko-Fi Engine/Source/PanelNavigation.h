@@ -2,6 +2,8 @@
 
 #include "Panel.h"
 
+#include "MathGeoLib/Math/float3.h"
+
 class Editor;
 
 class PanelNavigation : public Panel
@@ -17,4 +19,7 @@ public:
 
 private:
 	Editor* editor = nullptr;
+
+	float3 origin = { 0, 0, 0 };
+	float3 destination = { 0, 0, 0 };
 };

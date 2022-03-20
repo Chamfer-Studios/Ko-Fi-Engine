@@ -30,6 +30,7 @@ bool PanelNavigation::Update()
 
 	if (ImGui::Button("Bake Navmesh")) {
 		editor->engine->GetNavigation()->ComputeNavmesh();
+		editor->engine->GetNavigation()->PrepareDetour();
 	}
 
 	ImGui::End();

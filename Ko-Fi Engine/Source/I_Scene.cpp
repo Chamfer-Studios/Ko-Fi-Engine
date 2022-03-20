@@ -24,7 +24,8 @@
 #include "ComponentImage.h"
 #include "ComponentText.h"
 #include "ComponentTransform2D.h"
-
+#include "ComponentWalkable.h"
+#include "ComponentFollowPath.h"
 
 #include "Mesh.h"
 #include "Texture.h"
@@ -397,6 +398,18 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				textCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::WALKABLE:
+			{
+				ComponentWalkable* walkableCmp = (ComponentWalkable*)component;
+				walkableCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::FOLLOW_PATH:
+			{
+				ComponentFollowPath* followCmp = (ComponentFollowPath*)component;
+				followCmp->Save(jsonComponent);
+				break;
+			}
 			default:
 				break;
 			}
@@ -581,13 +594,33 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				}
 				else if (type == "collider")
 				{
-				ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
-				if (colCmp == nullptr)
-				{
-					colCmp = go->CreateComponent<ComponentCollider>();
+					ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
+					if (colCmp == nullptr)
+					{
+						colCmp = go->CreateComponent<ComponentCollider>();
+					}
+					colCmp->active = true;
+					colCmp->Load(jsonCmp);
 				}
-				colCmp->active = true;
-				colCmp->Load(jsonCmp);
+				else if (type == "walkable")
+				{
+					ComponentWalkable* walCmp = go->GetComponent<ComponentWalkable>();
+					if (walCmp == nullptr)
+					{
+						walCmp = go->CreateComponent<ComponentWalkable>();
+					}
+					walCmp->active = true;
+					walCmp->Load(jsonCmp);
+				}
+				else if (type == "followPath")
+				{
+					ComponentFollowPath* follCmp = go->GetComponent<ComponentFollowPath>();
+					if (follCmp == nullptr)
+					{
+						follCmp = go->CreateComponent<ComponentFollowPath>();
+					}
+					follCmp->active = true;
+					follCmp->Load(jsonCmp);
 				}
 			}
 			if (!exists)
