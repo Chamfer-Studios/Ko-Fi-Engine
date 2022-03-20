@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "FileSystem.h"
+#include "Navigation.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -284,6 +285,10 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	jsonFile[name];
 	jsonFile[name]["name"] = name;
 	jsonFile[name]["active"] = scene->active;
+
+	jsonFile[name]["navmesh"] = Json::object();
+	engine->GetNavigation()->Save(jsonFile[name]["navmesh"]);
+
 	jsonFile[name]["game_objects_amount"] = gameObjectList.size();
 
 	jsonFile[name]["game_objects_list"] = Json::array();
@@ -441,6 +446,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
 		scene->active = jsonScene.at("active");
+		if (jsonScene.find("navmesh") != jsonScene.end())
+			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
 		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
 		//{
 		//	(*goIt)->CleanUp();

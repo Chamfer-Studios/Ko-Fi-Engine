@@ -13,6 +13,7 @@
 #include "DetourNavMeshQuery.h"
 #include "DetourNavMesh.h"
 #include "Mesh.h"
+#include "JsonHandler.h"
 
 Navigation::Navigation(KoFiEngine* engine) : Module()
 {
@@ -197,17 +198,17 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 	config->bmax[2] = bMax[2];
 
 	config->cs = .3f;
-	config->ch = .3f;
+	config->ch = .2f;
 	config->walkableSlopeAngle = 45;
-	config->walkableClimb = 0.0f;
+	config->walkableClimb = 1.0f;
 	config->walkableHeight = 2;
-	config->walkableRadius = 3.f;
+	config->walkableRadius = 2.f;
 	config->minRegionArea = 2.f;
 	config->mergeRegionArea = 2.f;
 	config->borderSize = 0.5f;
 	config->maxEdgeLen = 30.f;
 	config->maxVertsPerPoly = 6;
-	config->detailSampleMaxError = 0.1f;
+	config->detailSampleMaxError = 1.0f;
 	config->detailSampleDist = 1.0f;
 
 	int w, h;
@@ -324,6 +325,185 @@ void Navigation::FindPath(float3 origin, float3 destination, float3** path, int 
 		(*path)[i] = nextPosAsF3;
 		currentPos = nextPosAsF3;
 	}
+}
+
+void Navigation::Save(Json& json) const
+{
+	Json navmeshJson = Json::object();
+
+	navmeshJson.emplace("verts", Json::array());
+	std::vector<unsigned short> verts;
+	for (int i = 0; i < navMesh->nverts * 3; i++) {
+		verts.push_back(navMesh->verts[i]);
+	}
+	navmeshJson["verts"] = verts;
+
+	navmeshJson.emplace("polys", Json::array());
+	std::vector<unsigned short> polys;
+	for (int i = 0; i < navMesh->maxpolys * 2 * navMesh->nvp; i++) {
+		polys.push_back(navMesh->polys[i]);
+	}
+	navmeshJson["polys"] = polys;
+
+	navmeshJson.emplace("regs", Json::array());
+	std::vector<unsigned short> regs;
+	for (int i = 0; i < navMesh->maxpolys; i++) {
+		regs.push_back(navMesh->regs[i]);
+	}
+	navmeshJson["regs"] = regs;
+
+	navmeshJson.emplace("flags", Json::array());
+	std::vector<unsigned short> flags;
+	for (int i = 0; i < navMesh->maxpolys; i++) {
+		flags.push_back(navMesh->flags[i]);
+	}
+	navmeshJson["flags"] = flags;
+
+	navmeshJson.emplace("areas", Json::array());
+	std::vector<unsigned char> areas;
+	for (int i = 0; i < navMesh->maxpolys; i++) {
+		areas.push_back(navMesh->areas[i]);
+	}
+	navmeshJson["areas"] = areas;
+
+	navmeshJson.emplace("nverts", navMesh->nverts);
+	navmeshJson.emplace("npolys", navMesh->npolys);
+	navmeshJson.emplace("maxpolys", navMesh->maxpolys);
+	navmeshJson.emplace("nvp", navMesh->nvp);
+
+	navmeshJson.emplace("bmin", Json::array());
+	navmeshJson["bmin"] = {
+		navMesh->bmin[0],
+		navMesh->bmin[1],
+		navMesh->bmin[2],
+	};
+
+	navmeshJson.emplace("bmax", Json::array());
+	navmeshJson["bmax"] = {
+		navMesh->bmax[0],
+		navMesh->bmax[1],
+		navMesh->bmax[2],
+	};
+
+	navmeshJson.emplace("cs", navMesh->cs);
+	navmeshJson.emplace("ch", navMesh->ch);
+	navmeshJson.emplace("borderSize", navMesh->borderSize);
+	navmeshJson.emplace("maxEdgeError", navMesh->maxEdgeError);
+
+	Json detailNavmeshJson = Json::object();
+
+	detailNavmeshJson.emplace("meshes", Json::array());
+	std::vector<unsigned int> meshes;
+	for (int i = 0; i < navMeshDetail->nmeshes * 4; i++) {
+		meshes.push_back(navMeshDetail->meshes[i]);
+	}
+	detailNavmeshJson["meshes"] = meshes;
+
+	detailNavmeshJson.emplace("verts", Json::array());
+	std::vector<float> dverts;
+	for (int i = 0; i < navMeshDetail->nverts * 3; i++) {
+		dverts.push_back(navMeshDetail->verts[i]);
+	}
+	detailNavmeshJson["verts"] = dverts;
+
+	detailNavmeshJson.emplace("tris", Json::array());
+	std::vector<unsigned char> tris;
+	for (int i = 0; i < navMeshDetail->ntris * 4; i++) {
+		tris.push_back(navMeshDetail->tris[i]);
+	}
+	detailNavmeshJson["tris"] = tris;
+
+	detailNavmeshJson.emplace("nmeshes", navMeshDetail->nmeshes);
+	detailNavmeshJson.emplace("nverts", navMeshDetail->nverts);
+	detailNavmeshJson.emplace("ntris", navMeshDetail->ntris);
+
+	json.emplace("basic", navmeshJson);
+	json.emplace("detail", detailNavmeshJson);
+}
+
+void Navigation::Load(Json& json)
+{
+	if (json.find("basic") == json.end() || json.find("detail") == json.end()) return;
+
+	navMesh = rcAllocPolyMesh();
+	navMeshDetail = rcAllocPolyMeshDetail();
+
+	Json navmeshJson = json.at("basic");
+	Json detailNavmeshJson = json.at("detail");
+
+	std::vector<unsigned short> verts = navmeshJson.at("verts").get<std::vector<unsigned short>>();
+	navMesh->verts = (unsigned short*)malloc(sizeof(unsigned short) * verts.size());
+	for (int i = 0; i < verts.size(); i++) {
+		navMesh->verts[i] = verts[i];
+	}
+
+	std::vector<unsigned short> polys = navmeshJson.at("polys").get<std::vector<unsigned short>>();
+	navMesh->polys = (unsigned short*)malloc(sizeof(unsigned short) * polys.size());
+	for (int i = 0; i < polys.size(); i++) {
+		navMesh->polys[i] = polys[i];
+	}
+
+	std::vector<unsigned short> regs = navmeshJson.at("regs").get<std::vector<unsigned short>>();
+	navMesh->regs = (unsigned short*)malloc(sizeof(unsigned short) * regs.size());
+	for (int i = 0; i < regs.size(); i++) {
+		navMesh->regs[i] = regs[i];
+	}
+
+	std::vector<unsigned short> flags = navmeshJson.at("flags").get<std::vector<unsigned short>>();
+	navMesh->flags = (unsigned short*)malloc(sizeof(unsigned short) * flags.size());
+	for (int i = 0; i < flags.size(); i++) {
+		navMesh->flags[i] = flags[i];
+	}
+
+	std::vector<unsigned char> areas = navmeshJson.at("areas").get<std::vector<unsigned char>>();
+	navMesh->areas = (unsigned char*)malloc(sizeof(unsigned char) * areas.size());
+	for (int i = 0; i < areas.size(); i++) {
+		navMesh->areas[i] = areas[i];
+	}
+
+	navMesh->nverts = navmeshJson.at("nverts").get<int>();
+	navMesh->npolys = navmeshJson.at("npolys").get<int>();
+	navMesh->maxpolys = navmeshJson.at("maxpolys").get<int>();
+	navMesh->nvp = navmeshJson.at("nvp").get<int>();
+
+	std::vector<float> bmin = navmeshJson.at("bmin").get<std::vector<float>>();
+	navMesh->bmin[0] = bmin[0];
+	navMesh->bmin[1] = bmin[1];
+	navMesh->bmin[2] = bmin[2];
+
+	std::vector<float> bmax = navmeshJson.at("bmax").get<std::vector<float>>();
+	navMesh->bmax[0] = bmax[0];
+	navMesh->bmax[1] = bmax[1];
+	navMesh->bmax[2] = bmax[2];
+
+	navMesh->cs = navmeshJson.at("cs").get<float>();
+	navMesh->ch = navmeshJson.at("ch").get<float>();
+	navMesh->borderSize = navmeshJson.at("borderSize").get<int>();
+	navMesh->maxEdgeError = navmeshJson.at("maxEdgeError").get<float>();
+
+	std::vector<unsigned int> meshes = detailNavmeshJson.at("meshes").get<std::vector<unsigned int>>();
+	navMeshDetail->meshes = (unsigned int*)malloc(sizeof(unsigned int) * meshes.size());
+	for (int i = 0; i < meshes.size(); i++) {
+		navMeshDetail->meshes[i] = meshes[i];
+	}
+
+	std::vector<float> dverts = detailNavmeshJson.at("verts").get<std::vector<float>>();
+	navMeshDetail->verts = (float*)malloc(sizeof(float) * dverts.size());
+	for (int i = 0; i < dverts.size(); i++) {
+		navMeshDetail->verts[i] = dverts[i];
+	}
+
+	std::vector<unsigned char> tris = detailNavmeshJson.at("tris").get<std::vector<unsigned char>>();
+	navMeshDetail->tris = (unsigned char*)malloc(sizeof(unsigned char) * tris.size());
+	for (int i = 0; i < tris.size(); i++) {
+		navMeshDetail->tris[i] = tris[i];
+	}
+
+	navMeshDetail->nmeshes = detailNavmeshJson.at("nmeshes").get<int>();
+	navMeshDetail->nverts = detailNavmeshJson.at("nverts").get<int>();
+	navMeshDetail->ntris = detailNavmeshJson.at("ntris").get<int>();
+
+	PrepareDetour();
 }
 
 void Navigation::OnGui()

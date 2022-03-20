@@ -6,6 +6,7 @@
 #include "glew.h"
 #include "MathGeoLib/Math/float3.h"
 #include <vector>
+#include "json.hpp"
 
 class GameObject;
 class rcPolyMesh;
@@ -42,6 +43,9 @@ public:
 	std::vector<GameObject*> CollectWalkableObjects();
 
 	void FindPath(float3 origin, float3 destination, float3** path, int maxLength, int* actualLength);
+
+	void Save(Json& json) const;
+	void Load(Json& json);
 
 	void OnGui() override;
 private:
