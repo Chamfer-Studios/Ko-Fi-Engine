@@ -29,5 +29,6 @@
   "ViewportFrameBuffer": null,
   "Physics":  null,
   "Scripting": null,
-  "UI": null
+  "UI": null,
+  "ResourceManager": null
 }

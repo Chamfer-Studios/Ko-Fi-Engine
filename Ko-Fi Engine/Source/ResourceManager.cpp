@@ -73,6 +73,12 @@ bool ResourceManager::CleanUp()
 	return ret;
 }
 
+// Method to receive and manage events
+void ResourceManager::OnNotify(const Event& event)
+{
+	// Manage events
+}
+
 UID ResourceManager::ImportFile(const char* assetPath)
 {
 	if (assetPath == nullptr)
@@ -81,7 +87,7 @@ UID ResourceManager::ImportFile(const char* assetPath)
 		return -1;
 	}
 	std::string path = assetPath;
-	std::string extension = path.substr(path.find_last_of(".") + 1);
+	std::string extension = path.substr(path.find_last_of("."));
 	Resource::Type type = GetTypeFromExtension(extension.c_str());
 
 	if (type == Resource::Type::UNKNOWN)
@@ -246,31 +252,21 @@ UID ResourceManager::LoadFromLibrary(const char* libraryPath)
 	return -1;
 }
 
-Resource::Type ResourceManager::GetTypeFromExtension(const char* extension) const
+Resource::Type ResourceManager::GetTypeFromExtension(const char* extension)
 {
 	Resource::Type ret = Resource::Type::UNKNOWN;
 
 	//LUA?
-	if (extension == "png" || extension == "PNG")
-	{
+	if (StringCompare(extension, TEXTURE_EXTENSION) == 0)
 		ret = Resource::Type::TEXTURE;
-	}
-	else if (extension == "fbx" || extension == "FBX")
-	{
+	else if (StringCompare(extension, ".fbx") == 0)
 		ret = Resource::Type::MESH;
-	}
-	else if (extension == "json" || extension == "JSON")
-	{
+	else if (StringCompare(extension, SCENE_EXTENSION) == 0)
 		ret = Resource::Type::SCENE;
-	}
-	else if (extension == "glsl" || extension == "GLSL")
-	{
+	else if (StringCompare(extension, SHADER_EXTENSION) == 0)
 		ret = Resource::Type::SHADER;
-	}
-	else if (extension == "ttf" || extension == "TTF")
-	{
+	else if (StringCompare(extension, FONT_EXTENSION) == 0)
 		ret = Resource::Type::FONT;
-	}
 
 	return ret;
 }
@@ -305,4 +301,18 @@ const char* ResourceManager::GetFileName(const char* path) const
 	std::string p = path;
 	std::string name = p.substr(p.find_last_of("/")+1, p.size());
 	return name.c_str();
+}
+
+int ResourceManager::StringCompare(const char* a, const char* b) {
+	int ca, cb;
+	do
+	{
+		ca = *(unsigned char*)a;
+		cb = *(unsigned char*)b;
+		ca = tolower(toupper(ca));
+		cb = tolower(toupper(cb));
+		a++;
+		b++;
+	} while (ca == cb && ca != '\0');
+	return ca - cb;
 }

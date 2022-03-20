@@ -14,6 +14,7 @@ public:
 	bool Start();
 	bool PreUpdate(float dt);
 	bool CleanUp();
+	void OnNotify(const Event& event);
 
 	UID ImportFile(const char* assetPath);
 	void SaveResource(Resource* resource);
@@ -25,9 +26,11 @@ public:
 	//const Resource* RequestResource(uint uid) const;			Can't do it because of the maps
 	UID Find(const char* assetPath) const;
 	Resource* RequestResource(UID uid);
-	Resource::Type GetTypeFromExtension(const char* extension) const;
+	Resource::Type GetTypeFromExtension(const char* extension);
 	const char* GetValidPath(const char* path) const;
 	const char* GetFileName(const char* path) const;
+
+	int StringCompare(const char* a, const char* b);
 
 private:
 	Resource* CreateNewResource(const char* assetPath, Resource::Type type);

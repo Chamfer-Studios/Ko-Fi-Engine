@@ -19,6 +19,7 @@ class ViewportFrameBuffer;
 class Physics;
 class UI;
 class CollisionDetector;
+class ResourceManager;
 
 class KoFiEngine
 {
@@ -61,6 +62,7 @@ public:
 	Physics* GetPhysics() const;
 	UI* GetUI() const;
 	CollisionDetector* GetCollisionDetector() const;
+	ResourceManager* GetResourceManager() const;
 
 private:
 	// Add a new module to handle
@@ -97,6 +99,7 @@ private:
 	Physics* physics = nullptr;
 	UI* ui = nullptr;
 	CollisionDetector* collisionDetector = nullptr;
+	ResourceManager* resourceManager = nullptr;
 
 private:
 	int argc;
