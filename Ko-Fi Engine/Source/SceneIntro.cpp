@@ -130,7 +130,7 @@ bool SceneIntro::PostUpdate(float dt)
 		bullet->GetTransform()->SetRotation(rot);
 
 		ComponentMesh* componentMesh = bullet->CreateComponent<ComponentMesh>();
- 		Mesh* mesh = gameObjectList.at(6)->GetComponent<ComponentMesh>()->GetMesh();
+ 		Mesh* mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
 		componentMesh->SetMesh(mesh);
 
 		
@@ -143,7 +143,7 @@ bool SceneIntro::PostUpdate(float dt)
 		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
 		componentScript->path = "Assets/Scripts/Bullet.lua";
 		componentScript->ReloadScript();
-		componentScript->handler->lua["Start"]();
+		//componentScript->handler->lua["Start"]();
 	}
 	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)

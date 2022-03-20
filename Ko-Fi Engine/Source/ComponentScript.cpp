@@ -30,7 +30,7 @@ ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 
 ComponentScript::~ComponentScript()
 {
-	delete(handler);
+	//delete(handler);
 	handler = nullptr;
 }
 

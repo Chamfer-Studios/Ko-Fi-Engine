@@ -107,7 +107,8 @@ bool GameObject::CleanUp()
 {
 	for (Component* component : components)
 	{
-		RELEASE(component);
+		if (component->GetType() != ComponentType::MESH)
+			RELEASE(component);
 	}
 	components.clear();
 	children.clear();
