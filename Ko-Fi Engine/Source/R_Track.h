@@ -16,6 +16,8 @@
 #include <vector>
 #include <string>
 
+class Effect;
+
 #define OpenAL_ErrorCheck(message)\
 {\
 	ALenum error = alGetError();\
@@ -66,14 +68,20 @@ public:
 	void SetVolume(float volume);
 	inline float GetVolume() const { return volume; }
 
-	//inline void SetBypass(bool bypass) { this->bypass = bypass; }
-	//inline bool GetBypass() const { return bypass; }
+	inline void SetBypass(bool bypass) { this->bypass = bypass; }
+	inline bool GetBypass() const { return bypass; }
 
-	//void SetPanning(float pan);
-	//inline float GetPan() const { return pan; }
+	void SetPanning(float pan);
+	inline float GetPan() const { return pan; }
 
-	//void SetTranspose(float transpose);
-	//inline float GetTranspose() const { return transpose; }
+	void SetTranspose(float transpose);
+	inline float GetTranspose() const { return transpose; }
+
+	int GetEffectNameId(std::string eName) const;
+	const char* ReturnWrittenName(std::string eName) const;
+
+	Effect* CreateEffect(int effect);
+	void RemoveEffect();
 
 public:
 	std::string path;
@@ -85,9 +93,15 @@ public:
 
 	bool playOnStart = true, loop = false, mute = false;
 
-	//bool knobReminder1 = false, knobReminder2 = false;
-	//float pan = 0.0f, transpose = 0.0f; 
-	//bool bypass = false;
+	bool knobReminder1 = false, knobReminder2 = false;
+	float pan = 0.0f, transpose = 0.0f; 
+	bool bypass = false;
+
+	std::vector<Effect*> effects;
+	int currEffect = 0;
+	unsigned int totalEffects = 6;
+	const char* fxNames[6] = { "-----", "Reverb", "Distortion", "Flanger", "Delay", "Chorus" };
+	std::vector<const char*> fxTracker = { "-----", "Reverb", "Distortion", "Flanger", "Delay", "Chorus" };
 
 	unsigned int channels = 0;
 	unsigned int sampleRate = 44100;

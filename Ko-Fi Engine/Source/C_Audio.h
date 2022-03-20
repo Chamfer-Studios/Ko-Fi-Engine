@@ -1,6 +1,8 @@
 #ifndef __C_AUDIO_H__
 #define __C_AUDIO_H__
 
+#include "R_Track.h"
+
 #include "al.h"
 #include "alc.h"
 #include "alext.h"
@@ -73,6 +75,23 @@ public:
                 alSourcef(audioSource, AL_SEC_OFFSET, time);
 
             alec(alSourcePlay(audioSource));
+        }
+    }
+
+    void PlayAudio(R_Track* track, float time = 0.0f)
+    {
+        ALint sourceState;
+        alec(alGetSourcei(track->source, AL_SOURCE_STATE, &sourceState));
+
+        if (time >= track->duration)
+            time = 0.0f;
+
+        if (sourceState == AL_STOPPED || sourceState == AL_INITIAL)
+        {
+            if (time != 0.0f)
+                alSourcef(track->source, AL_SEC_OFFSET, time);
+
+            alec(alSourcePlay(track->source));
         }
     }
 

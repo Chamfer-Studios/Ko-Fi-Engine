@@ -21,7 +21,7 @@ public:
 
     void UpdatePlayState();
 
-    void SwitchTrack(int newTrackIndex);
+    void SwitchTrack(int newTrackIndex, bool offsetSync = false);
     void SwitchFade(float fadeSeconds);
 
     bool IsAnyTrackPlaying() const;
@@ -34,6 +34,8 @@ public:
     inline int GetNextSwitchTrack() const { return nextSwitchTrack; }
     inline float GetFadeTime() const { return fadeTime; }
 
+    void DrawEditor(R_Track* track);
+
 private:
     int totalTracks = 0;
 
@@ -43,6 +45,13 @@ private:
     float fadeTime = 2.0f;
     float switchTime = 0.0f;
     float pauseDifference = 0.0f;
+
+    int trackIdInEdit = -1;
+    bool openEditor = false;
+
+    bool offsetSync = false;
+    float oldOffset = 0.0f;
+    float editorOffset = 0.0f;
 
     R_Track* oldTrack = nullptr;
     R_Track* newTrack = nullptr;

@@ -288,6 +288,7 @@
     <ClInclude Include="Source\C_AudioSource.h" />
     <ClInclude Include="Source\C_AudioSpacial.h" />
     <ClInclude Include="Source\C_AudioSwitch.h" />
+    <ClInclude Include="Source\Effects.h" />
     <ClInclude Include="Source\I_Track.h" />
     <ClInclude Include="Source\R_Track.h" />
     <ClInclude Include="Source\Camera3D.h" />

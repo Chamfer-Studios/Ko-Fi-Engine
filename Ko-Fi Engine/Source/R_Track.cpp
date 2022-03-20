@@ -1,4 +1,5 @@
 #include "R_Track.h"
+#include "Effects.h"
 
 #include "MathGeoLib/Math/MathFunc.h"
 
@@ -13,9 +14,14 @@ R_Track::R_Track()
 	playOnStart = true;
 	mute = false;
 
-	//pan = 0.0f;
-	//transpose = 0.0f;
-	//bypass = false;
+	pan = 0.0f;
+	transpose = 0.0f;
+	bypass = false;
+	knobReminder1 = false;
+	knobReminder2 = false;
+
+	currEffect = 0;
+	totalEffects = 6;
 
 	channels = 0;
 	sampleRate = 44100;
@@ -41,9 +47,14 @@ R_Track::R_Track(float volume, bool mute, bool playOnStart, bool loop)
 
 	offset = 0.0f;
 
-	//this->pan = pan;
-	//this->transpose = transpose;
-	//this->bypass = bypass;
+	this->pan = pan;
+	this->transpose = transpose;
+	this->bypass = bypass;
+	knobReminder1 = false;
+	knobReminder2 = false;
+
+	currEffect = 0;
+	totalEffects = 6;
 
 	channels = 0;
 	sampleRate = 44100;
@@ -60,8 +71,20 @@ R_Track::R_Track(float volume, bool mute, bool playOnStart, bool loop)
 
 R_Track::~R_Track()
 {
+	fxTracker.clear();
+	fxTracker.shrink_to_fit();
+
+	for (unsigned int i = 0; i < effects.size(); ++i)
+	{
+		effects[i]->Disconnect(source);
+		delete effects[i];
+	}
+	effects.clear();
+	effects.shrink_to_fit();
+
+	alSourcei(source, AL_BUFFER, 0);
 	alec(alDeleteSources(1, &source));
-	alec(alDeleteSources(1, &buffer));
+	alec(alDeleteBuffers(1, &buffer));
 }
 
 uint64_t R_Track::GetTotalSamples() const
@@ -109,23 +132,91 @@ void R_Track::SetVolume(float volume)
 	alSourcef(source, AL_GAIN, volume / 100.0f);
 }
 
-//void C_AudioSource::SetPanning(float pan)
-//{
-//    alSource3f(track->source, AL_POSITION, pan, 0, -sqrtf(1.0f - pan * pan));
-//}
+void R_Track::SetPanning(float pan)
+{
+    alSource3f(source, AL_POSITION, pan, 0, -sqrtf(1.0f - pan * pan));
+}
 
-//void C_AudioSource::SetTranspose(float transpose)
-//{
-//    transpose = exp(0.0577623f * transpose);
-//
-//    if (transpose > 4.0f)
-//        transpose = 4.0f;
-//
-//    if (transpose < 0.25f)
-//        transpose = 0.25f;
-//
-//    if (transpose > 0.98f && transpose < 1.02f)
-//        transpose = 1.0f;
-//
-//    alSourcef(track->source, AL_PITCH, transpose);
-//}
+void R_Track::SetTranspose(float transpose)
+{
+    transpose = exp(0.0577623f * transpose);
+
+    if (transpose > 4.0f)
+        transpose = 4.0f;
+
+    if (transpose < 0.25f)
+        transpose = 0.25f;
+
+    if (transpose > 0.98f && transpose < 1.02f)
+        transpose = 1.0f;
+
+    alSourcef(source, AL_PITCH, transpose);
+}
+
+int R_Track::GetEffectNameId(std::string eName) const
+{
+	if ("Reverb" == eName) return 1;
+	else if ("Distortion" == eName) return 2;
+	else if ("Flanger" == eName) return 3;
+	else if ("Delay" == eName) return 4;
+	else if ("Chorus" == eName) return 5;
+
+	return -1;
+}
+
+const char* R_Track::ReturnWrittenName(std::string eName) const
+{
+	if ("Reverb" == eName) return "Reverb";
+	else if ("Distortion" == eName) return "Distortion";
+	else if ("Flanger" == eName) return "Flanger";
+	else if ("Delay" == eName) return "Delay";
+	else if ("Chorus" == eName) return "Chorus";
+
+	return "";
+}
+
+Effect* R_Track::CreateEffect(int effect)
+{
+	Effect* e = nullptr;
+
+	const char* eName = fxTracker[effect];
+
+	if ("Reverb" == eName) e = new Reverb(source, bypass);
+	else if ("Distortion" == eName) e = new Distortion(source, bypass);
+	else if ("Flanger" == eName) e = new Flanger(source, bypass);
+	else if ("Delay" == eName) e = new Delay(source, bypass);
+	else if ("Chorus" == eName) e = new Chorus(source, bypass);
+
+	return e;
+}
+
+void R_Track::RemoveEffect()
+{
+	for (unsigned int i = 0; i < effects.size(); ++i)
+	{
+		if (effects[i]->selected)
+		{
+			Effect* e = effects[i];
+			if (fxTracker.size() == 1) fxTracker.push_back(ReturnWrittenName(e->GetName()));
+			else
+			{
+				int delId = GetEffectNameId(e->GetName());
+				bool inserted = false;
+				for (unsigned int a = 1; a < fxTracker.size(); a++)
+				{
+					if (delId < GetEffectNameId(fxTracker[a]))
+					{
+						fxTracker.insert(fxTracker.begin() + a, ReturnWrittenName(e->GetName()));
+						inserted = true;
+						break;
+					}
+				}
+				if (!inserted) fxTracker.push_back(ReturnWrittenName(e->GetName()));
+			}
+			effects[i]->Disconnect(source);
+			delete effects[i];
+			effects.erase(effects.begin() + i);
+			break;
+		}
+	}
+}

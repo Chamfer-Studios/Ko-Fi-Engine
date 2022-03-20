@@ -99,6 +99,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
         {
             bool mono = track->channels == 1;
 
+            ImGui::Spacing();
             if (ImGui::Button("Change Track"))
             {
                 chooser->OpenPanel("Add Track", "wav");
@@ -106,6 +107,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             ImGui::SameLine();
             if (ImGui::Button("Delete Track"))
             {
+                StopAudio(track->source);
                 RELEASE(track);
                 return ret;
             }
@@ -122,10 +124,24 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
                 ImGui::Text("(No Pan)");
             }
 
-            ImGui::Separator();
-
-            ImGui::SameLine();
             ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+
+            std::string action;
+            track->play ? action = "Stop" : action = "Play";
+            if (ImGui::Button(action.c_str()))
+            {
+                float time = track->duration * track->offset;
+                track->play ? StopAudio(track->source) : PlayAudio(track->source, time);
+            }
+            ImGui::SameLine();
+            ImGui::SliderFloat("Offset", &track->offset, 0.0f, 1.0f);
+
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+
             ImGui::Text("Options");
 
             if (ImGui::Checkbox("Mute", &track->mute))
@@ -137,23 +153,15 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
                 track->SetLoop(track->loop);
 
             ImGui::Spacing();
-
-            std::string action;
-            track->play ? action = "Stop" : action = "Play";
-            if (ImGui::Button(action.c_str()))
-            {
-                float time = track->duration * track->offset;
-                track->play ? StopAudio(track->source) : PlayAudio(track->source, time);
-            }
-
-            ImGui::SliderFloat("Offset", &track->offset, 0.0f, 1.0f);
         }
         else
         {
+            ImGui::Spacing();
             if (ImGui::Button("Add Track"))
             {
                 chooser->OpenPanel("Add Track", "wav");
             }
+            ImGui::Spacing();
         }
     }
 
