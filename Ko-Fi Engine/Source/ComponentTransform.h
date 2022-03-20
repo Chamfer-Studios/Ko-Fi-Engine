@@ -15,7 +15,8 @@ public:
 	~ComponentTransform();
 
 	bool Update(float dt) override;
-	bool InspectorDraw(PanelChooser* chooser); // OngGui
+	bool CleanUp() override;
+	bool InspectorDraw(PanelChooser* chooser) override; // OngGui
 
 	void SetPosition(const float3& newPosition);
 	void SetRotation(const float3& newRotation);

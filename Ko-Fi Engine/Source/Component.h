@@ -14,6 +14,7 @@ enum class ComponentType
 	NONE,
 	MESH,
 	MATERIAL,
+	PARTICLE,
 	CAMERA,
 	COLLIDER,
 	SCRIPT,
@@ -49,7 +50,6 @@ public:
 	virtual void Load(Json& json) {}
 
 	ComponentType GetType() { return type; }
-
 
 public:
 	bool active = true;

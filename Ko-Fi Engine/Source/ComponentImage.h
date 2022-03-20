@@ -30,6 +30,7 @@ public:
 
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
+	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void SetTexture(const char* path);

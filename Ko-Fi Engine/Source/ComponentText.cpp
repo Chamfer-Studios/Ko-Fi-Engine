@@ -21,6 +21,12 @@ ComponentText::~ComponentText()
 	FreeTextures();
 }
 
+bool ComponentText::CleanUp()
+{
+	FreeTextures();
+	return true;
+}
+
 void ComponentText::Save(Json& json) const
 {
 	json["type"] = "text";

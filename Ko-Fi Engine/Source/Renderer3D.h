@@ -6,6 +6,7 @@
 #include "glmath.h"
 #include "Light.h"
 #include "SDL_video.h"
+#include "MathGeoLib/Math/float4x4.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
 
@@ -14,6 +15,19 @@
 class GameObject;
 typedef unsigned int GLenum;
 class ComponentMesh;
+class Texture;
+
+struct ParticleRenderer
+{
+	ParticleRenderer(Texture* tex, Color color, const float4x4 transform);
+
+	//void Render();
+
+	Texture*	tex;
+	Color		color;
+	float4x4	transform;
+};
+
 class Renderer3D : public Module
 {
 public:
@@ -64,6 +78,9 @@ public:
 	void ReleaseFrameBuffers();
 
 	uint GetTextureBuffer();
+	void AddParticle(Texture* tex, Color color, const float4x4 transform, float distanceToCamera);
+	void RenderParticle(ParticleRenderer* particle);
+	void RenderAllParticles();
 
 public:
 	Light lights[MAX_LIGHTS];
@@ -84,6 +101,9 @@ private:
 	uint renderBufferoutput = 0;
 	uint textureBuffer = 0;
 	bool show_viewport_window = true;
+
+	//Particle Map
+	std::map<float, ParticleRenderer> particles;
 };
 
 #endif // !__RENDERER_3D_H__

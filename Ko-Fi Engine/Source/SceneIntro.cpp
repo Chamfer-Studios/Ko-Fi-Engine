@@ -11,6 +11,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "ComponentParticle.h"
 #include "ComponentScript.h"
 #include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "ComponentTransform.h"
@@ -34,6 +35,11 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	rootGo = new GameObject(-1, engine, "SceneIntro");
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
+
+	//LCG random;
+	//uint uid = random.Int();
+	//GameObject * g = this->CreateEmptyGameObject("Particle Test");
+	//g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
 }
 
 SceneIntro::~SceneIntro()
@@ -50,19 +56,6 @@ bool SceneIntro::Start()
 	appLog->AddLog("Loading Intro assets\n");
 
 	example::NodeEditorInitialize();
-
-	// Load initial scene (temporal)
-	//engine->GetFileSystem()->GameObjectFromMesh("Assets/Models/baker_house.fbx", this->gameObjectList,"Assets/Textures/baker_house.png");
-
-	// REMOVE THE FOLLOWING 2 LINES WHEN WE HAVE THE CUSTOM FILE FORMAT FINISHED.
-	//Importer::GetInstance()->ImportModel("Assets/Models/baker_house.fbx");
-	/*Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
-	GameObject* camera = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(2);
-	ComponentCamera* componentCamera = camera->CreateComponent<ComponentCamera>();
-	camera->AddComponent(componentCamera);*/
-
-	// Load scene with a camera and several houses.
-	//engine->GetSceneManager()->LoadScene(this, "SceneIntro");
 
 	for (GameObject* go : this->gameObjectList)
 	{
@@ -135,7 +128,7 @@ bool SceneIntro::PostUpdate(float dt)
 		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 		componentMaterial->SetMaterial(material);
 		
-		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
+		ComponentScript* componentScript = (ComponentScript*)bullet->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
 		componentScript->path = "Assets/Scripts/Bullet.lua";
 		componentScript->ReloadScript();
 	}
