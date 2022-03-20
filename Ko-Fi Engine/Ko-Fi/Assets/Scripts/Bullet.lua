@@ -1,6 +1,6 @@
 ------------------- Variables --------------------
 
-speed = 300
+s = 300
 life = 0.5
 
 -------------------- Methods ---------------------
@@ -12,7 +12,7 @@ function Update(dt)
 		DeleteGameObject()
 	else
 		local front = componentTransform:GetFront()
-		componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + front.x * speed * dt, componentTransform:GetPosition().y + front.y * speed * dt, componentTransform:GetPosition().z + front.z * speed * dt))
+		componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + front.x * s * dt, componentTransform:GetPosition().y + front.y * s * dt, componentTransform:GetPosition().z + front.z * s * dt))
 	end
 
 end
