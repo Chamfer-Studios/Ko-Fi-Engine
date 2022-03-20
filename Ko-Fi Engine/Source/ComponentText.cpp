@@ -85,6 +85,9 @@ void ComponentText::SetTextValue(std::string newValue)
 	TTF_SizeUTF8(owner->GetEngine()->GetUI()->rubik, newValue.c_str(), &w, &h);
 	owner->GetComponent<ComponentTransform2D>()->SetSize({ (float)w, (float)h });
 
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+
 	SDL_FreeSurface(srcSurface);
 	SDL_FreeSurface(dstSurface);
 }

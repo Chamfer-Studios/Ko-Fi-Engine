@@ -63,11 +63,11 @@ bool PanelHierarchy::Update()
 			ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 
 		//	DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo, flags);
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+		DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo, flags);
 		for (int i = 0; i < editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().size(); ++i)
 		{
-			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 
-			DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.at(i), flags);
 		}
 
 		if (alignLabelWithCurrentXPosition)
