@@ -31,7 +31,7 @@ ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 ComponentScript::~ComponentScript()
 {
 	handler->CleanUp();
-	RELEASE(handler);
+	//RELEASE(handler);
 	for (InspectorVariable* variable : inspectorVariables)
 	{
 		RELEASE(variable);
