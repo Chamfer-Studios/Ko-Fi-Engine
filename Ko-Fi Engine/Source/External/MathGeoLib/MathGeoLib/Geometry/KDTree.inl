@@ -254,11 +254,11 @@ void KdTree<T>::Build()
 	buckets.push_back(0);
 
 	// Add a root node for the tree.
-	KdTreeNode rootNode;
-	rootNode.splitAxis = AxisNone;
-	rootNode.childIndex = 0;
-	rootNode.bucketIndex = 1;
-	nodes.push_back(rootNode);
+	KdTreeNode assimpScene;
+	assimpScene.splitAxis = AxisNone;
+	assimpScene.childIndex = 0;
+	assimpScene.bucketIndex = 1;
+	nodes.push_back(assimpScene);
 
 	// Initially, add all objects to the root node.
 	u32 *rootBucket = new u32[objects.size()+1];

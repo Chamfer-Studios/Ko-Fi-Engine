@@ -6,8 +6,12 @@
 #include <string>
 
 #include "MathGeoLib/Geometry/AABB.h"
+#include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/Math/Quat.h"
+#include "MathGeoLib/Math/TransformOps.h"
 
-//#include "Resource.h"
+#include "Assimp.h"
 #include "par_shapes.h"
 #include "Globals.h"
 #include "Log.h"
@@ -54,6 +58,18 @@ struct VertexBoneData
 	}
 };
 
+struct BoneInfo
+{
+	float4x4 offsetMatrix;
+	float4x4 finalTransformation;
+
+	BoneInfo(const float4x4& offset)
+	{
+		offsetMatrix = offset;
+		finalTransformation = float4x4::zero;
+	}
+};
+
 class Mesh
 {
 public:
@@ -71,6 +87,26 @@ public:
 
 	inline void SetFaceNormals(bool faces) { drawFaceNormals = faces; }
 	inline bool GetFaceNormals() const { return drawFaceNormals; }
+
+	void GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms);
+	void ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, const float4x4& parentTransform);
+
+	void SetRootNode(const aiScene* assimpScene);
+	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const std::string nodeName);
+
+	uint FindPosition(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+
+	uint FindRotation(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+
+	uint FindScaling(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+
+	float4x4 InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ);
+	float4x4 InitRotateTransform(const aiQuaternion& quat);
+	float4x4 InitTranslationTransform(float x, float y, float z);
+	float4x4 aiMatrix3x32aiMatrix4x4(aiMatrix3x3 assimpMatrix);
 
 	// Size in Bytes
 	unsigned verticesSizeBytes = 0;
@@ -95,6 +131,7 @@ public:
 	float* texCoords = nullptr;
 	uint idBones = 0;
 	std::vector<VertexBoneData> bones;
+	std::vector<BoneInfo> boneInfo;
 
 	std::map<std::string, uint> boneNameToIndexMap;
 
@@ -117,6 +154,8 @@ private:
 	// Debug bools
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;
+
+	const aiScene* assimpScene = nullptr;
 };
 
 #endif // !__MESH_H__

@@ -13,7 +13,7 @@ I_Mesh::~I_Mesh()
 {
 }
 
-bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh)
+bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene)
 {
 	if (mesh == nullptr)
 	{
@@ -74,22 +74,25 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh)
 	}
 	else
 		mesh->texCoords = 0;
-	
 
 	if (aiMesh->HasBones())
 	{
 		uint numVertices = mesh->verticesSizeBytes / (sizeof(float) * 3);
 		mesh->bones.resize(numVertices);
-		//Load mesh bones
+		// Load mesh bones
 		for (int i = 0; i < aiMesh->mNumBones; i++)
 		{
-			
-			//load single bone
+			// Load single bone
 			aiBone* bone = aiMesh->mBones[i];
 			int boneId = GetBoneId(bone,mesh->boneNameToIndexMap);
+			if (boneId == mesh->boneInfo.size())
+			{
+				float4x4 offsetmatrix = aiMatrix2Float4x4(bone->mOffsetMatrix);
+				BoneInfo bi(offsetmatrix);
+				mesh->boneInfo.push_back(bi);
+			}
 			for (int j = 0; j < bone->mNumWeights; j++)
 			{
-				
 				const aiVertexWeight& vw = bone->mWeights[j];
 				uint globalVertexID = bone->mWeights[j].mVertexId;
 				mesh->bones[globalVertexID].AddBoneData(boneId, vw.mWeight);
@@ -97,6 +100,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh)
 			}
 		}
 	}
+	mesh->SetRootNode(assimpScene);
 
 	mesh->SetUpMeshBuffers();
 

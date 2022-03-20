@@ -53,7 +53,9 @@ bool I_Scene::Import(const char* path)
 
 	if (path == nullptr)
 		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
-	const aiScene* assimpScene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs );
+
+	const aiScene* assimpScene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs);
+	this->assimpScene = (aiScene*)assimpScene;
 
 	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
 	{
@@ -75,6 +77,11 @@ GameObject* I_Scene::ImportModel(const char* path)
 	// TODO: WE SHOULD CHANGE THIS
 	GameObject* tmp = nullptr;
 	return tmp;
+}
+
+aiScene* I_Scene::GetAssimpScene()
+{
+	return assimpScene;
 }
 
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent)
@@ -162,7 +169,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 
 		if (assimpMesh != nullptr && assimpMesh->HasFaces())
 		{
-			ImportMesh(nodeName, assimpMesh, gameObj);
+			ImportMesh(nodeName, assimpMesh, gameObj, assimpScene);
 
 			if (assimpScene->HasMaterials() && assimpMesh->mMaterialIndex >= 0)
 			{
@@ -175,7 +182,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 	}
 }
 
-void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj)
+void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj, const aiScene* assimpScene)
 {
 	//std::string assetPath = ASSETS_MODELS_DIR + std::string(nodeName) + MESH_EXTENSION;
 
@@ -186,7 +193,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 
 	// Import Mesh to GameObject
 	Mesh* mesh = new Mesh(Shape::NONE);
-	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh);
+	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh, assimpScene);
 
 	if (mesh == nullptr)
 	{

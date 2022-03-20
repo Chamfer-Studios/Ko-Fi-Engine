@@ -19,7 +19,6 @@
 
 #include "Importer.h"
 
-#include "I_Mesh.h"
 #include "Material.h"
 
 #include "glew.h"
@@ -292,5 +291,3 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 	}
 	return ret;
 }
-
-
