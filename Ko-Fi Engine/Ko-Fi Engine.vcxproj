@@ -296,6 +296,7 @@
     <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
+    <ClInclude Include="Source\ComponentRenderedUI.h" />
     <ClInclude Include="Source\ComponentRigidBody.h" />
     <ClInclude Include="Source\ComponentScript.h" />
     <ClInclude Include="Source\ComponentText.h" />

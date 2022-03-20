@@ -26,6 +26,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentRenderedUI.h"
 #include "Material.h"
 
 #include "PanelViewport.h"
@@ -252,6 +253,13 @@ void Renderer3D::RenderScene()
 				RenderMeshes(go);
 				RenderBoundingBox(cMesh);
 			}
+
+			ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+			if (cRenderedUI)
+			{
+				RenderUI(go);
+			}
+
 			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
 			if (cCamera) {
 				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
@@ -366,6 +374,12 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 		}
 	}
+}
+
+void Renderer3D::RenderUI(GameObject* go)
+{
+	ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+	cRenderedUI->Draw();
 }
 
 // Method to receive and manage events

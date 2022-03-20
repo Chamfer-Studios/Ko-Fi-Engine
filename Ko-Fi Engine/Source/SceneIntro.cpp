@@ -76,13 +76,6 @@ bool SceneIntro::PreUpdate(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
-			go->PreUpdate();
-	}
-
-	for (GameObject* go : this->gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
 			go->PreUpdate();
 	}
 
@@ -94,13 +87,6 @@ bool SceneIntro::Update(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
-			go->Update(dt);
-	}
-
-	for (GameObject* go : this->gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
 			go->Update(dt);
 	}
 
@@ -121,14 +107,7 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
 			go->PostUpdate(dt); 
-	}
-
-	for (GameObject* go : gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
-			go->PostUpdate(dt);
 	}
 
 	for (GameObject* parent : gameObjectListToCreate)

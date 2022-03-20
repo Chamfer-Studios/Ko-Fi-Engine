@@ -1483,6 +1483,12 @@
     <ClInclude Include="Source\PanelSettings.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentRenderedUI.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\ResourceManager.h">
