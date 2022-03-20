@@ -23,7 +23,10 @@ private:
 	int nWaypoints = 0;
 	float3* waypoints = nullptr;
 
-	int pathfindLength = 1000;
+	int pathfindLimit = 1000;
 
 	std::vector<float3> finalPath;
+	int currentPathWaypoint = 0;
+	float minWaypointTriggerDst = 2;
+	float speed = 1.0f;
 };

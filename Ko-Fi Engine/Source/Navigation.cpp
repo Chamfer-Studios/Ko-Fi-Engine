@@ -201,7 +201,7 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 	config->walkableSlopeAngle = 45;
 	config->walkableClimb = 0.0f;
 	config->walkableHeight = 2;
-	config->walkableRadius = 0.5;
+	config->walkableRadius = 3.f;
 	config->minRegionArea = 2.f;
 	config->mergeRegionArea = 2.f;
 	config->borderSize = 0.5f;
@@ -280,7 +280,7 @@ std::vector<GameObject*> Navigation::CollectWalkableObjects()
 	std::vector<GameObject*> res;
 
 	for (auto o : list) {
-		if (o->GetComponent<ComponentTransform>() != nullptr) {
+		if (o->GetComponent<ComponentWalkable>() != nullptr) {
 			res.push_back(o);
 		}
 	}

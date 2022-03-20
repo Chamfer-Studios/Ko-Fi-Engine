@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "Navigation.h"
 #include "GameObject.h"
+#include "ComponentTransform.h"
 
 ComponentFollowPath::ComponentFollowPath(GameObject* parent) : Component(parent)
 {
@@ -25,6 +26,7 @@ void ComponentFollowPath::Save(Json& json) const
 
 	json["waypoints"] = wpVector;
 	json["pathfindLimit"] = pathfindLimit;
+	json["speed"] = speed;
 }
 
 void ComponentFollowPath::Load(Json& json)
@@ -43,16 +45,33 @@ void ComponentFollowPath::Load(Json& json)
 	}
 
 	pathfindLimit = json.at("pathfindLimit").get<int>();
+	speed = json.at("speed").get<float>();
 }
 
 bool ComponentFollowPath::Update(float dt)
 {
+	if (finalPath.size() == 0) return true;
+
+	ComponentTransform* cTrans = owner->GetComponent<ComponentTransform>();
+	float3 position = cTrans->GetPosition();
+	float3 wp = finalPath[currentPathWaypoint];
+
+	if (position.Distance(wp) < minWaypointTriggerDst) {
+		currentPathWaypoint++;
+		if (currentPathWaypoint >= finalPath.size()) currentPathWaypoint = 0;
+	}
+
+	float3 delta = finalPath[currentPathWaypoint] - cTrans->GetPosition();
+	delta.Normalize();
+	delta *= dt * speed;
+	cTrans->SetPosition(cTrans->GetPosition() + delta);
+
 	return true;
 }
 
 void ComponentFollowPath::CalculatePath()
 {
-	std::vector<float3> finalPath;
+	finalPath.clear();
 
 	for (int i = 0; i < nWaypoints - 1; i++) {
 		float3 current = waypoints[i];
@@ -66,11 +85,27 @@ void ComponentFollowPath::CalculatePath()
 	}
 
 	appLog->AddLog("Found path with %d directions\n", finalPath.size());
+
+	// Find closest waypoint to current position to resume patrol
+	ComponentTransform* cTrans = owner->GetComponent<ComponentTransform>();
+	int closestIndex = 0;
+	float minDist = INT_MAX;
+	for (int i = 0; i < finalPath.size(); i++) {
+		float3 wp = finalPath[i];
+		float dist = cTrans->GetPosition().Distance(wp);
+		if (dist < minDist) {
+			minDist = dist;
+			closestIndex = i;
+		}
+	}
+	currentPathWaypoint = closestIndex;
 }
 
 bool ComponentFollowPath::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Path Follower")) {
+		ImGui::DragFloat("Speed", &speed, 0.5f);
+
 		ImGui::DragInt("Pathfinder node limit", &pathfindLimit, 1.0f, 0);
 
 		if (ImGui::Button("Generate path")) {
