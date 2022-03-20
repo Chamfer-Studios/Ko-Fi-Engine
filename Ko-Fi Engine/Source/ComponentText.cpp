@@ -62,9 +62,6 @@ bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
 
 void ComponentText::SetTextValue(std::string newValue)
 {
-	if (textValue == newValue)
-		return;
-
 	FreeTextures();
 
 	glEnable(GL_BLEND);
