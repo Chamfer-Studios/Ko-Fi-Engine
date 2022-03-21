@@ -32,10 +32,6 @@ ComponentScript::~ComponentScript()
 {
 	handler->CleanUp();
 	//RELEASE(handler);
-	for (InspectorVariable* variable : inspectorVariables)
-	{
-		RELEASE(variable);
-	}
 	inspectorVariables.clear();
 }
 

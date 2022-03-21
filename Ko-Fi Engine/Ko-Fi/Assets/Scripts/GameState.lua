@@ -1,28 +1,30 @@
-local GameState = {}
-abc = 33
-GameState.GameState = {
-   STOP = 1,
-   STARTING = 2,
-   PLAYING = 3,
-   PAUSED = 4,
-}
+------------------- Variables --------------------
 
-gameState = GameState.GameState.STARTING
+currentState = GetRuntimeState()
+characterSelected = -1
 
-function GameState.GetGameState()
-	return gameState
-end
+-------------------- Methods ---------------------
 
-function GameState.SayHi()
-    print("Hello World!")
-end
-
-function Start()
-	
-end
-
+-- Called each loop iteration
 function Update(dt)
-	gameState = GameState.GameState.PAUSED
+	
+	currentState = GetRuntimeState()
+	if (currentState == RuntimeState.PLAYING) 
+		then
+			if (GetInput(21) == KEY_STATE.KEY_DOWN) then
+				characterSelected = 1
+			elseif (GetInput(22) == KEY_STATE.KEY_DOWN) then
+				characterSelected = 2
+			elseif (GetInput(23) == KEY_STATE.KEY_DOWN) then
+				characterSelected = 3
+			elseif (GetInput(24) == KEY_STATE.KEY_DOWN) then
+				characterSelected = 4
+			elseif (GetInput(1) == KEY_STATE.KEY_DOWN) then
+				characterSelected = -1
+			end
+		end
 end
 
-return GameState --.gameState
+--------------------------------------------------
+
+print("GameState.lua compiled succesfully")

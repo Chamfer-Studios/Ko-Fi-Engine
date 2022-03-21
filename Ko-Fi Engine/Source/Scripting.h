@@ -114,6 +114,14 @@ public:
 			"ITEM_GUN",		ItemType::ITEM_GUN
 			);
 
+		// RuntimeState
+		lua.new_enum("RuntimeState",
+			"PAUSED",	RuntimeState::PAUSED,
+			"PLAYING",	RuntimeState::PLAYING,
+			"STOPPED",	RuntimeState::STOPPED,
+			"TICK",		RuntimeState::TICK
+		);
+
 
 			/// Classes:
 		// float3 structure
@@ -192,7 +200,7 @@ public:
 			"SetDynamic",			&ComponentRigidBody::SetDynamic,
 			"SetLinearVelocity",	&ComponentRigidBody::SetLinearVelocity,
 			"FreezePositionY",		&ComponentRigidBody::FreezePositionY,
-			"Set2DVelocity",	&ComponentRigidBody::Set2DVelocity
+			"Set2DVelocity",		&ComponentRigidBody::Set2DVelocity
 			);
 
 		// Item
@@ -215,6 +223,7 @@ public:
 		lua.set_function("Find",				&Scripting::LuaFind, this);
 		lua.set_function("GetInt",				&Scripting::LuaGetInt, this);
 		lua.set_function("NewVariable",			&Scripting::LuaNewVariable, this);
+		lua.set_function("GetRuntimeState",		&Scripting::LuaGetRuntimeState, this);
 	}
 
 	bool CleanUp()
@@ -238,6 +247,11 @@ public:
 			case 8:  { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X); }
 			case 9:  { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_C); }
 			case 10: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_R); }
+
+			case 21: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_1); }
+			case 22: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_2); }
+			case 23: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_3); }
+			case 24: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4); }
 		}
 	}
 
@@ -283,6 +297,11 @@ public:
 	{
 		ComponentScript* script = gameObject->GetComponent<ComponentScript>();
 		script->inspectorVariables.push_back(inspectorVariable);
+	}
+
+	RuntimeState LuaGetRuntimeState() const
+	{
+		return gameObject->GetEngine()->GetSceneManager()->GetState();
 	}
 
 public:

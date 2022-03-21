@@ -1,7 +1,7 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 15,
+        "game_objects_amount": 16,
         "game_objects_list": [
             {
                 "UID": 4294967295,
@@ -908,6 +908,44 @@
                 ],
                 "name": "CliffRock_low",
                 "parent_UID": 1386708608
+            },
+            {
+                "UID": 897839112,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/GameState.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    }
+                ],
+                "name": "GameState",
+                "parent_UID": 4294967295
             }
         ],
         "name": "SceneIntro"

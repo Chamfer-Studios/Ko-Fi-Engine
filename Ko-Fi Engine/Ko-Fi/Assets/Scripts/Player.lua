@@ -1,5 +1,7 @@
 ------------------- Variables --------------------
 
+characterID = 1
+
 State = {
    IDLE = 1,
    CROUCH = 2,
@@ -7,14 +9,18 @@ State = {
 }
 
 currentState = State.IDLE
-speed = 500  -- consider Start()
+speed = 50  -- consider Start()
 isDoubleShot = false
-bullets = 10
-
+maxBullets = 10
+bullets = maxBullets
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
+
+local maxBulletsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+maxBulletsIV = InspectorVariable.new("maxBullets", maxBulletsIVT, maxBullets)
+NewVariable(maxBulletsIV)
 
 local isDoubleShotIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 isDoubleShotIV = InspectorVariable.new("isDoubleShot", isDoubleShotIVT, isDoubleShot)
@@ -28,6 +34,7 @@ currentItem = Item.new(currentItemType, currentItemDamage)
 -- Try to switch and use next
 
 -------------------- Methods ---------------------
+
 function Start()
 	destination = nil
 end
@@ -35,22 +42,21 @@ end
 -- Called each loop iteration
 function Update(dt)
 
-	--mouseRight = GetInput(3)
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
 	end
-	if (gameObject:IsSelected() == true)
+	if (IsSelected() == true)
 		then --Gather Inputs
-			if (GetInput(5) == KEY_STATE.KEY_DOWN) then
+			if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
 				currentItem.type = ItemType.ITEM_HAND
 			end
-			if (GetInput(6) == KEY_STATE.KEY_DOWN) then
+			if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
 				currentItem.type = ItemType.ITEM_KNIFE
 			end
-			if (GetInput(7) == KEY_STATE.KEY_DOWN) then
+			if (GetInput(7) == KEY_STATE.KEY_DOWN) then -- G
 				currentItem.type = ItemType.ITEM_GUN
 			end	
-			if (GetInput(8) == KEY_STATE.KEY_DOWN) 
+			if (GetInput(8) == KEY_STATE.KEY_DOWN) -- X
 				then
 					if (currentState == State.CROUCH) then
 						currentState = State.IDLE
@@ -58,7 +64,7 @@ function Update(dt)
 						currentState = State.CROUCH
 					end
 			end	
-			if (GetInput(9) == KEY_STATE.KEY_DOWN) 
+			if (GetInput(9) == KEY_STATE.KEY_DOWN)  -- C
 				then
 					if (currentState == State.PRONE) then
 						currentState = State.IDLE
@@ -66,10 +72,10 @@ function Update(dt)
 						currentState = State.PRONE
 					end	
 			end
-			if (GetInput(10) == KEY_STATE.KEY_DOWN) then
+			if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
 				Reload()
 			end
-			if (GetInput(4) == KEY_STATE.KEY_DOWN) 
+			if (GetInput(4) == KEY_STATE.KEY_DOWN) -- SPACE
 				then
 					if (currentItem.type == ItemType.ITEM_GUN and bullets > 0) then
 						CreateBullet()
@@ -105,8 +111,8 @@ function MoveToDestination(dt)
 			end
 
 			-- Movement
-			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * s * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * s * dt))
-
+			--componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * s * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * s * dt))
+			gameObject:GetRigidBody():Set2DVelocity(float2.new(vec2[1] * s * dt, vec2[2] * s * dt))
 			-- Rotation
 			vec2 = Normalize(vec2, d)
 			local rad = math.acos(vec2[2])
@@ -115,12 +121,24 @@ function MoveToDestination(dt)
 			end
 			componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
 		else
+			gameObject:GetRigidBody():Set2DVelocity(float2.new(0,0))
 			destination = nil
 	end
 end
 
 function Reload()
-	bullets = 10
+	bullets = maxBullets
+end
+
+function IsSelected()
+	
+	id = GetInt("GameState.lua", "characterSelected")
+
+	if (id == characterID) then	
+		return true
+	else 
+		return false
+	end
 end
 
 -------------------- Setters ---------------------

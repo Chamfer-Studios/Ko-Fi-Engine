@@ -265,13 +265,12 @@ void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
 
 void Camera3D::OnClick(SDL_Event event)
 {
-	if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING) return;
-	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT) return;
+	if (event.button.type != SDL_MOUSEBUTTONDOWN || (event.button.button != SDL_BUTTON_LEFT && event.button.button != SDL_BUTTON_RIGHT)) return;
 	if (engine->GetEditor()->GetPanel<PanelViewport>())
 		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
 			return;
 
-if (event.button.button == SDL_BUTTON_LEFT)
+	if (event.button.button == SDL_BUTTON_LEFT && engine->GetSceneManager()->GetState() != RuntimeState::PLAYING)
 	{
 		GameObject* hit = engine->GetCamera3D()->MousePicking();
 		if (hit != nullptr)
@@ -283,11 +282,17 @@ if (event.button.button == SDL_BUTTON_LEFT)
 			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 		}
 	}
-	else if (event.button.button == SDL_BUTTON_RIGHT)
+	else if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING)
 	{
-		engine->GetCamera3D()->MousePicking(true);
+		if (event.button.button == SDL_BUTTON_LEFT)
+		{
+			engine->GetCamera3D()->MousePicking();
+		}
+		else if (event.button.button == SDL_BUTTON_RIGHT)
+		{
+			engine->GetCamera3D()->MousePicking(true);
+		}
 	}
-
 }
 
 //void Camera3D::OnSave(JSONWriter& writer) const
@@ -404,12 +409,12 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 
 					for (GameObject* go : sceneGameObjects)
 					{
-						if (gameObject != go && engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == go->GetUID())
+						//if (gameObject != go && engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == go->GetUID())
 						{
 							ComponentScript* script = go->GetComponent<ComponentScript>();
 							if (script != nullptr)
 							{
-								if (script->path.substr(script->path.find_last_of('/') + 1) == "Player.lua")
+								if (script->path.substr(script->path.find_last_of('/') + 1) == "Player.lua" && (bool)script->handler->lua["IsSelected"]())
 								{
 									intersectionPoint.x *= gameObject->GetTransform()->GetScale().x;
 									intersectionPoint.y *= gameObject->GetTransform()->GetScale().y;
