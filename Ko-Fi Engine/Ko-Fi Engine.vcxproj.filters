@@ -488,13 +488,10 @@
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Source\ParticleResource.cpp">
-       <Filter>Source\Resources</Filter>
+      <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
       <Filter>Source\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\I_Track.cpp">
-      <Filter>Source\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_AudioSource.cpp">
       <Filter>Source\GameObject\Components\Audio</Filter>
@@ -583,6 +580,9 @@
     <ClCompile Include="Source\ComponentFollowPath.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClCompile>
+    <ClCompile Include="Source\External\stb_image\stb_image.cpp" />
+    <ClCompile Include="Source\I_Track.cpp" />
+    <ClCompile Include="Source\par_shapes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1641,9 +1641,6 @@
     <ClInclude Include="Source\C_AudioSwitch.h">
       <Filter>Source\GameObject\Components\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\I_Track.h">
-      <Filter>Source\Importers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
@@ -1673,6 +1670,12 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentFollowPath.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Track.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>External Libraries</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

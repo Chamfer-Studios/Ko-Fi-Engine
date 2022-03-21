@@ -67,7 +67,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene
 		for (uint j = 0; j < aiMesh->mNumVertices; ++j)
 		{
 			mesh->texCoords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-			mesh->texCoords[j * 2 + 1] =  aiMesh->mTextureCoords[0][j].y;
+			mesh->texCoords[j * 2 + 1] =  1.0f - aiMesh->mTextureCoords[0][j].y;
 		}
 
 		CONSOLE_LOG("[STATUS] Imported %u texture coordinates!", aiMesh->mNumVertices * 2);
