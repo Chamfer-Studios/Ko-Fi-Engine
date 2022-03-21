@@ -15,9 +15,10 @@
 #include "ComponentRigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentText.h"
+#include "ComponentAnimator.h"
+#include "ComponentParticle.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
-#include "ComponentAnimator.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -153,8 +154,9 @@ public:
 			"GetTransform",			&GameObject::GetTransform,
 			"GetRigidBody",			&GameObject::GetComponent<ComponentRigidBody>,
 			"GetText",				&GameObject::GetComponent<ComponentText>,
-			"GetAudioSwitch",		&GameObject::GetComponent<C_AudioSwitch>,
 			"GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
+			"GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
+			"GetAudioSwitch",		&GameObject::GetComponent<C_AudioSwitch>,
 			"IsSelected",			&GameObject::IsSelected
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
@@ -188,21 +190,27 @@ public:
 			"SetTextValue", &ComponentText::SetTextValue
 			);
 
-		// Component Audio Switch
-		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
-			sol::constructors<void(GameObject*)>(),
-			"PlayTrack",	&C_AudioSwitch::PlayTrack,
-			"PauseTrack",	&C_AudioSwitch::PauseTrack,
-			"ResumeTrack",	&C_AudioSwitch::ResumeTrack,
-			"StopTrack",	&C_AudioSwitch::StopTrack
-			);
-
 		// Component Animator
 		lua.new_usertype<ComponentAnimator>("ComponentAnimator",
 			sol::constructors<void(GameObject*)>(),
 			"PlayAnimation",	&ComponentAnimator::PlayAnimation
 			);
-		
+
+		// Component Particle
+		lua.new_usertype<ComponentParticle>("ComponentParticle",
+			sol::constructors<void(GameObject*)>()
+
+			);
+
+		// Component Audio Switch
+		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
+			sol::constructors<void(GameObject*)>(),
+			"PlayTrack", &C_AudioSwitch::PlayTrack,
+			"PauseTrack", &C_AudioSwitch::PauseTrack,
+			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
+			"StopTrack", &C_AudioSwitch::StopTrack
+			);
+
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
 			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string>)>(),
