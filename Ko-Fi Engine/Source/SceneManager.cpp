@@ -1,7 +1,14 @@
 #include "SceneManager.h"
 #include "Engine.h"
+#include "Editor.h"
 #include "SceneIntro.h"
+#include "Camera3D.h"
+#include "Window.h"
+
 #include "GameObject.h"
+#include "Material.h"
+#include "Texture.h"
+
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
@@ -13,15 +20,14 @@
 #include "ComponentButton.h"
 #include "ComponentText.h"
 #include "ComponentScript.h"
-#include "Material.h"
-#include "Texture.h"
-#include "Editor.h"
-#include "Camera3D.h"
+
 #include "PanelViewport.h"
 #include "Log.h"
 #include "Scripting.h"
 
+#include "Log.h"
 #include "Globals.h"
+
 
 SceneManager::SceneManager(KoFiEngine* engine)
 {
@@ -31,6 +37,8 @@ SceneManager::SceneManager(KoFiEngine* engine)
 	sceneIntro = new SceneIntro(engine);
 	AddScene(sceneIntro);
 	currentScene = sceneIntro;
+
+	gameTime = 0.0f;
 }
 
 SceneManager::~SceneManager()
@@ -59,6 +67,9 @@ bool SceneManager::Start()
 		ret = (*scene)->Start();
 	}
 	Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), "SceneIntro");
+
+	currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+	currentGizmoMode = ImGuizmo::MODE::WORLD;
 	return ret;
 }
 
@@ -67,6 +78,7 @@ bool SceneManager::PreUpdate(float dt)
 	bool ret = true;
 
 	PrepareUpdate();
+	UpdateGuizmo();
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
@@ -79,7 +91,7 @@ bool SceneManager::PreUpdate(float dt)
 bool SceneManager::Update(float dt)
 {
 	bool ret = true;
-
+	
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->Update(dt);
@@ -98,13 +110,14 @@ bool SceneManager::PostUpdate(float dt)
 	}
 
 	FinishUpdate();
-
+	GuizmoTransformation();
 	return ret;
 }
 
 bool SceneManager::CleanUp()
 {
 	bool ret = true;
+	ImGuizmo::Enable(false);
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
@@ -132,6 +145,7 @@ bool SceneManager::PrepareUpdate()
 		frameCount++;
 		time += timer.ReadSec();
 		gameDt = timer.ReadSec() * gameClockSpeed;
+		gameTime += gameDt;
 		timer.Start();
 	}
 
@@ -169,6 +183,8 @@ void SceneManager::OnPlay()
 	runtimeState = RuntimeState::PLAYING;
 	gameClockSpeed = timeScale;
 
+	gameTime = 0.0f;
+
 	// Serialize scene and save it as a .json
 	Importer::GetInstance()->sceneImporter->Save(currentScene);
 
@@ -180,7 +196,9 @@ void SceneManager::OnPlay()
 			script->ReloadScript();
 			script->handler->lua["Start"]();
 		}
+		go->OnPlay();
 	}
+
 }
 
 void SceneManager::OnPause()
@@ -195,6 +213,7 @@ void SceneManager::OnStop()
 	gameClockSpeed = 0.0f;
 	frameCount = 0;
 	time = 0.0f;
+	gameTime = 0.0f;
 
 	Importer::GetInstance()->sceneImporter->Load(currentScene,currentScene->name.c_str());
 	// Load the scene we saved before in .json
@@ -215,24 +234,64 @@ void SceneManager::OnTick()
 
 void SceneManager::OnClick(SDL_Event event)
 {
-	if (event.button.type != SDL_MOUSEBUTTONDOWN) return;
+}
 
-	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused()) return;
+void SceneManager::GuizmoTransformation()
+{
+	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+	if (selectedGameObject == nullptr || selectedGameObject->GetUID() == -1)
+		return;
 
-	if (event.button.button == SDL_BUTTON_LEFT)
+	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->viewMatrix.Transposed();
+	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
+	ComponentTransform* cTrans = selectedGameObject->GetComponent<ComponentTransform>();
+	if (cTrans == nullptr) return;
+	float4x4 objectTransform = cTrans->GetGlobalTransform().Transposed();
+
+	float tempTransform[16];
+	memcpy(tempTransform, objectTransform.ptr(), 16 * sizeof(float));
+
+	int winX, winY;
+	engine->GetWindow()->GetPosition(winX, winY);
+	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
+	ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, currentGizmoOperation != ImGuizmo::OPERATION::SCALE ? currentGizmoMode : ImGuizmo::MODE::LOCAL, tempTransform);
+
+	if (ImGuizmo::IsUsing())
 	{
-		GameObject* hit = engine->GetCamera3D()->MousePicking();
-		if (hit != nullptr)
-		{
-			CONSOLE_LOG("%s", hit->GetName());
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
-		}
-		else {
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
-		}
+		float4x4 newTransform;
+		newTransform.Set(tempTransform);
+		objectTransform = newTransform.Transposed();
+		selectedGameObject->GetComponent<ComponentTransform>()->UpdateGuizmoParameters(objectTransform);
 	}
-	else if (event.button.button == SDL_BUTTON_RIGHT)
+}
+
+void SceneManager::UpdateGuizmo()
+{
+	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+	if (selectedGameObject != nullptr && selectedGameObject->GetComponent<ComponentCamera>() != nullptr && currentGizmoOperation == ImGuizmo::OPERATION::SCALE)
+		currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+
+	if (engine->GetEditor()->MouseOnScene() && (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT))
 	{
-		engine->GetCamera3D()->MousePicking(true);
+
+		if ((engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
+		{
+			currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+			CONSOLE_LOG("Set Guizmo to Translate");
+		}
+		if ((engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_DOWN))
+		{
+			currentGizmoOperation = ImGuizmo::OPERATION::ROTATE;
+			CONSOLE_LOG("Set Guizmo to Rotate");
+		}
+		if (selectedGameObject != nullptr && selectedGameObject->GetComponent<ComponentCamera>() == nullptr)
+		{
+			if ((engine->GetInput()->GetKey(SDL_SCANCODE_R) == KEY_DOWN))
+			{
+				currentGizmoOperation = ImGuizmo::OPERATION::SCALE;
+				CONSOLE_LOG("Set Guizmo to Scale");
+			}
+		}
+	
 	}
 }

@@ -32,7 +32,7 @@ public:
 	// Mesh Functions
 	void SetUpMeshBuffers();
 
-	void Draw(GameObject* owner);
+	void Draw();
 	void DebugDraw();
 
 	inline void SetVertexNormals(bool vertex) { drawVertexNormals = vertex; }

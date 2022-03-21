@@ -3,6 +3,9 @@
 #include "Editor.h"
 #include "Engine.h"
 #include "Window.h"
+#include "Renderer3D.h"
+#include "SceneManager.h"
+#include "Physics.h"
 
 
 PanelSettings::PanelSettings(Editor* editor)
@@ -45,7 +48,7 @@ void PanelSettings::ShowPanel(bool* toggleSettingsPanel)
     {
         if(ImGui::CollapsingHeader("Window##"))
         {
-            ImGui::Combo("##resolutionCombo", &currentResolution, "Select Resolution\0R1024x768\0R1920x1080\0R1280x720");
+            ImGui::Combo("##resolutionCombo", &currentResolution, "Select Resolution\0 1024x768\0 1920x1080\0 1280x720");
                 
             ImGui::SameLine();
             if(ImGui::Button("SetResolution##"))
@@ -77,7 +80,45 @@ void PanelSettings::ShowPanel(bool* toggleSettingsPanel)
                 editor->engine->SaveConfiguration();
             }
         }
+        if (ImGui::CollapsingHeader("Renderer##"))
+        {
+            bool vsync = editor->engine->GetRenderer()->GetVsync();
+            if (ImGui::Checkbox("V-Sync", &vsync))
+            {
+                editor->engine->GetRenderer()->SetVsync(vsync);
+                editor->engine->SaveConfiguration();
 
+            }
+            if (ImGui::Checkbox("Draw scene partition tree", &editor->engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {
+                editor->engine->SaveConfiguration();
+            }
+        }
+
+        if (ImGui::CollapsingHeader("Physics##"))
+        {
+            ImGui::Text("Number of threads");
+            ImGui::SameLine();
+            int newNbThreads = editor->engine->GetPhysics()->GetNbThreads();
+            if (ImGui::DragInt("##drag_threads", &newNbThreads, 0.1f, 0.0f, 16.0f))
+            {
+                editor->engine->GetPhysics()->SetNbThreads(newNbThreads);
+                editor->engine->SaveConfiguration();
+            }
+            ImGui::Separator();
+            ImGui::Text("Scene gravity");
+            ImGui::SameLine();
+            float grav = editor->engine->GetPhysics()->GetGravity();
+            if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f, "%.2f"))
+            {
+                editor->engine->GetPhysics()->SetGravity(grav);
+                editor->engine->SaveConfiguration();
+            }
+            if (ImGui::Button("Default gravity##"))
+            {
+                editor->engine->GetPhysics()->SetGravity(9.81f);
+                editor->engine->SaveConfiguration();
+            }
+        }
     }
     ImGui::End();
 }

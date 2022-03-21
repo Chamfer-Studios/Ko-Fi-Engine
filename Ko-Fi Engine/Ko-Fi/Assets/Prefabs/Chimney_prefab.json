@@ -1,0 +1,64 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                134.026123046875,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                -0.7071068286895752,
+                0.0,
+                0.0,
+                0.7071067690849304
+            ],
+            "scale": [
+                100.0,
+                99.99996185302734,
+                99.99996185302734
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "draw_face_normals": false,
+            "draw_vertex_normals": false,
+            "path": "Library/Meshes/Chimney.sugar",
+            "shape_type": 0,
+            "type": "mesh"
+        },
+        {
+            "active": true,
+            "color": [
+                0.47040000557899475,
+                0.47040000557899475,
+                0.47040000557899475,
+                1.0
+            ],
+            "shader_path": "Assets/Shaders/default_shader.glsl",
+            "texture_path": "Assets/Textures/Baker_house.png",
+            "type": "material",
+            "uniforms": [
+                {
+                    "name": "albedoTint",
+                    "type": 35666,
+                    "value": {
+                        "w": 1.0,
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            ]
+        }
+    ],
+    "isPrefab": true,
+    "name": "Chimney"
+}

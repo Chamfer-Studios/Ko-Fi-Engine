@@ -37,6 +37,7 @@ public:
 	float GetBrightness();
 
 	// Retrive window size
+	inline SDL_Window* GetWindow() { return this->window; }
 	void GetWindowSize(uint& width, uint& height) const;
 	int GetWidth() const;
 	int GetHeight() const;

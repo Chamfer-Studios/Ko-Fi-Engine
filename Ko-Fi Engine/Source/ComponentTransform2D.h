@@ -6,6 +6,7 @@
 
 class KoFiEngine;
 class ComponentCanvas;
+class MyPlane;
 
 class ComponentTransform2D : public Component {
 public:
@@ -22,11 +23,13 @@ public:
 	};
 public:
 	ComponentTransform2D(GameObject* parent);
+	~ComponentTransform2D();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
 	bool Update(float dt) override;
+	bool CleanUp() override;
 	virtual bool InspectorDraw(PanelChooser* chooser) override;
 
 	// Setters
@@ -43,9 +46,9 @@ public:
 	inline float2 GetSize() const { return size; };
 	inline Anchor GetAnchor() const { return anchor; };
 
-	virtual float2 GetNormalizedPosition(bool invertY = false);
-	virtual float2 GetNormalizedSize(bool invertY = false);
-	virtual float2 GetNormalizedPivotOffset(bool invertY = false);
+	virtual float2 GetNormalizedPosition();
+	virtual float2 GetNormalizedSize();
+	virtual float2 GetNormalizedPivotOffset();
 	virtual float2 GetAnchorPosition(Anchor _anchor);
 
 	virtual ComponentCanvas* GetCanvas();
@@ -53,6 +56,7 @@ public:
 
 	bool CheckPointWithinBounds(float2 vec);
 
+	MyPlane* drawablePlane = nullptr;
 protected:
 	float2 position = { 0, 0 };
 	float2 pivot = { 0, 0 };
@@ -60,4 +64,7 @@ protected:
 	float2 size = { 0, 0 };
 
 	Anchor anchor = Anchor::CENTER;
+
+private:
+	float2 mask = { 1.0f, 1.0f };
 };

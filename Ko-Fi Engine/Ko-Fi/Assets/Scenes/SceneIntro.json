@@ -32,7 +32,51 @@
                         "type": "transform"
                     }
                 ],
+                "is3D": true,
                 "name": "Root",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 624435464,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            29.0,
+                            -93.0
+                        ],
+                        "rotation": [
+                            0.06975638121366501,
+                            2.0768315067698495e-08,
+                            2.9700078130190377e-07,
+                            0.9975647926330566
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_frustum": true,
+                        "far_plane_distance": 320.0,
+                        "frustum_culling": false,
+                        "isMainCamera": true,
+                        "near_plane_distance": 5.099999904632568,
+                        "type": "camera",
+                        "vertical_fov": 46.0
+                    }
+                ],
+                "is3D": true,
+                "name": "MainCamera",
                 "parent_UID": 4294967295
             },
             {
@@ -102,6 +146,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "Floor",
                 "parent_UID": 4294967295
             },
@@ -127,9 +172,9 @@
                             0.4999999701976776
                         ],
                         "scale": [
-                            30.000263214111328,
-                            1.0000163316726685,
-                            30.000263214111328
+                            30.00020980834961,
+                            1.000012993812561,
+                            30.00020980834961
                         ],
                         "type": "transform"
                     },
@@ -172,6 +217,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "LeftWall",
                 "parent_UID": 4294967295
             },
@@ -198,8 +244,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999958276748657,
-                            29.999868392944336
+                            0.9999966621398926,
+                            29.999895095825195
                         ],
                         "type": "transform"
                     },
@@ -242,6 +288,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "FrontWall",
                 "parent_UID": 4294967295
             },
@@ -268,8 +315,8 @@
                         ],
                         "scale": [
                             1.0,
-                            0.9999958872795105,
-                            0.9999958872795105
+                            0.9999967217445374,
+                            0.9999967217445374
                         ],
                         "type": "transform"
                     },
@@ -313,16 +360,70 @@
                     },
                     {
                         "active": true,
-                        "is_static": true,
-                        "type": "rigidBody"
+                        "angular_damping": 0.0,
+                        "angular_velocity": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "density": 1.0,
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "is_kinematic": false,
+                        "is_static": false,
+                        "linear_damping": 0.0,
+                        "linear_velocity": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "mass": 5.0,
+                        "type": "rigidBody",
+                        "use_gravity": true
                     },
                     {
                         "active": true,
                         "file_name": "Assets/Scripts/Player.lua",
                         "script_number": 1,
                         "type": "script"
+                    },
+                    {
+                        "active": true,
+                        "fade_time": 2.0,
+                        "offset_sync": false,
+                        "total_tracks": 2,
+                        "tracks": [
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": true,
+                                "track_path": "Assets/Audio/SplitDuty_Meh_Fx.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            },
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": false,
+                                "track_path": "Assets/Audio/bounce.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            }
+                        ],
+                        "type": "audio_switch"
                     }
                 ],
+                "is3D": true,
                 "name": "Character",
                 "parent_UID": 4294967295
             },
@@ -349,8 +450,8 @@
                         ],
                         "scale": [
                             10.0,
-                            19.9998722076416,
-                            0.9999959468841553
+                            19.99989128112793,
+                            0.999996542930603
                         ],
                         "type": "transform"
                     },
@@ -393,6 +494,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "Table",
                 "parent_UID": 4294967295
             },
@@ -457,279 +559,12 @@
                         ]
                     }
                 ],
+                "is3D": true,
                 "name": "Shell",
                 "parent_UID": 4294967295
             },
             {
-                "UID": 1168295805,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -100.0,
-                            0.0,
-                            143.0
-                        ],
-                        "rotation": [
-                            -0.5000000596046448,
-                            0.5000001192092896,
-                            0.5000001192092896,
-                            0.5000000596046448
-                        ],
-                        "scale": [
-                            30.00043487548828,
-                            1.0000134706497192,
-                            30.00043487548828
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/CliffRock_low.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 3,
-                        "is_trigger": false,
-                        "type": "collider"
-                    }
-                ],
-                "name": "CliffRock_low",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1278325985,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "name": "rock_cliff",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 168619064,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            0.0,
-                            0.0,
-                            0.7071067094802856
-                        ],
-                        "scale": [
-                            30.0,
-                            0.9999980330467224,
-                            29.999937057495117
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/CliffRock_low.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "name": "CliffRock_low",
-                "parent_UID": 1278325985
-            },
-            {
-                "UID": 1386708608,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "name": "rock_cliff",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1765163036,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            0.0,
-                            0.0,
-                            0.7071067094802856
-                        ],
-                        "scale": [
-                            30.0,
-                            0.9999980926513672,
-                            29.99993896484375
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/CliffRock_low.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 3,
-                        "is_trigger": false,
-                        "type": "collider"
-                    }
-                ],
-                "name": "CliffRock_low",
-                "parent_UID": 1386708608
-            },
-            {
-                "UID": 1739788079,
+                "UID": 1037610866,
                 "active": true,
                 "components": [
                     {
@@ -783,11 +618,12 @@
                         "type": "canvas"
                     }
                 ],
+                "is3D": true,
                 "name": "Canvas",
                 "parent_UID": 4294967295
             },
             {
-                "UID": 1265706318,
+                "UID": 303700353,
                 "active": true,
                 "components": [
                     {
@@ -816,10 +652,10 @@
                     },
                     {
                         "active": true,
-                        "anchor": 3,
+                        "anchor": 6,
                         "pivot": [
                             0.0,
-                            0.46000000834465027
+                            0.0
                         ],
                         "position": [
                             0.0,
@@ -831,26 +667,23 @@
                             0.0
                         ],
                         "size": [
-                            365.0,
-                            973.0
+                            276.0,
+                            667.0
                         ],
                         "type": "transform2D"
                     },
                     {
                         "active": true,
-                        "mask": [
-                            1.0,
-                            1.0
-                        ],
                         "texture": "Assets/HUD/character_abilities_v1.2.png",
                         "type": "image"
                     }
                 ],
+                "is3D": true,
                 "name": "Image",
-                "parent_UID": 1739788079
+                "parent_UID": 1037610866
             },
             {
-                "UID": 1846450480,
+                "UID": 1168295805,
                 "active": true,
                 "components": [
                     {
@@ -860,85 +693,20 @@
                     {
                         "active": true,
                         "position": [
+                            -100.0,
                             0.0,
-                            0.0,
-                            0.0
+                            143.0
                         ],
                         "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
+                            -0.5000000596046448,
+                            0.5000001192092896,
+                            0.5000001192092896,
+                            0.5000000596046448
                         ],
                         "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 0,
-                        "pivot": [
-                            0.0,
-                            1.0
-                        ],
-                        "position": [
-                            67.0,
-                            4.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            112.0,
-                            112.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "type": "text",
-                        "value": "0"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/TextScript.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "name": "Text",
-                "parent_UID": 1739788079
-            },
-            {
-                "UID": 1047998249,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -38.0,
-                            0.3562670350074768,
-                            11.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            -3.654919700224468e-10,
-                            -5.472506448001013e-09,
-                            0.7071067094802856
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999987483024597,
-                            0.9999987483024597
+                            30.000274658203125,
+                            1.000008463859558,
+                            30.000274658203125
                         ],
                         "type": "transform"
                     },
@@ -946,7 +714,7 @@
                         "active": true,
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Character2.sugar",
+                        "path": "Library/Meshes/CliffRock_low.sugar",
                         "shape_type": 0,
                         "type": "mesh"
                     },
@@ -959,7 +727,7 @@
                             1.0
                         ],
                         "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/mc_base_color.png",
+                        "texture_path": "Assets/Textures/cliff_rock.png",
                         "type": "material",
                         "uniforms": [
                             {
@@ -968,7 +736,7 @@
                                 "value": {
                                     "w": 1.0,
                                     "x": 1.0,
-                                    "y": 0.0,
+                                    "y": 1.0,
                                     "z": 1.0
                                 }
                             }
@@ -976,23 +744,267 @@
                     },
                     {
                         "active": true,
-                        "collider_type": 1,
+                        "collider_type": 3,
                         "is_trigger": false,
                         "type": "collider"
                     },
                     {
                         "active": true,
-                        "is_static": true,
-                        "type": "rigidBody"
+                        "bypass": false,
+                        "loop": false,
+                        "mute": false,
+                        "offset": 0.0,
+                        "pan": 0.0,
+                        "play_on_start": true,
+                        "track_path": "Assets/Audio/desert_calm_zone.wav",
+                        "transpose": 1.0,
+                        "type": "audio_source",
+                        "volume": 100.0
+                    }
+                ],
+                "is3D": true,
+                "name": "CliffRock_low",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 1278325985,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Player.lua",
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "rock_cliff",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 168619064,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            30.0,
+                            0.9999988675117493,
+                            29.999963760375977
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/CliffRock_low.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/cliff_rock.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "is3D": true,
+                "name": "CliffRock_low",
+                "parent_UID": 1278325985
+            },
+            {
+                "UID": 1386708608,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "rock_cliff",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 1765163036,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            30.0,
+                            0.999998927116394,
+                            29.99996566772461
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/CliffRock_low.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/cliff_rock.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "active": true,
+                        "collider_type": 3,
+                        "is_trigger": false,
+                        "type": "collider"
+                    }
+                ],
+                "is3D": true,
+                "name": "CliffRock_low",
+                "parent_UID": 1386708608
+            },
+            {
+                "UID": 897839112,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/GameState.lua",
                         "script_number": 1,
                         "type": "script"
                     }
                 ],
-                "name": "Character2",
+                "is3D": true,
+                "name": "GameState",
                 "parent_UID": 4294967295
             }
         ],

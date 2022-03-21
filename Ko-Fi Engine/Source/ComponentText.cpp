@@ -10,18 +10,21 @@
 #include "Editor.h"
 #include "UI.h"
 
-ComponentText::ComponentText(GameObject* parent) : Component(parent)
+ComponentText::ComponentText(GameObject* parent) : ComponentRenderedUI(parent)
 {
 	type = ComponentType::TEXT;
 	SetTextValue("Hello world!");
-	glGenFramebuffers(1, &fboId);
-	drawablePlane = new MyPlane(owner);
 }
 
 ComponentText::~ComponentText()
 {
-	delete drawablePlane;
 	FreeTextures();
+}
+
+bool ComponentText::CleanUp()
+{
+	FreeTextures();
+	return true;
 }
 
 void ComponentText::Save(Json& json) const
@@ -43,10 +46,6 @@ bool ComponentText::Update(float dt)
 
 bool ComponentText::PostUpdate(float dt)
 {
-	owner->GetEngine()->GetUI()->PrepareUIRender();
-	drawablePlane->DrawPlane2D(openGLTexture, { 255, 255, 255 });
-	owner->GetEngine()->GetUI()->EndUIRender();
-
 	return true;
 }
 
@@ -63,9 +62,6 @@ bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
 
 void ComponentText::SetTextValue(std::string newValue)
 {
-	if (textValue == newValue)
-		return;
-
 	FreeTextures();
 
 	glEnable(GL_BLEND);
@@ -91,8 +87,22 @@ void ComponentText::SetTextValue(std::string newValue)
 
 	openGLTexture = SurfaceToOpenGLTexture(dstSurface);
 
+	int w, h;
+	TTF_SizeUTF8(owner->GetEngine()->GetUI()->rubik, newValue.c_str(), &w, &h);
+	owner->GetComponent<ComponentTransform2D>()->SetSize({ (float)w, (float)h });
+
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+
 	SDL_FreeSurface(srcSurface);
 	SDL_FreeSurface(dstSurface);
+}
+
+void ComponentText::Draw()
+{
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture, { 255, 255, 255 });
+	owner->GetEngine()->GetUI()->EndUIRender();
 }
 
 GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)

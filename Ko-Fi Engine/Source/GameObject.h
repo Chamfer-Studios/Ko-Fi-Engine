@@ -7,11 +7,13 @@
 #include "Component.h"
 
 class KoFiEngine;
+//class ComponentMesh;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentInfo;
 class ComponentScript;
 class ComponentCollider;
+class ComponentCollider2;
 
 class GameObject
 {
@@ -26,15 +28,10 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	bool OnPlay();
 
 	void Enable();
 	void Disable();
-
-	template<class T> T* CreateComponent()
-	{
-		T* newComponent = new T(this);
-		return newComponent;
-	}
 
 	template<class T> T* GetComponent()
 	{
@@ -51,7 +48,7 @@ public:
 	// New way
 	void DeleteComponent(Component* component);
 	void AddComponent(Component* component);
-	void AddComponentByType(ComponentType componentType);
+	Component* AddComponentByType(ComponentType componentType);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 
@@ -87,6 +84,12 @@ public:
 	bool UpdatePrefab(Json& jsonFile);
 
 	bool IsSelected();
+public:
+	template<class T> T* CreateComponent()
+	{
+		T* newComponent = new T(this);
+		return newComponent;
+	}
 
 public:
 	std::string name;

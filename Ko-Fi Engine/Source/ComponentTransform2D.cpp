@@ -23,6 +23,17 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	pivot = { 0.5f, 0.5f };
 	rotation = { 0.0f,0.f,0.f };
 	anchor = Anchor::CENTER;
+	drawablePlane = new MyPlane(owner);
+}
+
+ComponentTransform2D::~ComponentTransform2D()
+{
+	delete drawablePlane;
+}
+
+bool ComponentTransform2D::CleanUp()
+{
+	return true;
 }
 
 void ComponentTransform2D::Save(Json& json) const
@@ -120,6 +131,17 @@ bool ComponentTransform2D::InspectorDraw(PanelChooser* chooser)
 		{
 			SetAnchor((Anchor)newAnchor);
 		}
+
+		if (ImGui::DragFloat2("Mask", &mask[0], 0.005f, 0.0f, 1.0f)) {
+			drawablePlane->texCoords.clear();
+			drawablePlane->texCoords.push_back({ 0, mask.y });
+			drawablePlane->texCoords.push_back({ 0, 0 });
+			drawablePlane->texCoords.push_back({ mask.x, mask.y });
+			drawablePlane->texCoords.push_back({ mask.x, 0 });
+
+			glBindBuffer(GL_ARRAY_BUFFER, drawablePlane->textureBufferId);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * drawablePlane->texCoords.size(), &drawablePlane->texCoords[0], GL_STATIC_DRAW);
+		}
 	}
 
 	return true;
@@ -146,30 +168,30 @@ void ComponentTransform2D::SetAnchor(const Anchor& newAnchor)
 	anchor = newAnchor;
 }
 
-float2 ComponentTransform2D::GetNormalizedPosition(bool invertY)
+float2 ComponentTransform2D::GetNormalizedPosition()
 {
 	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
 	if (parentTransform == nullptr) return float2(position.x, position.y);
 
 	float2 normalizedPosition = GetCanvas()->LogicalToViewport(position);
-	normalizedPosition = normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset(invertY);
-	return float2(normalizedPosition.x, normalizedPosition.y);
+	normalizedPosition = normalizedPosition + parentTransform->GetAnchorPosition(anchor) - GetNormalizedPivotOffset();
+
+	float2 normalizedSize = GetCanvas()->LogicalToViewport(size);
+	return float2(normalizedPosition.x - (1.0f - mask.x) * (normalizedSize.x * pivot.x), normalizedPosition.y - (1.0f - mask.y) * (normalizedSize.y * pivot.y)); // VODOO
 }
 
-float2 ComponentTransform2D::GetNormalizedSize(bool invertY)
+float2 ComponentTransform2D::GetNormalizedSize()
 {
 	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
 	if (parentTransform == nullptr) return size;
 
 	float2 normalizedSize = GetCanvas()->LogicalToViewport(size);
-	if (invertY)
-		normalizedSize.y = -normalizedSize.y;
-	return normalizedSize;
+	return { normalizedSize.x * mask.x, normalizedSize.y * mask.y };
 }
 
-float2 ComponentTransform2D::GetNormalizedPivotOffset(bool invertY)
+float2 ComponentTransform2D::GetNormalizedPivotOffset()
 {
-	float2 normalizedSize = GetNormalizedSize(invertY);
+	float2 normalizedSize = GetNormalizedSize();
 	return { pivot.x * normalizedSize.x, pivot.y * normalizedSize.y };
 }
 
@@ -252,123 +274,3 @@ bool ComponentTransform2D::CheckPointWithinBounds(float2 vec)
 
 	return lowerLeft.x < vec.x && lowerLeft.y < vec.y && vec.x < upperRight.x && vec.y < upperRight.y;
 }
-
-/*void ComponentTransform2D::OnSave(JSONWriter& writer) const
-{
-	writer.String("Transform 2D");
-	writer.StartObject();
-
-	// Saving position
-	writer.String("Position");
-	writer.StartArray();
-	writer.Double(GetPosition().x);
-	writer.Double(GetPosition().y);
-	writer.EndArray();
-
-	// Saving pivot
-	writer.String("Pivot");
-	writer.StartArray();
-	writer.Double(GetPivot().x);
-	writer.Double(GetPivot().y);
-	writer.EndArray();
-
-	// Saving rotation
-	writer.String("Rotation");
-	writer.StartArray();
-	//writer.Double(GetRotation());
-	writer.EndArray();
-
-	// Saving size
-	writer.String("Size");
-	writer.StartArray();
-	writer.Double(GetSize().x);
-	writer.Double(GetSize().y);
-	writer.EndArray();
-
-	// Saving anchor
-	writer.String("Anchor");
-	writer.StartArray();
-	writer.Int((int)GetAnchor());
-	writer.EndArray();
-	writer.EndObject();
-}
-
-void ComponentTransform2D::OnLoad(const JSONReader& reader)
-{
-	// Loading position
-	if (reader.HasMember("Position"))
-	{
-		const rapidjson::Value& itemPosition = reader["Position"];
-		float positionX = 0.0f;
-		float positionY = 0.0f;
-
-		int i = 0;
-		for (rapidjson::Value::ConstValueIterator it = itemPosition.Begin(); it != itemPosition.End(); ++it)
-		{
-			if (i == 0) positionX = it->GetDouble();
-			else if (i == 1) positionY = it->GetDouble();
-			i++;
-		}
-		SetPosition(float2(positionX, positionY));
-	}
-
-	// Loading pivot
-	if (reader.HasMember("Pivot"))
-	{
-		const rapidjson::Value& itemPivot = reader["Pivot"];
-		float pivotX = 0.0f;
-		float pivotY = 0.0f;
-		int i = 0;
-		for (rapidjson::Value::ConstValueIterator it = itemPivot.Begin(); it != itemPivot.End(); ++it)
-		{
-			if (i == 0) pivotX = it->GetDouble();
-			else if (i == 1) pivotY = it->GetDouble();
-			i++;
-		}
-		SetPivot(float2(pivotX, pivotY));
-	}
-
-	// Loading rotation
-	if (reader.HasMember("Rotation"))
-	{
-		const rapidjson::Value& itemRotation = reader["Rotation"];
-		float newRotation;
-		int i = 0;
-		for (rapidjson::Value::ConstValueIterator it = itemRotation.Begin(); it != itemRotation.End(); ++it)
-		{
-			if (i == 0) newRotation = it->GetDouble();
-			i++;
-		}
-		//SetRotation(newRotation);
-	}
-
-	// Loading size
-	if (reader.HasMember("Size"))
-	{
-		const rapidjson::Value& itemSize = reader["Size"];
-		float sizeX = 0.0f;
-		float sizeY = 0.0f;
-		int i = 0;
-		for (rapidjson::Value::ConstValueIterator it = itemSize.Begin(); it != itemSize.End(); ++it)
-		{
-			if (i == 0) sizeX = it->GetDouble();
-			else if (i == 1) sizeY = it->GetDouble();
-			i++;
-		}
-		SetSize(float2(sizeX, sizeY));
-	}
-
-	// Loading anchor
-	if (reader.HasMember("Anchor"))
-	{
-		const rapidjson::Value& itemAnchor = reader["Anchor"];
-		int newAnchor = 0;
-		int i = 0;
-		for (rapidjson::Value::ConstValueIterator it = itemAnchor.Begin(); it != itemAnchor.End(); ++it)
-		{
-			if (i == 0) newAnchor = it->GetInt();
-			i++;
-		}
-		SetAnchor((Anchor)newAnchor);
-	}
-}*/

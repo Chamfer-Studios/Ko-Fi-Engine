@@ -30,8 +30,9 @@ ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 
 ComponentScript::~ComponentScript()
 {
-	delete(handler);
-	handler = nullptr;
+	handler->CleanUp();
+	//RELEASE(handler);
+	inspectorVariables.clear();
 }
 
 bool ComponentScript::Start()
@@ -176,6 +177,7 @@ void ComponentScript::ReloadScript()
 {
 	if (path == "")
 		return;
+	inspectorVariables.clear();
 	script = handler->lua.load_file(path);
 	script();
 	isScriptLoaded = true;

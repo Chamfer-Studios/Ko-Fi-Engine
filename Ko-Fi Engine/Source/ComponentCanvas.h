@@ -12,18 +12,20 @@ class ComponentCanvas : public ComponentTransform2D
 {
 public:
 	ComponentCanvas(GameObject* parent);
+	~ComponentCanvas();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
 	bool Update(float dt) override;
+	bool CleanUp() override;
 
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void SetLogicalSize(float2 _newVal) { logicalSize = _newVal; };
 	float2 GetLogicalSize();
-	float2 GetNormalizedSize(bool invertY = false) override;
-	float2 GetNormalizedPosition(bool invertY = false) override;
+	float2 GetNormalizedSize() override;
+	float2 GetNormalizedPosition() override;
 
 	float2 LogicalToViewport(float2 vec);
 	float2 ViewportToLogical(float2 vec);

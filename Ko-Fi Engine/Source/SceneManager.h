@@ -8,6 +8,8 @@
 #include <string>
 #include <list>
 
+#include "ImGuizmo.h"
+
 class KoFiEngine;
 class SceneIntro;
 class GameObject;
@@ -64,12 +66,22 @@ public:
 	Scene* GetCurrentScene();
 	RuntimeState GetState();
 
+	inline float GetGameDt() const { return gameDt; }
+	inline float GetTotalGameTime() const { return gameTime; }
+
 	void OnPlay();
 	void OnStop();
 	void OnPause();
 	void OnResume();
 	void OnTick();
 	void OnClick(SDL_Event event);
+
+	//GUIZMO
+	ImGuizmo::OPERATION GetGizmoOperation() { return currentGizmoOperation; }
+	void SetGizmoOperation(ImGuizmo::OPERATION operation) { currentGizmoOperation = operation; }
+	void GuizmoTransformation();
+	void UpdateGuizmo();
+	//
 public:
 	bool active;
 
@@ -81,6 +93,10 @@ private:
 	std::vector<Scene*> scenes;
 	Scene* currentScene = nullptr;
 	SceneIntro* sceneIntro = nullptr;
+
+	// Guizmo
+	ImGuizmo::OPERATION currentGizmoOperation;
+	ImGuizmo::MODE currentGizmoMode;
 
 	// TIME MANAGEMENT
 	// --------------------------------------------------
@@ -98,6 +114,8 @@ private:
 	// Real Time Since Startup: seconds since game start (Real Time Clock) --> Engine.cpp
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
 	// --------------------------------------------------
+
+	float gameTime = 0.0f;
 	
 	RuntimeState runtimeState = RuntimeState::STOPPED;
 };

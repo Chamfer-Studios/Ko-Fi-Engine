@@ -13,11 +13,9 @@
 #include "Input.h"
 #include "Importer.h"
 
-ComponentButton::ComponentButton(GameObject* parent) : Component(parent)
+ComponentButton::ComponentButton(GameObject* parent) : ComponentRenderedUI(parent)
 {
 	type = ComponentType::BUTTON;
-	glGenFramebuffers(1, &fboId);
-	drawablePlane = new MyPlane(owner);
 }
 
 ComponentButton::~ComponentButton()
@@ -25,28 +23,16 @@ ComponentButton::~ComponentButton()
 	FreeTextures(BUTTON_STATE::IDLE);
 	FreeTextures(BUTTON_STATE::HOVER);
 	FreeTextures(BUTTON_STATE::PRESSED);
-	delete drawablePlane;
 }
 
-void ComponentButton::Save(Json& json) const
+bool ComponentButton::CleanUp()
 {
-	json["type"] = "button";
-	json["idleTexture"] = idleOpenGLTexture.path;
-	json["hoverTexture"] = hoverOpenGLTexture.path;
-	json["pressedTexture"] = pressedOpenGLTexture.path;
+	FreeTextures(BUTTON_STATE::IDLE);
+	FreeTextures(BUTTON_STATE::HOVER);
+	FreeTextures(BUTTON_STATE::PRESSED);
+	return true;
 }
 
-void ComponentButton::Load(Json& json)
-{
-	std::string path = json["idleTexture"].get<std::string>();
-	SetIdleTexture(path.c_str());
-
-	path = json["hoverTexture"].get<std::string>();
-	SetHoverTexture(path.c_str());
-
-	path = json["pressedTexture"].get<std::string>();
-	SetPressedTexture(path.c_str());
-}
 
 bool ComponentButton::Update(float dt)
 {
@@ -79,28 +65,6 @@ bool ComponentButton::Update(float dt)
 
 bool ComponentButton::PostUpdate(float dt)
 {
-	//SDL_Texture* SDLTexture = nullptr;
-	Texture openGLTexture;
-
-	switch (state) {
-	case BUTTON_STATE::IDLE:
-		//SDLTexture = idleSDLTexture;
-		openGLTexture = idleOpenGLTexture;
-		break;
-	case BUTTON_STATE::HOVER:
-		//SDLTexture = hoverSDLTexture;
-		openGLTexture = hoverOpenGLTexture;
-		break;
-	case BUTTON_STATE::PRESSED:
-		//SDLTexture = pressedSDLTexture;
-		openGLTexture = pressedOpenGLTexture;
-		break;
-	}
-
-	owner->GetEngine()->GetUI()->PrepareUIRender();
-	drawablePlane->DrawPlane2D(&openGLTexture, { 255, 255, 255 });
-	owner->GetEngine()->GetUI()->EndUIRender();
-
 	return true;
 }
 
@@ -110,7 +74,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		// IDLE
 		ImGui::Text("IDLE: ");
 		ImGui::SameLine();
-		if (idleOpenGLTexture.GetTextureId() == 0)
+		if (idleOpenGLTexture.GetTextureId() == TEXTUREID_DEFAULT)
 		{
 			ImGui::Text("None");
 		}
@@ -134,7 +98,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		// HOVER
 		ImGui::Text("HOVER: ");
 		ImGui::SameLine();
-		if (hoverOpenGLTexture.GetTextureId() == 0)
+		if (hoverOpenGLTexture.GetTextureId() == TEXTUREID_DEFAULT)
 		{
 			ImGui::Text("None");
 		}
@@ -158,7 +122,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		// PRESSED
 		ImGui::Text("PRESSED: ");
 		ImGui::SameLine();
-		if (pressedOpenGLTexture.GetTextureId() == 0)
+		if (pressedOpenGLTexture.GetTextureId() == TEXTUREID_DEFAULT)
 		{
 			ImGui::Text("None");
 		}
@@ -183,39 +147,46 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-/*SDL_Texture* ComponentButton::LoadTexture(const char* path)
+void ComponentButton::Save(Json& json) const
 {
-	SDL_Texture* texture = NULL;
-	SDL_Surface* surface = IMG_Load(path);
-
-	if (surface == NULL)
-	{
-		appLog->AddLog("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
-	}
-	else
-	{
-		texture = LoadSurface(surface);
-		SDL_FreeSurface(surface);
-	}
-
-	return texture;
+	json["type"] = "button";
+	json["idleTexture"] = idleOpenGLTexture.path;
+	json["hoverTexture"] = hoverOpenGLTexture.path;
+	json["pressedTexture"] = pressedOpenGLTexture.path;
 }
 
-SDL_Texture* const ComponentButton::LoadSurface(SDL_Surface* surface)
+void ComponentButton::Load(Json& json)
 {
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(owner->GetEngine()->GetUI()->renderer, surface);
+	std::string path = json["idleTexture"].get<std::string>();
+	SetIdleTexture(path.c_str());
 
-	if (texture == NULL)
-	{
-		appLog->AddLog("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
-	}
-	else
-	{
-		owner->GetEngine()->GetUI()->loadedTextures.push_back(texture);
+	path = json["hoverTexture"].get<std::string>();
+	SetHoverTexture(path.c_str());
+
+	path = json["pressedTexture"].get<std::string>();
+	SetPressedTexture(path.c_str());
+}
+
+void ComponentButton::Draw()
+{
+	Texture openGLTexture;
+
+	switch (state) {
+	case BUTTON_STATE::IDLE:
+		openGLTexture = idleOpenGLTexture;
+		break;
+	case BUTTON_STATE::HOVER:
+		openGLTexture = hoverOpenGLTexture;
+		break;
+	case BUTTON_STATE::PRESSED:
+		openGLTexture = pressedOpenGLTexture;
+		break;
 	}
 
-	return texture;
-}*/
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
+	owner->GetEngine()->GetUI()->EndUIRender();
+}
 
 void ComponentButton::SetIdleTexture(const char* path)
 {

@@ -11,7 +11,9 @@ public:
 	ComponentInfo(GameObject* parent);
 	~ComponentInfo();
 
-	bool InspectorDraw(PanelChooser* chooser);
+	bool Update(float dt) override;
+	bool CleanUp() override;
+	bool InspectorDraw(PanelChooser* chooser) override;
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 };

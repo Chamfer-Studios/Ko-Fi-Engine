@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "ComponentTransform2D.h"
+#include "ComponentRenderedUI.h"
 
 #include "Texture.h"
 
@@ -18,7 +19,7 @@ class SDL_Texture;
 class SDL_Surface;
 class MyPlane;
 
-class ComponentText : public Component {
+class ComponentText : public ComponentRenderedUI {
 public:
 	ComponentText(GameObject* parent);
 	~ComponentText();
@@ -28,29 +29,20 @@ public:
 
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
+	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void SetTextValue(std::string newValue);
 	std::string GetTextValue() { return textValue; };
 
-	//void OnLoad(const JSONReader& reader) override;
-	//void OnSave(JSONWriter& writer) const override;
+	void Draw() override;
 
-	//SDL_Texture* SDLTexture = nullptr;
 	GLuint openGLTexture = 0;
 
 private:
 	GLuint SurfaceToOpenGLTexture(SDL_Surface* surface);
-	SDL_Texture* SurfaceToSDLTexture(SDL_Surface* surface);
 	void FreeTextures();
 
-	int texW = 0;
-	int texH = 0;
-
 	std::string textValue = "HELLO WORLD!";
-
-	GLuint fboId = 0;
-
-	MyPlane* drawablePlane = nullptr;
 };
 

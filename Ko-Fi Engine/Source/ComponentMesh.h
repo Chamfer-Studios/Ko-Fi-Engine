@@ -21,7 +21,7 @@ public:
 	//void CopyParMesh(par_shapes_mesh* parMesh);
 
 	bool Start();
-	bool Update();
+	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
@@ -58,10 +58,6 @@ public:
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
 
 	bool InspectorDraw(PanelChooser* chooser);
-	// NEW - Using Space Partitioning
-	//AABB GetGlobalAABB();
-	void DrawMouseSelection();
-	// -------------------
 
 private:
 	Mesh* mesh = nullptr;
