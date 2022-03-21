@@ -26,7 +26,7 @@ Mesh::Mesh(Shape shape)
 	texCoordSizeBytes = 0;
 	indicesSizeBytes = 0;
 	VAO = 0;
-	isAnimated = true;
+	isAnimated = false;
 	meshType = shape;
 
 	switch (shape)
