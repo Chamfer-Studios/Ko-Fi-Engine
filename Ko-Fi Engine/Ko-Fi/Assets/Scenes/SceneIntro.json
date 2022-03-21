@@ -32,6 +32,7 @@
                         "type": "transform"
                     }
                 ],
+                "is3D": true,
                 "name": "Root",
                 "parent_UID": 4294967295
             },
@@ -74,6 +75,7 @@
                         "vertical_fov": 46.0
                     }
                 ],
+                "is3D": true,
                 "name": "MainCamera",
                 "parent_UID": 4294967295
             },
@@ -144,6 +146,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "Floor",
                 "parent_UID": 4294967295
             },
@@ -214,6 +217,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "LeftWall",
                 "parent_UID": 4294967295
             },
@@ -284,6 +288,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "FrontWall",
                 "parent_UID": 4294967295
             },
@@ -387,6 +392,7 @@
                         "type": "script"
                     }
                 ],
+                "is3D": true,
                 "name": "Character",
                 "parent_UID": 4294967295
             },
@@ -457,6 +463,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "Table",
                 "parent_UID": 4294967295
             },
@@ -521,6 +528,7 @@
                         ]
                     }
                 ],
+                "is3D": true,
                 "name": "Shell",
                 "parent_UID": 4294967295
             },
@@ -579,6 +587,7 @@
                         "type": "canvas"
                     }
                 ],
+                "is3D": true,
                 "name": "Canvas",
                 "parent_UID": 4294967295
             },
@@ -615,7 +624,7 @@
                         "anchor": 6,
                         "pivot": [
                             0.0,
-                            1.0
+                            0.0
                         ],
                         "position": [
                             0.0,
@@ -628,7 +637,7 @@
                         ],
                         "size": [
                             276.0,
-                            -672.0
+                            667.0
                         ],
                         "type": "transform2D"
                     },
@@ -638,6 +647,7 @@
                         "type": "image"
                     }
                 ],
+                "is3D": true,
                 "name": "Image",
                 "parent_UID": 1037610866
             },
@@ -708,6 +718,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "CliffRock_low",
                 "parent_UID": 4294967295
             },
@@ -740,6 +751,7 @@
                         "type": "transform"
                     }
                 ],
+                "is3D": true,
                 "name": "rock_cliff",
                 "parent_UID": 4294967295
             },
@@ -804,6 +816,7 @@
                         ]
                     }
                 ],
+                "is3D": true,
                 "name": "CliffRock_low",
                 "parent_UID": 1278325985
             },
@@ -836,6 +849,7 @@
                         "type": "transform"
                     }
                 ],
+                "is3D": true,
                 "name": "rock_cliff",
                 "parent_UID": 4294967295
             },
@@ -906,6 +920,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "CliffRock_low",
                 "parent_UID": 1386708608
             },

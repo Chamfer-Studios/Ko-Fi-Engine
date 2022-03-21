@@ -237,7 +237,9 @@ void SceneManager::GuizmoTransformation()
 
 	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->viewMatrix.Transposed();
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
-	float4x4 objectTransform = selectedGameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Transposed();
+	ComponentTransform* cTrans = selectedGameObject->GetComponent<ComponentTransform>();
+	if (cTrans == nullptr) return;
+	float4x4 objectTransform = cTrans->GetGlobalTransform().Transposed();
 
 	float tempTransform[16];
 	memcpy(tempTransform, objectTransform.ptr(), 16 * sizeof(float));

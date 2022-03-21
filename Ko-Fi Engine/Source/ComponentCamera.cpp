@@ -103,10 +103,10 @@ void ComponentCamera::LookAt(const float3& point)
 	CalculateViewMatrix();
 }
 
-void ComponentCamera::CalculateViewMatrix()
+void ComponentCamera::CalculateViewMatrix(bool ortho)
 {
 	if (projectionIsDirty)
-		RecalculateProjection();
+		RecalculateProjection(ortho);
 
 	cameraFrustum.pos = position;
 	cameraFrustum.front = front.Normalized();
@@ -116,13 +116,22 @@ void ComponentCamera::CalculateViewMatrix()
 	viewMatrix = cameraFrustum.ViewMatrix();
 }
 
-void ComponentCamera::RecalculateProjection()
+void ComponentCamera::RecalculateProjection(bool ortho)
 {
-	cameraFrustum.type = FrustumType::PerspectiveFrustum;
-	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-	cameraFrustum.farPlaneDistance = farPlaneDistance;
-	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
-	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+	if (!ortho) {
+		cameraFrustum.type = FrustumType::PerspectiveFrustum;
+		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+		cameraFrustum.farPlaneDistance = farPlaneDistance;
+		cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
+		cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+	}
+	else {
+		cameraFrustum.type = FrustumType::OrthographicFrustum;
+		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+		cameraFrustum.farPlaneDistance = farPlaneDistance;
+		cameraFrustum.orthographicWidth = owner->GetEngine()->GetEditor()->lastViewportSize.x;
+		cameraFrustum.orthographicHeight = owner->GetEngine()->GetEditor()->lastViewportSize.y;
+	}
 }
 
 bool ComponentCamera::InspectorDraw(PanelChooser* chooser)

@@ -34,7 +34,8 @@ bool Camera3D::Start()
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
 
-	engineCamera = new ComponentCamera(nullptr, true);
+	engineCameraObject = new GameObject(0, engine, "");
+	engineCamera = new ComponentCamera(engineCameraObject, true);
 	engineCamera->isEngineCamera = true;
 	
 	currentCamera = engineCamera;

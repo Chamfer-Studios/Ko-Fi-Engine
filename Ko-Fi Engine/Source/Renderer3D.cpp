@@ -16,6 +16,7 @@
 #include "Input.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
+#include "Texture.h"
 
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -26,6 +27,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentRenderedUI.h"
 #include "Material.h"
 
 #include "PanelViewport.h"
@@ -252,6 +254,13 @@ void Renderer3D::RenderScene()
 				RenderMeshes(go);
 				RenderBoundingBox(cMesh);
 			}
+
+			ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+			if (cRenderedUI)
+			{
+				RenderUI(go);
+			}
+
 			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
 			if (cCamera) {
 				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
@@ -260,6 +269,7 @@ void Renderer3D::RenderScene()
 				}
 
 			}
+			RenderAllParticles();
 		}
 		
 
@@ -366,6 +376,12 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 		}
 	}
+}
+
+void Renderer3D::RenderUI(GameObject* go)
+{
+	ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+	cRenderedUI->Draw();
 }
 
 // Method to receive and manage events
@@ -501,4 +517,122 @@ void Renderer3D::ReleaseFrameBuffers()
 uint Renderer3D::GetTextureBuffer()
 {
 	return textureBuffer;
+}
+void Renderer3D::AddParticle(Texture* tex, Color color, const float4x4 transform, float distanceToCamera)
+{
+	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
+	particles.insert(std::map<float, ParticleRenderer>::value_type(distanceToCamera, pRenderer));
+}
+
+void Renderer3D::RenderAllParticles()
+{
+	for (auto particle : particles)
+	{
+		RenderParticle(&particle.second);
+	}
+
+	particles.clear();
+}
+
+ParticleRenderer::ParticleRenderer(Texture* tex, Color color, const float4x4 transform):
+tex(tex),
+color(color),
+transform(transform)
+{
+
+}
+
+
+void Renderer3D::RenderParticle(ParticleRenderer* particle)
+{
+	//glEnable(GL_BLEND);
+	//glEnable(GL_ALPHA_TEST);
+	//
+	//glUseProgram(particle->shaderID);
+	//
+	//if(particle->tex)
+	//	glBindTexture(GL_TEXTURE_2D, particle->tex->GetTextureId());
+	//else
+	//	glDisable(GL_TEXTURE_2D);
+	//
+	//// Matrices
+	//GLint model_matrix = glGetUniformLocation(particle->shaderID, "modelMatrix");
+	//glUniformMatrix4fv(model_matrix, 1, GL_FALSE, particle->transform.Transposed().ptr());
+	//
+	//GLint projection_location = glGetUniformLocation(particle->shaderID, "projectionMatrix");
+	//glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	//
+	//GLint view_location = glGetUniformLocation(particle->shaderID, "viewMatrix");
+	//glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->viewMatrix.Transposed().ptr());
+	//
+	//glUniform4fv(glGetUniformLocation(particle->shaderID, "color"), 1, (GLfloat*)&particle->color);
+	//
+	//glBindBuffer(GL_ARRAY_BUFFER, particle->VAO);
+	//
+	//glDrawArrays(GL_TRIANGLES, 0, 6);
+	//
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	//
+	//glUseProgram(0);
+	//
+	//glDisable(GL_BLEND);
+	//glDisable(GL_ALPHA_TEST);
+
+	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA_TEST);
+	
+	if (particle->tex)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, particle->tex->GetTextureId());
+	}
+	else
+		glDisable(GL_TEXTURE_2D);
+
+	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	//glMultMatrixf(engine->GetCamera3D()->cameraFrustum.ProjectionMatrix().Transposed().ptr());// proj
+															// *
+	glMultMatrixf(engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());// view
+															// *
+	glMultMatrixf(particle->transform.Transposed().ptr());	// model
+	
+	//Drawing to tris in direct mode
+	glBegin(GL_TRIANGLES);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-.5f, -.5f, .0f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glPopMatrix();
+
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_NORMAL_ARRAY, 0);
+	//glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	//
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glDisable(GL_BLEND);
+	glDisable(GL_ALPHA_TEST);
 }

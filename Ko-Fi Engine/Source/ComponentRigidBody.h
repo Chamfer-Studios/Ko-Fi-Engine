@@ -23,6 +23,7 @@ public:
 	~ComponentRigidBody();
 
 	bool Update(float dt) override;
+	bool CleanUp() override;
 
 	// Called whenever a rigid body attribute is changed
 	void UpdatePhysicsValues(); 
@@ -44,7 +45,7 @@ public:
 	void Load(Json& json) override;
 
 	// On inspector draw
-	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
+	bool InspectorDraw(PanelChooser* chooser) override; // (OnGui)
 
 	// Getters & setters
 	inline physx::PxRigidActor* GetRigidBody() { if (isStatic) return staticBody; else return dynamicBody; }

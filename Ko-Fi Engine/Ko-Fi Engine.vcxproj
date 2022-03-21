@@ -185,6 +185,8 @@
     <ClCompile Include="Source\C_Collider.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />
+    <ClCompile Include="Source\Emitter.cpp" />
+    <ClCompile Include="Source\EmitterInstance.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\GraphEditor.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\ImCurveEdit.cpp" />
@@ -257,6 +259,11 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelSettings.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
+    <ClCompile Include="Source\ComponentParticle.cpp" />
+    <ClCompile Include="Source\ParticleModule.cpp" />
+    <ClCompile Include="Source\Particle.cpp" />
+    <ClCompile Include="Source\ParticleResource.cpp" />
+    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
     <ClCompile Include="Source\par_shapes.cpp" />
@@ -296,6 +303,7 @@
     <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
+    <ClInclude Include="Source\ComponentRenderedUI.h" />
     <ClInclude Include="Source\ComponentRigidBody.h" />
     <ClInclude Include="Source\ComponentScript.h" />
     <ClInclude Include="Source\ComponentText.h" />
@@ -304,6 +312,8 @@
     <ClInclude Include="Source\C_Collider.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
+    <ClInclude Include="Source\Emitter.h" />
+    <ClInclude Include="Source\EmitterInstance.h" />
     <ClInclude Include="Source\Engine.h" />
     <ClInclude Include="Source\EngineConfig.h" />
     <ClInclude Include="Source\External\ImGuizmo\include\GraphEditor.h" />
@@ -613,6 +623,7 @@
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\PanelCameraViewport.h" />
     <ClInclude Include="Source\PanelSettings.h" />
+    <ClInclude Include="Source\ParticleResource.h" />
     <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />
@@ -621,6 +632,10 @@
     <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\PanelTextEditor.h" />
+    <ClInclude Include="Source\ComponentParticle.h" />
+    <ClInclude Include="Source\Particle.h" />
+    <ClInclude Include="Source\ParticleModule.h" />
+    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\QuadTree3D.h" />
     <ClInclude Include="Source\Resource.h" />

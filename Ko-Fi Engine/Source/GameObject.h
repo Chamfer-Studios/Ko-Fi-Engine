@@ -7,6 +7,7 @@
 #include "Component.h"
 
 class KoFiEngine;
+//class ComponentMesh;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentInfo;
@@ -31,12 +32,6 @@ public:
 	void Enable();
 	void Disable();
 
-	template<class T> T* CreateComponent()
-	{
-		T* newComponent = new T(this);
-		return newComponent;
-	}
-
 	template<class T> T* GetComponent()
 	{
 		T* component = nullptr;
@@ -52,7 +47,7 @@ public:
 	// New way
 	void DeleteComponent(Component* component);
 	void AddComponent(Component* component);
-	void AddComponentByType(ComponentType componentType);
+	Component* AddComponentByType(ComponentType componentType);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 
@@ -87,6 +82,12 @@ public:
 	bool LoadPrefab(Json& jsonFile);
 
 	bool IsSelected();
+public:
+	template<class T> T* CreateComponent()
+	{
+		T* newComponent = new T(this);
+		return newComponent;
+	}
 
 public:
 	std::string name;

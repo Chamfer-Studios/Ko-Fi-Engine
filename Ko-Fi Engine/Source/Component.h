@@ -1,5 +1,4 @@
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
+#pragma once
 
 #include "imgui.h"
 #include "json.hpp"
@@ -14,6 +13,7 @@ enum class ComponentType
 	NONE,
 	MESH,
 	MATERIAL,
+	PARTICLE,
 	CAMERA,
 	COLLIDER,
 	SCRIPT,
@@ -50,11 +50,8 @@ public:
 
 	ComponentType GetType() { return type; }
 
-
 public:
 	bool active = true;
 	GameObject* owner = nullptr;
 	ComponentType type;
 };
-
-#endif // !__COMPONENT_H__
