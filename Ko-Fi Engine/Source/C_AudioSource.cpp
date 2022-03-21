@@ -29,8 +29,6 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 
 C_AudioSource::~C_AudioSource()
 {
-    StopAudio(track->source);
-
     RELEASE(track);
 }
 
