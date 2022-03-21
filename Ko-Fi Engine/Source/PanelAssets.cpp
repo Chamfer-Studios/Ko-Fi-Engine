@@ -102,6 +102,12 @@ bool PanelAssets::Update()
 	if (ImGui::BeginPopup("File Handle")) {
 
 		if (ImGui::BeginMenu("Create")) {
+			if (ImGui::MenuItem("Scene"))
+			{
+				std::string fileName = FileExistsScene("/scene.json", 1);
+				std::string path = currentDir.string() + fileName;
+				editor->engine->GetFileSystem()->CreateScene(path.c_str(),fileName.c_str());
+			}
 			if (ImGui::MenuItem("Material")) {
 				std::string fileName =  FileExistsMaterial("/material.milk",1);
 			
@@ -153,6 +159,24 @@ void PanelAssets::LoadIcons(TextureIcon& texture, const char* path)
 	}
 
 	stbi_image_free(pixels);
+}
+
+std::string PanelAssets::FileExistsScene(std::string fileName, int i)
+{
+	int j = i;
+	std::string name = "";
+	std::string number = "";
+	std::string ext = "";
+	if (std::filesystem::exists(currentDir.string() + fileName)) {
+		name = "/scene";
+		number = std::to_string(j);
+		ext = ".json";
+		return FileExistsMaterial(name + " (" + number + ") " + ext, j + 1);
+	}
+	else {
+		return fileName;
+	}
+	return name + number + ext;
 }
 
 std::string PanelAssets::FileExistsMaterial(std::string fileName,int i)
