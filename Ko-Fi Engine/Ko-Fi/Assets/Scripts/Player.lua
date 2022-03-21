@@ -78,7 +78,7 @@ function Update(dt)
 					if (currentItem.type == ItemType.ITEM_GUN and bulletCount > 0) then
 						CreateBullet()
 						bulletCount = bulletCount - 1
-						-- TODO: Play audio
+						gameObject:GetAudioSwitch():PlayTrack(0)
 					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
 						print("Knife used")
 					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
@@ -122,7 +122,7 @@ function MoveToDestination(dt)
 end
 
 function Reload()
-	bullets = maxBullets
+	bulletCount = maxBullets
 	-- TODO: Play audio
 end
 

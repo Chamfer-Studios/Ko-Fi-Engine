@@ -189,10 +189,10 @@ public:
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
 			sol::constructors<void(GameObject*)>(),
-			"PlayAudio",	&C_AudioSwitch::PlayAudio,
-			"PauseAudio",	&C_AudioSwitch::PauseAudio,
-			"ResumeAudio",	&C_AudioSwitch::ResumeAudio,
-			"StopAudio",	&C_AudioSwitch::StopAudio
+			"PlayTrack",	&C_AudioSwitch::PlayTrack,
+			"PauseTrack",	&C_AudioSwitch::PauseTrack,
+			"ResumeTrack",	&C_AudioSwitch::ResumeTrack,
+			"StopTrack",	&C_AudioSwitch::StopTrack
 			);
 		
 		// Inspector Variables
