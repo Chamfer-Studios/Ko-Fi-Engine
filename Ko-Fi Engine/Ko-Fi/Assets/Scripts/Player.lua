@@ -10,9 +10,8 @@ State = {
 
 currentState = State.IDLE
 speed = 50  -- consider Start()
-isDoubleShot = false
 maxBullets = 10
-bullets = maxBullets
+bulletCount = maxBullets
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
@@ -21,11 +20,6 @@ NewVariable(speedIV)
 local maxBulletsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 maxBulletsIV = InspectorVariable.new("maxBullets", maxBulletsIVT, maxBullets)
 NewVariable(maxBulletsIV)
-
-local isDoubleShotIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-isDoubleShotIV = InspectorVariable.new("isDoubleShot", isDoubleShotIVT, isDoubleShot)
-NewVariable(isDoubleShotIV)
-
 
 local currentItemType = ItemType.ITEM_GUN
 currentItemDamage = 5
@@ -60,16 +54,20 @@ function Update(dt)
 				then
 					if (currentState == State.CROUCH) then
 						currentState = State.IDLE
+						-- TODO: Play audio
 					else
 						currentState = State.CROUCH
+						-- TODO: Play audio
 					end
 			end	
 			if (GetInput(9) == KEY_STATE.KEY_DOWN)  -- C
 				then
 					if (currentState == State.PRONE) then
 						currentState = State.IDLE
+						-- TODO: Play audio
 					else
 						currentState = State.PRONE
+						-- TODO: Play audio
 					end	
 			end
 			if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
@@ -77,13 +75,10 @@ function Update(dt)
 			end
 			if (GetInput(4) == KEY_STATE.KEY_DOWN) -- SPACE
 				then
-					if (currentItem.type == ItemType.ITEM_GUN and bullets > 0) then
+					if (currentItem.type == ItemType.ITEM_GUN and bulletCount > 0) then
 						CreateBullet()
-						bullets = bullets - 1
-						if (isDoubleShot and bullets > 0) then
-							CreateBullet()
-							bullets = bullets - 1
-						end
+						bulletCount = bulletCount - 1
+						-- TODO: Play audio
 					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
 						print("Knife used")
 					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
@@ -128,6 +123,7 @@ end
 
 function Reload()
 	bullets = maxBullets
+	-- TODO: Play audio
 end
 
 function IsSelected()

@@ -959,6 +959,7 @@
                         "type": "script"
                     }
                 ],
+                "is3D": true,
                 "name": "GameState",
                 "parent_UID": 4294967295
             }
