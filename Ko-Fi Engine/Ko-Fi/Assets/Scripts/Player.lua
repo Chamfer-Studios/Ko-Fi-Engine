@@ -26,7 +26,7 @@ local currentItemType = ItemType.ITEM_GUN
 currentItemDamage = 5
 currentItem = Item.new(currentItemType, currentItemDamage)
 
---gameObject:GetComponentAnimator():PlayAnimation("Idle")
+gameObject:GetComponentAnimator():PlayAnimation("Idle")
 
 mouseParticles = Find("Mouse Particles")
 mouseParticles:GetComponentParticle():StopParticleSpawn()
@@ -98,7 +98,7 @@ function Update(dt)
 						gameObject:GetAudioSwitch():PlayTrack(0)
 					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
 						gameObject:GetAudioSwitch():PlayTrack(0)
-						--gameObject:GetComponentAnimator():PlayAnimation("Attack")
+						gameObject:GetComponentAnimator():PlayAnimation("Attack")
 					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
 						print("No item selected")
 				end
@@ -127,12 +127,11 @@ function MoveToDestination(dt)
 			if (isWalking ~= true) then
 				if (currentState == State.IDLE) then
 					gameObject:GetAudioSwitch():PlayTrack(1)
-					--gameObject:GetComponentAnimator():PlayAnimation("Walk")
+					gameObject:GetComponentAnimator():PlayAnimation("Walk")
 				elseif (currentState == State.CROUCH) then
 					gameObject:GetAudioSwitch():PlayTrack(2)
-					--gameObject:GetComponentAnimator():PlayAnimation("Crouch")
+					gameObject:GetComponentAnimator():PlayAnimation("Crouch")
 				end
-				--mouseParticles = Find("Mouse Particles")
 				mouseParticles:GetComponentParticle():ResumeParticleSpawn()
 				mouseParticles:GetTransform():SetPosition(destination)
 				particleFlag = true
@@ -154,6 +153,8 @@ function MoveToDestination(dt)
 			destination = nil
 
 			gameObject:GetAudioSwitch():StopTrack(1)
+			gameObject:GetComponentAnimator():PlayAnimation("Idle")
+
 			isWalking = false
 	end
 end
