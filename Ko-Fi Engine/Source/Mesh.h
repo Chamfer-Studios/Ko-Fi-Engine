@@ -143,7 +143,7 @@ public:
 
 	Shape meshType;
 	std::string path;
-
+	bool isAnimated = false;
 private:
 	// Debug functions for drawing
 	void DrawVertexNormals() const;

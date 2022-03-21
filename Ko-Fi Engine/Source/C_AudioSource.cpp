@@ -58,7 +58,7 @@ bool C_AudioSource::Update(float dt)
     if (track != nullptr)
     {
 
-        if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+        if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
         {
             PauseAudio(track->source);
             return true;
@@ -66,7 +66,7 @@ bool C_AudioSource::Update(float dt)
         //ResumeAudio(track->source);
     }
 
-    if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)
+    if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::STOPPED)
     {
         return true;
     }

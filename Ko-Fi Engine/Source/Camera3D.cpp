@@ -271,7 +271,7 @@ void Camera3D::OnClick(SDL_Event event)
 		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
 			return;
 
-	if (event.button.button == SDL_BUTTON_LEFT && engine->GetSceneManager()->GetState() != RuntimeState::PLAYING)
+	if (event.button.button == SDL_BUTTON_LEFT && engine->GetSceneManager()->GetGameState() != GameState::PLAYING)
 	{
 		GameObject* hit = engine->GetCamera3D()->MousePicking();
 		if (hit != nullptr)
@@ -283,7 +283,7 @@ void Camera3D::OnClick(SDL_Event event)
 			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 		}
 	}
-	else if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING)
+	else if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
 	{
 		if (event.button.button == SDL_BUTTON_LEFT)
 		{

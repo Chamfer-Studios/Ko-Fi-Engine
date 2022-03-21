@@ -617,7 +617,6 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h" />
     <ClInclude Include="Source\FSDefs.h" />
     <ClInclude Include="Source\External\SDL_ttf\include\SDL_ttf.h" />
-    <ClInclude Include="Source\External\stb_image\stb_image.h" />
     <ClInclude Include="Source\External\stb_truetype\stb_truetype.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />

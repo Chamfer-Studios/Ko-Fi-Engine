@@ -97,7 +97,7 @@ void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, G
 	assimpNode = ImportTransform(assimpNode, gameObj);
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
 
-	if (isPrefab = true) gameObj->isPrefab = true;
+	gameObj->isPrefab = isPrefab;
 
 	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
 	gameObj->SetName(nodeName.c_str());
@@ -223,7 +223,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		CONSOLE_LOG("[WARNING] Scene Importer: Model had no animations to import.");
 		return;
 	}
-
+	mesh->isAnimated = true;
 	Animation* anim = new Animation();
 	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim, assimpScene);
 

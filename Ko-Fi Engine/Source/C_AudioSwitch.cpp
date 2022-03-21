@@ -89,12 +89,12 @@ bool C_AudioSwitch::Update(float dt)
     if (switching)
         SwitchFade(fadeTime);
 
-    if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)
+    if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::STOPPED)
         return ret;
 
     for (R_Track* index : tracks)
     {
-        if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+        if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
         {
             PauseAudio(index->source);
             if (switching)
@@ -390,7 +390,7 @@ void C_AudioSwitch::SwitchFade(float fadeSeconds)
         alSourcef(newTrack->source, AL_GAIN, 0.0f);
     }
 
-    if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+    if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
     {
         switchTime = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - pauseDifference;
         return;

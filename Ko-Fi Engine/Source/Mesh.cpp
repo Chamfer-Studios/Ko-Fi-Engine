@@ -26,7 +26,7 @@ Mesh::Mesh(Shape shape)
 	texCoordSizeBytes = 0;
 	indicesSizeBytes = 0;
 	VAO = 0;
-
+	isAnimated = true;
 	meshType = shape;
 
 	switch (shape)
@@ -118,14 +118,17 @@ void Mesh::SetUpMeshBuffers()
 		glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(TEX_COORD_LOCATION);
 	}
-
-	glGenBuffers(1, &idBones);
-	glBindBuffer(GL_ARRAY_BUFFER, idBones);
-	glBufferData(GL_ARRAY_BUFFER,sizeof(bones[0])*bones.size(),&bones[0], GL_DYNAMIC_DRAW);
-	glEnableVertexAttribArray(BONE_LOCATION);
-	glVertexAttribPointer(BONE_LOCATION, MAX_NUM_BONES_PER_VERTEX, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (void*)0);
-	glEnableVertexAttribArray(WEIGHT_LOCATION);
-	glVertexAttribPointer(WEIGHT_LOCATION, MAX_NUM_BONES_PER_VERTEX, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)(MAX_NUM_BONES_PER_VERTEX * sizeof(int32_t)));
+	if (bones.size() > 0)
+	{
+		glGenBuffers(1, &idBones);
+		glBindBuffer(GL_ARRAY_BUFFER, idBones);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(bones[0]) * bones.size(), &bones[0], GL_DYNAMIC_DRAW);
+		glEnableVertexAttribArray(BONE_LOCATION);
+		glVertexAttribPointer(BONE_LOCATION, MAX_NUM_BONES_PER_VERTEX, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (void*)0);
+		glEnableVertexAttribArray(WEIGHT_LOCATION);
+		glVertexAttribPointer(WEIGHT_LOCATION, MAX_NUM_BONES_PER_VERTEX, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)(MAX_NUM_BONES_PER_VERTEX * sizeof(int32_t)));
+	}
+	
 	// Unbind any vertex array we have binded before.
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

@@ -118,10 +118,10 @@ public:
 
 		// RuntimeState
 		lua.new_enum("RuntimeState",
-			"PAUSED",	RuntimeState::PAUSED,
-			"PLAYING",	RuntimeState::PLAYING,
-			"STOPPED",	RuntimeState::STOPPED,
-			"TICK",		RuntimeState::TICK
+			"PAUSED",	GameState::PAUSED,
+			"PLAYING", GameState::PLAYING,
+			"STOPPED", GameState::STOPPED,
+			"TICK", GameState::TICK
 		);
 
 
@@ -186,14 +186,14 @@ public:
 			"SetTextValue", &ComponentText::SetTextValue
 			);
 
-		// Component Audio Switch
-		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
-			sol::constructors<void(GameObject*)>(),
-			"PlayAudio",	&C_AudioSwitch::PlayAudio,
-			"PauseAudio",	&C_AudioSwitch::PauseAudio,
-			"ResumeAudio",	&C_AudioSwitch::ResumeAudio,
-			"StopAudio",	&C_AudioSwitch::StopAudio
-			);
+		//// Component Audio Switch
+		//lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
+		//	sol::constructors<void(GameObject*)>(),
+		//	"PlayAudio",	&C_AudioSwitch::PlayAudio,
+		//	"PauseAudio",	&C_AudioSwitch::PauseAudio,
+		//	"ResumeAudio",	&C_AudioSwitch::ResumeAudio,
+		//	"StopAudio",	&C_AudioSwitch::StopAudio
+		//	);
 		
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
@@ -311,9 +311,9 @@ public:
 		script->inspectorVariables.push_back(inspectorVariable);
 	}
 
-	RuntimeState LuaGetRuntimeState() const
+	GameState LuaGetRuntimeState() const
 	{
-		return gameObject->GetEngine()->GetSceneManager()->GetState();
+		return gameObject->GetEngine()->GetSceneManager()->GetGameState();
 	}
 
 	void LuaPlayAudio()
