@@ -74,7 +74,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		// IDLE
 		ImGui::Text("IDLE: ");
 		ImGui::SameLine();
-		if (idleOpenGLTexture.GetTextureId() == 0)
+		if (idleOpenGLTexture.GetTextureId() == TEXTUREID_DEFAULT)
 		{
 			ImGui::Text("None");
 		}
@@ -98,7 +98,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		// HOVER
 		ImGui::Text("HOVER: ");
 		ImGui::SameLine();
-		if (hoverOpenGLTexture.GetTextureId() == 0)
+		if (hoverOpenGLTexture.GetTextureId() == TEXTUREID_DEFAULT)
 		{
 			ImGui::Text("None");
 		}
@@ -122,7 +122,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		// PRESSED
 		ImGui::Text("PRESSED: ");
 		ImGui::SameLine();
-		if (pressedOpenGLTexture.GetTextureId() == 0)
+		if (pressedOpenGLTexture.GetTextureId() == TEXTUREID_DEFAULT)
 		{
 			ImGui::Text("None");
 		}

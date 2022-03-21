@@ -19,11 +19,11 @@ class Texture;
 
 struct ParticleRenderer
 {
-	ParticleRenderer(Texture* tex, Color color, const float4x4 transform);
+	ParticleRenderer(Texture& tex, Color color, const float4x4 transform);
 
 	//void Render();
 
-	Texture*	tex;
+	Texture&	tex;
 	Color		color;
 	float4x4	transform;
 };
@@ -78,7 +78,7 @@ public:
 	void ReleaseFrameBuffers();
 
 	uint GetTextureBuffer();
-	void AddParticle(Texture* tex, Color color, const float4x4 transform, float distanceToCamera);
+	void AddParticle(Texture& tex, Color color, const float4x4 transform, float distanceToCamera);
 	void RenderParticle(ParticleRenderer* particle);
 	void RenderAllParticles();
 

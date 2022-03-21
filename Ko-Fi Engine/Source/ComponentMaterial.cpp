@@ -329,7 +329,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 				//}
 				if (texture.textureID == currentTextureId)
 				{
-					texture.textureID = -1;
+					texture.textureID = 0;
 					texture.SetTexturePath(nullptr);
 
 					Texture tex;

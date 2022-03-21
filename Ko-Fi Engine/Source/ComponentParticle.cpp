@@ -53,7 +53,7 @@ bool ComponentParticle::Update(float dt)
 			unsigned int particleIndex = it->particleIndices[i];
 			Particle* particle = &it->particles[particleIndex];
 		
-			owner->GetEngine()->GetRenderer()->AddParticle( &it->emitter->texture, particle->CurrentColor,
+			owner->GetEngine()->GetRenderer()->AddParticle(it->emitter->texture, particle->CurrentColor,
 				float4x4::FromTRS(particle->position, particle->rotation, particle->scale), 
 				particle->distanceToCamera);
 		}
@@ -153,7 +153,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						std::string path = chooser->OnChooserClosed();
 						if (emitter->texture.textureID == currentTextureId)
 						{
-							emitter->texture.textureID = -1;
+							emitter->texture.textureID = TEXTUREID_DEFAULT;
 							emitter->texture.SetTexturePath(nullptr);
 
 							Texture tex = Texture();

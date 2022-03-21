@@ -5,7 +5,7 @@
 #include "MathGeoLib/Math/float2.h"
 #include "Globals.h"
 //#include "Resource.h"
-
+#define TEXTUREID_DEFAULT 4294967295
 class Texture
 {
 public:
@@ -23,7 +23,7 @@ public:
 	inline int GetNrChannels() const { return nrChannels; }
 
 public:
-	uint textureID = -1;
+	uint textureID = TEXTUREID_DEFAULT;
 	int width = -1;
 	int height = -1;
 	int nrChannels = 1;
