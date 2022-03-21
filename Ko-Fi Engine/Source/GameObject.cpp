@@ -22,6 +22,8 @@
 #include "ComponentInfo.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
+#include "ComponentWalkable.h"
+#include "ComponentFollowPath.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine *engine, const char *name, bool _is3D)
@@ -256,6 +258,16 @@ Component *GameObject::AddComponentByType(ComponentType componentType)
 		if (!this->GetComponent<ComponentRigidBody>())
 			this->CreateComponent<ComponentRigidBody>();
 		ComponentCollider2 *cmpColl2 = new ComponentCollider2(this, ColliderShape::NONE);
+	}
+	case ComponentType::WALKABLE:
+	{
+		c = this->CreateComponent<ComponentWalkable>();
+		break;
+	}
+	case ComponentType::FOLLOW_PATH:
+	{
+		c = this->CreateComponent<ComponentFollowPath>();
+		break;
 	}
 	case ComponentType::AUDIO_SOURCE:
 	{

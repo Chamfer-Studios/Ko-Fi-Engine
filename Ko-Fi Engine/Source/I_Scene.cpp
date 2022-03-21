@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "FileSystem.h"
+#include "Navigation.h"
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -31,6 +32,8 @@
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 #include "ComponentAnimator.h"
+#include "ComponentWalkable.h"
+#include "ComponentFollowPath.h"
 
 #include "Mesh.h"
 #include "Animation.h"
@@ -320,8 +323,9 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	jsonFile[name];
 	jsonFile[name]["name"] = name;
 	jsonFile[name]["active"] = scene->active;
+	jsonFile[name]["navmesh"] = Json::object();
+	engine->GetNavigation()->Save(jsonFile[name]["navmesh"]);
 	jsonFile[name]["game_objects_amount"] = gameObjectList.size()-1;
-
 	jsonFile[name]["game_objects_list"] = Json::array();
 	for (std::vector<GameObject*>::iterator goIt = gameObjectList.begin(); goIt != gameObjectList.end(); ++goIt)
 	{
@@ -468,6 +472,16 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			{
 				ComponentAnimator* cAnimator = (ComponentAnimator*)component;
 				cAnimator->Save(jsonComponent);
+			}
+			case ComponentType::WALKABLE:
+			{
+				ComponentWalkable* walkableCmp = (ComponentWalkable*)component;
+				walkableCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::FOLLOW_PATH:
+			{
+				followCmp->Save(jsonComponent);
 				break;
 			}
 			default:
@@ -503,6 +517,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		scene->active = jsonScene.at("active");
 		//Create Root
 		scene->rootGo->SetName(scene->name.c_str());
+		if (jsonScene.find("navmesh") != jsonScene.end())
+			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
 		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
 		//{
 		//	(*goIt)->CleanUp();
@@ -718,6 +734,24 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					cAnimator->active = true;
 					cAnimator->Load(jsonCmp);
+				else if (type == "walkable")
+				{
+					ComponentWalkable* walCmp = go->GetComponent<ComponentWalkable>();
+					if (walCmp == nullptr)
+					{
+						walCmp = go->CreateComponent<ComponentWalkable>();
+					}
+					walCmp->active = true;
+					walCmp->Load(jsonCmp);
+				}
+				else if (type == "followPath")
+				{
+					ComponentFollowPath* follCmp = go->GetComponent<ComponentFollowPath>();
+					if (follCmp == nullptr)
+					{
+						follCmp = go->CreateComponent<ComponentFollowPath>();
+					}
+					follCmp->active = true;
 				}
 			}
 			if (!exists)

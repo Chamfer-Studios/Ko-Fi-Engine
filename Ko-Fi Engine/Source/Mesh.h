@@ -108,6 +108,9 @@ public:
 	float4x4 InitRotateTransform(const aiQuaternion& quat);
 	float4x4 InitTranslationTransform(float x, float y, float z);
 	float4x4 aiMatrix3x32Float4x4(aiMatrix3x3 assimpMatrix);
+	float* GetTransformedVertices(float4x4 transform);
+
+	static Mesh* MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transformations);
 
 	// Size in Bytes
 	unsigned verticesSizeBytes = 0;

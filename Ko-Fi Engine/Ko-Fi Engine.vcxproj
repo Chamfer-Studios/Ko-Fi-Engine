@@ -89,7 +89,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -176,6 +176,7 @@
     <ClCompile Include="Source\ComponentButton.cpp" />
     <ClCompile Include="Source\ComponentCamera.cpp" />
     <ClCompile Include="Source\ComponentCanvas.cpp" />
+    <ClCompile Include="Source\ComponentFollowPath.cpp" />
     <ClCompile Include="Source\ComponentImage.cpp" />
     <ClCompile Include="Source\ComponentMaterial.cpp" />
     <ClCompile Include="Source\ComponentScript.cpp" />
@@ -200,6 +201,12 @@
     <ClCompile Include="Source\External\ImGuizmo\include\ImGradient.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\ImGuizmo.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\ImSequencer.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourAlloc.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourCommon.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourNavMesh.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourNavMeshBuilder.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourNavMeshQuery.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourNode.cpp" />
     <ClCompile Include="Source\External\imgui\imgui.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_demo.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_draw.cpp" />
@@ -241,6 +248,16 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="Source\External\mmgr\mmgr.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\Recast.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastAlloc.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastArea.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastContour.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastFilter.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastLayers.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastMesh.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastMeshDetail.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastRasterization.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastRegion.cpp" />
     <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c" />
     <ClCompile Include="Source\External\stb_image\stb_image.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
@@ -261,9 +278,11 @@
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\Navigation.cpp" />
     <ClCompile Include="Source\PanelAssets.cpp" />
     <ClCompile Include="Source\PanelCameraViewport.cpp" />
     <ClCompile Include="Source\PanelGame.cpp" />
+    <ClCompile Include="Source\PanelNavigation.cpp" />
     <ClCompile Include="Source\PanelNodeEditor.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelSettings.cpp" />
@@ -295,6 +314,7 @@
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\ComponentMesh.cpp" />
+    <ClCompile Include="Source\ComponentWalkable.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +338,7 @@
     <ClInclude Include="Source\ComponentButton.h" />
     <ClInclude Include="Source\ComponentCamera.h" />
     <ClInclude Include="Source\ComponentCanvas.h" />
+    <ClInclude Include="Source\ComponentFollowPath.h" />
     <ClInclude Include="Source\ComponentImage.h" />
     <ClInclude Include="Source\ComponentCollider.h" />
     <ClInclude Include="Source\ComponentInfo.h" />
@@ -643,6 +664,8 @@
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\PanelCameraViewport.h" />
+    <ClInclude Include="Source\Navigation.h" />
+    <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
     <ClInclude Include="Source\ParticleResource.h" />
     <ClInclude Include="Source\UI.h" />
@@ -681,6 +704,7 @@
     <ClInclude Include="Source\RNG.h" />
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\ComponentWalkable.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>
   <ItemGroup>

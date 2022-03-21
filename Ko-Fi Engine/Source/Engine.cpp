@@ -16,6 +16,7 @@
 #include "Physics.h"
 #include "CollisionDetector.h"
 #include "Audio.h"
+#include "Navigation.h"
 
 #include <iostream>
 #include <sstream>
@@ -40,6 +41,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics(this);
 	collisionDetector = new CollisionDetector(this);
 	audio = new Audio(this);
+	navigation = new Navigation(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -50,6 +52,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fileSystem);
 	AddModule(ui);
 	AddModule(collisionDetector);
+	AddModule(navigation);
 	AddModule(sceneManager);
 	AddModule(audio);
 	// Render last to swap buffer
@@ -448,4 +451,9 @@ UI* KoFiEngine::GetUI() const
 CollisionDetector* KoFiEngine::GetCollisionDetector() const
 {
 	return this->collisionDetector;
+}
+
+Navigation* KoFiEngine::GetNavigation() const
+{
+	return this->navigation;
 }
