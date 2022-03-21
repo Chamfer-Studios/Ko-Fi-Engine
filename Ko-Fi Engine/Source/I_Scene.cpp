@@ -481,6 +481,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::FOLLOW_PATH:
 			{
+				ComponentFollowPath* followCmp = (ComponentFollowPath*)component;
 				followCmp->Save(jsonComponent);
 				break;
 			}
@@ -734,6 +735,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					cAnimator->active = true;
 					cAnimator->Load(jsonCmp);
+				}
 				else if (type == "walkable")
 				{
 					ComponentWalkable* walCmp = go->GetComponent<ComponentWalkable>();
