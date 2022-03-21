@@ -29,6 +29,7 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 
 C_AudioSource::~C_AudioSource()
 {
+    StopAudio(track->source);
     RELEASE(track);
 }
 
@@ -62,8 +63,6 @@ bool C_AudioSource::Update(float dt)
             PauseAudio(track->source);
             return true;
         }
-
-        ResumeAudio(track->source);
     }
 
     if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)
@@ -193,7 +192,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
         }
     }
 
-    if (track != nullptr)
+    if (track != nullptr && track->IsTrackLoaded())
         UpdatePlayState();
 
     return ret;
