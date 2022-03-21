@@ -13,9 +13,3 @@ Animation::~Animation()
 {
 
 }
-
-std::string Animation::GetName()
-{
-	return name;
-}
-

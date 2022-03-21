@@ -193,7 +193,7 @@ public:
 		// Component Animator
 		lua.new_usertype<ComponentAnimator>("ComponentAnimator",
 			sol::constructors<void(GameObject*)>(),
-			"PlayAnimation",	&ComponentAnimator::PlayAnimation
+			"SetSelectedClip",	&ComponentAnimator::SetSelectedClip
 			);
 
 		// Component Particle

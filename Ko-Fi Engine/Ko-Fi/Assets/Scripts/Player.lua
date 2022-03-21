@@ -26,7 +26,7 @@ local currentItemType = ItemType.ITEM_GUN
 currentItemDamage = 5
 currentItem = Item.new(currentItemType, currentItemDamage)
 
-gameObject:GetComponentAnimator():PlayAnimation("Idle")
+gameObject:GetComponentAnimator():SetSelectedClip("Idle")
 
 -------------------- Methods ---------------------
 
@@ -87,8 +87,8 @@ function Update(dt)
 						bulletCount = bulletCount - 1
 						gameObject:GetAudioSwitch():PlayTrack(0)
 					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
-						gameObject:GetAudioSwitch():PlayTrack(0)
-						gameObject:GetComponentAnimator():PlayAnimation("Attack")
+						--gameObject:GetAudioSwitch():PlayTrack(0)
+						gameObject:GetComponentAnimator():SetSelectedClip("Attack")
 					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
 						print("No item selected")
 				end
@@ -117,10 +117,10 @@ function MoveToDestination(dt)
 			if (isWalking ~= true) then
 				if (currentState == State.IDLE) then
 					gameObject:GetAudioSwitch():PlayTrack(1)
-					gameObject:GetComponentAnimator():PlayAnimation("Walk")
+					gameObject:GetComponentAnimator():SetSelectedClip("Walk")
 				elseif (currentState == State.CROUCH) then
 					gameObject:GetAudioSwitch():PlayTrack(2)
-					gameObject:GetComponentAnimator():PlayAnimation("Crouch")
+					gameObject:GetComponentAnimator():SetSelectedClip("Crouch")
 				end
 				isWalking = true
 			end
