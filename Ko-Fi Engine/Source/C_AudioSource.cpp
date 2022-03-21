@@ -63,6 +63,7 @@ bool C_AudioSource::Update(float dt)
             PauseAudio(track->source);
             return true;
         }
+        //ResumeAudio(track->source);
     }
 
     if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)

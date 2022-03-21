@@ -102,7 +102,7 @@ bool C_AudioSwitch::Update(float dt)
 
             continue;
         }
-        ResumeAudio(index->source);
+        //ResumeAudio(index->source);
     }
     UpdatePlayState();
 }
