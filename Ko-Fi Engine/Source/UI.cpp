@@ -191,6 +191,8 @@ void UI::PrepareUIRender()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	glDisable(GL_DEPTH_TEST);
+
 	glDisable(GL_LIGHTING);
 }
 
@@ -198,7 +200,8 @@ void UI::EndUIRender()
 {
 	glEnable(GL_LIGHTING);
 
-	//glColor3f(255, 255, 255);
+	glEnable(GL_DEPTH_TEST);
+
 	glDisable(GL_BLEND);
 
 	glPopMatrix();

@@ -255,12 +255,6 @@ void Renderer3D::RenderScene()
 				RenderBoundingBox(cMesh);
 			}
 
-			ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
-			if (cRenderedUI)
-			{
-				RenderUI(go);
-			}
-
 			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
 			if (cCamera) {
 				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
@@ -271,8 +265,18 @@ void Renderer3D::RenderScene()
 			}
 			RenderAllParticles();
 		}
-		
+	}
 
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->active)
+		{
+			ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+			if (cRenderedUI)
+			{
+				RenderUI(go);
+			}
+		}
 	}
 }
 
@@ -581,7 +585,8 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 	//glDisable(GL_ALPHA_TEST);
 
 	glEnable(GL_BLEND);
-	glEnable(GL_ALPHA_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_ALPHA_TEST);
 	
 	if (particle->tex)
 	{
@@ -634,5 +639,5 @@ void Renderer3D::RenderParticle(ParticleRenderer* particle)
 	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glDisable(GL_BLEND);
-	glDisable(GL_ALPHA_TEST);
+	//glDisable(GL_ALPHA_TEST);
 }
