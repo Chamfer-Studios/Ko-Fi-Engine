@@ -51,10 +51,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(ui);
 	AddModule(collisionDetector);
 	AddModule(sceneManager);
-	AddModule(viewportBuffer);
 	AddModule(audio);
-	AddModule(editor);
-
 	// Render last to swap buffer
 	AddModule(renderer);
 	// CHANGE THAT FOR THE SAKE OF GOD

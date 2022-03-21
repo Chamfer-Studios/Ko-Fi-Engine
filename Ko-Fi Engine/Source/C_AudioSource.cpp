@@ -36,6 +36,12 @@ C_AudioSource::~C_AudioSource()
 
 bool C_AudioSource::Start()
 {
+
+    return true;
+}
+
+bool C_AudioSource::OnPlay()
+{
     if (track != nullptr)
     {
         StopAudio(track->source);
@@ -43,7 +49,6 @@ bool C_AudioSource::Start()
         if (track->playOnStart)
             PlayAudio(track->source);
     }
-
     return true;
 }
 
@@ -53,11 +58,6 @@ bool C_AudioSource::Update(float dt)
 
     if (track != nullptr)
     {
-        if (track->playOnStart && owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING)
-        {
-            PlayAudio(track->source);
-            track->playOnStart = false;
-        }
 
         if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
         {
@@ -294,8 +294,8 @@ void C_AudioSource::DrawEditor()
                     track->play ? StopAudio(track->source) : PlayAudio(track->source, time);
                 }
             }
+            ImGui::EndTable();
         }
-        ImGui::EndTable();
 
         ImGui::Dummy(ImVec2{ 0.0f, 4.2f });
 
@@ -345,8 +345,8 @@ void C_AudioSource::DrawEditor()
                 ImGui::PlotHistogram("##volumegraph", a, 10, 100.0f, "", 0.0f, 10.0f, ImVec2(width - 220, 100));
                 ImGui::PlotHistogram("##volumegraph", a, 10, 0.0f, "", 10.0f, 0.0f, ImVec2(width - 220, 100), 4, true);
             }
+            ImGui::EndTable();
         }
-        ImGui::EndTable();
 
         ImGui::Dummy(ImVec2{ 6.f, 0.0f }); ImGui::SameLine();
 
@@ -417,8 +417,8 @@ void C_AudioSource::DrawEditor()
                     }
                 }
             }
+            ImGui::EndTable();
         }
-        ImGui::EndTable();
     }
     ImGui::End();
 

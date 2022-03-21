@@ -119,6 +119,16 @@ bool GameObject::CleanUp()
 	return true;
 }
 
+bool GameObject::OnPlay()
+{
+	bool ret = true;
+	for (Component* component : components)
+	{
+		ret = component->OnPlay();
+	}
+	return ret;
+}
+
 void GameObject::Enable()
 {
 	active = true;

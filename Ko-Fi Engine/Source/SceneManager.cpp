@@ -196,7 +196,9 @@ void SceneManager::OnPlay()
 			script->ReloadScript();
 			script->handler->lua["Start"]();
 		}
+		go->OnPlay();
 	}
+
 }
 
 void SceneManager::OnPause()

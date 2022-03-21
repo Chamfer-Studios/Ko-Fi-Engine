@@ -58,6 +58,13 @@ C_AudioSwitch::~C_AudioSwitch()
 
 bool C_AudioSwitch::Start()
 {
+
+
+    return true;
+}
+
+bool C_AudioSwitch::OnPlay()
+{
     for (R_Track* index : tracks)
     {
         if (index->IsTrackLoaded())
@@ -72,7 +79,6 @@ bool C_AudioSwitch::Start()
     }
     switching = false;
     switchTime = 0.0f;
-
     return true;
 }
 
@@ -529,8 +535,8 @@ void C_AudioSwitch::DrawEditor(R_Track* track)
 
                 }
             }
+            ImGui::EndTable();
         }
-        ImGui::EndTable();
 
         ImGui::Dummy(ImVec2{ 0.0f, 4.2f });
 
@@ -580,8 +586,9 @@ void C_AudioSwitch::DrawEditor(R_Track* track)
                 ImGui::PlotHistogram("##volumegraph", a, 10, 100.0f, "", 0.0f, 10.0f, ImVec2(width - 220, 100));
                 ImGui::PlotHistogram("##volumegraph", a, 10, 0.0f, "", 10.0f, 0.0f, ImVec2(width - 220, 100), 4, true);
             }
+            ImGui::EndTable();
+
         }
-        ImGui::EndTable();
 
         ImGui::Dummy(ImVec2{ 6.f, 0.0f }); ImGui::SameLine();
 
@@ -652,8 +659,9 @@ void C_AudioSwitch::DrawEditor(R_Track* track)
                     }
                 }
             }
+            ImGui::EndTable();
+
         }
-        ImGui::EndTable();
     }
     ImGui::End();
 

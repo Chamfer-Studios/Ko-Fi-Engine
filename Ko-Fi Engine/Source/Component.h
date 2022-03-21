@@ -42,6 +42,7 @@ public:
 	virtual bool Update(float dt) { return true; }
 	virtual bool PostUpdate(float dt) { return true; }
 	virtual bool CleanUp() { return true; }
+	virtual bool OnPlay() { return true; }
 
 	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
 

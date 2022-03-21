@@ -16,6 +16,8 @@ public:
 
     bool Start() override;
     bool Update(float dt) override;
+    bool OnPlay() override;
+
     bool InspectorDraw(PanelChooser* chooser) override;
 
     void Save(Json& json) const override;
