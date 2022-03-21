@@ -688,13 +688,6 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					partCmp->active = true;
 					partCmp->Load(jsonCmp);
-					ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
-					if (colCmp == nullptr)
-					{
-						colCmp = go->CreateComponent<ComponentCollider>();
-					}
-					colCmp->active = true;
-					colCmp->Load(jsonCmp);
 				}
 				else if (type == "audio_source")
 				{

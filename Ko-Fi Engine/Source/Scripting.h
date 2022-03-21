@@ -198,8 +198,9 @@ public:
 
 		// Component Particle
 		lua.new_usertype<ComponentParticle>("ComponentParticle",
-			sol::constructors<void(GameObject*)>()
-
+			sol::constructors<void(GameObject*)>(),
+			"StopParticleSpawn",	&ComponentParticle::StopParticleSpawn,
+			"ResumeParticleSpawn",	&ComponentParticle::ResumeParticleSpawn
 			);
 
 		// Component Audio Switch

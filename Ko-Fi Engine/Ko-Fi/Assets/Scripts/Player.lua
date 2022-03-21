@@ -28,6 +28,11 @@ currentItem = Item.new(currentItemType, currentItemDamage)
 
 gameObject:GetComponentAnimator():SetSelectedClip("Idle")
 
+mouseParticles = Find("Mouse Particles")
+mouseParticles:GetComponentParticle():StopParticleSpawn()
+
+particleFlag = false
+
 -------------------- Methods ---------------------
 
 function Start()
@@ -36,6 +41,11 @@ end
 
 -- Called each loop iteration
 function Update(dt)
+
+	if (particleFlag == true) then
+		mouseParticles:GetComponentParticle():StopParticleSpawn()
+		particleFlag = false
+	end
 
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
@@ -98,7 +108,7 @@ end
 
 -- Move to destination
 function MoveToDestination(dt)
-	print(destination)
+	
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local d = Distance(pos2D, targetPos2D)
@@ -122,6 +132,9 @@ function MoveToDestination(dt)
 					gameObject:GetAudioSwitch():PlayTrack(2)
 					gameObject:GetComponentAnimator():SetSelectedClip("Crouch")
 				end
+				mouseParticles:GetComponentParticle():ResumeParticleSpawn()
+				mouseParticles:GetTransform():SetPosition(destination)
+				particleFlag = true
 				isWalking = true
 			end
 
@@ -140,6 +153,8 @@ function MoveToDestination(dt)
 			destination = nil
 
 			gameObject:GetAudioSwitch():StopTrack(1)
+			gameObject:GetComponentAnimator():PlayAnimation("Idle")
+
 			isWalking = false
 	end
 end
