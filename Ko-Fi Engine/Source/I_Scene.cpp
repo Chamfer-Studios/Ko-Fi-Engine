@@ -29,8 +29,10 @@
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
+#include "ComponentAnimator.h"
 
 #include "Mesh.h"
+#include "Animation.h"
 #include "Texture.h"
 #include "Material.h"
 
@@ -38,6 +40,8 @@
 #include "I_Mesh.h"
 #include "I_Texture.h"
 #include "I_Material.h"
+
+#include "AnimatorClip.h"
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 {
@@ -58,7 +62,8 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 	if (path == nullptr)
 		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
 
-	const aiScene* assimpScene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* assimpScene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs);
+	this->assimpScene = (aiScene*)assimpScene;
 
 	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
 	{
@@ -81,7 +86,10 @@ GameObject* I_Scene::ImportModel(const char* path)
 	GameObject* tmp = nullptr;
 	return tmp;
 }
-
+aiScene* I_Scene::GetAssimpScene()
+{
+	return assimpScene;
+}
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab)
 {
 	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
@@ -89,7 +97,7 @@ void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, G
 	assimpNode = ImportTransform(assimpNode, gameObj);
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
 
-	if (isPrefab = true) gameObj->isPrefab = true;
+	gameObj->isPrefab = isPrefab;
 
 	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
 	gameObj->SetName(nodeName.c_str());
@@ -169,7 +177,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 
 		if (assimpMesh != nullptr && assimpMesh->HasFaces())
 		{
-			ImportMesh(nodeName, assimpMesh, gameObj);
+			ImportMesh(nodeName, assimpMesh, gameObj, assimpScene);
 
 			if (assimpScene->HasMaterials() && assimpMesh->mMaterialIndex >= 0)
 			{
@@ -182,7 +190,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 	}
 }
 
-void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj)
+void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj, const aiScene* assimpScene)
 {
 	//std::string assetPath = ASSETS_MODELS_DIR + std::string(nodeName) + MESH_EXTENSION;
 
@@ -193,7 +201,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 
 	// Import Mesh to GameObject
 	Mesh* mesh = new Mesh(Shape::NONE);
-	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh);
+	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh, assimpScene);
 
 	if (mesh == nullptr)
 	{
@@ -209,6 +217,28 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
 		return;
 	}
+
+	if (!assimpScene->HasAnimations())
+	{
+		CONSOLE_LOG("[WARNING] Scene Importer: Model had no animations to import.");
+		return;
+	}
+	mesh->isAnimated = true;
+	Animation* anim = new Animation();
+	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim, assimpScene);
+
+	ComponentAnimator* cAnim = gameObj->CreateComponent<ComponentAnimator>();
+	if (cAnim != nullptr)
+		cAnim->SetAnim(anim);
+	else
+	{
+		CONSOLE_LOG("[ERROR] Component Animator is nullptr.");
+		return;
+	}
+	
+	// Creating a default clip with all the keyframes of the animation.
+	AnimatorClip* animClip = new AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
+	cAnim->CreateDefaultClip(animClip);
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)
@@ -289,7 +319,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	jsonFile[name];
 	jsonFile[name]["name"] = name;
 	jsonFile[name]["active"] = scene->active;
-	jsonFile[name]["game_objects_amount"] = gameObjectList.size();
+	jsonFile[name]["game_objects_amount"] = gameObjectList.size()-1;
 
 	jsonFile[name]["game_objects_list"] = Json::array();
 	for (std::vector<GameObject*>::iterator goIt = gameObjectList.begin(); goIt != gameObjectList.end(); ++goIt)
@@ -297,7 +327,10 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 		Json jsonGameObject;
 
 		GameObject* gameObject = (*goIt);
-
+		if (gameObject->GetUID() == scene->rootGo->GetUID())
+		{
+			continue;
+		}
 		jsonGameObject["name"] = gameObject->GetName();
 		jsonGameObject["active"] = gameObject->active;
 		jsonGameObject["UID"] = gameObject->GetUID();
@@ -461,6 +494,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
 		scene->active = jsonScene.at("active");
+		//Create Root
+		scene->rootGo->SetName(scene->name.c_str());
 		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
 		//{
 		//	(*goIt)->CleanUp();

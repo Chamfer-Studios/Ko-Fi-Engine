@@ -310,9 +310,6 @@
     <ClCompile Include="Source\PanelInspector.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\External\stb_image\stb_image.cpp">
-      <Filter>Libs\stb_image</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ComponentMesh.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
@@ -502,6 +499,18 @@
     </ClCompile>
     <ClCompile Include="Source\R_Track.cpp">
       <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentAnimator.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimatorClip.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Animations.cpp">
+      <Filter>Source\Helpers\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -810,9 +819,6 @@
     </ClInclude>
     <ClInclude Include="Source\PanelInspector.h">
       <Filter>Source\Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>Libs\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="Source\Component.h">
       <Filter>Source\GameObject\Components</Filter>
@@ -1510,9 +1516,6 @@
     <ClInclude Include="Source\Scripting.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\ImGuizmo\include\GraphEditor.h">
       <Filter>Libs\ImGuizmo</Filter>
     </ClInclude>
@@ -1537,8 +1540,8 @@
     <ClInclude Include="Source\C_Collider.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\ComponentAnimator.h">
+      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelSettings.h">
       <Filter>Source\Editor\Panels</Filter>
@@ -1548,9 +1551,6 @@
     </ClInclude>
     <ClInclude Include="Source\ParticleResource.h">
       <Filter>Source\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\Audio.h">
       <Filter>Source\Modules</Filter>
@@ -1576,20 +1576,17 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Effects.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimatorClip.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Animations.h">
+      <Filter>Source\Helpers\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

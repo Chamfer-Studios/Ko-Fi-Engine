@@ -11,6 +11,7 @@ Importer::Importer(KoFiEngine* e)
 	materialImporter = new I_Material();
 	textureImporter = new I_Texture();
 	trackImporter = new I_Track();
+	animationImporter = new I_Animations();
 }
 
 Importer::~Importer()

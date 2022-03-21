@@ -66,7 +66,7 @@ bool SceneManager::Start()
 	{
 		ret = (*scene)->Start();
 	}
-	Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), "SceneIntro");
+	//Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), "SceneIntro");
 
 	currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 	currentGizmoMode = ImGuizmo::MODE::WORLD;
@@ -139,8 +139,8 @@ bool SceneManager::PrepareUpdate()
 {
 	bool ret = true;
 
-	if (runtimeState == RuntimeState::PLAYING ||
-		runtimeState == RuntimeState::TICK)
+	if (runtimeState == GameState::PLAYING ||
+		runtimeState == GameState::TICK)
 	{
 		frameCount++;
 		time += timer.ReadSec();
@@ -156,7 +156,7 @@ bool SceneManager::FinishUpdate()
 {
 	bool ret = true;
 
-	if (runtimeState == RuntimeState::TICK)
+	if (runtimeState == GameState::TICK)
 		OnPause();
 
 	return ret;
@@ -173,14 +173,24 @@ Scene* SceneManager::GetCurrentScene()
 	return currentScene;
 }
 
-RuntimeState SceneManager::GetState()
+GameState SceneManager::GetGameState()
 {
 	return runtimeState;
 }
 
+float SceneManager::GetGameDt()
+{
+	return gameDt;
+}
+
+float SceneManager::GetGameTime()
+{
+	return time;
+}
+
 void SceneManager::OnPlay()
 {
-	runtimeState = RuntimeState::PLAYING;
+	runtimeState = GameState::PLAYING;
 	gameClockSpeed = timeScale;
 
 	gameTime = 0.0f;
@@ -196,13 +206,13 @@ void SceneManager::OnPlay()
 
 void SceneManager::OnPause()
 {
-	runtimeState = RuntimeState::PAUSED;
+	runtimeState = GameState::PAUSED;
 	gameClockSpeed = 0.0f;
 }
 
 void SceneManager::OnStop()
 {
-	runtimeState = RuntimeState::STOPPED;
+	runtimeState = GameState::STOPPED;
 	gameClockSpeed = 0.0f;
 	frameCount = 0;
 	time = 0.0f;
@@ -215,13 +225,13 @@ void SceneManager::OnStop()
 
 void SceneManager::OnResume()
 {
-	runtimeState = RuntimeState::PLAYING;
+	runtimeState = GameState::PLAYING;
 	gameClockSpeed = timeScale;
 }
 
 void SceneManager::OnTick()
 {
-	runtimeState = RuntimeState::TICK;
+	runtimeState = GameState::TICK;
 	gameClockSpeed = timeScale;
 }
 

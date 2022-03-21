@@ -10,6 +10,7 @@
 #include "ComponentCamera.h"
 #include "ComponentCollider.h"
 #include "ComponentScript.h"
+#include "ComponentAnimator.h"
 #include "C_Collider.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
@@ -266,6 +267,12 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 			c = this->CreateComponent<C_AudioSwitch>();
 			break;
 		}
+		case ComponentType::ANIMATOR:
+		{
+			this->CreateComponent<ComponentAnimator>();
+			break;
+		}
+
 	}
 	c->Start();
 	return c;
