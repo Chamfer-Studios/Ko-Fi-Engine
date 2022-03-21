@@ -757,7 +757,7 @@
                         "pan": 0.0,
                         "play_on_start": true,
                         "track_path": "Assets/Audio/desert_calm_zone.wav",
-                        "transpose": 1.0,
+                        "transpose": 0.0,
                         "type": "audio_source",
                         "volume": 100.0
                     }

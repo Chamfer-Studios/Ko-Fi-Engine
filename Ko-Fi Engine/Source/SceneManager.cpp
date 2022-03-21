@@ -187,6 +187,11 @@ void SceneManager::OnPlay()
 
 	// Serialize scene and save it as a .json
 	Importer::GetInstance()->sceneImporter->Save(currentScene);
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnPlay();
+	}
 }
 
 void SceneManager::OnPause()
