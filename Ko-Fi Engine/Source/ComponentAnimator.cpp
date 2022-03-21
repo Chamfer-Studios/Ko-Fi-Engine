@@ -70,10 +70,8 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 		{
 			CreateClip(AnimatorClip(rAnim, clipName, rAnim->startPoint, rAnim->endPoint, 1.0f, true));
 		}
-			
 
 		ImGui::Text("Select Clip");
-
 
 		if (ImGui::BeginCombo("Select Clip", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
@@ -153,22 +151,22 @@ bool ComponentAnimator::CreateClip(const AnimatorClip& clip)
 	clips.emplace(clip.GetName(), clip);
 }
 
-bool ComponentAnimator::CreateDefaultClip(const AnimatorClip& clip)
+bool ComponentAnimator::CreateDefaultClip(AnimatorClip* clip)
 {
-	if (clip.GetAnimation() == nullptr)
+	if (clip->GetAnimation() == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip.GetName());
+		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip->GetName());
 		return false;
 	}
-	if (clips.find(clip.GetName()) != clips.end())
+	if (clips.find(clip->GetName()) != clips.end())
 	{
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip.GetName().c_str());
+		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip->GetName().c_str());
 		return false;
 	}
 
-	clips.emplace(clip.GetName(), clip);
+	clips.emplace(clip->GetName(), *clip);
 
-	selectedClip = (AnimatorClip*)&clip;
+	selectedClip = clip;
 }
 
 void ComponentAnimator::SetAnim(Animation* anim)
@@ -182,9 +180,4 @@ void ComponentAnimator::SetAnim(Animation* anim)
 AnimatorClip* ComponentAnimator::GetSelectedClip()
 {
 	return selectedClip;
-}
-
-void ComponentAnimator::SetSelectedClip(AnimatorClip& animatorClip)
-{
-	selectedClip = &animatorClip;
 }

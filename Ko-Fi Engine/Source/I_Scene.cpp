@@ -233,7 +233,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 	
 	// Creating a default clip with all the keyframes of the animation.
-	AnimatorClip animClip = AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
+	AnimatorClip* animClip = new AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
 	cAnim->CreateDefaultClip(animClip);
 }
 

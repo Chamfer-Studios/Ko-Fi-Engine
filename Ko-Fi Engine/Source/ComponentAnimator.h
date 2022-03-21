@@ -24,11 +24,10 @@ public:
 	void Reset();
 
 	bool CreateClip(const AnimatorClip& clip);
-	bool CreateDefaultClip(const AnimatorClip& clip);
+	bool CreateDefaultClip(AnimatorClip* clip);
 
 	void SetAnim(Animation* anim);
 	AnimatorClip* GetSelectedClip();
-	void SetSelectedClip(AnimatorClip& clip);
 
 private:
 	bool playing;
