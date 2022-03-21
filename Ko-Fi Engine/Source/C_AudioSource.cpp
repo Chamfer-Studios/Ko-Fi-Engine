@@ -29,7 +29,9 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 
 C_AudioSource::~C_AudioSource()
 {
-    StopAudio(track->source);
+    if(track != nullptr)
+        StopAudio(track->source);
+
     RELEASE(track);
 }
 
@@ -47,8 +49,7 @@ bool C_AudioSource::OnPlay()
 
         if (track->playOnStart)
         {
-            float time = track->duration * track->offset;
-            PlayAudio(track->source);
+            PlayAudio(track->source, track->offset);
         }
     }
     return true;
@@ -60,7 +61,6 @@ bool C_AudioSource::Update(float dt)
 
     if (track != nullptr)
     {
-
         if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
         {
             PauseAudio(track->source);
@@ -69,12 +69,10 @@ bool C_AudioSource::Update(float dt)
         //ResumeAudio(track->source);
     }
 
-    if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::STOPPED)
-    {
-        return true;
-    }
+    if (track != nullptr && track->IsTrackLoaded())
+        UpdatePlayState();
 
-    return true;
+    return ret;
 }
 
 bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
@@ -152,8 +150,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             track->play ? action = "Stop" : action = "Play";
             if (ImGui::Button(action.c_str()))
             {
-                float time = track->duration * track->offset;
-                track->play ? StopAudio(track->source) : PlayAudio(track->source, time);
+                track->play ? StopAudio(track->source) : PlayAudio(track->source, track->offset);
             }
             ImGui::SameLine();
             if (ImGui::Button("Edit"))
@@ -161,7 +158,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
                 openEditor = !openEditor;
             }
             ImGui::SameLine();
-            ImGui::SliderFloat("Offset", &track->offset, 0.0f, 1.0f);
+            ImGui::SliderFloat("Offset", &track->offset, 0.0f, track->duration);
 
             ImGui::Spacing();
             ImGui::Separator();
@@ -195,9 +192,6 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             ImGui::Spacing();
         }
     }
-
-    if (track != nullptr && track->IsTrackLoaded())
-        UpdatePlayState();
 
     return ret;
 }

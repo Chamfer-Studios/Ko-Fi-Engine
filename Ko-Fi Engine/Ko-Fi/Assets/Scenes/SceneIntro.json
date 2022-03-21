@@ -300,20 +300,20 @@
                     {
                         "active": true,
                         "position": [
-                            0.0,
-                            0.3562679886817932,
+                            -1.1920928955078125e-07,
+                            0.35626792907714844,
                             12.0
                         ],
                         "rotation": [
                             -0.7071068286895752,
-                            -3.654919700224468e-10,
-                            -5.472506448001013e-09,
+                            -3.654910263328759e-10,
+                            -5.4725060039118034e-09,
                             0.7071067094802856
                         ],
                         "scale": [
                             1.0,
-                            0.9999967217445374,
-                            0.9999967217445374
+                            0.9999964833259583,
+                            0.9999964833259583
                         ],
                         "type": "transform"
                     },
@@ -397,37 +397,6 @@
                         "file_name": "Assets/Scripts/Player.lua",
                         "script_number": 1,
                         "type": "script"
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": true,
-                                "track_path": "Assets/Audio/SFX/mc_attack_splash_2_fx.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": true,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/heavy_steps_fx.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": "audio_switch"
                     }
                 ],
                 "is3D": true,

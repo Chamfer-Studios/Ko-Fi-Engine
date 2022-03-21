@@ -96,7 +96,7 @@ public:
 
 	bool play = false;
 
-	bool playOnStart = true, loop = false, mute = false;
+	bool playOnStart = false, loop = false, mute = false;
 
 	bool knobReminder1 = false, knobReminder2 = false;
 	float pan = 0.0f, transpose = 0.0f; 

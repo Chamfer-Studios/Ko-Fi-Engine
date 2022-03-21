@@ -35,9 +35,10 @@ public:
 
     bool IsAnyTrackPlaying() const;
     R_Track* GetPlayingTrack() const;
+    int GetPlayingTrackID() const;
 
     void StopAllTracks();
-    void DisablePlayOnStart();
+    void DisablePlayOnStart(R_Track* trackToChange);
 
     inline int GetTotalTracks() const { return totalTracks; }
     inline int GetNextSwitchTrack() const { return nextSwitchTrack; }
