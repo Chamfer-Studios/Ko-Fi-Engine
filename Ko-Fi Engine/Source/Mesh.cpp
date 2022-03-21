@@ -19,6 +19,14 @@
 #include <gl/GLU.h>
 #include <iostream>
 
+#include "MathGeoLib/Math/float4.h"
+#include "MathGeoLib/Math/float4x4.h"
+
+#include "ComponentMaterial.h"
+#include "ComponentTransform.h"
+#include "GameObject.h"
+#include "Globals.h"
+
 Mesh::Mesh(Shape shape)
 {
 	verticesSizeBytes = 0;
@@ -157,6 +165,76 @@ void Mesh::DebugDraw()
 
 	if (drawFaceNormals)
 		DrawFaceNormals();
+}
+
+float* Mesh::GetTransformedVertices(float4x4 transform)
+{
+	float* ret = (float*)malloc(verticesSizeBytes);
+
+	int nvf = verticesSizeBytes / sizeof(float);
+	for (int i = 0; i < nvf; i += 3) {
+		float3 v = { vertices[i], vertices[i + 1], vertices[i + 2] };
+		float4 e = { v.x, v.y, v.z, 1 };
+		float4 t = transform * e;
+		float3 homogenized = { t.x / t.w, t.y / t.w, t.z / t.w };
+		ret[i] = homogenized.x;
+		ret[i + 1] = homogenized.y;
+		ret[i + 2] = homogenized.z;
+	}
+
+	return ret;
+}
+
+Mesh* Mesh::MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transformations)
+{
+	Mesh* ret = new Mesh();
+
+	int verticesSizeBytes = 0;
+	int indicesSizeBytes = 0;
+	for (auto m : meshes) {
+		verticesSizeBytes += m->verticesSizeBytes;
+		indicesSizeBytes += m->indicesSizeBytes;
+	}
+
+	ret->vertices = (float*)malloc(verticesSizeBytes);
+	ret->indices = (unsigned int*)malloc(indicesSizeBytes);
+	ret->verticesSizeBytes = verticesSizeBytes;
+	ret->indicesSizeBytes = indicesSizeBytes;
+
+	int indicesOffset = 0;
+	std::vector<float> outputVertices;
+	std::vector<unsigned int> outputIndices;
+	for (int i = 0; i < meshes.size(); i++) {
+		Mesh* m = meshes[i];
+		float4x4 t = transformations[i];
+
+		float* vertices = m->GetTransformedVertices(t);
+
+		for (int i = 0; i < m->verticesSizeBytes / sizeof(float); i++) {
+			outputVertices.push_back(vertices[i]);
+		}
+
+		//memcpy(ret->vertices + verticesBytesOffset, vertices, m->verticesSizeBytes);
+		//verticesBytesOffset += m->verticesSizeBytes;
+
+		for (int i = 0; i < m->indicesSizeBytes / sizeof(unsigned int); i++) {
+			outputIndices.push_back(m->indices[i] + indicesOffset);
+		}
+
+		indicesOffset += m->verticesSizeBytes / sizeof(float3);
+
+		free(vertices);
+	}
+
+	for (int i = 0; i < outputVertices.size(); i++) {
+		ret->vertices[i] = outputVertices[i];
+	}
+
+	for (int i = 0; i < outputIndices.size(); i++) {
+		ret->indices[i] = outputIndices[i];
+	}
+
+	return ret;
 }
 
 void Mesh::DrawVertexNormals() const

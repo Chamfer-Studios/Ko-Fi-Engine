@@ -28,6 +28,8 @@ enum class ComponentType
 	BUTTON,
 	TEXT,
 	TRANSFORM,
+	WALKABLE,
+	FOLLOW_PATH,
 	INFO
 };
 
