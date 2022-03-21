@@ -28,7 +28,7 @@ public:
 	float3 velocity;
 	float3 acceleration;
 	float3 direction;
-	float intensity = 1.0f;
+	//float intensity = 1.0f;
 
 	float lifeTime = 0.0f;
 	float maxLifetime = 0.0f;
