@@ -152,6 +152,7 @@ public:
 			"GetTransform",		&GameObject::GetTransform,
 			"GetRigidBody",		&GameObject::GetComponent<ComponentRigidBody>,
 			"GetText",			&GameObject::GetComponent<ComponentText>,
+			"GetAudioSwitch",	&GameObject::GetComponent<C_AudioSwitch>,
 			"IsSelected",		&GameObject::IsSelected
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
@@ -183,6 +184,15 @@ public:
 			sol::constructors<void(GameObject*)>(),
 			"GetTextValue", &ComponentText::GetTextValue,
 			"SetTextValue", &ComponentText::SetTextValue
+			);
+
+		// Component Audio Switch
+		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
+			sol::constructors<void(GameObject*)>(),
+			"PlayAudio",	&C_AudioSwitch::PlayAudio,
+			"PauseAudio",	&C_AudioSwitch::PauseAudio,
+			"ResumeAudio",	&C_AudioSwitch::ResumeAudio,
+			"StopAudio",	&C_AudioSwitch::StopAudio
 			);
 		
 		// Inspector Variables
