@@ -1,41 +1,8 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 16,
+        "game_objects_amount": 15,
         "game_objects_list": [
-            {
-                "UID": 4294967295,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "Root",
-                "parent_UID": 4294967295
-            },
             {
                 "UID": 624435464,
                 "active": true,
@@ -136,6 +103,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -198,6 +175,16 @@
                         "texture_path": "Assets/Textures/cliff_rock.png",
                         "type": "material",
                         "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -278,6 +265,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -349,6 +346,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -405,18 +412,18 @@
                                 "pan": 0.0,
                                 "play_on_start": true,
                                 "track_path": "Assets/Audio/SFX/mc_attack_splash_2_fx.wav",
-                                "transpose": 1.0,
+                                "transpose": 0.0,
                                 "volume": 100.0
                             },
                             {
                                 "bypass": false,
-                                "loop": false,
+                                "loop": true,
                                 "mute": false,
                                 "offset": 0.0,
                                 "pan": 0.0,
-                                "play_on_start": true,
-                                "track_path": "Assets/Audio/SFX/light_steps_fx.wav",
-                                "transpose": 1.0,
+                                "play_on_start": false,
+                                "track_path": "Assets/Audio/SFX/heavy_steps_fx.wav",
+                                "transpose": 0.0,
                                 "volume": 100.0
                             }
                         ],
@@ -475,6 +482,16 @@
                         "texture_path": "Assets/Textures/dinning_table_texture_v2.png",
                         "type": "material",
                         "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -546,6 +563,16 @@
                         "texture_path": "",
                         "type": "material",
                         "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -739,6 +766,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -843,6 +880,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     }
@@ -932,6 +979,16 @@
                         "texture_path": "Assets/Textures/cliff_rock.png",
                         "type": "material",
                         "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,

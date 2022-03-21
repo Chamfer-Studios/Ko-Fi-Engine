@@ -181,3 +181,15 @@ AnimatorClip* ComponentAnimator::GetSelectedClip()
 {
 	return selectedClip;
 }
+
+void ComponentAnimator::PlayAnimation(std::string name)
+{
+	std::map<std::string, AnimatorClip>::iterator mapIt;
+	for (auto clip = clips.begin(); clip != clips.end(); ++clip)
+	{
+		if ((*clip).first == name)
+		{
+			selectedClip = &clip->second;
+		}
+	}
+}

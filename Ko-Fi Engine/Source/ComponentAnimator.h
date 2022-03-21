@@ -29,6 +29,8 @@ public:
 	void SetAnim(Animation* anim);
 	AnimatorClip* GetSelectedClip();
 
+	void PlayAnimation(std::string name);
+
 private:
 	bool playing;
 

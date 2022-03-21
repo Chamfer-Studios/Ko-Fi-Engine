@@ -402,7 +402,7 @@ void C_AudioSwitch::ResumeTrack(int trackIndex)
 void C_AudioSwitch::StopTrack(int trackIndex)
 {
     if (tracks[trackIndex] != nullptr)
-        StopTrack(tracks[trackIndex]->source);
+        StopAudio(tracks[trackIndex]->source);
 }
 
 void C_AudioSwitch::PauseTrack(int trackIndex)

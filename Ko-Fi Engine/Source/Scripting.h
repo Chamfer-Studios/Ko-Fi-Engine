@@ -17,6 +17,7 @@
 #include "ComponentText.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
+#include "ComponentAnimator.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -145,15 +146,16 @@ public:
 		// GameObject structure
 		lua.new_usertype<GameObject>("GameObject",
 			sol::constructors<void()>(),
-			"active",			&GameObject::active,
-			"name",				&GameObject::name,
-			"GetParent",		&GameObject::GetParent,
-			"GetComponents",	&GameObject::GetComponents,							// Kinda works... not very useful tho
-			"GetTransform",		&GameObject::GetTransform,
-			"GetRigidBody",		&GameObject::GetComponent<ComponentRigidBody>,
-			"GetText",			&GameObject::GetComponent<ComponentText>,
-			"GetAudioSwitch",	&GameObject::GetComponent<C_AudioSwitch>,
-			"IsSelected",		&GameObject::IsSelected
+			"active",				&GameObject::active,
+			"name",					&GameObject::name,
+			"GetParent",			&GameObject::GetParent,
+			"GetComponents",		&GameObject::GetComponents,							// Kinda works... not very useful tho
+			"GetTransform",			&GameObject::GetTransform,
+			"GetRigidBody",			&GameObject::GetComponent<ComponentRigidBody>,
+			"GetText",				&GameObject::GetComponent<ComponentText>,
+			"GetAudioSwitch",		&GameObject::GetComponent<C_AudioSwitch>,
+			"GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
+			"IsSelected",			&GameObject::IsSelected
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
 
@@ -193,6 +195,12 @@ public:
 			"PauseTrack",	&C_AudioSwitch::PauseTrack,
 			"ResumeTrack",	&C_AudioSwitch::ResumeTrack,
 			"StopTrack",	&C_AudioSwitch::StopTrack
+			);
+
+		// Component Animator
+		lua.new_usertype<ComponentAnimator>("ComponentAnimator",
+			sol::constructors<void(GameObject*)>(),
+			"PlayAnimation",	&ComponentAnimator::PlayAnimation
 			);
 		
 		// Inspector Variables
