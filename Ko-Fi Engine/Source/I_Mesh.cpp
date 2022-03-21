@@ -1,7 +1,6 @@
 #include "I_Mesh.h"
 #include "Globals.h"
 #include "Log.h"
-
 #include "Mesh.h"
 
 #include <fstream>
@@ -14,7 +13,7 @@ I_Mesh::~I_Mesh()
 {
 }
 
-bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh)
+bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene)
 {
 	if (mesh == nullptr)
 	{
@@ -68,13 +67,40 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh)
 		for (uint j = 0; j < aiMesh->mNumVertices; ++j)
 		{
 			mesh->texCoords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-			mesh->texCoords[j * 2 + 1] = 1.0f - aiMesh->mTextureCoords[0][j].y;
+			mesh->texCoords[j * 2 + 1] =  aiMesh->mTextureCoords[0][j].y;
 		}
 
 		CONSOLE_LOG("[STATUS] Imported %u texture coordinates!", aiMesh->mNumVertices * 2);
 	}
 	else
 		mesh->texCoords = 0;
+
+	if (aiMesh->HasBones())
+	{
+		uint numVertices = mesh->verticesSizeBytes / (sizeof(float) * 3);
+		mesh->bones.resize(numVertices);
+		// Load mesh bones
+		for (int i = 0; i < aiMesh->mNumBones; i++)
+		{
+			// Load single bone
+			aiBone* bone = aiMesh->mBones[i];
+			int boneId = GetBoneId(bone,mesh->boneNameToIndexMap);
+			if (boneId == mesh->boneInfo.size())
+			{
+				float4x4 offsetmatrix = aiMatrix2Float4x4(bone->mOffsetMatrix);
+				BoneInfo bi(offsetmatrix);
+				mesh->boneInfo.push_back(bi);
+			}
+			for (int j = 0; j < bone->mNumWeights; j++)
+			{
+				const aiVertexWeight& vw = bone->mWeights[j];
+				uint globalVertexID = bone->mWeights[j].mVertexId;
+				mesh->bones[globalVertexID].AddBoneData(boneId, vw.mWeight);
+				CONSOLE_LOG("%d: vertex id %d weight %.2f\n",j,vw.mVertexId,vw.mWeight);
+			}
+		}
+	}
+	mesh->SetRootNode(assimpScene);
 
 	mesh->SetUpMeshBuffers();
 
@@ -136,4 +162,20 @@ bool I_Mesh::Load(const char* path, Mesh* mesh)
 		return true;
 	}
 	return false;
+}
+
+int I_Mesh::GetBoneId(const aiBone* pBone, std::map<std::string, uint>& boneNameToIndexMap)
+{
+	int boneIndex = 0;
+	std::string boneName(pBone->mName.C_Str());
+	if (boneNameToIndexMap.find(boneName) == boneNameToIndexMap.end())
+	{
+		boneIndex = (int)boneNameToIndexMap.size();
+		boneNameToIndexMap[boneName] = boneIndex;
+	}
+	else
+	{
+		boneIndex = boneNameToIndexMap[boneName];
+	}
+	return boneIndex;
 }

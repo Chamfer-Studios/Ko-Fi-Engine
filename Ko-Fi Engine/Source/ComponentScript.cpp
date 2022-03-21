@@ -50,7 +50,7 @@ bool ComponentScript::CleanUp()
 
 bool ComponentScript::Update(float dt)
 {
-	if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING && isScriptLoaded)
+	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
 		handler->lua["Update"](dt);
 	}

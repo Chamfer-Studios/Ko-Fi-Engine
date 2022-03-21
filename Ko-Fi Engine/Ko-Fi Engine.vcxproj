@@ -166,6 +166,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Audio.cpp" />
+    <ClCompile Include="Source\Animation.cpp" />
+    <ClCompile Include="Source\AnimatorClip.cpp" />
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\CollisionDetector.cpp" />
     <ClCompile Include="Source\Color.cpp" />
@@ -183,6 +185,7 @@
     <ClCompile Include="Source\ComponentRigidBody.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\ComponentTransform2D.cpp" />
+    <ClCompile Include="Source\ComponentAnimator.cpp" />
     <ClCompile Include="Source\C_Collider.cpp" />
     <ClCompile Include="Source\C_AudioSource.cpp" />
     <ClCompile Include="Source\C_AudioSwitch.cpp" />
@@ -243,6 +246,7 @@
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\Importer.cpp" />
     <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\I_Animations.cpp" />
     <ClCompile Include="Source\I_Material.cpp" />
     <ClCompile Include="Source\I_Mesh.cpp" />
     <ClCompile Include="Source\I_Scene.cpp" />
@@ -296,6 +300,8 @@
   <ItemGroup>
     <ClInclude Include="Event.h" />
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\AnimatorClip.h" />
     <ClInclude Include="Source\Assimp.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\C_Audio.h" />
@@ -323,6 +329,7 @@
     <ClInclude Include="Source\ComponentText.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\ComponentTransform2D.h" />
+    <ClInclude Include="Source\ComponentAnimator.h" />
     <ClInclude Include="Source\C_Collider.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
@@ -618,6 +625,7 @@
     <ClInclude Include="Source\IconsFontAwesome5.h" />
     <ClInclude Include="Source\ImGuiAppLog.h" />
     <ClInclude Include="Source\Importer.h" />
+    <ClInclude Include="Source\I_Animations.h" />
     <ClInclude Include="Source\I_Material.h" />
     <ClInclude Include="Source\I_Mesh.h" />
     <ClInclude Include="Source\I_Scene.h" />
