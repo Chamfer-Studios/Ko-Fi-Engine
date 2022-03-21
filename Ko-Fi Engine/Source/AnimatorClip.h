@@ -11,10 +11,16 @@ public:
 	AnimatorClip();
 	AnimatorClip(const Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop);
 
-	const std::string GetName() const;
-	const Animation* GetAnimation() const;
-	const float GetStartFrame();
-	const float GetEndFrame();
+	const std::string inline GetName() const { return name; }
+	const Animation* GetAnimation() const { return clipAnim; }
+	const float inline GetStartFrame() const { return start; }
+	const float inline GetEndFrame() const { return end; }
+	const float inline GetDuration() const { return duration; }
+
+	inline void SetName(const char* name) { this->name = name; }
+	inline void SetStartFrame(uint start) { this->start = start; }
+	inline void SetEndFrame(uint end) { this->end = end; }
+	inline void SetDuration(float duration) { this->duration = duration; }
 
 private:
 	//const R_Animation* animation;
@@ -25,13 +31,12 @@ private:
 	float				duration;
 	float				durationInSeconds;
 
-
 	float				time;
 	float				frame;
 	uint				tick;
 
 	bool				loop;
 	bool				interruptible;
-	const Animation*			clipAnim;
+	const Animation*	clipAnim;
 };
 #endif // !__ANIMATOR_CLIP_H__

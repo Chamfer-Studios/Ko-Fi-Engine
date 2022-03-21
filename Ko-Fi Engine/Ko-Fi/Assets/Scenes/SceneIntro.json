@@ -1,10 +1,10 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 16,
+        "game_objects_amount": 68,
         "game_objects_list": [
             {
-                "UID": 4294967295,
+                "UID": 1261807221,
                 "active": true,
                 "components": [
                     {
@@ -23,39 +23,6 @@
                             0.0,
                             0.0,
                             1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "Root",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 624435464,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            29.0,
-                            -93.0
-                        ],
-                        "rotation": [
-                            0.06975638121366501,
-                            2.0768315067698495e-08,
-                            2.9700078130190377e-07,
-                            0.9975647926330566
                         ],
                         "scale": [
                             1.0,
@@ -67,20 +34,20 @@
                     {
                         "active": true,
                         "draw_frustum": true,
-                        "far_plane_distance": 320.0,
+                        "far_plane_distance": 100.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
-                        "near_plane_distance": 5.099999904632568,
+                        "near_plane_distance": 0.10000000149011612,
                         "type": "camera",
-                        "vertical_fov": 46.0
+                        "vertical_fov": 60.0
                     }
                 ],
                 "is3D": true,
-                "name": "MainCamera",
+                "name": "camera",
                 "parent_UID": 4294967295
             },
             {
-                "UID": 1890739606,
+                "UID": 1166985412,
                 "active": true,
                 "components": [
                     {
@@ -95,228 +62,2193 @@
                             0.0
                         ],
                         "rotation": [
-                            5.960464477539063e-08,
+                            0.0,
                             0.0,
                             0.0,
                             1.0
-                        ],
-                        "scale": [
-                            30.0,
-                            0.10000000149011612,
-                            30.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Floor.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 4,
-                        "is_trigger": false,
-                        "type": "collider"
-                    }
-                ],
-                "is3D": true,
-                "name": "Floor",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 303954203,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            99.0,
-                            -20.0,
-                            138.0
-                        ],
-                        "rotation": [
-                            -0.5000001192092896,
-                            0.5000001192092896,
-                            0.4999999701976776,
-                            0.4999999701976776
-                        ],
-                        "scale": [
-                            30.00020980834961,
-                            1.000012993812561,
-                            30.00020980834961
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/LeftWall.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 3,
-                        "is_trigger": false,
-                        "type": "collider"
-                    }
-                ],
-                "is3D": true,
-                "name": "LeftWall",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 355990346,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            -7.0,
-                            213.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            0.0,
-                            0.0,
-                            0.7071067094802856
-                        ],
-                        "scale": [
-                            30.0,
-                            0.9999966621398926,
-                            29.999895095825195
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/FrontWall.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 3,
-                        "is_trigger": false,
-                        "type": "collider"
-                    }
-                ],
-                "is3D": true,
-                "name": "FrontWall",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1195123424,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.3562679886817932,
-                            12.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            -3.654919700224468e-10,
-                            -5.472506448001013e-09,
-                            0.7071067094802856
                         ],
                         "scale": [
                             1.0,
-                            0.9999967217445374,
-                            0.9999967217445374
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "ChavalRefachero",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 942551901,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.08971820771694183,
+                            121.76077270507813,
+                            1.2568751573562622
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Hips",
+                "parent_UID": 1166985412
+            },
+            {
+                "UID": 748098142,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.07196059077978134,
+                            7.257320880889893,
+                            -0.7896790504455566
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Spine",
+                "parent_UID": 942551901
+            },
+            {
+                "UID": 419853491,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.908751152920559e-09,
+                            8.466862678527832,
+                            -0.9212923049926758
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Spine1",
+                "parent_UID": 748098142
+            },
+            {
+                "UID": 1219977594,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.778157247642412e-08,
+                            29.059362411499023,
+                            -1.0529072284698486
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Spine2",
+                "parent_UID": 419853491
+            },
+            {
+                "UID": 934349377,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            6.787327322399506e-08,
+                            14.033303260803223,
+                            7.520357608795166
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Neck",
+                "parent_UID": 1219977594
+            },
+            {
+                "UID": 910824840,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.696001809634254e-08,
+                            8.198503494262695,
+                            5.703134536743164
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Head",
+                "parent_UID": 934349377
+            },
+            {
+                "UID": 1639057024,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.0718707699197694e-07,
+                            17.760822296142578,
+                            13.332673072814941
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "HeadTop_End",
+                "parent_UID": 910824840
+            },
+            {
+                "UID": 1950517265,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            12.584894180297852,
+                            11.570624351501465,
+                            -1.3379740715026855
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftShoulder",
+                "parent_UID": 1219977594
+            },
+            {
+                "UID": 834088520,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            13.906049728393555,
+                            -6.096520900726318,
+                            1.9650508165359497
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftArm",
+                "parent_UID": 1950517265
+            },
+            {
+                "UID": 2119036040,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            34.1367073059082,
+                            -0.07012993842363358,
+                            0.4831913411617279
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftForeArm",
+                "parent_UID": 834088520
+            },
+            {
+                "UID": 1576559234,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            40.9560661315918,
+                            -5.793508535134606e-05,
+                            0.5797587037086487
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHand",
+                "parent_UID": 2119036040
+            },
+            {
+                "UID": 1593748497,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.870942115783691,
+                            -7.20591926574707,
+                            9.68708324432373
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandThumb1",
+                "parent_UID": 1576559234
+            },
+            {
+                "UID": 31552794,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.819836139678955,
+                            -1.0594749450683594,
+                            1.0852917432785034
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandThumb2",
+                "parent_UID": 1593748497
+            },
+            {
+                "UID": 2008783840,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.094804048538208,
+                            -1.2194979190826416,
+                            1.2493321895599365
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandThumb3",
+                "parent_UID": 31552794
+            },
+            {
+                "UID": 814697412,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.803746223449707,
+                            -2.7965621948242188,
+                            2.8648681640625
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandThumb4",
+                "parent_UID": 2008783840
+            },
+            {
+                "UID": 710436288,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            18.32303237915039,
+                            -0.9394271373748779,
+                            4.853191375732422
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandIndex1",
+                "parent_UID": 1576559234
+            },
+            {
+                "UID": 441449144,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.710793495178223,
+                            -3.776004086830653e-05,
+                            0.06666567176580429
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandIndex2",
+                "parent_UID": 710436288
+            },
+            {
+                "UID": 1492382207,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.8768725395202637,
+                            -0.2261034995317459,
+                            0.04582379013299942
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandIndex3",
+                "parent_UID": 441449144
+            },
+            {
+                "UID": 1587824393,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            6.1453118324279785,
+                            -4.887246177531779e-05,
+                            0.087004654109478
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandIndex4",
+                "parent_UID": 1492382207
+            },
+            {
+                "UID": 2053852081,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            18.011228561401367,
+                            2.229919846286066e-05,
+                            0.25492510199546814
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandMiddle1",
+                "parent_UID": 1576559234
+            },
+            {
+                "UID": 1037095806,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.946174621582031,
+                            -1.6569871149840765e-05,
+                            0.07002447545528412
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandMiddle2",
+                "parent_UID": 2053852081
+            },
+            {
+                "UID": 951930092,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.3418843746185303,
+                            1.9837099898722954e-05,
+                            0.04732242226600647
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandMiddle3",
+                "parent_UID": 1037095806
+            },
+            {
+                "UID": 832105065,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.461334228515625,
+                            -4.258087574271485e-05,
+                            0.06317214667797089
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandMiddle4",
+                "parent_UID": 951930092
+            },
+            {
+                "UID": 1467868893,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            15.906673431396484,
+                            -0.08760487288236618,
+                            -3.9018146991729736
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandRing1",
+                "parent_UID": 1576559234
+            },
+            {
+                "UID": 48406117,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.5266811847686768,
+                            -4.3607236875686795e-05,
+                            0.0499647818505764
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandRing2",
+                "parent_UID": 1467868893
+            },
+            {
+                "UID": 680429514,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.9608302116394043,
+                            -3.1277334073820384e-06,
+                            0.041909847408533096
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandRing3",
+                "parent_UID": 48406117
+            },
+            {
+                "UID": 841425021,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.92672061920166,
+                            -3.8105910789454356e-05,
+                            0.06976080685853958
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandRing4",
+                "parent_UID": 680429514
+            },
+            {
+                "UID": 1792464175,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            12.886801719665527,
+                            -0.8068302869796753,
+                            -6.620516300201416
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandPinky1",
+                "parent_UID": 1576559234
+            },
+            {
+                "UID": 726116858,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.326814651489258,
+                            -7.983118848642334e-06,
+                            0.047120820730924606
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandPinky2",
+                "parent_UID": 1792464175
+            },
+            {
+                "UID": 1216720438,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.0146188735961914,
+                            -2.89547024294734e-05,
+                            0.042702462524175644
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandPinky3",
+                "parent_UID": 726116858
+            },
+            {
+                "UID": 1801158083,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.847151756286621,
+                            3.475909761618823e-05,
+                            0.08274434506893158
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandPinky4",
+                "parent_UID": 1216720438
+            },
+            {
+                "UID": 414297272,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -12.584894180297852,
+                            11.570624351501465,
+                            -1.337973952293396
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightShoulder",
+                "parent_UID": 1219977594
+            },
+            {
+                "UID": 937511055,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -13.906045913696289,
+                            -6.096528053283691,
+                            1.9650506973266602
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightArm",
+                "parent_UID": 414297272
+            },
+            {
+                "UID": 1986676884,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -34.1367073059082,
+                            -0.07014089077711105,
+                            0.4831947088241577
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightForeArm",
+                "parent_UID": 937511055
+            },
+            {
+                "UID": 1452088635,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -40.9560661315918,
+                            -2.961565951409284e-05,
+                            0.5797960162162781
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHand",
+                "parent_UID": 1986676884
+            },
+            {
+                "UID": 922691163,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -9.870892524719238,
+                            -7.205987930297852,
+                            9.687082290649414
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandThumb1",
+                "parent_UID": 1452088635
+            },
+            {
+                "UID": 1003126512,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.8198305368423462,
+                            -1.0594816207885742,
+                            1.0852946043014526
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandThumb2",
+                "parent_UID": 922691163
+            },
+            {
+                "UID": 355207865,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.094829559326172,
+                            -1.219502568244934,
+                            1.2492847442626953
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandThumb3",
+                "parent_UID": 1003126512
+            },
+            {
+                "UID": 1652573960,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.803753852844238,
+                            -2.7965822219848633,
+                            2.864835739135742
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandThumb4",
+                "parent_UID": 355207865
+            },
+            {
+                "UID": 267797488,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -18.323015213012695,
+                            -0.9395055174827576,
+                            4.853236198425293
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandIndex1",
+                "parent_UID": 1452088635
+            },
+            {
+                "UID": 2023372441,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.7107930183410645,
+                            -2.6183059162576683e-05,
+                            0.06670506298542023
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandIndex2",
+                "parent_UID": 267797488
+            },
+            {
+                "UID": 727922602,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.8768727779388428,
+                            -0.22609636187553406,
+                            0.04584670439362526
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandIndex3",
+                "parent_UID": 2023372441
+            },
+            {
+                "UID": 232888289,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -6.14531135559082,
+                            1.126529969042167e-05,
+                            0.08704285323619843
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandIndex4",
+                "parent_UID": 727922602
+            },
+            {
+                "UID": 414033619,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -18.011226654052734,
+                            -3.793935684370808e-05,
+                            0.2549726963043213
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandMiddle1",
+                "parent_UID": 1452088635
+            },
+            {
+                "UID": 1909078365,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.946175575256348,
+                            1.913406549647334e-06,
+                            0.06998187303543091
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandMiddle2",
+                "parent_UID": 414033619
+            },
+            {
+                "UID": 2034453188,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.3418848514556885,
+                            -7.118768280633958e-06,
+                            0.04728700965642929
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandMiddle3",
+                "parent_UID": 1909078365
+            },
+            {
+                "UID": 1233980216,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.461335182189941,
+                            -2.061457598756533e-05,
+                            0.06311575323343277
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandMiddle4",
+                "parent_UID": 2034453188
+            },
+            {
+                "UID": 853319901,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -15.906682968139648,
+                            -0.08764266967773438,
+                            -3.901772975921631
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandRing1",
+                "parent_UID": 1452088635
+            },
+            {
+                "UID": 997216913,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.5266823768615723,
+                            -3.7752870412077755e-05,
+                            0.0498872734606266
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandRing2",
+                "parent_UID": 853319901
+            },
+            {
+                "UID": 1239876110,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.960829973220825,
+                            1.336932837148197e-05,
+                            0.04192589595913887
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandRing3",
+                "parent_UID": 997216913
+            },
+            {
+                "UID": 1161979498,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.92672061920166,
+                            -5.776090983999893e-05,
+                            0.06977670639753342
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandRing4",
+                "parent_UID": 1239876110
+            },
+            {
+                "UID": 318164121,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -12.88681697845459,
+                            -0.8068479895591736,
+                            -6.620485305786133
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandPinky1",
+                "parent_UID": 1452088635
+            },
+            {
+                "UID": 1757932983,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.3268144130706787,
+                            -8.305970368382987e-06,
+                            0.047130219638347626
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandPinky2",
+                "parent_UID": 318164121
+            },
+            {
+                "UID": 1811683266,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.0146195888519287,
+                            -9.802607564779464e-06,
+                            0.04266476631164551
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandPinky3",
+                "parent_UID": 1757932983
+            },
+            {
+                "UID": 896139288,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -5.847150802612305,
+                            -2.6067848011734895e-05,
+                            0.0827980488538742
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandPinky4",
+                "parent_UID": 1811683266
+            },
+            {
+                "UID": 1418457204,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            13.026870727539063,
+                            -6.336296081542969,
+                            -1.0927687883377075
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftUpLeg",
+                "parent_UID": 942551901
+            },
+            {
+                "UID": 226008742,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.5317361950874329,
+                            -46.09675216674805,
+                            9.782727241516113
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftLeg",
+                "parent_UID": 1418457204
+            },
+            {
+                "UID": 341945213,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.516061007976532,
+                            -53.4275016784668,
+                            -12.948193550109863
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftFoot",
+                "parent_UID": 226008742
+            },
+            {
+                "UID": 1711447278,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.1922207623720169,
+                            -14.00966739654541,
+                            16.36406135559082
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftToeBase",
+                "parent_UID": 341945213
+            },
+            {
+                "UID": 1688271490,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.7847167253494263,
+                            -0.5617358088493347,
+                            9.47480583190918
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftToe_End",
+                "parent_UID": 1711447278
+            },
+            {
+                "UID": 926954039,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -12.882950782775879,
+                            -6.336294651031494,
+                            -1.0927687883377075
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightUpLeg",
+                "parent_UID": 942551901
+            },
+            {
+                "UID": 1436073222,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.5175102353096008,
+                            -46.09690475463867,
+                            9.78277587890625
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightLeg",
+                "parent_UID": 926954039
+            },
+            {
+                "UID": 457635483,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.5327556133270264,
+                            -53.42731475830078,
+                            -12.948287963867188
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightFoot",
+                "parent_UID": 1436073222
+            },
+            {
+                "UID": 972575051,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.19222334027290344,
+                            -14.00968074798584,
+                            16.364049911499023
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightToeBase",
+                "parent_UID": 457635483
+            },
+            {
+                "UID": 1488235761,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.7847158908843994,
+                            -0.5617435574531555,
+                            9.474804878234863
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightToe_End",
+                "parent_UID": 972575051
+            },
+            {
+                "UID": 670916125,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
                         ],
                         "type": "transform"
                     },
@@ -324,155 +2256,47 @@
                         "active": true,
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Character.sugar",
+                        "path": "Library/Meshes/Vampire.sugar",
                         "shape_type": 0,
                         "type": "mesh"
                     },
                     {
                         "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/mc_base_color.png",
-                        "type": "material",
-                        "uniforms": [
+                        "clips": [
                             {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 1,
-                        "is_trigger": false,
-                        "type": "collider"
-                    },
-                    {
-                        "active": true,
-                        "angular_damping": 0.0,
-                        "angular_velocity": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "density": 1.0,
-                        "freeze_position_x": false,
-                        "freeze_position_y": false,
-                        "freeze_position_z": false,
-                        "freeze_rotation_x": false,
-                        "freeze_rotation_y": false,
-                        "freeze_rotation_z": false,
-                        "is_kinematic": false,
-                        "is_static": false,
-                        "linear_damping": 0.0,
-                        "linear_velocity": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "mass": 5.0,
-                        "type": "rigidBody",
-                        "use_gravity": true
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Player.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": true,
-                                "track_path": "Assets/Audio/SFX/mc_attack_splash_2_fx.wav",
-                                "transpose": 1.0,
-                                "volume": 100.0
+                                "clipDuration": 70.0,
+                                "clipEndFrame": 70.0,
+                                "clipName": "Default clip",
+                                "clipStartFrame": 0.0,
+                                "mapString": "Default clip"
                             },
                             {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": true,
-                                "track_path": "Assets/Audio/SFX/light_steps_fx.wav",
-                                "transpose": 1.0,
-                                "volume": 100.0
+                                "clipDuration": 36.0,
+                                "clipEndFrame": 36.0,
+                                "clipName": "clipfacha",
+                                "clipStartFrame": 0.0,
+                                "mapString": "clipfacha"
+                            },
+                            {
+                                "clipDuration": 16.0,
+                                "clipEndFrame": 52.0,
+                                "clipName": "clipfacha2",
+                                "clipStartFrame": 36.0,
+                                "mapString": "clipfacha2"
                             }
                         ],
-                        "type": "audio_switch"
-                    }
-                ],
-                "is3D": true,
-                "name": "Character",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1657882298,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            11.0,
-                            112.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            0.0,
-                            0.0,
-                            0.7071067094802856
-                        ],
-                        "scale": [
-                            10.0,
-                            19.99989128112793,
-                            0.999996542930603
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Table.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
+                        "type": "animator"
                     },
                     {
                         "active": true,
                         "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
+                            1.0,
+                            1.0,
+                            1.0,
                             1.0
                         ],
                         "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/dinning_table_texture_v2.png",
+                        "texture_path": "Assets/Textures/Vampire_diffuse.png",
                         "type": "material",
                         "uniforms": [
                             {
@@ -484,68 +2308,7 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 3,
-                        "is_trigger": false,
-                        "type": "collider"
-                    }
-                ],
-                "is3D": true,
-                "name": "Table",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1860854588,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1486.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            0.0,
-                            0.10000000149011612,
-                            0.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Shell.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            1.0,
-                            0.8588235974311829,
-                            0.08627451211214066,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "",
-                        "type": "material",
-                        "uniforms": [
+                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -560,439 +2323,8 @@
                     }
                 ],
                 "is3D": true,
-                "name": "Shell",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1037610866,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "logicalSize": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": "canvas"
-                    }
-                ],
-                "is3D": true,
-                "name": "Canvas",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 303700353,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.0,
-                            0.0
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            276.0,
-                            667.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/character_abilities_v1.2.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": true,
-                "name": "Image",
-                "parent_UID": 1037610866
-            },
-            {
-                "UID": 1168295805,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -100.0,
-                            0.0,
-                            143.0
-                        ],
-                        "rotation": [
-                            -0.5000000596046448,
-                            0.5000001192092896,
-                            0.5000001192092896,
-                            0.5000000596046448
-                        ],
-                        "scale": [
-                            30.000274658203125,
-                            1.000008463859558,
-                            30.000274658203125
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/CliffRock_low.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 3,
-                        "is_trigger": false,
-                        "type": "collider"
-                    }
-                ],
-                "is3D": true,
-                "name": "CliffRock_low",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1278325985,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "rock_cliff",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 168619064,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            0.0,
-                            0.0,
-                            0.7071067094802856
-                        ],
-                        "scale": [
-                            30.0,
-                            0.9999988675117493,
-                            29.999963760375977
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/CliffRock_low.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "is3D": true,
-                "name": "CliffRock_low",
-                "parent_UID": 1278325985
-            },
-            {
-                "UID": 1386708608,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "rock_cliff",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1765163036,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            0.0,
-                            0.0,
-                            0.7071067094802856
-                        ],
-                        "scale": [
-                            30.0,
-                            0.999998927116394,
-                            29.99996566772461
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/CliffRock_low.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/cliff_rock.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "collider_type": 3,
-                        "is_trigger": false,
-                        "type": "collider"
-                    }
-                ],
-                "is3D": true,
-                "name": "CliffRock_low",
-                "parent_UID": 1386708608
-            },
-            {
-                "UID": 897839112,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/GameState.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "is3D": true,
-                "name": "GameState",
-                "parent_UID": 4294967295
+                "name": "Vampire",
+                "parent_UID": 1166985412
             }
         ],
         "name": "SceneIntro"

@@ -3,10 +3,12 @@
 #include "GameObject.h"
 #include "Globals.h"
 #include "ComponentMesh.h"
-#include <vector>
 #include "Engine.h"
 #include "Animation.h"
 #include "AnimatorClip.h"
+
+#include <vector>
+#include <string>
 
 ComponentAnimator::ComponentAnimator(GameObject* parent) : Component(parent)
 {
@@ -128,6 +130,38 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 
 	}
 	return ret;
+}
+
+void ComponentAnimator::Save(Json& json) const
+{
+	json["type"] = "animator";
+	Json jsonClips;
+	for (auto clip : clips)
+	{
+		jsonClips["mapString"] = clip.first.c_str();
+		jsonClips["clipName"] = clip.second.GetName().c_str();
+		jsonClips["clipStartFrame"] = clip.second.GetStartFrame();
+		jsonClips["clipEndFrame"] = clip.second.GetEndFrame();
+		jsonClips["clipDuration"] = clip.second.GetDuration();
+
+		json["clips"].push_back(jsonClips);
+	}
+}
+
+void ComponentAnimator::Load(Json& json)
+{
+	if (!json.empty())
+	{
+		AnimatorClip animatorClip;
+		for (const auto& clip : json.at("clips").items())
+		{
+			animatorClip.SetName(clip.value().at("clipName").get<std::string>().c_str());
+			animatorClip.SetStartFrame(clip.value().at("clipStartFrame"));
+			animatorClip.SetStartFrame(clip.value().at("clipEndFrame"));
+			animatorClip.SetDuration(clip.value().at("clipDuration"));
+			clips.emplace(clip.value().at("mapString"), animatorClip);
+		}
+	}
 }
 
 void ComponentAnimator::Reset()
