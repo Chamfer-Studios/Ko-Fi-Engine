@@ -12,6 +12,7 @@
 #include "ComponentCollider.h"
 #include "ComponentMaterial.h"
 #include "ComponentScript.h"
+#include "ComponentAnimator.h"
 #include "C_Collider.h"
 
 // Used with a path for the .fbx load
@@ -201,6 +202,12 @@ void GameObject::AddComponentByType(ComponentType componentType)
 			ComponentCollider2* cmpColl2 = new ComponentCollider2(this, ColliderShape::NONE);
 			break;
 		}
+		case ComponentType::ANIMATOR:
+		{
+			this->CreateComponent<ComponentAnimator>();
+			break;
+		}
+
 	}
 }
 

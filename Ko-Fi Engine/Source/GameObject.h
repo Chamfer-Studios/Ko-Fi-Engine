@@ -13,6 +13,7 @@ class ComponentInfo;
 class ComponentScript;
 class ComponentCollider;
 class ComponentCollider2;
+class ComponentAnimator;
 
 class GameObject
 {

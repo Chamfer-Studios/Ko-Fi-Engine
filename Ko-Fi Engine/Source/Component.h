@@ -19,6 +19,7 @@ enum class ComponentType
 	SCRIPT,
 	RIGID_BODY,
 	COLLIDER2,
+	ANIMATOR,
 	TRANSFORM2D,
 	CANVAS,
 	IMAGE,

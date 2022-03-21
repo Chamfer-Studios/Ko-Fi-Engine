@@ -12,6 +12,7 @@
 #include "ComponentTransform.h"
 #include "ComponentCollider.h"
 #include "ComponentRigidBody.h"
+#include "ComponentAnimator.h"
 
 PanelInspector::PanelInspector(Editor* editor)
 {
@@ -54,7 +55,7 @@ bool PanelInspector::Update()
 		ImGui::Separator();
 
 		// Take care with the order in the combo, it has to follow the ComponentType enum class order
-		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody\0Collider2");
+		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Camera\0Collider\0Script\0RigidBody\0Collider2\0Animator");
 
 		ImGui::SameLine();
 

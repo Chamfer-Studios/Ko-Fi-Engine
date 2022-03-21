@@ -182,7 +182,7 @@
     <ClCompile Include="Source\ComponentRigidBody.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\ComponentTransform2D.cpp" />
-    <ClCompile Include="Source\C_Animator.cpp" />
+    <ClCompile Include="Source\ComponentAnimator.cpp" />
     <ClCompile Include="Source\C_Collider.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />
@@ -302,7 +302,7 @@
     <ClInclude Include="Source\ComponentText.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\ComponentTransform2D.h" />
-    <ClInclude Include="Source\C_Animator.h" />
+    <ClInclude Include="Source\ComponentAnimator.h" />
     <ClInclude Include="Source\C_Collider.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
