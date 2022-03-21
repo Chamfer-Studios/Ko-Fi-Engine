@@ -46,7 +46,10 @@ bool C_AudioSource::OnPlay()
         StopAudio(track->source);
 
         if (track->playOnStart)
+        {
+            float time = track->duration * track->offset;
             PlayAudio(track->source);
+        }
     }
     return true;
 }
@@ -432,4 +435,37 @@ void C_AudioSource::DrawEditor()
 
     if (!openEditor)
         StopAudio(track->source);
+}
+
+void C_AudioSource::PlayTrack()
+{
+    if (track != nullptr)
+    {
+        float time = track->duration * track->offset;
+        PlayAudio(track->source, time);
+    }
+}
+
+void C_AudioSource::ResumeTrack()
+{
+    if (track != nullptr)
+    {
+        ResumeAudio(track->source);
+    }
+}
+
+void C_AudioSource::StopTrack()
+{
+    if (track != nullptr)
+    {
+        StopAudio(track->source);
+    }
+}
+
+void C_AudioSource::PauseTrack()
+{
+    if (track != nullptr)
+    {
+        PauseAudio(track->source);
+    }
 }

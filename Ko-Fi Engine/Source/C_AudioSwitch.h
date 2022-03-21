@@ -25,7 +25,12 @@ public:
 
     void UpdatePlayState();
 
-    void SwitchTrack(int newTrackIndex, bool offsetSync = false);
+    void SwitchTrack(int newTrackIndex);
+    void PlayTrack(int trackIndex);
+    void ResumeTrack(int trackIndex);
+    void StopTrack(int trackIndex);
+    void PauseTrack(int trackIndex);
+
     void SwitchFade(float fadeSeconds);
 
     bool IsAnyTrackPlaying() const;
