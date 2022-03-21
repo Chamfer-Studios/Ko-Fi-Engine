@@ -73,8 +73,8 @@ bool C_AudioSwitch::OnPlay()
             if (index->GetPlayOnStart())
             {
                 playingTrack = index;
-                float time = index->duration * index->offset;
-                PlayAudio(index->source, time);
+
+                PlayAudio(index->source, index->offset);
             }
         }
     }
@@ -90,9 +90,6 @@ bool C_AudioSwitch::Update(float dt)
     if (switching)
         SwitchFade(fadeTime);
 
-    if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::STOPPED)
-        return ret;
-
     for (R_Track* index : tracks)
     {
         if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
@@ -105,7 +102,10 @@ bool C_AudioSwitch::Update(float dt)
         }
         //ResumeAudio(index->source);
     }
+
     UpdatePlayState();
+
+    return ret;
 }
 
 bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
@@ -261,10 +261,9 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                         if (ImGui::Checkbox("Mute", &index->mute))
                             index->SetVolume();
 
-                        if (ImGui::Checkbox("Play on start", &index->playOnStart))
+                        if (ImGui::Checkbox("Play on start", &index->playOnStart) && index->playOnStart)
                         {
-                            DisablePlayOnStart();
-                            index->playOnStart = true;
+                            DisablePlayOnStart(index);
                         }
 
                         if (ImGui::Checkbox("Loop", &index->loop))
@@ -280,7 +279,6 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                 ImGui::Spacing();
                 ImGui::PopID();
             }
-            UpdatePlayState();
         }
     }
     return ret;
@@ -315,6 +313,13 @@ void C_AudioSwitch::Load(Json& json)
 {
     openEditor = false;
     trackIdInEdit = -1;
+    editorOffset = 0.0f;
+
+    if (IsAnyTrackPlaying())
+    {
+        R_Track* trackToStop = GetPlayingTrack();
+        StopAudio(trackToStop->source);
+    }
 
     fadeTime = json.at("fade_time");
     offsetSync = json.at("offset_sync");
@@ -388,8 +393,8 @@ void C_AudioSwitch::PlayTrack(int trackIndex)
     if (tracks[trackIndex] != nullptr)
     {
         playingTrack = tracks[trackIndex];
-        float time = tracks[trackIndex]->duration * tracks[trackIndex]->offset;
-        PlayAudio(tracks[trackIndex]->source, time);
+
+        PlayAudio(tracks[trackIndex]->source, tracks[trackIndex]->offset);
     }
 }
 
@@ -480,6 +485,15 @@ R_Track* C_AudioSwitch::GetPlayingTrack() const
     }
     return nullptr;
 }
+int C_AudioSwitch::GetPlayingTrackID() const
+{
+    for (uint i = 0; i < tracks.size(); ++i)
+    {
+        if (tracks[i]->play)
+            return i;
+    }
+    return -1;
+}
 
 void C_AudioSwitch::StopAllTracks()
 {
@@ -490,11 +504,11 @@ void C_AudioSwitch::StopAllTracks()
     }
 }
 
-void C_AudioSwitch::DisablePlayOnStart()
+void C_AudioSwitch::DisablePlayOnStart(R_Track* trackToChange)
 {
     for (R_Track* index : tracks)
     {
-        if (!index->IsTrackLoaded())
+        if (!index->IsTrackLoaded() || trackToChange == index)
             continue;
 
         index->playOnStart = false;
