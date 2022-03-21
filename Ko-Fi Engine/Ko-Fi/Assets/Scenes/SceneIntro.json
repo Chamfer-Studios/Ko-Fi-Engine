@@ -1,7 +1,7 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 15,
+        "game_objects_amount": 16,
         "game_objects_list": [
             {
                 "UID": 624435464,
@@ -412,7 +412,7 @@
                                 "pan": 0.0,
                                 "play_on_start": false,
                                 "track_path": "Assets/Audio/SFX/Harkonnen/harkonnen_attack_1_fx.wav",
-                                "transpose": 1.0,
+                                "transpose": 0.0,
                                 "volume": 100.0
                             },
                             {
@@ -423,7 +423,7 @@
                                 "pan": 0.0,
                                 "play_on_start": false,
                                 "track_path": "Assets/Audio/SFX/heavy_steps_fx.wav",
-                                "transpose": 1.0,
+                                "transpose": 0.0,
                                 "volume": 100.0
                             },
                             {
@@ -434,7 +434,7 @@
                                 "pan": 0.0,
                                 "play_on_start": false,
                                 "track_path": "Assets/Audio/SFX/light_steps_fx.wav",
-                                "transpose": 1.0,
+                                "transpose": 0.0,
                                 "volume": 100.0
                             }
                         ],
@@ -1060,6 +1060,121 @@
                 ],
                 "is3D": true,
                 "name": "GameState",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 543336811,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "resource": [
+                            {
+                                "emitters": [
+                                    {
+                                        "maxParticles": 50,
+                                        "modules": [
+                                            {
+                                                "maxParticleLife": 3.0,
+                                                "minParticleLife": 1.0,
+                                                "randomParticleLife": false,
+                                                "spawnTime": 0.0,
+                                                "spawnTimer": 0.0,
+                                                "type": 1
+                                            },
+                                            {
+                                                "maxAcceleration": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ],
+                                                "maxDirection": [
+                                                    -1.0,
+                                                    -1.0,
+                                                    -1.0
+                                                ],
+                                                "maxPosition": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "maxVelocity": 3.0,
+                                                "minAcceleration": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "minDirection": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ],
+                                                "minPosition": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "minVelocity": 1.0,
+                                                "randAcceleration": true,
+                                                "randDirection": false,
+                                                "randPosition": false,
+                                                "randVelocity": false,
+                                                "type": 2
+                                            },
+                                            {
+                                                "maxSize": [
+                                                    1.5,
+                                                    1.5,
+                                                    1.5
+                                                ],
+                                                "minSize": [
+                                                    1.0,
+                                                    1.0,
+                                                    1.0
+                                                ],
+                                                "type": 4
+                                            },
+                                            {
+                                                "billboardingType": 1,
+                                                "type": 5
+                                            }
+                                        ],
+                                        "name": "Emitter",
+                                        "texture_path": "Assets/Textures/firework_projectile.png"
+                                    }
+                                ],
+                                "name": "New Resource"
+                            }
+                        ],
+                        "type": "particle"
+                    }
+                ],
+                "is3D": true,
+                "name": "Mouse Particles",
                 "parent_UID": 4294967295
             }
         ],
