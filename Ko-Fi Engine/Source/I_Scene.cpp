@@ -25,9 +25,11 @@
 #include "ComponentImage.h"
 #include "ComponentText.h"
 #include "ComponentTransform2D.h"
+#include "ComponentAnimator.h"
 
 
 #include "Mesh.h"
+#include "Animation.h"
 #include "Texture.h"
 #include "Material.h"
 
@@ -210,6 +212,25 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
 		return;
 	}
+
+	if (!assimpScene->HasAnimations())
+	{
+		CONSOLE_LOG("[WARNING] Scene Importer: Model had no animations to import.");
+		return;
+	}
+
+	Animation* anim = new Animation();
+	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim, assimpScene);
+
+	ComponentAnimator* cAnim = gameObj->CreateComponent<ComponentAnimator>();
+	if (cAnim != nullptr)
+		cAnim->SetAnim(anim);
+	else
+	{
+		CONSOLE_LOG("[ERROR] Component Animator is nullptr.");
+		return;
+	}
+	//set animations?
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)

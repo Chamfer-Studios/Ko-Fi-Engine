@@ -4,12 +4,11 @@
 #include <vector>
 #include "Component.h"
 #include "MathGeoLib/Math/float4x4.h"
+#include "AnimatorClip.h"
+#include <map>
 
 class GameObject;
-
-struct AnimationClip {
-	int whatever;
-};
+class Animation;
 
 class ComponentAnimator : public Component
 {
@@ -21,14 +20,21 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 	bool InspectorDraw(PanelChooser* chooser);
+	
 
 	void Reset();
 
-	void Save();
+	bool CreateClip(const AnimatorClip& clip);
+
+	void SetAnim(Animation* anim);
 
 	bool playing;
 
-	//R_Animation rAnim;
+	Animation* rAnim;
+	
+	std::map<std::string, AnimatorClip> clips;
+	AnimatorClip* selectedClip;
+
 };
 
 #endif // __COMPONENT_ANIMATOR_H__

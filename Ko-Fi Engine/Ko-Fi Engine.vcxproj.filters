@@ -461,6 +461,15 @@
     <ClCompile Include="Source\ComponentAnimator.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimatorClip.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Animations.cpp">
+      <Filter>Source\Helpers\Importers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1494,6 +1503,18 @@
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimatorClip.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Animations.h">
+      <Filter>Source\Helpers\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

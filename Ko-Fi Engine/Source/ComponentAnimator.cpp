@@ -5,6 +5,7 @@
 #include "ComponentMesh.h"
 #include <vector>
 #include "Engine.h"
+#include "Animation.h"
 
 ComponentAnimator::ComponentAnimator(GameObject* parent) : Component(parent)
 {
@@ -55,50 +56,42 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 		// -- CLIP CREATOR
 		ImGui::Text("Select Animation");
 
-		if (ImGui::BeginCombo(" ", "[SELECT ANIMATION]", ImGuiComboFlags_None))
-		{
-			//for (uint i = 0; i < animations->size(); ++i)
-			{
-				//R_Animation* rAnimation = animations->at(i);
-				//if (rAnimation == nullptr)
-					//continue;
+		
+		ImGui::Text(rAnim->GetName().c_str());
 
-				/*if (ImGui::Selectable(rAnimation->GetName(), (rAnimation == selectedAnimation), ImGuiSelectableFlags_None))
-				{
-					selectedAnimation = rAnimation;
+		static char clipName[128] = "Enter Clip Name";
+		ImGuiInputTextFlags inputTxtFlags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll;
+		ImGui::InputText("Clip Name", clipName, IM_ARRAYSIZE(clipName), inputTxtFlags);
 
-					newClipEnd = selectedAnimation->GetDuration();
-					newClipMax = selectedAnimation->GetDuration();
-				}*/
-			}
-
-			ImGui::EndCombo();
-		}
-
-		int value = 5;
 		ImGui::Text("Reel selector: ");
-		ImGui::SliderInt("Edit Start", &value, 0, 10);
-		ImGui::SliderInt("Edit End", &value, 0, 10);
+		ImGui::SliderInt("Edit Start", &rAnim->startPoint, 0, rAnim->duration);
+		ImGui::SliderInt("Edit End", &rAnim->endPoint, 0, rAnim->duration);
+
 		if (ImGui::Button("Create Clip", ImVec2(80, 35)))
-			Save();
+		{
+			CreateClip(AnimatorClip(rAnim, clipName, rAnim->startPoint, rAnim->endPoint, 1.0f, true));
+		}
+			
 
 		ImGui::Text("Select Clip");
 
-		if (ImGui::BeginCombo(" ", "[SELECT CLIP]", ImGuiComboFlags_None))
+
+		if (ImGui::BeginCombo("Select Clip", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
-			//for (uint i = 0; i < animations->size(); ++i)
+			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
-				//R_Animation* rAnimation = animations->at(i);
-				//if (rAnimation == nullptr)
-					//continue;
-
-				/*if (ImGui::Selectable(rAnimation->GetName(), (rAnimation == selectedAnimation), ImGuiSelectableFlags_None))
+				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == selectedClip), ImGuiSelectableFlags_None))
 				{
-					selectedAnimation = rAnimation;
+					selectedClip = &clip->second;
 
-					newClipEnd = selectedAnimation->GetDuration();
-					newClipMax = selectedAnimation->GetDuration();
-				}*/
+					/*strcpy(editedName, selectedClip->GetName());
+					editedStart = (int)selectedClip->GetStart();
+					editedEnd = (int)selectedClip->GetEnd();
+					editedSpeed = selectedClip->GetSpeed();
+					editedLoop = selectedClip->IsLooped();
+
+					editedMax = (selectedAnimation != nullptr) ? selectedAnimation->GetDuration() : 0;*/
+				}
 			}
 
 			ImGui::EndCombo();
@@ -145,8 +138,26 @@ void ComponentAnimator::Reset()
 	//set the animation to the initial time value
 }
 
-void ComponentAnimator::Save()
+bool ComponentAnimator::CreateClip(const AnimatorClip& clip)
 {
-	//set the initial and final animation internal time value through which the animation will loop 
-	//use the values of the slider above
+	if (clip.GetAnimation() == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip.GetName());
+		return false;
+	}
+	if (clips.find(clip.GetName()) != clips.end())
+	{ 
+		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip.GetName().c_str());
+		return false;
+	}
+
+	clips.emplace(clip.GetName(), clip);
+}
+
+void ComponentAnimator::SetAnim(Animation* anim)
+{
+	if (this->rAnim != nullptr)
+		RELEASE(this->rAnim);
+
+	this->rAnim = anim;
 }
