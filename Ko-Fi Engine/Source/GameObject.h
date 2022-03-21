@@ -82,8 +82,9 @@ public:
 	
 	bool PrefabSaveJson();
 	bool PrefabSave(Json& jsonFile);
-	bool LoadPrefabJson(const char* path);
+	bool LoadPrefabJson(const char* path, bool exists);
 	bool LoadPrefab(Json& jsonFile);
+	bool UpdatePrefab(Json& jsonFile);
 
 	bool IsSelected();
 
@@ -93,6 +94,7 @@ public:
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
+	std::string prefabPath;
 
 	std::vector<GameObject*> children;
 private:
