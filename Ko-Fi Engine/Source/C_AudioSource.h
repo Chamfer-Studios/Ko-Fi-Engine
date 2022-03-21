@@ -18,7 +18,12 @@ public:
 	bool Update(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
+
 	void UpdatePlayState();
+
+	void DrawEditor();
 
 private:
     R_Track* track;

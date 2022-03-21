@@ -43,7 +43,6 @@ class R_Track
 {
 public:
 	R_Track();
-	R_Track(float volume, bool mute, bool playOnStart, bool loop);
 	~R_Track();
 
 	uint64_t GetTotalSamples() const;
@@ -65,17 +64,23 @@ public:
 	void SetLoop(bool active);
 	inline bool GetLoop() const { return loop; }
 
+	void SetVolume();
 	void SetVolume(float volume);
 	inline float GetVolume() const { return volume; }
 
 	inline void SetBypass(bool bypass) { this->bypass = bypass; }
 	inline bool GetBypass() const { return bypass; }
 
+	void SetPanning();
 	void SetPanning(float pan);
 	inline float GetPan() const { return pan; }
 
+	void SetTranspose();
 	void SetTranspose(float transpose);
 	inline float GetTranspose() const { return transpose; }
+
+	inline void SetOffset(float offset) { this->offset = offset; }
+	inline float GetOffset() const { return offset; }
 
 	int GetEffectNameId(std::string eName) const;
 	const char* ReturnWrittenName(std::string eName) const;

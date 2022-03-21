@@ -31,15 +31,15 @@ class GameObject;
 class C_Audio : public Component
 {
 public:
-    C_Audio(GameObject* parent) : Component(parent) {}
+    C_Audio(GameObject* parent) : Component(parent), editorOffset(0.0f), openEditor(false) {}
     ~C_Audio() {}
 
     virtual bool Start() { return true; }
     virtual bool Update(float dt) { return true; }
     virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
 
-    //virtual void Save(Json& json) const {}
-    //virtual void Load(Json& json) {}
+    virtual void Save(Json& json) const {}
+    virtual void Load(Json& json) {}
 
     ALuint CreateAudioSource(ALuint audioBuffer, bool spacial)
     {
@@ -121,6 +121,10 @@ public:
         if (sourceState == AL_PLAYING)
             alec(alSourcePause(audioSource));
     }
+
+public:
+    float editorOffset = 0.0f;
+    bool openEditor = false;
 };
 
 #endif // !__C_AUDIO_H__

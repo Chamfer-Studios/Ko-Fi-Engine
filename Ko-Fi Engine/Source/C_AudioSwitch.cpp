@@ -1,11 +1,4 @@
 #include "C_AudioSwitch.h"
-#include "SceneManager.h"
-#include "Globals.h"
-#include "Log.h"
-#include "GameObject.h"
-#include "PanelChooser.h"
-#include "Importer.h"
-#include "Effects.h"
 
 #include "External/imgui/imgui_internal.h"
 
@@ -15,6 +8,14 @@
 #include "efx.h"
 #include "efx-creative.h"
 #include "efx-presets.h"
+
+#include "Globals.h"
+#include "Log.h"
+#include "SceneManager.h"
+#include "GameObject.h"
+#include "Effects.h"
+#include "Importer.h"
+#include "PanelChooser.h"
 
 C_AudioSwitch::C_AudioSwitch(GameObject* parent) : C_Audio(parent)
 {
@@ -41,38 +42,14 @@ C_AudioSwitch::C_AudioSwitch(GameObject* parent) : C_Audio(parent)
     playingTrack = nullptr;
 }
 
-C_AudioSwitch::C_AudioSwitch(GameObject* parent, int totalTracks, int nextSwitchTrack, float fadeTime) : C_Audio(parent)
-{
-    type = ComponentType::AUDIO_SWITCH;
-
-    this->totalTracks = totalTracks;
-    this->nextSwitchTrack = nextSwitchTrack;
-    this->fadeTime = fadeTime;
-
-    switching = false;
-    switchTime = 0.0f;
-    pauseDifference = 0.0f;
-
-    trackIdInEdit = -1;
-    openEditor = false;
-
-    offsetSync = false;
-    oldOffset = 0.0f;
-    editorOffset = 0.0f;
-
-    oldTrack = nullptr;
-    newTrack = nullptr;
-    playingTrack = nullptr;
-}
-
 C_AudioSwitch::~C_AudioSwitch()
 {
-    for (uint i = 0; i < tracks.size(); ++i)
+    for (R_Track* index : tracks)
     {
-        if (tracks[i]->IsTrackLoaded())
-            StopAudio(tracks[i]->source);
+        if (index->IsTrackLoaded())
+            StopAudio(index->source);
 
-        RELEASE(tracks[i]);
+        RELEASE(index);
     }
 
     tracks.clear();
@@ -81,15 +58,15 @@ C_AudioSwitch::~C_AudioSwitch()
 
 bool C_AudioSwitch::Start()
 {
-    for (uint i = 0; i < tracks.size(); ++i)
+    for (R_Track* index : tracks)
     {
-        if (tracks[i]->IsTrackLoaded())
+        if (index->IsTrackLoaded())
         {
-            StopAudio(tracks[i]->source);
-            if (tracks[i]->GetPlayOnStart())
+            StopAudio(index->source);
+            if (index->GetPlayOnStart())
             {
-                playingTrack = tracks[i];
-                PlayAudio(tracks[i]->source);
+                playingTrack = index;
+                PlayAudio(index->source);
             }
         }
     }
@@ -109,17 +86,17 @@ bool C_AudioSwitch::Update(float dt)
     if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)
         return ret;
 
-    for (uint i = 0; i < tracks.size(); ++i)
+    for (R_Track* index : tracks)
     {
         if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
         {
-            PauseAudio(tracks[i]->source);
+            PauseAudio(index->source);
             if (switching)
                 pauseDifference = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - switchTime;
 
             continue;
         }
-        ResumeAudio(tracks[i]->source);
+        ResumeAudio(index->source);
     }
     UpdatePlayState();
 }
@@ -145,10 +122,11 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                     Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
                     track->source = CreateAudioSource(track->buffer, false);
 
-                    track->SetVolume(track->volume);
+                    track->SetVolume();
                     track->SetLoop(track->loop);
-                    //SetPanning(pan);
-                    //SetTranspose(transpose);
+                    track->SetPanning();
+                    track->SetTranspose();
+
                     tracks.push_back(track);
                     ++totalTracks;
                 }
@@ -200,7 +178,6 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
         ImGui::Spacing();
         if (totalTracks <= 1)
             ImGui::EndDisabled();
-
 
         if (totalTracks > 0)
         {
@@ -275,7 +252,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                         ImGui::Text("Options");
 
                         if (ImGui::Checkbox("Mute", &index->mute))
-                            tracks[i]->SetVolume(index->volume);
+                            index->SetVolume();
 
                         if (ImGui::Checkbox("Play on start", &index->playOnStart) && index->playOnStart)
                         {
@@ -284,7 +261,13 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                         }
 
                         if (ImGui::Checkbox("Loop", &index->loop))
-                            tracks[i]->SetLoop(index->loop);
+                            index->SetLoop(index->loop);
+
+                        if (ImGui::Checkbox("Bypass SFX", &index->bypass))
+                        {
+                            for (uint i = 0; i < index->effects.size(); ++i)
+                                index->effects[i]->ToggleBypass(!index->bypass);
+                        }
                     }
                 }
                 ImGui::Spacing();
@@ -296,15 +279,76 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
     return ret;
 }
 
+void C_AudioSwitch::Save(Json& json) const
+{
+    json["type"] = "audio_switch";
+
+    json["total_tracks"] = totalTracks;
+    json["fade_time"] = fadeTime;
+
+    Json jsonTrack;
+    for (R_Track* track : tracks)
+    {
+        jsonTrack["track_path"] = track->GetTrackPath();
+        jsonTrack["mute"] = track->GetMute();
+        jsonTrack["play_on_start"] = track->GetPlayOnStart();
+        jsonTrack["loop"] = track->GetLoop();
+        jsonTrack["bypass"] = track->GetBypass();
+        jsonTrack["volume"] = track->GetVolume();
+        jsonTrack["pan"] = track->GetPan();
+        jsonTrack["transpose"] = track->GetTranspose();
+        jsonTrack["offset"] = track->GetOffset();
+
+        json["tracks"].push_back(jsonTrack);
+    }
+}
+
+void C_AudioSwitch::Load(Json& json)
+{
+    openEditor = false;
+    trackIdInEdit = -1;
+
+    fadeTime = json.at("fade_time");
+
+    if (totalTracks != 0 && json.at("total_tracks") > 0)
+    {
+        return;
+    }
+    else if (totalTracks == 0 && json.at("total_tracks") > 0)
+    {
+        totalTracks = json.at("total_tracks");
+
+        for (const auto& index : json.at("tracks").items())
+        {
+            std::string path = index.value().at("track_path");
+
+            R_Track* track = new R_Track();
+            Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
+            track->source = CreateAudioSource(track->buffer, false);
+
+            track->SetMute(index.value().at("mute"));
+            track->SetPlayOnStart(index.value().at("play_on_start"));
+            track->SetLoop(index.value().at("loop"));
+            track->SetBypass(index.value().at("bypass"));
+            track->SetVolume(index.value().at("volume"));
+            track->SetPanning(index.value().at("pan"));
+            track->SetTranspose(index.value().at("transpose"));
+            track->SetOffset(index.value().at("offset"));
+
+            tracks.push_back(track);
+        }
+    }
+}
+
 void C_AudioSwitch::UpdatePlayState()
 {
-    for (uint i = 0; i < tracks.size(); ++i)
+    for (R_Track* index : tracks)
     {
-        if (tracks[i]->IsTrackLoaded())
+        if (index->IsTrackLoaded())
         {
             ALint sourceState;
-            alGetSourcei(tracks[i]->source, AL_SOURCE_STATE, &sourceState);
-            (sourceState == AL_PLAYING) ? tracks[i]->play = true : tracks[i]->play = false;
+            alGetSourcei(index->source, AL_SOURCE_STATE, &sourceState);
+            (sourceState == AL_PLAYING) ? index->play = true : index->play = false;
         }
     }
 }
@@ -349,9 +393,9 @@ void C_AudioSwitch::SwitchFade(float fadeSeconds)
     {
         switching = false; // Stop source
         StopAudio(oldTrack->source);
-        oldTrack->SetVolume(oldTrack->volume);
+        oldTrack->SetVolume();
 
-        newTrack->SetVolume(newTrack->volume);
+        newTrack->SetVolume();
 
         playingTrack = newTrack;
 
@@ -378,12 +422,12 @@ void C_AudioSwitch::SwitchFade(float fadeSeconds)
 
 bool C_AudioSwitch::IsAnyTrackPlaying() const
 {
-    for (uint i = 0; i < tracks.size(); ++i)
+    for (R_Track* index : tracks)
     {
-        if (!tracks[i]->IsTrackLoaded())
+        if (!index->IsTrackLoaded())
             continue;
 
-        if (tracks[i]->play)
+        if (index->play)
             return true;
     }
     return false;
@@ -391,31 +435,31 @@ bool C_AudioSwitch::IsAnyTrackPlaying() const
 
 R_Track* C_AudioSwitch::GetPlayingTrack() const
 {
-    for (uint i = 0; i < tracks.size(); ++i)
+    for (R_Track* index : tracks)
     {
-        if (tracks[i]->play)
-            return tracks[i];
+        if (index->play)
+            return index;
     }
     return nullptr;
 }
 
 void C_AudioSwitch::StopAllTracks()
 {
-    for (uint i = 0; i < tracks.size(); ++i)
+    for (R_Track* index : tracks)
     {
-        if (tracks[i]->IsTrackLoaded())
-            StopAudio(tracks[i]->source);
+        if (index->IsTrackLoaded())
+            StopAudio(index->source);
     }
 }
 
 void C_AudioSwitch::DisablePlayOnStart()
 {
-    for (uint i = 0; i < tracks.size(); ++i)
+    for (R_Track* index : tracks)
     {
-        if (!tracks[i]->IsTrackLoaded())
+        if (!index->IsTrackLoaded())
             continue;
 
-        tracks[i]->playOnStart = false;
+        index->playOnStart = false;
     }
 }
 
@@ -500,7 +544,7 @@ void C_AudioSwitch::DrawEditor(R_Track* track)
                 ImGui::Dummy(ImVec2{ 3.8f, 0.0f }); ImGui::SameLine();
                 if (track->mute) ImGui::BeginDisabled();
                 ImGui::VSliderFloat("-0", ImVec2{ 15, 155 }, &track->volume, 0.0f, 100.0f, "");
-                if (ImGui::IsItemDeactivatedAfterEdit()) track->SetVolume(track->volume);
+                if (ImGui::IsItemDeactivatedAfterEdit()) track->SetVolume();
                 if (track->mute) ImGui::EndDisabled();
                 ImGui::SameLine(0.0f, 20.0f);
                 if (ImGui::BeginTable("Column Table", 2))
@@ -511,13 +555,13 @@ void C_AudioSwitch::DrawEditor(R_Track* track)
                     ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
                     ImGui::Dummy(ImVec2{ 4.5f, 0.0f }); ImGui::SameLine();
                     if (ImGui::Knob("L / R", &track->pan, -0.5, 0.5, false, mono, 2.5f, &track->knobReminder2) && mono)
-                        track->SetPanning(track->pan);
+                        track->SetPanning();
 
                     ImGui::Dummy(ImVec2{ 0.0f, 10.0f });
 
                     ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
                     if (ImGui::Knob("Transpose", &track->transpose, -24.0, 24.0, false, true, -10, &track->knobReminder1))
-                        track->SetTranspose(track->transpose);
+                        track->SetTranspose();
                 }
                 ImGui::EndTable();
             }

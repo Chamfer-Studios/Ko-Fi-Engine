@@ -12,12 +12,14 @@ class C_AudioSwitch : public C_Audio
 {
 public:
     C_AudioSwitch(GameObject* parent);
-    C_AudioSwitch(GameObject* parent, int totalTracks, int nextSwitchTrack,float fadeTime);
     ~C_AudioSwitch();
 
     bool Start() override;
     bool Update(float dt) override;
     bool InspectorDraw(PanelChooser* chooser) override;
+
+    void Save(Json& json) const override;
+    void Load(Json& json) override;
 
     void UpdatePlayState();
 
@@ -47,11 +49,9 @@ private:
     float pauseDifference = 0.0f;
 
     int trackIdInEdit = -1;
-    bool openEditor = false;
 
     bool offsetSync = false;
     float oldOffset = 0.0f;
-    float editorOffset = 0.0f;
 
     R_Track* oldTrack = nullptr;
     R_Track* newTrack = nullptr;

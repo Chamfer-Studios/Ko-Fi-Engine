@@ -36,39 +36,6 @@ R_Track::R_Track()
 	totalPCMFrameCountFlac = 0;
 }
 
-R_Track::R_Track(float volume, bool mute, bool playOnStart, bool loop)
-{
-	this->volume = volume;
-	this->mute = mute;
-	this->playOnStart = playOnStart;
-	this->loop = loop;
-
-	play = false;
-
-	offset = 0.0f;
-
-	this->pan = pan;
-	this->transpose = transpose;
-	this->bypass = bypass;
-	knobReminder1 = false;
-	knobReminder2 = false;
-
-	currEffect = 0;
-	totalEffects = 6;
-
-	channels = 0;
-	sampleRate = 44100;
-	bits = 16;
-	duration = 0.0f;
-	format = AudioFormat::NONE;
-	buffer = 0;
-	source = 0;
-
-	totalPCMFrameCountWav = 0;
-	totalPCMFrameCountMp3 = 0;
-	totalPCMFrameCountFlac = 0;
-}
-
 R_Track::~R_Track()
 {
 	fxTracker.clear();
@@ -112,10 +79,26 @@ void R_Track::SetPCMFrameCount(drwav_uint64 value)
 
 void R_Track::SetLoop(bool active)
 {
+	loop = active;
 	alSourcei(source, AL_LOOPING, active);
 }
 
 // Range [0 - 100]
+void R_Track::SetVolume()
+{
+	if (mute)
+	{
+		alSourcef(source, AL_GAIN, 0.0f);
+		return;
+	}
+
+	volume = Pow(volume, 2.5f) / 1000.0f;
+
+	if (volume > 99.0f)
+		volume = 100.0f;
+
+	alSourcef(source, AL_GAIN, volume / 100.0f);
+}
 void R_Track::SetVolume(float volume)
 {
 	if (mute)
@@ -132,12 +115,16 @@ void R_Track::SetVolume(float volume)
 	alSourcef(source, AL_GAIN, volume / 100.0f);
 }
 
-void R_Track::SetPanning(float pan)
+void R_Track::SetPanning()
 {
     alSource3f(source, AL_POSITION, pan, 0, -sqrtf(1.0f - pan * pan));
 }
+void R_Track::SetPanning(float pan)
+{
+	alSource3f(source, AL_POSITION, pan, 0, -sqrtf(1.0f - pan * pan));
+}
 
-void R_Track::SetTranspose(float transpose)
+void R_Track::SetTranspose()
 {
     transpose = exp(0.0577623f * transpose);
 
@@ -151,6 +138,21 @@ void R_Track::SetTranspose(float transpose)
         transpose = 1.0f;
 
     alSourcef(source, AL_PITCH, transpose);
+}
+void R_Track::SetTranspose(float transpose)
+{
+	transpose = exp(0.0577623f * transpose);
+
+	if (transpose > 4.0f)
+		transpose = 4.0f;
+
+	if (transpose < 0.25f)
+		transpose = 0.25f;
+
+	if (transpose > 0.98f && transpose < 1.02f)
+		transpose = 1.0f;
+
+	alSourcef(source, AL_PITCH, transpose);
 }
 
 int R_Track::GetEffectNameId(std::string eName) const
