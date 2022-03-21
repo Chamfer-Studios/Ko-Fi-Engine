@@ -72,7 +72,7 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 		// Texture display
 		ImGui::Text("Texture: ");
 		ImGui::SameLine();
-		if (openGLTexture.GetTextureId() == 0) // Supposedly there is no textureId = 0 in textures array
+		if (openGLTexture.GetTextureId() == TEXTUREID_DEFAULT) // Supposedly there is no textureId = 0 in textures array
 		{
 			ImGui::Text("None");
 		}
@@ -112,7 +112,7 @@ void ComponentImage::Draw()
 
 void ComponentImage::FreeTextures()
 {
-	if (openGLTexture.GetTextureId() != 0) {
+	if (openGLTexture.GetTextureId() != TEXTUREID_DEFAULT) {
 		GLuint id = openGLTexture.GetTextureId();
 		glDeleteTextures(1, &id);
 	}

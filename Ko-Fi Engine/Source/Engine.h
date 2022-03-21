@@ -18,6 +18,7 @@ class FileSystem;
 class Physics;
 class UI;
 class CollisionDetector;
+class Audio;
 
 class KoFiEngine
 {
@@ -98,6 +99,7 @@ private:
 	Physics* physics = nullptr;
 	UI* ui = nullptr;
 	CollisionDetector* collisionDetector = nullptr;
+	Audio* audio = nullptr;
 
 private:
 	int argc;

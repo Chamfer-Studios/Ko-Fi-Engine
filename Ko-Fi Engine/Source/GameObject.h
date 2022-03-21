@@ -28,6 +28,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+	bool OnPlay();
 
 	void Enable();
 	void Disable();

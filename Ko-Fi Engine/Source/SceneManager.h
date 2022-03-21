@@ -66,6 +66,9 @@ public:
 	Scene* GetCurrentScene();
 	RuntimeState GetState();
 
+	inline float GetGameDt() const { return gameDt; }
+	inline float GetTotalGameTime() const { return gameTime; }
+
 	void OnPlay();
 	void OnStop();
 	void OnPause();
@@ -111,6 +114,8 @@ private:
 	// Real Time Since Startup: seconds since game start (Real Time Clock) --> Engine.cpp
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
 	// --------------------------------------------------
+
+	float gameTime = 0.0f;
 	
 	RuntimeState runtimeState = RuntimeState::STOPPED;
 };

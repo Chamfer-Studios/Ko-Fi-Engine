@@ -147,6 +147,86 @@ static ImVec2           InputTextCalcTextSizeW(const ImWchar* text_begin, const 
 // - BulletTextV()
 //-------------------------------------------------------------------------
 
+// Implementing a simple custom widget using the public API.
+// You may also use the <imgui_internal.h> API to get raw access to more data/helpers, however the internal API isn't guaranteed to be forward compatible.
+// FIXME: Need at least proper label centering + clipping (internal functions RenderTextClipped provides both but api is flaky/temporary)
+bool ImGui::Knob(const char* label, float* p_value, float v_min, float v_max, bool tooltip, bool active, float x_text_offset, bool* reminder_bool)
+{
+    ImGuiIO& io = ImGui::GetIO();
+    ImGuiStyle& style = ImGui::GetStyle();
+
+    float radius_outer = 20.0f;
+    ImVec2 pos = ImGui::GetCursorScreenPos();
+    ImVec2 center = ImVec2(pos.x + radius_outer, pos.y + radius_outer);
+    float line_height = ImGui::GetTextLineHeight();
+    ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+    float ANGLE_MIN = 3.141592f * 0.75f;
+    float ANGLE_MAX = 3.141592f * 2.25f;
+
+    ImGui::InvisibleButton(label, ImVec2(radius_outer * 2, radius_outer * 2 + line_height + style.ItemInnerSpacing.y));
+    bool value_changed = false;
+    bool is_active = ImGui::IsItemActive();
+    bool is_hovered = ImGui::IsItemActive();
+    if (is_active && io.MouseDelta.x != 0.0f)
+    {
+        float step = (v_max - v_min) / 200.0f;
+        *p_value += io.MouseDelta.x * step;
+        if (*p_value < v_min) *p_value = v_min;
+        if (*p_value > v_max) *p_value = v_max;
+        value_changed = true;
+    }
+
+    center.x -= x_text_offset;
+
+    float t = (*p_value - v_min) / (v_max - v_min);
+    float angle = ANGLE_MIN + (ANGLE_MAX - ANGLE_MIN) * t;
+    float angle_cos = cosf(angle), angle_sin = sinf(angle);
+    float radius_inner = radius_outer * 0.40f;
+    if (active)
+    {
+        draw_list->AddCircleFilled(center, radius_outer, ImGui::GetColorU32(ImGuiCol_FrameBg), 16);
+        draw_list->AddLine(ImVec2(center.x + angle_cos * radius_inner, center.y + angle_sin * radius_inner), ImVec2(center.x + angle_cos * (radius_outer - 2), center.y + angle_sin * (radius_outer - 2)), ImGui::GetColorU32(ImGuiCol_SliderGrabActive), 2.0f);
+        draw_list->AddCircleFilled(center, radius_inner, ImGui::GetColorU32(is_active ? ImGuiCol_FrameBgActive : is_hovered ? ImGuiCol_FrameBgHovered : ImGuiCol_FrameBg), 16);
+        draw_list->AddText(ImVec2(pos.x, pos.y + radius_outer * 2 + style.ItemInnerSpacing.y), ImGui::GetColorU32(ImGuiCol_Text), label);
+    }
+    else
+    {
+        draw_list->AddCircleFilled(center, radius_outer, ImGui::GetColorU32(ImGuiCol_Border, 0.5f), 16);
+        draw_list->AddLine(ImVec2(center.x + angle_cos * radius_inner, center.y + angle_sin * radius_inner), ImVec2(center.x + angle_cos * (radius_outer - 2), center.y + angle_sin * (radius_outer - 2)), ImGui::GetColorU32(ImGuiCol_PopupBg), 2.0f);
+        draw_list->AddCircleFilled(center, radius_inner, ImGui::GetColorU32(ImGui::GetColorU32(ImGuiCol_MenuBarBg)), 16);
+        draw_list->AddText(ImVec2(pos.x, pos.y + radius_outer * 2 + style.ItemInnerSpacing.y), ImGui::GetColorU32(ImGuiCol_Text), label);
+    }
+
+    if (!active) *p_value = (v_max + v_min) / 2;
+
+    if (is_active || is_hovered)
+    {
+        if (tooltip)
+        {
+            ImGui::SetNextWindowPos(ImVec2(pos.x - style.WindowPadding.x, pos.y - line_height - style.ItemInnerSpacing.y - style.WindowPadding.y));
+            ImGui::BeginTooltip();
+            ImGui::Text("%.3f", *p_value);
+            ImGui::EndTooltip();
+        }
+    }
+
+    if (reminder_bool != nullptr)
+    {
+        bool ret = false;
+        //is_active ? ImGui::Text("True") : ImGui::Text("False");
+        //*reminder_bool ? ImGui::Text("True") : ImGui::Text("False");
+
+        if (*reminder_bool && !is_active) ret = true;
+
+        *reminder_bool = is_active;
+
+        return ret;
+    }
+
+    return value_changed;
+}
+
 void ImGui::TextEx(const char* text, const char* text_end, ImGuiTextFlags flags)
 {
     ImGuiWindow* window = GetCurrentWindow();
@@ -6421,7 +6501,7 @@ bool ImGui::ListBox(const char* label, int* current_item, bool (*items_getter)(v
 // - others https://github.com/ocornut/imgui/wiki/Useful-Extensions
 //-------------------------------------------------------------------------
 
-int ImGui::PlotEx(ImGuiPlotType plot_type, const char* label, float (*values_getter)(void* data, int idx), void* data, int values_count, int values_offset, const char* overlay_text, float scale_min, float scale_max, ImVec2 frame_size)
+int ImGui::PlotEx(ImGuiPlotType plot_type, const char* label, float (*values_getter)(void* data, int idx), void* data, int values_count, int values_offset, const char* overlay_text, float scale_min, float scale_max, ImVec2 frame_size, bool invert)
 {
     ImGuiContext& g = *GImGui;
     ImGuiWindow* window = GetCurrentWindow();
@@ -6497,6 +6577,7 @@ int ImGui::PlotEx(ImGuiPlotType plot_type, const char* label, float (*values_get
         ImVec2 tp0 = ImVec2( t0, 1.0f - ImSaturate((v0 - scale_min) * inv_scale) );                       // Point in the normalized space of our target rectangle
         float histogram_zero_line_t = (scale_min * scale_max < 0.0f) ? (1 + scale_min * inv_scale) : (scale_min < 0.0f ? 0.0f : 1.0f);   // Where does the zero line stands
 
+        // Bar color
         const ImU32 col_base = GetColorU32((plot_type == ImGuiPlotType_Lines) ? ImGuiCol_PlotLines : ImGuiCol_PlotHistogram);
         const ImU32 col_hovered = GetColorU32((plot_type == ImGuiPlotType_Lines) ? ImGuiCol_PlotLinesHovered : ImGuiCol_PlotHistogramHovered);
 
@@ -6509,8 +6590,19 @@ int ImGui::PlotEx(ImGuiPlotType plot_type, const char* label, float (*values_get
             const ImVec2 tp1 = ImVec2( t1, 1.0f - ImSaturate((v1 - scale_min) * inv_scale) );
 
             // NB: Draw calls are merged together by the DrawList system. Still, we should render our batch are lower level to save a bit of CPU.
-            ImVec2 pos0 = ImLerp(inner_bb.Min, inner_bb.Max, tp0);
-            ImVec2 pos1 = ImLerp(inner_bb.Min, inner_bb.Max, (plot_type == ImGuiPlotType_Lines) ? tp1 : ImVec2(tp1.x, histogram_zero_line_t));
+            ImVec2 pos0;
+            ImVec2 pos1;
+            if (!invert)
+            {
+                pos0 = ImLerp(inner_bb.Min, inner_bb.Max, tp0);
+                pos1 = ImLerp(inner_bb.Min, inner_bb.Max, (plot_type == ImGuiPlotType_Lines) ? tp1 : ImVec2(tp1.x, histogram_zero_line_t));
+            }
+            else
+            {
+                pos0 = ImLerp(inner_bb.Max, inner_bb.Min, tp0);
+                pos1 = ImLerp(inner_bb.Max, inner_bb.Min, (plot_type == ImGuiPlotType_Lines) ? tp1 : ImVec2(tp1.x, histogram_zero_line_t));
+            }
+
             if (plot_type == ImGuiPlotType_Lines)
             {
                 window->DrawList->AddLine(pos0, pos1, idx_hovered == v1_idx ? col_hovered : col_base);
@@ -6565,10 +6657,10 @@ void ImGui::PlotLines(const char* label, float (*values_getter)(void* data, int 
     PlotEx(ImGuiPlotType_Lines, label, values_getter, data, values_count, values_offset, overlay_text, scale_min, scale_max, graph_size);
 }
 
-void ImGui::PlotHistogram(const char* label, const float* values, int values_count, int values_offset, const char* overlay_text, float scale_min, float scale_max, ImVec2 graph_size, int stride)
+void ImGui::PlotHistogram(const char* label, const float* values, int values_count, int values_offset, const char* overlay_text, float scale_min, float scale_max, ImVec2 graph_size, int stride, bool invert)
 {
     ImGuiPlotArrayGetterData data(values, stride);
-    PlotEx(ImGuiPlotType_Histogram, label, &Plot_ArrayGetter, (void*)&data, values_count, values_offset, overlay_text, scale_min, scale_max, graph_size);
+    PlotEx(ImGuiPlotType_Histogram, label, &Plot_ArrayGetter, (void*)&data, values_count, values_offset, overlay_text, scale_min, scale_max, graph_size, invert);
 }
 
 void ImGui::PlotHistogram(const char* label, float (*values_getter)(void* data, int idx), void* data, int values_count, int values_offset, const char* overlay_text, float scale_min, float scale_max, ImVec2 graph_size)

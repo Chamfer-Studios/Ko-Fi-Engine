@@ -390,6 +390,37 @@
                         "file_name": "Assets/Scripts/Player.lua",
                         "script_number": 1,
                         "type": "script"
+                    },
+                    {
+                        "active": true,
+                        "fade_time": 2.0,
+                        "offset_sync": false,
+                        "total_tracks": 2,
+                        "tracks": [
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": true,
+                                "track_path": "Assets/Audio/SplitDuty_Meh_Fx.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            },
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": false,
+                                "track_path": "Assets/Audio/bounce.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            }
+                        ],
+                        "type": "audio_switch"
                     }
                 ],
                 "is3D": true,
@@ -716,6 +747,19 @@
                         "collider_type": 3,
                         "is_trigger": false,
                         "type": "collider"
+                    },
+                    {
+                        "active": true,
+                        "bypass": false,
+                        "loop": false,
+                        "mute": false,
+                        "offset": 0.0,
+                        "pan": 0.0,
+                        "play_on_start": true,
+                        "track_path": "Assets/Audio/desert_calm_zone.wav",
+                        "transpose": 1.0,
+                        "type": "audio_source",
+                        "volume": 100.0
                     }
                 ],
                 "is3D": true,

@@ -19,6 +19,8 @@
 #include "ComponentRigidBody.h"
 #include "ComponentTransform.h"
 #include "ComponentInfo.h"
+#include "C_AudioSource.h"
+#include "C_AudioSwitch.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -115,6 +117,16 @@ bool GameObject::CleanUp()
 	parent = nullptr;
 
 	return true;
+}
+
+bool GameObject::OnPlay()
+{
+	bool ret = true;
+	for (Component* component : components)
+	{
+		ret = component->OnPlay();
+	}
+	return ret;
 }
 
 void GameObject::Enable()
@@ -243,6 +255,15 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 			if (!this->GetComponent<ComponentRigidBody>())
 				this->CreateComponent<ComponentRigidBody>();
 			ComponentCollider2* cmpColl2 = new ComponentCollider2(this, ColliderShape::NONE);
+		}
+		case ComponentType::AUDIO_SOURCE:
+		{
+			c = this->CreateComponent<C_AudioSource>();
+			break;
+		}
+		case ComponentType::AUDIO_SWITCH:
+		{
+			c = this->CreateComponent<C_AudioSwitch>();
 			break;
 		}
 	}

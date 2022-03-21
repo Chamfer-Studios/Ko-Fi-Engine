@@ -27,6 +27,8 @@
 #include "ComponentTransform2D.h"
 #include "ComponentParticle.h"
 
+#include "C_AudioSource.h"
+#include "C_AudioSwitch.h"
 
 #include "Mesh.h"
 #include "Texture.h"
@@ -416,6 +418,18 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				infoCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::AUDIO_SOURCE:
+			{
+				C_AudioSource* audioSrcCmp = (C_AudioSource*)component;
+				audioSrcCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::AUDIO_SWITCH:
+			{
+				C_AudioSwitch* audioSwitchCmp = (C_AudioSwitch*)component;
+				audioSwitchCmp->Save(jsonComponent);
+				break;
+			}
 			default:
 				break;
 			}
@@ -632,6 +646,33 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					partCmp->active = true;
 					partCmp->Load(jsonCmp);
+					ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
+					if (colCmp == nullptr)
+					{
+						colCmp = go->CreateComponent<ComponentCollider>();
+					}
+					colCmp->active = true;
+					colCmp->Load(jsonCmp);
+				}
+				else if (type == "audio_source")
+				{
+					C_AudioSource* audioSrcCmp = go->GetComponent<C_AudioSource>();
+					if (audioSrcCmp == nullptr)
+					{
+						audioSrcCmp = go->CreateComponent<C_AudioSource>();
+					}
+					audioSrcCmp->active = true;
+					audioSrcCmp->Load(jsonCmp);
+				}
+				else if (type == "audio_switch")
+				{
+					C_AudioSwitch* audioSwitchCmp = go->GetComponent<C_AudioSwitch>();
+					if (audioSwitchCmp == nullptr)
+					{
+						audioSwitchCmp = go->CreateComponent<C_AudioSwitch>();
+					}
+					audioSwitchCmp->active = true;
+					audioSwitchCmp->Load(jsonCmp);
 				}
 			}
 			if (!exists)

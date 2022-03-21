@@ -10,6 +10,7 @@ Importer::Importer(KoFiEngine* e)
 	meshImporter = new I_Mesh();
 	materialImporter = new I_Material();
 	textureImporter = new I_Texture();
+	trackImporter = new I_Track();
 }
 
 Importer::~Importer()
