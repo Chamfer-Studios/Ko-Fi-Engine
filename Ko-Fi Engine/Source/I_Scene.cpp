@@ -319,7 +319,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	jsonFile[name];
 	jsonFile[name]["name"] = name;
 	jsonFile[name]["active"] = scene->active;
-	jsonFile[name]["game_objects_amount"] = gameObjectList.size();
+	jsonFile[name]["game_objects_amount"] = gameObjectList.size()-1;
 
 	jsonFile[name]["game_objects_list"] = Json::array();
 	for (std::vector<GameObject*>::iterator goIt = gameObjectList.begin(); goIt != gameObjectList.end(); ++goIt)
@@ -327,7 +327,10 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 		Json jsonGameObject;
 
 		GameObject* gameObject = (*goIt);
-
+		if (gameObject->GetUID() == scene->rootGo->GetUID())
+		{
+			continue;
+		}
 		jsonGameObject["name"] = gameObject->GetName();
 		jsonGameObject["active"] = gameObject->active;
 		jsonGameObject["UID"] = gameObject->GetUID();
@@ -491,6 +494,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
 		scene->active = jsonScene.at("active");
+		//Create Root
+		scene->rootGo->SetName(scene->name.c_str());
 		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
 		//{
 		//	(*goIt)->CleanUp();

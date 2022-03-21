@@ -206,7 +206,7 @@ void Renderer3D::PassProjectionAndViewToRenderer()
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	Camera3D* currentCamera3D = engine->GetCamera3D();
-	if (currentCamera3D)
+	if (currentCamera3D->currentCamera)
 	{
 		if (currentCamera3D->currentCamera->projectionIsDirty) {
 			RecalculateProjectionMatrix();
