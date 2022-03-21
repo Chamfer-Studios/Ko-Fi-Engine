@@ -13,8 +13,9 @@ public:
 	~Texture();
 
 	inline const char* GetTexturePath() { return path.c_str(); }
-	inline void SetTexturePath(const char* path) { 
-		path != nullptr ? this->path = path:this->path = "";
+	inline void SetTexturePath(const char* path)
+	{ 
+		path != nullptr ? this->path = path : this->path = "";
 	}
 
 	inline uint GetTextureId() const { return textureID; }

@@ -25,5 +25,6 @@
   "Editor": null,
   "SceneManager": null,
   "ModelLoader": null,
-  "ViewportFrameBuffer":  null
+  "ViewportFrameBuffer": null,
+  "Audio": null
 }
