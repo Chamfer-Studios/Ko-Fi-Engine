@@ -73,7 +73,8 @@ bool C_AudioSwitch::OnPlay()
             if (index->GetPlayOnStart())
             {
                 playingTrack = index;
-                PlayAudio(index->source);
+                float time = index->duration * index->offset;
+                PlayAudio(index->source, time);
             }
         }
     }
@@ -167,7 +168,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
         // SWITCH BUTTON
         if (ImGui::Button("Switch To") && !switching)
         {
-            SwitchTrack(nextSwitchTrack, offsetSync);
+            SwitchTrack(nextSwitchTrack);
         }
         ImGui::SameLine();
         ImGui::DragInt("##Switch", &nextSwitchTrack, 0.1f, 0, tracks.size() - 1, "Track %d");
@@ -260,7 +261,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                         if (ImGui::Checkbox("Mute", &index->mute))
                             index->SetVolume();
 
-                        if (ImGui::Checkbox("Play on start", &index->playOnStart) && index->playOnStart)
+                        if (ImGui::Checkbox("Play on start", &index->playOnStart))
                         {
                             DisablePlayOnStart();
                             index->playOnStart = true;
@@ -362,7 +363,7 @@ void C_AudioSwitch::UpdatePlayState()
     }
 }
 
-void C_AudioSwitch::SwitchTrack(int newTrackIndex, bool offsetSync)
+void C_AudioSwitch::SwitchTrack(int newTrackIndex)
 {
     if (newTrackIndex >= tracks.size())
         return;
@@ -380,6 +381,34 @@ void C_AudioSwitch::SwitchTrack(int newTrackIndex, bool offsetSync)
         switching = true;
         switchTime = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec();
     }
+}
+
+void C_AudioSwitch::PlayTrack(int trackIndex)
+{
+    if (tracks[trackIndex] != nullptr)
+    {
+        playingTrack = tracks[trackIndex];
+        float time = tracks[trackIndex]->duration * tracks[trackIndex]->offset;
+        PlayAudio(tracks[trackIndex]->source, time);
+    }
+}
+
+void C_AudioSwitch::ResumeTrack(int trackIndex)
+{
+    if (tracks[trackIndex] != nullptr)
+        ResumeAudio(tracks[trackIndex]->source);
+}
+
+void C_AudioSwitch::StopTrack(int trackIndex)
+{
+    if (tracks[trackIndex] != nullptr)
+        StopTrack(tracks[trackIndex]->source);
+}
+
+void C_AudioSwitch::PauseTrack(int trackIndex)
+{
+    if (tracks[trackIndex] != nullptr)
+        PauseAudio(tracks[trackIndex]->source);
 }
 
 void C_AudioSwitch::SwitchFade(float fadeSeconds)
