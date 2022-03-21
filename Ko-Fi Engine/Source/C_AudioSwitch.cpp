@@ -285,6 +285,7 @@ void C_AudioSwitch::Save(Json& json) const
 
     json["total_tracks"] = totalTracks;
     json["fade_time"] = fadeTime;
+    json["offset_sync"] = offsetSync;
 
     Json jsonTrack;
     for (R_Track* track : tracks)
@@ -309,9 +310,11 @@ void C_AudioSwitch::Load(Json& json)
     trackIdInEdit = -1;
 
     fadeTime = json.at("fade_time");
+    offsetSync = json.at("offset_sync");
 
     if (totalTracks != 0 && json.at("total_tracks") > 0)
     {
+        // TODO: Check already existing tracks & update them
         return;
     }
     else if (totalTracks == 0 && json.at("total_tracks") > 0)
