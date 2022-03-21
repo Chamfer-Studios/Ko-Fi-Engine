@@ -26,6 +26,7 @@
 #include "ComponentText.h"
 #include "ComponentTransform2D.h"
 #include "ComponentParticle.h"
+#include "ComponentAnimator.h"
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
@@ -463,6 +464,12 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				audioSwitchCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::ANIMATOR:
+			{
+				ComponentAnimator* cAnimator = (ComponentAnimator*)component;
+				cAnimator->Save(jsonComponent);
+				break;
+			}
 			default:
 				break;
 			}
@@ -708,6 +715,16 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					audioSwitchCmp->active = true;
 					audioSwitchCmp->Load(jsonCmp);
+				}
+				else if (type == "animator")
+				{
+					ComponentAnimator* cAnimator = go->GetComponent<ComponentAnimator>();
+					if (cAnimator == nullptr)
+					{
+						cAnimator = go->CreateComponent<ComponentAnimator>();
+					}
+					cAnimator->active = true;
+					cAnimator->Load(jsonCmp);
 				}
 			}
 			if (!exists)

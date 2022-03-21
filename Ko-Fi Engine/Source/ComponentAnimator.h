@@ -21,6 +21,9 @@ public:
 	bool CleanUp();
 	bool InspectorDraw(PanelChooser* chooser);
 
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
+
 	void Reset();
 
 	bool CreateClip(const AnimatorClip& clip);
