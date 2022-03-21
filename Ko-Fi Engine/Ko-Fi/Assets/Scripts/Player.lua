@@ -27,9 +27,12 @@ currentItemDamage = 5
 currentItem = Item.new(currentItemType, currentItemDamage)
 
 gameObject:GetComponentAnimator():SetSelectedClip("Idle")
+animationDuration = 0.8
+animationTimer = 0.0
+isAttacking = false
 
-mouseParticles = Find("Mouse Particles")
-mouseParticles:GetComponentParticle():StopParticleSpawn()
+--mouseParticles = Find("Mouse Particles")
+--mouseParticles:GetComponentParticle():StopParticleSpawn()
 
 particleFlag = false
 
@@ -42,6 +45,14 @@ end
 -- Called each loop iteration
 function Update(dt)
 
+	if (isAttacking) then
+		animationTimer = animationTimer + dt
+		if (animationTimer >= animationDuration) then
+			gameObject:GetComponentAnimator():SetSelectedClip("Idle")
+			isAttacking = false
+			animationTimer = 0.0
+		end
+	end
 	if (particleFlag == true) then
 		mouseParticles:GetComponentParticle():StopParticleSpawn()
 		particleFlag = false
@@ -99,6 +110,7 @@ function Update(dt)
 					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
 						--gameObject:GetAudioSwitch():PlayTrack(0)
 						gameObject:GetComponentAnimator():SetSelectedClip("Attack")
+						isAttacking = true
 					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
 						print("No item selected")
 				end
