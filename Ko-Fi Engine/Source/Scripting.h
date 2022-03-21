@@ -15,6 +15,8 @@
 #include "ComponentRigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentText.h"
+#include "C_AudioSource.h"
+#include "C_AudioSwitch.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -302,6 +304,11 @@ public:
 	RuntimeState LuaGetRuntimeState() const
 	{
 		return gameObject->GetEngine()->GetSceneManager()->GetState();
+	}
+
+	void LuaPlayAudio()
+	{
+
 	}
 
 public:

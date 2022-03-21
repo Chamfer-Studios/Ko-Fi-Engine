@@ -187,18 +187,6 @@ void SceneManager::OnPlay()
 
 	// Serialize scene and save it as a .json
 	Importer::GetInstance()->sceneImporter->Save(currentScene);
-
-	for (GameObject* go : currentScene->gameObjectList)
-	{
-		ComponentScript* script = go->GetComponent<ComponentScript>();
-		if (script != nullptr)
-		{
-			script->ReloadScript();
-			script->handler->lua["Start"]();
-		}
-		go->OnPlay();
-	}
-
 }
 
 void SceneManager::OnPause()

@@ -21,6 +21,7 @@ public:
 	bool Start() override;
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
+	bool OnPlay() override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 	void Save(Json& json) const override;

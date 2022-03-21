@@ -39,8 +39,6 @@ bool ComponentScript::Start()
 {
 	bool ret = true;
 
-	ReloadScript();  // For loading scenes
-
 	return ret;
 }
 
@@ -63,6 +61,15 @@ bool ComponentScript::PostUpdate(float dt)
 {
 
 	return true;
+}
+
+bool ComponentScript::OnPlay()
+{
+	bool ret = true;
+
+	ReloadScript();
+
+	return ret;
 }
 
 bool ComponentScript::InspectorDraw(PanelChooser* chooser)
