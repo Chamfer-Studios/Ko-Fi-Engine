@@ -49,3 +49,13 @@ const Animation* AnimatorClip::GetAnimation() const
 {
 	return clipAnim;
 }
+
+const float AnimatorClip::GetStartFrame()
+{
+	return start;
+}
+
+const float AnimatorClip::GetEndFrame()
+{
+	return end;
+}

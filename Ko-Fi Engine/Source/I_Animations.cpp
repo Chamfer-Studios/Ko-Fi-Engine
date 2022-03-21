@@ -27,7 +27,8 @@ bool I_Animations::Import(const aiAnimation* aiAnimation, Animation* anim, const
 	anim->name = aiAnimation->mName.C_Str();
 	anim->ticksPerSecond = aiAnimation->mTicksPerSecond;
 	anim->duration = aiAnimation->mDuration;
+	anim->startPoint = 0;
+	anim->endPoint = aiAnimation->mDuration;
 	
 	return true;
 }
-

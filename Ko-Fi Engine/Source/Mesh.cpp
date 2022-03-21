@@ -4,6 +4,9 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
+#include "ComponentAnimator.h"
+
+#include "AnimatorClip.h"
 
 #include "Globals.h"
 
@@ -271,7 +274,7 @@ void Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 	par_shapes_free_mesh(primitiveMesh);
 }
 
-void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms)
+void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject)
 {
 	transforms.resize(boneInfo.size());
 
@@ -279,9 +282,26 @@ void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transfo
 
 	float ticksPerSecond = (float)(assimpScene->mAnimations[0]->mTicksPerSecond != 0 ? assimpScene->mAnimations[0]->mTicksPerSecond : 25.0f);
 	float timeInTicks = timeInSeconds * ticksPerSecond;
-	float animationTimeTicks = fmod(timeInTicks, (float)assimpScene->mAnimations[0]->mDuration);
 
-	ReadNodeHeirarchy(animationTimeTicks, assimpScene->mRootNode, identity);
+	float startFrame, endFrame, animDur;
+	ComponentAnimator* cAnimator = gameObject->GetComponent<ComponentAnimator>();
+	if (cAnimator != nullptr && cAnimator->GetSelectedClip() != nullptr)
+	{
+		startFrame = cAnimator->GetSelectedClip()->GetStartFrame();
+		endFrame = cAnimator->GetSelectedClip()->GetEndFrame();
+		animDur = endFrame - startFrame;
+	}
+	else
+	{
+		startFrame = 0.0f;
+		endFrame = 0.0f;
+		float animDur = assimpScene->mAnimations[0]->mDuration;
+	}
+	
+
+	float animationTimeTicks = fmod(timeInTicks, (float)animDur); // This divides the whole animation into segments of animDur.
+
+	ReadNodeHeirarchy(animationTimeTicks + startFrame, assimpScene->mRootNode, identity); // We add startFrame as an offset to the duration.
 	transforms.resize(boneInfo.size());
 
 	for (uint i = 0; i < boneInfo.size(); i++)
@@ -311,7 +331,7 @@ void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, cons
 		// Interpolate rotation and generate rotation transformation matrix
 		aiQuaternion rotationQ;
 		CalcInterpolatedRotation(rotationQ, animationTimeTicks, pNodeAnim);
-		float4x4 rotationM = aiMatrix3x32aiMatrix4x4(rotationQ.GetMatrix()); /*= Matrix4f(rotationQ.GetMatrix());*/
+		float4x4 rotationM = aiMatrix3x32Float4x4(rotationQ.GetMatrix());
 
 		// Interpolate translation and generate translation transformation matrix
 		aiVector3D translation;
@@ -328,11 +348,7 @@ void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, cons
 	{
 		uint boneIndex = boneNameToIndexMap[nodeName];
 		float4x4 rootTransform = Importer::GetInstance()->meshImporter->aiMatrix2Float4x4(assimpScene->mRootNode->mTransformation.Inverse());
-		//float4x4 delta = rootTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
-		float4x4 delta = float4x4::identity;
-		delta = globalTransformation * delta;
-		delta = rootTransform * delta;
-		delta = delta * boneInfo[boneIndex].offsetMatrix;
+		float4x4 delta = rootTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
 		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
@@ -526,7 +542,7 @@ float4x4 Mesh::InitTranslationTransform(float x, float y, float z)
 	return m;
 }
 
-float4x4 Mesh::aiMatrix3x32aiMatrix4x4(aiMatrix3x3 assimpMatrix)
+float4x4 Mesh::aiMatrix3x32Float4x4(aiMatrix3x3 assimpMatrix)
 {
 	float4x4 m;
 

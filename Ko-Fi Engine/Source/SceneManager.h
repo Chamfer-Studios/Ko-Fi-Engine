@@ -24,7 +24,7 @@ class ComponentText;
 class ComponentImage;
 class ComponentButton;
 
-enum class RuntimeState
+enum class GameState
 {
 	PLAYING,
 	PAUSED,
@@ -64,7 +64,10 @@ public:
 
 	void AddScene(Scene* scene);
 	Scene* GetCurrentScene();
-	RuntimeState GetState();
+
+	GameState GetGameState();
+	float GetGameDt();
+	float GetGameTime();
 
 	void OnPlay();
 	void OnStop();
@@ -112,7 +115,7 @@ private:
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
 	// --------------------------------------------------
 	
-	RuntimeState runtimeState = RuntimeState::STOPPED;
+	GameState runtimeState = GameState::STOPPED;
 };
 
 #endif // !__SCENE_MANAGER_H__

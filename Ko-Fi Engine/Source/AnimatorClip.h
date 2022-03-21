@@ -13,6 +13,8 @@ public:
 
 	const std::string GetName() const;
 	const Animation* GetAnimation() const;
+	const float GetStartFrame();
+	const float GetEndFrame();
 
 private:
 	//const R_Animation* animation;

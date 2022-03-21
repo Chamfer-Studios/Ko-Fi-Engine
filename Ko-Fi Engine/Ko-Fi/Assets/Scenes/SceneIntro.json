@@ -1,0 +1,41 @@
+{
+    "SceneIntro": {
+        "active": true,
+        "game_objects_amount": 1,
+        "game_objects_list": [
+            {
+                "UID": 4294967295,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "name": "SceneIntro",
+                "parent_UID": 4294967295
+            }
+        ],
+        "name": "SceneIntro"
+    }
+}

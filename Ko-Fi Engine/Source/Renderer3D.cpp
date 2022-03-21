@@ -311,7 +311,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 			float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
 			std::vector<float4x4> transformsAnim;
-			mesh->GetBoneTransforms(currentTimeMillis, transformsAnim);
+			mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
 
 			GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 			glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());

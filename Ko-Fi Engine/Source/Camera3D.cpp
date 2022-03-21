@@ -264,7 +264,7 @@ void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
 
 void Camera3D::OnClick(SDL_Event event)
 {
-	if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING) return;
+	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING) return;
 	if (event.button.type != SDL_MOUSEBUTTONDOWN || event.button.button != SDL_BUTTON_LEFT) return;
 	if (engine->GetEditor()->GetPanel<PanelViewport>())
 		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())

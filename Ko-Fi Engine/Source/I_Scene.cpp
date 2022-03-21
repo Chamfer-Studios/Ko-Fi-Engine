@@ -27,7 +27,6 @@
 #include "ComponentTransform2D.h"
 #include "ComponentAnimator.h"
 
-
 #include "Mesh.h"
 #include "Animation.h"
 #include "Texture.h"
@@ -37,6 +36,8 @@
 #include "I_Mesh.h"
 #include "I_Texture.h"
 #include "I_Material.h"
+
+#include "AnimatorClip.h"
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 {
@@ -230,7 +231,10 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		CONSOLE_LOG("[ERROR] Component Animator is nullptr.");
 		return;
 	}
-	//set animations?
+	
+	// Creating a default clip with all the keyframes of the animation.
+	AnimatorClip animClip = AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
+	cAnim->CreateDefaultClip(animClip);
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)

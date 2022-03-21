@@ -6,12 +6,12 @@
 #include <vector>
 #include "Engine.h"
 #include "Animation.h"
+#include "AnimatorClip.h"
 
 ComponentAnimator::ComponentAnimator(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::ANIMATOR;
 	playing = true;
-
 }
 
 ComponentAnimator::~ComponentAnimator()
@@ -55,7 +55,6 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 
 		// -- CLIP CREATOR
 		ImGui::Text("Select Animation");
-
 		
 		ImGui::Text(rAnim->GetName().c_str());
 
@@ -154,10 +153,38 @@ bool ComponentAnimator::CreateClip(const AnimatorClip& clip)
 	clips.emplace(clip.GetName(), clip);
 }
 
+bool ComponentAnimator::CreateDefaultClip(const AnimatorClip& clip)
+{
+	if (clip.GetAnimation() == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip.GetName());
+		return false;
+	}
+	if (clips.find(clip.GetName()) != clips.end())
+	{
+		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip.GetName().c_str());
+		return false;
+	}
+
+	clips.emplace(clip.GetName(), clip);
+
+	selectedClip = (AnimatorClip*)&clip;
+}
+
 void ComponentAnimator::SetAnim(Animation* anim)
 {
 	if (this->rAnim != nullptr)
 		RELEASE(this->rAnim);
 
 	this->rAnim = anim;
+}
+
+AnimatorClip* ComponentAnimator::GetSelectedClip()
+{
+	return selectedClip;
+}
+
+void ComponentAnimator::SetSelectedClip(AnimatorClip& animatorClip)
+{
+	selectedClip = &animatorClip;
 }

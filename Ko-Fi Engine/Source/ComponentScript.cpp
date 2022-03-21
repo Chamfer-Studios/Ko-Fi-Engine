@@ -49,7 +49,7 @@ bool ComponentScript::CleanUp()
 
 bool ComponentScript::Update(float dt)
 {
-	if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING && isScriptLoaded)
+	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
 		handler->lua["Update"](dt);
 	}
@@ -75,7 +75,7 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 			if (chooser->OnChooserClosed() != nullptr) 
 			{
 				path = chooser->OnChooserClosed();
-				if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING)
+				if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING)
 					ReloadScript();
 				else
 					script = handler->lua.load_file(path);
