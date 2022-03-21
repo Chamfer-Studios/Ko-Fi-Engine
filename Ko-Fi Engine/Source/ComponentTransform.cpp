@@ -92,9 +92,9 @@ void ComponentTransform::SetPosition(const float3& newPosition)
 
 void ComponentTransform::SetRotation(const float3& newRotation)
 {
-	Quat rotationDelta = Quat::FromEulerXYZ(newRotation.x - rotationEuler.x, newRotation.y - rotationEuler.y, newRotation.z - rotationEuler.z);
-	rotation = rotation*rotationDelta;
+	rotation = Quat::FromEulerXYZ(newRotation.x, newRotation.y, newRotation.z);
 	rotationEuler = newRotation;
+
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
@@ -102,7 +102,7 @@ void ComponentTransform::SetRotation(const float3& newRotation)
 void ComponentTransform::SetRotationQuat(const Quat& newRotation)
 {
 	this->rotation = newRotation;
-	rotationEuler = newRotation.ToEulerXYZ() * RADTODEG;
+	rotationEuler = newRotation.ToEulerXYZ();
 	isDirty = true;
 }
 
@@ -148,7 +148,7 @@ void ComponentTransform::UpdateGuizmoParameters(float4x4& transformMatrix)
 	transformMatrix.Decompose(position, rotation, scale);
 	
 	SetPosition(position);
-	SetRotationQuat(rotation);
+	SetRotation(rotation.ToEulerXYZ());
 	SetScale(scale);
 }
 
