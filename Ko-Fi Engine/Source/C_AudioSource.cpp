@@ -203,15 +203,21 @@ void C_AudioSource::Save(Json& json) const
 {
     json["type"] = "audio_source";
 
-    json["track_path"] = track->GetTrackPath();
-    json["mute"] = track->GetMute();
-    json["play_on_start"] = track->GetPlayOnStart();
-    json["loop"] = track->GetLoop();
-    json["bypass"] = track->GetBypass();
-    json["volume"] = track->GetVolume();
-    json["pan"] = track->GetPan();
-    json["transpose"] = track->GetTranspose();
-    json["offset"] = track->GetOffset();
+    if (track != nullptr)
+    {
+        json["state"] = true;
+        json["track_path"] = track->GetTrackPath();
+        json["mute"] = track->GetMute();
+        json["play_on_start"] = track->GetPlayOnStart();
+        json["loop"] = track->GetLoop();
+        json["bypass"] = track->GetBypass();
+        json["volume"] = track->GetVolume();
+        json["pan"] = track->GetPan();
+        json["transpose"] = track->GetTranspose();
+        json["offset"] = track->GetOffset();
+    }
+    else
+        json["state"] = false;
 }
 
 void C_AudioSource::Load(Json& json)
@@ -224,19 +230,23 @@ void C_AudioSource::Load(Json& json)
         RELEASE(track);
     }
 
-    std::string path = json.at("track_path");
-    track = new R_Track();
-    Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
-    track->source = CreateAudioSource(track->buffer, false);
+    bool state = json.at("state");
+    if (state)
+    {
+        std::string path = json.at("track_path");
+        track = new R_Track();
+        Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
+        track->source = CreateAudioSource(track->buffer, false);
 
-    track->SetMute(json.at("mute"));
-    track->SetPlayOnStart(json.at("play_on_start"));
-    track->SetLoop(json.at("loop"));
-    track->SetBypass(json.at("bypass"));
-    track->SetVolume(json.at("volume"));
-    track->SetPanning(json.at("pan"));
-    track->SetTranspose(json.at("transpose"));
-    track->SetOffset(json.at("offset"));
+        track->SetMute(json.at("mute"));
+        track->SetPlayOnStart(json.at("play_on_start"));
+        track->SetLoop(json.at("loop"));
+        track->SetBypass(json.at("bypass"));
+        track->SetVolume(json.at("volume"));
+        track->SetPanning(json.at("pan"));
+        track->SetTranspose(json.at("transpose"));
+        track->SetOffset(json.at("offset"));
+    }
 }
 
 void C_AudioSource::UpdatePlayState()
