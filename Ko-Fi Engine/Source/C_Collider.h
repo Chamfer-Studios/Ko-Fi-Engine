@@ -5,6 +5,21 @@
 #include "Physics.h"
 #include "MathGeoLib/Math/float3.h"
 
+/*
+
+	TODOS ------------------------------------------------------------------------
+
+	DrawCollider()
+	CreateSphereCollider();
+	CreateCapsuleCollider();
+
+	Make filters matrix (CollisionLayer)
+	Make filters editable on editor (adding and deleting)
+
+	-----------------------------------------------------------------------------
+
+*/
+
 enum class ColliderShape
 {
 	NONE,
