@@ -89,9 +89,6 @@
     <Filter Include="Libs\PhysX">
       <UniqueIdentifier>{d0f948d0-4ad2-4262-9a39-3321cdcb7606}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Physics">
-      <UniqueIdentifier>{f9672267-00e4-430b-9bd2-c2aad4a948ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libs\lua">
       <UniqueIdentifier>{bacdd039-412c-4820-8ee9-0c6c150a7660}</UniqueIdentifier>
     </Filter>
@@ -130,6 +127,9 @@
     </Filter>
     <Filter Include="Libs\Detour">
       <UniqueIdentifier>{467578bf-7949-40fb-8030-3807b7413e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\Components\Physics">
+      <UniqueIdentifier>{21f4d6d4-3c57-49e7-a527-40532929dd04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -385,12 +385,6 @@
     <ClCompile Include="Source\ParticleModule.cpp">
       <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>Source\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QuadTree3D.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
@@ -457,9 +451,6 @@
     <ClCompile Include="Source\ComponentText.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentCollider.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CollisionDetector.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -481,8 +472,6 @@
     </ClCompile>
     <ClCompile Include="Source\PanelCameraViewport.cpp">
       <Filter>Source\Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\C_Collider.cpp">
     </ClCompile>
     <ClCompile Include="Source\PanelSettings.cpp">
       <Filter>Source\Editor\Panels</Filter>
@@ -583,6 +572,19 @@
     <ClCompile Include="Source\External\stb_image\stb_image.cpp" />
     <ClCompile Include="Source\I_Track.cpp" />
     <ClCompile Include="Source\par_shapes.cpp" />
+    <ClCompile Include="Source\par_shapes.cpp" />
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_Collider.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentRigidBody.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentCollider.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1539,12 +1541,6 @@
     <ClInclude Include="Source\External\PhysX_4.1\include\foundation\windows\PxWindowsIntrinsics.h">
       <Filter>Libs\PhysX</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Source\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentRigidBody.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Iterable.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
@@ -1607,9 +1603,6 @@
     </ClInclude>
     <ClInclude Include="Source\PanelCameraViewport.h">
       <Filter>Source\Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\C_Collider.h">
-      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentAnimator.h">
       <Filter>Source\GameObject\Components</Filter>
@@ -1676,6 +1669,18 @@
     </ClInclude>
     <ClInclude Include="Source\par_shapes.h">
       <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_Collider.h">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentRigidBody.h">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentCollider.h">
+      <Filter>Source\GameObject\Components\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1747,9 +1752,6 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentText.h">
       <Filter>Source\GameObject\Components\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentCollider.h">
-      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\CollisionDetector.h">
       <Filter>Source\Modules</Filter>
