@@ -42,7 +42,7 @@ public:
 
 	void UpdateGuizmoParameters(float4x4& transformMatrix);
 
-	float4x4 GetGlobalTransform();
+	float4x4 GetGlobalTransform() const;
 	void SetGlobalTransform(const float4x4& globalTransform);
 
 	bool GetDirty() const;

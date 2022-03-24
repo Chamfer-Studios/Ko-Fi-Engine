@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "ComponentMesh.h"
 #include "Engine.h"
-#include "Animation.h"
+#include "R_Animation.h"
 #include "AnimatorClip.h"
 
 #include <vector>
@@ -65,12 +65,12 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 		ImGui::InputText("Clip Name", clipName, IM_ARRAYSIZE(clipName), inputTxtFlags);
 
 		ImGui::Text("Reel selector: ");
-		ImGui::SliderInt("Edit Start", &rAnim->startPoint, 0, rAnim->duration);
-		ImGui::SliderInt("Edit End", &rAnim->endPoint, 0, rAnim->duration);
+		ImGui::SliderInt("Edit Start", &rAnim->startFrame, 0, rAnim->duration);
+		ImGui::SliderInt("Edit End", &rAnim->endFrame, 0, rAnim->duration);
 
 		if (ImGui::Button("Create Clip", ImVec2(80, 35)))
 		{
-			CreateClip(AnimatorClip(rAnim, clipName, rAnim->startPoint, rAnim->endPoint, 1.0f, true));
+			CreateClip(AnimatorClip(rAnim, clipName, rAnim->startFrame, rAnim->endFrame, 1.0f, true));
 		}
 
 		ImGui::Text("Select Clip");
@@ -159,7 +159,7 @@ void ComponentAnimator::Save(Json& json) const
 void ComponentAnimator::Load(Json& json)
 {
 	if (rAnim == nullptr)
-		rAnim = new Animation();
+		rAnim = new R_Animation();
 
 	if (selectedClip == nullptr)
 		selectedClip = new AnimatorClip();
@@ -225,7 +225,7 @@ bool ComponentAnimator::CreateDefaultClip(AnimatorClip* clip)
 	selectedClip = clip;
 }
 
-void ComponentAnimator::SetAnim(Animation* anim)
+void ComponentAnimator::SetAnim(R_Animation* anim)
 {
 	if (this->rAnim != nullptr)
 		RELEASE(this->rAnim);

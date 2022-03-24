@@ -490,7 +490,7 @@
     <ClCompile Include="Source\R_Track.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Animation.cpp">
+    <ClCompile Include="Source\R_Animation.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\AnimatorClip.cpp">
@@ -589,6 +589,9 @@
       <Filter>Libs\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Channel.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1646,7 +1649,7 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Animation.h">
+    <ClInclude Include="Source\R_Animation.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimatorClip.h">
@@ -1686,6 +1689,9 @@
       <Filter>Libs\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Channel.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>

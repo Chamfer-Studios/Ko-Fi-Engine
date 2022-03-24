@@ -57,13 +57,13 @@ public:
 
 	// Old way
 	void SetName(const char* name);
-	const char* GetName();
+	const char* GetName() const;
 
 	std::vector<GameObject*> GetChildren() const;
 	void SetChild(GameObject* child);
 	GameObject* GetParent() const;
 
-	ComponentTransform* GetTransform();
+	ComponentTransform* GetTransform() const;
 	std::vector<Component*> GetComponents() const;
 	AABB BoundingAABB();
 	void SetUID(uint uid);

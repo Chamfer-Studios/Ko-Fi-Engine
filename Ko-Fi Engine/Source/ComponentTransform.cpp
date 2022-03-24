@@ -152,7 +152,7 @@ void ComponentTransform::UpdateGuizmoParameters(float4x4& transformMatrix)
 	SetScale(scale);
 }
 
-float4x4 ComponentTransform::GetGlobalTransform()
+float4x4 ComponentTransform::GetGlobalTransform() const
 {
 	return transformMatrix;
 }

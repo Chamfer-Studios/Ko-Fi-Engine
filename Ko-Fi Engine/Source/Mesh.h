@@ -26,6 +26,7 @@
 
 class GameObject;
 class aiBone;
+class R_Animation;
 
 enum class Shape
 {
@@ -90,9 +91,13 @@ public:
 	inline bool GetFaceNormals() const { return drawFaceNormals; }
 
 	void GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject);
-	void ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, const float4x4& parentTransform);
+	void ReadNodeHeirarchy(float animationTimeTicks, const GameObject* rootNode, const float4x4& parentTransform);
 
-	void SetRootNode(const aiScene* assimpScene);
+	void inline SetIsAnimated(bool isAnimated) { this->isAnimated = isAnimated; }
+	bool inline IsAnimated() const { return isAnimated; }
+	void SetRootNode(const aiScene* assimpScene); // TEMPORAL
+	void inline SetRootNode(const GameObject* rootNode) { this->rootNode = rootNode; }
+	void inline SetAnimation(const R_Animation* animation) { this->animation = animation; }
 	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const std::string nodeName);
 
 	uint FindPosition(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
@@ -146,7 +151,7 @@ public:
 
 	Shape meshType;
 	std::string path;
-	bool isAnimated = false;
+
 private:
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
@@ -159,7 +164,11 @@ private:
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;
 
+	bool isAnimated = false;
+
 	const aiScene* assimpScene = nullptr;
+	const GameObject* rootNode = nullptr;
+	const R_Animation* animation = nullptr;
 };
 
 #endif // !__MESH_H__

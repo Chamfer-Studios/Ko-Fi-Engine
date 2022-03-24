@@ -323,7 +323,7 @@ void GameObject::SetName(const char *name)
 	this->name = name;
 }
 
-const char *GameObject::GetName()
+const char *GameObject::GetName() const
 {
 	return name.c_str();
 }
@@ -343,7 +343,7 @@ GameObject *GameObject::GetParent() const
 	return parent;
 }
 
-ComponentTransform *GameObject::GetTransform()
+ComponentTransform *GameObject::GetTransform() const
 {
 	return this->transform;
 }

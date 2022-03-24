@@ -6,6 +6,7 @@
 #include "ComponentTransform.h"
 #include "ComponentAnimator.h"
 
+#include "R_Animation.h"
 #include "AnimatorClip.h"
 
 #include "Globals.h"
@@ -361,7 +362,7 @@ void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transfo
 
 	float4x4 identity = float4x4::identity;
 
-	float ticksPerSecond = (float)(assimpScene->mAnimations[0]->mTicksPerSecond != 0 ? assimpScene->mAnimations[0]->mTicksPerSecond : 25.0f);
+	float ticksPerSecond = (float)(animation->GetTicksPerSecond() != 0 ? animation->GetTicksPerSecond() : 25.0f);
 	float timeInTicks = timeInSeconds * ticksPerSecond;
 
 	float startFrame, endFrame, animDur;
@@ -376,13 +377,13 @@ void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transfo
 	{
 		startFrame = 0.0f;
 		endFrame = 0.0f;
-		float animDur = assimpScene->mAnimations[0]->mDuration;
+		float animDur = animation->GetDuration();
 	}
 	
 
 	float animationTimeTicks = fmod(timeInTicks, (float)animDur); // This divides the whole animation into segments of animDur.
 
-	ReadNodeHeirarchy(animationTimeTicks + startFrame, assimpScene->mRootNode, identity); // We add startFrame as an offset to the duration.
+	ReadNodeHeirarchy(animationTimeTicks + startFrame, rootNode, identity); // We add startFrame as an offset to the duration.
 	transforms.resize(boneInfo.size());
 
 	for (uint i = 0; i < boneInfo.size(); i++)
@@ -391,14 +392,15 @@ void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transfo
 	}
 }
 
-void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, const float4x4& parentTransform)
+void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode, const float4x4& parentTransform)
 {
-	std::string nodeName(pNode->mName.data);
+	std::string nodeName(pNode->GetName());
 
 	const aiAnimation* pAnimation = assimpScene->mAnimations[0];
 
-	aiMatrix4x4 transformation = pNode->mTransformation;
-	float4x4 nodeTransformation(Importer::GetInstance()->meshImporter->aiMatrix2Float4x4(transformation));
+	/*aiMatrix4x4 transformation = pNode->mTransformation;
+	float4x4 nodeTransformation(Importer::GetInstance()->meshImporter->aiMatrix2Float4x4(transformation));*/
+	float4x4 nodeTransformation(pNode->GetTransform()->GetGlobalTransform());
 
 	const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, nodeName);
 
@@ -428,14 +430,14 @@ void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, cons
 	if (boneNameToIndexMap.find(nodeName) != boneNameToIndexMap.end())
 	{
 		uint boneIndex = boneNameToIndexMap[nodeName];
-		float4x4 rootTransform = Importer::GetInstance()->meshImporter->aiMatrix2Float4x4(assimpScene->mRootNode->mTransformation.Inverse());
+		float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
 		float4x4 delta = rootTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
 		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
-	for (uint i = 0; i < pNode->mNumChildren; i++)
+	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
-		ReadNodeHeirarchy(animationTimeTicks, pNode->mChildren[i], globalTransformation);
+		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);
 	}
 }
 

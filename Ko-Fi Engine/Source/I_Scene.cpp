@@ -36,7 +36,7 @@
 #include "ComponentFollowPath.h"
 
 #include "Mesh.h"
-#include "Animation.h"
+#include "R_Animation.h"
 #include "Texture.h"
 #include "Material.h"
 
@@ -213,9 +213,12 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		return;
 	}
 
-	ComponentMesh* cMesh = (ComponentMesh*)gameObj->AddComponentByType(ComponentType::MESH);//CreateComponent<ComponentMesh>();
+	ComponentMesh* cMesh = (ComponentMesh*)gameObj->AddComponentByType(ComponentType::MESH);
 	if (cMesh != nullptr)
+	{
 		cMesh->SetMesh(mesh);
+		mesh->SetRootNode(gameObj->GetParent());
+	}
 	else
 	{
 		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
@@ -227,9 +230,11 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		CONSOLE_LOG("[WARNING] Scene Importer: Model had no animations to import.");
 		return;
 	}
-	mesh->isAnimated = true;
-	Animation* anim = new Animation();
-	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim, assimpScene);
+
+	R_Animation* anim = new R_Animation();
+	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim);
+	mesh->SetIsAnimated(true);
+	mesh->SetAnimation(anim);
 
 	ComponentAnimator* cAnim = gameObj->CreateComponent<ComponentAnimator>();
 	if (cAnim != nullptr)

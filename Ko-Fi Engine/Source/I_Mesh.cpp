@@ -84,7 +84,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene
 		{
 			// Load single bone
 			aiBone* bone = aiMesh->mBones[i];
-			int boneId = GetBoneId(bone,mesh->boneNameToIndexMap);
+			int boneId = GetBoneId(bone, mesh->boneNameToIndexMap);
 			if (boneId == mesh->boneInfo.size())
 			{
 				float4x4 offsetmatrix = aiMatrix2Float4x4(bone->mOffsetMatrix);
