@@ -11,8 +11,26 @@
 #include "Window.h"
 #include "Engine.h"
 #include "Camera3D.h"
+#include "SceneManager.h"
+#include "Editor.h"
+#include "Input.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
+#include "Texture.h"
+
+#include <imgui.h>
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_internal.h"
+
+#include "GameObject.h"
+#include "ComponentTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
+#include "ComponentRenderedUI.h"
+#include "Material.h"
+
+#include "PanelViewport.h"
 
 #include "UI.h"
 
@@ -36,63 +54,97 @@ bool Renderer3D::Awake(Json configModule)
 	CONSOLE_LOG("Creating 3D Renderer context");
 	appLog->AddLog("Creating 3D Renderer context\n");
 	bool ret = true;
+	ret = InitOpenGL();
+	OnResize();
+	SetVsync(configModule["Vsync"].get<bool>());
 
-	// Create context
+	InitFrameBuffers();
 
-	context = SDL_GL_CreateContext(engine->GetWindow()->window);
-	if (context == NULL)
+	return ret;
+}
+
+// PreUpdate: clear buffer
+bool Renderer3D::PreUpdate(float dt)
+{
+	bool ret = true;
+	PrepareFrameBuffers();
+
+	return ret;
+}
+
+bool Renderer3D::Update(float dt)
+{
+	return true;
+}
+
+// PostUpdate present buffer to screen
+bool Renderer3D::PostUpdate(float dt)
+{
+	PassProjectionAndViewToRenderer();
+	RenderScene();
+	UnbindFrameBuffers();
+	SDL_GL_SwapWindow(engine->GetWindow()->GetWindow());
+
+	return true;
+}
+
+// Called before quitting
+bool Renderer3D::CleanUp()
+{
+	CONSOLE_LOG("Destroying 3D Renderer");
+	appLog->AddLog("Destroying 3D Renderer\n");
+
+	SDL_GL_DeleteContext(context);
+
+	ReleaseFrameBuffers();
+
+	return true;
+}
+
+bool Renderer3D::SaveConfiguration(Json& configModule) const
+{
+	configModule["Vsync"] = vsync;
+	return true;
+}
+
+bool Renderer3D::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Renderer3D::InitOpenGL()
+{
+	bool ret = true;
+	context = SDL_GL_CreateContext(engine->GetWindow()->GetWindow());
+	int contextMajorVersion, contextMinorVersion;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &contextMajorVersion);
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &contextMinorVersion);
+	if (!context)
 	{
-		CONSOLE_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
-		appLog->AddLog("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		CONSOLE_LOG("[ERROR] OpenGL context could not be created! SDL_ERROR: %s\n", SDL_GetError());
 		ret = false;
 	}
-
-	if (ret == true)
+	ret = InitGlew();
+	if (ret)
 	{
-		// Use Vsync
-		vsync = configModule.at("Vsync");
-		SetVsync(vsync);
-
-		// Initialize Projection Matrix
+		if (this->vsync)
+		{
+			SDL_GL_SetSwapInterval(1) < 0 ?
+				CONSOLE_LOG("[ERROR] Unable to set Vsync! SDL Error: %s\n", SDL_GetError()) : CONSOLE_LOG("[STATUS] Vsync is activated!");
+		}
+		else
+		{
+			SDL_GL_SetSwapInterval(0) < 0 ?
+				CONSOLE_LOG("[ERROR] Unable to set frame update interval to immediate! SDL Error: %s\n", SDL_GetError()) : CONSOLE_LOG("[STATUS] Vsync is deactivated!");
+		}
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
-		// Check for error
-		GLenum error = glGetError();
-		if (error != GL_NO_ERROR)
-		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
-
-		// Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-
-		// Check for error
-		error = glGetError();
-		if (error != GL_NO_ERROR)
-		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
-
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-
-		// Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
-
-		// Check for error
-		error = glGetError();
-		if (error != GL_NO_ERROR)
-		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			appLog->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		GLfloat LightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
@@ -109,82 +161,243 @@ bool Renderer3D::Awake(Json configModule)
 		GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
+		SetGLFlag(GL_DEPTH_TEST, true);
+		SetGLFlag(GL_CULL_FACE, true);
 		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
-	}
+		SetGLFlag(GL_LIGHTING, true);
+		SetGLFlag(GL_COLOR_MATERIAL, true);
+		SetGLFlag(GL_TEXTURE_2D, true);
 
-	// Projection matrix for
-	OnResize(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-
-	// Init the GLEW library
-	GLenum err = glewInit();
-	if (err != GLEW_OK)
-	{
-		CONSOLE_LOG("Glew library could not be initiated! Glew Error: %s\n", glewGetErrorString(err));
-		appLog->AddLog("Glew library could not be initiated! GLEW Error: %s\n", glewGetErrorString(err));
-		ret = false;
-	}
-
-	if (err == GLEW_OK)
-	{
-		CONSOLE_LOG("Using Glew %s\n", glewGetString(GLEW_VERSION));
-		appLog->AddLog("Using Glew %s\n", glewGetString(GLEW_VERSION));
-
-		// Current hardware and driver capabilities
-		CONSOLE_LOG("Vendor: %s", glGetString(GL_VENDOR));
-		CONSOLE_LOG("Renderer: %s", glGetString(GL_RENDERER));
-		CONSOLE_LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		CONSOLE_LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-		appLog->AddLog("Vendor: %s\n", glGetString(GL_VENDOR));
-		appLog->AddLog("Renderer: %s\n", glGetString(GL_RENDERER));
-		appLog->AddLog("OpenGL version supported %s\n", glGetString(GL_VERSION));
-		appLog->AddLog("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		GLenum err = glGetError();
+		while (err != GL_NO_ERROR)
+		{
+			CONSOLE_LOG("OpenGl error: %d", err);
+			err = glGetError();
+		}
 	}
 
 	return ret;
 }
 
-// PreUpdate: clear buffer
-bool Renderer3D::PreUpdate(float dt)
+bool Renderer3D::InitGlew()
 {
-	SDL_RenderClear(engine->GetUI()->renderer);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	bool ret = true;
+
+	// Initializing glew.
+	GLuint GLEWerr = glewInit();
+	if (GLEWerr != GLEW_OK)
+	{
+		CONSOLE_LOG("[ERROR] GLEW could not initialize!: %s\n", glewGetErrorString(GLEWerr));
+		ret = false;
+	}
+	return ret;
+}
+
+void Renderer3D::SetGLFlag(GLenum flag, bool setTo)
+{
+	if (setTo != (bool)glIsEnabled(flag))
+	{
+		setTo ? glEnable(flag) : glDisable(flag);
+	}
+}
+
+void Renderer3D::PassProjectionAndViewToRenderer()
+{
 	glLoadIdentity();
-
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->viewMatrix.Transposed().ptr());
+	Camera3D* currentCamera3D = engine->GetCamera3D();
+	if (currentCamera3D->currentCamera)
+	{
+		if (currentCamera3D->currentCamera->projectionIsDirty) {
+			RecalculateProjectionMatrix();
+			currentCamera3D->currentCamera->CalculateViewMatrix();
+		}
 
-	// light 0 on cam pos
-	lights[0].SetPos(engine->GetCamera3D()->position.x, engine->GetCamera3D()->position.y, engine->GetCamera3D()->position.z);
-
-	for (uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
-	return true;
+		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->viewMatrix.Transposed().ptr());
+	}
+	float3 cameraPos = float3::zero;
+	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
+	if (engine->GetCamera3D()->currentCamera)
+	{
+		cameraPos = engine->GetCamera3D()->currentCamera->position;
+	}
+	else {
+		cameraPos = float3(0.0f, 20.0f, 0.0f);
+	}
 }
 
-// PostUpdate present buffer to screen
-bool Renderer3D::PostUpdate(float dt)
+void Renderer3D::RecalculateProjectionMatrix()
 {
-	SDL_GL_SwapWindow(engine->GetWindow()->window);
-	SDL_SetRenderDrawColor(engine->GetUI()->renderer, 0, 0, 0, 0);
-	//SDL_RenderPresent(engine->GetUI()->renderer);
-	return true;
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	if (engine->GetCamera3D()->currentCamera)
+	{
+		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Renderer3D: Could not recalculate the projection matrix!Error : Current Camera was nullptr.");
+	}
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
-// Called before quitting
-bool Renderer3D::CleanUp()
+void Renderer3D::RenderScene()
 {
-	CONSOLE_LOG("Destroying 3D Renderer");
-	appLog->AddLog("Destroying 3D Renderer\n");
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->active)
+		{
+			ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+			if (cMesh)
+			{
+				RenderMeshes(go);
+				RenderBoundingBox(cMesh);
+			}
 
-	SDL_GL_DeleteContext(context);
+			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
+			if (cCamera) {
+				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
+				{
+					cCamera->DrawFrustum();
+				}
 
-	return true;
+			}
+		}
+	}
+	RenderAllParticles();
+
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->active)
+		{
+			ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+			if (cRenderedUI)
+			{
+				RenderUI(go);
+			}
+		}
+	}
+
+}
+
+void Renderer3D::RenderBoundingBox(ComponentMesh* cMesh)
+{
+	cMesh->GenerateGlobalBoundingBox();
+	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
+	if (selectedId == -1) return;
+	if (selectedId == cMesh->owner->GetUID())
+		cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+}
+
+void Renderer3D::RenderMeshes(GameObject* go)
+{
+	//Get needed variables
+	ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
+	ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+	Mesh* mesh = cMesh->GetMesh();
+	//Check textures
+	if (cMat && mesh)
+	{
+		if (!cMat->active)
+		{
+			glDisable(GL_TEXTURE_2D);
+		}
+		else
+		{
+			glBindTexture(GL_TEXTURE_2D, cMat->texture.GetTextureId());
+		}
+	}
+	//Set Shaders
+	if (cMesh->GetRenderMesh())
+	{
+		uint shader = cMat->GetMaterial()->shaderProgramID;
+		if (shader != 0)
+		{
+			glUseProgram(shader);
+			// Passing Shader Uniforms
+			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+			GLint view_location = glGetUniformLocation(shader, "view");
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
+
+			GLint projection_location = glGetUniformLocation(shader, "projection");
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+			if (mesh->isAnimated)
+			{
+				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
+				std::vector<float4x4> transformsAnim;
+				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+
+				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+				glUniform1i(isAnimated, mesh->isAnimated);
+			}
+			
+
+			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
+
+			float2 resolution = float2(1080.0f, 720.0f);
+			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+
+			this->timeWaterShader += 0.02f;
+			glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
+			//Pass all varibale uniforms from the material to the shader
+			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
+			{
+				switch (uniform->type)
+				{
+				case GL_INT:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+				}
+				break;
+				case GL_FLOAT:
+				{
+					glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+				}
+				break;
+				case GL_BOOL:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<bool>*)uniform)->value);
+				}
+				break;
+				case GL_FLOAT_VEC2:
+				{
+					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+					glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
+				}
+				break;
+				case GL_FLOAT_VEC3:
+				{
+					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+					glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
+				}
+				break;
+				case GL_FLOAT_VEC4:
+				{
+					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
+				}
+				break;
+				default:
+					break;
+				}
+			}
+			//Draw Mesh
+			mesh->Draw();
+			glUseProgram(0);
+
+		}
+	}
+}
+
+void Renderer3D::RenderUI(GameObject* go)
+{
+	ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+	cRenderedUI->Draw();
 }
 
 // Method to receive and manage events
@@ -205,24 +418,26 @@ void Renderer3D::SetVsync(bool vsync)
 		this->vsync = vsync;
 		if (SDL_GL_SetSwapInterval(vsync ? 1 : 0) < 0) {
 			CONSOLE_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
-			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n",SDL_GetError());
+			appLog->AddLog("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 		}
-		
+
 		SDL_GL_GetSwapInterval() ? appLog->AddLog("Vsync Started\n") : appLog->AddLog("Vsync Stopped\n");;
 	}
 }
 
-void Renderer3D::OnResize(int width, int height)
+void Renderer3D::OnResize()
 {
-	glViewport(0, 0, width, height);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glViewport(0, 0, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+	if (engine->GetCamera3D()->currentCamera)
+	{
+		//engine->GetCamera3D()->aspectRatio = engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight();
+		engine->GetCamera3D()->currentCamera->SetAspectRatio(engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight());
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Renderer 3D: Could not recalculate the aspect ratio! Error: Current Camera was nullptr.");
+	}
+	RecalculateProjectionMatrix();
 }
 
 // Debug ray for mouse picking
@@ -248,4 +463,141 @@ void Renderer3D::SetRay(LineSegment ray)
 LineSegment Renderer3D::GetRay()
 {
 	return ray;
+}
+
+void Renderer3D::InitFrameBuffers()
+{
+	show_viewport_window = true;
+
+	glGenFramebuffers(1, &frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glGenTextures(1, &textureBuffer);
+	glBindTexture(GL_TEXTURE_2D, textureBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glBindTexture(GL_TEXTURE_2D, 0); //Unbind texture
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBuffer, 0);
+
+	//Render Buffers
+	glGenRenderbuffers(1, &renderBufferoutput);
+	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
+
+	//Bind tex data with render buffers
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderBufferoutput);
+
+	//After binding tex data, we must unbind renderbuffer and framebuffer not usefull anymore
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer3D::PrepareFrameBuffers()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Renderer3D::UnbindFrameBuffers()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer3D::ResizeFrameBuffers(int width, int height)
+{
+	glViewport(0, 0, width, height);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glBindTexture(GL_TEXTURE_2D, textureBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Renderer3D::ReleaseFrameBuffers()
+{
+	if (textureBuffer != 0) glDeleteTextures(1, &textureBuffer);
+	if (frameBuffer != 0) glDeleteFramebuffers(1, &frameBuffer);
+	if (renderBufferoutput != 0) glDeleteRenderbuffers(1, &renderBufferoutput);
+}
+
+uint Renderer3D::GetTextureBuffer()
+{
+	return textureBuffer;
+}
+void Renderer3D::AddParticle(Texture& tex, Color color, const float4x4 transform, float distanceToCamera)
+{
+	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
+	particles.insert(std::map<float, ParticleRenderer>::value_type(distanceToCamera, pRenderer));
+}
+
+void Renderer3D::RenderAllParticles()
+{
+	for (auto particle : particles)
+	{
+		RenderParticle(&particle.second);
+	}
+
+	particles.clear();
+}
+
+ParticleRenderer::ParticleRenderer(Texture& tex, Color color, const float4x4 transform):
+tex(tex),
+color(color),
+transform(transform)
+{
+
+}
+
+
+void Renderer3D::RenderParticle(ParticleRenderer* particle)
+{
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_TEXTURE_2D);
+	glPushMatrix();
+	glMultMatrixf(particle->transform.Transposed().ptr());	// model
+	glColor3f(1.0f,1.0f,1.0f);
+	if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, particle->tex.GetTextureId());
+	}
+
+	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);
+	
+	//Drawing to tris in direct mode
+	glBegin(GL_TRIANGLES);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-.5f, -.5f, .0f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+
+	glEnd();
+
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_BLEND);
+
 }

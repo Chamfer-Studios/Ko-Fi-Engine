@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 #include "Log.h"
+#include "PanelChooser.h"
 
 // Helper to display a little (?) mark which shows a tooltip when hovered.
 // In your own code you may want to display an actual icon if you are using a merged icon fonts (see docs/FONTS.md)
@@ -57,21 +58,38 @@ bool PanelHierarchy::Update()
 		HelpMarker(
 			"This is a more typical looking tree with selectable nodes.\n"
 			"Click to select, CTRL+Click to toggle, click on arrows or double-click to open.");
+		
 		static bool alignLabelWithCurrentXPosition = false;
 
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 
-		//	DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo, flags);
-		for (int i = 0; i < editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().size(); ++i)
-		{
-			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-
-			DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetChildren().at(i), flags);
-		}
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+		DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo, flags);
 
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+
+		if (editor->GetPanelChooser()->IsReadyToClose("CreatePrefab")) {
+			if (editor->GetPanelChooser()->OnChooserClosed() != nullptr) {
+				std::string path = editor->GetPanelChooser()->OnChooserClosed();
+				Importer::GetInstance()->sceneImporter->Import(path.c_str(), true);
+			}
+		}
+		if (ImGui::Button("Create Prefab")) {
+			editor->GetPanelChooser()->OpenPanel("CreatePrefab", "fbx");
+		}
+		if (editor->GetPanelChooser()->IsReadyToClose("LoadPrefab")) {
+			if (editor->GetPanelChooser()->OnChooserClosed() != nullptr) {
+				std::string path = editor->GetPanelChooser()->OnChooserClosed();
+				//Importer::GetInstance()->sceneImporter->Import(path.c_str(), true);
+				GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+				go->LoadPrefabJson(path.c_str());
+			}
+		}
+		if (ImGui::Button("Open Prefab")) {
+			editor->GetPanelChooser()->OpenPanel("LoadPrefab", "json");
+		}
 	}
 
 	ImGui::End();
@@ -86,6 +104,11 @@ bool PanelHierarchy::PostUpdate()
 
 void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 {
+	if (go->isPrefab)
+	{
+		ImGuiStyle* style = &ImGui::GetStyle();
+		style->Colors[ImGuiCol_Text] = ImVec4(0.00f, 0.50f, 1.00f, 1.f);
+	}
 	if (go->GetChildren().size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf;
 	if (ImGui::TreeNodeEx(go->GetName(), flags))
@@ -114,7 +137,14 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 						editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
 						editor->panelGameObjectInfo.selectedGameObjectID = -1;
 					}
-
+				}
+			}
+			if (ImGui::MenuItem("Set as Prefab")) {
+				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
+					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetUID() != -1) {
+						go->isPrefab = true;
+						editor->panelGameObjectInfo.selectedGameObjectID = -1;
+					}
 				}
 			}
 			ImGui::EndPopup();
@@ -131,6 +161,11 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 	else
 	{
 		DragNDrop(go);
+	}
+	if (go->isPrefab)
+	{
+		ImGuiStyle* style = &ImGui::GetStyle();
+		style->Colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.f);
 	}
 }
 

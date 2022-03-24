@@ -1,34 +1,37 @@
 {
-  "Engine": {
-    "Authors": "Alejandro Avila & Bosco Barber",
-    "License": "MIT License\n\nKo-Fi Studios (c)2021 \n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the <Software>), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED <AS IS>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
-    "Organization": "Ko-Fi Studios",
-    "Title": "Ko-Fi Engine",
-    "MaxFPS":60
-  },
-  "Window": {
-    "Width": 1024,
-    "Height": 768,
-    "Scale": 1,
-    "Fullscreen": false,
-    "FullscreenDesktop": false,
-    "Resizable": true,
-    "Borderless": false,
-    "Title": "Ko-Fi Engine",
-    "Icon" : "Assets/Icons/icon.bmp"
-  },
-  "Renderer3D": {
-    "Vsync": true
-  },
-  "Camera": null,
-  "Input": null,
-  "Editor": null,
-  "SceneManager": null,
-  "CollisionDetector":  null,
-  "ModelLoader": null,
-  "ViewportFrameBuffer": null,
-  "Physics":  null,
-  "Scripting": null,
-  "UI": null,
-  "ResourceManager": null
+    "Camera": null,
+    "CollisionDetector": null,
+    "Editor": null,
+    "Engine": {
+        "Authors": "Alejandro Avila & Bosco Barber",
+        "License": "MIT License\n\nKo-Fi Studios (c)2021 \n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the <Software>), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED <AS IS>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+        "MaxFPS": 60,
+        "Organization": "Ko-Fi Studios",
+        "Title": "Ko-Fi Engine"
+    },
+    "Input": null,
+    "ModelLoader": null,
+    "Physics": {
+        "gravity": 9.8100004196167,
+        "number_threads": 4
+    },
+    "Renderer3D": {
+        "Vsync": true
+    },
+    "SceneManager": null,
+    "UI": null,
+    "Navigation": null,
+    "ViewportFrameBuffer": null,
+    "Window": {
+        "Borderless": false,
+        "Fullscreen": false,
+        "FullscreenDesktop": false,
+        "Height": 768,
+        "Icon": "Assets/Icons/icon.bmp",
+        "Resizable": true,
+        "Scale": 0,
+        "Title": "Ko-Fi Engine",
+        "Width": 1024
+    },
+    "Audio": null
 }

@@ -22,6 +22,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override; 
+	// ------------------------------------------------------------------
+
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
@@ -32,6 +37,7 @@ public:
 	float GetBrightness();
 
 	// Retrive window size
+	inline SDL_Window* GetWindow() { return this->window; }
 	void GetWindowSize(uint& width, uint& height) const;
 	int GetWidth() const;
 	int GetHeight() const;
@@ -41,6 +47,7 @@ public:
 	bool GetBorderless() const;
 	uint GetRefreshRate() const;
 	const char* GetIcon() const;
+	const char* GetTitle() const;
 	void SetFullscreen(bool fullscreen);
 	void SetFullscreenDesktop(bool fullscreenDesktop);
 	void SetResizable(bool resizable);

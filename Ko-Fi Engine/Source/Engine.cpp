@@ -7,7 +7,7 @@
 #include "SceneManager.h"
 #include "Editor.h"
 #include "FileSystem.h"
-#include "ViewportFrameBuffer.h"
+#include "FSDefs.h"
 #include "UI.h"
 #include "Importer.h"
 #include "Globals.h"
@@ -16,6 +16,8 @@
 #include "Physics.h"
 #include "CollisionDetector.h"
 #include "ResourceManager.h"
+#include "Audio.h"
+#include "Navigation.h"
 
 #include <iostream>
 #include <sstream>
@@ -36,27 +38,33 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
 	ui = new UI(this);
-	viewportBuffer = new ViewportFrameBuffer(this);
+	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new Physics(this);
 	collisionDetector = new CollisionDetector(this);
 	resourceManager = new ResourceManager(this);
+	audio = new Audio(this);
+	navigation = new Navigation(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(window);
+	AddModule(physics);
 	AddModule(input);
 	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(ui);
-	AddModule(physics);
 	AddModule(collisionDetector);
+	AddModule(navigation);
 	AddModule(sceneManager);
 	AddModule(viewportBuffer);
 	AddModule(editor);
 	AddModule(resourceManager);
 
+	AddModule(audio);
 	// Render last to swap buffer
 	AddModule(renderer);
+	// CHANGE THAT FOR THE SAKE OF GOD
+	AddModule(editor);
 
 	PERF_PEEK(ptimer);
 }
@@ -103,8 +111,10 @@ bool KoFiEngine::Awake()
 		ret = true;
 		jsonConfigEngine = jsonConfig.at("Engine");
 
+		engineConfig->authors = jsonConfigEngine.at("Authors").get<std::string>().c_str();
+		engineConfig->license = jsonConfigEngine.at("License").get<std::string>().c_str();
 		engineConfig->title = jsonConfigEngine.at("Title").get<std::string>().c_str();
-		engineConfig->organization = jsonConfigEngine.at("Organization").dump(4).c_str();
+		engineConfig->organization = jsonConfigEngine.at("Organization").get<std::string>().c_str();
 		engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
 		if (engineConfig->maxFps > 0) engineConfig->cappedMs = 1000 / engineConfig->maxFps;
 	}
@@ -306,6 +316,32 @@ int KoFiEngine::GetArgc() const
 	return argc;
 }
 
+bool KoFiEngine::SaveConfiguration() const
+{
+	bool ret = true;
+	JsonHandler jsonHandler;
+	Json jsonConfig;
+	Json configEngine;
+	configEngine["Authors"] = engineConfig->authors;
+	configEngine["License"] = engineConfig->license;
+	configEngine["Organization"] = engineConfig->organization;
+	configEngine["Title"] = engineConfig->title;
+	configEngine["MaxFPS"] = engineConfig->maxFps;
+	jsonConfig["Engine"]=configEngine;
+
+	for (Module* module : modules)
+	{
+		Json configModule;
+		module->SaveConfiguration(configModule);
+		jsonConfig[module->name.c_str()] = configModule;
+	}
+
+
+	jsonHandler.SaveJson(jsonConfig, "EngineConfig/config.json");
+
+	return ret;
+}
+
 // ---------------------------------------
 const char* KoFiEngine::GetArgv(int index) const
 {
@@ -410,11 +446,6 @@ FileSystem* KoFiEngine::GetFileSystem()const
 	return this->fileSystem;
 }
 
-ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
-{
-	return this->viewportBuffer;
-}
-
 Physics* KoFiEngine::GetPhysics()const
 {
 	return this->physics;
@@ -431,4 +462,8 @@ CollisionDetector* KoFiEngine::GetCollisionDetector() const
 ResourceManager* KoFiEngine::GetResourceManager() const
 {
 	return this->resourceManager;
+}
+Navigation* KoFiEngine::GetNavigation() const
+{
+	return this->navigation;
 }

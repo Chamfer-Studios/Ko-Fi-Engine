@@ -15,14 +15,18 @@
 #include "PanelConfiguration.h"
 #include "PanelLog.h"
 #include "PanelAbout.h"
+#include "PanelSettings.h"
 #include "PanelChooser.h"
 #include "PanelInspector.h"
 #include "PanelViewport.h"
+#include "PanelCameraViewport.h"
 #include "PanelGame.h"
 #include "PanelRuntimeState.h"
 #include "PanelAssets.h"
 #include "PanelTextEditor.h"
 #include "PanelNodeEditor.h"
+#include "ImGuizmo.h"
+#include "PanelNavigation.h"
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
 
@@ -49,11 +53,13 @@ Editor::Editor(KoFiEngine* engine)
 	panelConfig = new PanelConfiguration(this, engine->GetEngineConfig());
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
+	panelSettings = new PanelSettings(this);
 	panelChooser = new PanelChooser(this);
 	panelGameObject = new PanelInspector(this);
 	panelAssets = new PanelAssets(this);
 	//panelNodeEditor = new PanelNodeEditor(this);
 	panelTextEditor = new PanelTextEditor(this);
+	panelNavigation = new PanelNavigation(this);
 
 	// Panel instances with its own bool
 	/*if (panelsState.showGameWindow)
@@ -66,22 +72,29 @@ Editor::Editor(KoFiEngine* engine)
 		panelViewport = new PanelViewport(this, engine);
 		AddPanel(panelViewport);
 	}
+	if (panelsState.showCameraViewportWindow)
+	{
+		panelCameraViewport = new PanelCameraViewport(this, engine);
+		AddPanel(panelCameraViewport);
+	}
 	//------------------------------------
 	
 	// We want to have it always displayed.
 	panelRuntimeState = new PanelRuntimeState(this, engine);
 	AddPanel(panelRuntimeState);
 
-	AddPanel(mainMenuBar);
+	//AddPanel(mainMenuBar);
 	AddPanel(panelHierarchy);
-	AddPanel(panelConfig);
+	//AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);
+	AddPanel(panelSettings);
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
+	AddPanel(panelNavigation);
 }
 
 Editor::~Editor()
@@ -129,7 +142,7 @@ bool Editor::Awake(Json configModule)
 
 	// FIXME: The list of meshes should be in scene intro.
 	//input->gameObjects = &gameObjects;
-
+	ImGuizmo::Enable(true);
 	return ret;
 }
 
@@ -142,6 +155,7 @@ bool Editor::Start()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImNodes::CreateContext();
+	//ImGuizmo::SetImGuiContext(ImGui::GetCurrentContext());
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
 
@@ -172,6 +186,7 @@ bool Editor::PreUpdate(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 
 	// Panels PreUpdate
 	if (ret == true)
@@ -218,7 +233,7 @@ bool Editor::Update(float dt)
 
 	// Update panels state
 	UpdatePanelsState();
-
+	mainMenuBar->Update();
 	// Panels Update
 	if (ret == true)
 	{
@@ -289,6 +304,7 @@ bool Editor::CleanUp()
 	RELEASE(panelConfig);
 	RELEASE(panelLog);
 	RELEASE(panelAbout);
+	RELEASE(panelSettings);
 	RELEASE(panelChooser);
 	RELEASE(panelGameObject);
 	RELEASE(panelViewport);
@@ -307,6 +323,11 @@ bool Editor::CleanUp()
 void Editor::OnNotify(const Event& event)
 {
 	// Manage events
+}
+
+void Editor::OnPlay()
+{
+	panelGameObjectInfo.selectedGameObjectID = -1;
 }
 
 #include "ImGui.h"                // https://github.com/ocornut/imgui
@@ -481,10 +502,20 @@ void Editor::UpdatePanelsState()
 	}
 }
 
-void Editor::OpenTextEditor(std::string path)
+std::list<Panel*> Editor::GetPanels()
 {
-	toggleTextEditor = true;
-	panelTextEditor->LoadFile(path);
+	return panels;
+}
+
+bool Editor::MouseOnScene()
+{
+	return mouseScenePosition.x > 0 && mouseScenePosition.x < viewportSize.x
+		&& mouseScenePosition.y > 0 && mouseScenePosition.y < viewportSize.y;
 }
 
 
+void Editor::OpenTextEditor(std::string path, const char* ext)
+{
+	toggleTextEditor = true;
+	panelTextEditor->LoadFile(path,ext);
+}

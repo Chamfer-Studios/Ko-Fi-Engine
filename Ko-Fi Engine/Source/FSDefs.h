@@ -18,6 +18,8 @@
 #define SHADERS_DIR "Library/Shaders/"
 #define FONT_DIR "Library/Fonts/"
 
+#define CONFIG_DIR "EngineConfig/"
+
 // EXTENSIONS
 #define MESH_EXTENSION ".sugar"
 #define MATERIAL_EXTENSION ".milk"

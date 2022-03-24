@@ -1,7 +1,5 @@
 #include "Physics.h"
 
-#include "PxPhysicsAPI.h"
-
 // Module constructor
 Physics::Physics(KoFiEngine* engine) : Module()
 {
@@ -16,7 +14,11 @@ Physics::~Physics()
 
 bool Physics::Awake(Json configModule)
 {
-	return true;
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
 }
 
 bool Physics::Start()
@@ -32,21 +34,17 @@ bool Physics::Start()
 	return ret;
 }
 
-bool Physics::PreUpdate(float dt)
-{
-	return true;
-}
-
 bool Physics::Update(float dt)
 {
-	if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING || engine->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING || engine->GetSceneManager()->GetGameState() == GameState::PAUSED)
 	{
-		inGame = true;
+		isSimulating = true;
 	}
-	else inGame = false;
+	else isSimulating = false;
 
-	if (scene && inGame)
+	if (scene && isSimulating)
 	{
+		// TODO: WE HAVE TO PASS AS A PARAMETER THE GAME DT, NOT THE ENGINE DT
 		scene->simulate(dt);
 		scene->fetchResults(true);
 	}
@@ -54,28 +52,39 @@ bool Physics::Update(float dt)
 	return true;
 }
 
-bool Physics::PostUpdate(float dt)
-{
-	return true;
-}
-
 bool Physics::CleanUp()
 {
 	if (foundation)
 		foundation->release();
+	if (material)
+		material->release();
 	if (physics)
 		physics->release();
 	if (cooking)
 		cooking->release();
-	// This pointer release crashes at cleaning, I suppose it is due physx itself does its own cleanup or something
 	/*if (scene)
 		scene->release();*/
 
 	foundation = nullptr;
 	physics = nullptr;
 	cooking = nullptr;
+	material = nullptr;
 	scene = nullptr;
 
+	return true;
+}
+
+bool Physics::SaveConfiguration(Json& configModule) const
+{
+	configModule["gravity"] =  gravity;
+	configModule["number_threads"] = nbThreads;
+	return true;
+}
+
+bool Physics::LoadConfiguration(Json& configModule)
+{
+	gravity = configModule["gravity"];
+	nbThreads = configModule["number_threads"];
 	return true;
 }
 
@@ -95,7 +104,6 @@ bool Physics::InitializePhysX()
 		LOG_BOTH("PxCreateFoundation failed!");
 		return false;
 	}
-	LOG_BOTH("PxCreateFoundation returned successfully!");
 
 	// Top-level PxPhysics object creation
 	bool recordMemoryAllocations = true;
@@ -105,7 +113,6 @@ bool Physics::InitializePhysX()
 		LOG_BOTH("PxCreatePhysics failed!");
 		return false;
 	}
-	LOG_BOTH("PxCreatePhysics returned successfully!");
 
 	// Cooking creation
 	cooking = PxCreateCooking(PX_PHYSICS_VERSION, *foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
@@ -114,7 +121,6 @@ bool Physics::InitializePhysX()
 		LOG_BOTH("PxCreateCooking failed!");
 		return false;
 	}
-	LOG_BOTH("PxCreateCooking returned successfully!");
 
 	// Scene description creation
 	physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
@@ -122,13 +128,12 @@ bool Physics::InitializePhysX()
 	sceneDesc.bounceThresholdVelocity = gravity * 0.25f;
 	if (!sceneDesc.cpuDispatcher)
 	{
-		physx::PxCpuDispatcher* _cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(nbThreads);
+		physx::PxCpuDispatcher* _cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(/*nbThreads*/4);
 		if (!_cpuDispatcher)
 		{
 			LOG_BOTH("PxDefaultCpuDispatcherCreate failed!");
 			return false;
 		}
-		LOG_BOTH("PxDefaultCpuDispatcherCreate returned successfully!");
 		sceneDesc.cpuDispatcher = _cpuDispatcher;
 	}
 
@@ -139,7 +144,8 @@ bool Physics::InitializePhysX()
 		LOG_BOTH("createScene failed!");
 		return false;
 	}
-	LOG_BOTH("createScene returned successfully!");
+
+	material = physics->createMaterial(0, 0, 0);
 
 	return true;
 }

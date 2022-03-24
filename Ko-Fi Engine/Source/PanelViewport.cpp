@@ -4,10 +4,11 @@
 #include "Engine.h"
 #include "Camera3D.h"
 #include "SceneManager.h"
-#include "ViewportFrameBuffer.h"
+//#include "ViewportFrameBuffer.h"
 #include "Input.h"
 #include "Window.h"
 #include "Importer.h"
+#include "Renderer3D.h"
 #include "Texture.h"
 #include "ComponentMaterial.h"
 
@@ -41,8 +42,8 @@ bool PanelViewport::PreUpdate()
 
 bool PanelViewport::Update()
 {
-	//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove ))
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		editor->scenePanelOrigin = ImGui::GetWindowPos();
 		editor->scenePanelOrigin.x += ImGui::GetWindowContentRegionMin().x;
@@ -56,18 +57,19 @@ bool PanelViewport::Update()
 
 
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
+		viewportSize.y -= 26; // Make the viewport substract 26 pixels from the imgui window (corresponds to the imgui viewport header)
 
 		if (viewportSize.x != editor->lastViewportSize.x || viewportSize.y != editor->lastViewportSize.y)
 		{
 			editor->lastViewportSize = viewportSize;
-			engine->GetCamera3D()->aspectRatio = viewportSize.x / viewportSize.y;
-			engine->GetCamera3D()->RecalculateProjection();
-			engine->GetViewportFrameBuffer()->OnResize(viewportSize.x, viewportSize.y);
+			engine->GetCamera3D()->currentCamera->aspectRatio = viewportSize.x / viewportSize.y;
+			engine->GetCamera3D()->currentCamera->RecalculateProjection();
+			engine->GetRenderer()->ResizeFrameBuffers(viewportSize.x, viewportSize.y);
 
 		}
 		editor->viewportSize = viewportSize;
 
-		ImGui::Image((ImTextureID)engine->GetViewportFrameBuffer()->textureBuffer, viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+		ImGui::Image((ImTextureID)engine->GetRenderer()->GetTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 
 		if (ImGui::IsMouseClicked(1)) ImGui::SetWindowFocus();
 		isFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
@@ -81,7 +83,7 @@ bool PanelViewport::Update()
 				{
 					std::string path = (const char*)payload->Data;
 
-					if (path.find(".fbx") != std::string::npos)
+					if (path.find(".fbx") != std::string::npos || path.find(".md5mesh") != std::string::npos)
 					{
 						Importer::GetInstance()->sceneImporter->Import(path.c_str());
 					}
@@ -113,7 +115,7 @@ bool PanelViewport::Update()
 	}
 	ImGui::End();
 
-	//ImGui::PopStyleVar();
+	ImGui::PopStyleVar();
 
 	return true;
 }
@@ -126,4 +128,9 @@ bool PanelViewport::PostUpdate()
 bool PanelViewport::IsWindowFocused()
 {
 	return isFocused;
+}
+
+void PanelViewport::SetIsFocused(bool isFocused)
+{
+	this->isFocused = isFocused;
 }

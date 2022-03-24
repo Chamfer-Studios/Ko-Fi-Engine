@@ -1,3 +1,4 @@
+#include "Scripting.h"
 #include "ComponentScript.h"
 #include "Engine.h"
 
@@ -29,14 +30,14 @@ ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 
 ComponentScript::~ComponentScript()
 {
-	delete(handler);
-	handler = nullptr;
+	handler->CleanUp();
+	//RELEASE(handler);
+	inspectorVariables.clear();
 }
 
 bool ComponentScript::Start()
 {
 	bool ret = true;
-
 
 	return ret;
 }
@@ -49,7 +50,7 @@ bool ComponentScript::CleanUp()
 
 bool ComponentScript::Update(float dt)
 {
-	if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING && isScriptLoaded)
+	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
 		handler->lua["Update"](dt);
 	}
@@ -62,23 +63,29 @@ bool ComponentScript::PostUpdate(float dt)
 	return true;
 }
 
+bool ComponentScript::OnPlay()
+{
+	bool ret = true;
+
+	ReloadScript();
+
+	return ret;
+}
+
 bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
 	std::string headerName = "Script" + std::to_string(numScript);
 
-	if (ImGui::CollapsingHeader(headerName.c_str()))
+	if (ImGui::CollapsingHeader(headerName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (chooser->IsReadyToClose("LoadScript")) 
 		{
 			if (chooser->OnChooserClosed() != nullptr) 
 			{
 				path = chooser->OnChooserClosed();
-				if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING)
-					ReloadScript();
-				else
-					script = handler->lua.load_file(path);
+				ReloadScript();
 			}
 		}
 		if (ImGui::Button("Select Script")) 
@@ -88,11 +95,80 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());
 
-		//float s = handler->lua["speed"];
-		//if (ImGui::DragFloat("Speed", &s))
-		//{
-		//	handler->lua["speed"] = s;
-		//}
+		bool isSeparatorNeeded = true;
+		for (InspectorVariable* variable : inspectorVariables)
+		{
+			if (variable->type == INSPECTOR_NO_TYPE)
+				continue;
+
+			if (isSeparatorNeeded)
+			{
+				ImGui::Separator();
+				isSeparatorNeeded = false;
+			}
+			
+			switch (variable->type)
+			{
+				case INSPECTOR_INT:
+				{
+					if (ImGui::DragInt(variable->name.c_str(), &std::get<int>(variable->value)))
+					{
+						handler->lua[variable->name.c_str()] = std::get<int>(variable->value);
+					}
+					break;
+				}
+				case INSPECTOR_FLOAT:
+				{
+					if (ImGui::DragFloat(variable->name.c_str(), &std::get<float>(variable->value)))
+					{
+						handler->lua[variable->name.c_str()] = std::get<float>(variable->value);
+					}
+					break;
+				}
+				case INSPECTOR_FLOAT2:
+				{
+					if (ImGui::DragFloat2(variable->name.c_str(), std::get<float2>(variable->value).ptr()))
+					{
+						handler->lua[variable->name.c_str()] = std::get<float2>(variable->value);
+					}
+					break;
+				}
+				case INSPECTOR_FLOAT3:
+				{
+					if (ImGui::DragFloat3(variable->name.c_str(), std::get<float3>(variable->value).ptr()))
+					{
+						handler->lua[variable->name.c_str()] = std::get<float3>(variable->value);
+					}
+					break;
+				}
+				case INSPECTOR_BOOL:
+				{
+					if (ImGui::Checkbox(variable->name.c_str(), &std::get<bool>(variable->value)))
+					{
+						handler->lua[variable->name.c_str()] = std::get<bool>(variable->value);
+					}
+					break;
+				}
+				case INSPECTOR_STRING:
+				{
+					if (ImGui::InputText(variable->name.c_str(), &std::get<std::string>(variable->value)))
+					{
+						handler->lua[variable->name.c_str()] = std::get<std::string>(variable->value);
+					}
+					break;
+				}
+				case INSPECTOR_TO_STRING:
+				{
+					ImGui::Text(std::get<std::string>(variable->value).c_str());
+					break;
+				}
+			}
+		}
+
+		if (!isSeparatorNeeded)
+		{
+			ImGui::Separator();
+		}
 
 		if (ImGui::Button("Reload Script"))
 		{
@@ -106,6 +182,9 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 void ComponentScript::ReloadScript()
 {
+	if (path == "")
+		return;
+	inspectorVariables.clear();
 	script = handler->lua.load_file(path);
 	script();
 	isScriptLoaded = true;

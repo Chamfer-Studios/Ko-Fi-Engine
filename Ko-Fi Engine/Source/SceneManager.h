@@ -8,6 +8,8 @@
 #include <string>
 #include <list>
 
+#include "ImGuizmo.h"
+
 class KoFiEngine;
 class SceneIntro;
 class GameObject;
@@ -22,7 +24,7 @@ class ComponentText;
 class ComponentImage;
 class ComponentButton;
 
-enum class RuntimeState
+enum class GameState
 {
 	PLAYING,
 	PAUSED,
@@ -62,7 +64,13 @@ public:
 
 	void AddScene(Scene* scene);
 	Scene* GetCurrentScene();
-	RuntimeState GetState();
+
+	GameState GetGameState();
+	float GetGameDt();
+	float GetGameTime();
+
+	inline float GetGameDt() const { return gameDt; }
+	inline float GetTotalGameTime() const { return gameTime; }
 
 	void OnPlay();
 	void OnStop();
@@ -70,6 +78,13 @@ public:
 	void OnResume();
 	void OnTick();
 	void OnClick(SDL_Event event);
+
+	//GUIZMO
+	ImGuizmo::OPERATION GetGizmoOperation() { return currentGizmoOperation; }
+	void SetGizmoOperation(ImGuizmo::OPERATION operation) { currentGizmoOperation = operation; }
+	void GuizmoTransformation();
+	void UpdateGuizmo();
+	//
 public:
 	bool active;
 
@@ -81,6 +96,10 @@ private:
 	std::vector<Scene*> scenes;
 	Scene* currentScene = nullptr;
 	SceneIntro* sceneIntro = nullptr;
+
+	// Guizmo
+	ImGuizmo::OPERATION currentGizmoOperation;
+	ImGuizmo::MODE currentGizmoMode;
 
 	// TIME MANAGEMENT
 	// --------------------------------------------------
@@ -98,8 +117,10 @@ private:
 	// Real Time Since Startup: seconds since game start (Real Time Clock) --> Engine.cpp
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
 	// --------------------------------------------------
+
+	float gameTime = 0.0f;
 	
-	RuntimeState runtimeState = RuntimeState::STOPPED;
+	GameState runtimeState = GameState::STOPPED;
 };
 
 #endif // !__SCENE_MANAGER_H__

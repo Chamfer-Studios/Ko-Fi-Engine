@@ -27,7 +27,6 @@ CollisionDetector::~CollisionDetector()
 bool CollisionDetector::Update(float dt)
 {
 	//TODO: timed updates?
-
 	for (int i = 0; i < collidableEntities.size(); i++)
 	{
 		CheckCollisions(collidableEntities[i]);
@@ -78,6 +77,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 {
 	std::vector<GameObject*> fullGOList = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
+	if (currentEntity->GetComponent<ComponentMesh>() == nullptr) return;
 	currentEntity->GetComponent<ComponentMesh>()->GenerateGlobalBoundingBox();
 	math::AABB currentEntityAABB = currentEntity->GetComponent<ComponentMesh>()->GetGlobalAABB();
 	ColliderType currentType = currentEntity->GetComponent<ComponentCollider>()->GetColliderType();
@@ -97,7 +97,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 			if (currentEntityAABB.Intersects(newCollider))
 			{
 				//call corresponding event depending on collider type
-				std::cout<<"intersectioooooon";
+				//std::cout<<"intersectioooooon";
 
 				//set new collision for the inspector properties
 				currentEntity->GetComponent<ComponentCollider>()->SetNewCollision(fullGOList[i]);
@@ -124,9 +124,10 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 						//Move currentEntity out of the floor
 						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + float3(0, floorCollisionTranslation, 0);
 						currentEntity->GetTransform()->SetPosition(finalPosition);
+						currentEntity->GetComponent<ComponentRigidBody>()->TransformUpdatesRigidBody();
 						
 						//Stop gravity
-						currentEntity->GetComponent<ComponentRigidBody>()->SetAffectGravity(false);
+						currentEntity->GetComponent<ComponentRigidBody>()->SetUseGravity(false);
 
 						//lock Y axis at desired position
 						currentEntity->GetComponent<ComponentRigidBody>()->FreezePositionY(true);
@@ -170,6 +171,7 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 
 						math::float3 finalPosition = currentEntity->GetTransform()->GetPosition() + wallCollisionTranslation;
 						currentEntity->GetTransform()->SetPosition(finalPosition);
+						currentEntity->GetComponent<ComponentRigidBody>()->TransformUpdatesRigidBody();
 					}
 					break;
 				}

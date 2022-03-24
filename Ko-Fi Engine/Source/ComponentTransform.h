@@ -15,7 +15,8 @@ public:
 	~ComponentTransform();
 
 	bool Update(float dt) override;
-	bool InspectorDraw(PanelChooser* chooser); // OngGui
+	bool CleanUp() override;
+	bool InspectorDraw(PanelChooser* chooser) override; // OngGui
 
 	void SetPosition(const float3& newPosition);
 	void SetRotation(const float3& newRotation);
@@ -29,12 +30,17 @@ public:
 	inline const float3& Right() const { return right; }
 	inline const float3& Up() const { return up; }
 	inline const float3& Front() const { return front; }
-	void SetFront(const float3& front) { this->front = front; }
+	void SetFront(const float3& front) 
+	{ 
+		this->front = front; 
+	}
 
 	void NewAttachment();
 	void OnParentMoved();
 
 	void RecomputeGlobalMatrix();
+
+	void UpdateGuizmoParameters(float4x4& transformMatrix);
 
 	float4x4 GetGlobalTransform();
 	void SetGlobalTransform(const float4x4& globalTransform);

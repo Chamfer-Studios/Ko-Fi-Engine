@@ -16,11 +16,14 @@ class PanelAbout;
 class PanelChooser;
 class PanelInspector;
 class PanelViewport;
+class PanelCameraViewport;
 class PanelGame;
 class PanelRuntimeState;
 class PanelAssets;
 class PanelNodeEditor;
 class PanelTextEditor;
+class PanelSettings;
+class PanelNavigation;
 
 class GameObject;
 
@@ -34,6 +37,7 @@ struct PanelGameObjectInfo
 struct PanelsState
 {
 	bool showViewportWindow = true;
+	bool showCameraViewportWindow = true;
 	bool showGameWindow = true;
 };
 
@@ -51,6 +55,7 @@ public:
 	bool CleanUp();
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
+	void OnPlay();
 
 	void AddPanel(Panel* panel);
 	void RemovePanel(Panel* panel);
@@ -58,8 +63,11 @@ public:
 	void Markdown(const std::string& markdown_);
 	void MarkdownExample();
 	void UpdatePanelsState();
-	void OpenTextEditor(std::string path);
+	void OpenTextEditor(std::string path,const char* ext = nullptr);
 
+	bool MouseOnScene();
+
+	std::list<Panel*> GetPanels();
 	template<class T> T* GetPanel()
 	{
 		T* panel = nullptr;
@@ -83,6 +91,7 @@ public:
 	bool toggleAboutPanel = false;
 	bool toggleChooserPanel = false;
 	bool toggleTextEditor = false;
+	bool toggleSettingsPanel = false;
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
 	KoFiEngine* engine = nullptr;
@@ -103,10 +112,13 @@ private:
 	PanelInspector* panelGameObject = nullptr;
 	PanelGame* panelGame = nullptr;
 	PanelViewport* panelViewport = nullptr;
+	PanelCameraViewport* panelCameraViewport = nullptr;
 	PanelRuntimeState* panelRuntimeState = nullptr;
 	PanelAssets* panelAssets = nullptr;
 	PanelNodeEditor* panelNodeEditor = nullptr;
 	PanelTextEditor* panelTextEditor = nullptr;
+	PanelSettings* panelSettings = nullptr;
+	PanelNavigation* panelNavigation = nullptr;
 	
 	bool isSceneWindowClicked = false;
 

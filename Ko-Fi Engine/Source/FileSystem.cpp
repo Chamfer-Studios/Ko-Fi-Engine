@@ -264,3 +264,20 @@ void FileSystem::CreateShader(const char* path)
 	}
 	stream.close();
 }
+
+void FileSystem::CreateScene(const char* path,const char* sceneName)
+{
+	
+	Json sceneJson;
+	std::string name = Importer::GetInstance()->GetNameFromPath(sceneName);
+	sceneJson[name];
+	sceneJson[name]["active"] = true;
+	sceneJson[name]["game_objects_amount"] = 0;
+	sceneJson[name]["game_objects_list"] = json::array();
+	sceneJson[name]["name"] = name;
+
+	SDL_assert(path != nullptr);
+
+	JsonHandler handler;
+	handler.SaveJson(sceneJson, path);
+}

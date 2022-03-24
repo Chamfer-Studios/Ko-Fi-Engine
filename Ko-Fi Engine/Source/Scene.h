@@ -82,7 +82,6 @@ public:
 
 		return nullptr;
 	}
-
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
 	{
 		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
@@ -106,6 +105,12 @@ public:
 			{
 				if ((*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID == (*it)->GetUID())
 					(*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+				std::vector<GameObject*> childs = (*it)->GetChildren();
+				for (GameObject* child : childs)
+				{
+					DeleteGameObject(child);
+				}
+				
 				gameObjectList.erase(it);
 				break;
 			}

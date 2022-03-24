@@ -6,6 +6,8 @@
 #include "Globals.h"
 #include "Resource.h"
 
+#define TEXTUREID_DEFAULT 4294967295
+
 class Texture : public Resource
 {
 public:
@@ -13,8 +15,9 @@ public:
 	~Texture();
 
 	inline const char* GetTexturePath() { return path.c_str(); }
-	inline void SetTexturePath(const char* path) { 
-		path != nullptr ? this->path = path:this->path = "";
+	inline void SetTexturePath(const char* path)
+	{ 
+		path != nullptr ? this->path = path : this->path = "";
 	}
 
 	inline uint GetTextureId() const { return textureID; }
@@ -23,7 +26,7 @@ public:
 	inline int GetNrChannels() const { return nrChannels; }
 
 public:
-	uint textureID = -1;
+	uint textureID = TEXTUREID_DEFAULT;
 	int width = -1;
 	int height = -1;
 	int nrChannels = 1;
