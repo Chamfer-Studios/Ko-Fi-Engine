@@ -40,6 +40,16 @@ bool ComponentCollider2::Update(float dt)
 	return ret;
 }
 
+bool ComponentCollider2::PostUpdate(float dt)
+{
+	bool ret = true;
+
+	if (drawCollider)
+		DrawCollider();
+
+	return ret;
+}
+
 // TODO: Separate updating between shape and state
 bool ComponentCollider2::UpdateCollider()
 {
@@ -149,6 +159,11 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 
 
 	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
+}
+
+void ComponentCollider2::DrawCollider()
+{
+
 }
 
 // Serialization 
@@ -271,6 +286,8 @@ const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collSh
 {
 	switch (collShape)
 	{
+	case ColliderShape::NONE:
+		return "NONE";
 	case ColliderShape::BOX:
 		return "BOX";
 	case ColliderShape::CAPSULE:
@@ -278,7 +295,7 @@ const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collSh
 	case ColliderShape::SPHERE:
 		return "SPHERE";
 	default:
-		return "NONE";
+		return "ERROR, goto C_Collider.cpp refer 'ColliderShapeToString'";
 	}
 	return "ERROR, NO COLLIDER SHAPE";
 }
@@ -297,7 +314,7 @@ const char* ComponentCollider2::CollisionLayerToString(const CollisionLayer coll
 	case CollisionLayer::TERRAIN:
 		return "TERRAIN";
 	default:
-		return "ERROR, NO COLLISION LAYER";
+		return "ERROR, goto C_Collider.cpp refer 'CollisionLayerToString'";
 	}
 	return "ERROR, NO COLLISION LAYER";
 }

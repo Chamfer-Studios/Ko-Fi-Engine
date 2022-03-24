@@ -29,9 +29,12 @@ public:
 	~ComponentCollider2();
 
 	bool Update(float dt) override;
+	bool PostUpdate(float dt) override;
 	bool UpdateCollider(); // Called whenever a change is produced in collider shape or state
 
 	void CreateCollider(ColliderShape collType);
+
+	void DrawCollider();
 
 	// Serialization 
 	void Save(Json& json) const override;
