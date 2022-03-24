@@ -37,11 +37,17 @@ EmitterDefault::EmitterDefault()
 
 void EmitterDefault::Spawn(Particle* particle, EmitterInstance* emitter)
 {
+	LCG random;
 	GameObject* go = emitter->component->owner;
 
 	particle->position = go->GetTransform()->GetGlobalTransform().TranslatePart();
-
-	particle->maxLifetime = initialLifetime;
+	if (randomParticleLife)
+	{
+		float particleLife = math::Lerp(minParticleLife, maxParticleLife, random.Float());
+		particle->maxLifetime = particleLife;
+	}
+	else
+		particle->maxLifetime = minParticleLife;
 	particle->lifeTime = 0.0f;
 }
 
@@ -51,11 +57,11 @@ bool EmitterDefault::Update(float dt, EmitterInstance* emitter)
 	{
 		return true;
 	}
-	timer += dt;
-	if (timer >= spawnTime)
+	spawnTimer += dt;
+	if (spawnTimer >= spawnTime)
 	{
 		emitter->SpawnParticle();
-		timer = 0;
+		spawnTimer = 0;
 	}
 	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
@@ -78,20 +84,43 @@ EmitterMovement::EmitterMovement()
 void EmitterMovement::Spawn(Particle* particle, EmitterInstance* emitter)
 {
 	LCG random;
-	particle->direction = particle->direction.Lerp(initialDirection, finalDirection, random.Float());
+	if (randomPosition)
+	{
+		float positionX = math::Lerp(minPosition.x, maxPosition.x, random.Float());
+		float positionY = math::Lerp(minPosition.y, maxPosition.y, random.Float());
+		float positionZ = math::Lerp(minPosition.z, maxPosition.z, random.Float());
+		particle->position += float3(positionX, positionY, positionZ);
+	}
+	else
+		particle->position += minPosition;
 
-	float directionX = math::Lerp(initialDirection.x, finalDirection.x, random.Float());
-	float directionY = math::Lerp(initialDirection.y, finalDirection.y, random.Float());
-	float directionZ = math::Lerp(initialDirection.z, finalDirection.z, random.Float());
-	particle->direction = float3(directionX, directionY, directionZ);
+	if (randomDirection)
+	{
+		float directionX = math::Lerp(minDirection.x, maxDirection.x, random.Float());
+		float directionY = math::Lerp(minDirection.y, maxDirection.y, random.Float());
+		float directionZ = math::Lerp(minDirection.z, maxDirection.z, random.Float());
+		particle->direction = float3(directionX, directionY, directionZ);
+	}
+	else
+		particle->direction = minDirection;
 
-	particle->intensity = math::Lerp(initialIntensity,finalIntensity,random.Float());
-	particle->velocity = particle->direction * particle->intensity;
+	if (randomVelocity)
+	{
+		float intensity = math::Lerp(minVelocity, maxVelocity, random.Float());
+		particle->velocity = particle->direction * intensity;
+	}
+	else
+		particle->velocity = particle->direction * minVelocity;
 
-	float accelerationX = math::Lerp(initialAcceleration.x, finalAcceleration.x, random.Float());
-	float accelerationY = math::Lerp(initialAcceleration.y, finalAcceleration.y, random.Float());
-	float accelerationZ = math::Lerp(initialAcceleration.z, finalAcceleration.z, random.Float());
-	particle->acceleration = float3(accelerationX, accelerationY, accelerationZ);
+	if (randomAcceleration)
+	{
+		float accelerationX = math::Lerp(minAcceleration.x, maxAcceleration.x, random.Float());
+		float accelerationY = math::Lerp(minAcceleration.y, maxAcceleration.y, random.Float());
+		float accelerationZ = math::Lerp(minAcceleration.z, maxAcceleration.z, random.Float());
+		particle->acceleration = float3(accelerationX, accelerationY, accelerationZ);
+	}
+	else
+		particle->acceleration = minAcceleration;
 }
 
 bool EmitterMovement::Update(float dt, EmitterInstance* emitter)
@@ -193,7 +222,7 @@ EmitterSize::EmitterSize()
 void EmitterSize::Spawn(Particle* particle, EmitterInstance* emitter)
 {
 	LCG random;
-	particle->scale = particle->scale.Lerp(initialSize, finalSize, random.Float());
+	particle->scale = particle->scale.Lerp(minSize, maxSize, random.Float());
 }
 
 bool EmitterSize::Update(float dt, EmitterInstance* emitter)
@@ -208,13 +237,14 @@ bool EmitterSize::Update(float dt, EmitterInstance* emitter)
 		Particle* particle = &emitter->particles[particleIndex];
 
 		float p = GetPercentage(particle);
-		particle->scale = particle->scale.Lerp(initialSize, finalSize, p);
+		particle->scale = particle->scale.Lerp(minSize, maxSize, p);
 	}
 }
 
-ParticleBillboarding::ParticleBillboarding()
+ParticleBillboarding::ParticleBillboarding(BillboardingType typeB)
 {
 	type = ParticleModuleType::BILLBOARDING;
+	billboardingType = typeB;
 }
 
 void ParticleBillboarding::Spawn(EmitterInstance* emitter, Particle* particle)

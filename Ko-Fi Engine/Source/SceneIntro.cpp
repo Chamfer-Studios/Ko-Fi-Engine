@@ -40,6 +40,11 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	//uint uid = random.Int();
 	//GameObject * g = this->CreateEmptyGameObject("Particle Test");
 	//g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
+
+	GameObject* camera = CreateEmptyGameObject("camera");
+	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
+	cCamera->isMainCamera = true;
+	engine->GetCamera3D()->SetGameCamera(cCamera);
 }
 
 SceneIntro::~SceneIntro()

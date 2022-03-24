@@ -73,7 +73,8 @@ bool C_AudioSwitch::OnPlay()
             if (index->GetPlayOnStart())
             {
                 playingTrack = index;
-                PlayAudio(index->source);
+
+                PlayAudio(index->source, index->offset);
             }
         }
     }
@@ -89,12 +90,9 @@ bool C_AudioSwitch::Update(float dt)
     if (switching)
         SwitchFade(fadeTime);
 
-    if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)
-        return ret;
-
     for (R_Track* index : tracks)
     {
-        if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+        if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
         {
             PauseAudio(index->source);
             if (switching)
@@ -102,9 +100,12 @@ bool C_AudioSwitch::Update(float dt)
 
             continue;
         }
-        ResumeAudio(index->source);
+        //ResumeAudio(index->source);
     }
+
     UpdatePlayState();
+
+    return ret;
 }
 
 bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
@@ -167,7 +168,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
         // SWITCH BUTTON
         if (ImGui::Button("Switch To") && !switching)
         {
-            SwitchTrack(nextSwitchTrack, offsetSync);
+            SwitchTrack(nextSwitchTrack);
         }
         ImGui::SameLine();
         ImGui::DragInt("##Switch", &nextSwitchTrack, 0.1f, 0, tracks.size() - 1, "Track %d");
@@ -262,8 +263,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
                         if (ImGui::Checkbox("Play on start", &index->playOnStart) && index->playOnStart)
                         {
-                            DisablePlayOnStart();
-                            index->playOnStart = true;
+                            DisablePlayOnStart(index);
                         }
 
                         if (ImGui::Checkbox("Loop", &index->loop))
@@ -279,7 +279,6 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                 ImGui::Spacing();
                 ImGui::PopID();
             }
-            UpdatePlayState();
         }
     }
     return ret;
@@ -314,6 +313,13 @@ void C_AudioSwitch::Load(Json& json)
 {
     openEditor = false;
     trackIdInEdit = -1;
+    editorOffset = 0.0f;
+
+    if (IsAnyTrackPlaying())
+    {
+        R_Track* trackToStop = GetPlayingTrack();
+        StopAudio(trackToStop->source);
+    }
 
     fadeTime = json.at("fade_time");
     offsetSync = json.at("offset_sync");
@@ -362,7 +368,7 @@ void C_AudioSwitch::UpdatePlayState()
     }
 }
 
-void C_AudioSwitch::SwitchTrack(int newTrackIndex, bool offsetSync)
+void C_AudioSwitch::SwitchTrack(int newTrackIndex)
 {
     if (newTrackIndex >= tracks.size())
         return;
@@ -382,6 +388,34 @@ void C_AudioSwitch::SwitchTrack(int newTrackIndex, bool offsetSync)
     }
 }
 
+void C_AudioSwitch::PlayTrack(int trackIndex)
+{
+    if (tracks[trackIndex] != nullptr)
+    {
+        playingTrack = tracks[trackIndex];
+
+        PlayAudio(tracks[trackIndex]->source, tracks[trackIndex]->offset);
+    }
+}
+
+void C_AudioSwitch::ResumeTrack(int trackIndex)
+{
+    if (tracks[trackIndex] != nullptr)
+        ResumeAudio(tracks[trackIndex]->source);
+}
+
+void C_AudioSwitch::StopTrack(int trackIndex)
+{
+    if (tracks[trackIndex] != nullptr)
+        StopAudio(tracks[trackIndex]->source);
+}
+
+void C_AudioSwitch::PauseTrack(int trackIndex)
+{
+    if (tracks[trackIndex] != nullptr)
+        PauseAudio(tracks[trackIndex]->source);
+}
+
 void C_AudioSwitch::SwitchFade(float fadeSeconds)
 {
     if (!newTrack->play)
@@ -390,7 +424,7 @@ void C_AudioSwitch::SwitchFade(float fadeSeconds)
         alSourcef(newTrack->source, AL_GAIN, 0.0f);
     }
 
-    if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+    if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
     {
         switchTime = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - pauseDifference;
         return;
@@ -451,6 +485,15 @@ R_Track* C_AudioSwitch::GetPlayingTrack() const
     }
     return nullptr;
 }
+int C_AudioSwitch::GetPlayingTrackID() const
+{
+    for (uint i = 0; i < tracks.size(); ++i)
+    {
+        if (tracks[i]->play)
+            return i;
+    }
+    return -1;
+}
 
 void C_AudioSwitch::StopAllTracks()
 {
@@ -461,11 +504,11 @@ void C_AudioSwitch::StopAllTracks()
     }
 }
 
-void C_AudioSwitch::DisablePlayOnStart()
+void C_AudioSwitch::DisablePlayOnStart(R_Track* trackToChange)
 {
     for (R_Track* index : tracks)
     {
-        if (!index->IsTrackLoaded())
+        if (!index->IsTrackLoaded() || trackToChange == index)
             continue;
 
         index->playOnStart = false;

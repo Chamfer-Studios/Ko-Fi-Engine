@@ -206,7 +206,7 @@ void Renderer3D::PassProjectionAndViewToRenderer()
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	Camera3D* currentCamera3D = engine->GetCamera3D();
-	if (currentCamera3D)
+	if (currentCamera3D->currentCamera)
 	{
 		if (currentCamera3D->currentCamera->projectionIsDirty) {
 			RecalculateProjectionMatrix();
@@ -321,9 +321,20 @@ void Renderer3D::RenderMeshes(GameObject* go)
 			GLint view_location = glGetUniformLocation(shader, "view");
 			glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 
-
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+			if (mesh->isAnimated)
+			{
+				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
+				std::vector<float4x4> transformsAnim;
+				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+
+				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+				glUniform1i(isAnimated, mesh->isAnimated);
+			}
+			
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
 			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());

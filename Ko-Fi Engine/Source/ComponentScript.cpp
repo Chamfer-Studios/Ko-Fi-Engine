@@ -39,8 +39,6 @@ bool ComponentScript::Start()
 {
 	bool ret = true;
 
-	ReloadScript();  // For loading scenes
-
 	return ret;
 }
 
@@ -52,7 +50,7 @@ bool ComponentScript::CleanUp()
 
 bool ComponentScript::Update(float dt)
 {
-	if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PLAYING && isScriptLoaded)
+	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
 		handler->lua["Update"](dt);
 	}
@@ -63,6 +61,15 @@ bool ComponentScript::PostUpdate(float dt)
 {
 
 	return true;
+}
+
+bool ComponentScript::OnPlay()
+{
+	bool ret = true;
+
+	ReloadScript();
+
+	return ret;
 }
 
 bool ComponentScript::InspectorDraw(PanelChooser* chooser)

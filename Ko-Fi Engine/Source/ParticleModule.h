@@ -44,9 +44,11 @@ public:
 	bool Update(float dt, EmitterInstance* emitter);
 
 public:
-	float timer = 0.0f;
+	float spawnTimer = 0.0f;
 	float spawnTime = 0.5f;
-	float initialLifetime = 1.0f;
+	bool randomParticleLife = false;
+	float minParticleLife = 1.0f;
+	float maxParticleLife = 3.0f;
 };
 
 class EmitterMovement : public ParticleModule
@@ -58,17 +60,21 @@ public:
 	bool Update(float dt, EmitterInstance* emitter);
 
 public:
-	float initialIntensity = 1.0f;
-	float finalIntensity = 3.0f;
+	bool randomDirection = false;
+	float3 minDirection = float3(1.0f, 1.0f, 1.0f);
+	float3 maxDirection = float3(-1.0f, -1.0f, -1.0f);
 
-	float3 initialDirection = float3(1.0f, 1.0f, 1.0f);
-	float3 finalDirection = float3(-1.0f, -1.0f, -1.0f);
+	bool randomPosition = false;
+	float3 minPosition = float3::zero;
+	float3 maxPosition = float3::zero;
 
-	float3 initialPosition = float3::zero;
-	float3 finalPosition = float3::zero;
+	bool randomVelocity = false;
+	float minVelocity = 1.0f;
+	float maxVelocity = 3.0f;
 
-	float3 initialAcceleration = float3(0.0f, 0.0f, 0.0f);
-	float3 finalAcceleration = float3(1.0f, 1.0f, 1.0f);
+	bool randomAcceleration = false;
+	float3 minAcceleration = float3(-1.0f, 0.0f, -1.0f);
+	float3 maxAcceleration = float3(1.0f, 1.0f, 1.0f);
 };
 
 class EmitterColor : public ParticleModule
@@ -94,8 +100,8 @@ public:
 	bool Update(float dt, EmitterInstance* emitter);
 
 public:
-	float3 initialSize = float3(1.0f, 1.0f, 1.0f);
-	float3 finalSize = float3(1.5f, 1.5f, 1.5f);
+	float3 minSize = float3(1.0f, 1.0f, 1.0f);
+	float3 maxSize = float3(1.5f, 1.5f, 1.5f);
 };
 
 class ParticleBillboarding : public ParticleModule
@@ -112,7 +118,7 @@ public:
 		None,
 	};
 
-	ParticleBillboarding();
+	ParticleBillboarding(BillboardingType typeB = BillboardingType::WorldAligned);
 
 	void Spawn(EmitterInstance* emitter, Particle* particle);
 	bool Update(float dt, EmitterInstance* emitter);
@@ -121,7 +127,6 @@ public:
 
 	BillboardingType billboardingType = BillboardingType::WorldAligned;
 	bool hideBillboarding = false;
-	bool eraseBillboarding = false;
 };
 
 #endif // !__PARTICLE_MODULE_H__

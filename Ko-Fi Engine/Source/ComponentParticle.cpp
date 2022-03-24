@@ -13,7 +13,8 @@
 ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::PARTICLE;
-	resource = new ParticleResource();
+	//resource = new ParticleResource();
+	resource = nullptr;
 	emitterInstances.clear();
 }
 
@@ -98,38 +99,16 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 			ImGui::Text("Emitters: %d", resource->emitters.size());
 
 			std::string addEmitterName = "Add Emitter to " + resource->name;
-			ImGui::Combo("##Emitter Combo", &emitterToAdd, "Add Emitter\0New Emitter");
-			ImGui::SameLine();
 			if ((ImGui::Button(addEmitterName.c_str())))
 			{
-				//TODO: Check all emitters that are loaded
-				if (emitterToAdd == 1)
-				{
-					CONSOLE_LOG("%d", emitterToAdd);
-					std::string name = "Emitter";
-					NewEmitterName(name);
-					Emitter* e = new Emitter(name.c_str());
-					resource->emitters.push_back(e);
-					EmitterInstance* ei = new EmitterInstance(e, this);
-					ei->Init();
-					emitterInstances.push_back(ei);
-				}
+				std::string name = "Emitter";
+				NewEmitterName(name);
+				Emitter* e = new Emitter(name.c_str());
+				resource->emitters.push_back(e);
+				EmitterInstance* ei = new EmitterInstance(e, this);
+				ei->Init();
+				emitterInstances.push_back(ei);
 			}
-			//what we had before, don't delete
-			//ImGui::SameLine();
-
-			////Combo to select either an existing resource or create a new one
-
-			//if (ImGui::Button("Add Emitter")) 
-			//{
-			//	std::string name = "Emitter";
-			//	NewEmitterName(name);
-			//	Emitter* e = new Emitter(name.c_str());
-			//	resource->emitters.push_back(e);
-			//	EmitterInstance* ei = new EmitterInstance(e, this);
-			//	ei->Init();
-			//	emitterInstances.push_back(ei);
-			//}
 
 			ImGui::Text("Emitter Instances: %d", emitterInstances.size());
 
@@ -140,7 +119,6 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 			for (Emitter* emitter : resource->emitters)
 			{
 				std::string emitterName = "##Emitter" + std::to_string(emitterAt);
-				//std::string emitterNameDots = "Emitter " + std::to_string(emitterAt) + " Name:";
 				ImGui::Text("Name:");
 				ImGui::SameLine();
 				ImGui::InputText(emitterName.c_str(), &(emitter->name));
@@ -156,7 +134,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 							emitter->texture.textureID = TEXTUREID_DEFAULT;
 							emitter->texture.SetTexturePath(nullptr);
 
-							Texture tex = Texture();
+							Texture tex;
 							Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
 							emitter->texture = tex;
 						}
@@ -225,23 +203,42 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						if (ImGui::CollapsingHeader(moduleName.c_str()))
 						{
 							EmitterDefault* e = (EmitterDefault*)module;
-							float timer = e->timer;
-							std::string timerName = emitter->name + " - Timer";
-							if (ImGui::InputFloat(timerName.c_str(), &timer, 0.0f, 100.0f))
+							float spawnTimer = e->spawnTimer;
+							std::string spawnTimerName = emitter->name + " - SpawnTimer";
+							if (ImGui::InputFloat(spawnTimerName.c_str(), &spawnTimer, 0.0f, 100.0f))
 							{
-								e->timer = timer;
+								e->spawnTimer = spawnTimer;
 							}
 							float spawnTime = e->spawnTime;
-							std::string spawnName = emitter->name + " - SpawnTime";
-							if (ImGui::InputFloat(spawnName.c_str(), &spawnTime, 0.0f, 25.0f))
+							std::string spawnTimeName = emitter->name + " - SpawnTime";
+							if (ImGui::InputFloat(spawnTimeName.c_str(), &spawnTime, 0.0f, 25.0f))
 							{
 								e->spawnTime = spawnTime;
 							}
-							float initialLifetime = e->initialLifetime;
-							std::string lifetimeName = emitter->name + " - InitialLifetime";
-							if (ImGui::InputFloat(lifetimeName.c_str(), &initialLifetime, 0.0f, 60.0f))
+
+							bool randomParticleLife = e->randomParticleLife;
+							if (ImGui::Checkbox("Random Particle Life", &randomParticleLife))
 							{
-								e->initialLifetime = initialLifetime;
+								e->randomParticleLife = randomParticleLife;
+							}
+							if (randomParticleLife)
+							{
+								float particleLife[2] = { e->minParticleLife,e->maxParticleLife };
+								std::string particleLifeName = emitter->name + " - ParticleLife";
+								if (ImGui::DragFloat2(particleLifeName.c_str(), particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
+								{
+									e->minParticleLife = particleLife[0];
+									e->maxParticleLife = particleLife[1];
+								}
+							}
+							else
+							{
+								float particleLife = e->minParticleLife;
+								std::string particleLifeName = emitter->name + " - ParticleLife";
+								if (ImGui::DragFloat(particleLifeName.c_str(), &particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
+								{
+									e->minParticleLife = particleLife;
+								}
 							}
 						}
 						break;
@@ -250,57 +247,126 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						if (ImGui::CollapsingHeader(moduleName.c_str()))
 						{
 							EmitterMovement* e = (EmitterMovement*)module;
-							float intensity[2] = { e->initialIntensity,e->finalIntensity };
-							std::string intensityName = emitter->name + " - Intensity";
-							if (ImGui::DragFloat2(intensityName.c_str(), intensity, 0.1f, 0.0f, 100.0f, "%.1f"))
+
+							bool randomPosition = e->randomPosition;
+							if (ImGui::Checkbox("Random Position", &randomPosition))
 							{
-								e->initialIntensity = intensity[0];
-								e->finalIntensity = intensity[1];
+								e->randomPosition = randomPosition;
+							}
+							if (randomPosition)
+							{
+								float minPosition[3] = { e->minPosition.x,e->minPosition.y,e->minPosition.z };
+								std::string minPositionName = emitter->name + " - minPosition";
+								if (ImGui::DragFloat3(minPositionName.c_str(), minPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+								{
+									e->minPosition = { minPosition[0],minPosition[1],minPosition[2] };
+								}
+								float maxPosition[3] = { e->maxPosition.x,e->maxPosition.y,e->maxPosition.z };
+								std::string maxPositionName = emitter->name + " - maxPosition";
+								if (ImGui::DragFloat3(maxPositionName.c_str(), maxPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+								{
+									e->maxPosition = { maxPosition[0],maxPosition[1],maxPosition[2] };
+								}
+							}
+							else
+							{
+								float position[3] = { e->minPosition.x,e->minPosition.y,e->minPosition.z };
+								std::string positionName = emitter->name + " - Position";
+								if (ImGui::DragFloat3(positionName.c_str(), position, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+								{
+									e->minPosition = { position[0],position[1],position[2] };
+								}
 							}
 
 							ImGui::Spacing();
 
-							float initialDirection[3] = { e->initialDirection.x,e->initialDirection.y,e->initialDirection.z };
-							std::string iDirectionName = emitter->name + " - InitialDirection";
-							if (ImGui::DragFloat3(iDirectionName.c_str(), initialDirection, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+							bool randomDirection = e->randomDirection;
+							if (ImGui::Checkbox("Random Direction", &randomDirection))
 							{
-								e->initialDirection = { initialDirection[0],initialDirection[1],initialDirection[2] };
+								e->randomDirection = randomDirection;
 							}
-							float finalDirection[3] = { e->finalDirection.x,e->finalDirection.y,e->finalDirection.z };
-							std::string fDirectionName = emitter->name + " - FinalDirection";
-							if (ImGui::DragFloat3(fDirectionName.c_str(), finalDirection, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+							if (randomDirection)
 							{
-								e->finalDirection = { finalDirection[0],finalDirection[1],finalDirection[2] };
+								float minDirection[3] = { e->minDirection.x,e->minDirection.y,e->minDirection.z };
+								std::string minDirectionName = emitter->name + " - minDirection";
+								if (ImGui::DragFloat3(minDirectionName.c_str(), minDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
+								{
+									e->minDirection = { minDirection[0],minDirection[1],minDirection[2] };
+								}
+								float maxDirection[3] = { e->maxDirection.x,e->maxDirection.y,e->maxDirection.z };
+								std::string maxDirectionName = emitter->name + " - maxDirection";
+								if (ImGui::DragFloat3(maxDirectionName.c_str(), maxDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
+								{
+									e->maxDirection = { maxDirection[0],maxDirection[1],maxDirection[2] };
+								}
+							}
+							else
+							{
+								float direction[3] = { e->minDirection.x,e->minDirection.y,e->minDirection.z };
+								std::string directionName = emitter->name + " - Direction";
+								if (ImGui::DragFloat3(directionName.c_str(), direction, 0.005f, -1.0f, 1.0f, "%.3f"))
+								{
+									e->minDirection = { direction[0],direction[1],direction[2] };
+								}
 							}
 
 							ImGui::Spacing();
 
-							float initialPosition[3] = { e->initialPosition.x,e->initialPosition.y,e->initialPosition.z };
-							std::string iPositionName = emitter->name + " - InitialPosition";
-							if (ImGui::DragFloat3(iPositionName.c_str(), initialPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+							bool randomVelocity = e->randomVelocity;
+							if (ImGui::Checkbox("Random Velocity", &randomVelocity))
 							{
-								e->initialPosition = { initialPosition[0],initialPosition[1],initialPosition[2] };
+								e->randomVelocity = randomVelocity;
 							}
-							float finalPosition[3] = { e->finalPosition.x,e->finalPosition.y,e->finalPosition.z };
-							std::string fPositionName = emitter->name + " - FinalPosition";
-							if (ImGui::DragFloat3(fPositionName.c_str(), finalPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+							if (randomVelocity)
 							{
-								e->finalPosition = { finalPosition[0],finalPosition[1],finalPosition[2] };
+								float velocity[2] = { e->minVelocity,e->maxVelocity };
+								std::string velocityName = emitter->name + " - Velocity";
+								if (ImGui::DragFloat2(velocityName.c_str(), velocity, 0.1f, 0.0f, 1000.0f, "%.1f"))
+								{
+									e->minVelocity = velocity[0];
+									e->maxVelocity = velocity[1];
+								}
+							}
+							else
+							{
+								float velocity = e->minVelocity;
+								std::string velocityName = emitter->name + " - Velocity";
+								if (ImGui::DragFloat(velocityName.c_str(), &velocity, 0.1f, 0.0f, 1000.0f, "%.1f"))
+								{
+									e->minVelocity = velocity;
+								}
 							}
 
 							ImGui::Spacing();
 
-							float initialAcceleration[3] = { e->initialAcceleration.x,e->initialAcceleration.y,e->initialAcceleration.z };
-							std::string iAccelerationName = emitter->name + " - InitialAcceleration";
-							if (ImGui::DragFloat3(iAccelerationName.c_str(), initialAcceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+							bool randomAcceleration = e->randomAcceleration;
+							if (ImGui::Checkbox("Random Acceleration", &randomAcceleration))
 							{
-								e->initialAcceleration = { initialAcceleration[0],initialAcceleration[1],initialAcceleration[2] };
+								e->randomAcceleration = randomAcceleration;
 							}
-							float finalAcceleration[3] = { e->finalAcceleration.x,e->finalAcceleration.y,e->finalAcceleration.z };
-							std::string fAccelerationName = emitter->name + " - FinalAcceleration";
-							if (ImGui::DragFloat3(fAccelerationName.c_str(), finalAcceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+							if (randomAcceleration)
 							{
-								e->finalAcceleration = { finalAcceleration[0],finalAcceleration[1],finalAcceleration[2] };
+								float minAcceleration[3] = { e->minAcceleration.x,e->minAcceleration.y,e->minAcceleration.z };
+								std::string minAccelerationName = emitter->name + " - minAcceleration";
+								if (ImGui::DragFloat3(minAccelerationName.c_str(), minAcceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+								{
+									e->minAcceleration = { minAcceleration[0],minAcceleration[1],minAcceleration[2] };
+								}
+								float maxAcceleration[3] = { e->maxAcceleration.x,e->maxAcceleration.y,e->maxAcceleration.z };
+								std::string maxAccelerationName = emitter->name + " - maxAcceleration";
+								if (ImGui::DragFloat3(maxAccelerationName.c_str(), maxAcceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+								{
+									e->maxAcceleration = { maxAcceleration[0],maxAcceleration[1],maxAcceleration[2] };
+								}
+							}
+							else
+							{
+								float acceleration[3] = { e->minAcceleration.x,e->minAcceleration.y,e->minAcceleration.z };
+								std::string accelerationName = emitter->name + " - Acceleration";
+								if (ImGui::DragFloat3(accelerationName.c_str(), acceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+								{
+									e->minAcceleration = { acceleration[0],acceleration[1],acceleration[2] };
+								}
 							}
 
 							std::string deleteEmitter = emitter->name + " - Delete Module Movement";
@@ -370,18 +436,18 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 						if (ImGui::CollapsingHeader(moduleName.c_str()))
 						{
 							EmitterSize* e = (EmitterSize*)module;
-							float initialSize[3] = { e->initialSize.x,e->initialSize.y,e->initialSize.z };
-							std::string iSizeName = emitter->name + " - InitialSize";
-							if (ImGui::DragFloat3(iSizeName.c_str(), initialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+							float minSize[3] = { e->minSize.x,e->minSize.y,e->minSize.z };
+							std::string minSizeName = emitter->name + " - minSize";
+							if (ImGui::DragFloat3(minSizeName.c_str(), minSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 							{
-								e->initialSize = { initialSize[0],initialSize[1],initialSize[2] };
+								e->minSize = { minSize[0],minSize[1],minSize[2] };
 							}
 
-							float finalSize[3] = { e->finalSize.x,e->finalSize.y,e->finalSize.z };
-							std::string fSizeName = emitter->name + " - FinalSize";
-							if (ImGui::DragFloat3(fSizeName.c_str(), finalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+							float maxSize[3] = { e->maxSize.x,e->maxSize.y,e->maxSize.z };
+							std::string maxSizeName = emitter->name + " - maxSize";
+							if (ImGui::DragFloat3(maxSizeName.c_str(), maxSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 							{
-								e->finalSize = { finalSize[0],finalSize[1],finalSize[2] };
+								e->maxSize = { maxSize[0],maxSize[1],maxSize[2] };
 							}
 
 							std::string deleteEmitter = emitter->name + " - Delete Module Size";
@@ -406,17 +472,38 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 
 							ImGui::Combo("Billboarding##", &billboardingType, "Screen Aligned\0World Aligned\0X-Axis Aligned\0Y-Axis Aligned\0Z-Axis Aligned");
 							ImGui::SameLine();
-							if ((ImGui::Button("SELECT"))) { particleBillboarding->billboardingType = (ParticleBillboarding::BillboardingType)billboardingType; }
+							if (ImGui::Button("SELECT"))
+							{
+								particleBillboarding->billboardingType = (ParticleBillboarding::BillboardingType)billboardingType;
+							}
 
 							bool hideModule = particleBillboarding->hideBillboarding;
-							bool deleteModule = particleBillboarding->eraseBillboarding;
-							if (ImGui::Checkbox("Hide Billboarding", &hideModule)) { particleBillboarding->hideBillboarding = hideModule; }
-							if (ImGui::Checkbox("Delete Billboarding", &deleteModule)) { particleBillboarding->eraseBillboarding = deleteModule; }
+							if (ImGui::Checkbox("Hide Billboarding", &hideModule))
+							{
+								particleBillboarding->hideBillboarding = hideModule;
+							}
+
+							std::string deleteEmitter = emitter->name + " - Delete Module Billboarding";
+							if (ImGui::Button(deleteEmitter.c_str()))
+							{
+								for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
+								{
+									if ((*it)->type == ParticleModuleType::BILLBOARDING)
+									{
+										emitter->modules.erase(it);
+										break;
+									}
+								}
+							}
 						}
+						break;
 					default:
 						break;
 					}
 				}
+
+				ImGui::Spacing();
+				ImGui::Spacing();
 
 				std::string deleteEmitter = "Delete " + emitter->name;
 				if (ImGui::Button(deleteEmitter.c_str()))
@@ -430,8 +517,8 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 								if ((*yt)->emitter == emitter)
 								{
 									emitterInstances.erase(yt);
+									break;
 								}
-									
 							}
 							resource->emitters.erase(it);
 							break;
@@ -447,7 +534,21 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 		}
 		else
 		{
-			ImGui::Text("Resource is null!");
+			std::string addResourceName = "Add Resource";
+			ImGui::Combo("##Resource Combo", &resourceToAdd, "Add Resource\0New Resource");
+			ImGui::SameLine();
+			if ((ImGui::Button(addResourceName.c_str())))
+			{
+				if (resourceToAdd == 1)
+				{
+					resource = new ParticleResource();
+					Emitter* e = new Emitter();
+					resource->emitters.push_back(e);
+					EmitterInstance* eI = new EmitterInstance(e, this);
+					emitterInstances.push_back(eI);
+					eI->Init();
+				}
+			}
 		}
 	}
 	return ret;
@@ -531,23 +632,29 @@ void ComponentParticle::Save(Json& json) const
 				{
 					EmitterDefault* mDefault = (EmitterDefault*)m;
 					jsonModule["type"] = (int)mDefault->type;
-					jsonModule["timer"] = mDefault->timer;
+					jsonModule["spawnTimer"] = mDefault->spawnTimer;
 					jsonModule["spawnTime"] = mDefault->spawnTime;
-					jsonModule["initialLifetime"] = mDefault->initialLifetime;
+					jsonModule["randomParticleLife"] = mDefault->randomParticleLife;
+					jsonModule["minParticleLife"] = mDefault->minParticleLife;
+					jsonModule["maxParticleLife"] = mDefault->maxParticleLife;
 					break;
 				}
 				case ParticleModuleType::MOVEMENT:
 				{
 					EmitterMovement* mMovement = (EmitterMovement*)m;
 					jsonModule["type"] = (int)mMovement->type;
-					jsonModule["initialIntensity"] = mMovement->initialIntensity;
-					jsonModule["finalIntensity"] = mMovement->finalIntensity;
-					jsonModule["initialDirection"] = { mMovement->initialDirection.x,mMovement->initialDirection.y,mMovement->initialDirection.z };
-					jsonModule["finalDirection"] = { mMovement->finalDirection.x,mMovement->finalDirection.y,mMovement->finalDirection.z };
-					jsonModule["initialPosition"] = { mMovement->initialPosition.x,mMovement->initialPosition.y,mMovement->initialPosition.z };
-					jsonModule["finalPosition"] = { mMovement->finalPosition.x,mMovement->finalPosition.y,mMovement->finalPosition.z };
-					jsonModule["initialAcceleration"] = { mMovement->initialAcceleration.x,mMovement->initialAcceleration.y,mMovement->initialAcceleration.z };
-					jsonModule["finalAcceleration"] = { mMovement->finalAcceleration.x,mMovement->finalAcceleration.y,mMovement->finalAcceleration.z };
+					jsonModule["randPosition"] = mMovement->randomPosition;
+					jsonModule["minPosition"] = { mMovement->minPosition.x,mMovement->minPosition.y,mMovement->minPosition.z };
+					jsonModule["maxPosition"] = { mMovement->maxPosition.x,mMovement->maxPosition.y,mMovement->maxPosition.z };
+					jsonModule["randVelocity"] = mMovement->randomVelocity;
+					jsonModule["minVelocity"] = mMovement->minVelocity;
+					jsonModule["maxVelocity"] = mMovement->maxVelocity;
+					jsonModule["randDirection"] = mMovement->randomDirection;
+					jsonModule["minDirection"] = { mMovement->minDirection.x,mMovement->minDirection.y,mMovement->minDirection.z };
+					jsonModule["maxDirection"] = { mMovement->maxDirection.x,mMovement->maxDirection.y,mMovement->maxDirection.z };
+					jsonModule["randAcceleration"] = mMovement->randomAcceleration;
+					jsonModule["minAcceleration"] = { mMovement->minAcceleration.x,mMovement->minAcceleration.y,mMovement->minAcceleration.z };
+					jsonModule["maxAcceleration"] = { mMovement->maxAcceleration.x,mMovement->maxAcceleration.y,mMovement->maxAcceleration.z };
 					break;
 				}
 				case ParticleModuleType::COLOR:
@@ -567,8 +674,15 @@ void ComponentParticle::Save(Json& json) const
 				{
 					EmitterSize* mSize = (EmitterSize*)m;
 					jsonModule["type"] = (int)mSize->type;
-					jsonModule["initialSize"] = { mSize->initialSize.x,mSize->initialSize.y,mSize->initialSize.z };
-					jsonModule["finalSize"] = { mSize->finalSize.x,mSize->finalSize.y,mSize->finalSize.z };
+					jsonModule["minSize"] = { mSize->minSize.x,mSize->minSize.y,mSize->minSize.z };
+					jsonModule["maxSize"] = { mSize->maxSize.x,mSize->maxSize.y,mSize->maxSize.z };
+					break;
+				}
+				case ParticleModuleType::BILLBOARDING:
+				{
+					ParticleBillboarding* mBillboarding = (ParticleBillboarding*)m;
+					jsonModule["type"] = (int)mBillboarding->type;
+					jsonModule["billboardingType"] = (int)mBillboarding->billboardingType;
 					break;
 				}
 				default:
@@ -593,19 +707,6 @@ void ComponentParticle::Load(Json& json)
 		resource->emitters.clear();
 		for (const auto& r : json.at("resource").items())
 		{
-			//emitterInstances.clear();
-			//Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
-			//EmitterInstance* ei = new EmitterInstance(e, this);
-			//emitterInstances.push_back(ei);
-			//ei->Init();
-			//e->maxParticles = emitter.value().at("maxParticles");
-			//e->texture = Texture();
-			//e->texture.path = emitter.value().at("texture_path");
-			//if (e->texture.path != "")
-			//	Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), &e->texture);
-
-			//e->modules.clear();
-			//for (const auto& pModule : emitter.value().at("modules").items())
 			resource->name = r.value().at("name").get<std::string>();
 
 			for (const auto& emitter : r.value().at("emitters").items())
@@ -631,34 +732,43 @@ void ComponentParticle::Load(Json& json)
 					case 1:
 					{
 						EmitterDefault* mDefault = new EmitterDefault();
-						mDefault->timer = pModule.value().at("timer");
+						mDefault->spawnTimer = pModule.value().at("spawnTimer");
 						mDefault->spawnTime = pModule.value().at("spawnTime");
-						mDefault->initialLifetime = pModule.value().at("initialLifetime");
+						mDefault->randomParticleLife = pModule.value().at("randomParticleLife");
+						mDefault->minParticleLife = pModule.value().at("minParticleLife");
+						mDefault->maxParticleLife = pModule.value().at("maxParticleLife");
 						m = mDefault;
 						break;
 					}
 					case 2:
 					{
 						EmitterMovement* mMovement = new EmitterMovement();
-						mMovement->initialIntensity = pModule.value().at("initialIntensity");
-						mMovement->finalIntensity = pModule.value().at("finalIntensity");
-						std::vector<float> values = pModule.value().at("initialDirection").get<std::vector<float>>();
-						mMovement->initialDirection = { values[0],values[1],values[2] };
+						mMovement->randomPosition = pModule.value().at("randPosition");
+						std::vector<float> values = pModule.value().at("minPosition").get<std::vector<float>>();
+						mMovement->minPosition = { values[0],values[1],values[2] };
 						values.clear();
-						values = pModule.value().at("finalDirection").get<std::vector<float>>();
-						mMovement->finalDirection = { values[0],values[1],values[2] };
+						values = pModule.value().at("maxPosition").get<std::vector<float>>();
+						mMovement->maxPosition = { values[0],values[1],values[2] };
 						values.clear();
-						values = pModule.value().at("initialPosition").get<std::vector<float>>();
-						mMovement->initialPosition = { values[0],values[1],values[2] };
+
+						mMovement->randomDirection = pModule.value().at("randDirection");
+						values = pModule.value().at("minDirection").get<std::vector<float>>();
+						mMovement->minDirection = { values[0],values[1],values[2] };
 						values.clear();
-						values = pModule.value().at("finalPosition").get<std::vector<float>>();
-						mMovement->finalPosition = { values[0],values[1],values[2] };
+						values = pModule.value().at("maxDirection").get<std::vector<float>>();
+						mMovement->maxDirection = { values[0],values[1],values[2] };
 						values.clear();
-						values = pModule.value().at("initialAcceleration").get<std::vector<float>>();
-						mMovement->initialAcceleration = { values[0],values[1],values[2] };
+
+						mMovement->randomVelocity = pModule.value().at("randVelocity");
+						mMovement->minVelocity = pModule.value().at("minVelocity");
+						mMovement->maxVelocity = pModule.value().at("maxVelocity");
+
+						mMovement->randomAcceleration = pModule.value().at("randAcceleration");
+						values = pModule.value().at("minAcceleration").get<std::vector<float>>();
+						mMovement->minAcceleration = { values[0],values[1],values[2] };
 						values.clear();
-						values = pModule.value().at("finalAcceleration").get<std::vector<float>>();
-						mMovement->finalAcceleration = { values[0],values[1],values[2] };
+						values = pModule.value().at("maxAcceleration").get<std::vector<float>>();
+						mMovement->maxAcceleration = { values[0],values[1],values[2] };
 						values.clear();
 						m = mMovement;
 						break;
@@ -682,13 +792,20 @@ void ComponentParticle::Load(Json& json)
 					case 4:
 					{
 						EmitterSize* mSize = new EmitterSize();
-						std::vector<float> values = pModule.value().at("initialSize").get<std::vector<float>>();
-						mSize->initialSize = { values[0],values[1],values[2] };
+						std::vector<float> values = pModule.value().at("minSize").get<std::vector<float>>();
+						mSize->minSize = { values[0],values[1],values[2] };
 						values.clear();
-						values = pModule.value().at("finalSize").get<std::vector<float>>();
-						mSize->finalSize = { values[0],values[1],values[2] };
+						values = pModule.value().at("maxSize").get<std::vector<float>>();
+						mSize->maxSize = { values[0],values[1],values[2] };
 						values.clear();
 						m = mSize;
+						break;
+					}
+					case 5:
+					{
+						int typeB = pModule.value().at("billboardingType");
+						ParticleBillboarding* mBillboarding = new ParticleBillboarding((ParticleBillboarding::BillboardingType)typeB);
+						m = mBillboarding;
 						break;
 					}
 					default:

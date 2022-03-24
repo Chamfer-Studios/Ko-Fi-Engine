@@ -29,7 +29,8 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 
 C_AudioSource::~C_AudioSource()
 {
-    StopAudio(track->source);
+    if(track != nullptr)
+        StopAudio(track->source);
 
     RELEASE(track);
 }
@@ -47,7 +48,9 @@ bool C_AudioSource::OnPlay()
         StopAudio(track->source);
 
         if (track->playOnStart)
-            PlayAudio(track->source);
+        {
+            PlayAudio(track->source, track->offset);
+        }
     }
     return true;
 }
@@ -58,22 +61,18 @@ bool C_AudioSource::Update(float dt)
 
     if (track != nullptr)
     {
-
-        if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+        if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
         {
             PauseAudio(track->source);
             return true;
         }
-
-        ResumeAudio(track->source);
+        //ResumeAudio(track->source);
     }
 
-    if (owner->GetEngine()->GetSceneManager()->GetState() == RuntimeState::STOPPED)
-    {
-        return true;
-    }
+    if (track != nullptr && track->IsTrackLoaded())
+        UpdatePlayState();
 
-    return true;
+    return ret;
 }
 
 bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
@@ -151,8 +150,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             track->play ? action = "Stop" : action = "Play";
             if (ImGui::Button(action.c_str()))
             {
-                float time = track->duration * track->offset;
-                track->play ? StopAudio(track->source) : PlayAudio(track->source, time);
+                track->play ? StopAudio(track->source) : PlayAudio(track->source, track->offset);
             }
             ImGui::SameLine();
             if (ImGui::Button("Edit"))
@@ -160,7 +158,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
                 openEditor = !openEditor;
             }
             ImGui::SameLine();
-            ImGui::SliderFloat("Offset", &track->offset, 0.0f, 1.0f);
+            ImGui::SliderFloat("Offset", &track->offset, 0.0f, track->duration);
 
             ImGui::Spacing();
             ImGui::Separator();
@@ -195,9 +193,6 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
         }
     }
 
-    if (track != nullptr)
-        UpdatePlayState();
-
     return ret;
 }
 
@@ -205,15 +200,21 @@ void C_AudioSource::Save(Json& json) const
 {
     json["type"] = "audio_source";
 
-    json["track_path"] = track->GetTrackPath();
-    json["mute"] = track->GetMute();
-    json["play_on_start"] = track->GetPlayOnStart();
-    json["loop"] = track->GetLoop();
-    json["bypass"] = track->GetBypass();
-    json["volume"] = track->GetVolume();
-    json["pan"] = track->GetPan();
-    json["transpose"] = track->GetTranspose();
-    json["offset"] = track->GetOffset();
+    if (track != nullptr)
+    {
+        json["state"] = true;
+        json["track_path"] = track->GetTrackPath();
+        json["mute"] = track->GetMute();
+        json["play_on_start"] = track->GetPlayOnStart();
+        json["loop"] = track->GetLoop();
+        json["bypass"] = track->GetBypass();
+        json["volume"] = track->GetVolume();
+        json["pan"] = track->GetPan();
+        json["transpose"] = track->GetTranspose();
+        json["offset"] = track->GetOffset();
+    }
+    else
+        json["state"] = false;
 }
 
 void C_AudioSource::Load(Json& json)
@@ -226,19 +227,23 @@ void C_AudioSource::Load(Json& json)
         RELEASE(track);
     }
 
-    std::string path = json.at("track_path");
-    track = new R_Track();
-    Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
-    track->source = CreateAudioSource(track->buffer, false);
+    bool state = json.at("state");
+    if (state)
+    {
+        std::string path = json.at("track_path");
+        track = new R_Track();
+        Importer::GetInstance()->trackImporter->Import(path.c_str(), track);
+        track->source = CreateAudioSource(track->buffer, false);
 
-    track->SetMute(json.at("mute"));
-    track->SetPlayOnStart(json.at("play_on_start"));
-    track->SetLoop(json.at("loop"));
-    track->SetBypass(json.at("bypass"));
-    track->SetVolume(json.at("volume"));
-    track->SetPanning(json.at("pan"));
-    track->SetTranspose(json.at("transpose"));
-    track->SetOffset(json.at("offset"));
+        track->SetMute(json.at("mute"));
+        track->SetPlayOnStart(json.at("play_on_start"));
+        track->SetLoop(json.at("loop"));
+        track->SetBypass(json.at("bypass"));
+        track->SetVolume(json.at("volume"));
+        track->SetPanning(json.at("pan"));
+        track->SetTranspose(json.at("transpose"));
+        track->SetOffset(json.at("offset"));
+    }
 }
 
 void C_AudioSource::UpdatePlayState()
@@ -424,4 +429,37 @@ void C_AudioSource::DrawEditor()
 
     if (!openEditor)
         StopAudio(track->source);
+}
+
+void C_AudioSource::PlayTrack()
+{
+    if (track != nullptr)
+    {
+        float time = track->duration * track->offset;
+        PlayAudio(track->source, time);
+    }
+}
+
+void C_AudioSource::ResumeTrack()
+{
+    if (track != nullptr)
+    {
+        ResumeAudio(track->source);
+    }
+}
+
+void C_AudioSource::StopTrack()
+{
+    if (track != nullptr)
+    {
+        StopAudio(track->source);
+    }
+}
+
+void C_AudioSource::PauseTrack()
+{
+    if (track != nullptr)
+    {
+        PauseAudio(track->source);
+    }
 }

@@ -15,6 +15,10 @@
 #include "ComponentRigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentText.h"
+#include "ComponentAnimator.h"
+#include "ComponentParticle.h"
+#include "C_AudioSource.h"
+#include "C_AudioSwitch.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -116,10 +120,10 @@ public:
 
 		// RuntimeState
 		lua.new_enum("RuntimeState",
-			"PAUSED",	RuntimeState::PAUSED,
-			"PLAYING",	RuntimeState::PLAYING,
-			"STOPPED",	RuntimeState::STOPPED,
-			"TICK",		RuntimeState::TICK
+			"PAUSED",	GameState::PAUSED,
+			"PLAYING", GameState::PLAYING,
+			"STOPPED", GameState::STOPPED,
+			"TICK", GameState::TICK
 		);
 
 
@@ -143,14 +147,17 @@ public:
 		// GameObject structure
 		lua.new_usertype<GameObject>("GameObject",
 			sol::constructors<void()>(),
-			"active",			&GameObject::active,
-			"name",				&GameObject::name,
-			"GetParent",		&GameObject::GetParent,
-			"GetComponents",	&GameObject::GetComponents,							// Kinda works... not very useful tho
-			"GetTransform",		&GameObject::GetTransform,
-			"GetRigidBody",		&GameObject::GetComponent<ComponentRigidBody>,
-			"GetText",			&GameObject::GetComponent<ComponentText>,
-			"IsSelected",		&GameObject::IsSelected
+			"active",				&GameObject::active,
+			"name",					&GameObject::name,
+			"GetParent",			&GameObject::GetParent,
+			"GetComponents",		&GameObject::GetComponents,							// Kinda works... not very useful tho
+			"GetTransform",			&GameObject::GetTransform,
+			"GetRigidBody",			&GameObject::GetComponent<ComponentRigidBody>,
+			"GetText",				&GameObject::GetComponent<ComponentText>,
+			"GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
+			"GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
+			"GetAudioSwitch",		&GameObject::GetComponent<C_AudioSwitch>,
+			"IsSelected",			&GameObject::IsSelected
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
 
@@ -182,7 +189,29 @@ public:
 			"GetTextValue", &ComponentText::GetTextValue,
 			"SetTextValue", &ComponentText::SetTextValue
 			);
-		
+
+		// Component Animator
+		lua.new_usertype<ComponentAnimator>("ComponentAnimator",
+			sol::constructors<void(GameObject*)>(),
+			"SetSelectedClip",	&ComponentAnimator::SetSelectedClip
+			);
+
+		// Component Particle
+		lua.new_usertype<ComponentParticle>("ComponentParticle",
+			sol::constructors<void(GameObject*)>(),
+			"StopParticleSpawn",	&ComponentParticle::StopParticleSpawn,
+			"ResumeParticleSpawn",	&ComponentParticle::ResumeParticleSpawn
+			);
+
+		// Component Audio Switch
+		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
+			sol::constructors<void(GameObject*)>(),
+			"PlayTrack", &C_AudioSwitch::PlayTrack,
+			"PauseTrack", &C_AudioSwitch::PauseTrack,
+			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
+			"StopTrack", &C_AudioSwitch::StopTrack
+			);
+
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
 			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string>)>(),
@@ -299,9 +328,14 @@ public:
 		script->inspectorVariables.push_back(inspectorVariable);
 	}
 
-	RuntimeState LuaGetRuntimeState() const
+	GameState LuaGetRuntimeState() const
 	{
-		return gameObject->GetEngine()->GetSceneManager()->GetState();
+		return gameObject->GetEngine()->GetSceneManager()->GetGameState();
+	}
+
+	void LuaPlayAudio()
+	{
+
 	}
 
 public:

@@ -36,7 +36,7 @@ public:
 	std::vector<EmitterInstance*> emitterInstances;
 	ParticleResource* resource = nullptr;
 	int moduleToAdd = 0;
-	int emitterToAdd = 0;
+	int resourceToAdd = 0;
 	int currentTextureId = 0;
 	int billboardingType = 0;
 	
