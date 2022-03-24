@@ -113,9 +113,6 @@
     <Filter Include="Libs\ImGuizmo">
       <UniqueIdentifier>{81e980dd-0834-4dc1-9f44-2fc93aa38da8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Helpers\Importers">
-      <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\GameObject\Components\Audio">
       <UniqueIdentifier>{3d499aa0-c255-4528-9686-25779eaba5c8}</UniqueIdentifier>
     </Filter>
@@ -130,6 +127,9 @@
     </Filter>
     <Filter Include="Source\GameObject\Components\Physics">
       <UniqueIdentifier>{21f4d6d4-3c57-49e7-a527-40532929dd04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Importers">
+      <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -409,23 +409,20 @@
     <ClCompile Include="Source\RNG.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\par_shapes.cpp">
-      <Filter>Source\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="Source\I_Material.cpp">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Mesh.cpp">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Texture.cpp">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Scene.cpp">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Importer.cpp">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Material.cpp">
       <Filter>Source\Resources</Filter>
@@ -454,7 +451,6 @@
     <ClCompile Include="Source\CollisionDetector.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\GraphEditor.cpp">
       <Filter>Libs\ImGuizmo</Filter>
     </ClCompile>
@@ -494,9 +490,6 @@
     <ClCompile Include="Source\R_Track.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentAnimator.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Animation.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
@@ -504,7 +497,7 @@
       <Filter>Source\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Animations.cpp">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentWalkable.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
@@ -569,8 +562,6 @@
     <ClCompile Include="Source\ComponentFollowPath.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\External\stb_image\stb_image.cpp" />
-    <ClCompile Include="Source\I_Track.cpp" />
     <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp">
@@ -584,6 +575,21 @@
     </ClCompile>
     <ClCompile Include="Source\ComponentCollider.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Track.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentRigidBody.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentAnimator.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\stb_image\stb_image.cpp">
+      <Filter>Libs\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1547,9 +1553,6 @@
     <ClInclude Include="Source\QuadTree3D.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneManager.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
@@ -1604,9 +1607,6 @@
     <ClInclude Include="Source\PanelCameraViewport.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentAnimator.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PanelSettings.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
@@ -1634,9 +1634,6 @@
     <ClInclude Include="Source\C_AudioSwitch.h">
       <Filter>Source\GameObject\Components\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ComponentWalkable.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClInclude>
@@ -1649,9 +1646,6 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Effects.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Animation.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
@@ -1659,16 +1653,10 @@
       <Filter>Source\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Animations.h">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentFollowPath.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\I_Track.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\par_shapes.h">
-      <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Source\Modules</Filter>
@@ -1681,6 +1669,24 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentCollider.h">
       <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Track.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentAnimator.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effects.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>Libs\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1703,22 +1709,22 @@
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Material.h">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Mesh.h">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Texture.h">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Scene.h">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentMesh.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Importer.h">
-      <Filter>Source\Helpers\Importers</Filter>
+      <Filter>Source\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\MathGeoTransform.h">
       <Filter>Source\Utils</Filter>
