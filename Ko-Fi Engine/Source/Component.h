@@ -49,7 +49,10 @@ public:
 	virtual void Load(Json& json) {}
 
 	ComponentType GetType() { return type; }
+	const char* GetNameByComponentType(ComponentType type);
 
+protected:
+	void DrawDeleteButton(GameObject* owner, Component* component);
 
 public:
 	bool active = true;

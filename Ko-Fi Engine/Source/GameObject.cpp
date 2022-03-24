@@ -81,7 +81,8 @@ bool GameObject::Update(float dt)
 	bool ret = true;
 	for (Component* component : components)
 	{
-		ret = component->Update(dt);
+		if (component)
+			ret = component->Update(dt);
 	}
 	return ret;
 }

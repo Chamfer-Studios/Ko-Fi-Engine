@@ -73,7 +73,9 @@ bool ComponentImage::PostUpdate(float dt)
 
 bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Image")) {
+	if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_AllowItemOverlap)) {
+		DrawDeleteButton(owner, this);
+
 		// Texture display
 		ImGui::Text("Texture: ");
 		ImGui::SameLine();
@@ -98,6 +100,8 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 			panelChooser->OpenPanel("AddTextureImage", "png");
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }

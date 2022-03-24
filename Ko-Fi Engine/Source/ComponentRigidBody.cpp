@@ -248,8 +248,10 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 
 	if (isStatic)
 	{
-		if (ImGui::CollapsingHeader("Static body"))
+		if (ImGui::CollapsingHeader("Static body", ImGuiTreeNodeFlags_AllowItemOverlap))
 		{
+			DrawDeleteButton(owner, this);
+
 			// ---------------------------------------------------------------------------------
 			if (ImGui::Button("Make Dynamic"))
 				SetDynamic();
@@ -282,11 +284,15 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			}
 			// ---------------------------------------------------------------------------------
 		}
+		else
+			DrawDeleteButton(owner, this);
 	}
 	else 
 	{
-		if (ImGui::CollapsingHeader("Rigid body"))
+		if (ImGui::CollapsingHeader("Rigid body", ImGuiTreeNodeFlags_AllowItemOverlap))
 		{
+			DrawDeleteButton(owner, this);
+
 			// ---------------------------------------------------------------------------------
 			if (ImGui::Button("Make Static"))
 				SetStatic();
@@ -376,6 +382,8 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			}
 			// ---------------------------------------------------------------------------------
 		}
+		else
+			DrawDeleteButton(owner, this);
 	}
 
 	return ret;

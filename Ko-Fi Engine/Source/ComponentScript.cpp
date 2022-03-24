@@ -68,8 +68,10 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 
 	std::string headerName = "Script" + std::to_string(numScript);
 
-	if (ImGui::CollapsingHeader(headerName.c_str()))
+	if (ImGui::CollapsingHeader(headerName.c_str(), ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
+		DrawDeleteButton(owner, this);
+
 		if (chooser->IsReadyToClose("LoadScript")) 
 		{
 			if (chooser->OnChooserClosed() != nullptr) 
@@ -99,7 +101,8 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 			ReloadScript();
 		}
 	}
-
+	else
+		DrawDeleteButton(owner, this);
 
 	return ret;
 }
