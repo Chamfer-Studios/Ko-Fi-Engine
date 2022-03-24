@@ -95,6 +95,17 @@ public:
 
 		return go;
 	}
+	virtual void DeleteCurrentScene()
+	{
+		for (GameObject* gameObject : gameObjectList)
+		{
+			RELEASE(gameObject);
+		}
+		gameObjectList.clear();
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+		rootGo = new GameObject(-1, engine, "Root");
+		gameObjectList.push_back(rootGo);
+	}
 
 	virtual void DeleteGameObject(GameObject* gameObject)
 	{
