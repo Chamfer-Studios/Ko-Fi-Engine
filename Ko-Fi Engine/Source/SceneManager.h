@@ -66,9 +66,7 @@ public:
 	Scene* GetCurrentScene();
 
 	GameState GetGameState();
-	float GetGameDt();
-	float GetGameTime();
-
+	inline float const GetGameTime() { return time; }
 	inline float GetGameDt() const { return gameDt; }
 	inline float GetTotalGameTime() const { return gameTime; }
 

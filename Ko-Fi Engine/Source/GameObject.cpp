@@ -133,6 +133,54 @@ bool GameObject::OnPlay()
 	return ret;
 }
 
+bool GameObject::OnPause()
+{
+	bool ret = true;
+
+	for (Component* component : components)
+	{
+		ret = component->OnPause();
+	}
+
+	return ret;
+}
+
+bool GameObject::OnStop()
+{
+	bool ret = true;
+
+	for (Component* component : components)
+	{
+		ret = component->OnStop();
+	}
+
+	return ret;
+}
+
+bool GameObject::OnResume()
+{
+	bool ret = true;
+
+	for (Component* component : components)
+	{
+		ret = component->OnResume();
+	}
+
+	return ret;
+}
+
+bool GameObject::OnTick()
+{
+	bool ret = true;
+
+	for (Component* component : components)
+	{
+		ret = component->OnTick();
+	}
+
+	return ret;
+}
+
 void GameObject::Enable()
 {
 	active = true;

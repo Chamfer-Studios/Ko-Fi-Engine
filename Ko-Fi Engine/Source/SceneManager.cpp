@@ -208,6 +208,11 @@ void SceneManager::OnPause()
 {
 	runtimeState = GameState::PAUSED;
 	gameClockSpeed = 0.0f;
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnPause();
+	}
 }
 
 void SceneManager::OnStop()
@@ -221,18 +226,32 @@ void SceneManager::OnStop()
 	Importer::GetInstance()->sceneImporter->Load(currentScene,currentScene->name.c_str());
 	// Load the scene we saved before in .json
 	//LoadScene(currentScene, "SceneIntro");
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnStop();
+	}
 }
 
 void SceneManager::OnResume()
 {
 	runtimeState = GameState::PLAYING;
 	gameClockSpeed = timeScale;
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnResume();
+	}
 }
 
 void SceneManager::OnTick()
 {
 	runtimeState = GameState::TICK;
 	gameClockSpeed = timeScale;
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnTick();
+	}
 }
 
 void SceneManager::OnClick(SDL_Event event)

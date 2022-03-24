@@ -39,26 +39,31 @@ public:
 	Component(GameObject *parent);
 	virtual ~Component(){};
 
-	virtual void Enable() { active = true; }
 	virtual bool Start() { return true; }
 	virtual bool PreUpdate() { return true; }
 	virtual bool Update(float dt) { return true; }
 	virtual bool PostUpdate(float dt) { return true; }
 	virtual bool CleanUp() { return true; }
+
+	virtual void Enable() { active = true; }
+	virtual void Disable() { active = false; }
+
 	virtual bool OnPlay() { return true; }
+	virtual bool OnPause() { return true; }
+	virtual bool OnStop() { return true; }
+	virtual bool OnResume() { return true; }
+	virtual bool OnTick() { return true; }
 
 	virtual bool InspectorDraw(PanelChooser *chooser) { return true; }
-
-	virtual void Disable() { active = false; }
 
 	virtual void Save(Json &json) const {}
 	virtual void Load(Json &json) {}
 
 	ComponentType GetType() { return type; }
-	const char *GetNameByComponentType(ComponentType type);
 
 protected:
 	void DrawDeleteButton(GameObject *owner, Component *component);
+	const char* GetNameByComponentType(ComponentType type);
 
 public:
 	bool active = true;
