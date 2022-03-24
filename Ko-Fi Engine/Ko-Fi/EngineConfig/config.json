@@ -33,5 +33,6 @@
         "Title": "Ko-Fi Engine",
         "Width": 1024
     },
-    "Audio": null
+    "Audio": null,
+    "ResourceManager":null
 }

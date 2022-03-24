@@ -403,9 +403,6 @@
     <ClCompile Include="Source\Texture.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Resource.cpp">
-      <Filter>Source\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Source\RNG.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
@@ -590,6 +587,9 @@
     </ClCompile>
     <ClCompile Include="Source\par_shapes.cpp">
       <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Source\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1688,6 +1688,9 @@
     <ClInclude Include="Source\par_shapes.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Resource.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\ResourceManager.h">
@@ -1700,9 +1703,6 @@
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\Texture.h">
-      <Filter>Source\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Resource.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\FSDefs.h">

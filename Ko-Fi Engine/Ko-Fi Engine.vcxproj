@@ -330,6 +330,7 @@
     <ClInclude Include="Source\Event.h" />
     <ClInclude Include="Source\I_Track.h" />
     <ClInclude Include="Source\par_shapes.h" />
+    <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\R_Track.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\CollisionDetector.h" />
@@ -681,7 +682,6 @@
     <ClInclude Include="Source\ParticleModule.h" />
     <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\QuadTree3D.h" />
-    <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
