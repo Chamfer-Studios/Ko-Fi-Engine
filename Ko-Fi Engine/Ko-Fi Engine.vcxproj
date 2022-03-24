@@ -294,7 +294,6 @@
     <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
-    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\RNG.cpp" />
@@ -318,7 +317,6 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Event.h" />
     <ClInclude Include="Source\AdditionNode.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\AnimatorClip.h" />
@@ -329,7 +327,9 @@
     <ClInclude Include="Source\C_AudioSpacial.h" />
     <ClInclude Include="Source\C_AudioSwitch.h" />
     <ClInclude Include="Source\Effects.h" />
+    <ClInclude Include="Source\Event.h" />
     <ClInclude Include="Source\I_Track.h" />
+    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\R_Track.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\CollisionDetector.h" />
@@ -679,7 +679,6 @@
     <ClInclude Include="Source\ComponentParticle.h" />
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleModule.h" />
-    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\QuadTree3D.h" />
     <ClInclude Include="Source\Resource.h" />
