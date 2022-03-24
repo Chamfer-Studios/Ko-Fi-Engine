@@ -349,28 +349,32 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			// ---------------------------------------------------------------------------------
 			if (ImGui::TreeNodeEx("Velocity info (read only)"))
 			{
-				ImGui::Text("Speed");
-				ImGui::SameLine();
 				float speed = GetSpeed();
 				ImGui::DragFloat("##speed", &speed, 0.1f, ImGuiInputTextFlags_ReadOnly);
-				ImGui::Text("Linear Velocity");
 				ImGui::SameLine();
+				ImGui::Text("Speed");
+
 				float3 vel2 = GetLinearVelocity();
 				float vel[3] = { vel2.x, vel2.y, vel2.z };
 				ImGui::InputFloat3("##linearvelinput", vel, "%.3f", ImGuiInputTextFlags_ReadOnly);
-				ImGui::Text("Linear Damping");
 				ImGui::SameLine();
+				ImGui::Text("Linear Velocity");
+
 				float newLinDamp = GetLinearDamping();
 				ImGui::DragFloat("##lineardamping", &newLinDamp, 0.1f, ImGuiInputTextFlags_ReadOnly);
-				ImGui::Text("Angular Velocity");
 				ImGui::SameLine();
+				ImGui::Text("Linear Damping");
+
 				vel2 = GetAngularVelocity();
 				float angVel[3] = { vel2.x, vel2.y, vel2.z };
 				ImGui::InputFloat3("##angularvelinput", angVel, "%.3f", ImGuiInputTextFlags_ReadOnly);
-				ImGui::Text("Angular Damping");
 				ImGui::SameLine();
+				ImGui::Text("Angular Velocity");
+
 				float newAngDamp = GetAngularDamping();
 				ImGui::DragFloat("##angulardamping", &newAngDamp, 0.1f, ImGuiInputTextFlags_ReadOnly);
+				ImGui::SameLine();
+				ImGui::Text("Angular Damping");
 
 				ImGui::TreePop();
 			}

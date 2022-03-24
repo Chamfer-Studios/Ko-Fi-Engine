@@ -5,21 +5,6 @@
 #include "Physics.h"
 #include "MathGeoLib/Math/float3.h"
 
-/*
-
-	TODOS ------------------------------------------------------------------------
-
-	DrawCollider()
-	CreateSphereCollider();
-	CreateCapsuleCollider();
-
-	Make filters matrix (CollisionLayer)
-	Make filters editable on editor (adding and deleting)
-
-	-----------------------------------------------------------------------------
-
-*/
-
 enum class ColliderShape
 {
 	NONE,
@@ -67,7 +52,7 @@ public:
 	inline const bool IsTrigger() { return isTrigger; }
 	inline void SetIsTrigger(const bool isTrigger) { this->isTrigger = isTrigger; hasUpdated = true; }
 	
-	inline const float3 GetCollSize() { return boxCollSize; }
+	inline const float3 GetBoxCollSize() { return boxCollSize; }
 	inline void SetCollSize(const float3 size) { boxCollSize = size; hasUpdated = true; }
 	inline void SetCollSize(const float x, const float y, const float z) { boxCollSize = float3(x, y, z); hasUpdated = true; }
 
@@ -96,8 +81,8 @@ private:
 	CollisionLayer collisionLayer = CollisionLayer::DEFAULT;
 	int collisionLayerInt = 0;
 
-	float3 boxCollSize = float3(5, 5, 5);
-	float3 centerPosition = float3(0, 0, 0);
+	float3 boxCollSize = float3(5, 5, 5); // Box collider size
+	float3 centerPosition = float3(0, 0, 0); // Center position of the collider
 
 	bool drawCollider = false;
 };

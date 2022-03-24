@@ -45,7 +45,7 @@ bool Physics::Update(float dt)
 	if (scene && isSimulating)
 	{
 		// TODO: WE HAVE TO PASS AS A PARAMETER THE GAME DT, NOT THE ENGINE DT
-		scene->simulate(dt);
+		scene->simulate(engine->GetSceneManager()->GetGameDt());
 		scene->fetchResults(true);
 	}
 

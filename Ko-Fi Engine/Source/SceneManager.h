@@ -79,6 +79,8 @@ public:
 	void GuizmoTransformation();
 	void UpdateGuizmo();
 	//
+
+	inline float GetGameDt() const { return gameDt; }
 public:
 	bool active;
 

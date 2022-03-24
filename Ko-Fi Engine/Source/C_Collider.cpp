@@ -101,11 +101,6 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 	if (shape)
 		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);
 
-	// If a rigid body is not created, then create it
-	// If it is already created, update the actor list (removing and creating again)
-	/*if (!owner->GetComponent<ComponentRigidBody>())
-		owner->CreateComponent<ComponentRigidBody>();
-	else*/
 	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody());
 
 	if (owner->GetComponent<ComponentMesh>())
@@ -208,8 +203,8 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 			{
 			case (int)ColliderShape::NONE: break;
 			case (int)ColliderShape::BOX: SetColliderShape((ColliderShape)colliderShapeInt); break;
-			case (int)ColliderShape::SPHERE: SetColliderShape((ColliderShape)colliderShapeInt); break;
-			case (int)ColliderShape::CAPSULE: SetColliderShape((ColliderShape)colliderShapeInt); break;
+			case (int)ColliderShape::SPHERE: /*SetColliderShape((ColliderShape)colliderShapeInt);*/ break;
+			case (int)ColliderShape::CAPSULE: /*SetColliderShape((ColliderShape)colliderShapeInt);*/ break;
 			}
 			colliderShapeInt = 0; // This will reset the button to default when clicked
 			hasUpdated = true;
@@ -249,7 +244,23 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Draw Collider##", &drawCollider)) hasUpdated = true;
 
 		// COLLIDER CENTER POS & SIZE ----------------------------------------------------------------------------------------
-		float newSize[3] = { boxCollSize.x, boxCollSize.y, boxCollSize.z };
+		if (ImGui::TreeNodeEx("Size & Center position"))
+		{
+			float3 newSize2 = GetBoxCollSize();
+			float newSize[3] = { newSize2.x, newSize2.y, newSize2.z };
+			ImGui::InputFloat3("##boxcollsize", newSize, "%.3f");
+			ImGui::SameLine();
+			ImGui::Text("Box collider size");
+
+			float3 newCenterPos2 = GetCenterPosition();
+			float newCenterPos[3] = { newCenterPos2.x, newCenterPos2.y, newCenterPos2.z };
+			ImGui::InputFloat3("##centerpos", newCenterPos, "%.3f");
+			ImGui::SameLine();
+			ImGui::Text("Center position");
+
+			ImGui::TreePop();
+		}
+		
 	}
 
 	return ret;
