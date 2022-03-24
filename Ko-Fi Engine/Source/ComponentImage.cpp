@@ -27,13 +27,20 @@
 #include "glew.h"
 #include <vector>
 
-ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
+ComponentImage::ComponentImage(GameObject* parent) : ComponentRenderedUI(parent)
 {
 	type = ComponentType::IMAGE;
 }
 
 ComponentImage::~ComponentImage()
 {
+	FreeTextures();
+}
+
+bool ComponentImage::CleanUp()
+{
+	FreeTextures();
+	return true;
 }
 
 void ComponentImage::Save(Json& json) const
@@ -41,20 +48,12 @@ void ComponentImage::Save(Json& json) const
 	json["type"] = "image";
 
 	json["texture"] = openGLTexture.path;
-	//json["mask"] = {
-	//	mask.x,
-	//	mask.y
-	//};
 }
 
 void ComponentImage::Load(Json& json)
 {
 	std::string path = json["texture"].get<std::string>();
 	SetTexture(path.c_str());
-
-	//std::vector<float> values = json["mask"].get<std::vector<float>>();
-	//mask.x = values[0];
-	//mask.y = values[1];
 }
 
 bool ComponentImage::Update(float dt)
@@ -64,10 +63,6 @@ bool ComponentImage::Update(float dt)
 
 bool ComponentImage::PostUpdate(float dt)
 {
-	owner->GetEngine()->GetUI()->PrepareUIRender();
-	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), {255, 255, 255});
-	owner->GetEngine()->GetUI()->EndUIRender();
-
 	return true;
 }
 
@@ -79,7 +74,7 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 		// Texture display
 		ImGui::Text("Texture: ");
 		ImGui::SameLine();
-		if (openGLTexture.GetTextureId() == 0) // Supposedly there is no textureId = 0 in textures array
+		if (openGLTexture.GetTextureId() == TEXTUREID_DEFAULT) // Supposedly there is no textureId = 0 in textures array
 		{
 			ImGui::Text("None");
 		}
@@ -112,9 +107,16 @@ void ComponentImage::SetTexture(const char* path)
 	Importer::GetInstance()->textureImporter->Import(path, &openGLTexture);
 }
 
+void ComponentImage::Draw()
+{
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
+	owner->GetEngine()->GetUI()->EndUIRender();
+}
+
 void ComponentImage::FreeTextures()
 {
-	if (openGLTexture.GetTextureId() != 0) {
+	if (openGLTexture.GetTextureId() != TEXTUREID_DEFAULT) {
 		GLuint id = openGLTexture.GetTextureId();
 		glDeleteTextures(1, &id);
 	}

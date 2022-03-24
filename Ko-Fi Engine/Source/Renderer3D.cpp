@@ -16,6 +16,7 @@
 #include "Input.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
+#include "Texture.h"
 
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -26,6 +27,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentRenderedUI.h"
 #include "Material.h"
 
 #include "PanelViewport.h"
@@ -252,6 +254,7 @@ void Renderer3D::RenderScene()
 				RenderMeshes(go);
 				RenderBoundingBox(cMesh);
 			}
+
 			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
 			if (cCamera) {
 				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
@@ -261,9 +264,21 @@ void Renderer3D::RenderScene()
 
 			}
 		}
-		
-
 	}
+	RenderAllParticles();
+
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->active)
+		{
+			ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+			if (cRenderedUI)
+			{
+				RenderUI(go);
+			}
+		}
+	}
+
 }
 
 void Renderer3D::RenderBoundingBox(ComponentMesh* cMesh)
@@ -306,9 +321,20 @@ void Renderer3D::RenderMeshes(GameObject* go)
 			GLint view_location = glGetUniformLocation(shader, "view");
 			glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 
-
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+			if (mesh->isAnimated)
+			{
+				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
+				std::vector<float4x4> transformsAnim;
+				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+
+				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+				glUniform1i(isAnimated, mesh->isAnimated);
+			}
+			
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
 			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
@@ -366,6 +392,12 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 		}
 	}
+}
+
+void Renderer3D::RenderUI(GameObject* go)
+{
+	ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+	cRenderedUI->Draw();
 }
 
 // Method to receive and manage events
@@ -501,4 +533,71 @@ void Renderer3D::ReleaseFrameBuffers()
 uint Renderer3D::GetTextureBuffer()
 {
 	return textureBuffer;
+}
+void Renderer3D::AddParticle(Texture& tex, Color color, const float4x4 transform, float distanceToCamera)
+{
+	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
+	particles.insert(std::map<float, ParticleRenderer>::value_type(distanceToCamera, pRenderer));
+}
+
+void Renderer3D::RenderAllParticles()
+{
+	for (auto particle : particles)
+	{
+		RenderParticle(&particle.second);
+	}
+
+	particles.clear();
+}
+
+ParticleRenderer::ParticleRenderer(Texture& tex, Color color, const float4x4 transform):
+tex(tex),
+color(color),
+transform(transform)
+{
+
+}
+
+
+void Renderer3D::RenderParticle(ParticleRenderer* particle)
+{
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_TEXTURE_2D);
+	glPushMatrix();
+	glMultMatrixf(particle->transform.Transposed().ptr());	// model
+	glColor3f(1.0f,1.0f,1.0f);
+	if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, particle->tex.GetTextureId());
+	}
+
+	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);
+	
+	//Drawing to tris in direct mode
+	glBegin(GL_TRIANGLES);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-.5f, -.5f, .0f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(.5f, -.5f, .0f);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(.5f, .5f, .0f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-.5f, .5f, .0f);
+
+	glEnd();
+
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_BLEND);
+
 }

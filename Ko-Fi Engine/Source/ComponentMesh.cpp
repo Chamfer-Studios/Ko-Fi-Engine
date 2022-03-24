@@ -11,15 +11,16 @@
 #include "ComponentCamera.h"
 #include "SceneManager.h"
 #include "Engine.h"
+#include "Renderer3D.h"
 #include "Camera3D.h"
 #include "PanelChooser.h"
 #include "PanelViewport.h"
 #include "Editor.h"
+#include "EmitterInstance.h"
 #include "Log.h"
 
 #include "Importer.h"
 
-#include "I_Mesh.h"
 #include "Material.h"
 
 #include "glew.h"
@@ -54,12 +55,12 @@ bool ComponentMesh::Start()
 	return true;
 }
 
-bool ComponentMesh::Update()
+bool ComponentMesh::Update(float dt)
 {
 	return true;
 }
 
-bool ComponentMesh::PostUpdate(float dt)
+bool ComponentMesh::PostUpdate(float dt) //AKA the real render
 {
 	bool ret = true;
 
@@ -296,5 +297,3 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 	}
 	return ret;
 }
-
-

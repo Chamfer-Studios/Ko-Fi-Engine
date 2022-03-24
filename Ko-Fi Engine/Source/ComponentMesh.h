@@ -21,7 +21,7 @@ public:
 	//void CopyParMesh(par_shapes_mesh* parMesh);
 
 	bool Start();
-	bool Update();
+	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 

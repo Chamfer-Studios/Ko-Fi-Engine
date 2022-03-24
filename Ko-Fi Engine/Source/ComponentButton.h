@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "ComponentTransform2D.h"
+#include "ComponentRenderedUI.h"
 
 #include "Texture.h"
 
@@ -18,7 +19,7 @@ class SDL_Texture;
 class SDL_Surface;
 class MyPlane;
 
-class ComponentButton : public Component {
+class ComponentButton : public ComponentRenderedUI {
 public:
 	ComponentButton(GameObject* parent);
 	~ComponentButton();
@@ -28,10 +29,10 @@ public:
 
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
+	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser) override;
 
-	//SDL_Texture* LoadTexture(const char* path);
-	//SDL_Texture* const LoadSurface(SDL_Surface* surface);
+	void Draw() override;
 
 	Texture GetIdleTexture() { return idleOpenGLTexture; };
 	Texture GetHoverTexture() { return hoverOpenGLTexture; };
@@ -47,8 +48,6 @@ private:
 		HOVER,
 		PRESSED
 	};
-
-	GLuint fboId = 0;
 
 	void FreeTextures(BUTTON_STATE type);
 

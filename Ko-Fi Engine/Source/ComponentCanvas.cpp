@@ -13,6 +13,14 @@ ComponentCanvas::ComponentCanvas(GameObject* parent) : ComponentTransform2D(pare
 	logicalSize = { 1920, 1080 };
 }
 
+ComponentCanvas::~ComponentCanvas()
+{}
+
+bool ComponentCanvas::CleanUp()
+{
+	return true;
+}
+
 void ComponentCanvas::Save(Json& json) const
 {
 	json["type"] = "canvas";

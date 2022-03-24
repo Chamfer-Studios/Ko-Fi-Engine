@@ -2,9 +2,9 @@
 
 Texture::Texture()
 {
-	textureID = -1;
-	width = -1;
-	height = -1;
+	textureID = TEXTUREID_DEFAULT;
+	width = 0;
+	height = 0;
 	nrChannels = 1;
 }
 

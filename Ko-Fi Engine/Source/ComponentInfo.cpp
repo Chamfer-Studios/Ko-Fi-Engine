@@ -9,7 +9,16 @@ ComponentInfo::ComponentInfo(GameObject* parent) : Component(parent)
 }
 
 ComponentInfo::~ComponentInfo()
+{}
+
+bool ComponentInfo::CleanUp()
 {
+	return true;
+}
+
+bool ComponentInfo::Update(float dt)
+{
+	return true;
 }
 
 bool ComponentInfo::InspectorDraw(PanelChooser* chooser)

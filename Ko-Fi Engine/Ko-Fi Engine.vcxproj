@@ -89,9 +89,9 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
@@ -102,8 +102,8 @@
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXFoundation_32.lib;SceneQuery_static_32.lib;LowLevel_static_32.lib;LowLevelAABB_static_32.lib;LowLevelDynamics_static_32.lib;PhysXExtensions_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysDebug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;LowLevel_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysDebug;$(ProjectDir)Source\External\OpenAL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;PhysX_32.lib;OpenAL32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;LowLevel_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,13 +130,13 @@
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;NDEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
@@ -144,8 +144,8 @@
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXFoundation_32.lib;SceneQuery_static_32.lib;LowLevel_static_32.lib;LowLevelAABB_static_32.lib;LowLevelDynamics_static_32.lib;PhysXExtensions_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysRelease;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;LowLevel_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysRelease;$(ProjectDir)Source\External\OpenAL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;LowLevel_static_32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -165,6 +165,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Audio.cpp" />
+    <ClCompile Include="Source\Animation.cpp" />
+    <ClCompile Include="Source\AnimatorClip.cpp" />
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\CollisionDetector.cpp" />
     <ClCompile Include="Source\Color.cpp" />
@@ -173,6 +176,7 @@
     <ClCompile Include="Source\ComponentButton.cpp" />
     <ClCompile Include="Source\ComponentCamera.cpp" />
     <ClCompile Include="Source\ComponentCanvas.cpp" />
+    <ClCompile Include="Source\ComponentFollowPath.cpp" />
     <ClCompile Include="Source\ComponentImage.cpp" />
     <ClCompile Include="Source\ComponentMaterial.cpp" />
     <ClCompile Include="Source\ComponentScript.cpp" />
@@ -182,15 +186,27 @@
     <ClCompile Include="Source\ComponentRigidBody.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\ComponentTransform2D.cpp" />
+    <ClCompile Include="Source\ComponentAnimator.cpp" />
     <ClCompile Include="Source\C_Collider.cpp" />
+    <ClCompile Include="Source\C_AudioSource.cpp" />
+    <ClCompile Include="Source\C_AudioSwitch.cpp" />
+    <ClCompile Include="Source\dr_wav_impl.c" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />
+    <ClCompile Include="Source\Emitter.cpp" />
+    <ClCompile Include="Source\EmitterInstance.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\GraphEditor.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\ImCurveEdit.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\ImGradient.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\ImGuizmo.cpp" />
     <ClCompile Include="Source\External\ImGuizmo\include\ImSequencer.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourAlloc.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourCommon.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourNavMesh.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourNavMeshBuilder.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourNavMeshQuery.cpp" />
+    <ClCompile Include="Source\External\Detour\Source\DetourNode.cpp" />
     <ClCompile Include="Source\External\imgui\imgui.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_demo.cpp" />
     <ClCompile Include="Source\External\imgui\imgui_draw.cpp" />
@@ -232,15 +248,27 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="Source\External\mmgr\mmgr.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\Recast.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastAlloc.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastArea.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastContour.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastFilter.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastLayers.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastMesh.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastMeshDetail.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastRasterization.cpp" />
+    <ClCompile Include="Source\External\Recast\Source\RecastRegion.cpp" />
     <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c" />
     <ClCompile Include="Source\External\stb_image\stb_image.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\Importer.cpp" />
     <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\I_Animations.cpp" />
     <ClCompile Include="Source\I_Material.cpp" />
     <ClCompile Include="Source\I_Mesh.cpp" />
     <ClCompile Include="Source\I_Scene.cpp" />
     <ClCompile Include="Source\I_Texture.cpp" />
+    <ClCompile Include="Source\I_Track.cpp" />
     <ClCompile Include="Source\JsonHandler.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Log.cpp" />
@@ -250,19 +278,26 @@
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\Navigation.cpp" />
     <ClCompile Include="Source\PanelAssets.cpp" />
     <ClCompile Include="Source\PanelCameraViewport.cpp" />
     <ClCompile Include="Source\PanelGame.cpp" />
+    <ClCompile Include="Source\PanelNavigation.cpp" />
     <ClCompile Include="Source\PanelNodeEditor.cpp" />
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelSettings.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
+    <ClCompile Include="Source\ComponentParticle.cpp" />
+    <ClCompile Include="Source\ParticleModule.cpp" />
+    <ClCompile Include="Source\Particle.cpp" />
+    <ClCompile Include="Source\ParticleResource.cpp" />
+    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
-    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\RNG.cpp" />
+    <ClCompile Include="Source\R_Track.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
@@ -278,12 +313,24 @@
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\ComponentMesh.cpp" />
+    <ClCompile Include="Source\ComponentWalkable.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Event.h" />
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\AnimatorClip.h" />
     <ClInclude Include="Source\Assimp.h" />
+    <ClInclude Include="Source\Audio.h" />
+    <ClInclude Include="Source\C_Audio.h" />
+    <ClInclude Include="Source\C_AudioSource.h" />
+    <ClInclude Include="Source\C_AudioSpacial.h" />
+    <ClInclude Include="Source\C_AudioSwitch.h" />
+    <ClInclude Include="Source\Effects.h" />
+    <ClInclude Include="Source\Event.h" />
+    <ClInclude Include="Source\I_Track.h" />
+    <ClInclude Include="Source\par_shapes.h" />
+    <ClInclude Include="Source\R_Track.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\CollisionDetector.h" />
     <ClInclude Include="Source\Color.h" />
@@ -291,19 +338,24 @@
     <ClInclude Include="Source\ComponentButton.h" />
     <ClInclude Include="Source\ComponentCamera.h" />
     <ClInclude Include="Source\ComponentCanvas.h" />
+    <ClInclude Include="Source\ComponentFollowPath.h" />
     <ClInclude Include="Source\ComponentImage.h" />
     <ClInclude Include="Source\ComponentCollider.h" />
     <ClInclude Include="Source\ComponentInfo.h" />
     <ClInclude Include="Source\ComponentMaterial.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
+    <ClInclude Include="Source\ComponentRenderedUI.h" />
     <ClInclude Include="Source\ComponentRigidBody.h" />
     <ClInclude Include="Source\ComponentScript.h" />
     <ClInclude Include="Source\ComponentText.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\ComponentTransform2D.h" />
+    <ClInclude Include="Source\ComponentAnimator.h" />
     <ClInclude Include="Source\C_Collider.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
+    <ClInclude Include="Source\Emitter.h" />
+    <ClInclude Include="Source\EmitterInstance.h" />
     <ClInclude Include="Source\Engine.h" />
     <ClInclude Include="Source\EngineConfig.h" />
     <ClInclude Include="Source\External\ImGuizmo\include\GraphEditor.h" />
@@ -586,7 +638,6 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h" />
     <ClInclude Include="Source\FSDefs.h" />
     <ClInclude Include="Source\External\SDL_ttf\include\SDL_ttf.h" />
-    <ClInclude Include="Source\External\stb_image\stb_image.h" />
     <ClInclude Include="Source\External\stb_truetype\stb_truetype.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
@@ -594,6 +645,7 @@
     <ClInclude Include="Source\IconsFontAwesome5.h" />
     <ClInclude Include="Source\ImGuiAppLog.h" />
     <ClInclude Include="Source\Importer.h" />
+    <ClInclude Include="Source\I_Animations.h" />
     <ClInclude Include="Source\I_Material.h" />
     <ClInclude Include="Source\I_Mesh.h" />
     <ClInclude Include="Source\I_Scene.h" />
@@ -612,7 +664,10 @@
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\PanelCameraViewport.h" />
+    <ClInclude Include="Source\Navigation.h" />
+    <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
+    <ClInclude Include="Source\ParticleResource.h" />
     <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />
@@ -621,6 +676,9 @@
     <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\PanelTextEditor.h" />
+    <ClInclude Include="Source\ComponentParticle.h" />
+    <ClInclude Include="Source\Particle.h" />
+    <ClInclude Include="Source\ParticleModule.h" />
     <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\QuadTree3D.h" />
     <ClInclude Include="Source\Resource.h" />
@@ -645,12 +703,14 @@
     <ClInclude Include="Source\RNG.h" />
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\ComponentWalkable.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

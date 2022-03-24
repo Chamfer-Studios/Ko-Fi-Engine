@@ -26,6 +26,7 @@
 #include "PanelTextEditor.h"
 #include "PanelNodeEditor.h"
 #include "ImGuizmo.h"
+#include "PanelNavigation.h"
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
 
@@ -58,6 +59,7 @@ Editor::Editor(KoFiEngine* engine)
 	panelAssets = new PanelAssets(this);
 	//panelNodeEditor = new PanelNodeEditor(this);
 	panelTextEditor = new PanelTextEditor(this);
+	panelNavigation = new PanelNavigation(this);
 
 	// Panel instances with its own bool
 	/*if (panelsState.showGameWindow)
@@ -92,6 +94,7 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelAssets);
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
+	AddPanel(panelNavigation);
 }
 
 Editor::~Editor()

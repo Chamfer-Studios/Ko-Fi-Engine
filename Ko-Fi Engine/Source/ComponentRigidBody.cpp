@@ -1,6 +1,6 @@
 #include "ComponentRigidBody.h"
 
-ComponentRigidBody::ComponentRigidBody(GameObject* parent) : Component(parent)
+ComponentRigidBody::ComponentRigidBody(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
 
@@ -16,12 +16,27 @@ ComponentRigidBody::~ComponentRigidBody()
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
 		dynamicBody->release();
-	}	
+	}
 	if (staticBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
 		staticBody->release();
 	}
+}
+
+bool ComponentRigidBody::CleanUp()
+{
+	if (dynamicBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
+		dynamicBody->release();
+	}
+	if (staticBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
+		staticBody->release();
+	}
+	return true;
 }
 
 bool ComponentRigidBody::Update(float dt)
@@ -37,9 +52,10 @@ bool ComponentRigidBody::Update(float dt)
 			physx::PxVec3 lVel = dynamicBody->getLinearVelocity();
 			physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
 			// Speed limiters
-			if (lVel.y > 30.0f) lVel.y = 30.0f;
-			linearVel = { lVel.x, lVel.y, lVel.z };
-			angularVel = { aVel.x, aVel.y, aVel.z };
+			if (lVel.y > 30.0f)
+				lVel.y = 30.0f;
+			linearVel = {lVel.x, lVel.y, lVel.z};
+			angularVel = {aVel.x, aVel.y, aVel.z};
 
 			// Check each frame if rigid body attributes have a pending update
 			if (hasUpdated)
@@ -115,10 +131,11 @@ void ComponentRigidBody::UpdatePhysicsValues()
 // Update rigid body by the owner's transform
 bool ComponentRigidBody::TransformUpdatesRigidBody()
 {
-	physx::PxRigidActor* body = nullptr;
+	physx::PxRigidActor *body = nullptr;
 	if (!isStatic)
 		body = dynamicBody;
-	else body = staticBody;
+	else
+		body = staticBody;
 
 	if (!body)
 		return false;
@@ -140,10 +157,11 @@ bool ComponentRigidBody::TransformUpdatesRigidBody()
 
 bool ComponentRigidBody::RigidBodyUpdatesTransform()
 {
-	physx::PxRigidActor* body = nullptr;
+	physx::PxRigidActor *body = nullptr;
 	if (!isStatic)
 		body = dynamicBody;
-	else body = staticBody;
+	else
+		body = staticBody;
 
 	if (!body)
 		return false;
@@ -180,13 +198,13 @@ void ComponentRigidBody::StopMovement()
 	dynamicBody->setAngularVelocity(physx::PxVec3(0, 0, 0));
 
 	physx::PxVec3 lVel = dynamicBody->getLinearVelocity();
-	linearVel = { lVel.x, lVel.y, lVel.z };
+	linearVel = {lVel.x, lVel.y, lVel.z};
 	physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
-	angularVel = { aVel.x, aVel.y, aVel.z };
+	angularVel = {aVel.x, aVel.y, aVel.z};
 }
 
-// Serialization 
-void ComponentRigidBody::Save(Json& json) const
+// Serialization
+void ComponentRigidBody::Save(Json &json) const
 {
 	json["type"] = "rigidBody";
 
@@ -197,9 +215,9 @@ void ComponentRigidBody::Save(Json& json) const
 	json["mass"] = mass;
 	json["density"] = density;
 
-	json["linear_velocity"] = { linearVel.x, linearVel.y, linearVel.z };
+	json["linear_velocity"] = {linearVel.x, linearVel.y, linearVel.z};
 	json["linear_damping"] = linearDamping;
-	json["angular_velocity"] = { angularVel.x, angularVel.y, angularVel.z };
+	json["angular_velocity"] = {angularVel.x, angularVel.y, angularVel.z};
 	json["angular_damping"] = angularDamping;
 
 	json["freeze_position_x"] = freezePositionX;
@@ -209,7 +227,7 @@ void ComponentRigidBody::Save(Json& json) const
 	json["freeze_rotation_y"] = freezeRotationY;
 	json["freeze_rotation_z"] = freezeRotationZ;
 }
-void ComponentRigidBody::Load(Json& json)
+void ComponentRigidBody::Load(Json &json)
 {
 	isStatic = json.at("is_static");
 	isKinematic = json.at("is_kinematic");
@@ -236,13 +254,14 @@ void ComponentRigidBody::Load(Json& json)
 
 	if (!isStatic)
 		CreateDynamic();
-	else CreateStatic();
+	else
+		CreateStatic();
 
 	hasUpdated = true;
 }
 
 // On inspector draw
-bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
+bool ComponentRigidBody::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true;
 
@@ -257,7 +276,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 				SetDynamic();
 			ImGui::Separator();
 			// ---------------------------------------------------------------------------------
-			
+
 			// ---------------------------------------------------------------------------------
 			if (ImGui::TreeNodeEx("Constraints"))
 			{
@@ -287,7 +306,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 		else
 			DrawDeleteButton(owner, this);
 	}
-	else 
+	else
 	{
 		if (ImGui::CollapsingHeader("Rigid body", ImGuiTreeNodeFlags_AllowItemOverlap))
 		{
@@ -362,7 +381,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 				ImGui::Text("Linear Velocity");
 				ImGui::SameLine();
 				float3 vel2 = GetLinearVelocity();
-				float vel[3] = { vel2.x, vel2.y, vel2.z };
+				float vel[3] = {vel2.x, vel2.y, vel2.z};
 				ImGui::InputFloat3("##linearvelinput", vel, "%.3f", ImGuiInputTextFlags_ReadOnly);
 				ImGui::Text("Linear Damping");
 				ImGui::SameLine();
@@ -371,7 +390,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 				ImGui::Text("Angular Velocity");
 				ImGui::SameLine();
 				vel2 = GetAngularVelocity();
-				float angVel[3] = { vel2.x, vel2.y, vel2.z };
+				float angVel[3] = {vel2.x, vel2.y, vel2.z};
 				ImGui::InputFloat3("##angularvelinput", angVel, "%.3f", ImGuiInputTextFlags_ReadOnly);
 				ImGui::Text("Angular Damping");
 				ImGui::SameLine();
