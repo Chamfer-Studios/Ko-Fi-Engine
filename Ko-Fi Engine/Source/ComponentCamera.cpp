@@ -138,8 +138,10 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
-	if (ImGui::CollapsingHeader("Editor Camera"))
+	if (ImGui::CollapsingHeader("Editor Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
+		DrawDeleteButton(owner, this);
+
 		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
 		{
 			projectionIsDirty = true;
@@ -164,7 +166,8 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 		}
 	}
-
+	else
+		DrawDeleteButton(owner, this);
 	return ret;
 }
 

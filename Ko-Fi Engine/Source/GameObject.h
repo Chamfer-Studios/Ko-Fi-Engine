@@ -29,7 +29,12 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+
 	bool OnPlay();
+	bool OnPause();
+	bool OnStop();
+	bool OnResume();
+	bool OnTick();
 
 	void Enable();
 	void Disable();

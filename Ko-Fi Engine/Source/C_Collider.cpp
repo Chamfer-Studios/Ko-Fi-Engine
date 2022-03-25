@@ -205,8 +205,10 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
-	if (ImGui::CollapsingHeader("Component Collider (physx)"))
+	if (ImGui::CollapsingHeader("Component Collider (physx)", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
+		DrawDeleteButton(owner, this);
+
 		// COLLIDER SHAPE -----------------------------------------------------------------------------------------------
 		ImGui::Text("Collider Shape:");
 		// Take care with the order in the combo, it has to follow the ColliderShape enum class order
@@ -277,6 +279,8 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		}
 		
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return ret;
 }

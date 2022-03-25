@@ -14,7 +14,7 @@
 #include <fstream>
 #include "MathGeoLib/Math/float2.h"
 
-ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
+ComponentScript::ComponentScript(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
 
@@ -31,7 +31,7 @@ ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 ComponentScript::~ComponentScript()
 {
 	handler->CleanUp();
-	//RELEASE(handler);
+	// RELEASE(handler);
 	inspectorVariables.clear();
 }
 
@@ -72,23 +72,25 @@ bool ComponentScript::OnPlay()
 	return ret;
 }
 
-bool ComponentScript::InspectorDraw(PanelChooser* chooser)
+bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
 	std::string headerName = "Script" + std::to_string(numScript);
 
-	if (ImGui::CollapsingHeader(headerName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader(headerName.c_str(), ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		if (chooser->IsReadyToClose("LoadScript")) 
+		DrawDeleteButton(owner, this);
+
+		if (chooser->IsReadyToClose("LoadScript"))
 		{
-			if (chooser->OnChooserClosed() != nullptr) 
+			if (chooser->OnChooserClosed() != nullptr)
 			{
 				path = chooser->OnChooserClosed();
 				ReloadScript();
 			}
 		}
-		if (ImGui::Button("Select Script")) 
+		if (ImGui::Button("Select Script"))
 		{
 			chooser->OpenPanel("LoadScript", "lua");
 		}
@@ -96,7 +98,7 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());
 
 		bool isSeparatorNeeded = true;
-		for (InspectorVariable* variable : inspectorVariables)
+		for (InspectorVariable *variable : inspectorVariables)
 		{
 			if (variable->type == INSPECTOR_NO_TYPE)
 				continue;
@@ -106,62 +108,62 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 				ImGui::Separator();
 				isSeparatorNeeded = false;
 			}
-			
+
 			switch (variable->type)
 			{
-				case INSPECTOR_INT:
+			case INSPECTOR_INT:
+			{
+				if (ImGui::DragInt(variable->name.c_str(), &std::get<int>(variable->value)))
 				{
-					if (ImGui::DragInt(variable->name.c_str(), &std::get<int>(variable->value)))
-					{
-						handler->lua[variable->name.c_str()] = std::get<int>(variable->value);
-					}
-					break;
+					handler->lua[variable->name.c_str()] = std::get<int>(variable->value);
 				}
-				case INSPECTOR_FLOAT:
+				break;
+			}
+			case INSPECTOR_FLOAT:
+			{
+				if (ImGui::DragFloat(variable->name.c_str(), &std::get<float>(variable->value)))
 				{
-					if (ImGui::DragFloat(variable->name.c_str(), &std::get<float>(variable->value)))
-					{
-						handler->lua[variable->name.c_str()] = std::get<float>(variable->value);
-					}
-					break;
+					handler->lua[variable->name.c_str()] = std::get<float>(variable->value);
 				}
-				case INSPECTOR_FLOAT2:
+				break;
+			}
+			case INSPECTOR_FLOAT2:
+			{
+				if (ImGui::DragFloat2(variable->name.c_str(), std::get<float2>(variable->value).ptr()))
 				{
-					if (ImGui::DragFloat2(variable->name.c_str(), std::get<float2>(variable->value).ptr()))
-					{
-						handler->lua[variable->name.c_str()] = std::get<float2>(variable->value);
-					}
-					break;
+					handler->lua[variable->name.c_str()] = std::get<float2>(variable->value);
 				}
-				case INSPECTOR_FLOAT3:
+				break;
+			}
+			case INSPECTOR_FLOAT3:
+			{
+				if (ImGui::DragFloat3(variable->name.c_str(), std::get<float3>(variable->value).ptr()))
 				{
-					if (ImGui::DragFloat3(variable->name.c_str(), std::get<float3>(variable->value).ptr()))
-					{
-						handler->lua[variable->name.c_str()] = std::get<float3>(variable->value);
-					}
-					break;
+					handler->lua[variable->name.c_str()] = std::get<float3>(variable->value);
 				}
-				case INSPECTOR_BOOL:
+				break;
+			}
+			case INSPECTOR_BOOL:
+			{
+				if (ImGui::Checkbox(variable->name.c_str(), &std::get<bool>(variable->value)))
 				{
-					if (ImGui::Checkbox(variable->name.c_str(), &std::get<bool>(variable->value)))
-					{
-						handler->lua[variable->name.c_str()] = std::get<bool>(variable->value);
-					}
-					break;
+					handler->lua[variable->name.c_str()] = std::get<bool>(variable->value);
 				}
-				case INSPECTOR_STRING:
+				break;
+			}
+			case INSPECTOR_STRING:
+			{
+				if (ImGui::InputText(variable->name.c_str(), &std::get<std::string>(variable->value)))
 				{
-					if (ImGui::InputText(variable->name.c_str(), &std::get<std::string>(variable->value)))
-					{
-						handler->lua[variable->name.c_str()] = std::get<std::string>(variable->value);
-					}
-					break;
+					handler->lua[variable->name.c_str()] = std::get<std::string>(variable->value);
 				}
-				case INSPECTOR_TO_STRING:
-				{
-					ImGui::Text(std::get<std::string>(variable->value).c_str());
-					break;
-				}
+				break;
+			}
+			case INSPECTOR_TO_STRING:
+			{
+				ImGui::Text(std::get<std::string>(variable->value).c_str());
+				break;
+			}
 			}
 		}
 
@@ -175,7 +177,8 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 			ReloadScript();
 		}
 	}
-
+	else
+		DrawDeleteButton(owner, this);
 
 	return ret;
 }
@@ -190,14 +193,14 @@ void ComponentScript::ReloadScript()
 	isScriptLoaded = true;
 }
 
-void ComponentScript::Save(Json& json) const
+void ComponentScript::Save(Json &json) const
 {
 	json["type"] = "script";
 	json["file_name"] = path;
 	json["script_number"] = numScript;
 }
 
-void ComponentScript::Load(Json& json)
+void ComponentScript::Load(Json &json)
 {
 	path = json.at("file_name");
 	numScript = json.at("script_number");
