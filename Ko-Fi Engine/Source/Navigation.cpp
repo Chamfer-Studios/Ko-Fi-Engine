@@ -151,14 +151,14 @@ void Navigation::PrepareDetour()
 
 	dtNavMeshCreateParams.offMeshConCount = 0;
 
-	dtNavMeshCreateParams.walkableHeight = 2.0f;
-	dtNavMeshCreateParams.walkableClimb = 0.0f;
-	dtNavMeshCreateParams.walkableRadius = 0.5f; // TODO
+	dtNavMeshCreateParams.walkableHeight = navMeshConfig.walkableHeight;
+	dtNavMeshCreateParams.walkableClimb = navMeshConfig.walkableClimb;
+	dtNavMeshCreateParams.walkableRadius = navMeshConfig.walkableRadius;
 
 	rcVcopy(dtNavMeshCreateParams.bmin, navMesh->bmin);
 	rcVcopy(dtNavMeshCreateParams.bmax, navMesh->bmax);
-	dtNavMeshCreateParams.cs = .3f;
-	dtNavMeshCreateParams.ch = .3f; // TODO
+	dtNavMeshCreateParams.cs = navMeshConfig.cs;
+	dtNavMeshCreateParams.ch = navMeshConfig.ch;
 	dtNavMeshCreateParams.buildBvTree = true;
 
 	unsigned char* data = nullptr;
@@ -197,19 +197,19 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 	config->bmax[1] = bMax[1];
 	config->bmax[2] = bMax[2];
 
-	config->cs = .3f;
-	config->ch = .2f;
-	config->walkableSlopeAngle = 45;
-	config->walkableClimb = 1.0f;
-	config->walkableHeight = 2;
-	config->walkableRadius = 2.f;
-	config->minRegionArea = 2.f;
-	config->mergeRegionArea = 2.f;
-	config->borderSize = 0.5f;
-	config->maxEdgeLen = 30.f;
-	config->maxVertsPerPoly = 6;
-	config->detailSampleMaxError = 1.0f;
-	config->detailSampleDist = 1.0f;
+	config->cs = navMeshConfig.cs;
+	config->ch = navMeshConfig.ch;
+	config->walkableSlopeAngle = navMeshConfig.walkableSlopeAngle;
+	config->walkableClimb = navMeshConfig.walkableClimb;
+	config->walkableHeight = navMeshConfig.walkableHeight;
+	config->walkableRadius = navMeshConfig.walkableRadius;
+	config->minRegionArea = navMeshConfig.minRegionArea;
+	config->mergeRegionArea = navMeshConfig.mergeRegionArea;
+	config->borderSize = navMeshConfig.borderSize;
+	config->maxEdgeLen = navMeshConfig.maxEdgeLen;
+	config->maxVertsPerPoly = navMeshConfig.maxVertsPerPoly;
+	config->detailSampleMaxError = navMeshConfig.detailSampleMaxError;
+	config->detailSampleDist = navMeshConfig.detailSampleDist;
 
 	int w, h;
 	rcCalcGridSize(bMin, bMax, config->cs, &w, &h);
@@ -508,4 +508,26 @@ void Navigation::Load(Json& json)
 
 void Navigation::OnGui()
 {
+	ImGui::Begin("Navigator");
+
+	ImGui::DragFloat("Cell Size", &navMeshConfig.cs, 0.001f);
+	ImGui::DragFloat("Cell Height", &navMeshConfig.ch, 0.001f);
+	ImGui::DragFloat("Slope Angle", &navMeshConfig.walkableSlopeAngle, 0.5f);
+	ImGui::DragFloat("Walkable Climb", &navMeshConfig.walkableClimb, 0.02f);
+	ImGui::DragInt("Walkable Height", &navMeshConfig.walkableHeight, 0.05f);
+	ImGui::DragFloat("Walkable Radius", &navMeshConfig.walkableRadius, 0.02f);
+	ImGui::DragFloat("Min Region Area", &navMeshConfig.minRegionArea, 0.02f);
+	ImGui::DragFloat("Merge Region Area", &navMeshConfig.mergeRegionArea, 0.02f);
+	ImGui::DragFloat("Border Size", &navMeshConfig.borderSize, 0.001f);
+	ImGui::DragFloat("Max Edge Length", &navMeshConfig.maxEdgeLen, 0.5f);
+	ImGui::DragInt("Max Verts Poly", &navMeshConfig.maxVertsPerPoly, 0.2f, 3, 6);
+	ImGui::DragFloat("Detail Sample Error", &navMeshConfig.detailSampleMaxError, 0.02f);
+	ImGui::DragFloat("Detail Sample Distance", &navMeshConfig.detailSampleDist, 0.02f);
+
+	if (ImGui::Button("Bake Navmesh")) {
+		ComputeNavmesh();
+		PrepareDetour();
+	}
+
+	ImGui::End();
 }

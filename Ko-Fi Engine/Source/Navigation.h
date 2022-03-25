@@ -18,6 +18,22 @@ class Mesh;
 class Navigation : public Module
 {
 public:
+	struct NavMeshConfig {
+		float cs = .3f;
+		float ch = .2f;
+		float walkableSlopeAngle = 45;
+		float walkableClimb = 1.0f;
+		int walkableHeight = 2;
+		float walkableRadius = 2.f;
+		float minRegionArea = 2.f;
+		float mergeRegionArea = 2.f;
+		float borderSize = 0.5f;
+		float maxEdgeLen = 30.f;
+		int maxVertsPerPoly = 6;
+		float detailSampleMaxError = 1.0f;
+		float detailSampleDist = 1.0f;
+	};
+
 	enum PolyAreas
 	{
 		SAMPLE_POLYAREA_GROUND,
@@ -54,4 +70,5 @@ private:
 	rcPolyMesh* navMesh = nullptr;
 	rcPolyMeshDetail* navMeshDetail = nullptr;
 	dtNavMesh* dtNavMesh = nullptr;
+	NavMeshConfig navMeshConfig;
 };
