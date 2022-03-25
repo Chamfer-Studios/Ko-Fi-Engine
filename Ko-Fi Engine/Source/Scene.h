@@ -81,7 +81,6 @@ public:
 
 		return nullptr;
 	}
-
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
 	{
 		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
@@ -95,6 +94,17 @@ public:
 		//engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = GOID;
 
 		return go;
+	}
+	virtual void DeleteCurrentScene()
+	{
+		for (GameObject* gameObject : gameObjectList)
+		{
+			RELEASE(gameObject);
+		}
+		gameObjectList.clear();
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+		rootGo = new GameObject(-1, engine, "Root");
+		gameObjectList.push_back(rootGo);
 	}
 
 	virtual void DeleteGameObject(GameObject* gameObject)

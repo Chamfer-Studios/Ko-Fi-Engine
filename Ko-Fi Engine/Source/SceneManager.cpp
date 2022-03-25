@@ -22,6 +22,8 @@
 #include "ComponentScript.h"
 
 #include "PanelViewport.h"
+#include "Log.h"
+#include "Scripting.h"
 
 #include "Log.h"
 #include "Globals.h"
@@ -35,6 +37,8 @@ SceneManager::SceneManager(KoFiEngine* engine)
 	sceneIntro = new SceneIntro(engine);
 	AddScene(sceneIntro);
 	currentScene = sceneIntro;
+
+	gameTime = 0.0f;
 }
 
 SceneManager::~SceneManager()
@@ -62,11 +66,10 @@ bool SceneManager::Start()
 	{
 		ret = (*scene)->Start();
 	}
-	Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), "SceneIntro");
+	//Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), "SceneIntro");
 
 	currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 	currentGizmoMode = ImGuizmo::MODE::WORLD;
-	//ImGuizmo::SetGizmoSizeClipSpace(0.1f);
 	return ret;
 }
 
@@ -136,12 +139,13 @@ bool SceneManager::PrepareUpdate()
 {
 	bool ret = true;
 
-	if (runtimeState == RuntimeState::PLAYING ||
-		runtimeState == RuntimeState::TICK)
+	if (runtimeState == GameState::PLAYING ||
+		runtimeState == GameState::TICK)
 	{
 		frameCount++;
 		time += timer.ReadSec();
 		gameDt = timer.ReadSec() * gameClockSpeed;
+		gameTime += gameDt;
 		timer.Start();
 	}
 
@@ -152,7 +156,7 @@ bool SceneManager::FinishUpdate()
 {
 	bool ret = true;
 
-	if (runtimeState == RuntimeState::TICK)
+	if (runtimeState == GameState::TICK)
 		OnPause();
 
 	return ret;
@@ -169,41 +173,50 @@ Scene* SceneManager::GetCurrentScene()
 	return currentScene;
 }
 
-RuntimeState SceneManager::GetState()
+GameState SceneManager::GetGameState()
 {
 	return runtimeState;
 }
 
+float SceneManager::GetGameDt()
+{
+	return gameDt;
+}
+
+float SceneManager::GetGameTime()
+{
+	return time;
+}
+
 void SceneManager::OnPlay()
 {
-	runtimeState = RuntimeState::PLAYING;
+	runtimeState = GameState::PLAYING;
 	gameClockSpeed = timeScale;
+
+	gameTime = 0.0f;
 
 	// Serialize scene and save it as a .json
 	Importer::GetInstance()->sceneImporter->Save(currentScene);
 
 	for (GameObject* go : currentScene->gameObjectList)
 	{
-		ComponentScript* script = go->GetComponent<ComponentScript>();
-		if (script != nullptr)
-		{
-			script->ReloadScript();
-		}
+		go->OnPlay();
 	}
 }
 
 void SceneManager::OnPause()
 {
-	runtimeState = RuntimeState::PAUSED;
+	runtimeState = GameState::PAUSED;
 	gameClockSpeed = 0.0f;
 }
 
 void SceneManager::OnStop()
 {
-	runtimeState = RuntimeState::STOPPED;
+	runtimeState = GameState::STOPPED;
 	gameClockSpeed = 0.0f;
 	frameCount = 0;
 	time = 0.0f;
+	gameTime = 0.0f;
 
 	Importer::GetInstance()->sceneImporter->Load(currentScene,currentScene->name.c_str());
 	// Load the scene we saved before in .json
@@ -212,13 +225,13 @@ void SceneManager::OnStop()
 
 void SceneManager::OnResume()
 {
-	runtimeState = RuntimeState::PLAYING;
+	runtimeState = GameState::PLAYING;
 	gameClockSpeed = timeScale;
 }
 
 void SceneManager::OnTick()
 {
-	runtimeState = RuntimeState::TICK;
+	runtimeState = GameState::TICK;
 	gameClockSpeed = timeScale;
 }
 
@@ -234,22 +247,26 @@ void SceneManager::GuizmoTransformation()
 
 	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->viewMatrix.Transposed();
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
-	float4x4 objectTransform = selectedGameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Transposed();
+	ComponentTransform* cTrans = selectedGameObject->GetComponent<ComponentTransform>();
+	if (cTrans == nullptr) return;
+	float4x4 objectTransform = cTrans->GetGlobalTransform().Transposed();
 
 	float tempTransform[16];
 	memcpy(tempTransform, objectTransform.ptr(), 16 * sizeof(float));
 
-	int winX, winY;
-	engine->GetWindow()->GetPosition(winX, winY);
 	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
 	ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, currentGizmoOperation != ImGuizmo::OPERATION::SCALE ? currentGizmoMode : ImGuizmo::MODE::LOCAL, tempTransform);
+	
 
 	if (ImGuizmo::IsUsing())
 	{
 		float4x4 newTransform;
 		newTransform.Set(tempTransform);
-		objectTransform = newTransform.Transposed();
-		selectedGameObject->GetComponent<ComponentTransform>()->UpdateGuizmoParameters(objectTransform);
+		if (newTransform.IsFinite())
+		{
+			objectTransform = newTransform.Transposed();
+			selectedGameObject->GetComponent<ComponentTransform>()->UpdateGuizmoParameters(objectTransform);
+		}
 	}
 }
 
@@ -280,5 +297,6 @@ void SceneManager::UpdateGuizmo()
 				CONSOLE_LOG("Set Guizmo to Scale");
 			}
 		}
+	
 	}
 }

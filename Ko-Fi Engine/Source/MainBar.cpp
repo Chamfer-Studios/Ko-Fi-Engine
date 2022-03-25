@@ -6,6 +6,7 @@
 #include "PanelChooser.h"
 #include "SDL.h"
 #include <imgui.h>
+#include <imgui_stdlib.h>
 #include "Primitive.h"
 #include "Importer.h"
 #include "ComponentCamera.h"
@@ -50,8 +51,14 @@ bool MainBar::Update()
 			{
 				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx");
 			}
+			if (ImGui::MenuItem("Save Scene"))
+			{
+				saveAsSceneName = editor->engine->GetSceneManager()->GetCurrentScene()->name.c_str();
+				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName.c_str());
+			}
 			if (ImGui::MenuItem("Save Scene As"))
 			{
+				saveAsSceneName = editor->engine->GetSceneManager()->GetCurrentScene()->name.c_str();
 				openSaveAsPopup = true;
 			}
 			if (ImGui::MenuItem("Load Scene"))
@@ -64,15 +71,8 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
-				std::vector<GameObject*> gameObjectList = editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
-				for (GameObject* gameObject : gameObjectList)
-				{
-					RELEASE(gameObject);
-				}
-				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.clear();
-				editor->panelGameObjectInfo.selectedGameObjectID = -1;
-				editor->engine->GetSceneManager()->GetCurrentScene()->rootGo = new GameObject(-1, editor->engine, "Root");
-				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.push_back(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo);
+				editor->engine->GetSceneManager()->GetCurrentScene()->DeleteCurrentScene();
+			
 			}
 			if (ImGui::MenuItem("Quit"))
 			{
@@ -173,10 +173,10 @@ bool MainBar::Update()
 		}
 		if (ImGui::BeginPopupModal("SaveSceneAsPopup",&openSaveAsPopup))
 		{
-
-			ImGui::InputText("Scene name", saveAsSceneName,150);
-			if (ImGui::Button("Save##") && saveAsSceneName != nullptr && saveAsSceneName != "") {
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName);
+			
+			ImGui::InputText("Scene Name", &saveAsSceneName);
+			if (ImGui::Button("Save##") && !saveAsSceneName.empty()) {
+				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName.c_str());
 				openSaveAsPopup = false;
 			}
 			ImGui::EndPopup();
@@ -207,7 +207,6 @@ void MainBar::ChoosersListener()
 		if (file != nullptr)
 		{
 			Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
-
 		}
 	}
 }

@@ -31,6 +31,11 @@ ComponentTransform2D::~ComponentTransform2D()
 	delete drawablePlane;
 }
 
+bool ComponentTransform2D::CleanUp()
+{
+	return true;
+}
+
 void ComponentTransform2D::Save(Json& json) const
 {
 	json["type"] = "transform2D";

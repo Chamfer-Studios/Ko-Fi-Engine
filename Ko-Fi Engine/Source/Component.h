@@ -1,5 +1,4 @@
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
+#pragma once
 
 #include "imgui.h"
 #include "json.hpp"
@@ -14,17 +13,23 @@ enum class ComponentType
 	NONE,
 	MESH,
 	MATERIAL,
+	PARTICLE,
 	CAMERA,
 	COLLIDER,
 	SCRIPT,
 	RIGID_BODY,
 	COLLIDER2,
+	AUDIO_SOURCE,
+	AUDIO_SWITCH,
+	ANIMATOR,
 	TRANSFORM2D,
 	CANVAS,
 	IMAGE,
 	BUTTON,
 	TEXT,
 	TRANSFORM,
+	WALKABLE,
+	FOLLOW_PATH,
 	INFO
 };
 
@@ -40,6 +45,7 @@ public:
 	virtual bool Update(float dt) { return true; }
 	virtual bool PostUpdate(float dt) { return true; }
 	virtual bool CleanUp() { return true; }
+	virtual bool OnPlay() { return true; }
 
 	virtual bool InspectorDraw(PanelChooser* chooser) { return true; }
 
@@ -50,11 +56,8 @@ public:
 
 	ComponentType GetType() { return type; }
 
-
 public:
 	bool active = true;
 	GameObject* owner = nullptr;
 	ComponentType type;
 };
-
-#endif // !__COMPONENT_H__

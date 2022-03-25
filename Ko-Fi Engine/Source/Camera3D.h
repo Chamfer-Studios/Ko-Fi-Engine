@@ -35,10 +35,12 @@ public:
 	void CheckMouseMotion();
 
 	void SetGameCamera(ComponentCamera* gameCamera);
-
-	GameObject* MousePicking();
+	
+	GameObject* MousePicking(const bool& isRightButton = false);
 
 public:
+	GameObject* engineCameraObject = nullptr; // The engine camera needs a game object as holder if we want to be able to access "engine" from component camera.
+
 	ComponentCamera* currentCamera = nullptr; // The camera that will display on screen
 	ComponentCamera* engineCamera = nullptr; // The engine camera, asigning this to currentCamera will display de engine camera
 	ComponentCamera* gameCamera = nullptr; // The game camera, asigning this to currentCamera will display de game camera

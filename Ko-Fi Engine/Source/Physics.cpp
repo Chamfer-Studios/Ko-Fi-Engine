@@ -45,7 +45,7 @@ bool Physics::Start()
 
 bool Physics::Update(float dt)
 {
-	if (engine->GetSceneManager()->GetState() == RuntimeState::PLAYING || engine->GetSceneManager()->GetState() == RuntimeState::PAUSED)
+	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING || engine->GetSceneManager()->GetGameState() == GameState::PAUSED)
 	{
 		isSimulating = true;
 	}

@@ -24,6 +24,8 @@
     },
     "SceneManager": null,
     "UI": null,
+    "Navigation": null,
+    "ViewportFrameBuffer": null,
     "Window": {
         "Borderless": false,
         "Fullscreen": false,
@@ -34,5 +36,6 @@
         "Scale": 0,
         "Title": "Ko-Fi Engine",
         "Width": 1024
-    }
+    },
+    "Audio": null
 }

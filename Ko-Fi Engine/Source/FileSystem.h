@@ -37,6 +37,7 @@ public:
 	void CreateMaterial(const char* path, const char* filename,const char* texturePath);
 	void CreateMaterial(const char* path);
 	void CreateShader(const char* path);
+	void CreateScene(const char* path,const char* sceneName);
 
 public:
 	fs::path rootPath;

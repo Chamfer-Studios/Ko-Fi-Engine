@@ -19,26 +19,31 @@ public:
 	I_Scene(KoFiEngine* engine);
 	~I_Scene();
 
-	bool Import(const char* path);
+	bool Import(const char* path, bool isPrefab = false);
 	bool Save(Scene* scene, const char* name = nullptr);
 	bool Load(Scene* scene, const char* name);
 
 	GameObject* ImportModel(const char* path);
 
+	aiScene* GetAssimpScene();
+
 private:
-	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent);
+	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab = false);
 
 	const aiNode* ImportTransform(const aiNode* assimpNode, GameObject* gameObj);
 	bool IsDummyNode(const aiNode& assimpNode);
 
 	void ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* gameObj);
-	void ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj);
+	void ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj, const aiScene* assimpScene = nullptr);
 	void ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj);
 
 private:
 	KoFiEngine* engine = nullptr;
 
 	std::string nodeName;
+
+	// Instance of some generic Assimp variables in case we need them from the outside of the importer
+	aiScene* assimpScene = nullptr;
 };
 
 #endif // !__I_SCENE_H__

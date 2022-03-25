@@ -24,6 +24,21 @@ ComponentRigidBody::~ComponentRigidBody()
 	}
 }
 
+bool ComponentRigidBody::CleanUp()
+{
+	if (dynamicBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
+		dynamicBody->release();
+	}
+	if (staticBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
+		staticBody->release();
+	}
+	return true;
+}
+
 bool ComponentRigidBody::Update(float dt)
 {
 	bool ret = true;
@@ -282,8 +297,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			}
 			// ---------------------------------------------------------------------------------
 		}
-	}
-	else 
+	}else 
 	{
 		if (ImGui::CollapsingHeader("Rigid body"))
 		{

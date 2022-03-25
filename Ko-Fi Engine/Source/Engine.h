@@ -18,6 +18,8 @@ class FileSystem;
 class Physics;
 class UI;
 class CollisionDetector;
+class Audio;
+class Navigation;
 
 class KoFiEngine
 {
@@ -63,6 +65,7 @@ public:
 	Physics* GetPhysics() const;
 	UI* GetUI() const;
 	CollisionDetector* GetCollisionDetector() const;
+	Navigation* GetNavigation() const;
 
 private:
 	// Add a new module to handle
@@ -98,6 +101,8 @@ private:
 	Physics* physics = nullptr;
 	UI* ui = nullptr;
 	CollisionDetector* collisionDetector = nullptr;
+	Audio* audio = nullptr;
+	Navigation* navigation = nullptr;
 
 private:
 	int argc;
