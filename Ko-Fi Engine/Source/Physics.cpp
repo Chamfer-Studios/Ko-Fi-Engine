@@ -120,28 +120,62 @@ bool Physics::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Physics##"))
 	{
-		ImGui::Text("Number of threads");
-		ImGui::SameLine();
 		int newNbThreads = GetNbThreads();
 		if (ImGui::DragInt("##drag_threads", &newNbThreads, 0.1f, 0.0f, 16.0f))
 		{
 			SetNbThreads(newNbThreads);
 			engine->SaveConfiguration();
 		}
-		ImGui::Separator();
-		ImGui::Text("Scene gravity");
 		ImGui::SameLine();
+		ImGui::Text("Number of threads");
+
+		ImGui::Text("");
 		float grav = GetGravity();
 		if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f, "%.2f"))
 		{
 			SetGravity(grav);
 			engine->SaveConfiguration();
 		}
+		ImGui::SameLine();
+		ImGui::Text("Scene gravity");
 		if (ImGui::Button("Default gravity##"))
 		{
 			SetGravity(9.81f);
 			engine->SaveConfiguration();
 		}
+
+		ImGui::Separator();
+		ImGui::Text("Filters:");
+		for (int i = 0; i < filters.size(); ++i)
+		{
+			ImGui::Text(filters[i].c_str());
+			ImGui::SameLine();
+			std::string label = "delete##";
+			label += filters[i];
+			if (ImGui::Button(label.c_str()))
+			{
+				DeleteFilter(filters[i]);
+				engine->SaveConfiguration();
+			}
+		}
+		char filterBuff[64];
+		strcpy_s(filterBuff, "");
+		ImGui::Text("Create filter: ");
+		if (ImGui::InputText("##createfilter", filterBuff, IM_ARRAYSIZE(filterBuff), ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			std::string str = filterBuff;
+			if (str == "")
+			{
+				LOG_BOTH("ERROR, cannot add an empty filter\n");
+			}
+			else
+			{
+				AddFilter(str);
+				engine->SaveConfiguration();
+			}
+		}
+		ImGui::Text("(For the input text to work, you will have to write the desired filter name and press enter)");
+		ImGui::Separator();
 	}
 
 	return true;
@@ -160,7 +194,7 @@ bool Physics::InitializePhysX()
 	foundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback, gDefaultErrorCallback);
 	if (!foundation)
 	{
-		LOG_BOTH("PxCreateFoundation failed!");
+		LOG_BOTH("PxCreateFoundation failed!\n");
 		return false;
 	}
 
@@ -169,7 +203,7 @@ bool Physics::InitializePhysX()
 	physics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *foundation, physx::PxTolerancesScale(), recordMemoryAllocations);
 	if (!physics)
 	{
-		LOG_BOTH("PxCreatePhysics failed!");
+		LOG_BOTH("PxCreatePhysics failed!\n");
 		return false;
 	}
 
@@ -177,7 +211,7 @@ bool Physics::InitializePhysX()
 	cooking = PxCreateCooking(PX_PHYSICS_VERSION, *foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
 	if (!cooking)
 	{
-		LOG_BOTH("PxCreateCooking failed!");
+		LOG_BOTH("PxCreateCooking failed!\n");
 		return false;
 	}
 
@@ -190,7 +224,7 @@ bool Physics::InitializePhysX()
 		physx::PxCpuDispatcher* _cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(/*nbThreads*/4);
 		if (!_cpuDispatcher)
 		{
-			LOG_BOTH("PxDefaultCpuDispatcherCreate failed!");
+			LOG_BOTH("PxDefaultCpuDispatcherCreate failed!\n");
 			return false;
 		}
 		sceneDesc.cpuDispatcher = _cpuDispatcher;
@@ -200,7 +234,7 @@ bool Physics::InitializePhysX()
 	scene = physics->createScene(sceneDesc);
 	if (!scene)
 	{
-		LOG_BOTH("createScene failed!");
+		LOG_BOTH("createScene failed!\n");
 		return false;
 	}
 
@@ -234,7 +268,7 @@ void Physics::AddFilter(const std::string newFilter)
 	{
 		if (filters[i] == newFilter)
 		{
-			LOG_BOTH("ERROR, the filter %s already exists in filters array", newFilter.c_str());
+			LOG_BOTH("ERROR, the filter %s already exists in filters array\n", newFilter.c_str());
 			return;
 		}
 	}
@@ -260,12 +294,15 @@ void Physics::DeleteFilter(const std::string deletedFilter)
 		for (std::vector<std::string>::iterator i = filters.begin(); i != filters.end(); ++i)
 		{
 			if (*i == deletedFilter)
+			{
 				filters.erase(i);
+				break;
+			}	
 		}
 	}
 	else
 	{
-		LOG_BOTH("ERROR, the filter to delete %s is not contained in filters array", deletedFilter.c_str());
+		LOG_BOTH("ERROR, the filter to delete %s is not contained in filters array\n", deletedFilter.c_str());
 		return;
 	}
 }
