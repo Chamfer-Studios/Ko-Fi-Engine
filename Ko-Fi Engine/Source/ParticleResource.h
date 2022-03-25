@@ -6,7 +6,7 @@
 class ParticleResource
 {
 public:
-	ParticleResource();
+	ParticleResource(const char* resourceName = "New Resource");
 	~ParticleResource();
 
 	bool CleanUp();

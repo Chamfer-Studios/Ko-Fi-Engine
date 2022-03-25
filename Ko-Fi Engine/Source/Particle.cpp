@@ -14,7 +14,7 @@ Particle::Particle()
 	velocity = float3::zero;
 	acceleration = float3::zero;
 	direction = float3::zero;
-	intensity = 1.0f;
+	//intensity = 1.0f;
 	lifeTime = 0.0f;
 	maxLifetime = 0.0f;
 	distanceToCamera = 0.0f;

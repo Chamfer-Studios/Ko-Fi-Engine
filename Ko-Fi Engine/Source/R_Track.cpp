@@ -11,7 +11,7 @@ R_Track::R_Track()
 
 	loop = false;
 	play = false;
-	playOnStart = true;
+	playOnStart = false;
 	mute = false;
 
 	pan = 0.0f;

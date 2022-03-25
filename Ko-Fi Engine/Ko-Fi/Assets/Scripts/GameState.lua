@@ -1,6 +1,5 @@
 ------------------- Variables --------------------
 
-currentState = GetRuntimeState()
 characterSelected = -1
 
 -------------------- Methods ---------------------

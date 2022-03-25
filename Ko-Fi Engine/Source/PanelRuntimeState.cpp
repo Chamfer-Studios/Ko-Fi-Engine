@@ -47,14 +47,14 @@ void PanelRuntimeState::DrawRuntimePanel()
         Editor* editor = engine->GetEditor();
         Camera3D* camera = engine->GetCamera3D();
         Input* input = engine->GetInput();
-        RuntimeState state = sceneManager->GetState();
+        GameState state = sceneManager->GetGameState();
 
-        if (state == RuntimeState::PLAYING)
+        if (state == GameState::PLAYING)
         {
             if (ImGui::Button("PAUSE", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
                 sceneManager->OnPause();
         }
-        else if (state == RuntimeState::PAUSED)
+        else if (state == GameState::PAUSED)
         {
             if (ImGui::Button("CONTINUE", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
                 sceneManager->OnResume();
@@ -62,7 +62,7 @@ void PanelRuntimeState::DrawRuntimePanel()
 
         ImGui::SameLine();
 
-        if (state != RuntimeState::PLAYING && state != RuntimeState::PAUSED)
+        if (state != GameState::PLAYING && state != GameState::PAUSED)
         {
             if (ImGui::Button("PLAY", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
             {

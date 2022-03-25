@@ -1,6 +1,7 @@
 ------------------- Variables --------------------
 
 characterID = 1
+isWalking = false -- To play the steps track only once
 
 State = {
    IDLE = 1,
@@ -9,19 +10,19 @@ State = {
 }
 
 currentState = State.IDLE
-speed = 50  -- consider Start()
-isDoubleShot = false
+speed = 500  -- consider Start()
 maxBullets = 10
 bullets = maxBullets
 maxLives = 3
 lives = maxLives
+bulletCount = maxBullets
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
-speedIV = InspectorVariable.new("speed", speedIVT, speed)
+local speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
 local maxBulletsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-maxBulletsIV = InspectorVariable.new("maxBullets", maxBulletsIVT, maxBullets)
+local maxBulletsIV = InspectorVariable.new("maxBullets", maxBulletsIVT, maxBullets)
 NewVariable(maxBulletsIV)
 
 local maxLivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
@@ -34,25 +35,58 @@ NewVariable(isDoubleShotIV)
 
 
 local currentItemType = ItemType.ITEM_GUN
-currentItemDamage = 5
+local currentItemDamage = 5
 currentItem = Item.new(currentItemType, currentItemDamage)
 
--- Try to switch and use next
+componentAnimator = gameObject:GetComponentAnimator()
+if (componentAnimator ~= nil) then
+	componentAnimator:SetSelectedClip("Idle")
+end
+--animationDuration = 0.8
+--animationTimer = 0.0
+isAttacking = false
+
+componentSwitch = gameObject:GetAudioSwitch()
+componentRigidBody = gameObject:GetRigidBody()
+
+mouseParticles = Find("Mouse Particles")
+if (mouseParticles ~= nil) then
+	mouseParticles:GetComponentParticle():StopParticleSpawn()
+end
+
+particleFlag = false
 
 -------------------- Methods ---------------------
-
-function Start()
-	destination = nil
-end
 
 -- Called each loop iteration
 function Update(dt)
 
+	if (isAttacking and componentAnimator ~= nil) then
+		animationTimer = animationTimer + dt
+		if (animationTimer >= animationDuration) then
+			componentAnimator:SetSelectedClip("Idle")
+			isAttacking = false
+			animationTimer = 0.0
+		end
+	end
+	if (particleFlag == true and mouseParticles ~= nil) then
+		mouseParticles:GetComponentParticle():StopParticleSpawn()
+		particleFlag = false
+	end
+
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
 	end
+
 	if (IsSelected() == true)
 		then --Gather Inputs
+			if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- RightClick
+				if (mouseParticles ~= nil) then
+					mouseParticles:GetComponentParticle():ResumeParticleSpawn()
+					mouseParticles:GetTransform():SetPosition(destination)
+					particleFlag = true
+				end
+			end
 			if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
 				currentItem.type = ItemType.ITEM_HAND
 			end
@@ -66,18 +100,28 @@ function Update(dt)
 				then
 					if (currentState == State.CROUCH) then
 						currentState = State.IDLE
+						if (isWalking == true and componentSwitch ~= nil) then
+							componentSwitch:StopTrack(2)
+							componentSwitch:PlayAudio(1)
+						end
 					else
 						currentState = State.CROUCH
+						if (isWalking == true and componentSwitch ~= nil) then
+							componentSwitch:StopTrack(1)
+							componentSwitch:PlayAudio(2)
+						end
 					end
 			end	
-			if (GetInput(9) == KEY_STATE.KEY_DOWN)  -- C
-				then
-					if (currentState == State.PRONE) then
-						currentState = State.IDLE
-					else
-						currentState = State.PRONE
-					end	
-			end
+			--if (GetInput(9) == KEY_STATE.KEY_DOWN)  -- C
+			--	then
+			--		if (currentState == State.PRONE) then
+			--			currentState = State.IDLE
+			--			-- TODO: Play audio
+			--		else
+			--			currentState = State.PRONE
+			--			-- TODO: Play audio
+			--		end	
+			--end
 			if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
 				Reload()
 			end
@@ -86,15 +130,15 @@ function Update(dt)
 			end
 			if (GetInput(4) == KEY_STATE.KEY_DOWN) -- SPACE
 				then
-					if (currentItem.type == ItemType.ITEM_GUN and bullets > 0) then
+					if (currentItem.type == ItemType.ITEM_GUN and bulletCount > 0) then
+						-- Cast a ray to check if it can shoot a target
 						CreateBullet()
-						bullets = bullets - 1
-						if (isDoubleShot and bullets > 0) then
-							CreateBullet()
-							bullets = bullets - 1
+						bulletCount = bulletCount - 1
+						if (componentSwitch ~= nil) then
+							componentSwitch:PlayTrack(0)
 						end
 					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
-						print("Knife used")
+						print("La cartera, bro")
 					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
 						print("No item selected")
 				end
@@ -111,7 +155,8 @@ function MoveToDestination(dt)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 
 	if (d > 0.5)
-		then 
+		then
+
 			local s = speed
 			if (currentState == State.CROUCH) then
 				s = speed * 0.66
@@ -119,24 +164,65 @@ function MoveToDestination(dt)
 				s = speed * 0.33
 			end
 
+			if (isWalking ~= true) then
+				if (currentState == State.IDLE) then
+					if (componentSwitch ~= nil) then
+						componentSwitch:PlayTrack(1)
+					end
+					if (componentAnimator ~= nil) then
+						componentAnimator:SetSelectedClip("Walk")
+					end
+				elseif (currentState == State.CROUCH) then
+					if (componentSwitch ~= nil) then
+						componentSwitch:PlayTrack(2)
+					end
+					if (componentAnimator ~= nil) then
+						componentAnimator:SetSelectedClip("Crouch")
+					end
+				end
+
+				if (mouseParticles ~= nil) then
+					mouseParticles:GetComponentParticle():ResumeParticleSpawn()
+					mouseParticles:GetTransform():SetPosition(destination)
+					particleFlag = true
+				end
+
+				isWalking = true
+			end
+
 			-- Movement
-			--componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + (vec2[1] / d) * s * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + (vec2[2] / d) * s * dt))
-			gameObject:GetRigidBody():Set2DVelocity(float2.new(vec2[1] * s * dt, vec2[2] * s * dt))
-			-- Rotation
 			vec2 = Normalize(vec2, d)
+			if (componentRigidBody ~= nil) then
+				componentRigidBody:Set2DVelocity(float2.new(vec2[1] * s * dt, vec2[2] * s * dt))
+			end
+
+			-- Rotation
 			local rad = math.acos(vec2[2])
 			if(vec2[1] < 0)	then
 				rad = rad * (-1)
 			end
 			componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
 		else
-			gameObject:GetRigidBody():Set2DVelocity(float2.new(0,0))
+			
+			if (componentRigidBody ~= nil) then
+				componentRigidBody:Set2DVelocity(float2.new(0,0))
+			end
 			destination = nil
+
+			if (componentSwitch ~= nil) then
+				componentSwitch:StopTrack(1)
+			end
+			if (componentAnimator ~= nil) then
+				componentAnimator:PlayAnimation("Idle")
+			end
+			isWalking = false
 	end
+	-- Add ChangeAnimation() to check the speed of the rigid body
 end
 
 function Reload()
-	bullets = maxBullets
+	bulletCount = maxBullets
+	--TODO: Play audio
 end
 
 function IsSelected()
@@ -153,7 +239,7 @@ end
 -------------------- Setters ---------------------
 
 function SetDestination(dest)
-	destination = dest
+
 end
 
 function SetTarget(tar)

@@ -1,9 +1,10 @@
 #include "ParticleResource.h"
 
-ParticleResource::ParticleResource()
+ParticleResource::ParticleResource(const char* resourceName)
 {
 	emitters.clear();
 	name.clear();
+	name = resourceName;
 }
 
 ParticleResource::~ParticleResource()

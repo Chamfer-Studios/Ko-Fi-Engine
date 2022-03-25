@@ -26,6 +26,11 @@ public:
 
 	void DrawEditor();
 
+	void PlayTrack();
+	void ResumeTrack();
+	void StopTrack();
+	void PauseTrack();
+
 private:
     R_Track* track;
 };

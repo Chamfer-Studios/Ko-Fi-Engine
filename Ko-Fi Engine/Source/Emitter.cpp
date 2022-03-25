@@ -4,13 +4,12 @@
 Emitter::Emitter(const char* newName)
 {
 	name = newName;
-	//texture = Texture(); //new Texture();
-	//path = "Assets\Textures\firework_projectile.png";
-	//Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
+	texture.path = "Assets/Textures/firework_projectile.png";
+	Importer::GetInstance()->textureImporter->Import(texture.path.c_str(), &texture);
 	modules.push_back(CreateModule<EmitterDefault>());
 	modules.push_back(CreateModule<EmitterMovement>());
 	modules.push_back(CreateModule<EmitterSize>());
-
+	modules.push_back(CreateModule<ParticleBillboarding>());
 }
 
 Emitter::~Emitter()

@@ -24,7 +24,7 @@ class ComponentText;
 class ComponentImage;
 class ComponentButton;
 
-enum class RuntimeState
+enum class GameState
 {
 	PLAYING,
 	PAUSED,
@@ -64,7 +64,10 @@ public:
 
 	void AddScene(Scene* scene);
 	Scene* GetCurrentScene();
-	RuntimeState GetState();
+
+	GameState GetGameState();
+	float GetGameDt();
+	float GetGameTime();
 
 	inline float GetGameDt() const { return gameDt; }
 	inline float GetTotalGameTime() const { return gameTime; }
@@ -117,7 +120,7 @@ private:
 
 	float gameTime = 0.0f;
 	
-	RuntimeState runtimeState = RuntimeState::STOPPED;
+	GameState runtimeState = GameState::STOPPED;
 };
 
 #endif // !__SCENE_MANAGER_H__
