@@ -2,13 +2,13 @@
 #define __MODULE_PHYSICS_H__
 
 #include "Module.h"
-#include <vector>
-#include <string>
-#include "Globals.h"
-#include "Engine.h"
-#include "SceneManager.h"
+#include "PhysX_4.1/include/PxScene.h"
+#include "PhysX_4.1/include/foundation/PxVec3.h"
 
-#include "PxPhysicsAPI.h"
+class string;
+class vector;
+class GameObject;
+typedef unsigned int uint;
 
 namespace physx
 {
@@ -16,43 +16,56 @@ namespace physx
 	class PxFoundation;
 	class PxPhysics;
 	class PxCooking;
-	class PxScene;
 	class PxMaterial;
-	class PxActor;
+	class PxScene;
 	class PxShape;
-	class PxActorShape;
+	class PxActor;
 	class PxRigidActor;
+	class PxRigidDynamic;
 	class PxRigidStatic;
+	class PxForceMode;
 	class PxSimulationEventCallback;
-	class PxQueryFilterCallback;
 
+	class PxVec3;
 	typedef uint32_t PxU32;
 };
-
-class GameObject;
 
 class Physics : public Module
 {
 public:
 	Physics(KoFiEngine* engine); // Module constructor
-	~Physics(); // Module destructor
+	~Physics(); // Module destructor, but module cleaning is done in CleanUp()
 
-	// TODO: Serialization -------------------------------
-	bool Awake(Json configModule); // Not used, scene gravity is not serialized
-	// --------------------------------------------------
+	bool Awake(Json configModule);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
+
 	// Engine config serialization --------------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	void OnNotify(const Event& event);
+
+	// Physx config initialization, called at Start()
 	bool InitializePhysX();
 
+	// Actors methods
 	void AddActor(physx::PxActor* actor, GameObject* owner);
 	void DeleteActor(physx::PxActor* actor);
 	inline const std::map<physx::PxRigidActor*, GameObject*> GetActors() { return actors; }
+
+	// Filters methods
+	void AddFilter(const std::string newFilter);
+	void DeleteFilter(const std::string deletedFilter);
+	inline std::vector<std::string> const GetFilters() { return filters; }
+	uint const GetFilterID(const std::string newFilter);
+	std::string const GetFilterByID(const uint ID);
 
 	// Getters & setters
 	inline physx::PxPhysics* GetPxPhysics() { 
@@ -64,6 +77,7 @@ public:
 
 	inline float GetGravity() const { return gravity; }
 	inline void SetGravity(const float newGravity) { gravity = newGravity; scene->setGravity(physx::PxVec3(0.0f, -gravity, 0.0f)); }
+
 	inline int GetNbThreads() const { return nbThreads; }
 	inline void SetNbThreads(const float newNbThreads) { nbThreads = newNbThreads; }
 
@@ -73,6 +87,9 @@ private:
 	bool isSimulating = false;
 
 	std::map<physx::PxRigidActor*, GameObject*> actors;
+
+	std::vector<std::string> filters;
+	std::string defaultFilter = "Default";
 
 	physx::PxFoundation* foundation = nullptr;
 	physx::PxPhysics* physics = nullptr;

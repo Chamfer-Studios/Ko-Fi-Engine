@@ -110,6 +110,24 @@ bool Renderer3D::LoadConfiguration(Json& configModule)
 	return true;
 }
 
+bool Renderer3D::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Renderer##"))
+	{
+		bool vsync = GetVsync();
+		if (ImGui::Checkbox("V-Sync", &vsync))
+		{
+			SetVsync(vsync);
+			engine->SaveConfiguration();
+		}
+		if (ImGui::Checkbox("Draw scene partition tree", &engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {
+			engine->SaveConfiguration();
+		}
+	}
+
+	return true;
+}
+
 bool Renderer3D::InitOpenGL()
 {
 	bool ret = true;

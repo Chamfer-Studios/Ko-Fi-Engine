@@ -30,6 +30,11 @@ public:
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	// ------------------------------------------------------------------
+	
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	// Method to receive and manage events
 	//Renderer Set Up Functions
 	bool InitOpenGL();

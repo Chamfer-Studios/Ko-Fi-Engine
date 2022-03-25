@@ -1,5 +1,13 @@
 #include "Physics.h"
 
+#include "PhysX_4.1/include/PxPhysicsAPI.h"
+#include "Globals.h"
+#include "Engine.h"
+#include "SceneManager.h"
+
+#include <vector>
+#include <string>
+
 // Module constructor
 Physics::Physics(KoFiEngine* engine) : Module()
 {
@@ -76,15 +84,66 @@ bool Physics::CleanUp()
 
 bool Physics::SaveConfiguration(Json& configModule) const
 {
-	configModule["gravity"] =  gravity;
-	configModule["number_threads"] = nbThreads;
+	configModule["Gravity"] =  gravity;
+	configModule["Number_threads"] = nbThreads;
+
+	configModule["Filters"];
+	//configModule["Filters"].push_back(std::string("hola"));
+	/*configModule["Filters"].push_back(std::string("hola soy otro filtro"));*/
+	for (std::string filter : filters)
+	{
+		configModule["Filters"].push_back(filter);
+	}
+
 	return true;
 }
 
 bool Physics::LoadConfiguration(Json& configModule)
 {
-	gravity = configModule["gravity"];
-	nbThreads = configModule["number_threads"];
+	gravity = configModule["Gravity"];
+	nbThreads = configModule["Number_threads"];
+
+	// Delete current filters
+	if (filters.size() > 0)
+		filters.clear();
+
+	// Load new filters
+	for (auto filter : configModule.at("Filters").items())
+	{
+		filters.push_back(filter.value().get<std::string>());
+	}
+
+	return true;
+}
+
+bool Physics::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Physics##"))
+	{
+		ImGui::Text("Number of threads");
+		ImGui::SameLine();
+		int newNbThreads = GetNbThreads();
+		if (ImGui::DragInt("##drag_threads", &newNbThreads, 0.1f, 0.0f, 16.0f))
+		{
+			SetNbThreads(newNbThreads);
+			engine->SaveConfiguration();
+		}
+		ImGui::Separator();
+		ImGui::Text("Scene gravity");
+		ImGui::SameLine();
+		float grav = GetGravity();
+		if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f, "%.2f"))
+		{
+			SetGravity(grav);
+			engine->SaveConfiguration();
+		}
+		if (ImGui::Button("Default gravity##"))
+		{
+			SetGravity(9.81f);
+			engine->SaveConfiguration();
+		}
+	}
+
 	return true;
 }
 
@@ -166,4 +225,66 @@ void Physics::DeleteActor(physx::PxActor* actor)
 		scene->removeActor(*actor);
 		actors.erase((physx::PxRigidActor*)actor);
 	}
+}
+
+void Physics::AddFilter(const std::string newFilter)
+{
+	// Filter repeated filters
+	for (int i = 0; i < filters.size(); ++i)
+	{
+		if (filters[i] == newFilter)
+		{
+			LOG_BOTH("ERROR, the filter %s already exists in filters array", newFilter.c_str());
+			return;
+		}
+	}
+
+	filters.push_back(newFilter);
+}
+
+void Physics::DeleteFilter(const std::string deletedFilter)
+{
+	// Check if it is contained in the filter list
+	bool contains = false;
+	for (int i = 0; i < filters.size(); ++i)
+	{
+		if (filters[i] == deletedFilter)
+		{
+			contains = true;
+			break;
+		}
+	}
+
+	if (contains)
+	{
+		for (std::vector<std::string>::iterator i = filters.begin(); i != filters.end(); ++i)
+		{
+			if (*i == deletedFilter)
+				filters.erase(i);
+		}
+	}
+	else
+	{
+		LOG_BOTH("ERROR, the filter to delete %s is not contained in filters array", deletedFilter.c_str());
+		return;
+	}
+}
+
+uint const Physics::GetFilterID(const std::string newFilter)
+{
+	for (int i = 0; i < filters.size(); ++i)
+	{
+		if (filters[i] == newFilter)
+			return i;
+	}
+
+	return -1;
+}
+
+std::string const Physics::GetFilterByID(const uint ID)
+{
+	if (ID < 0 || ID >= filters.size())
+		return defaultFilter;
+	else
+		return filters[ID];
 }
