@@ -32,6 +32,8 @@ public:
 	std::string OpenFileBinary(const char* path) const;
 	bool SaveFile(const char* path, std::string text) const;
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
+	void DiscoverAllFilesFiltered(const char* directory, std::vector<std::string>& files, std::vector<std::string>& filteredFiles, const char* filter);
+	int StringCompare(const char* a, const char* b);
 	void AddPath(const char* path);
 
 	void CreateMaterial(const char* path, const char* filename,const char* texturePath);

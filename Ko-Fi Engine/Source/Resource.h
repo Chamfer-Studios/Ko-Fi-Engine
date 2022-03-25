@@ -4,28 +4,26 @@
 #include "Globals.h"
 #include <string>
 
+enum class ResourceType {
+	MESH,
+	TEXTURE,
+	SCENE,
+	SHADER,
+	FONT,
+	//PARTICLE
+	UNKNOWN
+};
+
 class Resource
 {
-	friend class ResourceManager;
-
 public:
-	enum class Type {
-		MESH,
-		TEXTURE,
-		SCENE,
-		SHADER,
-		FONT,
-		//PARTICLE
-		UNKNOWN
-	};
-
 	Resource() {}
-	Resource(Resource::Type type);
+	Resource(ResourceType type);
 	virtual ~Resource();
 
 	virtual bool CleanUp();
 
-	inline Resource::Type GetType() const { return type; }
+	inline ResourceType GetType() const { return type; }
 
 	inline UID GetUID() const { return uid; }
 	inline void SetUID(const UID& uid) { this->uid = uid; }
@@ -54,14 +52,14 @@ public:
 	//virtual void Save() const;
 	//virtual void Load();
 
-protected:
+private:
 	UID uid = 0;
+	ResourceType type = ResourceType::UNKNOWN;
 	std::string assetPath = "";
 	std::string assetFile = "";
 	std::string libraryPath = "";
 	std::string libraryFile = "";
 
-	Type type = Type::UNKNOWN;
 	uint referenceCount = 0;
 };
 

@@ -295,6 +295,7 @@
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
+    <ClCompile Include="Source\ResourceBase.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\RNG.cpp" />
     <ClCompile Include="Source\R_Track.cpp" />
@@ -669,6 +670,7 @@
     <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
     <ClInclude Include="Source\ParticleResource.h" />
+    <ClInclude Include="Source\ResourceBase.h" />
     <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />

@@ -591,6 +591,10 @@
     <ClCompile Include="Source\Resource.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentRigidBody.cpp" />
+    <ClCompile Include="Source\ResourceBase.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1689,6 +1693,12 @@
       <Filter>Source\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Resource.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ResourceBase.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
   </ItemGroup>

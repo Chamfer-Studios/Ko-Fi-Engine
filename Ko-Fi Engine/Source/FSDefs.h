@@ -27,5 +27,6 @@
 #define SCENE_EXTENSION ".json"
 #define FONT_EXTENSION ".ttf"		//not sure
 #define TEXTURE_EXTENSION ".png"	//not sure
+#define META_EXTENSION ".meta"
 
 #endif // !__FSDIRECTORIES_H__

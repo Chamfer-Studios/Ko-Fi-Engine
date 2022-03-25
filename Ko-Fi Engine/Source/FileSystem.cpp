@@ -144,6 +144,60 @@ void FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& file
 	}
 }
 
+void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std::string>& files, std::vector<std::string>& filteredFiles, const char* filter)
+{
+	if (directory == nullptr)
+	{
+		CONSOLE_LOG("Error discovering files, directory string was nullptr.");
+		return;
+	}
+	if (!std::filesystem::exists(directory))
+	{
+		CONSOLE_LOG("Error discovering files, directory %s doesn't exist or not found.", directory);
+		return;
+	}
+
+	if (filter == nullptr)
+	{
+		CONSOLE_LOG("Filter was nullptr");
+		return;
+	}
+
+	std::vector<std::string> directories;
+	EnumerateFiles(directory, files, directories);
+
+	for (const auto file : files)
+	{
+		std::string fileExtension = file;
+		fileExtension = fileExtension.substr(fileExtension.find_last_of("."), fileExtension.size());
+		if (StringCompare(fileExtension.c_str(), filter) == 0)
+			filteredFiles.push_back(file);
+	}
+
+	for (const auto dir : directories)
+	{
+		std::string path = directory + std::string("/") + dir.c_str();
+		DiscoverAllFilesFiltered(path.c_str(), files, filteredFiles, filter);
+	}
+
+	directories.clear();
+	directories.shrink_to_fit();
+}
+
+int FileSystem::StringCompare(const char* a, const char* b) {
+	int ca, cb;
+	do
+	{
+		ca = *(unsigned char*)a;
+		cb = *(unsigned char*)b;
+		ca = tolower(toupper(ca));
+		cb = tolower(toupper(cb));
+		a++;
+		b++;
+	} while (ca == cb && ca != '\0');
+	return ca - cb;
+}
+
 void FileSystem::AddPath(const char* path)
 {
 	rootPath += path;

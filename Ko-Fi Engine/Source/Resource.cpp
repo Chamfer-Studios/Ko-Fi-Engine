@@ -2,12 +2,14 @@
 #include "RNG.h"
 #include "FSDefs.h"
 
-Resource::Resource(Resource::Type type) :
+Resource::Resource(ResourceType type) :
 type(type),
 uid(RNG::GetRandomUint()),
 referenceCount(0),
 assetPath(""),
-libraryPath("")
+assetFile(""),
+libraryPath(""),
+libraryFile("")
 {
 
 };
@@ -20,10 +22,14 @@ Resource::~Resource()
 bool Resource::CleanUp()
 {
 	assetPath.clear();
+	assetFile.clear();
 	libraryPath.clear();
+	libraryFile.clear();
 
 	assetPath.shrink_to_fit();
+	assetFile.shrink_to_fit();
 	libraryPath.shrink_to_fit();
+	libraryFile.shrink_to_fit();
 	return true;
 }
 
@@ -35,27 +41,27 @@ void Resource::SetLibraryPathAndFile()
 
 	switch (type)
 	{
-	case Resource::Type::MESH:
+	case ResourceType::MESH:
 		dir = MESHES_DIR;
 		extension = MESH_EXTENSION;
 		break;
-	case Resource::Type::TEXTURE:
+	case ResourceType::TEXTURE:
 		dir = TEXTURES_DIR;
 		extension = TEXTURE_EXTENSION;
 		break;
-	case Resource::Type::SCENE:
+	case ResourceType::SCENE:
 		dir = ASSETS_SCENES_DIR;
 		extension = SCENE_EXTENSION;
 		break;
-	case Resource::Type::SHADER:
+	case ResourceType::SHADER:
 		dir = SHADERS_DIR;
 		extension = SHADER_EXTENSION;
 		break;
-	case Resource::Type::FONT:
+	case ResourceType::FONT:
 		dir = FONT_DIR;
 		extension = FONT_EXTENSION;
 		break;
-	case Resource::Type::UNKNOWN:
+	case ResourceType::UNKNOWN:
 		break;
 	default:
 		break;
