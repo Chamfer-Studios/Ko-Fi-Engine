@@ -20,8 +20,8 @@ ComponentCollider2::~ComponentCollider2()
 {
 	if (shape)
 	{
-		if (owner->GetComponent<ComponentRigidBody>())
-			owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);
+		/*if (owner->GetComponent<ComponentRigidBody>())
+			owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);*/
 		shape->release();
 		shape = nullptr;
 	}
@@ -114,6 +114,8 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 	if (owner->GetComponent<ComponentMesh>())
 		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
 	
+	/*if (owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size().x != boxCollSize.x || owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size().y != boxCollSize.y || owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size().z != boxCollSize.z)
+		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();*/
 
 	physx::PxVec3 localPos;
 	physx::PxTransform a;
@@ -172,12 +174,15 @@ void ComponentCollider2::DrawCollider()
 
 void ComponentCollider2::DrawBoxCollider()
 {
-	float3 min = centerPosition - (boxCollSize / 4);
-	float3 max = centerPosition + (boxCollSize / 4);
+
+	float3 min = centerPosition - (boxCollSize / 2);
+	//min = { centerPosition.x - boxCollSize.x / 2, centerPosition.y - boxCollSize.y / 2, centerPosition.z - boxCollSize.z  };
+	float3 max = centerPosition + (boxCollSize / 2);
+	//max = { centerPosition.x + boxCollSize.x / 2, centerPosition.y + boxCollSize.y / 2, centerPosition.z + boxCollSize.z / 2 };
 	glLineWidth(2.0f);
 	glColor3f(1.0f,0.0f,0.0f);
-	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
+	//glPushMatrix();
+	//glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
 	glBegin(GL_LINES);
 
 	// Bottom 1
@@ -223,7 +228,7 @@ void ComponentCollider2::DrawBoxCollider()
 	glEnd();
 	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1.0f);
-	glPopMatrix();
+	/*glPopMatrix();*/
 
 }
 
@@ -326,7 +331,10 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		{
 			float3 newSize2 = GetBoxCollSize();
 			float newSize[3] = { newSize2.x, newSize2.y, newSize2.z };
-			ImGui::InputFloat3("##boxcollsize", newSize, "%.3f");
+			if (ImGui::DragFloat3("##boxcollsize", newSize))
+			{
+				boxCollSize = { newSize[0], newSize[1], newSize[2] };
+			}
 			ImGui::SameLine();
 			ImGui::Text("Box collider size");
 

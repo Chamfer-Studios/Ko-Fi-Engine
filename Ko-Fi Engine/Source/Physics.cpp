@@ -54,7 +54,7 @@ bool Physics::Update(float dt)
 	if (scene && isSimulating)
 	{
 		// Maybe we have to refactor physx timing simulation, not sure if this will work as intended
-		scene->simulate(engine->GetSceneManager()->GetGameDt());
+		scene->simulate(/*engine->GetSceneManager()->GetGameDt()*/dt);
 		scene->fetchResults(true);
 	}
 

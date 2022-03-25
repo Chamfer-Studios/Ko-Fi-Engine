@@ -271,7 +271,7 @@ void Renderer3D::RenderScene()
 			if (cMesh)
 			{
 				RenderMeshes(go);
-				//RenderBoundingBox(cMesh);
+				RenderBoundingBox(cMesh);
 			}
 
 			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
