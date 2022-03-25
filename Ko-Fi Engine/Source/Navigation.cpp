@@ -329,6 +329,9 @@ void Navigation::FindPath(float3 origin, float3 destination, float3** path, int 
 
 void Navigation::Save(Json& json) const
 {
+	if (navMesh == nullptr)
+		return;
+
 	Json navmeshJson = Json::object();
 
 	navmeshJson.emplace("verts", Json::array());

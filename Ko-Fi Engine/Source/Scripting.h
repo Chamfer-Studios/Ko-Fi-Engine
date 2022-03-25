@@ -52,7 +52,7 @@ public:
 };
 
 class Item
-{ // Needs porper structure !!
+{ // Needs proper structure !!
 public:
 	ItemType type = ITEM_NO_TYPE;
 	int damage;
@@ -121,9 +121,9 @@ public:
 		// RuntimeState
 		lua.new_enum("RuntimeState",
 			"PAUSED",	GameState::PAUSED,
-			"PLAYING", GameState::PLAYING,
-			"STOPPED", GameState::STOPPED,
-			"TICK", GameState::TICK
+			"PLAYING",	GameState::PLAYING,
+			"STOPPED",	GameState::STOPPED,
+			"TICK",		GameState::TICK
 		);
 
 
@@ -206,10 +206,10 @@ public:
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
 			sol::constructors<void(GameObject*)>(),
-			"PlayTrack", &C_AudioSwitch::PlayTrack,
-			"PauseTrack", &C_AudioSwitch::PauseTrack,
-			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack
+			"PlayTrack",	&C_AudioSwitch::PlayTrack,
+			"PauseTrack",	&C_AudioSwitch::PauseTrack,
+			"ResumeTrack",	&C_AudioSwitch::ResumeTrack,
+			"StopTrack",	&C_AudioSwitch::StopTrack
 			);
 
 		// Inspector Variables
