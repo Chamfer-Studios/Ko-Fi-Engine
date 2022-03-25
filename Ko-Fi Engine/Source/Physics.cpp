@@ -1,6 +1,6 @@
 #include "Physics.h"
 
-#include "PhysX_4.1/include/PxPhysicsAPI.h"
+#include "PxPhysicsAPI.h"
 #include "Globals.h"
 #include "Engine.h"
 #include "SceneManager.h"

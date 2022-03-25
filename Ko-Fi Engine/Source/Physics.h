@@ -2,8 +2,8 @@
 #define __MODULE_PHYSICS_H__
 
 #include "Module.h"
-#include "PhysX_4.1/include/PxScene.h"
-#include "PhysX_4.1/include/foundation/PxVec3.h"
+#include "PxScene.h"
+#include "foundation/PxVec3.h"
 
 class string;
 class vector;

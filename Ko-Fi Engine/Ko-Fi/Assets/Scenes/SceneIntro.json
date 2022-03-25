@@ -1,40 +1,8 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 15,
+        "game_objects_amount": 14,
         "game_objects_list": [
-            {
-                "UID": 4294967295,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "name": "Root",
-                "parent_UID": 4294967295
-            },
             {
                 "UID": 624435464,
                 "active": true,
@@ -74,6 +42,7 @@
                         "vertical_fov": 46.0
                     }
                 ],
+                "is3D": true,
                 "name": "MainCamera",
                 "parent_UID": 4294967295
             },
@@ -125,6 +94,16 @@
                         "texture_path": "Assets/Textures/cliff_rock.png",
                         "type": "material",
                         "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -190,6 +169,7 @@
                         "type": "collider2"
                     }
                 ],
+                "is3D": true,
                 "name": "Floor",
                 "parent_UID": 4294967295
             },
@@ -250,6 +230,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -260,6 +250,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "LeftWall",
                 "parent_UID": 4294967295
             },
@@ -320,6 +311,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -330,6 +331,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "FrontWall",
                 "parent_UID": 4294967295
             },
@@ -381,6 +383,16 @@
                         "texture_path": "Assets/Textures/mc_base_color.png",
                         "type": "material",
                         "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -452,6 +464,7 @@
                         "type": "collider2"
                     }
                 ],
+                "is3D": true,
                 "name": "Character",
                 "parent_UID": 4294967295
             },
@@ -512,6 +525,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -522,6 +545,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "Table",
                 "parent_UID": 4294967295
             },
@@ -582,10 +606,21 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     }
                 ],
+                "is3D": true,
                 "name": "Shell",
                 "parent_UID": 4294967295
             },
@@ -644,6 +679,7 @@
                         "type": "canvas"
                     }
                 ],
+                "is3D": true,
                 "name": "Canvas",
                 "parent_UID": 4294967295
             },
@@ -703,6 +739,7 @@
                         "type": "image"
                     }
                 ],
+                "is3D": true,
                 "name": "Image",
                 "parent_UID": 1037610866
             },
@@ -763,6 +800,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -773,6 +820,7 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "CliffRock_low",
                 "parent_UID": 4294967295
             },
@@ -805,6 +853,7 @@
                         "type": "transform"
                     }
                 ],
+                "is3D": true,
                 "name": "rock_cliff",
                 "parent_UID": 4294967295
             },
@@ -865,10 +914,21 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     }
                 ],
+                "is3D": true,
                 "name": "CliffRock_low",
                 "parent_UID": 1278325985
             },
@@ -901,6 +961,7 @@
                         "type": "transform"
                     }
                 ],
+                "is3D": true,
                 "name": "rock_cliff",
                 "parent_UID": 4294967295
             },
@@ -961,6 +1022,16 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
                             }
                         ]
                     },
@@ -971,10 +1042,12 @@
                         "type": "collider"
                     }
                 ],
+                "is3D": true,
                 "name": "CliffRock_low",
                 "parent_UID": 1386708608
             }
         ],
-        "name": "SceneIntro"
+        "name": "SceneIntro",
+        "navmesh": {}
     }
 }

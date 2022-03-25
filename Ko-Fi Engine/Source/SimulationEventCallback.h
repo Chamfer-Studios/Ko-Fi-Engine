@@ -1,7 +1,7 @@
 #ifndef __SIMULATION_CALLBACK_H__
 #define __SIMULATION_CALLBACK_H__
 
-#include "PhysX_4.1/include/PxPhysicsAPI.h"
+#include "PxPhysicsAPI.h"
 
 class Physics;
 

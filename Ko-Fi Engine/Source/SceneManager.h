@@ -69,7 +69,6 @@ public:
 	float GetGameDt();
 	float GetGameTime();
 
-	inline float GetGameDt() const { return gameDt; }
 	inline float GetTotalGameTime() const { return gameTime; }
 
 	void OnPlay();

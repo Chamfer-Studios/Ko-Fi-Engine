@@ -2,7 +2,7 @@
 #include "Source/GameObject.h"
 #include "Source/Physics.h"
 #include "Source/ComponentScript.h"
-#include "PhysX_4.1/include/PxSimulationEventCallback.h"
+#include "PxSimulationEventCallback.h"
 #include "Source/Globals.h"
 
 void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
