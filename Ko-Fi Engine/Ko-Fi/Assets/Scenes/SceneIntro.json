@@ -68,7 +68,7 @@
                         "draw_frustum": true,
                         "far_plane_distance": 320.0,
                         "frustum_culling": false,
-                        "isMainCamera": true,
+                        "isMainCamera": false,
                         "near_plane_distance": 5.099999904632568,
                         "type": "camera",
                         "vertical_fov": 46.0
@@ -142,6 +142,52 @@
                         "collider_type": 4,
                         "is_trigger": false,
                         "type": "collider"
+                    },
+                    {
+                        "active": true,
+                        "angular_damping": 0.0,
+                        "angular_velocity": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "density": 1.0,
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "is_kinematic": false,
+                        "is_static": false,
+                        "linear_damping": 0.0,
+                        "linear_velocity": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "mass": 5.0,
+                        "type": "rigidBody",
+                        "use_gravity": true
+                    },
+                    {
+                        "active": true,
+                        "box_collider_size": [
+                            254.65975952148438,
+                            0.42442455887794495,
+                            248.67422485351563
+                        ],
+                        "center_position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "collider_type": 1,
+                        "collision_layer": 0,
+                        "draw_collider": false,
+                        "enabled": true,
+                        "is_trigger": false,
+                        "type": "collider2"
                     }
                 ],
                 "name": "Floor",
@@ -298,20 +344,20 @@
                     {
                         "active": true,
                         "position": [
-                            0.0,
-                            0.3562679886817932,
-                            12.0
+                            4.0,
+                            13.355998992919922,
+                            19.0
                         ],
                         "rotation": [
                             -0.7071068286895752,
-                            -3.654919700224468e-10,
-                            -5.472506448001013e-09,
+                            -3.6549149817766136e-10,
+                            -5.4725060039118034e-09,
                             0.7071067094802856
                         ],
                         "scale": [
                             1.0,
-                            0.9999967217445374,
-                            0.9999967217445374
+                            0.9999966025352478,
+                            0.9999966025352478
                         ],
                         "type": "transform"
                     },
@@ -385,6 +431,25 @@
                         "file_name": "Assets/Scripts/Player.lua",
                         "script_number": 1,
                         "type": "script"
+                    },
+                    {
+                        "active": true,
+                        "box_collider_size": [
+                            14.316238403320313,
+                            24.062850952148438,
+                            5.583248138427734
+                        ],
+                        "center_position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "collider_type": 1,
+                        "collision_layer": 0,
+                        "draw_collider": false,
+                        "enabled": true,
+                        "is_trigger": false,
+                        "type": "collider2"
                     }
                 ],
                 "name": "Character",

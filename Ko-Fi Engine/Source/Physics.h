@@ -8,6 +8,7 @@
 class string;
 class vector;
 class GameObject;
+class SimulationEventCallback;
 typedef unsigned int uint;
 
 namespace physx
@@ -58,7 +59,7 @@ public:
 	// Actors methods
 	void AddActor(physx::PxActor* actor, GameObject* owner);
 	void DeleteActor(physx::PxActor* actor);
-	inline const std::map<physx::PxRigidActor*, GameObject*> GetActors() { return actors; }
+	inline std::map<physx::PxRigidActor*, GameObject*> GetActors() { return actors; }
 
 	// Filters methods
 	void AddFilter(const std::string newFilter);
@@ -96,6 +97,7 @@ private:
 	physx::PxCooking* cooking = nullptr;
 	physx::PxMaterial* material = nullptr;
 	physx::PxScene* scene = nullptr;
+	SimulationEventCallback* simulationEventCallback = nullptr;
 
 	physx::PxU32 nbThreads = 4;
 

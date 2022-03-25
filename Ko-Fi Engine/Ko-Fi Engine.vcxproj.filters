@@ -461,6 +461,9 @@
     <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c">
       <Filter>Libs\SDL_ttf</Filter>
     </ClCompile>
+    <ClCompile Include="SimulationEventCallback.cpp">
+      <Filter>Source\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1488,6 +1491,15 @@
     </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Source\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SimulationEventCallback.h">
+      <Filter>Source\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

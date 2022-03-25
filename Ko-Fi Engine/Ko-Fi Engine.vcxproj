@@ -165,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SimulationEventCallback.cpp" />
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\CollisionDetector.cpp" />
     <ClCompile Include="Source\Color.cpp" />
@@ -613,6 +614,7 @@
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\PanelCameraViewport.h" />
     <ClInclude Include="Source\PanelSettings.h" />
+    <ClInclude Include="Source\SimulationEventCallback.h" />
     <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />

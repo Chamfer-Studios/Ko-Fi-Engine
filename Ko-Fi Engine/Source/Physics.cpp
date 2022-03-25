@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "Engine.h"
 #include "SceneManager.h"
+#include "SimulationEventCallback.h"
 
 #include <vector>
 #include <string>
@@ -52,7 +53,7 @@ bool Physics::Update(float dt)
 
 	if (scene && isSimulating)
 	{
-		// TODO: WE HAVE TO PASS AS A PARAMETER THE GAME DT, NOT THE ENGINE DT
+		// Maybe we have to refactor physx timing simulation, not sure if this will work as intended
 		scene->simulate(engine->GetSceneManager()->GetGameDt());
 		scene->fetchResults(true);
 	}
@@ -62,6 +63,8 @@ bool Physics::Update(float dt)
 
 bool Physics::CleanUp()
 {
+	RELEASE(simulationEventCallback);
+
 	if (foundation)
 		foundation->release();
 	if (material)
@@ -231,6 +234,8 @@ bool Physics::InitializePhysX()
 	}
 
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+	simulationEventCallback = new SimulationEventCallback(this);
+	sceneDesc.simulationEventCallback = simulationEventCallback;
 	scene = physics->createScene(sceneDesc);
 	if (!scene)
 	{

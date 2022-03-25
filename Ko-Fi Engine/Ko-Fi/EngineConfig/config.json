@@ -13,7 +13,8 @@
     "ModelLoader": null,
     "Physics": {
         "Filters": [
-            "player"
+            "player",
+            "enemy"
         ],
         "Gravity": 9.8100004196167,
         "Number_threads": 4
