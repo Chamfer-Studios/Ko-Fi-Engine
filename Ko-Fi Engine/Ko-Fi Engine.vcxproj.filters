@@ -475,17 +475,8 @@
     <ClCompile Include="Source\PanelSettings.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>Source\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\C_Collider.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c">
       <Filter>Libs\SDL_ttf</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulationEventCallback.cpp">
-      <Filter>Source\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\ParticleResource.cpp">
       <Filter>Source\Resources</Filter>
@@ -605,6 +596,11 @@
     </ClCompile>
     <ClCompile Include="Source\par_shapes.cpp">
       <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="SimulationEventCallback.cpp" />
+    <ClCompile Include="Source\Physics.cpp" />
+    <ClCompile Include="Source\C_Collider.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1715,10 +1711,10 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SimulationEventCallback.h">
-      <Filter>Source\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SimulationEventCallback.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
   </ItemGroup>

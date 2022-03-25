@@ -27,6 +27,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "C_Collider.h"
 #include "ComponentRenderedUI.h"
 #include "Material.h"
 
@@ -270,7 +271,7 @@ void Renderer3D::RenderScene()
 			if (cMesh)
 			{
 				RenderMeshes(go);
-				RenderBoundingBox(cMesh);
+				//RenderBoundingBox(cMesh);
 			}
 
 			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
@@ -280,6 +281,11 @@ void Renderer3D::RenderScene()
 					cCamera->DrawFrustum();
 				}
 
+			}
+			ComponentCollider2* cCol = go->GetComponent<ComponentCollider2>();
+			if (cCol)
+			{
+				cCol->DrawCollider();
 			}
 		}
 	}

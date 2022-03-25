@@ -178,15 +178,7 @@ GameState SceneManager::GetGameState()
 	return runtimeState;
 }
 
-float SceneManager::GetGameDt()
-{
-	return gameDt;
-}
 
-float SceneManager::GetGameTime()
-{
-	return time;
-}
 
 void SceneManager::OnPlay()
 {

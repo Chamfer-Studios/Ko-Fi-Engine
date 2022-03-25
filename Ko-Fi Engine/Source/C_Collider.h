@@ -35,6 +35,8 @@ public:
 	void CreateCollider(ColliderShape collType);
 
 	void DrawCollider();
+	void DrawBoxCollider();
+
 
 	// Serialization 
 	void Save(Json& json) const override;

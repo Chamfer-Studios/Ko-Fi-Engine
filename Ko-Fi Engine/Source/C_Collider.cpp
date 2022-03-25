@@ -44,8 +44,6 @@ bool ComponentCollider2::PostUpdate(float dt)
 {
 	bool ret = true;
 
-	if (drawCollider)
-		DrawCollider();
 
 	return ret;
 }
@@ -163,6 +161,69 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 
 void ComponentCollider2::DrawCollider()
 {
+	if (drawCollider)
+	{
+		if (colliderShape == ColliderShape::BOX)
+		{
+			DrawBoxCollider();
+		}
+	}
+}
+
+void ComponentCollider2::DrawBoxCollider()
+{
+	float3 min = centerPosition - (boxCollSize / 4);
+	float3 max = centerPosition + (boxCollSize / 4);
+	glLineWidth(2.0f);
+	glColor3f(1.0f,0.0f,0.0f);
+	glPushMatrix();
+	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
+	glBegin(GL_LINES);
+
+	// Bottom 1
+	glVertex3f(min.x, min.y, min.z);
+	glVertex3f(max.x, min.y, min.z);
+
+	glVertex3f(min.x, min.y, min.z);
+	glVertex3f(min.x, max.y, min.z);
+
+	glVertex3f(min.x, min.y, min.z);
+	glVertex3f(min.x, min.y, max.z);
+
+	// Bottom 2
+	glVertex3f(max.x, min.y, max.z);
+	glVertex3f(min.x, min.y, max.z);
+
+	glVertex3f(max.x, min.y, max.z);
+	glVertex3f(max.x, max.y, max.z);
+
+	glVertex3f(max.x, min.y, max.z);
+	glVertex3f(max.x, min.y, min.z);
+
+	// Top 1
+	glVertex3f(max.x, max.y, min.z);
+	glVertex3f(min.x, max.y, min.z);
+
+	glVertex3f(max.x, max.y, min.z);
+	glVertex3f(max.x, min.y, min.z);
+
+	glVertex3f(max.x, max.y, min.z);
+	glVertex3f(max.x, max.y, max.z);
+
+	// Top 2
+	glVertex3f(min.x, max.y, max.z);
+	glVertex3f(max.x, max.y, max.z);
+
+	glVertex3f(min.x, max.y, max.z);
+	glVertex3f(min.x, min.y, max.z);
+
+	glVertex3f(min.x, max.y, max.z);
+	glVertex3f(min.x, max.y, min.z);
+
+	glEnd();
+	glColor3f(1.f, 1.f, 1.f);
+	glLineWidth(1.0f);
+	glPopMatrix();
 
 }
 
