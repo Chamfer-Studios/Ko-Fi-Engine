@@ -13,6 +13,8 @@ speed = 50  -- consider Start()
 isDoubleShot = false
 maxBullets = 10
 bullets = maxBullets
+maxLives = 3
+lives = maxLives
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
@@ -21,6 +23,10 @@ NewVariable(speedIV)
 local maxBulletsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 maxBulletsIV = InspectorVariable.new("maxBullets", maxBulletsIVT, maxBullets)
 NewVariable(maxBulletsIV)
+
+local maxLivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+maxLivesIVT = InspectorVariable.new("maxLives", maxLivesIVT, maxLives)
+NewVariable(maxLivesIVT)
 
 local isDoubleShotIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 isDoubleShotIV = InspectorVariable.new("isDoubleShot", isDoubleShotIVT, isDoubleShot)
@@ -74,6 +80,9 @@ function Update(dt)
 			end
 			if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
 				Reload()
+			end
+			if (GetInput(11) == KEY_STATE.KEY_DOWN) then -- B
+				lives = lives - 1
 			end
 			if (GetInput(4) == KEY_STATE.KEY_DOWN) -- SPACE
 				then

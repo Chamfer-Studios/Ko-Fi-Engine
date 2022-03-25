@@ -15,6 +15,7 @@
 #include "ComponentRigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentText.h"
+#include "ComponentImage.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -150,6 +151,7 @@ public:
 			"GetTransform",		&GameObject::GetTransform,
 			"GetRigidBody",		&GameObject::GetComponent<ComponentRigidBody>,
 			"GetText",			&GameObject::GetComponent<ComponentText>,
+			"GetImage",			&GameObject::GetComponent<ComponentImage>,
 			"IsSelected",		&GameObject::IsSelected
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
@@ -181,6 +183,12 @@ public:
 			sol::constructors<void(GameObject*)>(),
 			"GetTextValue", &ComponentText::GetTextValue,
 			"SetTextValue", &ComponentText::SetTextValue
+			);
+
+		// Component Image
+		lua.new_usertype<ComponentImage>("ComponentImage",
+			sol::constructors<void(GameObject*)>(),
+			"SetTexture", &ComponentImage::SetTexture
 			);
 		
 		// Inspector Variables
@@ -247,6 +255,7 @@ public:
 			case 8:  { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X); }
 			case 9:  { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_C); }
 			case 10: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_R); }
+			case 11: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_B); }
 
 			case 21: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_1); }
 			case 22: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_2); }
