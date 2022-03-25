@@ -17,6 +17,8 @@ public:
 	bool Update();
 	bool PostUpdate();
 	bool IsWindowFocused();
+
+	void SetIsFocused(bool isFocused);
 	
 private:
 	bool isFocused = false;

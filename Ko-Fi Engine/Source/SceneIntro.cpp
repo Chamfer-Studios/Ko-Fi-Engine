@@ -11,7 +11,10 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
+#include "ComponentParticle.h"
 #include "ComponentScript.h"
+#include "Scripting.h" // Consider moving this to Globals.h or smth
+#include "ComponentTransform.h"
 #include "Material.h"
 #include "ComponentTransform2D.h"
 #include "GameObject.h"
@@ -32,6 +35,16 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	rootGo = new GameObject(-1, engine, "SceneIntro");
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
+
+	//LCG random;
+	//uint uid = random.Int();
+	//GameObject * g = this->CreateEmptyGameObject("Particle Test");
+	//g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
+
+	GameObject* camera = CreateEmptyGameObject("camera");
+	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
+	cCamera->isMainCamera = true;
+	engine->GetCamera3D()->SetGameCamera(cCamera);
 }
 
 SceneIntro::~SceneIntro()
@@ -49,19 +62,6 @@ bool SceneIntro::Start()
 
 	example::NodeEditorInitialize();
 
-	// Load initial scene (temporal)
-	//engine->GetFileSystem()->GameObjectFromMesh("Assets/Models/baker_house.fbx", this->gameObjectList,"Assets/Textures/baker_house.png");
-
-	// REMOVE THE FOLLOWING 2 LINES WHEN WE HAVE THE CUSTOM FILE FORMAT FINISHED.
-	//Importer::GetInstance()->ImportModel("Assets/Models/baker_house.fbx");
-	/*Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
-	GameObject* camera = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(2);
-	ComponentCamera* componentCamera = camera->CreateComponent<ComponentCamera>();
-	camera->AddComponent(componentCamera);*/
-
-	// Load scene with a camera and several houses.
-	//engine->GetSceneManager()->LoadScene(this, "SceneIntro");
-
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Start();
@@ -76,13 +76,6 @@ bool SceneIntro::PreUpdate(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
-			go->PreUpdate();
-	}
-
-	for (GameObject* go : this->gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
 			go->PreUpdate();
 	}
 
@@ -94,13 +87,6 @@ bool SceneIntro::Update(float dt)
 {
 	for (GameObject* go : this->gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
-			go->Update(dt);
-	}
-
-	for (GameObject* go : this->gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
 			go->Update(dt);
 	}
 
@@ -121,14 +107,7 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : gameObjectList)
 	{
-		if (go->GetComponent<ComponentTransform2D>() == nullptr)
 			go->PostUpdate(dt); 
-	}
-
-	for (GameObject* go : gameObjectList)
-	{
-		if (go->GetComponent<ComponentTransform2D>() != nullptr)
-			go->PostUpdate(dt);
 	}
 
 	for (GameObject* parent : gameObjectListToCreate)
@@ -139,26 +118,24 @@ bool SceneIntro::PostUpdate(float dt)
 
 		bullet->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 		float3 pos = parent->GetTransform()->GetPosition();
-		bullet->GetTransform()->SetPosition(float3(pos.x, pos.y+15, pos.z - 15));
+		bullet->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
 		float3 parentRot = parent->GetTransform()->GetRotation();
-		float3 rot = { parentRot.x-55,parentRot.y,parentRot.z };
+		float3 rot = { parentRot.x - 55,parentRot.y,parentRot.z };
 		bullet->GetTransform()->SetRotation(rot);
 
 		ComponentMesh* componentMesh = bullet->CreateComponent<ComponentMesh>();
- 		Mesh* mesh = gameObjectList.at(6)->GetComponent<ComponentMesh>()->GetMesh();
+ 		Mesh* mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
 		componentMesh->SetMesh(mesh);
-
 		
 		ComponentMaterial* componentMaterial = bullet->CreateComponent<ComponentMaterial>();
-		Importer::GetInstance()->textureImporter->Import(nullptr,&componentMaterial->texture);
+		Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
 		Material* material = new Material();
 		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 		componentMaterial->SetMaterial(material);
 		
-		ComponentScript* componentScript = bullet->CreateComponent<ComponentScript>();
+		ComponentScript* componentScript = (ComponentScript*)bullet->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
 		componentScript->path = "Assets/Scripts/Bullet.lua";
 		componentScript->ReloadScript();
-		parent->GetComponent<ComponentScript>()->handler->lua["SetBulletDirection"](bullet);
 	}
 	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)

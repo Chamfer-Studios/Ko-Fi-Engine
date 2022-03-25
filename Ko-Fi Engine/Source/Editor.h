@@ -16,6 +16,7 @@ class PanelAbout;
 class PanelChooser;
 class PanelInspector;
 class PanelViewport;
+class PanelCameraViewport;
 class PanelGame;
 class PanelRuntimeState;
 class PanelAssets;
@@ -36,6 +37,7 @@ struct PanelGameObjectInfo
 struct PanelsState
 {
 	bool showViewportWindow = true;
+	bool showCameraViewportWindow = true;
 	bool showGameWindow = true;
 };
 
@@ -53,6 +55,7 @@ public:
 	bool CleanUp();
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
+	void OnPlay();
 
 	void AddPanel(Panel* panel);
 	void RemovePanel(Panel* panel);
@@ -62,6 +65,9 @@ public:
 	void UpdatePanelsState();
 	void OpenTextEditor(std::string path,const char* ext = nullptr);
 
+	bool MouseOnScene();
+
+	std::list<Panel*> GetPanels();
 	template<class T> T* GetPanel()
 	{
 		T* panel = nullptr;
@@ -106,6 +112,7 @@ private:
 	PanelInspector* panelGameObject = nullptr;
 	PanelGame* panelGame = nullptr;
 	PanelViewport* panelViewport = nullptr;
+	PanelCameraViewport* panelCameraViewport = nullptr;
 	PanelRuntimeState* panelRuntimeState = nullptr;
 	PanelAssets* panelAssets = nullptr;
 	PanelNodeEditor* panelNodeEditor = nullptr;

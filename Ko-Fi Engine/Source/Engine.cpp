@@ -8,7 +8,6 @@
 #include "Editor.h"
 #include "FileSystem.h"
 #include "FSDefs.h"
-#include "ViewportFrameBuffer.h"
 #include "UI.h"
 #include "Importer.h"
 #include "Globals.h"
@@ -16,6 +15,7 @@
 #include "ImGuiAppLog.h"
 #include "Physics.h"
 #include "CollisionDetector.h"
+#include "Audio.h"
 #include "Navigation.h"
 
 #include <iostream>
@@ -37,27 +37,28 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
 	ui = new UI(this);
-	viewportBuffer = new ViewportFrameBuffer(this);
+	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new Physics(this);
 	collisionDetector = new CollisionDetector(this);
+	audio = new Audio(this);
 	navigation = new Navigation(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(window);
+	AddModule(physics);
 	AddModule(input);
 	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(ui);
-	AddModule(physics);
 	AddModule(collisionDetector);
 	AddModule(navigation);
 	AddModule(sceneManager);
-	AddModule(viewportBuffer);
-	AddModule(editor);
-
+	AddModule(audio);
 	// Render last to swap buffer
 	AddModule(renderer);
+	// CHANGE THAT FOR THE SAKE OF GOD
+	AddModule(editor);
 
 	PERF_PEEK(ptimer);
 }
@@ -107,7 +108,7 @@ bool KoFiEngine::Awake()
 		engineConfig->authors = jsonConfigEngine.at("Authors").get<std::string>().c_str();
 		engineConfig->license = jsonConfigEngine.at("License").get<std::string>().c_str();
 		engineConfig->title = jsonConfigEngine.at("Title").get<std::string>().c_str();
-		engineConfig->organization = jsonConfigEngine.at("Organization").dump(4).c_str();
+		engineConfig->organization = jsonConfigEngine.at("Organization").get<std::string>().c_str();
 		engineConfig->maxFps = jsonConfigEngine.at("MaxFPS");
 		if (engineConfig->maxFps > 0) engineConfig->cappedMs = 1000 / engineConfig->maxFps;
 	}
@@ -437,11 +438,6 @@ Editor* KoFiEngine::GetEditor()const
 FileSystem* KoFiEngine::GetFileSystem()const
 {
 	return this->fileSystem;
-}
-
-ViewportFrameBuffer* KoFiEngine::GetViewportFrameBuffer()const
-{
-	return this->viewportBuffer;
 }
 
 Physics* KoFiEngine::GetPhysics()const

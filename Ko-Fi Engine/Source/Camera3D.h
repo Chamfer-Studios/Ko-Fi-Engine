@@ -7,6 +7,7 @@
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Geometry/Frustum.h"
 #include "glmath.h"
+#include "ComponentCamera.h"
 
 class GameObject;
 
@@ -22,29 +23,29 @@ public:
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
-	void LookAt(const float3& Spot);
-	void CalculateViewMatrix(bool ortho = false);
-	void RecalculateProjection(bool ortho = false);
 	void OnGui() override;
+	void OnClick(SDL_Event event);
+
+	void OnPlay();
+	void OnStop();
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;
-	GameObject* MousePicking();
-	void SetAspectRatio(const float& aspectRatio);
+
+	void CheckInput(float dt);
+	void CheckMouseMotion();
+
+	void SetGameCamera(ComponentCamera* gameCamera);
+	
+	GameObject* MousePicking(const bool& isRightButton = false);
 
 public:
-	float3 right, up, front, position, reference;
-	Frustum cameraFrustum;
-	float4x4 viewMatrix;
-	float aspectRatio = 1.f;
-	float verticalFOV = 60.f;
-	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 5000.f;
-	float cameraSensitivity = .2f;
-	float cameraSpeed = 40.f;
-	bool projectionIsDirty = false;
+	GameObject* engineCameraObject = nullptr; // The engine camera needs a game object as holder if we want to be able to access "engine" from component camera.
+
+	ComponentCamera* currentCamera = nullptr; // The camera that will display on screen
+	ComponentCamera* engineCamera = nullptr; // The engine camera, asigning this to currentCamera will display de engine camera
+	ComponentCamera* gameCamera = nullptr; // The game camera, asigning this to currentCamera will display de game camera
 
 private:
-	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
 	KoFiEngine* engine = nullptr;
 };

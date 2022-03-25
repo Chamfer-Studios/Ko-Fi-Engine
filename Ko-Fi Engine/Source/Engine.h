@@ -15,10 +15,10 @@ class Renderer3D;
 class Camera3D;
 class Editor;
 class FileSystem;
-class ViewportFrameBuffer;
 class Physics;
 class UI;
 class CollisionDetector;
+class Audio;
 class Navigation;
 
 class KoFiEngine
@@ -62,7 +62,6 @@ public:
 	Camera3D* GetCamera3D() const;
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
-	ViewportFrameBuffer* GetViewportFrameBuffer() const;
 	Physics* GetPhysics() const;
 	UI* GetUI() const;
 	CollisionDetector* GetCollisionDetector() const;
@@ -99,10 +98,10 @@ private:
 	Camera3D* camera = nullptr;
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
-	ViewportFrameBuffer* viewportBuffer = nullptr;
 	Physics* physics = nullptr;
 	UI* ui = nullptr;
 	CollisionDetector* collisionDetector = nullptr;
+	Audio* audio = nullptr;
 	Navigation* navigation = nullptr;
 
 private:

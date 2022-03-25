@@ -29,6 +29,7 @@ public:
 	void Load(Json& json) override;
 
 	bool Update(float dt) override;
+	bool CleanUp() override;
 	virtual bool InspectorDraw(PanelChooser* chooser) override;
 
 	// Setters

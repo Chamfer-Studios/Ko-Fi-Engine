@@ -80,11 +80,14 @@
     <Filter Include="Source\Editor\Panels\Example">
       <UniqueIdentifier>{3e536255-1b8b-4f95-85bc-74a6bf41e6ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Components\Particles">
+      <UniqueIdentifier>{23df9338-b10c-4b88-bff5-2556cdb3aae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Helpers\Particles">
+      <UniqueIdentifier>{fdcdaa78-ce37-43e6-bc8e-4a0a368d8e0c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Libs\PhysX">
       <UniqueIdentifier>{d0f948d0-4ad2-4262-9a39-3321cdcb7606}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Physics">
-      <UniqueIdentifier>{f9672267-00e4-430b-9bd2-c2aad4a948ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="Libs\lua">
       <UniqueIdentifier>{bacdd039-412c-4820-8ee9-0c6c150a7660}</UniqueIdentifier>
@@ -98,9 +101,6 @@
     <Filter Include="Source\Resources">
       <UniqueIdentifier>{b584c71f-4e5f-403c-ac2d-424816ead254}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Importers">
-      <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\GameObject\Components\UI">
       <UniqueIdentifier>{f14257b0-f5e3-4dcf-9d8e-c73dcdec444c}</UniqueIdentifier>
     </Filter>
@@ -110,6 +110,12 @@
     <Filter Include="Libs\SDL_ttf">
       <UniqueIdentifier>{7d8ca1e5-eefd-4c67-a8f4-310da73f01b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\ImGuizmo">
+      <UniqueIdentifier>{81e980dd-0834-4dc1-9f44-2fc93aa38da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\Components\Audio">
+      <UniqueIdentifier>{3d499aa0-c255-4528-9686-25779eaba5c8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\GameObject\Components\Navigation">
       <UniqueIdentifier>{fa04b05e-5adc-4db5-b2e6-0795bbe036dd}</UniqueIdentifier>
     </Filter>
@@ -118,6 +124,12 @@
     </Filter>
     <Filter Include="Libs\Detour">
       <UniqueIdentifier>{467578bf-7949-40fb-8030-3807b7413e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\Components\Physics">
+      <UniqueIdentifier>{21f4d6d4-3c57-49e7-a527-40532929dd04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Importers">
+      <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -307,9 +319,6 @@
     <ClCompile Include="Source\PanelInspector.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\External\stb_image\stb_image.cpp">
-      <Filter>Libs\stb_image</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ComponentMesh.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
@@ -333,9 +342,6 @@
     </ClCompile>
     <ClCompile Include="Source\PanelViewport.cpp">
       <Filter>Source\Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ViewportFrameBuffer.cpp">
-      <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelGame.cpp">
       <Filter>Source\Editor\Panels</Filter>
@@ -364,11 +370,20 @@
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>Source\Physics</Filter>
+    <ClCompile Include="Source\ComponentParticle.cpp">
+      <Filter>Source\GameObject\Components\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp">
-      <Filter>Source\GameObject\Components</Filter>
+    <ClCompile Include="Source\EmitterInstance.cpp">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Particle.cpp">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Emitter.cpp">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleModule.cpp">
+      <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
     <ClCompile Include="Source\QuadTree3D.cpp">
       <Filter>Source\Utils</Filter>
@@ -393,9 +408,6 @@
     </ClCompile>
     <ClCompile Include="Source\RNG.cpp">
       <Filter>Source\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\par_shapes.cpp">
-      <Filter>Source\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Material.cpp">
       <Filter>Source\Importers</Filter>
@@ -436,15 +448,56 @@
     <ClCompile Include="Source\ComponentText.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentCollider.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CollisionDetector.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp" />
+    <ClCompile Include="Source\External\ImGuizmo\include\GraphEditor.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\ImGuizmo\include\ImCurveEdit.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\ImGuizmo\include\ImGradient.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\ImGuizmo\include\ImGuizmo.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\ImGuizmo\include\ImSequencer.cpp">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelCameraViewport.cpp">
+      <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
     <ClCompile Include="Source\PanelSettings.cpp">
       <Filter>Source\Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleResource.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_AudioSource.cpp">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\dr_wav_impl.c">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_AudioSwitch.cpp">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\R_Track.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimatorClip.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Animations.cpp">
+      <Filter>Source\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentWalkable.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
@@ -508,6 +561,35 @@
     </ClCompile>
     <ClCompile Include="Source\ComponentFollowPath.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\par_shapes.cpp" />
+    <ClCompile Include="Source\par_shapes.cpp" />
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_Collider.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentRigidBody.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentCollider.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\I_Track.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentRigidBody.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentAnimator.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\stb_image\stb_image.cpp">
+      <Filter>Libs\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -817,9 +899,6 @@
     <ClInclude Include="Source\PanelInspector.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>Libs\stb_image</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Component.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
@@ -840,9 +919,6 @@
     </ClInclude>
     <ClInclude Include="Source\PanelViewport.h">
       <Filter>Source\Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ViewportFrameBuffer.h">
-      <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelGame.h">
       <Filter>Source\Editor\Panels</Filter>
@@ -891,6 +967,21 @@
     </ClInclude>
     <ClInclude Include="Source\AdditionNode.h">
       <Filter>Source\Editor\Panels\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentParticle.h">
+      <Filter>Source\GameObject\Components\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EmitterInstance.h">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Particle.h">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Emitter.h">
+      <Filter>Source\Helpers\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleModule.h">
+      <Filter>Source\Helpers\Particles</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\PhysX_4.1\include\geomutils\GuContactBuffer.h">
       <Filter>Libs\PhysX</Filter>
@@ -1456,19 +1547,10 @@
     <ClInclude Include="Source\External\PhysX_4.1\include\foundation\windows\PxWindowsIntrinsics.h">
       <Filter>Libs\PhysX</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Source\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentRigidBody.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Iterable.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\QuadTree3D.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Event.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneManager.h">
@@ -1504,26 +1586,53 @@
     <ClInclude Include="Source\Scripting.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\External\ImGuizmo\include\GraphEditor.h">
+      <Filter>Libs\ImGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImCurveEdit.h">
+      <Filter>Libs\ImGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImGradient.h">
+      <Filter>Libs\ImGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImGuizmo.h">
+      <Filter>Libs\ImGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImSequencer.h">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\ImGuizmo\include\ImZoomSlider.h">
+      <Filter>Libs\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelCameraViewport.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelSettings.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
+    <ClInclude Include="Source\ComponentRenderedUI.h">
+      <Filter>Source\GameObject\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleResource.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\R_Track.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_Audio.h">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_AudioSource.h">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_AudioSpacial.h">
+      <Filter>Source\GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_AudioSwitch.h">
+      <Filter>Source\GameObject\Components\Audio</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentWalkable.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
@@ -1537,8 +1646,47 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimatorClip.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Animations.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
     <ClInclude Include="Source\ComponentFollowPath.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_Collider.h">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentRigidBody.h">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentCollider.h">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Track.h">
+      <Filter>Source\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentAnimator.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effects.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>Libs\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1611,9 +1759,6 @@
     <ClInclude Include="Source\ComponentText.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentCollider.h">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CollisionDetector.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
@@ -1629,6 +1774,9 @@
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Player.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>
