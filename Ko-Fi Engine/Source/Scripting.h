@@ -6,6 +6,7 @@
 #include "Input.h" 
 #include "SceneManager.h"
 #include "SceneIntro.h"
+#include "ImGuiAppLog.h"
 
 #include <vector>
 
@@ -257,6 +258,7 @@ public:
 		lua.set_function("GetInt",				&Scripting::LuaGetInt, this);
 		lua.set_function("NewVariable",			&Scripting::LuaNewVariable, this);
 		lua.set_function("GetRuntimeState",		&Scripting::LuaGetRuntimeState, this);
+		lua.set_function("Log",					&Scripting::LuaLog, this);
 	}
 
 	bool CleanUp()
@@ -340,6 +342,10 @@ public:
 	void LuaPlayAudio()
 	{
 
+	}
+
+	void LuaLog(const char* log) {
+		appLog->AddLog(log);
 	}
 
 public:

@@ -40,7 +40,6 @@ ComponentScript::~ComponentScript()
 bool ComponentScript::Start()
 {
 	bool ret = true;
-
 	return ret;
 }
 
@@ -54,7 +53,17 @@ bool ComponentScript::Update(float dt)
 {
 	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
-		handler->lua["Update"](dt);
+		sol::protected_function_result result = lua_update(dt);
+		if (result.valid()) {
+			// Call succeeded
+			appLog->AddLog("Ok\n");
+		}
+		else {
+			// Call failed
+			sol::error err = result;
+			std::string what = err.what();
+			appLog->AddLog("%s\n", what.c_str());
+		}
 	}
 	return true;
 }
@@ -180,7 +189,6 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 					for (int i = 0; i < nWaypoints; i++) {
 						std::string label = std::to_string(i);
 						if (ImGui::DragFloat3(label.c_str(), &(waypoints[i][0]), 0.5f)) {
-
 							handler->lua[variable->name.c_str()] = std::get<std::vector<float3>>(variable->value);
 						}
 					}
@@ -208,8 +216,8 @@ void ComponentScript::ReloadScript()
 	if (path == "")
 		return;
 	inspectorVariables.clear();
-	script = handler->lua.load_file(path);
-	script();
+	script = handler->lua.script_file(path);
+	lua_update = sol::protected_function(handler->lua["Update"]);
 	isScriptLoaded = true;
 }
 

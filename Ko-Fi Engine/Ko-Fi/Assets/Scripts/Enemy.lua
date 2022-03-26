@@ -15,3 +15,6 @@ waypoints = {}
 local waypointsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3_ARRAY
 waypointsIV = InspectorVariable.new("waypoints", waypointsIVT, waypoints)
 NewVariable(waypointsIV)
+
+function Update(dt)
+end
