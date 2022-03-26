@@ -53,10 +53,6 @@ void Resource::SetLibraryPathAndFile()
 		dir = ASSETS_SCENES_DIR;
 		extension = SCENE_EXTENSION;
 		break;
-	case ResourceType::SHADER:
-		dir = SHADERS_DIR;
-		extension = SHADER_EXTENSION;
-		break;
 	case ResourceType::FONT:
 		dir = FONT_DIR;
 		extension = FONT_EXTENSION;

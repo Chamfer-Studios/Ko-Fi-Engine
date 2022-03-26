@@ -15,7 +15,7 @@
 #define MESHES_DIR "Library/Meshes/"
 #define MATERIALS_DIR "Library/Materials/"
 #define TEXTURES_DIR "Library/Textures/"
-#define SHADERS_DIR "Library/Shaders/"
+//#define SHADERS_DIR "Library/Shaders/"
 #define FONT_DIR "Library/Fonts/"
 
 #define CONFIG_DIR "EngineConfig/"

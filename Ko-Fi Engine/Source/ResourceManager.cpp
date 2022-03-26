@@ -6,6 +6,7 @@
 #include "Importer.h"
 #include "FileSystem.h"
 #include "ResourceBase.h"
+#include <filesystem>
 
 ResourceManager::ResourceManager(KoFiEngine* engine) : Module(),
 fileRefreshRate(0.0f),
@@ -105,8 +106,7 @@ bool ResourceManager::TrimLibrary()
 	{
 		if (library.find(UID->second) == library.end())
 		{
-			// I don't know how to do that
-			//App->fileSystem->Remove(UID->first.c_str());
+			std::filesystem::remove(UID->first.c_str());
 		}
 	}
 
@@ -636,8 +636,7 @@ void ResourceManager::DeleteFromLibrary(const char* libraryPath)
 
 	for (uint i = 0; i < toDelete.size(); ++i)
 	{
-		// I don't know how to do that
-		//App->fileSystem->Remove(toDelete[i].c_str());
+		std::filesystem::remove(toDelete[i].c_str());
 	}
 
 	toDelete.clear();
@@ -921,12 +920,6 @@ const char* ResourceManager::GetLibraryDirectoryFromType(const ResourceType type
 	case ResourceType::TEXTURE:
 		ret = TEXTURES_DIR;
 		break;
-	case ResourceType::SCENE:
-		//TODO: Add scene library?
-		break;
-	case ResourceType::SHADER:
-		ret = SHADERS_DIR;
-		break;
 	case ResourceType::FONT:
 		ret = FONT_DIR;
 		break;
@@ -962,7 +955,7 @@ void ResourceManager::DeleteFromAssets(const char* assetsPath)
 
 	for (uint i = 0; i < toDelete.size(); ++i)
 	{
-		// engine->GetFileSystem()->Remove(toDelete[i].c_str());
+		std::filesystem::remove(toDelete[i].c_str());
 	}
 
 	toDelete.clear();
@@ -983,15 +976,15 @@ const char* ResourceManager::GetValidPath(const char* path) const
 
 	size_t assetStart = normalizedPath.find("Assets");
 	size_t libraryStart = normalizedPath.find("Library");
-	std::string resultPath;
+	const char* resultPath;
 	if (assetStart != std::string::npos)
-		resultPath = normalizedPath.substr(assetStart, normalizedPath.size());
+		resultPath = normalizedPath.substr(assetStart, normalizedPath.size()).c_str();
 	else if (libraryStart != std::string::npos)
-		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size());
+		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size()).c_str();
 	else
 		LOG_BOTH("ERROR: Couldn't validate path.");
 
-	return resultPath.c_str();
+	return resultPath;
 }
 
 const char* ResourceManager::GetFileName(const char* path) const
