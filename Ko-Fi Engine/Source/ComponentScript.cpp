@@ -56,7 +56,6 @@ bool ComponentScript::Update(float dt)
 		sol::protected_function_result result = lua_update(dt);
 		if (result.valid()) {
 			// Call succeeded
-			appLog->AddLog("Ok\n");
 		}
 		else {
 			// Call failed

@@ -17,4 +17,9 @@ waypointsIV = InspectorVariable.new("waypoints", waypointsIVT, waypoints)
 NewVariable(waypointsIV)
 
 function Update(dt)
+    Log(tostring(#waypoints))
+    for i=1,#waypoints do
+        Log(tostring(i))
+        Log(tostring(waypoints[-1]))
+    end
 end
