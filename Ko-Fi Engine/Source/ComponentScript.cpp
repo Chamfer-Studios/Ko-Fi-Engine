@@ -182,13 +182,15 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 							waypoints.push_back(float3(0, 0, 0));
 						}
 						std::get<std::vector<float3>>(variable->value) = waypoints;
+						handler->lua[variable->name.c_str()] = waypoints;
 					}
 
 					ImGui::Text("Waypoints: ");
 					for (int i = 0; i < nWaypoints; i++) {
 						std::string label = std::to_string(i);
 						if (ImGui::DragFloat3(label.c_str(), &(waypoints[i][0]), 0.5f)) {
-							handler->lua[variable->name.c_str()] = std::get<std::vector<float3>>(variable->value);
+							std::get<std::vector<float3>>(variable->value)[i] = waypoints[i];
+							handler->lua[variable->name.c_str()] = waypoints;
 						}
 					}
 				}
