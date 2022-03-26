@@ -131,6 +131,9 @@
     <Filter Include="Source\Importers">
       <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Dialogue">
+      <UniqueIdentifier>{d8aab11d-2215-4e32-83a2-dcd4ccc3d9ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -1777,6 +1780,18 @@
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>
