@@ -12,6 +12,8 @@
 #include "PanelChooser.h"
 #include "imgui_stdlib.h"
 #include <fstream>
+#include <vector>
+#include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float2.h"
 
 ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
@@ -161,6 +163,27 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 				{
 					ImGui::Text(std::get<std::string>(variable->value).c_str());
 					break;
+				}
+				case INSPECTOR_FLOAT3_ARRAY:
+				{
+					int nWaypoints = std::get<std::vector<float3>>(variable->value).size();
+					std::vector<float3> waypoints = std::get<std::vector<float3>>(variable->value);
+					if (ImGui::DragInt("Path length", &nWaypoints, 1.0f, 0)) {
+						waypoints.clear();
+						for (int i = 0; i < nWaypoints; i++) {
+							waypoints.push_back(float3(0, 0, 0));
+						}
+						std::get<std::vector<float3>>(variable->value) = waypoints;
+					}
+
+					ImGui::Text("Waypoints: ");
+					for (int i = 0; i < nWaypoints; i++) {
+						std::string label = std::to_string(i);
+						if (ImGui::DragFloat3(label.c_str(), &(waypoints[i][0]), 0.5f)) {
+
+							handler->lua[variable->name.c_str()] = std::get<std::vector<float3>>(variable->value);
+						}
+					}
 				}
 			}
 		}

@@ -7,6 +7,8 @@
 #include "SceneManager.h"
 #include "SceneIntro.h"
 
+#include <vector>
+
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "MathGeoLib/Math/float3.h"
@@ -29,7 +31,8 @@ enum INSPECTOR_VARIABLE_TYPE
 	INSPECTOR_FLOAT3,
 	INSPECTOR_BOOL,
 	INSPECTOR_STRING,
-	INSPECTOR_TO_STRING
+	INSPECTOR_TO_STRING,
+	INSPECTOR_FLOAT3_ARRAY,
 };
 
 enum ItemType
@@ -46,9 +49,9 @@ class InspectorVariable
 public:
 	std::string name;
 	INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
-	std::variant<int, float, float2, float3, bool, std::string> value;
+	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>> value;
 
-	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string> value) : name(name), type(type), value(value) {}
+	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>> value) : name(name), type(type), value(value) {}
 };
 
 class Item
@@ -102,12 +105,13 @@ public:
 
 		// INSPECTOR_VARIABLE_TYPE
 		lua.new_enum("INSPECTOR_VARIABLE_TYPE",
-			"INSPECTOR_NO_TYPE",	INSPECTOR_VARIABLE_TYPE::INSPECTOR_NO_TYPE,
-			"INSPECTOR_INT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT,
-			"INSPECTOR_FLOAT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT,
-			"INSPECTOR_FLOAT2",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2,
-			"INSPECTOR_FLOAT3",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3,
-			"INSPECTOR_BOOL",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL
+			"INSPECTOR_NO_TYPE",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_NO_TYPE,
+			"INSPECTOR_INT",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT,
+			"INSPECTOR_FLOAT",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT,
+			"INSPECTOR_FLOAT2",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2,
+			"INSPECTOR_FLOAT3",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3,
+			"INSPECTOR_BOOL",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL,
+			"INSPECTOR_FLOAT3_ARRAY",	INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3_ARRAY
 		);
 
 		// ItemType
@@ -214,7 +218,7 @@ public:
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
-			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string>)>(),
+			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>)>(),
 			"name",		&InspectorVariable::name,
 			"type",		&InspectorVariable::type,
 			"value",	&InspectorVariable::value
