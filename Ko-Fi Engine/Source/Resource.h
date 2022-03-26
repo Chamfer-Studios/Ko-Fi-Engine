@@ -2,9 +2,13 @@
 #define __RESOURCE_H__
 
 #include "Globals.h"
+#include "json.hpp"
 #include <string>
 
-enum class ResourceType {
+using Json = nlohmann::json;
+
+enum class ResourceType
+{
 	MESH,
 	TEXTURE,
 	SCENE,
@@ -23,13 +27,18 @@ public:
 
 	virtual bool CleanUp();
 
-	inline ResourceType GetType() const { return type; }
+	virtual bool SaveMeta(Json& json) const { return true; }
+	virtual bool LoadMeta(const Json& json) const { return true; }
+
+	virtual inline ResourceType GetType() const { return type; }
 
 	inline UID GetUID() const { return uid; }
 	inline void SetUID(const UID& uid) { this->uid = uid; }
 
 	inline uint GetReferenceCount() const { return referenceCount; }
 	inline void SetReferenceCount(const uint& referenceCount) { this->referenceCount = referenceCount; }
+
+	void ModifyReferenceCount(int modification);
 
 	// Getters and Setters for Asset & Library Paths
 	inline const char* GetAssetPath() const { return assetPath.c_str(); }

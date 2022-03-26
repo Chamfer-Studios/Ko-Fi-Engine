@@ -69,6 +69,8 @@ bool SceneIntro::Start()
 
 	ComputeQuadTree();
 	
+	engine->GetFileSystem()->GetLastModTime("Assets/Audio/SFX/mc_attack_1_fx.wav");
+
 	return ret;
 }
 

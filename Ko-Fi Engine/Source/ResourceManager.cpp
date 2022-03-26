@@ -6,6 +6,11 @@
 #include "Importer.h"
 #include "FileSystem.h"
 #include "ResourceBase.h"
+
+#include "json.hpp"
+#include "JsonHandler.h"
+using Json = nlohmann::json;
+
 #include <filesystem>
 
 ResourceManager::ResourceManager(KoFiEngine* engine) : Module(),
@@ -753,6 +758,33 @@ Resource* ResourceManager::CreateNewResource(const char* assetPath, ResourceType
 	ret->SetLibraryPathAndFile();
 	return ret;
 }
+
+bool ResourceManager::SaveMetaFile(Resource* resource) const
+{
+	if (resource == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: Error saving meta file. Resource was nullptr.");
+		return false;
+	}
+
+	Json metaFile;
+
+	metaFile["UID"] = resource->GetUID();
+	metaFile["Type"] = (uint)resource->GetType();
+	metaFile["Name"] = resource->GetAssetFile();
+	metaFile["AssetsPath"] = resource->GetAssetPath();
+	metaFile["LibraryFile"] = resource->GetLibraryFile();
+	metaFile["LibraryPath"] = resource->GetLibraryPath();
+
+	JsonHandler jsonHandler;
+
+	return true;
+}
+
+//Json& ResourceManager::LoadMetaFile(const char* assetPath)
+//{
+//	// TODO: insert return statement here
+//}
 
 Resource* ResourceManager::RequestResource(UID uid)
 {

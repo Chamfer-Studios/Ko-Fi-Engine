@@ -184,6 +184,11 @@ void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std
 	directories.shrink_to_fit();
 }
 
+void FileSystem::GetLastModTime(const char* path)
+{
+	auto fTime = std::filesystem::last_write_time(path);
+}
+
 int FileSystem::StringCompare(const char* a, const char* b) {
 	int ca, cb;
 	do

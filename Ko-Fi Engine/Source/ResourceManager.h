@@ -56,6 +56,9 @@ public:
 private:
 	Resource* CreateNewResource(const char* assetPath, ResourceType type);
 
+	bool SaveMetaFile(Resource* resource) const;
+	//Json& LoadMetaFile(const char* assetPath);
+
 private:
 	KoFiEngine* engine = nullptr;
 

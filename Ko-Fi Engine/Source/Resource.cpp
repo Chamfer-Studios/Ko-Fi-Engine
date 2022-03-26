@@ -33,6 +33,12 @@ bool Resource::CleanUp()
 	return true;
 }
 
+void Resource::ModifyReferenceCount(int modification)
+{
+	int modifiedReferences = referenceCount + modification;
+	referenceCount = (modifiedReferences < 0) ? 0 : modifiedReferences;
+}
+
 void Resource::SetLibraryPathAndFile()
 {
 	std::string dir = "";
