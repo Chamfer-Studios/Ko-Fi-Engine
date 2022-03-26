@@ -148,6 +148,7 @@ void ComponentMaterial::Load(Json& json)
 		std::vector<float> values = json.at("color").get<std::vector<float>>();
 		material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
 		values.clear();
+		values.shrink_to_fit();
 
 		Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), &texture);
 		//for (const auto& tex : json.at("textures").items())

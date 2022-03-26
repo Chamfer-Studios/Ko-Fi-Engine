@@ -16,7 +16,7 @@ libraryFile("")
 
 Resource::~Resource()
 {
-
+	CleanUp();
 }
 
 bool Resource::CleanUp()

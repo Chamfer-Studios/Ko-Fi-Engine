@@ -16,6 +16,7 @@ ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 	//resource = new ParticleResource();
 	resource = nullptr;
 	emitterInstances.clear();
+	emitterInstances.shrink_to_fit();
 }
 
 ComponentParticle::~ComponentParticle()
@@ -705,6 +706,7 @@ void ComponentParticle::Load(Json& json)
 			resource = new ParticleResource();
 
 		resource->emitters.clear();
+		resource->emitters.shrink_to_fit();
 		for (const auto& r : json.at("resource").items())
 		{
 			resource->name = r.value().at("name").get<std::string>();
@@ -712,6 +714,7 @@ void ComponentParticle::Load(Json& json)
 			for (const auto& emitter : r.value().at("emitters").items())
 			{
 				emitterInstances.clear();
+				emitterInstances.shrink_to_fit();
 				Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
 				EmitterInstance* ei = new EmitterInstance(e, this);
 				emitterInstances.push_back(ei);
@@ -723,6 +726,7 @@ void ComponentParticle::Load(Json& json)
 					Importer::GetInstance()->textureImporter->Import(e->texture.path.c_str(), &e->texture);
 
 				e->modules.clear();
+				e->modules.shrink_to_fit();
 				for (const auto& pModule : emitter.value().at("modules").items())
 				{
 					ParticleModule* m = nullptr;
@@ -747,6 +751,7 @@ void ComponentParticle::Load(Json& json)
 						std::vector<float> values = pModule.value().at("minPosition").get<std::vector<float>>();
 						mMovement->minPosition = { values[0],values[1],values[2] };
 						values.clear();
+
 						values = pModule.value().at("maxPosition").get<std::vector<float>>();
 						mMovement->maxPosition = { values[0],values[1],values[2] };
 						values.clear();
@@ -755,6 +760,7 @@ void ComponentParticle::Load(Json& json)
 						values = pModule.value().at("minDirection").get<std::vector<float>>();
 						mMovement->minDirection = { values[0],values[1],values[2] };
 						values.clear();
+
 						values = pModule.value().at("maxDirection").get<std::vector<float>>();
 						mMovement->maxDirection = { values[0],values[1],values[2] };
 						values.clear();
@@ -767,9 +773,12 @@ void ComponentParticle::Load(Json& json)
 						values = pModule.value().at("minAcceleration").get<std::vector<float>>();
 						mMovement->minAcceleration = { values[0],values[1],values[2] };
 						values.clear();
+
 						values = pModule.value().at("maxAcceleration").get<std::vector<float>>();
 						mMovement->maxAcceleration = { values[0],values[1],values[2] };
 						values.clear();
+						values.shrink_to_fit();
+
 						m = mMovement;
 						break;
 					}
@@ -777,12 +786,14 @@ void ComponentParticle::Load(Json& json)
 					{
 						EmitterColor* mColor = new EmitterColor();
 						mColor->colorOverTime.clear();
+						mColor->colorOverTime.shrink_to_fit();
 						for (const auto& c : pModule.value().at("colors").items())
 						{
 							FadeColor fc = FadeColor();
 							std::vector<float> values = c.value().at("color").get<std::vector<float>>();
 							fc.color = Color(values[0], values[1], values[2], values[3]);
 							values.clear();
+							values.shrink_to_fit();
 							fc.pos = c.value().at("position");
 							mColor->colorOverTime.push_back(fc);
 						}
@@ -798,6 +809,7 @@ void ComponentParticle::Load(Json& json)
 						values = pModule.value().at("maxSize").get<std::vector<float>>();
 						mSize->maxSize = { values[0],values[1],values[2] };
 						values.clear();
+						values.shrink_to_fit();
 						m = mSize;
 						break;
 					}

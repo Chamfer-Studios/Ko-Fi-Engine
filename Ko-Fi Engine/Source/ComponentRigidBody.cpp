@@ -240,6 +240,7 @@ void ComponentRigidBody::Load(Json& json)
 	values = json.at("angular_velocity").get<std::vector<float>>();
 	angularVel = float3(values[0], values[1], values[2]);
 	values.clear();
+	values.shrink_to_fit();
 	angularDamping = json.at("angular_damping");
 
 	freezePositionX = json.at("freeze_position_x");

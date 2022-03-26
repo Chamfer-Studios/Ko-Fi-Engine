@@ -17,6 +17,7 @@ public:
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
+	bool CleanUp();
 	void DisplayTree(GameObject* go, int flags);
 	void DragNDrop(GameObject* go);
 private:

@@ -29,6 +29,8 @@
 GameObject::GameObject(int uid, KoFiEngine *engine, const char *name, bool _is3D)
 {
 	active = true;
+	children.clear();
+	children.shrink_to_fit();
 
 	if (name == nullptr)
 		this->name = "GameObject " + std::to_string(uid);
@@ -49,6 +51,8 @@ GameObject::GameObject(int uid, KoFiEngine *engine, const char *name, bool _is3D
 GameObject::GameObject()
 {
 	active = true;
+	children.clear();
+	children.shrink_to_fit();
 
 	this->name = "GameObject " + std::to_string(uid);
 
@@ -115,8 +119,13 @@ bool GameObject::CleanUp()
 		if (component->GetType() != ComponentType::MESH) // This is the dirty patch
 			RELEASE(component);
 	}
+
 	components.clear();
+	components.shrink_to_fit();
+
 	children.clear();
+	children.shrink_to_fit();
+
 	parent = nullptr;
 
 	return true;

@@ -112,7 +112,9 @@ bool ResourceManager::TrimLibrary()
 
 	fileUIDs.clear();
 	directories.clear();
+	directories.shrink_to_fit();
 	files.clear();
+	files.shrink_to_fit();
 
 	return true;
 }
@@ -124,9 +126,15 @@ UID ResourceManager::ImportFile(const char* assetPath)
 		LOG_BOTH("Error loading file, file path was nullptr.");
 		return -1;
 	}
-	std::string path = assetPath;
-	std::string extension = path.substr(path.find_last_of("."));
-	ResourceType type = GetTypeFromExtension(extension.c_str());
+
+	if (HasImportIgnoredExtension(assetPath))
+	{
+		LOG_BOTH("Error loading file, the file extension has an import ignored extension.");
+		return -1;
+	}
+
+	std::filesystem::path path = assetPath;
+	ResourceType type = GetTypeFromExtension(path.extension().string().c_str());
 
 	if (type == ResourceType::UNKNOWN)
 	{
@@ -140,45 +148,44 @@ UID ResourceManager::ImportFile(const char* assetPath)
 		LOG_BOTH("Error loading file, couldn't validate path.");
 		return -1;
 	}
-	Resource* resource = CreateNewResource(cleanPath.c_str(), type);
 
-	// TODO: Load from filesystem
-	//char* fileBuffer = engine->filesystem->Load(assetPath);
-
-	switch (resource->GetType())
+	UID uid;
+	bool metaIsValid = ValidateMetaFile(assetPath);
+	if (metaIsValid)
 	{
-	case ResourceType::MESH:
-		//Importer::GetInstance()->meshImporter->Import(fileBuffer, (Mesh*)resource);
-		break;
-	case ResourceType::TEXTURE:
-		//Importer::GetInstance()->textureImporter->Import(fileBuffer, (Texture*)resource);
-		break;
-	case ResourceType::SCENE:
-		//Importer::GetInstance()->sceneImporter->Import(fileBuffer);
-		break;
-	case ResourceType::SHADER:
-		// TODO: Import Shader
-		break;
-	case ResourceType::FONT:
-		// TODO: Import Font
-		break;
-	case ResourceType::UNKNOWN:
-		break;
-	default:
-		break;
+		if (HasMetaFile(assetPath))
+		{
+			DeleteFromLibrary(assetPath);
+		}
+		
+		uid = LoadFromAssets(assetPath);
+
+		if (uid == 0)
+		{
+			LOG_BOTH("Error loading file, error loading file from assets.");
+			return -1;
+		}
+	}
+	else
+	{
+		LOG_BOTH("File to import was already in the library.");
+
+		std::map<UID, ResourceBase> libraryItems;
+		GetLibraryPairs(assetPath, libraryItems);
+
+		//TODO: This doesn't work i don't know why
+		//for (auto item : libraryItems)
+		//{
+		//	if (library.find(item.first) == library.end())
+		//	{
+		//		library.emplace(item.first, item.second);
+		//	}
+		//}
+		uid = libraryItems.begin()->first;
+		libraryItems.clear();
 	}
 
-	// TODO: Save the Resource
-	SaveResource(resource);
-
-	// Get the UID Resource to return
-	UID ret = resource->GetUID();
-
-	// TODO: Unload the resource after importing, we should only use the ID
-	//RELEASE_ARRAY(fileBuffer);
-	UnloadResource(resource);
-
-	return ret;
+	return uid;
 }
 
 void ResourceManager::RefreshDirectoryFiles(const char* directory)
@@ -207,7 +214,9 @@ void ResourceManager::RefreshDirectoryFiles(const char* directory)
 
 	filePairs.clear();
 	metaFiles.clear();
+	metaFiles.shrink_to_fit();
 	assetFiles.clear();
+	assetFiles.shrink_to_fit();
 
 	for (uint i = 0; i < toDelete.size(); ++i)
 		DeleteFromLibrary(toDelete[i].c_str());
@@ -230,8 +239,11 @@ void ResourceManager::RefreshDirectoryFiles(const char* directory)
 		ImportFile(toImport[i].c_str());
 
 	toDelete.clear();
+	toDelete.shrink_to_fit();
 	toUpdate.clear();
+	toUpdate.shrink_to_fit();
 	toImport.clear();
+	toImport.shrink_to_fit();
 }
 
 void ResourceManager::FindFilesToImport(std::vector<std::string>& assetFiles, std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toImport)
@@ -640,7 +652,9 @@ void ResourceManager::DeleteFromLibrary(const char* libraryPath)
 	}
 
 	toDelete.clear();
+	toDelete.shrink_to_fit();
 	resourceUids.clear();
+	resourceUids.shrink_to_fit();
 
 }
 
@@ -764,11 +778,12 @@ Resource* ResourceManager::RequestResource(UID uid)
 
 UID ResourceManager::Find(const char* assetPath) const
 {
-	for (auto r : resourcesMap)
-	{
-		if (r.second->GetAssetPath() == assetPath)
-			return r.first;
-	}
+	//TODO: This doesn't work i don't know why
+	//for (auto r : resourcesMap)
+	//{
+	//	if (r.second->GetAssetPath() == assetPath)
+	//		return r.first;
+	//}
 	return -1;
 }
 
@@ -794,6 +809,11 @@ void ResourceManager::SaveResource(Resource* resource)
 	default:
 		break;
 	}
+
+	//TODO: meta shit ???
+
+	//TODO: library should be changed to resourceBase instead of string
+	library.emplace(resource->GetUID(), resource->GetAssetPath());
 }
 
 bool ResourceManager::UnloadResource(Resource* resource)
@@ -859,6 +879,57 @@ UID ResourceManager::LoadFromLibrary(const char* libraryPath)
 
 	//TODO: Wtf do i do now?
 	return -1;
+}
+
+UID ResourceManager::LoadFromAssets(const char* assetsPath)
+{
+	UID uid;
+
+	if (assetsPath == nullptr)
+	{
+		LOG_BOTH("Error loading from assets, path was nullptr.");
+		return -1;
+	}
+
+	//char* buffer = nullptr;
+	//uint read = App->fileSystem->Load(assetsPath, &buffer);
+	//if (read == 0)
+	//{
+	//	LOG("[ERROR] Resource Manager: Could not Import File %s! Error: File System could not Read the File.", assetsPath);
+	//	return 0;
+	//}
+
+	ResourceType type = GetTypeFromExtension(assetsPath);
+	Resource* resource = CreateNewResource(assetsPath, type);
+
+	switch (type)
+	{
+	case ResourceType::MESH:
+		//Importer::GetInstance()->meshImporter->Import();
+		break;
+	case ResourceType::TEXTURE:
+		//Importer::GetInstance()->textureImporter->Import();
+		break;
+	case ResourceType::SCENE:
+		//Importer::GetInstance()->sceneImporter->Import();
+		break;
+	case ResourceType::SHADER:
+		break;
+	case ResourceType::FONT:
+		break;
+	case ResourceType::UNKNOWN:
+		break;
+	default:
+		break;
+	}
+
+	//RELEASE_ARRAY(buffer);
+
+	uid = resource->GetUID();
+	SaveResource(resource);
+	UnloadResource(resource);
+
+	return uid;
 }
 
 ResourceType ResourceManager::GetTypeFromExtension(const char* extension)
@@ -959,7 +1030,9 @@ void ResourceManager::DeleteFromAssets(const char* assetsPath)
 	}
 
 	toDelete.clear();
+	toDelete.shrink_to_fit();
 	resourceUIDs.clear();
+	resourceUIDs.shrink_to_fit();
 }
 
 const char* ResourceManager::GetValidPath(const char* path) const
@@ -976,7 +1049,7 @@ const char* ResourceManager::GetValidPath(const char* path) const
 
 	size_t assetStart = normalizedPath.find("Assets");
 	size_t libraryStart = normalizedPath.find("Library");
-	const char* resultPath;
+	const char* resultPath = nullptr;
 	if (assetStart != std::string::npos)
 		resultPath = normalizedPath.substr(assetStart, normalizedPath.size()).c_str();
 	else if (libraryStart != std::string::npos)
@@ -993,6 +1066,14 @@ const char* ResourceManager::GetFileName(const char* path) const
 	std::string name = p.substr(p.find_last_of("/")+1, p.size());
 	const char* n = name.c_str();
 	return n;
+}
+
+bool ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
+{
+	std::filesystem::path filePath = assetsPath;
+	return (engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ini") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
 }
 
 //uint32 M_ResourceManager::ImportFromAssets(const char* assetsPath)

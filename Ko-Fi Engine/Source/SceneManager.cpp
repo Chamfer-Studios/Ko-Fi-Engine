@@ -125,6 +125,7 @@ bool SceneManager::CleanUp()
 		RELEASE((*scene));
 	}
 	scenes.clear();
+	scenes.shrink_to_fit();
 
 	return ret;
 }

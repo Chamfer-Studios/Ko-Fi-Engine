@@ -186,6 +186,7 @@ void ComponentCollider2::Load(Json& json)
 	values = json.at("center_position").get<std::vector<float>>();
 	centerPosition = float3(values[0], values[1], values[2]);
 	values.clear();
+	values.shrink_to_fit();
 
 	hasUpdated = true;
 }

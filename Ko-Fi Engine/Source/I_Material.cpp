@@ -168,6 +168,7 @@ unsigned int I_Material::CreateShaderStage(unsigned int type, const std::string&
 bool I_Material::LoadUniforms(Material* material)
 {
 	material->uniforms.clear();
+	material->uniforms.shrink_to_fit();
 
 	GLint uniformsCount;
 

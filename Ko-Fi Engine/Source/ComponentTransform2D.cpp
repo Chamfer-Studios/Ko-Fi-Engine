@@ -134,6 +134,7 @@ bool ComponentTransform2D::InspectorDraw(PanelChooser* chooser)
 
 		if (ImGui::DragFloat2("Mask", &mask[0], 0.005f, 0.0f, 1.0f)) {
 			drawablePlane->texCoords.clear();
+			drawablePlane->texCoords.shrink_to_fit();
 			drawablePlane->texCoords.push_back({ 0, mask.y });
 			drawablePlane->texCoords.push_back({ 0, 0 });
 			drawablePlane->texCoords.push_back({ mask.x, mask.y });

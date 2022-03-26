@@ -77,6 +77,7 @@ bool MainBar::Update()
 					RELEASE(gameObject);
 				}
 				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.clear();
+				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.shrink_to_fit();
 				editor->panelGameObjectInfo.selectedGameObjectID = -1;
 				editor->engine->GetSceneManager()->GetCurrentScene()->rootGo = new GameObject(-1, editor->engine, "Root");
 				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.push_back(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo);

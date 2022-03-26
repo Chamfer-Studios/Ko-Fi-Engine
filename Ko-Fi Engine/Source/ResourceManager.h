@@ -24,9 +24,11 @@ public:
 	bool UnloadResource(Resource* resource);
 	Resource* GetResourceFromLibrary(const char* libraryPath);
 	UID LoadFromLibrary(const char* libraryPath);
+	UID LoadFromAssets(const char* assetsPath);
 	void DeleteFromLibrary(const char* libraryPath);
 	void DeleteFromAssets(const char* assetsPath);
 	bool TrimLibrary();
+	bool HasImportIgnoredExtension(const char* assetsPath) const;
 
 	//const Resource* RequestResource(uint uid) const;			Can't do it because of the maps
 	UID Find(const char* assetPath) const;
@@ -44,7 +46,7 @@ public:
 	void LoadFilesIntoLibrary(std::map<std::string, std::string>& filePairs);
 
 	bool HasMetaFile(const char* assestsPath);
-	bool ValidateMetaFile(const char* assetsPath, bool library);
+	bool ValidateMetaFile(const char* assetsPath, bool library = true);
 	bool LoadMetaFileIntoLibrary(const char* assetsPath);
 	bool GetLibraryPairs(const char* assetsPath, std::map<UID, ResourceBase>& pairs);
 	bool GetResourceUIDsFromMeta(const char* assetsPath, std::vector<UID>& uids);

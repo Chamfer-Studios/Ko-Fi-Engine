@@ -72,6 +72,7 @@ bool ComponentFollowPath::Update(float dt)
 void ComponentFollowPath::CalculatePath()
 {
 	finalPath.clear();
+	finalPath.shrink_to_fit();
 
 	for (int i = 0; i < nWaypoints - 1; i++) {
 		float3 current = waypoints[i];

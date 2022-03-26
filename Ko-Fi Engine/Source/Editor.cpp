@@ -99,11 +99,7 @@ Editor::Editor(KoFiEngine* engine)
 
 Editor::~Editor()
 {
-	for (std::list<Panel*>::reverse_iterator item = panels.rbegin(); item != panels.rend(); ++item)
-	{
-		RELEASE(*item);
-	}
-	panels.clear();
+	CleanUp();
 }
 
 void Editor::AddPanel(Panel* panel)
@@ -297,19 +293,26 @@ bool Editor::CleanUp()
 	for (std::list<Panel*>::reverse_iterator item = panels.rbegin(); item != panels.rend() && ret == true; ++item)
 	{
 		ret = (*item)->CleanUp();
+		RELEASE(*item);
 	}
+	panels.clear();
 
-	RELEASE(mainMenuBar);
-	RELEASE(panelHierarchy);
-	RELEASE(panelConfig);
-	RELEASE(panelLog);
-	RELEASE(panelAbout);
-	RELEASE(panelSettings);
-	RELEASE(panelChooser);
-	RELEASE(panelGameObject);
-	RELEASE(panelViewport);
-	//RELEASE(panelGame);
-	RELEASE(panelRuntimeState);
+	//RELEASE(mainMenuBar);
+	//RELEASE(panelHierarchy);
+	//RELEASE(panelConfig);
+	//RELEASE(panelLog);
+	//RELEASE(panelAbout);
+	//RELEASE(panelChooser);
+	//RELEASE(panelGameObject);
+	////RELEASE(panelGame);
+	//RELEASE(panelViewport);
+	//RELEASE(panelCameraViewport);
+	//RELEASE(panelRuntimeState);
+	//RELEASE(panelAssets);
+	//RELEASE(panelNodeEditor);
+	//RELEASE(panelTextEditor);
+	//RELEASE(panelSettings);
+	//RELEASE(panelNavigation);
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();

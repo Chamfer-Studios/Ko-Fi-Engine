@@ -3,6 +3,7 @@
 ParticleResource::ParticleResource(const char* resourceName)
 {
 	emitters.clear();
+	emitters.shrink_to_fit();
 	name.clear();
 	name = resourceName;
 }
@@ -16,6 +17,8 @@ ParticleResource::~ParticleResource()
 			it = emitters.erase(it);
 		}
 	}
+	emitters.clear();
+	emitters.shrink_to_fit();
 	name.clear();
 }
 
@@ -25,6 +28,8 @@ bool ParticleResource::CleanUp()
 	{
 		it = emitters.erase(it);
 	}
+	emitters.clear();
+	emitters.shrink_to_fit();
 	name.clear();
 	return true;
 }

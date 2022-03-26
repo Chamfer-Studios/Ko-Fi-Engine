@@ -78,6 +78,7 @@ void QuadTreeNode3D::Clear()
 		}
 	}
 	objects.clear();
+	objects.shrink_to_fit();
 }
 
 void QuadTreeNode3D::Draw()

@@ -138,11 +138,13 @@ bool SceneIntro::PostUpdate(float dt)
 		componentScript->ReloadScript();
 	}
 	gameObjectListToCreate.clear();
+	gameObjectListToCreate.shrink_to_fit();
 	for (GameObject* gameObject : gameObjectListToDelete)
 	{
 		DeleteGameObject(gameObject);
 	}
 	gameObjectListToDelete.clear();
+	gameObjectListToDelete.shrink_to_fit();
 
 	engine->GetRenderer()->DrawRay();
 
@@ -160,6 +162,8 @@ bool SceneIntro::CleanUp()
 	{
 		RELEASE(gameObject);
 	}
+	gameObjectList.clear();
+	gameObjectList.shrink_to_fit();
 
 	example::NodeEditorShutdown();
 

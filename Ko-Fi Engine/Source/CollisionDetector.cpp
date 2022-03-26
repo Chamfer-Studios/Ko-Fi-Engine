@@ -22,6 +22,7 @@ CollisionDetector::CollisionDetector(KoFiEngine* engine)
 
 CollisionDetector::~CollisionDetector()
 {
+	CleanUp();
 }
 
 bool CollisionDetector::Update(float dt)
@@ -38,6 +39,7 @@ bool CollisionDetector::Update(float dt)
 bool CollisionDetector::CleanUp()
 {
 	collidableEntities.clear();
+	collidableEntities.shrink_to_fit();
 	return true;
 }
 

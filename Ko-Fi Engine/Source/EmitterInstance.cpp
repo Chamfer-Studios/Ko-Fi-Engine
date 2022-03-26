@@ -7,6 +7,7 @@ EmitterInstance::EmitterInstance(Emitter* e, ComponentParticle* cp) : emitter(e)
 	emitterLife = 0.0f;
 	activeParticles = 0;
 	particles.clear();
+	particles.shrink_to_fit();
 }
 
 EmitterInstance::~EmitterInstance()

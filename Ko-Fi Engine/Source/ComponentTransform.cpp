@@ -194,6 +194,7 @@ void ComponentTransform::Load(Json& json)
 	values = json.at("scale").get<std::vector<float>>();
 	SetScale(float3(values[0], values[1], values[2]));
 	values.clear();
+	values.shrink_to_fit();
 
 	transformMatrixLocal = float4x4::FromTRS(position, rotation, scale);
 
