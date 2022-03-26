@@ -90,8 +90,8 @@
                     {
                         "active": true,
                         "position": [
-                            0.0,
-                            0.8612573146820068,
+                            2.747903347015381,
+                            4.511672019958496,
                             -4.172325134277344e-07
                         ],
                         "rotation": [
@@ -179,7 +179,7 @@
                     {
                         "active": true,
                         "box_collider_size": [
-                            3.2137579917907715,
+                            3.2137577533721924,
                             3.5429458618164063,
                             3.967226028442383
                         ],
@@ -190,7 +190,7 @@
                         ],
                         "collider_type": 1,
                         "collision_layer": 1,
-                        "draw_collider": false,
+                        "draw_collider": true,
                         "enabled": true,
                         "is_trigger": false,
                         "type": "collider2"
@@ -315,7 +315,7 @@
                         ],
                         "collider_type": 1,
                         "collision_layer": 4,
-                        "draw_collider": false,
+                        "draw_collider": true,
                         "enabled": true,
                         "is_trigger": false,
                         "type": "collider2"

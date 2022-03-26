@@ -33,6 +33,7 @@ public:
 	bool UpdateCollider(); // Called whenever a change is produced in collider shape or state
 
 	void CreateCollider(ColliderShape collType);
+	void CreateBoxCollider();
 
 	void DrawCollider();
 	void DrawBoxCollider();

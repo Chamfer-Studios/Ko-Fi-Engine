@@ -54,54 +54,34 @@ bool ComponentCollider2::UpdateCollider()
 	bool ret = true;
 
 	CreateCollider(colliderShape);
-	//// SHAPE UPDATE
-	//if(shape)
-	//	shape->release();
-
-	//if (owner->GetComponent<ComponentMesh>())
-	//	boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
-
-	//physx::PxVec3 localPos;
-	//physx::PxBoxGeometry boxGeometry(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
-
-	//switch (GetColliderShape())
-	//{
-	//case ColliderShape::BOX:
-	//	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
-
-	//	localPos = physx::PxVec3(centerPosition.x, centerPosition.y + boxCollSize.y / 2, centerPosition.z);
-	//	shape->setLocalPose(physx::PxTransform(localPos));
-	//	break;
-	//case ColliderShape::SPHERE:
-
-	//	break;
-	//case ColliderShape::CAPSULE:
-
-	//	break;
-	//default:
-	//	break;
-	//}
-
-	//// STATE UPDATE
-	//if (shape)
-	//{
-	//	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
-	//	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
-
-	//	physx::PxFilterData filterData;
-	//	filterData.word0 = (int)GetCollisionLayer();
-
-	//	shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-	//	shape->setSimulationFilterData(filterData);
-	//	shape->setQueryFilterData(filterData);
-
-	//	owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
-	//}
 
 	return ret;
 }
 
 void ComponentCollider2::CreateCollider(ColliderShape collType)
+{
+	switch (collType)
+	{
+	case ColliderShape::BOX:
+		CreateBoxCollider();
+		break;
+	case ColliderShape::SPHERE:
+
+		break;
+	case ColliderShape::CAPSULE:
+
+		break;
+	case ColliderShape::NONE:
+
+		break;
+	default:
+
+		break;
+	}
+	
+}
+
+void ComponentCollider2::CreateBoxCollider()
 {
 	// SHAPE CREATION
 	if (shape)
@@ -113,33 +93,15 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 
 	if (owner->GetComponent<ComponentMesh>())
 		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
-	
-	/*if (owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size().x != boxCollSize.x || owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size().y != boxCollSize.y || owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size().z != boxCollSize.z)
-		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();*/
 
 	physx::PxVec3 localPos;
 	physx::PxTransform a;
 	physx::PxBoxGeometry boxGeometry(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
 
-	switch (collType)
-	{
-	case ColliderShape::BOX:
-		shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
+	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
-		localPos = physx::PxVec3(centerPosition.x, centerPosition.y + boxCollSize.y / 2, centerPosition.z);
-		shape->setLocalPose(physx::PxTransform(localPos));
-		a = shape->getLocalPose();
-
-		break;
-	case ColliderShape::SPHERE:
-
-		break;
-	case ColliderShape::CAPSULE:
-
-		break;
-	default:
-		break;
-	}
+	localPos = physx::PxVec3(centerPosition.x, centerPosition.y + boxCollSize.y / 2, centerPosition.z);
+	shape->setLocalPose(physx::PxTransform(localPos));
 
 	// STATE CREATION
 	if (shape)
@@ -157,7 +119,6 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
 	}
 
-
 	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
 }
 
@@ -174,15 +135,11 @@ void ComponentCollider2::DrawCollider()
 
 void ComponentCollider2::DrawBoxCollider()
 {
-
-	float3 min = centerPosition - (boxCollSize / 2);
-	//min = { centerPosition.x - boxCollSize.x / 2, centerPosition.y - boxCollSize.y / 2, centerPosition.z - boxCollSize.z  };
-	float3 max = centerPosition + (boxCollSize / 2);
-	//max = { centerPosition.x + boxCollSize.x / 2, centerPosition.y + boxCollSize.y / 2, centerPosition.z + boxCollSize.z / 2 };
+	float3 min = centerPosition - float3(boxCollSize.x / 2, 0, boxCollSize.z / 2) + owner->GetComponent<ComponentTransform>()->GetPosition();
+	float3 max = centerPosition + float3(boxCollSize.x / 2, boxCollSize.y, boxCollSize.z / 2) + owner->GetComponent<ComponentTransform>()->GetPosition();
+	
 	glLineWidth(2.0f);
 	glColor3f(1.0f,0.0f,0.0f);
-	//glPushMatrix();
-	//glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
 	glBegin(GL_LINES);
 
 	// Bottom 1
@@ -228,8 +185,6 @@ void ComponentCollider2::DrawBoxCollider()
 	glEnd();
 	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1.0f);
-	/*glPopMatrix();*/
-
 }
 
 // Serialization 
@@ -286,8 +241,8 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 			{
 			case (int)ColliderShape::NONE: break;
 			case (int)ColliderShape::BOX: SetColliderShape((ColliderShape)colliderShapeInt); break;
-			case (int)ColliderShape::SPHERE: /*SetColliderShape((ColliderShape)colliderShapeInt);*/ break;
-			case (int)ColliderShape::CAPSULE: /*SetColliderShape((ColliderShape)colliderShapeInt);*/ break;
+			case (int)ColliderShape::SPHERE: SetColliderShape((ColliderShape)colliderShapeInt); break;
+			case (int)ColliderShape::CAPSULE: SetColliderShape((ColliderShape)colliderShapeInt); break;
 			}
 			colliderShapeInt = 0; // This will reset the button to default when clicked
 			hasUpdated = true;
