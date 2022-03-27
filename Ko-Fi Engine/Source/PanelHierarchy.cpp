@@ -114,7 +114,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 	if (ImGui::TreeNodeEx(go->GetName(), flags))
 	{
 		DragNDrop(go);
-		if ((ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)))
+		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(1)))
 		{
 			editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
 			CONSOLE_LOG("%s || %d", go->name.c_str(), go->GetUID());

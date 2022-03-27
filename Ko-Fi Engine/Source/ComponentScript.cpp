@@ -12,7 +12,10 @@
 #include "PanelChooser.h"
 #include "imgui_stdlib.h"
 #include <fstream>
+#include <vector>
+#include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float2.h"
+#include "PanelHierarchy.h"
 
 ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 {
@@ -38,7 +41,6 @@ ComponentScript::~ComponentScript()
 bool ComponentScript::Start()
 {
 	bool ret = true;
-
 	return ret;
 }
 
@@ -52,7 +54,16 @@ bool ComponentScript::Update(float dt)
 {
 	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
-		handler->lua["Update"](dt);
+		sol::protected_function_result result = lua_update(dt);
+		if (result.valid()) {
+			// Call succeeded
+		}
+		else {
+			// Call failed
+			sol::error err = result;
+			std::string what = err.what();
+			appLog->AddLog("%s\n", what.c_str());
+		}
 	}
 	return true;
 }
@@ -67,7 +78,7 @@ bool ComponentScript::OnPlay()
 {
 	bool ret = true;
 
-	ReloadScript();
+	//ReloadScript();
 
 	return ret;
 }
@@ -162,6 +173,47 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 					ImGui::Text(std::get<std::string>(variable->value).c_str());
 					break;
 				}
+				case INSPECTOR_FLOAT3_ARRAY:
+				{
+					int nWaypoints = std::get<std::vector<float3>>(variable->value).size();
+					std::vector<float3> waypoints = std::get<std::vector<float3>>(variable->value);
+					if (ImGui::DragInt("Path length", &nWaypoints, 1.0f, 0)) {
+						waypoints.clear();
+						for (int i = 0; i < nWaypoints; i++) {
+							waypoints.push_back(float3(0, 0, 0));
+						}
+						std::get<std::vector<float3>>(variable->value) = waypoints;
+						handler->lua[variable->name.c_str()] = waypoints;
+					}
+
+					ImGui::Text("Waypoints: ");
+					for (int i = 0; i < nWaypoints; i++) {
+						std::string label = std::to_string(i);
+						if (ImGui::DragFloat3(label.c_str(), &(waypoints[i][0]), 0.5f)) {
+							std::get<std::vector<float3>>(variable->value)[i] = waypoints[i];
+							handler->lua[variable->name.c_str()] = waypoints;
+						}
+					}
+					break;
+				}
+				case INSPECTOR_GAMEOBJECT:
+				{
+					GameObject* selected = std::get<GameObject*>(variable->value);
+					std::string name = (selected == nullptr) ? "null" : selected->name.c_str();
+					ImGui::InputText(variable->name.c_str(), &name);
+					if (ImGui::BeginDragDropTarget())
+					{
+						const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy");
+						if (payload != nullptr)
+						{
+							GameObject* go = owner->GetEngine()->GetEditor()->GetPanelHierarchy()->GetSelectedGameObject();
+							std::get<GameObject*>(variable->value) = go;
+							handler->lua[variable->name.c_str()] = go;
+						}
+						ImGui::EndDragDropTarget();
+					}
+					break;
+				}
 			}
 		}
 
@@ -185,8 +237,8 @@ void ComponentScript::ReloadScript()
 	if (path == "")
 		return;
 	inspectorVariables.clear();
-	script = handler->lua.load_file(path);
-	script();
+	script = handler->lua.script_file(path);
+	lua_update = sol::protected_function(handler->lua["Update"]);
 	isScriptLoaded = true;
 }
 

@@ -3,12 +3,15 @@
 
 #include "Globals.h"
 #include "Engine.h"
+#include "Navigation.h"
 #include "Input.h" 
 #include "SceneManager.h"
 #include "SceneIntro.h"
+#include "ImGuiAppLog.h"
+
+#include <vector>
 
 #include "Log.h"
-#include "ImGuiAppLog.h"
 #include "MathGeoLib/Math/float3.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -29,7 +32,9 @@ enum INSPECTOR_VARIABLE_TYPE
 	INSPECTOR_FLOAT3,
 	INSPECTOR_BOOL,
 	INSPECTOR_STRING,
-	INSPECTOR_TO_STRING
+	INSPECTOR_TO_STRING,
+	INSPECTOR_FLOAT3_ARRAY,
+	INSPECTOR_GAMEOBJECT,
 };
 
 enum ItemType
@@ -46,9 +51,9 @@ class InspectorVariable
 public:
 	std::string name;
 	INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
-	std::variant<int, float, float2, float3, bool, std::string> value;
+	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value;
 
-	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string> value) : name(name), type(type), value(value) {}
+	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value) : name(name), type(type), value(value) {}
 };
 
 class Item
@@ -102,12 +107,16 @@ public:
 
 		// INSPECTOR_VARIABLE_TYPE
 		lua.new_enum("INSPECTOR_VARIABLE_TYPE",
-			"INSPECTOR_NO_TYPE",	INSPECTOR_VARIABLE_TYPE::INSPECTOR_NO_TYPE,
-			"INSPECTOR_INT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT,
-			"INSPECTOR_FLOAT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT,
-			"INSPECTOR_FLOAT2",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2,
-			"INSPECTOR_FLOAT3",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3,
-			"INSPECTOR_BOOL",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL
+			"INSPECTOR_NO_TYPE",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_NO_TYPE,
+			"INSPECTOR_INT",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT,
+			"INSPECTOR_FLOAT",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT,
+			"INSPECTOR_FLOAT2",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2,
+			"INSPECTOR_FLOAT3",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3,
+			"INSPECTOR_BOOL",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL,
+			"INSPECTOR_STRING",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING,
+			"INSPECTOR_TO_STRING",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_TO_STRING,
+			"INSPECTOR_FLOAT3_ARRAY",	INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3_ARRAY,
+			"INSPECTOR_GAMEOBJECT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_GAMEOBJECT
 		);
 
 		// ItemType
@@ -214,7 +223,7 @@ public:
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
-			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string>)>(),
+			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>)>(),
 			"name",		&InspectorVariable::name,
 			"type",		&InspectorVariable::type,
 			"value",	&InspectorVariable::value
@@ -239,6 +248,11 @@ public:
 			"damage",	&Item::damage
 			);
 
+		lua.new_usertype<Navigation>("Navigation",
+			sol::constructors<void(KoFiEngine*)>(),
+			"FindPath",			&Navigation::FindPath
+			);
+
 
 			/// Variables
 		lua["gameObject"] = gameObject;
@@ -253,6 +267,8 @@ public:
 		lua.set_function("GetInt",				&Scripting::LuaGetInt, this);
 		lua.set_function("NewVariable",			&Scripting::LuaNewVariable, this);
 		lua.set_function("GetRuntimeState",		&Scripting::LuaGetRuntimeState, this);
+		lua.set_function("Log",					&Scripting::LuaLog, this);
+		lua.set_function("GetNavigation",		&Scripting::GetNavigation, this);
 	}
 
 	bool CleanUp()
@@ -282,6 +298,11 @@ public:
 			case 23: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_3); }
 			case 24: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4); }
 		}
+	}
+
+	Navigation* GetNavigation()
+	{
+		return gameObject->GetEngine()->GetNavigation();
 	}
 
 	void LuaCreateBullet()
@@ -336,6 +357,10 @@ public:
 	void LuaPlayAudio()
 	{
 
+	}
+
+	void LuaLog(const char* log) {
+		appLog->AddLog(log);
 	}
 
 public:

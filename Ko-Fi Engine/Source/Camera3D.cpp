@@ -251,6 +251,15 @@ void Camera3D::CheckMouseMotion()
 
 void Camera3D::OnPlay()
 {
+	if (gameCamera == nullptr)
+	{
+		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("MainCamera");
+		ComponentCamera* cCamera = go->CreateComponent<ComponentCamera>();
+		cCamera->isMainCamera = true;
+		gameCamera = cCamera;
+
+	}
+		
 	currentCamera = gameCamera;
 }
 
