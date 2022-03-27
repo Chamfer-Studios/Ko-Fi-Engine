@@ -20,8 +20,7 @@ class Scene
 {
 public:
 	Scene() : active(false)
-	{
-	}
+	{}
 
 	~Scene()
 	{
@@ -199,6 +198,7 @@ public:
 	bool drawSceneTree = false;
 	QuadTree3D* sceneTree = nullptr;
 
+	std::vector<const char*> tags; // TODO: needs to be implemented!
 
 	LineSegment ray;
 

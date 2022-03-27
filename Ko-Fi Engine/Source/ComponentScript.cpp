@@ -59,7 +59,10 @@ bool ComponentScript::Update(float dt)
 
 bool ComponentScript::PostUpdate(float dt)
 {
-
+	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
+	{
+		handler->lua["PostUpdate"](dt);
+	}
 	return true;
 }
 

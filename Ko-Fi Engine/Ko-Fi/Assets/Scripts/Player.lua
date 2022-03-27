@@ -11,7 +11,7 @@ State = {
 
 currentState = State.IDLE
 speed = 500  -- consider Start()
-maxBullets = 10
+maxBullets = 2
 bulletCount = maxBullets
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
@@ -22,7 +22,7 @@ local maxBulletsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 local maxBulletsIV = InspectorVariable.new("maxBullets", maxBulletsIVT, maxBullets)
 NewVariable(maxBulletsIV)
 
-local currentItemType = ItemType.ITEM_GUN
+local currentItemType = ItemType.ITEM_HAND
 local currentItemDamage = 5
 currentItem = Item.new(currentItemType, currentItemDamage)
 
@@ -33,6 +33,7 @@ end
 --animationDuration = 0.8
 --animationTimer = 0.0
 isAttacking = false
+isAiming = false -- This is for GameState.lua not to unselect the player when you Left Click
 
 componentSwitch = gameObject:GetAudioSwitch()
 componentRigidBody = gameObject:GetRigidBody()
@@ -43,6 +44,8 @@ if (mouseParticles ~= nil) then
 end
 
 particleFlag = false
+
+target = nil
 
 -------------------- Methods ---------------------
 
@@ -68,6 +71,16 @@ function Update(dt)
 
 	if (IsSelected() == true)
 		then --Gather Inputs
+			if (GetInput(1) == KEY_STATE.KEY_DOWN) then -- Left Click
+				
+				if (currentItem.type == ItemType.ITEM_GUN and bulletCount > 0) then
+
+					target = GetGameObjectHovered()
+					if (target.tag == Tag.ENEMY) then
+						Fire()
+					end
+				end
+			end
 			if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- RightClick
 				if (mouseParticles ~= nil) then
 					mouseParticles:GetComponentParticle():ResumeParticleSpawn()
@@ -77,12 +90,15 @@ function Update(dt)
 			end
 			if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
 				currentItem.type = ItemType.ITEM_HAND
+				isAiming = false
 			end
 			if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
 				currentItem.type = ItemType.ITEM_KNIFE
+				isAiming = false
 			end
 			if (GetInput(7) == KEY_STATE.KEY_DOWN) then -- G
 				currentItem.type = ItemType.ITEM_GUN
+				isAiming = true
 			end	
 			if (GetInput(8) == KEY_STATE.KEY_DOWN) -- X
 				then
@@ -129,6 +145,10 @@ function Update(dt)
 				end
 		end
 	end
+end
+
+function PostUpdate(dt)
+
 end
 
 -- Move to destination
@@ -212,12 +232,21 @@ end
 
 function IsSelected()
 	
-	id = GetInt("GameState.lua", "characterSelected")
+	id = GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 
 	if (id == characterID) then	
 		return true
 	else 
 		return false
+	end
+end
+
+function Fire()
+
+	CreateBullet()
+	bulletCount = bulletCount - 1
+	if (componentSwitch ~= nil) then
+		componentSwitch:PlayTrack(0)
 	end
 end
 

@@ -1,5 +1,8 @@
 #include "ComponentInfo.h"
 #include "GameObject.h"
+#include "Engine.h"
+#include "SceneManager.h"
+
 #include "imgui_stdlib.h"
 #include "PanelChooser.h"
 
@@ -29,8 +32,16 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 	{
 		ImGui::Text("Name:");
 		ImGui::SameLine();
-		ImGui::InputText("##Name",&(owner->name));
+		ImGui::InputText("##Name", &(owner->name));
 		ImGui::Checkbox("Active", &owner->active);
+		ImGui::SameLine();
+
+		// Take care with the order in the combo, it has to follow the Tag enum class order
+		if (ImGui::Combo("##tagcombo", &tag, "Untagged\0Player\0Enemy\0Wall"))
+		{
+			if (owner->tag != (Tag)tag)
+				owner->tag = (Tag)tag;
+		}
 	}
 
 	return ret;

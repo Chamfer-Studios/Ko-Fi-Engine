@@ -43,6 +43,8 @@ GameObject::GameObject(int uid, KoFiEngine *engine, const char *name, bool _is3D
 	if (is3D)
 		transform = CreateComponent<ComponentTransform>();
 
+	tag = Tag::TAG_UNTAGGED;
+
 	this->parent = nullptr;
 }
 
@@ -57,6 +59,8 @@ GameObject::GameObject()
 
 	CreateComponent<ComponentInfo>();
 	transform = CreateComponent<ComponentTransform>();
+
+	tag = Tag::TAG_UNTAGGED;
 
 	this->parent = nullptr;
 }
