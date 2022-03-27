@@ -237,13 +237,7 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		if ((ImGui::Button("Assign##collidershape")))
 		{
-			switch (colliderShapeInt)
-			{
-			case (int)ColliderShape::NONE: break;
-			case (int)ColliderShape::BOX: SetColliderShape((ColliderShape)colliderShapeInt); break;
-			case (int)ColliderShape::SPHERE: SetColliderShape((ColliderShape)colliderShapeInt); break;
-			case (int)ColliderShape::CAPSULE: SetColliderShape((ColliderShape)colliderShapeInt); break;
-			}
+			SetColliderShape((ColliderShape)colliderShapeInt);
 			colliderShapeInt = 0; // This will reset the button to default when clicked
 			hasUpdated = true;
 		}
@@ -260,14 +254,7 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		if ((ImGui::Button("Assign##collisionlayer")))
 		{
-			switch (collisionLayerInt)
-			{
-			case (int)CollisionLayer::DEFAULT: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
-			case (int)CollisionLayer::PLAYER: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
-			case (int)CollisionLayer::ENEMY: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
-			case (int)CollisionLayer::BULLET: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
-			case (int)CollisionLayer::TERRAIN: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
-			}
+			SetCollisionLayer((CollisionLayer)collisionLayerInt);
 			collisionLayerInt = 0; // This will reset the button to default when clicked
 			hasUpdated = true;
 		}
@@ -276,31 +263,46 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		ImGui::Text("%s", GetCollisionLayerString());
 		ImGui::Separator();
 
-		// ATTRIBUTES -----------------------------------------------------------------------------------------------
-		if (ImGui::Checkbox("Enable##", &enabled)) hasUpdated = true;
-		if (ImGui::Checkbox("IsTrigger##", &isTrigger)) hasUpdated = true;
-		if (ImGui::Checkbox("Draw Collider##", &drawCollider)) hasUpdated = true;
-
-		// COLLIDER CENTER POS & SIZE ----------------------------------------------------------------------------------------
-		if (ImGui::TreeNodeEx("Size & Center position"))
+		if (colliderShape == ColliderShape::BOX)
 		{
-			float3 newSize2 = GetBoxCollSize();
-			float newSize[3] = { newSize2.x, newSize2.y, newSize2.z };
-			if (ImGui::DragFloat3("##boxcollsize", newSize))
+			// ATTRIBUTES -----------------------------------------------------------------------------------------------
+			if (ImGui::Checkbox("Enable##", &enabled)) hasUpdated = true;
+			if (ImGui::Checkbox("IsTrigger##", &isTrigger)) hasUpdated = true;
+			if (ImGui::Checkbox("Draw Collider##", &drawCollider)) hasUpdated = true;
+
+			// COLLIDER CENTER POS & SIZE ----------------------------------------------------------------------------------------
+			if (ImGui::TreeNodeEx("Size & Center position"))
 			{
-				boxCollSize = { newSize[0], newSize[1], newSize[2] };
+				float3 newSize2 = GetBoxCollSize();
+				float newSize[3] = { newSize2.x, newSize2.y, newSize2.z };
+				if (ImGui::DragFloat3("##boxcollsize", newSize))
+				{
+					boxCollSize = { newSize[0], newSize[1], newSize[2] };
+				}
+				ImGui::SameLine();
+				ImGui::Text("Box collider size");
+
+				float3 newCenterPos2 = GetCenterPosition();
+				float newCenterPos[3] = { newCenterPos2.x, newCenterPos2.y, newCenterPos2.z };
+				if (ImGui::DragFloat3("##centerpos", newCenterPos))
+				{
+					centerPosition = { newCenterPos[0], newCenterPos[1], newCenterPos[2] };
+				}
+				ImGui::SameLine();
+				ImGui::Text("Center position");
+
+				ImGui::TreePop();
 			}
-			ImGui::SameLine();
-			ImGui::Text("Box collider size");
-
-			float3 newCenterPos2 = GetCenterPosition();
-			float newCenterPos[3] = { newCenterPos2.x, newCenterPos2.y, newCenterPos2.z };
-			ImGui::InputFloat3("##centerpos", newCenterPos, "%.3f");
-			ImGui::SameLine();
-			ImGui::Text("Center position");
-
-			ImGui::TreePop();
 		}
+		else if (colliderShape == ColliderShape::NONE)
+		{
+			ImGui::Text("You have to set a collider shape first!");
+		}
+		else
+		{
+			ImGui::Text("Collider shape not supported yet!");
+		}
+		
 		
 	}
 	else
