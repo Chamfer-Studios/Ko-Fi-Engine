@@ -82,6 +82,11 @@ bool Physics::CleanUp()
 	material = nullptr;
 	scene = nullptr;
 
+	simulationEventCallback = nullptr;
+
+	// TODO: Delete the filter matrix
+
+
 	return true;
 }
 
@@ -91,12 +96,12 @@ bool Physics::SaveConfiguration(Json& configModule) const
 	configModule["Number_threads"] = nbThreads;
 
 	configModule["Filters"];
-	//configModule["Filters"].push_back(std::string("hola"));
-	/*configModule["Filters"].push_back(std::string("hola soy otro filtro"));*/
 	for (std::string filter : filters)
 	{
 		configModule["Filters"].push_back(filter);
 	}
+
+	// TODO: Save filter matrix
 
 	return true;
 }
@@ -116,6 +121,10 @@ bool Physics::LoadConfiguration(Json& configModule)
 		filters.push_back(filter.value().get<std::string>());
 	}
 
+	// TODO: Delete current filter matrix
+
+	// TODO: Create new filter matrix
+
 	return true;
 }
 
@@ -123,6 +132,7 @@ bool Physics::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Physics##"))
 	{
+		// NUMBER OF THREADS ----------------------------------------------------
 		int newNbThreads = GetNbThreads();
 		if (ImGui::DragInt("##drag_threads", &newNbThreads, 0.1f, 0.0f, 16.0f))
 		{
@@ -131,7 +141,9 @@ bool Physics::InspectorDraw()
 		}
 		ImGui::SameLine();
 		ImGui::Text("Number of threads");
+		// ------------------------------------------------------------------------
 
+		// GRAVITY ----------------------------------------------------------------
 		ImGui::Text("");
 		float grav = GetGravity();
 		if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f, "%.2f"))
@@ -146,7 +158,9 @@ bool Physics::InspectorDraw()
 			SetGravity(9.81f);
 			engine->SaveConfiguration();
 		}
+		// ------------------------------------------------------------------------
 
+		// COLLISION FILTERS ------------------------------------------------------
 		ImGui::Separator();
 		ImGui::Text("Filters:");
 		for (int i = 0; i < filters.size(); ++i)
@@ -179,6 +193,11 @@ bool Physics::InspectorDraw()
 		}
 		ImGui::Text("(For the input text to work, you will have to write the desired filter name and press enter)");
 		ImGui::Separator();
+		// -------------------------------------------------------------------------------------------------------------
+
+		// FILTER MATRIX ---------------------------------------------------------------------
+
+		// -----------------------------------------------------------------------------------
 	}
 
 	return true;
@@ -279,6 +298,10 @@ void Physics::AddFilter(const std::string newFilter)
 	}
 
 	filters.push_back(newFilter);
+
+	// TODO: Delete current filter matrix
+
+	// TODO: Create new filter matrix
 }
 
 void Physics::DeleteFilter(const std::string deletedFilter)
@@ -310,6 +333,11 @@ void Physics::DeleteFilter(const std::string deletedFilter)
 		LOG_BOTH("ERROR, the filter to delete %s is not contained in filters array\n", deletedFilter.c_str());
 		return;
 	}
+
+	// TODO: Delete current filter matrix
+
+	// TODO: Create new filter matrix
+
 }
 
 uint const Physics::GetFilterID(const std::string newFilter)
@@ -329,4 +357,8 @@ std::string const Physics::GetFilterByID(const uint ID)
 		return defaultFilter;
 	else
 		return filters[ID];
+}
+
+void Physics::DeleteFilterMatrix()
+{
 }

@@ -68,6 +68,10 @@ public:
 	uint const GetFilterID(const std::string newFilter);
 	std::string const GetFilterByID(const uint ID);
 
+	// Filter matrix methods
+	inline bool** const GetFilterMatrix() { return filterMatrix; }
+	void DeleteFilterMatrix();
+
 	// Getters & setters
 	inline physx::PxPhysics* GetPxPhysics() { 
 		return physics; 
@@ -91,6 +95,7 @@ private:
 
 	std::vector<std::string> filters;
 	std::string defaultFilter = "Default";
+	bool** filterMatrix = nullptr;
 
 	physx::PxFoundation* foundation = nullptr;
 	physx::PxPhysics* physics = nullptr;
