@@ -15,6 +15,9 @@
 #include "Mesh.h"
 #include "JsonHandler.h"
 
+#include <lua.hpp>
+#include <sol.hpp>
+
 Navigation::Navigation(KoFiEngine* engine) : Module()
 {
 	name = "Navigation";
@@ -289,9 +292,11 @@ std::vector<GameObject*> Navigation::CollectWalkableObjects()
 	return res;
 }
 
-void Navigation::FindPath(float3 origin, float3 destination, float3** path, int maxLength, int* actualLength)
+std::tuple<std::vector<float3>> Navigation::FindPath(float3 origin, float3 destination, int maxLength)
 {
-	if (dtNavMesh == nullptr) return;
+	std::vector<float3> path;
+	if (dtNavMesh == nullptr) return std::make_tuple(path);
+	int actualLength = 0;
 
 	dtNavMeshQuery* query = dtAllocNavMeshQuery();
 
@@ -312,19 +317,20 @@ void Navigation::FindPath(float3 origin, float3 destination, float3** path, int 
 
 	dtPolyRef* polyPath = (dtPolyRef*)malloc(sizeof(dtPolyRef*) * maxLength);
 	memset(polyPath, 0, sizeof(dtPolyRef) * maxLength);
-	query->findPath(originPoly, destinationPoly, originPolyPos, destinationPolyPos, filter, polyPath, actualLength, maxLength);
+	query->findPath(originPoly, destinationPoly, originPolyPos, destinationPolyPos, filter, polyPath, &actualLength, maxLength);
 
-	*path = (float3*)malloc(sizeof(float3) * *actualLength);
 	float3 currentPos = origin;
-	for (int i = 0; i < *actualLength; i++) {
+	for (int i = 0; i < actualLength; i++) {
 		dtPolyRef currentPoly = polyPath[i];
 		float nextPos[3] = { 0, 0, 0 };
 		bool _p;
 		query->closestPointOnPoly(currentPoly, &currentPos[0], nextPos, &_p);
 		float3 nextPosAsF3 = float3(nextPos[0], nextPos[1], nextPos[2]);
-		(*path)[i] = nextPosAsF3;
+		path.push_back(nextPosAsF3);
 		currentPos = nextPosAsF3;
 	}
+
+	return std::make_tuple(path);
 }
 
 void Navigation::Save(Json& json) const

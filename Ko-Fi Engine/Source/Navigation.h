@@ -6,6 +6,7 @@
 #include "glew.h"
 #include "MathGeoLib/Math/float3.h"
 #include <vector>
+#include <tuple>
 #include "json.hpp"
 
 class GameObject;
@@ -58,7 +59,7 @@ public:
 	void PrepareDetour();
 	std::vector<GameObject*> CollectWalkableObjects();
 
-	void FindPath(float3 origin, float3 destination, float3** path, int maxLength, int* actualLength);
+	std::tuple<std::vector<float3>> FindPath(float3 origin, float3 destination, int maxLength);
 
 	void Save(Json& json) const;
 	void Load(Json& json);

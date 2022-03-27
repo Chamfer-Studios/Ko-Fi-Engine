@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 #include "Engine.h"
+#include "Navigation.h"
 #include "Input.h" 
 #include "SceneManager.h"
 #include "SceneIntro.h"
@@ -11,7 +12,6 @@
 #include <vector>
 
 #include "Log.h"
-#include "ImGuiAppLog.h"
 #include "MathGeoLib/Math/float3.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -244,6 +244,11 @@ public:
 			"damage",	&Item::damage
 			);
 
+		lua.new_usertype<Navigation>("Navigation",
+			sol::constructors<void(KoFiEngine*)>(),
+			"FindPath",			&Navigation::FindPath
+			);
+
 
 			/// Variables
 		lua["gameObject"] = gameObject;
@@ -259,6 +264,7 @@ public:
 		lua.set_function("NewVariable",			&Scripting::LuaNewVariable, this);
 		lua.set_function("GetRuntimeState",		&Scripting::LuaGetRuntimeState, this);
 		lua.set_function("Log",					&Scripting::LuaLog, this);
+		lua.set_function("GetNavigation",		&Scripting::GetNavigation, this);
 	}
 
 	bool CleanUp()
@@ -288,6 +294,11 @@ public:
 			case 23: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_3); }
 			case 24: { return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4); }
 		}
+	}
+
+	Navigation* GetNavigation()
+	{
+		return gameObject->GetEngine()->GetNavigation();
 	}
 
 	void LuaCreateBullet()
