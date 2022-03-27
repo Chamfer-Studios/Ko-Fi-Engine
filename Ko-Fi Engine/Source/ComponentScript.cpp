@@ -15,6 +15,7 @@
 #include <vector>
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float2.h"
+#include "PanelHierarchy.h"
 
 ComponentScript::ComponentScript(GameObject* parent) : Component(parent)
 {
@@ -193,6 +194,25 @@ bool ComponentScript::InspectorDraw(PanelChooser* chooser)
 							handler->lua[variable->name.c_str()] = waypoints;
 						}
 					}
+					break;
+				}
+				case INSPECTOR_GAMEOBJECT:
+				{
+					GameObject* selected = std::get<GameObject*>(variable->value);
+					std::string name = (selected == nullptr) ? "null" : selected->name.c_str();
+					ImGui::InputText(variable->name.c_str(), &name);
+					if (ImGui::BeginDragDropTarget())
+					{
+						const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy");
+						if (payload != nullptr)
+						{
+							GameObject* go = owner->GetEngine()->GetEditor()->GetPanelHierarchy()->GetSelectedGameObject();
+							std::get<GameObject*>(variable->value) = go;
+							handler->lua[variable->name.c_str()] = go;
+						}
+						ImGui::EndDragDropTarget();
+					}
+					break;
 				}
 			}
 		}

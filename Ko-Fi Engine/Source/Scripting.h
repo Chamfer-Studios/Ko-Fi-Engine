@@ -34,6 +34,7 @@ enum INSPECTOR_VARIABLE_TYPE
 	INSPECTOR_STRING,
 	INSPECTOR_TO_STRING,
 	INSPECTOR_FLOAT3_ARRAY,
+	INSPECTOR_GAMEOBJECT,
 };
 
 enum ItemType
@@ -50,9 +51,9 @@ class InspectorVariable
 public:
 	std::string name;
 	INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
-	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>> value;
+	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value;
 
-	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>> value) : name(name), type(type), value(value) {}
+	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value) : name(name), type(type), value(value) {}
 };
 
 class Item
@@ -112,7 +113,10 @@ public:
 			"INSPECTOR_FLOAT2",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2,
 			"INSPECTOR_FLOAT3",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3,
 			"INSPECTOR_BOOL",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL,
-			"INSPECTOR_FLOAT3_ARRAY",	INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3_ARRAY
+			"INSPECTOR_STRING",			INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING,
+			"INSPECTOR_TO_STRING",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_TO_STRING,
+			"INSPECTOR_FLOAT3_ARRAY",	INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3_ARRAY,
+			"INSPECTOR_GAMEOBJECT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_GAMEOBJECT
 		);
 
 		// ItemType
@@ -219,7 +223,7 @@ public:
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
-			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>)>(),
+			sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>)>(),
 			"name",		&InspectorVariable::name,
 			"type",		&InspectorVariable::type,
 			"value",	&InspectorVariable::value
