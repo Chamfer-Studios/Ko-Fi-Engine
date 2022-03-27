@@ -100,7 +100,6 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene
 			}
 		}
 	}
-	mesh->SetRootNode(assimpScene);
 
 	mesh->SetUpMeshBuffers();
 

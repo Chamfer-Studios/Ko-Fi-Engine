@@ -134,13 +134,8 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 
 void ComponentAnimator::Save(Json& json) const
 {
-	json["name"] = rAnim->GetName();
-	json["ticksPerSecond"] = rAnim->GetTicksPerSecond();
-	json["duration"] = rAnim->GetDuration();
-	json["startPoint"] = rAnim->GetStartFrame();
-	json["endPoint"] = rAnim->GetEndFrame();
-
 	json["type"] = "animator";
+
 	Json jsonClips;
 	for (auto clip : clips)
 	{
@@ -153,36 +148,28 @@ void ComponentAnimator::Save(Json& json) const
 		json["clips"].push_back(jsonClips);
 	}
 
-	json["selectedAnimation"] = selectedClip->GetName();
+	json["selectedClip"] = selectedClip->GetName();
 }
 
 void ComponentAnimator::Load(Json& json)
 {
-	if (rAnim == nullptr)
-		rAnim = new R_Animation();
-
 	if (selectedClip == nullptr)
 		selectedClip = new AnimatorClip();
 
 	if (!json.empty())
 	{
-		rAnim->SetName(json.at("name"));
-		rAnim->SetTicksPerSecond(json.at("ticksPerSecond"));
-		rAnim->SetDuration(json.at("duration"));
-		rAnim->SetStartFrame(json.at("startPoint"));
-		rAnim->SetEndFrame(json.at("endPoint"));
-
 		AnimatorClip animatorClip;
 		for (const auto& clip : json.at("clips").items())
 		{
 			animatorClip.SetName(clip.value().at("clipName").get<std::string>().c_str());
 			animatorClip.SetStartFrame(clip.value().at("clipStartFrame"));
-			animatorClip.SetStartFrame(clip.value().at("clipEndFrame"));
+			animatorClip.SetEndFrame(clip.value().at("clipEndFrame"));
 			animatorClip.SetDuration(clip.value().at("clipDuration"));
+
 			clips.emplace(clip.value().at("mapString"), animatorClip);
 		}
 
-		SetSelectedClip(json.at("selectedAnimation"));
+		SetSelectedClip(json.at("selectedClip"));
 	}
 }
 

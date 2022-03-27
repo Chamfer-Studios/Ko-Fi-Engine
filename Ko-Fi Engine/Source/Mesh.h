@@ -27,6 +27,7 @@
 class GameObject;
 class aiBone;
 class R_Animation;
+struct Channel;
 
 enum class Shape
 {
@@ -95,19 +96,18 @@ public:
 
 	void inline SetIsAnimated(bool isAnimated) { this->isAnimated = isAnimated; }
 	bool inline IsAnimated() const { return isAnimated; }
-	void SetRootNode(const aiScene* assimpScene); // TEMPORAL
 	void inline SetRootNode(const GameObject* rootNode) { this->rootNode = rootNode; }
 	void inline SetAnimation(const R_Animation* animation) { this->animation = animation; }
-	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const std::string nodeName);
+	const Channel* FindNodeAnim(const std::string nodeName);
 
-	uint FindPosition(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	uint FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
 
-	uint FindRotation(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	uint FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
 
-	uint FindScaling(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	uint FindScaling(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedScaling(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
 
 	float4x4 InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ);
 	float4x4 InitRotateTransform(const aiQuaternion& quat);
@@ -116,6 +116,8 @@ public:
 	float* GetTransformedVertices(float4x4 transform);
 
 	static Mesh* MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transformations);
+
+	float4x4 GetMatrixFromQuat(Quat quat);
 
 	// Size in Bytes
 	unsigned verticesSizeBytes = 0;
@@ -166,7 +168,6 @@ private:
 
 	bool isAnimated = false;
 
-	const aiScene* assimpScene = nullptr;
 	const GameObject* rootNode = nullptr;
 	const R_Animation* animation = nullptr;
 };

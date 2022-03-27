@@ -4,6 +4,8 @@
 #include "R_Animation.h"
 #include "Channel.h"
 
+#include <map>
+
 I_Animations::I_Animations()
 {
 }
@@ -74,7 +76,7 @@ void I_Animations::GetPositionKeys(const aiNodeAnim* aiChannel, Channel& rChanne
 		double time = pk.mTime;
 		float3 position = float3(pk.mValue.x, pk.mValue.y, pk.mValue.z);
 
-		rChannel.positionKeyframes.emplace(time, position);
+		rChannel.positionKeyframes.push_back(PositionKeyframe(time, position));
 	}
 }
 
@@ -87,7 +89,7 @@ void I_Animations::GetRotationKeys(const aiNodeAnim* aiChannel, Channel& rChanne
 		double time = rk.mTime;
 		Quat rotation = Quat(rk.mValue.x, rk.mValue.y, rk.mValue.z, rk.mValue.w);
 
-		rChannel.rotationKeyframes.emplace(time, rotation);
+		rChannel.rotationKeyframes.push_back(RotationKeyframe(time, rotation));
 	}
 }
 
@@ -100,7 +102,7 @@ void I_Animations::GetScaleKeys(const aiNodeAnim* aiChannel, Channel& rChannel)
 		double time = sk.mTime;
 		float3 scale = float3(sk.mValue.x, sk.mValue.y, sk.mValue.z);
 
-		rChannel.scaleKeyframes.emplace(time, scale);
+		rChannel.scaleKeyframes.push_back(ScaleKeyframe(time, scale));
 	}
 }
 
@@ -111,27 +113,27 @@ void I_Animations::ValidateChannel(Channel& rChannel)
 		if (strstr(rChannel.name.c_str(), "_$AssimpFbx$_Translation") != nullptr)
 		{
 			rChannel.rotationKeyframes.clear();
-			rChannel.rotationKeyframes.emplace(-1.0, Quat::identity);
+			rChannel.rotationKeyframes.push_back(RotationKeyframe(-1.0, Quat::identity));
 
 			rChannel.scaleKeyframes.clear();
-			rChannel.scaleKeyframes.emplace(-1.0, float3::zero);
+			rChannel.scaleKeyframes.push_back(ScaleKeyframe(-1.0, float3::zero));
 
 		}
 		else if (strstr(rChannel.name.c_str(), "_$AssimpFbx$_Rotation") != nullptr)
 		{
 			rChannel.positionKeyframes.clear();
-			rChannel.positionKeyframes.emplace(-1.0, float3::zero);
+			rChannel.positionKeyframes.push_back(PositionKeyframe(-1.0, float3::zero));
 
 			rChannel.scaleKeyframes.clear();
-			rChannel.scaleKeyframes.emplace(-1.0, float3::zero);
+			rChannel.scaleKeyframes.push_back(ScaleKeyframe(-1.0, float3::zero));
 		}
 		else if (strstr(rChannel.name.c_str(), "_$AssimpFbx$_Scaling") != nullptr)
 		{
 			rChannel.positionKeyframes.clear();
-			rChannel.positionKeyframes.emplace(-1.0, float3::zero);
+			rChannel.positionKeyframes.push_back(PositionKeyframe(-1.0, float3::zero));
 
 			rChannel.rotationKeyframes.clear();
-			rChannel.rotationKeyframes.emplace(-1.0, Quat::identity);
+			rChannel.rotationKeyframes.push_back(RotationKeyframe(-1.0, Quat::identity));
 		}
 
 		uint pos = rChannel.name.find_first_of("$");
@@ -148,12 +150,15 @@ void I_Animations::FuseChannels(const Channel& newChannel, Channel& existingChan
 	{
 		if (!existingChannel.HasPositionKeyframes())
 		{
-			existingChannel.positionKeyframes.clear();																// Erasing the [-1.0] item that identifies an invalid keyframe channel.
+			existingChannel.positionKeyframes.clear();	// Erasing the [-1.0] item that identifies an invalid keyframe channel.
 		}
 
+		uint i = 0;
 		for (auto pk = newChannel.positionKeyframes.begin(); pk != newChannel.positionKeyframes.end(); ++pk)
 		{
-			existingChannel.positionKeyframes[pk->first] = pk->second;
+			//existingChannel.positionKeyframes[pk->first] = pk->second;
+			existingChannel.positionKeyframes.at(i).value = pk->value;
+			i++;
 		}
 	}
 	if (newChannel.HasRotationKeyframes())
@@ -163,9 +168,12 @@ void I_Animations::FuseChannels(const Channel& newChannel, Channel& existingChan
 			existingChannel.rotationKeyframes.clear();
 		}
 
+		uint i = 0;
 		for (auto rk = newChannel.rotationKeyframes.begin(); rk != newChannel.rotationKeyframes.end(); ++rk)
 		{
-			existingChannel.rotationKeyframes[rk->first] = rk->second;
+			//existingChannel.rotationKeyframes[rk->first] = rk->second;
+			existingChannel.rotationKeyframes.at(i).value = rk->value;
+			i++;
 		}
 	}
 	if (newChannel.HasScaleKeyframes())
@@ -175,9 +183,12 @@ void I_Animations::FuseChannels(const Channel& newChannel, Channel& existingChan
 			existingChannel.scaleKeyframes.clear();
 		}
 
+		uint i = 0;
 		for (auto sk = newChannel.scaleKeyframes.begin(); sk != newChannel.scaleKeyframes.end(); ++sk)
 		{
-			existingChannel.scaleKeyframes[sk->first] = sk->second;
+			//existingChannel.scaleKeyframes[sk->first] = sk->second;
+			existingChannel.scaleKeyframes.at(i).value = sk->value;
+			i++;
 		}
 	}
 }

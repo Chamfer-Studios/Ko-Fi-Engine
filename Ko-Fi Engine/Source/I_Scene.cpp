@@ -79,8 +79,6 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo, isPrefab);
 
-	//ImportAnimations(assimpScene, mesh);
-
 	return true;
 }
 
@@ -90,10 +88,12 @@ GameObject* I_Scene::ImportModel(const char* path)
 	GameObject* tmp = nullptr;
 	return tmp;
 }
+
 aiScene* I_Scene::GetAssimpScene()
 {
 	return assimpScene;
 }
+
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab)
 {
 	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
