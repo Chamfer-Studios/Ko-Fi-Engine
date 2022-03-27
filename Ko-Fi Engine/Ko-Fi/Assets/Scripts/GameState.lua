@@ -18,10 +18,17 @@ function Update(dt)
 				characterSelected = 3
 			elseif (GetInput(24) == KEY_STATE.KEY_DOWN) then
 				characterSelected = 4
-			elseif (GetInput(1) == KEY_STATE.KEY_DOWN) then
-				characterSelected = -1
 			end
 		end
+end
+
+function PostUpdate(dt)
+	
+	if (GetVariable("Player.lua", "isAiming", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
+		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
+			characterSelected = -1
+		end
+	end
 end
 
 --------------------------------------------------

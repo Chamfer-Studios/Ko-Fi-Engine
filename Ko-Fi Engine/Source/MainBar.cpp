@@ -71,15 +71,8 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
-				std::vector<GameObject*> gameObjectList = editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
-				for (GameObject* gameObject : gameObjectList)
-				{
-					RELEASE(gameObject);
-				}
-				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.clear();
-				editor->panelGameObjectInfo.selectedGameObjectID = -1;
-				editor->engine->GetSceneManager()->GetCurrentScene()->rootGo = new GameObject(-1, editor->engine, "Root");
-				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.push_back(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo);
+				editor->engine->GetSceneManager()->GetCurrentScene()->DeleteCurrentScene();
+			
 			}
 			if (ImGui::MenuItem("Quit"))
 			{

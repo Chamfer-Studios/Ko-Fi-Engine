@@ -16,6 +16,14 @@ class ComponentCollider;
 class ComponentCollider2;
 class ComponentAnimator;
 
+enum class Tag 
+{
+	TAG_UNTAGGED,
+	TAG_PLAYER,
+	TAG_ENEMY,
+	TAG_WALL
+};
+
 class GameObject
 {
 public:
@@ -99,6 +107,7 @@ public:
 	bool is3D = true;
 	bool isPrefab = false;
 	std::string prefabPath;
+	Tag tag;
 
 	std::vector<GameObject*> children;
 private:
