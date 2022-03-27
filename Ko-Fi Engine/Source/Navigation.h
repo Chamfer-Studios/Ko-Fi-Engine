@@ -6,6 +6,7 @@
 #include "glew.h"
 #include "MathGeoLib/Math/float3.h"
 #include <vector>
+#include <tuple>
 #include "json.hpp"
 
 class GameObject;
@@ -18,6 +19,22 @@ class Mesh;
 class Navigation : public Module
 {
 public:
+	struct NavMeshConfig {
+		float cs = .3f;
+		float ch = .2f;
+		float walkableSlopeAngle = 45;
+		float walkableClimb = 1.0f;
+		int walkableHeight = 2;
+		float walkableRadius = 2.f;
+		float minRegionArea = 2.f;
+		float mergeRegionArea = 2.f;
+		float borderSize = 0.5f;
+		float maxEdgeLen = 30.f;
+		int maxVertsPerPoly = 6;
+		float detailSampleMaxError = 1.0f;
+		float detailSampleDist = 1.0f;
+	};
+
 	enum PolyAreas
 	{
 		SAMPLE_POLYAREA_GROUND,
@@ -42,7 +59,7 @@ public:
 	void PrepareDetour();
 	std::vector<GameObject*> CollectWalkableObjects();
 
-	void FindPath(float3 origin, float3 destination, float3** path, int maxLength, int* actualLength);
+	std::tuple<std::vector<float3>> FindPath(float3 origin, float3 destination, int maxLength);
 
 	void Save(Json& json) const;
 	void Load(Json& json);
@@ -54,4 +71,5 @@ private:
 	rcPolyMesh* navMesh = nullptr;
 	rcPolyMeshDetail* navMeshDetail = nullptr;
 	dtNavMesh* dtNavMesh = nullptr;
+	NavMeshConfig navMeshConfig;
 };
