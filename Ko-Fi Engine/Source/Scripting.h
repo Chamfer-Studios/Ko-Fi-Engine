@@ -159,7 +159,7 @@ public:
 			"GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
 			"GetAudioSwitch",		&GameObject::GetComponent<C_AudioSwitch>,
 			"IsSelected",			&GameObject::IsSelected,
-			"GetImage",			&GameObject::GetComponent<ComponentImage>
+			"GetImage",				&GameObject::GetComponent<ComponentImage>
 
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);
