@@ -512,6 +512,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 	if (!jsonFile.is_null())
 	{
+		scene->DeleteCurrentScene();
 		ret = true;
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
@@ -520,11 +521,6 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		scene->rootGo->SetName(scene->name.c_str());
 		if (jsonScene.find("navmesh") != jsonScene.end())
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
-		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
-		//{
-		//	(*goIt)->CleanUp();
-		//	RELEASE((*goIt));
-		//}
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		for (const auto& goIt : jsonGameObjects.items())
