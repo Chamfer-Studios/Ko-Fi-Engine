@@ -23,9 +23,12 @@ function Update(dt)
 end
 
 function PostUpdate(dt)
-	
-	if (GetVariable("Player.lua", "isAiming", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
+	aiming = GetVariable("Player.lua", "currentAction", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+	print(aiming)
+	if (aiming  ~= 4) then
+		
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
+			print("Deselected")
 			characterSelected = -1
 		end
 	end

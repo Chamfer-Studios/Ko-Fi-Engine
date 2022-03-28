@@ -223,7 +223,7 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		// COLLISION LAYER -----------------------------------------------------------------------------------------------
 		ImGui::Text("Collison Layer:");
 		// Take care with the order in the combo, it has to follow the CollisionLayer enum class order
-		ImGui::Combo("##combocollisionlayer", &collisionLayerInt, "Default\0Player\0Enemy\0Bullet\0Terrain");
+		ImGui::Combo("##combocollisionlayer", &collisionLayerInt, "Default\0Player\0Enemy\0Projectile\0Terrain");
 		ImGui::SameLine();
 		if ((ImGui::Button("Assign##collisionlayer")))
 		{
@@ -232,7 +232,7 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 			case (int)CollisionLayer::DEFAULT: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
 			case (int)CollisionLayer::PLAYER: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
 			case (int)CollisionLayer::ENEMY: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
-			case (int)CollisionLayer::BULLET: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
+			case (int)CollisionLayer::PROJECTILE: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
 			case (int)CollisionLayer::TERRAIN: SetCollisionLayer((CollisionLayer)collisionLayerInt); break;
 			}
 			collisionLayerInt = 0; // This will reset the button to default when clicked
@@ -281,8 +281,8 @@ const char* ComponentCollider2::CollisionLayerToString(const CollisionLayer coll
 		return "PLAYER";
 	case CollisionLayer::ENEMY:
 		return "ENEMY";
-	case CollisionLayer::BULLET:
-		return "BULLET";
+	case CollisionLayer::PROJECTILE:
+		return "PROJECTILE";
 	case CollisionLayer::TERRAIN:
 		return "TERRAIN";
 	default:

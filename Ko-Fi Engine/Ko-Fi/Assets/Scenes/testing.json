@@ -1,53 +1,10 @@
 {
     "testing": {
         "active": true,
-        "game_objects_amount": 19,
+        "game_objects_amount": 18,
         "game_objects_list": [
             {
                 "UID": 27979895,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_frustum": true,
-                        "far_plane_distance": 100.0,
-                        "frustum_culling": false,
-                        "isMainCamera": true,
-                        "near_plane_distance": 0.10000000149011612,
-                        "type": "camera",
-                        "vertical_fov": 60.0
-                    }
-                ],
-                "is3D": true,
-                "name": "camera",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1457899727,
                 "active": true,
                 "components": [
                     {
@@ -1276,13 +1233,13 @@
                         "position": [
                             0.0,
                             15.356266021728516,
-                            112.0
+                            248.3292694091797
                         ],
                         "rotation": [
-                            0.011064374819397926,
-                            -3.610984400381767e-09,
-                            3.995573316650791e-11,
-                            -0.9999387860298157
+                            -0.011064521968364716,
+                            3.611002163950161e-09,
+                            -3.995625705299766e-11,
+                            0.9999387860298157
                         ],
                         "scale": [
                             0.10000000149011612,
@@ -1295,7 +1252,7 @@
                         "active": true,
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Bullet.sugar",
+                        "path": "Library/Meshes/Knife.sugar",
                         "shape_type": 0,
                         "type": "mesh"
                     },
@@ -1341,7 +1298,7 @@
                     }
                 ],
                 "is3D": true,
-                "name": "Bullet",
+                "name": "Knife",
                 "parent_UID": 4294967295
             }
         ],

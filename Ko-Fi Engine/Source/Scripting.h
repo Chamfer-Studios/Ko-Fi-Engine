@@ -38,15 +38,6 @@ enum INSPECTOR_VARIABLE_TYPE
 	INSPECTOR_GAMEOBJECT,
 };
 
-enum ItemType
-{
-	ITEM_NO_TYPE,
-
-	ITEM_HAND,
-	ITEM_KNIFE,
-	ITEM_GUN
-};
-
 class InspectorVariable
 {
 public:
@@ -55,15 +46,6 @@ public:
 	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value;
 
 	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value) : name(name), type(type), value(value) {}
-};
-
-class Item
-{ // Needs proper structure !!
-public:
-	ItemType type = ITEM_NO_TYPE;
-	int damage;
-
-	Item(ItemType type, int damage) : type(type), damage(damage) {}
 };
 
 class Scripting
@@ -119,14 +101,6 @@ public:
 			"INSPECTOR_FLOAT3_ARRAY",	INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3_ARRAY,
 			"INSPECTOR_GAMEOBJECT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_GAMEOBJECT
 		);
-
-		// ItemType
-		lua.new_enum("ItemType",
-			"ITEM_NO_TYPE", ItemType::ITEM_NO_TYPE,
-			"ITEM_HAND",	ItemType::ITEM_HAND,
-			"ITEM_KNIFE",	ItemType::ITEM_KNIFE,
-			"ITEM_GUN",		ItemType::ITEM_GUN
-			);
 
 		// RuntimeState
 		lua.new_enum("RuntimeState",
@@ -251,12 +225,6 @@ public:
 			"Set2DVelocity",		&ComponentRigidBody::Set2DVelocity
 			);
 
-		// Item
-		lua.new_usertype<Item>("Item",
-			sol::constructors<void(ItemType, int)>(),
-			"type",		&Item::type,
-			"damage",	&Item::damage
-			);
 
 		lua.new_usertype<Navigation>("Navigation",
 			sol::constructors<void(KoFiEngine*)>(),
@@ -271,7 +239,7 @@ public:
 
 			/// Functions
 		lua.set_function("GetInput",				&Scripting::LuaGetInput, this);
-		lua.set_function("CreateBullet",			&Scripting::LuaCreateBullet, this);
+		lua.set_function("CreateGameObject",		&Scripting::LuaCreateGameObject, this);
 		lua.set_function("DeleteGameObject",		&Scripting::DeleteGameObject, this);
 		lua.set_function("Find",					&Scripting::LuaFind, this);
 		lua.set_function("GetVariable",				&Scripting::LuaGetVariable, this);
@@ -316,9 +284,9 @@ public:
 		return gameObject->GetEngine()->GetNavigation();
 	}
 
-	void LuaCreateBullet()
+	void LuaCreateGameObject(std::string name)
 	{
-		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.push_back(gameObject);
+		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.emplace(gameObject, name);
 	}
 
 	void DeleteGameObject()

@@ -1767,7 +1767,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua">
+    <None Include="Ko-Fi\Assets\Scripts\Knife.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
@@ -1777,6 +1777,9 @@
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Enemy.lua">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>

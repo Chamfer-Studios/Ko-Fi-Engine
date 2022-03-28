@@ -2,38 +2,42 @@
 
 characterID = 1
 isWalking = false -- To play the steps track only once
+target = nil
 
-State = {
-   IDLE = 1,
+WalkState = {
+   WALK = 1,
    CROUCH = 2,
-   PRONE = 3,
+   RUN = 3,
 }
 
-currentState = State.IDLE
+Action = {
+	IDLE = 1,
+	ATTACKING = 2,
+	WALKING = 3,
+	AIMING = 4,
+}
+
+currentWalkState = WalkState.WALK
+currentAction = Action.IDLE
 speed = 500  -- consider Start()
-maxBullets = 2
-bulletCount = maxBullets
+maxKnives = 2
+knifeCount = maxKnives
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 local speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
-local maxBulletsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-local maxBulletsIV = InspectorVariable.new("maxBullets", maxBulletsIVT, maxBullets)
-NewVariable(maxBulletsIV)
-
-local currentItemType = ItemType.ITEM_HAND
-local currentItemDamage = 5
-currentItem = Item.new(currentItemType, currentItemDamage)
+local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+local maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
+NewVariable(maxKnivesIV)
 
 componentAnimator = gameObject:GetComponentAnimator()
 if (componentAnimator ~= nil) then
 	componentAnimator:SetSelectedClip("Idle")
 end
---animationDuration = 0.8
---animationTimer = 0.0
-isAttacking = false
-isAiming = false -- This is for GameState.lua not to unselect the player when you Left Click
+animationDuration = 0.8
+animationTimer = 0.0
+isAttacking = false -- This should go
 
 componentSwitch = gameObject:GetAudioSwitch()
 componentRigidBody = gameObject:GetRigidBody()
@@ -42,10 +46,6 @@ mouseParticles = Find("Mouse Particles")
 if (mouseParticles ~= nil) then
 	mouseParticles:GetComponentParticle():StopParticleSpawn()
 end
-
-particleFlag = false
-
-target = nil
 
 -------------------- Methods ---------------------
 
@@ -60,89 +60,62 @@ function Update(dt)
 			animationTimer = 0.0
 		end
 	end
-	if (particleFlag == true and mouseParticles ~= nil) then
+	if (mouseParticles ~= nil) then
 		mouseParticles:GetComponentParticle():StopParticleSpawn()
-		particleFlag = false
 	end
 
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
 	end
 
-	if (IsSelected() == true)
-		then --Gather Inputs
-			if (GetInput(1) == KEY_STATE.KEY_DOWN) then -- Left Click
-				
-				if (currentItem.type == ItemType.ITEM_GUN and bulletCount > 0) then
-
-					target = GetGameObjectHovered()
-					if (target.tag == Tag.ENEMY) then
-						Fire()
-					end
+	if (IsSelected() == true) then --Gather Inputs
+		if (GetInput(1) == KEY_STATE.KEY_DOWN) then -- Left Click
+			if (currentAction == Action.AIMING and knifeCount > 0) then
+				target = GetGameObjectHovered()
+				if (target.tag == Tag.ENEMY) then
+					Fire()
 				end
 			end
-			if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- RightClick
-				if (mouseParticles ~= nil) then
-					mouseParticles:GetComponentParticle():ResumeParticleSpawn()
-					mouseParticles:GetTransform():SetPosition(destination)
-					particleFlag = true
+		end
+		if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
+			if (mouseParticles ~= nil) then
+				mouseParticles:GetComponentParticle():ResumeParticleSpawn()
+				mouseParticles:GetTransform():SetPosition(destination)
+			end
+		end
+		if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
+			currentAction = Action.IDLE
+		end
+		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
+			currentAction = Action.AIMING
+		end	
+		if (GetInput(8) == KEY_STATE.KEY_DOWN) then -- X
+			if (currentWalkState == WalkState.CROUCH) then
+				currentWalkState = WalkState.WALK
+				if (isWalking == true and componentSwitch ~= nil) then
+					componentSwitch:StopTrack(2)
+					componentSwitch:PlayAudio(1)
+				end
+			else
+				currentWalkState = WalkState.CROUCH
+				if (isWalking == true and componentSwitch ~= nil) then
+					componentSwitch:StopTrack(1)
+					componentSwitch:PlayAudio(2)
 				end
 			end
-			if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
-				currentItem.type = ItemType.ITEM_HAND
-				isAiming = false
-			end
-			if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
-				currentItem.type = ItemType.ITEM_KNIFE
-				isAiming = false
-			end
-			if (GetInput(7) == KEY_STATE.KEY_DOWN) then -- G
-				currentItem.type = ItemType.ITEM_GUN
-				isAiming = true
-			end	
-			if (GetInput(8) == KEY_STATE.KEY_DOWN) -- X
-				then
-					if (currentState == State.CROUCH) then
-						currentState = State.IDLE
-						if (isWalking == true and componentSwitch ~= nil) then
-							componentSwitch:StopTrack(2)
-							componentSwitch:PlayAudio(1)
-						end
-					else
-						currentState = State.CROUCH
-						if (isWalking == true and componentSwitch ~= nil) then
-							componentSwitch:StopTrack(1)
-							componentSwitch:PlayAudio(2)
-						end
-					end
-			end	
-			--if (GetInput(9) == KEY_STATE.KEY_DOWN)  -- C
-			--	then
-			--		if (currentState == State.PRONE) then
-			--			currentState = State.IDLE
-			--			-- TODO: Play audio
-			--		else
-			--			currentState = State.PRONE
-			--			-- TODO: Play audio
-			--		end	
-			--end
-			if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
-				Reload()
-			end
-			if (GetInput(4) == KEY_STATE.KEY_DOWN) -- SPACE
-				then
-					if (currentItem.type == ItemType.ITEM_GUN and bulletCount > 0) then
-						-- Cast a ray to check if it can shoot a target
-						CreateBullet()
-						bulletCount = bulletCount - 1
-						if (componentSwitch ~= nil) then
-							componentSwitch:PlayTrack(0)
-						end
-					elseif (currentItem.type == ItemType.ITEM_KNIFE) then
-						print("La cartera, bro")
-					elseif (currentItem.type == ItemType.ITEM_NO_TYPE) then
-						print("No item selected")
-				end
+		end	
+		--if (GetInput(9) == KEY_STATE.KEY_DOWN)  -- C
+		--	then
+		--		if (currentWalkState == WalkState.RUN) then
+		--			currentWalkState = WalkState.WALK
+		--			-- TODO: Play audio
+		--		else
+		--			currentWalkState = WalkState.RUN
+		--			-- TODO: Play audio
+		--		end	
+		--end
+		if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
+			Reload()
 		end
 	end
 end
@@ -163,21 +136,21 @@ function MoveToDestination(dt)
 		then
 
 			local s = speed
-			if (currentState == State.CROUCH) then
+			if (currentWalkState == WalkState.CROUCH) then
 				s = speed * 0.66
-			elseif (currentState == State.PRONE) then
-				s = speed * 0.33
+			elseif (currentWalkState == WalkState.RUN) then
+				s = speed * 1.5
 			end
 
 			if (isWalking ~= true) then
-				if (currentState == State.IDLE) then
+				if (currentWalkState == WalkState.WALK) then
 					if (componentSwitch ~= nil) then
 						componentSwitch:PlayTrack(1)
 					end
 					if (componentAnimator ~= nil) then
 						componentAnimator:SetSelectedClip("Walk")
 					end
-				elseif (currentState == State.CROUCH) then
+				elseif (currentWalkState == WalkState.CROUCH) then
 					if (componentSwitch ~= nil) then
 						componentSwitch:PlayTrack(2)
 					end
@@ -189,7 +162,6 @@ function MoveToDestination(dt)
 				if (mouseParticles ~= nil) then
 					mouseParticles:GetComponentParticle():ResumeParticleSpawn()
 					mouseParticles:GetTransform():SetPosition(destination)
-					particleFlag = true
 				end
 
 				isWalking = true
@@ -226,7 +198,7 @@ function MoveToDestination(dt)
 end
 
 function Reload()
-	bulletCount = maxBullets
+	knifeCount = maxKnives
 	--TODO: Play audio
 end
 
@@ -243,8 +215,8 @@ end
 
 function Fire()
 
-	CreateBullet()
-	bulletCount = bulletCount - 1
+	CreateGameObject("Knife")
+	knifeCount = knifeCount - 1
 	if (componentSwitch ~= nil) then
 		componentSwitch:PlayTrack(0)
 	end
@@ -258,19 +230,6 @@ end
 
 function SetTarget(tar)
 	target = tar
-end
-
-function SetBulletDirection(bullet)
-	
-	local playerPos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
-	local bulletPos2D = { bullet:GetTransform():GetPosition().x, bullet:GetTransform():GetPosition().z }
-	local dist = Distance(playerPos2D, bulletPos2D)
-	local dir = { bulletPos2D[1] - playerPos2D[1], bulletPos2D[2] - playerPos2D[2] }
-	dir = Normalize(dir, dist)
-	dir3 = float3.new(dir[1], 0, dir[2])
-	
-	bullet:GetTransform():SetFront(dir3)
-
 end
 
 ----------------- Math Functions -----------------

@@ -107,38 +107,40 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : gameObjectList)
 	{
-			go->PostUpdate(dt); 
+		go->PostUpdate(dt); 
 	}
 
-	for (GameObject* parent : gameObjectListToCreate)
+	for (std::map<GameObject*, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
 	{
-		GameObject* bullet = CreateEmptyGameObject("Bullet");
-		//parent->GetComponent<ComponentScript>()->handler->lua["bullet"] = bullet;
-		//parent->GetComponent<ComponentScript>()->handler->lua.script("table.insert(bullets, bullet)"); //We will need something like this
+		GameObject* knife = CreateEmptyGameObject((*mapIt).second.c_str());
+		GameObject* parent = (*mapIt).first;
 
-		bullet->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
-		float3 pos = parent->GetTransform()->GetPosition();
-		bullet->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
-		float3 parentRot = parent->GetTransform()->GetRotation();
-		float3 rot = { parentRot.x - 55,parentRot.y,parentRot.z };
-		bullet->GetTransform()->SetRotation(rot);
+		if ((*mapIt).second == "Knife")
+		{
+			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
+			float3 pos = parent->GetTransform()->GetPosition();
+			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
+			float3 parentRot = parent->GetTransform()->GetRotation();
+			float3 rot = { parentRot.x - 55,parentRot.y,parentRot.z };
+			knife->GetTransform()->SetRotation(rot);
 
-		ComponentMesh* componentMesh = bullet->CreateComponent<ComponentMesh>();
- 		Mesh* mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
-		componentMesh->SetMesh(mesh);
-		
-		ComponentMaterial* componentMaterial = bullet->CreateComponent<ComponentMaterial>();
-		Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
-		Material* material = new Material();
-		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-		componentMaterial->SetMaterial(material);
-		
-		ComponentScript* componentScript = (ComponentScript*)bullet->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
-		componentScript->path = "Assets/Scripts/Bullet.lua";
-		componentScript->ReloadScript();
-		GameObject* target = parent->GetComponent<ComponentScript>()->handler->lua["target"];
-		componentScript->handler->lua["target"] = target;
-		componentScript->handler->lua["SetDestination"]();
+			ComponentMesh* componentMesh = knife->CreateComponent<ComponentMesh>();
+			Mesh* mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
+			componentMesh->SetMesh(mesh);
+
+			ComponentMaterial* componentMaterial = knife->CreateComponent<ComponentMaterial>();
+			Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
+			Material* material = new Material();
+			Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
+			componentMaterial->SetMaterial(material);
+
+			ComponentScript* knifeScript = (ComponentScript*)knife->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
+			knifeScript->path = "Assets/Scripts/Knife.lua";
+			knifeScript->ReloadScript();
+			GameObject* target = parent->GetComponent<ComponentScript>()->handler->lua["target"];
+			knifeScript->handler->lua["target"] = target;
+			knifeScript->handler->lua["SetDestination"]();
+		}
 	}
 	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)
