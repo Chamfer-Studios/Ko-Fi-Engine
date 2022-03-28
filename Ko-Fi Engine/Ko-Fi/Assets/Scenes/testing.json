@@ -44,7 +44,8 @@
                 ],
                 "is3D": true,
                 "name": "camera",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 624435464,
@@ -87,7 +88,8 @@
                 ],
                 "is3D": true,
                 "name": "MainCamera",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 1890739606,
@@ -168,7 +170,8 @@
                 ],
                 "is3D": true,
                 "name": "Floor",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 303954203,
@@ -249,7 +252,8 @@
                 ],
                 "is3D": true,
                 "name": "LeftWall",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 355990346,
@@ -330,7 +334,8 @@
                 ],
                 "is3D": true,
                 "name": "FrontWall",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 1195123424,
@@ -486,7 +491,8 @@
                 ],
                 "is3D": true,
                 "name": "Character",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 1657882298,
@@ -567,7 +573,8 @@
                 ],
                 "is3D": true,
                 "name": "Table",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 2
             },
             {
                 "UID": 1860854588,
@@ -642,7 +649,8 @@
                 ],
                 "is3D": true,
                 "name": "Shell",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 1037610866,
@@ -701,7 +709,8 @@
                 ],
                 "is3D": true,
                 "name": "Canvas",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 303700353,
@@ -761,7 +770,8 @@
                 ],
                 "is3D": true,
                 "name": "Image",
-                "parent_UID": 1037610866
+                "parent_UID": 1037610866,
+                "tag": 0
             },
             {
                 "UID": 1168295805,
@@ -842,7 +852,8 @@
                 ],
                 "is3D": true,
                 "name": "CliffRock_low",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 1278325985,
@@ -875,7 +886,8 @@
                 ],
                 "is3D": true,
                 "name": "rock_cliff",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 168619064,
@@ -950,7 +962,8 @@
                 ],
                 "is3D": true,
                 "name": "CliffRock_low",
-                "parent_UID": 1278325985
+                "parent_UID": 1278325985,
+                "tag": 0
             },
             {
                 "UID": 1386708608,
@@ -983,7 +996,8 @@
                 ],
                 "is3D": true,
                 "name": "rock_cliff",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 1765163036,
@@ -1064,7 +1078,8 @@
                 ],
                 "is3D": true,
                 "name": "CliffRock_low",
-                "parent_UID": 1386708608
+                "parent_UID": 1386708608,
+                "tag": 0
             },
             {
                 "UID": 897839112,
@@ -1103,7 +1118,8 @@
                 ],
                 "is3D": true,
                 "name": "GameState",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 543336811,
@@ -1218,7 +1234,8 @@
                 ],
                 "is3D": true,
                 "name": "Mouse Particles",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 220601966,
@@ -1299,7 +1316,8 @@
                 ],
                 "is3D": true,
                 "name": "Knife",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             }
         ],
         "name": "testing",

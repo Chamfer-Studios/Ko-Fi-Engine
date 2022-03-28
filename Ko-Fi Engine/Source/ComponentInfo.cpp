@@ -35,7 +35,7 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 		ImGui::InputText("##Name", &(owner->name));
 		ImGui::Checkbox("Active", &owner->active);
 		ImGui::SameLine();
-
+		tag = (int)owner->tag;
 		// Take care with the order in the combo, it has to follow the Tag enum class order
 		if (ImGui::Combo("##tagcombo", &tag, "Untagged\0Player\0Enemy\0Wall"))
 		{
