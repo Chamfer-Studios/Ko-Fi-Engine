@@ -54,6 +54,8 @@ public:
 	inline const CollisionLayer GetCollisionLayer() { return collisionLayer; }
 	inline const const char* GetCollisionLayerString() { return CollisionLayerToString(collisionLayer); }
 	inline void SetCollisionLayer(const CollisionLayer collisionLayer) { if (collisionLayer == this->collisionLayer) return; this->collisionLayer = collisionLayer; hasUpdated = true; }
+	inline const std::string* GetFilter() const { return &filter; }
+	inline void SetFilter(const std::string newFilter) { if (newFilter == filter) return; filter = newFilter; hasUpdated = true; }
 	
 	inline const bool IsTrigger() { return isTrigger; }
 	inline void SetIsTrigger(const bool isTrigger) { this->isTrigger = isTrigger; hasUpdated = true; }
@@ -86,11 +88,14 @@ private:
 
 	CollisionLayer collisionLayer = CollisionLayer::DEFAULT;
 	int collisionLayerInt = 0;
+	std::string filter = "default";
 
 	float3 boxCollSize = float3(5, 5, 5); // Box collider size
 	float3 centerPosition = float3(0, 0, 0); // Center position of the collider
 
 	bool drawCollider = false;
+
+	std::string* debugFilter;
 };
 
 #endif // !__C_COLLIDER_H__

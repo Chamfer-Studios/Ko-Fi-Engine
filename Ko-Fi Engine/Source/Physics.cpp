@@ -9,6 +9,60 @@
 #include <vector>
 #include <string>
 
+void Physics::setupFiltering(physx::PxRigidActor* actor, physx::PxU32 LayerMask, physx::PxU32 filterMask)
+{
+	if (actor) {
+		physx::PxFilterData filterData;
+		filterData.word0 = LayerMask; // word0 = own ID
+		filterData.word1 = filterMask;	// word1 = ID mask to filter pairs that trigger a contact callback;
+
+		const physx::PxU32 numShapes = actor->getNbShapes();
+		physx::PxShape** shapes = (physx::PxShape**)malloc(sizeof(physx::PxShape*) * numShapes);
+		actor->getShapes(shapes, numShapes);
+		for (physx::PxU32 i = 0; i < numShapes; i++)
+		{
+			physx::PxShape* shape = shapes[i];
+
+			shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+			shape->setSimulationFilterData(filterData);
+			shape->setQueryFilterData(filterData);
+		}
+	}
+}
+
+physx::PxFilterFlags customFilterShader(
+	physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+	physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+{
+	if ((physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))) 
+	{
+		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
+	}
+	else
+	{
+		std::string* debugfilter0 = (std::string*)filterData0.word0;
+		debugfilter0->c_str();
+		std::string* debugfilter1 = (std::string*)filterData1.word0;
+		debugfilter1->c_str();
+		if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+		{
+			pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+			pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+			pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+			pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
+			pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
+		}
+		else
+		{
+			pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+			//return physx::PxFilterFlag::eSUPPRESS;
+		}
+	}
+
+	return physx::PxFilterFlag::eDEFAULT;
+}
+
 // Module constructor
 Physics::Physics(KoFiEngine* engine) : Module()
 {
@@ -84,8 +138,8 @@ bool Physics::CleanUp()
 
 	simulationEventCallback = nullptr;
 
-	// TODO: Delete the filter matrix
-
+	// TEST: Delete the filter matrix
+	DeleteFilterMatrix();
 
 	return true;
 }
@@ -101,7 +155,15 @@ bool Physics::SaveConfiguration(Json& configModule) const
 		configModule["Filters"].push_back(filter);
 	}
 
-	// TODO: Save filter matrix
+	// TEST: Save filter matrix
+	configModule["Filter_matrix"];
+	for (int i = 0; i < filters.size(); ++i)
+	{
+		for (int j = 0; j < filters.size(); ++j)
+		{
+			configModule["Filter_matrix"].push_back(filterMatrix[i][j]);
+		}
+	}
 
 	return true;
 }
@@ -121,9 +183,30 @@ bool Physics::LoadConfiguration(Json& configModule)
 		filters.push_back(filter.value().get<std::string>());
 	}
 
-	// TODO: Delete current filter matrix
+	//TEST: Delete current filter matrix
+	if (filterMatrix)
+		DeleteFilterMatrix();
 
-	// TODO: Create new filter matrix
+	if (filters.size())
+	{
+		// TEST: Declare new filter matrix
+		DeclareFilterMatrix();
+
+		// TEST: Traverse the 2D array and assign values from json
+		int iteratorX = 0;
+		int iteratorY = 0;
+		for (auto filterMat : configModule.at("Filter_matrix").items())
+		{
+			filterMatrix[iteratorX][iteratorY] = filterMat.value().get<bool>();
+
+			++iteratorY;
+			if (iteratorY >= filters.size())
+			{
+				++iteratorX;
+				iteratorY = 0;
+			}
+		}
+	}
 
 	return true;
 }
@@ -158,45 +241,84 @@ bool Physics::InspectorDraw()
 			SetGravity(9.81f);
 			engine->SaveConfiguration();
 		}
+		ImGui::Separator();
 		// ------------------------------------------------------------------------
 
 		// COLLISION FILTERS ------------------------------------------------------
-		ImGui::Separator();
-		ImGui::Text("Filters:");
-		for (int i = 0; i < filters.size(); ++i)
+		if (ImGui::TreeNodeEx("Filters"))
 		{
-			ImGui::Text(filters[i].c_str());
-			ImGui::SameLine();
-			std::string label = "delete##";
-			label += filters[i];
-			if (ImGui::Button(label.c_str()))
+			for (int i = 0; i < filters.size(); ++i)
 			{
-				DeleteFilter(filters[i]);
-				engine->SaveConfiguration();
+				ImGui::Text(filters[i].c_str());
+				if (filters[i] != defaultFilter)
+				{
+					ImGui::SameLine();
+					std::string label = "delete##";
+					label += filters[i];
+					if (ImGui::Button(label.c_str()))
+					{
+						DeleteFilter(filters[i]);
+						engine->SaveConfiguration();
+					}
+				}
 			}
+			char filterBuff[64];
+			strcpy_s(filterBuff, "");
+			ImGui::Text("Create filter: ");
+			if (ImGui::InputText("##createfilter", filterBuff, IM_ARRAYSIZE(filterBuff), ImGuiInputTextFlags_EnterReturnsTrue))
+			{
+				std::string str = filterBuff;
+				if (str == "")
+				{
+					LOG_BOTH("ERROR, cannot add an empty filter\n");
+				}
+				else
+				{
+					AddFilter(str);
+					engine->SaveConfiguration();
+				}
+			}
+			ImGui::Text("(For the input text to work, you will have to write the desired filter name and press enter)");
+
+			ImGui::TreePop();
 		}
-		char filterBuff[64];
-		strcpy_s(filterBuff, "");
-		ImGui::Text("Create filter: ");
-		if (ImGui::InputText("##createfilter", filterBuff, IM_ARRAYSIZE(filterBuff), ImGuiInputTextFlags_EnterReturnsTrue))
-		{
-			std::string str = filterBuff;
-			if (str == "")
-			{
-				LOG_BOTH("ERROR, cannot add an empty filter\n");
-			}
-			else
-			{
-				AddFilter(str);
-				engine->SaveConfiguration();
-			}
-		}
-		ImGui::Text("(For the input text to work, you will have to write the desired filter name and press enter)");
 		ImGui::Separator();
 		// -------------------------------------------------------------------------------------------------------------
 
 		// FILTER MATRIX ---------------------------------------------------------------------
+		if (ImGui::TreeNodeEx("Filter Matrix"))
+		{
+			size_t filSize = filters.size();
+			for (int i = 0; i < filSize; ++i)
+			{
+				for (int j = 0; j < filSize; ++j)
+				{
+					if (j != 0) ImGui::SameLine();
 
+					std::string label( "##" + filters[i] + std::to_string(i) + std::to_string(j));
+					bool filterMat = filterMatrix[i][j];
+					if (ImGui::Checkbox(label.c_str(), &filterMat))
+					{
+						filterMatrix[i][j] = filterMat;
+						engine->SaveConfiguration();
+					}
+				}
+				ImGui::SameLine();
+				ImGui::Text(std::string(filters[i] + " (" + std::to_string(i) + ")").c_str());
+			}
+			int count = filSize - 1;
+			for (int i = 0; i < filSize; ++i)
+			{
+				if (i != 0)
+				{
+					ImGui::SameLine();
+				}
+				ImGui::Text(std::string("  " + std::to_string(i) + "      ").c_str());
+			}
+
+			ImGui::TreePop();
+		}
+		ImGui::Separator();
 		// -----------------------------------------------------------------------------------
 	}
 
@@ -240,7 +362,7 @@ bool Physics::InitializePhysX()
 	// Scene description creation
 	physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
 	sceneDesc.gravity = physx::PxVec3(0.0f, -gravity, 0.0f);
-	sceneDesc.bounceThresholdVelocity = gravity * 0.25f;
+	sceneDesc.bounceThresholdVelocity = gravity * 0.02f;
 	if (!sceneDesc.cpuDispatcher)
 	{
 		physx::PxCpuDispatcher* _cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(/*nbThreads*/4);
@@ -252,7 +374,8 @@ bool Physics::InitializePhysX()
 		sceneDesc.cpuDispatcher = _cpuDispatcher;
 	}
 
-	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+	/*sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;*/
+	sceneDesc.filterShader = customFilterShader;
 	simulationEventCallback = new SimulationEventCallback(this);
 	sceneDesc.simulationEventCallback = simulationEventCallback;
 	scene = physics->createScene(sceneDesc);
@@ -299,9 +422,30 @@ void Physics::AddFilter(const std::string newFilter)
 
 	filters.push_back(newFilter);
 
-	// TODO: Delete current filter matrix
+	// TEST: Traverse the 2D array and assign values from old filter matrix and add the new filter
+	// First, we want to declare a new filter matrix
+	size_t filSize = filters.size();													
+	bool** newFilterMatrix = new bool* [filSize];												
+	for (int i = 0; i < filSize; ++i) { newFilterMatrix[i] = new bool[filSize]; }
+	// Then we want to copy the old filter matrix to the new one, and set to true the incoming filter change
+	for (int i = 0; i < filSize; ++i)
+	{
+		for (int j = 0; j < filSize; ++j)
+		{
+			// If i or j gets to the end of filterMatrix (new incoming filter), then set to true, else copy from old filter matrix
+			if (i == filSize - 1 || j == filSize - 1)
+				newFilterMatrix[i][j] = true;
+			else
+				newFilterMatrix[i][j] = filterMatrix[i][j];
+		}
+	}
+	DeclareFilterMatrix();
 
-	// TODO: Create new filter matrix
+	// TEST: Delete current filter matrix
+	DeleteFilterMatrix();
+
+	// TEST: Set the new filter matrix
+	SetFilterMatrix(newFilterMatrix);
 }
 
 void Physics::DeleteFilter(const std::string deletedFilter)
@@ -334,21 +478,36 @@ void Physics::DeleteFilter(const std::string deletedFilter)
 		return;
 	}
 
-	// TODO: Delete current filter matrix
-
-	// TODO: Create new filter matrix
-
-}
-
-uint const Physics::GetFilterID(const std::string newFilter)
-{
-	for (int i = 0; i < filters.size(); ++i)
+	// TEST: Traverse the 2D array and assign values from old filter matrix and add the new filter
+	// First, we want to declare a new filter matrix
+	size_t filSize = filters.size();
+	bool** newFilterMatrix = new bool* [filSize];
+	for (int i = 0; i < filSize; ++i) { newFilterMatrix[i] = new bool[filSize]; }
+	// Then we want to copy the old filter matrix to the new one
+	// TODO: We need to re-do the delete logic, as it is not done correctly
+	for (int i = 0; i < filSize; ++i)
 	{
-		if (filters[i] == newFilter)
-			return i;
+		if (i != 0) // What I guess this make is that the default filter is kept as true
+		{
+			for (int j = 0; j < filSize; ++j)
+			{
+				newFilterMatrix[i][j] = false;
+			}
+		}
+		else
+		{
+			for (int j = 0; j < filSize; ++j)
+				newFilterMatrix[0][j] = true;
+		}
+			
 	}
 
-	return -1;
+	// TEST: Delete current filter matrix
+	DeleteFilterMatrix();
+
+	// TEST: Set the new filter matrix
+	SetFilterMatrix(newFilterMatrix);
+
 }
 
 std::string const Physics::GetFilterByID(const uint ID)
@@ -359,6 +518,13 @@ std::string const Physics::GetFilterByID(const uint ID)
 		return filters[ID];
 }
 
-void Physics::DeleteFilterMatrix()
+uint const Physics::GetFilterID(const std::string* newFilter)
 {
+	for (int i = 0; i < filters.size(); ++i)
+	{
+		if (filters[i] == *newFilter)
+			return i;
+	}
+
+	return -1;
 }

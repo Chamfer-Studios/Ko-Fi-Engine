@@ -65,12 +65,12 @@ public:
 	void AddFilter(const std::string newFilter);
 	void DeleteFilter(const std::string deletedFilter);
 	inline std::vector<std::string> const GetFilters() { return filters; }
-	uint const GetFilterID(const std::string newFilter);
+	uint const GetFilterID(const std::string* newFilter);
 	std::string const GetFilterByID(const uint ID);
 
 	// Filter matrix methods
-	inline bool** const GetFilterMatrix() { return filterMatrix; }
-	void DeleteFilterMatrix();
+	inline bool** const GetFilterMatrix() { return filterMatrix; };
+	inline void SetFilterMatrix(bool** newFilterMatrix) { filterMatrix = newFilterMatrix; }
 
 	// Getters & setters
 	inline physx::PxPhysics* GetPxPhysics() { 
@@ -86,6 +86,24 @@ public:
 	inline int GetNbThreads() const { return nbThreads; }
 	inline void SetNbThreads(const float newNbThreads) { nbThreads = newNbThreads; }
 
+
+	void setupFiltering(physx::PxRigidActor* actor, physx::PxU32 LayerMask, physx::PxU32 filterMask);
+
+private:
+	// Filter matrix private methods
+	inline void DeleteFilterMatrix()
+	{
+		for (int i = 0; i < filters.size(); i++)
+			delete[] filterMatrix[i];				// To delete the inner arrays
+		delete[] filterMatrix;						// To delete the outer array, which contained the pointers of all the inner arrays
+	}
+	inline void DeclareFilterMatrix()
+	{
+		size_t filSize = filters.size();													// Dimensions of the array
+		filterMatrix = new bool* [filSize];												// Declare a memory block of bools of filters size
+		for (int i = 0; i < filSize; ++i) { filterMatrix[i] = new bool[filSize]; }		// Declare a memory block of bools of filters size
+	};
+
 private:
 	KoFiEngine* engine = nullptr;
 
@@ -94,8 +112,8 @@ private:
 	std::map<physx::PxRigidActor*, GameObject*> actors;
 
 	std::vector<std::string> filters;
-	std::string defaultFilter = "Default";
-	bool** filterMatrix = nullptr;
+	std::string defaultFilter = "default";
+	bool** filterMatrix = nullptr; // For declaring and using a 2d array dynamically, see https://www.geeksforgeeks.org/how-to-declare-a-2d-array-dynamically-in-c-using-new-operator/ as a reference
 
 	physx::PxFoundation* foundation = nullptr;
 	physx::PxPhysics* physics = nullptr;

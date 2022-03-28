@@ -48,7 +48,6 @@ bool ComponentCollider2::PostUpdate(float dt)
 	return ret;
 }
 
-// TODO: Separate updating between shape and state
 bool ComponentCollider2::UpdateCollider()
 {
 	bool ret = true;
@@ -83,6 +82,9 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 
 void ComponentCollider2::CreateBoxCollider()
 {
+	if (shape)
+		debugFilter = (std::string*)shape->getSimulationFilterData().word0;
+
 	// SHAPE CREATION
 	if (shape)
 		shape->release();
@@ -110,11 +112,11 @@ void ComponentCollider2::CreateBoxCollider()
 		shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
 
 		physx::PxFilterData filterData;
-		filterData.word0 = (int)GetCollisionLayer();
+		filterData.word0 = (int)GetFilter();
 
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-		//shape->setSimulationFilterData(filterData);
-		//shape->setQueryFilterData(filterData);
+		shape->setSimulationFilterData(filterData);
+		shape->setQueryFilterData(filterData);
 
 		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
 	}
@@ -198,10 +200,12 @@ void ComponentCollider2::Save(Json& json) const
 	json["enabled"] = enabled;
 	json["is_trigger"] = isTrigger;
 	json["draw_collider"] = drawCollider;
+	json["filter"] = filter;
 
 	json["box_collider_size"] = { boxCollSize.x, boxCollSize.y, boxCollSize.z };
 	json["center_position"] = { centerPosition.x, centerPosition.y, centerPosition.z };
 }
+
 void ComponentCollider2::Load(Json& json)
 {
 	colliderShape = (ColliderShape)json.at("collider_type");
@@ -210,6 +214,7 @@ void ComponentCollider2::Load(Json& json)
 	enabled = json.at("enabled");
 	isTrigger = json.at("is_trigger");
 	drawCollider = json.at("draw_collider");
+	filter = json.at("filter");
 
 	std::vector<float> values = json.at("box_collider_size").get<std::vector<float>>();
 	boxCollSize = float3(values[0], values[1], values[2]);
@@ -248,19 +253,38 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		ImGui::Separator();
 
 		// COLLISION LAYER -----------------------------------------------------------------------------------------------
-		ImGui::Text("Collison Layer:");
-		// Take care with the order in the combo, it has to follow the CollisionLayer enum class order
-		ImGui::Combo("##combocollisionlayer", &collisionLayerInt, "Default\0Player\0Enemy\0Bullet\0Terrain");
-		ImGui::SameLine();
-		if ((ImGui::Button("Assign##collisionlayer")))
+		//ImGui::Text("Collison Layer:");
+		//// Take care with the order in the combo, it has to follow the CollisionLayer enum class order
+		//ImGui::Combo("##combocollisionlayer", &collisionLayerInt, "Default\0Player\0Enemy\0Bullet\0Terrain");
+		//ImGui::SameLine();
+		//if ((ImGui::Button("Assign##collisionlayer")))
+		//{
+		//	SetCollisionLayer((CollisionLayer)collisionLayerInt);
+		//	collisionLayerInt = 0; // This will reset the button to default when clicked
+		//	hasUpdated = true;
+		//}
+		//ImGui::Text("Current collision layer: ");
+		//ImGui::SameLine();
+		//ImGui::Text("%s", GetCollisionLayerString());
+		//ImGui::Separator();
+
+		// FILTERS -----------------------------------------------------------------------------------------------
+		ImGui::Text("Filter:");
+		if (ImGui::BeginCombo("Filter", filter.c_str()))
 		{
-			SetCollisionLayer((CollisionLayer)collisionLayerInt);
-			collisionLayerInt = 0; // This will reset the button to default when clicked
-			hasUpdated = true;
+			const std::vector<std::string> filters = owner->GetEngine()->GetPhysics()->GetFilters();
+
+			for (int i = 0; i < filters.size(); ++i)
+			{
+				if (ImGui::Selectable(filters[i].c_str()))
+					SetFilter(filters[i]);
+			}
+			ImGui::EndCombo();
 		}
-		ImGui::Text("Current collision layer: ");
+		ImGui::Text("Current filter: ");
 		ImGui::SameLine();
-		ImGui::Text("%s", GetCollisionLayerString());
+		const std::string* str = GetFilter();
+		ImGui::Text("%s", str->c_str());
 		ImGui::Separator();
 
 		if (colliderShape == ColliderShape::BOX)

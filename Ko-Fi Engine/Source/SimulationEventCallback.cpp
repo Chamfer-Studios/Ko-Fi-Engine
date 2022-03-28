@@ -1,9 +1,9 @@
-#include "Source/SimulationEventCallback.h"
-#include "Source/GameObject.h"
-#include "Source/Physics.h"
-#include "Source/ComponentScript.h"
+#include "SimulationEventCallback.h"
+#include "GameObject.h"
+#include "Physics.h"
+#include "ComponentScript.h"
 #include "PxSimulationEventCallback.h"
-#include "Source/Globals.h"
+#include "Globals.h"
 
 void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 {
@@ -83,6 +83,7 @@ void SimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU3
 				{
 					if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 					{
+						LOG_BOTH("holi");
 						// Call to OnTriggerEnter(gameObject2) to the scripting function
 					}
 					else if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
@@ -102,6 +103,7 @@ void SimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU3
 				{
 					if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 					{
+						LOG_BOTH("holi");
 						// Call to OnTriggerEnter(gameObject1) to the scripting function
 					}
 					else if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
