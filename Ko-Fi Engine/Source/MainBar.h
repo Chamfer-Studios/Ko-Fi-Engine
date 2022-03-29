@@ -16,6 +16,7 @@ public:
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
+	void ThreadLoadScene();
 
 	void ChoosersListener();
 
