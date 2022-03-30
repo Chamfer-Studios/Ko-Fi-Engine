@@ -87,7 +87,7 @@ function CalculateFinalPath(wp)
     for i=1,#wp - 1 do
         current = wp[i]
         next = wp[i + 1]
-        result = navigation:FindPath(current, next, 1000)
+        result = navigation:FindPath(current, next, 1000, 1000)
         for j=1,#result do
             finalPath[n] = result[j]
             n = n + 1
