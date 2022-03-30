@@ -3,7 +3,7 @@ State = {
     SEEK = 2
 }
 
-currentState = State.SEEK
+currentState = State.PATROL
 speed = 20
 player = nil
 lastPlayerPosition = nil
@@ -90,6 +90,7 @@ function CalculateFinalPath(wp)
         result = navigation:FindPath(current, next, 1000, 1000)
         for j=1,#result do
             finalPath[n] = result[j]
+            Log(tostring(finalPath[n]) .. "\n")
             n = n + 1
         end
     end
