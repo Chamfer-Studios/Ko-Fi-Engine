@@ -743,6 +743,24 @@ bool ResourceManager::ValidateMetaFile(const char* assetsPath, bool library)
 	return false;
 }
 
+bool ResourceManager::ResourceHasMetaType(Resource* resource) const
+{
+	if (resource == nullptr)
+	{
+		LOG_BOTH("[ERROR] Resource Manager: Couldn't check that the resource has a meta type file. Resource was nullptr");
+		return false;
+	}
+
+	switch (resource->GetType())
+	{
+	case ResourceType::TEXTURE: { return true; } break;
+	case ResourceType::SHADER: { return true; } break;
+	default: break;
+	}
+
+	return false;
+}
+
 Resource* ResourceManager::CreateNewResource(const char* assetPath, ResourceType type)
 {
 	Resource* ret = new Resource(type);

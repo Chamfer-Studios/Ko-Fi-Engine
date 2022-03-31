@@ -47,6 +47,8 @@ public:
 
 	bool HasMetaFile(const char* assestsPath);
 	bool ValidateMetaFile(const char* assetsPath, bool library = true);
+	bool ResourceHasMetaType(Resource* resource) const;
+
 	bool LoadMetaFileIntoLibrary(const char* assetsPath);
 	bool GetLibraryPairs(const char* assetsPath, std::map<UID, ResourceBase>& pairs);
 	bool GetResourceUIDsFromMeta(const char* assetsPath, std::vector<UID>& uids);
