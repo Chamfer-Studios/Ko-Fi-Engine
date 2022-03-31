@@ -131,6 +131,9 @@
     <Filter Include="Source\Importers">
       <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Players">
+      <UniqueIdentifier>{b60b2e15-ad68-4868-b194-05cbcd60c8cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -1773,14 +1776,14 @@
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Enemy.lua">
       <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua">
+      <Filter>Scripts\Players</Filter>
     </None>
   </ItemGroup>
 </Project>

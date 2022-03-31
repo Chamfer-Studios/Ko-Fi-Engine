@@ -242,10 +242,12 @@ public:
 		lua.set_function("CreateGameObject",		&Scripting::LuaCreateGameObject, this);
 		lua.set_function("DeleteGameObject",		&Scripting::DeleteGameObject, this);
 		lua.set_function("Find",					&Scripting::LuaFind, this);
+		lua.set_function("GetObjectsByTag",			&Scripting::LuaGetObjectsByTag, this);
 		lua.set_function("GetVariable",				&Scripting::LuaGetVariable, this);
 		lua.set_function("NewVariable",				&Scripting::LuaNewVariable, this);
 		lua.set_function("GetRuntimeState",			&Scripting::LuaGetRuntimeState, this);
 		lua.set_function("GetGameObjectHovered",	&Scripting::LuaGetGameObjectHovered, this);
+		lua.set_function("GetLastMouseClick",		&Scripting::LuaGetLastMouseClick, this);
 		lua.set_function("Log",						&Scripting::LuaLog, this);
 		lua.set_function("GetNavigation",			&Scripting::GetNavigation, this);
 	}
@@ -302,6 +304,17 @@ public:
 				return go;
 		}
 		return nullptr;
+	}
+
+	std::vector<GameObject*> LuaGetObjectsByTag(std::string name)
+	{
+		std::vector<GameObject*> ret;
+		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		{
+			if (go->tag == Tag::TAG_PLAYER)
+				ret.push_back(go);
+		}
+		return ret;
 	}
 
 	std::variant<int, float, float2, float3, bool, std::string> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
@@ -362,6 +375,11 @@ public:
 	GameObject* LuaGetGameObjectHovered()
 	{
 		return gameObject->GetEngine()->GetCamera3D()->MousePicking();
+	}
+
+	float3 LuaGetLastMouseClick()
+	{
+		return gameObject->GetEngine()->GetCamera3D()->GetLastMouseClick();
 	}
 
 	void LuaLog(const char* log) {

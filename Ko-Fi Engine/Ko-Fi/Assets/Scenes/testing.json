@@ -442,7 +442,7 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Player.lua",
+                        "file_name": "Assets/Scripts/Players/Zhib.lua",
                         "script_number": 1,
                         "type": "script"
                     },
@@ -492,7 +492,7 @@
                 "is3D": true,
                 "name": "Character",
                 "parent_UID": 4294967295,
-                "tag": 0
+                "tag": 1
             },
             {
                 "UID": 1657882298,

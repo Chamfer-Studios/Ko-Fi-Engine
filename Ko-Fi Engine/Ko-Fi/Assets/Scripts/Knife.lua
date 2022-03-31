@@ -6,6 +6,7 @@ destination = nil
 
 -------------------- Methods ---------------------
 
+-- Called each loop iteration
 function Update(dt)
 
 	life = life - dt

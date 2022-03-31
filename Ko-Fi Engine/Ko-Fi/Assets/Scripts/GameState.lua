@@ -23,8 +23,7 @@ function Update(dt)
 end
 
 function PostUpdate(dt)
-	aiming = GetVariable("Player.lua", "currentAction", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
-	print(aiming)
+	aiming = GetVariable("Zhib.lua", "currentAction", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 	if (aiming  ~= 4) then
 		
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
