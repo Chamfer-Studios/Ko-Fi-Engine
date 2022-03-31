@@ -39,12 +39,23 @@ public:
 	UI(KoFiEngine* engine);
 	~UI();
 
+	bool Awake(Json configModule);
 	bool Start() override;
 	bool PreUpdate(float dt) override;
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
 	void OnNotify(const Event& event) override;
+
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 
 	void PrepareUIRender();
 	void EndUIRender();
@@ -55,8 +66,6 @@ public:
 	std::vector<SDL_Texture*> loadedTextures;
 
 	void OnGui() override;
-	//void OnLoad(const JSONReader& reader) override;
-	//void OnSave(JSONWriter& writer) const override;
 public:
 	TTF_Font* rubik = nullptr;
 private:

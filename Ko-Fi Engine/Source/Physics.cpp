@@ -9,27 +9,6 @@
 #include <vector>
 #include <string>
 
-void Physics::setupFiltering(physx::PxRigidActor* actor, physx::PxU32 LayerMask, physx::PxU32 filterMask)
-{
-	if (actor) {
-		physx::PxFilterData filterData;
-		filterData.word0 = LayerMask; // word0 = own ID
-		filterData.word1 = filterMask;	// word1 = ID mask to filter pairs that trigger a contact callback;
-
-		const physx::PxU32 numShapes = actor->getNbShapes();
-		physx::PxShape** shapes = (physx::PxShape**)malloc(sizeof(physx::PxShape*) * numShapes);
-		actor->getShapes(shapes, numShapes);
-		for (physx::PxU32 i = 0; i < numShapes; i++)
-		{
-			physx::PxShape* shape = shapes[i];
-
-			shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-			shape->setSimulationFilterData(filterData);
-			shape->setQueryFilterData(filterData);
-		}
-	}
-}
-
 physx::PxFilterFlags customFilterShader(
 	physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
 	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,

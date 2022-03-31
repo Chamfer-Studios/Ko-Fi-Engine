@@ -12,6 +12,7 @@ public:
 	CollisionDetector(KoFiEngine* engine);
 	~CollisionDetector();
 
+	bool Awake(Json configModule);
 	bool Update(float dt);
 	bool CleanUp();
 	void OnNotify(const Event& event);
@@ -19,6 +20,15 @@ public:
 	void RemoveCollidableEntity(GameObject* GO); //TODO: The GameObject should remove itself from the list at cleanup/when deactivated.
 
 	void CheckCollisions(GameObject* currentEntity); //loop through all gameobjects that are not itself and check for intersection between AABBs
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 
 private:
 	

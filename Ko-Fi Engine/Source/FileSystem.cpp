@@ -33,8 +33,10 @@ FileSystem::~FileSystem()
 
 }
 
-bool FileSystem::Awake()
+bool FileSystem::Awake(Json configModule)
 {
+	bool ret = true;
+
 	CONSOLE_LOG("Turning on FileSystem debugger...");
 	appLog->AddLog("Turning on FileSystem debugger...\n");
 
@@ -42,7 +44,9 @@ bool FileSystem::Awake()
 	//std::filesystem::directory_entry().assign(addPath);
 	// Stream log messages to Debug window
 
-	return true;
+	ret = LoadConfiguration(configModule);
+
+	return ret;
 }
 
 bool FileSystem::Start()
@@ -82,6 +86,21 @@ bool FileSystem::CleanUp()
 void FileSystem::OnNotify(const Event& event)
 {
 	// Manage events
+}
+
+bool FileSystem::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool FileSystem::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool FileSystem::InspectorDraw()
+{
+	return true;
 }
 
 std::string FileSystem::OpenFile(const char* path) const

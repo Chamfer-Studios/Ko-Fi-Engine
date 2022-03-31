@@ -143,6 +143,9 @@ bool Editor::Awake(Json configModule)
 	// FIXME: The list of meshes should be in scene intro.
 	//input->gameObjects = &gameObjects;
 	ImGuizmo::Enable(true);
+
+	ret = LoadConfiguration(configModule);
+
 	return ret;
 }
 
@@ -328,6 +331,21 @@ void Editor::OnNotify(const Event& event)
 void Editor::OnPlay()
 {
 	panelGameObjectInfo.selectedGameObjectID = -1;
+}
+
+bool Editor::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Editor::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Editor::InspectorDraw()
+{
+	return true;
 }
 
 #include "ImGui.h"                // https://github.com/ocornut/imgui

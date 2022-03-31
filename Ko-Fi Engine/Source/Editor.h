@@ -57,6 +57,15 @@ public:
 	void OnNotify(const Event& event);
 	void OnPlay();
 
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	void AddPanel(Panel* panel);
 	void RemovePanel(Panel* panel);
 	PanelChooser* GetPanelChooser();

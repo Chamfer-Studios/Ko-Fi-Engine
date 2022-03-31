@@ -38,6 +38,7 @@ public:
 	SceneManager(KoFiEngine* engine);
 	~SceneManager();
 
+	bool Awake(Json configModule);
 	// Called before render is available
 	virtual bool Awake();
 
@@ -58,6 +59,15 @@ public:
 
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
+
+		// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 
 	bool PrepareUpdate();
 	bool FinishUpdate();

@@ -29,6 +29,15 @@ Camera3D::~Camera3D()
 {
 }
 
+bool Camera3D::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool Camera3D::Start()
 {
 	CONSOLE_LOG("Setting up the camera");
@@ -266,6 +275,21 @@ void Camera3D::OnPlay()
 void Camera3D::OnStop()
 {
 	currentCamera = engineCamera;
+}
+
+bool Camera3D::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Camera3D::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Camera3D::InspectorDraw()
+{
+	return true;
 }
 
 void Camera3D::SetGameCamera(ComponentCamera* gameCamera)

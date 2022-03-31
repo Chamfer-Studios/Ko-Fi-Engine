@@ -28,6 +28,15 @@ Navigation::~Navigation()
 {
 }
 
+bool Navigation::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool Navigation::Start()
 {
 	return true;
@@ -538,4 +547,40 @@ void Navigation::OnGui()
 	}
 
 	ImGui::End();
+}
+
+bool Navigation::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Navigation::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Navigation::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Navigator##"))
+	{
+		ImGui::DragFloat("Cell Size", &navMeshConfig.cs, 0.001f);
+		ImGui::DragFloat("Cell Height", &navMeshConfig.ch, 0.001f);
+		ImGui::DragFloat("Slope Angle", &navMeshConfig.walkableSlopeAngle, 0.5f);
+		ImGui::DragFloat("Walkable Climb", &navMeshConfig.walkableClimb, 0.02f);
+		ImGui::DragInt("Walkable Height", &navMeshConfig.walkableHeight, 0.05f);
+		ImGui::DragFloat("Walkable Radius", &navMeshConfig.walkableRadius, 0.02f);
+		ImGui::DragFloat("Min Region Area", &navMeshConfig.minRegionArea, 0.02f);
+		ImGui::DragFloat("Merge Region Area", &navMeshConfig.mergeRegionArea, 0.02f);
+		ImGui::DragFloat("Border Size", &navMeshConfig.borderSize, 0.001f);
+		ImGui::DragFloat("Max Edge Length", &navMeshConfig.maxEdgeLen, 0.5f);
+		ImGui::DragInt("Max Verts Poly", &navMeshConfig.maxVertsPerPoly, 0.2f, 3, 6);
+		ImGui::DragFloat("Detail Sample Error", &navMeshConfig.detailSampleMaxError, 0.02f);
+		ImGui::DragFloat("Detail Sample Distance", &navMeshConfig.detailSampleDist, 0.02f);
+
+		if (ImGui::Button("Bake Navmesh")) {
+			ComputeNavmesh();
+			PrepareDetour();
+		}
+	}
+	return true;
 }

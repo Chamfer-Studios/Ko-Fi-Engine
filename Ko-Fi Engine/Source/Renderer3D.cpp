@@ -61,6 +61,8 @@ bool Renderer3D::Awake(Json configModule)
 
 	InitFrameBuffers();
 
+	ret = LoadConfiguration(configModule);
+
 	return ret;
 }
 
@@ -110,6 +112,7 @@ bool Renderer3D::SaveConfiguration(Json& configModule) const
 
 bool Renderer3D::LoadConfiguration(Json& configModule)
 {
+	vsync = configModule["Vsync"];
 	return true;
 }
 

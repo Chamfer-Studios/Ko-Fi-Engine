@@ -17,6 +17,7 @@ public:
 	Camera3D(KoFiEngine* engine);
 	~Camera3D();
 
+	bool Awake(Json configModule);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
@@ -28,8 +29,15 @@ public:
 
 	void OnPlay();
 	void OnStop();
-	//void OnSave(JSONWriter& writer) const override;
-	//void OnLoad(const JSONReader& reader) override;
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 
 	void CheckInput(float dt);
 	void CheckMouseMotion();
