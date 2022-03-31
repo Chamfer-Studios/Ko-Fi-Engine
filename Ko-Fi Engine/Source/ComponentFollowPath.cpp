@@ -71,7 +71,7 @@ bool ComponentFollowPath::Update(float dt)
 
 void ComponentFollowPath::CalculatePath()
 {
-	finalPath.clear();
+	/*finalPath.clear();
 
 	for (int i = 0; i < nWaypoints - 1; i++) {
 		float3 current = waypoints[i];
@@ -98,7 +98,7 @@ void ComponentFollowPath::CalculatePath()
 			closestIndex = i;
 		}
 	}
-	currentPathWaypoint = closestIndex;
+	currentPathWaypoint = closestIndex;*/
 }
 
 bool ComponentFollowPath::InspectorDraw(PanelChooser* chooser)

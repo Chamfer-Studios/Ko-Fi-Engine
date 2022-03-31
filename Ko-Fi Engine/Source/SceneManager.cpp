@@ -178,8 +178,6 @@ GameState SceneManager::GetGameState()
 	return runtimeState;
 }
 
-
-
 void SceneManager::OnPlay()
 {
 	runtimeState = GameState::PLAYING;

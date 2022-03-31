@@ -523,6 +523,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
+		float startTime = (float)engine->GetEngineTime();
+#pragma omp parallel for
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
@@ -755,6 +757,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			if (!exists)
 				scene->gameObjectList.push_back(go);
 		}
+
+		float endTime = (float)engine->GetEngineTime();
+		appLog->AddLog("Time to load: %f\n", endTime - startTime);
 
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
