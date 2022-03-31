@@ -3,7 +3,7 @@
 
 #include "MathGeoLib/Math/MathFunc.h"
 
-R_Track::R_Track()
+R_Track::R_Track() : Resource(ResourceType::TRACK)
 {
 	volume = 100.0f;
 

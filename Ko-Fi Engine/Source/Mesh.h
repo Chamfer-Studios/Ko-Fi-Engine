@@ -12,9 +12,9 @@
 #include "MathGeoLib/Math/TransformOps.h"
 
 #include "Assimp.h"
+#include "Resource.h"
 #include "par_shapes.h"
 #include "Globals.h"
-#include "Resource.h"
 #include "Log.h"
 
 #define POSITION_LOCATION 0

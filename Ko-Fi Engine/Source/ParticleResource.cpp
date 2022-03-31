@@ -1,6 +1,6 @@
 #include "ParticleResource.h"
 
-ParticleResource::ParticleResource(const char* resourceName)
+ParticleResource::ParticleResource(const char* resourceName) : Resource(ResourceType::PARTICLE)
 {
 	emitters.clear();
 	emitters.shrink_to_fit();

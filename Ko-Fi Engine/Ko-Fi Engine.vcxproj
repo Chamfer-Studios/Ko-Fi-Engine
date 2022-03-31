@@ -278,6 +278,7 @@
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Navigation.cpp" />
     <ClCompile Include="Source\PanelAssets.cpp" />
     <ClCompile Include="Source\PanelCameraViewport.cpp" />
@@ -330,6 +331,7 @@
     <ClInclude Include="Source\Effects.h" />
     <ClInclude Include="Source\Event.h" />
     <ClInclude Include="Source\I_Track.h" />
+    <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\R_Track.h" />

@@ -27,7 +27,7 @@
 #include "GameObject.h"
 #include "Globals.h"
 
-Mesh::Mesh(Shape shape)
+Mesh::Mesh(Shape shape) : Resource(ResourceType::MESH)
 {
 	verticesSizeBytes = 0;
 	normalsSizeBytes = 0;

@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture()
+Texture::Texture() : Resource(ResourceType::TEXTURE)
 {
 	textureID = TEXTUREID_DEFAULT;
 	width = 0;

@@ -4,9 +4,9 @@
 #include <string>
 #include "MathGeoLib/Math/float2.h"
 #include "Globals.h"
-//#include "Resource.h"
+#include "Resource.h"
 
-class Animation
+class Animation : public Resource
 {
 public:
 	Animation();

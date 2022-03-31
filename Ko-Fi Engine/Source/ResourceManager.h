@@ -36,7 +36,7 @@ public:
 	ResourceType GetTypeFromExtension(const char* extension);
 	const char* GetAssetsDirectoryFromType(const ResourceType);
 	const char* GetLibraryDirectoryFromType(const ResourceType type);
-	const char* GetValidPath(const char* path) const;
+	std::string GetValidPath(const char* path) const;
 	const char* GetFileName(const char* path) const;
 
 	void RefreshDirectoryFiles(const char* directory);
@@ -63,7 +63,7 @@ private:
 	KoFiEngine* engine = nullptr;
 
 	std::map<UID, Resource*> resourcesMap;
-	std::map<UID, std::string> library;
+	std::map<UID, ResourceBase> library;
 
 	float fileRefreshRate;
 	float fileRefreshTime;

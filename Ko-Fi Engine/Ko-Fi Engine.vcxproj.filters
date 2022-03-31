@@ -595,6 +595,9 @@
     <ClCompile Include="Source\ResourceBase.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Model.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1699,6 +1702,9 @@
       <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\ResourceBase.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Model.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
   </ItemGroup>

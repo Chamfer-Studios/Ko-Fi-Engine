@@ -2,8 +2,9 @@
 #define __PARTICLE_RESOURCE_H__
 
 #include "Emitter.h"
+#include "Resource.h"
 
-class ParticleResource
+class ParticleResource : public Resource
 {
 public:
 	ParticleResource(const char* resourceName = "New Resource");

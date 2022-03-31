@@ -8,6 +8,7 @@
 
 #define TEXTUREID_DEFAULT 4294967295
 
+
 class Texture : public Resource
 {
 public:

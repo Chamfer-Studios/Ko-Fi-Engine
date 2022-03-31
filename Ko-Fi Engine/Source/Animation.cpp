@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation() 
+Animation::Animation() : Resource(ResourceType::ANIMATION)
 {
 	name = "";
 	ticksPerSecond = 0;

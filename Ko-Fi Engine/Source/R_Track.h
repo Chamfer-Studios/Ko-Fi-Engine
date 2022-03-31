@@ -7,6 +7,7 @@
 #include "efx.h"
 #include "efx-creative.h"
 #include "efx-presets.h"
+#include "Resource.h"
 
 #include <dr_wav.h>
 #include <dr_mp3.h>
@@ -39,7 +40,7 @@ enum class AudioFormat
 	FLAC
 };
 
-class R_Track
+class R_Track : public Resource
 {
 public:
 	R_Track();

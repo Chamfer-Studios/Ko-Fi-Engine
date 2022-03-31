@@ -14,7 +14,11 @@ enum class ResourceType
 	SCENE,
 	SHADER,
 	FONT,
-	//PARTICLE
+	TRACK,
+	PARTICLE,
+	MODEL,
+	MATERIAL,
+	ANIMATION,
 	UNKNOWN
 };
 
@@ -36,8 +40,6 @@ public:
 	inline void SetUID(const UID& uid) { this->uid = uid; }
 
 	inline uint GetReferenceCount() const { return referenceCount; }
-	inline void SetReferenceCount(const uint& referenceCount) { this->referenceCount = referenceCount; }
-
 	void ModifyReferenceCount(int modification);
 
 	// Getters and Setters for Asset & Library Paths

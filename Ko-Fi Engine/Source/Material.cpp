@@ -7,7 +7,8 @@
 Material::Material() :
 	shaderProgramID(0),
 	//materialPath(MATERIALS_DIR + std::string("default") + MATERIAL_EXTENSION),
-	shaderPath(ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION)
+	shaderPath(ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION),
+	Resource(ResourceType::MATERIAL)
 {
 }
 

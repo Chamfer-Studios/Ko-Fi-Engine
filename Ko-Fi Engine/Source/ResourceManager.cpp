@@ -178,14 +178,13 @@ UID ResourceManager::ImportFile(const char* assetPath)
 		std::map<UID, ResourceBase> libraryItems;
 		GetLibraryPairs(assetPath, libraryItems);
 
-		//TODO: This doesn't work i don't know why
-		//for (auto item : libraryItems)
-		//{
-		//	if (library.find(item.first) == library.end())
-		//	{
-		//		library.emplace(item.first, item.second);
-		//	}
-		//}
+		for (auto item = libraryItems.begin(); item != libraryItems.end(); ++item)
+		{
+			if (library.find((*item).first) == library.end())
+			{
+				library.emplace(std::make_pair((*item).first, (*item).second));
+			}
+		}
 		uid = libraryItems.begin()->first;
 		libraryItems.clear();
 	}
@@ -228,12 +227,10 @@ void ResourceManager::RefreshDirectoryFiles(const char* directory)
 
 	for (uint i = 0; i < toUpdate.size(); ++i)
 	{
-		// I dont think this is necessary
+		std::string extension = toUpdate[i].c_str();
+		extension = extension.substr(extension.find_last_of("."), extension.size());
 
-		//std::string extension = toUpdate[i].c_str();
-		//extension = extension.substr(extension.find_last_of("."), extension.size());
-
-		//if (extension == "h" || extension == "particles" || extension == "navmesh" || extension == "shader" || extension == "png")
+		if (extension == "h" || extension == "particles" || extension == "navmesh" || extension == "shader" || extension == "png")
 		{
 			DeleteFromLibrary(toUpdate[i].c_str());
 			ImportFile(toUpdate[i].c_str());
@@ -259,7 +256,9 @@ void ResourceManager::FindFilesToImport(std::vector<std::string>& assetFiles, st
 	std::string metaFile = "";
 	for (uint i = 0; i < assetFiles.size(); ++i)
 	{
-		// Import ignored extensions?
+		if (HasImportIgnoredExtension(assetFiles[i].c_str()))
+			continue;
+
 		metaFile = assetFiles[i] + META_EXTENSION;
 		bool find = false;
 		for (uint j = 0; j < metaFiles.size(); ++j)
@@ -288,18 +287,16 @@ void ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& file
 	if (filePairs.empty())
 		return;
 
-	//TODO: This doesn't work i don't know why
-	//for (auto item : filePairs)
-	//{
-	//	//TODO: Not sure if this is working correctly
-	//	auto assetModification = std::filesystem::last_write_time(item.first);
-	//	auto metaModification = std::filesystem::last_write_time(item.second);
-	//	if (assetModification != metaModification)
-	//	{
-	//		CONSOLE_LOG("Modification time discrepancy with file %s\n", item.first);
-	//		toUpdate.push_back(item.first);
-	//	}
-	//}
+	for (auto item : filePairs)
+	{
+		auto assetModification = std::filesystem::last_write_time(item.first);
+		auto metaModification = std::filesystem::last_write_time(item.second);
+		if (assetModification != metaModification)
+		{
+			CONSOLE_LOG("Modification time discrepancy with file %s\n", item.first);
+			toUpdate.push_back(item.first);
+		}
+	}
 }
 
 void ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toDelete)
@@ -311,7 +308,6 @@ void ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, std
 	{
 		std::string assetPath = metaFiles[i];
 		assetPath = assetPath.substr(0,assetPath.find_last_of(META_EXTENSION) - 5);
-		//assetPath.resize(assetPath.size() - std::string(META_EXTENSION).size());
 		if (filePairs.find(assetPath) == filePairs.end())
 		{
 			toDelete.push_back(assetPath);
@@ -324,11 +320,10 @@ void ResourceManager::LoadFilesIntoLibrary(std::map<std::string, std::string>& f
 	if (filePairs.empty())
 		return;
 
-	//TODO: This doesn't work i don't know why
-	//for (auto item : filePairs)
-	//{
-	//	LoadMetaFileIntoLibrary(item.first.c_str());
-	//}
+	for (auto item : filePairs)
+	{
+		LoadMetaFileIntoLibrary(item.first.c_str());
+	}
 }
 
 bool ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
@@ -345,9 +340,8 @@ bool ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
 	if (libraryPairs.empty())
 		return true;
 
-	//TODO: This doesn't work i don't know why
-	//for (auto item : libraryPairs)
-	//	library.emplace(item.first, item.second);
+	for (auto item : libraryPairs)
+		library.emplace(item.first, item.second);
 
 	libraryPairs.clear();
 
@@ -385,7 +379,7 @@ bool ResourceManager::GetResourceUIDsFromMeta(const char* assetsPath, std::vecto
 {
 	if (assetsPath == nullptr)
 	{
-		CONSOLE_LOG("Error getting UIDs from meta, assets path was nullptr.");
+		LOG_BOTH("Error getting UIDs from meta, assets path was nullptr.");
 		return false;
 	}
 
@@ -793,29 +787,27 @@ Resource* ResourceManager::RequestResource(UID uid)
 
 	if (it != resourcesMap.end())
 	{
-		it->second->SetReferenceCount(it->second->GetReferenceCount() + 1);
+		it->second->ModifyReferenceCount(1);
 		return it->second;
 	}
 
-	// TODO: Find the library file (if exists) and load the custom file format
-	auto libIt = library.find(uid);
-	if (libIt != library.end())
-	{
-		Resource* r = GetResourceFromLibrary(libIt->second.c_str());
-		return r;
-	}
-	LOG_BOTH("FUCK YOU IT DOESNT EXIST");
+	//auto libIt = library.find(uid);
+	//if (libIt != library.end())
+	//{
+	//	Resource* r = GetResourceFromLibrary(libIt->second.libraryPath.c_str());
+	//	return r;
+	//}
+	//LOG_BOTH("FUCK YOU IT DOESNT EXIST");
 	return nullptr;
 }
 
 UID ResourceManager::Find(const char* assetPath) const
 {
-	//TODO: This doesn't work i don't know why
-	//for (auto r : resourcesMap)
-	//{
-	//	if (r.second->GetAssetPath() == assetPath)
-	//		return r.first;
-	//}
+	for (auto r : resourcesMap)
+	{
+		if (r.second->GetAssetPath() == assetPath)
+			return r.first;
+	}
 	return -1;
 }
 
@@ -844,8 +836,7 @@ void ResourceManager::SaveResource(Resource* resource)
 
 	//TODO: meta shit ???
 
-	//TODO: library should be changed to resourceBase instead of string
-	library.emplace(resource->GetUID(), resource->GetAssetPath());
+	library.emplace(resource->GetUID(), ResourceBase(resource));
 }
 
 bool ResourceManager::UnloadResource(Resource* resource)
@@ -1067,7 +1058,7 @@ void ResourceManager::DeleteFromAssets(const char* assetsPath)
 	resourceUIDs.shrink_to_fit();
 }
 
-const char* ResourceManager::GetValidPath(const char* path) const
+std::string ResourceManager::GetValidPath(const char* path) const
 {
 	std::string normalizedPath = path;
 
@@ -1081,7 +1072,7 @@ const char* ResourceManager::GetValidPath(const char* path) const
 
 	size_t assetStart = normalizedPath.find("Assets");
 	size_t libraryStart = normalizedPath.find("Library");
-	const char* resultPath = nullptr;
+	std::string resultPath;
 	if (assetStart != std::string::npos)
 		resultPath = normalizedPath.substr(assetStart, normalizedPath.size()).c_str();
 	else if (libraryStart != std::string::npos)
