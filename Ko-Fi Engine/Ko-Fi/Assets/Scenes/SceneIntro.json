@@ -1,7 +1,7 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 10,
+        "game_objects_amount": 11,
         "game_objects_list": [
             {
                 "UID": 42355873,
@@ -487,6 +487,54 @@
                 "is3D": true,
                 "name": "Baker_house",
                 "parent_UID": 806729230
+            },
+            {
+                "UID": 705917631,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "anchor": 6,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": "transform2D"
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "",
+                        "idleTexture": "Assets/Textures/Grey 2.png",
+                        "pressedTexture": "Assets/Textures/Blue.png",
+                        "type": "button"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/UI_CharacterSelected.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    }
+                ],
+                "is3D": false,
+                "name": "Button",
+                "parent_UID": 1411204437
             }
         ],
         "name": "SceneIntro",

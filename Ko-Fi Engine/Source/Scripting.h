@@ -20,6 +20,7 @@
 #include "ComponentScript.h"
 #include "ComponentText.h"
 #include "ComponentImage.h"
+#include "ComponentButton.h"
 #include "ComponentAnimator.h"
 #include "ComponentParticle.h"
 #include "C_AudioSource.h"
@@ -178,6 +179,7 @@ public:
 			"GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
 			"GetAudioSwitch",		&GameObject::GetComponent<C_AudioSwitch>,
 			"IsSelected",			&GameObject::IsSelected,
+			"GetButton",			&GameObject::GetComponent<ComponentButton>,
 			"GetImage",				&GameObject::GetComponent<ComponentImage>
 
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
@@ -216,6 +218,11 @@ public:
 		lua.new_usertype<ComponentImage>("ComponentImage",
 			sol::constructors<void(GameObject*)>(),
 			"SetTexture", &ComponentImage::SetTexture
+			);
+
+		lua.new_usertype<ComponentButton>("ComponentButton",
+			sol::constructors<void(GameObject*)>(),
+			"IsPressed", &ComponentButton::IsPressed
 			);
 		
 		// Component Animator
@@ -284,6 +291,7 @@ public:
 		lua.set_function("DeleteGameObject",		&Scripting::DeleteGameObject, this);
 		lua.set_function("Find",					&Scripting::LuaFind, this);
 		lua.set_function("GetVariable",				&Scripting::LuaGetVariable, this);
+		lua.set_function("SetVariable",				&Scripting::LuaSetVariable, this);
 		lua.set_function("NewVariable",				&Scripting::LuaNewVariable, this);
 		lua.set_function("GetRuntimeState",			&Scripting::LuaGetRuntimeState, this);
 		lua.set_function("GetGameObjectHovered",	&Scripting::LuaGetGameObjectHovered, this);
@@ -388,6 +396,53 @@ public:
 		}
 
 		return -999;
+	}
+
+	void LuaSetVariable(std::variant<int, float, float2, float3, bool, std::string> value, std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
+	{
+		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		{
+			ComponentScript* script = go->GetComponent<ComponentScript>();
+			if (script)
+			{
+				if (path == script->path.substr(script->path.find_last_of('/') + 1))
+				{
+					switch (type)
+					{
+					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
+					{
+						script->handler->lua[variable.c_str()] = std::get<int>(value);
+						return;
+					}
+					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
+					{
+						script->handler->lua[variable.c_str()] = std::get<float>(value);
+						return;
+					}
+					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
+					{
+						script->handler->lua[variable.c_str()] = std::get<float2>(value);
+						return;
+					}
+					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
+					{
+						script->handler->lua[variable.c_str()] = std::get<float3>(value);
+						return;
+					}
+					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
+					{
+						script->handler->lua[variable.c_str()] = std::get<bool>(value);
+						return;
+					}
+					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
+					{
+						script->handler->lua[variable.c_str()] = std::get<std::string>(value);
+						return;
+					}
+					}
+				}
+			}
+		}
 	}
 
 	void LuaNewVariable(InspectorVariable* inspectorVariable)

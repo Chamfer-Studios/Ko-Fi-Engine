@@ -233,3 +233,15 @@ void ComponentButton::FreeTextures(BUTTON_STATE type)
 		break;
 	}
 }
+
+bool ComponentButton::IsPressed()
+{
+	if (state == BUTTON_STATE::PRESSED)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

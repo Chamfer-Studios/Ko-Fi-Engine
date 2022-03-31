@@ -42,6 +42,8 @@ public:
 	void SetHoverTexture(const char* path);
 	void SetPressedTexture(const char* path);
 
+	bool IsPressed();
+
 private:
 	enum class BUTTON_STATE {
 		IDLE,
