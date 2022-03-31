@@ -226,8 +226,6 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
 	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
 
-	aabb.Size();
-
 	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
 	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 

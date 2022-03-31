@@ -83,6 +83,7 @@ public:
 	void GuizmoTransformation();
 	void UpdateGuizmo();
 	//
+
 public:
 	bool active;
 
