@@ -4,12 +4,6 @@ characterID = 1
 isWalking = false -- To play the steps track only once
 target = nil
 
-WalkState = {
-   WALK = 1,
-   CROUCH = 2,
-   RUN = 3,
-}
-
 Action = {
 	IDLE = 1,
 	ATTACKING = 2,
@@ -18,7 +12,6 @@ Action = {
 	AIMING = 5,
 }
 
-currentWalkState = WalkState.WALK
 currentAction = Action.IDLE
 speed = 500  -- consider Start()
 maxKnives = 2
@@ -106,10 +99,10 @@ function Update(dt)
 			goHit = GetGameObjectHovered()
 			if (goHit ~= hit and goHit ~= gameObject) then
 				destination = GetLastMouseClick()
-				if (currentWalkState == WalkState.WALK and isDoubleClicking == true) then
-					currentWalkState = WalkState.RUN
+				if (currentAction == Action.WALKING and isDoubleClicking == true) then
+					currentAction = Action.RUNNING
 				else
-					currentWalkState = WalkState.WALK
+					currentAction = Action.WALKING
 					isDoubleClicking = true
 				end
 				if (mouseParticles ~= nil) then
@@ -125,21 +118,21 @@ function Update(dt)
 		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
 			currentAction = Action.AIMING
 		end	
-		if (GetInput(8) == KEY_STATE.KEY_DOWN) then -- X
-			if (currentWalkState == WalkState.CROUCH) then
-				currentWalkState = WalkState.WALK
-				if (isWalking == true and componentSwitch ~= nil) then
+		if (GetInput(8) == KEY_STATE.KEY_DOWN) then -- X -> Toggle crouch
+			if (currentAction == Action.CROUCHING) then
+				currentAction = Action.WALKING
+				if (componentSwitch ~= nil) then
 					componentSwitch:StopTrack(2)
 					componentSwitch:PlayAudio(1)
 				end
 			else
-				currentWalkState = WalkState.CROUCH
-				if (isWalking == true and componentSwitch ~= nil) then
+				currentAction = Action.CROUCHING
+				if (componentSwitch ~= nil) then
 					componentSwitch:StopTrack(1)
 					componentSwitch:PlayAudio(2)
 				end
 			end
-		end	
+		end
 		if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
 			Reload()
 		end
@@ -160,29 +153,22 @@ function MoveToDestination(dt)
 
 	if (d > 0.5) then
 
-		local s = speed
-		if (currentWalkState == WalkState.CROUCH) then
-			s = speed * 0.66
-		elseif (currentWalkState == WalkState.RUN) then
-			s = speed * 1.5
-		end
-
-		if (isWalking ~= true) then
-			if (currentWalkState == WalkState.WALK) then
+		if (currentAction ~= Action.IDLE) then
+			if (currentAction == Action.WALKING) then
 				if (componentSwitch ~= nil) then
 					componentSwitch:PlayTrack(1)
 				end
 				if (componentAnimator ~= nil) then
 					componentAnimator:SetSelectedClip("Walk")
 				end
-			elseif (currentWalkState == WalkState.CROUCH) then
+			elseif (currentAction == Action.CROUCHING) then
 				if (componentSwitch ~= nil) then
 					componentSwitch:PlayTrack(2)
 				end
 				if (componentAnimator ~= nil) then
 					componentAnimator:SetSelectedClip("Crouch")
 				end
-			elseif (currentWalkState == WalkState.RUNNING) then
+			elseif (currentAction == Action.RUNNING) then
 				if (componentSwitch ~= nil) then
 					componentSwitch:PlayTrack(1)
 				end
@@ -190,13 +176,14 @@ function MoveToDestination(dt)
 					componentAnimator:SetSelectedClip("Run")
 				end
 			end
-
-			if (mouseParticles ~= nil) then
-				mouseParticles:GetComponentParticle():ResumeParticleSpawn()
-				mouseParticles:GetTransform():SetPosition(destination)
-			end
-
-			isWalking = true
+		end
+		
+		-- Adapt speed
+		local s = speed
+		if (currentAction == Action.CROUCHING) then
+			s = speed * 0.66
+		elseif (currentAction == Action.RUNNING) then
+			s = speed * 1.5
 		end
 
 		-- Movement
@@ -251,16 +238,6 @@ function Fire()
 	if (componentSwitch ~= nil) then
 		componentSwitch:PlayTrack(0)
 	end
-end
-
--------------------- Setters ---------------------
-
-function SetDestination(dest)
-
-end
-
-function SetTarget(tar)
-	target = tar
 end
 
 ----------------- Math Functions -----------------

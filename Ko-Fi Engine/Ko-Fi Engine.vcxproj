@@ -710,6 +710,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Enemy.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
   </ItemGroup>

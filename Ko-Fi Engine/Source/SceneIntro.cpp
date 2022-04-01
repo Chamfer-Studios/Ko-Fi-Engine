@@ -115,7 +115,7 @@ bool SceneIntro::PostUpdate(float dt)
 		GameObject* knife = CreateEmptyGameObject((*mapIt).second.c_str());
 		GameObject* parent = (*mapIt).first;
 
-		if ((*mapIt).second == "Knife")
+		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
 		{
 			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 			float3 pos = parent->GetTransform()->GetPosition();

@@ -1,7 +1,6 @@
 ------------------- Variables --------------------
 
 speed = 300
-life = 50
 destination = nil
 
 -------------------- Methods ---------------------
@@ -9,16 +8,17 @@ destination = nil
 -- Called each loop iteration
 function Update(dt)
 
-	life = life - dt
-	if (life <= 0) then
-		DeleteGameObject()
-	elseif (destination ~= nil) then
+	if (destination ~= nil) then
 		MoveToDestination(dt)
 	end
 end
 
-function PostUpdate(dt)
-
+function OnCollision(go)
+	if (go.tag == Tag.ENEMY || go.tag == Tag.WALL) then
+		componentTransform:SetPosition(go:GetTransform():GetPosition())
+	elseif (go == Find("Zhib")) -- Using direct name instead of tags so other players can't pick it up
+		DeleteGameObject()
+	end
 end
 
 --------------------------------------------------
