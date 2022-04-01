@@ -150,7 +150,7 @@ uint ComponentMesh::GetVertices()
 
 float3 ComponentMesh::GetCenterPointInWorldCoords() const
 {
-	return owner->GetTransform()->transformMatrix.TransformPos(centerPoint);
+	return owner->GetTransform()->GetGlobalTransform().TransformPos(centerPoint);
 }
 
 void ComponentMesh::SetVertexNormals(bool vertexNormals)
@@ -219,7 +219,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
 	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
+	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 	glBegin(GL_LINES);
 
 	// Bottom 1
