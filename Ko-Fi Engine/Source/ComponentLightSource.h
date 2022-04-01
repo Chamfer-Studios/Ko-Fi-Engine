@@ -14,17 +14,7 @@ enum class SourceType
 class LightSource
 {
 public:
-	LightSource() 
-	{
-		position = float3::zero;
-		color = float3(1.0f, 1.0f, 1.0f);
-
-		ambient = 0.2;
-		diffuse = 0.8;
-		specular = 0;
-	}
-
-	~LightSource() {}
+	LightSource();
 
 	float3 position;
 	float3 color;
@@ -38,7 +28,7 @@ public:
 class DirectionalLight : public LightSource
 {
 public:
-	DirectionalLight() { direction = float3(0.0f, 0.0f, 0.0f); }
+	DirectionalLight();
 	float3 GetDirection() { return direction; }
 	void SetDirection(float3 direction) { this->direction = direction; }
 
@@ -50,16 +40,11 @@ public:
 class PointLight : public LightSource
 {
 public:
-	PointLight() 
-	{
-		constant = 0.0f;
-		linear = 0.0f;
-		quadratic = 0.0f;
-	}
-	~PointLight() {}
+	PointLight();
 
 	float constant;
 	float linear;
+
 	float quadratic;
 };
 

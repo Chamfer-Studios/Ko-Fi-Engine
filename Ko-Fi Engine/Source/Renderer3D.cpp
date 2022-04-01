@@ -398,20 +398,28 @@ void Renderer3D::RenderMeshes(GameObject* go)
 				std::vector<GameObject*> directionalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::DIRECTIONAL);
 				if (directionalLights.size() > 0)
 				{
-					float3 lightDirections[MAX_DIR_LIGHTS]; //TODO: is it worth it to allocate this array and update only whan dirty?
+					//TODO: is it worth it to allocate this array and update only whan dirty?
 					int i = 0;
 					for (auto light : directionalLights)
 					{
+						//current iteration to string
+						std::string number = std::to_string(i);
+						//get corresponding directional light
 						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
-						lightDirections[i] = lightSource->direction;
+						//fill the first variable of the DirLight struct: vec3 direction
+						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
+						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
+						//fill the second variable of the DirLight struct: float ambient
+						GLint ambientValue = glGetUniformLocation(shader, ("dirLights[" + number + "].ambient").c_str());
+						glUniform1f(ambientValue, lightSource->ambient);
+						//fill the third variable of the DirLight struct: float diffuse
+						GLint diffuseValue = glGetUniformLocation(shader, ("dirLights[" + number + "].diffuse").c_str());
+						glUniform1f(diffuseValue, lightSource->diffuse);
 						i++;
 					}
 
 					GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
 					glUniform1i(numDirLights, i);
-
-					GLint lightDir = glGetUniformLocation(shader, "lightDirections");
-					glUniform3fv(lightDir, i, lightDirections->ptr());
 				}
 				else
 				{
@@ -427,15 +435,40 @@ void Renderer3D::RenderMeshes(GameObject* go)
 					int i = 0;
 					for (auto light : pointLights)
 					{
-						positionsList[i] = light->GetTransform()->GetPosition();
+						//current iteration to string
+						std::string number = std::to_string(i);
+
+						//get corresponding point light
+						PointLight* lightSource = (PointLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
+						
+						// --- basic light parameters ---
+						
+						//fill in the first variable of the DirLight struct: vec3 position
+						GLint lightPos = glGetUniformLocation(shader, ("pointLights[" + number + "].position").c_str());
+						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
+						//second variable: float ambient
+						GLint ambientValue = glGetUniformLocation(shader, ("pointLights[" + number + "].ambient").c_str());
+						glUniform1f(ambientValue, lightSource->ambient);
+						//third variable: float diffuse
+						GLint diffuseValue = glGetUniformLocation(shader, ("pointLights[" + number + "].diffuse").c_str());
+						glUniform1f(diffuseValue, lightSource->diffuse);
+
+						// --- light attenuation paramenters ---
+						
+						//fifth variable: float constant
+						GLint constantValue = glGetUniformLocation(shader, ("pointLights[" + number + "].constant").c_str());
+						glUniform1f(constantValue, lightSource->constant);
+						//sixth variable: float linear
+						GLint linearValue = glGetUniformLocation(shader, ("pointLights[" + number + "].linear").c_str());
+						glUniform1f(linearValue, lightSource->linear);
+						//seventh variable: float quadratic
+						GLint quadraticValue = glGetUniformLocation(shader, ("pointLights[" + number + "].quadratic").c_str());
+						glUniform1f(quadraticValue, lightSource->quadratic);
 						i++;
 					}
 
 					GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
 					glUniform1i(numPointLights, i);
-
-					GLint lightPosition = glGetUniformLocation(shader, "positionsList");
-					glUniform3fv(lightPosition, i, positionsList->ptr());
 				}
 				else
 				{
@@ -446,8 +479,8 @@ void Renderer3D::RenderMeshes(GameObject* go)
 				//{
 				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<ComponentLightSource>()->GetLightSource();
 				//}
-
 			}
+
 			else
 			{
 				float3 lightDirection = float3(-1.0f, 1.0f, 1.0f);

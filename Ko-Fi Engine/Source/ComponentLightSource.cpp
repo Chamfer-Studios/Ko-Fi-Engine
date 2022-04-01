@@ -75,18 +75,56 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 			{
 				currentLight->direction = { direction[0], direction[1], direction[2] };
 			}
+
+			float ambientValue = currentLight->ambient;
+			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->ambient = ambientValue;
+			}
+
+			float diffuseValue = currentLight->diffuse;
+			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->diffuse = diffuseValue;
+			}
 			break;
 		}
 		case SourceType::POINT:
 		{
-			DirectionalLight* currentLight = (DirectionalLight*)lightSource;
-			//text: modify the next values to change the lightsource fading;
+			PointLight* currentLight = (PointLight*)lightSource;
 			//dragfloat constantVal
 			//dragfloat linearVal
 			//dragfloat quadraticVal
+
+			float ambientValue = currentLight->ambient;
+			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->ambient = ambientValue;
+			}
+			float diffuseValue = currentLight->diffuse;
+			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->diffuse = diffuseValue;
+			}
+
+			float constantValue = currentLight->constant;
+			if (ImGui::DragFloat("Constant Light Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->constant = constantValue;
+			}
+			float linearValue = currentLight->linear;
+			if (ImGui::DragFloat("Linear Light Attenuation", &linearValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->linear = linearValue;
+			}
+			float quadraticValue = currentLight->quadratic;
+			if (ImGui::DragFloat("Quadratic Light Attenuation", &quadraticValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->quadratic = quadraticValue;
+			}
 			break;
-		}
-		}
+		} 
+		} 
 	}
 	return ret;
 }
@@ -150,3 +188,24 @@ LightSource* ComponentLightSource::ChangeSourceType(SourceType type)
 	return lightSource;
 }
 
+LightSource::LightSource()
+{
+	position = float3::zero;
+	color = float3(1.0f, 1.0f, 1.0f);
+
+	ambient = 0.2;
+	diffuse = 0.8;
+	specular = 0;
+}
+
+DirectionalLight::DirectionalLight() : LightSource()
+{
+	direction = float3(0.0f, 0.0f, 0.0f);
+}
+
+PointLight::PointLight() : LightSource()
+{
+	constant = 1.00f;
+	linear = 0.220f;
+	quadratic = 0.20f;
+}

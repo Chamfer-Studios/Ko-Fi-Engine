@@ -67,9 +67,7 @@ out vec4 color;
 uniform sampler2D ourTexture;
 
 uniform int numOfDirectionalLights;
-uniform vec3 lightDirections[MAX_DIR_LIGHTS];
 uniform int numOfPointLights;
-uniform vec3 positionsList[MAX_POINT_LIGHTS];
 
 //light definitions
 float ambientStrength = 0.1;
@@ -81,19 +79,21 @@ struct DirLight {
     float ambient;
     float diffuse;
     //float specular;
-}; 
+
+}; uniform DirLight dirLights[MAX_DIR_LIGHTS];
 
 struct PointLight {    
     vec3 position;
     
-    float constant;
-    float linear;
-    float quadratic;  
-
     float ambient;
     float diffuse;
     //vec3 specular;
-};  
+
+    float constant;
+    float linear;
+    float quadratic;  
+      
+}; uniform PointLight pointLights[MAX_POINT_LIGHTS];
 
 vec3 CalcDirLight(DirLight light, vec3 normal)
 {
@@ -144,42 +144,34 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos)
 
 void main() {
 
-    //output color value
-    vec3 output = vec3(0.0);
+    //output color value 
+    vec3 outputColor = vec3(0.0);
 
-    //---- Add the directional light's contribution to the output color ----//
-    DirLight currentLight;
-    currentLight.ambient = 0.2;
-    currentLight.diffuse = 0.7;
-
+    // --- Add the directional light's contribution to the output color ---
     //loop dirLights
     for(int i = 0; i < numOfDirectionalLights; i++)
     {
-        currentLight.direction = lightDirections[i];
-        output += CalcDirLight(currentLight, normal); 
-        //output += CalcDirLight(currentLight, normal, viewDir);  with viewDir for specular light
+        outputColor += CalcDirLight(dirLights[i], normal); 
     }
 
-    //---- Add the point light's contribution to the output color ----//
-    PointLight currentPLight;
-    currentPLight.ambient = 0.2;
-    currentPLight.diffuse = 0.7;
-    currentPLight.constant = 1.0;
-    currentPLight.linear = .22;
-    currentPLight.quadratic = .2;
-
+    // --- Add the point light's contribution to the output color ---
     //loop dirLights
     for(int i = 0; i < numOfPointLights; i++)
     {
-        currentPLight.position = positionsList[i];
-        output += CalcPointLight(currentPLight, normal, fragPos); 
+        outputColor += CalcPointLight(pointLights[i], normal, fragPos); 
     }
+
+    // --- Add the focal light's contribution to the output color ---
+    //for(int i = 0; i < numOfFocalLights; i++)
+    //{
+    //    outputColor += CalcFocalLight(currentPLight, normal, fragPos); 
+    //}
 
     //---- Apply output to the texture ----//
     //texture
     vec4 textureColor = texture(ourTexture, TexCoord);
 
     //color + lighting
-    color = textureColor * vec4(output, 1.0);
+    color = textureColor * vec4(outputColor, 1.0);
 
 }
