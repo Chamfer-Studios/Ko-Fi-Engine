@@ -16,6 +16,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentMesh.h"
 #include "ComponentRigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentText.h"
@@ -145,6 +146,7 @@ public:
 			"GetParent",			&GameObject::GetParent,
 			"GetComponents",		&GameObject::GetComponents,							// Kinda works... not very useful tho
 			"GetTransform",			&GameObject::GetTransform,
+			"GetComponentMesh",		&GameObject::GetComponent<ComponentMesh>,
 			"GetRigidBody",			&GameObject::GetComponent<ComponentRigidBody>,
 			"GetText",				&GameObject::GetComponent<ComponentText>,
 			"GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
@@ -174,6 +176,13 @@ public:
 			"SetScale",	   &ComponentTransform::SetScale,
 			"GetFront",	   &ComponentTransform::Front,
 			"SetFront",	   &ComponentTransform::SetFront
+			);
+
+		// Component Mesh
+		lua.new_usertype<ComponentMesh>("ComponentMesh",
+			sol::constructors<void(GameObject*)>(),
+			"Disable",	&ComponentMesh::Disable,
+			"Enable",	&ComponentMesh::Enable
 			);
 
 		// Component Text
@@ -238,18 +247,19 @@ public:
 		
 
 			/// Functions
-		lua.set_function("GetInput",				&Scripting::LuaGetInput, this);
-		lua.set_function("CreateGameObject",		&Scripting::LuaCreateGameObject, this);
-		lua.set_function("DeleteGameObject",		&Scripting::DeleteGameObject, this);
-		lua.set_function("Find",					&Scripting::LuaFind, this);
-		lua.set_function("GetObjectsByTag",			&Scripting::LuaGetObjectsByTag, this);
-		lua.set_function("GetVariable",				&Scripting::LuaGetVariable, this);
-		lua.set_function("NewVariable",				&Scripting::LuaNewVariable, this);
-		lua.set_function("GetRuntimeState",			&Scripting::LuaGetRuntimeState, this);
-		lua.set_function("GetGameObjectHovered",	&Scripting::LuaGetGameObjectHovered, this);
-		lua.set_function("GetLastMouseClick",		&Scripting::LuaGetLastMouseClick, this);
-		lua.set_function("Log",						&Scripting::LuaLog, this);
-		lua.set_function("GetNavigation",			&Scripting::GetNavigation, this);
+		lua.set_function("GetInput",						&Scripting::LuaGetInput, this);
+		lua.set_function("CreateGameObject",				&Scripting::LuaCreateGameObject, this);
+		lua.set_function("DeleteGameObject",				&Scripting::DeleteGameObject, this);
+		lua.set_function("Find",							&Scripting::LuaFind, this);
+		lua.set_function("GetObjectsByTag",					&Scripting::LuaGetObjectsByTag, this);
+		lua.set_function("GetVariable",						&Scripting::LuaGetVariable, this);
+		lua.set_function("NewVariable",						&Scripting::LuaNewVariable, this);
+		lua.set_function("GetRuntimeState",					&Scripting::LuaGetRuntimeState, this);
+		lua.set_function("GetGameObjectHovered",			&Scripting::LuaGetGameObjectHovered, this);
+		lua.set_function("GetLastMouseClick",				&Scripting::LuaGetLastMouseClick, this);
+		lua.set_function("Log",								&Scripting::LuaLog, this);
+		lua.set_function("GetNavigation",					&Scripting::GetNavigation, this);
+		lua.set_function("SetLuaVariableFromGameObject",	&Scripting::LuaSetLuaVariableFromGameObject, this);
 	}
 
 	bool CleanUp()
@@ -306,13 +316,15 @@ public:
 		return nullptr;
 	}
 
-	std::vector<GameObject*> LuaGetObjectsByTag(std::string name)
+	std::vector<GameObject*> LuaGetObjectsByTag(Tag tag)
 	{
 		std::vector<GameObject*> ret;
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			if (go->tag == Tag::TAG_PLAYER)
+			if (go->tag == tag)
+			{
 				ret.push_back(go);
+			}
 		}
 		return ret;
 	}
@@ -384,6 +396,19 @@ public:
 
 	void LuaLog(const char* log) {
 		appLog->AddLog(log);
+	}
+
+	void LuaSetLuaVariableFromGameObject(std::string goName, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
+	{
+		GameObject* go = LuaFind(goName);
+		if (go == nullptr)
+			return;
+
+		ComponentScript* goScript = go->GetComponent<ComponentScript>();
+		if (goScript == nullptr)
+			return;
+
+		goScript->handler->lua[variable.c_str()] = value;
 	}
 
 public:

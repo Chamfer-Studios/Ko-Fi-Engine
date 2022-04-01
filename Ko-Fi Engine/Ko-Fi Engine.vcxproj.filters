@@ -1788,5 +1788,8 @@
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua">
       <Filter>Scripts\Players</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua">
+      <Filter>Scripts\Players</Filter>
+    </None>
   </ItemGroup>
 </Project>

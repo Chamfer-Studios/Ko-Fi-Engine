@@ -1,6 +1,6 @@
 ------------------- Variables --------------------
 
-characterID = 1
+characterID = 3
 target = nil
 
 Action = {
@@ -8,28 +8,15 @@ Action = {
 	ATTACKING = 2,
 	WALKING = 3,
 	RUNNING = 4,
-	AIMING_KNIFE = 5,
-	AIMING_ULTIMATE = 6,
+	AIMING = 5,
 }
 
 currentAction = Action.IDLE
 speed = 500  -- consider Start()
-maxKnives = 2
-knifeCount = maxKnives
-ultimateRange = 150.0
-ultimateRangeExtension = ultimateRange * 0.66
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 local speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
-
-local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-local maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
-NewVariable(maxKnivesIV)
-
-local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-local ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
-NewVariable(ultimateRangeIV)
 
 local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 local characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
@@ -60,7 +47,7 @@ isDoubleClicking = false
 -- Called each loop iteration
 function Update(dt)
 
-	-- Timers & Helpers
+	-- Timers
 	if (isAttacking == true and componentAnimator ~= nil) then
 		animationTimer = animationTimer + dt
 		if (animationTimer >= animationDuration) then
@@ -77,42 +64,19 @@ function Update(dt)
 			doubleClickTimer = 0.0
 		end
 	end
+
 	if (mouseParticles ~= nil) then
 		mouseParticles:GetComponentParticle():StopParticleSpawn()
 	end
-	if (invisibilityDuration ~= nil) then
-		invisibilityTimer = invisibilityTimer + dt
-		if (invisibilityTimer >= invisibilityDuration) then
-			invisibilityDuration = nil
-			gameObject:GetComponentMesh():Enable() -- Useless ???
-		else
-			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 1000.0, componentTransform:GetPosition().z))
-		end
-	end
 
-	-- Actions
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
 	end
 
-	--Gather Inputs
-	if (IsSelected() == true) then 
+	if (IsSelected() == true) then --Gather Inputs
 
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then -- Left Click
-			if (currentAction == Action.AIMING_KNIFE) then -- Fire Knife (infinite range for now)
-				if (knifeCount > 0) then
-					target = GetGameObjectHovered()
-					if (target.tag == Tag.ENEMY) then
-						Fire()
-					end
-				else
-					print("Out of ammo")
-				end
-			elseif (currentAction == Action.AIMING_ULTIMATE) then -- Cast Ultimate (infinite range for now)
-				target = GetGameObjectHovered()
-				mousePos = GetLastMouseClick()
-				Ultimate(mousePos)
-			end
+			-- Do abillity
 		end
 
 		if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
@@ -136,11 +100,8 @@ function Update(dt)
 			currentAction = Action.IDLE
 		end
 		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
-			currentAction = Action.AIMING_KNIFE
+			currentAction = Action.AIMING
 		end	
-		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- SPACE
-			currentAction = Action.AIMING_ULTIMATE
-		end
 		if (GetInput(8) == KEY_STATE.KEY_DOWN) then -- X -> Toggle crouch
 			if (currentAction == Action.CROUCHING) then
 				currentAction = Action.WALKING
@@ -156,9 +117,6 @@ function Update(dt)
 				end
 			end
 		end
-		if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R -> For debugging purposes only
-			Reload()
-		end
 	end
 end
 
@@ -170,7 +128,7 @@ function MoveToDestination(dt)
 	local d = Distance(pos2D, targetPos2D)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 
-	if (d > 5.0) then
+	if (d > 0.5) then
 
 		if (currentAction ~= Action.IDLE) then
 			if (currentAction == Action.WALKING) then
@@ -197,7 +155,7 @@ function MoveToDestination(dt)
 			end
 		end
 		
-		-- Adapt speed
+		-- Adapt speed to walk state
 		local s = speed
 		if (currentAction == Action.CROUCHING) then
 			s = speed * 0.66
@@ -233,10 +191,6 @@ function MoveToDestination(dt)
 	-- Add ChangeAnimation() to check the speed of the rigid body
 end
 
-function Reload() -- For debugging purposes only
-	knifeCount = maxKnives
-end
-
 function IsSelected()
 	
 	id = GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -246,73 +200,6 @@ function IsSelected()
 	else 
 		return false
 	end
-end
-
-function Fire()
-
-	CreateGameObject("Knife")
-	knifeCount = knifeCount - 1
-	if (componentSwitch ~= nil) then
-		componentSwitch:PlayTrack(0)
-	end
-end
-
-function Ultimate(mousePos)
-
-	-- Get all enemies in range of the Mouse
-	enemiesInRange = {}
-	enemies = GetObjectsByTag(Tag.ENEMY)
-	for i = 1, #enemies do
-		if (Distance3D(enemies[i]:GetTransform():GetPosition(), mousePos) <= ultimateRange) then
-			enemiesInRange[#enemiesInRange + 1] = enemies[i]
-		end
-	end
-
-	-- If there are none, the ability isn't casted
-	if (#enemiesInRange <= 0) then
-		return
-	end
-
-	-- Check them all for adjacent enemies, different than the ones on the list and add them if there are anyway
-	for i = 1, #enemiesInRange do
-
-		for j = 1, #enemies do
-			if (enemiesInRange[i] ~= enemies[j]) then
-				if (Distance3D(enemiesInRange[i]:GetTransform():GetPosition(), enemies[j]:GetTransform():GetPosition()) <= ultimateRangeExtension) then
-					
-					isAlreadyInArray = false
-					for k = 1, #enemiesInRange do
-						if (enemiesInRange[k] == enemies[j]) then
-							isAlreadyInArray = true
-						end
-					end
-
-					if (not isAlreadyInArray) then 
-						enemiesInRange[#enemiesInRange + 1] = enemies[j]
-					end
-				end
-			end
-		end		
-	end
-
-	deathMarkTimer = 0.2
-	-- Set IN ORDER the death mark
-	for i = 1, #enemiesInRange do
-		deathMarkTimer = deathMarkTimer + 0.1
-		SetLuaVariableFromGameObject(enemiesInRange[i].name, "deathMark", deathMarkTimer)
-	end
-	
-	Disapear(deathMarkTimer)
-
-	-- Set timer equal to the longest dath mark timer to reappear
-end
-
-function Disapear(duration)
-	gameObject:GetComponentMesh():Disable() -- Useless ???
-	componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 1000.0, componentTransform:GetPosition().z))
-
-	invisibilityTimer = 0
-	invisibilityDuration = duration
 end
 
 ----------------- Math Functions -----------------
@@ -332,20 +219,6 @@ function Distance(a, b)
 
 end
 
-function Distance3D(a, b)
-
-    diff = { x = b.x - a.x, y = b.y - a.y, z = b.z - a.z }
-    return math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z)
-end
-
 --------------------------------------------------
 
-print("Zhib.lua compiled succesfully")
-
--------- Scraps --------
---local components = gameObject:GetComponents()
---print(components[3].type) -- return it as an int, can't associate back to enum (I don't know how to anyway)
-
---GameState = require "Assets.Scripts.GameState"
---GameState:Update(1)
---print(GameState:GetGameState())
+print("Omozra.lua compiled succesfully")

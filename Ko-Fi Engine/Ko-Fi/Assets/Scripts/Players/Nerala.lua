@@ -133,14 +133,7 @@ function Update(dt)
 				end
 			end
 		end	
-		if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
-			Reload()
-		end
 	end
-end
-
-function PostUpdate(dt)
-
 end
 
 -- Move to destination
@@ -199,10 +192,10 @@ function MoveToDestination(dt)
 		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
 	else
 		
+		destination = nil
 		if (componentRigidBody ~= nil) then
 			componentRigidBody:Set2DVelocity(float2.new(0,0))
 		end
-		destination = nil
 		if (componentSwitch ~= nil) then
 			componentSwitch:StopTrack(1)
 		end
@@ -212,11 +205,6 @@ function MoveToDestination(dt)
 		currentAction = Action.IDLE -- Check queue before this
 	end
 	-- Add ChangeAnimation() to check the speed of the rigid body
-end
-
-function Reload()
-	dartCount = maxDarts
-	--TODO: Play audio
 end
 
 function IsSelected()

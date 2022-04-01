@@ -1,7 +1,7 @@
 {
     "testing": {
         "active": true,
-        "game_objects_amount": 19,
+        "game_objects_amount": 20,
         "game_objects_list": [
             {
                 "UID": 27979895,
@@ -382,7 +382,7 @@
                             1.0
                         ],
                         "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/mc_base_color.png",
+                        "texture_path": "Assets/Textures/Characters/mc_base_color.png",
                         "type": "material",
                         "uniforms": [
                             {
@@ -1364,7 +1364,7 @@
                             1.0
                         ],
                         "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/nerala_base_color.png",
+                        "texture_path": "Assets/Textures/Characters/nerala_base_color.png",
                         "type": "material",
                         "uniforms": [
                             {
@@ -1474,7 +1474,164 @@
                 "is3D": true,
                 "name": "Nerala",
                 "parent_UID": 4294967295,
-                "tag": 0
+                "tag": 1
+            },
+            {
+                "UID": 489060177,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -36.92433547973633,
+                            24.126358032226563,
+                            42.89097213745117
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999914169311523,
+                            0.9999914169311523
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Omozra.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.48812994360923767,
+                            0.48812994360923767,
+                            0.48812994360923767,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "Assets/Textures/Characters/Assassin_Base_color.png",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            },
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "active": true,
+                        "collider_type": 1,
+                        "is_trigger": false,
+                        "type": "collider"
+                    },
+                    {
+                        "active": true,
+                        "angular_damping": 0.0,
+                        "angular_velocity": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "density": 1.0,
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "is_kinematic": false,
+                        "is_static": false,
+                        "linear_damping": 0.0,
+                        "linear_velocity": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "mass": 5.0,
+                        "type": "rigidBody",
+                        "use_gravity": true
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Players/Omozra.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    },
+                    {
+                        "active": true,
+                        "fade_time": 2.0,
+                        "offset_sync": false,
+                        "total_tracks": 3,
+                        "tracks": [
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": false,
+                                "track_path": "Assets/Audio/SFX/mc_attack_1_fx.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            },
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": false,
+                                "track_path": "Assets/Audio/SFX/heavy_steps_fx.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            },
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": false,
+                                "track_path": "Assets/Audio/SFX/light_steps_fx.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            }
+                        ],
+                        "type": "audio_switch"
+                    }
+                ],
+                "is3D": true,
+                "name": "Omozra",
+                "parent_UID": 4294967295,
+                "tag": 1
             }
         ],
         "name": "testing",
