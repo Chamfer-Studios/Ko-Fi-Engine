@@ -192,9 +192,10 @@ float4x4 ComponentTransform::GetGlobalTransform()
 
 void ComponentTransform::RecomputeGlobalMatrix()
 {
+
 	if (owner->GetParent() != nullptr)
 	{
-		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
+		transformMatrix = owner->GetParent()->GetTransform()->GetGlobalTransform().Mul(transformMatrixLocal);
 	}
 	else
 	{
@@ -202,31 +203,13 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	}
 }
 
-void ComponentTransform::NewAttachment()
-{
-	if (owner->GetParent() != nullptr)
-		transformMatrixLocal = owner->GetParent()->GetTransform()->transformMatrix.Inverted().Mul(transformMatrix);
-
-	
-	float3x3 rot;
-	float3 position;
-	float3 scale;
-	transformMatrixLocal.Decompose(position, rot, scale);
-	rotationEuler = rot.ToEulerXYZ();
-}
-
-void ComponentTransform::OnParentMoved()
-{
-	RecomputeGlobalMatrix();
-}
-
 void ComponentTransform::UpdateGuizmoParameters(float4x4& transformMatrix)
 {
 	float3 position;
 	Quat rotation;
 	float3 scale;
-	transformMatrix.Decompose(position, rotation, scale);
 
+	transformMatrix.Decompose(position, rotation, scale);
 	SetPosition(position);
 	SetRotationQuat(rotation);
 	SetScale(scale);

@@ -345,8 +345,7 @@ void GameObject::AttachChild(GameObject *child)
 
 	child->parent = this;
 	children.push_back(child);
-	// child->transform->NewAttachment();
-	// child->PropagateTransform();
+	child->PropagateTransform();
 }
 
 void GameObject::RemoveChild(GameObject *child)
@@ -363,7 +362,7 @@ void GameObject::PropagateTransform()
 	for (GameObject *go : children)
 	{
 		if (go->transform != nullptr)
-			go->transform->OnParentMoved();
+			go->transform->RecomputeGlobalMatrix();
 	}
 }
 

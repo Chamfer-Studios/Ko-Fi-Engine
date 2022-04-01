@@ -98,7 +98,7 @@ void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, G
 {
 	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 
-	assimpNode = ImportTransform(assimpNode, gameObj);
+	//assimpNode = ImportTransform(assimpNode, gameObj);
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
 
 	gameObj->isPrefab = isPrefab;

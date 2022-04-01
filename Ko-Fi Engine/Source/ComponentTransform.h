@@ -43,8 +43,6 @@ public:
 
 	// Transform Functions
 	void RecomputeGlobalMatrix();
-	void NewAttachment();
-	void OnParentMoved();
 
 	// Guizmo
 	void UpdateGuizmoParameters(float4x4& transformMatrix);
