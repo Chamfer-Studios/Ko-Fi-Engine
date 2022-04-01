@@ -31,6 +31,7 @@ private:
 
 	// Temporal to manage the use of the camera
 	GameObject* camera = nullptr;
+
 };
 
 #endif // !__SCENE_INTRO_H__

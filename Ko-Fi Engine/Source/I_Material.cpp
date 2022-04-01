@@ -200,7 +200,7 @@ bool I_Material::LoadUniforms(Material* material)
 				case GL_INT:
 				{
 					UniformT<int>* ui = new UniformT<int>(name, type, 0);
-					material->AddUniform(ui);
+					material-> AddUniform(ui);
 				}
 				break;
 				case GL_FLOAT:
