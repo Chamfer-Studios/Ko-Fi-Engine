@@ -199,6 +199,12 @@
                     {
                         "active": true,
                         "type": "walkable"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "",
+                        "script_number": 1,
+                        "type": "script"
                     }
                 ],
                 "is3D": true,
@@ -342,8 +348,8 @@
                     {
                         "active": true,
                         "position": [
-                            0.03140377998352051,
-                            -0.11406004428863525,
+                            0.7140700817108154,
+                            -0.1140599250793457,
                             0.0
                         ],
                         "rotation": [

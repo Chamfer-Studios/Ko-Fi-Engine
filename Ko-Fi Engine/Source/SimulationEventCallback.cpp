@@ -5,6 +5,7 @@
 #include "C_Collider.h"
 #include "PxSimulationEventCallback.h"
 #include "Globals.h"
+#include "Scripting.h"
 
 void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 {
@@ -27,44 +28,28 @@ void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHe
 			bool** filMatrix = callback->GetFilterMatrix();
 			if (filMatrix[fil1pos][fil2pos])
 			{
-				// For gameObject1
-				for (int i = 0; i < gameObject1->GetComponents().size(); ++i)
+				ComponentScript* cScript1 = gameObject1->GetComponent<ComponentScript>();
+				ComponentScript* cScript2 = gameObject2->GetComponent<ComponentScript>();
+				if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 				{
-					if (gameObject1->GetComponent<ComponentScript>())
-					{
-						if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
-						{
-							LOG_BOTH("holi");
-							// Call to OnCollisionEnter(gameObject2) to the scripting function
-						}
-						else if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
-						{
-							// Call to OnCollisionRepeat(gameObject2) to the scripting function
-						}
-						else if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
-						{
-							// Call to OnCollisionExit(gameObject2) to the scripting function
-						}
-					}
+					if (cScript1)
+						cScript1->handler->lua["OnCollisionEnter"](gameObject2);
+					if (cScript2)
+						cScript2->handler->lua["OnCollisionEnter"](gameObject1);
 				}
-				// For gameObject2
-				for (int i = 0; i < gameObject2->GetComponents().size(); ++i)
+				else if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
 				{
-					if (gameObject2->GetComponent<ComponentScript>())
-					{
-						if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
-						{
-							// Call to OnCollisionEnter(gameObject1) to the scripting function
-						}
-						else if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
-						{
-							// Call to OnCollisionRepeat(gameObject1) to the scripting function
-						}
-						else if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
-						{
-							// Call to OnCollisionExit(gameObject1) to the scripting function
-						}
-					}
+					if (cScript1)
+						cScript1->handler->lua["OnCollisionRepeat"](gameObject2);
+					if (cScript2)
+						cScript2->handler->lua["OnCollisionRepeat"](gameObject1);
+				}
+				else if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+				{
+					if (cScript1)
+						cScript1->handler->lua["OnCollisionExit"](gameObject2);
+					if (cScript2)
+						cScript2->handler->lua["OnCollisionExit"](gameObject1);
 				}
 			}
 		}
@@ -82,48 +67,29 @@ void SimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU3
 
 		if (gameObject1 && gameObject2)
 		{
-			// ---------------------------------------------------------------------------------------------------
-			// NOTE: I don't know if we would need an OnTriggerRepeat function, in case we need it I kept it there
-			// ---------------------------------------------------------------------------------------------------
+			const std::string* fil1 = gameObject1->GetComponent<ComponentCollider2>()->GetFilter();
+			const std::string* fil2 = gameObject2->GetComponent<ComponentCollider2>()->GetFilter();
+			int fil1pos = callback->GetFilterID(fil1);
+			int fil2pos = callback->GetFilterID(fil2);
 
-			// For gameObject1
-			for (int i = 0; i < gameObject1->GetComponents().size(); ++i)
+			bool** filMatrix = callback->GetFilterMatrix();
+			if (filMatrix[fil1pos][fil2pos])
 			{
-				if (gameObject1->GetComponent<ComponentScript>())
+				ComponentScript* cScript1 = gameObject1->GetComponent<ComponentScript>();
+				ComponentScript* cScript2 = gameObject2->GetComponent<ComponentScript>();
+				if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 				{
-					if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
-					{
-						LOG_BOTH("holi");
-						// Call to OnTriggerEnter(gameObject2) to the scripting function
-					}
-					else if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
-					{
-						// Call to OnTriggerRepeat(gameObject2) to the scripting function
-					}
-					else if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
-					{
-						// Call to OnTriggerExit(gameObject2) to the scripting function
-					}
+					if (cScript1)
+						cScript1->handler->lua["OnTriggerEnter"](gameObject2);
+					if (cScript2)
+						cScript2->handler->lua["OnTriggerEnter"](gameObject1);
 				}
-			}
-			// For gameObject2
-			for (int i = 0; i < gameObject2->GetComponents().size(); ++i)
-			{
-				if (gameObject2->GetComponent<ComponentScript>())
+				else if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 				{
-					if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
-					{
-						LOG_BOTH("holi");
-						// Call to OnTriggerEnter(gameObject1) to the scripting function
-					}
-					else if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
-					{
-						// Call to OnTriggerRepeat(gameObject1) to the scripting function
-					}
-					else if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
-					{
-						// Call to OnTriggerExit(gameObject1) to the scripting function
-					}
+					if (cScript1)
+						cScript1->handler->lua["OnTriggerExit"](gameObject2);
+					if (cScript2)
+						cScript2->handler->lua["OnTriggerExit"](gameObject1);
 				}
 			}
 		}
