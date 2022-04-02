@@ -22,23 +22,16 @@ enum class ComponentType
 	AUDIO_SOURCE,
 	AUDIO_SWITCH,
 	ANIMATOR,
-	WALKABLE,
-	FOLLOW_PATH,
-	LIGHT_SOURCE,
-	TRANSFORM2D,
 	CANVAS,
 	IMAGE,
 	BUTTON,
 	TEXT,
 	WALKABLE,
 	FOLLOW_PATH,
+	LIGHT_SOURCE,
 	END, //Put all the component types that you dont want the add combo to show after the END and map it in the component type to string function below this enum
-	INFO,
 	TRANSFORM,
 	TRANSFORM2D,
-
-
-	TRANSFORM,
 	INFO
 };
 namespace componentTypeUtils{
