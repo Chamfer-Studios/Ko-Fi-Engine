@@ -236,12 +236,28 @@ void ComponentButton::FreeTextures(BUTTON_STATE type)
 
 bool ComponentButton::IsPressed()
 {
-	if (state == BUTTON_STATE::PRESSED)
+	if (state == BUTTON_STATE::PRESSED && !isPressed)
 	{
+		isPressed = true;
 		return true;
 	}
-	else
+	else if (state != BUTTON_STATE::PRESSED)
 	{
-		return false;
+		isPressed = false;
 	}
+	return false;
+}
+
+bool ComponentButton::IsHovered()
+{
+	if (state == BUTTON_STATE::HOVER && !isHovered)
+	{
+		isHovered = true;
+		return true;
+	}
+	else if (state == BUTTON_STATE::IDLE)
+	{
+		isHovered = false;
+	}
+	return false;
 }

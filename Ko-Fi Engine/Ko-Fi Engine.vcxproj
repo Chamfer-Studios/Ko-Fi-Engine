@@ -713,6 +713,10 @@
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_1.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_3.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_SFX.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
