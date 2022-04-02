@@ -41,23 +41,29 @@ physx::PxFilterFlags customFilterShader(
 	}
 	else
 	{
-		std::string* debugfilter0 = (std::string*)filterData0.word0;
-		debugfilter0->c_str();
-		std::string* debugfilter1 = (std::string*)filterData1.word0;
-		debugfilter1->c_str();
-		if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-		{
-			pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
-			pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
-			pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
-			pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
-			pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
-		}
-		else
-		{
-			pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
-			//return physx::PxFilterFlag::eSUPPRESS;
-		}
+		pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+		pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
+		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
+
+		//std::string* debugfilter0 = (std::string*)filterData0.word0;
+		//debugfilter0->c_str();
+		//std::string* debugfilter1 = (std::string*)filterData1.word0;
+		//debugfilter1->c_str();
+		//if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+		//{
+		//	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+		//	pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+		//	pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+		//	pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
+		//	pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
+		//}
+		//else
+		//{
+		//	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+		//	//return physx::PxFilterFlag::eSUPPRESS;
+		//}
 	}
 
 	return physx::PxFilterFlag::eDEFAULT;

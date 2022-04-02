@@ -91,7 +91,7 @@
                         "active": true,
                         "position": [
                             5.960464477539063e-08,
-                            12.787323951721191,
+                            4.094788551330566,
                             -2.980232238769531e-07
                         ],
                         "rotation": [
@@ -180,7 +180,7 @@
                         "active": true,
                         "box_collider_size": [
                             3.2137579917907715,
-                            3.54294490814209,
+                            3.5429458618164063,
                             3.967226028442383
                         ],
                         "center_position": [
@@ -342,8 +342,8 @@
                     {
                         "active": true,
                         "position": [
-                            1.4901161193847656e-08,
-                            5.95674991607666,
+                            0.03140377998352051,
+                            -0.11406004428863525,
                             0.0
                         ],
                         "rotation": [
@@ -410,14 +410,14 @@
                             0.0
                         ],
                         "density": 0.9100000262260437,
-                        "freeze_position_x": false,
-                        "freeze_position_y": false,
-                        "freeze_position_z": false,
-                        "freeze_rotation_x": false,
-                        "freeze_rotation_y": false,
-                        "freeze_rotation_z": false,
+                        "freeze_position_x": true,
+                        "freeze_position_y": true,
+                        "freeze_position_z": true,
+                        "freeze_rotation_x": true,
+                        "freeze_rotation_y": true,
+                        "freeze_rotation_z": true,
                         "is_kinematic": false,
-                        "is_static": false,
+                        "is_static": true,
                         "linear_damping": 0.0,
                         "linear_velocity": [
                             0.0,
@@ -426,13 +426,13 @@
                         ],
                         "mass": 5.699999809265137,
                         "type": "rigidBody",
-                        "use_gravity": true
+                        "use_gravity": false
                     },
                     {
                         "active": true,
                         "box_collider_size": [
                             3.2137579917907715,
-                            3.5429744720458984,
+                            3.5429749488830566,
                             3.9672586917877197
                         ],
                         "center_position": [
