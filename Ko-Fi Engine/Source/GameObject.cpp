@@ -205,19 +205,6 @@ void GameObject::DeleteComponent(Component* component)
 	}
 }
 
-void GameObject::AddComponent(Component* component)
-{
-	// Check if it is repeated
-	for (Component* c : components)
-	{
-		if (c->GetType() == component->GetType())
-		{
-			LOG_BOTH("Components cannot be duplicated!");
-			return;
-		}
-	}
-	components.push_back(component);
-}
 
 Component* GameObject::AddComponentByType(ComponentType componentType)
 {
@@ -308,8 +295,13 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 		/*this->CreateComponent<ComponentCollider2>();*/
 		if (!this->GetComponent<ComponentRigidBody>())
-			this->CreateComponent<ComponentRigidBody>();
-		ComponentCollider2* cmpColl2 = new ComponentCollider2(this, ColliderShape::NONE);
+		{
+			
+			AddComponentByType(ComponentType::RIGID_BODY);
+		}
+			
+		c = new ComponentCollider2(this, ColliderShape::NONE);
+		break;
 	}
 	case ComponentType::WALKABLE:
 	{
@@ -340,6 +332,9 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	c->Start();
 	return c;
 }
+
+
+
 
 void GameObject::AttachChild(GameObject* child)
 {
@@ -792,5 +787,5 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 		chainName = name + number;
 	}
 
-	return chainName; 
+	return chainName;
 }

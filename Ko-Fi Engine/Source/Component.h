@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef __COMPONENT_H__
+#define __COMPONENT_H__
 #include "imgui.h"
 #include "json.hpp"
 
@@ -10,8 +10,8 @@ using Json = nlohmann::json;
 
 enum class ComponentType
 {
-	NONE,
-	MESH,
+	NONE = 0,
+	MESH ,
 	MATERIAL,
 	PARTICLE,
 	CAMERA,
@@ -22,16 +22,23 @@ enum class ComponentType
 	AUDIO_SOURCE,
 	AUDIO_SWITCH,
 	ANIMATOR,
-	TRANSFORM2D,
 	CANVAS,
 	IMAGE,
 	BUTTON,
 	TEXT,
-	TRANSFORM,
 	WALKABLE,
 	FOLLOW_PATH,
-	INFO
+	END, //Put all the component types that you dont want the add combo to show after the END and map it in the component type to string function below this enum
+	INFO,
+	TRANSFORM,
+	TRANSFORM2D,
+
+
 };
+namespace componentTypeUtils{
+	const char* ComponentTypeToString(ComponentType e);
+	
+}
 
 class Component
 {
@@ -70,3 +77,5 @@ public:
 	GameObject *owner = nullptr;
 	ComponentType type;
 };
+
+#endif //__COMPONENT_H__

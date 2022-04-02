@@ -50,10 +50,10 @@ public:
 		}
 		return component;
 	}
-
+	
 	// New way
 	void DeleteComponent(Component* component);
-	void AddComponent(Component* component);
+	void PushBackComponent(Component* component) { components.push_back(component); }
 	Component* AddComponentByType(ComponentType componentType);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
@@ -98,6 +98,7 @@ public:
 		T* newComponent = new T(this);
 		return newComponent;
 	}
+
 
 public:
 	bool active = true;
