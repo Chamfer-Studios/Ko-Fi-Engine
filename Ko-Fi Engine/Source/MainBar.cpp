@@ -206,7 +206,15 @@ void MainBar::ChoosersListener()
 		const char* file = editor->GetPanelChooser()->OnChooserClosed();
 		if (file != nullptr)
 		{
-			Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+	#pragma omp parallel private()
+			{
+				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+			}
+			
 		}
 	}
+}
+
+void MainBar::ThreadLoadScene()
+{
 }

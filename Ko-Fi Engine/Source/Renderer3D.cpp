@@ -27,6 +27,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "C_Collider.h"
 #include "ComponentRenderedUI.h"
 #include "ComponentLightSource.h"
 #include "Material.h"
@@ -62,6 +63,8 @@ bool Renderer3D::Awake(Json configModule)
 	SetVsync(configModule["Vsync"].get<bool>());
 
 	InitFrameBuffers();
+
+	ret = LoadConfiguration(configModule);
 
 	return ret;
 }
@@ -112,6 +115,25 @@ bool Renderer3D::SaveConfiguration(Json& configModule) const
 
 bool Renderer3D::LoadConfiguration(Json& configModule)
 {
+	vsync = configModule["Vsync"];
+	return true;
+}
+
+bool Renderer3D::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Renderer##"))
+	{
+		bool vsync = GetVsync();
+		if (ImGui::Checkbox("V-Sync", &vsync))
+		{
+			SetVsync(vsync);
+			engine->SaveConfiguration();
+		}
+		if (ImGui::Checkbox("Draw scene partition tree", &engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {
+			engine->SaveConfiguration();
+		}
+	}
+
 	return true;
 }
 
@@ -265,6 +287,11 @@ void Renderer3D::RenderScene()
 					cCamera->DrawFrustum();
 				}
 
+			}
+			ComponentCollider2* cCol = go->GetComponent<ComponentCollider2>();
+			if (cCol)
+			{
+				cCol->DrawCollider();
 			}
 		}
 	}

@@ -70,7 +70,10 @@ bool ComponentButton::PostUpdate(float dt)
 
 bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Button")) {
+	if (ImGui::CollapsingHeader("Button", ImGuiTreeNodeFlags_AllowItemOverlap))
+	{
+		DrawDeleteButton(owner, this);
+
 		// IDLE
 		ImGui::Text("IDLE: ");
 		ImGui::SameLine();
@@ -143,6 +146,8 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 			panelChooser->OpenPanel("PRESSEDTextureButton", "png");
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }

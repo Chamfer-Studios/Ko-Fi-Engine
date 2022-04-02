@@ -40,7 +40,6 @@ enum INSPECTOR_VARIABLE_TYPE
 enum ItemType
 {
 	ITEM_NO_TYPE,
-
 	ITEM_HAND,
 	ITEM_KNIFE,
 	ITEM_GUN
@@ -184,8 +183,8 @@ public:
 			sol::constructors<void(GameObject*)>(),
 			"GetPosition", &ComponentTransform::GetPosition,
 			"SetPosition", &ComponentTransform::SetPosition,
-			"GetRotation", &ComponentTransform::GetRotation,
-			"SetRotation", &ComponentTransform::SetRotation,
+			"GetRotation", &ComponentTransform::GetRotationEuler,
+			"SetRotation", &ComponentTransform::SetRotationEuler,
 			"GetScale",	   &ComponentTransform::GetScale,
 			"SetScale",	   &ComponentTransform::SetScale,
 			"GetFront",	   &ComponentTransform::Front,

@@ -38,6 +38,7 @@ public:
 	SceneManager(KoFiEngine* engine);
 	~SceneManager();
 
+	bool Awake(Json configModule);
 	// Called before render is available
 	virtual bool Awake();
 
@@ -59,6 +60,15 @@ public:
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
+		// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	bool PrepareUpdate();
 	bool FinishUpdate();
 
@@ -66,9 +76,7 @@ public:
 	Scene* GetCurrentScene();
 
 	GameState GetGameState();
-	float GetGameDt();
-	float GetGameTime();
-
+	inline float const GetGameTime() { return time; }
 	inline float GetGameDt() const { return gameDt; }
 	inline float GetTotalGameTime() const { return gameTime; }
 
@@ -85,6 +93,7 @@ public:
 	void GuizmoTransformation();
 	void UpdateGuizmo();
 	//
+
 public:
 	bool active;
 

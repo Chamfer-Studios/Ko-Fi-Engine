@@ -99,7 +99,7 @@ void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, G
 {
 	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 
-	assimpNode = ImportTransform(assimpNode, gameObj);
+	assimpNode = ImportTransform(assimpNode, gameObj); // THIS IS CAUSING BUGS WITH THE SCALE 
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
 
 	gameObj->isPrefab = isPrefab;
@@ -530,6 +530,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
+		float startTime = (float)engine->GetEngineTime();
+#pragma omp parallel for
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
@@ -561,6 +563,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			go->SetParentUID(parentUid);
 
 			Json jsonCmp = jsonGo.at("components");
+#pragma omp parallel for
 			for (const auto& cmpIt : jsonCmp.items())
 			{
 				Json jsonCmp = cmpIt.value();
@@ -772,6 +775,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			if (!exists)
 				scene->gameObjectList.push_back(go);
 		}
+
+		float endTime = (float)engine->GetEngineTime();
+		appLog->AddLog("Time to load: %f\n", endTime - startTime);
 
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{

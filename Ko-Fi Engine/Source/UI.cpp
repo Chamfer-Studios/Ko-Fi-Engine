@@ -138,6 +138,15 @@ UI::~UI()
 {
 }
 
+bool UI::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool UI::Start()
 {
 	return true;
@@ -167,6 +176,21 @@ bool UI::CleanUp()
 
 void UI::OnNotify(const Event& event)
 {
+}
+
+bool UI::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool UI::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool UI::InspectorDraw()
+{
+	return true;
 }
 
 void UI::PrepareUIRender()
