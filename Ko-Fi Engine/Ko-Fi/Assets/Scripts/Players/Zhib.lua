@@ -84,7 +84,7 @@ function Update(dt)
 		invisibilityTimer = invisibilityTimer + dt
 		if (invisibilityTimer >= invisibilityDuration) then
 			invisibilityDuration = nil
-			gameObject:GetComponentMesh():Enable() -- Useless ???
+			gameObject.active = true
 		else
 			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 1000.0, componentTransform:GetPosition().z))
 		end
@@ -94,10 +94,10 @@ function Update(dt)
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
 	end
-
+	
 	--Gather Inputs
 	if (IsSelected() == true) then 
-
+	
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then -- Left Click
 			if (currentAction == Action.AIMING_KNIFE) then -- Fire Knife (infinite range for now)
 				if (knifeCount > 0) then
@@ -114,7 +114,7 @@ function Update(dt)
 				Ultimate(mousePos)
 			end
 		end
-
+	
 		if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
 			goHit = GetGameObjectHovered()
 			if (goHit ~= hit and goHit ~= gameObject) then
@@ -131,7 +131,7 @@ function Update(dt)
 				end
 			end
 		end
-
+	
 		if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
 			currentAction = Action.IDLE
 		end
@@ -295,20 +295,20 @@ function Ultimate(mousePos)
 		end		
 	end
 
-	deathMarkTimer = 0.2
+	deathMarkDuration = 0.4
 	-- Set IN ORDER the death mark
 	for i = 1, #enemiesInRange do
-		deathMarkTimer = deathMarkTimer + 0.1
-		SetLuaVariableFromGameObject(enemiesInRange[i].name, "deathMark", deathMarkTimer)
+		deathMarkDuration = deathMarkDuration + 0.3
+		SetLuaVariableFromGameObject(enemiesInRange[i].name, "deathMarkDuration", deathMarkDuration)
 	end
 	
-	Disapear(deathMarkTimer)
+	Disapear(deathMarkDuration)
 
 	-- Set timer equal to the longest dath mark timer to reappear
 end
 
 function Disapear(duration)
-	gameObject:GetComponentMesh():Disable() -- Useless ???
+	gameObject.active = false
 	componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 1000.0, componentTransform:GetPosition().z))
 
 	invisibilityTimer = 0

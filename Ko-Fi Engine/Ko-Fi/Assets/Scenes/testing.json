@@ -569,6 +569,12 @@
                         "collider_type": 3,
                         "is_trigger": false,
                         "type": "collider"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
+                        "script_number": 1,
+                        "type": "script"
                     }
                 ],
                 "is3D": true,
@@ -1309,7 +1315,7 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Bullet.lua",
+                        "file_name": "Assets/Scripts/Knife.lua",
                         "script_number": 1,
                         "type": "script"
                     }
@@ -1424,7 +1430,7 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Players/Nerala.lua",
+                        "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
                         "script_number": 1,
                         "type": "script"
                     },
@@ -1474,7 +1480,7 @@
                 "is3D": true,
                 "name": "Nerala",
                 "parent_UID": 4294967295,
-                "tag": 1
+                "tag": 2
             },
             {
                 "UID": 489060177,
@@ -1581,7 +1587,7 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Players/Omozra.lua",
+                        "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
                         "script_number": 1,
                         "type": "script"
                     },
@@ -1631,7 +1637,7 @@
                 "is3D": true,
                 "name": "Omozra",
                 "parent_UID": 4294967295,
-                "tag": 1
+                "tag": 2
             }
         ],
         "name": "testing",

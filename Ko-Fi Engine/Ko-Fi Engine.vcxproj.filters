@@ -134,6 +134,9 @@
     <Filter Include="Scripts\Players">
       <UniqueIdentifier>{b60b2e15-ad68-4868-b194-05cbcd60c8cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Enemies">
+      <UniqueIdentifier>{eaea32bb-f20e-4cce-a1a5-b570cd06a4a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -1790,6 +1793,9 @@
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua">
       <Filter>Scripts\Players</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
+      <Filter>Scripts\Enemies</Filter>
     </None>
   </ItemGroup>
 </Project>
