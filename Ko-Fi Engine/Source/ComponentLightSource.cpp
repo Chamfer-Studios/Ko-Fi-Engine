@@ -39,10 +39,95 @@ bool ComponentLightSource::CleanUp()
 
 void ComponentLightSource::Save(Json& json) const
 {
+	json["type"] = "lightSource";
+	json["sourceType"] = (int)sourceType;
+
+	switch (sourceType)
+	{
+	case SourceType::DIRECTIONAL:
+	{
+		DirectionalLight* currentLight = (DirectionalLight*)lightSource;
+		
+		json["lightPosition"] = { currentLight->position.x, currentLight->position.y, currentLight->position.z };
+		json["lightColor"] = { currentLight->color.x, currentLight->color.y, currentLight->color.z };
+	
+		json["lightDirection"] = { currentLight->direction.x, currentLight->direction.y, currentLight->direction.z };
+		
+		json["ambientValue"] = currentLight->ambient;
+		json["diffuseValue"] = currentLight->diffuse;
+		json["specularValue"] = currentLight->specular;
+
+		break;
+	}
+	case SourceType::POINT:
+	{
+		PointLight* currentLight = (PointLight*)lightSource;
+		
+		json["lightPosition"] = { currentLight->position.x, currentLight->position.y, currentLight->position.z };
+		json["lightColor"] = { currentLight->color.x, currentLight->color.y, currentLight->color.z };
+	
+		json["ambientValue"] = currentLight->ambient;
+		json["diffuseValue"] = currentLight->diffuse;
+		json["specularValue"] = currentLight->specular;
+		
+		json["constantAttenuationValue"] = currentLight->constant;
+		json["linearAttenuationValue"] = currentLight->linear;
+		json["quadraticAttenuationValue"] = currentLight->quadratic;
+
+		break;
+	}
+	}
 }
 
 void ComponentLightSource::Load(Json& json)
 {
+	SourceType type = (SourceType)json.at("sourceType");
+
+	switch (type)
+	{
+	case SourceType::DIRECTIONAL:
+	{
+		DirectionalLight* currentLight = (DirectionalLight*)ChangeSourceType(type);
+		std::vector<float> values = json.at("lightPosition").get<std::vector<float>>();
+		currentLight->position = (float3(values[0], values[1], values[2]));
+		values.clear();
+
+		values = json.at("lightColor").get<std::vector<float>>();
+		currentLight->color = (float3(values[0], values[1], values[2]));
+		values.clear();
+
+		values = json.at("lightDirection").get<std::vector<float>>();
+		currentLight->direction = (float3(values[0], values[1], values[2]));
+		values.clear();
+
+		currentLight->ambient = json.at("ambientValue");
+		currentLight->diffuse = json.at("diffuseValue");
+		currentLight->specular = json.at("specularValue");
+
+		break;
+	}
+	case SourceType::POINT:
+	{
+		PointLight* currentLight = (PointLight*)ChangeSourceType(type);
+		std::vector<float> values = json.at("lightPosition").get<std::vector<float>>();
+		currentLight->position = (float3(values[0], values[1], values[2]));
+		values.clear();
+
+		values = json.at("lightColor").get<std::vector<float>>();
+		currentLight->color = (float3(values[0], values[1], values[2]));
+		values.clear();
+
+		currentLight->ambient = json.at("ambientValue");
+		currentLight->diffuse = json.at("diffuseValue");
+		currentLight->specular = json.at("specularValue");
+
+		currentLight->constant = json.at("constantAttenuationValue");
+		currentLight->linear = json.at("linearAttenuationValue");
+		currentLight->quadratic = json.at("quadraticAttenuationValue");
+		break;
+	}
+	}
+	
 }
 
 bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
@@ -92,9 +177,6 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 		case SourceType::POINT:
 		{
 			PointLight* currentLight = (PointLight*)lightSource;
-			//dragfloat constantVal
-			//dragfloat linearVal
-			//dragfloat quadraticVal
 
 			float ambientValue = currentLight->ambient;
 			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))

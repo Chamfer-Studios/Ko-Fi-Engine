@@ -103,6 +103,7 @@ public:
 			RELEASE(gameObject);
 		}
 		gameObjectList.clear();
+		lights.clear();
 		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 		rootGo = new GameObject(-1, engine, "Root");
 		gameObjectList.push_back(rootGo);
@@ -110,9 +111,6 @@ public:
 
 	virtual void DeleteGameObject(GameObject* gameObject)
 	{
-		if (gameObject->GetComponent<ComponentLightSource>() != nullptr)
-			//RemoveLight(gameObject);
-
 		for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
 		{
 			if ((*it)->GetUID() == gameObject->GetUID())
@@ -143,7 +141,10 @@ public:
 				}
 			}
 			parent->RemoveChild(gameObject);
-
+			
+			if (gameObject->GetComponent<ComponentLightSource>() != nullptr)
+				RemoveLight(gameObject);
+			
 			gameObject->CleanUp();
 			
 

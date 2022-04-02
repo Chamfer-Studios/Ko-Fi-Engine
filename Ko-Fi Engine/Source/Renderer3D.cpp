@@ -483,20 +483,11 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 			else
 			{
-				float3 lightDirection = float3(-1.0f, 1.0f, 1.0f);
-
 				GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
-				glUniform1i(numDirLights, 1);
+				glUniform1i(numDirLights, 0);
 
-				GLint lightDir = glGetUniformLocation(shader, "lightDirections");
-				glUniform3fv(lightDir, 1, lightDirection.ptr());
-
-				GLenum err = glGetError();
-				while (err != GL_NO_ERROR)
-				{
-					//CONSOLE_LOG("OpenGl error: %d", err);
-					err = glGetError();
-				}
+				GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
+				glUniform1i(numPointLights, 0);
 
 			}
 			//Draw Mesh
