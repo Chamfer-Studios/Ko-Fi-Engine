@@ -433,7 +433,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 				case GL_FLOAT_VEC3:
 				{
 					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-					ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), 0.001f, 0.0f, 32.0f, "%.3f");
+					ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), 0.001f, -32.0f, 32.0f, "%.3f");
 				}
 				break;
 				case GL_FLOAT_VEC4:

@@ -24,6 +24,7 @@
 #include "C_AudioSwitch.h"
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
+#include "ComponentLightSource.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine *engine, const char *name, bool _is3D)
@@ -282,6 +283,12 @@ Component *GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::ANIMATOR:
 	{
 		this->CreateComponent<ComponentAnimator>();
+		break;
+	}
+	case ComponentType::LIGHT_SOURCE:
+	{
+		c = this->CreateComponent<ComponentLightSource>();
+		engine->GetSceneManager()->GetCurrentScene()->AddLight(this);
 		break;
 	}
 	}

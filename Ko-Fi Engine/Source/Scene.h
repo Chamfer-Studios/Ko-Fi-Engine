@@ -7,6 +7,7 @@
 #include "Editor.h"
 #include "QuadTree3D.h"
 #include "RNG.h"
+#include "ComponentLightSource.h"
 
 #include <vector>
 #include "MathGeoLib/Geometry/LineSegment.h"
@@ -102,6 +103,7 @@ public:
 			RELEASE(gameObject);
 		}
 		gameObjectList.clear();
+		lights.clear();
 		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 		rootGo = new GameObject(-1, engine, "Root");
 		gameObjectList.push_back(rootGo);
@@ -139,7 +141,10 @@ public:
 				}
 			}
 			parent->RemoveChild(gameObject);
-
+			
+			if (gameObject->GetComponent<ComponentLightSource>() != nullptr)
+				RemoveLight(gameObject);
+			
 			gameObject->CleanUp();
 			
 
@@ -194,6 +199,40 @@ public:
 		delete objects;
 	}
 
+	// ----- Lighting -----
+	void AddLight(GameObject* newLight)
+	{
+		if (newLight != nullptr)
+			lights.push_back(newLight);
+	}
+
+	void RemoveLight(GameObject* lightToDelete)
+	{
+		for (std::vector<GameObject*>::iterator light = lights.begin(); light != lights.end(); light++)
+		{
+			if (lightToDelete == *light)
+			{
+				lights.erase(light);
+			}
+		}
+	}
+
+	std::vector<GameObject*> GetLights(SourceType type)
+	{
+		std::vector<GameObject*> ret;
+
+		for (int i = 0; i < lights.size(); i++)
+		{
+			if (lights[i]->GetComponent<ComponentLightSource>()->GetSourceType() == type)
+			{
+				ret.push_back(lights[i]);
+			}
+		}
+
+		return ret;
+	}
+
+
 public:
 	std::string name;
 	bool active;
@@ -211,6 +250,7 @@ public:
 	QuadTree3D* sceneTree = nullptr;
 
 
+	std::vector<GameObject*> lights;
 	LineSegment ray;
 
 	// Space Partitioning Functions...
