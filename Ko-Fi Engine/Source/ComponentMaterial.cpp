@@ -64,7 +64,7 @@ void ComponentMaterial::Save(Json& json) const
 	//	jsonTex["path"] = tex.GetTexturePath();
 	//	json["textures"].push_back(jsonTex);
 	//}
-
+	json["uniforms"].array();
 	Json jsonUniform;
 	for (Uniform* uniform : material->uniforms)
 	{
@@ -116,6 +116,8 @@ void ComponentMaterial::Save(Json& json) const
 			jsonUniform["value"] = ui->value;
 		}
 		break;
+		default:
+			continue;
 		}
 		json["uniforms"].push_back(jsonUniform);
 	}

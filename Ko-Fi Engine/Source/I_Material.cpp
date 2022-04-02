@@ -196,7 +196,7 @@ bool I_Material::LoadUniforms(Material* material)
 			std::string sName = name;
 			if (sName.find("dirLights") != std::string::npos ||
 				sName.find("pointLights") != std::string::npos ||
-				sName.find("numOfDirLights") != std::string::npos ||
+				sName.find("numOfDirectionalLights") != std::string::npos ||
 				sName.find("numOfPointLights") != std::string::npos)
 			{
 				continue;
