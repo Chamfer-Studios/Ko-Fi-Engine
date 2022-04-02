@@ -19,19 +19,19 @@ public:
 	void OnNotify(const Event& event);
 
 	UID ImportFile(const char* assetPath);
-	void SaveResource(Resource* resource);
-	bool UnloadResource(UID uid);
-	bool UnloadResource(Resource* resource);
-	Resource* GetResourceFromLibrary(const char* libraryPath);
 	UID LoadFromLibrary(const char* libraryPath);
-	UID LoadFromAssets(const char* assetsPath);
+	UID ImportFromAssets(const char* assetsPath);
 	void DeleteFromLibrary(const char* libraryPath);
 	void DeleteFromAssets(const char* assetsPath);
 	bool TrimLibrary();
 	bool HasImportIgnoredExtension(const char* assetsPath) const;
 
 	//const Resource* RequestResource(uint uid) const;			Can't do it because of the maps
+	void SaveResource(Resource* resource);
+	bool UnloadResource(UID uid);
+	bool UnloadResource(Resource* resource);
 	UID Find(const char* assetPath) const;
+	Resource* GetResourceFromLibrary(const char* libraryPath);
 	Resource* RequestResource(UID uid);
 	ResourceType GetTypeFromExtension(const char* extension);
 	const char* GetAssetsDirectoryFromType(const ResourceType);
@@ -46,7 +46,8 @@ public:
 	void LoadFilesIntoLibrary(std::map<std::string, std::string>& filePairs);
 
 	bool HasMetaFile(const char* assestsPath);
-	bool ValidateMetaFile(const char* assetsPath, bool library = true);
+	bool ValidateMetaFile(const char* assetsPath, bool libraryCheck = true);
+	bool ValidateMetaFile(Json& json, bool libraryCheck = true);
 	bool ResourceHasMetaType(Resource* resource) const;
 
 	bool LoadMetaFileIntoLibrary(const char* assetsPath);
@@ -59,7 +60,7 @@ private:
 	Resource* CreateNewResource(const char* assetPath, ResourceType type);
 
 	bool SaveMetaFile(Resource* resource) const;
-	//Json& LoadMetaFile(const char* assetPath);
+	bool LoadMetaFile(Json& json, const char* assetPath);
 
 private:
 	KoFiEngine* engine = nullptr;

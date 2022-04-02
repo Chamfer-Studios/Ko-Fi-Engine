@@ -32,7 +32,7 @@ public:
 	virtual bool CleanUp();
 
 	virtual bool SaveMeta(Json& json) const { return true; }
-	virtual bool LoadMeta(const Json& json) const { return true; }
+	virtual bool LoadMeta(Json& json) { return true; }
 
 	virtual inline ResourceType GetType() const { return type; }
 

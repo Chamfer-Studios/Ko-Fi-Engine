@@ -163,7 +163,7 @@ UID ResourceManager::ImportFile(const char* assetPath)
 			DeleteFromLibrary(assetPath);
 		}
 		
-		uid = LoadFromAssets(assetPath);
+		uid = ImportFromAssets(assetPath);
 
 		if (uid == 0)
 		{
@@ -668,7 +668,7 @@ bool ResourceManager::HasMetaFile(const char* assestsPath)
 	return std::filesystem::exists(path);
 }
 
-bool ResourceManager::ValidateMetaFile(const char* assetsPath, bool library)
+bool ResourceManager::ValidateMetaFile(const char* assetsPath, bool libraryCheck)
 {
 	if (assetsPath == nullptr)
 	{
@@ -743,11 +743,39 @@ bool ResourceManager::ValidateMetaFile(const char* assetsPath, bool library)
 	return false;
 }
 
+bool ResourceManager::ValidateMetaFile(Json& json, bool libraryCheck)
+{
+	std::string libraryPath = json.at("library_path").get<std::string>();
+	UID uid = (UID)json.at("uid");
+
+	//TODO: CHECK IF EVERYTHING EXISTS
+	if (libraryCheck && library.find(uid) == library.end())
+	{
+		LOG_BOTH("Error validating meta file, resource with uid %d could not be validated.", uid);
+		return false;
+	}
+
+	for (const auto& resource : json.at("resources").items())
+	{
+		std::string rLibraryPath = resource.value().at("library_path").get<std::string>();
+		UID rUid = (UID)resource.value().at("uid");
+
+		//TODO: CHECK IF EVERYTHING EXISTS
+		if (libraryCheck && library.find(rUid) == library.end())
+		{
+			LOG_BOTH("Error validating meta file, contained resource with uid %d could not be validated.", rUid);
+			return false;
+		}
+	}
+
+	return true;
+}
+
 bool ResourceManager::ResourceHasMetaType(Resource* resource) const
 {
 	if (resource == nullptr)
 	{
-		LOG_BOTH("[ERROR] Resource Manager: Couldn't check that the resource has a meta type file. Resource was nullptr");
+		LOG_BOTH("Error checking meta type, resource was nullptr.");
 		return false;
 	}
 
@@ -775,7 +803,7 @@ bool ResourceManager::SaveMetaFile(Resource* resource) const
 {
 	if (resource == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: Error saving meta file. Resource was nullptr.");
+		CONSOLE_LOG("Error saving meta file, resource was nullptr.");
 		return false;
 	}
 
@@ -787,16 +815,27 @@ bool ResourceManager::SaveMetaFile(Resource* resource) const
 	metaFile["AssetsPath"] = resource->GetAssetPath();
 	metaFile["LibraryFile"] = resource->GetLibraryFile();
 	metaFile["LibraryPath"] = resource->GetLibraryPath();
+	//TODO: ADD MODIFICATION TIME
 
-	JsonHandler jsonHandler;
+	resource->SaveMeta(metaFile);
+
+	//JsonHandler jsonHandler;
 
 	return true;
 }
 
-//Json& ResourceManager::LoadMetaFile(const char* assetPath)
-//{
-//	// TODO: insert return statement here
-//}
+bool ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
+{
+	if (assetPath == nullptr)
+	{
+		LOG_BOTH("Error loading meta file, assetPath was nullptr.");
+	}
+
+	//TODO: I don't know what to do here, I think it's this:
+	// engine->GetFileSystem()->OpenFile(assetPath);
+
+	return true;
+}
 
 Resource* ResourceManager::RequestResource(UID uid)
 {
@@ -809,13 +848,11 @@ Resource* ResourceManager::RequestResource(UID uid)
 		return it->second;
 	}
 
-	//auto libIt = library.find(uid);
-	//if (libIt != library.end())
-	//{
-	//	Resource* r = GetResourceFromLibrary(libIt->second.libraryPath.c_str());
-	//	return r;
-	//}
-	//LOG_BOTH("FUCK YOU IT DOESNT EXIST");
+	auto libIt = library.find(uid);
+	if (libIt != library.end())
+	{
+		return GetResourceFromLibrary(libIt->second.assetsPath.c_str());
+	}
 	return nullptr;
 }
 
@@ -852,7 +889,8 @@ void ResourceManager::SaveResource(Resource* resource)
 		break;
 	}
 
-	//TODO: meta shit ???
+	if (ResourceHasMetaType(resource))
+		SaveMetaFile(resource);
 
 	library.emplace(resource->GetUID(), ResourceBase(resource));
 }
@@ -906,7 +944,19 @@ Resource* ResourceManager::GetResourceFromLibrary(const char* libraryPath)
 	}
 
 	UID uid = LoadFromLibrary(libraryPath);
-	return nullptr;
+	if (uid == 0)
+	{
+		LOG_BOTH("Error getting resource from library, could not get resource uid from assests path.");
+		return nullptr;
+	}
+
+	Resource* resource = RequestResource(uid);
+	if (resource == nullptr)
+	{
+		LOG_BOTH("Error getting resource from library, could not request resource.");
+	}
+
+	return resource;
 }
 
 UID ResourceManager::LoadFromLibrary(const char* libraryPath)
@@ -918,11 +968,55 @@ UID ResourceManager::LoadFromLibrary(const char* libraryPath)
 		return -1;
 	}
 
-	//TODO: Wtf do i do now?
-	return -1;
+	Json jsonRoot;
+	LoadMetaFile(jsonRoot, libraryPath);
+	bool metaIsValid = ValidateMetaFile(jsonRoot);
+	if (jsonRoot.empty())
+	{
+		LOG_BOTH("Error loading from library, could not get the meta root node.");
+		return 0;
+	}
+	if (!metaIsValid)
+	{
+		LOG_BOTH("Error loading from library, could not validate meta root node.");
+		return 0;
+	}
+
+	UID uid = (UID)jsonRoot.at("uid");
+
+	if (resourcesMap.find(uid) != resourcesMap.end())
+		return uid;
+
+	//TODO: Allocate resource function
+
+	for (const auto& resource : jsonRoot.at("resources").items())
+	{
+		std::string containedPath;
+		std::string containedName = resource.value().at("name").get<std::string>();
+		UID containedUid = (UID)resource.value().at("uid");
+
+		//TODO: I don't know how to do this
+		//
+		//App->fileSystem->SplitFilePath(assetsPath, &containedPath, nullptr, nullptr);
+		//containedName = containedNode.GetString("Name");
+		//containedPath += containedName;
+
+		if (resourcesMap.find(containedUid) != resourcesMap.end())
+		{
+			continue;
+		}
+
+		//TODO: Allocate resource function
+		containedPath.clear();
+		containedPath.shrink_to_fit();
+		containedName.clear();
+		containedName.shrink_to_fit();
+	}
+
+	return uid;
 }
 
-UID ResourceManager::LoadFromAssets(const char* assetsPath)
+UID ResourceManager::ImportFromAssets(const char* assetsPath)
 {
 	UID uid;
 
@@ -1117,56 +1211,6 @@ bool ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
 }
 
-//uint32 M_ResourceManager::ImportFromAssets(const char* assetsPath)
-//{
-//	uint32 resourceUid = 0;
-//
-//	if (assetsPath == nullptr)
-//	{
-//		LOG("[ERROR] Resource Manager: Could not Import File from the given path! Error: Path was nullptr.");
-//		return 0;
-//	}
-//
-//	char* buffer = nullptr;
-//	uint read = App->fileSystem->Load(assetsPath, &buffer);
-//	if (read == 0)
-//	{
-//		LOG("[ERROR] Resource Manager: Could not Import File %s! Error: File System could not Read the File.", assetsPath);
-//		return 0;
-//	}
-//
-//	ResourceType type = GetTypeFromAssetsExtension(assetsPath);
-//	Resource* resource = CreateResource(type, assetsPath);
-//
-//	bool success = false;
-//	switch (type)
-//	{
-//	case ResourceType::MODEL: { success = Importer::ImportScene(buffer, read, (R_Model*)resource); }						break;
-//	case ResourceType::MESH: { success = Importer::ImportMesh(buffer, (R_Mesh*)resource); }								break;
-//	case ResourceType::TEXTURE: { success = Importer::ImportTexture(buffer, read, (R_Texture*)resource); }					break;
-//	case ResourceType::SCENE: { /*success = HAVE A FUNCTIONAL R_SCENE AND LOAD/SAVE METHODS*/ }							break;
-//	case ResourceType::SHADER: { success = Importer::Shaders::Import(resource->GetAssetsPath(), (R_Shader*)resource); }	break;
-//	case ResourceType::PARTICLE_SYSTEM: { success = Importer::ImportParticles(buffer, (R_ParticleSystem*)resource); }				break;
-//	case ResourceType::SCRIPT: { success = Importer::Scripts::Import(assetsPath, buffer, read, (R_Script*)resource); }		break;
-//	case ResourceType::NAVMESH: { success = Importer::ImportNavMesh(buffer, (R_NavMesh*)resource); }						break;
-//	}
-//
-//	RELEASE_ARRAY(buffer);
-//
-//	if (!success)
-//	{
-//		LOG("[ERROR] Resource Manager: Could not Import File %s! Error: Check for [IMPORTER] errors in the Console Panel.", assetsPath);
-//		DeallocateResource(resource);
-//		return 0;
-//	}
-//
-//	resourceUid = resource->GetUID();
-//	SaveResourceToLibrary(resource);
-//	DeallocateResource(resource);
-//
-//	return resourceUid;
-//}
-//
 //void M_ResourceManager::DragAndDrop(const char* path)
 //{
 //	//Check if file is valid with extension
@@ -1238,26 +1282,4 @@ bool ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
 //	// TODO: Try to RELEASE the buffer here instead of having to do it every time the function is called wherever it is called.
 //
 //	return ParsonNode(*buffer);
-//}
-//
-//bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
-//{
-//	if (resource == nullptr)
-//	{
-//		LOG("[ERROR] Resource Manager: Could not check that Resource* had Meta Type! Error: Resource* was nullptr.");
-//		return false;
-//	}
-//
-//	switch (resource->GetType())
-//	{
-//	case ResourceType::FOLDER: { return true; }	break;
-//	case ResourceType::MODEL: { return true; }	break;
-//	case ResourceType::TEXTURE: { return true; }	break;
-//	case ResourceType::SHADER: { return true; }	break;
-//	case ResourceType::PARTICLE_SYSTEM: { return true; }	break;
-//	case ResourceType::SCRIPT: { return true; }	break;
-//	case ResourceType::NAVMESH: { return true; }	break;
-//	}
-//
-//	return false;
 //}

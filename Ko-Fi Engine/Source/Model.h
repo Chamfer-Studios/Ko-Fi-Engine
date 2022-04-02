@@ -14,7 +14,7 @@ public:
 	ModelNode();
 	ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID shader, UID texture, std::string textureName);
 	~ModelNode();
-	void Save(const Json& json) const;
+	void Save(Json& json) const;
 	void Load(Json& json);
 
 public:
@@ -33,8 +33,8 @@ class Model : public Resource
 public:
 	Model();
 	~Model();
-	void Save(const Json& json) const;
-	void Load(Json& json);
+	bool SaveMeta(Json& json) const override;
+	bool LoadMeta(Json& json) override;
 
 public:
 	std::vector<ModelNode> nodes;
