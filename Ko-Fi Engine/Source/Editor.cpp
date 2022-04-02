@@ -88,13 +88,13 @@ Editor::Editor(KoFiEngine* engine)
 	//AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);
+	AddPanel(panelNavigation);
 	AddPanel(panelSettings);
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
-	AddPanel(panelNavigation);
 }
 
 Editor::~Editor()
@@ -143,6 +143,7 @@ bool Editor::Awake(Json configModule)
 	// FIXME: The list of meshes should be in scene intro.
 	//input->gameObjects = &gameObjects;
 	ImGuizmo::Enable(true);
+	ImGuizmo::AllowAxisFlip(false);
 
 	ret = LoadConfiguration(configModule);
 
