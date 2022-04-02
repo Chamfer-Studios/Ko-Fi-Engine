@@ -28,6 +28,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentParticle.h"
 #include "ComponentAnimator.h"
+#include "ComponentLightSource.h"
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
@@ -486,6 +487,12 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				followCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::LIGHT_SOURCE:
+			{
+				ComponentLightSource* componentLightSource = (ComponentLightSource*)component;
+				componentLightSource->Save(jsonComponent);
+				break;
+			}
 			default:
 				break;
 			}
@@ -755,6 +762,16 @@ bool I_Scene::Load(Scene* scene, const char* name)
 						follCmp = go->CreateComponent<ComponentFollowPath>();
 					}
 					follCmp->active = true;
+				}
+				else if (type == "lightSource")
+				{
+					ComponentLightSource* componentLightSource = go->GetComponent<ComponentLightSource>();
+					if (componentLightSource == nullptr)
+					{
+						componentLightSource = (ComponentLightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+					}
+					componentLightSource->active = true;
+					componentLightSource->Load(jsonCmp);
 				}
 			}
 			if (!exists)

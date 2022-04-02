@@ -13,6 +13,7 @@
 #include "ComponentCollider.h"
 #include "ComponentRigidBody.h"
 #include "ComponentAnimator.h"
+#include "ComponentLightSource.h"
 
 #include <queue>
 

@@ -29,11 +29,14 @@
 #include "ComponentMaterial.h"
 #include "C_Collider.h"
 #include "ComponentRenderedUI.h"
+#include "ComponentLightSource.h"
 #include "Material.h"
 
 #include "PanelViewport.h"
 
 #include "UI.h"
+
+#include <iostream>
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -341,7 +344,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 		uint shader = cMat->GetMaterial()->shaderProgramID;
 		if (shader != 0)
 		{
-			glUseProgram(shader);
+			glUseProgram(shader);   
 			// Passing Shader Uniforms
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
@@ -360,8 +363,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
 				glUniform1i(isAnimated, mesh->isAnimated);
-			}
-			
+			}			
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
 			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
@@ -371,6 +373,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 			this->timeWaterShader += 0.02f;
 			glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
+
 			//Pass all varibale uniforms from the material to the shader
 			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 			{
@@ -412,6 +415,107 @@ void Renderer3D::RenderMeshes(GameObject* go)
 				default:
 					break;
 				}
+			}
+
+			//lights rendering 
+
+			if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
+			{
+				// ---- directional lights ----
+				std::vector<GameObject*> directionalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::DIRECTIONAL);
+				if (directionalLights.size() > 0)
+				{
+					//TODO: is it worth it to allocate this array and update only whan dirty?
+					int i = 0;
+					for (auto light : directionalLights)
+					{
+						//current iteration to string
+						std::string number = std::to_string(i);
+						//get corresponding directional light
+						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
+						//fill the first variable of the DirLight struct: vec3 direction
+						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
+						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
+						//fill the second variable of the DirLight struct: float ambient
+						GLint ambientValue = glGetUniformLocation(shader, ("dirLights[" + number + "].ambient").c_str());
+						glUniform1f(ambientValue, lightSource->ambient);
+						//fill the third variable of the DirLight struct: float diffuse
+						GLint diffuseValue = glGetUniformLocation(shader, ("dirLights[" + number + "].diffuse").c_str());
+						glUniform1f(diffuseValue, lightSource->diffuse);
+						i++;
+					}
+
+					GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
+					glUniform1i(numDirLights, i);
+				}
+				else
+				{
+					GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
+					glUniform1i(numDirLights, 0);
+				}
+
+				// ---- point lights ----
+				std::vector<GameObject*> pointLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::POINT);
+				if (pointLights.size() > 0)
+				{
+					float3 positionsList[MAX_POINT_LIGHTS];
+					int i = 0;
+					for (auto light : pointLights)
+					{
+						//current iteration to string
+						std::string number = std::to_string(i);
+
+						//get corresponding point light
+						PointLight* lightSource = (PointLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
+						
+						// --- basic light parameters ---
+						
+						//fill in the first variable of the DirLight struct: vec3 position
+						GLint lightPos = glGetUniformLocation(shader, ("pointLights[" + number + "].position").c_str());
+						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
+						//second variable: float ambient
+						GLint ambientValue = glGetUniformLocation(shader, ("pointLights[" + number + "].ambient").c_str());
+						glUniform1f(ambientValue, lightSource->ambient);
+						//third variable: float diffuse
+						GLint diffuseValue = glGetUniformLocation(shader, ("pointLights[" + number + "].diffuse").c_str());
+						glUniform1f(diffuseValue, lightSource->diffuse);
+
+						// --- light attenuation paramenters ---
+						
+						//fifth variable: float constant
+						GLint constantValue = glGetUniformLocation(shader, ("pointLights[" + number + "].constant").c_str());
+						glUniform1f(constantValue, lightSource->constant);
+						//sixth variable: float linear
+						GLint linearValue = glGetUniformLocation(shader, ("pointLights[" + number + "].linear").c_str());
+						glUniform1f(linearValue, lightSource->linear);
+						//seventh variable: float quadratic
+						GLint quadraticValue = glGetUniformLocation(shader, ("pointLights[" + number + "].quadratic").c_str());
+						glUniform1f(quadraticValue, lightSource->quadratic);
+						i++;
+					}
+
+					GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
+					glUniform1i(numPointLights, i);
+				}
+				else
+				{
+					GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
+					glUniform1i(numPointLights, 0);
+				}
+				//for (int i = 0; i < engine->GetSceneManager()->GetCurrentScene()->lights.size(), i++)
+				//{
+				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<ComponentLightSource>()->GetLightSource();
+				//}
+			}
+
+			else
+			{
+				GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
+				glUniform1i(numDirLights, 0);
+
+				GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
+				glUniform1i(numPointLights, 0);
+
 			}
 			//Draw Mesh
 			mesh->Draw();
@@ -588,7 +692,6 @@ transform(transform)
 
 void Renderer3D::RenderParticle(ParticleRenderer* particle)
 {
-
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_TEXTURE_2D);

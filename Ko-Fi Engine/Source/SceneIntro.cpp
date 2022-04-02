@@ -107,7 +107,7 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : gameObjectList)
 	{
-			go->PostUpdate(dt); 
+		go->PostUpdate(dt); 
 	}
 
 	for (GameObject* parent : gameObjectListToCreate)
@@ -160,6 +160,8 @@ bool SceneIntro::CleanUp()
 	{
 		RELEASE(gameObject);
 	}
+
+	lights.clear();
 
 	example::NodeEditorShutdown();
 

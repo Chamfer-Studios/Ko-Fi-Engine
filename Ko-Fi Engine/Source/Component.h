@@ -22,6 +22,10 @@ enum class ComponentType
 	AUDIO_SOURCE,
 	AUDIO_SWITCH,
 	ANIMATOR,
+	WALKABLE,
+	FOLLOW_PATH,
+	LIGHT_SOURCE,
+	TRANSFORM2D,
 	CANVAS,
 	IMAGE,
 	BUTTON,
@@ -34,6 +38,8 @@ enum class ComponentType
 	TRANSFORM2D,
 
 
+	TRANSFORM,
+	INFO
 };
 namespace componentTypeUtils{
 	const char* ComponentTypeToString(ComponentType e);

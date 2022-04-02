@@ -600,6 +600,9 @@
     <ClCompile Include="Source\par_shapes.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentLightSource.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\C_Collider.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
@@ -1707,17 +1710,14 @@
     <ClInclude Include="Source\par_shapes.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ComponentLightSource.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Source\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image\stb_image.h">
-      <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\SimulationEventCallback.h">
       <Filter>Source\Helpers\Physics</Filter>
