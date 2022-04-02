@@ -134,6 +134,12 @@
     <Filter Include="Source\Helpers\Physics">
       <UniqueIdentifier>{5e576769-6fa5-4e63-9e84-299ec3eb37f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Players">
+      <UniqueIdentifier>{b60b2e15-ad68-4868-b194-05cbcd60c8cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemies">
+      <UniqueIdentifier>{eaea32bb-f20e-4cce-a1a5-b570cd06a4a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -1801,17 +1807,29 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua">
+    <None Include="Ko-Fi\Assets\Scripts\Knife.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Enemy.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua">
+      <Filter>Scripts\Players</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua">
+      <Filter>Scripts\Players</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua">
+      <Filter>Scripts\Players</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
+      <Filter>Scripts\Enemies</Filter>
     </None>
   </ItemGroup>
 </Project>

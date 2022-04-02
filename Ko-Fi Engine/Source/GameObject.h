@@ -16,6 +16,14 @@ class ComponentCollider;
 class ComponentCollider2;
 class ComponentAnimator;
 
+enum class Tag 
+{
+	TAG_UNTAGGED,
+	TAG_PLAYER,
+	TAG_ENEMY,
+	TAG_WALL
+};
+
 class GameObject
 {
 public:
@@ -85,8 +93,9 @@ public:
 	
 	bool PrefabSaveJson();
 	bool PrefabSave(Json& jsonFile);
-	bool LoadPrefabJson(const char* path);
+	bool LoadPrefabJson(const char* path, bool exists);
 	bool LoadPrefab(Json& jsonFile);
+	bool UpdatePrefab(Json& jsonFile);
 
 	bool IsSelected();
 public:
@@ -102,6 +111,8 @@ public:
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
+	std::string prefabPath;
+	Tag tag;
 
 	std::vector<GameObject*> children;
 private:

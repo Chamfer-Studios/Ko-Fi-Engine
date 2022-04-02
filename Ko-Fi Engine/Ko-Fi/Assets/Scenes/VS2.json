@@ -1,8 +1,51 @@
 {
     "VS2": {
         "active": true,
-        "game_objects_amount": 325,
+        "game_objects_amount": 323,
         "game_objects_list": [
+            {
+                "UID": 1493117615,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_frustum": true,
+                        "far_plane_distance": 100.0,
+                        "frustum_culling": false,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.10000000149011612,
+                        "type": "camera",
+                        "vertical_fov": 60.0
+                    }
+                ],
+                "is3D": true,
+                "name": "camera",
+                "parent_UID": 4294967295
+            },
             {
                 "UID": 1899641666,
                 "active": true,
@@ -25242,7 +25285,7 @@
                 "parent_UID": 1899641666
             },
             {
-                "UID": 967122866,
+                "UID": 868088129,
                 "active": true,
                 "components": [
                     {
@@ -25275,7 +25318,7 @@
                 "parent_UID": 4294967295
             },
             {
-                "UID": 2006269395,
+                "UID": 531351588,
                 "active": true,
                 "components": [
                     {
@@ -25285,9 +25328,9 @@
                     {
                         "active": true,
                         "position": [
-                            -87.93479919433594,
-                            -31.464004516601563,
-                            84.13427734375
+                            -85.0,
+                            -32.0,
+                            76.0
                         ],
                         "rotation": [
                             0.0,
@@ -25296,9 +25339,9 @@
                             1.0
                         ],
                         "scale": [
-                            0.14000004529953003,
-                            0.14000004529953003,
-                            0.14000004529953003
+                            0.10000000149011612,
+                            0.10000000149011612,
+                            0.10000000149011612
                         ],
                         "type": "transform"
                     },
@@ -25346,165 +25389,15 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Enemy.lua",
-                        "script_number": 1,
-                        "type": "script"
+                        "pathfindLimit": 1000,
+                        "speed": 1.0,
+                        "type": "followPath",
+                        "waypoints": []
                     }
                 ],
                 "is3D": true,
                 "name": "Sphere",
-                "parent_UID": 967122866
-            },
-            {
-                "UID": 208929234,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -78.0,
-                            203.0,
-                            207.0
-                        ],
-                        "rotation": [
-                            -0.017974605783820152,
-                            -0.8566451668739319,
-                            0.5147243142127991,
-                            0.02991468459367752
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_frustum": true,
-                        "far_plane_distance": 2000.0,
-                        "frustum_culling": false,
-                        "isMainCamera": true,
-                        "near_plane_distance": 0.10000000149011612,
-                        "type": "camera",
-                        "vertical_fov": 60.0
-                    }
-                ],
-                "is3D": true,
-                "name": "camera",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 184196540,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "ball",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1322455103,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -0.19099999964237213,
-                            -32.47401809692383,
-                            120.74637603759766
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            0.24000000953674316,
-                            0.24887220561504364,
-                            0.24000000953674316
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Player.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "is3D": true,
-                "name": "Player",
-                "parent_UID": 184196540
+                "parent_UID": 868088129
             }
         ],
         "name": "VS2",

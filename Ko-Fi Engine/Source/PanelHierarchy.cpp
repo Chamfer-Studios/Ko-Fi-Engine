@@ -84,7 +84,7 @@ bool PanelHierarchy::Update()
 				std::string path = editor->GetPanelChooser()->OnChooserClosed();
 				//Importer::GetInstance()->sceneImporter->Import(path.c_str(), true);
 				GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-				go->LoadPrefabJson(path.c_str());
+				go->LoadPrefabJson(path.c_str(), false);
 			}
 		}
 		if (ImGui::Button("Open Prefab")) {

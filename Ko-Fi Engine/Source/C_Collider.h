@@ -18,7 +18,7 @@ enum class CollisionLayer
 	DEFAULT,
 	PLAYER,
 	ENEMY,
-	BULLET,
+	PROJECTILE,
 	TERRAIN
 };
 

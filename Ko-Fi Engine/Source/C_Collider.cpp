@@ -8,7 +8,7 @@
 #include "Physics.h"
 #include "PxPhysicsAPI.h"
 
-ComponentCollider2::ComponentCollider2(GameObject* parent, ColliderShape collType) : Component(parent)
+ComponentCollider2::ComponentCollider2(GameObject *parent, ColliderShape collType) : Component(parent)
 {
 	type = ComponentType::COLLIDER2;
 	colliderShape = collType;
@@ -44,7 +44,6 @@ bool ComponentCollider2::PostUpdate(float dt)
 {
 	bool ret = true;
 
-
 	return ret;
 }
 
@@ -77,13 +76,12 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 
 		break;
 	}
-	
 }
 
 void ComponentCollider2::CreateBoxCollider()
 {
 	if (shape)
-		debugFilter = (std::string*)shape->getSimulationFilterData().word0;
+		debugFilter = (std::string *)shape->getSimulationFilterData().word0;
 
 	// SHAPE CREATION
 	if (shape)
@@ -139,9 +137,9 @@ void ComponentCollider2::DrawBoxCollider()
 {
 	float3 min = centerPosition - float3(boxCollSize.x / 2, 0, boxCollSize.z / 2) + owner->GetComponent<ComponentTransform>()->GetPosition();
 	float3 max = centerPosition + float3(boxCollSize.x / 2, boxCollSize.y, boxCollSize.z / 2) + owner->GetComponent<ComponentTransform>()->GetPosition();
-	
+
 	glLineWidth(2.0f);
-	glColor3f(1.0f,0.0f,0.0f);
+	glColor3f(1.0f, 0.0f, 0.0f);
 	glBegin(GL_LINES);
 
 	// Bottom 1
@@ -189,8 +187,8 @@ void ComponentCollider2::DrawBoxCollider()
 	glLineWidth(1.0f);
 }
 
-// Serialization 
-void ComponentCollider2::Save(Json& json) const
+// Serialization
+void ComponentCollider2::Save(Json &json) const
 {
 	json["type"] = "collider2";
 
@@ -202,11 +200,11 @@ void ComponentCollider2::Save(Json& json) const
 	json["draw_collider"] = drawCollider;
 	json["filter"] = filter;
 
-	json["box_collider_size"] = { boxCollSize.x, boxCollSize.y, boxCollSize.z };
-	json["center_position"] = { centerPosition.x, centerPosition.y, centerPosition.z };
+	json["box_collider_size"] = {boxCollSize.x, boxCollSize.y, boxCollSize.z};
+	json["center_position"] = {centerPosition.x, centerPosition.y, centerPosition.z};
 }
 
-void ComponentCollider2::Load(Json& json)
+void ComponentCollider2::Load(Json &json)
 {
 	colliderShape = (ColliderShape)json.at("collider_type");
 	collisionLayer = (CollisionLayer)json.at("collision_layer");
@@ -227,7 +225,7 @@ void ComponentCollider2::Load(Json& json)
 }
 
 // On inspector draw
-bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
+bool ComponentCollider2::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true;
 
@@ -253,20 +251,20 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		ImGui::Separator();
 
 		// COLLISION LAYER -----------------------------------------------------------------------------------------------
-		//ImGui::Text("Collison Layer:");
+		// ImGui::Text("Collison Layer:");
 		//// Take care with the order in the combo, it has to follow the CollisionLayer enum class order
-		//ImGui::Combo("##combocollisionlayer", &collisionLayerInt, "Default\0Player\0Enemy\0Bullet\0Terrain");
-		//ImGui::SameLine();
-		//if ((ImGui::Button("Assign##collisionlayer")))
+		// ImGui::Combo("##combocollisionlayer", &collisionLayerInt, "Default\0Player\0Enemy\0Bullet\0Terrain");
+		// ImGui::SameLine();
+		// if ((ImGui::Button("Assign##collisionlayer")))
 		//{
 		//	SetCollisionLayer((CollisionLayer)collisionLayerInt);
 		//	collisionLayerInt = 0; // This will reset the button to default when clicked
 		//	hasUpdated = true;
-		//}
-		//ImGui::Text("Current collision layer: ");
-		//ImGui::SameLine();
-		//ImGui::Text("%s", GetCollisionLayerString());
-		//ImGui::Separator();
+		// }
+		// ImGui::Text("Current collision layer: ");
+		// ImGui::SameLine();
+		// ImGui::Text("%s", GetCollisionLayerString());
+		// ImGui::Separator();
 
 		// FILTERS -----------------------------------------------------------------------------------------------
 		ImGui::Text("Filter:");
@@ -279,97 +277,90 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 				if (ImGui::Selectable(filters[i].c_str()))
 					SetFilter(filters[i]);
 			}
-			ImGui::EndCombo();
-		}
-		ImGui::Text("Current filter: ");
-		ImGui::SameLine();
-		const std::string* str = GetFilter();
-		ImGui::Text("%s", str->c_str());
-		ImGui::Separator();
 
-		if (colliderShape == ColliderShape::BOX)
-		{
-			// ATTRIBUTES -----------------------------------------------------------------------------------------------
-			if (ImGui::Checkbox("Enable##", &enabled)) hasUpdated = true;
-			if (ImGui::Checkbox("IsTrigger##", &isTrigger)) hasUpdated = true;
-			if (ImGui::Checkbox("Draw Collider##", &drawCollider)) hasUpdated = true;
-
-			// COLLIDER CENTER POS & SIZE ----------------------------------------------------------------------------------------
-			if (ImGui::TreeNodeEx("Size & Center position"))
+			if (colliderShape == ColliderShape::BOX)
 			{
-				float3 newSize2 = GetBoxCollSize();
-				float newSize[3] = { newSize2.x, newSize2.y, newSize2.z };
-				if (ImGui::DragFloat3("##boxcollsize", newSize))
-				{
-					boxCollSize = { newSize[0], newSize[1], newSize[2] };
-				}
-				ImGui::SameLine();
-				ImGui::Text("Box collider size");
+				// ATTRIBUTES -----------------------------------------------------------------------------------------------
+				if (ImGui::Checkbox("Enable##", &enabled))
+					hasUpdated = true;
+				if (ImGui::Checkbox("IsTrigger##", &isTrigger))
+					hasUpdated = true;
+				if (ImGui::Checkbox("Draw Collider##", &drawCollider))
+					hasUpdated = true;
 
-				float3 newCenterPos2 = GetCenterPosition();
-				float newCenterPos[3] = { newCenterPos2.x, newCenterPos2.y, newCenterPos2.z };
-				if (ImGui::DragFloat3("##centerpos", newCenterPos))
+				// COLLIDER CENTER POS & SIZE ----------------------------------------------------------------------------------------
+				if (ImGui::TreeNodeEx("Size & Center position"))
 				{
-					centerPosition = { newCenterPos[0], newCenterPos[1], newCenterPos[2] };
-				}
-				ImGui::SameLine();
-				ImGui::Text("Center position");
+					float3 newSize2 = GetBoxCollSize();
+					float newSize[3] = {newSize2.x, newSize2.y, newSize2.z};
+					if (ImGui::DragFloat3("##boxcollsize", newSize))
+					{
+						boxCollSize = {newSize[0], newSize[1], newSize[2]};
+					}
+					ImGui::SameLine();
+					ImGui::Text("Box collider size");
 
-				ImGui::TreePop();
+					float3 newCenterPos2 = GetCenterPosition();
+					float newCenterPos[3] = {newCenterPos2.x, newCenterPos2.y, newCenterPos2.z};
+					if (ImGui::DragFloat3("##centerpos", newCenterPos))
+					{
+						centerPosition = {newCenterPos[0], newCenterPos[1], newCenterPos[2]};
+					}
+					ImGui::SameLine();
+					ImGui::Text("Center position");
+
+					ImGui::TreePop();
+				}
+			}
+			else if (colliderShape == ColliderShape::NONE)
+			{
+				ImGui::Text("You have to set a collider shape first!");
+			}
+			else
+			{
+				ImGui::Text("Collider shape not supported yet!");
 			}
 		}
-		else if (colliderShape == ColliderShape::NONE)
-		{
-			ImGui::Text("You have to set a collider shape first!");
-		}
 		else
+			DrawDeleteButton(owner, this);
+
+		return ret;
+	}
+
+	// Private methods
+	const char *ComponentCollider2::ColliderShapeToString(const ColliderShape collShape)
+	{
+		switch (collShape)
 		{
-			ImGui::Text("Collider shape not supported yet!");
+		case ColliderShape::NONE:
+			return "NONE";
+		case ColliderShape::BOX:
+			return "BOX";
+		case ColliderShape::CAPSULE:
+			return "CAPSULE";
+		case ColliderShape::SPHERE:
+			return "SPHERE";
+		default:
+			return "ERROR, goto C_Collider.cpp refer 'ColliderShapeToString'";
 		}
-		
-		
+		return "ERROR, NO COLLIDER SHAPE";
 	}
-	else
-		DrawDeleteButton(owner, this);
-
-	return ret;
-}
-
-// Private methods
-const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collShape)
-{
-	switch (collShape)
+	const char *ComponentCollider2::CollisionLayerToString(const CollisionLayer collLayer)
 	{
-	case ColliderShape::NONE:
-		return "NONE";
-	case ColliderShape::BOX:
-		return "BOX";
-	case ColliderShape::CAPSULE:
-		return "CAPSULE";
-	case ColliderShape::SPHERE:
-		return "SPHERE";
-	default:
-		return "ERROR, goto C_Collider.cpp refer 'ColliderShapeToString'";
+		switch (collLayer)
+		{
+		case CollisionLayer::DEFAULT:
+			return "DEFAULT";
+		case CollisionLayer::PLAYER:
+			return "PLAYER";
+		case CollisionLayer::ENEMY:
+			return "ENEMY";
+		case CollisionLayer::PROJECTILE:
+			return "PROJECTILE";
+		case CollisionLayer::TERRAIN:
+			return "TERRAIN";
+		default:
+			return "ERROR, goto C_Collider.cpp refer 'CollisionLayerToString'";
+		}
+		return "ERROR, NO COLLISION LAYER";
 	}
-	return "ERROR, NO COLLIDER SHAPE";
-}
-const char* ComponentCollider2::CollisionLayerToString(const CollisionLayer collLayer)
-{
-	switch (collLayer)
-	{
-	case CollisionLayer::DEFAULT:
-		return "DEFAULT";
-	case CollisionLayer::PLAYER:
-		return "PLAYER";
-	case CollisionLayer::ENEMY:
-		return "ENEMY";
-	case CollisionLayer::BULLET:
-		return "BULLET";
-	case CollisionLayer::TERRAIN:
-		return "TERRAIN";
-	default:
-		return "ERROR, goto C_Collider.cpp refer 'CollisionLayerToString'";
-	}
-	return "ERROR, NO COLLISION LAYER";
-}
-
