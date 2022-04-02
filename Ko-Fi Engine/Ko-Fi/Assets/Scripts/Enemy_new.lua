@@ -4,6 +4,7 @@ State = {
 }
 
 currentState = State.PATROL
+
 speed = 20
 player = nil
 lastPlayerPosition = nil
@@ -63,17 +64,14 @@ end
 
 function FollowPath(dt)
     currentTarget = finalPath[currentPathIndex]
-    -- Log(tostring(currentPathIndex) .. "\n")
     currentPosition = componentTransform:GetPosition()
     if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
         currentPathIndex = currentPathIndex + 1
         if currentPathIndex > #finalPath then
             if currentState == State.PATROL then
                 currentPathIndex = 1
-                -- Log("1")
             else
                 currentPathIndex = #finalPath
-                -- Log("bakana")
             end
         end
         currentTarget = finalPath[currentPathIndex]
@@ -85,19 +83,18 @@ function FollowPath(dt)
 end
 
 function CalculateFinalPath(wp)
-    Log(tostring(#wp) .. "\n")
     finalPath = {}
-    n = 1
+    n = 0
     for i=1,#wp - 1 do
         current = wp[i]
         next = wp[i + 1]
         result = navigation:FindPath(current, next, 1000, 1000)
         for j=1,#result do
             finalPath[n] = result[j]
+            Log(tostring(finalPath[n]) .. "\n")
             n = n + 1
         end
     end
-    Log(tostring(#finalPath) .. "\n")
 end
 
 function CheckAndRecalculatePath(force)
