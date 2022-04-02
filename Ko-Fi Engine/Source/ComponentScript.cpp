@@ -103,7 +103,7 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 		}
 		if (ImGui::Button("Select Script"))
 		{
-			chooser->OpenPanel("LoadScript", "lua");
+			chooser->OpenPanel("LoadScript", "lua", { "lua" });
 		}
 		ImGui::SameLine();
 		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());

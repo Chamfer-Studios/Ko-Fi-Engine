@@ -380,7 +380,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 
 			if (ImGui::Button("Change Texture"))
 			{
-				panelChooser->OpenPanel("ChangeTexture", "png");
+				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
 				currentTextureId = texture.textureID;
 			}
 
@@ -401,7 +401,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		{
 			if (ImGui::Button("Add Texture"))
 			{
-				panelChooser->OpenPanel("ChangeTexture", "png");
+				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
 				currentTextureId = texture.textureID;
 			}
 		}
@@ -412,7 +412,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		ImGui::Separator();
 
 		if (ImGui::Button("Change Shader"))
-			panelChooser->OpenPanel("ChangeShader", "glsl");
+			panelChooser->OpenPanel("ChangeShader", "glsl", { "glsl" });
 
 		if (material != nullptr)
 		{

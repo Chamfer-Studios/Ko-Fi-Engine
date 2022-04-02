@@ -49,7 +49,7 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Import Model"))
 			{
-				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx");
+				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
 			}
 			if (ImGui::MenuItem("Save Scene"))
 			{
@@ -63,7 +63,7 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Load Scene"))
 			{
-				editor->GetPanelChooser()->OpenPanel("LoadScene", "json");
+				editor->GetPanelChooser()->OpenPanel("LoadScene", "json", { "json" });
 			}
 			if (ImGui::MenuItem("Settings"))
 			{

@@ -77,7 +77,7 @@ bool PanelHierarchy::Update()
 			}
 		}
 		if (ImGui::Button("Create Prefab")) {
-			editor->GetPanelChooser()->OpenPanel("CreatePrefab", "fbx");
+			editor->GetPanelChooser()->OpenPanel("CreatePrefab", "fbx", {"fbx","dae","obj","stl","gltf"});
 		}
 		if (editor->GetPanelChooser()->IsReadyToClose("LoadPrefab")) {
 			if (editor->GetPanelChooser()->OnChooserClosed() != nullptr) {
@@ -88,7 +88,7 @@ bool PanelHierarchy::Update()
 			}
 		}
 		if (ImGui::Button("Open Prefab")) {
-			editor->GetPanelChooser()->OpenPanel("LoadPrefab", "json");
+			editor->GetPanelChooser()->OpenPanel("LoadPrefab", "json", { "json" });
 		}
 	}
 
