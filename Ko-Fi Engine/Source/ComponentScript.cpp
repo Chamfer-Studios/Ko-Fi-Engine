@@ -201,7 +201,7 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 				case INSPECTOR_GAMEOBJECT:
 				{
 					GameObject* selected = std::get<GameObject*>(variable->value);
-					std::string name = (selected == nullptr) ? "null" : selected->name.c_str();
+					std::string name = (selected == nullptr) ? "null" : selected->GetName();
 					ImGui::InputText(variable->name.c_str(), &name);
 					if (ImGui::BeginDragDropTarget())
 					{

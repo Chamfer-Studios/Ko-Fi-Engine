@@ -104,7 +104,8 @@ void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, G
 	gameObj->isPrefab = isPrefab;
 
 	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
-	gameObj->SetName(nodeName.c_str());
+	std::string chainName = nodeName.c_str() ;
+	gameObj->SetName(chainName.c_str());
 	parent->AttachChild(gameObj);
 
 	for (unsigned int i = 0; i < assimpNode->mNumChildren; ++i)
@@ -540,7 +541,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			{
 				exists = true;
 				go = scene->GetGameObject(UID);
-				go->name = jsonGo.at("name");
+				std::string tmp = jsonGo.at("name");
+				go->SetName(tmp.c_str());
 				go->SetUID(UID);
 				go->SetEngine(engine);
 				go->is3D = is3D;

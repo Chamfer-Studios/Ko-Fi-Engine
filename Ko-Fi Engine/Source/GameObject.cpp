@@ -26,17 +26,20 @@
 #include "ComponentFollowPath.h"
 
 // Used with a path for the .fbx load
-GameObject::GameObject(int uid, KoFiEngine *engine, const char *name, bool _is3D)
+GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
 {
 	active = true;
-
-	if (name == nullptr)
-		this->name = "GameObject " + std::to_string(uid);
-	else
-		this->name = name;
-
 	this->uid = uid;
 	this->engine = engine;
+
+	if (name == nullptr)
+	{
+		std::string tmp = std::string("GameObject ") + std::to_string(uid);
+		SetName(tmp.c_str());
+	}
+	else
+		SetName(name);
+
 	CreateComponent<ComponentInfo>();
 
 	is3D = _is3D;
@@ -69,7 +72,7 @@ GameObject::~GameObject()
 bool GameObject::Start()
 {
 	bool ret = true;
-	for (Component *component : components)
+	for (Component* component : components)
 	{
 		ret = component->Start();
 	}
@@ -79,7 +82,7 @@ bool GameObject::Start()
 bool GameObject::PreUpdate()
 {
 	bool ret = true;
-	for (Component *component : components)
+	for (Component* component : components)
 	{
 		ret = component->PreUpdate();
 	}
@@ -89,7 +92,7 @@ bool GameObject::PreUpdate()
 bool GameObject::Update(float dt)
 {
 	bool ret = true;
-	for (Component *component : components)
+	for (Component* component : components)
 	{
 		if (component)
 			ret = component->Update(dt);
@@ -101,7 +104,7 @@ bool GameObject::PostUpdate(float dt)
 {
 	bool ret = true;
 
-	for (Component *component : components)
+	for (Component* component : components)
 	{
 		ret = component->PostUpdate(dt);
 	}
@@ -111,7 +114,7 @@ bool GameObject::PostUpdate(float dt)
 
 bool GameObject::CleanUp()
 {
-	for (Component *component : components)
+	for (Component* component : components)
 	{
 		if (component->GetType() != ComponentType::MESH) // This is the dirty patch
 			RELEASE(component);
@@ -126,7 +129,7 @@ bool GameObject::CleanUp()
 bool GameObject::OnPlay()
 {
 	bool ret = true;
-	for (Component *component : components)
+	for (Component* component : components)
 	{
 		ret = component->OnPlay();
 	}
@@ -191,7 +194,7 @@ void GameObject::Disable()
 	active = false;
 }
 
-void GameObject::DeleteComponent(Component *component)
+void GameObject::DeleteComponent(Component* component)
 {
 	auto componentIt = std::find(components.begin(), components.end(), component);
 	if (componentIt != components.end())
@@ -202,10 +205,10 @@ void GameObject::DeleteComponent(Component *component)
 	}
 }
 
-void GameObject::AddComponent(Component *component)
+void GameObject::AddComponent(Component* component)
 {
 	// Check if it is repeated
-	for (Component *c : components)
+	for (Component* c : components)
 	{
 		if (c->GetType() == component->GetType())
 		{
@@ -216,10 +219,10 @@ void GameObject::AddComponent(Component *component)
 	components.push_back(component);
 }
 
-Component *GameObject::AddComponentByType(ComponentType componentType)
+Component* GameObject::AddComponentByType(ComponentType componentType)
 {
 	// Check if it is repeated
-	for (Component *component : components)
+	for (Component* component : components)
 	{
 		if (component->GetType() == componentType)
 		{
@@ -228,7 +231,7 @@ Component *GameObject::AddComponentByType(ComponentType componentType)
 		}
 	}
 
-	Component *c = nullptr;
+	Component* c = nullptr;
 	switch (componentType)
 	{
 	case ComponentType::MESH:
@@ -306,7 +309,7 @@ Component *GameObject::AddComponentByType(ComponentType componentType)
 		/*this->CreateComponent<ComponentCollider2>();*/
 		if (!this->GetComponent<ComponentRigidBody>())
 			this->CreateComponent<ComponentRigidBody>();
-		ComponentCollider2 *cmpColl2 = new ComponentCollider2(this, ColliderShape::NONE);
+		ComponentCollider2* cmpColl2 = new ComponentCollider2(this, ColliderShape::NONE);
 	}
 	case ComponentType::WALKABLE:
 	{
@@ -338,7 +341,7 @@ Component *GameObject::AddComponentByType(ComponentType componentType)
 	return c;
 }
 
-void GameObject::AttachChild(GameObject *child)
+void GameObject::AttachChild(GameObject* child)
 {
 	if (child->parent != nullptr)
 		child->parent->RemoveChild(child);
@@ -348,7 +351,7 @@ void GameObject::AttachChild(GameObject *child)
 	//child->PropagateTransform();
 }
 
-void GameObject::RemoveChild(GameObject *child)
+void GameObject::RemoveChild(GameObject* child)
 {
 	auto it = std::find(children.begin(), children.end(), child);
 	if (it != children.end())
@@ -359,44 +362,47 @@ void GameObject::RemoveChild(GameObject *child)
 
 void GameObject::PropagateTransform()
 {
-	for (GameObject *go : children)
+	for (GameObject* go : children)
 	{
 		if (go->transform != nullptr)
 			go->transform->RecomputeGlobalMatrix();
 	}
 }
 
-void GameObject::SetName(const char *name)
+void GameObject::SetName(const char* name)
 {
-	this->name = name;
+	if (engine->GetSceneManager() == nullptr)
+		this->name = name;
+	else
+		this->name = SetObjectNumberedName(name).c_str();
 }
 
-const char *GameObject::GetName()
+const char* GameObject::GetName()
 {
 	return name.c_str();
 }
 
-std::vector<GameObject *> GameObject::GetChildren() const
+std::vector<GameObject*> GameObject::GetChildren() const
 {
 	return children;
 }
 
-void GameObject::SetChild(GameObject *child)
+void GameObject::SetChild(GameObject* child)
 {
 	children.push_back(child);
 }
 
-GameObject *GameObject::GetParent() const
+GameObject* GameObject::GetParent() const
 {
 	return parent;
 }
 
-ComponentTransform *GameObject::GetTransform()
+ComponentTransform* GameObject::GetTransform()
 {
 	return this->transform;
 }
 
-std::vector<Component *> GameObject::GetComponents() const
+std::vector<Component*> GameObject::GetComponents() const
 {
 	return components;
 }
@@ -423,7 +429,7 @@ uint GameObject::GetParentUID() const
 
 bool GameObject::HasChildrenWithUID(uint uid)
 {
-	for (std::vector<GameObject *>::iterator child = children.begin(); child != children.end(); child++)
+	for (std::vector<GameObject*>::iterator child = children.begin(); child != children.end(); child++)
 	{
 		if ((*child)->uid == uid)
 			return true;
@@ -442,12 +448,12 @@ bool GameObject::HasParentWithUID(uint uid)
 	return false;
 }
 
-KoFiEngine *GameObject::GetEngine() const
+KoFiEngine* GameObject::GetEngine() const
 {
 	return engine;
 }
 
-void GameObject::SetEngine(KoFiEngine *engine)
+void GameObject::SetEngine(KoFiEngine* engine)
 {
 	this->engine = engine;
 }
@@ -463,7 +469,7 @@ bool GameObject::PrefabSaveJson()
 	JsonHandler jsonHandler;
 	Json jsonFile;
 
-	const char *name = this->name.c_str();
+	const char* name = this->name.c_str();
 
 	this->PrefabSave(jsonFile);
 
@@ -474,19 +480,19 @@ bool GameObject::PrefabSaveJson()
 	return ret;
 }
 
-bool GameObject::PrefabSave(Json &jsonFile)
+bool GameObject::PrefabSave(Json& jsonFile)
 {
 	jsonFile["name"] = this->name;
 	jsonFile["active"] = this->active;
 	jsonFile["isPrefab"] = this->isPrefab;
 
-	std::vector<Component *> componentsList = this->GetComponents();
+	std::vector<Component*> componentsList = this->GetComponents();
 	jsonFile["components"] = Json::array();
-	for (std::vector<Component *>::iterator cmpIt = componentsList.begin(); cmpIt != componentsList.end(); ++cmpIt)
+	for (std::vector<Component*>::iterator cmpIt = componentsList.begin(); cmpIt != componentsList.end(); ++cmpIt)
 	{
 		Json jsonComponent;
 
-		Component *component = (*cmpIt);
+		Component* component = (*cmpIt);
 
 		jsonComponent["active"] = component->active;
 
@@ -497,79 +503,79 @@ bool GameObject::PrefabSave(Json &jsonFile)
 			break;
 		case ComponentType::TRANSFORM:
 		{
-			ComponentTransform *transformCmp = (ComponentTransform *)component;
+			ComponentTransform* transformCmp = (ComponentTransform*)component;
 			transformCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::MESH:
 		{
-			ComponentMesh *meshCmp = (ComponentMesh *)component;
+			ComponentMesh* meshCmp = (ComponentMesh*)component;
 			meshCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::MATERIAL:
 		{
-			ComponentMaterial *materialCmp = (ComponentMaterial *)component;
+			ComponentMaterial* materialCmp = (ComponentMaterial*)component;
 			materialCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::INFO:
 		{
-			ComponentInfo *infoCmp = (ComponentInfo *)component;
+			ComponentInfo* infoCmp = (ComponentInfo*)component;
 			infoCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::CAMERA:
 		{
-			ComponentCamera *cameraCmp = (ComponentCamera *)component;
+			ComponentCamera* cameraCmp = (ComponentCamera*)component;
 			cameraCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::RIGID_BODY:
 		{
-			ComponentRigidBody *rigidBodyCmp = (ComponentRigidBody *)component;
+			ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
 			rigidBodyCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::COLLIDER:
 		{
-			ComponentCollider *collisionCmp = (ComponentCollider *)component;
+			ComponentCollider* collisionCmp = (ComponentCollider*)component;
 			collisionCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::SCRIPT:
 		{
-			ComponentScript *scriptCmp = (ComponentScript *)component;
+			ComponentScript* scriptCmp = (ComponentScript*)component;
 			scriptCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::TRANSFORM2D:
 		{
-			ComponentTransform2D *transform2DCmp = (ComponentTransform2D *)component;
+			ComponentTransform2D* transform2DCmp = (ComponentTransform2D*)component;
 			transform2DCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::CANVAS:
 		{
-			ComponentCanvas *canvasCmp = (ComponentCanvas *)component;
+			ComponentCanvas* canvasCmp = (ComponentCanvas*)component;
 			canvasCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::IMAGE:
 		{
-			ComponentImage *imageCmp = (ComponentImage *)component;
+			ComponentImage* imageCmp = (ComponentImage*)component;
 			imageCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::BUTTON:
 		{
-			ComponentButton *buttonCmp = (ComponentButton *)component;
+			ComponentButton* buttonCmp = (ComponentButton*)component;
 			buttonCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::TEXT:
 		{
-			ComponentText *textCmp = (ComponentText *)component;
+			ComponentText* textCmp = (ComponentText*)component;
 			textCmp->Save(jsonComponent);
 			break;
 		}
@@ -579,9 +585,9 @@ bool GameObject::PrefabSave(Json &jsonFile)
 		jsonFile["components"].push_back(jsonComponent);
 	}
 
-	std::vector<GameObject *> childrenList = this->GetChildren();
+	std::vector<GameObject*> childrenList = this->GetChildren();
 	jsonFile["children"] = Json::array();
-	for (std::vector<GameObject *>::iterator chdIt = childrenList.begin(); chdIt != childrenList.end(); ++chdIt)
+	for (std::vector<GameObject*>::iterator chdIt = childrenList.begin(); chdIt != childrenList.end(); ++chdIt)
 	{
 		json jsonChildren;
 		(*chdIt)->PrefabSave(jsonChildren);
@@ -591,7 +597,7 @@ bool GameObject::PrefabSave(Json &jsonFile)
 	return true;
 }
 
-bool GameObject::LoadPrefabJson(const char *path)
+bool GameObject::LoadPrefabJson(const char* path)
 {
 	bool ret = false;
 
@@ -610,13 +616,13 @@ bool GameObject::LoadPrefabJson(const char *path)
 	return ret;
 }
 
-bool GameObject::LoadPrefab(Json &jsonFile)
+bool GameObject::LoadPrefab(Json& jsonFile)
 {
 	this->name = jsonFile.at("name");
 	this->isPrefab = jsonFile.at("isPrefab");
 	this->active = jsonFile.at("active");
 	Json jsonCmp = jsonFile.at("components");
-	for (const auto &cmpIt : jsonCmp.items())
+	for (const auto& cmpIt : jsonCmp.items())
 	{
 		Json jsonCmp = cmpIt.value();
 		bool active = jsonCmp.at("active");
@@ -624,13 +630,13 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 
 		if (type == "transform")
 		{
-			ComponentTransform *transformCmp = this->GetComponent<ComponentTransform>();
+			ComponentTransform* transformCmp = this->GetComponent<ComponentTransform>();
 			transformCmp->active = true;
 			transformCmp->Load(jsonCmp);
 		}
 		else if (type == "mesh")
 		{
-			ComponentMesh *meshCmp = this->GetComponent<ComponentMesh>();
+			ComponentMesh* meshCmp = this->GetComponent<ComponentMesh>();
 			if (meshCmp == nullptr)
 			{
 				meshCmp = this->CreateComponent<ComponentMesh>();
@@ -640,7 +646,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "material")
 		{
-			ComponentMaterial *materialCmp = this->GetComponent<ComponentMaterial>();
+			ComponentMaterial* materialCmp = this->GetComponent<ComponentMaterial>();
 			if (materialCmp == nullptr)
 			{
 				materialCmp = this->CreateComponent<ComponentMaterial>();
@@ -650,13 +656,13 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "info")
 		{
-			ComponentInfo *infoCmp = this->GetComponent<ComponentInfo>();
+			ComponentInfo* infoCmp = this->GetComponent<ComponentInfo>();
 			infoCmp->active = true;
 			infoCmp->Load(jsonCmp); // does nothing as of now
 		}
 		else if (type == "camera")
 		{
-			ComponentCamera *cameraCmp = this->GetComponent<ComponentCamera>();
+			ComponentCamera* cameraCmp = this->GetComponent<ComponentCamera>();
 			if (cameraCmp == nullptr)
 			{
 				cameraCmp = this->CreateComponent<ComponentCamera>();
@@ -666,7 +672,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "script")
 		{
-			ComponentScript *scriptCmp = this->GetComponent<ComponentScript>();
+			ComponentScript* scriptCmp = this->GetComponent<ComponentScript>();
 			if (scriptCmp == nullptr)
 			{
 				scriptCmp = this->CreateComponent<ComponentScript>();
@@ -676,7 +682,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "transform2D")
 		{
-			ComponentTransform2D *transform2DCmp = this->GetComponent<ComponentTransform2D>();
+			ComponentTransform2D* transform2DCmp = this->GetComponent<ComponentTransform2D>();
 			if (transform2DCmp == nullptr)
 			{
 				transform2DCmp = this->CreateComponent<ComponentTransform2D>();
@@ -686,7 +692,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "canvas")
 		{
-			ComponentCanvas *canvasCmp = this->GetComponent<ComponentCanvas>();
+			ComponentCanvas* canvasCmp = this->GetComponent<ComponentCanvas>();
 			if (canvasCmp == nullptr)
 			{
 				canvasCmp = this->CreateComponent<ComponentCanvas>();
@@ -696,7 +702,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "image")
 		{
-			ComponentImage *imageCmp = this->GetComponent<ComponentImage>();
+			ComponentImage* imageCmp = this->GetComponent<ComponentImage>();
 			if (imageCmp == nullptr)
 			{
 				imageCmp = this->CreateComponent<ComponentImage>();
@@ -706,7 +712,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "button")
 		{
-			ComponentButton *buttonCmp = this->GetComponent<ComponentButton>();
+			ComponentButton* buttonCmp = this->GetComponent<ComponentButton>();
 			if (buttonCmp == nullptr)
 			{
 				buttonCmp = this->CreateComponent<ComponentButton>();
@@ -716,7 +722,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "text")
 		{
-			ComponentText *textCmp = this->GetComponent<ComponentText>();
+			ComponentText* textCmp = this->GetComponent<ComponentText>();
 			if (textCmp == nullptr)
 			{
 				textCmp = this->CreateComponent<ComponentText>();
@@ -726,7 +732,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "rigidBody")
 		{
-			ComponentRigidBody *rbCmp = this->GetComponent<ComponentRigidBody>();
+			ComponentRigidBody* rbCmp = this->GetComponent<ComponentRigidBody>();
 			if (rbCmp == nullptr)
 			{
 				rbCmp = this->CreateComponent<ComponentRigidBody>();
@@ -736,7 +742,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 		else if (type == "collider")
 		{
-			ComponentCollider *colCmp = this->GetComponent<ComponentCollider>();
+			ComponentCollider* colCmp = this->GetComponent<ComponentCollider>();
 			if (colCmp == nullptr)
 			{
 				colCmp = this->CreateComponent<ComponentCollider>();
@@ -746,10 +752,10 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		}
 	}
 	Json jsonChd = jsonFile.at("children");
-	for (const auto &chdIt : jsonChd.items())
+	for (const auto& chdIt : jsonChd.items())
 	{
 		Json jsonChd = chdIt.value();
-		GameObject *go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 		go->LoadPrefab(jsonChd);
 		this->AttachChild(go);
 	}
@@ -759,4 +765,32 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 bool GameObject::IsSelected()
 {
 	return engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == uid;
+}
+
+std::string GameObject::SetObjectNumberedName(const char* _name)
+{
+	int count = 0;
+	std::string name = std::string(_name);
+	std::string number = std::string("");
+	std::string chainName = name + number;
+	Scene* scene = engine->GetSceneManager()->GetCurrentScene();
+
+	if (scene->IsGameObjectInScene(name)) // Check if there is a replic or not || BakerHouse, not BakerHouse0
+	{
+		count++;
+		number = std::to_string(count);
+		chainName = name + number;
+	}
+	else
+		return name; // If there is no object with that name return the name asigned
+
+
+	while (scene->IsGameObjectInScene(chainName) != false) // Check if replics exists || BakerHouse0, BakerHouse1... 
+	{
+		count++;
+		number = std::to_string(count);
+		chainName = name + number;
+	}
+
+	return chainName; 
 }

@@ -89,6 +89,9 @@ public:
 	bool LoadPrefab(Json& jsonFile);
 
 	bool IsSelected();
+private:
+	std::string SetObjectNumberedName(const char* _name);
+
 public:
 	template<class T> T* CreateComponent()
 	{
@@ -97,7 +100,6 @@ public:
 	}
 
 public:
-	std::string name;
 	bool active = true;
 	int numScripts = 0;
 	bool is3D = true;
@@ -105,6 +107,7 @@ public:
 
 	std::vector<GameObject*> children;
 private:
+	std::string name;
 	std::vector<Component*> components;
 	GameObject* parent = nullptr;
 	uint uid;

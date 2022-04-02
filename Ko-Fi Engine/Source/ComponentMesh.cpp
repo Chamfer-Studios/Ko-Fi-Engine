@@ -79,7 +79,7 @@ void ComponentMesh::Save(Json& json) const
 {
 	json["type"] = "mesh";
 
-	std::string name = owner->name;
+	std::string name = owner->GetName();
 	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
 
 	Importer::GetInstance()->meshImporter->Save(mesh, mesh->path.c_str());

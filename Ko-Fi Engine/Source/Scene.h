@@ -81,6 +81,20 @@ public:
 
 		return nullptr;
 	}
+
+	bool IsGameObjectInScene(std::string name)
+	{
+		for (GameObject* go : gameObjectList)
+		{
+			if (go->GetName() == name)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
 	{
 		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
@@ -95,6 +109,7 @@ public:
 
 		return go;
 	}
+
 	virtual void DeleteCurrentScene()
 	{
 		for (GameObject* gameObject : gameObjectList)
@@ -172,7 +187,6 @@ public:
 			RELEASE(gameObject);
 		}
 	}
-
 
 	template<class UnaryFunction>
 	void ApplyToObjects(UnaryFunction f);

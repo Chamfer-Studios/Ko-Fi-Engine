@@ -117,7 +117,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(1)))
 		{
 			editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
-			CONSOLE_LOG("%s || %d", go->name.c_str(), go->GetUID());
+			CONSOLE_LOG("%s || %d", go->GetName(), go->GetUID());
 		}
 		if (ImGui::IsItemClicked(1)) {
 			ImGui::OpenPopup("Test");
@@ -175,7 +175,7 @@ void PanelHierarchy::DragNDrop(GameObject* go)
 	{
 		ImGui::SetDragDropPayload("Hierarchy", go, sizeof(GameObject));
 		selectedGameObject = go;
-		ImGui::Text(go->name.c_str());
+		ImGui::Text(go->GetName());
 		ImGui::EndDragDropSource();
 	}
 	if (ImGui::BeginDragDropTarget())

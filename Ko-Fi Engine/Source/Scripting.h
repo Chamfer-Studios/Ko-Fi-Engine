@@ -156,7 +156,7 @@ public:
 		lua.new_usertype<GameObject>("GameObject",
 			sol::constructors<void()>(),
 			"active",				&GameObject::active,
-			"name",					&GameObject::name,
+			"name",					&GameObject::GetName,
 			"GetParent",			&GameObject::GetParent,
 			"GetComponents",		&GameObject::GetComponents,							// Kinda works... not very useful tho
 			"GetTransform",			&GameObject::GetTransform,
@@ -318,7 +318,7 @@ public:
 	{
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			if (go->name == name)
+			if (go->GetName() == name)
 				return go;
 		}
 		return nullptr;
