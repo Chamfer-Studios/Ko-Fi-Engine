@@ -41,10 +41,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	//GameObject * g = this->CreateEmptyGameObject("Particle Test");
 	//g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
 
-	GameObject* camera = CreateEmptyGameObject("camera");
-	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
-	cCamera->isMainCamera = true;
-	engine->GetCamera3D()->SetGameCamera(cCamera);
+	
 }
 
 SceneIntro::~SceneIntro()
@@ -56,7 +53,10 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	bool ret = true;
-
+	GameObject* camera = CreateEmptyGameObject("camera");
+	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
+	cCamera->isMainCamera = true;
+	engine->GetCamera3D()->SetGameCamera(cCamera);
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 

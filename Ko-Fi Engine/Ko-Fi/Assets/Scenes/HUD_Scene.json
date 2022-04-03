@@ -829,7 +829,7 @@
                     }
                 ],
                 "is3D": false,
-                "name": "Text",
+                "name": "Text1",
                 "parent_UID": 1855757815
             },
             {
@@ -869,7 +869,7 @@
                     }
                 ],
                 "is3D": false,
-                "name": "Counter",
+                "name": "Counter1",
                 "parent_UID": 733408228
             },
             {
@@ -909,7 +909,7 @@
                     }
                 ],
                 "is3D": false,
-                "name": "Counter",
+                "name": "Counter2",
                 "parent_UID": 1566707212
             },
             {
@@ -1119,16 +1119,6 @@
                         "texture_path": "",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,

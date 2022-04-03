@@ -1,10 +1,10 @@
 {
-    "SceneIntro": {
+    "epty1": {
         "active": true,
         "game_objects_amount": 1,
         "game_objects_list": [
             {
-                "UID": 883557660,
+                "UID": 1015887569,
                 "active": true,
                 "components": [
                     {
@@ -47,7 +47,7 @@
                 "parent_UID": 4294967295
             }
         ],
-        "name": "SceneIntro",
+        "name": "epty1",
         "navmesh": {}
     }
 }
