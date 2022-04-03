@@ -126,16 +126,17 @@ bool ResourceManager::TrimLibrary()
 
 UID ResourceManager::ImportFile(const char* assetPath)
 {
+	UID uid = 0;
 	if (assetPath == nullptr)
 	{
 		LOG_BOTH("Error loading file, file path was nullptr.");
-		return -1;
+		return uid;
 	}
 
 	if (HasImportIgnoredExtension(assetPath))
 	{
 		LOG_BOTH("Error loading file, the file extension has an import ignored extension.");
-		return -1;
+		return uid;
 	}
 
 	std::filesystem::path path = assetPath;
@@ -144,49 +145,41 @@ UID ResourceManager::ImportFile(const char* assetPath)
 	if (type == ResourceType::UNKNOWN)
 	{
 		LOG_BOTH("Error loading file, unkown file type.");
-		return -1;
+		return uid;
 	}
 
 	std::string cleanPath = GetValidPath(assetPath);
 	if (cleanPath.c_str() == nullptr)
 	{
 		LOG_BOTH("Error loading file, couldn't validate path.");
-		return -1;
+		return uid;
 	}
 
-	UID uid;
 	bool metaIsValid = ValidateMetaFile(assetPath);
 	if (metaIsValid)
-	{
-		if (HasMetaFile(assetPath))
-		{
-			DeleteFromLibrary(assetPath);
-		}
-		
-		uid = ImportFromAssets(assetPath);
-
-		if (uid == 0)
-		{
-			LOG_BOTH("Error loading file, error loading file from assets.");
-			return -1;
-		}
-	}
-	else
 	{
 		LOG_BOTH("File to import was already in the library.");
 
 		std::map<UID, ResourceBase> libraryItems;
 		GetLibraryPairs(assetPath, libraryItems);
 
-		for (auto item = libraryItems.begin(); item != libraryItems.end(); ++item)
+		for (auto& item : libraryItems)
 		{
-			if (library.find((*item).first) == library.end())
-			{
-				library.emplace(std::make_pair((*item).first, (*item).second));
-			}
+			if (library.find(item.first) == library.end())
+				library.emplace(std::make_pair(item.first, item.second));
 		}
 		uid = libraryItems.begin()->first;
 		libraryItems.clear();
+	}
+	else
+	{
+		if (HasMetaFile(assetPath))
+			DeleteFromLibrary(assetPath);
+
+		uid = ImportFromAssets(assetPath);
+
+		if (uid == 0)
+			LOG_BOTH("Error loading file, error loading file from assets.");
 	}
 
 	return uid;
@@ -809,16 +802,17 @@ bool ResourceManager::SaveMetaFile(Resource* resource) const
 
 	Json metaFile;
 
-	metaFile["UID"] = resource->GetUID();
-	metaFile["Type"] = (uint)resource->GetType();
-	metaFile["Name"] = resource->GetAssetFile();
-	metaFile["AssetsPath"] = resource->GetAssetPath();
-	metaFile["LibraryFile"] = resource->GetLibraryFile();
-	metaFile["LibraryPath"] = resource->GetLibraryPath();
+	metaFile["uid"] = resource->GetUID();
+	metaFile["type"] = (uint)resource->GetType();
+	metaFile["name"] = resource->GetAssetFile();
+	metaFile["assets_path"] = resource->GetAssetPath();
+	metaFile["library_file"] = resource->GetLibraryFile();
+	metaFile["library_path"] = resource->GetLibraryPath();
 	//TODO: ADD MODIFICATION TIME
 
-	resource->SaveMeta(metaFile);
+	resource->SaveMeta(metaFile); // This json doesn't go anywhere :/
 
+	//TODO: Serialize to file & save file i think?
 	//JsonHandler jsonHandler;
 
 	return true;
@@ -829,10 +823,34 @@ bool ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
 	if (assetPath == nullptr)
 	{
 		LOG_BOTH("Error loading meta file, assetPath was nullptr.");
+		return false;
 	}
 
 	//TODO: I don't know what to do here, I think it's this:
 	// engine->GetFileSystem()->OpenFile(assetPath);
+	UID uid = (UID)json.at("uid");
+	Resource* r = RequestResource(uid);
+
+	if (r == nullptr)
+	{
+		LOG_BOTH("Error loading meta file, resource was not found.");
+		return false;
+	}
+
+	ResourceType type = (ResourceType)json.at("type");
+	if (r->GetType() != type)
+	{
+		LOG_BOTH("Error loading meta file, resource type missmatch.");
+		return false;
+	}
+
+	r->SetUID(uid);
+	r->SetAssetFile(json.at("name").get<std::string>().c_str());
+	r->SetAssetPath(json.at("assets_path").get<std::string>().c_str());
+	r->SetLibraryFile(json.at("library_file").get<std::string>().c_str());
+	r->SetLibraryPath(json.at("library_path").get<std::string>().c_str());
+
+	r->LoadMeta(json); // I'm not sure about this since the function is empty
 
 	return true;
 }
@@ -1210,76 +1228,3 @@ bool ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
 }
-
-//void M_ResourceManager::DragAndDrop(const char* path)
-//{
-//	//Check if file is valid with extension
-//	std::string pathS, file, extension;
-//	App->fileSystem->SplitFilePath(path, &pathS, &file, &extension);
-//
-//	std::string newPath = "Assets/";
-//
-//	std::string fullFile = newPath + file + "." + extension;
-//
-//	App->fileSystem->DuplicateFile(path, fullFile.c_str());
-//
-//	//Import
-//	App->resourceManager->ImportFile(fullFile.c_str());
-//}
-//
-//bool M_ResourceManager::SaveMetaFile(Resource* resource) const
-//{
-//	if (resource == nullptr)
-//	{
-//		LOG("[ERROR] Resource Manager: Could not Save the Meta File! Error: Given Resource* was nullptr.");
-//		return false;
-//	}
-//
-//	ParsonNode metaRoot = ParsonNode();
-//	metaRoot.SetNumber("UID", resource->GetUID());																											// --- GENERAL RESOURCE META DATA
-//	metaRoot.SetNumber("Type", (uint)resource->GetType());																									// 
-//
-//	metaRoot.SetString("Name", resource->GetAssetsFile());																									// 
-//	metaRoot.SetString("AssetsPath", resource->GetAssetsPath());
-//	metaRoot.SetString("LibraryFile", resource->GetLibraryFile());
-//	metaRoot.SetString("LibraryPath", resource->GetLibraryPath());																							// 
-//
-//	metaRoot.SetNumber("ModificationTime", (double)App->fileSystem->GetLastModTime(resource->GetAssetsPath()));												// ------------------------------
-//
-//	resource->SaveMeta(metaRoot);																															// --- RESOURCE-SPECIFIC META DATA
-//
-//	char* buffer = nullptr;
-//	std::string path = resource->GetAssetsPath() + std::string(META_EXTENSION);
-//	uint written = metaRoot.SerializeToFile(path.c_str(), &buffer);																					// --- SERIALIZING TO META FILE
-//	if (written > 0)
-//	{
-//		LOG("[STATUS] Resource Manager: Successfully Saved the Meta File for Resource %lu! Path: %s", resource->GetUID(), path.c_str());
-//	}
-//	else
-//	{
-//		LOG("[ERROR] Resource Manager: Could not Save the Meta File of Resource %lu! Error: File System could not write the file.", resource->GetUID());
-//	}
-//
-//	RELEASE_ARRAY(buffer);
-//
-//	return true;
-//}
-//
-//ParsonNode M_ResourceManager::LoadMetaFile(const char* assetsPath, char** buffer)
-//{
-//	if (assetsPath == nullptr)
-//	{
-//		LOG("[ERROR] Resource Manager: Could not load the .meta File! Error: Given path was nullptr!");
-//	}
-//
-//	std::string metaPath = assetsPath + std::string(META_EXTENSION);
-//	uint read = App->fileSystem->Load(metaPath.c_str(), buffer);
-//	if (read == 0)
-//	{
-//		LOG("[ERROR] Resource Manager: Could not load the .meta File with Path: %s! Error: No Meta File exists with the given path.", metaPath);
-//	}
-//
-//	// TODO: Try to RELEASE the buffer here instead of having to do it every time the function is called wherever it is called.
-//
-//	return ParsonNode(*buffer);
-//}

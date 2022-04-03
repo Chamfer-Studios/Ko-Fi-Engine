@@ -182,6 +182,7 @@ bool Input::PreUpdate(float dt)
 			tmp.assign(event.drop.file);
 			if (!tmp.empty())
 			{
+				//TODO: We should call ImportFile here I'm pretty sure instead of all this other stuff
 				if (tmp.find(".fbx") != std::string::npos)
 				{
 					Importer::GetInstance()->sceneImporter->Import(tmp.c_str());
