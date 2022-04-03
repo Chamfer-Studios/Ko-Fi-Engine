@@ -45,18 +45,18 @@
         "Vsync": true
     },
     "SceneManager": {
-        "DefaultScene": "Root"
+        "DefaultScene": "IntroMenu"
     },
     "UI": null,
     "Window": {
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 768,
+        "Height": 1009,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
         "Title": "Ko-Fi Engine",
-        "Width": 1024
+        "Width": 1920
     }
 }
