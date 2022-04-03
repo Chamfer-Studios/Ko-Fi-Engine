@@ -25346,7 +25346,7 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Enemy.lua",
+                        "file_name": "Assets/Scripts/EnemyPathfinder.lua",
                         "script_number": 1,
                         "type": "script"
                     }

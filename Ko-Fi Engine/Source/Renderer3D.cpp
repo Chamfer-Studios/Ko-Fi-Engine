@@ -282,8 +282,6 @@ void Renderer3D::RenderScene()
 		}
 	}
 
-	pie->draw(float4x4::identity.RotateX(90.f * DEGTORAD));
-
 }
 
 void Renderer3D::RenderBoundingBox(ComponentMesh* cMesh)
