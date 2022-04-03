@@ -93,6 +93,7 @@ public:
 	bool UpdatePrefab(Json& jsonFile);
 
 	bool IsSelected();
+	void LoadSceneFromName(std::string name);
 public:
 	template<class T> T* CreateComponent()
 	{
@@ -106,6 +107,7 @@ public:
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
+	bool changeScene = false;
 	std::string prefabPath;
 	Tag tag;
 

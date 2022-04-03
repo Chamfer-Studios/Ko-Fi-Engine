@@ -1,7 +1,7 @@
 {
-    "SceneIntro": {
+    "IntroMenu": {
         "active": true,
-        "game_objects_amount": 3,
+        "game_objects_amount": 4,
         "game_objects_list": [
             {
                 "UID": 27388352,
@@ -121,14 +121,59 @@
                         "idleTexture": "Assets/Textures/Grey.png",
                         "pressedTexture": "Assets/Textures/firework_projectile.png",
                         "type": "button"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/UI_ChangeScenes.lua",
+                        "script_number": 1,
+                        "type": "script"
                     }
                 ],
                 "is3D": false,
                 "name": "Button",
                 "parent_UID": 1986459703
+            },
+            {
+                "UID": 1886696759,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/GameState.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    }
+                ],
+                "is3D": true,
+                "name": "GameState",
+                "parent_UID": 4294967295
             }
         ],
-        "name": "SceneIntro",
+        "name": "IntroMenu",
         "navmesh": {}
     }
 }

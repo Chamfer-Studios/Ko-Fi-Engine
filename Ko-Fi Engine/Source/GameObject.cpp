@@ -875,3 +875,8 @@ bool GameObject::IsSelected()
 {
 	return engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == uid;
 }
+
+void GameObject::LoadSceneFromName(std::string name)
+{
+	Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), name.c_str());
+}

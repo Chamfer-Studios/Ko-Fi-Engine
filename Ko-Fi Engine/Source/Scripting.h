@@ -180,7 +180,8 @@ public:
 			"GetAudioSwitch",		&GameObject::GetComponent<C_AudioSwitch>,
 			"IsSelected",			&GameObject::IsSelected,
 			"GetButton",			&GameObject::GetComponent<ComponentButton>,
-			"GetImage",				&GameObject::GetComponent<ComponentImage>
+			"GetImage",				&GameObject::GetComponent<ComponentImage>,
+			"LoadScene",			&GameObject::LoadSceneFromName
 
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/				// Further documentation needed to get this as a dynamic cast
 			);

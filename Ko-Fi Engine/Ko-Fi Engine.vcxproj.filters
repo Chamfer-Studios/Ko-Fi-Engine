@@ -553,5 +553,6 @@
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives_2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives_3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />
   </ItemGroup>
 </Project>

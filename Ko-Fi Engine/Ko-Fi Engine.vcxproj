@@ -711,6 +711,7 @@
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives_1.lua" />
