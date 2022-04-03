@@ -16,6 +16,7 @@ class GameObject;
 typedef unsigned int GLenum;
 class ComponentMesh;
 class Texture;
+class PieShape;
 
 struct ParticleRenderer
 {
@@ -65,6 +66,8 @@ public:
 	void SetVsync(bool vsync);
 	void OnResize();
 
+	void DrawCylinder(float4x4 transform);
+
 	// Debug ray for mouse picking
 	void DrawRay();
 	void SetRay(LineSegment ray);
@@ -104,6 +107,8 @@ private:
 
 	//Particle Map
 	std::map<float, ParticleRenderer> particles;
+
+	PieShape* pie = nullptr;
 };
 
 #endif // !__RENDERER_3D_H__

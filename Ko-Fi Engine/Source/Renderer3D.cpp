@@ -29,6 +29,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentRenderedUI.h"
 #include "Material.h"
+#include "PieShape.h"
 
 #include "PanelViewport.h"
 
@@ -59,6 +60,8 @@ bool Renderer3D::Awake(Json configModule)
 	SetVsync(configModule["Vsync"].get<bool>());
 
 	InitFrameBuffers();
+
+	pie = new PieShape(100, 100, 50);
 
 	return ret;
 }
@@ -279,6 +282,8 @@ void Renderer3D::RenderScene()
 		}
 	}
 
+	pie->draw(float4x4::identity.RotateX(90.f * DEGTORAD));
+
 }
 
 void Renderer3D::RenderBoundingBox(ComponentMesh* cMesh)
@@ -438,6 +443,10 @@ void Renderer3D::OnResize()
 		CONSOLE_LOG("[ERROR] Renderer 3D: Could not recalculate the aspect ratio! Error: Current Camera was nullptr.");
 	}
 	RecalculateProjectionMatrix();
+}
+
+void Renderer3D::DrawCylinder(float4x4 transform)
+{
 }
 
 // Debug ray for mouse picking
