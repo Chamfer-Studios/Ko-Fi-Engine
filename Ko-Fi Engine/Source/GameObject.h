@@ -15,6 +15,7 @@ class ComponentScript;
 class ComponentCollider;
 class ComponentCollider2;
 class ComponentAnimator;
+class ComponentLightSource;
 
 enum class Tag 
 {
@@ -58,10 +59,10 @@ public:
 		}
 		return component;
 	}
-
+	
 	// New way
 	void DeleteComponent(Component* component);
-	void AddComponent(Component* component);
+	void PushBackComponent(Component* component) { components.push_back(component); }
 	Component* AddComponentByType(ComponentType componentType);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
@@ -98,6 +99,9 @@ public:
 	bool UpdatePrefab(Json& jsonFile);
 
 	bool IsSelected();
+private:
+	std::string SetObjectNumberedName(const char* _name);
+
 public:
 	template<class T> T* CreateComponent()
 	{
@@ -105,8 +109,8 @@ public:
 		return newComponent;
 	}
 
+
 public:
-	std::string name;
 	bool active = true;
 	int numScripts = 0;
 	bool is3D = true;
@@ -116,6 +120,7 @@ public:
 
 	std::vector<GameObject*> children;
 private:
+	std::string name;
 	std::vector<Component*> components;
 	GameObject* parent = nullptr;
 	uint uid;

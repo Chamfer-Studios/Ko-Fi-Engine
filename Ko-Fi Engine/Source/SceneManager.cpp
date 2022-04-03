@@ -46,6 +46,21 @@ SceneManager::~SceneManager()
 	CleanUp();
 }
 
+bool SceneManager::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+
+	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	{
+		ret = (*scene)->Awake();
+	}
+
+	return ret;
+}
+
 bool SceneManager::Awake()
 {
 	bool ret = true;
@@ -133,6 +148,21 @@ bool SceneManager::CleanUp()
 void SceneManager::OnNotify(const Event& event)
 {
 	// Manage events
+}
+
+bool SceneManager::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool SceneManager::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool SceneManager::InspectorDraw()
+{
+	return true;
 }
 
 bool SceneManager::PrepareUpdate()

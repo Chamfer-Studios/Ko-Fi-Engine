@@ -28,7 +28,7 @@ bool Window::Awake(Json configModule)
 	bool ret = true;
 
 	// TODO: Load all config data with this function
-	LoadConfiguration(configModule);
+	ret = LoadConfiguration(configModule);
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -162,6 +162,15 @@ bool Window::SaveConfiguration(Json& configModule) const
 
 bool Window::LoadConfiguration(Json& configModule)
 {
+	//SetWidth(configModule["Width"]);
+	//SetHeight(configModule["Height"]);
+	//// SetScale(configModule["Scale"]);
+	//SetFullscreen(configModule["Fullscreen"]);
+	//SetFullscreenDesktop(configModule["FullscreenDesktop"]);
+	//SetResizable(configModule["Resizable"]);
+	//SetBorderless(configModule["Borderless"]);
+	//SetTitle(configModule["Title"]);
+	//SetIcon(configModule["Icon"]);
 	return true;
 }
 

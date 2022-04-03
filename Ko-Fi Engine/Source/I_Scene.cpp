@@ -28,6 +28,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentParticle.h"
 #include "ComponentAnimator.h"
+#include "ComponentLightSource.h"
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
@@ -98,13 +99,14 @@ void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, G
 {
 	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 
-	assimpNode = ImportTransform(assimpNode, gameObj);
+	assimpNode = ImportTransform(assimpNode, gameObj); // THIS IS CAUSING BUGS WITH THE SCALE 
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
 
 	gameObj->isPrefab = isPrefab;
 
 	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
-	gameObj->SetName(nodeName.c_str());
+	std::string chainName = nodeName.c_str() ;
+	gameObj->SetName(chainName.c_str());
 	parent->AttachChild(gameObj);
 
 	for (unsigned int i = 0; i < assimpNode->mNumChildren; ++i)
@@ -486,6 +488,12 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				followCmp->Save(jsonComponent);
 				break;
 			}
+			case ComponentType::LIGHT_SOURCE:
+			{
+				ComponentLightSource* componentLightSource = (ComponentLightSource*)component;
+				componentLightSource->Save(jsonComponent);
+				break;
+			}
 			default:
 				break;
 			}
@@ -542,7 +550,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			{
 				exists = true;
 				go = scene->GetGameObject(UID);
-				go->name = jsonGo.at("name");
+				std::string tmp = jsonGo.at("name");
+				go->SetName(tmp.c_str());
 				go->SetUID(UID);
 				go->SetEngine(engine);
 				go->is3D = is3D;
@@ -559,6 +568,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			go->SetParentUID(parentUid);
 
 			Json jsonCmp = jsonGo.at("components");
+#pragma omp parallel for
 			for (const auto& cmpIt : jsonCmp.items())
 			{
 				Json jsonCmp = cmpIt.value();
@@ -756,6 +766,16 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					follCmp->active = true;
 				}
+				else if (type == "lightSource")
+				{
+					ComponentLightSource* componentLightSource = go->GetComponent<ComponentLightSource>();
+					if (componentLightSource == nullptr)
+					{
+						componentLightSource = (ComponentLightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+					}
+					componentLightSource->active = true;
+					componentLightSource->Load(jsonCmp);
+				}
 			}
 			if (!exists)
 				scene->gameObjectList.push_back(go);
@@ -763,7 +783,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 		float endTime = (float)engine->GetEngineTime();
 		appLog->AddLog("Time to load: %f\n", endTime - startTime);
-
+#pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)

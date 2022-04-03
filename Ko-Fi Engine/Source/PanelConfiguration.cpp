@@ -117,7 +117,7 @@ bool PanelConfiguration::Update()
 			}
 		}
 		if (ImGui::Selectable(editor->engine->GetWindow()->GetIcon()))
-			editor->GetPanelChooser()->OpenPanel("PanelConfig","bmp");
+			editor->GetPanelChooser()->OpenPanel("PanelConfig", "bmp", { "bmp" });
 		float brightness = editor->engine->GetWindow()->GetBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
 			editor->engine->GetWindow()->AdjustBrightness(brightness);

@@ -106,7 +106,7 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 		}
 		if (ImGui::Button("Select Script"))
 		{
-			chooser->OpenPanel("LoadScript", "lua");
+			chooser->OpenPanel("LoadScript", "lua", { "lua" });
 		}
 		ImGui::SameLine();
 		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());
@@ -204,7 +204,7 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 				case INSPECTOR_GAMEOBJECT:
 				{
 					GameObject* selected = std::get<GameObject*>(variable->value);
-					std::string name = (selected == nullptr) ? "null" : selected->name.c_str();
+					std::string name = (selected == nullptr) ? "null" : selected->GetName();
 					ImGui::InputText(variable->name.c_str(), &name);
 					if (ImGui::BeginDragDropTarget())
 					{

@@ -223,7 +223,7 @@ void ComponentCamera::Load(Json& json)
 void ComponentCamera::DrawFrustum() const
 {
 	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
+	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
 

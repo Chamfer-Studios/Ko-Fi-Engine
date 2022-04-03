@@ -64,7 +64,7 @@ void ComponentMaterial::Save(Json& json) const
 	//	jsonTex["path"] = tex.GetTexturePath();
 	//	json["textures"].push_back(jsonTex);
 	//}
-
+	json["uniforms"].array();
 	Json jsonUniform;
 	for (Uniform* uniform : material->uniforms)
 	{
@@ -116,6 +116,8 @@ void ComponentMaterial::Save(Json& json) const
 			jsonUniform["value"] = ui->value;
 		}
 		break;
+		default:
+			continue;
 		}
 		json["uniforms"].push_back(jsonUniform);
 	}
@@ -378,7 +380,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 
 			if (ImGui::Button("Change Texture"))
 			{
-				panelChooser->OpenPanel("ChangeTexture", "png");
+				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
 				currentTextureId = texture.textureID;
 			}
 
@@ -399,7 +401,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		{
 			if (ImGui::Button("Add Texture"))
 			{
-				panelChooser->OpenPanel("ChangeTexture", "png");
+				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
 				currentTextureId = texture.textureID;
 			}
 		}
@@ -410,7 +412,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 		ImGui::Separator();
 
 		if (ImGui::Button("Change Shader"))
-			panelChooser->OpenPanel("ChangeShader", "glsl");
+			panelChooser->OpenPanel("ChangeShader", "glsl", { "glsl" });
 
 		if (material != nullptr)
 		{
@@ -433,7 +435,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 				case GL_FLOAT_VEC3:
 				{
 					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-					ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), 0.001f, 0.0f, 32.0f, "%.3f");
+					ImGui::DragFloat3(uniform->name.c_str(), uf3->value.ptr(), 0.001f, -32.0f, 32.0f, "%.3f");
 				}
 				break;
 				case GL_FLOAT_VEC4:

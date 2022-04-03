@@ -11,6 +11,7 @@ public:
 	ResourceManager(KoFiEngine* engine);
 	~ResourceManager();
 
+	bool Awake(Json configModule);
 	bool Start();
 	bool PreUpdate(float dt);
 	bool CleanUp();
@@ -22,6 +23,15 @@ public:
 	//const Resource* RequestResource(uint uid) const;
 	Resource* RequestResource(UID uid);
 	Resource::Type GetTypeFromExtension(const char* extension) const;
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 
 	//void ReleaseResource(uint uid);
 
