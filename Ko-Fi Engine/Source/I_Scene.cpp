@@ -477,6 +477,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			{
 				ComponentAnimator* cAnimator = (ComponentAnimator*)component;
 				cAnimator->Save(jsonComponent);
+				break;
 			}
 			case ComponentType::WALKABLE:
 			{

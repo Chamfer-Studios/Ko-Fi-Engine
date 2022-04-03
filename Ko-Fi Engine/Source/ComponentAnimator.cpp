@@ -137,7 +137,7 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 void ComponentAnimator::Save(Json& json) const
 {
 	CONSOLE_LOG("hey");
-	/*json["type"] = "animator";
+	json["type"] = "animator";
 
 	std::string name = owner->name;
 	animation->path = ANIMATIONS_DIR + name + ANIMATION_EXTENSION;
@@ -155,7 +155,7 @@ void ComponentAnimator::Save(Json& json) const
 
 		json["clips"].push_back(jsonClips);
 	}
-	json["selectedClip"] = selectedClip->GetName();*/
+	json["selectedClip"] = selectedClip->GetName();
 }
 
 void ComponentAnimator::Load(Json& json)
