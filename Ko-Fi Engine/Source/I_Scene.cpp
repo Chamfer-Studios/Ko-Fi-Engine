@@ -780,7 +780,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 		float endTime = (float)engine->GetEngineTime();
 		appLog->AddLog("Time to load: %f\n", endTime - startTime);
-
+#pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)

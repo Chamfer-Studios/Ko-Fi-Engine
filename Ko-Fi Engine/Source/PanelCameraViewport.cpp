@@ -56,7 +56,19 @@ bool PanelCameraViewport::RenderPanel(bool* showPanel )
 	{
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
 
-		ImGui::Image((ImTextureID)engine->GetRenderer()->GetTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+		ImGui::Image((ImTextureID)engine->GetRenderer()->GetPreviewTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+		if (viewportSize.x != editor->lastCameraViewportSize.x || viewportSize.y != editor->lastCameraViewportSize.y)
+		{
+			editor->lastCameraViewportSize = viewportSize;
+
+
+			engine->GetCamera3D()->gameCamera->aspectRatio = viewportSize.x / viewportSize.y;
+			engine->GetCamera3D()->gameCamera->RecalculateProjection();
+			engine->GetRenderer()->ResizePreviewFrameBuffers(viewportSize.x, viewportSize.y);
+	
+
+		}
+		editor->cameraViewportSize = viewportSize;
 
 	}
 	ImGui::End();

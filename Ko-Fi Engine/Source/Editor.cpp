@@ -67,16 +67,17 @@ Editor::Editor(KoFiEngine* engine)
 		//panelGame = new PanelGame(this);
 		//AddPanel(panelGame);
 	/*}*/
-	if (panelsState.showViewportWindow)
-	{
-		panelViewport = new PanelViewport(this, engine);
-		AddPanel(panelViewport);
-	}
 	if (panelsState.showCameraViewportWindow)
 	{
 		panelCameraViewport = new PanelCameraViewport(this, engine);
 		AddPanel(panelCameraViewport);
 	}
+	if (panelsState.showViewportWindow)
+	{
+		panelViewport = new PanelViewport(this, engine);
+		AddPanel(panelViewport);
+	}
+	
 	//------------------------------------
 	
 	// We want to have it always displayed.
@@ -312,6 +313,7 @@ bool Editor::CleanUp()
 	RELEASE(panelChooser);
 	RELEASE(panelGameObject);
 	RELEASE(panelViewport);
+	RELEASE(panelCameraViewport);
 	//RELEASE(panelGame);
 	RELEASE(panelRuntimeState);
 

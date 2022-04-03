@@ -93,7 +93,9 @@ public:
 public:
 	PanelsState panelsState;
 	ImVec2 lastViewportSize;
+	ImVec2 lastCameraViewportSize;
 	ImVec2 viewportSize;
+	ImVec2 cameraViewportSize;
 	ImVec2 scenePanelOrigin;
 	ImVec2 mouseScenePosition;
 
