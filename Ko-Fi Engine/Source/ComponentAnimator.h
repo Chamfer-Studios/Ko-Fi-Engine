@@ -37,10 +37,10 @@ public:
 private:
 	bool playing;
 
-	R_Animation* animation;
+	R_Animation* animation = nullptr;
 
 	std::map<std::string, AnimatorClip> clips;
-	AnimatorClip* selectedClip;
+	AnimatorClip* selectedClip = nullptr;
 };
 
 #endif // __COMPONENT_ANIMATOR_H__

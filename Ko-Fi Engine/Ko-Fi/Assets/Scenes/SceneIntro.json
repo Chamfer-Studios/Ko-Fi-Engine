@@ -4,7 +4,7 @@
         "game_objects_amount": 68,
         "game_objects_list": [
             {
-                "UID": 1878906652,
+                "UID": 1156467392,
                 "active": true,
                 "components": [
                     {
@@ -47,7 +47,7 @@
                 "parent_UID": 4294967295
             },
             {
-                "UID": 1688629181,
+                "UID": 959405108,
                 "active": true,
                 "components": [
                     {
@@ -80,7 +80,7 @@
                 "parent_UID": 4294967295
             },
             {
-                "UID": 59955386,
+                "UID": 1559151427,
                 "active": true,
                 "components": [
                     {
@@ -110,10 +110,10 @@
                 ],
                 "is3D": true,
                 "name": "Hips",
-                "parent_UID": 1688629181
+                "parent_UID": 959405108
             },
             {
-                "UID": 1593202585,
+                "UID": 825594258,
                 "active": true,
                 "components": [
                     {
@@ -143,10 +143,10 @@
                 ],
                 "is3D": true,
                 "name": "Spine",
-                "parent_UID": 59955386
+                "parent_UID": 1559151427
             },
             {
-                "UID": 679319088,
+                "UID": 1298024263,
                 "active": true,
                 "components": [
                     {
@@ -176,10 +176,10 @@
                 ],
                 "is3D": true,
                 "name": "Spine1",
-                "parent_UID": 1593202585
+                "parent_UID": 825594258
             },
             {
-                "UID": 841867767,
+                "UID": 1487864916,
                 "active": true,
                 "components": [
                     {
@@ -209,10 +209,10 @@
                 ],
                 "is3D": true,
                 "name": "Spine2",
-                "parent_UID": 679319088
+                "parent_UID": 1298024263
             },
             {
-                "UID": 404628736,
+                "UID": 622120144,
                 "active": true,
                 "components": [
                     {
@@ -242,10 +242,10 @@
                 ],
                 "is3D": true,
                 "name": "Neck",
-                "parent_UID": 841867767
+                "parent_UID": 1487864916
             },
             {
-                "UID": 2114231357,
+                "UID": 28869081,
                 "active": true,
                 "components": [
                     {
@@ -275,10 +275,10 @@
                 ],
                 "is3D": true,
                 "name": "Head",
-                "parent_UID": 404628736
+                "parent_UID": 622120144
             },
             {
-                "UID": 2077173023,
+                "UID": 1997078356,
                 "active": true,
                 "components": [
                     {
@@ -308,10 +308,10 @@
                 ],
                 "is3D": true,
                 "name": "HeadTop_End",
-                "parent_UID": 2114231357
+                "parent_UID": 28869081
             },
             {
-                "UID": 1166761656,
+                "UID": 1910981708,
                 "active": true,
                 "components": [
                     {
@@ -341,10 +341,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftShoulder",
-                "parent_UID": 841867767
+                "parent_UID": 1487864916
             },
             {
-                "UID": 396820954,
+                "UID": 1403110077,
                 "active": true,
                 "components": [
                     {
@@ -374,10 +374,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftArm",
-                "parent_UID": 1166761656
+                "parent_UID": 1910981708
             },
             {
-                "UID": 1842003426,
+                "UID": 1190536081,
                 "active": true,
                 "components": [
                     {
@@ -407,10 +407,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftForeArm",
-                "parent_UID": 396820954
+                "parent_UID": 1403110077
             },
             {
-                "UID": 839573647,
+                "UID": 2033655689,
                 "active": true,
                 "components": [
                     {
@@ -440,10 +440,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHand",
-                "parent_UID": 1842003426
+                "parent_UID": 1190536081
             },
             {
-                "UID": 1746973741,
+                "UID": 1545877159,
                 "active": true,
                 "components": [
                     {
@@ -473,10 +473,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandThumb1",
-                "parent_UID": 839573647
+                "parent_UID": 2033655689
             },
             {
-                "UID": 1174990669,
+                "UID": 75750040,
                 "active": true,
                 "components": [
                     {
@@ -506,10 +506,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandThumb2",
-                "parent_UID": 1746973741
+                "parent_UID": 1545877159
             },
             {
-                "UID": 2078284925,
+                "UID": 1721181455,
                 "active": true,
                 "components": [
                     {
@@ -539,10 +539,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandThumb3",
-                "parent_UID": 1174990669
+                "parent_UID": 75750040
             },
             {
-                "UID": 1269079506,
+                "UID": 786575955,
                 "active": true,
                 "components": [
                     {
@@ -572,10 +572,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandThumb4",
-                "parent_UID": 2078284925
+                "parent_UID": 1721181455
             },
             {
-                "UID": 664598705,
+                "UID": 1371564555,
                 "active": true,
                 "components": [
                     {
@@ -605,10 +605,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandIndex1",
-                "parent_UID": 839573647
+                "parent_UID": 2033655689
             },
             {
-                "UID": 343782543,
+                "UID": 1835519800,
                 "active": true,
                 "components": [
                     {
@@ -638,10 +638,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandIndex2",
-                "parent_UID": 664598705
+                "parent_UID": 1371564555
             },
             {
-                "UID": 779180388,
+                "UID": 414613771,
                 "active": true,
                 "components": [
                     {
@@ -671,10 +671,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandIndex3",
-                "parent_UID": 343782543
+                "parent_UID": 1835519800
             },
             {
-                "UID": 1880869728,
+                "UID": 1497651464,
                 "active": true,
                 "components": [
                     {
@@ -704,10 +704,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandIndex4",
-                "parent_UID": 779180388
+                "parent_UID": 414613771
             },
             {
-                "UID": 920989969,
+                "UID": 1219062353,
                 "active": true,
                 "components": [
                     {
@@ -737,10 +737,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandMiddle1",
-                "parent_UID": 839573647
+                "parent_UID": 2033655689
             },
             {
-                "UID": 675899623,
+                "UID": 1638865126,
                 "active": true,
                 "components": [
                     {
@@ -770,10 +770,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandMiddle2",
-                "parent_UID": 920989969
+                "parent_UID": 1219062353
             },
             {
-                "UID": 1145979819,
+                "UID": 1475288489,
                 "active": true,
                 "components": [
                     {
@@ -803,10 +803,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandMiddle3",
-                "parent_UID": 675899623
+                "parent_UID": 1638865126
             },
             {
-                "UID": 948525255,
+                "UID": 1212023953,
                 "active": true,
                 "components": [
                     {
@@ -836,10 +836,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandMiddle4",
-                "parent_UID": 1145979819
+                "parent_UID": 1475288489
             },
             {
-                "UID": 7149458,
+                "UID": 1244690242,
                 "active": true,
                 "components": [
                     {
@@ -869,10 +869,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandRing1",
-                "parent_UID": 839573647
+                "parent_UID": 2033655689
             },
             {
-                "UID": 1683692961,
+                "UID": 1319214538,
                 "active": true,
                 "components": [
                     {
@@ -902,10 +902,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandRing2",
-                "parent_UID": 7149458
+                "parent_UID": 1244690242
             },
             {
-                "UID": 2140249933,
+                "UID": 1454735202,
                 "active": true,
                 "components": [
                     {
@@ -935,10 +935,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandRing3",
-                "parent_UID": 1683692961
+                "parent_UID": 1319214538
             },
             {
-                "UID": 1040254651,
+                "UID": 495738628,
                 "active": true,
                 "components": [
                     {
@@ -968,10 +968,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandRing4",
-                "parent_UID": 2140249933
+                "parent_UID": 1454735202
             },
             {
-                "UID": 1830545843,
+                "UID": 1609329051,
                 "active": true,
                 "components": [
                     {
@@ -1001,10 +1001,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandPinky1",
-                "parent_UID": 839573647
+                "parent_UID": 2033655689
             },
             {
-                "UID": 2015104288,
+                "UID": 286061093,
                 "active": true,
                 "components": [
                     {
@@ -1034,10 +1034,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandPinky2",
-                "parent_UID": 1830545843
+                "parent_UID": 1609329051
             },
             {
-                "UID": 616459985,
+                "UID": 96013475,
                 "active": true,
                 "components": [
                     {
@@ -1067,10 +1067,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandPinky3",
-                "parent_UID": 2015104288
+                "parent_UID": 286061093
             },
             {
-                "UID": 1099930390,
+                "UID": 1585033511,
                 "active": true,
                 "components": [
                     {
@@ -1100,10 +1100,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftHandPinky4",
-                "parent_UID": 616459985
+                "parent_UID": 96013475
             },
             {
-                "UID": 1134313817,
+                "UID": 1023384589,
                 "active": true,
                 "components": [
                     {
@@ -1133,10 +1133,10 @@
                 ],
                 "is3D": true,
                 "name": "RightShoulder",
-                "parent_UID": 841867767
+                "parent_UID": 1487864916
             },
             {
-                "UID": 498618579,
+                "UID": 1993514250,
                 "active": true,
                 "components": [
                     {
@@ -1166,10 +1166,10 @@
                 ],
                 "is3D": true,
                 "name": "RightArm",
-                "parent_UID": 1134313817
+                "parent_UID": 1023384589
             },
             {
-                "UID": 250934804,
+                "UID": 734977287,
                 "active": true,
                 "components": [
                     {
@@ -1199,10 +1199,10 @@
                 ],
                 "is3D": true,
                 "name": "RightForeArm",
-                "parent_UID": 498618579
+                "parent_UID": 1993514250
             },
             {
-                "UID": 552520939,
+                "UID": 1760841158,
                 "active": true,
                 "components": [
                     {
@@ -1232,10 +1232,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHand",
-                "parent_UID": 250934804
+                "parent_UID": 734977287
             },
             {
-                "UID": 1333209055,
+                "UID": 270788476,
                 "active": true,
                 "components": [
                     {
@@ -1265,10 +1265,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandThumb1",
-                "parent_UID": 552520939
+                "parent_UID": 1760841158
             },
             {
-                "UID": 809427521,
+                "UID": 1953034230,
                 "active": true,
                 "components": [
                     {
@@ -1298,10 +1298,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandThumb2",
-                "parent_UID": 1333209055
+                "parent_UID": 270788476
             },
             {
-                "UID": 1035058614,
+                "UID": 2121533378,
                 "active": true,
                 "components": [
                     {
@@ -1331,10 +1331,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandThumb3",
-                "parent_UID": 809427521
+                "parent_UID": 1953034230
             },
             {
-                "UID": 854506562,
+                "UID": 1497552725,
                 "active": true,
                 "components": [
                     {
@@ -1364,10 +1364,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandThumb4",
-                "parent_UID": 1035058614
+                "parent_UID": 2121533378
             },
             {
-                "UID": 2009363808,
+                "UID": 787205375,
                 "active": true,
                 "components": [
                     {
@@ -1397,10 +1397,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandIndex1",
-                "parent_UID": 552520939
+                "parent_UID": 1760841158
             },
             {
-                "UID": 390460247,
+                "UID": 95257788,
                 "active": true,
                 "components": [
                     {
@@ -1430,10 +1430,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandIndex2",
-                "parent_UID": 2009363808
+                "parent_UID": 787205375
             },
             {
-                "UID": 1384852661,
+                "UID": 512956412,
                 "active": true,
                 "components": [
                     {
@@ -1463,10 +1463,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandIndex3",
-                "parent_UID": 390460247
+                "parent_UID": 95257788
             },
             {
-                "UID": 1401295769,
+                "UID": 2032793889,
                 "active": true,
                 "components": [
                     {
@@ -1496,10 +1496,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandIndex4",
-                "parent_UID": 1384852661
+                "parent_UID": 512956412
             },
             {
-                "UID": 1578133986,
+                "UID": 1676041475,
                 "active": true,
                 "components": [
                     {
@@ -1529,10 +1529,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandMiddle1",
-                "parent_UID": 552520939
+                "parent_UID": 1760841158
             },
             {
-                "UID": 1707891492,
+                "UID": 2012087583,
                 "active": true,
                 "components": [
                     {
@@ -1562,10 +1562,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandMiddle2",
-                "parent_UID": 1578133986
+                "parent_UID": 1676041475
             },
             {
-                "UID": 1091513789,
+                "UID": 1043838586,
                 "active": true,
                 "components": [
                     {
@@ -1595,10 +1595,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandMiddle3",
-                "parent_UID": 1707891492
+                "parent_UID": 2012087583
             },
             {
-                "UID": 1425171227,
+                "UID": 92097779,
                 "active": true,
                 "components": [
                     {
@@ -1628,10 +1628,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandMiddle4",
-                "parent_UID": 1091513789
+                "parent_UID": 1043838586
             },
             {
-                "UID": 1659052626,
+                "UID": 1700785464,
                 "active": true,
                 "components": [
                     {
@@ -1661,10 +1661,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandRing1",
-                "parent_UID": 552520939
+                "parent_UID": 1760841158
             },
             {
-                "UID": 347437204,
+                "UID": 283977211,
                 "active": true,
                 "components": [
                     {
@@ -1694,10 +1694,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandRing2",
-                "parent_UID": 1659052626
+                "parent_UID": 1700785464
             },
             {
-                "UID": 1817263523,
+                "UID": 1042952749,
                 "active": true,
                 "components": [
                     {
@@ -1727,10 +1727,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandRing3",
-                "parent_UID": 347437204
+                "parent_UID": 283977211
             },
             {
-                "UID": 704671778,
+                "UID": 696265765,
                 "active": true,
                 "components": [
                     {
@@ -1760,10 +1760,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandRing4",
-                "parent_UID": 1817263523
+                "parent_UID": 1042952749
             },
             {
-                "UID": 689940423,
+                "UID": 1717944981,
                 "active": true,
                 "components": [
                     {
@@ -1793,10 +1793,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandPinky1",
-                "parent_UID": 552520939
+                "parent_UID": 1760841158
             },
             {
-                "UID": 1575457234,
+                "UID": 945802536,
                 "active": true,
                 "components": [
                     {
@@ -1826,10 +1826,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandPinky2",
-                "parent_UID": 689940423
+                "parent_UID": 1717944981
             },
             {
-                "UID": 33334142,
+                "UID": 1574774542,
                 "active": true,
                 "components": [
                     {
@@ -1859,10 +1859,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandPinky3",
-                "parent_UID": 1575457234
+                "parent_UID": 945802536
             },
             {
-                "UID": 1473961422,
+                "UID": 1895758291,
                 "active": true,
                 "components": [
                     {
@@ -1892,10 +1892,10 @@
                 ],
                 "is3D": true,
                 "name": "RightHandPinky4",
-                "parent_UID": 33334142
+                "parent_UID": 1574774542
             },
             {
-                "UID": 1162089167,
+                "UID": 243033091,
                 "active": true,
                 "components": [
                     {
@@ -1925,10 +1925,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftUpLeg",
-                "parent_UID": 59955386
+                "parent_UID": 1559151427
             },
             {
-                "UID": 1510978629,
+                "UID": 183173798,
                 "active": true,
                 "components": [
                     {
@@ -1958,10 +1958,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftLeg",
-                "parent_UID": 1162089167
+                "parent_UID": 243033091
             },
             {
-                "UID": 1356681314,
+                "UID": 985094672,
                 "active": true,
                 "components": [
                     {
@@ -1991,10 +1991,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftFoot",
-                "parent_UID": 1510978629
+                "parent_UID": 183173798
             },
             {
-                "UID": 736515993,
+                "UID": 1238408720,
                 "active": true,
                 "components": [
                     {
@@ -2024,10 +2024,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftToeBase",
-                "parent_UID": 1356681314
+                "parent_UID": 985094672
             },
             {
-                "UID": 1512909234,
+                "UID": 2080035364,
                 "active": true,
                 "components": [
                     {
@@ -2057,10 +2057,10 @@
                 ],
                 "is3D": true,
                 "name": "LeftToe_End",
-                "parent_UID": 736515993
+                "parent_UID": 1238408720
             },
             {
-                "UID": 475862258,
+                "UID": 729825246,
                 "active": true,
                 "components": [
                     {
@@ -2090,10 +2090,10 @@
                 ],
                 "is3D": true,
                 "name": "RightUpLeg",
-                "parent_UID": 59955386
+                "parent_UID": 1559151427
             },
             {
-                "UID": 776041949,
+                "UID": 1700363746,
                 "active": true,
                 "components": [
                     {
@@ -2123,10 +2123,10 @@
                 ],
                 "is3D": true,
                 "name": "RightLeg",
-                "parent_UID": 475862258
+                "parent_UID": 729825246
             },
             {
-                "UID": 275456456,
+                "UID": 988319391,
                 "active": true,
                 "components": [
                     {
@@ -2156,10 +2156,10 @@
                 ],
                 "is3D": true,
                 "name": "RightFoot",
-                "parent_UID": 776041949
+                "parent_UID": 1700363746
             },
             {
-                "UID": 524955466,
+                "UID": 260787284,
                 "active": true,
                 "components": [
                     {
@@ -2189,10 +2189,10 @@
                 ],
                 "is3D": true,
                 "name": "RightToeBase",
-                "parent_UID": 275456456
+                "parent_UID": 988319391
             },
             {
-                "UID": 2047793740,
+                "UID": 1444747626,
                 "active": true,
                 "components": [
                     {
@@ -2222,10 +2222,10 @@
                 ],
                 "is3D": true,
                 "name": "RightToe_End",
-                "parent_UID": 524955466
+                "parent_UID": 260787284
             },
             {
-                "UID": 156131857,
+                "UID": 935411560,
                 "active": true,
                 "components": [
                     {
@@ -2257,6 +2257,7 @@
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
                         "path": "Library/Meshes/Vampire.sugar",
+                        "rootNodeUID": 4294967295,
                         "shape_type": 0,
                         "type": "mesh"
                     },
@@ -2312,7 +2313,7 @@
                 ],
                 "is3D": true,
                 "name": "Vampire",
-                "parent_UID": 1688629181
+                "parent_UID": 959405108
             }
         ],
         "name": "SceneIntro",

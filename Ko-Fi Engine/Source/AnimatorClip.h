@@ -18,6 +18,7 @@ public:
 	const float inline GetDuration() const { return duration; }
 
 	inline void SetName(const char* name) { this->name = name; }
+	inline void SetAnimation(const R_Animation* clipAnim) { this->clipAnim = clipAnim; }
 	inline void SetStartFrame(uint start) { this->start = start; }
 	inline void SetEndFrame(uint end) { this->end = end; }
 	inline void SetDuration(float duration) { this->duration = duration; }

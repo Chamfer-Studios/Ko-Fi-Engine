@@ -160,18 +160,30 @@ void ComponentAnimator::Save(Json& json) const
 
 void ComponentAnimator::Load(Json& json)
 {
-	RELEASE(animation);
-	if (animation == nullptr)
+	if (animation)
 	{
-		animation = new R_Animation();
+		RELEASE(animation);
 	}
+
+	/*if (animation == nullptr)
+	{*/
+		animation = new R_Animation();
+	/*}*/
 
 	std::string path = json.at("path");
 	Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
-	animation->path = path;
+	owner->GetComponent<ComponentMesh>()->GetMesh()->SetIsAnimated(true);
+	owner->GetComponent<ComponentMesh>()->GetMesh()->SetAnimation(animation);
 
-	if (selectedClip == nullptr)
-		selectedClip = new AnimatorClip();
+	if (selectedClip)
+	{
+		selectedClip = nullptr;
+	}
+
+	/*if (!selectedClip)
+	{*/
+		/*selectedClip = new AnimatorClip();*/
+	/*}*/
 
 	if (!json.empty())
 	{
@@ -182,6 +194,8 @@ void ComponentAnimator::Load(Json& json)
 			animatorClip.SetStartFrame(clip.value().at("clipStartFrame"));
 			animatorClip.SetEndFrame(clip.value().at("clipEndFrame"));
 			animatorClip.SetDuration(clip.value().at("clipDuration"));
+
+			animatorClip.SetAnimation(animation);
 
 			clips.emplace(clip.value().at("mapString"), animatorClip);
 		}
@@ -243,8 +257,7 @@ AnimatorClip* ComponentAnimator::GetSelectedClip()
 
 void ComponentAnimator::SetSelectedClip(std::string name)
 {
-	std::map<std::string, AnimatorClip>::iterator mapIt;
-	for (auto clip = clips.begin(); clip != clips.end(); ++clip)
+	for (std::map<std::string, AnimatorClip>::iterator clip = clips.begin(); clip != clips.end(); ++clip)
 	{
 		if ((*clip).first == name)
 		{

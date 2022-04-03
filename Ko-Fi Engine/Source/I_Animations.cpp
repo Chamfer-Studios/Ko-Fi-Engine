@@ -91,7 +91,6 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 
 		// BODY
 		// Writing each variable into the file.
-		
 		file.write((char*)animation->name.data(), nameSizeBytes);												// Name
 		file.write((char*)&animation->duration, durationSizeBytes);								// Duration
 		file.write((char*)&animation->ticksPerSecond, ticksPerSecondSizeBytes);					// Ticks per second
@@ -157,6 +156,8 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 
 bool I_Animations::Load(const char* path, R_Animation* animation)
 {
+	animation->path = path;
+
 	std::ifstream file;
 	file.open(path, std::ios::binary);
 	if (file.is_open())
@@ -184,6 +185,9 @@ bool I_Animations::Load(const char* path, R_Animation* animation)
 		animation->SetName(std::string(name));
 		animation->SetDuration(duration);
 		animation->SetTicksPerSecond(ticksPerSecond);
+		animation->SetStartFrame(0);
+		animation->SetEndFrame(duration);
+
 		for (int i = 0; i < numChannels; ++i)
 		{
 			uint channelNameSizeBytes = 0;
