@@ -4,7 +4,7 @@
         "game_objects_amount": 4,
         "game_objects_list": [
             {
-                "UID": 1238525502,
+                "UID": 167563113,
                 "active": true,
                 "components": [
                     {
@@ -34,12 +34,12 @@
                     {
                         "active": true,
                         "draw_frustum": true,
-                        "far_plane_distance": 218.0,
+                        "far_plane_distance": 100.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.10000000149011612,
                         "type": "camera",
-                        "vertical_fov": 39.0
+                        "vertical_fov": 60.0
                     }
                 ],
                 "is3D": true,
@@ -47,7 +47,7 @@
                 "parent_UID": 4294967295
             },
             {
-                "UID": 1620580398,
+                "UID": 780319669,
                 "active": true,
                 "components": [
                     {
@@ -59,7 +59,7 @@
                         "position": [
                             0.0,
                             0.0,
-                            154.57525634765625
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -68,9 +68,9 @@
                             1.0
                         ],
                         "scale": [
-                            0.18000000715255737,
-                            0.18000000715255737,
-                            0.18000000715255737
+                            1.0,
+                            1.0,
+                            1.0
                         ],
                         "type": "transform"
                     }
@@ -80,7 +80,7 @@
                 "parent_UID": 4294967295
             },
             {
-                "UID": 1932043072,
+                "UID": 1741857290,
                 "active": true,
                 "components": [
                     {
@@ -109,14 +109,6 @@
                     },
                     {
                         "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Chimney.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
                         "color": [
                             0.47040000557899475,
                             0.47040000557899475,
@@ -138,14 +130,22 @@
                                 }
                             }
                         ]
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Chimney.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
                     }
                 ],
                 "is3D": true,
                 "name": "Chimney",
-                "parent_UID": 1620580398
+                "parent_UID": 780319669
             },
             {
-                "UID": 985002220,
+                "UID": 1444841000,
                 "active": true,
                 "components": [
                     {
@@ -157,7 +157,7 @@
                         "position": [
                             0.0,
                             0.0,
-                            0.0
+                            108.0
                         ],
                         "rotation": [
                             -0.7071068286895752,
@@ -166,19 +166,11 @@
                             0.7071067094802856
                         ],
                         "scale": [
-                            72.0000228881836,
-                            72.00001525878906,
-                            72.00001525878906
+                            11.0,
+                            10.999558448791504,
+                            10.999258041381836
                         ],
                         "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Baker_house.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
                     },
                     {
                         "active": true,
@@ -203,11 +195,19 @@
                                 }
                             }
                         ]
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Baker_house.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
                     }
                 ],
                 "is3D": true,
                 "name": "Baker_house",
-                "parent_UID": 1620580398
+                "parent_UID": 780319669
             }
         ],
         "name": "SceneIntro",

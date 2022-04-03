@@ -62,6 +62,7 @@ bool PanelCameraViewport::RenderPanel(bool* showPanel )
 			editor->lastCameraViewportSize = viewportSize;
 			
 			engine->GetRenderer()->ResizePreviewFrameBuffers(viewportSize.x, viewportSize.y);
+			engine->GetRenderer()->ResizeFrameBuffers(editor->cameraViewportSize.x, editor->cameraViewportSize.y);
 	
 
 		}
