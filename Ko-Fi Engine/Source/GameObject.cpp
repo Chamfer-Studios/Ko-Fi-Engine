@@ -326,7 +326,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::ANIMATOR:
 	{
-		this->CreateComponent<ComponentAnimator>();
+		c = this->CreateComponent<ComponentAnimator>();
 		break;
 	}
 	case ComponentType::LIGHT_SOURCE:
