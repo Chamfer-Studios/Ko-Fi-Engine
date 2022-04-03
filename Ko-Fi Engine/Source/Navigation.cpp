@@ -346,6 +346,7 @@ void Navigation::Save(Json& json) const
 {
 	if (navMesh == nullptr)
 		return;
+
 	Json navmeshJson = Json::object();
 
 	navmeshJson.emplace("verts", Json::array());

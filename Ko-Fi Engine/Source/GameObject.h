@@ -17,6 +17,14 @@ class ComponentCollider2;
 class ComponentAnimator;
 class ComponentLightSource;
 
+enum class Tag 
+{
+	TAG_UNTAGGED,
+	TAG_PLAYER,
+	TAG_ENEMY,
+	TAG_WALL
+};
+
 class GameObject
 {
 public:
@@ -86,10 +94,13 @@ public:
 	
 	bool PrefabSaveJson();
 	bool PrefabSave(Json& jsonFile);
-	bool LoadPrefabJson(const char* path);
+	bool LoadPrefabJson(const char* path, bool exists);
 	bool LoadPrefab(Json& jsonFile);
+	bool UpdatePrefab(Json& jsonFile);
 
 	bool IsSelected();
+	void LoadSceneFromName(std::string name);
+	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
 private:
 	std::string SetObjectNumberedName(const char* _name);
 
@@ -106,6 +117,10 @@ public:
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
+	bool changeScene = false;
+	std::string sceneName;
+	std::string prefabPath;
+	Tag tag;
 
 	std::vector<GameObject*> children;
 private:

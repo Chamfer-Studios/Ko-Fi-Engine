@@ -42,6 +42,9 @@ public:
 	void SetHoverTexture(const char* path);
 	void SetPressedTexture(const char* path);
 
+	bool IsPressed();
+	bool IsHovered();
+
 private:
 	enum class BUTTON_STATE {
 		IDLE,
@@ -56,4 +59,7 @@ private:
 	Texture pressedOpenGLTexture;
 
 	BUTTON_STATE state = BUTTON_STATE::IDLE;
+
+	bool isPressed = false;
+	bool isHovered = false;
 };

@@ -238,3 +238,31 @@ void ComponentButton::FreeTextures(BUTTON_STATE type)
 		break;
 	}
 }
+
+bool ComponentButton::IsPressed()
+{
+	if (state == BUTTON_STATE::PRESSED && !isPressed)
+	{
+		isPressed = true;
+		return true;
+	}
+	else if (state != BUTTON_STATE::PRESSED)
+	{
+		isPressed = false;
+	}
+	return false;
+}
+
+bool ComponentButton::IsHovered()
+{
+	if (state == BUTTON_STATE::HOVER && !isHovered)
+	{
+		isHovered = true;
+		return true;
+	}
+	else if (state == BUTTON_STATE::IDLE)
+	{
+		isHovered = false;
+	}
+	return false;
+}

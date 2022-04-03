@@ -52,9 +52,31 @@ bool PanelInspector::Update()
 
 		if (currentGameObject->isPrefab)
 		{
-			if (ImGui::Button("Update Changes"))
+			if (ImGui::Button("Save"))
 			{
 				currentGameObject->PrefabSaveJson();
+			}
+			if (ImGui::Button("Update changes"))
+			{
+				/*int prefabsCount = 0;
+				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
+					if (go->prefabPath == currentGameObject->prefabPath && go->GetUID() != currentGameObject->GetUID())
+					{
+						editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
+						prefabsCount++;
+					}
+				}
+				for (int i = 0; i < prefabsCount; ++i)
+				{
+					GameObject* gameObj = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+					gameObj->LoadPrefabJson(currentGameObject->prefabPath.c_str(), true);
+				}*/
+				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
+					if (go->prefabPath == currentGameObject->prefabPath && go->GetUID() != currentGameObject->GetUID())
+					{
+						go->LoadPrefabJson(currentGameObject->prefabPath.c_str(), true);
+					}
+				}
 			}
 		}
 

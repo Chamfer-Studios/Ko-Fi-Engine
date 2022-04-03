@@ -41,10 +41,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	//GameObject * g = this->CreateEmptyGameObject("Particle Test");
 	//g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
 
-	GameObject* camera = CreateEmptyGameObject("camera");
-	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
-	cCamera->isMainCamera = true;
-	engine->GetCamera3D()->SetGameCamera(cCamera);
+	
 }
 
 SceneIntro::~SceneIntro()
@@ -56,7 +53,10 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	bool ret = true;
-
+	GameObject* camera = CreateEmptyGameObject("camera");
+	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
+	cCamera->isMainCamera = true;
+	engine->GetCamera3D()->SetGameCamera(cCamera);
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 
@@ -88,6 +88,12 @@ bool SceneIntro::Update(float dt)
 	for (GameObject* go : this->gameObjectList)
 	{
 			go->Update(dt);
+			if (go->changeScene)
+			{
+				switchScene = true;
+				sceneNameGO = go->sceneName;
+				go->changeScene = false;
+			}
 	}
 
 	//example::NodeEditorShow();
@@ -136,6 +142,9 @@ bool SceneIntro::PostUpdate(float dt)
 		ComponentScript* componentScript = (ComponentScript*)bullet->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
 		componentScript->path = "Assets/Scripts/Bullet.lua";
 		componentScript->ReloadScript();
+		GameObject* target = parent->GetComponent<ComponentScript>()->handler->lua["target"];
+		componentScript->handler->lua["target"] = target;
+		componentScript->handler->lua["SetDestination"]();
 	}
 	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)
@@ -146,6 +155,11 @@ bool SceneIntro::PostUpdate(float dt)
 
 	engine->GetRenderer()->DrawRay();
 
+	if (switchScene)
+	{
+		switchScene = false;
+		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+	}
 
 	return true;
 }

@@ -64,13 +64,21 @@ bool ComponentScript::Update(float dt)
 			std::string what = err.what();
 			appLog->AddLog("%s\n", what.c_str());
 		}
+		/*if (owner->changeScene)
+		{
+			owner->changeScene = false;
+			owner->LoadSceneFromName("HUD_Scene");
+		}*/
 	}
 	return true;
 }
 
 bool ComponentScript::PostUpdate(float dt)
 {
-
+	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
+	{
+		handler->lua["PostUpdate"](dt);
+	}
 	return true;
 }
 
@@ -78,7 +86,7 @@ bool ComponentScript::OnPlay()
 {
 	bool ret = true;
 
-	//ReloadScript();
+	ReloadScript();
 
 	return ret;
 }
@@ -256,4 +264,5 @@ void ComponentScript::Load(Json &json)
 {
 	path = json.at("file_name");
 	numScript = json.at("script_number");
+	ReloadScript();
 }
