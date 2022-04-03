@@ -2,8 +2,10 @@
 
 #include "GameObject.h"
 #include "Globals.h"
+#include "FSDefs.h"
 #include "ComponentMesh.h"
 #include "Engine.h"
+#include "Importer.h"
 #include "R_Animation.h"
 #include "AnimatorClip.h"
 
@@ -58,19 +60,19 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 		// -- CLIP CREATOR
 		ImGui::Text("Select Animation");
 		
-		ImGui::Text(rAnim->GetName().c_str());
+		ImGui::Text(animation->GetName().c_str());
 
 		static char clipName[128] = "Enter Clip Name";
 		ImGuiInputTextFlags inputTxtFlags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll;
 		ImGui::InputText("Clip Name", clipName, IM_ARRAYSIZE(clipName), inputTxtFlags);
 
 		ImGui::Text("Reel selector: ");
-		ImGui::SliderInt("Edit Start", &rAnim->startFrame, 0, rAnim->duration);
-		ImGui::SliderInt("Edit End", &rAnim->endFrame, 0, rAnim->duration);
+		ImGui::SliderInt("Edit Start", &animation->startFrame, 0, animation->duration);
+		ImGui::SliderInt("Edit End", &animation->endFrame, 0, animation->duration);
 
 		if (ImGui::Button("Create Clip", ImVec2(80, 35)))
 		{
-			CreateClip(AnimatorClip(rAnim, clipName, rAnim->startFrame, rAnim->endFrame, 1.0f, true));
+			CreateClip(AnimatorClip(animation, clipName, animation->startFrame, animation->endFrame, 1.0f, true));
 		}
 
 		ImGui::Text("Select Clip");
@@ -134,8 +136,14 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 
 void ComponentAnimator::Save(Json& json) const
 {
-	json["type"] = "animator";
+	CONSOLE_LOG("hey");
+	/*json["type"] = "animator";
 
+	std::string name = owner->name;
+	animation->path = ANIMATIONS_DIR + name + ANIMATION_EXTENSION;
+	Importer::GetInstance()->animationImporter->Save(animation, animation->path.c_str());
+
+	json["path"] = animation->path;
 	Json jsonClips;
 	for (auto clip : clips)
 	{
@@ -147,12 +155,21 @@ void ComponentAnimator::Save(Json& json) const
 
 		json["clips"].push_back(jsonClips);
 	}
-
-	json["selectedClip"] = selectedClip->GetName();
+	json["selectedClip"] = selectedClip->GetName();*/
 }
 
 void ComponentAnimator::Load(Json& json)
 {
+	RELEASE(animation);
+	if (animation == nullptr)
+	{
+		animation = new R_Animation();
+	}
+
+	std::string path = json.at("path");
+	Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
+	animation->path = path;
+
 	if (selectedClip == nullptr)
 		selectedClip = new AnimatorClip();
 
@@ -168,7 +185,6 @@ void ComponentAnimator::Load(Json& json)
 
 			clips.emplace(clip.value().at("mapString"), animatorClip);
 		}
-
 		SetSelectedClip(json.at("selectedClip"));
 	}
 }
@@ -214,10 +230,10 @@ bool ComponentAnimator::CreateDefaultClip(AnimatorClip* clip)
 
 void ComponentAnimator::SetAnim(R_Animation* anim)
 {
-	if (this->rAnim != nullptr)
-		RELEASE(this->rAnim);
+	if (this->animation != nullptr)
+		RELEASE(this->animation);
 
-	this->rAnim = anim;
+	this->animation = anim;
 }
 
 AnimatorClip* ComponentAnimator::GetSelectedClip()

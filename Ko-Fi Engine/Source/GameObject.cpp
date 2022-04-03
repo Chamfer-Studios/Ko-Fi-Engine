@@ -170,7 +170,7 @@ void GameObject::AddComponent(Component *component)
 Component *GameObject::AddComponentByType(ComponentType componentType)
 {
 	// Check if it is repeated
-	for (Component *component : components)
+	for (Component* component : components)
 	{
 		if (component->GetType() == componentType)
 		{
@@ -281,7 +281,7 @@ Component *GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::ANIMATOR:
 	{
-		this->CreateComponent<ComponentAnimator>();
+		c = this->CreateComponent<ComponentAnimator>();
 		break;
 	}
 	}

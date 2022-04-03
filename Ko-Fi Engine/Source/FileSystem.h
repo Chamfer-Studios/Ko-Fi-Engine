@@ -34,7 +34,7 @@ public:
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
 	void AddPath(const char* path);
 
-	void CreateMaterial(const char* path, const char* filename,const char* texturePath);
+	void CreateMaterial(const char* path, const char* filename, const char* texturePath);
 	void CreateMaterial(const char* path);
 	void CreateShader(const char* path);
 	void CreateScene(const char* path,const char* sceneName);

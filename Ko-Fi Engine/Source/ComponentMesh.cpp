@@ -81,7 +81,6 @@ void ComponentMesh::Save(Json& json) const
 
 	std::string name = owner->name;
 	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
-
 	Importer::GetInstance()->meshImporter->Save(mesh, mesh->path.c_str());
 
 	json["path"] = mesh->path;
@@ -124,6 +123,7 @@ void ComponentMesh::Load(Json& json)
 
 		mesh->meshType = meshType;
 	}
+
 	std::string path = json.at("path");
 	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
 	mesh->path = path;
@@ -274,7 +274,6 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 }
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
-
 	bool ret = true;
 	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
 	{

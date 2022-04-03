@@ -4,7 +4,10 @@
 #include "R_Animation.h"
 #include "Channel.h"
 
+#include "MathGeoLib/Math/float3.h"
+
 #include <map>
+#include <fstream>
 
 I_Animations::I_Animations()
 {
@@ -67,6 +70,187 @@ bool I_Animations::Import(const aiAnimation* assimpAnimation, R_Animation* rAnim
 	return true;
 }
 
+bool I_Animations::Save(const R_Animation* animation, const char* path)
+{
+	std::ofstream file;
+	file.open(path, std::ios::in | std::ios::trunc | std::ios::binary);
+	if (file.is_open())
+	{
+		// HEADER
+		// Writing each variable size bytes into the header of the file.
+		uint nameSizeBytes = strlen(animation->name.c_str()) * sizeof(char);
+		uint durationSizeBytes = sizeof(float);
+		uint ticksPerSecondSizeBytes = sizeof(float);
+		uint numChannelsSizeBytes = sizeof(uint);
+		uint channelsSizeBytes = GetChannelsDataSize(animation);
+		file.write((char*)&nameSizeBytes, sizeof(unsigned));									// Name size bytes
+		file.write((char*)&durationSizeBytes, sizeof(unsigned));								// Duration size bytes
+		file.write((char*)&ticksPerSecondSizeBytes, sizeof(unsigned));							// Ticks per second size bytes
+		file.write((char*)&numChannelsSizeBytes, sizeof(unsigned));								// Number of channels size bytes
+		file.write((char*)&channelsSizeBytes, sizeof(unsigned));								// Channels size bytes
+
+		// BODY
+		// Writing each variable into the file.
+		const char* name = animation->name.c_str();
+		file.write((char*)&name, nameSizeBytes);												// Name
+		file.write((char*)&animation->duration, durationSizeBytes);								// Duration
+		file.write((char*)&animation->ticksPerSecond, ticksPerSecondSizeBytes);					// Ticks per second
+		uint numChannels = animation->channels.size();
+		file.write((char*)&numChannels, numChannelsSizeBytes);									// Number of channels
+		for (Channel channel : animation->channels)												// Channels
+		{
+			// Writing each channel variable size bytes.
+			uint channelNameSizeBytes = strlen(channel.name.c_str()) * sizeof(char);
+			uint vecKeySize = sizeof(double) + (sizeof(float) * 3);								// float3 is composed by 3 floats.
+			uint quatKeySize = sizeof(double) + (sizeof(float) * 4);							// Quat is composed by 4 floats.
+			uint positionKeyframesSizeBytes = channel.positionKeyframes.size() * vecKeySize;
+			uint rotationKeyframesSizeBytes = channel.rotationKeyframes.size() * quatKeySize;
+			uint scaleKeyframesSizeBytes = channel.scaleKeyframes.size() * vecKeySize;
+			file.write((char*)&channelNameSizeBytes, sizeof(unsigned));							// Channel name size bytes
+			file.write((char*)&positionKeyframesSizeBytes, sizeof(unsigned));					// Position keyframes size bytes
+			file.write((char*)&rotationKeyframesSizeBytes, sizeof(unsigned));					// Rotation keyframes size bytes
+			file.write((char*)&scaleKeyframesSizeBytes, sizeof(unsigned));						// Scale keyframes size bytes
+
+			// Writing each channel variable into the file.
+			/*const char* channelName = channel.name.c_str();
+			file.write((char*)&channelName, channelNameSizeBytes);*/								// Channel name
+			std::vector<PositionKeyframe> positionKeyframes = channel.positionKeyframes;
+			for (std::vector<PositionKeyframe>::iterator it = positionKeyframes.begin();
+				it != positionKeyframes.end(); it++)											// Position keyframes
+			{
+				PositionKeyframe posKF = (*it);
+				file.write((char*)&posKF.time, sizeof(double));
+				file.write((char*)&posKF.value.x, sizeof(float));
+				file.write((char*)&posKF.value.y, sizeof(float));
+				file.write((char*)&posKF.value.z, sizeof(float));
+			}
+			std::vector<RotationKeyframe> rotationKeyframes = channel.rotationKeyframes;
+			for (std::vector<RotationKeyframe>::iterator it = rotationKeyframes.begin();
+				it != rotationKeyframes.end(); it++)											// Rotation keyframes
+			{
+				RotationKeyframe rotKF = (*it);
+				file.write((char*)&rotKF.time, sizeof(double));
+				file.write((char*)&rotKF.value.x, sizeof(float));
+				file.write((char*)&rotKF.value.y, sizeof(float));
+				file.write((char*)&rotKF.value.z, sizeof(float));
+				file.write((char*)&rotKF.value.w, sizeof(float));
+			}
+			std::vector<ScaleKeyframe> scaleKeyframes = channel.scaleKeyframes;
+			for (std::vector<ScaleKeyframe>::iterator it = scaleKeyframes.begin();
+				it != scaleKeyframes.end(); it++)												// Scale keyframes
+			{
+				ScaleKeyframe scaleKF = (*it);
+				file.write((char*)&scaleKF.time, sizeof(double));
+				file.write((char*)&scaleKF.value.x, sizeof(float));
+				file.write((char*)&scaleKF.value.y, sizeof(float));
+				file.write((char*)&scaleKF.value.z, sizeof(float));
+			}
+		}
+
+		file.close();
+
+		return true;
+	}
+
+	return false;
+}
+
+bool I_Animations::Load(const char* path, R_Animation* animation)
+{
+	std::ifstream file;
+	file.open(path, std::ios::binary);
+	if (file.is_open())
+	{
+		uint nameSizeBytes;
+		uint durationSizeBytes;
+		uint ticksPerSecondSizeBytes;
+		uint numChannelsSizeBytes;
+		uint channelsSizeBytes;
+		file.read((char*)&nameSizeBytes, sizeof(unsigned));
+		file.read((char*)&durationSizeBytes, sizeof(unsigned));
+		file.read((char*)&ticksPerSecondSizeBytes, sizeof(unsigned));
+		file.read((char*)&numChannelsSizeBytes, sizeof(unsigned));
+		file.read((char*)&channelsSizeBytes, sizeof(unsigned));
+
+		const char* name;
+		float duration;
+		float ticksPerSecond;
+		uint numChannels;
+		file.read((char*)&name, nameSizeBytes);
+		file.read((char*)&duration, durationSizeBytes);
+		file.read((char*)&ticksPerSecond, ticksPerSecondSizeBytes);
+		file.read((char*)&numChannels, numChannelsSizeBytes);
+		animation->SetName(std::string(name));
+		animation->SetDuration(duration);
+		animation->SetTicksPerSecond(ticksPerSecond);
+
+		for (int i = 0; i < numChannels; i++)
+		{
+			uint channelNameSizeBytes;
+			uint positionKeyframesSizeBytes;
+			uint rotationKeyframesSizeBytes;
+			uint scaleKeyframesSizeBytes;
+			file.read((char*)&channelNameSizeBytes, sizeof(unsigned));
+			file.read((char*)&positionKeyframesSizeBytes, sizeof(unsigned));
+			file.read((char*)&rotationKeyframesSizeBytes, sizeof(unsigned));
+			file.read((char*)&scaleKeyframesSizeBytes, sizeof(unsigned));
+
+			/*const char* channelName;
+			file.read((char*)&channelName, channelNameSizeBytes);*/
+			
+			Channel channel("go");
+
+			uint vecKeySize = sizeof(double) + (sizeof(float) * 3);								// float3 is composed by 3 floats.
+			uint quatKeySize = sizeof(double) + (sizeof(float) * 4);							// Quat is composed by 4 floats.
+			uint numPositionKeyframes = positionKeyframesSizeBytes / vecKeySize;
+			uint numRotationKeyframes = rotationKeyframesSizeBytes / quatKeySize;
+			uint numScaleKeyframes = scaleKeyframesSizeBytes / vecKeySize;
+
+			for (int i = 0; i < numPositionKeyframes; i++)
+			{
+				double time = 0;
+				float3 value;
+				file.read((char*)&time, sizeof(double));
+				file.read((char*)&value.x, sizeof(float));
+				file.read((char*)&value.y, sizeof(float));
+				file.read((char*)&value.z, sizeof(float));
+
+				channel.positionKeyframes.push_back(PositionKeyframe(time, value));
+			}
+			for (int i = 0; i < numRotationKeyframes; i++)
+			{
+				double time = 0;
+				Quat value;
+				file.read((char*)&time, sizeof(double));
+				file.read((char*)&value.x, sizeof(float));
+				file.read((char*)&value.y, sizeof(float));
+				file.read((char*)&value.z, sizeof(float));
+				file.read((char*)&value.w, sizeof(float));
+
+				channel.rotationKeyframes.push_back(RotationKeyframe(time, value));
+			}
+			for (int i = 0; i < numScaleKeyframes; i++)
+			{
+				double time = 0;
+				float3 value;
+				file.read((char*)&time, sizeof(double));
+				file.read((char*)&value.x, sizeof(float));
+				file.read((char*)&value.y, sizeof(float));
+				file.read((char*)&value.z, sizeof(float));
+
+				channel.scaleKeyframes.push_back(ScaleKeyframe(time, value));
+			}
+
+			animation->channels.push_back(channel);
+		}
+
+		file.close();
+
+		return true;
+	}
+	return false;
+}
+
 void I_Animations::GetPositionKeys(const aiNodeAnim* aiChannel, Channel& rChannel)
 {
 	for (uint i = 0; i < aiChannel->mNumPositionKeys; ++i)
@@ -104,6 +288,36 @@ void I_Animations::GetScaleKeys(const aiNodeAnim* aiChannel, Channel& rChannel)
 
 		rChannel.scaleKeyframes.push_back(ScaleKeyframe(time, scale));
 	}
+}
+
+uint I_Animations::GetChannelsDataSize(const R_Animation* rAnimation)
+{
+	uint channelsSize = 0;																									// Will contain the total size of all the animation's channels.
+
+	if (rAnimation == nullptr)
+	{
+		LOG("[ERROR] Animations Importer: Could not get Channels Size Of Data! Error: Argument R_Animation* was nullptr");
+		return 0;
+	}
+
+	uint vecKeySize = sizeof(double) + (sizeof(float) * 3);																	// float3 is composed by 3 floats.
+	uint quatKeySize = sizeof(double) + (sizeof(float) * 4);																// Quat is composed by 4 floats.
+	for (uint i = 0; i < rAnimation->channels.size(); ++i)
+	{
+		const Channel& rChannel = rAnimation->channels[i];
+		uint channelSize = 0;
+
+		/*channelSize += sizeof(uint);*/ // Channel Type
+		channelSize += sizeof(uint) * 4;																					// Length of the name and sizes of the keys maps.
+		channelSize += (strlen(rChannel.name.c_str()) * sizeof(char));
+		channelSize += rChannel.positionKeyframes.size() * vecKeySize;
+		channelSize += rChannel.rotationKeyframes.size() * quatKeySize;
+		channelSize += rChannel.scaleKeyframes.size() * vecKeySize;
+
+		channelsSize += channelSize;
+	}
+
+	return channelsSize;
 }
 
 void I_Animations::ValidateChannel(Channel& rChannel)

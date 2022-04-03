@@ -34,8 +34,11 @@ public:
 	std::string name;
 	float duration;
 	float ticksPerSecond;
-	int startFrame;
-	int endFrame;
+	int startFrame; // Not necessary, remove when possible.
+	int endFrame; // Not necessary, remove when possible.
+
+public:
+	std::string path;
 };
 
 #endif // !__ANIMATION_H__

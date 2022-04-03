@@ -37,7 +37,7 @@ public:
 private:
 	bool playing;
 
-	R_Animation* rAnim;
+	R_Animation* animation;
 
 	std::map<std::string, AnimatorClip> clips;
 	AnimatorClip* selectedClip;
