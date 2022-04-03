@@ -67,6 +67,7 @@ bool PanelCameraViewport::RenderPanel(bool* showPanel )
 		}
 		editor->cameraViewportSize = viewportSize;
 		ImGui::Image((ImTextureID)engine->GetRenderer()->GetPreviewTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+		glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
 
 	}
 	ImGui::End();

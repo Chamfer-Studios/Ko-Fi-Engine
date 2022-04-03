@@ -959,7 +959,7 @@ void Renderer3D::ResizeFrameBuffers(int width, int height)
 
 void Renderer3D::ResizePreviewFrameBuffers(int width, int height)
 {
-	//glViewport(0, 0, width, height);
+	glViewport(0, 0, width, height);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
 	glBindTexture(GL_TEXTURE_2D, previewTextureBuffer);

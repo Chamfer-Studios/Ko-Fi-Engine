@@ -110,6 +110,7 @@ private:
 	uint frameBuffer = 0;
 	uint previewFrameBuffer = 0;
 	uint renderBufferoutput = 0;
+	uint renderPreviewBufferoutput = 0;
 	uint textureBuffer = 0;
 	uint previewTextureBuffer = 0;
 	bool show_viewport_window = true;
