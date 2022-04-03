@@ -73,8 +73,7 @@ bool Camera3D::Update(float dt)
 
 	if (currentCamera->isEngineCamera)
 	{
-		CheckInput(dt);
-		CheckMouseMotion();
+		CheckMouseMotion(dt);
 	}
 
 	return true;
@@ -183,7 +182,7 @@ void Camera3D::CheckInput(float dt)
 	currentCamera->position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
 }
 
-void Camera3D::CheckMouseMotion()
+void Camera3D::CheckMouseMotion(float dt)
 {
 
 	// Mouse motion ----------------
@@ -192,6 +191,7 @@ void Camera3D::CheckMouseMotion()
 
 	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
+		CheckInput(dt);
 		int dx = -engine->GetInput()->GetMouseXMotion();
 		int dy = -engine->GetInput()->GetMouseYMotion();
 

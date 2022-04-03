@@ -70,8 +70,13 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 
 		// Scale ImGui
 		float3 newScale = GetScale();
-		if (ImGui::DragFloat3("Scale", &(newScale[0]), 0.02f, 0.1f, 5000.f))
+		if (ImGui::DragFloat3("Scale", &(newScale[0]), 0.02f, 0.00000001f, 5000.f))
 		{
+			// If it is equal to 0 it crashes
+			if (newScale.x == 0) newScale.x = 0.00000001f;
+			if (newScale.y == 0) newScale.y = 0.00000001f;
+			if (newScale.z == 0) newScale.z = 0.00000001f;
+
 			SetScale(newScale);
 		}
 	}
