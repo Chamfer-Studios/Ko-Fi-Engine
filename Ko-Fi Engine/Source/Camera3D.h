@@ -40,7 +40,7 @@ public:
 	// ------------------------------------------------------------------
 
 	void CheckInput(float dt);
-	void CheckMouseMotion();
+	void CheckMouseMotion(float dt);
 
 	void SetGameCamera(ComponentCamera* gameCamera);
 	
