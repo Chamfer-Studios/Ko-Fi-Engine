@@ -78,7 +78,7 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 	{
 		// HEADER
 		// Writing each variable size bytes into the header of the file.
-		uint nameSizeBytes = animation->name.length()*4;
+		uint nameSizeBytes = animation->name.length();
 		uint durationSizeBytes = sizeof(float);
 		uint ticksPerSecondSizeBytes = sizeof(float);
 		uint numChannelsSizeBytes = sizeof(uint);
@@ -92,15 +92,16 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 		// BODY
 		// Writing each variable into the file.
 		
-		file.write((char*)&animation->name, nameSizeBytes);												// Name
+		file.write((char*)animation->name.data(), nameSizeBytes);												// Name
 		file.write((char*)&animation->duration, durationSizeBytes);								// Duration
 		file.write((char*)&animation->ticksPerSecond, ticksPerSecondSizeBytes);					// Ticks per second
 		uint numChannels = animation->channels.size();
-		file.write((char*)&numChannels, numChannelsSizeBytes);									// Number of channels
+		file.write((char*)&numChannels, numChannelsSizeBytes);
+		// Number of channels
 		for (Channel channel : animation->channels)												// Channels
 		{
 			// Writing each channel variable size bytes.
-			uint channelNameSizeBytes = channel.name.length() * 4;
+			uint channelNameSizeBytes = channel.name.length();
 			uint vecKeySize = sizeof(double) + (sizeof(float) * 3);								// float3 is composed by 3 floats.
 			uint quatKeySize = sizeof(double) + (sizeof(float) * 4);							// Quat is composed by 4 floats.
 			uint positionKeyframesSizeBytes = channel.positionKeyframes.size() * vecKeySize;
@@ -112,7 +113,7 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 			file.write((char*)&scaleKeyframesSizeBytes, sizeof(unsigned));						// Scale keyframes size bytes
 
 			// Writing each channel variable into the file.
-			file.write((char*)&channel.name, channelNameSizeBytes);								// Channel name
+			file.write((char*)channel.name.data(), channelNameSizeBytes);								// Channel name
 			std::vector<PositionKeyframe> positionKeyframes = channel.positionKeyframes;
 			for (std::vector<PositionKeyframe>::iterator it = positionKeyframes.begin();
 				it != positionKeyframes.end(); it++)											// Position keyframes
@@ -160,11 +161,11 @@ bool I_Animations::Load(const char* path, R_Animation* animation)
 	file.open(path, std::ios::binary);
 	if (file.is_open())
 	{
-		uint nameSizeBytes;
-		uint durationSizeBytes;
-		uint ticksPerSecondSizeBytes;
-		uint numChannelsSizeBytes;
-		uint channelsSizeBytes;
+		uint nameSizeBytes = 0;
+		uint durationSizeBytes = 0;
+		uint ticksPerSecondSizeBytes = 0;
+		uint numChannelsSizeBytes = 0;
+		uint channelsSizeBytes = 0;
 		file.read((char*)&nameSizeBytes, sizeof(unsigned));
 		file.read((char*)&durationSizeBytes, sizeof(unsigned));
 		file.read((char*)&ticksPerSecondSizeBytes, sizeof(unsigned));
@@ -172,40 +173,41 @@ bool I_Animations::Load(const char* path, R_Animation* animation)
 		file.read((char*)&channelsSizeBytes, sizeof(unsigned));
 
 		std::string name;
-		float duration;
-		float ticksPerSecond;
-		uint numChannels;
-		file.read((char*)&name, nameSizeBytes);
+		float duration = 0.0f;
+		float ticksPerSecond = 0.0f;
+		uint numChannels = 0;
+		name.resize(nameSizeBytes);
+		file.read((char*)(name.data()), nameSizeBytes);
 		file.read((char*)&duration, durationSizeBytes);
 		file.read((char*)&ticksPerSecond, ticksPerSecondSizeBytes);
 		file.read((char*)&numChannels, numChannelsSizeBytes);
 		animation->SetName(std::string(name));
 		animation->SetDuration(duration);
 		animation->SetTicksPerSecond(ticksPerSecond);
-
-		for (int i = 0; i < numChannels; i++)
+		for (int i = 0; i < numChannels; ++i)
 		{
-			uint channelNameSizeBytes;
-			uint positionKeyframesSizeBytes;
-			uint rotationKeyframesSizeBytes;
-			uint scaleKeyframesSizeBytes;
+			uint channelNameSizeBytes = 0;
+			uint positionKeyframesSizeBytes = 0;
+			uint rotationKeyframesSizeBytes = 0;
+			uint scaleKeyframesSizeBytes = 0;
 			file.read((char*)&channelNameSizeBytes, sizeof(unsigned));
 			file.read((char*)&positionKeyframesSizeBytes, sizeof(unsigned));
 			file.read((char*)&rotationKeyframesSizeBytes, sizeof(unsigned));
 			file.read((char*)&scaleKeyframesSizeBytes, sizeof(unsigned));
 
 			std::string channelName;
-			file.read((char*)&channelName, channelNameSizeBytes);
+			channelName.resize(channelNameSizeBytes);
+			file.read((char*)(channelName.data()), channelNameSizeBytes);
 			
-			Channel channel("go");
+			Channel channel(channelName.c_str());
+			//Channel channel("mamahuevo"+i);
 
 			uint vecKeySize = sizeof(double) + (sizeof(float) * 3);								// float3 is composed by 3 floats.
 			uint quatKeySize = sizeof(double) + (sizeof(float) * 4);							// Quat is composed by 4 floats.
 			uint numPositionKeyframes = positionKeyframesSizeBytes / vecKeySize;
 			uint numRotationKeyframes = rotationKeyframesSizeBytes / quatKeySize;
 			uint numScaleKeyframes = scaleKeyframesSizeBytes / vecKeySize;
-
-			for (int i = 0; i < numPositionKeyframes; i++)
+			for (int j = 0; j < numPositionKeyframes; ++j)
 			{
 				double time = 0;
 				float3 value;
@@ -216,7 +218,7 @@ bool I_Animations::Load(const char* path, R_Animation* animation)
 
 				channel.positionKeyframes.push_back(PositionKeyframe(time, value));
 			}
-			for (int i = 0; i < numRotationKeyframes; i++)
+			for (int k = 0; k < numRotationKeyframes; ++k)
 			{
 				double time = 0;
 				Quat value;
@@ -228,7 +230,7 @@ bool I_Animations::Load(const char* path, R_Animation* animation)
 
 				channel.rotationKeyframes.push_back(RotationKeyframe(time, value));
 			}
-			for (int i = 0; i < numScaleKeyframes; i++)
+			for (int o = 0; o < numScaleKeyframes; ++o)
 			{
 				double time = 0;
 				float3 value;
@@ -239,8 +241,8 @@ bool I_Animations::Load(const char* path, R_Animation* animation)
 
 				channel.scaleKeyframes.push_back(ScaleKeyframe(time, value));
 			}
-
 			animation->channels.push_back(channel);
+
 		}
 
 		file.close();
