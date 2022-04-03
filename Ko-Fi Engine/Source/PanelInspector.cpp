@@ -13,6 +13,7 @@
 #include "ComponentCollider.h"
 #include "ComponentRigidBody.h"
 #include "ComponentAnimator.h"
+#include "ComponentLightSource.h"
 
 #include <queue>
 
@@ -78,53 +79,28 @@ bool PanelInspector::Update()
 				}
 			}
 		}
-		
+
 		for (Component* component : currentGameObject->GetComponents())
 		{
 			component->InspectorDraw(editor->GetPanelChooser());
 		}
 
 		ImGui::Separator();
-
-		// Take care with the order in the combo, it has to follow the ComponentType enum class order
-		ImGui::Combo("##combo", &componentType, "Add Component\0Mesh\0Material\0Particle\0Camera\0Collider\0Script\0RigidBody\0Collider2\0Audio Source\0Audio Switch\0Animator\0Walkable\0Follow Path");
-		ImGui::SameLine();
-
-		if ((ImGui::Button("ADD")))
+		
+		if (ImGui::BeginCombo("Add Component##", "Add Component"))
 		{
-			if (componentType != (int)ComponentType::NONE)
+			for (int i = (int)ComponentType::NONE+1; i != (int)ComponentType::END; ++i)
 			{
-				currentGameObject->AddComponentByType((ComponentType)componentType);
-				componentType = 0;
+				std::string componentTypeName = componentTypeUtils::ComponentTypeToString((ComponentType)i);
+				if (ImGui::Selectable(componentTypeName.c_str()))
+				{
+					currentGameObject->AddComponentByType((ComponentType)i);
+				}
 			}
+			ImGui::EndCombo();
 		}
 
-		if ((ImGui::Button("ADD TO CHILDREN")))
-		{
-			if (componentType != (int)ComponentType::NONE)
-			{
-				std::queue<GameObject*> q;
-
-				for (auto o : currentGameObject->children) {
-					q.push(o);
-				}
-
-				while (!q.empty()) {
-					GameObject* go = q.front();
-					q.pop();
-
-					for (auto c : go->children) {
-						q.push(c);
-					}
-
-					go->AddComponentByType((ComponentType)componentType);
-				}
-
-				componentType = 0;
-			}
-		}
 	}
-
 	ImGui::End();
 	return true;
 }

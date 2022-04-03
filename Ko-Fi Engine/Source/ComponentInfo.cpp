@@ -32,7 +32,11 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 	{
 		ImGui::Text("Name:");
 		ImGui::SameLine();
-		ImGui::InputText("##Name", &(owner->name));
+		std::string newName = owner->GetName();
+		if (ImGui::InputText("##Name", &(newName)))
+		{
+			owner->SetName(newName.c_str());
+		}
 		ImGui::Checkbox("Active", &owner->active);
 		ImGui::SameLine();
 

@@ -44,18 +44,26 @@ public:
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	// ------------------------------------------------------------------
+	
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	// Method to receive and manage events
 	//Renderer Set Up Functions
 	bool InitOpenGL();
 	bool InitGlew();
 	void SetGLFlag(GLenum flag, bool setTo);
 	void PassProjectionAndViewToRenderer();
+	void PassPreviewProjectionAndViewToRenderer();
 	void RecalculateProjectionMatrix();
 	
 	//Render Functions
 	void RenderScene();
+	void RenderPreviewScene();
 	void RenderBoundingBox(ComponentMesh* cMesh);
 	void RenderMeshes(GameObject* go);
+	void RenderPreviewMeshes(GameObject* go);
 
 	void RenderUI(GameObject* go);
 
@@ -75,9 +83,11 @@ public:
 	void PrepareFrameBuffers();
 	void UnbindFrameBuffers();
 	void ResizeFrameBuffers(int width, int height);
+	void ResizePreviewFrameBuffers(int width, int height);
 	void ReleaseFrameBuffers();
 
 	uint GetTextureBuffer();
+	uint GetPreviewTextureBuffer();
 	void AddParticle(Texture& tex, Color color, const float4x4 transform, float distanceToCamera);
 	void RenderParticle(ParticleRenderer* particle);
 	void RenderAllParticles();
@@ -98,8 +108,11 @@ private:
 
 	// Viewport frame buffer
 	uint frameBuffer = 0;
+	uint previewFrameBuffer = 0;
 	uint renderBufferoutput = 0;
+	uint renderPreviewBufferoutput = 0;
 	uint textureBuffer = 0;
+	uint previewTextureBuffer = 0;
 	bool show_viewport_window = true;
 
 	//Particle Map

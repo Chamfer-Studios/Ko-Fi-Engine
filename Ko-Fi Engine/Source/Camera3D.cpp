@@ -29,6 +29,15 @@ Camera3D::~Camera3D()
 {
 }
 
+bool Camera3D::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool Camera3D::Start()
 {
 	CONSOLE_LOG("Setting up the camera");
@@ -64,8 +73,7 @@ bool Camera3D::Update(float dt)
 
 	if (currentCamera->isEngineCamera)
 	{
-		CheckInput(dt);
-		CheckMouseMotion();
+		CheckMouseMotion(dt);
 	}
 
 	return true;
@@ -174,7 +182,7 @@ void Camera3D::CheckInput(float dt)
 	currentCamera->position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
 }
 
-void Camera3D::CheckMouseMotion()
+void Camera3D::CheckMouseMotion(float dt)
 {
 
 	// Mouse motion ----------------
@@ -183,6 +191,7 @@ void Camera3D::CheckMouseMotion()
 
 	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
+		CheckInput(dt);
 		int dx = -engine->GetInput()->GetMouseXMotion();
 		int dy = -engine->GetInput()->GetMouseYMotion();
 
@@ -266,6 +275,21 @@ void Camera3D::OnPlay()
 void Camera3D::OnStop()
 {
 	currentCamera = engineCamera;
+}
+
+bool Camera3D::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Camera3D::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Camera3D::InspectorDraw()
+{
+	return true;
 }
 
 void Camera3D::SetGameCamera(ComponentCamera* gameCamera)

@@ -67,6 +67,8 @@ public:
 	CollisionDetector* GetCollisionDetector() const;
 	Navigation* GetNavigation() const;
 
+	double GetEngineTime() { return ptimer.ReadMs(); };
+
 private:
 	// Add a new module to handle
 	void AddModule(Module* module);

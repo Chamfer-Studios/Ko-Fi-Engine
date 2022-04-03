@@ -17,6 +17,8 @@
 #include "ComponentButton.h"
 #include "ComponentText.h"
 #include "ComponentCamera.h"
+#include "Material.h"
+#include "ComponentMesh.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -49,7 +51,7 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Import Model"))
 			{
-				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx");
+				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
 			}
 			if (ImGui::MenuItem("Save Scene"))
 			{
@@ -63,7 +65,7 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Load Scene"))
 			{
-				editor->GetPanelChooser()->OpenPanel("LoadScene", "json");
+				editor->GetPanelChooser()->OpenPanel("LoadScene", "json", { "json" });
 			}
 			if (ImGui::MenuItem("Settings"))
 			{
@@ -88,12 +90,8 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Create Camera"))
 			{
-				//GameObject* camera = Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
-				//camera->CreateComponent<ComponentCamera>();
-
 				GameObject* camera = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("camera");
 				camera->CreateComponent<ComponentCamera>();
-
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
@@ -206,7 +204,15 @@ void MainBar::ChoosersListener()
 		const char* file = editor->GetPanelChooser()->OnChooserClosed();
 		if (file != nullptr)
 		{
-			Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+	#pragma omp parallel private()
+			{
+				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+			}
+			
 		}
 	}
+}
+
+void MainBar::ThreadLoadScene()
+{
 }

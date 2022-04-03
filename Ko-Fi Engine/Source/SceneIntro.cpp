@@ -107,7 +107,7 @@ bool SceneIntro::PostUpdate(float dt)
 	// Draw meshes
 	for (GameObject* go : gameObjectList)
 	{
-			go->PostUpdate(dt); 
+		go->PostUpdate(dt); 
 	}
 
 	for (GameObject* parent : gameObjectListToCreate)
@@ -119,9 +119,9 @@ bool SceneIntro::PostUpdate(float dt)
 		bullet->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 		float3 pos = parent->GetTransform()->GetPosition();
 		bullet->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
-		float3 parentRot = parent->GetTransform()->GetRotation();
+		float3 parentRot = parent->GetTransform()->GetRotationEuler();
 		float3 rot = { parentRot.x - 55,parentRot.y,parentRot.z };
-		bullet->GetTransform()->SetRotation(rot);
+		bullet->GetTransform()->SetRotationEuler(rot);
 
 		ComponentMesh* componentMesh = bullet->CreateComponent<ComponentMesh>();
  		Mesh* mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
@@ -163,6 +163,8 @@ bool SceneIntro::CleanUp()
 	{
 		RELEASE(gameObject);
 	}
+
+	lights.clear();
 
 	example::NodeEditorShutdown();
 

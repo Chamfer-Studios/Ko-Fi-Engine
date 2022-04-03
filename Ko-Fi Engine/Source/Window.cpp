@@ -28,7 +28,7 @@ bool Window::Awake(Json configModule)
 	bool ret = true;
 
 	// TODO: Load all config data with this function
-	LoadConfiguration(configModule);
+	ret = LoadConfiguration(configModule);
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -162,6 +162,55 @@ bool Window::SaveConfiguration(Json& configModule) const
 
 bool Window::LoadConfiguration(Json& configModule)
 {
+	//SetWidth(configModule["Width"]);
+	//SetHeight(configModule["Height"]);
+	//// SetScale(configModule["Scale"]);
+	//SetFullscreen(configModule["Fullscreen"]);
+	//SetFullscreenDesktop(configModule["FullscreenDesktop"]);
+	//SetResizable(configModule["Resizable"]);
+	//SetBorderless(configModule["Borderless"]);
+	//SetTitle(configModule["Title"]);
+	//SetIcon(configModule["Icon"]);
+	return true;
+}
+
+bool Window::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Window##"))
+	{
+		ImGui::Combo("##resolutionCombo", &currentResolution, "Select Resolution\0 1024x768\0 1920x1080\0 1280x720");
+
+		ImGui::SameLine();
+		if (ImGui::Button("SetResolution##"))
+		{
+			switch (currentResolution)
+			{
+			case 0:
+				break;
+			case 1:
+				// Set 1024x768 resolution
+				SetWidth(1024);
+				SetHeight(768);
+				break;
+			case 2:
+				// Set 1920x1080 resolution
+				SetWidth(1920);
+				SetHeight(1080);
+				break;
+			case 3:
+				// Set 1280x720 resolution
+				SetWidth(1280);
+				SetHeight(720);
+				break;
+			default:
+				break;
+			}
+
+			engine->SaveConfiguration();
+		}
+		ImGui::Text("Current Resolution: %i x % i", GetWidth(), GetHeight());
+	}
+
 	return true;
 }
 
