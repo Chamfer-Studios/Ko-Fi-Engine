@@ -88,6 +88,12 @@ bool SceneIntro::Update(float dt)
 	for (GameObject* go : this->gameObjectList)
 	{
 			go->Update(dt);
+			if (go->changeScene)
+			{
+				switchScene = true;
+				sceneNameGO = go->sceneName;
+				go->changeScene = false;
+			}
 	}
 
 	//example::NodeEditorShow();
@@ -149,6 +155,11 @@ bool SceneIntro::PostUpdate(float dt)
 
 	engine->GetRenderer()->DrawRay();
 
+	if (switchScene)
+	{
+		switchScene = false;
+		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+	}
 
 	return true;
 }

@@ -110,16 +110,16 @@
                             0.0
                         ],
                         "size": [
-                            200.0,
-                            200.0
+                            524.0,
+                            132.0
                         ],
                         "type": "transform2D"
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/Textures/Grey 2.png",
-                        "idleTexture": "Assets/Textures/Grey.png",
-                        "pressedTexture": "Assets/Textures/firework_projectile.png",
+                        "hoverTexture": "Assets/HUD/PlayHover.png",
+                        "idleTexture": "Assets/HUD/Play.png",
+                        "pressedTexture": "Assets/HUD/PlayPressed.png",
                         "type": "button"
                     },
                     {

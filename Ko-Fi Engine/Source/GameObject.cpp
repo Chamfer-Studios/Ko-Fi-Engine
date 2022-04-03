@@ -952,6 +952,7 @@ void GameObject::LoadSceneFromName(std::string name)
 {
 	Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), name.c_str());
 }
+
 std::string GameObject::SetObjectNumberedName(const char* _name)
 {
 	int count = 0;
@@ -978,4 +979,10 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 	}
 
 	return chainName;
+}
+
+void GameObject::SetChangeScene(bool changeSceneLua, std::string sceneNameLua)
+{
+	changeScene = changeSceneLua;
+	sceneName = sceneNameLua;
 }

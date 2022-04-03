@@ -7,7 +7,7 @@ characterSelected = -1
 -- Called each loop iteration
 function Update(dt)
 
-print(characterSelected)	
+-- print(characterSelected)	
 
 	currentState = GetRuntimeState()
 	if (currentState == RuntimeState.PLAYING) 
