@@ -21,6 +21,7 @@ public:
 	void SetPosition(const float3& newPosition);
 	void SetRotation(const float3& newRotation);
 	void SetRotationQuat(const Quat& newRotation);
+	void LookAt(float3 forward, float3 up);
 	void SetScale(const float3& newScale);
 
 	inline float3 GetPosition() const { return position; };

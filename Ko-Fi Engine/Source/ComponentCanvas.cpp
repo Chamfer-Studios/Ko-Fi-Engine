@@ -98,11 +98,15 @@ bool ComponentCanvas::Update(float dt)
 
 bool ComponentCanvas::InspectorDraw(PanelChooser* chooser)
 {
-	if (ImGui::CollapsingHeader("Canvas 2D"))
+	if (ImGui::CollapsingHeader("Canvas 2D", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
+		DrawDeleteButton(owner, this);
+
 		ImGui::Text("Size: %f, %f", owner->GetEngine()->GetEditor()->lastViewportSize.x, owner->GetEngine()->GetEditor()->lastViewportSize.y);
 		ImGui::DragFloat2("Logical Size", &logicalSize[0]);
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }

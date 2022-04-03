@@ -43,6 +43,8 @@ GameObject::GameObject(int uid, KoFiEngine *engine, const char *name, bool _is3D
 	if (is3D)
 		transform = CreateComponent<ComponentTransform>();
 
+	tag = Tag::TAG_UNTAGGED;
+
 	this->parent = nullptr;
 }
 
@@ -57,6 +59,8 @@ GameObject::GameObject()
 
 	CreateComponent<ComponentInfo>();
 	transform = CreateComponent<ComponentTransform>();
+
+	tag = Tag::TAG_UNTAGGED;
 
 	this->parent = nullptr;
 }
@@ -91,7 +95,8 @@ bool GameObject::Update(float dt)
 	bool ret = true;
 	for (Component *component : components)
 	{
-		ret = component->Update(dt);
+		if (component)
+			ret = component->Update(dt);
 	}
 	return ret;
 }
@@ -112,8 +117,7 @@ bool GameObject::CleanUp()
 {
 	for (Component *component : components)
 	{
-		if (component->GetType() != ComponentType::MESH) // This is the dirty patch
-			RELEASE(component);
+		RELEASE(component);
 	}
 	components.clear();
 	children.clear();
@@ -129,6 +133,54 @@ bool GameObject::OnPlay()
 	{
 		ret = component->OnPlay();
 	}
+	return ret;
+}
+
+bool GameObject::OnPause()
+{
+	bool ret = true;
+
+	for (Component* component : components)
+	{
+		ret = component->OnPause();
+	}
+
+	return ret;
+}
+
+bool GameObject::OnStop()
+{
+	bool ret = true;
+
+	for (Component* component : components)
+	{
+		ret = component->OnStop();
+	}
+
+	return ret;
+}
+
+bool GameObject::OnResume()
+{
+	bool ret = true;
+
+	for (Component* component : components)
+	{
+		ret = component->OnResume();
+	}
+
+	return ret;
+}
+
+bool GameObject::OnTick()
+{
+	bool ret = true;
+
+	for (Component* component : components)
+	{
+		ret = component->OnTick();
+	}
+
 	return ret;
 }
 
@@ -420,6 +472,8 @@ bool GameObject::PrefabSaveJson()
 	this->PrefabSave(jsonFile);
 
 	std::string path = "Assets/Prefabs/" + std::string(name) + "_prefab.json";
+	
+	this->prefabPath = path;
 
 	ret = jsonHandler.SaveJson(jsonFile, path.c_str());
 
@@ -543,19 +597,24 @@ bool GameObject::PrefabSave(Json &jsonFile)
 	return true;
 }
 
-bool GameObject::LoadPrefabJson(const char *path)
+bool GameObject::LoadPrefabJson(const char* path, bool exists)
 {
 	bool ret = false;
 
 	JsonHandler jsonHandler;
 	Json jsonFile;
 
+	this->prefabPath = path;
+
 	ret = jsonHandler.LoadJson(jsonFile, path);
 
 	if (!jsonFile.is_null())
 	{
 		ret = true;
-		this->LoadPrefab(jsonFile);
+		if (exists)
+			this->UpdatePrefab(jsonFile);
+		else
+			this->LoadPrefab(jsonFile);
 	}
 	else
 		ret = false;
@@ -580,7 +639,7 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 			transformCmp->active = true;
 			transformCmp->Load(jsonCmp);
 		}
-		else if (type == "mesh")
+		if (type == "mesh")
 		{
 			ComponentMesh *meshCmp = this->GetComponent<ComponentMesh>();
 			if (meshCmp == nullptr)
@@ -704,6 +763,158 @@ bool GameObject::LoadPrefab(Json &jsonFile)
 		GameObject *go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 		go->LoadPrefab(jsonChd);
 		this->AttachChild(go);
+	}
+	return true;
+}
+
+bool GameObject::UpdatePrefab(Json& jsonFile)
+{
+	this->isPrefab = jsonFile.at("isPrefab");
+	this->active = jsonFile.at("active");
+	Json jsonCmp = jsonFile.at("components");
+	for (const auto& cmpIt : jsonCmp.items())
+	{
+		Json jsonCmp = cmpIt.value();
+		bool active = jsonCmp.at("active");
+		std::string type = jsonCmp.at("type");
+
+		if (type == "mesh")
+		{
+			ComponentMesh* meshCmp = this->GetComponent<ComponentMesh>();
+			if (meshCmp == nullptr)
+			{
+				meshCmp = this->CreateComponent<ComponentMesh>();
+			}
+			meshCmp->active = true;
+			meshCmp->Load(jsonCmp);
+		}
+		else if (type == "material")
+		{
+			ComponentMaterial* materialCmp = this->GetComponent<ComponentMaterial>();
+			if (materialCmp == nullptr)
+			{
+				materialCmp = this->CreateComponent<ComponentMaterial>();
+			}
+			materialCmp->active = true;
+			materialCmp->Load(jsonCmp);
+		}
+		else if (type == "info")
+		{
+			ComponentInfo* infoCmp = this->GetComponent<ComponentInfo>();
+			infoCmp->active = true;
+			infoCmp->Load(jsonCmp); //does nothing as of now
+		}
+		else if (type == "camera")
+		{
+			ComponentCamera* cameraCmp = this->GetComponent<ComponentCamera>();
+			if (cameraCmp == nullptr)
+			{
+				cameraCmp = this->CreateComponent<ComponentCamera>();
+			}
+			cameraCmp->active = true;
+			cameraCmp->Load(jsonCmp);
+		}
+		else if (type == "script")
+		{
+			ComponentScript* scriptCmp = this->GetComponent<ComponentScript>();
+			if (scriptCmp == nullptr)
+			{
+				scriptCmp = this->CreateComponent<ComponentScript>();
+			}
+			scriptCmp->active = true;
+			scriptCmp->Load(jsonCmp);
+		}
+		else if (type == "transform2D")
+		{
+			ComponentTransform2D* transform2DCmp = this->GetComponent<ComponentTransform2D>();
+			if (transform2DCmp == nullptr)
+			{
+				transform2DCmp = this->CreateComponent<ComponentTransform2D>();
+			}
+			transform2DCmp->active = true;
+			transform2DCmp->Load(jsonCmp);
+		}
+		else if (type == "canvas")
+		{
+			ComponentCanvas* canvasCmp = this->GetComponent<ComponentCanvas>();
+			if (canvasCmp == nullptr)
+			{
+				canvasCmp = this->CreateComponent<ComponentCanvas>();
+			}
+			canvasCmp->active = true;
+			canvasCmp->Load(jsonCmp);
+		}
+		else if (type == "image")
+		{
+			ComponentImage* imageCmp = this->GetComponent<ComponentImage>();
+			if (imageCmp == nullptr)
+			{
+				imageCmp = this->CreateComponent<ComponentImage>();
+			}
+			imageCmp->active = true;
+			imageCmp->Load(jsonCmp);
+		}
+		else if (type == "button")
+		{
+			ComponentButton* buttonCmp = this->GetComponent<ComponentButton>();
+			if (buttonCmp == nullptr)
+			{
+				buttonCmp = this->CreateComponent<ComponentButton>();
+			}
+			buttonCmp->active = true;
+			buttonCmp->Load(jsonCmp);
+		}
+		else if (type == "text")
+		{
+			ComponentText* textCmp = this->GetComponent<ComponentText>();
+			if (textCmp == nullptr)
+			{
+				textCmp = this->CreateComponent<ComponentText>();
+			}
+			textCmp->active = true;
+			textCmp->Load(jsonCmp);
+		}
+		else if (type == "rigidBody")
+		{
+			ComponentRigidBody* rbCmp = this->GetComponent<ComponentRigidBody>();
+			if (rbCmp == nullptr)
+			{
+				rbCmp = this->CreateComponent<ComponentRigidBody>();
+			}
+			rbCmp->active = true;
+			rbCmp->Load(jsonCmp);
+		}
+		else if (type == "collider")
+		{
+			ComponentCollider* colCmp = this->GetComponent<ComponentCollider>();
+			if (colCmp == nullptr)
+			{
+				colCmp = this->CreateComponent<ComponentCollider>();
+			}
+			colCmp->active = true;
+			colCmp->Load(jsonCmp);
+		}
+	}
+	Json jsonChd = jsonFile.at("children");
+	for (const auto& chdIt : jsonChd.items())
+	{
+		Json jsonChd = chdIt.value();
+		std::vector<GameObject*> gos = this->GetChildren();
+		bool childFound = false;
+		for (std::vector<GameObject*>::iterator chdIt = gos.begin(); chdIt != gos.end(); ++chdIt)
+		{
+			if ((*chdIt)->name == jsonChd.at("name"))
+			{
+				childFound = true;
+				(*chdIt)->UpdatePrefab(jsonChd);
+			}
+		}
+		if (!childFound)
+		{
+			GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+			go->UpdatePrefab(jsonChd);
+			this->AttachChild(go);
+		}
 	}
 	return true;
 }

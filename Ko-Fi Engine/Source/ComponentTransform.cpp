@@ -103,7 +103,23 @@ void ComponentTransform::SetRotationQuat(const Quat& newRotation)
 {
 	this->rotation = newRotation;
 	rotationEuler = newRotation.ToEulerXYZ();
+
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
+}
+
+void ComponentTransform::LookAt(float3 forward, float3 up)
+{
+	float4x4 forwardMatrix = transformMatrixLocal.LookAt(front, forward, up, float3::unitY);
+
+	float3 _position;
+	Quat _rotation;
+	float3 _scale;
+	forwardMatrix.Decompose(_position, _rotation, _scale);
+
+	Quat newRotation = rotation * _rotation;
+
+	SetRotationQuat(newRotation);
 }
 
 void ComponentTransform::SetScale(const float3& newScale)

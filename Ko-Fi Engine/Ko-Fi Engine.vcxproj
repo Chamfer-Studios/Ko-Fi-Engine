@@ -89,14 +89,14 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysDebug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXFoundation_32.lib;SceneQuery_static_32.lib;LowLevel_static_32.lib;LowLevelAABB_static_32.lib;LowLevelDynamics_static_32.lib;PhysXExtensions_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -300,6 +300,7 @@
     <ClCompile Include="Source\RNG.cpp" />
     <ClCompile Include="Source\R_Track.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\SimulationEventCallback.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\UI.cpp" />
@@ -669,6 +670,7 @@
     <ClInclude Include="Source\Navigation.h" />
     <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
+    <ClInclude Include="Source\SimulationEventCallback.h" />
     <ClInclude Include="Source\ParticleResource.h" />
     <ClInclude Include="Source\UI.h" />
     <ClInclude Include="Source\Node.h" />
@@ -709,9 +711,13 @@
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Enemy.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

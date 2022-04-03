@@ -27,6 +27,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "C_Collider.h"
 #include "ComponentRenderedUI.h"
 #include "Material.h"
 #include "PieShape.h"
@@ -112,6 +113,24 @@ bool Renderer3D::SaveConfiguration(Json& configModule) const
 
 bool Renderer3D::LoadConfiguration(Json& configModule)
 {
+	return true;
+}
+
+bool Renderer3D::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Renderer##"))
+	{
+		bool vsync = GetVsync();
+		if (ImGui::Checkbox("V-Sync", &vsync))
+		{
+			SetVsync(vsync);
+			engine->SaveConfiguration();
+		}
+		if (ImGui::Checkbox("Draw scene partition tree", &engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {
+			engine->SaveConfiguration();
+		}
+	}
+
 	return true;
 }
 
@@ -265,6 +284,11 @@ void Renderer3D::RenderScene()
 					cCamera->DrawFrustum();
 				}
 
+			}
+			ComponentCollider2* cCol = go->GetComponent<ComponentCollider2>();
+			if (cCol)
+			{
+				cCol->DrawCollider();
 			}
 		}
 	}
@@ -445,6 +469,35 @@ void Renderer3D::OnResize()
 
 void Renderer3D::DrawCylinder(float4x4 transform)
 {
+}
+
+void Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float angle, int length)
+{
+	glColor3f(0.0f, 1.0f, 1.0f);
+	glLineWidth(6.0f);
+
+	Quat rot;
+
+	rot.SetFromAxisAngle(up, angle / 2 * DEGTORAD);
+	float3 av = rot * forward;
+
+	rot.SetFromAxisAngle(up, -angle / 2 * DEGTORAD);
+	float3 bv = rot * forward;
+
+	float3 a = position + av * length;
+	float3 b = position + bv * length;
+
+	glBegin(GL_LINES);
+	glVertex3f(position.x, position.y, position.z);
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+	glVertex3f(b.x, b.y, b.z);
+	glVertex3f(position.x, position.y, position.z);
+	glEnd();
+
+	glLineWidth(1.0f);
+	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
 // Debug ray for mouse picking

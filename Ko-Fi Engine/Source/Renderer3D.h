@@ -7,6 +7,7 @@
 #include "Light.h"
 #include "SDL_video.h"
 #include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/float3.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
 
@@ -45,6 +46,11 @@ public:
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	// ------------------------------------------------------------------
+	
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	// Method to receive and manage events
 	//Renderer Set Up Functions
 	bool InitOpenGL();
@@ -67,6 +73,7 @@ public:
 	void OnResize();
 
 	void DrawCylinder(float4x4 transform);
+	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length);
 
 	// Debug ray for mouse picking
 	void DrawRay();

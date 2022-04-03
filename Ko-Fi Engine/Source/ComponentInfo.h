@@ -16,6 +16,9 @@ public:
 	bool InspectorDraw(PanelChooser* chooser) override;
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
+
+private:
+	int tag;
 };
 
 #endif // !__COMPONENT_INFO_H__

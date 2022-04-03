@@ -63,8 +63,10 @@ bool ComponentCollider::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
-	if (ImGui::CollapsingHeader("Component Collider"))
+	if (ImGui::CollapsingHeader("Component Collider", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
+		DrawDeleteButton(owner, this);
+
 		ImGui::Combo("###combo", &colliderType, "Collider Type\0Player\0Enemy\0Wall\0Floor");
 
 		ImGui::SameLine();
@@ -87,7 +89,10 @@ bool ComponentCollider::InspectorDraw(PanelChooser* chooser)
 			ImGui::Text(lastObjectCollided->GetName());
 		else
 			ImGui::Text("No collision");
-	}                        
+	}             
+	else
+		DrawDeleteButton(owner, this);
+
 	return ret;
 }
 

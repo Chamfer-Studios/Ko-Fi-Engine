@@ -4,9 +4,11 @@
 #include "Globals.h"
 #include "Engine.h"
 #include "Navigation.h"
+#include "Renderer3D.h"
 #include "Input.h" 
 #include "SceneManager.h"
 #include "SceneIntro.h"
+#include "Camera3D.h"
 #include "ImGuiAppLog.h"
 
 #include <vector>
@@ -15,6 +17,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentMesh.h"
 #include "ComponentRigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentText.h"
@@ -37,15 +40,6 @@ enum INSPECTOR_VARIABLE_TYPE
 	INSPECTOR_GAMEOBJECT,
 };
 
-enum ItemType
-{
-	ITEM_NO_TYPE,
-
-	ITEM_HAND,
-	ITEM_KNIFE,
-	ITEM_GUN
-};
-
 class InspectorVariable
 {
 public:
@@ -54,15 +48,6 @@ public:
 	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value;
 
 	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value) : name(name), type(type), value(value) {}
-};
-
-class Item
-{ // Needs porper structure !!
-public:
-	ItemType type = ITEM_NO_TYPE;
-	int damage;
-
-	Item(ItemType type, int damage) : type(type), damage(damage) {}
 };
 
 class Scripting
@@ -119,21 +104,21 @@ public:
 			"INSPECTOR_GAMEOBJECT",		INSPECTOR_VARIABLE_TYPE::INSPECTOR_GAMEOBJECT
 		);
 
-		// ItemType
-		lua.new_enum("ItemType",
-			"ITEM_NO_TYPE", ItemType::ITEM_NO_TYPE,
-			"ITEM_HAND",	ItemType::ITEM_HAND,
-			"ITEM_KNIFE",	ItemType::ITEM_KNIFE,
-			"ITEM_GUN",		ItemType::ITEM_GUN
-			);
-
 		// RuntimeState
 		lua.new_enum("RuntimeState",
 			"PAUSED",	GameState::PAUSED,
-			"PLAYING", GameState::PLAYING,
-			"STOPPED", GameState::STOPPED,
-			"TICK", GameState::TICK
+			"PLAYING",	GameState::PLAYING,
+			"STOPPED",	GameState::STOPPED,
+			"TICK",		GameState::TICK
 		);
+
+		// Tags
+		lua.new_enum("Tag",
+			"UNTAGGED", Tag::TAG_UNTAGGED,
+			"PLAYER",	Tag::TAG_PLAYER,
+			"ENEMY",	Tag::TAG_ENEMY,
+			"WALL",		Tag::TAG_WALL
+			);
 
 
 			/// Classes:
@@ -158,9 +143,11 @@ public:
 			sol::constructors<void()>(),
 			"active",				&GameObject::active,
 			"name",					&GameObject::name,
+			"tag",					&GameObject::tag,
 			"GetParent",			&GameObject::GetParent,
 			"GetComponents",		&GameObject::GetComponents,							// Kinda works... not very useful tho
 			"GetTransform",			&GameObject::GetTransform,
+			"GetComponentMesh",		&GameObject::GetComponent<ComponentMesh>,
 			"GetRigidBody",			&GameObject::GetComponent<ComponentRigidBody>,
 			"GetText",				&GameObject::GetComponent<ComponentText>,
 			"GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
@@ -186,10 +173,19 @@ public:
 			"SetPosition", &ComponentTransform::SetPosition,
 			"GetRotation", &ComponentTransform::GetRotation,
 			"SetRotation", &ComponentTransform::SetRotation,
+			"LookAt",	   &ComponentTransform::LookAt,
 			"GetScale",	   &ComponentTransform::GetScale,
 			"SetScale",	   &ComponentTransform::SetScale,
+			"GetUp",	   &ComponentTransform::Up,
 			"GetFront",	   &ComponentTransform::Front,
 			"SetFront",	   &ComponentTransform::SetFront
+			);
+
+		// Component Mesh
+		lua.new_usertype<ComponentMesh>("ComponentMesh",
+			sol::constructors<void(GameObject*)>(),
+			"Disable",	&ComponentMesh::Disable,
+			"Enable",	&ComponentMesh::Enable
 			);
 
 		// Component Text
@@ -215,10 +211,10 @@ public:
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
 			sol::constructors<void(GameObject*)>(),
-			"PlayTrack", &C_AudioSwitch::PlayTrack,
-			"PauseTrack", &C_AudioSwitch::PauseTrack,
-			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack
+			"PlayTrack",	&C_AudioSwitch::PlayTrack,
+			"PauseTrack",	&C_AudioSwitch::PauseTrack,
+			"ResumeTrack",	&C_AudioSwitch::ResumeTrack,
+			"StopTrack",	&C_AudioSwitch::StopTrack
 			);
 
 		// Inspector Variables
@@ -241,12 +237,6 @@ public:
 			"Set2DVelocity",		&ComponentRigidBody::Set2DVelocity
 			);
 
-		// Item
-		lua.new_usertype<Item>("Item",
-			sol::constructors<void(ItemType, int)>(),
-			"type",		&Item::type,
-			"damage",	&Item::damage
-			);
 
 		lua.new_usertype<Navigation>("Navigation",
 			sol::constructors<void(KoFiEngine*)>(),
@@ -260,15 +250,20 @@ public:
 		
 
 			/// Functions
-		lua.set_function("GetInput",			&Scripting::LuaGetInput, this);
-		lua.set_function("CreateBullet",		&Scripting::LuaCreateBullet, this);
-		lua.set_function("DeleteGameObject",	&Scripting::DeleteGameObject, this);
-		lua.set_function("Find",				&Scripting::LuaFind, this);
-		lua.set_function("GetInt",				&Scripting::LuaGetInt, this);
-		lua.set_function("NewVariable",			&Scripting::LuaNewVariable, this);
-		lua.set_function("GetRuntimeState",		&Scripting::LuaGetRuntimeState, this);
-		lua.set_function("Log",					&Scripting::LuaLog, this);
-		lua.set_function("GetNavigation",		&Scripting::GetNavigation, this);
+		lua.set_function("GetInput",						&Scripting::LuaGetInput, this);
+		lua.set_function("CreateGameObject",				&Scripting::LuaCreateGameObject, this);
+		lua.set_function("DeleteGameObject",				&Scripting::DeleteGameObject, this);
+		lua.set_function("Find",							&Scripting::LuaFind, this);
+		lua.set_function("GetObjectsByTag",					&Scripting::LuaGetObjectsByTag, this);
+		lua.set_function("GetVariable",						&Scripting::LuaGetVariable, this);
+		lua.set_function("NewVariable",						&Scripting::LuaNewVariable, this);
+		lua.set_function("GetRuntimeState",					&Scripting::LuaGetRuntimeState, this);
+		lua.set_function("GetGameObjectHovered",			&Scripting::LuaGetGameObjectHovered, this);
+		lua.set_function("GetLastMouseClick",				&Scripting::LuaGetLastMouseClick, this);
+		lua.set_function("Log",								&Scripting::LuaLog, this);
+		lua.set_function("GetNavigation",					&Scripting::GetNavigation, this);
+		lua.set_function("SetLuaVariableFromGameObject",	&Scripting::LuaSetLuaVariableFromGameObject, this);
+		lua.set_function("DrawCone",						&Scripting::DrawCone, this);
 	}
 
 	bool CleanUp()
@@ -305,9 +300,9 @@ public:
 		return gameObject->GetEngine()->GetNavigation();
 	}
 
-	void LuaCreateBullet()
+	void LuaCreateGameObject(std::string name)
 	{
-		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.push_back(gameObject);
+		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.emplace(gameObject, name);
 	}
 
 	void DeleteGameObject()
@@ -325,7 +320,20 @@ public:
 		return nullptr;
 	}
 
-	int LuaGetInt(std::string path, std::string variable)
+	std::vector<GameObject*> LuaGetObjectsByTag(Tag tag)
+	{
+		std::vector<GameObject*> ret;
+		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		{
+			if (go->tag == tag)
+			{
+				ret.push_back(go);
+			}
+		}
+		return ret;
+	}
+
+	std::variant<int, float, float2, float3, bool, std::string> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
 	{
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
@@ -334,8 +342,34 @@ public:
 			{
 				if (path == script->path.substr(script->path.find_last_of('/') + 1))
 				{
-					int abc = (int)script->handler->lua[variable.c_str()];
-					return abc;
+					switch (type)
+					{
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
+						{
+							return (int)script->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
+						{
+							return (float)script->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
+						{
+							return (float2)script->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
+						{
+							return (float3)script->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
+						{
+							return (bool)script->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
+						{
+							std::string a = script->handler->lua[variable.c_str()];
+							return a;
+						}
+					}
 				}
 			}
 		}
@@ -354,13 +388,35 @@ public:
 		return gameObject->GetEngine()->GetSceneManager()->GetGameState();
 	}
 
-	void LuaPlayAudio()
+	GameObject* LuaGetGameObjectHovered()
 	{
+		return gameObject->GetEngine()->GetCamera3D()->MousePicking();
+	}
 
+	float3 LuaGetLastMouseClick()
+	{
+		return gameObject->GetEngine()->GetCamera3D()->GetLastMouseClick();
 	}
 
 	void LuaLog(const char* log) {
 		appLog->AddLog(log);
+	}
+
+	void LuaSetLuaVariableFromGameObject(std::string goName, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
+	{
+		GameObject* go = LuaFind(goName);
+		if (go == nullptr)
+			return;
+
+		ComponentScript* goScript = go->GetComponent<ComponentScript>();
+		if (goScript == nullptr)
+			return;
+
+		goScript->handler->lua[variable.c_str()] = value;
+	}
+
+	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length) {
+		gameObject->GetEngine()->GetRenderer()->DrawCone(position, forward, up, angle, length);
 	}
 
 public:

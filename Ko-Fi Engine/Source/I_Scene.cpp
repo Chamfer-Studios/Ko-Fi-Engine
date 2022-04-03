@@ -340,6 +340,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 		jsonGameObject["active"] = gameObject->active;
 		jsonGameObject["UID"] = gameObject->GetUID();
 		jsonGameObject["is3D"] = gameObject->is3D;
+		jsonGameObject["tag"] = (int)gameObject->tag;
 
 		// We don't want to save also its children here.
 		// We will arrive and create them when they get here with the loop.
@@ -523,6 +524,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
+		float startTime = (float)engine->GetEngineTime();
+#pragma omp parallel for
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
@@ -530,6 +533,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			bool is3D = true;
 			if (jsonGo.find("is3D") != jsonGo.end()) {
 				is3D = jsonGo.at("is3D");
+			}
+			Tag tag = Tag::TAG_UNTAGGED;
+			if (jsonGo.find("tag") != jsonGo.end()) {
+				tag = jsonGo.at("tag");
 			}
 			GameObject* go = nullptr;
 			bool exists = false;
@@ -550,6 +557,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			}
 
 			go->active = jsonGo.at("active");
+			go->tag = tag;
 			uint parentUid = jsonGo.at("parent_UID");
 			go->SetParentUID(parentUid);
 
@@ -755,6 +763,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			if (!exists)
 				scene->gameObjectList.push_back(go);
 		}
+
+		float endTime = (float)engine->GetEngineTime();
+		appLog->AddLog("Time to load: %f\n", endTime - startTime);
 
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{

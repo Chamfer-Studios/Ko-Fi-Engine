@@ -165,6 +165,46 @@ bool Window::LoadConfiguration(Json& configModule)
 	return true;
 }
 
+bool Window::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Window##"))
+	{
+		ImGui::Combo("##resolutionCombo", &currentResolution, "Select Resolution\0 1024x768\0 1920x1080\0 1280x720");
+
+		ImGui::SameLine();
+		if (ImGui::Button("SetResolution##"))
+		{
+			switch (currentResolution)
+			{
+			case 0:
+				break;
+			case 1:
+				// Set 1024x768 resolution
+				SetWidth(1024);
+				SetHeight(768);
+				break;
+			case 2:
+				// Set 1920x1080 resolution
+				SetWidth(1920);
+				SetHeight(1080);
+				break;
+			case 3:
+				// Set 1280x720 resolution
+				SetWidth(1280);
+				SetHeight(720);
+				break;
+			default:
+				break;
+			}
+
+			engine->SaveConfiguration();
+		}
+		ImGui::Text("Current Resolution: %i x % i", GetWidth(), GetHeight());
+	}
+
+	return true;
+}
+
 // Method to receive and manage events
 void Window::OnNotify(const Event& event)
 {

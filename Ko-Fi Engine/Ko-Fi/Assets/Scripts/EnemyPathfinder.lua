@@ -92,7 +92,9 @@ function FollowPath(dt)
         currentTarget = finalPath[currentPathIndex]
     end
     direction = Float3NormalizedDifference(currentPosition, currentTarget)
+    Log(tostring(direction.x) .. " " .. tostring(direction.y) .. " " .. tostring(direction.z) .. "\n")
     delta = { x = direction.x * speed * dt, y = direction.y * speed * dt, z = direction.z * speed * dt }
+    componentTransform:LookAt(float3.new(direction.x, direction.y, direction.z), componentTransform:GetUp())
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
 end
@@ -165,6 +167,12 @@ function CheckAndRecalculateSeekTarget(force)
 end
 
 function ShouldSeekPlayer()
+    position = componentTransform:GetPosition()
+    forward = componentTransform:GetFront()
+    up = componentTransform:GetUp()
+
+    DrawCone(position, forward, up, visionConeAngle, visionConeRadius)
+
     if player == nil then
         return false
     end
@@ -175,13 +183,16 @@ function ShouldSeekPlayer()
         return false
     end
     
-    front = componentTransform:GetFront()
-    direction = Float3NormalizedDifference(playerPosition, componentTransform:GetPosition())
+    direction = Float3NormalizedDifference(componentTransform:GetPosition(), playerPosition)
 
-    angle = math.deg(Float3Angle(front, direction)))
+    angle = math.deg(Float3Angle(forward, direction))
 
     if angle > 180 then
         angle = angle - 360
+    end
+
+    if ((angle < visionConeAngle / 2) and (angle > -visionConeAngle / 2)) then
+        return true
     end
 
     return false

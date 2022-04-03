@@ -20,8 +20,7 @@ class Scene
 {
 public:
 	Scene() : active(false)
-	{
-	}
+	{}
 
 	~Scene()
 	{
@@ -200,7 +199,7 @@ public:
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
-	std::vector<GameObject*> gameObjectListToCreate;
+	std::map<GameObject*, std::string> gameObjectListToCreate;
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
@@ -210,6 +209,7 @@ public:
 	bool drawSceneTree = false;
 	QuadTree3D* sceneTree = nullptr;
 
+	std::vector<const char*> tags; // TODO: needs to be implemented!
 
 	LineSegment ray;
 
