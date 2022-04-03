@@ -44,7 +44,9 @@
     "Renderer3D": {
         "Vsync": true
     },
-    "SceneManager": null,
+    "SceneManager": {
+        "DefaultScene": "Root"
+    },
     "UI": null,
     "Window": {
         "Borderless": false,

@@ -32,7 +32,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 
-	rootGo = new GameObject(-1, engine, "SceneIntro");
+	rootGo = new GameObject(-1, engine, "Root");
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
 
@@ -53,10 +53,21 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	bool ret = true;
-	GameObject* camera = CreateEmptyGameObject("camera");
-	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
-	cCamera->isMainCamera = true;
-	engine->GetCamera3D()->SetGameCamera(cCamera);
+	//Load Default Screen (Can be changed from settings)
+	if (!engine->GetSceneManager()->GetDefaultScene().empty())
+	{
+		Importer::GetInstance()->sceneImporter->Load(this, engine->GetSceneManager()->GetDefaultScene().c_str());
+
+	}
+	if (!engine->GetCamera3D()->gameCamera)
+	{
+		GameObject* camera = CreateEmptyGameObject("camera");
+		ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
+		cCamera->isMainCamera = true;
+		engine->GetCamera3D()->SetGameCamera(cCamera);
+	}
+	
+
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 
