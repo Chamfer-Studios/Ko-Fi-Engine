@@ -74,7 +74,6 @@ bool Camera3D::Update(float dt)
 	if (currentCamera->isEngineCamera)
 	{
 		CheckMouseMotion(dt);
-
 	}
 
 	return true;

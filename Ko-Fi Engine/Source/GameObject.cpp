@@ -118,8 +118,12 @@ bool GameObject::CleanUp()
 {
 	for (Component* component : components)
 	{
-		if (component->GetType() != ComponentType::MESH) // This is the dirty patch
+		if (component->GetType() != ComponentType::MESH)
+		{
+			// This is the dirty patch
+			component->CleanUp();
 			RELEASE(component);
+		}
 	}
 	components.clear();
 	children.clear();
@@ -225,17 +229,17 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 	case ComponentType::MESH:
 	{
-		// Set Default Material
-		c = this->CreateComponent<ComponentMaterial>();
-		Material* material = new Material();
-		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-		this->GetComponent<ComponentMaterial>()->SetMaterial(material);
+		//// Set Default Material
+		//c = this->CreateComponent<ComponentMaterial>();
+		//Material* material = new Material();
+		//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
+		//this->GetComponent<ComponentMaterial>()->SetMaterial(material);
 
-		// Set a Default Model
+		//// Set a Default Model
 		c = this->CreateComponent<ComponentMesh>();
-		Mesh* mesh = new Mesh();
-		Importer::GetInstance()->meshImporter->Load("Library/Meshes/Sphere.sugar", mesh);
-		this->GetComponent<ComponentMesh>()->SetMesh(mesh);
+		//Mesh* mesh = new Mesh();
+		//Importer::GetInstance()->meshImporter->Load("Library/Meshes/Sphere.sugar", mesh);
+		//this->GetComponent<ComponentMesh>()->SetMesh(mesh);
 
 		break;
 	}
