@@ -91,17 +91,23 @@ void ComponentCollider2::CreateBoxCollider()
 
 	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody());
 
-	if (owner->GetComponent<ComponentMesh>())
+	if (owner->GetComponent<ComponentMesh>() && !once)
+	{
 		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
+		once = true;
+	}
 
 	physx::PxVec3 localPos;
 	physx::PxTransform a;
 	physx::PxBoxGeometry boxGeometry(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
 
+
+
 	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
-	localPos = physx::PxVec3(centerPosition.x, centerPosition.y + boxCollSize.y / 2, centerPosition.z);
-	shape->setLocalPose(physx::PxTransform(localPos));
+	localPos = physx::PxVec3(centerPosition.x + boxCollSize.x / 2, centerPosition.y + boxCollSize.y / 2, centerPosition.z  + boxCollSize.z / 2);
+	a.p = physx::PxVec3(0, 0, -boxCollSize.z / 2);
+	shape->setLocalPose(a);
 
 	// STATE CREATION
 	if (shape)
@@ -135,8 +141,18 @@ void ComponentCollider2::DrawCollider()
 
 void ComponentCollider2::DrawBoxCollider()
 {
-	float3 min = centerPosition - float3(boxCollSize.x / 2, 0, boxCollSize.z / 2) + owner->GetComponent<ComponentTransform>()->GetPosition();
-	float3 max = centerPosition + float3(boxCollSize.x / 2, boxCollSize.y, boxCollSize.z / 2) + owner->GetComponent<ComponentTransform>()->GetPosition();
+	float3 transformOffset = owner->GetComponent<ComponentTransform>()->GetPosition();
+	physx::PxTransform a;
+	physx::PxVec3 centPos;
+	if (shape)
+	{
+		a = shape->getLocalPose();
+		centPos = a.p;
+	}
+	//float3 min = centerPosition - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z) + transformOffset;
+	//float3 max = centerPosition + float3(boxCollSize.x / 2, boxCollSize.y / 2, 0) + transformOffset;
+	float3 min = float3(centPos.x, centPos.y, centPos.z) - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
+	float3 max = float3(centPos.x, centPos.y, centPos.z) + float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
 
 	glLineWidth(2.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
@@ -221,6 +237,7 @@ void ComponentCollider2::Load(Json &json)
 	centerPosition = float3(values[0], values[1], values[2]);
 	values.clear();
 
+	once = true;
 	hasUpdated = true;
 }
 
@@ -284,15 +301,23 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 				if (ImGui::DragFloat3("##boxcollsize", newSize))
 				{
 					boxCollSize = { newSize[0], newSize[1], newSize[2] };
+					hasUpdated = true;
 				}
 				ImGui::SameLine();
 				ImGui::Text("Box collider size");
+
+				if ((ImGui::Button("Set AABB size##collidershape")))
+				{
+					once = false;
+					hasUpdated = true;
+				}
 
 				float3 newCenterPos2 = GetCenterPosition();
 				float newCenterPos[3] = { newCenterPos2.x, newCenterPos2.y, newCenterPos2.z };
 				if (ImGui::DragFloat3("##centerpos", newCenterPos))
 				{
 					centerPosition = { newCenterPos[0], newCenterPos[1], newCenterPos[2] };
+					hasUpdated = true;
 				}
 				ImGui::SameLine();
 				ImGui::Text("Center position");

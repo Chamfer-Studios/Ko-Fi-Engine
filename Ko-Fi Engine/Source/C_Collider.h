@@ -92,6 +92,7 @@ private:
 
 	float3 boxCollSize = float3(5, 5, 5); // Box collider size
 	float3 centerPosition = float3(0, 0, 0); // Center position of the collider
+	bool once = false;
 
 	bool drawCollider = false;
 
