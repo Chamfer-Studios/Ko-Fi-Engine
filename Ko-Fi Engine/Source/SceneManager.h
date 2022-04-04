@@ -38,8 +38,8 @@ public:
 	SceneManager(KoFiEngine* engine);
 	~SceneManager();
 
+	bool Awake(Json configModule);
 	// Called before render is available
-	virtual bool Awake();
 
 	// Called before the first frame
 	virtual bool Start();
@@ -59,6 +59,15 @@ public:
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
+		// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	bool PrepareUpdate();
 	bool FinishUpdate();
 
@@ -69,6 +78,7 @@ public:
 	inline float const GetGameTime() { return time; }
 	inline float GetGameDt() const { return gameDt; }
 	inline float GetTotalGameTime() const { return gameTime; }
+	inline std::string GetDefaultScene() const { return defaultScene; }
 
 	void OnPlay();
 	void OnStop();
@@ -95,7 +105,7 @@ private:
 	std::vector<Scene*> scenes;
 	Scene* currentScene = nullptr;
 	SceneIntro* sceneIntro = nullptr;
-
+	std::string defaultScene = "";
 	// Guizmo
 	ImGuizmo::OPERATION currentGizmoOperation;
 	ImGuizmo::MODE currentGizmoMode;

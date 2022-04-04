@@ -120,4 +120,10 @@ enum update_status
 #define TITLE "Ko-Fi Engine"
 #define ORGANITZATION "CITM UPC 2021-2022"
 
+// Lights
+#define MAX_DIR_LIGHTS 5
+#define MAX_POINT_LIGHTS 5
+#define MAX_POINT_LIGHTS 5
+
+
 #endif // !__GLOBALS_H__

@@ -48,6 +48,7 @@ public:
 	Navigation(KoFiEngine* engine);
 	~Navigation();
 
+	bool Awake(Json configModule);
 	bool Start() override;
 	bool PreUpdate(float dt) override;
 	bool Update(float dt) override;
@@ -65,6 +66,15 @@ public:
 	void Load(Json& json);
 
 	void OnGui() override;
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 private:
 	rcPolyMeshDetail* ComputeNavmesh(Mesh* mesh);
 	KoFiEngine* engine = nullptr;

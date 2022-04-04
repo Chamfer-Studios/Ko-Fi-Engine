@@ -7,7 +7,8 @@ Component::Component(GameObject* parent) : owner(parent)
 
 	if (parent)
 	{
-		parent->AddComponent(this);
+		parent->PushBackComponent(this);
+
 	}
 }
 
@@ -99,3 +100,37 @@ void Component::DrawDeleteButton(GameObject* owner, Component* component)
 	}
 
 }
+
+const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
+{
+	
+		const std::map<ComponentType, const char*> componentTypeStrings{
+			{ ComponentType::MESH, "MESH" },
+			{ ComponentType::MATERIAL, "MATERIAL" },
+			{ ComponentType::PARTICLE, "PARTICLE" },
+			{ ComponentType::CAMERA, "CAMERA" },
+			{ ComponentType::COLLIDER, "COLLIDER" },
+			{ ComponentType::SCRIPT, "SCRIPT" },
+			{ ComponentType::RIGID_BODY, "RIGID BODY" },
+			{ ComponentType::COLLIDER2, "COLLIDER2" },
+			{ ComponentType::AUDIO_SOURCE, "AUDIO_SOURCE" },
+			{ ComponentType::AUDIO_SWITCH, "AUDIO_SWITCH" },
+			{ ComponentType::ANIMATOR, "ANIMATOR" },
+			{ ComponentType::CANVAS, "CANVAS" },
+			{ ComponentType::IMAGE, "IMAGE" },
+			{ ComponentType::BUTTON, "BUTTON" },
+			{ ComponentType::TEXT, "TEXT" },
+			{ ComponentType::WALKABLE, "WALKABLE" },
+			{ ComponentType::FOLLOW_PATH, "FOLLOW_PATH" },
+			{ ComponentType::LIGHT_SOURCE, "LIGHT_SOURCE" },
+
+		};
+		auto   it = componentTypeStrings.find(e);
+		return it == componentTypeStrings.end() ? "Out of range" : it->second;
+	
+}
+
+
+
+
+

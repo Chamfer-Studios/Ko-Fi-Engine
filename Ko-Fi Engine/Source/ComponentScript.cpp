@@ -55,15 +55,22 @@ bool ComponentScript::Update(float dt)
 	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
 		sol::protected_function_result result = lua_update(dt);
-		if (result.valid()) {
+		if (result.valid())
+		{
 			// Call succeeded
 		}
-		else {
+		else
+		{
 			// Call failed
 			sol::error err = result;
 			std::string what = err.what();
 			appLog->AddLog("%s\n", what.c_str());
 		}
+		/*if (owner->changeScene)
+		{
+			owner->changeScene = false;
+			owner->LoadSceneFromName("HUD_Scene");
+		}*/
 	}
 	return true;
 }
@@ -106,20 +113,20 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 		}
 		if (ImGui::Button("Select Script"))
 		{
-			chooser->OpenPanel("LoadScript", "lua");
+			chooser->OpenPanel("LoadScript", "lua", {"lua"});
 		}
 		ImGui::SameLine();
 		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());
 
 		bool isSeparatorNeeded = true;
-		for (std::vector<InspectorVariable*>::iterator variable = inspectorVariables.begin(); variable != inspectorVariables.end();	++variable)
+		for (std::vector<InspectorVariable *>::iterator variable = inspectorVariables.begin(); variable != inspectorVariables.end(); ++variable)
 		{
 			if ((*variable)->type == INSPECTOR_NO_TYPE)
 				continue;
 
 			if ((*variable)->name == "")
 			{
-				//inspectorVariables.erase(variable);
+				// inspectorVariables.erase(variable);
 				continue;
 			}
 			if (isSeparatorNeeded)
@@ -130,100 +137,104 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 
 			switch ((*variable)->type)
 			{
-				case INSPECTOR_INT:
+			case INSPECTOR_INT:
+			{
+				if (ImGui::DragInt((*variable)->name.c_str(), &std::get<int>((*variable)->value)))
 				{
-					if (ImGui::DragInt((*variable)->name.c_str(), &std::get<int>((*variable)->value)))
+					handler->lua[(*variable)->name.c_str()] = std::get<int>((*variable)->value);
+				}
+				break;
+			}
+			case INSPECTOR_FLOAT:
+			{
+				if (ImGui::DragFloat((*variable)->name.c_str(), &std::get<float>((*variable)->value)))
+				{
+					handler->lua[(*variable)->name.c_str()] = std::get<float>((*variable)->value);
+				}
+				break;
+			}
+			case INSPECTOR_FLOAT2:
+			{
+				if (ImGui::DragFloat2((*variable)->name.c_str(), std::get<float2>((*variable)->value).ptr()))
+				{
+					handler->lua[(*variable)->name.c_str()] = std::get<float2>((*variable)->value);
+				}
+				break;
+			}
+			case INSPECTOR_FLOAT3:
+			{
+				if (ImGui::DragFloat3((*variable)->name.c_str(), std::get<float3>((*variable)->value).ptr()))
+				{
+					handler->lua[(*variable)->name.c_str()] = std::get<float3>((*variable)->value);
+				}
+				break;
+			}
+			case INSPECTOR_BOOL:
+			{
+				if (ImGui::Checkbox((*variable)->name.c_str(), &std::get<bool>((*variable)->value)))
+				{
+					handler->lua[(*variable)->name.c_str()] = std::get<bool>((*variable)->value);
+				}
+				break;
+			}
+			case INSPECTOR_STRING:
+			{
+				if (ImGui::InputText((*variable)->name.c_str(), &std::get<std::string>((*variable)->value)))
+				{
+					handler->lua[(*variable)->name.c_str()] = std::get<std::string>((*variable)->value);
+				}
+				break;
+			}
+			case INSPECTOR_TO_STRING:
+			{
+				ImGui::Text(std::get<std::string>((*variable)->value).c_str());
+				break;
+			}
+			case INSPECTOR_FLOAT3_ARRAY:
+			{
+				int nWaypoints = std::get<std::vector<float3>>((*variable)->value).size();
+				std::vector<float3> waypoints = std::get<std::vector<float3>>((*variable)->value);
+				if (ImGui::DragInt("Path length", &nWaypoints, 1.0f, 0))
+				{
+					waypoints.clear();
+					for (int i = 0; i < nWaypoints; i++)
 					{
-						handler->lua[(*variable)->name.c_str()] = std::get<int>((*variable)->value);
+						waypoints.push_back(float3(0, 0, 0));
 					}
-					break;
+					std::get<std::vector<float3>>((*variable)->value) = waypoints;
+					handler->lua[(*variable)->name.c_str()] = waypoints;
 				}
-				case INSPECTOR_FLOAT:
+
+				ImGui::Text("Waypoints: ");
+				for (int i = 0; i < nWaypoints; i++)
 				{
-					if (ImGui::DragFloat((*variable)->name.c_str(), &std::get<float>((*variable)->value)))
+					std::string label = std::to_string(i);
+					if (ImGui::DragFloat3(label.c_str(), &(waypoints[i][0]), 0.5f))
 					{
-						handler->lua[(*variable)->name.c_str()] = std::get<float>((*variable)->value);
-					}
-					break;
-				}
-				case INSPECTOR_FLOAT2:
-				{
-					if (ImGui::DragFloat2((*variable)->name.c_str(), std::get<float2>((*variable)->value).ptr()))
-					{
-						handler->lua[(*variable)->name.c_str()] = std::get<float2>((*variable)->value);
-					}
-					break;
-				}
-				case INSPECTOR_FLOAT3:
-				{
-					if (ImGui::DragFloat3((*variable)->name.c_str(), std::get<float3>((*variable)->value).ptr()))
-					{
-						handler->lua[(*variable)->name.c_str()] = std::get<float3>((*variable)->value);
-					}
-					break;
-				}
-				case INSPECTOR_BOOL:
-				{
-					if (ImGui::Checkbox((*variable)->name.c_str(), &std::get<bool>((*variable)->value)))
-					{
-						handler->lua[(*variable)->name.c_str()] = std::get<bool>((*variable)->value);
-					}
-					break;
-				}
-				case INSPECTOR_STRING:
-				{
-					if (ImGui::InputText((*variable)->name.c_str(), &std::get<std::string>((*variable)->value)))
-					{
-						handler->lua[(*variable)->name.c_str()] = std::get<std::string>((*variable)->value);
-					}
-					break;
-				}
-				case INSPECTOR_TO_STRING:
-				{
-					ImGui::Text(std::get<std::string>((*variable)->value).c_str());
-					break;
-				}
-				case INSPECTOR_FLOAT3_ARRAY:
-				{
-					int nWaypoints = std::get<std::vector<float3>>((*variable)->value).size();
-					std::vector<float3> waypoints = std::get<std::vector<float3>>((*variable)->value);
-					if (ImGui::DragInt("Path length", &nWaypoints, 1.0f, 0)) {
-						waypoints.clear();
-						for (int i = 0; i < nWaypoints; i++) {
-							waypoints.push_back(float3(0, 0, 0));
-						}
-						std::get<std::vector<float3>>((*variable)->value) = waypoints;
+						std::get<std::vector<float3>>((*variable)->value)[i] = waypoints[i];
 						handler->lua[(*variable)->name.c_str()] = waypoints;
 					}
-
-					ImGui::Text("Waypoints: ");
-					for (int i = 0; i < nWaypoints; i++) {
-						std::string label = std::to_string(i);
-						if (ImGui::DragFloat3(label.c_str(), &(waypoints[i][0]), 0.5f)) {
-							std::get<std::vector<float3>>((*variable)->value)[i] = waypoints[i];
-							handler->lua[(*variable)->name.c_str()] = waypoints;
-						}
-					}
-					break;
 				}
-				case INSPECTOR_GAMEOBJECT:
+				break;
+			}
+			case INSPECTOR_GAMEOBJECT:
+			{
+				GameObject *selected = std::get<GameObject *>((*variable)->value);
+				std::string name = (selected == nullptr) ? "null" : selected->name.c_str();
+				ImGui::InputText((*variable)->name.c_str(), &name);
+				if (ImGui::BeginDragDropTarget())
 				{
-					GameObject* selected = std::get<GameObject*>((*variable)->value);
-					std::string name = (selected == nullptr) ? "null" : selected->name.c_str();
-					ImGui::InputText((*variable)->name.c_str(), &name);
-					if (ImGui::BeginDragDropTarget())
+					const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("Hierarchy");
+					if (payload != nullptr)
 					{
-						const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy");
-						if (payload != nullptr)
-						{
-							GameObject* go = owner->GetEngine()->GetEditor()->GetPanelHierarchy()->GetSelectedGameObject();
-							std::get<GameObject*>((*variable)->value) = go;
-							handler->lua[(*variable)->name.c_str()] = go;
-						}
-						ImGui::EndDragDropTarget();
+						GameObject *go = owner->GetEngine()->GetEditor()->GetPanelHierarchy()->GetSelectedGameObject();
+						std::get<GameObject *>((*variable)->value) = go;
+						handler->lua[(*variable)->name.c_str()] = go;
 					}
-					break;
+					ImGui::EndDragDropTarget();
 				}
+				break;
+			}
 			}
 		}
 
@@ -252,92 +263,92 @@ void ComponentScript::ReloadScript()
 	isScriptLoaded = true;
 }
 
-void ComponentScript::Save(Json& json) const
+void ComponentScript::Save(Json &json) const
 {
 	json["type"] = "script";
 	json["file_name"] = path;
 	json["script_number"] = numScript;
 	Json jsonIV;
-	for (InspectorVariable* variable : inspectorVariables)
+	for (InspectorVariable *variable : inspectorVariables)
 	{
 		switch (variable->type)
 		{
-			case INSPECTOR_INT:
+		case INSPECTOR_INT:
+		{
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "int";
+			jsonIV["value"] = std::get<int>(variable->value);
+		}
+		break;
+		case INSPECTOR_FLOAT:
+		{
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "float";
+			jsonIV["value"] = std::get<float>(variable->value);
+		}
+		break;
+		case INSPECTOR_FLOAT2:
+		{
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "float2";
+			jsonIV["value"]["x"] = std::get<float2>(variable->value).x;
+			jsonIV["value"]["y"] = std::get<float2>(variable->value).y;
+		}
+		break;
+		case INSPECTOR_FLOAT3:
+		{
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "float3";
+			jsonIV["value"]["x"] = std::get<float3>(variable->value).x;
+			jsonIV["value"]["y"] = std::get<float3>(variable->value).y;
+			jsonIV["value"]["z"] = std::get<float3>(variable->value).z;
+		}
+		break;
+		case INSPECTOR_BOOL:
+		{
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "bool";
+			jsonIV["value"] = std::get<bool>(variable->value);
+		}
+		break;
+		case INSPECTOR_STRING:
+		{
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "string";
+			jsonIV["value"] = std::get<std::string>(variable->value);
+		}
+		break;
+		case INSPECTOR_TO_STRING:
+		{
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "to_string";
+			jsonIV["value"] = std::get<std::string>(variable->value);
+		}
+		break;
+		case INSPECTOR_FLOAT3_ARRAY:
+		{
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "float3_array";
+			std::vector<float> array;
+			for (uint i = 0; i < std::get<std::vector<float3>>(variable->value).size(); ++i)
+			{
+				array.push_back(std::get<std::vector<float3>>(variable->value)[i].x);
+				array.push_back(std::get<std::vector<float3>>(variable->value)[i].y);
+				array.push_back(std::get<std::vector<float3>>(variable->value)[i].z);
+			}
+			json["value"] = array;
+		}
+		break;
+		case INSPECTOR_GAMEOBJECT:
+		{
+			if (std::get<GameObject *>(variable->value) != nullptr)
 			{
 				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "int";
-				jsonIV["value"] = std::get<int>(variable->value);
+				jsonIV["type"] = "gameObject";
+				jsonIV["value"] = std::get<GameObject *>(variable->value)->GetUID();
 			}
-			break;
-			case INSPECTOR_FLOAT:
-			{
-				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "float";
-				jsonIV["value"] = std::get<float>(variable->value);
-			}
-			break;
-			case INSPECTOR_FLOAT2:
-			{
-				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "float2";
-				jsonIV["value"]["x"] = std::get<float2>(variable->value).x;
-				jsonIV["value"]["y"] = std::get<float2>(variable->value).y;
-			}
-			break;
-			case INSPECTOR_FLOAT3:
-			{
-				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "float3";
-				jsonIV["value"]["x"] = std::get<float3>(variable->value).x;
-				jsonIV["value"]["y"] = std::get<float3>(variable->value).y;
-				jsonIV["value"]["z"] = std::get<float3>(variable->value).z;
-			}
-			break;
-			case INSPECTOR_BOOL:
-			{
-				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "bool";
-				jsonIV["value"] = std::get<bool>(variable->value);
-			}
-			break;
-			case INSPECTOR_STRING:
-			{
-				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "string";
-				jsonIV["value"] = std::get<std::string>(variable->value);
-			}
-			break;
-			case INSPECTOR_TO_STRING:
-			{
-				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "to_string";
-				jsonIV["value"] = std::get<std::string>(variable->value);
-			}
-			break;
-			case INSPECTOR_FLOAT3_ARRAY:
-			{
-				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "float3_array";
-				std::vector<float> array;
-				for (uint i = 0; i < std::get<std::vector<float3>>(variable->value).size(); ++i)
-				{
-					array.push_back(std::get<std::vector<float3>>(variable->value)[i].x);
-					array.push_back(std::get<std::vector<float3>>(variable->value)[i].y);
-					array.push_back(std::get<std::vector<float3>>(variable->value)[i].z);
-				}
-				json["value"] = array;
-			}
-			break;
-			case INSPECTOR_GAMEOBJECT:
-			{
-				if (std::get<GameObject*>(variable->value) != nullptr)
-				{
-					jsonIV["name"] = variable->name;
-					jsonIV["type"] = "gameObject";
-					jsonIV["value"] = std::get<GameObject*>(variable->value)->GetUID();
-				}
-			}
-			break;
+		}
+		break;
 		}
 		json["inspector_variables"].push_back(jsonIV);
 	}
@@ -350,16 +361,16 @@ void ComponentScript::Load(Json &json)
 	LoadInspectorVariables(json);
 }
 
-void ComponentScript::LoadInspectorVariables(Json& json)
+void ComponentScript::LoadInspectorVariables(Json &json)
 {
 	if (!json.contains("inspector_variables"))
 		return;
-	for (const auto& var : json.at("inspector_variables").items())
+	for (const auto &var : json.at("inspector_variables").items())
 	{
 		std::string name = var.value().at("name").get<std::string>();
 		std::string type_s = var.value().at("type").get<std::string>();
 		INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
-		std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value;
+		std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
 
 		if (type_s == "int")
 		{
@@ -413,7 +424,7 @@ void ComponentScript::LoadInspectorVariables(Json& json)
 			value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject((uint)var.value().at("value"));
 		}
 
-		InspectorVariable* variable = new InspectorVariable(name, type, value);
+		InspectorVariable *variable = new InspectorVariable(name, type, value);
 		inspectorVariables.push_back(variable);
 	}
 }

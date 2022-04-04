@@ -1,171 +1,166 @@
 #include "ComponentTransform.h"
-#include "PanelChooser.h"
-#include "MathGeoLib/MathGeoLib.h"
-#include "GameObject.h"
-#include "Globals.h"
+
 #include "Engine.h"
 #include "SceneManager.h"
-#include "ComponentCamera.h"
+#include "Globals.h"
 
-ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
+#include "PanelChooser.h"
+
+#include "GameObject.h"
+#include "ComponentCamera.h"
+#include "C_Collider.h"
+
+#include "MathGeoLib/MathGeoLib.h"
+
+ComponentTransform::ComponentTransform(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::TRANSFORM;
 
-	position = float3::zero;
-	rotation = Quat::identity;
-	scale = float3::one;
-	isDirty = true;
-
-	transformMatrix.SetIdentity();
 	transformMatrixLocal.SetIdentity();
+	transformMatrix = float4x4::FromTRS(float3::zero, Quat::identity, float3::one);
+	rotationEuler = GetRotationEuler();
+
+	isDirty = true;
 }
 
 ComponentTransform::~ComponentTransform()
-{}
+{
+}
+
+bool ComponentTransform::Update(float dt)
+{
+	if (isDirty) // When Object is Modified
+	{
+		RecomputeGlobalMatrix();
+		owner->PropagateTransform();
+		if (owner->GetComponent<ComponentCollider2>())
+			owner->GetComponent<ComponentCollider2>()->UpdateCollSizeFromAABB();
+		isDirty = false;
+	}
+
+	return true;
+}
 
 bool ComponentTransform::CleanUp()
 {
 	return true;
 }
 
-bool ComponentTransform::Update(float dt)
-{
-	if (isDirty)
-	{
-		transformMatrixLocal = float4x4::FromTRS(position, rotation, scale);
-
-		right = transformMatrixLocal.Col3(0).Normalized();
-		up = transformMatrixLocal.Col3(1).Normalized();
-		front = transformMatrixLocal.Col3(2).Normalized();
-		RecomputeGlobalMatrix();
-		owner->PropagateTransform();
-		isDirty = false;
-	}
-	return true;
-}
-
-bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
+bool ComponentTransform::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Transform"))
 	{
-		if (ImGui::RadioButton("Translate", owner->GetEngine()->GetSceneManager()->GetGizmoOperation() == ImGuizmo::TRANSLATE)) owner->GetEngine()->GetSceneManager()->SetGizmoOperation(ImGuizmo::TRANSLATE);
-		ImGui::SameLine();
-		if (ImGui::RadioButton("Rotate", owner->GetEngine()->GetSceneManager()->GetGizmoOperation() == ImGuizmo::ROTATE)) owner->GetEngine()->GetSceneManager()->SetGizmoOperation(ImGuizmo::ROTATE);
-		if (owner->GetComponent<ComponentCamera>() == nullptr)
-		{
-			ImGui::SameLine();
-			if (ImGui::RadioButton("Scale", owner->GetEngine()->GetSceneManager()->GetGizmoOperation() == ImGuizmo::SCALE)) owner->GetEngine()->GetSceneManager()->SetGizmoOperation(ImGuizmo::SCALE);
-		}
-		float3 newPosition = position;
-		if (ImGui::DragFloat3("Location", &newPosition[0]))
+
+		// Position ImGui
+		float3 newPosition = GetPosition();
+		if (ImGui::DragFloat3("Location", &newPosition[0]), 0.005f)
 		{
 			SetPosition(newPosition);
 		}
+
+		// Rotation ImGui
 		float3 newRotationEuler;
 		newRotationEuler.x = RADTODEG * rotationEuler.x;
 		newRotationEuler.y = RADTODEG * rotationEuler.y;
 		newRotationEuler.z = RADTODEG * rotationEuler.z;
-		if (ImGui::DragFloat3("Rotation", &(newRotationEuler[0])))
+		if (ImGui::DragFloat3("Rotation", &(newRotationEuler[0]), 0.045f))
 		{
 			newRotationEuler.x = DEGTORAD * newRotationEuler.x;
 			newRotationEuler.y = DEGTORAD * newRotationEuler.y;
 			newRotationEuler.z = DEGTORAD * newRotationEuler.z;
-			SetRotation(newRotationEuler);
+			SetRotationEuler(newRotationEuler);
 		}
-		float3 newScale = scale;
-		if (ImGui::DragFloat3("Scale", &(newScale[0])))
+
+		// Scale ImGui
+		float3 newScale = GetScale();
+		if (ImGui::DragFloat3("Scale", &(newScale[0]), 0.02f, 0.00000001f, 5000.f))
 		{
+			// If it is equal to 0 it crashes
+			if (newScale.x == 0)
+				newScale.x = 0.00000001f;
+			if (newScale.y == 0)
+				newScale.y = 0.00000001f;
+			if (newScale.z == 0)
+				newScale.z = 0.00000001f;
+
 			SetScale(newScale);
 		}
 	}
-	
+
 	return ret;
 }
 
-void ComponentTransform::SetPosition(const float3& newPosition)
+void ComponentTransform::SetPosition(const float3 &newPosition)
 {
-	position = newPosition;
+	transformMatrixLocal = float4x4::FromTRS(newPosition, GetRotationQuat(), GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
 
-void ComponentTransform::SetRotation(const float3& newRotation)
+void ComponentTransform::SetScale(const float3 &newScale)
 {
-	rotation = Quat::FromEulerXYZ(newRotation.x, newRotation.y, newRotation.z);
+	transformMatrixLocal = float4x4::FromTRS(GetPosition(), GetRotationQuat(), newScale);
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
+	isDirty = true;
+}
+
+void ComponentTransform::SetRotationEuler(const float3 &newRotation)
+{
+	Quat rotation = Quat::FromEulerXYZ(newRotation.x, newRotation.y, newRotation.z);
 	rotationEuler = newRotation;
-
+	transformMatrixLocal = float4x4::FromTRS(GetPosition(), rotation, GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
 
-void ComponentTransform::SetRotationQuat(const Quat& newRotation)
+void ComponentTransform::SetRotationQuat(const Quat &newRotation)
 {
-	this->rotation = newRotation;
+	transformMatrixLocal = float4x4::FromTRS(GetPosition(), newRotation, GetScale());
 	rotationEuler = newRotation.ToEulerXYZ();
 	isDirty = true;
 }
 
-void ComponentTransform::SetScale(const float3& newScale)
+void ComponentTransform::SetFront(const float3 &front)
 {
-	scale = newScale;
-	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
-	isDirty = true;
+	transformMatrixLocal.SetCol3(2, front);
 }
 
-void ComponentTransform::NewAttachment()
-{
-	if (owner->GetParent() != nullptr)
-		transformMatrixLocal = owner->GetParent()->GetTransform()->transformMatrix.Inverted().Mul(transformMatrix);
-
-	float3x3 rot;
-	transformMatrixLocal.Decompose(position, rot, scale);
-	rotationEuler = rot.ToEulerXYZ();
-}
-
-void ComponentTransform::OnParentMoved()
-{
-	RecomputeGlobalMatrix();
-}
-
-void ComponentTransform::RecomputeGlobalMatrix()
-{
-	if (owner->GetParent() != nullptr)
-	{
-		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
-	}
-	else
-	{
-		transformMatrix = transformMatrixLocal;
-	}
-}
-
-void ComponentTransform::UpdateGuizmoParameters(float4x4& transformMatrix)
-{
-	float3 position;
-	Quat rotation;
-	float3 scale;
-	transformMatrix.Decompose(position, rotation, scale);
-	
-	SetPosition(position);
-	SetRotation(rotation.ToEulerXYZ());
-	SetScale(scale);
-}
-
-float4x4 ComponentTransform::GetGlobalTransform()
-{
-	return transformMatrix;
-}
-
-void ComponentTransform::SetGlobalTransform(const float4x4& globalTransform)
+void ComponentTransform::SetGlobalTransform(const float4x4 &globalTransform)
 {
 	transformMatrix = globalTransform;
-
 }
 
-bool ComponentTransform::GetDirty() const
+void ComponentTransform::SetDirty(bool isDirty)
 {
-	return isDirty;
+	this->isDirty = isDirty;
+}
+
+float3 ComponentTransform::GetPosition() const
+{
+	float3 position;
+	float3 scale;
+	Quat rotation;
+	transformMatrixLocal.Decompose(position, rotation, scale);
+	return position;
+}
+
+float3 ComponentTransform::GetScale() const
+{
+	float3 position;
+	float3 scale;
+	Quat rotation;
+	transformMatrixLocal.Decompose(position, rotation, scale);
+	return scale;
+}
+
+float3 ComponentTransform::GetRotationEuler() const
+{
+	float3 position;
+	float3 scale;
+	Quat rotation;
+	transformMatrixLocal.Decompose(position, rotation, scale);
+	return rotation.ToEulerXYZ();
 }
 
 Quat ComponentTransform::GetRotationQuat() const
@@ -177,20 +172,64 @@ Quat ComponentTransform::GetRotationQuat() const
 	return rotation;
 }
 
-void ComponentTransform::SetDirty(bool isDirty)
+const float3 &ComponentTransform::Right() const
 {
-	this->isDirty = isDirty;
+	return transformMatrixLocal.Col3(0).Normalized();
 }
 
-void ComponentTransform::Save(Json& json) const
+const float3 &ComponentTransform::Up() const
 {
+	return transformMatrixLocal.Col3(1).Normalized();
+}
+
+const float3 &ComponentTransform::Front() const
+{
+	return transformMatrixLocal.Col3(2).Normalized();
+}
+
+float4x4 ComponentTransform::GetGlobalTransform()
+{
+	return transformMatrix;
+}
+
+void ComponentTransform::RecomputeGlobalMatrix()
+{
+
+	if (owner->GetParent() != nullptr)
+	{
+		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
+	}
+	else
+	{
+		transformMatrix = transformMatrixLocal;
+	}
+}
+
+void ComponentTransform::UpdateGuizmoParameters(float4x4 &transformMatrix)
+{
+	float3 position;
+	Quat rotation;
+	float3 scale;
+
+	transformMatrix.Decompose(position, rotation, scale);
+	SetPosition(position);
+	SetRotationQuat(rotation);
+	SetScale(scale);
+}
+
+void ComponentTransform::Save(Json &json) const
+{
+	float3 position = GetPosition();
+	float3 scale = GetScale();
+	Quat rotation = GetRotationQuat();
+
 	json["type"] = "transform";
-	json["position"] = { position.x,position.y,position.z };
-	json["rotation"] = { rotation.x,rotation.y,rotation.z,rotation.w };
-	json["scale"] = { scale.x,scale.y,scale.z };
+	json["position"] = {position.x, position.y, position.z};
+	json["rotation"] = {rotation.x, rotation.y, rotation.z, rotation.w};
+	json["scale"] = {scale.x, scale.y, scale.z};
 }
 
-void ComponentTransform::Load(Json& json)
+void ComponentTransform::Load(Json &json)
 {
 	std::vector<float> values = json.at("position").get<std::vector<float>>();
 	SetPosition(float3(values[0], values[1], values[2]));
@@ -204,11 +243,8 @@ void ComponentTransform::Load(Json& json)
 	SetScale(float3(values[0], values[1], values[2]));
 	values.clear();
 
-	transformMatrixLocal = float4x4::FromTRS(position, rotation, scale);
+	transformMatrixLocal = float4x4::FromTRS(GetPosition(), GetRotationQuat(), GetScale());
 
-	right = transformMatrixLocal.Col3(0).Normalized();
-	up = transformMatrixLocal.Col3(1).Normalized();
-	front = transformMatrixLocal.Col3(2).Normalized();
 	RecomputeGlobalMatrix();
 	owner->PropagateTransform();
 }
