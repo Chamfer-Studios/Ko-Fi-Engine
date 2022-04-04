@@ -18,7 +18,6 @@ ComponentTransform::ComponentTransform(GameObject *parent) : Component(parent)
 
 	transformMatrixLocal.SetIdentity();
 	transformMatrix = float4x4::FromTRS(float3::zero, Quat::identity, float3::one);
-	rotationEuler = GetRotationEuler();
 
 	isDirty = true;
 }
@@ -60,15 +59,11 @@ bool ComponentTransform::InspectorDraw(PanelChooser *chooser)
 		}
 
 		// Rotation ImGui
-		float3 newRotationEuler;
-		newRotationEuler.x = RADTODEG * rotationEuler.x;
-		newRotationEuler.y = RADTODEG * rotationEuler.y;
-		newRotationEuler.z = RADTODEG * rotationEuler.z;
+		float3 newRotationEuler = GetRotationEuler();
+		newRotationEuler = RadToDeg(newRotationEuler);
 		if (ImGui::DragFloat3("Rotation", &(newRotationEuler[0]), 0.045f))
 		{
-			newRotationEuler.x = DEGTORAD * newRotationEuler.x;
-			newRotationEuler.y = DEGTORAD * newRotationEuler.y;
-			newRotationEuler.z = DEGTORAD * newRotationEuler.z;
+			newRotationEuler = DegToRad(newRotationEuler);
 			SetRotationEuler(newRotationEuler);
 		}
 
@@ -76,14 +71,6 @@ bool ComponentTransform::InspectorDraw(PanelChooser *chooser)
 		float3 newScale = GetScale();
 		if (ImGui::DragFloat3("Scale", &(newScale[0]), 0.02f, 0.00000001f, 5000.f))
 		{
-			// If it is equal to 0 it crashes
-			if (newScale.x == 0)
-				newScale.x = 0.00000001f;
-			if (newScale.y == 0)
-				newScale.y = 0.00000001f;
-			if (newScale.z == 0)
-				newScale.z = 0.00000001f;
-
 			SetScale(newScale);
 		}
 	}
@@ -100,7 +87,17 @@ void ComponentTransform::SetPosition(const float3 &newPosition)
 
 void ComponentTransform::SetScale(const float3 &newScale)
 {
-	transformMatrixLocal = float4x4::FromTRS(GetPosition(), GetRotationQuat(), newScale);
+	float3 fixedScale = newScale;
+
+	// Absolute scale
+	if (fixedScale.x <= 0)
+		fixedScale.x *= -1.f;
+	if (fixedScale.y <= 0)
+		fixedScale.y *= -1.f;
+	if (fixedScale.z <= 0)
+		fixedScale.z *= -1.f;
+
+	transformMatrixLocal = float4x4::FromTRS(GetPosition(), GetRotationQuat(), fixedScale);
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
@@ -108,7 +105,6 @@ void ComponentTransform::SetScale(const float3 &newScale)
 void ComponentTransform::SetRotationEuler(const float3 &newRotation)
 {
 	Quat rotation = Quat::FromEulerXYZ(newRotation.x, newRotation.y, newRotation.z);
-	rotationEuler = newRotation;
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), rotation, GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
@@ -117,7 +113,6 @@ void ComponentTransform::SetRotationEuler(const float3 &newRotation)
 void ComponentTransform::SetRotationQuat(const Quat &newRotation)
 {
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), newRotation, GetScale());
-	rotationEuler = newRotation.ToEulerXYZ();
 	isDirty = true;
 }
 
@@ -128,7 +123,9 @@ void ComponentTransform::SetFront(const float3 &front)
 
 void ComponentTransform::SetGlobalTransform(const float4x4 &globalTransform)
 {
+	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
 	transformMatrix = globalTransform;
+	isDirty = true;
 }
 
 void ComponentTransform::SetDirty(bool isDirty)
@@ -203,18 +200,6 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	{
 		transformMatrix = transformMatrixLocal;
 	}
-}
-
-void ComponentTransform::UpdateGuizmoParameters(float4x4 &transformMatrix)
-{
-	float3 position;
-	Quat rotation;
-	float3 scale;
-
-	transformMatrix.Decompose(position, rotation, scale);
-	SetPosition(position);
-	SetRotationQuat(rotation);
-	SetScale(scale);
 }
 
 void ComponentTransform::Save(Json &json) const
