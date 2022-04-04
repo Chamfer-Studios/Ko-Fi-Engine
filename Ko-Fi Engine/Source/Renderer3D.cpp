@@ -50,7 +50,9 @@ Renderer3D::Renderer3D(KoFiEngine* engine) : Module()
 
 // Destructor
 Renderer3D::~Renderer3D()
-{}
+{
+	CleanUp();
+}
 
 // Called before render is available
 bool Renderer3D::Awake(Json configModule)
@@ -105,6 +107,10 @@ bool Renderer3D::CleanUp()
 {
 	CONSOLE_LOG("Destroying 3D Renderer");
 	appLog->AddLog("Destroying 3D Renderer\n");
+
+	engine = nullptr;
+
+	particles.clear();
 
 	SDL_GL_DeleteContext(context);
 

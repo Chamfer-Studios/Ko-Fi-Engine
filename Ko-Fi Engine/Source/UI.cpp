@@ -65,6 +65,16 @@ MyPlane::MyPlane(GameObject* _owner) {
 
 MyPlane::~MyPlane()
 {
+	owner = nullptr;
+
+	indices.clear();
+	indices.shrink_to_fit();
+
+	texCoords.clear();
+	texCoords.shrink_to_fit();
+
+	vertices.clear();
+	vertices.shrink_to_fit();
 }
 
 void MyPlane::DrawPlane2D(Texture* texture, SDL_Color color)
@@ -136,6 +146,7 @@ UI::UI(KoFiEngine* engine) : Module()
 
 UI::~UI()
 {
+	CleanUp();
 }
 
 bool UI::Awake(Json configModule)
@@ -157,20 +168,28 @@ bool UI::PreUpdate(float dt)
 	return true;
 }
 
-bool UI::Update(float dt) {
-
+bool UI::Update(float dt)
+{
 	return true;
 }
 
 bool UI::PostUpdate(float dt)
 {
-
 	return true;
 }
 
 bool UI::CleanUp()
 {
+	renderer = nullptr;
+
+	loadedTextures.clear();
+	loadedTextures.shrink_to_fit();
+
 	TTF_CloseFont(rubik);
+	RELEASE(rubik);
+
+	engine = nullptr;
+
 	return true;
 }
 

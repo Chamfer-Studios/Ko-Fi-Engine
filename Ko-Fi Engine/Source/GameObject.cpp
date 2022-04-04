@@ -137,7 +137,7 @@ bool GameObject::CleanUp()
 
 	for (Component* component : components)
 	{
-		if (component->GetType() != ComponentType::MESH)
+		//if (component->GetType() != ComponentType::MESH)
 		{
 			// This is the dirty patch
 			RELEASE(component);

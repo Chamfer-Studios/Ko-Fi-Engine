@@ -10,6 +10,7 @@ class AnimatorClip
 public:
 	AnimatorClip();
 	AnimatorClip(const Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop);
+	~AnimatorClip();
 
 	void CleanUp();
 

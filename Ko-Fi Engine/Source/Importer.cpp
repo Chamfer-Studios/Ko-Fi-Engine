@@ -16,7 +16,31 @@ Importer::Importer(KoFiEngine* e)
 
 Importer::~Importer()
 {
+	CleanUp();
+}
 
+void Importer::CleanUp()
+{
+	if (sceneImporter)
+		RELEASE(sceneImporter);
+
+	if (meshImporter)
+		RELEASE(meshImporter);
+
+	if (materialImporter)
+		RELEASE(materialImporter);
+
+	if (textureImporter)
+		RELEASE(textureImporter);
+
+	if (trackImporter)
+		RELEASE(trackImporter);
+
+	if (animationImporter)
+		RELEASE(animationImporter);
+
+	engine = nullptr;
+	instance = nullptr;
 }
 
 Importer* Importer::GetInstance(KoFiEngine* e)

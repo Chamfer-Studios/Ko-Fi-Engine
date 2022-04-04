@@ -20,7 +20,7 @@ ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 
 ComponentParticle::~ComponentParticle()
 {
-
+	CleanUp();
 }
 
 bool ComponentParticle::Start()
@@ -72,10 +72,14 @@ bool ComponentParticle::CleanUp()
 {
 	//DELETE TEXTURES
 
-	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
+	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it != emitterInstances.end(); ++it)
 	{
-		it = emitterInstances.erase(it);
+		emitterInstances.erase(it);
+		if (emitterInstances.empty())
+			break;
 	}
+	emitterInstances.clear();
+	emitterInstances.shrink_to_fit();
 
 	//TODO: refs -1
 	resource->CleanUp();

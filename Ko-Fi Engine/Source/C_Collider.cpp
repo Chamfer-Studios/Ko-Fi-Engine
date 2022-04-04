@@ -18,6 +18,11 @@ ComponentCollider2::ComponentCollider2(GameObject *parent, ColliderShape collTyp
 
 ComponentCollider2::~ComponentCollider2()
 {
+	CleanUp();
+}
+
+bool ComponentCollider2::CleanUp()
+{
 	if (shape)
 	{
 		/*if (owner->GetComponent<ComponentRigidBody>())
@@ -25,6 +30,7 @@ ComponentCollider2::~ComponentCollider2()
 		shape->release();
 		shape = nullptr;
 	}
+	return true;
 }
 
 bool ComponentCollider2::Update(float dt)

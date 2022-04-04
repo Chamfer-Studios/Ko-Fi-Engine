@@ -28,6 +28,15 @@ PanelViewport::PanelViewport(Editor* editor, KoFiEngine* engine)
 
 PanelViewport::~PanelViewport()
 {
+	CleanUp();
+}
+
+bool PanelViewport::CleanUp()
+{
+	editor = nullptr;
+	engine = nullptr;
+
+	return true;
 }
 
 bool PanelViewport::Awake()

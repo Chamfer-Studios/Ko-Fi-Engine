@@ -100,11 +100,7 @@ Editor::Editor(KoFiEngine* engine)
 
 Editor::~Editor()
 {
-	for (std::list<Panel*>::reverse_iterator item = panels.rbegin(); item != panels.rend(); ++item)
-	{
-		RELEASE(*item);
-	}
-	panels.clear();
+	CleanUp();
 }
 
 void Editor::AddPanel(Panel* panel)
@@ -296,26 +292,58 @@ bool Editor::PostUpdate(float dt)
 bool Editor::CleanUp()
 {
 	appLog->AddLog("Cleaning panel editor\n");
-	bool ret = true;
+	engine = nullptr;
 
 	// Cleaning panels
-	for (std::list<Panel*>::reverse_iterator item = panels.rbegin(); item != panels.rend() && ret == true; ++item)
-	{
-		ret = (*item)->CleanUp();
-	}
+	//for (std::list<Panel*>::reverse_iterator item = panels.rbegin(); item != panels.rend(); ++item)
+	//{
+	//	RELEASE(*item);
 
-	RELEASE(mainMenuBar);
-	RELEASE(panelHierarchy);
-	RELEASE(panelConfig);
-	RELEASE(panelLog);
-	RELEASE(panelAbout);
-	RELEASE(panelSettings);
-	RELEASE(panelChooser);
-	RELEASE(panelGameObject);
-	RELEASE(panelViewport);
-	RELEASE(panelCameraViewport);
+	//	if (panels.empty())
+	//		break;
+	//}
+	for (Panel* p : panels)
+	{
+		if (p != nullptr)
+			RELEASE(p);
+	}
+	panels.clear();
+
+	if (mainMenuBar != nullptr)
+		RELEASE(mainMenuBar);
+
+	if (panelHierarchy != nullptr)
+		RELEASE(panelHierarchy);
+
+	if (panelConfig != nullptr)
+		RELEASE(panelConfig);
+
+	if (panelLog != nullptr)
+		RELEASE(panelLog);
+
+	if (panelAbout != nullptr)
+		RELEASE(panelAbout);
+
+	if (panelSettings != nullptr)
+		RELEASE(panelSettings);
+
+	if (panelChooser != nullptr)
+		RELEASE(panelChooser);
+
+	if (panelGameObject != nullptr)
+		RELEASE(panelGameObject);
+
+	if (panelViewport != nullptr)
+		RELEASE(panelViewport);
+
+	if (panelCameraViewport != nullptr)
+		RELEASE(panelCameraViewport);
+
 	//RELEASE(panelGame);
-	RELEASE(panelRuntimeState);
+	panelGame = nullptr;
+
+	if (panelRuntimeState != nullptr)
+		RELEASE(panelRuntimeState);
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();

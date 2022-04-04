@@ -29,6 +29,15 @@ MainBar::MainBar(Editor* editor)
 
 MainBar::~MainBar()
 {
+	CleanUp();
+}
+
+bool MainBar::CleanUp()
+{
+	editor = nullptr;
+	saveAsSceneName.clear();
+	saveAsSceneName.shrink_to_fit();
+	return true;
 }
 
 bool MainBar::Awake()

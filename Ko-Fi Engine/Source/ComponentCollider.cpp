@@ -12,6 +12,7 @@ ComponentCollider::ComponentCollider(GameObject* parent, ColliderType _collType)
 
 ComponentCollider::~ComponentCollider()
 {
+	CleanUp();
 }
 
 bool ComponentCollider::Start()
@@ -55,6 +56,8 @@ bool ComponentCollider::CleanUp()
 {
 	if (collType == ColliderType::ENEMY || collType == ColliderType::PLAYER)
 			owner->GetEngine()->GetCollisionDetector()->RemoveCollidableEntity(owner);
+
+	lastObjectCollided = nullptr;
 
 	return false;
 }

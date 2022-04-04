@@ -26,6 +26,7 @@ Navigation::Navigation(KoFiEngine* engine) : Module()
 
 Navigation::~Navigation()
 {
+	CleanUp();
 }
 
 bool Navigation::Awake(Json configModule)
@@ -102,6 +103,17 @@ bool Navigation::PostUpdate(float dt)
 
 bool Navigation::CleanUp()
 {
+	engine = nullptr;
+
+	if (navMesh)
+		RELEASE(navMesh);
+
+	if (navMeshDetail)
+		RELEASE(navMeshDetail);
+
+	if (dtNavMesh)
+		RELEASE(dtNavMesh);
+
 	return true;
 }
 

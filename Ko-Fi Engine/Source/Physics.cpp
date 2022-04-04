@@ -40,6 +40,7 @@ Physics::Physics(KoFiEngine* engine) : Module()
 // Module destructor
 Physics::~Physics()
 {
+	CleanUp();
 }
 
 bool Physics::Awake(Json configModule)
@@ -84,26 +85,43 @@ bool Physics::Update(float dt)
 
 bool Physics::CleanUp()
 {
-	RELEASE(simulationEventCallback);
+	engine = nullptr;
+
+	actors.clear();
+
+	filters.clear();
+	filters.shrink_to_fit();
 
 	if (foundation)
+	{
 		foundation->release();
-	if (material)
-		material->release();
+		foundation = nullptr;
+	}
+
 	if (physics)
+	{
 		physics->release();
+		physics = nullptr;
+	}
+
 	if (cooking)
+	{
 		cooking->release();
+		cooking = nullptr;
+	}
+
+	if (material)
+	{
+		material->release();
+		material = nullptr;
+	}
+
 	/*if (scene)
 		scene->release();*/
-
-	foundation = nullptr;
-	physics = nullptr;
-	cooking = nullptr;
-	material = nullptr;
 	scene = nullptr;
 
-	simulationEventCallback = nullptr;
+	if (simulationEventCallback)
+		RELEASE(simulationEventCallback);
 
 	// TEST: Delete the filter matrix
 	DeleteFilterMatrix();

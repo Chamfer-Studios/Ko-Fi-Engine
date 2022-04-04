@@ -26,6 +26,15 @@ PanelCameraViewport::PanelCameraViewport(Editor* editor, KoFiEngine* engine)
 
 PanelCameraViewport::~PanelCameraViewport()
 {
+	CleanUp();
+}
+
+bool PanelCameraViewport::CleanUp()
+{
+	editor = nullptr;
+	engine = nullptr;
+
+	return true;
 }
 
 bool PanelCameraViewport::Awake()

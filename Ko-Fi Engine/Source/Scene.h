@@ -66,6 +66,55 @@ public:
 	// Called before quitting
 	virtual bool CleanUp()
 	{
+		name.clear();
+		name.shrink_to_fit();
+
+		engine = nullptr;
+
+		for (std::vector<GameObject*>::const_iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
+		{
+			gameObjectList.erase(it);
+			if (gameObjectList.empty())
+				break;
+		}
+		gameObjectList.clear();
+		gameObjectList.shrink_to_fit();
+
+		gameObjectListToCreate.clear();
+
+		for (std::vector<GameObject*>::const_iterator it = gameObjectListToDelete.begin(); it != gameObjectListToDelete.end(); ++it)
+		{
+			gameObjectListToDelete.erase(it);
+			if (gameObjectListToDelete.empty())
+				break;
+		}
+		gameObjectListToDelete.clear();
+		gameObjectListToDelete.shrink_to_fit();
+
+		if (rootGo)
+			RELEASE(rootGo);
+
+		if (currentCamera)
+			RELEASE(currentCamera);
+
+		if (sceneTree)
+		{
+			sceneTree->Clear();
+			RELEASE(sceneTree);
+		}
+
+		tags.clear();
+		tags.shrink_to_fit();
+
+		for (std::vector<GameObject*>::const_iterator it = lights.begin(); it != lights.end(); ++it)
+		{
+			lights.erase(it);
+			if (lights.empty())
+				break;
+		}
+		lights.clear();
+		lights.shrink_to_fit();
+
 		return true;
 	}
 

@@ -208,14 +208,10 @@ bool SceneIntro::CleanUp()
 	CONSOLE_LOG("Unloading Intro scene");
 	appLog->AddLog("Unloading Intro scene\n");
 
-	for (GameObject* gameObject : gameObjectList)
-	{
-		RELEASE(gameObject);
-	}
-	gameObjectList.clear();
-	gameObjectList.shrink_to_fit();
-	lights.clear();
-	lights.shrink_to_fit();
+	sceneNameGO.clear();
+	sceneNameGO.shrink_to_fit();
+
+	camera = nullptr;
 
 	example::NodeEditorShutdown();
 

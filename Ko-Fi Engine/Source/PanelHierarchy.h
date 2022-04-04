@@ -13,6 +13,7 @@ public:
 	PanelHierarchy(Editor* editor);
 	~PanelHierarchy();
 
+	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

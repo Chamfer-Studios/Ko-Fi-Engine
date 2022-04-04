@@ -41,6 +41,11 @@ AnimatorClip::AnimatorClip(const Animation* animation, const std::string& name, 
 	//durationInSeconds = (animation != nullptr) ? (duration / animation->GetTicksPerSecond()) : 0.0f;
 }
 
+AnimatorClip::~AnimatorClip()
+{
+	CleanUp();
+}
+
 void AnimatorClip::CleanUp()
 {
 	name.clear();

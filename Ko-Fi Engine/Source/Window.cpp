@@ -18,6 +18,7 @@ Window::Window(KoFiEngine* engine) : Module()
 // Destructor
 Window::~Window()
 {
+	CleanUp();
 }
 
 // Called before render is available
@@ -140,6 +141,11 @@ bool Window::CleanUp()
 	{
 		SDL_DestroyWindow(window);
 	}
+
+	iconFile.clear();
+	iconFile.shrink_to_fit();
+
+	engine = nullptr;
 
 	// Quit SDL subsystems
 	SDL_Quit();
