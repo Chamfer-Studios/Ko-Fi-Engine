@@ -191,4 +191,11 @@ function Update(dt)
     end
 end
 
+function OnTriggerEnter(go)
+    print("a")
+	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
+		DeleteGameObject()
+	end
+end
+
 print("Harkonnen.lua compiled succesfully")

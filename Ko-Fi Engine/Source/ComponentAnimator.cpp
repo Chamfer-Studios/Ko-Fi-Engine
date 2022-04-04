@@ -67,8 +67,8 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 		ImGui::InputText("Clip Name", clipName, IM_ARRAYSIZE(clipName), inputTxtFlags);
 
 		ImGui::Text("Reel selector: ");
-		ImGui::SliderInt("Edit Start", &animation->startFrame, 0, animation->duration);
-		ImGui::SliderInt("Edit End", &animation->endFrame, 0, animation->duration);
+		ImGui::DragInt("Edit Start", &animation->startFrame, 0, animation->duration);
+		ImGui::DragInt("Edit End", &animation->endFrame, 0, animation->duration);
 
 		if (ImGui::Button("Create Clip", ImVec2(80, 35)))
 		{

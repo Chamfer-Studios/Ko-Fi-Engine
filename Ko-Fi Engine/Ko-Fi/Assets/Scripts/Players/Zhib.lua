@@ -339,6 +339,13 @@ function Disapear(duration)
 	gameObject:GetRigidBody():SetRigidBodyPos(reappearPosition)
 end
 
+function OnTriggerEnter(go)
+
+	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
+		knifeCount = knifeCount + 1
+	end
+end
+
 ----------------- Math Functions -----------------
 
 function Normalize(vec, distance)

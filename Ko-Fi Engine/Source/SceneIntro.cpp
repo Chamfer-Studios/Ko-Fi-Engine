@@ -144,13 +144,13 @@ bool SceneIntro::PostUpdate(float dt)
 			knife->GetTransform()->SetRotationEuler(rot);
 
 			ComponentMesh *componentMesh = knife->CreateComponent<ComponentMesh>();
-			Mesh *mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
+			Mesh *mesh = parent->GetComponent<ComponentScript>()->handler->LuaFind("Karambit")->GetComponent<ComponentMesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			ComponentMaterial *componentMaterial = knife->CreateComponent<ComponentMaterial>();
-			Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
-			Material *material = new Material();
-			Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
+			//Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
+			Material *material = parent->GetComponent<ComponentScript>()->handler->LuaFind("Karambit")->GetComponent<ComponentMaterial>()->GetMaterial();
+			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 			componentMaterial->SetMaterial(material);
 
 			rigidBody->FreezePositionY(true);

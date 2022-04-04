@@ -37,7 +37,7 @@ ComponentMaterial::~ComponentMaterial()
 bool ComponentMaterial::CleanUp()
 {
 	if(material != nullptr)
-		RELEASE(material);
+		RELEASE(material);// peta por el karambit
 
 	return true;
 }
