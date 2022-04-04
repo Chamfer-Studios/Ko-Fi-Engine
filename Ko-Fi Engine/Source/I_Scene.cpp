@@ -75,7 +75,7 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 		return false;
 	}
 
-	nodeName = Importer::GetInstance()->GetNameFromPath(path);
+	nodeName = engine->GetFileSystem()->GetNameFromPath(path);
 
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo, isPrefab);
 

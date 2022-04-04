@@ -7,6 +7,7 @@
 //#include "ViewportFrameBuffer.h"
 #include "Input.h"
 #include "Window.h"
+#include "FileSystem.h"
 #include "Importer.h"
 #include "Renderer3D.h"
 #include "Texture.h"
@@ -106,7 +107,7 @@ bool PanelViewport::Update()
 					}
 					else if (path.find(".json") != std::string::npos) {
 						
-						Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(path).c_str());
+						Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
 					}
 				}
 			}

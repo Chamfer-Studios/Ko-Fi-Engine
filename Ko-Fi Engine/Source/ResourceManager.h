@@ -23,6 +23,7 @@ public:
 	UID ImportFromAssets(const char* assetsPath);
 	void DeleteFromLibrary(const char* libraryPath);
 	void DeleteFromAssets(const char* assetsPath);
+
 	bool TrimLibrary();
 	bool HasImportIgnoredExtension(const char* assetsPath) const;
 
@@ -30,14 +31,17 @@ public:
 	void SaveResource(Resource* resource);
 	bool UnloadResource(UID uid);
 	bool UnloadResource(Resource* resource);
+
 	UID Find(const char* assetPath) const;
 	Resource* GetResourceFromLibrary(const char* libraryPath);
 	Resource* RequestResource(UID uid);
+
 	ResourceType GetTypeFromExtension(const char* extension);
+
 	const char* GetAssetsDirectoryFromType(const ResourceType);
 	const char* GetLibraryDirectoryFromType(const ResourceType type);
+
 	std::string GetValidPath(const char* path) const;
-	const char* GetFileName(const char* path) const;
 
 	void RefreshDirectoryFiles(const char* directory);
 	void FindFilesToImport(std::vector<std::string>& assetFiles, std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toImport);

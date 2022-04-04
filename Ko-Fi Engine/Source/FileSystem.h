@@ -33,9 +33,13 @@ public:
 	bool SaveFile(const char* path, std::string text) const;
 
 	void EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs);
+	void DiscoverAllFiles(const char* directory, std::vector<std::string>& files);
 	void DiscoverAllFilesFiltered(const char* directory, std::vector<std::string>& files, std::vector<std::string>& filteredFiles, const char* filter);
 	
 	void GetLastModTime(const char* path);
+
+	const char* GetFileName(const char* path) const;
+	std::string GetNameFromPath(std::string path);
 	
 	int StringCompare(const char* a, const char* b);
 	void AddPath(const char* path);

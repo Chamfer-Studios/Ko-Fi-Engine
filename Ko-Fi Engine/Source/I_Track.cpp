@@ -1,4 +1,8 @@
 #include "I_Track.h"
+
+#include "Engine.h"
+#include "FileSystem.h"
+
 #include "R_Track.h"
 
 #include "al.h"
@@ -13,11 +17,10 @@
 #include "dr_flac.h"
 
 #include "Log.h"
-#include "Importer.h"
 
 #include <filesystem>
 
-I_Track::I_Track()
+I_Track::I_Track(KoFiEngine* engine) : engine(engine)
 {
 }
 
@@ -30,7 +33,7 @@ bool I_Track::Import(const char* path, R_Track* track)
     bool ret = true;
 
     track->path = path;
-    track->name = Importer::GetInstance()->GetNameFromPath(path);
+    track->name = engine->GetFileSystem()->GetNameFromPath(path);
 
     std::filesystem::path filePath = path;
     if (filePath.extension() == ".mp3" || filePath.extension() == ".MP3")

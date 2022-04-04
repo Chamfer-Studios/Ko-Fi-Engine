@@ -135,43 +135,72 @@ void FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& file
 	std::string p = rootPath.string() + path;
 	for (const auto& file : std::filesystem::directory_iterator(p))
 	{
-		if (std::filesystem::is_directory(file.path())) {
+		if (std::filesystem::is_directory(file.path()))
+		{
 			dirs.push_back(file.path().filename().string());
 		}
-		else {
+		else
+		{
 			files.push_back(file.path().filename().string());
 		}
 	}
 }
 
-void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std::string>& files, std::vector<std::string>& filteredFiles, const char* filter)
+void FileSystem::DiscoverAllFiles(const char* directory, std::vector<std::string>& files)
 {
 	if (directory == nullptr)
 	{
-		CONSOLE_LOG("Error discovering files, directory string was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory string was nullptr.");
 		return;
 	}
 	if (!std::filesystem::exists(directory))
 	{
-		CONSOLE_LOG("Error discovering files, directory %s doesn't exist or not found.", directory);
-		return;
-	}
-
-	if (filter == nullptr)
-	{
-		CONSOLE_LOG("Filter was nullptr");
+		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
 		return;
 	}
 
 	std::vector<std::string> directories;
 	EnumerateFiles(directory, files, directories);
 
-	for (const auto file : files)
+	for (const auto dir : directories)
 	{
-		std::string fileExtension = file;
-		fileExtension = fileExtension.substr(fileExtension.find_last_of("."), fileExtension.size());
-		if (StringCompare(fileExtension.c_str(), filter) == 0)
-			filteredFiles.push_back(file);
+		std::string path = directory + std::string("/") + dir.c_str();
+		DiscoverAllFiles(path.c_str(), files);
+	}
+
+	directories.clear();
+	directories.shrink_to_fit();
+}
+
+void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std::string>& files, std::vector<std::string>& filteredFiles, const char* filter)
+{
+	if (directory == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory string was nullptr.");
+		return;
+	}
+	if (!std::filesystem::exists(directory))
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
+		return;
+	}
+	if (filter == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: Filter was nullptr.");
+		return;
+	}
+
+	std::vector<std::string> directories;
+	EnumerateFiles(directory, files, directories);
+
+	for (auto & file : files)
+	{
+		std::filesystem::path fileTmp = file;
+		if (!fileTmp.extension().empty())
+		{
+			if (StringCompare((const char*)fileTmp.extension().c_str(), filter) == 0)
+				files.push_back(file);
+		}
 	}
 
 	for (const auto dir : directories)
@@ -187,6 +216,23 @@ void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std
 void FileSystem::GetLastModTime(const char* path)
 {
 	auto fTime = std::filesystem::last_write_time(path);
+}
+
+const char* FileSystem::GetFileName(const char* path) const
+{
+	std::string p = path;
+	std::string name = p.substr(p.find_last_of("/") + 1, p.size());
+	const char* n = name.c_str();
+	return n;
+}
+
+std::string FileSystem::GetNameFromPath(std::string path)
+{
+	std::string name = path;
+	name = name.substr(name.find_last_of("/\\") + 1);
+	std::string::size_type const p(name.find_last_of('.'));
+	name = name.substr(0, p);
+	return name;
 }
 
 int FileSystem::StringCompare(const char* a, const char* b) {
@@ -326,9 +372,8 @@ void FileSystem::CreateShader(const char* path)
 
 void FileSystem::CreateScene(const char* path,const char* sceneName)
 {
-	
 	Json sceneJson;
-	std::string name = Importer::GetInstance()->GetNameFromPath(sceneName);
+	std::string name = GetNameFromPath(sceneName);
 	sceneJson[name];
 	sceneJson[name]["active"] = true;
 	sceneJson[name]["game_objects_amount"] = 0;
