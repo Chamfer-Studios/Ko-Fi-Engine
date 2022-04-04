@@ -135,36 +135,36 @@ void ComponentTransform::SetDirty(bool isDirty)
 
 float3 ComponentTransform::GetPosition() const
 {
-	float3 position;
-	float3 scale;
-	Quat rotation;
+	float3 position = float3::zero;
+	float3 scale = float3::zero;
+	Quat rotation = Quat::identity;
 	transformMatrixLocal.Decompose(position, rotation, scale);
 	return position;
 }
 
 float3 ComponentTransform::GetScale() const
 {
-	float3 position;
-	float3 scale;
-	Quat rotation;
+	float3 position = float3::zero;
+	float3 scale = float3::zero;
+	Quat rotation = Quat::identity;
 	transformMatrixLocal.Decompose(position, rotation, scale);
 	return scale;
 }
 
 float3 ComponentTransform::GetRotationEuler() const
 {
-	float3 position;
-	float3 scale;
-	Quat rotation;
+	float3 position = float3::zero;
+	float3 scale = float3::zero;
+	Quat rotation = Quat::identity;
 	transformMatrixLocal.Decompose(position, rotation, scale);
 	return rotation.ToEulerXYZ();
 }
 
 Quat ComponentTransform::GetRotationQuat() const
 {
-	float3 position;
-	float3 scale;
-	Quat rotation;
+	float3 position = float3::zero;
+	float3 scale = float3::zero;
+	Quat rotation = Quat::identity;
 	transformMatrixLocal.Decompose(position, rotation, scale);
 	return rotation;
 }

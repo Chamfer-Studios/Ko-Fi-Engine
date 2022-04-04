@@ -1,7 +1,7 @@
 {
     "testing": {
         "active": true,
-        "game_objects_amount": 20,
+        "game_objects_amount": 19,
         "game_objects_list": [
             {
                 "UID": 27979895,
@@ -63,15 +63,15 @@
                             -93.0
                         ],
                         "rotation": [
-                            0.06975638121366501,
-                            2.0768315067698495e-08,
-                            2.9700078130190377e-07,
-                            0.9975647926330566
+                            0.06975645571947098,
+                            2.076833460762373e-08,
+                            2.9700103709728864e-07,
+                            0.9975640773773193
                         ],
                         "scale": [
                             1.0,
-                            1.0,
-                            1.0
+                            0.9999998807907104,
+                            0.9999998807907104
                         ],
                         "type": "transform"
                     },
@@ -148,16 +148,6 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
-                            },
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
                             }
                         ]
                     },
@@ -189,15 +179,15 @@
                             138.0
                         ],
                         "rotation": [
-                            -0.5000001192092896,
-                            0.5000001192092896,
-                            0.4999999701976776,
-                            0.4999999701976776
+                            -0.5,
+                            0.5000002980232239,
+                            0.49999988079071045,
+                            0.49999988079071045
                         ],
                         "scale": [
-                            30.00020980834961,
-                            1.000012993812561,
-                            30.00020980834961
+                            30.000221252441406,
+                            1.0000133514404297,
+                            30.000221252441406
                         ],
                         "type": "transform"
                     },
@@ -221,16 +211,6 @@
                         "texture_path": "Assets/Textures/cliff_rock.png",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -278,8 +258,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999966621398926,
-                            29.999895095825195
+                            0.999996542930603,
+                            29.99989128112793
                         ],
                         "type": "transform"
                     },
@@ -303,16 +283,6 @@
                         "texture_path": "Assets/Textures/cliff_rock.png",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -349,19 +319,19 @@
                         "active": true,
                         "position": [
                             -1.1920928955078125e-07,
-                            0.3562656342983246,
+                            0.356266587972641,
                             12.0
                         ],
                         "rotation": [
                             -0.7071068286895752,
-                            -3.6548986059870003e-10,
-                            -5.472505115733384e-09,
+                            -3.6548897242028033e-10,
+                            -5.472504227554964e-09,
                             0.7071067094802856
                         ],
                         "scale": [
                             1.0,
-                            0.9999964833259583,
-                            0.9999964833259583
+                            0.9999963045120239,
+                            0.9999963045120239
                         ],
                         "type": "transform"
                     },
@@ -385,16 +355,6 @@
                         "texture_path": "Assets/Textures/Characters/mc_base_color.png",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -514,7 +474,7 @@
                 "is3D": true,
                 "name": "Zhib",
                 "parent_UID": 4294967295,
-                "tag": 1
+                "tag": 0
             },
             {
                 "UID": 1657882298,
@@ -539,8 +499,8 @@
                         ],
                         "scale": [
                             10.0,
-                            19.99989128112793,
-                            0.999996542930603
+                            19.999887466430664,
+                            0.9999964237213135
                         ],
                         "type": "transform"
                     },
@@ -564,16 +524,6 @@
                         "texture_path": "Assets/Textures/dinning_table_texture_v2.png",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -623,82 +573,6 @@
                 ],
                 "is3D": true,
                 "name": "Table",
-                "parent_UID": 4294967295,
-                "tag": 2
-            },
-            {
-                "UID": 1860854588,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1486.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            0.0,
-                            0.10000000149011612,
-                            0.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Shell.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            1.0,
-                            0.8588235974311829,
-                            0.08627451211214066,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "is3D": true,
-                "name": "Shell",
                 "parent_UID": 4294967295,
                 "tag": 0
             },
@@ -839,10 +713,10 @@
                             143.0
                         ],
                         "rotation": [
-                            -0.5000000596046448,
-                            0.5000001192092896,
-                            0.5000001192092896,
-                            0.5000000596046448
+                            -0.4999999403953552,
+                            0.4999999403953552,
+                            0.5000001788139343,
+                            0.4999999403953552
                         ],
                         "scale": [
                             30.000274658203125,
@@ -871,16 +745,6 @@
                         "texture_path": "Assets/Textures/cliff_rock.png",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -962,8 +826,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.9999988675117493,
-                            29.999963760375977
+                            0.9999987483024597,
+                            29.99995994567871
                         ],
                         "type": "transform"
                     },
@@ -971,7 +835,7 @@
                         "active": true,
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
-                        "path": "Library/Meshes/CliffRock_low.sugar",
+                        "path": "Library/Meshes/CliffRock_low1.sugar",
                         "shape_type": 0,
                         "type": "mesh"
                     },
@@ -996,22 +860,12 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
-                            },
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
                             }
                         ]
                     }
                 ],
                 "is3D": true,
-                "name": "CliffRock_low",
+                "name": "CliffRock_low1",
                 "parent_UID": 1278325985,
                 "tag": 0
             },
@@ -1045,7 +899,7 @@
                     }
                 ],
                 "is3D": true,
-                "name": "rock_cliff",
+                "name": "rock_cliff1",
                 "parent_UID": 4294967295,
                 "tag": 0
             },
@@ -1072,8 +926,8 @@
                         ],
                         "scale": [
                             30.0,
-                            0.999998927116394,
-                            29.99996566772461
+                            0.9999988079071045,
+                            29.999961853027344
                         ],
                         "type": "transform"
                     },
@@ -1081,7 +935,7 @@
                         "active": true,
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
-                        "path": "Library/Meshes/CliffRock_low.sugar",
+                        "path": "Library/Meshes/CliffRock_low2.sugar",
                         "shape_type": 0,
                         "type": "mesh"
                     },
@@ -1106,16 +960,6 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
-                            },
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
                             }
                         ]
                     },
@@ -1127,7 +971,7 @@
                     }
                 ],
                 "is3D": true,
-                "name": "CliffRock_low",
+                "name": "CliffRock_low2",
                 "parent_UID": 1386708608,
                 "tag": 0
             },
@@ -1303,9 +1147,9 @@
                             248.3292694091797
                         ],
                         "rotation": [
-                            -0.011064521968364716,
-                            3.611002163950161e-09,
-                            -3.995625705299766e-11,
+                            -0.01106452476233244,
+                            3.611002830083976e-09,
+                            -3.995626746133851e-11,
                             0.9999387860298157
                         ],
                         "scale": [
@@ -1335,16 +1179,6 @@
                         "texture_path": "",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -1417,16 +1251,6 @@
                         "texture_path": "Assets/Textures/Characters/nerala_base_color.png",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -1546,7 +1370,7 @@
                 "is3D": true,
                 "name": "Nerala",
                 "parent_UID": 4294967295,
-                "tag": 2
+                "tag": 0
             },
             {
                 "UID": 489060177,
@@ -1571,8 +1395,8 @@
                         ],
                         "scale": [
                             1.0,
-                            0.9999914169311523,
-                            0.9999914169311523
+                            0.9999912977218628,
+                            0.9999912977218628
                         ],
                         "type": "transform"
                     },
@@ -1596,16 +1420,6 @@
                         "texture_path": "Assets/Textures/Characters/Assassin_Base_color.png",
                         "type": "material",
                         "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
                             {
                                 "name": "albedoTint",
                                 "type": 35666,
@@ -1725,7 +1539,7 @@
                 "is3D": true,
                 "name": "Omozra",
                 "parent_UID": 4294967295,
-                "tag": 2
+                "tag": 0
             }
         ],
         "name": "testing",
