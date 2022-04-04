@@ -44,15 +44,11 @@ public:
 	// Transform Functions
 	void RecomputeGlobalMatrix();
 
-	// Guizmo
-	void UpdateGuizmoParameters(float4x4& transformMatrix);
-
 	// Serialization
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
 private:
-
 	// Transfrom Properties
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;
