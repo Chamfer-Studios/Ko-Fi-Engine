@@ -125,6 +125,8 @@ void Navigation::PrepareDetour()
 {
 	if (navMeshDetail == nullptr) return;
 
+	if (dtNavMesh != nullptr) dtFreeNavMesh(dtNavMesh);
+
 	for (int i = 0; i < navMesh->npolys; ++i)
 	{
 		if (navMesh->areas[i] == RC_WALKABLE_AREA)
@@ -181,6 +183,9 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 {
 	// https://wiki.jmonkeyengine.org/docs/3.4/contributions/ai/recast.html
 	// https://github.com/recastnavigation/recastnavigation/blob/c5cbd53024c8a9d8d097a4371215e3342d2fdc87/RecastDemo/Source/Sample_SoloMesh.cpp
+
+	if (navMesh != nullptr) rcFreePolyMesh(navMesh);
+	if (navMeshDetail != nullptr) rcFreePolyMeshDetail(navMeshDetail);
 
 	rcConfig* config = new rcConfig();
 
@@ -275,6 +280,14 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 		return nullptr;
 	}
 
+	delete config;
+	delete context;
+
+	rcFreeHeightField(heightfield);
+	delete[] areas;
+	rcFreeCompactHeightfield(compactHeightfield);
+	rcFreeContourSet(contourSet);
+
 	return polyMeshDetail;
 }
 
@@ -329,7 +342,10 @@ std::tuple<std::vector<float3>> Navigation::FindPath(float3 origin, float3 desti
 		path.push_back(float3(vectorPath[i * 3], vectorPath[i * 3 + 1], vectorPath[i * 3 + 2]));
 	}
 
+	dtFreeNavMeshQuery(query);
+	delete filter;
 	free(polyPath);
+	free(vectorPath);
 
 	return std::make_tuple(path);
 }
