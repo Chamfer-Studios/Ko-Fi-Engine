@@ -152,7 +152,8 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					ImGui::SameLine();
 					ImGui::BeginGroup();
 					ImGui::Text(emitter->texture.GetTexturePath());
-					ImGui::PushID(emitter->texture.textureID << 8);
+					ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
 
 					std::string changeTexture = "Change Texture to " + emitter->name;
 					if (ImGui::Button(changeTexture.c_str()))
@@ -162,7 +163,8 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					}
 
 					ImGui::PopID();
-					ImGui::PushID(emitter->texture.textureID << 16);
+					ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
 
 					std::string deleteTexture = "Delete Texture to " + emitter->name;
 					if (ImGui::Button(deleteTexture.c_str()))

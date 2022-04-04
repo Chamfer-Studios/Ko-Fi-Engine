@@ -15,7 +15,6 @@ public:
 	bool PreUpdate();
 	bool Update();
 	bool PostUpdate();
-
 private:
 	// Needed modules
 	Editor* editor = nullptr;
@@ -25,6 +24,7 @@ private:
 	bool debugOptions = false;
 	bool drawVertexNormals = false;
 	bool drawFacesNormals = false;
+
 
 };
 

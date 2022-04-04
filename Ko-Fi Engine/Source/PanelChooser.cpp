@@ -58,6 +58,7 @@ const char* PanelChooser::OnChooserClosed()
 }
 void PanelChooser::ShowPanel(const char* path,const char* extension)
 {
+	ImGui::PushID(editor->idTracker++);
 	ImGui::OpenPopup("Chooser");
 	if (ImGui::BeginPopupModal("Chooser", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
 		ImGui::BeginChild("ChooserPanel", ImVec2(0, 300), true);
@@ -96,6 +97,7 @@ void PanelChooser::ShowPanel(const char* path,const char* extension)
 
 		ImGui::EndPopup();
 	}
+	ImGui::PopID();
 }
 
 void PanelChooser::GetPath(const char* path, const char* extension)

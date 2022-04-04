@@ -169,13 +169,30 @@ void ComponentAnimator::Load(Json& json)
 	{*/
 		animation = new R_Animation();
 	/*}*/
-		if (json.contains("path"))
+	if (json.contains("path"))
+	{
+		std::string path = json.at("path");
+		Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
+		owner->GetComponent<ComponentMesh>()->GetMesh()->SetIsAnimated(true);
+		owner->GetComponent<ComponentMesh>()->GetMesh()->SetAnimation(animation);
+
+		if (!json.empty())
 		{
+			AnimatorClip animatorClip;
+			for (const auto& clip : json.at("clips").items())
+			{
+				animatorClip.SetName(clip.value().at("clipName").get<std::string>().c_str());
+				animatorClip.SetStartFrame(clip.value().at("clipStartFrame"));
+				animatorClip.SetEndFrame(clip.value().at("clipEndFrame"));
+				animatorClip.SetDuration(clip.value().at("clipDuration"));
+
+				animatorClip.SetAnimation(animation);
+
+				clips.emplace(clip.value().at("mapString"), animatorClip);
+			}
+			SetSelectedClip(json.at("selectedClip"));
+		}
 	}
-	std::string path = json.at("path");
-	Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
-	owner->GetComponent<ComponentMesh>()->GetMesh()->SetIsAnimated(true);
-	owner->GetComponent<ComponentMesh>()->GetMesh()->SetAnimation(animation);
 
 	if (selectedClip)
 	{
@@ -186,23 +203,6 @@ void ComponentAnimator::Load(Json& json)
 	{*/
 		/*selectedClip = new AnimatorClip();*/
 	/*}*/
-
-	if (!json.empty())
-	{
-		AnimatorClip animatorClip;
-		for (const auto& clip : json.at("clips").items())
-		{
-			animatorClip.SetName(clip.value().at("clipName").get<std::string>().c_str());
-			animatorClip.SetStartFrame(clip.value().at("clipStartFrame"));
-			animatorClip.SetEndFrame(clip.value().at("clipEndFrame"));
-			animatorClip.SetDuration(clip.value().at("clipDuration"));
-
-			animatorClip.SetAnimation(animation);
-
-			clips.emplace(clip.value().at("mapString"), animatorClip);
-		}
-		SetSelectedClip(json.at("selectedClip"));
-	}
 }
 
 void ComponentAnimator::Reset()

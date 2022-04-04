@@ -1,6 +1,9 @@
 #include "ComponentMaterial.h"
 #include "Material.h"
 #include "Log.h"
+#include "GameObject.h"
+#include "Engine.h"
+#include "Editor.h"
 
 #include "Importer.h"
 #include "I_Material.h"
@@ -376,7 +379,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			ImGui::SameLine();
 			ImGui::BeginGroup();
 			ImGui::Text(texture.GetTexturePath());
-			ImGui::PushID(texture.textureID << 8);
+			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 			if (ImGui::Button("Change Texture"))
 			{
@@ -386,7 +389,8 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 
 			ImGui::PopID();
 
-			ImGui::PushID(texture.textureID << 16);
+			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
 
 			if (ImGui::Button("Delete Texture"))
 			{
