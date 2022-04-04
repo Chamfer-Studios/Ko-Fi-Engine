@@ -277,6 +277,8 @@ void SceneManager::OnClick(SDL_Event event)
 void SceneManager::GuizmoTransformation()
 {
 	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+	if (!selectedGameObject->GetComponent<ComponentTransform>()) return;
+
 	if (selectedGameObject == nullptr || selectedGameObject->GetUID() == -1)
 		return;
 
