@@ -20,19 +20,19 @@ ultimateRange = 150.0
 ultimateRangeExtension = ultimateRange * 0.66
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
-local speedIV = InspectorVariable.new("speed", speedIVT, speed)
+speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
 local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-local maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
+maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
 NewVariable(maxKnivesIV)
 
 local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-local ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
+ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
 NewVariable(ultimateRangeIV)
 
 local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-local characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
 
 componentAnimator = gameObject:GetComponentAnimator()
@@ -83,11 +83,12 @@ function Update(dt)
 	if (invisibilityDuration ~= nil) then
 		invisibilityTimer = invisibilityTimer + dt
 		if (invisibilityTimer >= invisibilityDuration) then
+			-- Reappear
 			invisibilityDuration = nil
 			gameObject.active = true
-		else
-			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 1000.0, componentTransform:GetPosition().z))
+			componentTransform:SetPosition(reappearPosition) -- WORKS FOR ONE FRAME
 		end
+		return -- This is to not receive input while invis
 	end
 
 	-- Actions
@@ -295,21 +296,30 @@ function Ultimate(mousePos)
 		end		
 	end
 
-	deathMarkDuration = 0.4
+	deathMarkDuration = 0.2
 	-- Set IN ORDER the death mark
 	for i = 1, #enemiesInRange do
-		deathMarkDuration = deathMarkDuration + 0.3
+		deathMarkDuration = deathMarkDuration + 0.2
 		SetLuaVariableFromGameObject(enemiesInRange[i].name, "deathMarkDuration", deathMarkDuration)
 	end
-	
-	Disapear(deathMarkDuration)
+
+	-- final pos = final target pos + Normalized(final target pos - initial pos) * d
+	local targetPos2D = { enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().x, enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().z }
+	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
+	local d = Distance(pos2D, targetPos2D)
+	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }	
+	vec2 = Normalize(vec2, d)
+
+	-- This 10 is the constant to modify
+	reappearPosition = float3.new(enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().x + vec2[1] * 10, enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().y, enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().z + vec2[2] * 10)
 
 	-- Set timer equal to the longest dath mark timer to reappear
+	Disapear(deathMarkDuration)
+
 end
 
 function Disapear(duration)
 	gameObject.active = false
-	componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 1000.0, componentTransform:GetPosition().z))
 
 	invisibilityTimer = 0
 	invisibilityDuration = duration

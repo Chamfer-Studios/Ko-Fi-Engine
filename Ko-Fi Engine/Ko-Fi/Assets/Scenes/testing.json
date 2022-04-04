@@ -349,13 +349,13 @@
                         "active": true,
                         "position": [
                             -1.1920928955078125e-07,
-                            0.35626792907714844,
+                            0.3562656342983246,
                             12.0
                         ],
                         "rotation": [
                             -0.7071068286895752,
-                            -3.654910263328759e-10,
-                            -5.4725060039118034e-09,
+                            -3.6548986059870003e-10,
+                            -5.472505115733384e-09,
                             0.7071067094802856
                         ],
                         "scale": [
@@ -423,7 +423,7 @@
                         ],
                         "density": 1.0,
                         "freeze_position_x": false,
-                        "freeze_position_y": false,
+                        "freeze_position_y": true,
                         "freeze_position_z": false,
                         "freeze_rotation_x": false,
                         "freeze_rotation_y": false,
@@ -438,11 +438,33 @@
                         ],
                         "mass": 5.0,
                         "type": "rigidBody",
-                        "use_gravity": true
+                        "use_gravity": false
                     },
                     {
                         "active": true,
                         "file_name": "Assets/Scripts/Players/Zhib.lua",
+                        "inspector_variables": [
+                            {
+                                "name": "speed",
+                                "type": "int",
+                                "value": 229
+                            },
+                            {
+                                "name": "maxKnives",
+                                "type": "int",
+                                "value": 2
+                            },
+                            {
+                                "name": "ultimateRange",
+                                "type": "float",
+                                "value": 150.0
+                            },
+                            {
+                                "name": "characterID",
+                                "type": "int",
+                                "value": 1
+                            }
+                        ],
                         "script_number": 1,
                         "type": "script"
                     },
@@ -573,6 +595,28 @@
                     {
                         "active": true,
                         "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
+                        "inspector_variables": [
+                            {
+                                "name": "speed",
+                                "type": "int",
+                                "value": 20
+                            },
+                            {
+                                "name": "speed",
+                                "type": "int",
+                                "value": 20
+                            },
+                            {
+                                "name": "minSeekDistance",
+                                "type": "int",
+                                "value": 100
+                            },
+                            {
+                                "name": "minRetargetingDistance",
+                                "type": "int",
+                                "value": 3
+                            }
+                        ],
                         "script_number": 1,
                         "type": "script"
                     }
@@ -1337,7 +1381,7 @@
                         "active": true,
                         "position": [
                             0.0,
-                            16.50762939453125,
+                            15.924203872680664,
                             48.489837646484375
                         ],
                         "rotation": [
@@ -1411,7 +1455,7 @@
                         ],
                         "density": 1.0,
                         "freeze_position_x": false,
-                        "freeze_position_y": false,
+                        "freeze_position_y": true,
                         "freeze_position_z": false,
                         "freeze_rotation_x": false,
                         "freeze_rotation_y": false,
@@ -1426,11 +1470,33 @@
                         ],
                         "mass": 5.0,
                         "type": "rigidBody",
-                        "use_gravity": true
+                        "use_gravity": false
                     },
                     {
                         "active": true,
                         "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
+                        "inspector_variables": [
+                            {
+                                "name": "speed",
+                                "type": "int",
+                                "value": 20
+                            },
+                            {
+                                "name": "speed",
+                                "type": "int",
+                                "value": 20
+                            },
+                            {
+                                "name": "minSeekDistance",
+                                "type": "int",
+                                "value": 100
+                            },
+                            {
+                                "name": "minRetargetingDistance",
+                                "type": "int",
+                                "value": 3
+                            }
+                        ],
                         "script_number": 1,
                         "type": "script"
                     },
@@ -1494,7 +1560,7 @@
                         "active": true,
                         "position": [
                             -36.92433547973633,
-                            24.126358032226563,
+                            23.69434356689453,
                             42.89097213745117
                         ],
                         "rotation": [
@@ -1568,7 +1634,7 @@
                         ],
                         "density": 1.0,
                         "freeze_position_x": false,
-                        "freeze_position_y": false,
+                        "freeze_position_y": true,
                         "freeze_position_z": false,
                         "freeze_rotation_x": false,
                         "freeze_rotation_y": false,
@@ -1583,11 +1649,33 @@
                         ],
                         "mass": 5.0,
                         "type": "rigidBody",
-                        "use_gravity": true
+                        "use_gravity": false
                     },
                     {
                         "active": true,
                         "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
+                        "inspector_variables": [
+                            {
+                                "name": "speed",
+                                "type": "int",
+                                "value": 20
+                            },
+                            {
+                                "name": "speed",
+                                "type": "int",
+                                "value": 20
+                            },
+                            {
+                                "name": "minSeekDistance",
+                                "type": "int",
+                                "value": 100
+                            },
+                            {
+                                "name": "minRetargetingDistance",
+                                "type": "int",
+                                "value": 3
+                            }
+                        ],
                         "script_number": 1,
                         "type": "script"
                     },

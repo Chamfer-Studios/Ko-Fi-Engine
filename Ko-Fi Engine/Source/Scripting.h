@@ -376,6 +376,61 @@ public:
 	void LuaNewVariable(InspectorVariable* inspectorVariable)
 	{
 		ComponentScript* script = gameObject->GetComponent<ComponentScript>();
+
+		for (std::vector<InspectorVariable*>::iterator var = script->inspectorVariables.begin(); var != script->inspectorVariables.end(); ++var)
+		{
+			if (inspectorVariable->name == (*var)->name)
+			{
+				switch (inspectorVariable->type)
+				{
+					case INSPECTOR_INT:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<int>((*var)->value);
+						return;
+					}
+					case INSPECTOR_FLOAT:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<float>((*var)->value);
+						return;
+					}
+					case INSPECTOR_FLOAT2:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<float2>((*var)->value);
+						return;
+					}
+					case INSPECTOR_FLOAT3:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<float3>((*var)->value);
+						return;
+					}
+					case INSPECTOR_BOOL:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<bool>((*var)->value);
+						return;
+					}
+					case INSPECTOR_STRING:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<std::string>((*var)->value);
+						return;
+					}
+					case INSPECTOR_TO_STRING:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<std::string>((*var)->value);
+						return;
+					}
+					case INSPECTOR_FLOAT3_ARRAY:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<std::vector<float3>>((*var)->value);
+						return;
+					}
+					case INSPECTOR_GAMEOBJECT:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<GameObject*>((*var)->value);
+						return;
+					}
+				}
+			}
+		}
 		script->inspectorVariables.push_back(inspectorVariable);
 	}
 
