@@ -43,6 +43,8 @@ navigation = GetNavigation()
 finalPath = {}
 currentPathIndex = 1
 
+forward = nil
+
 function Float3Length(v)
     return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
 end
@@ -92,6 +94,7 @@ function FollowPath(dt)
         currentTarget = finalPath[currentPathIndex]
     end
     direction = Float3NormalizedDifference(currentPosition, currentTarget)
+    forward = direction
     delta = { x = direction.x * speed * dt, y = direction.y * speed * dt, z = direction.z * speed * dt }
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
@@ -99,9 +102,9 @@ end
 
 function CalculateFinalPath(wp)
     finalPath = {}
-    playerPosition = player:GetPosition()
-    finalPath[1] = float3.new(playerPosition.x, playerPosition.y, playerPosition.z)
-    n = 2
+    playerPosition = componentTransform:GetPosition()
+    --finalPath[1] = playerPosition
+    n = 1
     for i=1,#wp - 1 do
         current = wp[i]
         next = wp[i + 1]
@@ -168,7 +171,6 @@ end
 
 function ShouldSeekPlayer()
     position = componentTransform:GetPosition()
-    forward = componentTransform:GetFront()
     --up = componentTransform:GetUp()
 
     --DrawCone(position, forward, up, visionConeAngle, visionConeRadius)
