@@ -44,7 +44,8 @@
                 ],
                 "is3D": true,
                 "name": "camera",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 1986459703,
@@ -83,7 +84,8 @@
                 ],
                 "is3D": false,
                 "name": "Canvas",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
                 "UID": 1364115763,
@@ -131,7 +133,8 @@
                 ],
                 "is3D": false,
                 "name": "Button",
-                "parent_UID": 1986459703
+                "parent_UID": 1986459703,
+                "tag": 0
             },
             {
                 "UID": 1886696759,
@@ -170,7 +173,8 @@
                 ],
                 "is3D": true,
                 "name": "GameState",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             }
         ],
         "name": "IntroMenu",
