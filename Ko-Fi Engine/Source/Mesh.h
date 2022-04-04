@@ -66,6 +66,11 @@ struct BoneInfo
 	float4x4 offsetMatrix;
 	float4x4 finalTransformation;
 
+	BoneInfo()
+	{
+		offsetMatrix = float4x4::zero;
+		finalTransformation = float4x4::zero;
+	}
 	BoneInfo(const float4x4& offset)
 	{
 		offsetMatrix = offset;
@@ -141,10 +146,11 @@ public:
 	// Texture coordinates
 	uint idTexCoord = 0;
 	float* texCoords = nullptr;
+
+	// Bones
 	uint idBones = 0;
 	std::vector<VertexBoneData> bones;
 	std::vector<BoneInfo> boneInfo;
-
 	std::map<std::string, uint> boneNameToIndexMap;
 
 	unsigned int VAO = 0;

@@ -87,7 +87,6 @@ void ComponentMesh::Save(Json& json) const
 	json["shape_type"] = (int)mesh->meshType;
 	json["draw_vertex_normals"] = mesh->GetVertexNormals();
 	json["draw_face_normals"] = mesh->GetFaceNormals();
-	int uid = mesh->GetRootNode()->GetUID();
 	json["rootNodeUID"] = mesh->GetRootNode()->GetUID();
 }
 
