@@ -1,4 +1,4 @@
-#ifndef __SCRIPTING_H__
+	#ifndef __SCRIPTING_H__
 #define __SCRIPTING_H__
 
 #include "Globals.h"
@@ -124,7 +124,8 @@ public:
 					 "UNTAGGED", Tag::TAG_UNTAGGED,
 					 "PLAYER", Tag::TAG_PLAYER,
 					 "ENEMY", Tag::TAG_ENEMY,
-					 "WALL", Tag::TAG_WALL);
+					 "WALL", Tag::TAG_WALL,
+					 "PROJECTILE", Tag::TAG_PROJECTILE);
 
 		/// Classes:
 		// float3 structure
@@ -142,24 +143,24 @@ public:
 
 		// GameObject structure
 		lua.new_usertype<GameObject>("GameObject",
-			sol::constructors<void()>(),
-			"active", &GameObject::active,
-			"name", &GameObject::GetName,
-			"tag", &GameObject::tag,
-			"GetParent", &GameObject::GetParent,
-			"GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
-			"GetTransform", &GameObject::GetTransform,
-			"GetComponentMesh", &GameObject::GetComponent<ComponentMesh>,
-			"GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>,
-			"GetText", &GameObject::GetComponent<ComponentText>,
-			"GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
-			"GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
-			"GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
-			"IsSelected", &GameObject::IsSelected,
-			"GetButton", &GameObject::GetComponent<ComponentButton>,
-			"GetImage", &GameObject::GetComponent<ComponentImage>,
-			"LoadScene", &GameObject::LoadSceneFromName,
-			"ChangeScene", &GameObject::SetChangeScene
+									 sol::constructors<void()>(),
+									 "active", &GameObject::active,
+									 "GetName", &GameObject::GetName,
+									 "tag", &GameObject::tag,
+									 "GetParent", &GameObject::GetParent,
+									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
+									 "GetTransform", &GameObject::GetTransform,
+									 "GetComponentMesh", &GameObject::GetComponent<ComponentMesh>,
+									 "GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>,
+									 "GetText", &GameObject::GetComponent<ComponentText>,
+									 "GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
+									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
+									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
+									 "IsSelected", &GameObject::IsSelected,
+									 "GetButton", &GameObject::GetComponent<ComponentButton>,
+									 "GetImage", &GameObject::GetComponent<ComponentImage>,
+									 "LoadScene", &GameObject::LoadSceneFromName,
+									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
 		);
@@ -244,14 +245,15 @@ public:
 
 		// Rigid Body structure
 		lua.new_usertype<ComponentRigidBody>("ComponentRigidBody",
-		sol::constructors<void(GameObject *)>(),
-		"IsStatic", &ComponentRigidBody::IsStatic,
-		"IsKinematic", &ComponentRigidBody::IsKinematic,
-		"SetStatic", &ComponentRigidBody::SetStatic,
-		"SetDynamic", &ComponentRigidBody::SetDynamic,
-		"SetLinearVelocity", &ComponentRigidBody::SetLinearVelocity,
-		"FreezePositionY", &ComponentRigidBody::FreezePositionY,
-		"Set2DVelocity", &ComponentRigidBody::Set2DVelocity);
+											 sol::constructors<void(GameObject *)>(),
+											 "IsStatic", &ComponentRigidBody::IsStatic,
+											 "IsKinematic", &ComponentRigidBody::IsKinematic,
+											 "SetStatic", &ComponentRigidBody::SetStatic,
+											 "SetDynamic", &ComponentRigidBody::SetDynamic,
+											 "SetLinearVelocity", &ComponentRigidBody::SetLinearVelocity,
+											 "FreezePositionY", &ComponentRigidBody::FreezePositionY,
+											 "Set2DVelocity", &ComponentRigidBody::Set2DVelocity,
+											 "SetRigidBodyPos", &ComponentRigidBody::SetRigidBodyPos);
 
 		lua.new_usertype<Navigation>("Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
@@ -476,6 +478,61 @@ public:
 	void LuaNewVariable(InspectorVariable *inspectorVariable)
 	{
 		ComponentScript *script = gameObject->GetComponent<ComponentScript>();
+
+		for (std::vector<InspectorVariable *>::iterator var = script->inspectorVariables.begin(); var != script->inspectorVariables.end(); ++var)
+		{
+			if (inspectorVariable->name == (*var)->name)
+			{
+				switch (inspectorVariable->type)
+				{
+				case INSPECTOR_INT:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<int>((*var)->value);
+					return;
+				}
+				case INSPECTOR_FLOAT:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<float>((*var)->value);
+					return;
+				}
+				case INSPECTOR_FLOAT2:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<float2>((*var)->value);
+					return;
+				}
+				case INSPECTOR_FLOAT3:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<float3>((*var)->value);
+					return;
+				}
+				case INSPECTOR_BOOL:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<bool>((*var)->value);
+					return;
+				}
+				case INSPECTOR_STRING:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<std::string>((*var)->value);
+					return;
+				}
+				case INSPECTOR_TO_STRING:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<std::string>((*var)->value);
+					return;
+				}
+				case INSPECTOR_FLOAT3_ARRAY:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<std::vector<float3>>((*var)->value);
+					return;
+				}
+				case INSPECTOR_GAMEOBJECT:
+				{
+					lua[inspectorVariable->name.c_str()] = std::get<GameObject *>((*var)->value);
+					return;
+				}
+				}
+			}
+		}
 		script->inspectorVariables.push_back(inspectorVariable);
 	}
 

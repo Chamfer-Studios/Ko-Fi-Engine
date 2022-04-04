@@ -22,21 +22,31 @@
             true,
             true,
             true,
-            false,
             true,
             false,
             true,
             true,
+            false,
+            true,
+            true,
+            true,
             true,
             false,
             true,
-            true
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
         ],
         "Filters": [
             "default",
             "enemy",
             "player",
-            "terrain"
+            "terrain",
+            "projectile"
         ],
         "Gravity": 9.8100004196167,
         "Number_threads": 4

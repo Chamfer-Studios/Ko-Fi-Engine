@@ -189,6 +189,17 @@ void ComponentRigidBody::Set2DVelocity(float2 vel)
 	}
 }
 
+void ComponentRigidBody::SetRigidBodyPos(float3 pos)
+{
+	physx::PxTransform transform;
+	transform.p = physx::PxVec3(pos.x, pos.y, pos.z);
+	math::Quat quat = owner->GetComponent<ComponentTransform>()->GetRotationQuat();
+	transform.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
+
+	GetRigidBody()->setGlobalPose(transform); 
+	hasUpdated = true; 
+}
+
 void ComponentRigidBody::StopMovement()
 {
 	if (isStatic)

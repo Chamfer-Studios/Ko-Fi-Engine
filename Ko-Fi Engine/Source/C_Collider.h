@@ -27,7 +27,7 @@ class ComponentTransform;
 class ComponentCollider2 : public Component
 {
 public:
-	ComponentCollider2(GameObject* parent, ColliderShape collType);
+	ComponentCollider2(GameObject* parent, ColliderShape collType = ColliderShape::NONE);
 	~ComponentCollider2();
 
 	bool Update(float dt) override;
