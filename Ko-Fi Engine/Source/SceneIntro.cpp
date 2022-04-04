@@ -20,6 +20,7 @@
 #include "GameObject.h"
 #include "SceneManager.h"
 #include "node_editor.h"
+#include "Log.h"
 
 #include "SDL_assert.h"
 
@@ -211,8 +212,10 @@ bool SceneIntro::CleanUp()
 	{
 		RELEASE(gameObject);
 	}
-
+	gameObjectList.clear();
+	gameObjectList.shrink_to_fit();
 	lights.clear();
+	lights.shrink_to_fit();
 
 	example::NodeEditorShutdown();
 

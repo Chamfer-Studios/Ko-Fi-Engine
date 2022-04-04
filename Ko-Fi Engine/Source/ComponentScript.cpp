@@ -45,14 +45,14 @@ bool ComponentScript::Start()
 bool ComponentScript::CleanUp()
 {
 	//TODO: CLEAN UP LUA
-	//script.abandon();
-	//script.~protected_function_result();
+	script.abandon();
+	script.~protected_function_result();
 
-	if (handler)
-	{
-		handler->CleanUp();
-		RELEASE(handler);
-	}
+	//if (handler != nullptr)
+	//{
+	//	handler->CleanUp();
+	//	RELEASE(handler);
+	//}
 
 	path.clear();
 	path.shrink_to_fit();
