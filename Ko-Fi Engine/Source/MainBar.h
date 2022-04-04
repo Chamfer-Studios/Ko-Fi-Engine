@@ -5,6 +5,7 @@
 
 class Editor;
 class Importer;
+class GameObject;
 
 class MainBar : public Panel
 {
@@ -17,6 +18,7 @@ public:
 	bool Update();
 	bool PostUpdate();
 	void ThreadLoadScene();
+	void SafeUIPlacing(GameObject* go);
 
 	void ChoosersListener();
 
