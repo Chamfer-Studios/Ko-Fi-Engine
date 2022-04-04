@@ -15,6 +15,8 @@
 
 #include "Log.h"
 #include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/Math/float4.h"
+#include "MathGeoLib/Math/Quat.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
@@ -25,6 +27,7 @@
 #include "ComponentButton.h"
 #include "ComponentAnimator.h"
 #include "ComponentParticle.h"
+#include "ComponentCamera.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 
@@ -133,14 +136,32 @@ public:
 								 sol::constructors<void(), void(float, float, float)>(),
 								 "x", &float3::x,
 								 "y", &float3::y,
-								 "z", &float3::z);
+								 "z", &float3::z,
+								 "Normalize",&float3::Normalize);
 
 		// float2 structure
 		lua.new_usertype<float2>("float2",
 								 sol::constructors<void(), void(float, float)>(),
 								 "x", &float2::x,
 								 "y", &float2::y);
+		// float4 structure
+		lua.new_usertype<float4>("float4",
+			sol::constructors<void(), void(float, float, float, float)>(),
+			"x", &float4::x,
+			"y", &float4::y,
+			"z", &float4::z,
+			"w", &float4::w
+			);
 
+		// Quaternion structure
+		lua.new_usertype<Quat>("Quat",
+			sol::constructors<void(float, float, float, float)>(),
+			"x", &Quat::x,
+			"y", &Quat::y,
+			"z", &Quat::z,
+			"w", &Quat::w,
+			"RotateY", &Quat::RotateY
+			);
 		// GameObject structure
 		lua.new_usertype<GameObject>("GameObject",
 									 sol::constructors<void()>(),
@@ -156,6 +177,7 @@ public:
 									 "GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
 									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
+									 "GetCamera", &GameObject::GetComponent<ComponentCamera>,
 									 "IsSelected", &GameObject::IsSelected,
 									 "GetButton", &GameObject::GetComponent<ComponentButton>,
 									 "GetImage", &GameObject::GetComponent<ComponentImage>,
@@ -181,12 +203,21 @@ public:
 			"SetPosition", &ComponentTransform::SetPosition,
 			"GetRotation", &ComponentTransform::GetRotationEuler,
 			"SetRotation", &ComponentTransform::SetRotationEuler,
+			"SetRotationQuat", &ComponentTransform::SetRotationQuat,
+			"GetRotationQuat", &ComponentTransform::GetRotationQuat,
 			"GetScale", &ComponentTransform::GetScale,
 			"SetScale", &ComponentTransform::SetScale,
 			"GetFront", &ComponentTransform::Front,
 			"SetFront", &ComponentTransform::SetFront
 			);
 
+		// Component Camera
+		lua.new_usertype<ComponentCamera>("ComponentTransform",
+			sol::constructors<void(GameObject*)>(),
+			"LookAt", &ComponentCamera::LookAt,
+			"right", &ComponentCamera::right,
+			"up", &ComponentCamera::up
+			);
 		// Component Mesh
 		lua.new_usertype<ComponentMesh>("ComponentMesh",
 			sol::constructors<void(GameObject *)>(),
@@ -278,6 +309,7 @@ public:
 		lua.set_function("Log", &Scripting::LuaLog, this);
 		lua.set_function("GetNavigation", &Scripting::GetNavigation, this);
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
+		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
 	}
 
 	bool CleanUp()
@@ -571,6 +603,11 @@ public:
 
 	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length) {
 		gameObject->GetEngine()->GetRenderer()->DrawCone(position, forward, up, angle, length);
+	}
+	float3 LuaMulQuat(Quat quat, float3 vector)
+	{
+		float3 tmp = quat.Mul(vector);
+		return tmp;
 	}
 
 public:
