@@ -231,6 +231,7 @@ bool Input::CleanUp()
 	CONSOLE_LOG("Quitting SDL input event subsystem");
 	appLog->AddLog("Quitting SDL input event subsystem\n");
 
+
 	delete[] keyboard;
 
 	if(dropped_filedir)

@@ -112,7 +112,7 @@ bool Physics::CleanUp()
 
 	if (material)
 	{
-		material->release();
+		//material->release();
 		material = nullptr;
 	}
 

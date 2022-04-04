@@ -186,7 +186,7 @@ bool UI::CleanUp()
 	loadedTextures.shrink_to_fit();
 
 	TTF_CloseFont(rubik);
-	RELEASE(rubik);
+	rubik = nullptr;
 
 	engine = nullptr;
 

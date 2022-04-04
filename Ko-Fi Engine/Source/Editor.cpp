@@ -310,40 +310,40 @@ bool Editor::CleanUp()
 	panels.clear();
 
 	if (mainMenuBar != nullptr)
-		RELEASE(mainMenuBar);
+		mainMenuBar = nullptr;
 
 	if (panelHierarchy != nullptr)
-		RELEASE(panelHierarchy);
+		panelHierarchy = nullptr;
 
 	if (panelConfig != nullptr)
-		RELEASE(panelConfig);
+		panelConfig = nullptr;
 
 	if (panelLog != nullptr)
-		RELEASE(panelLog);
+		panelLog = nullptr;
 
 	if (panelAbout != nullptr)
-		RELEASE(panelAbout);
+		panelAbout = nullptr;
 
 	if (panelSettings != nullptr)
-		RELEASE(panelSettings);
+		panelSettings = nullptr;
 
 	if (panelChooser != nullptr)
-		RELEASE(panelChooser);
+		panelChooser = nullptr;
 
 	if (panelGameObject != nullptr)
-		RELEASE(panelGameObject);
+		panelGameObject = nullptr;
 
 	if (panelViewport != nullptr)
-		RELEASE(panelViewport);
+		panelViewport = nullptr;
 
 	if (panelCameraViewport != nullptr)
-		RELEASE(panelCameraViewport);
+		panelCameraViewport = nullptr;
 
 	//RELEASE(panelGame);
 	panelGame = nullptr;
 
 	if (panelRuntimeState != nullptr)
-		RELEASE(panelRuntimeState);
+		panelRuntimeState = nullptr;
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();

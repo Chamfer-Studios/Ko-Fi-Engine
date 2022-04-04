@@ -19,8 +19,8 @@ PanelChooser::~PanelChooser()
 bool PanelChooser::CleanUp()
 {
 	editor = nullptr;
-
-	RELEASE(currentExtension);
+	if (currentExtension)
+		currentExtension = nullptr;
 
 	extensionList.clear();
 	extensionList.shrink_to_fit();

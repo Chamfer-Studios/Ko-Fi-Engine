@@ -70,12 +70,18 @@ public:
 		name.shrink_to_fit();
 
 		engine = nullptr;
-
-		for (std::vector<GameObject*>::const_iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
+		if (!gameObjectList.empty())
 		{
-			gameObjectList.erase(it);
-			if (gameObjectList.empty())
-				break;
+			//for (std::vector<GameObject*>::const_iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
+			//{
+			//	DeleteGameObject((*it));
+			//	/*gameObjectList.erase(it);
+			//	if (gameObjectList.empty())
+			//		break;*/
+			//}
+			gameObjectList.clear();
+			gameObjectList.shrink_to_fit();
+
 		}
 		gameObjectList.clear();
 		gameObjectList.shrink_to_fit();
@@ -144,7 +150,7 @@ public:
 		return false;
 	}
 
-	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
+	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr, bool is3D = true)
 	{
 		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
 		this->gameObjectList.push_back(go);
@@ -185,12 +191,12 @@ public:
 				{
 					DeleteGameObject(child);
 				}
-				
+
 				gameObjectList.erase(it);
 				break;
 			}
 		}
-		
+
 		if (gameObject != nullptr)
 		{
 			GameObject* parent = gameObject->GetParent();
@@ -204,12 +210,12 @@ public:
 				}
 			}
 			parent->RemoveChild(gameObject);
-			
+
 			if (gameObject->GetComponent<ComponentLightSource>() != nullptr)
 				RemoveLight(gameObject);
-			
+
 			gameObject->CleanUp();
-			
+
 
 			RELEASE(gameObject);
 		}
@@ -305,7 +311,7 @@ public:
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
-	
+
 	//Space Partitioning
 	bool sceneTreeIsDirty = true;
 	bool drawSceneTree = false;
@@ -317,16 +323,16 @@ public:
 	LineSegment ray;
 
 	// Space Partitioning Functions...
-	private:
-		template<class UnaryFunction>
-		void recursive_iterate(const GameObject* o, UnaryFunction f)
+private:
+	template<class UnaryFunction>
+	void recursive_iterate(const GameObject* o, UnaryFunction f)
+	{
+		for (auto c = o->children.begin(); c != o->children.end(); ++c)
 		{
-			for (auto c = o->children.begin(); c != o->children.end(); ++c)
-			{
-				recursive_iterate(*c, f);
-				f(*c);
-			}
+			recursive_iterate(*c, f);
+			f(*c);
 		}
+	}
 
 };
 

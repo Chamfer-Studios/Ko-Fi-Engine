@@ -120,7 +120,6 @@ bool GameObject::PostUpdate(float dt)
 
 bool GameObject::CleanUp()
 {
-
 	sceneName.clear();
 	sceneName.shrink_to_fit();
 	prefabPath.clear();

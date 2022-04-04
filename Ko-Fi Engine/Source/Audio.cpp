@@ -78,10 +78,10 @@ bool Audio::CleanUp()
 	engine = nullptr;
 
 	if (device)
-		RELEASE(device);
+		device = nullptr;
 
 	if (context)
-		RELEASE(context);
+		context = nullptr;
 
 	return true;
 }
