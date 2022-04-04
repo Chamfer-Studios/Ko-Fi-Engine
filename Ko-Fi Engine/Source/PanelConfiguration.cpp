@@ -20,17 +20,6 @@ PanelConfiguration::PanelConfiguration(Editor* editor, EngineConfig* engineConfi
 
 PanelConfiguration::~PanelConfiguration()
 {
-	CleanUp();
-}
-
-bool PanelConfiguration::CleanUp()
-{
-	if (engineConfig)
-		RELEASE(engineConfig);
-
-	editor = nullptr;
-
-	return true;
 }
 
 bool PanelConfiguration::Awake()

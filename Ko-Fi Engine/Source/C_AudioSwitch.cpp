@@ -44,15 +44,6 @@ C_AudioSwitch::C_AudioSwitch(GameObject* parent) : C_Audio(parent)
 
 C_AudioSwitch::~C_AudioSwitch()
 {
-    CleanUp();
-}
-
-bool C_AudioSwitch::CleanUp()
-{
-    oldTrack = nullptr;
-    newTrack = nullptr;
-    playingTrack = nullptr;
-
     for (R_Track* index : tracks)
     {
         if (index->IsTrackLoaded())
@@ -63,11 +54,12 @@ bool C_AudioSwitch::CleanUp()
 
     tracks.clear();
     tracks.shrink_to_fit();
-    return true;
 }
 
 bool C_AudioSwitch::Start()
 {
+
+
     return true;
 }
 

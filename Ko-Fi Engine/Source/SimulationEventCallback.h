@@ -8,10 +8,9 @@ class Physics;
 class SimulationEventCallback : public physx::PxSimulationEventCallback
 {
 public:
-	SimulationEventCallback(Physics* callback);
-	~SimulationEventCallback();
+	SimulationEventCallback(Physics* callback) { this->callback = callback; }
+	~SimulationEventCallback() {}
 
-	void CleanUp();
 	void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs);
 	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count);
 
@@ -24,6 +23,8 @@ public:
 
 private:
 	Physics* callback = nullptr;
+
 };
 
 #endif // !__SIMULATION_CALLBACK_H__
+

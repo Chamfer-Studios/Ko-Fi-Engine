@@ -10,24 +10,7 @@ EmitterInstance::EmitterInstance(Emitter* e, ComponentParticle* cp) : emitter(e)
 }
 
 EmitterInstance::~EmitterInstance()
-{
-	CleanUp();
-}
-
-void EmitterInstance::CleanUp()
-{
-	for (std::vector<Particle>::const_iterator p = particles.begin(); p != particles.end(); ++p)
-	{
-		particles.erase(p);
-		if (particles.empty())
-			break;
-	}
-	particles.clear();
-	particles.shrink_to_fit();
-
-	emitter = nullptr;
-	component = nullptr;
-}
+{}
 
 void EmitterInstance::Init()
 {

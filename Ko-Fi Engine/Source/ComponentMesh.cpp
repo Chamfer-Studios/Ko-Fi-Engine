@@ -41,10 +41,13 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 	time = 0.0f;
 }
 
+
 ComponentMesh::~ComponentMesh()
 {
-	CleanUp();
+	RELEASE(mesh);
 }
+
+
 
 bool ComponentMesh::Start()
 {
@@ -67,8 +70,7 @@ bool ComponentMesh::PostUpdate(float dt) //AKA the real render
 
 bool ComponentMesh::CleanUp()
 {
-	if(mesh)
-		RELEASE(mesh);
+	RELEASE(mesh);
 
 	return true;
 }

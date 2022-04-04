@@ -14,7 +14,6 @@ public:
 	PanelChooser(Editor* editor);
 	~PanelChooser();
 
-	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();
@@ -28,7 +27,7 @@ public:
 	void OpenPanel(std::string id,const char* extension, std::vector<std::string> extensionList, const char* from_folder = nullptr);
 
 private:
-	enum ChooserState
+	enum
 	{
 		CLOSED,
 		OPENED,

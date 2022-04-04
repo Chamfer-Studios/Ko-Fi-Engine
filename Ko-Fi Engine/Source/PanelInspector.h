@@ -11,7 +11,6 @@ public:
 	PanelInspector(Editor* editor);
 	~PanelInspector();
 
-	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

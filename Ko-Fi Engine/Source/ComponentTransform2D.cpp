@@ -28,12 +28,11 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 
 ComponentTransform2D::~ComponentTransform2D()
 {
-	CleanUp();
+	delete drawablePlane;
 }
 
 bool ComponentTransform2D::CleanUp()
 {
-	RELEASE(drawablePlane);
 	return true;
 }
 

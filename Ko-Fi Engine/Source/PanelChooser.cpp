@@ -13,22 +13,6 @@ PanelChooser::PanelChooser(Editor* editor)
 
 PanelChooser::~PanelChooser()
 {
-	CleanUp();
-}
-
-bool PanelChooser::CleanUp()
-{
-	editor = nullptr;
-	if (currentExtension)
-		currentExtension = nullptr;
-
-	extensionList.clear();
-	extensionList.shrink_to_fit();
-
-	id.clear();
-	id.shrink_to_fit();
-
-	return true;
 }
 
 bool PanelChooser::Awake()

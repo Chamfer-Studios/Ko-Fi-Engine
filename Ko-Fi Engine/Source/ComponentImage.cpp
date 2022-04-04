@@ -34,7 +34,7 @@ ComponentImage::ComponentImage(GameObject* parent) : ComponentRenderedUI(parent)
 
 ComponentImage::~ComponentImage()
 {
-	CleanUp();
+	FreeTextures();
 }
 
 bool ComponentImage::CleanUp()

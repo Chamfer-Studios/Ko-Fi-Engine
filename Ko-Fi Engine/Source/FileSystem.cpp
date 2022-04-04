@@ -30,7 +30,7 @@ FileSystem::FileSystem(KoFiEngine* engine)
 
 FileSystem::~FileSystem()
 {
-	CleanUp();
+
 }
 
 bool FileSystem::Awake(Json configModule)
@@ -76,10 +76,6 @@ bool FileSystem::CleanUp()
 {
 	CONSOLE_LOG("Cleaning FileSystem up...");
 	appLog->AddLog("Cleaning FileSystem up...\n");
-
-	rootPath.clear();
-
-	engine = nullptr;
 
 	// detach log stream
 

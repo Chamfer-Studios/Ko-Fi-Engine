@@ -86,15 +86,15 @@ public:
 private:
 
 	//light parameters
-	SourceType sourceType = SourceType::DIRECTIONAL;
+	SourceType sourceType;
 
 	//updated number of each light type
 	int numOfDirectional = 0;
 	int numOfPoint = 0;
 	int numOfFocal = 0;
 
-	LightSource* lightSource = nullptr;
+	LightSource* lightSource;
 
 	//inspector variables
-	int sType = 0;
+	int sType;
 };

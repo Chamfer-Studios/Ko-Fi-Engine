@@ -10,13 +10,6 @@ PanelAbout::PanelAbout(Editor* editor)
 
 PanelAbout::~PanelAbout()
 {
-	CleanUp();
-}
-
-bool PanelAbout::CleanUp()
-{
-	editor = nullptr;
-	return true;
 }
 
 bool PanelAbout::Awake()

@@ -12,7 +12,6 @@ public:
 	PanelCameraViewport(Editor* editor, KoFiEngine* engine);
 	~PanelCameraViewport();
 
-	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

@@ -125,7 +125,6 @@ private:
 	PanelGame* panelGame = nullptr;
 	PanelViewport* panelViewport = nullptr;
 	PanelCameraViewport* panelCameraViewport = nullptr;
-	//
 	PanelRuntimeState* panelRuntimeState = nullptr;
 	PanelAssets* panelAssets = nullptr;
 	PanelNodeEditor* panelNodeEditor = nullptr;

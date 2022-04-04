@@ -21,7 +21,6 @@
 #include "GameObject.h"
 #include "SceneManager.h"
 #include "node_editor.h"
-#include "Log.h"
 
 #include "SDL_assert.h"
 
@@ -192,11 +191,12 @@ bool SceneIntro::CleanUp()
 	CONSOLE_LOG("Unloading Intro scene");
 	appLog->AddLog("Unloading Intro scene\n");
 
+	for (GameObject *gameObject : gameObjectList)
+	{
+		RELEASE(gameObject);
+	}
 
-	sceneNameGO.clear();
-	sceneNameGO.shrink_to_fit();
-
-	camera = nullptr;
+	lights.clear();
 
 	example::NodeEditorShutdown();
 

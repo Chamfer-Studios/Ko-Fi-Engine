@@ -18,8 +18,6 @@ class PanelAssets : public Panel
 public:
 	PanelAssets(Editor* editor);
 	~PanelAssets();
-	
-	bool CleanUp();
 	bool Start();
 	bool Update();
 	bool PostUpdate();
@@ -35,8 +33,7 @@ private:
 	Editor* editor = nullptr;
 	TextureIcon fileTexture;
 	TextureIcon directoryTexture;
-	std::string fileIcon = "";
-	std::string directoryIcon = "";
+	std::string fileIcon, directoryIcon;
 	const std::filesystem::path assetsDir = "Assets";
 	std::filesystem::path currentDir = "Assets";
 	std::string selectedFile = "";

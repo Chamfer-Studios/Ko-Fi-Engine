@@ -62,6 +62,7 @@ public:
 private:
 
 	ComponentTransform* componentTransform = nullptr;
+	
 };
 
 #endif // !__COMPONENT_CAMERA_H__
