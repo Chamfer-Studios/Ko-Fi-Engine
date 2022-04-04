@@ -295,14 +295,14 @@ function Ultimate(mousePos)
 			end
 		end		
 	end
-	print("flag 1")
+
 	deathMarkDuration = 0.3
 	-- Set IN ORDER the death mark
 	for i = 1, #enemiesInRange do
 		SetLuaVariableFromGameObject(enemiesInRange[i]:GetName(), "deathMarkDuration", deathMarkDuration)
 		deathMarkDuration = deathMarkDuration + 0.3
 	end
-	print("flag2")
+
 	-- final pos = final target pos + Normalized(final target pos - initial pos) * d
 	local targetPos2D = { enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().x, enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }

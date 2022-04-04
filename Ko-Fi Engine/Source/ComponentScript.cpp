@@ -93,7 +93,7 @@ bool ComponentScript::OnPlay()
 {
 	bool ret = true;
 
-	// ReloadScript();
+	ReloadScript();
 
 	return ret;
 }
