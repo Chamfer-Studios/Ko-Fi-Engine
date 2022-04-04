@@ -543,10 +543,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				is3D = jsonGo.at("is3D");
 			}
 			Tag tag = Tag::TAG_UNTAGGED;
-			if (jsonGo.find("tag") != jsonGo.end()) {
+			if (jsonGo.contains("tag"))
 				tag = jsonGo.at("tag");
-			}
-
 			GameObject* go = nullptr;
 			bool exists = false;
 
