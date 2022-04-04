@@ -26,7 +26,7 @@ ComponentRigidBody::~ComponentRigidBody()
 
 bool ComponentRigidBody::CleanUp()
 {
-	if (dynamicBody)
+	/*if (dynamicBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
 		dynamicBody->release();
@@ -35,7 +35,7 @@ bool ComponentRigidBody::CleanUp()
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
 		staticBody->release();
-	}
+	}*/
 	return true;
 }
 

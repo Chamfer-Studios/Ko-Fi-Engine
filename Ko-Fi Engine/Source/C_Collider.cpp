@@ -51,6 +51,7 @@ bool ComponentCollider2::UpdateCollider()
 {
 	bool ret = true;
 
+
 	CreateCollider(colliderShape);
 
 	return ret;
@@ -91,23 +92,28 @@ void ComponentCollider2::CreateBoxCollider()
 
 	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody());
 
-	if (owner->GetComponent<ComponentMesh>() && !once)
+	ComponentTransform* currentTransform = owner->GetComponent<ComponentTransform>();
+	float3 pos, scale;
+	Quat quat;
+	currentTransform->GetGlobalTransform().Decompose(pos, quat, scale);
+
+	prevTransform = currentTransform;
+
+	if (setFromAABB)
 	{
 		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
-		once = true;
+		setFromAABB = false;
 	}
-
-	physx::PxVec3 localPos;
-	physx::PxTransform a;
+	
 	physx::PxBoxGeometry boxGeometry(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
-
-
-
+	
 	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
-	localPos = physx::PxVec3(centerPosition.x + boxCollSize.x / 2, centerPosition.y + boxCollSize.y / 2, centerPosition.z  + boxCollSize.z / 2);
-	a.p = physx::PxVec3(0, 0, -boxCollSize.z / 2);
-	shape->setLocalPose(a);
+	physx::PxTransform localPose;
+	float3 center = owner->GetComponent<ComponentMesh>()->GetLocalAABB().CenterPoint();
+	localPose.p = physx::PxVec3(offset.x, offset.y, offset.z - boxCollSize.z / 2);
+	localPose.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
+	shape->setLocalPose(localPose);
 
 	// STATE CREATION
 	if (shape)
@@ -124,6 +130,7 @@ void ComponentCollider2::CreateBoxCollider()
 
 		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
 	}
+
 
 	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
 }
@@ -142,17 +149,16 @@ void ComponentCollider2::DrawCollider()
 void ComponentCollider2::DrawBoxCollider()
 {
 	float3 transformOffset = owner->GetComponent<ComponentTransform>()->GetPosition();
-	physx::PxTransform a;
-	physx::PxVec3 centPos;
+	physx::PxTransform localPose;
+	physx::PxVec3 center;
 	if (shape)
 	{
-		a = shape->getLocalPose();
-		centPos = a.p;
+		localPose = shape->getLocalPose();
+		center = localPose.p;
 	}
-	//float3 min = centerPosition - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z) + transformOffset;
-	//float3 max = centerPosition + float3(boxCollSize.x / 2, boxCollSize.y / 2, 0) + transformOffset;
-	float3 min = float3(centPos.x, centPos.y, centPos.z) - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
-	float3 max = float3(centPos.x, centPos.y, centPos.z) + float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
+
+	float3 min = float3(center.x, center.y, center.z) - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
+	float3 max = float3(center.x, center.y, center.z) + float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
 
 	glLineWidth(2.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
@@ -209,7 +215,6 @@ void ComponentCollider2::Save(Json &json) const
 	json["type"] = "collider2";
 
 	json["collider_type"] = (int)colliderShape;
-	json["collision_layer"] = (int)collisionLayer;
 
 	json["enabled"] = enabled;
 	json["is_trigger"] = isTrigger;
@@ -217,13 +222,12 @@ void ComponentCollider2::Save(Json &json) const
 	json["filter"] = filter;
 
 	json["box_collider_size"] = {boxCollSize.x, boxCollSize.y, boxCollSize.z};
-	json["center_position"] = {centerPosition.x, centerPosition.y, centerPosition.z};
+	json["offset"] = {offset.x, offset.y, offset.z};
 }
 
 void ComponentCollider2::Load(Json &json)
 {
 	colliderShape = (ColliderShape)json.at("collider_type");
-	collisionLayer = (CollisionLayer)json.at("collision_layer");
 
 	enabled = json.at("enabled");
 	isTrigger = json.at("is_trigger");
@@ -233,11 +237,11 @@ void ComponentCollider2::Load(Json &json)
 	std::vector<float> values = json.at("box_collider_size").get<std::vector<float>>();
 	boxCollSize = float3(values[0], values[1], values[2]);
 	values.clear();
-	values = json.at("center_position").get<std::vector<float>>();
-	centerPosition = float3(values[0], values[1], values[2]);
-	values.clear();
+	/*values = json.at("offset").get<std::vector<float>>();
+	offset = float3(values[0], values[1], values[2]);
+	values.clear();*/
 
-	once = true;
+	setFromAABB = true;
 	hasUpdated = true;
 }
 
@@ -267,62 +271,53 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 
 		ImGui::Separator();
 
-		// FILTERS -----------------------------------------------------------------------------------------------
-		ImGui::Text("Filter:");
-		if (ImGui::BeginCombo("Filter", filter.c_str()))
-		{
-			const std::vector<std::string> filters = owner->GetEngine()->GetPhysics()->GetFilters();
-
-			for (int i = 0; i < filters.size(); ++i)
-			{
-				if (ImGui::Selectable(filters[i].c_str()))
-					SetFilter(filters[i]);
-			}
-			ImGui::EndCombo();
-		}
-		ImGui::Text("Current filter: ");
-		ImGui::SameLine();
-		const std::string* str = GetFilter();
-		ImGui::Text("%s", str->c_str());
-		ImGui::Separator();
-
 		if (colliderShape == ColliderShape::BOX)
 		{
+			// FILTERS -----------------------------------------------------------------------------------------------
+			ImGui::Text("Filter:");
+			if (ImGui::BeginCombo("Filter", filter.c_str()))
+			{
+				const std::vector<std::string> filters = owner->GetEngine()->GetPhysics()->GetFilters();
+
+				for (int i = 0; i < filters.size(); ++i)
+				{
+					if (ImGui::Selectable(filters[i].c_str()))
+						SetFilter(filters[i]);
+				}
+				ImGui::EndCombo();
+			}
+			ImGui::Text("Current filter: ");
+			ImGui::SameLine();
+			const std::string* str = GetFilter();
+			ImGui::Text("%s", str->c_str());
+			ImGui::Separator();
+
 			// ATTRIBUTES -----------------------------------------------------------------------------------------------
 			if (ImGui::Checkbox("Enable##", &enabled)) hasUpdated = true;
 			if (ImGui::Checkbox("IsTrigger##", &isTrigger)) hasUpdated = true;
 			if (ImGui::Checkbox("Draw Collider##", &drawCollider)) hasUpdated = true;
-
-			// COLLIDER CENTER POS & SIZE ----------------------------------------------------------------------------------------
-			if (ImGui::TreeNodeEx("Size & Center position"))
+			ImGui::Separator();
+			// -----------------------------------------------------------------------------------------------------------
+			if ((ImGui::Button("Update size from AABB##")))
 			{
-				float3 newSize2 = GetBoxCollSize();
-				float newSize[3] = { newSize2.x, newSize2.y, newSize2.z };
-				if (ImGui::DragFloat3("##boxcollsize", newSize))
-				{
-					boxCollSize = { newSize[0], newSize[1], newSize[2] };
-					hasUpdated = true;
-				}
-				ImGui::SameLine();
-				ImGui::Text("Box collider size");
+				setFromAABB = true;
+				hasUpdated = true;
+			}
 
-				if ((ImGui::Button("Set AABB size##collidershape")))
-				{
-					once = false;
-					hasUpdated = true;
-				}
+			ImGui::Text("Size:");
+			float newSize[3] = { boxCollSize.x, boxCollSize.y, boxCollSize.z };
+			if (ImGui::InputFloat3("##boxcollsize", newSize, "%.3f", ImGuiInputTextFlags_ReadOnly))
+			{
+				boxCollSize = { newSize[0], newSize[1], newSize[2] };
+				hasUpdated = true;
+			}
 
-				float3 newCenterPos2 = GetCenterPosition();
-				float newCenterPos[3] = { newCenterPos2.x, newCenterPos2.y, newCenterPos2.z };
-				if (ImGui::DragFloat3("##centerpos", newCenterPos))
-				{
-					centerPosition = { newCenterPos[0], newCenterPos[1], newCenterPos[2] };
-					hasUpdated = true;
-				}
-				ImGui::SameLine();
-				ImGui::Text("Center position");
-
-				ImGui::TreePop();
+			ImGui::Text("Offset");
+			float newOffset[3] = { offset.x, offset.y, offset.z };
+			if (ImGui::InputFloat3("##offset", newOffset, "%.3f", ImGuiInputTextFlags_ReadOnly))
+			{
+				offset = { newOffset[0], newOffset[1], newOffset[2] };
+				hasUpdated = true;
 			}
 		}
 		else if (colliderShape == ColliderShape::NONE)

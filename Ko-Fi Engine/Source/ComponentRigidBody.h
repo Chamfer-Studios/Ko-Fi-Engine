@@ -35,6 +35,7 @@ public:
 	inline void	AddTorque(physx::PxVec3 force, physx::PxForceMode::Enum forceMode) { if (dynamicBody) dynamicBody->addTorque(force, forceMode); }
 
 	void Set2DVelocity(float2 vel);
+	inline void SetRigidBodyPos(float3 pos) { GetRigidBody()->setGlobalPose(physx::PxTransform(physx::PxVec3(pos.x, pos.y, pos.z))); hasUpdated = true; };
 
 	void StopMovement();
 

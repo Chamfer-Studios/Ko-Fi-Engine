@@ -149,7 +149,7 @@ public:
 		lua.new_usertype<GameObject>("GameObject",
 			sol::constructors<void()>(),
 			"active",				&GameObject::active,
-			"name",					&GameObject::name,
+			"name",					&GameObject::GetName,
 			"tag",					&GameObject::tag,
 			"GetParent",			&GameObject::GetParent,
 			"GetComponents",		&GameObject::GetComponents,							// Kinda works... not very useful tho

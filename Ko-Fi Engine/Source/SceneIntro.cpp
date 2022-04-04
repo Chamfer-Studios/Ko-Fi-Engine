@@ -120,9 +120,9 @@ bool SceneIntro::PostUpdate(float dt)
 			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 			float3 pos = parent->GetTransform()->GetPosition();
 			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
-			float3 parentRot = parent->GetTransform()->GetRotation();
+			float3 parentRot = parent->GetTransform()->GetRotationEuler();
 			float3 rot = { parentRot.x - 55,parentRot.y,parentRot.z };
-			knife->GetTransform()->SetRotation(rot);
+			knife->GetTransform()->SetRotationEuler(rot);
 
 			ComponentMesh* componentMesh = knife->CreateComponent<ComponentMesh>();
 			Mesh* mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
