@@ -194,18 +194,6 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	}
 }
 
-void ComponentTransform::UpdateGuizmoParameters(float4x4& transformMatrix)
-{
-	float3 position;
-	Quat rotation;
-	float3 scale;
-	
-	transformMatrix.Decompose(position, rotation, scale);
-	SetPosition(position);
-	SetRotationQuat(rotation);
-	SetScale(scale);
-}
-
 void ComponentTransform::Save(Json& json) const
 {
 	float3 position = GetPosition();
