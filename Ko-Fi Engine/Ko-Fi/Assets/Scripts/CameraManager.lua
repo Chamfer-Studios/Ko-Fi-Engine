@@ -26,7 +26,7 @@ function Update(dt)
 
 	buttonLeft = Find("ButtonL"):GetButton():GetButtonState()
 	buttonRigth = Find("ButtonR"):GetButton():GetButtonState()
-	target = Find("Player"):GetTransform():GetPosition()
+	target = Find("Nerala"):GetTransform():GetPosition()
 
 	if(start) then
 		

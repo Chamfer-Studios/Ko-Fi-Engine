@@ -189,10 +189,14 @@ void ComponentMaterial::Load(Json& json)
 			case GL_FLOAT_VEC4:
 			{
 				UniformT<float4>* uniform = (UniformT<float4>*)material->FindUniform(uniformName);
-				uniform->value.x = uni.value().at("value").at("x");
-				uniform->value.y = uni.value().at("value").at("y");
-				uniform->value.z = uni.value().at("value").at("z");
-				uniform->value.w = uni.value().at("value").at("w");
+				if (uniform)
+				{
+					uniform->value.x = uni.value().at("value").at("x");
+					uniform->value.y = uni.value().at("value").at("y");
+					uniform->value.z = uni.value().at("value").at("z");
+					uniform->value.w = uni.value().at("value").at("w");
+				}
+			
 			}
 			break;
 			case GL_INT:
