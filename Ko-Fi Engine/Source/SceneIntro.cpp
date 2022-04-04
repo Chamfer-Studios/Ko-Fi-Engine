@@ -138,9 +138,8 @@ bool SceneIntro::PostUpdate(float dt)
 			float3 pos = parent->GetTransform()->GetPosition();
 
 			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y + 15, pos.z - 15));
-			float3 parentRot = parent->GetTransform()->GetRotation();
-			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
 			float3 parentRot = parent->GetTransform()->GetRotationEuler();
+			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
 			float3 rot = {parentRot.x - 55, parentRot.y, parentRot.z};
 			knife->GetTransform()->SetRotationEuler(rot);
 
