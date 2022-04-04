@@ -20,7 +20,7 @@ ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 
 ComponentParticle::~ComponentParticle()
 {
-	CleanUp();
+
 }
 
 bool ComponentParticle::Start()

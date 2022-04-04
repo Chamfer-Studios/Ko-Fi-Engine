@@ -12,7 +12,6 @@ public:
 	PanelConfiguration(Editor* editor, EngineConfig* engineConfig);
 	~PanelConfiguration();
 
-	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

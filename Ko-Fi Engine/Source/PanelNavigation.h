@@ -12,7 +12,6 @@ public:
 	PanelNavigation(Editor* editor);
 	~PanelNavigation();
 
-	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

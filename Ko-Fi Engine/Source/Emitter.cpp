@@ -13,9 +13,7 @@ Emitter::Emitter(const char* newName)
 }
 
 Emitter::~Emitter()
-{
-	Cleanup();
-}
+{}
 
 bool Emitter::Update(float dt)
 {
@@ -24,19 +22,6 @@ bool Emitter::Update(float dt)
 
 bool Emitter::Cleanup()
 {
-	for (std::vector<ParticleModule*>::const_iterator m = modules.begin(); m != modules.end(); ++m)
-	{
-		modules.erase(m);
-		if (modules.empty())
-			break;
-	}
-
-	modules.clear();
-	modules.shrink_to_fit();
-
-	name.clear();
-	name.shrink_to_fit();
-
 	return true;
 }
 

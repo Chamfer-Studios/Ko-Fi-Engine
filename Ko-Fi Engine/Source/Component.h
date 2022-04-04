@@ -43,17 +43,13 @@ class Component
 {
 public:
 	Component(GameObject *parent);
-	virtual ~Component() { CleanUp(); };
+	virtual ~Component(){};
 
 	virtual bool Start() { return true; }
 	virtual bool PreUpdate() { return true; }
 	virtual bool Update(float dt) { return true; }
 	virtual bool PostUpdate(float dt) { return true; }
-	virtual bool CleanUp()
-	{
-		owner = nullptr;
-		return true;
-	}
+	virtual bool CleanUp() { return true; }
 
 	virtual void Enable() { active = true; }
 	virtual void Disable() { active = false; }

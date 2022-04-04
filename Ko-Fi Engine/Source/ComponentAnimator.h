@@ -35,7 +35,7 @@ public:
 	void SetSelectedClip(std::string name);
 
 private:
-	bool playing = true;
+	bool playing;
 
 	R_Animation* animation = nullptr;
 

@@ -12,7 +12,7 @@ fileRefreshTime(0.0f)
 
 ResourceManager::~ResourceManager()
 {
-	CleanUp();
+
 }
 
 bool ResourceManager::Awake(Json configModule)
@@ -66,8 +66,12 @@ bool ResourceManager::CleanUp()
 
 	bool ret = true;
 
-	for (std::map<UID, Resource*>::iterator it = resourcesMap.begin(); it != resourcesMap.end(); ++it)
+	std::map<UID, Resource*>::iterator it;
+	for (it = resourcesMap.begin(); it != resourcesMap.end(); ++it)
+	{
+		it->second->CleanUp();
 		RELEASE(it->second);
+	}
 
 	resourcesMap.clear();
 	library.clear();

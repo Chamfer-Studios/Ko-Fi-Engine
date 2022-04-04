@@ -12,23 +12,30 @@ ComponentRigidBody::ComponentRigidBody(GameObject *parent) : Component(parent)
 
 ComponentRigidBody::~ComponentRigidBody()
 {
-	CleanUp();
-}
-
-bool ComponentRigidBody::CleanUp()
-{
 	if (dynamicBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
 		dynamicBody->release();
 	}
-
 	if (staticBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
 		staticBody->release();
 	}
+}
 
+bool ComponentRigidBody::CleanUp()
+{
+	/*if (dynamicBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
+		dynamicBody->release();
+	}
+	if (staticBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
+		staticBody->release();
+	}*/
 	return true;
 }
 

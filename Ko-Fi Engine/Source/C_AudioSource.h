@@ -14,7 +14,6 @@ public:
 	C_AudioSource(GameObject* parent);
 	~C_AudioSource();
 
-	bool CleanUp();
 	bool Start() override;
 	bool Update(float dt) override;
 	bool InspectorDraw(PanelChooser* chooser) override;

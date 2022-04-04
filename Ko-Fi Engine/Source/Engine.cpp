@@ -70,13 +70,9 @@ KoFiEngine::~KoFiEngine()
 	for (std::list<Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend(); ++item)
 	{
 		RELEASE(*item);
-		if (modules.empty())
-			break;
 	}
-	modules.clear();
 
-	if (engineConfig)
-		RELEASE(engineConfig);
+	modules.clear();
 }
 
 void KoFiEngine::AddModule(Module* module)

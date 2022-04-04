@@ -20,7 +20,9 @@ ComponentButton::ComponentButton(GameObject* parent) : ComponentRenderedUI(paren
 
 ComponentButton::~ComponentButton()
 {
-	CleanUp();
+	FreeTextures(BUTTON_STATE::IDLE);
+	FreeTextures(BUTTON_STATE::HOVER);
+	FreeTextures(BUTTON_STATE::PRESSED);
 }
 
 bool ComponentButton::CleanUp()

@@ -89,7 +89,6 @@ public:
 
 	void Draw();
 	void DebugDraw();
-	void CleanUp();
 
 	inline void SetVertexNormals(bool vertex) { drawVertexNormals = vertex; }
 	inline bool GetVertexNormals() const { return drawVertexNormals; }

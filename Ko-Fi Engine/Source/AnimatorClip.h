@@ -9,10 +9,7 @@ class AnimatorClip
 {
 public:
 	AnimatorClip();
-	AnimatorClip(const Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop);
-	~AnimatorClip();
-
-	void CleanUp();
+	AnimatorClip(const R_Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop);
 
 	const std::string inline GetName() const { return name; }
 	const R_Animation* GetAnimation() const { return clipAnim; }

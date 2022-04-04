@@ -12,14 +12,6 @@ PanelNavigation::PanelNavigation(Editor* editor)
 
 PanelNavigation::~PanelNavigation()
 {
-	CleanUp();
-}
-
-bool PanelNavigation::CleanUp()
-{
-	editor = nullptr;
-
-	return true;
 }
 
 bool PanelNavigation::Awake()
