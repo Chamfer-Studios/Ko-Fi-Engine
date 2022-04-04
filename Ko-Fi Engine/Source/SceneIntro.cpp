@@ -13,6 +13,7 @@
 #include "ComponentCamera.h"
 #include "ComponentParticle.h"
 #include "ComponentScript.h"
+#include "C_Collider.h"
 #include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "ComponentTransform.h"
 #include "Material.h"
@@ -117,9 +118,13 @@ bool SceneIntro::PostUpdate(float dt)
 
 		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
 		{
+			knife->tag = Tag::TAG_PROJECTILE;
+			ComponentRigidBody* rigidBody = knife->CreateComponent<ComponentRigidBody>();
+
 			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 			float3 pos = parent->GetTransform()->GetPosition();
-			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
+
+			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y + 15, pos.z - 15));
 			float3 parentRot = parent->GetTransform()->GetRotation();
 			float3 rot = { parentRot.x - 55,parentRot.y,parentRot.z };
 			knife->GetTransform()->SetRotation(rot);
@@ -133,6 +138,12 @@ bool SceneIntro::PostUpdate(float dt)
 			Material* material = new Material();
 			Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 			componentMaterial->SetMaterial(material);
+
+			rigidBody->FreezePositionY(true);
+			ComponentCollider2* collider = knife->CreateComponent<ComponentCollider2>();
+			collider->SetColliderShape(ColliderShape::BOX);
+			collider->SetFilter("projectile");
+			collider->SetIsTrigger(true);
 
 			ComponentScript* knifeScript = (ComponentScript*)knife->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
 			knifeScript->path = "Assets/Scripts/Knife.lua";

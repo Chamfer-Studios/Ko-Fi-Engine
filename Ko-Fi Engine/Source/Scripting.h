@@ -113,10 +113,11 @@ public:
 
 		// Tags
 		lua.new_enum("Tag",
-			"UNTAGGED", Tag::TAG_UNTAGGED,
-			"PLAYER",	Tag::TAG_PLAYER,
-			"ENEMY",	Tag::TAG_ENEMY,
-			"WALL",		Tag::TAG_WALL
+			"UNTAGGED",		Tag::TAG_UNTAGGED,
+			"PLAYER",		Tag::TAG_PLAYER,
+			"ENEMY",		Tag::TAG_ENEMY,
+			"WALL",			Tag::TAG_WALL,
+			"PROJECTILE",	Tag::TAG_PROJECTILE
 			);
 
 
@@ -231,7 +232,8 @@ public:
 			"SetDynamic",			&ComponentRigidBody::SetDynamic,
 			"SetLinearVelocity",	&ComponentRigidBody::SetLinearVelocity,
 			"FreezePositionY",		&ComponentRigidBody::FreezePositionY,
-			"Set2DVelocity",		&ComponentRigidBody::Set2DVelocity
+			"Set2DVelocity",		&ComponentRigidBody::Set2DVelocity,
+			"SetRigidBodyPos",		&ComponentRigidBody::SetRigidBodyPos
 			);
 
 

@@ -168,6 +168,15 @@ bool ComponentTransform::GetDirty() const
 	return isDirty;
 }
 
+Quat ComponentTransform::GetRotationQuat() const
+{
+	float3 position;
+	float3 scale;
+	Quat rotation;
+	transformMatrixLocal.Decompose(position, rotation, scale);
+	return rotation;
+}
+
 void ComponentTransform::SetDirty(bool isDirty)
 {
 	this->isDirty = isDirty;

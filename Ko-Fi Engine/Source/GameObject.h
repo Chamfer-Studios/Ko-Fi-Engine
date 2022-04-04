@@ -21,7 +21,8 @@ enum class Tag
 	TAG_UNTAGGED,
 	TAG_PLAYER,
 	TAG_ENEMY,
-	TAG_WALL
+	TAG_WALL,
+	TAG_PROJECTILE
 };
 
 class GameObject

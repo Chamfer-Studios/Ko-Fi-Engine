@@ -44,6 +44,7 @@ public:
 
 	float4x4 GetGlobalTransform();
 	void SetGlobalTransform(const float4x4& globalTransform);
+	Quat    GetRotationQuat() const;
 
 	bool GetDirty() const;
 	void SetDirty(bool isDirty);

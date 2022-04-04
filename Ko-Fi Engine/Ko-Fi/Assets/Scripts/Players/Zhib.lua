@@ -86,7 +86,6 @@ function Update(dt)
 			-- Reappear
 			invisibilityDuration = nil
 			gameObject.active = true
-			componentTransform:SetPosition(reappearPosition) -- WORKS FOR ONE FRAME
 		end
 		return -- This is to not receive input while invis
 	end
@@ -296,11 +295,11 @@ function Ultimate(mousePos)
 		end		
 	end
 
-	deathMarkDuration = 0.2
+	deathMarkDuration = 0.3
 	-- Set IN ORDER the death mark
 	for i = 1, #enemiesInRange do
-		deathMarkDuration = deathMarkDuration + 0.2
 		SetLuaVariableFromGameObject(enemiesInRange[i].name, "deathMarkDuration", deathMarkDuration)
+		deathMarkDuration = deathMarkDuration + 0.3
 	end
 
 	-- final pos = final target pos + Normalized(final target pos - initial pos) * d
@@ -310,8 +309,20 @@ function Ultimate(mousePos)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }	
 	vec2 = Normalize(vec2, d)
 
-	-- This 10 is the constant to modify
-	reappearPosition = float3.new(enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().x + vec2[1] * 10, enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().y, enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().z + vec2[2] * 10)
+	-- Find the furthest enemy
+	local furtherstEnemy = enemiesInRange[1] -- Just in case
+	local longestDistance = -1
+	for i = 1, #enemiesInRange do
+		local enemyPos2D = { enemiesInRange[i]:GetTransform():GetPosition().x, enemiesInRange[i]:GetTransform():GetPosition().z }
+		local d = Distance(pos2D, enemyPos2D)
+		if (d > longestDistance) then
+			longestDistance = d
+			furtherstEnemy = enemiesInRange[i]
+		end
+	end
+
+	-- This 5 is the constant to modify
+	reappearPosition = float3.new(furtherstEnemy:GetTransform():GetPosition().x + vec2[1] * 5, componentTransform:GetPosition().y, furtherstEnemy:GetTransform():GetPosition().z + vec2[2] * 5)
 
 	-- Set timer equal to the longest dath mark timer to reappear
 	Disapear(deathMarkDuration)
@@ -323,6 +334,8 @@ function Disapear(duration)
 
 	invisibilityTimer = 0
 	invisibilityDuration = duration
+
+	gameObject:GetRigidBody():SetRigidBodyPos(reappearPosition)
 end
 
 ----------------- Math Functions -----------------

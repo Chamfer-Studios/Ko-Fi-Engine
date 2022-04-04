@@ -35,7 +35,7 @@ public:
 	inline void	AddTorque(physx::PxVec3 force, physx::PxForceMode::Enum forceMode) { if (dynamicBody) dynamicBody->addTorque(force, forceMode); }
 
 	void Set2DVelocity(float2 vel);
-
+	void SetRigidBodyPos(float3 pos);
 	void StopMovement();
 
 	inline const bool IsSleeping() { return dynamicBody->isSleeping(); }
