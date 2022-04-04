@@ -69,9 +69,10 @@ bool PanelCameraViewport::RenderPanel(bool* showPanel )
 		if (viewportSize.x != editor->lastCameraViewportSize.x || viewportSize.y != editor->lastCameraViewportSize.y)
 		{
 			editor->lastCameraViewportSize = viewportSize;
-			
+			engine->GetCamera3D()->gameCamera->aspectRatio = viewportSize.x / viewportSize.y;
+			engine->GetCamera3D()->gameCamera->RecalculateProjection();
+
 			engine->GetRenderer()->ResizePreviewFrameBuffers(viewportSize.x, viewportSize.y);
-			engine->GetRenderer()->ResizeFrameBuffers(editor->cameraViewportSize.x, editor->cameraViewportSize.y);
 	
 
 		}
