@@ -49,13 +49,22 @@
 #include "AnimatorClip.h"
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
-{
-
-}
+{}
 
 I_Scene::~I_Scene()
 {
+	CleanUp();
+}
 
+void I_Scene::CleanUp()
+{
+	engine = nullptr;
+
+	nodeName.clear();
+	nodeName.shrink_to_fit();
+
+	if (assimpScene)
+		RELEASE(assimpScene);
 }
 
 bool I_Scene::Import(const char* path, bool isPrefab)

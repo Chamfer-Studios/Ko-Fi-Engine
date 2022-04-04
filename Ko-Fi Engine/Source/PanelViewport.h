@@ -12,6 +12,7 @@ public:
 	PanelViewport(Editor* editor, KoFiEngine* engine);
 	~PanelViewport();
 
+	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

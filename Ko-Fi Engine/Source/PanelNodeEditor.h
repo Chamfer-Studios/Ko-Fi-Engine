@@ -20,6 +20,7 @@ public:
 	PanelNodeEditor(Editor* editor);
 	~PanelNodeEditor();
 
+	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();
@@ -70,12 +71,12 @@ private:
 		return nullptr;
 	}
 private:
-	Editor* editor;
+	Editor* editor = nullptr;
 	std::vector<Node*> nodes;
 	std::vector<Link> links;
 	std::vector<int> selectedNodes;
 
-	int currentId;
+	int currentId = 0;
 	int hoveredId = 0;
 
 };

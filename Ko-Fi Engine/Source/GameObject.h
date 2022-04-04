@@ -119,13 +119,13 @@ public:
 	bool is3D = true;
 	bool isPrefab = false;
 	bool changeScene = false;
-	std::string sceneName;
-	std::string prefabPath;
+	std::string sceneName = "";
+	std::string prefabPath = "";
 	Tag tag;
 
 	std::vector<GameObject*> children;
 private:
-	std::string name;
+	std::string name = "";
 	std::vector<Component*> components;
 	GameObject* parent = nullptr;
 	uint uid;

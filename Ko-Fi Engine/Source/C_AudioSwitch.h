@@ -14,6 +14,7 @@ public:
     C_AudioSwitch(GameObject* parent);
     ~C_AudioSwitch();
 
+    bool CleanUp();
     bool Start() override;
     bool Update(float dt) override;
     bool OnPlay() override;

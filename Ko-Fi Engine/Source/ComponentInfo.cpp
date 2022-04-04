@@ -12,7 +12,9 @@ ComponentInfo::ComponentInfo(GameObject* parent) : Component(parent)
 }
 
 ComponentInfo::~ComponentInfo()
-{}
+{
+	CleanUp();
+}
 
 bool ComponentInfo::CleanUp()
 {

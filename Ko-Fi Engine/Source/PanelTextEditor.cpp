@@ -16,6 +16,7 @@ PanelTextEditor::PanelTextEditor(Editor* editor)
 	this->editor = editor;
 	panelName = "Text Editor";
 	//Editor configuration
+	textEditor = TextEditor();
 	textEditor.SetShowWhitespaces(false);
 	textEditor.SetReadOnly(false);
 	textEditor.SetPalette(TextEditor::GetDarkPalette());
@@ -36,6 +37,16 @@ PanelTextEditor::PanelTextEditor(Editor* editor,const char* path)
 
 PanelTextEditor::~PanelTextEditor()
 {
+	CleanUp();
+}
+
+bool PanelTextEditor::CleanUp()
+{
+	editor = nullptr;
+	//TODO: CHECK TEXT EDITOR CLEANUP -- MAMAMIA SCARY
+	filePath.clear();
+	filePath.shrink_to_fit();
+	return true;
 }
 
 bool PanelTextEditor::Awake()

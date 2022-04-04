@@ -6,10 +6,7 @@ Component::Component(GameObject* parent) : owner(parent)
 	type = ComponentType::NONE;
 
 	if (parent)
-	{
 		parent->PushBackComponent(this);
-
-	}
 }
 
 const char* Component::GetNameByComponentType(ComponentType type)

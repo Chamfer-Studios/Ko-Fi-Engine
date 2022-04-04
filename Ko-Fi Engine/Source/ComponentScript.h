@@ -39,5 +39,4 @@ private:
 	bool isScriptLoaded = false;
 
 	sol::protected_function lua_update;
-
 };

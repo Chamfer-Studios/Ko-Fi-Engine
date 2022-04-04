@@ -16,6 +16,7 @@ ComponentLightSource::ComponentLightSource(GameObject* parent) : Component(paren
 
 ComponentLightSource::~ComponentLightSource()
 {
+	CleanUp();
 }
 
 bool ComponentLightSource::Start()

@@ -18,7 +18,27 @@ PanelNodeEditor::PanelNodeEditor(Editor* editor)
 
 PanelNodeEditor::~PanelNodeEditor()
 {
-    
+    CleanUp();
+}
+
+bool PanelNodeEditor::CleanUp()
+{
+    editor = nullptr;
+
+    for (std::vector<Node*>::const_iterator i = nodes.begin(); i != nodes.end(); ++i)
+    {
+        nodes.erase(i);
+    }
+    nodes.clear();
+    nodes.shrink_to_fit();
+
+    links.clear();
+    links.shrink_to_fit();
+
+    selectedNodes.clear();
+    selectedNodes.shrink_to_fit();
+
+    return true;
 }
 
 bool PanelNodeEditor::Awake()

@@ -107,7 +107,7 @@ public:
 private:
 	// To keep track of the observers of each module
 	std::list<Module*> observers;
-	int numObservers;
+	int numObservers = 0;
 };
 
 #endif // !__MODULE_H__

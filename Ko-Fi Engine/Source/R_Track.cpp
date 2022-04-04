@@ -38,8 +38,16 @@ R_Track::R_Track()
 
 R_Track::~R_Track()
 {
-	fxTracker.clear();
-	fxTracker.shrink_to_fit();
+	CleanUp();
+}
+
+void R_Track::CleanUp()
+{
+	path.clear();
+	path.shrink_to_fit();
+
+	name.clear();
+	name.shrink_to_fit();
 
 	for (unsigned int i = 0; i < effects.size(); ++i)
 	{
@@ -48,6 +56,9 @@ R_Track::~R_Track()
 	}
 	effects.clear();
 	effects.shrink_to_fit();
+
+	fxTracker.clear();
+	fxTracker.shrink_to_fit();
 
 	alSourcei(source, AL_BUFFER, 0);
 	alec(alDeleteSources(1, &source));

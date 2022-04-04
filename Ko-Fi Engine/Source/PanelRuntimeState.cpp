@@ -15,6 +15,14 @@ PanelRuntimeState::PanelRuntimeState(Editor* editor, KoFiEngine* engine)
 
 PanelRuntimeState::~PanelRuntimeState()
 {
+    CleanUp();
+}
+
+bool PanelRuntimeState::CleanUp()
+{
+    editor = nullptr;
+    engine = nullptr;
+    return true;
 }
 
 bool PanelRuntimeState::Awake()

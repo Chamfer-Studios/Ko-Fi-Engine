@@ -13,6 +13,11 @@ Material::Material() :
 
 Material::~Material()
 {
+	CleanUp();
+}
+
+void Material::CleanUp()
+{
 	glDeleteProgram(shaderProgramID);
 
 	uniforms.clear();

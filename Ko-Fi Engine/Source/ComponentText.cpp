@@ -18,12 +18,16 @@ ComponentText::ComponentText(GameObject* parent) : ComponentRenderedUI(parent)
 
 ComponentText::~ComponentText()
 {
-	FreeTextures();
+	CleanUp();
 }
 
 bool ComponentText::CleanUp()
 {
 	FreeTextures();
+
+	textValue.clear();
+	textValue.shrink_to_fit();
+
 	return true;
 }
 

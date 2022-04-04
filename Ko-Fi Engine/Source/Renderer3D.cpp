@@ -51,7 +51,9 @@ Renderer3D::Renderer3D(KoFiEngine* engine) : Module()
 
 // Destructor
 Renderer3D::~Renderer3D()
-{}
+{
+	CleanUp();
+}
 
 // Called before render is available
 bool Renderer3D::Awake(Json configModule)
@@ -106,6 +108,10 @@ bool Renderer3D::CleanUp()
 {
 	CONSOLE_LOG("Destroying 3D Renderer");
 	appLog->AddLog("Destroying 3D Renderer\n");
+
+	engine = nullptr;
+
+	particles.clear();
 
 	SDL_GL_DeleteContext(context);
 
@@ -935,6 +941,8 @@ void Renderer3D::InitFrameBuffers()
 	//Bind tex data with render buffers
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderBufferoutput);
+
+
 	//After binding tex data, we must unbind renderbuffer and framebuffer not usefull anymore
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -978,8 +986,7 @@ void Renderer3D::UnbindFrameBuffers()
 
 void Renderer3D::ResizeFrameBuffers(int width, int height)
 {
-	glViewport(0, 0, width, height);
-
+	glViewport(0,0,width,height);
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glBindTexture(GL_TEXTURE_2D, textureBuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -993,15 +1000,26 @@ void Renderer3D::ResizeFrameBuffers(int width, int height)
 
 void Renderer3D::ResizePreviewFrameBuffers(int width, int height)
 {
-	glViewport(0, 0, width, height);
-
+	float lwidth, lheight = 0.0f;
+	float aspectRatio = 0.0f;
+	aspectRatio = engine->GetEditor()->viewportSize.x / engine->GetEditor()->viewportSize.y;
+	if (width < height)
+	{
+		lwidth = width;
+		lheight = width * aspectRatio;
+	}
+	else
+	{
+		lheight = height;
+		lwidth = height * aspectRatio;
+	}
 	glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
 	glBindTexture(GL_TEXTURE_2D, previewTextureBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lwidth, lheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	glBindRenderbuffer(GL_RENDERBUFFER, renderPreviewBufferoutput);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, lwidth, lheight);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 

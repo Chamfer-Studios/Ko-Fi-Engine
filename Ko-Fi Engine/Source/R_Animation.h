@@ -15,6 +15,8 @@ public:
 	R_Animation();
 	~R_Animation();
 
+	void CleanUp();
+
 	inline void SetName(std::string name) { this->name = name; }
 	inline void SetDuration(float duration) { this->duration = duration; }
 	inline void SetTicksPerSecond(float ticksPerSecond) { this->ticksPerSecond = ticksPerSecond; }

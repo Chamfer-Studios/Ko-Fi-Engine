@@ -10,6 +10,13 @@ PanelGame::PanelGame(Editor* editor)
 
 PanelGame::~PanelGame()
 {
+	CleanUp();
+}
+
+bool PanelGame::CleanUp()
+{
+	editor = nullptr;
+	return true;
 }
 
 bool PanelGame::Awake()
