@@ -153,12 +153,6 @@ end
 
 hasSwitchedState = false
 
-function Start()
-    if (componentRigidBody ~= nil) then
-		componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 0, componentTransform:GetPosition().z))
-	end
-end
-
 function Update(dt)
 
     if (deathMarkDuration ~= nil) then
@@ -195,13 +189,6 @@ function Update(dt)
     if #finalPath ~= 0 then
         FollowPath(dt)
     end
-end
-
-function OnTriggerEnter(go)
-
-	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
-		DeleteGameObject()
-	end
 end
 
 print("Harkonnen.lua compiled succesfully")

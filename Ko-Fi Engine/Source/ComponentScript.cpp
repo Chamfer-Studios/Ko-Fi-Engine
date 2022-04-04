@@ -41,15 +41,6 @@ ComponentScript::~ComponentScript()
 bool ComponentScript::Start()
 {
 	bool ret = true;
-	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
-	{
-		auto f = handler->lua["PostUpdate"];
-
-		if (f.valid()) {
-			f();
-		}
-	}
-
 	return ret;
 }
 
