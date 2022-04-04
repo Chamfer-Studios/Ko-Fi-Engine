@@ -214,9 +214,6 @@ public:
 			if (gameObject->GetComponent<ComponentLightSource>() != nullptr)
 				RemoveLight(gameObject);
 
-			gameObject->CleanUp();
-
-
 			RELEASE(gameObject);
 		}
 
