@@ -153,7 +153,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					std::string changeTexture = "Change Texture to " + emitter->name;
 					if (ImGui::Button(changeTexture.c_str()))
 					{
-						chooser->OpenPanel(changeTexture.c_str(), "png");
+						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg"});
 						currentTextureId = emitter->texture.textureID;
 					}
 
@@ -175,7 +175,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					if (ImGui::Button(addTexture.c_str()))
 					{
 						std::string changeTexture = "Change Texture to " + emitter->name;
-						chooser->OpenPanel(changeTexture.c_str(), "png");
+						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg" });
 						currentTextureId = emitter->texture.textureID;
 					}
 				}

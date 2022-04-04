@@ -118,7 +118,7 @@ void ComponentCamera::CalculateViewMatrix(bool ortho)
 
 void ComponentCamera::RecalculateProjection(bool ortho)
 {
-	if (!ortho) {
+	if (!ortho ) {
 		cameraFrustum.type = FrustumType::PerspectiveFrustum;
 		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
 		cameraFrustum.farPlaneDistance = farPlaneDistance;
@@ -126,11 +126,15 @@ void ComponentCamera::RecalculateProjection(bool ortho)
 		cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
 	}
 	else {
-		cameraFrustum.type = FrustumType::OrthographicFrustum;
-		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-		cameraFrustum.farPlaneDistance = farPlaneDistance;
-		cameraFrustum.orthographicWidth = owner->GetEngine()->GetEditor()->lastViewportSize.x;
-		cameraFrustum.orthographicHeight = owner->GetEngine()->GetEditor()->lastViewportSize.y;
+		if (owner)
+		{
+			cameraFrustum.type = FrustumType::OrthographicFrustum;
+			cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+			cameraFrustum.farPlaneDistance = farPlaneDistance;
+			cameraFrustum.orthographicWidth = owner->GetEngine()->GetEditor()->lastViewportSize.x;
+			cameraFrustum.orthographicHeight = owner->GetEngine()->GetEditor()->lastViewportSize.y;
+		}
+		
 	}
 }
 
@@ -223,7 +227,7 @@ void ComponentCamera::Load(Json& json)
 void ComponentCamera::DrawFrustum() const
 {
 	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
+	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
 

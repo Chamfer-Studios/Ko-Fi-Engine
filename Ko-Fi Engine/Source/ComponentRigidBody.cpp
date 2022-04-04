@@ -26,7 +26,7 @@ ComponentRigidBody::~ComponentRigidBody()
 
 bool ComponentRigidBody::CleanUp()
 {
-	if (dynamicBody)
+	/*if (dynamicBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
 		dynamicBody->release();
@@ -35,7 +35,7 @@ bool ComponentRigidBody::CleanUp()
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
 		staticBody->release();
-	}
+	}*/
 	return true;
 }
 
@@ -143,7 +143,7 @@ bool ComponentRigidBody::TransformUpdatesRigidBody()
 	owner->GetEngine()->GetPhysics()->DeleteActor(body);
 
 	float3 pos = owner->GetTransform()->GetPosition();
-	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 
 	physx::PxTransform pxTransform;
 	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
@@ -173,7 +173,7 @@ bool ComponentRigidBody::RigidBodyUpdatesTransform()
 	float3 scale = owner->GetTransform()->GetScale();
 
 	owner->GetTransform()->SetPosition(position);
-	owner->GetTransform()->SetRotation(rot);
+	owner->GetTransform()->SetRotationEuler(rot);
 	owner->GetTransform()->SetScale(scale);
 
 	return true;
@@ -427,7 +427,7 @@ void ComponentRigidBody::SetStatic()
 
 		// Create static body
 		float3 pos = owner->GetTransform()->GetPosition();
-		Quat rot = Quat::FromEulerXYX(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+		Quat rot = Quat::FromEulerXYX(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 		physx::PxTransform pxTransform;
 		pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
 		pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
@@ -477,7 +477,7 @@ void ComponentRigidBody::SetDynamic()
 
 		// Create dynamic object
 		float3 pos = owner->GetTransform()->GetPosition();
-		Quat rot = Quat::FromEulerXYX(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+		Quat rot = Quat::FromEulerXYX(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 		physx::PxTransform pxTransform;
 		pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
 		pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
@@ -519,7 +519,7 @@ void ComponentRigidBody::CreateDynamic()
 	hasUpdated = true;
 
 	float3 pos = owner->GetTransform()->GetPosition();
-	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 
 	physx::PxTransform pxTransform;
 	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
@@ -542,7 +542,7 @@ void ComponentRigidBody::CreateStatic()
 	hasUpdated = true;
 
 	float3 pos = owner->GetTransform()->GetPosition();
-	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 
 	physx::PxTransform pxTransform;
 	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);

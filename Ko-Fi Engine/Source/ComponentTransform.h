@@ -11,61 +11,55 @@ using Json = nlohmann::json;
 class ComponentTransform : public Component
 {
 public:
+
+	// Constructors
 	ComponentTransform(GameObject* parent);
 	~ComponentTransform();
 
+	// Game Loop
 	bool Update(float dt) override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser) override; // OngGui
 
+	// Setters
 	void SetPosition(const float3& newPosition);
-	void SetRotation(const float3& newRotation);
-	void SetRotationQuat(const Quat& newRotation);
-	void LookAt(float3 forward, float3 up);
 	void SetScale(const float3& newScale);
-
-	inline float3 GetPosition() const { return position; };
-	inline float3 GetRotation() const { return rotationEuler; };
-	inline float3 GetScale() const { return scale; };
-
-	inline const float3& Right() const { return right; }
-	inline const float3& Up() const { return up; }
-	inline const float3& Front() const { return front; }
-	void SetFront(const float3& front) 
-	{ 
-		this->front = front; 
-	}
-
-	void NewAttachment();
-	void OnParentMoved();
-
-	void RecomputeGlobalMatrix();
-
-	void UpdateGuizmoParameters(float4x4& transformMatrix);
-
-	float4x4 GetGlobalTransform();
+	void SetRotationEuler(const float3& newRotation);
+	void SetRotationQuat(const Quat& newRotation);
+	void SetFront(const float3& front);
 	void SetGlobalTransform(const float4x4& globalTransform);
-
-	bool GetDirty() const;
 	void SetDirty(bool isDirty);
 
+	// Getters
+	float3 GetPosition() const;
+	float3 GetScale() const;
+	float3 GetRotationEuler() const;
+	Quat	GetRotationQuat() const;
+	const float3& Right() const;
+	const float3& Up() const;
+	const float3& Front() const;
+	float4x4 GetGlobalTransform();
+	inline bool GetDirty() const { return isDirty; }
+
+	// Transform Functions
+	void RecomputeGlobalMatrix();
+
+	// Guizmo
+	void UpdateGuizmoParameters(float4x4& transformMatrix);
+
+	// Serialization
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
+private:
+
+	// Transfrom Properties
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;
 
-private:
+	float3 rotationEuler; // Just for ImGui Values
 	bool isDirty = true;
 
-	float3 position;
-	Quat rotation;
-	float3 rotationEuler;
-	float3 scale;
-
-	float3 front = float3::unitZ;
-	float3 up = float3::unitY;
-	float3 right = float3::unitX;
 };
 
 #endif // !__COMPONENT_TRANSFORM_H__

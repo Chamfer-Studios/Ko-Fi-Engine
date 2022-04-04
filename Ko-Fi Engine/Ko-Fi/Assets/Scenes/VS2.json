@@ -1,7 +1,7 @@
 {
     "VS2": {
         "active": true,
-        "game_objects_amount": 325,
+        "game_objects_amount": 323,
         "game_objects_list": [
             {
                 "UID": 1493117615,
@@ -14,27 +14,27 @@
                     {
                         "active": true,
                         "position": [
-                            -43.47517395019531,
-                            315.572998046875,
-                            54.90973663330078
+                            0.0,
+                            0.0,
+                            0.0
                         ],
                         "rotation": [
-                            0.7071068286895752,
                             0.0,
                             0.0,
-                            0.7071067094802856
+                            0.0,
+                            1.0
                         ],
                         "scale": [
                             1.0,
-                            0.9999793767929077,
-                            0.9999793767929077
+                            1.0,
+                            1.0
                         ],
                         "type": "transform"
                     },
                     {
                         "active": true,
                         "draw_frustum": true,
-                        "far_plane_distance": 2000.0,
+                        "far_plane_distance": 100.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.10000000149011612,
@@ -44,8 +44,7 @@
                 ],
                 "is3D": true,
                 "name": "camera",
-                "parent_UID": 4294967295,
-                "tag": 0
+                "parent_UID": 4294967295
             },
             {
                 "UID": 1899641666,
@@ -82,8 +81,7 @@
                 ],
                 "is3D": true,
                 "name": "Level 1",
-                "parent_UID": 4294967295,
-                "tag": 0
+                "parent_UID": 4294967295
             },
             {
                 "UID": 24544444,
@@ -162,8 +160,7 @@
                 ],
                 "is3D": true,
                 "name": "Plane",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1559236359,
@@ -242,8 +239,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 296194089,
@@ -322,8 +318,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1190691775,
@@ -402,8 +397,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.002",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2135809428,
@@ -482,8 +476,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.003",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1125501214,
@@ -562,8 +555,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.004",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1136708158,
@@ -642,8 +634,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.005",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1838792521,
@@ -722,8 +713,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.006",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 631455930,
@@ -802,8 +792,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.007",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1455564793,
@@ -882,8 +871,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.008",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 270635170,
@@ -962,8 +950,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.009",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2017135439,
@@ -1042,8 +1029,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.010",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 293303054,
@@ -1122,8 +1108,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.011",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1777406858,
@@ -1202,8 +1187,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.012",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 392669737,
@@ -1282,8 +1266,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.013",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 592933367,
@@ -1362,8 +1345,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.014",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1683281273,
@@ -1442,8 +1424,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.015",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1395407096,
@@ -1522,8 +1503,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.016",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1772207630,
@@ -1602,8 +1582,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.017",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1341953492,
@@ -1682,8 +1661,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.018",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1868003797,
@@ -1762,8 +1740,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.019",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 682688617,
@@ -1842,8 +1819,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.020",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1356128753,
@@ -1922,8 +1898,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.021",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 921372258,
@@ -2002,8 +1977,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.022",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1521438328,
@@ -2082,8 +2056,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.023",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1574429060,
@@ -2162,8 +2135,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.024",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1465276086,
@@ -2242,8 +2214,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.025",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2070699965,
@@ -2322,8 +2293,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.026",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1477556508,
@@ -2402,8 +2372,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.027",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 199984874,
@@ -2482,8 +2451,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.028",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1010429253,
@@ -2562,8 +2530,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.029",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1973198334,
@@ -2642,8 +2609,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.030",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1512312824,
@@ -2722,8 +2688,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.031",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1902874588,
@@ -2802,8 +2767,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.032",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1765507718,
@@ -2882,8 +2846,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.033",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 891331539,
@@ -2962,8 +2925,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.034",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1705613007,
@@ -3042,8 +3004,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.035",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1374899482,
@@ -3122,8 +3083,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.036",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2088238591,
@@ -3202,8 +3162,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.037",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 616042111,
@@ -3282,8 +3241,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.038",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2071895694,
@@ -3362,8 +3320,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.039",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 973542984,
@@ -3442,8 +3399,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.040",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 157222450,
@@ -3522,8 +3478,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.041",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 260042691,
@@ -3602,8 +3557,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.042",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1145045901,
@@ -3682,8 +3636,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.043",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 352729587,
@@ -3762,8 +3715,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.044",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 911073082,
@@ -3842,8 +3794,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.045",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1742044130,
@@ -3922,8 +3873,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.046",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1567926758,
@@ -4002,8 +3952,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.047",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1887558061,
@@ -4082,8 +4031,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.048",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 565470363,
@@ -4162,8 +4110,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.049",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 941925619,
@@ -4242,8 +4189,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.050",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 95391960,
@@ -4322,8 +4268,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.051",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1264210636,
@@ -4402,8 +4347,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.052",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 991416661,
@@ -4482,8 +4426,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.053",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1147457254,
@@ -4562,8 +4505,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.054",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 729812334,
@@ -4642,8 +4584,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.055",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 801417394,
@@ -4722,8 +4663,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.056",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1707754967,
@@ -4802,8 +4742,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.057",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 176441352,
@@ -4882,8 +4821,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.058",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 416906752,
@@ -4962,8 +4900,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.059",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 76008140,
@@ -5042,8 +4979,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.060",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 363008732,
@@ -5122,8 +5058,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.061",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1443372676,
@@ -5202,8 +5137,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.062",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1846781725,
@@ -5282,8 +5216,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.063",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 649563041,
@@ -5362,8 +5295,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.064",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1517838935,
@@ -5442,8 +5374,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.065",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 89192059,
@@ -5522,8 +5453,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.066",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1265116162,
@@ -5602,8 +5532,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.067",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1758016544,
@@ -5682,8 +5611,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.068",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1186832706,
@@ -5762,8 +5690,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.069",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1899022454,
@@ -5842,8 +5769,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.070",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2011542379,
@@ -5922,8 +5848,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.071",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1740896548,
@@ -6002,8 +5927,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.072",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1129015275,
@@ -6082,8 +6006,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.073",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 976013281,
@@ -6162,8 +6085,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.074",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 343078127,
@@ -6242,8 +6164,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.075",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1129157933,
@@ -6322,8 +6243,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.076",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 170587664,
@@ -6402,8 +6322,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.077",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 899187434,
@@ -6482,8 +6401,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.078",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1032548817,
@@ -6562,8 +6480,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.079",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 66105032,
@@ -6642,8 +6559,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.080",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 240977351,
@@ -6722,8 +6638,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.081",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 941903607,
@@ -6802,8 +6717,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.082",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 710378155,
@@ -6882,8 +6796,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.083",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 689138845,
@@ -6962,8 +6875,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.084",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1603370118,
@@ -7042,8 +6954,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.085",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2031014218,
@@ -7122,8 +7033,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.086",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 180134663,
@@ -7202,8 +7112,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.087",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1998357890,
@@ -7282,8 +7191,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.088",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 799105148,
@@ -7362,8 +7270,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.089",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1788149726,
@@ -7442,8 +7349,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.090",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 997573609,
@@ -7522,8 +7428,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.091",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 303604562,
@@ -7602,8 +7507,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.092",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1719157228,
@@ -7682,8 +7586,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.093",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1591788690,
@@ -7762,8 +7665,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.094",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1026783055,
@@ -7842,8 +7744,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.095",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 227430819,
@@ -7922,8 +7823,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.096",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 564120268,
@@ -8002,8 +7902,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.097",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1436242092,
@@ -8082,8 +7981,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.103",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1477115518,
@@ -8162,8 +8060,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.112",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1710074789,
@@ -8242,8 +8139,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.113",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 623495289,
@@ -8322,8 +8218,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.114",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1278558658,
@@ -8402,8 +8297,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.115",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1335160468,
@@ -8482,8 +8376,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.137",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1377282233,
@@ -8562,8 +8455,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.138",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 474021496,
@@ -8642,8 +8534,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.139",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1469369567,
@@ -8722,8 +8613,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.140",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1447615615,
@@ -8802,8 +8692,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.141",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 891694558,
@@ -8882,8 +8771,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.142",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1209555042,
@@ -8962,8 +8850,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.143",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1155329271,
@@ -9042,8 +8929,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.144",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1179177906,
@@ -9122,8 +9008,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.145",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1540136110,
@@ -9202,8 +9087,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.146",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1957619600,
@@ -9282,8 +9166,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.147",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1384514745,
@@ -9362,8 +9245,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.105",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1497566050,
@@ -9442,8 +9324,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.151",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1714905200,
@@ -9522,8 +9403,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.152",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1914090588,
@@ -9602,8 +9482,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.098",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 950596210,
@@ -9682,8 +9561,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.169",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 307703164,
@@ -9762,8 +9640,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.170",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1452602019,
@@ -9842,8 +9719,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.176",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 157776628,
@@ -9922,8 +9798,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.177",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 187763583,
@@ -10002,8 +9877,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.178",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 555452754,
@@ -10082,8 +9956,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.179",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1438154705,
@@ -10162,8 +10035,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.180",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1491159077,
@@ -10242,8 +10114,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.181",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 184152896,
@@ -10322,8 +10193,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.182",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 431399826,
@@ -10402,8 +10272,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.183",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1928482651,
@@ -10482,8 +10351,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.184",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 65551184,
@@ -10562,8 +10430,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.185",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 336231389,
@@ -10642,8 +10509,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.186",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1193781269,
@@ -10722,8 +10588,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.187",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 333622855,
@@ -10802,8 +10667,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.188",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2121145650,
@@ -10882,8 +10746,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.189",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 273345401,
@@ -10962,8 +10825,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.190",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1727566954,
@@ -11042,8 +10904,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.191",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 822286905,
@@ -11122,8 +10983,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.192",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 817551279,
@@ -11202,8 +11062,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.193",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1831015171,
@@ -11282,8 +11141,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.194",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 330450624,
@@ -11362,8 +11220,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.195",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 310583193,
@@ -11442,8 +11299,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.196",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 99638210,
@@ -11522,8 +11378,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.197",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 539638600,
@@ -11602,8 +11457,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.198",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2100049982,
@@ -11682,8 +11536,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.199",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 450658121,
@@ -11762,8 +11615,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.200",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 532959471,
@@ -11842,8 +11694,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.131",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 948877625,
@@ -11922,8 +11773,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.201",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 917181111,
@@ -12002,8 +11852,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.202",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1787369033,
@@ -12082,8 +11931,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.102",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 332037431,
@@ -12162,8 +12010,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.104",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1264007343,
@@ -12242,8 +12089,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.106",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1870340237,
@@ -12322,8 +12168,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.107",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 139220685,
@@ -12402,8 +12247,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.108",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1089611474,
@@ -12482,8 +12326,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.109",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2128084726,
@@ -12562,8 +12405,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.110",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 194935022,
@@ -12642,8 +12484,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.111",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1622001269,
@@ -12722,8 +12563,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.116",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2070255201,
@@ -12802,8 +12642,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.117",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 577413122,
@@ -12882,8 +12721,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.118",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1332578569,
@@ -12962,8 +12800,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.119",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2011518302,
@@ -13042,8 +12879,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.120",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 64631731,
@@ -13122,8 +12958,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.121",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 747503486,
@@ -13202,8 +13037,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.122",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1968981055,
@@ -13282,8 +13116,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.123",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2106391204,
@@ -13362,8 +13195,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.124",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1698727348,
@@ -13442,8 +13274,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.125",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 877287524,
@@ -13522,8 +13353,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.126",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1052304077,
@@ -13602,8 +13432,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.127",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1057527412,
@@ -13682,8 +13511,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.128",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1786597104,
@@ -13762,8 +13590,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.129",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 276659697,
@@ -13842,8 +13669,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.130",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 543934894,
@@ -13922,8 +13748,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.132",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 564623976,
@@ -14002,8 +13827,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.133",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2145158408,
@@ -14082,8 +13906,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.134",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1323292753,
@@ -14162,8 +13985,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.135",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1916300313,
@@ -14242,8 +14064,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.136",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 175037851,
@@ -14322,8 +14143,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.148",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1488011393,
@@ -14402,8 +14222,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.149",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 82577126,
@@ -14482,8 +14301,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.150",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 288366227,
@@ -14562,8 +14380,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.099",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1667957811,
@@ -14642,8 +14459,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.100",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1860031753,
@@ -14722,8 +14538,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.101",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1859277866,
@@ -14802,8 +14617,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.153",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 912518567,
@@ -14882,8 +14696,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.154",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1446423906,
@@ -14962,8 +14775,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.155",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1675584502,
@@ -15042,8 +14854,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.156",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 261941408,
@@ -15122,8 +14933,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.157",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 191636044,
@@ -15202,8 +15012,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.158",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1724604160,
@@ -15282,8 +15091,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.159",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 708035943,
@@ -15362,8 +15170,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.160",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 830754365,
@@ -15442,8 +15249,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.161",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1920064661,
@@ -15522,8 +15328,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.162",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 259705025,
@@ -15602,8 +15407,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.164",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1258721432,
@@ -15682,8 +15486,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.165",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1079634143,
@@ -15762,8 +15565,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.166",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1133541156,
@@ -15842,8 +15644,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.167",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 392278273,
@@ -15922,8 +15723,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.168",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1256105634,
@@ -16002,8 +15802,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.171",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1501271580,
@@ -16082,8 +15881,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.172",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1999571690,
@@ -16162,8 +15960,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.173",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1553212715,
@@ -16242,8 +16039,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.174",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1830869977,
@@ -16322,8 +16118,7 @@
                 ],
                 "is3D": true,
                 "name": "Cube.175",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 959317385,
@@ -16402,8 +16197,7 @@
                 ],
                 "is3D": true,
                 "name": "Box",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1894239385,
@@ -16482,8 +16276,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1869460815,
@@ -16562,8 +16355,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.002",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1190007386,
@@ -16642,8 +16434,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.003",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1732603093,
@@ -16722,8 +16513,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.004",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1403485763,
@@ -16802,8 +16592,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.005",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1576367323,
@@ -16882,8 +16671,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.006",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1117614648,
@@ -16962,8 +16750,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.007",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1821910304,
@@ -17042,8 +16829,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.008",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2095664729,
@@ -17122,8 +16908,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.009",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 87636882,
@@ -17202,8 +16987,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.010",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 366320595,
@@ -17282,8 +17066,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.011",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 90352723,
@@ -17362,8 +17145,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.012",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 467325920,
@@ -17442,8 +17224,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.013",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1320624270,
@@ -17522,8 +17303,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePilePlatform",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 817439012,
@@ -17602,8 +17382,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 457325305,
@@ -17682,8 +17461,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 852508983,
@@ -17762,8 +17540,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.002",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 374869657,
@@ -17842,8 +17619,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.003",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 431628006,
@@ -17922,8 +17698,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.004",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 634733255,
@@ -18002,8 +17777,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.005",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1992942036,
@@ -18082,8 +17856,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.014",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1699055686,
@@ -18162,8 +17935,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.015",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 114187305,
@@ -18242,8 +18014,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.016",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1997383858,
@@ -18322,8 +18093,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.017",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1705499980,
@@ -18402,8 +18172,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.018",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2095781303,
@@ -18482,8 +18251,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.019",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1761184395,
@@ -18562,8 +18330,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.020",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 544971536,
@@ -18642,8 +18409,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.021",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1869716307,
@@ -18722,8 +18488,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.022",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1797746742,
@@ -18802,8 +18567,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.023",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1284010328,
@@ -18882,8 +18646,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.024",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 781272019,
@@ -18962,8 +18725,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.025",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1473423583,
@@ -19042,8 +18804,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.026",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 224422147,
@@ -19122,8 +18883,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.027",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1550764362,
@@ -19202,8 +18962,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.028",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1025293877,
@@ -19282,8 +19041,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.029",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1776067984,
@@ -19362,8 +19120,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.030",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1668203451,
@@ -19442,8 +19199,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.031",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1781865017,
@@ -19522,8 +19278,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.032",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1536512308,
@@ -19602,8 +19357,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.006",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 920487257,
@@ -19682,8 +19436,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.007",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 36325823,
@@ -19762,8 +19515,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.008",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1451870564,
@@ -19842,8 +19594,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePilePlatform.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 772755601,
@@ -19922,8 +19673,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.010",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1257372577,
@@ -20002,8 +19752,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.011",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1660280656,
@@ -20082,8 +19831,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.012",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2092251601,
@@ -20162,8 +19910,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.013",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 832937211,
@@ -20242,8 +19989,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.014",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1420647090,
@@ -20322,8 +20068,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.015",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 216723011,
@@ -20402,8 +20147,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.016",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 252645009,
@@ -20482,8 +20226,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.033",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1507102659,
@@ -20562,8 +20305,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.034",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2090713466,
@@ -20642,8 +20384,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.035",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1120622726,
@@ -20722,8 +20463,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.036",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 793911336,
@@ -20802,8 +20542,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.037",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 967017170,
@@ -20882,8 +20621,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.038",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1090059120,
@@ -20962,8 +20700,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.039",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1081392187,
@@ -21042,8 +20779,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.040",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1123754601,
@@ -21122,8 +20858,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.041",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1942332364,
@@ -21202,8 +20937,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.042",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 76262454,
@@ -21282,8 +21016,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.043",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 888734550,
@@ -21362,8 +21095,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.044",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1289268186,
@@ -21442,8 +21174,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.045",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1766383847,
@@ -21522,8 +21253,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.046",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1758766532,
@@ -21602,8 +21332,7 @@
                 ],
                 "is3D": true,
                 "name": "Water Tank",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1862139726,
@@ -21682,8 +21411,7 @@
                 ],
                 "is3D": true,
                 "name": "Tent",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 442094456,
@@ -21762,8 +21490,7 @@
                 ],
                 "is3D": true,
                 "name": "Spaceship",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1322492372,
@@ -21842,8 +21569,7 @@
                 ],
                 "is3D": true,
                 "name": "Stilltent",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2027549534,
@@ -21922,8 +21648,7 @@
                 ],
                 "is3D": true,
                 "name": "Stilltent.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1631022010,
@@ -22002,8 +21727,7 @@
                 ],
                 "is3D": true,
                 "name": "Button.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 890555791,
@@ -22082,8 +21806,7 @@
                 ],
                 "is3D": true,
                 "name": "Button.002",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1384352674,
@@ -22162,8 +21885,7 @@
                 ],
                 "is3D": true,
                 "name": "Button.003",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 951439194,
@@ -22242,8 +21964,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.017",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1015033759,
@@ -22322,8 +22043,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.018",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 420963510,
@@ -22402,8 +22122,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.019",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1191199101,
@@ -22482,8 +22201,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePilePlatform.002",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 949130875,
@@ -22562,8 +22280,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePilePlatform.003",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1368830185,
@@ -22642,8 +22359,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePilePlatform.004",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 444506966,
@@ -22722,8 +22438,7 @@
                 ],
                 "is3D": true,
                 "name": "ArtilleryGun",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1780126616,
@@ -22802,8 +22517,7 @@
                 ],
                 "is3D": true,
                 "name": "ArtilleryGun.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 766380519,
@@ -22882,8 +22596,7 @@
                 ],
                 "is3D": true,
                 "name": "Dummy",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1946903584,
@@ -22962,8 +22675,7 @@
                 ],
                 "is3D": true,
                 "name": "Dummy.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 501590318,
@@ -23042,8 +22754,7 @@
                 ],
                 "is3D": true,
                 "name": "Dummy.002",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 987945611,
@@ -23122,8 +22833,7 @@
                 ],
                 "is3D": true,
                 "name": "RocketLauncher",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 7653668,
@@ -23202,8 +22912,7 @@
                 ],
                 "is3D": true,
                 "name": "RocketLauncher.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 280075372,
@@ -23282,8 +22991,7 @@
                 ],
                 "is3D": true,
                 "name": "Watchtower",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2123442899,
@@ -23362,8 +23070,7 @@
                 ],
                 "is3D": true,
                 "name": "Watchtower.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1296328152,
@@ -23442,8 +23149,7 @@
                 ],
                 "is3D": true,
                 "name": "WeaponStand",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1514521570,
@@ -23522,8 +23228,7 @@
                 ],
                 "is3D": true,
                 "name": "WeaponStand.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1059157270,
@@ -23602,8 +23307,7 @@
                 ],
                 "is3D": true,
                 "name": "WeaponStand.002",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1442307631,
@@ -23682,8 +23386,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.047",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 711727778,
@@ -23762,8 +23465,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.048",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 161961260,
@@ -23842,8 +23544,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.049",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1615735710,
@@ -23922,8 +23623,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.050",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1794952403,
@@ -24002,8 +23702,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.051",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 12863039,
@@ -24082,8 +23781,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.052",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 36957420,
@@ -24162,8 +23860,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.053",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 327128714,
@@ -24242,8 +23939,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.054",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 964120959,
@@ -24322,8 +24018,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.055",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1316415907,
@@ -24402,8 +24097,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.056",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2032258228,
@@ -24482,8 +24176,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.057",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 890008993,
@@ -24562,8 +24255,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.058",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1970434762,
@@ -24642,8 +24334,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.059",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 235711195,
@@ -24722,8 +24413,7 @@
                 ],
                 "is3D": true,
                 "name": "Box.060",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1526560368,
@@ -24802,8 +24492,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.009",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1693690498,
@@ -24882,8 +24571,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.020",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 246588135,
@@ -24962,8 +24650,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.021",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 728272717,
@@ -25042,8 +24729,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.022",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 985924587,
@@ -25122,8 +24808,7 @@
                 ],
                 "is3D": true,
                 "name": "StonePile.023",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1035862466,
@@ -25202,8 +24887,7 @@
                 ],
                 "is3D": true,
                 "name": "Spice",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 984911832,
@@ -25282,8 +24966,7 @@
                 ],
                 "is3D": true,
                 "name": "Spice.001",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1393806962,
@@ -25362,8 +25045,7 @@
                 ],
                 "is3D": true,
                 "name": "Spice.002",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 2038428060,
@@ -25442,8 +25124,7 @@
                 ],
                 "is3D": true,
                 "name": "Spice.003",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 943153265,
@@ -25522,8 +25203,7 @@
                 ],
                 "is3D": true,
                 "name": "Spice.004",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 1813471893,
@@ -25602,8 +25282,7 @@
                 ],
                 "is3D": true,
                 "name": "Spice.005",
-                "parent_UID": 1899641666,
-                "tag": 0
+                "parent_UID": 1899641666
             },
             {
                 "UID": 868088129,
@@ -25636,8 +25315,7 @@
                 ],
                 "is3D": true,
                 "name": "ball",
-                "parent_UID": 4294967295,
-                "tag": 0
+                "parent_UID": 4294967295
             },
             {
                 "UID": 531351588,
@@ -25650,9 +25328,9 @@
                     {
                         "active": true,
                         "position": [
-                            -106.03172302246094,
-                            -32.003173828125,
-                            -36.293304443359375
+                            -85.0,
+                            -32.0,
+                            76.0
                         ],
                         "rotation": [
                             0.0,
@@ -25671,7 +25349,7 @@
                         "active": true,
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Enemy.sugar",
+                        "path": "Library/Meshes/Sphere.sugar",
                         "shape_type": 0,
                         "type": "mesh"
                     },
@@ -25715,128 +25393,11 @@
                         "speed": 1.0,
                         "type": "followPath",
                         "waypoints": []
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/EnemyPathfinder.lua",
-                        "script_number": 1,
-                        "type": "script"
                     }
                 ],
                 "is3D": true,
-                "name": "Enemy",
-                "parent_UID": 868088129,
-                "tag": 0
-            },
-            {
-                "UID": 79120585,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "ball",
-                "parent_UID": 4294967295,
-                "tag": 0
-            },
-            {
-                "UID": 158693730,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -36.9487419128418,
-                            -32.29462432861328,
-                            116.38735961914063
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            0.1600000262260437,
-                            0.1600000262260437,
-                            0.1600000262260437
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Player.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "is3D": true,
-                "name": "Player",
-                "parent_UID": 79120585,
-                "tag": 0
+                "name": "Sphere",
+                "parent_UID": 868088129
             }
         ],
         "name": "VS2",

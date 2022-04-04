@@ -40,7 +40,7 @@ bool PanelNodeEditor::Update()
     }
     ImGui::SameLine();
     if (ImGui::Button("Load")) {
-        editor->GetPanelChooser()->OpenPanel("NodeEditor", "ini");
+        editor->GetPanelChooser()->OpenPanel("NodeEditor", "ini", {"ini"});
     }
     if (editor->GetPanelChooser()->IsReadyToClose("NodeEditor"))
     {

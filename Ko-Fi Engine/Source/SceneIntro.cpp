@@ -32,7 +32,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 
-	rootGo = new GameObject(-1, engine, "SceneIntro");
+	rootGo = new GameObject(-1, engine, "Root");
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
 
@@ -41,10 +41,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	//GameObject * g = this->CreateEmptyGameObject("Particle Test");
 	//g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
 
-	GameObject* camera = CreateEmptyGameObject("camera");
-	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
-	cCamera->isMainCamera = true;
-	engine->GetCamera3D()->SetGameCamera(cCamera);
+	
 }
 
 SceneIntro::~SceneIntro()
@@ -56,6 +53,20 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	bool ret = true;
+	//Load Default Screen (Can be changed from settings)
+	if (!engine->GetSceneManager()->GetDefaultScene().empty())
+	{
+		Importer::GetInstance()->sceneImporter->Load(this, engine->GetSceneManager()->GetDefaultScene().c_str());
+
+	}
+	if (!engine->GetCamera3D()->gameCamera)
+	{
+		GameObject* camera = CreateEmptyGameObject("camera");
+		ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
+		cCamera->isMainCamera = true;
+		engine->GetCamera3D()->SetGameCamera(cCamera);
+	}
+	
 
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
@@ -88,6 +99,12 @@ bool SceneIntro::Update(float dt)
 	for (GameObject* go : this->gameObjectList)
 	{
 			go->Update(dt);
+			if (go->changeScene)
+			{
+				switchScene = true;
+				sceneNameGO = go->sceneName;
+				go->changeScene = false;
+			}
 	}
 
 	//example::NodeEditorShow();
@@ -120,9 +137,9 @@ bool SceneIntro::PostUpdate(float dt)
 			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 			float3 pos = parent->GetTransform()->GetPosition();
 			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
-			float3 parentRot = parent->GetTransform()->GetRotation();
+			float3 parentRot = parent->GetTransform()->GetRotationEuler();
 			float3 rot = { parentRot.x - 55,parentRot.y,parentRot.z };
-			knife->GetTransform()->SetRotation(rot);
+			knife->GetTransform()->SetRotationEuler(rot);
 
 			ComponentMesh* componentMesh = knife->CreateComponent<ComponentMesh>();
 			Mesh* mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
@@ -151,6 +168,11 @@ bool SceneIntro::PostUpdate(float dt)
 
 	engine->GetRenderer()->DrawRay();
 
+	if (switchScene)
+	{
+		switchScene = false;
+		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+	}
 
 	return true;
 }
@@ -165,6 +187,8 @@ bool SceneIntro::CleanUp()
 	{
 		RELEASE(gameObject);
 	}
+
+	lights.clear();
 
 	example::NodeEditorShutdown();
 

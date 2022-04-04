@@ -92,7 +92,7 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (ImGui::Button("Set Texture")) {
-			panelChooser->OpenPanel("AddTextureImage", "png");
+			panelChooser->OpenPanel("AddTextureImage", "png", { "png","jpg","jpeg" });
 		}
 	}
 	else

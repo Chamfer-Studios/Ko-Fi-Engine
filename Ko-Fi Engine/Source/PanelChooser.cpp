@@ -68,15 +68,15 @@ void PanelChooser::ShowPanel(const char* path,const char* extension)
 			chooserState = READY_TO_CLOSE;
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
-		const char* extensions[] = { "fbx","bmp","png","jpg","glsl","milk","mat","wav","mp3","flac" };
+		
 		ImGui::PushItemWidth(50.0f);
 		if (ImGui::BeginCombo("##combo", currentExtension)) // The second parameter is the label previewed before opening the combo.
 		{
-			for (int n = 0; n < IM_ARRAYSIZE(extensions); n++)
+			for (int n = 0; n < this->extensionList.size(); n++)
 			{
-				bool is_selected = (currentExtension == extensions[n]); // You can store your selection however you want, outside or inside your objects
-				if (ImGui::Selectable(extensions[n], is_selected))
-					currentExtension = extensions[n];
+				bool is_selected = (currentExtension == extensionList[n]); // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(extensionList[n].c_str(), is_selected))
+					currentExtension = extensionList[n].c_str();
 					if (is_selected)
 						ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
 			}
@@ -135,11 +135,12 @@ void PanelChooser::GetPath(const char* path, const char* extension)
 
 }
 
-void PanelChooser::OpenPanel(std::string id ,const char* extension, const char* from_folder)
+void PanelChooser::OpenPanel(std::string id ,const char* extension, std::vector<std::string> extensionList, const char* from_folder)
 {
 	this->id = id;
 	selectedFile[0] = '\0';
 	currentExtension = (extension) ? extension : "";
 	fileDialogOrigin = (from_folder) ? from_folder : "";
+	this->extensionList = extensionList;
 	chooserState = OPENED;
 }

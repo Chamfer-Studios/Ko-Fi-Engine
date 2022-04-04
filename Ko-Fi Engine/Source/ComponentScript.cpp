@@ -64,6 +64,11 @@ bool ComponentScript::Update(float dt)
 			std::string what = err.what();
 			appLog->AddLog("%s\n", what.c_str());
 		}
+		/*if (owner->changeScene)
+		{
+			owner->changeScene = false;
+			owner->LoadSceneFromName("HUD_Scene");
+		}*/
 	}
 	return true;
 }
@@ -81,7 +86,7 @@ bool ComponentScript::OnPlay()
 {
 	bool ret = true;
 
-	//ReloadScript();
+	ReloadScript();
 
 	return ret;
 }
@@ -106,7 +111,7 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 		}
 		if (ImGui::Button("Select Script"))
 		{
-			chooser->OpenPanel("LoadScript", "lua");
+			chooser->OpenPanel("LoadScript", "lua", { "lua" });
 		}
 		ImGui::SameLine();
 		ImGui::Text(path.substr(path.find_last_of('/') + 1).c_str());
@@ -204,7 +209,7 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 				case INSPECTOR_GAMEOBJECT:
 				{
 					GameObject* selected = std::get<GameObject*>(variable->value);
-					std::string name = (selected == nullptr) ? "null" : selected->name.c_str();
+					std::string name = (selected == nullptr) ? "null" : selected->GetName();
 					ImGui::InputText(variable->name.c_str(), &name);
 					if (ImGui::BeginDragDropTarget())
 					{
@@ -259,4 +264,5 @@ void ComponentScript::Load(Json &json)
 {
 	path = json.at("file_name");
 	numScript = json.at("script_number");
+	ReloadScript();
 }

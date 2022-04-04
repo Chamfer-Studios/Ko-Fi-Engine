@@ -23,11 +23,21 @@ public:
 	Input(KoFiEngine* engine);
 	~Input();
 
+	bool Awake(Json configModule);
 	bool Init();
 	bool PreUpdate(float dt);
 	bool CleanUp();
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 
 	KEY_STATE GetKey(int id) const
 	{

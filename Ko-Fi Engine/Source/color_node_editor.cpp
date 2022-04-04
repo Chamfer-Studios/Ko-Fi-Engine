@@ -202,11 +202,10 @@ public:
         // Handle new nodes
         // These are driven by the user, so we place this code before rendering the nodes
         {
-            const bool open_popup = 
-                                    ImGui::IsMouseClicked(1);
+            const bool open_popup = ImGui::IsMouseClicked(1);
 
             ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8.f, 8.f));
-            if ( open_popup)
+            if (open_popup)
             {
                 ImGui::OpenPopup("add node");
             }
