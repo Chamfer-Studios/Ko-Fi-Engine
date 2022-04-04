@@ -166,9 +166,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Audio.cpp" />
-    <ClCompile Include="Source\Animation.cpp" />
+    <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
     <ClCompile Include="Source\Camera3D.cpp" />
+    <ClCompile Include="Source\Channel.cpp" />
     <ClCompile Include="Source\CollisionDetector.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\color_node_editor.cpp" />
@@ -321,11 +322,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
-    <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\R_Animation.h" />
     <ClInclude Include="Source\AnimatorClip.h" />
     <ClInclude Include="Source\Assimp.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\ComponentLightSource.h" />
+    <ClInclude Include="Source\Channel.h" />
     <ClInclude Include="Source\C_Audio.h" />
     <ClInclude Include="Source\C_AudioSource.h" />
     <ClInclude Include="Source\C_AudioSpacial.h" />

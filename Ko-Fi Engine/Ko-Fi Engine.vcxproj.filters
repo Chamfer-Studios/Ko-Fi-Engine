@@ -505,7 +505,7 @@
     <ClCompile Include="Source\R_Track.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Animation.cpp">
+    <ClCompile Include="Source\R_Animation.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\AnimatorClip.cpp">
@@ -613,11 +613,15 @@
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp" />
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Source\C_Collider.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\SimulationEventCallback.cpp">
       <Filter>Source\Helpers\Physics</Filter>
+    <ClCompile Include="Source\Channel.cpp">
+      <Filter>Source\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1677,7 +1681,7 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Animation.h">
+    <ClInclude Include="Source\R_Animation.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimatorClip.h">
@@ -1733,6 +1737,9 @@
     </ClInclude>
     <ClInclude Include="Source\SimulationEventCallback.h">
       <Filter>Source\Helpers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Channel.h">
+      <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

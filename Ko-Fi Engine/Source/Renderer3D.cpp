@@ -428,7 +428,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-			if (mesh->isAnimated)
+			if (mesh->IsAnimated())
 			{
 				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
 				std::vector<float4x4> transformsAnim;

@@ -9,7 +9,8 @@ class Resource
 	friend class ResourceManager;
 
 public:
-	enum class Type {
+	enum class Type
+	{
 		MESH,
 		TEXTURE,
 		SCENE,

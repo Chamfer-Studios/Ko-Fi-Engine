@@ -37,7 +37,7 @@ public:
 	const float3 &Right() const;
 	const float3 &Up() const;
 	const float3 &Front() const;
-	float4x4 GetGlobalTransform();
+	float4x4 GetGlobalTransform() const;
 	inline bool GetDirty() const { return isDirty; }
 
 	// Transform Functions

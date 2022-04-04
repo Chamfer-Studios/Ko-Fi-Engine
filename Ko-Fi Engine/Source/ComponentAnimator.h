@@ -7,7 +7,7 @@
 #include <map>
 
 class GameObject;
-class Animation;
+class R_Animation;
 class AnimatorClip;
 
 class ComponentAnimator : public Component
@@ -29,7 +29,7 @@ public:
 	bool CreateClip(const AnimatorClip& clip);
 	bool CreateDefaultClip(AnimatorClip* clip);
 
-	void SetAnim(Animation* anim);
+	void SetAnim(R_Animation* anim);
 	AnimatorClip* GetSelectedClip();
 
 	void SetSelectedClip(std::string name);
@@ -37,10 +37,10 @@ public:
 private:
 	bool playing;
 
-	Animation* rAnim;
+	R_Animation* animation = nullptr;
 
 	std::map<std::string, AnimatorClip> clips;
-	AnimatorClip* selectedClip;
+	AnimatorClip* selectedClip = nullptr;
 };
 
 #endif // __COMPONENT_ANIMATOR_H__
