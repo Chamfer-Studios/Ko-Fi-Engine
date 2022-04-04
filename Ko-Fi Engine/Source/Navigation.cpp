@@ -54,6 +54,8 @@ bool Navigation::Update(float dt)
 
 bool Navigation::PostUpdate(float dt)
 {
+	return true;
+
 	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
 
 	if (navMeshDetail == nullptr) return true;
