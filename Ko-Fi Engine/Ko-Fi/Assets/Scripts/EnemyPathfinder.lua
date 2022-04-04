@@ -3,12 +3,13 @@ State = {
     SEEK = 2
 }
 
-currentState = State.SEEK
+currentState = State.PATROL
 speed = 20
 player = nil
 lastPlayerPosition = nil
 minRetargetingDistance = 3
-minSeekDistance = 100
+visionConeAngle = 90
+visionConeRadius = 50
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
@@ -18,9 +19,13 @@ local playerIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT
 playerIV = InspectorVariable.new("player", playerIVT, playerName)
 NewVariable(playerIV)
 
-local minSeekDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-minSeekDistanceIV = InspectorVariable.new("minSeekDistance", minSeekDistanceIVT, minSeekDistance)
-NewVariable(minSeekDistanceIV)
+local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+visionConeAngleIV = InspectorVariable.new("visionConeAngle", visionConeAngleIVT, visionConeAngle)
+NewVariable(visionConeAngleIV)
+
+local visionConeRadiusIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+visionConeRadiusIV = InspectorVariable.new("visionConeRadius", visionConeRadiusIVT, visionConeRadius)
+NewVariable(visionConeRadiusIV)
 
 local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
@@ -61,6 +66,17 @@ function Float3NormalizedDifference(a, b)
     return Float3Normalized(v)
 end
 
+function Float3Dot(a, b)
+    return a.x * b.x + a.y * b.y + a.z * b.z
+end
+
+function Float3Angle(a, b)
+    lenA = Float3Length(a)
+    lenB = Float3Length(b)
+
+    return math.acos(Float3Dot(a, b) / (lenA * lenB))
+end
+
 function FollowPath(dt)
     currentTarget = finalPath[currentPathIndex]
     currentPosition = componentTransform:GetPosition()
@@ -76,18 +92,20 @@ function FollowPath(dt)
         currentTarget = finalPath[currentPathIndex]
     end
     direction = Float3NormalizedDifference(currentPosition, currentTarget)
+    Log(tostring(direction.x) .. " " .. tostring(direction.y) .. " " .. tostring(direction.z) .. "\n")
     delta = { x = direction.x * speed * dt, y = direction.y * speed * dt, z = direction.z * speed * dt }
+    componentTransform:LookAt(float3.new(direction.x, direction.y, direction.z), componentTransform:GetUp())
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
 end
 
 function CalculateFinalPath(wp)
     finalPath = {}
-    n = 0
+    n = 1
     for i=1,#wp - 1 do
         current = wp[i]
         next = wp[i + 1]
-        result = navigation:FindPath(current, next, 1000)
+        result = navigation:FindPath(current, next, 1000, 1000)
         for j=1,#result do
             finalPath[n] = result[j]
             n = n + 1
@@ -148,11 +166,43 @@ function CheckAndRecalculateSeekTarget(force)
     end
 end
 
+function ShouldSeekPlayer()
+    position = componentTransform:GetPosition()
+    forward = componentTransform:GetFront()
+    up = componentTransform:GetUp()
+
+    DrawCone(position, forward, up, visionConeAngle, visionConeRadius)
+
+    if player == nil then
+        return false
+    end
+
+    playerPosition = player:GetTransform():GetPosition()
+
+    if Float3Distance(playerPosition, componentTransform:GetPosition()) > visionConeRadius then
+        return false
+    end
+    
+    direction = Float3NormalizedDifference(componentTransform:GetPosition(), playerPosition)
+
+    angle = math.deg(Float3Angle(forward, direction))
+
+    if angle > 180 then
+        angle = angle - 360
+    end
+
+    if ((angle < visionConeAngle / 2) and (angle > -visionConeAngle / 2)) then
+        return true
+    end
+
+    return false
+end
+
 hasSwitchedState = false
 
 function Update(dt)
     playerPosition = player:GetTransform():GetPosition()
-    if Float3Distance(playerPosition, componentTransform:GetPosition()) < minSeekDistance then
+    if ShouldSeekPlayer() then
         if currentState ~= State.SEEK then
             hasSwitchedState = true
         end

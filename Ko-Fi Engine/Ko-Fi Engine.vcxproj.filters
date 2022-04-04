@@ -606,6 +606,9 @@
     <ClCompile Include="Source\par_shapes.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PieShape.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="Source\ComponentLightSource.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
@@ -1715,6 +1718,9 @@
     </ClInclude>
     <ClInclude Include="Source\par_shapes.h">
       <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PieShape.h">
+      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentLightSource.h">
       <Filter>Source\GameObject\Components</Filter>

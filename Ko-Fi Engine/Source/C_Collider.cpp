@@ -51,7 +51,6 @@ bool ComponentCollider2::UpdateCollider()
 {
 	bool ret = true;
 
-
 	CreateCollider(colliderShape);
 
 	return ret;
@@ -130,7 +129,6 @@ void ComponentCollider2::CreateBoxCollider()
 
 		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
 	}
-
 
 	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
 }
@@ -328,8 +326,6 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		{
 			ImGui::Text("Collider shape not supported yet!");
 		}
-
-
 	}
 	else
 		DrawDeleteButton(owner, this);

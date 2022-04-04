@@ -111,13 +111,13 @@ void ComponentTransform::SetRotationEuler(const float3& newRotation)
 void ComponentTransform::SetRotationQuat(const Quat& newRotation)
 {
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), newRotation, GetScale());
+	
 	isDirty = true;
 }
 
 void ComponentTransform::SetFront(const float3& front)
 {
 	transformMatrixLocal.SetCol3(2, front);
-
 }
 
 void ComponentTransform::SetGlobalTransform(const float4x4& globalTransform)

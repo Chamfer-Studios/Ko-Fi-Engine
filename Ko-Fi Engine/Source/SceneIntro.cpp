@@ -158,30 +158,6 @@ bool SceneIntro::PostUpdate(float dt)
 			knifeScript->handler->lua["target"] = target;
 			knifeScript->handler->lua["SetDestination"]();
 		}
-		GameObject* bullet = CreateEmptyGameObject("Bullet");
-		//parent->GetComponent<ComponentScript>()->handler->lua["bullet"] = bullet;
-		//parent->GetComponent<ComponentScript>()->handler->lua.script("table.insert(bullets, bullet)"); //We will need something like this
-
-		bullet->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
-		float3 pos = parent->GetTransform()->GetPosition();
-		bullet->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
-		float3 parentRot = parent->GetTransform()->GetRotationEuler();
-		float3 rot = { parentRot.x - 55,parentRot.y,parentRot.z };
-		bullet->GetTransform()->SetRotationEuler(rot);
-
-		ComponentMesh* componentMesh = bullet->CreateComponent<ComponentMesh>();
- 		Mesh* mesh = gameObjectList.at(7)->GetComponent<ComponentMesh>()->GetMesh();
-		componentMesh->SetMesh(mesh);
-		
-		ComponentMaterial* componentMaterial = bullet->CreateComponent<ComponentMaterial>();
-		Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
-		Material* material = new Material();
-		Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-		componentMaterial->SetMaterial(material);
-		
-		ComponentScript* componentScript = (ComponentScript*)bullet->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
-		componentScript->path = "Assets/Scripts/Bullet.lua";
-		componentScript->ReloadScript();
 	}
 	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)

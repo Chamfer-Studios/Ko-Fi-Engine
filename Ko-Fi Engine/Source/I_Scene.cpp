@@ -542,7 +542,11 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			if (jsonGo.find("is3D") != jsonGo.end()) {
 				is3D = jsonGo.at("is3D");
 			}
-			Tag tag = jsonGo.at("tag");
+			Tag tag = Tag::TAG_UNTAGGED;
+			if (jsonGo.find("tag") != jsonGo.end()) {
+				tag = jsonGo.at("tag");
+			}
+
 			GameObject* go = nullptr;
 			bool exists = false;
 
@@ -783,6 +787,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 		float endTime = (float)engine->GetEngineTime();
 		appLog->AddLog("Time to load: %f\n", endTime - startTime);
+
 #pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{

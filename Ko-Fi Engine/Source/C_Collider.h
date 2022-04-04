@@ -95,7 +95,6 @@ private:
 	bool drawCollider = false;
 
 	std::string* debugFilter;
-
 	ComponentTransform* prevTransform;
 };
 
