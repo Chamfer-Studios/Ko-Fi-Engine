@@ -11,7 +11,6 @@ using Json = nlohmann::json;
 class ComponentTransform : public Component
 {
 public:
-
 	// Constructors
 	ComponentTransform(GameObject* parent);
 	~ComponentTransform();
