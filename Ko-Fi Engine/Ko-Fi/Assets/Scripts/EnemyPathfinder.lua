@@ -95,6 +95,7 @@ function FollowPath(dt)
     end
     direction = Float3NormalizedDifference(currentPosition, currentTarget)
     forward = direction
+    componentTransform:SetFront(float3.new(direction.x, direction.y, direction.z))
     delta = { x = direction.x * speed * dt, y = direction.y * speed * dt, z = direction.z * speed * dt }
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
