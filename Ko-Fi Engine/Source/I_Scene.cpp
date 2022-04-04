@@ -542,7 +542,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			if (jsonGo.find("is3D") != jsonGo.end()) {
 				is3D = jsonGo.at("is3D");
 			}
-			//Tag tag = jsonGo.at("tag");
+			Tag tag = Tag::TAG_UNTAGGED;
+			if (jsonGo.contains("tag"))
+				tag = jsonGo.at("tag");
 			GameObject* go = nullptr;
 			bool exists = false;
 
@@ -563,7 +565,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			}
 
 			go->active = jsonGo.at("active");
-			//go->tag = tag;
+			go->tag = tag;
 			uint parentUid = jsonGo.at("parent_UID");
 			go->SetParentUID(parentUid);
 

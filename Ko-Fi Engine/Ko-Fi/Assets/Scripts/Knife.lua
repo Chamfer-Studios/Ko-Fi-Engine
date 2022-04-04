@@ -23,7 +23,7 @@ function OnTriggerEnter(go)
 end
 
 function OnCollisionEnter(go)
-	print("aa")
+	print("bb")
 	if (go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
 		DeleteGameObject()
 		print("Bye")
