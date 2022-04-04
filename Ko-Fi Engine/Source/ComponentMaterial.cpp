@@ -30,13 +30,12 @@ ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 
 ComponentMaterial::~ComponentMaterial()
 {
-	if(material != nullptr)
-		RELEASE(material);
+	CleanUp();
 }
 
 bool ComponentMaterial::CleanUp()
 {
-	if(material != nullptr)
+	if(material)
 		RELEASE(material);
 
 	return true;

@@ -14,7 +14,9 @@ ComponentCanvas::ComponentCanvas(GameObject* parent) : ComponentTransform2D(pare
 }
 
 ComponentCanvas::~ComponentCanvas()
-{}
+{
+	CleanUp();
+}
 
 bool ComponentCanvas::CleanUp()
 {

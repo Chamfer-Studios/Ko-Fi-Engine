@@ -9,7 +9,7 @@ ParticleResource::ParticleResource(const char* resourceName)
 
 ParticleResource::~ParticleResource()
 {
-	
+	CleanUp();
 }
 
 bool ParticleResource::CleanUp()
@@ -22,6 +22,8 @@ bool ParticleResource::CleanUp()
 	}
 	emitters.clear();
 	emitters.shrink_to_fit();
+
 	name.clear();
+	name.shrink_to_fit();
 	return true;
 }

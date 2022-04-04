@@ -33,9 +33,7 @@ ComponentScript::ComponentScript(GameObject *parent) : Component(parent)
 
 ComponentScript::~ComponentScript()
 {
-	handler->CleanUp();
-	// RELEASE(handler);
-	inspectorVariables.clear();
+	CleanUp();
 }
 
 bool ComponentScript::Start()
@@ -55,7 +53,22 @@ bool ComponentScript::Start()
 
 bool ComponentScript::CleanUp()
 {
-	handler->CleanUp();
+	//TODO: CLEAN UP LUA
+	script.abandon();
+	script.~protected_function_result();
+
+	//if (handler != nullptr)
+	//{
+	//	handler->CleanUp();
+	//	RELEASE(handler);
+	//}
+
+	path.clear();
+	path.shrink_to_fit();
+
+	inspectorVariables.clear();
+	inspectorVariables.shrink_to_fit();
+
 	return true;
 }
 

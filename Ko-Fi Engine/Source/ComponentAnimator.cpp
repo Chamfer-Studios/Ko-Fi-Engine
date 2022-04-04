@@ -20,6 +20,7 @@ ComponentAnimator::ComponentAnimator(GameObject* parent) : Component(parent)
 
 ComponentAnimator::~ComponentAnimator()
 {
+	CleanUp();
 }
 
 bool ComponentAnimator::Start()
@@ -34,6 +35,14 @@ bool ComponentAnimator::Update(float dt)
 
 bool ComponentAnimator::CleanUp()
 {
+	if (rAnim)
+		RELEASE(rAnim);
+
+	clips.clear();
+
+	if (selectedClip)
+		RELEASE(selectedClip);
+
 	return true;
 }
 

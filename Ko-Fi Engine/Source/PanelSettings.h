@@ -11,6 +11,7 @@ public:
 	PanelSettings(Editor* editor);
 	~PanelSettings();
 
+	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

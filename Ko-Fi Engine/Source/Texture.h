@@ -12,6 +12,7 @@ public:
 	Texture();
 	~Texture();
 
+	void CleanUp();
 	inline const char* GetTexturePath() { return path.c_str(); }
 	inline void SetTexturePath(const char* path)
 	{ 

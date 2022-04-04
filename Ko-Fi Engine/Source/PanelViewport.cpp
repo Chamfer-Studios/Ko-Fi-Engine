@@ -28,6 +28,15 @@ PanelViewport::PanelViewport(Editor* editor, KoFiEngine* engine)
 
 PanelViewport::~PanelViewport()
 {
+	CleanUp();
+}
+
+bool PanelViewport::CleanUp()
+{
+	editor = nullptr;
+	engine = nullptr;
+
+	return true;
 }
 
 bool PanelViewport::Awake()
@@ -65,7 +74,6 @@ bool PanelViewport::Update()
 			engine->GetCamera3D()->currentCamera->aspectRatio = viewportSize.x / viewportSize.y;
 			engine->GetCamera3D()->currentCamera->RecalculateProjection();
 			engine->GetRenderer()->ResizeFrameBuffers(viewportSize.x, viewportSize.y);
-			engine->GetRenderer()->ResizeFrameBuffers(editor->cameraViewportSize.x, editor->cameraViewportSize.y);
 
 		}
 		editor->viewportSize = viewportSize;

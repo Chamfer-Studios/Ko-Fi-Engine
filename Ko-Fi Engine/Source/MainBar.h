@@ -12,6 +12,7 @@ public:
 	MainBar(Editor* editor);
 	~MainBar();
 
+	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

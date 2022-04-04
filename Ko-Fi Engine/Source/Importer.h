@@ -18,6 +18,7 @@ private:
 public:
 	~Importer();
 
+	void CleanUp();
 	static Importer* GetInstance(KoFiEngine* e = nullptr);
 	std::string GetNameFromPath(std::string path);
 

@@ -19,6 +19,7 @@ public:
 	I_Scene(KoFiEngine* engine);
 	~I_Scene();
 
+	void CleanUp();
 	bool Import(const char* path, bool isPrefab = false);
 	bool Save(Scene* scene, const char* name = nullptr);
 	bool Load(Scene* scene, const char* name);

@@ -26,6 +26,7 @@ public:
 	Material();
 	~Material();
 
+	void CleanUp();
 	Uniform* FindUniform(std::string name);
 	void AddUniform(Uniform* uniform);
 

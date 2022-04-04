@@ -45,6 +45,8 @@ public:
 	R_Track();
 	~R_Track();
 
+	void CleanUp();
+
 	uint64_t GetTotalSamples() const;
 	void SetPCMFrameCount(drwav_uint64 value);
 
@@ -89,8 +91,8 @@ public:
 	void RemoveEffect();
 
 public:
-	std::string path;
-	std::string name;
+	std::string path = "";
+	std::string name = "";
 
 	float volume = 100.0f, offset = 0.0f;
 
@@ -111,7 +113,7 @@ public:
 	unsigned int channels = 0;
 	unsigned int sampleRate = 44100;
 	unsigned int bits = 16;
-	float duration;
+	float duration = 0.0f;
 
 	AudioFormat format;
 

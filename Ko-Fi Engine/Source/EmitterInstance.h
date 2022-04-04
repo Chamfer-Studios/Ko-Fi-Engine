@@ -17,6 +17,7 @@ public:
 	EmitterInstance(Emitter* e, ComponentParticle* cp);
 	~EmitterInstance();
 	
+	void CleanUp();
 	void Init();
 	bool Update(float dt);
 

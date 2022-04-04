@@ -7,6 +7,19 @@
 #include "Globals.h"
 #include "Scripting.h"
 
+SimulationEventCallback::SimulationEventCallback(Physics* callback) : callback(callback)
+{}
+
+SimulationEventCallback::~SimulationEventCallback()
+{
+	CleanUp();
+}
+
+void SimulationEventCallback::CleanUp()
+{
+	callback = nullptr;
+}
+
 void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 {
 	for (physx::PxU32 i = 0; i < nbPairs; ++i)
