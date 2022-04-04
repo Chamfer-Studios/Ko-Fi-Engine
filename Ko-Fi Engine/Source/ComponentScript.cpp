@@ -64,6 +64,11 @@ bool ComponentScript::Update(float dt)
 			std::string what = err.what();
 			appLog->AddLog("%s\n", what.c_str());
 		}
+		/*if (owner->changeScene)
+		{
+			owner->changeScene = false;
+			owner->LoadSceneFromName("HUD_Scene");
+		}*/
 	}
 	return true;
 }
@@ -259,4 +264,5 @@ void ComponentScript::Load(Json &json)
 {
 	path = json.at("file_name");
 	numScript = json.at("script_number");
+	ReloadScript();
 }

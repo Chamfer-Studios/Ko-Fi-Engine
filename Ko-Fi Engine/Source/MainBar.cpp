@@ -56,7 +56,7 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Save Scene"))
 			{
 				saveAsSceneName = editor->engine->GetSceneManager()->GetCurrentScene()->name.c_str();
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName.c_str());
+				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
 			}
 			if (ImGui::MenuItem("Save Scene As"))
 			{

@@ -32,7 +32,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 
 	jsonHandler.LoadJson(j,"EngineConfig/window_test.json");
 
-	rootGo = new GameObject(-1, engine, "SceneIntro");
+	rootGo = new GameObject(-1, engine, "Root");
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
 
@@ -41,10 +41,7 @@ SceneIntro::SceneIntro(KoFiEngine* engine) : Scene()
 	//GameObject * g = this->CreateEmptyGameObject("Particle Test");
 	//g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
 
-	GameObject* camera = CreateEmptyGameObject("camera");
-	ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
-	cCamera->isMainCamera = true;
-	engine->GetCamera3D()->SetGameCamera(cCamera);
+	
 }
 
 SceneIntro::~SceneIntro()
@@ -56,6 +53,20 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	bool ret = true;
+	//Load Default Screen (Can be changed from settings)
+	if (!engine->GetSceneManager()->GetDefaultScene().empty())
+	{
+		Importer::GetInstance()->sceneImporter->Load(this, engine->GetSceneManager()->GetDefaultScene().c_str());
+
+	}
+	if (!engine->GetCamera3D()->gameCamera)
+	{
+		GameObject* camera = CreateEmptyGameObject("camera");
+		ComponentCamera* cCamera = camera->CreateComponent<ComponentCamera>();
+		cCamera->isMainCamera = true;
+		engine->GetCamera3D()->SetGameCamera(cCamera);
+	}
+	
 
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
@@ -88,6 +99,12 @@ bool SceneIntro::Update(float dt)
 	for (GameObject* go : this->gameObjectList)
 	{
 			go->Update(dt);
+			if (go->changeScene)
+			{
+				switchScene = true;
+				sceneNameGO = go->sceneName;
+				go->changeScene = false;
+			}
 	}
 
 	//example::NodeEditorShow();
@@ -175,6 +192,11 @@ bool SceneIntro::PostUpdate(float dt)
 
 	engine->GetRenderer()->DrawRay();
 
+	if (switchScene)
+	{
+		switchScene = false;
+		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+	}
 
 	return true;
 }

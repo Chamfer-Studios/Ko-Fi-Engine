@@ -99,6 +99,8 @@ public:
 	bool UpdatePrefab(Json& jsonFile);
 
 	bool IsSelected();
+	void LoadSceneFromName(std::string name);
+	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
 private:
 	std::string SetObjectNumberedName(const char* _name);
 
@@ -115,6 +117,8 @@ public:
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
+	bool changeScene = false;
+	std::string sceneName;
 	std::string prefabPath;
 	Tag tag;
 

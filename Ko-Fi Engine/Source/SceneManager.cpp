@@ -4,6 +4,7 @@
 #include "SceneIntro.h"
 #include "Camera3D.h"
 #include "Window.h"
+#include <imgui_stdlib.h>
 
 #include "GameObject.h"
 #include "Material.h"
@@ -61,17 +62,6 @@ bool SceneManager::Awake(Json configModule)
 	return ret;
 }
 
-bool SceneManager::Awake()
-{
-	bool ret = true;
-
-	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
-	{
-		ret = (*scene)->Awake();
-	}
-
-	return ret;
-}
 
 bool SceneManager::Start()
 {
@@ -152,16 +142,22 @@ void SceneManager::OnNotify(const Event& event)
 
 bool SceneManager::SaveConfiguration(Json& configModule) const
 {
+	configModule["DefaultScene"] = defaultScene;
 	return true;
 }
 
 bool SceneManager::LoadConfiguration(Json& configModule)
 {
+	defaultScene = configModule["DefaultScene"];
 	return true;
 }
 
 bool SceneManager::InspectorDraw()
 {
+	if (ImGui::CollapsingHeader("SceneManager##"))
+	{
+		ImGui::InputText("Default Scene: ", &defaultScene);
+	}
 	return true;
 }
 

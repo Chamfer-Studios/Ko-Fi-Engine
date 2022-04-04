@@ -296,6 +296,10 @@ bool Camera3D::InspectorDraw()
 void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
 {
 	this->gameCamera = gameCamera;
+	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
+	{
+		this->currentCamera = this->gameCamera;
+	}
 }
 
 void Camera3D::OnClick(SDL_Event event)

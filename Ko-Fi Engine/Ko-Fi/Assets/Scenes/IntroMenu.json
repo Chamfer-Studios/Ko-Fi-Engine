@@ -1,10 +1,10 @@
 {
-    "NAV": {
+    "IntroMenu": {
         "active": true,
-        "game_objects_amount": 3,
+        "game_objects_amount": 4,
         "game_objects_list": [
             {
-                "UID": 480600814,
+                "UID": 27388352,
                 "active": true,
                 "components": [
                     {
@@ -47,7 +47,94 @@
                 "parent_UID": 4294967295
             },
             {
-                "UID": 2114051234,
+                "UID": 1986459703,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": "canvas"
+                    }
+                ],
+                "is3D": false,
+                "name": "Canvas",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 1364115763,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            524.0,
+                            132.0
+                        ],
+                        "type": "transform2D"
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/HUD/PlayHover.png",
+                        "idleTexture": "Assets/HUD/Play.png",
+                        "pressedTexture": "Assets/HUD/PlayPressed.png",
+                        "type": "button"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/UI_ChangeScenes.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    }
+                ],
+                "is3D": false,
+                "name": "Button",
+                "parent_UID": 1986459703
+            },
+            {
+                "UID": 1886696759,
                 "active": true,
                 "components": [
                     {
@@ -73,95 +160,20 @@
                             1.0
                         ],
                         "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "ball",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 274247875,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
                     },
                     {
                         "active": true,
-                        "position": [
-                            14.477999687194824,
-                            0.10229486227035522,
-                            0.31305980682373047
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "path": "Library/Meshes/Sphere.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            },
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Enemy.lua",
+                        "file_name": "Assets/Scripts/GameState.lua",
                         "script_number": 1,
                         "type": "script"
                     }
                 ],
                 "is3D": true,
-                "name": "Sphere",
-                "parent_UID": 2114051234
+                "name": "GameState",
+                "parent_UID": 4294967295
             }
         ],
-        "name": "NAV",
+        "name": "IntroMenu",
         "navmesh": {}
     }
 }
