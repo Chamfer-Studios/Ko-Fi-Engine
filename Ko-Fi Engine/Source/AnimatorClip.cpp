@@ -1,5 +1,6 @@
 #include "AnimatorClip.h"
 #include <string>
+#include "Globals.h"
 
 class Animation;
 
@@ -38,4 +39,13 @@ AnimatorClip::AnimatorClip(const Animation* animation, const std::string& name, 
 {
 	duration = ((float)(end - start)) / speed;
 	//durationInSeconds = (animation != nullptr) ? (duration / animation->GetTicksPerSecond()) : 0.0f;
+}
+
+void AnimatorClip::CleanUp()
+{
+	name.clear();
+	name.shrink_to_fit();
+
+	if (clipAnim)
+		RELEASE(clipAnim);
 }

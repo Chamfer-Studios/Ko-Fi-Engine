@@ -11,6 +11,8 @@ public:
 	AnimatorClip();
 	AnimatorClip(const Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop);
 
+	void CleanUp();
+
 	const std::string inline GetName() const { return name; }
 	const Animation* GetAnimation() const { return clipAnim; }
 	const float inline GetStartFrame() const { return start; }

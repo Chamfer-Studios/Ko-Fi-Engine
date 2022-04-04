@@ -12,6 +12,8 @@ public:
 	Animation();
 	~Animation();
 
+	void CleanUp();
+
 	inline void SetName(std::string name) { this->name = name; }
 	inline void SetTicksPerSecond(float ticksPerSecond) { this->ticksPerSecond = ticksPerSecond; }
 	inline void SetDuration(float duration) { this->duration = duration; }

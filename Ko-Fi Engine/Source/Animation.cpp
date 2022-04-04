@@ -11,5 +11,11 @@ Animation::Animation()
 
 Animation::~Animation()
 {
+	CleanUp();
+}
 
+void Animation::CleanUp()
+{
+	name.clear();
+	name.shrink_to_fit();
 }

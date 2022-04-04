@@ -49,6 +49,7 @@ ComponentCamera::ComponentCamera(GameObject* parent, bool isEngineCamera) : Comp
 
 ComponentCamera::~ComponentCamera()
 {
+	CleanUp();
 }
 
 bool ComponentCamera::Start()
@@ -67,6 +68,8 @@ bool ComponentCamera::CleanUp()
 {
 	CONSOLE_LOG("Cleaning up the camera");
 	appLog->AddLog("Cleaning up the camera\n");
+
+	componentTransform = nullptr;
 
 	return true;
 }

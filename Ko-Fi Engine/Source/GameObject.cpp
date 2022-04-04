@@ -120,18 +120,35 @@ bool GameObject::PostUpdate(float dt)
 
 bool GameObject::CleanUp()
 {
+	sceneName.clear();
+	sceneName.shrink_to_fit();
+	prefabPath.clear();
+	prefabPath.shrink_to_fit();
+
+	for (GameObject* child : children)
+		RELEASE(child);
+
+	children.clear();
+	children.shrink_to_fit();
+
+	name.clear();
+	name.shrink_to_fit();
+
 	for (Component* component : components)
 	{
 		if (component->GetType() != ComponentType::MESH)
 		{
 			// This is the dirty patch
-			component->CleanUp();
 			RELEASE(component);
 		}
 	}
+
 	components.clear();
-	children.clear();
+	components.shrink_to_fit();
+
 	parent = nullptr;
+	engine = nullptr;
+	transform = nullptr;
 
 	return true;
 }

@@ -18,7 +18,7 @@ public:
 	void Load(Json& json) override;
 
 private:
-	int tag;
+	int tag = 0;
 };
 
 #endif // !__COMPONENT_INFO_H__

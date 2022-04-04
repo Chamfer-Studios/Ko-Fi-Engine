@@ -35,12 +35,12 @@ public:
 	void SetSelectedClip(std::string name);
 
 private:
-	bool playing;
+	bool playing = true;
 
-	Animation* rAnim;
+	Animation* rAnim = nullptr;
 
 	std::map<std::string, AnimatorClip> clips;
-	AnimatorClip* selectedClip;
+	AnimatorClip* selectedClip = nullptr;
 };
 
 #endif // __COMPONENT_ANIMATOR_H__
