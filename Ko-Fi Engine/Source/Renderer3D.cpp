@@ -437,7 +437,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->isAnimated);
+				glUniform1i(isAnimated, mesh->IsAnimated());
 			}			
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
@@ -633,7 +633,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->gameCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-			if (mesh->isAnimated)
+			if (mesh->IsAnimated())
 			{
 				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
 				std::vector<float4x4> transformsAnim;
@@ -642,7 +642,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->isAnimated);
+				glUniform1i(isAnimated, mesh->IsAnimated());
 			}
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");

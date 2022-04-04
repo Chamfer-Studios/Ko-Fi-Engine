@@ -185,7 +185,7 @@ const float3 &ComponentTransform::Front() const
 	return transformMatrixLocal.Col3(2).Normalized();
 }
 
-float4x4 ComponentTransform::GetGlobalTransform()
+float4x4 ComponentTransform::GetGlobalTransform() const
 {
 	return transformMatrix;
 }

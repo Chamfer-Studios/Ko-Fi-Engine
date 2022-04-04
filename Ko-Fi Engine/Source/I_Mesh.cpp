@@ -67,7 +67,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene
 		for (uint j = 0; j < aiMesh->mNumVertices; ++j)
 		{
 			mesh->texCoords[j * 2] = aiMesh->mTextureCoords[0][j].x;
-			mesh->texCoords[j * 2 + 1] =  1.0f - aiMesh->mTextureCoords[0][j].y;
+			mesh->texCoords[j * 2 + 1] = 1.0f - aiMesh->mTextureCoords[0][j].y;
 		}
 
 		CONSOLE_LOG("[STATUS] Imported %u texture coordinates!", aiMesh->mNumVertices * 2);
@@ -96,7 +96,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene
 				const aiVertexWeight& vw = bone->mWeights[j];
 				uint globalVertexID = bone->mWeights[j].mVertexId;
 				mesh->bones[globalVertexID].AddBoneData(boneId, vw.mWeight);
-				CONSOLE_LOG("%d: vertex id %d weight %.2f\n",j,vw.mVertexId,vw.mWeight);
+				CONSOLE_LOG("%d: vertex id %d weight %.2f\n", j, vw.mVertexId, vw.mWeight);
 			}
 		}
 	}
@@ -216,80 +216,83 @@ bool I_Mesh::Load(const char* path, Mesh* mesh)
 			mesh->texCoords = (float*)malloc(mesh->texCoordSizeBytes);
 			file.read((char*)mesh->texCoords, mesh->texCoordSizeBytes);
 		}
+		if (mesh->IsAnimated())
+		{
+			uint boneInfoSize;
+			uint bonesSize;
+			uint boneNameToIndexMapSize;
+			uint boneInfoSizeBytes;
+			uint bonesSizeBytes;
+			uint boneNameToIndexMapSizeBytes;
+			file.read((char*)&boneInfoSize, sizeof(uint));
+			file.read((char*)&bonesSize, sizeof(uint));
+			file.read((char*)&boneNameToIndexMapSize, sizeof(uint));
+			file.read((char*)&boneInfoSizeBytes, sizeof(uint));
+			file.read((char*)&bonesSizeBytes, sizeof(uint));
+			file.read((char*)&boneNameToIndexMapSizeBytes, sizeof(uint));
+			mesh->boneInfo.clear();
+			mesh->boneInfo.resize(boneInfoSize);
+			mesh->bones.clear();
+			mesh->bones.resize(bonesSize);
+			mesh->boneNameToIndexMap.clear();
+			for (int i = 0; i < boneInfoSize; ++i)
+			{
+				float4x4 offsetMatrix;
+				file.read((char*)&offsetMatrix[0][0], sizeof(float));
+				file.read((char*)&offsetMatrix[0][1], sizeof(float));
+				file.read((char*)&offsetMatrix[0][2], sizeof(float));
+				file.read((char*)&offsetMatrix[0][3], sizeof(float));
+				file.read((char*)&offsetMatrix[1][0], sizeof(float));
+				file.read((char*)&offsetMatrix[1][1], sizeof(float));
+				file.read((char*)&offsetMatrix[1][2], sizeof(float));
+				file.read((char*)&offsetMatrix[1][3], sizeof(float));
+				file.read((char*)&offsetMatrix[2][0], sizeof(float));
+				file.read((char*)&offsetMatrix[2][1], sizeof(float));
+				file.read((char*)&offsetMatrix[2][2], sizeof(float));
+				file.read((char*)&offsetMatrix[2][3], sizeof(float));
+				file.read((char*)&offsetMatrix[3][0], sizeof(float));
+				file.read((char*)&offsetMatrix[3][1], sizeof(float));
+				file.read((char*)&offsetMatrix[3][2], sizeof(float));
+				file.read((char*)&offsetMatrix[3][3], sizeof(float));
+				mesh->boneInfo.at(i).offsetMatrix = offsetMatrix;
 
-		uint boneInfoSize;
-		uint bonesSize;
-		uint boneNameToIndexMapSize;
-		uint boneInfoSizeBytes;
-		uint bonesSizeBytes;
-		uint boneNameToIndexMapSizeBytes;
-		file.read((char*)&boneInfoSize, sizeof(uint));
-		file.read((char*)&bonesSize, sizeof(uint));
-		file.read((char*)&boneNameToIndexMapSize, sizeof(uint));
-		file.read((char*)&boneInfoSizeBytes, sizeof(uint));
-		file.read((char*)&bonesSizeBytes, sizeof(uint));
-		file.read((char*)&boneNameToIndexMapSizeBytes, sizeof(uint));
-		mesh->boneInfo.clear();
-		mesh->boneInfo.resize(boneInfoSize);
-		mesh->bones.clear();
-		mesh->bones.resize(bonesSize);
-		mesh->boneNameToIndexMap.clear();
-		for (int i = 0; i < boneInfoSize; ++i)
-		{
-			float4x4 offsetMatrix;
-			file.read((char*)&offsetMatrix[0][0], sizeof(float));
-			file.read((char*)&offsetMatrix[0][1], sizeof(float));
-			file.read((char*)&offsetMatrix[0][2], sizeof(float));
-			file.read((char*)&offsetMatrix[0][3], sizeof(float));
-			file.read((char*)&offsetMatrix[1][0], sizeof(float));
-			file.read((char*)&offsetMatrix[1][1], sizeof(float));
-			file.read((char*)&offsetMatrix[1][2], sizeof(float));
-			file.read((char*)&offsetMatrix[1][3], sizeof(float));
-			file.read((char*)&offsetMatrix[2][0], sizeof(float));
-			file.read((char*)&offsetMatrix[2][1], sizeof(float));
-			file.read((char*)&offsetMatrix[2][2], sizeof(float));
-			file.read((char*)&offsetMatrix[2][3], sizeof(float));
-			file.read((char*)&offsetMatrix[3][0], sizeof(float));
-			file.read((char*)&offsetMatrix[3][1], sizeof(float));
-			file.read((char*)&offsetMatrix[3][2], sizeof(float));
-			file.read((char*)&offsetMatrix[3][3], sizeof(float));
-			mesh->boneInfo.at(i).offsetMatrix = offsetMatrix;
+				float4x4 finalTransformation;
+				file.read((char*)&finalTransformation[0][0], sizeof(float));
+				file.read((char*)&finalTransformation[0][1], sizeof(float));
+				file.read((char*)&finalTransformation[0][2], sizeof(float));
+				file.read((char*)&finalTransformation[0][3], sizeof(float));
+				file.read((char*)&finalTransformation[1][0], sizeof(float));
+				file.read((char*)&finalTransformation[1][1], sizeof(float));
+				file.read((char*)&finalTransformation[1][2], sizeof(float));
+				file.read((char*)&finalTransformation[1][3], sizeof(float));
+				file.read((char*)&finalTransformation[2][0], sizeof(float));
+				file.read((char*)&finalTransformation[2][1], sizeof(float));
+				file.read((char*)&finalTransformation[2][2], sizeof(float));
+				file.read((char*)&finalTransformation[2][3], sizeof(float));
+				file.read((char*)&finalTransformation[3][0], sizeof(float));
+				file.read((char*)&finalTransformation[3][1], sizeof(float));
+				file.read((char*)&finalTransformation[3][2], sizeof(float));
+				file.read((char*)&finalTransformation[3][3], sizeof(float));
+				mesh->boneInfo.at(i).finalTransformation = finalTransformation;
+			}
+			for (int i = 0; i < bonesSize; ++i)
+			{
+				file.read((char*)&mesh->bones.at(i).boneIDs[0], MAX_NUM_BONES_PER_VERTEX * sizeof(uint));
+				file.read((char*)&mesh->bones.at(i).weights[0], MAX_NUM_BONES_PER_VERTEX * sizeof(float));
+			}
+			for (int z = 0; z < boneNameToIndexMapSize; ++z)
+			{
+				uint nameSizeBytes;
+				std::string name;
+				uint index;
+				file.read((char*)&nameSizeBytes, sizeof(uint));
+				name.resize(nameSizeBytes);
+				file.read((char*)(name.data()), nameSizeBytes);
+				file.read((char*)&index, sizeof(uint));
+				mesh->boneNameToIndexMap.emplace(name.c_str(), index);
+			}
+		}
 
-			float4x4 finalTransformation;
-			file.read((char*)&finalTransformation[0][0], sizeof(float));
-			file.read((char*)&finalTransformation[0][1], sizeof(float));
-			file.read((char*)&finalTransformation[0][2], sizeof(float));
-			file.read((char*)&finalTransformation[0][3], sizeof(float));
-			file.read((char*)&finalTransformation[1][0], sizeof(float));
-			file.read((char*)&finalTransformation[1][1], sizeof(float));
-			file.read((char*)&finalTransformation[1][2], sizeof(float));
-			file.read((char*)&finalTransformation[1][3], sizeof(float));
-			file.read((char*)&finalTransformation[2][0], sizeof(float));
-			file.read((char*)&finalTransformation[2][1], sizeof(float));
-			file.read((char*)&finalTransformation[2][2], sizeof(float));
-			file.read((char*)&finalTransformation[2][3], sizeof(float));
-			file.read((char*)&finalTransformation[3][0], sizeof(float));
-			file.read((char*)&finalTransformation[3][1], sizeof(float));
-			file.read((char*)&finalTransformation[3][2], sizeof(float));
-			file.read((char*)&finalTransformation[3][3], sizeof(float));
-			mesh->boneInfo.at(i).finalTransformation = finalTransformation;
-		}
-		for (int i = 0; i < bonesSize; ++i)
-		{
-			file.read((char*)&mesh->bones.at(i).boneIDs[0], MAX_NUM_BONES_PER_VERTEX * sizeof(uint));
-			file.read((char*)&mesh->bones.at(i).weights[0], MAX_NUM_BONES_PER_VERTEX * sizeof(float));
-		}
-		for (int z = 0; z < boneNameToIndexMapSize; ++z)
-		{
-			uint nameSizeBytes;
-			std::string name;
-			uint index;
-			file.read((char*)&nameSizeBytes, sizeof(uint));
-			name.resize(nameSizeBytes);
-			file.read((char*)(name.data()), nameSizeBytes);
-			file.read((char*)&index, sizeof(uint));
-			mesh->boneNameToIndexMap.emplace(name.c_str(), index);
-		}
 
 		file.close();
 

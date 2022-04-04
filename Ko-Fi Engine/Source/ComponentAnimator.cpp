@@ -139,7 +139,7 @@ void ComponentAnimator::Save(Json& json) const
 	CONSOLE_LOG("hey");
 	json["type"] = "animator";
 
-	std::string name = owner->name;
+	std::string name = owner->GetName();
 	animation->path = ANIMATIONS_DIR + name + ANIMATION_EXTENSION;
 	Importer::GetInstance()->animationImporter->Save(animation, animation->path.c_str());
 
@@ -169,7 +169,9 @@ void ComponentAnimator::Load(Json& json)
 	{*/
 		animation = new R_Animation();
 	/*}*/
-
+		if (json.contains("path"))
+		{
+	}
 	std::string path = json.at("path");
 	Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
 	owner->GetComponent<ComponentMesh>()->GetMesh()->SetIsAnimated(true);
