@@ -186,6 +186,8 @@ void Navigation::PrepareDetour()
 		appLog->AddLog("Could not create DT navmesh!");
 		return;
 	}
+
+	appLog->AddLog("Sucessfully prepared pathfinding.\n");
 }
 
 rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
@@ -296,6 +298,8 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 	delete[] areas;
 	rcFreeCompactHeightfield(compactHeightfield);
 	rcFreeContourSet(contourSet);
+
+	appLog->AddLog("Successfully created navmesh.\n");
 
 	return polyMeshDetail;
 }

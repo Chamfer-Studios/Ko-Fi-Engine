@@ -1822,7 +1822,7 @@
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\Enemy.lua">
+    <None Include="Ko-Fi\Assets\Scripts\EnemyPathfinder.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua">

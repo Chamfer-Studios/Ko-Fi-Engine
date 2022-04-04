@@ -52,23 +52,26 @@ bool ComponentScript::CleanUp()
 
 bool ComponentScript::Update(float dt)
 {
+	lua_update = sol::protected_function(handler->lua["Update"]);
 	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
-		sol::protected_function_result result = lua_update(dt);
-		if (result.valid()) {
-			// Call succeeded
+		if (lua_update.valid()) {
+			sol::protected_function_result result = lua_update(dt);
+			if (result.valid()) {
+				// Call succeeded
+			}
+			else {
+				// Call failed
+				sol::error err = result;
+				std::string what = err.what();
+				appLog->AddLog("%s\n", what.c_str());
+			}
+			/*if (owner->changeScene)
+			{
+				owner->changeScene = false;
+				owner->LoadSceneFromName("HUD_Scene");
+			}*/
 		}
-		else {
-			// Call failed
-			sol::error err = result;
-			std::string what = err.what();
-			appLog->AddLog("%s\n", what.c_str());
-		}
-		/*if (owner->changeScene)
-		{
-			owner->changeScene = false;
-			owner->LoadSceneFromName("HUD_Scene");
-		}*/
 	}
 	return true;
 }
@@ -77,7 +80,11 @@ bool ComponentScript::PostUpdate(float dt)
 {
 	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && isScriptLoaded)
 	{
-		handler->lua["PostUpdate"](dt);
+		auto f = handler->lua["PostUpdate"];
+
+		if (f.valid()) {
+			f(dt);
+		}
 	}
 	return true;
 }
@@ -86,7 +93,7 @@ bool ComponentScript::OnPlay()
 {
 	bool ret = true;
 
-	ReloadScript();
+	// ReloadScript();
 
 	return ret;
 }
@@ -249,7 +256,6 @@ void ComponentScript::ReloadScript()
 		return;
 	inspectorVariables.clear();
 	script = handler->lua.script_file(path);
-	lua_update = sol::protected_function(handler->lua["Update"]);
 	isScriptLoaded = true;
 }
 

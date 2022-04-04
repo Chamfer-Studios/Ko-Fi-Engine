@@ -715,7 +715,7 @@
   <ItemGroup>
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Enemy.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\EnemyPathfinder.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua" />
