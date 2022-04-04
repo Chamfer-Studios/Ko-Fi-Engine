@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include <string>
 #include <list>
+#include "MathGeoLib/Math/float2.h"
 
 #include "ImGuizmo.h"
 
@@ -109,7 +110,7 @@ private:
 	// Guizmo
 	ImGuizmo::OPERATION currentGizmoOperation;
 	ImGuizmo::MODE currentGizmoMode;
-
+	float2 cornerPos;
 	// TIME MANAGEMENT
 	// --------------------------------------------------
 	// Frame Count: app graphics frames since game start

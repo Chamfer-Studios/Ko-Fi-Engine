@@ -56,8 +56,6 @@ private:
 	// Transfrom Properties
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;
-
-	float3 rotationEuler; // Just for ImGui Values
 	bool isDirty = true;
 
 };
