@@ -45,6 +45,9 @@ isAttacking = false -- This should go
 
 componentSwitch = gameObject:GetAudioSwitch()
 componentRigidBody = gameObject:GetRigidBody()
+if (componentRigidBody ~= nil) then
+	componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 0, componentTransform:GetPosition().z))
+end
 
 mouseParticles = Find("Mouse Particles")
 if (mouseParticles ~= nil) then
@@ -56,6 +59,10 @@ doubleClickTimer = 0.0
 isDoubleClicking = false
 
 -------------------- Methods ---------------------
+
+function Start()
+	
+end
 
 -- Called each loop iteration
 function Update(dt)
@@ -338,6 +345,14 @@ function Disapear(duration)
 
 	gameObject:GetRigidBody():SetRigidBodyPos(reappearPosition)
 end
+
+function OnTriggerEnter(go)
+
+	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
+		knifeCount = knifeCount + 1
+	end
+end
+
 
 ----------------- Math Functions -----------------
 
