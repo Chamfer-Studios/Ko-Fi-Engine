@@ -18,7 +18,6 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent)
 
 	transformMatrixLocal.SetIdentity();
 	transformMatrix = float4x4::FromTRS(float3::zero, Quat::identity, float3::one);
-	rotationEuler = GetRotationEuler();
 
 	isDirty = true;
 }
@@ -59,15 +58,11 @@ bool ComponentTransform::InspectorDraw(PanelChooser* chooser)
 		}
 
 		// Rotation ImGui
-		float3 newRotationEuler;
-		newRotationEuler.x = RADTODEG * rotationEuler.x;
-		newRotationEuler.y = RADTODEG * rotationEuler.y;
-		newRotationEuler.z = RADTODEG * rotationEuler.z;
+		float3 newRotationEuler = GetRotationEuler();
+		newRotationEuler = RadToDeg(newRotationEuler);
 		if (ImGui::DragFloat3("Rotation", &(newRotationEuler[0]), 0.045f))
 		{
-			newRotationEuler.x = DEGTORAD * newRotationEuler.x;
-			newRotationEuler.y = DEGTORAD * newRotationEuler.y;
-			newRotationEuler.z = DEGTORAD * newRotationEuler.z;
+			newRotationEuler = DegToRad(newRotationEuler);
 			SetRotationEuler(newRotationEuler);
 		}
 
@@ -104,7 +99,6 @@ void ComponentTransform::SetScale(const float3& newScale)
 void ComponentTransform::SetRotationEuler(const float3& newRotation)
 {
 	Quat rotation = Quat::FromEulerXYZ(newRotation.x, newRotation.y, newRotation.z);
-	rotationEuler = newRotation;
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), rotation, GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
@@ -113,7 +107,6 @@ void ComponentTransform::SetRotationEuler(const float3& newRotation)
 void ComponentTransform::SetRotationQuat(const Quat& newRotation)
 {
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), newRotation, GetScale());
-	rotationEuler = newRotation.ToEulerXYZ();
 	isDirty = true;
 }
 
@@ -125,8 +118,9 @@ void ComponentTransform::SetFront(const float3& front)
 
 void ComponentTransform::SetGlobalTransform(const float4x4& globalTransform)
 {
+	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
 	transformMatrix = globalTransform;
-
+	isDirty = true;
 }
 
 void ComponentTransform::SetDirty(bool isDirty)
@@ -201,18 +195,6 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	{
 		transformMatrix = transformMatrixLocal;
 	}
-}
-
-void ComponentTransform::UpdateGuizmoParameters(float4x4& transformMatrix)
-{
-	float3 position;
-	Quat rotation;
-	float3 scale;
-	
-	transformMatrix.Decompose(position, rotation, scale);
-	SetPosition(position);
-	SetRotationQuat(rotation);
-	SetScale(scale);
 }
 
 void ComponentTransform::Save(Json& json) const
