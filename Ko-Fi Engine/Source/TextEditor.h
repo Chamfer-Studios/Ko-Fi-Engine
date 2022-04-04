@@ -298,11 +298,11 @@ private:
 		void Undo(TextEditor* aEditor);
 		void Redo(TextEditor* aEditor);
 
-		std::string mAdded;
+		std::string mAdded = "";
 		Coordinates mAddedStart;
 		Coordinates mAddedEnd;
 
-		std::string mRemoved;
+		std::string mRemoved = "";
 		Coordinates mRemovedStart;
 		Coordinates mRemovedEnd;
 

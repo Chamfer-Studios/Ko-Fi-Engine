@@ -17,6 +17,21 @@ PanelAssets::PanelAssets(Editor* editor) : currentDir(assetsDir), fileIcon("Asse
 
 PanelAssets::~PanelAssets()
 {
+	CleanUp();
+}
+
+bool PanelAssets::CleanUp()
+{
+	editor = nullptr;
+	fileIcon.clear();
+	directoryIcon.clear();
+	selectedFile.clear();
+
+	fileIcon.shrink_to_fit();
+	directoryIcon.shrink_to_fit();
+	selectedFile.shrink_to_fit();
+
+	return true;
 }
 
 bool PanelAssets::Start()

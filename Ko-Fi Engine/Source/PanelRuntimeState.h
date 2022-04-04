@@ -12,6 +12,7 @@ public:
 	PanelRuntimeState(Editor* editor, KoFiEngine* engine);
 	~PanelRuntimeState();
 
+	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();

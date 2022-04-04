@@ -16,6 +16,13 @@ PanelSettings::PanelSettings(Editor* editor)
 
 PanelSettings::~PanelSettings()
 {
+    CleanUp();
+}
+
+bool PanelSettings::CleanUp()
+{
+    editor = nullptr;
+    return true;
 }
 
 bool PanelSettings::Awake()
