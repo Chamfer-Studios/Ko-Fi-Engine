@@ -17,6 +17,8 @@
 #define TEXTURES_DIR "Library/Textures/"
 //#define SHADERS_DIR "Library/Shaders/"
 #define FONT_DIR "Library/Fonts/"
+#define SHADERS_DIR "Library/Shaders/"
+#define ANIMATIONS_DIR "Library/Animations/"
 
 #define CONFIG_DIR "EngineConfig/"
 
@@ -28,5 +30,6 @@
 #define FONT_EXTENSION ".ttf"		//not sure
 #define TEXTURE_EXTENSION ".png"	//not sure
 #define META_EXTENSION ".meta"
+#define ANIMATION_EXTENSION ".cake"
 
 #endif // !__FSDIRECTORIES_H__

@@ -18,6 +18,7 @@ public:
     Audio(KoFiEngine* engine);
     ~Audio();
 
+    bool Awake(Json configModule);
     bool Start();
     bool Update(float dt);
     bool CleanUp();
@@ -25,6 +26,15 @@ public:
     void OnNotify(const Event& event);
 
     void CreateAudioListener(float x, float y, float z);
+
+    // Engine config serialization --------------------------------------
+    bool SaveConfiguration(Json& configModule) const override;
+    bool LoadConfiguration(Json& configModule) override;
+    // ------------------------------------------------------------------
+
+    // Engine config inspector draw -------------------------------------
+    bool InspectorDraw() override;
+    // ------------------------------------------------------------------
 
 private:
     void ListAudioDevices(const ALCchar* devices);

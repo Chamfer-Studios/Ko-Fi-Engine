@@ -28,6 +28,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentParticle.h"
 #include "ComponentAnimator.h"
+#include "ComponentLightSource.h"
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
@@ -36,7 +37,7 @@
 #include "ComponentFollowPath.h"
 
 #include "Mesh.h"
-#include "Animation.h"
+#include "R_Animation.h"
 #include "Texture.h"
 #include "Material.h"
 
@@ -79,8 +80,6 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 
 	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo, isPrefab);
 
-	//ImportAnimations(assimpScene, mesh);
-
 	return true;
 }
 
@@ -90,21 +89,24 @@ GameObject* I_Scene::ImportModel(const char* path)
 	GameObject* tmp = nullptr;
 	return tmp;
 }
+
 aiScene* I_Scene::GetAssimpScene()
 {
 	return assimpScene;
 }
+
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab)
 {
 	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 
-	assimpNode = ImportTransform(assimpNode, gameObj);
+	assimpNode = ImportTransform(assimpNode, gameObj); // THIS IS CAUSING BUGS WITH THE SCALE 
 	ImportMeshesAndMaterials(assimpScene, assimpNode, gameObj);
 
 	gameObj->isPrefab = isPrefab;
 
 	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
-	gameObj->SetName(nodeName.c_str());
+	std::string chainName = nodeName.c_str() ;
+	gameObj->SetName(chainName.c_str());
 	parent->AttachChild(gameObj);
 
 	for (unsigned int i = 0; i < assimpNode->mNumChildren; ++i)
@@ -213,9 +215,12 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		return;
 	}
 
-	ComponentMesh* cMesh = (ComponentMesh*)gameObj->AddComponentByType(ComponentType::MESH);//CreateComponent<ComponentMesh>();
+	ComponentMesh* cMesh = (ComponentMesh*)gameObj->AddComponentByType(ComponentType::MESH);
 	if (cMesh != nullptr)
+	{
 		cMesh->SetMesh(mesh);
+		mesh->SetRootNode(gameObj->GetParent());
+	}
 	else
 	{
 		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
@@ -227,9 +232,11 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		CONSOLE_LOG("[WARNING] Scene Importer: Model had no animations to import.");
 		return;
 	}
-	mesh->isAnimated = true;
-	Animation* anim = new Animation();
-	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim, assimpScene);
+
+	R_Animation* anim = new R_Animation();
+	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim);
+	mesh->SetIsAnimated(true);
+	mesh->SetAnimation(anim);
 
 	ComponentAnimator* cAnim = gameObj->CreateComponent<ComponentAnimator>();
 	if (cAnim != nullptr)
@@ -340,6 +347,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 		jsonGameObject["active"] = gameObject->active;
 		jsonGameObject["UID"] = gameObject->GetUID();
 		jsonGameObject["is3D"] = gameObject->is3D;
+		jsonGameObject["tag"] = (int)gameObject->tag;
 
 		// We don't want to save also its children here.
 		// We will arrive and create them when they get here with the loop.
@@ -472,6 +480,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			{
 				ComponentAnimator* cAnimator = (ComponentAnimator*)component;
 				cAnimator->Save(jsonComponent);
+				break;
 			}
 			case ComponentType::WALKABLE:
 			{
@@ -483,6 +492,12 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			{
 				ComponentFollowPath* followCmp = (ComponentFollowPath*)component;
 				followCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::LIGHT_SOURCE:
+			{
+				ComponentLightSource* componentLightSource = (ComponentLightSource*)component;
+				componentLightSource->Save(jsonComponent);
 				break;
 			}
 			default:
@@ -512,6 +527,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 	if (!jsonFile.is_null())
 	{
+		scene->DeleteCurrentScene();
 		ret = true;
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
@@ -520,13 +536,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		scene->rootGo->SetName(scene->name.c_str());
 		if (jsonScene.find("navmesh") != jsonScene.end())
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
-		//for (std::vector<GameObject*>::iterator goIt = gameObjects.begin(); goIt != gameObjects.end(); ++goIt)
-		//{
-		//	(*goIt)->CleanUp();
-		//	RELEASE((*goIt));
-		//}
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
+		float startTime = (float)engine->GetEngineTime();
+#pragma omp parallel for
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
@@ -535,6 +548,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			if (jsonGo.find("is3D") != jsonGo.end()) {
 				is3D = jsonGo.at("is3D");
 			}
+			Tag tag = Tag::TAG_UNTAGGED;
+			if (jsonGo.contains("tag"))
+				tag = jsonGo.at("tag");
 			GameObject* go = nullptr;
 			bool exists = false;
 
@@ -542,7 +558,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			{
 				exists = true;
 				go = scene->GetGameObject(UID);
-				go->name = jsonGo.at("name");
+				std::string tmp = jsonGo.at("name");
+				go->SetName(tmp.c_str());
 				go->SetUID(UID);
 				go->SetEngine(engine);
 				go->is3D = is3D;
@@ -554,10 +571,12 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			}
 
 			go->active = jsonGo.at("active");
+			go->tag = tag;
 			uint parentUid = jsonGo.at("parent_UID");
 			go->SetParentUID(parentUid);
 
 			Json jsonCmp = jsonGo.at("components");
+#pragma omp parallel for
 			for (const auto& cmpIt : jsonCmp.items())
 			{
 				Json jsonCmp = cmpIt.value();
@@ -575,7 +594,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentMesh* meshCmp = go->GetComponent<ComponentMesh>();
 					if (meshCmp == nullptr)
 					{
-						meshCmp = (ComponentMesh*)go->AddComponentByType(ComponentType::MESH);//CreateComponent<ComponentMesh>();
+						meshCmp = (ComponentMesh*)go->AddComponentByType(ComponentType::MESH);
 					}
 					meshCmp->active = true;
 					meshCmp->Load(jsonCmp);
@@ -585,23 +604,23 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentMaterial* materialCmp = go->GetComponent<ComponentMaterial>();
 					if (materialCmp == nullptr)
 					{
-						materialCmp = (ComponentMaterial*)go->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<ComponentMaterial>();
+						materialCmp = (ComponentMaterial*)go->AddComponentByType(ComponentType::MATERIAL);
 					}
 					materialCmp->active = true;
 					materialCmp->Load(jsonCmp);
 				}
 				else if (type == "info")
 				{
-					ComponentInfo* infoCmp = (ComponentInfo*)go->AddComponentByType(ComponentType::INFO);//GetComponent<ComponentInfo>();
+					ComponentInfo* infoCmp = (ComponentInfo*)go->AddComponentByType(ComponentType::INFO);
 					infoCmp->active = true;
-					infoCmp->Load(jsonCmp); //does nothing as of now
+					infoCmp->Load(jsonCmp); // Does nothing as of now
 				}
 				else if (type == "camera")
 				{
 					ComponentCamera* cameraCmp = go->GetComponent<ComponentCamera>();
 					if (cameraCmp == nullptr)
 					{
-						cameraCmp = (ComponentCamera*)go->AddComponentByType(ComponentType::CAMERA);//CreateComponent<ComponentCamera>();
+						cameraCmp = (ComponentCamera*)go->AddComponentByType(ComponentType::CAMERA);
 					}
 					cameraCmp->active = true;
 					cameraCmp->Load(jsonCmp);
@@ -611,7 +630,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
 					if (scriptCmp == nullptr)
 					{
-						scriptCmp = (ComponentScript*)go->AddComponentByType(ComponentType::SCRIPT);//CreateComponent<ComponentScript>();
+						scriptCmp = (ComponentScript*)go->AddComponentByType(ComponentType::SCRIPT);
 					}
 					scriptCmp->active = true;
 					scriptCmp->Load(jsonCmp);
@@ -621,7 +640,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentTransform2D* transform2DCmp = go->GetComponent<ComponentTransform2D>();
 					if (transform2DCmp == nullptr)
 					{
-						transform2DCmp = (ComponentTransform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);//CreateComponent<ComponentTransform2D>();
+						transform2DCmp = (ComponentTransform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);
 					}
 					transform2DCmp->active = true;
 					transform2DCmp->Load(jsonCmp);
@@ -631,7 +650,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentCanvas* canvasCmp = go->GetComponent<ComponentCanvas>();
 					if (canvasCmp == nullptr)
 					{
-						canvasCmp = (ComponentCanvas*)go->AddComponentByType(ComponentType::CANVAS);//CreateComponent<ComponentCanvas>();
+						canvasCmp = (ComponentCanvas*)go->AddComponentByType(ComponentType::CANVAS);
 					}
 					canvasCmp->active = true;
 					canvasCmp->Load(jsonCmp);
@@ -641,7 +660,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentImage* imageCmp = go->GetComponent<ComponentImage>();
 					if (imageCmp == nullptr)
 					{
-						imageCmp = (ComponentImage*)go->AddComponentByType(ComponentType::IMAGE);//CreateComponent<ComponentImage>();
+						imageCmp = (ComponentImage*)go->AddComponentByType(ComponentType::IMAGE);
 					}
 					imageCmp->active = true;
 					imageCmp->Load(jsonCmp);
@@ -651,7 +670,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentButton* buttonCmp = go->GetComponent<ComponentButton>();
 					if (buttonCmp == nullptr)
 					{
-						buttonCmp = (ComponentButton*)go->AddComponentByType(ComponentType::BUTTON);//CreateComponent<ComponentButton>();
+						buttonCmp = (ComponentButton*)go->AddComponentByType(ComponentType::BUTTON);
 					}
 					buttonCmp->active = true;
 					buttonCmp->Load(jsonCmp);
@@ -661,7 +680,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentText* textCmp = go->GetComponent<ComponentText>();
 					if (textCmp == nullptr)
 					{
-						textCmp = (ComponentText*)go->AddComponentByType(ComponentType::TEXT);//CreateComponent<ComponentText>();
+						textCmp = (ComponentText*)go->AddComponentByType(ComponentType::TEXT);
 					}
 					textCmp->active = true;
 					textCmp->Load(jsonCmp);
@@ -671,7 +690,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentRigidBody* rbCmp = go->GetComponent<ComponentRigidBody>();
 					if (rbCmp == nullptr)
 					{
-						rbCmp = (ComponentRigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);//CreateComponent<ComponentRigidBody>();
+						rbCmp = (ComponentRigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
 					}
 					rbCmp->active = true;
 					rbCmp->Load(jsonCmp);
@@ -691,7 +710,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
 					if (colCmp == nullptr)
 					{
-						colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);//CreateComponent<ComponentCollider>();
+						colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);
 					}
 					colCmp->active = true;
 					colCmp->Load(jsonCmp);
@@ -701,7 +720,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentParticle* partCmp = go->GetComponent<ComponentParticle>();
 					if (partCmp == nullptr)
 					{
-						partCmp = (ComponentParticle*)go->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentCollider>();
+						partCmp = (ComponentParticle*)go->AddComponentByType(ComponentType::PARTICLE);
 					}
 					partCmp->active = true;
 					partCmp->Load(jsonCmp);
@@ -731,7 +750,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					ComponentAnimator* cAnimator = go->GetComponent<ComponentAnimator>();
 					if (cAnimator == nullptr)
 					{
-						cAnimator = go->CreateComponent<ComponentAnimator>();
+						cAnimator = (ComponentAnimator*)go->AddComponentByType(ComponentType::ANIMATOR);
 					}
 					cAnimator->active = true;
 					cAnimator->Load(jsonCmp);
@@ -755,11 +774,25 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					follCmp->active = true;
 				}
+				else if (type == "lightSource")
+				{
+					ComponentLightSource* componentLightSource = go->GetComponent<ComponentLightSource>();
+					if (componentLightSource == nullptr)
+					{
+						componentLightSource = (ComponentLightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+					}
+					componentLightSource->active = true;
+					componentLightSource->Load(jsonCmp);
+				}
 			}
 			if (!exists)
 				scene->gameObjectList.push_back(go);
 		}
 
+		float endTime = (float)engine->GetEngineTime();
+		appLog->AddLog("Time to load: %f\n", endTime - startTime);
+
+#pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)

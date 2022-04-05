@@ -87,18 +87,18 @@ bool PanelHierarchy::Update()
 			}
 		}
 		if (ImGui::Button("Create Prefab")) {
-			editor->GetPanelChooser()->OpenPanel("CreatePrefab", "fbx");
+			editor->GetPanelChooser()->OpenPanel("CreatePrefab", "fbx", {"fbx","dae","obj","stl","gltf"});
 		}
 		if (editor->GetPanelChooser()->IsReadyToClose("LoadPrefab")) {
 			if (editor->GetPanelChooser()->OnChooserClosed() != nullptr) {
 				std::string path = editor->GetPanelChooser()->OnChooserClosed();
 				//Importer::GetInstance()->sceneImporter->Import(path.c_str(), true);
 				GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
-				go->LoadPrefabJson(path.c_str());
+				go->LoadPrefabJson(path.c_str(), false);
 			}
 		}
 		if (ImGui::Button("Open Prefab")) {
-			editor->GetPanelChooser()->OpenPanel("LoadPrefab", "json");
+			editor->GetPanelChooser()->OpenPanel("LoadPrefab", "json", { "json" });
 		}
 	}
 
@@ -124,10 +124,10 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 	if (ImGui::TreeNodeEx(go->GetName(), flags))
 	{
 		DragNDrop(go);
-		if ((ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)))
+		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(1)))
 		{
 			editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
-			CONSOLE_LOG("%s || %d", go->name.c_str(), go->GetUID());
+			CONSOLE_LOG("%s || %d", go->GetName(), go->GetUID());
 		}
 		if (ImGui::IsItemClicked(1)) {
 			ImGui::OpenPopup("Test");
@@ -185,7 +185,7 @@ void PanelHierarchy::DragNDrop(GameObject* go)
 	{
 		ImGui::SetDragDropPayload("Hierarchy", go, sizeof(GameObject));
 		selectedGameObject = go;
-		ImGui::Text(go->name.c_str());
+		ImGui::Text(go->GetName());
 		ImGui::EndDragDropSource();
 	}
 	if (ImGui::BeginDragDropTarget())

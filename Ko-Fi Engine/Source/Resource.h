@@ -25,6 +25,15 @@ enum class ResourceType
 class Resource
 {
 public:
+	enum class Type
+	{
+		MESH,
+		TEXTURE,
+		SCENE,
+		SHADER,
+		UNKNOWN,
+	};
+
 	Resource() {}
 	Resource(ResourceType type);
 	virtual ~Resource();

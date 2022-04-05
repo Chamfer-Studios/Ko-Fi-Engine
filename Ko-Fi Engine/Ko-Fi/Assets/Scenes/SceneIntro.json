@@ -1,10 +1,10 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 43,
+        "game_objects_amount": 68,
         "game_objects_list": [
             {
-                "UID": 514774812,
+                "UID": 433558694,
                 "active": true,
                 "components": [
                     {
@@ -44,10 +44,11 @@
                 ],
                 "is3D": true,
                 "name": "camera",
-                "parent_UID": 4294967295
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
-                "UID": 1930085116,
+                "UID": 1907176389,
                 "active": true,
                 "components": [
                     {
@@ -76,11 +77,2222 @@
                     }
                 ],
                 "is3D": true,
-                "name": "main_character_final_v2",
-                "parent_UID": 4294967295
+                "name": "ChavalRefachero",
+                "parent_UID": 4294967295,
+                "tag": 0
             },
             {
-                "UID": 2109100952,
+                "UID": 613484559,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.08971820771694183,
+                            121.76077270507813,
+                            1.2568751573562622
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Hips",
+                "parent_UID": 1907176389,
+                "tag": 0
+            },
+            {
+                "UID": 106226956,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.07196059077978134,
+                            7.257320880889893,
+                            -0.7896790504455566
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Spine",
+                "parent_UID": 613484559,
+                "tag": 0
+            },
+            {
+                "UID": 1840707055,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.908751152920559e-09,
+                            8.466862678527832,
+                            -0.9212923049926758
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Spine1",
+                "parent_UID": 106226956,
+                "tag": 0
+            },
+            {
+                "UID": 779241430,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.778157247642412e-08,
+                            29.059362411499023,
+                            -1.0529072284698486
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Spine2",
+                "parent_UID": 1840707055,
+                "tag": 0
+            },
+            {
+                "UID": 1835707516,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            6.787327322399506e-08,
+                            14.033303260803223,
+                            7.520357608795166
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Neck",
+                "parent_UID": 779241430,
+                "tag": 0
+            },
+            {
+                "UID": 598687525,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.696001809634254e-08,
+                            8.198503494262695,
+                            5.703134536743164
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "Head",
+                "parent_UID": 1835707516,
+                "tag": 0
+            },
+            {
+                "UID": 714073402,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.0718707699197694e-07,
+                            17.760822296142578,
+                            13.332673072814941
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "HeadTop_End",
+                "parent_UID": 598687525,
+                "tag": 0
+            },
+            {
+                "UID": 257892592,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            12.584894180297852,
+                            11.570624351501465,
+                            -1.3379740715026855
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftShoulder",
+                "parent_UID": 779241430,
+                "tag": 0
+            },
+            {
+                "UID": 1776858712,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            13.906049728393555,
+                            -6.096520900726318,
+                            1.9650508165359497
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftArm",
+                "parent_UID": 257892592,
+                "tag": 0
+            },
+            {
+                "UID": 884902717,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            34.1367073059082,
+                            -0.07012993842363358,
+                            0.4831913411617279
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftForeArm",
+                "parent_UID": 1776858712,
+                "tag": 0
+            },
+            {
+                "UID": 801195121,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            40.9560661315918,
+                            -5.793508535134606e-05,
+                            0.5797587037086487
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHand",
+                "parent_UID": 884902717,
+                "tag": 0
+            },
+            {
+                "UID": 1265271963,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.870942115783691,
+                            -7.20591926574707,
+                            9.68708324432373
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandThumb1",
+                "parent_UID": 801195121,
+                "tag": 0
+            },
+            {
+                "UID": 1867619730,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.819836139678955,
+                            -1.0594749450683594,
+                            1.0852917432785034
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandThumb2",
+                "parent_UID": 1265271963,
+                "tag": 0
+            },
+            {
+                "UID": 1860847421,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.094804048538208,
+                            -1.2194979190826416,
+                            1.2493321895599365
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandThumb3",
+                "parent_UID": 1867619730,
+                "tag": 0
+            },
+            {
+                "UID": 664841225,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.803746223449707,
+                            -2.7965621948242188,
+                            2.8648681640625
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandThumb4",
+                "parent_UID": 1860847421,
+                "tag": 0
+            },
+            {
+                "UID": 48398287,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            18.32303237915039,
+                            -0.9394271373748779,
+                            4.853191375732422
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandIndex1",
+                "parent_UID": 801195121,
+                "tag": 0
+            },
+            {
+                "UID": 135297084,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.710793495178223,
+                            -3.776004086830653e-05,
+                            0.06666567176580429
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandIndex2",
+                "parent_UID": 48398287,
+                "tag": 0
+            },
+            {
+                "UID": 655009422,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.8768725395202637,
+                            -0.2261034995317459,
+                            0.04582379013299942
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandIndex3",
+                "parent_UID": 135297084,
+                "tag": 0
+            },
+            {
+                "UID": 595725017,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            6.1453118324279785,
+                            -4.887246177531779e-05,
+                            0.087004654109478
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandIndex4",
+                "parent_UID": 655009422,
+                "tag": 0
+            },
+            {
+                "UID": 619734046,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            18.011228561401367,
+                            2.229919846286066e-05,
+                            0.25492510199546814
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandMiddle1",
+                "parent_UID": 801195121,
+                "tag": 0
+            },
+            {
+                "UID": 1410064689,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.946174621582031,
+                            -1.6569871149840765e-05,
+                            0.07002447545528412
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandMiddle2",
+                "parent_UID": 619734046,
+                "tag": 0
+            },
+            {
+                "UID": 46273911,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.3418843746185303,
+                            1.9837099898722954e-05,
+                            0.04732242226600647
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandMiddle3",
+                "parent_UID": 1410064689,
+                "tag": 0
+            },
+            {
+                "UID": 410487231,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.461334228515625,
+                            -4.258087574271485e-05,
+                            0.06317214667797089
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandMiddle4",
+                "parent_UID": 46273911,
+                "tag": 0
+            },
+            {
+                "UID": 1966618822,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            15.906673431396484,
+                            -0.08760487288236618,
+                            -3.9018146991729736
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandRing1",
+                "parent_UID": 801195121,
+                "tag": 0
+            },
+            {
+                "UID": 854124683,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.5266811847686768,
+                            -4.3607236875686795e-05,
+                            0.0499647818505764
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandRing2",
+                "parent_UID": 1966618822,
+                "tag": 0
+            },
+            {
+                "UID": 1192369713,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.9608302116394043,
+                            -3.1277334073820384e-06,
+                            0.041909847408533096
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandRing3",
+                "parent_UID": 854124683,
+                "tag": 0
+            },
+            {
+                "UID": 843930341,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.92672061920166,
+                            -3.8105910789454356e-05,
+                            0.06976080685853958
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandRing4",
+                "parent_UID": 1192369713,
+                "tag": 0
+            },
+            {
+                "UID": 121688841,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            12.886801719665527,
+                            -0.8068302869796753,
+                            -6.620516300201416
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandPinky1",
+                "parent_UID": 801195121,
+                "tag": 0
+            },
+            {
+                "UID": 275811846,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.326814651489258,
+                            -7.983118848642334e-06,
+                            0.047120820730924606
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandPinky2",
+                "parent_UID": 121688841,
+                "tag": 0
+            },
+            {
+                "UID": 1645242539,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.0146188735961914,
+                            -2.89547024294734e-05,
+                            0.042702462524175644
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandPinky3",
+                "parent_UID": 275811846,
+                "tag": 0
+            },
+            {
+                "UID": 948044033,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.847151756286621,
+                            3.475909761618823e-05,
+                            0.08274434506893158
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftHandPinky4",
+                "parent_UID": 1645242539,
+                "tag": 0
+            },
+            {
+                "UID": 863730948,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -12.584894180297852,
+                            11.570624351501465,
+                            -1.337973952293396
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightShoulder",
+                "parent_UID": 779241430,
+                "tag": 0
+            },
+            {
+                "UID": 2122731061,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -13.906045913696289,
+                            -6.096528053283691,
+                            1.9650506973266602
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightArm",
+                "parent_UID": 863730948,
+                "tag": 0
+            },
+            {
+                "UID": 1129578635,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -34.1367073059082,
+                            -0.07014089077711105,
+                            0.4831947088241577
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightForeArm",
+                "parent_UID": 2122731061,
+                "tag": 0
+            },
+            {
+                "UID": 1542994195,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -40.9560661315918,
+                            -2.961565951409284e-05,
+                            0.5797960162162781
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHand",
+                "parent_UID": 1129578635,
+                "tag": 0
+            },
+            {
+                "UID": 1224376214,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -9.870892524719238,
+                            -7.205987930297852,
+                            9.687082290649414
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandThumb1",
+                "parent_UID": 1542994195,
+                "tag": 0
+            },
+            {
+                "UID": 80510876,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.8198305368423462,
+                            -1.0594816207885742,
+                            1.0852946043014526
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandThumb2",
+                "parent_UID": 1224376214,
+                "tag": 0
+            },
+            {
+                "UID": 315379326,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.094829559326172,
+                            -1.219502568244934,
+                            1.2492847442626953
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandThumb3",
+                "parent_UID": 80510876,
+                "tag": 0
+            },
+            {
+                "UID": 1151248518,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.803753852844238,
+                            -2.7965822219848633,
+                            2.864835739135742
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandThumb4",
+                "parent_UID": 315379326,
+                "tag": 0
+            },
+            {
+                "UID": 540914697,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -18.323015213012695,
+                            -0.9395055174827576,
+                            4.853236198425293
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandIndex1",
+                "parent_UID": 1542994195,
+                "tag": 0
+            },
+            {
+                "UID": 748886045,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.7107930183410645,
+                            -2.6183059162576683e-05,
+                            0.06670506298542023
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandIndex2",
+                "parent_UID": 540914697,
+                "tag": 0
+            },
+            {
+                "UID": 1587357079,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.8768727779388428,
+                            -0.22609636187553406,
+                            0.04584670439362526
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandIndex3",
+                "parent_UID": 748886045,
+                "tag": 0
+            },
+            {
+                "UID": 1731238792,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -6.14531135559082,
+                            1.126529969042167e-05,
+                            0.08704285323619843
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandIndex4",
+                "parent_UID": 1587357079,
+                "tag": 0
+            },
+            {
+                "UID": 908766310,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -18.011226654052734,
+                            -3.793935684370808e-05,
+                            0.2549726963043213
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandMiddle1",
+                "parent_UID": 1542994195,
+                "tag": 0
+            },
+            {
+                "UID": 56060596,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.946175575256348,
+                            1.913406549647334e-06,
+                            0.06998187303543091
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandMiddle2",
+                "parent_UID": 908766310,
+                "tag": 0
+            },
+            {
+                "UID": 1016967517,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.3418848514556885,
+                            -7.118768280633958e-06,
+                            0.04728700965642929
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandMiddle3",
+                "parent_UID": 56060596,
+                "tag": 0
+            },
+            {
+                "UID": 1907143114,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.461335182189941,
+                            -2.061457598756533e-05,
+                            0.06311575323343277
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandMiddle4",
+                "parent_UID": 1016967517,
+                "tag": 0
+            },
+            {
+                "UID": 444329431,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -15.906682968139648,
+                            -0.08764266967773438,
+                            -3.901772975921631
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandRing1",
+                "parent_UID": 1542994195,
+                "tag": 0
+            },
+            {
+                "UID": 157380616,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.5266823768615723,
+                            -3.7752870412077755e-05,
+                            0.0498872734606266
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandRing2",
+                "parent_UID": 444329431,
+                "tag": 0
+            },
+            {
+                "UID": 534299542,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.960829973220825,
+                            1.336932837148197e-05,
+                            0.04192589595913887
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandRing3",
+                "parent_UID": 157380616,
+                "tag": 0
+            },
+            {
+                "UID": 1904163895,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.92672061920166,
+                            -5.776090983999893e-05,
+                            0.06977670639753342
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandRing4",
+                "parent_UID": 534299542,
+                "tag": 0
+            },
+            {
+                "UID": 1334037191,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -12.88681697845459,
+                            -0.8068479895591736,
+                            -6.620485305786133
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandPinky1",
+                "parent_UID": 1542994195,
+                "tag": 0
+            },
+            {
+                "UID": 483025508,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.3268144130706787,
+                            -8.305970368382987e-06,
+                            0.047130219638347626
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandPinky2",
+                "parent_UID": 1334037191,
+                "tag": 0
+            },
+            {
+                "UID": 1272464095,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.0146195888519287,
+                            -9.802607564779464e-06,
+                            0.04266476631164551
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandPinky3",
+                "parent_UID": 483025508,
+                "tag": 0
+            },
+            {
+                "UID": 79868304,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -5.847150802612305,
+                            -2.6067848011734895e-05,
+                            0.0827980488538742
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightHandPinky4",
+                "parent_UID": 1272464095,
+                "tag": 0
+            },
+            {
+                "UID": 676030701,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            13.026870727539063,
+                            -6.336296081542969,
+                            -1.0927687883377075
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftUpLeg",
+                "parent_UID": 613484559,
+                "tag": 0
+            },
+            {
+                "UID": 1681826669,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.5317361950874329,
+                            -46.09675216674805,
+                            9.782727241516113
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftLeg",
+                "parent_UID": 676030701,
+                "tag": 0
+            },
+            {
+                "UID": 1056153421,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.516061007976532,
+                            -53.4275016784668,
+                            -12.948193550109863
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftFoot",
+                "parent_UID": 1681826669,
+                "tag": 0
+            },
+            {
+                "UID": 617250161,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.1922207623720169,
+                            -14.00966739654541,
+                            16.36406135559082
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftToeBase",
+                "parent_UID": 1056153421,
+                "tag": 0
+            },
+            {
+                "UID": 278198864,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.7847167253494263,
+                            -0.5617358088493347,
+                            9.47480583190918
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "LeftToe_End",
+                "parent_UID": 617250161,
+                "tag": 0
+            },
+            {
+                "UID": 328098251,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -12.882950782775879,
+                            -6.336294651031494,
+                            -1.0927687883377075
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightUpLeg",
+                "parent_UID": 613484559,
+                "tag": 0
+            },
+            {
+                "UID": 1892263379,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.5175102353096008,
+                            -46.09690475463867,
+                            9.78277587890625
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightLeg",
+                "parent_UID": 328098251,
+                "tag": 0
+            },
+            {
+                "UID": 1736900497,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.5327556133270264,
+                            -53.42731475830078,
+                            -12.948287963867188
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightFoot",
+                "parent_UID": 1892263379,
+                "tag": 0
+            },
+            {
+                "UID": 2092822714,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.19222334027290344,
+                            -14.00968074798584,
+                            16.364049911499023
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightToeBase",
+                "parent_UID": 1736900497,
+                "tag": 0
+            },
+            {
+                "UID": 1939689738,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.7847158908843994,
+                            -0.5617435574531555,
+                            9.474804878234863
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "RightToe_End",
+                "parent_UID": 2092822714,
+                "tag": 0
+            },
+            {
+                "UID": 777591350,
                 "active": true,
                 "components": [
                     {
@@ -101,1296 +2313,9 @@
                             1.0
                         ],
                         "scale": [
-                            0.09999999403953552,
-                            0.09999999403953552,
-                            0.09999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "Armature",
-                "parent_UID": 1930085116
-            },
-            {
-                "UID": 1375531920,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -2.31866455078125,
-                            1363.8160400390625,
-                            -8.181259155273438
-                        ],
-                        "rotation": [
-                            -0.026227671653032303,
-                            -0.01174818817526102,
-                            -0.012702299281954765,
-                            0.9995062351226807
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:Hips",
-                "parent_UID": 2109100952
-            },
-            {
-                "UID": 1022048002,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1.8477439880371094e-06,
-                            122.5986328125,
-                            -2.40576171875
-                        ],
-                        "rotation": [
-                            0.001984891016036272,
-                            -0.002543404698371887,
-                            0.002342372899875045,
-                            0.9999920725822449
-                        ],
-                        "scale": [
                             1.0,
                             1.0,
                             1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:Spine",
-                "parent_UID": 1375531920
-            },
-            {
-                "UID": 1280787544,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            8.106231689453125e-06,
-                            143.059326171875,
-                            7.368624210357666e-06
-                        ],
-                        "rotation": [
-                            0.01421809010207653,
-                            -0.026335859671235085,
-                            0.0023471806198358536,
-                            0.9995492696762085
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:Spine1",
-                "parent_UID": 1022048002
-            },
-            {
-                "UID": 1893610090,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1.1920928955078125e-06,
-                            163.49639892578125,
-                            -5.364418029785156e-07
-                        ],
-                        "rotation": [
-                            0.014079189859330654,
-                            -0.026265067979693413,
-                            0.003027939470484853,
-                            0.9995512962341309
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:Spine2",
-                "parent_UID": 1280787544
-            },
-            {
-                "UID": 1006986560,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            7.152557373046875e-07,
-                            183.9333953857422,
-                            1.2874603271484375e-05
-                        ],
-                        "rotation": [
-                            0.012570278719067574,
-                            0.015402531251311302,
-                            -0.010452582500874996,
-                            0.9997477531433105
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:Neck",
-                "parent_UID": 1893610090
-            },
-            {
-                "UID": 660153798,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            6.67572021484375e-06,
-                            109.42900085449219,
-                            -27.35902976989746
-                        ],
-                        "rotation": [
-                            0.0463852733373642,
-                            0.0006954573327675462,
-                            0.03362411633133888,
-                            0.9983572959899902
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:Head",
-                "parent_UID": 1006986560
-            },
-            {
-                "UID": 122557464,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.76837158203125e-06,
-                            181.51113891601563,
-                            -45.38066101074219
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:HeadTop_End",
-                "parent_UID": 660153798
-            },
-            {
-                "UID": 620671613,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            187.097900390625,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:HeadTop_End_end",
-                "parent_UID": 122557464
-            },
-            {
-                "UID": 112423739,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            108.89476013183594,
-                            145.5734100341797,
-                            -1.0300121307373047
-                        ],
-                        "rotation": [
-                            -0.5501711964607239,
-                            -0.42356330156326294,
-                            0.6091484427452087,
-                            -0.38320234417915344
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftShoulder",
-                "parent_UID": 1893610090
-            },
-            {
-                "UID": 1622723251,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            224.89874267578125,
-                            3.9383769035339355e-05
-                        ],
-                        "rotation": [
-                            0.4332461357116699,
-                            0.2066265195608139,
-                            0.11505011469125748,
-                            0.8696935176849365
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftArm",
-                "parent_UID": 112423739
-            },
-            {
-                "UID": 795756495,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.2739171981811523e-05,
-                            273.2503356933594,
-                            -0.0001096874475479126
-                        ],
-                        "rotation": [
-                            0.005985923111438751,
-                            -0.004644277039915323,
-                            0.25781911611557007,
-                            0.9661635160446167
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftForeArm",
-                "parent_UID": 1622723251
-            },
-            {
-                "UID": 579813089,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.57763671875e-05,
-                            277.0179138183594,
-                            0.000102996826171875
-                        ],
-                        "rotation": [
-                            0.08934773504734039,
-                            0.01673991233110428,
-                            -0.12046041339635849,
-                            0.9885474443435669
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftHand",
-                "parent_UID": 795756495
-            },
-            {
-                "UID": 916956610,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            7.62939453125e-06,
-                            90.33486938476563,
-                            1.52587890625e-05
-                        ],
-                        "rotation": [
-                            0.1440417766571045,
-                            0.6739311814308167,
-                            0.12656435370445251,
-                            0.7134775519371033
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftHandIndex1",
-                "parent_UID": 579813089
-            },
-            {
-                "UID": 1189770441,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1.4543533325195313e-05,
-                            53.24171447753906,
-                            1.52587890625e-05
-                        ],
-                        "rotation": [
-                            0.2632574737071991,
-                            0.07677965611219406,
-                            0.17033235728740692,
-                            0.9464603662490845
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftHandIndex2",
-                "parent_UID": 916956610
-            },
-            {
-                "UID": 268640777,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -22.474781036376953,
-                            70.22346496582031,
-                            -33.4071159362793
-                        ],
-                        "rotation": [
-                            0.0514814630150795,
-                            0.06477991491556168,
-                            0.09163223952054977,
-                            0.9923491477966309
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftHandIndex3",
-                "parent_UID": 1189770441
-            },
-            {
-                "UID": 604453794,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -15.36419677734375,
-                            49.34992218017578,
-                            -28.89679718017578
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftHandIndex4",
-                "parent_UID": 268640777
-            },
-            {
-                "UID": 588045462,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            59.21574401855469,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftHandIndex4_end",
-                "parent_UID": 604453794
-            },
-            {
-                "UID": 684863494,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -108.89478302001953,
-                            145.56263732910156,
-                            -0.4756593704223633
-                        ],
-                        "rotation": [
-                            0.6105949878692627,
-                            -0.3933477997779846,
-                            0.5454868674278259,
-                            0.41820502281188965
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightShoulder",
-                "parent_UID": 1893610090
-            },
-            {
-                "UID": 301901433,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -9.5367431640625e-06,
-                            224.8975372314453,
-                            -3.808736801147461e-05
-                        ],
-                        "rotation": [
-                            0.4301236569881439,
-                            -0.16388528048992157,
-                            -0.11744092404842377,
-                            0.8799675703048706
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightArm",
-                "parent_UID": 684863494
-            },
-            {
-                "UID": 1257213704,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -7.62939453125e-06,
-                            273.3033447265625,
-                            2.47955322265625e-05
-                        ],
-                        "rotation": [
-                            0.0053751408122479916,
-                            0.004851013887673616,
-                            -0.2589932978153229,
-                            0.9658520221710205
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightForeArm",
-                "parent_UID": 301901433
-            },
-            {
-                "UID": 1336801758,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -2.288818359375e-05,
-                            276.99267578125,
-                            4.76837158203125e-05
-                        ],
-                        "rotation": [
-                            -0.007870792411267757,
-                            0.03611360117793083,
-                            0.13265356421470642,
-                            0.9904730916023254
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightHand",
-                "parent_UID": 1257213704
-            },
-            {
-                "UID": 1828900032,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            104.93094635009766,
-                            7.62939453125e-06
-                        ],
-                        "rotation": [
-                            0.09267862141132355,
-                            0.0026594488881528378,
-                            0.051932960748672485,
-                            0.994337260723114
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightHandIndex1",
-                "parent_UID": 1336801758
-            },
-            {
-                "UID": 1248729948,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1.52587890625e-05,
-                            46.762821197509766,
-                            1.9073486328125e-05
-                        ],
-                        "rotation": [
-                            0.23168553411960602,
-                            -0.04287669435143471,
-                            0.16016492247581482,
-                            0.9585565328598022
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightHandIndex2",
-                "parent_UID": 1828900032
-            },
-            {
-                "UID": 1247228207,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            17.18871307373047,
-                            72.07684326171875,
-                            14.651412963867188
-                        ],
-                        "rotation": [
-                            0.09999281913042068,
-                            -0.0401909314095974,
-                            0.0620783269405365,
-                            0.9922360777854919
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightHandIndex3",
-                "parent_UID": 1248729948
-            },
-            {
-                "UID": 1921216749,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            17.20458221435547,
-                            48.053531646728516,
-                            6.344383239746094
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightHandIndex4",
-                "parent_UID": 1247228207
-            },
-            {
-                "UID": 1012328734,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            51.43324661254883,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightHandIndex4_end",
-                "parent_UID": 1921216749
-            },
-            {
-                "UID": 1072978921,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            165.72607421875,
-                            -68.20973205566406,
-                            12.830353736877441
-                        ],
-                        "rotation": [
-                            0.039043985307216644,
-                            0.09374654293060303,
-                            0.9945254921913147,
-                            -0.024621393531560898
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftUpLeg",
-                "parent_UID": 1375531920
-            },
-            {
-                "UID": 1646798046,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1.9073486328125e-06,
-                            612.2064208984375,
-                            3.4332275390625e-05
-                        ],
-                        "rotation": [
-                            -0.28993329405784607,
-                            -0.07894425094127655,
-                            0.051623545587062836,
-                            0.952387273311615
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftLeg",
-                "parent_UID": 1072978921
-            },
-            {
-                "UID": 1869814530,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.09808349609375e-05,
-                            606.6557006835938,
-                            -1.52587890625e-05
-                        ],
-                        "rotation": [
-                            0.6097764372825623,
-                            -0.1581658124923706,
-                            0.03909258544445038,
-                            0.7756469249725342
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftFoot",
-                "parent_UID": 1646798046
-            },
-            {
-                "UID": 46195637,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            7.180869579315186e-05,
-                            251.9935760498047,
-                            1.3917684555053711e-05
-                        ],
-                        "rotation": [
-                            0.2666679918766022,
-                            -0.03203621879220009,
-                            0.008691591210663319,
-                            0.9632166624069214
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftToeBase",
-                "parent_UID": 1869814530
-            },
-            {
-                "UID": 1403424018,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.34717333316803e-05,
-                            100.87796783447266,
-                            -2.980232238769531e-07
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftToe_End",
-                "parent_UID": 46195637
-            },
-            {
-                "UID": 1572585972,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            100.87884521484375,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:LeftToe_End_end",
-                "parent_UID": 1403424018
-            },
-            {
-                "UID": 1996665258,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -165.72608947753906,
-                            -68.20986938476563,
-                            16.401142120361328
-                        ],
-                        "rotation": [
-                            -0.09161175787448883,
-                            0.0898074135184288,
-                            0.9913637042045593,
-                            0.027201762422919273
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightUpLeg",
-                "parent_UID": 1375531920
-            },
-            {
-                "UID": 1067973261,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -2.09808349609375e-05,
-                            611.6704711914063,
-                            -4.1961669921875e-05
-                        ],
-                        "rotation": [
-                            -0.25827574729919434,
-                            0.028041444718837738,
-                            -0.044277139008045197,
-                            0.9646485447883606
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightLeg",
-                "parent_UID": 1996665258
-            },
-            {
-                "UID": 1040094000,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.76837158203125e-06,
-                            606.3030395507813,
-                            -1.1920928955078125e-05
-                        ],
-                        "rotation": [
-                            0.5840539932250977,
-                            0.1462186574935913,
-                            -0.029341397807002068,
-                            0.7978972792625427
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightFoot",
-                "parent_UID": 1067973261
-            },
-            {
-                "UID": 1383280807,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -2.9802322387695313e-08,
-                            249.30203247070313,
-                            -2.7865171432495117e-05
-                        ],
-                        "rotation": [
-                            0.26835915446281433,
-                            0.03136729076504707,
-                            -0.008743221871554852,
-                            0.9627684354782104
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightToeBase",
-                "parent_UID": 1040094000
-            },
-            {
-                "UID": 1488914432,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -7.554001058451831e-06,
-                            99.30513763427734,
-                            -6.211921572685242e-07
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightToe_End",
-                "parent_UID": 1383280807
-            },
-            {
-                "UID": 676029582,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            99.3055648803711,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "name": "mixamorig:RightToe_End_end",
-                "parent_UID": 1488914432
-            },
-            {
-                "UID": 1603920770,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.7630000114440918,
-                            -15.0,
-                            78.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            0.10000000149011612,
-                            0.10000000149011612,
-                            0.10000000149011612
                         ],
                         "type": "transform"
                     },
@@ -1398,7 +2323,9 @@
                         "active": true,
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
-                        "path": "Library/Meshes/character_low.sugar",
+                        "isAnimated": true,
+                        "path": "Library/Meshes/Vampire.sugar",
+                        "rootNodeUID": 4294967295,
                         "shape_type": 0,
                         "type": "mesh"
                     },
@@ -1406,33 +2333,29 @@
                         "active": true,
                         "clips": [
                             {
-                                "clipDuration": 31.0,
-                                "clipEndFrame": 229.0,
-                                "clipName": "Attack",
-                                "clipStartFrame": 198.0,
-                                "mapString": "Attack"
-                            },
-                            {
-                                "clipDuration": 326.0,
-                                "clipEndFrame": 326.0,
+                                "clipDuration": 70.0,
+                                "clipEndFrame": 70.0,
                                 "clipName": "Default clip",
                                 "clipStartFrame": 0.0,
                                 "mapString": "Default clip"
                             },
                             {
-                                "clipDuration": 103.0,
-                                "clipEndFrame": 103.0,
-                                "clipName": "Idle",
+                                "clipDuration": 48.0,
+                                "clipEndFrame": 70.0,
+                                "clipName": "Enter Clip Name",
+                                "clipStartFrame": 22.0,
+                                "mapString": "Enter Clip Name"
+                            },
+                            {
+                                "clipDuration": 35.0,
+                                "clipEndFrame": 35.0,
+                                "clipName": "PiernaLft",
                                 "clipStartFrame": 0.0,
-                                "mapString": "Idle"
+                                "mapString": "PiernaLft"
                             }
                         ],
-                        "duration": 326.3999938964844,
-                        "endPoint": 103.0,
-                        "name": "Armature|Armature|Take 001|BaseLayer",
-                        "selectedAnimation": "Default clip",
-                        "startPoint": 0.0,
-                        "ticksPerSecond": 24.0,
+                        "path": "Library/Animations/Vampire.cake",
+                        "selectedClip": "PiernaLft",
                         "type": "animator"
                     },
                     {
@@ -1444,7 +2367,7 @@
                             1.0
                         ],
                         "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/mc_base_color_ao.png",
+                        "texture_path": "Assets/Textures/Vampire_diffuse.png",
                         "type": "material",
                         "uniforms": [
                             {
@@ -1456,70 +2379,17 @@
                                     "y": 1.0,
                                     "z": 1.0
                                 }
-                            },
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
                             }
                         ]
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Player.lua",
-                        "script_number": 1,
-                        "type": "script"
                     }
                 ],
                 "is3D": true,
-                "name": "character_low",
-                "parent_UID": 1930085116
-            },
-            {
-                "UID": 1713251464,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/GameState.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "is3D": true,
-                "name": "GameObject 1713251464",
-                "parent_UID": 4294967295
+                "name": "Vampire",
+                "parent_UID": 1907176389,
+                "tag": 0
             }
         ],
-        "name": "SceneIntro"
+        "name": "SceneIntro",
+        "navmesh": {}
     }
 }

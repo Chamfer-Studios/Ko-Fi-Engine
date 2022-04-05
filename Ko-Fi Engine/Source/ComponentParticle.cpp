@@ -73,10 +73,14 @@ bool ComponentParticle::CleanUp()
 {
 	//DELETE TEXTURES
 
-	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
+	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it != emitterInstances.end(); ++it)
 	{
-		it = emitterInstances.erase(it);
+		emitterInstances.erase(it);
+		if (emitterInstances.empty())
+			break;
 	}
+	emitterInstances.clear();
+	emitterInstances.shrink_to_fit();
 
 	//TODO: refs -1
 	resource->CleanUp();
@@ -154,7 +158,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					std::string changeTexture = "Change Texture to " + emitter->name;
 					if (ImGui::Button(changeTexture.c_str()))
 					{
-						chooser->OpenPanel(changeTexture.c_str(), "png");
+						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg"});
 						currentTextureId = emitter->texture.textureID;
 					}
 
@@ -176,7 +180,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					if (ImGui::Button(addTexture.c_str()))
 					{
 						std::string changeTexture = "Change Texture to " + emitter->name;
-						chooser->OpenPanel(changeTexture.c_str(), "png");
+						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg" });
 						currentTextureId = emitter->texture.textureID;
 					}
 				}

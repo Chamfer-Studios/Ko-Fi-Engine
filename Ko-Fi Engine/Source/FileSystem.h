@@ -18,7 +18,7 @@ public:
 	FileSystem(KoFiEngine* engien);
 	~FileSystem();
 
-	bool Awake();
+	bool Awake(Json configModule);
 	bool Start();
 	bool PreUpdate(float dt);
 	bool Update(float dt);
@@ -26,6 +26,15 @@ public:
 	bool CleanUp();
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 
 	// FileSystem Functions
 	std::string OpenFile(const char* path) const;
@@ -44,7 +53,7 @@ public:
 	int StringCompare(const char* a, const char* b);
 	void AddPath(const char* path);
 
-	void CreateMaterial(const char* path, const char* filename,const char* texturePath);
+	void CreateMaterial(const char* path, const char* filename, const char* texturePath);
 	void CreateMaterial(const char* path);
 	void CreateShader(const char* path);
 	void CreateScene(const char* path,const char* sceneName);

@@ -25,6 +25,15 @@ CollisionDetector::~CollisionDetector()
 	CleanUp();
 }
 
+bool CollisionDetector::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool CollisionDetector::Update(float dt)
 {
 	//TODO: timed updates?
@@ -206,4 +215,19 @@ void CollisionDetector::CheckCollisions(GameObject* currentEntity)
 			}
 		}
 	}
+}
+
+bool CollisionDetector::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool CollisionDetector::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool CollisionDetector::InspectorDraw()
+{
+	return true;
 }

@@ -24,13 +24,16 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	bool switchScene = false;
+	std::string sceneNameGO;
+
 private:
 	int random = 0;
 	JsonHandler jsonHandler;
 	Json j;
-
 	// Temporal to manage the use of the camera
 	GameObject* camera = nullptr;
+
 };
 
 #endif // !__SCENE_INTRO_H__

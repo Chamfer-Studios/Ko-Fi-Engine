@@ -16,12 +16,10 @@ public:
 	bool Update();
 	bool PostUpdate();
 
-	void ShowPanel(bool* toggleSettingsPanel);
+	bool ShowPanel(bool* toggleSettingsPanel);
 
 private:
 	Editor* editor = nullptr;
-
-	int currentResolution;
 };
 
 

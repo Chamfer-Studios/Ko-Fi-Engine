@@ -13,6 +13,7 @@ public:
 	ResourceManager(KoFiEngine* engine);
 	~ResourceManager();
 
+	bool Awake(Json configModule);
 	bool Start();
 	bool PreUpdate(float dt);
 	bool CleanUp();
@@ -59,6 +60,16 @@ public:
 	bool GetResourceUIDsFromMeta(const char* assetsPath, std::vector<UID>& uids);
 	bool GetResourceBasesFromMeta(const char* assetsPath, std::vector<ResourceBase>& bases);
 	bool GetLibraryFilePathsFromMeta(const char* assetsPath, std::vector<std::string>& paths);
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
+	//void ReleaseResource(uint uid);
 
 private:
 	Resource* CreateNewResource(const char* assetPath, ResourceType type);

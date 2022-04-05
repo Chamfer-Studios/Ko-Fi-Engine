@@ -54,10 +54,10 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fileSystem);
 	AddModule(ui);
 	AddModule(collisionDetector);
-	AddModule(navigation);
 	AddModule(sceneManager);
 	AddModule(resourceManager);
 
+	AddModule(navigation);
 	AddModule(audio);
 	AddModule(renderer);
 	AddModule(editor);

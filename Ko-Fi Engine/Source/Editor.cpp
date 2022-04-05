@@ -67,16 +67,17 @@ Editor::Editor(KoFiEngine* engine)
 		//panelGame = new PanelGame(this);
 		//AddPanel(panelGame);
 	/*}*/
-	if (panelsState.showViewportWindow)
-	{
-		panelViewport = new PanelViewport(this, engine);
-		AddPanel(panelViewport);
-	}
 	if (panelsState.showCameraViewportWindow)
 	{
 		panelCameraViewport = new PanelCameraViewport(this, engine);
 		AddPanel(panelCameraViewport);
 	}
+	if (panelsState.showViewportWindow)
+	{
+		panelViewport = new PanelViewport(this, engine);
+		AddPanel(panelViewport);
+	}
+	
 	//------------------------------------
 	
 	// We want to have it always displayed.
@@ -88,13 +89,13 @@ Editor::Editor(KoFiEngine* engine)
 	//AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);
+	AddPanel(panelNavigation);
 	AddPanel(panelSettings);
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
-	AddPanel(panelNavigation);
 }
 
 Editor::~Editor()
@@ -139,6 +140,10 @@ bool Editor::Awake(Json configModule)
 	// FIXME: The list of meshes should be in scene intro.
 	//input->gameObjects = &gameObjects;
 	ImGuizmo::Enable(true);
+	ImGuizmo::AllowAxisFlip(false);
+
+	ret = LoadConfiguration(configModule);
+
 	return ret;
 }
 
@@ -297,22 +302,18 @@ bool Editor::CleanUp()
 	}
 	panels.clear();
 
-	//RELEASE(mainMenuBar);
-	//RELEASE(panelHierarchy);
-	//RELEASE(panelConfig);
-	//RELEASE(panelLog);
-	//RELEASE(panelAbout);
-	//RELEASE(panelChooser);
-	//RELEASE(panelGameObject);
-	////RELEASE(panelGame);
-	//RELEASE(panelViewport);
-	//RELEASE(panelCameraViewport);
-	//RELEASE(panelRuntimeState);
-	//RELEASE(panelAssets);
-	//RELEASE(panelNodeEditor);
-	//RELEASE(panelTextEditor);
-	//RELEASE(panelSettings);
-	//RELEASE(panelNavigation);
+	RELEASE(mainMenuBar);
+	RELEASE(panelHierarchy);
+	RELEASE(panelConfig);
+	RELEASE(panelLog);
+	RELEASE(panelAbout);
+	RELEASE(panelSettings);
+	RELEASE(panelChooser);
+	RELEASE(panelGameObject);
+	RELEASE(panelViewport);
+	RELEASE(panelCameraViewport);
+	//RELEASE(panelGame);
+	RELEASE(panelRuntimeState);
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -331,6 +332,21 @@ void Editor::OnNotify(const Event& event)
 void Editor::OnPlay()
 {
 	panelGameObjectInfo.selectedGameObjectID = -1;
+}
+
+bool Editor::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Editor::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Editor::InspectorDraw()
+{
+	return true;
 }
 
 #include "ImGui.h"                // https://github.com/ocornut/imgui

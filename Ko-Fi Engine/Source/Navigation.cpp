@@ -15,6 +15,9 @@
 #include "Mesh.h"
 #include "JsonHandler.h"
 
+#include <lua.hpp>
+#include <sol.hpp>
+
 Navigation::Navigation(KoFiEngine* engine) : Module()
 {
 	name = "Navigation";
@@ -23,6 +26,15 @@ Navigation::Navigation(KoFiEngine* engine) : Module()
 
 Navigation::~Navigation()
 {
+}
+
+bool Navigation::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
 }
 
 bool Navigation::Start()
@@ -42,6 +54,8 @@ bool Navigation::Update(float dt)
 
 bool Navigation::PostUpdate(float dt)
 {
+	return true;
+
 	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
 
 	if (navMeshDetail == nullptr) return true;
@@ -122,6 +136,8 @@ void Navigation::PrepareDetour()
 {
 	if (navMeshDetail == nullptr) return;
 
+	if (dtNavMesh != nullptr) dtFreeNavMesh(dtNavMesh);
+
 	for (int i = 0; i < navMesh->npolys; ++i)
 	{
 		if (navMesh->areas[i] == RC_WALKABLE_AREA)
@@ -151,14 +167,14 @@ void Navigation::PrepareDetour()
 
 	dtNavMeshCreateParams.offMeshConCount = 0;
 
-	dtNavMeshCreateParams.walkableHeight = 2.0f;
-	dtNavMeshCreateParams.walkableClimb = 0.0f;
-	dtNavMeshCreateParams.walkableRadius = 0.5f; // TODO
+	dtNavMeshCreateParams.walkableHeight = navMeshConfig.walkableHeight;
+	dtNavMeshCreateParams.walkableClimb = navMeshConfig.walkableClimb;
+	dtNavMeshCreateParams.walkableRadius = navMeshConfig.walkableRadius;
 
 	rcVcopy(dtNavMeshCreateParams.bmin, navMesh->bmin);
 	rcVcopy(dtNavMeshCreateParams.bmax, navMesh->bmax);
-	dtNavMeshCreateParams.cs = .3f;
-	dtNavMeshCreateParams.ch = .3f; // TODO
+	dtNavMeshCreateParams.cs = navMeshConfig.cs;
+	dtNavMeshCreateParams.ch = navMeshConfig.ch;
 	dtNavMeshCreateParams.buildBvTree = true;
 
 	unsigned char* data = nullptr;
@@ -172,12 +188,17 @@ void Navigation::PrepareDetour()
 		appLog->AddLog("Could not create DT navmesh!");
 		return;
 	}
+
+	appLog->AddLog("Sucessfully prepared pathfinding.\n");
 }
 
 rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 {
 	// https://wiki.jmonkeyengine.org/docs/3.4/contributions/ai/recast.html
 	// https://github.com/recastnavigation/recastnavigation/blob/c5cbd53024c8a9d8d097a4371215e3342d2fdc87/RecastDemo/Source/Sample_SoloMesh.cpp
+
+	if (navMesh != nullptr) rcFreePolyMesh(navMesh);
+	if (navMeshDetail != nullptr) rcFreePolyMeshDetail(navMeshDetail);
 
 	rcConfig* config = new rcConfig();
 
@@ -197,19 +218,19 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 	config->bmax[1] = bMax[1];
 	config->bmax[2] = bMax[2];
 
-	config->cs = .3f;
-	config->ch = .2f;
-	config->walkableSlopeAngle = 45;
-	config->walkableClimb = 1.0f;
-	config->walkableHeight = 2;
-	config->walkableRadius = 2.f;
-	config->minRegionArea = 2.f;
-	config->mergeRegionArea = 2.f;
-	config->borderSize = 0.5f;
-	config->maxEdgeLen = 30.f;
-	config->maxVertsPerPoly = 6;
-	config->detailSampleMaxError = 1.0f;
-	config->detailSampleDist = 1.0f;
+	config->cs = navMeshConfig.cs;
+	config->ch = navMeshConfig.ch;
+	config->walkableSlopeAngle = navMeshConfig.walkableSlopeAngle;
+	config->walkableClimb = navMeshConfig.walkableClimb;
+	config->walkableHeight = navMeshConfig.walkableHeight;
+	config->walkableRadius = navMeshConfig.walkableRadius;
+	config->minRegionArea = navMeshConfig.minRegionArea;
+	config->mergeRegionArea = navMeshConfig.mergeRegionArea;
+	config->borderSize = navMeshConfig.borderSize;
+	config->maxEdgeLen = navMeshConfig.maxEdgeLen;
+	config->maxVertsPerPoly = navMeshConfig.maxVertsPerPoly;
+	config->detailSampleMaxError = navMeshConfig.detailSampleMaxError;
+	config->detailSampleDist = navMeshConfig.detailSampleDist;
 
 	int w, h;
 	rcCalcGridSize(bMin, bMax, config->cs, &w, &h);
@@ -272,6 +293,16 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 		return nullptr;
 	}
 
+	delete config;
+	delete context;
+
+	rcFreeHeightField(heightfield);
+	delete[] areas;
+	rcFreeCompactHeightfield(compactHeightfield);
+	rcFreeContourSet(contourSet);
+
+	appLog->AddLog("Successfully created navmesh.\n");
+
 	return polyMeshDetail;
 }
 
@@ -289,13 +320,16 @@ std::vector<GameObject*> Navigation::CollectWalkableObjects()
 	return res;
 }
 
-void Navigation::FindPath(float3 origin, float3 destination, float3** path, int maxLength, int* actualLength)
+std::tuple<std::vector<float3>> Navigation::FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength)
 {
-	if (dtNavMesh == nullptr) return;
+	std::vector<float3> path;
+	if (dtNavMesh == nullptr) return std::make_tuple(path);
+	int actualPolyLength = 0;
+	int actualVectorLength = 0;
 
 	dtNavMeshQuery* query = dtAllocNavMeshQuery();
 
-	query->init(dtNavMesh, maxLength);
+	query->init(dtNavMesh, maxPolyLength);
 
 	float extents[3] = { 5, 5, 5 };
 	dtQueryFilter* filter = new dtQueryFilter();
@@ -310,25 +344,32 @@ void Navigation::FindPath(float3 origin, float3 destination, float3** path, int 
 	float destinationPolyPos[3] = { 0, 0, 0 };
 	query->findNearestPoly(destinationArray, extents, filter, &destinationPoly, destinationPolyPos);
 
-	dtPolyRef* polyPath = (dtPolyRef*)malloc(sizeof(dtPolyRef*) * maxLength);
-	memset(polyPath, 0, sizeof(dtPolyRef) * maxLength);
-	query->findPath(originPoly, destinationPoly, originPolyPos, destinationPolyPos, filter, polyPath, actualLength, maxLength);
+	dtPolyRef* polyPath = (dtPolyRef*)malloc(sizeof(dtPolyRef*) * maxPolyLength);
+	memset(polyPath, 0, sizeof(dtPolyRef) * maxPolyLength);
 
-	*path = (float3*)malloc(sizeof(float3) * *actualLength);
-	float3 currentPos = origin;
-	for (int i = 0; i < *actualLength; i++) {
-		dtPolyRef currentPoly = polyPath[i];
-		float nextPos[3] = { 0, 0, 0 };
-		bool _p;
-		query->closestPointOnPoly(currentPoly, &currentPos[0], nextPos, &_p);
-		float3 nextPosAsF3 = float3(nextPos[0], nextPos[1], nextPos[2]);
-		(*path)[i] = nextPosAsF3;
-		currentPos = nextPosAsF3;
+	query->findPath(originPoly, destinationPoly, originPolyPos, destinationPolyPos, filter, polyPath, &actualPolyLength, maxPolyLength);
+
+	float* vectorPath = (float*)malloc(sizeof(float*) * maxVectorLength);
+	memset(vectorPath, 0, sizeof(float*) * maxVectorLength);
+	query->findStraightPath(origin.ptr(), destination.ptr(), polyPath, actualPolyLength, vectorPath, nullptr, nullptr, &actualVectorLength, maxVectorLength);
+
+	for (int i = 0; i < actualVectorLength; i++) {
+		path.push_back(float3(vectorPath[i * 3], vectorPath[i * 3 + 1], vectorPath[i * 3 + 2]));
 	}
+
+	dtFreeNavMeshQuery(query);
+	delete filter;
+	free(polyPath);
+	free(vectorPath);
+
+	return std::make_tuple(path);
 }
 
 void Navigation::Save(Json& json) const
 {
+	if (navMesh == nullptr)
+		return;
+
 	Json navmeshJson = Json::object();
 
 	navmeshJson.emplace("verts", Json::array());
@@ -508,4 +549,62 @@ void Navigation::Load(Json& json)
 
 void Navigation::OnGui()
 {
+	ImGui::Begin("Navigator");
+
+	ImGui::DragFloat("Cell Size", &navMeshConfig.cs, 0.001f);
+	ImGui::DragFloat("Cell Height", &navMeshConfig.ch, 0.001f);
+	ImGui::DragFloat("Slope Angle", &navMeshConfig.walkableSlopeAngle, 0.5f);
+	ImGui::DragFloat("Walkable Climb", &navMeshConfig.walkableClimb, 0.02f);
+	ImGui::DragInt("Walkable Height", &navMeshConfig.walkableHeight, 0.05f);
+	ImGui::DragFloat("Walkable Radius", &navMeshConfig.walkableRadius, 0.02f);
+	ImGui::DragFloat("Min Region Area", &navMeshConfig.minRegionArea, 0.02f);
+	ImGui::DragFloat("Merge Region Area", &navMeshConfig.mergeRegionArea, 0.02f);
+	ImGui::DragFloat("Border Size", &navMeshConfig.borderSize, 0.001f);
+	ImGui::DragFloat("Max Edge Length", &navMeshConfig.maxEdgeLen, 0.5f);
+	ImGui::DragInt("Max Verts Poly", &navMeshConfig.maxVertsPerPoly, 0.2f, 3, 6);
+	ImGui::DragFloat("Detail Sample Error", &navMeshConfig.detailSampleMaxError, 0.02f);
+	ImGui::DragFloat("Detail Sample Distance", &navMeshConfig.detailSampleDist, 0.02f);
+
+	if (ImGui::Button("Bake Navmesh")) {
+		ComputeNavmesh();
+		PrepareDetour();
+	}
+
+	ImGui::End();
+}
+
+bool Navigation::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Navigation::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Navigation::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Navigator##"))
+	{
+		ImGui::DragFloat("Cell Size", &navMeshConfig.cs, 0.001f);
+		ImGui::DragFloat("Cell Height", &navMeshConfig.ch, 0.001f);
+		ImGui::DragFloat("Slope Angle", &navMeshConfig.walkableSlopeAngle, 0.5f);
+		ImGui::DragFloat("Walkable Climb", &navMeshConfig.walkableClimb, 0.02f);
+		ImGui::DragInt("Walkable Height", &navMeshConfig.walkableHeight, 0.05f);
+		ImGui::DragFloat("Walkable Radius", &navMeshConfig.walkableRadius, 0.02f);
+		ImGui::DragFloat("Min Region Area", &navMeshConfig.minRegionArea, 0.02f);
+		ImGui::DragFloat("Merge Region Area", &navMeshConfig.mergeRegionArea, 0.02f);
+		ImGui::DragFloat("Border Size", &navMeshConfig.borderSize, 0.001f);
+		ImGui::DragFloat("Max Edge Length", &navMeshConfig.maxEdgeLen, 0.5f);
+		ImGui::DragInt("Max Verts Poly", &navMeshConfig.maxVertsPerPoly, 0.2f, 3, 6);
+		ImGui::DragFloat("Detail Sample Error", &navMeshConfig.detailSampleMaxError, 0.02f);
+		ImGui::DragFloat("Detail Sample Distance", &navMeshConfig.detailSampleDist, 0.02f);
+
+		if (ImGui::Button("Bake Navmesh")) {
+			ComputeNavmesh();
+			PrepareDetour();
+		}
+	}
+	return true;
 }

@@ -20,6 +20,7 @@ public:
 	bool CleanUp();
 	void DisplayTree(GameObject* go, int flags);
 	void DragNDrop(GameObject* go);
+	GameObject* GetSelectedGameObject() { return selectedGameObject; };
 private:
 	EditorStyleHandler styleHandler;
 

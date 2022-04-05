@@ -193,6 +193,15 @@ bool I_Material::LoadUniforms(Material* material)
 		for (GLuint i = 0; i < uniformsCount; i++)
 		{
 			glGetActiveUniform(material->shaderProgramID, (GLuint)i, bufSize, &length, &size, &type, name);
+			
+			std::string sName = name;
+			if (sName.find("dirLights") != std::string::npos ||
+				sName.find("pointLights") != std::string::npos ||
+				sName.find("numOfDirectionalLights") != std::string::npos ||
+				sName.find("numOfPointLights") != std::string::npos)
+			{
+				continue;
+			}
 
 			if (CheckUniformName(name))
 			{
@@ -201,7 +210,7 @@ bool I_Material::LoadUniforms(Material* material)
 				case GL_INT:
 				{
 					UniformT<int>* ui = new UniformT<int>(name, type, 0);
-					material->AddUniform(ui);
+					material-> AddUniform(ui);
 				}
 				break;
 				case GL_FLOAT:

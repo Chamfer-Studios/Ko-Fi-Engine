@@ -70,7 +70,10 @@ bool ComponentButton::PostUpdate(float dt)
 
 bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Button")) {
+	if (ImGui::CollapsingHeader("Button", ImGuiTreeNodeFlags_AllowItemOverlap))
+	{
+		DrawDeleteButton(owner, this);
+
 		// IDLE
 		ImGui::Text("IDLE: ");
 		ImGui::SameLine();
@@ -92,7 +95,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (ImGui::Button("Set IDLE texture")) {
-			panelChooser->OpenPanel("IDLETextureButton", "png");
+			panelChooser->OpenPanel("IDLETextureButton", "png", { "png","jpg","jpeg" });
 		}
 
 		// HOVER
@@ -116,7 +119,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (ImGui::Button("Set HOVER texture")) {
-			panelChooser->OpenPanel("HOVERTextureButton", "png");
+			panelChooser->OpenPanel("HOVERTextureButton", "png", { "png","jpg","jpeg" });
 		}
 
 		// PRESSED
@@ -140,9 +143,11 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (ImGui::Button("Set PRESSED texture")) {
-			panelChooser->OpenPanel("PRESSEDTextureButton", "png");
+			panelChooser->OpenPanel("PRESSEDTextureButton", "png", { "png","jpg","jpeg" });
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }
@@ -232,4 +237,32 @@ void ComponentButton::FreeTextures(BUTTON_STATE type)
 			glDeleteTextures(1, &id);
 		break;
 	}
+}
+
+bool ComponentButton::IsPressed()
+{
+	if (state == BUTTON_STATE::PRESSED && !isPressed)
+	{
+		isPressed = true;
+		return true;
+	}
+	else if (state != BUTTON_STATE::PRESSED)
+	{
+		isPressed = false;
+	}
+	return false;
+}
+
+bool ComponentButton::IsHovered()
+{
+	if (state == BUTTON_STATE::HOVER && !isHovered)
+	{
+		isHovered = true;
+		return true;
+	}
+	else if (state == BUTTON_STATE::IDLE)
+	{
+		isHovered = false;
+	}
+	return false;
 }

@@ -1,5 +1,4 @@
-#ifndef __COMPONENT_SCRIPT_H__
-#define __COMPONENT_SCRIPT_H__
+#pragma once
 
 #include "Component.h"
 #include <lua.hpp>
@@ -26,10 +25,11 @@ public:
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
+	void LoadInspectorVariables(Json& json);
 	void ReloadScript();
 
 public:
-	sol::load_result script; // Check if it can be private
+	sol::protected_function_result script; // Check if it can be private
 	Scripting* handler = nullptr;
 	std::string path = "";
 	std::vector<InspectorVariable*> inspectorVariables;
@@ -38,6 +38,6 @@ private:
 	int numScript;
 	bool isScriptLoaded = false;
 
-};
+	sol::protected_function lua_update;
 
-#endif // __COMPONENT_SCRIPT_H__
+};

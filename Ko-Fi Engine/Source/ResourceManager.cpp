@@ -26,6 +26,15 @@ ResourceManager::~ResourceManager()
 
 }
 
+bool ResourceManager::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool ResourceManager::Start()
 {
 	CONSOLE_LOG("Starting ResourceManager...");
@@ -1229,4 +1238,18 @@ bool ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
 	return (engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ini") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
+}
+bool ResourceManager::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool ResourceManager::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool ResourceManager::InspectorDraw()
+{
+	return true;
 }
