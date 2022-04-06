@@ -121,7 +121,9 @@ bool KoFiEngine::Awake()
 
 		while (item != modules.end() && ret)
 		{
-			ret = (*item)->Awake(jsonConfig.at((*item)->name));
+			if (jsonConfig.contains((*item)->name))
+				ret = (*item)->Awake(jsonConfig.at((*item)->name));
+
 			item++;
 		}
 	}

@@ -10,7 +10,7 @@ ParticleResource::ParticleResource(const char* resourceName) : Resource(Resource
 
 ParticleResource::~ParticleResource()
 {
-	CleanUp()
+	CleanUp();
 }
 
 bool ParticleResource::CleanUp()

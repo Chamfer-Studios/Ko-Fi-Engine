@@ -168,7 +168,6 @@ bool SceneIntro::PostUpdate(float dt)
 		}
 	}
 	gameObjectListToCreate.clear();
-	gameObjectListToCreate.shrink_to_fit();
 	for (GameObject* gameObject : gameObjectListToDelete)
 	{
 		DeleteGameObject(gameObject);

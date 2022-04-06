@@ -302,18 +302,18 @@ bool Editor::CleanUp()
 	}
 	panels.clear();
 
-	RELEASE(mainMenuBar);
-	RELEASE(panelHierarchy);
-	RELEASE(panelConfig);
-	RELEASE(panelLog);
-	RELEASE(panelAbout);
-	RELEASE(panelSettings);
-	RELEASE(panelChooser);
-	RELEASE(panelGameObject);
-	RELEASE(panelViewport);
-	RELEASE(panelCameraViewport);
+	mainMenuBar = nullptr;
+	panelHierarchy = nullptr;
+	panelConfig = nullptr;
+	panelLog = nullptr;
+	panelAbout = nullptr;
+	panelSettings = nullptr;
+	panelChooser = nullptr;
+	panelGameObject = nullptr;
+	panelViewport = nullptr;
+	panelCameraViewport = nullptr;
 	//RELEASE(panelGame);
-	RELEASE(panelRuntimeState);
+	panelRuntimeState = nullptr;
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();

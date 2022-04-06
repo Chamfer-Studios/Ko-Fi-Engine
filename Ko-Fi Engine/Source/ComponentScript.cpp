@@ -263,10 +263,11 @@ void ComponentScript::ReloadScript()
 {
 	if (path == "")
 		return;
-	inspectorVariables.clear();
-	inspectorVariables.shrink_to_fit();
-	script = handler->lua.load_file(path);
-	script();
+	//inspectorVariables.clear();
+	//inspectorVariables.shrink_to_fit();
+	//script = handler->lua.load_file(path);
+	//script();
+	script = handler->lua.script_file(path);
 	isScriptLoaded = true;
 }
 

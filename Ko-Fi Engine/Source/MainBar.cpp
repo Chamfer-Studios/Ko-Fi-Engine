@@ -298,7 +298,7 @@ void MainBar::ChoosersListener()
 		{
 	#pragma omp parallel private()
 			{
-				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
 			}
 			
 		}
