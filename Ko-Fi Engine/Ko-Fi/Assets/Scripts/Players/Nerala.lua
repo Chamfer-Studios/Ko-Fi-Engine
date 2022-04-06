@@ -13,20 +13,20 @@ Action = {
 }
 
 currentAction = Action.IDLE
-speed = 500  -- consider Start()
+speed = 300  -- consider Start()
 maxDarts = 2
 dartCount = maxDarts
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
-local speedIV = InspectorVariable.new("speed", speedIVT, speed)
+speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
 local maxDartsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-local maxDartsIV = InspectorVariable.new("maxDarts", maxDartsIVT, maxDarts)
+maxDartsIV = InspectorVariable.new("maxDarts", maxDartsIVT, maxDarts)
 NewVariable(maxDartsIV)
 
 local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-local characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
 
 componentAnimator = gameObject:GetComponentAnimator()
@@ -48,11 +48,19 @@ end
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
+rigidBodyFlag = true
 
 -------------------- Methods ---------------------
 
 -- Called each loop iteration
 function Update(dt)
+	
+	if (rigidBodyFlag == true) then
+		if (componentRigidBody ~= nil) then
+			rigidBodyFlag = false
+			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 0, componentTransform:GetPosition().z))
+		end
+	end
 
 	-- Timers
 	if (isAttacking == true and componentAnimator ~= nil) then
@@ -189,7 +197,7 @@ function MoveToDestination(dt)
 		if(vec2[1] < 0)	then
 			rad = rad * (-1)
 		end
-		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
+		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
 	else
 		
 		destination = nil
@@ -200,7 +208,7 @@ function MoveToDestination(dt)
 			componentSwitch:StopTrack(1)
 		end
 		if (componentAnimator ~= nil) then
-			componentAnimator:PlayAnimation("Idle")
+			componentAnimator:SetSelectedClip("Idle")
 		end
 		currentAction = Action.IDLE -- Check queue before this
 	end

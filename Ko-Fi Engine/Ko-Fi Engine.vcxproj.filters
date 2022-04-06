@@ -131,6 +131,9 @@
     <Filter Include="Source\Importers">
       <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Dialogue">
+      <UniqueIdentifier>{d8aab11d-2215-4e32-83a2-dcd4ccc3d9ff}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Helpers\Physics">
       <UniqueIdentifier>{5e576769-6fa5-4e63-9e84-299ec3eb37f2}</UniqueIdentifier>
     </Filter>
@@ -577,8 +580,6 @@
     <ClCompile Include="Source\ComponentFollowPath.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\par_shapes.cpp" />
-    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -612,7 +613,7 @@
     <ClCompile Include="Source\ComponentLightSource.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp" />
+    <ClCompile Include="Source\Physics.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_Collider.cpp">
@@ -620,6 +621,7 @@
     </ClCompile>
     <ClCompile Include="Source\SimulationEventCallback.cpp">
       <Filter>Source\Helpers\Physics</Filter>
+      </ClCompile>
     <ClCompile Include="Source\Channel.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
@@ -1832,6 +1834,18 @@
     <None Include="Ko-Fi\Assets\Scripts\EnemyPathfinder.lua">
       <Filter>Scripts</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua">
+      <Filter>Scripts</Filter>
+    </None>
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua">
       <Filter>Scripts\Players</Filter>
     </None>
@@ -1851,5 +1865,13 @@
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives_2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives_3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterAssetsChange.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes&amp;SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX3.lua" />
   </ItemGroup>
 </Project>

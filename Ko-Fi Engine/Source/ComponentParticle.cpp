@@ -72,7 +72,7 @@ bool ComponentParticle::CleanUp()
 {
 	//DELETE TEXTURES
 
-	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it != emitterInstances.end(); ++it)
+	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();++it)
 	{
 		emitterInstances.erase(it);
 		if (emitterInstances.empty())
