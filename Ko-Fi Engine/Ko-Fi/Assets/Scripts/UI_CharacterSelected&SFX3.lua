@@ -1,16 +1,19 @@
 -- player = Find("Character")
-characterID = 1
+characterID = 3
 
 local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-characterIDIV = InspectorVariable.new("lives", characterIDIVT, characterID)
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
 
 -- Called each loop iteration
 function Update(dt)
 	if (gameObject:GetButton():IsPressed() == true) then
 		SetVariable(characterID, "GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT);
-		print("CharacterSelected")
+		gameObject:GetAudioSwitch():PlayTrack(0)
+	end
+	if (gameObject:GetButton():IsHovered() == true) then
+		gameObject:GetAudioSwitch():PlayTrack(1)
 	end
 end
 
-print("UI_CharacterSelected.lua compiled succesfully")
+print("UI_CharacterSelected&SFX.lua compiled succesfully")

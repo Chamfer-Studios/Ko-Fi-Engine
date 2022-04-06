@@ -714,8 +714,16 @@
     <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes&amp;SFX.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterAssetsChange.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_Lives_1.lua" />

@@ -1,7 +1,7 @@
 {
     "HUD_Scene": {
         "active": true,
-        "game_objects_amount": 27,
+        "game_objects_amount": 31,
         "game_objects_list": [
             {
                 "UID": 658759807,
@@ -204,9 +204,40 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/UI_CharacterSelected.lua",
-                        "script_number": 1,
+                        "file_name": "Assets/Scripts/UI_CharacterSelected&SFX.lua",
+                        "script_number": 2,
                         "type": "script"
+                    },
+                    {
+                        "active": true,
+                        "fade_time": 2.0,
+                        "offset_sync": false,
+                        "total_tracks": 2,
+                        "tracks": [
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": false,
+                                "track_path": "Assets/Audio/SFX/click_fx.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            },
+                            {
+                                "bypass": false,
+                                "loop": false,
+                                "mute": false,
+                                "offset": 0.0,
+                                "pan": 0.0,
+                                "play_on_start": false,
+                                "track_path": "Assets/Audio/SFX/hover_fx.wav",
+                                "transpose": 0.0,
+                                "volume": 100.0
+                            }
+                        ],
+                        "type": "audio_switch"
                     }
                 ],
                 "is3D": false,
@@ -249,6 +280,12 @@
                         "idleTexture": "Assets/HUD/character_nebala_normal_v1.3.png",
                         "pressedTexture": "Assets/HUD/character_nebala_select_v1.3.png",
                         "type": "button"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/UI_CharacterSelected&SFX2.lua",
+                        "script_number": 1,
+                        "type": "script"
                     }
                 ],
                 "is3D": false,
@@ -325,7 +362,7 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/UI_SFX.lua",
+                        "file_name": "Assets/Scripts/UI_CharacterSelected&SFX3.lua",
                         "script_number": 1,
                         "type": "script"
                     }
@@ -706,6 +743,12 @@
                         "active": true,
                         "texture": "Assets/HUD/zhib_v1.0.png",
                         "type": "image"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/UI_CharacterAssetsChange.lua",
+                        "script_number": 1,
+                        "type": "script"
                     }
                 ],
                 "is3D": false,
@@ -1062,7 +1105,7 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Player.lua",
+                        "file_name": "Assets/Scripts/TemporaryPlayer.lua",
                         "script_number": 1,
                         "type": "script"
                     }
@@ -1174,6 +1217,214 @@
                 "is3D": true,
                 "name": "GameState",
                 "parent_UID": 4294967295
+            },
+            {
+                "UID": 878635075,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/TemporaryPlayer2.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    }
+                ],
+                "is3D": true,
+                "name": "ball1",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 380871780,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Sphere1.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "is3D": true,
+                "name": "Sphere1",
+                "parent_UID": 878635075
+            },
+            {
+                "UID": 1693605871,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/TemporaryPlayer3.lua",
+                        "script_number": 1,
+                        "type": "script"
+                    }
+                ],
+                "is3D": true,
+                "name": "ball2",
+                "parent_UID": 4294967295
+            },
+            {
+                "UID": 797222709,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "path": "Library/Meshes/Sphere2.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "",
+                        "type": "material",
+                        "uniforms": [
+                            {
+                                "name": "albedoTint",
+                                "type": 35666,
+                                "value": {
+                                    "w": 1.0,
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "is3D": true,
+                "name": "Sphere2",
+                "parent_UID": 1693605871
             }
         ],
         "name": "HUD_Scene",

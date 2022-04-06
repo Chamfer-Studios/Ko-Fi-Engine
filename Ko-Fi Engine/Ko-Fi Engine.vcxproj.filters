@@ -1813,5 +1813,20 @@
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_1.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_3.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterAssetsChange.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes&amp;SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX3.lua" />
   </ItemGroup>
 </Project>
