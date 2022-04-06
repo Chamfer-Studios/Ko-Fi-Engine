@@ -577,8 +577,6 @@
     <ClCompile Include="Source\ComponentFollowPath.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\par_shapes.cpp" />
-    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -612,7 +610,7 @@
     <ClCompile Include="Source\ComponentLightSource.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp" />
+    <ClCompile Include="Source\Physics.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_Collider.cpp">
@@ -620,6 +618,7 @@
     </ClCompile>
     <ClCompile Include="Source\SimulationEventCallback.cpp">
       <Filter>Source\Helpers\Physics</Filter>
+      </ClCompile>
     <ClCompile Include="Source\Channel.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
