@@ -42,6 +42,8 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Animator"))
 	{
+		DrawDeleteButton(owner, this);
+
 		ImGui::Text("Current Time: ");
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
@@ -131,6 +133,8 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 			Reset();
 
 	}
+	else
+		DrawDeleteButton(owner, this);
 	return ret;
 }
 

@@ -117,6 +117,8 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
     if (ImGui::CollapsingHeader("Audio Switch"))
     {
+        DrawDeleteButton(owner, this);
+
         if (chooser->IsReadyToClose("Add Track"))
         {
             if (chooser->OnChooserClosed() != nullptr)
@@ -282,6 +284,9 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
             }
         }
     }
+    else
+        DrawDeleteButton(owner, this);
+
     return ret;
 }
 

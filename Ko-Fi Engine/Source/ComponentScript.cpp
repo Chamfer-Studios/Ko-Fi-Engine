@@ -278,9 +278,7 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 		}
 	}
 	else
-	{
 		DrawDeleteButton(owner, this);
-	}
 
 	return ret;
 }

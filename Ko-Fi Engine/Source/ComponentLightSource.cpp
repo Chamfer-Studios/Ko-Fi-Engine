@@ -136,6 +136,8 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Component LightSource"))
 	{	
+		DrawDeleteButton(owner, this);
+
 		ImGui::Combo("###combo", &sType, "Directional Light Source\0Point Light Source\0Focal Light Source");
 
 		ImGui::SameLine();
@@ -208,6 +210,9 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 		} 
 		} 
 	}
+	else
+		DrawDeleteButton(owner, this);
+
 	return ret;
 }
 

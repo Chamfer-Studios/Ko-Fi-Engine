@@ -104,6 +104,8 @@ void ComponentFollowPath::CalculatePath()
 bool ComponentFollowPath::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Path Follower")) {
+		DrawDeleteButton(owner, this);
+
 		ImGui::DragFloat("Speed", &speed, 0.5f);
 
 		ImGui::DragInt("Pathfinder node limit", &pathfindLimit, 1.0f, 0);
@@ -126,6 +128,8 @@ bool ComponentFollowPath::InspectorDraw(PanelChooser* chooser)
 			ImGui::DragFloat3(label.c_str(), &(waypoints[i][0]), 0.5f);
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }

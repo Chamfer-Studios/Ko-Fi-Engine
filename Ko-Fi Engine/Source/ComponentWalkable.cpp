@@ -22,8 +22,10 @@ bool ComponentWalkable::Update(float dt)
 bool ComponentWalkable::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Walkable Surface")) {
-		
+		DrawDeleteButton(owner, this);
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }

@@ -299,6 +299,8 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 	bool ret = true;
 	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
 	{
+		DrawDeleteButton(owner, this);
+
 		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
@@ -316,5 +318,8 @@ bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Faces Normals", &faces))
 			mesh->SetFaceNormals(faces);
 	}
+	else
+		DrawDeleteButton(owner, this);
+
 	return ret;
 }

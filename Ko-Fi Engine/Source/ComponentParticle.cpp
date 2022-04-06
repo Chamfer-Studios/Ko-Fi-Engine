@@ -95,6 +95,8 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Particle System", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		DrawDeleteButton(owner, this);
+
 		if (resource != nullptr)
 		{
 			ImGui::Text("Resource Name:");
@@ -558,6 +560,9 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 			}
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
+
 	return ret;
 }
 

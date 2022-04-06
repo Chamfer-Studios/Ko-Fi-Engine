@@ -84,6 +84,8 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
 
     if (ImGui::CollapsingHeader("Audio Source"))
     {
+        DrawDeleteButton(owner, this);
+
         if (chooser->IsReadyToClose("Add Track"))
         {
             if (chooser->OnChooserClosed() != nullptr)
@@ -192,6 +194,8 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             ImGui::Spacing();
         }
     }
+    else
+        DrawDeleteButton(owner, this);
 
     return ret;
 }

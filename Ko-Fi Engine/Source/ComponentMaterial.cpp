@@ -311,6 +311,7 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Material"))
 	{
+		DrawDeleteButton(owner, this);
 		//if (panelChooser->IsReadyToClose("AddTexture"))
 		//{
 		//	if (panelChooser->OnChooserClosed() != nullptr)
@@ -465,5 +466,8 @@ bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
 			}
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
+
 	return true;
 }
