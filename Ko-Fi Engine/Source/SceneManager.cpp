@@ -121,22 +121,17 @@ bool SceneManager::PostUpdate(float dt)
 
 bool SceneManager::CleanUp()
 {
-	engine = nullptr;
+	bool ret = true;
 	ImGuizmo::Enable(false);
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	{
+		ret = (*scene)->CleanUp();
 		RELEASE((*scene));
-
+	}
 	scenes.clear();
-	scenes.shrink_to_fit();
 
-	currentScene = nullptr;
-	sceneIntro = nullptr;
-
-	defaultScene.clear();
-	defaultScene.shrink_to_fit();
-
-	return true;
+	return ret;
 }
 
 // Method to receive and manage events

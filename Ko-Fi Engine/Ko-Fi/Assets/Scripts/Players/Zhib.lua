@@ -20,19 +20,19 @@ ultimateRange = 150.0
 ultimateRangeExtension = ultimateRange * 0.66
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
-local speedIV = InspectorVariable.new("speed", speedIVT, speed)
+speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
 local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-local maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
+maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
 NewVariable(maxKnivesIV)
 
 local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-local ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
+ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
 NewVariable(ultimateRangeIV)
 
 local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-local characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
 
 componentAnimator = gameObject:GetComponentAnimator()
@@ -54,12 +54,19 @@ end
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
+rigidBodyFlag = true
 
 -------------------- Methods ---------------------
 
 -- Called each loop iteration
 function Update(dt)
 
+	if (rigidBodyFlag == true) then
+		if (componentRigidBody ~= nil) then
+			rigidBodyFlag = false
+			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 0, componentTransform:GetPosition().z))
+		end
+	end
 	-- Timers & Helpers
 	if (isAttacking == true and componentAnimator ~= nil) then
 		animationTimer = animationTimer + dt
@@ -83,11 +90,11 @@ function Update(dt)
 	if (invisibilityDuration ~= nil) then
 		invisibilityTimer = invisibilityTimer + dt
 		if (invisibilityTimer >= invisibilityDuration) then
+			-- Reappear
 			invisibilityDuration = nil
 			gameObject.active = true
-		else
-			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 1000.0, componentTransform:GetPosition().z))
 		end
+		return -- This is to not receive input while invis
 	end
 
 	-- Actions
@@ -104,12 +111,16 @@ function Update(dt)
 					target = GetGameObjectHovered()
 					if (target.tag == Tag.ENEMY) then
 						Fire()
+						if (componentSwitch ~= nil) then
+							componentSwitch:PlayAudio(0)
+						end
 					end
 				else
 					print("Out of ammo")
 				end
 			elseif (currentAction == Action.AIMING_ULTIMATE) then -- Cast Ultimate (infinite range for now)
-				target = GetGameObjectHovered()
+
+				GetGameObjectHovered()
 				mousePos = GetLastMouseClick()
 				Ultimate(mousePos)
 			end
@@ -258,7 +269,7 @@ function Fire()
 end
 
 function Ultimate(mousePos)
-
+	
 	-- Get all enemies in range of the Mouse
 	enemiesInRange = {}
 	enemies = GetObjectsByTag(Tag.ENEMY)
@@ -295,24 +306,54 @@ function Ultimate(mousePos)
 		end		
 	end
 
-	deathMarkDuration = 0.4
+	deathMarkDuration = 0.3
 	-- Set IN ORDER the death mark
 	for i = 1, #enemiesInRange do
+		SetLuaVariableFromGameObject(enemiesInRange[i]:GetName(), "deathMarkDuration", deathMarkDuration)
 		deathMarkDuration = deathMarkDuration + 0.3
-		SetLuaVariableFromGameObject(enemiesInRange[i].name, "deathMarkDuration", deathMarkDuration)
 	end
-	
-	Disapear(deathMarkDuration)
+
+	-- final pos = final target pos + Normalized(final target pos - initial pos) * d
+	local targetPos2D = { enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().x, enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().z }
+	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
+	local d = Distance(pos2D, targetPos2D)
+	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }	
+	vec2 = Normalize(vec2, d)
+
+	-- Find the furthest enemy
+	local furtherstEnemy = enemiesInRange[1] -- Just in case
+	local longestDistance = -1
+	for i = 1, #enemiesInRange do
+		local enemyPos2D = { enemiesInRange[i]:GetTransform():GetPosition().x, enemiesInRange[i]:GetTransform():GetPosition().z }
+		local d = Distance(pos2D, enemyPos2D)
+		if (d > longestDistance) then
+			longestDistance = d
+			furtherstEnemy = enemiesInRange[i]
+		end
+	end
+
+	-- This 5 is the constant to modify
+	reappearPosition = float3.new(furtherstEnemy:GetTransform():GetPosition().x + vec2[1] * 5, componentTransform:GetPosition().y, furtherstEnemy:GetTransform():GetPosition().z + vec2[2] * 5)
 
 	-- Set timer equal to the longest dath mark timer to reappear
+	Disapear(deathMarkDuration)
+
 end
 
 function Disapear(duration)
 	gameObject.active = false
-	componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 1000.0, componentTransform:GetPosition().z))
 
 	invisibilityTimer = 0
 	invisibilityDuration = duration
+
+	gameObject:GetRigidBody():SetRigidBodyPos(reappearPosition)
+end
+
+function OnTriggerEnter(go)
+
+	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
+		knifeCount = knifeCount + 1
+	end
 end
 
 ----------------- Math Functions -----------------

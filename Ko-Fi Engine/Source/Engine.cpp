@@ -52,8 +52,8 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fileSystem);
 	AddModule(ui);
 	AddModule(collisionDetector);
-	AddModule(navigation);
 	AddModule(sceneManager);
+	AddModule(navigation);
 	AddModule(audio);
 	// Render last to swap buffer
 	AddModule(renderer);
@@ -70,13 +70,9 @@ KoFiEngine::~KoFiEngine()
 	for (std::list<Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend(); ++item)
 	{
 		RELEASE(*item);
-		if (modules.empty())
-			break;
 	}
-	modules.clear();
 
-	if (engineConfig)
-		RELEASE(engineConfig);
+	modules.clear();
 }
 
 void KoFiEngine::AddModule(Module* module)

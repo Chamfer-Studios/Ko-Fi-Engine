@@ -12,9 +12,7 @@ ComponentInfo::ComponentInfo(GameObject* parent) : Component(parent)
 }
 
 ComponentInfo::~ComponentInfo()
-{
-	CleanUp();
-}
+{}
 
 bool ComponentInfo::CleanUp()
 {
@@ -43,7 +41,7 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		tag = (int)owner->tag;
 		// Take care with the order in the combo, it has to follow the Tag enum class order
-		if (ImGui::Combo("##tagcombo", &tag, "Untagged\0Player\0Enemy\0Wall"))
+		if (ImGui::Combo("##tagcombo", &tag, "Untagged\0Player\0Enemy\0Wall\0Projectile")) // TODO: Change to BeginCombo()
 		{
 			if (owner->tag != (Tag)tag)
 				owner->tag = (Tag)tag;

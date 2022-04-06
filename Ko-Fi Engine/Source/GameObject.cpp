@@ -120,35 +120,18 @@ bool GameObject::PostUpdate(float dt)
 
 bool GameObject::CleanUp()
 {
-	sceneName.clear();
-	sceneName.shrink_to_fit();
-	prefabPath.clear();
-	prefabPath.shrink_to_fit();
-
-	for (GameObject* child : children)
-		RELEASE(child);
-
-	children.clear();
-	children.shrink_to_fit();
-
-	name.clear();
-	name.shrink_to_fit();
-
 	for (Component* component : components)
 	{
-		//if (component->GetType() != ComponentType::MESH)
+		if (component->GetType() != ComponentType::MESH)
 		{
 			// This is the dirty patch
+			component->CleanUp();
 			RELEASE(component);
 		}
 	}
-
 	components.clear();
-	components.shrink_to_fit();
-
+	children.clear();
 	parent = nullptr;
-	engine = nullptr;
-	transform = nullptr;
 
 	return true;
 }
@@ -240,8 +223,8 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 		if (component->GetType() == componentType)
 		{
-			LOG_BOTH("Components cannot be duplicated!");
-			return component;
+			/*LOG_BOTH("Components cannot be duplicated!");
+			return component;*/
 		}
 	}
 
@@ -416,7 +399,7 @@ void GameObject::SetName(const char* name)
 		this->name = SetObjectNumberedName(name).c_str();
 }
 
-const char* GameObject::GetName()
+const char *GameObject::GetName() const
 {
 	return name.c_str();
 }
@@ -436,7 +419,7 @@ GameObject* GameObject::GetParent() const
 	return parent;
 }
 
-ComponentTransform* GameObject::GetTransform()
+ComponentTransform *GameObject::GetTransform() const
 {
 	return this->transform;
 }

@@ -14,22 +14,16 @@ libraryPath("")
 
 Resource::~Resource()
 {
-	CleanUp();
+
 }
 
 void Resource::CleanUp()
 {
 	assetPath.clear();
-	assetPath.shrink_to_fit();
-
-	assetFile.clear();
-	assetFile.shrink_to_fit();
-
 	libraryPath.clear();
-	libraryPath.shrink_to_fit();
 
-	libraryFile.clear();
-	libraryFile.shrink_to_fit();
+	assetPath.shrink_to_fit();
+	libraryPath.shrink_to_fit();
 }
 
 void Resource::SetLibraryPathAndFile()

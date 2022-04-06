@@ -26,6 +26,8 @@
 
 class GameObject;
 class aiBone;
+class R_Animation;
+struct Channel;
 
 enum class Shape
 {
@@ -64,6 +66,11 @@ struct BoneInfo
 	float4x4 offsetMatrix;
 	float4x4 finalTransformation;
 
+	BoneInfo()
+	{
+		offsetMatrix = float4x4::zero;
+		finalTransformation = float4x4::zero;
+	}
 	BoneInfo(const float4x4& offset)
 	{
 		offsetMatrix = offset;
@@ -82,7 +89,6 @@ public:
 
 	void Draw();
 	void DebugDraw();
-	void CleanUp();
 
 	inline void SetVertexNormals(bool vertex) { drawVertexNormals = vertex; }
 	inline bool GetVertexNormals() const { return drawVertexNormals; }
@@ -91,19 +97,23 @@ public:
 	inline bool GetFaceNormals() const { return drawFaceNormals; }
 
 	void GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject);
-	void ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, const float4x4& parentTransform);
+	void ReadNodeHeirarchy(float animationTimeTicks, const GameObject* rootNode, const float4x4& parentTransform);
 
-	void SetRootNode(const aiScene* assimpScene);
-	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const std::string nodeName);
+	void inline SetIsAnimated(bool isAnimated) { this->isAnimated = isAnimated; }
+	bool inline IsAnimated() const { return isAnimated; }
+	void inline SetRootNode(const GameObject* rootNode) { this->rootNode = rootNode; }
+	inline const GameObject* GetRootNode() { return rootNode; }
+	void inline SetAnimation(const R_Animation* animation) { this->animation = animation; }
+	const Channel* FindNodeAnim(const std::string nodeName);
 
-	uint FindPosition(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	uint FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
 
-	uint FindRotation(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	uint FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
 
-	uint FindScaling(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim);
+	uint FindScaling(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedScaling(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
 
 	float4x4 InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ);
 	float4x4 InitRotateTransform(const aiQuaternion& quat);
@@ -112,6 +122,8 @@ public:
 	float* GetTransformedVertices(float4x4 transform);
 
 	static Mesh* MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transformations);
+
+	float4x4 GetMatrixFromQuat(Quat quat);
 
 	// Size in Bytes
 	unsigned verticesSizeBytes = 0;
@@ -134,10 +146,11 @@ public:
 	// Texture coordinates
 	uint idTexCoord = 0;
 	float* texCoords = nullptr;
+
+	// Bones
 	uint idBones = 0;
 	std::vector<VertexBoneData> bones;
 	std::vector<BoneInfo> boneInfo;
-
 	std::map<std::string, uint> boneNameToIndexMap;
 
 	unsigned int VAO = 0;
@@ -147,7 +160,7 @@ public:
 
 	Shape meshType;
 	std::string path;
-	bool isAnimated = false;
+
 private:
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
@@ -160,7 +173,10 @@ private:
 	bool drawVertexNormals = false;
 	bool drawFaceNormals = false;
 
-	const aiScene* assimpScene = nullptr;
+	bool isAnimated = false;
+
+	const GameObject* rootNode = nullptr;
+	const R_Animation* animation = nullptr;
 };
 
 #endif // !__MESH_H__

@@ -66,61 +66,6 @@ public:
 	// Called before quitting
 	virtual bool CleanUp()
 	{
-		name.clear();
-		name.shrink_to_fit();
-
-		engine = nullptr;
-		if (!gameObjectList.empty())
-		{
-			//for (std::vector<GameObject*>::const_iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
-			//{
-			//	DeleteGameObject((*it));
-			//	/*gameObjectList.erase(it);
-			//	if (gameObjectList.empty())
-			//		break;*/
-			//}
-			gameObjectList.clear();
-			gameObjectList.shrink_to_fit();
-
-		}
-		gameObjectList.clear();
-		gameObjectList.shrink_to_fit();
-
-		gameObjectListToCreate.clear();
-
-		for (std::vector<GameObject*>::const_iterator it = gameObjectListToDelete.begin(); it != gameObjectListToDelete.end(); ++it)
-		{
-			gameObjectListToDelete.erase(it);
-			if (gameObjectListToDelete.empty())
-				break;
-		}
-		gameObjectListToDelete.clear();
-		gameObjectListToDelete.shrink_to_fit();
-
-		if (rootGo)
-			RELEASE(rootGo);
-
-		if (currentCamera)
-			RELEASE(currentCamera);
-
-		if (sceneTree)
-		{
-			sceneTree->Clear();
-			RELEASE(sceneTree);
-		}
-
-		tags.clear();
-		tags.shrink_to_fit();
-
-		for (std::vector<GameObject*>::const_iterator it = lights.begin(); it != lights.end(); ++it)
-		{
-			lights.erase(it);
-			if (lights.empty())
-				break;
-		}
-		lights.clear();
-		lights.shrink_to_fit();
-
 		return true;
 	}
 
@@ -150,7 +95,7 @@ public:
 		return false;
 	}
 
-	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr, bool is3D = true)
+	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent=nullptr,bool is3D = true)
 	{
 		GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
 		this->gameObjectList.push_back(go);
@@ -191,12 +136,12 @@ public:
 				{
 					DeleteGameObject(child);
 				}
-
+				
 				gameObjectList.erase(it);
 				break;
 			}
 		}
-
+		
 		if (gameObject != nullptr)
 		{
 			GameObject* parent = gameObject->GetParent();
@@ -210,9 +155,12 @@ public:
 				}
 			}
 			parent->RemoveChild(gameObject);
-
+			
 			if (gameObject->GetComponent<ComponentLightSource>() != nullptr)
 				RemoveLight(gameObject);
+			
+			gameObject->CleanUp();
+			
 
 			RELEASE(gameObject);
 		}
@@ -308,7 +256,7 @@ public:
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
-
+	
 	//Space Partitioning
 	bool sceneTreeIsDirty = true;
 	bool drawSceneTree = false;
@@ -320,16 +268,16 @@ public:
 	LineSegment ray;
 
 	// Space Partitioning Functions...
-private:
-	template<class UnaryFunction>
-	void recursive_iterate(const GameObject* o, UnaryFunction f)
-	{
-		for (auto c = o->children.begin(); c != o->children.end(); ++c)
+	private:
+		template<class UnaryFunction>
+		void recursive_iterate(const GameObject* o, UnaryFunction f)
 		{
-			recursive_iterate(*c, f);
-			f(*c);
+			for (auto c = o->children.begin(); c != o->children.end(); ++c)
+			{
+				recursive_iterate(*c, f);
+				f(*c);
+			}
 		}
-	}
 
 };
 

@@ -12,23 +12,30 @@ ComponentRigidBody::ComponentRigidBody(GameObject *parent) : Component(parent)
 
 ComponentRigidBody::~ComponentRigidBody()
 {
-	CleanUp();
-}
-
-bool ComponentRigidBody::CleanUp()
-{
 	if (dynamicBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
 		dynamicBody->release();
 	}
-
 	if (staticBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
 		staticBody->release();
 	}
+}
 
+bool ComponentRigidBody::CleanUp()
+{
+	/*if (dynamicBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
+		dynamicBody->release();
+	}
+	if (staticBody)
+	{
+		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
+		staticBody->release();
+	}*/
 	return true;
 }
 
@@ -180,6 +187,17 @@ void ComponentRigidBody::Set2DVelocity(float2 vel)
 	{
 		dynamicBody->setLinearVelocity(physx::PxVec3(linearVel.x, linearVel.y, linearVel.z));
 	}
+}
+
+void ComponentRigidBody::SetRigidBodyPos(float3 pos)
+{
+	physx::PxTransform transform;
+	transform.p = physx::PxVec3(pos.x, pos.y, pos.z);
+	math::Quat quat = owner->GetComponent<ComponentTransform>()->GetRotationQuat();
+	transform.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
+
+	GetRigidBody()->setGlobalPose(transform); 
+	hasUpdated = true; 
 }
 
 void ComponentRigidBody::StopMovement()

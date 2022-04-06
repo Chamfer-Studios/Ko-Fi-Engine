@@ -10,11 +10,6 @@ Texture::Texture()
 
 Texture::~Texture()
 {
-	CleanUp();
-}
-
-void Texture::CleanUp()
-{
 	path.clear();
 	path.shrink_to_fit();
 }

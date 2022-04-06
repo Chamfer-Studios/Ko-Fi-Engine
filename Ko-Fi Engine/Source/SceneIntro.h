@@ -25,7 +25,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 	bool switchScene = false;
-	std::string sceneNameGO = "";
+	std::string sceneNameGO;
 
 private:
 	int random = 0;

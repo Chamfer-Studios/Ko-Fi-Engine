@@ -31,6 +31,7 @@
 #include "ComponentRenderedUI.h"
 #include "ComponentLightSource.h"
 #include "Material.h"
+#include "PieShape.h"
 
 #include "PanelViewport.h"
 
@@ -50,9 +51,7 @@ Renderer3D::Renderer3D(KoFiEngine* engine) : Module()
 
 // Destructor
 Renderer3D::~Renderer3D()
-{
-	CleanUp();
-}
+{}
 
 // Called before render is available
 bool Renderer3D::Awake(Json configModule)
@@ -107,10 +106,6 @@ bool Renderer3D::CleanUp()
 {
 	CONSOLE_LOG("Destroying 3D Renderer");
 	appLog->AddLog("Destroying 3D Renderer\n");
-
-	engine = nullptr;
-
-	particles.clear();
 
 	SDL_GL_DeleteContext(context);
 
@@ -433,7 +428,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-			if (mesh->isAnimated)
+			if (mesh->IsAnimated())
 			{
 				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
 				std::vector<float4x4> transformsAnim;
@@ -442,7 +437,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->isAnimated);
+				glUniform1i(isAnimated, mesh->IsAnimated());
 			}			
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
@@ -638,7 +633,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->gameCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-			if (mesh->isAnimated)
+			if (mesh->IsAnimated())
 			{
 				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
 				std::vector<float4x4> transformsAnim;
@@ -647,7 +642,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->isAnimated);
+				glUniform1i(isAnimated, mesh->IsAnimated());
 			}
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
@@ -856,6 +851,39 @@ void Renderer3D::OnResize()
 	RecalculateProjectionMatrix();
 }
 
+void Renderer3D::DrawCylinder(float4x4 transform)
+{
+}
+
+void Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float angle, int length)
+{
+	glColor3f(0.0f, 1.0f, 1.0f);
+	glLineWidth(6.0f);
+
+	Quat rot;
+
+	rot.SetFromAxisAngle(up, angle / 2 * DEGTORAD);
+	float3 av = rot * forward;
+
+	rot.SetFromAxisAngle(up, -angle / 2 * DEGTORAD);
+	float3 bv = rot * forward;
+
+	float3 a = position + av * length;
+	float3 b = position + bv * length;
+
+	glBegin(GL_LINES);
+	glVertex3f(position.x, position.y, position.z);
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+	glVertex3f(b.x, b.y, b.z);
+	glVertex3f(position.x, position.y, position.z);
+	glEnd();
+
+	glLineWidth(1.0f);
+	glColor3f(1.0f, 1.0f, 1.0f);
+}
+
 // Debug ray for mouse picking
 void Renderer3D::DrawRay()
 {
@@ -907,8 +935,6 @@ void Renderer3D::InitFrameBuffers()
 	//Bind tex data with render buffers
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderBufferoutput);
-
-
 	//After binding tex data, we must unbind renderbuffer and framebuffer not usefull anymore
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -952,7 +978,8 @@ void Renderer3D::UnbindFrameBuffers()
 
 void Renderer3D::ResizeFrameBuffers(int width, int height)
 {
-	glViewport(0,0,width,height);
+	glViewport(0, 0, width, height);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glBindTexture(GL_TEXTURE_2D, textureBuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -966,26 +993,15 @@ void Renderer3D::ResizeFrameBuffers(int width, int height)
 
 void Renderer3D::ResizePreviewFrameBuffers(int width, int height)
 {
-	float lwidth, lheight = 0.0f;
-	float aspectRatio = 0.0f;
-	aspectRatio = engine->GetEditor()->viewportSize.x / engine->GetEditor()->viewportSize.y;
-	if (width < height)
-	{
-		lwidth = width;
-		lheight = width * aspectRatio;
-	}
-	else
-	{
-		lheight = height;
-		lwidth = height * aspectRatio;
-	}
+	glViewport(0, 0, width, height);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
 	glBindTexture(GL_TEXTURE_2D, previewTextureBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lwidth, lheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, lwidth, lheight);
+	glBindRenderbuffer(GL_RENDERBUFFER, renderPreviewBufferoutput);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 

@@ -33,16 +33,6 @@ PanelHierarchy::PanelHierarchy(Editor* editor)
 
 PanelHierarchy::~PanelHierarchy()
 {
-	CleanUp();
-}
-
-bool PanelHierarchy::CleanUp()
-{
-	editor = nullptr;
-	selectedGameObject = nullptr;
-	destinationGameObject = nullptr;
-
-	return true;
 }
 
 bool PanelHierarchy::Awake()

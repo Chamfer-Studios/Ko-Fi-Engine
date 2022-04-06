@@ -145,12 +145,6 @@ EmitterColor::EmitterColor()
 	colorOverTime.push_back(FadeColor());
 }
 
-EmitterColor::~EmitterColor()
-{
-	colorOverTime.clear();
-	colorOverTime.shrink_to_fit();
-}
-
 void EmitterColor::Spawn(Particle* particle, EmitterInstance* emitter)
 {
 	particle->CurrentColor = ColorLerp(GetPercentage(particle));

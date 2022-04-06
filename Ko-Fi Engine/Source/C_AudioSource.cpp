@@ -29,20 +29,15 @@ C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 
 C_AudioSource::~C_AudioSource()
 {
-    CleanUp();
-}
-
-bool C_AudioSource::CleanUp()
-{
     if(track != nullptr)
         StopAudio(track->source);
 
     RELEASE(track);
-    return true;
 }
 
 bool C_AudioSource::Start()
 {
+
     return true;
 }
 

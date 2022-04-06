@@ -22,7 +22,8 @@ enum class Tag
 	TAG_UNTAGGED,
 	TAG_PLAYER,
 	TAG_ENEMY,
-	TAG_WALL
+	TAG_WALL,
+	TAG_PROJECTILE
 };
 
 class GameObject
@@ -71,13 +72,13 @@ public:
 
 	// Old way
 	void SetName(const char* name);
-	const char* GetName();
+	const char* GetName() const;
 
 	std::vector<GameObject*> GetChildren() const;
 	void SetChild(GameObject* child);
 	GameObject* GetParent() const;
 
-	ComponentTransform* GetTransform();
+	ComponentTransform* GetTransform() const;
 	std::vector<Component*> GetComponents() const;
 	AABB BoundingAABB();
 	void SetUID(uint uid);
@@ -118,13 +119,13 @@ public:
 	bool is3D = true;
 	bool isPrefab = false;
 	bool changeScene = false;
-	std::string sceneName = "";
-	std::string prefabPath = "";
+	std::string sceneName;
+	std::string prefabPath;
 	Tag tag;
 
 	std::vector<GameObject*> children;
 private:
-	std::string name = "";
+	std::string name;
 	std::vector<Component*> components;
 	GameObject* parent = nullptr;
 	uint uid;

@@ -6,7 +6,10 @@ Component::Component(GameObject* parent) : owner(parent)
 	type = ComponentType::NONE;
 
 	if (parent)
+	{
 		parent->PushBackComponent(this);
+
+	}
 }
 
 const char* Component::GetNameByComponentType(ComponentType type)
@@ -95,7 +98,6 @@ void Component::DrawDeleteButton(GameObject* owner, Component* component)
 
 		ImGui::EndPopup();
 	}
-
 }
 
 const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
@@ -126,8 +128,3 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 		return it == componentTypeStrings.end() ? "Out of range" : it->second;
 	
 }
-
-
-
-
-

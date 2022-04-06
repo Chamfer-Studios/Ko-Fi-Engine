@@ -25,13 +25,6 @@ PanelInspector::PanelInspector(Editor* editor)
 
 PanelInspector::~PanelInspector()
 {
-	CleanUp();
-}
-
-bool PanelInspector::CleanUp()
-{
-	editor = nullptr;
-	return true;
 }
 
 bool PanelInspector::Awake()

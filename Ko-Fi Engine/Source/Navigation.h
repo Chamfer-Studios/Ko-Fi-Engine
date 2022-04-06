@@ -60,7 +60,7 @@ public:
 	void PrepareDetour();
 	std::vector<GameObject*> CollectWalkableObjects();
 
-	std::tuple<std::vector<float3>> FindPath(float3 origin, float3 destination, int maxLength);
+	std::tuple<std::vector<float3>> FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength);
 
 	void Save(Json& json) const;
 	void Load(Json& json);

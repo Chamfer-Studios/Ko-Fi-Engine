@@ -1,7 +1,6 @@
 #include "Audio.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
-#include "Globals.h"
 
 #define OpenAL_ErrorCheck(message)\
 {\
@@ -27,7 +26,7 @@ Audio::Audio(KoFiEngine* engine)
 
 Audio::~Audio()
 {
-	CleanUp();
+    
 }
 
 bool Audio::Awake(Json configModule)
@@ -75,14 +74,6 @@ bool Audio::Update(float dt)
 
 bool Audio::CleanUp()
 {
-	engine = nullptr;
-
-	if (device)
-		device = nullptr;
-
-	if (context)
-		context = nullptr;
-
 	return true;
 }
 

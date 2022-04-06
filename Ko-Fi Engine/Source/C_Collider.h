@@ -27,10 +27,9 @@ class ComponentTransform;
 class ComponentCollider2 : public Component
 {
 public:
-	ComponentCollider2(GameObject* parent, ColliderShape collType);
+	ComponentCollider2(GameObject* parent, ColliderShape collType = ColliderShape::NONE);
 	~ComponentCollider2();
 
-	bool CleanUp();
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool UpdateCollider(); // Called whenever a change is produced in collider shape or state
@@ -96,7 +95,6 @@ private:
 	bool drawCollider = false;
 
 	std::string* debugFilter;
-
 	ComponentTransform* prevTransform;
 };
 

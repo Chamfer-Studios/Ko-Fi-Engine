@@ -12,7 +12,6 @@ public:
 	PanelTextEditor(Editor* editor,const char* path);
 	~PanelTextEditor();
 
-	bool CleanUp();
 	bool Awake();
 	bool PreUpdate();
 	bool Update();
@@ -24,9 +23,9 @@ public:
 private:
 	void ChooserListener();
 private:
-	Editor* editor = nullptr;
+	Editor* editor;
 	TextEditor textEditor;
-	std::string filePath = "";
+	std::string filePath;
 };
 
 #endif // !__PANEL_TEXT_EDITOR_H__

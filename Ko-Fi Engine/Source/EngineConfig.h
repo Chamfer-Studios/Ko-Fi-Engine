@@ -23,25 +23,6 @@ public:
 		cappedMs = -1;
 	}
 
-	~EngineConfig()
-	{
-		authors.clear();
-		authors.shrink_to_fit();
-		license.clear();
-		license.shrink_to_fit();
-		title.clear();
-		title.shrink_to_fit();
-		organization.clear();
-		organization.shrink_to_fit();
-
-		msLog.clear();
-		msLog.shrink_to_fit();
-		fpsLog.clear();
-		fpsLog.shrink_to_fit();
-		caps.clear();
-		caps.shrink_to_fit();
-	}
-
 	std::string authors;
 	std::string license;
 	std::string title;

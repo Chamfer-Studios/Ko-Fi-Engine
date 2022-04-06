@@ -6,10 +6,6 @@ class Panel
 public:
 	Panel() : active(false) 
 	{}
-	virtual ~Panel()
-	{
-		CleanUp();
-	}
 
 	void Init()
 	{
@@ -25,12 +21,8 @@ public:
 	virtual bool PreUpdate() { return true; }
 	virtual bool Update() { return true; }
 	virtual bool PostUpdate(){ return true; }
-	virtual void Focus(){}
-	virtual bool CleanUp()
-	{
-		panelName.clear();
-		panelName.shrink_to_fit();
-		return true;
+	virtual bool CleanUp(){ return true; }
+	virtual void Focus(){
 	}
 
 public:

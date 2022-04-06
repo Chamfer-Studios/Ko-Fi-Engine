@@ -18,11 +18,6 @@ ComponentCollider2::ComponentCollider2(GameObject *parent, ColliderShape collTyp
 
 ComponentCollider2::~ComponentCollider2()
 {
-	CleanUp();
-}
-
-bool ComponentCollider2::CleanUp()
-{
 	if (shape)
 	{
 		/*if (owner->GetComponent<ComponentRigidBody>())
@@ -30,7 +25,6 @@ bool ComponentCollider2::CleanUp()
 		shape->release();
 		shape = nullptr;
 	}
-	return true;
 }
 
 bool ComponentCollider2::Update(float dt)
@@ -56,7 +50,6 @@ bool ComponentCollider2::PostUpdate(float dt)
 bool ComponentCollider2::UpdateCollider()
 {
 	bool ret = true;
-
 
 	CreateCollider(colliderShape);
 
@@ -136,7 +129,6 @@ void ComponentCollider2::CreateBoxCollider()
 
 		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
 	}
-
 
 	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
 }
@@ -334,8 +326,6 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 		{
 			ImGui::Text("Collider shape not supported yet!");
 		}
-
-
 	}
 	else
 		DrawDeleteButton(owner, this);

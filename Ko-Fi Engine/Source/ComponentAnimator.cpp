@@ -2,9 +2,11 @@
 
 #include "GameObject.h"
 #include "Globals.h"
+#include "FSDefs.h"
 #include "ComponentMesh.h"
 #include "Engine.h"
-#include "Animation.h"
+#include "Importer.h"
+#include "R_Animation.h"
 #include "AnimatorClip.h"
 
 #include <vector>
@@ -18,7 +20,6 @@ ComponentAnimator::ComponentAnimator(GameObject* parent) : Component(parent)
 
 ComponentAnimator::~ComponentAnimator()
 {
-	CleanUp();
 }
 
 bool ComponentAnimator::Start()
@@ -33,14 +34,6 @@ bool ComponentAnimator::Update(float dt)
 
 bool ComponentAnimator::CleanUp()
 {
-	if (rAnim)
-		RELEASE(rAnim);
-
-	clips.clear();
-
-	if (selectedClip)
-		RELEASE(selectedClip);
-
 	return true;
 }
 
@@ -67,19 +60,19 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 		// -- CLIP CREATOR
 		ImGui::Text("Select Animation");
 		
-		ImGui::Text(rAnim->GetName().c_str());
+		ImGui::Text(animation->GetName().c_str());
 
 		static char clipName[128] = "Enter Clip Name";
 		ImGuiInputTextFlags inputTxtFlags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll;
 		ImGui::InputText("Clip Name", clipName, IM_ARRAYSIZE(clipName), inputTxtFlags);
 
 		ImGui::Text("Reel selector: ");
-		ImGui::SliderInt("Edit Start", &rAnim->startPoint, 0, rAnim->duration);
-		ImGui::SliderInt("Edit End", &rAnim->endPoint, 0, rAnim->duration);
+		ImGui::DragInt("Edit Start", &animation->startFrame, 0, animation->duration);
+		ImGui::DragInt("Edit End", &animation->endFrame, 0, animation->duration);
 
 		if (ImGui::Button("Create Clip", ImVec2(80, 35)))
 		{
-			CreateClip(AnimatorClip(rAnim, clipName, rAnim->startPoint, rAnim->endPoint, 1.0f, true));
+			CreateClip(AnimatorClip(animation, clipName, animation->startFrame, animation->endFrame, 1.0f, true));
 		}
 
 		ImGui::Text("Select Clip");
@@ -143,13 +136,14 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 
 void ComponentAnimator::Save(Json& json) const
 {
-	json["name"] = rAnim->GetName();
-	json["ticksPerSecond"] = rAnim->GetTicksPerSecond();
-	json["duration"] = rAnim->GetDuration();
-	json["startPoint"] = rAnim->GetStartFrame();
-	json["endPoint"] = rAnim->GetEndFrame();
-
+	CONSOLE_LOG("hey");
 	json["type"] = "animator";
+
+	std::string name = owner->GetName();
+	animation->path = ANIMATIONS_DIR + name + ANIMATION_EXTENSION;
+	Importer::GetInstance()->animationImporter->Save(animation, animation->path.c_str());
+
+	json["path"] = animation->path;
 	Json jsonClips;
 	for (auto clip : clips)
 	{
@@ -161,37 +155,53 @@ void ComponentAnimator::Save(Json& json) const
 
 		json["clips"].push_back(jsonClips);
 	}
-
-	json["selectedAnimation"] = selectedClip->GetName();
+	json["selectedClip"] = selectedClip->GetName();
 }
 
 void ComponentAnimator::Load(Json& json)
 {
-	if (rAnim == nullptr)
-		rAnim = new Animation();
+	if (animation)
+	{
+		RELEASE(animation);
+	}
 
-	if (selectedClip == nullptr)
-		selectedClip = new AnimatorClip();
+	/*if (animation == nullptr)
+	{*/
+		animation = new R_Animation();
+	/*}*/
+		if (json.contains("path"))
+		{
+	}
+	std::string path = json.at("path");
+	Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
+	owner->GetComponent<ComponentMesh>()->GetMesh()->SetIsAnimated(true);
+	owner->GetComponent<ComponentMesh>()->GetMesh()->SetAnimation(animation);
+
+	if (selectedClip)
+	{
+		selectedClip = nullptr;
+	}
+
+	/*if (!selectedClip)
+	{*/
+		/*selectedClip = new AnimatorClip();*/
+	/*}*/
 
 	if (!json.empty())
 	{
-		rAnim->SetName(json.at("name"));
-		rAnim->SetTicksPerSecond(json.at("ticksPerSecond"));
-		rAnim->SetDuration(json.at("duration"));
-		rAnim->SetStartFrame(json.at("startPoint"));
-		rAnim->SetEndFrame(json.at("endPoint"));
-
 		AnimatorClip animatorClip;
 		for (const auto& clip : json.at("clips").items())
 		{
 			animatorClip.SetName(clip.value().at("clipName").get<std::string>().c_str());
 			animatorClip.SetStartFrame(clip.value().at("clipStartFrame"));
-			animatorClip.SetStartFrame(clip.value().at("clipEndFrame"));
+			animatorClip.SetEndFrame(clip.value().at("clipEndFrame"));
 			animatorClip.SetDuration(clip.value().at("clipDuration"));
+
+			animatorClip.SetAnimation(animation);
+
 			clips.emplace(clip.value().at("mapString"), animatorClip);
 		}
-
-		SetSelectedClip(json.at("selectedAnimation"));
+		SetSelectedClip(json.at("selectedClip"));
 	}
 }
 
@@ -234,12 +244,12 @@ bool ComponentAnimator::CreateDefaultClip(AnimatorClip* clip)
 	selectedClip = clip;
 }
 
-void ComponentAnimator::SetAnim(Animation* anim)
+void ComponentAnimator::SetAnim(R_Animation* anim)
 {
-	if (this->rAnim != nullptr)
-		RELEASE(this->rAnim);
+	if (this->animation != nullptr)
+		RELEASE(this->animation);
 
-	this->rAnim = anim;
+	this->animation = anim;
 }
 
 AnimatorClip* ComponentAnimator::GetSelectedClip()
@@ -249,8 +259,7 @@ AnimatorClip* ComponentAnimator::GetSelectedClip()
 
 void ComponentAnimator::SetSelectedClip(std::string name)
 {
-	std::map<std::string, AnimatorClip>::iterator mapIt;
-	for (auto clip = clips.begin(); clip != clips.end(); ++clip)
+	for (std::map<std::string, AnimatorClip>::iterator clip = clips.begin(); clip != clips.end(); ++clip)
 	{
 		if ((*clip).first == name)
 		{

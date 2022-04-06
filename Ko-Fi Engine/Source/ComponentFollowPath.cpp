@@ -12,21 +12,6 @@ ComponentFollowPath::ComponentFollowPath(GameObject* parent) : Component(parent)
 	memset(waypoints, 0, sizeof(float3) * nWaypoints);
 }
 
-ComponentFollowPath::~ComponentFollowPath()
-{
-	CleanUp();
-}
-
-bool ComponentFollowPath::CleanUp()
-{
-	RELEASE(waypoints);
-
-	finalPath.clear();
-	finalPath.shrink_to_fit();
-
-	return true;
-}
-
 void ComponentFollowPath::Save(Json& json) const
 {
 	json["type"] = "followPath";

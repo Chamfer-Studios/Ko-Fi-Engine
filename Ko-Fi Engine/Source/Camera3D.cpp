@@ -23,11 +23,11 @@ Camera3D::Camera3D(KoFiEngine* engine) : Module()
 {
 	name = "Camera";
 	this->engine = engine;
+
 }
 
 Camera3D::~Camera3D()
 {
-	CleanUp();
 }
 
 bool Camera3D::Awake(Json configModule)
@@ -85,21 +85,9 @@ bool Camera3D::CleanUp()
 {
 	CONSOLE_LOG("Cleaning camera");
 	appLog->AddLog("Cleaning camera\n");
-
-	engineCameraObject = nullptr;
-	currentCamera = nullptr;
-
-	if(engineCamera)
-		RELEASE(engineCamera);
-	//engineCamera = nullptr;
-
-	gameCamera = nullptr;
-
 	//RELEASE(currentCamera);
+	//RELEASE(engineCamera);
 	//RELEASE(gameCamera);
-
-	engine = nullptr;
-
 	return true;
 }
 

@@ -3,24 +3,22 @@
 
 #include <string>
 typedef unsigned int uint;
-class Animation;
+class R_Animation;
 
 class AnimatorClip
 {
 public:
 	AnimatorClip();
-	AnimatorClip(const Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop);
-	~AnimatorClip();
-
-	void CleanUp();
+	AnimatorClip(const R_Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop);
 
 	const std::string inline GetName() const { return name; }
-	const Animation* GetAnimation() const { return clipAnim; }
+	const R_Animation* GetAnimation() const { return clipAnim; }
 	const float inline GetStartFrame() const { return start; }
 	const float inline GetEndFrame() const { return end; }
 	const float inline GetDuration() const { return duration; }
 
 	inline void SetName(const char* name) { this->name = name; }
+	inline void SetAnimation(const R_Animation* clipAnim) { this->clipAnim = clipAnim; }
 	inline void SetStartFrame(uint start) { this->start = start; }
 	inline void SetEndFrame(uint end) { this->end = end; }
 	inline void SetDuration(float duration) { this->duration = duration; }
@@ -40,6 +38,6 @@ private:
 
 	bool				loop;
 	bool				interruptible;
-	const Animation*	clipAnim;
+	const R_Animation*	clipAnim;
 };
 #endif // !__ANIMATOR_CLIP_H__

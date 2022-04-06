@@ -81,7 +81,6 @@ class EmitterColor : public ParticleModule
 {
 public:
 	EmitterColor();
-	~EmitterColor();
 
 	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);

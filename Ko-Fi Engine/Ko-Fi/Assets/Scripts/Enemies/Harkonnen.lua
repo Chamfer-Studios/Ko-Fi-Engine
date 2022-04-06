@@ -29,17 +29,20 @@ NewVariable(minRetargetingDistanceIV)
 oldWaypoints = {}
 waypoints = {}
 
-local waypointsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3_ARRAY
-waypointsIV = InspectorVariable.new("waypoints", waypointsIVT, waypoints)
-NewVariable(waypointsIV)
+--local waypointsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3_ARRAY
+--waypointsIV = InspectorVariable.new("waypoints", waypointsIVT, waypoints)
+--NewVariable(waypointsIV)
 
 navigation = GetNavigation()
 
 finalPath = {}
 currentPathIndex = 1
-deathMark = nil
+deathMarkDuration = nil
 
 invisibilityTimer = 0
+
+componentRigidBody = gameObject:GetRigidBody()
+rigidBodyFlag = true
 
 function Float3Length(v)
     return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
@@ -155,6 +158,13 @@ hasSwitchedState = false
 
 function Update(dt)
 
+    if (rigidBodyFlag == true) then
+		if (componentRigidBody ~= nil) then
+			rigidBodyFlag = false
+			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 15, componentTransform:GetPosition().z))
+		end
+	end
+
     if (deathMarkDuration ~= nil) then
         if (invisibilityTimer >= deathMarkDuration) then
             print("Die")
@@ -164,7 +174,7 @@ function Update(dt)
         end
         invisibilityTimer = invisibilityTimer + dt
     end
-
+    
     playerPosition = player:GetTransform():GetPosition()
     if Float3Distance(playerPosition, componentTransform:GetPosition()) < minSeekDistance then
         if currentState ~= State.SEEK then
@@ -177,16 +187,25 @@ function Update(dt)
         end
         currentState = State.PATROL
     end
-
+    
     if currentState == State.PATROL then
         CheckAndRecalculatePath(hasSwitchedState)
     else
         CheckAndRecalculateSeekTarget(hasSwitchedState)
     end
-
+    
     hasSwitchedState = false
-
+    
     if #finalPath ~= 0 then
         FollowPath(dt)
     end
 end
+
+function OnTriggerEnter(go)
+
+	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
+		DeleteGameObject()
+	end
+end
+
+print("Harkonnen.lua compiled succesfully")

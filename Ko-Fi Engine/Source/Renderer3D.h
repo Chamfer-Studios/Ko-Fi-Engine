@@ -7,6 +7,7 @@
 #include "Light.h"
 #include "SDL_video.h"
 #include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/float3.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
 
@@ -16,6 +17,7 @@ class GameObject;
 typedef unsigned int GLenum;
 class ComponentMesh;
 class Texture;
+class PieShape;
 
 struct ParticleRenderer
 {
@@ -72,6 +74,9 @@ public:
 	bool GetVsync() const;
 	void SetVsync(bool vsync);
 	void OnResize();
+
+	void DrawCylinder(float4x4 transform);
+	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length);
 
 	// Debug ray for mouse picking
 	void DrawRay();

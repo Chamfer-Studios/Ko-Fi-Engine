@@ -1,8 +1,7 @@
 #include "AnimatorClip.h"
 #include <string>
-#include "Globals.h"
 
-class Animation;
+class R_Animation;
 
 typedef unsigned int uint;
 
@@ -24,7 +23,7 @@ AnimatorClip::AnimatorClip() :
 
 }
 
-AnimatorClip::AnimatorClip(const Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop) :
+AnimatorClip::AnimatorClip(const R_Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop) :
 	clipAnim(animation),
 	name(name),
 	start(start),
@@ -39,18 +38,4 @@ AnimatorClip::AnimatorClip(const Animation* animation, const std::string& name, 
 {
 	duration = ((float)(end - start)) / speed;
 	//durationInSeconds = (animation != nullptr) ? (duration / animation->GetTicksPerSecond()) : 0.0f;
-}
-
-AnimatorClip::~AnimatorClip()
-{
-	CleanUp();
-}
-
-void AnimatorClip::CleanUp()
-{
-	name.clear();
-	name.shrink_to_fit();
-
-	if (clipAnim)
-		RELEASE(clipAnim);
 }

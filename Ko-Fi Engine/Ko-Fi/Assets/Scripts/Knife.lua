@@ -1,7 +1,8 @@
 ------------------- Variables --------------------
 
-speed = 300
+speed = 3000
 destination = nil
+componentRigidBody = gameObject:GetRigidBody()
 
 -------------------- Methods ---------------------
 
@@ -13,10 +14,16 @@ function Update(dt)
 	end
 end
 
-function OnCollision(go)
-	if (go.tag == Tag.ENEMY || go.tag == Tag.WALL) then
-		componentTransform:SetPosition(go:GetTransform():GetPosition())
-	elseif (go == Find("Zhib")) -- Using direct name instead of tags so other players can't pick it up
+function OnTriggerEnter(go)
+
+	if (go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
+		DeleteGameObject()
+	end
+end
+
+function OnCollisionEnter(go)
+
+	if (go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
 		DeleteGameObject()
 	end
 end
@@ -31,28 +38,26 @@ function MoveToDestination(dt)
 	local d = Distance(pos2D, targetPos2D)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 
-	if (d > 0.5)
-		then
-			-- Movement
-			vec2 = Normalize(vec2, d)
-			componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x + vec2[1] * speed * dt, componentTransform:GetPosition().y, componentTransform:GetPosition().z + vec2[2] * speed * dt))
+	if (d > 5.0) then
 
-			if (componentTransform:GetPosition().x > destination.x) then
-				componentTransform:SetPosition(float3.new(destination.x, componentTransform:GetPosition().y, componentTransform:GetPosition().z))
-			end
+		-- Movement
+		vec2 = Normalize(vec2, d)
+		if (componentRigidBody ~= nil) then
+			componentRigidBody:Set2DVelocity(float2.new(vec2[1] * speed * dt, vec2[2] * speed * dt))
+		end
 
-			if (componentTransform:GetPosition().z > destination.z) then
-				componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, componentTransform:GetPosition().y, destination.z))
-			end
-
-			-- Rotation
-			local rad = math.acos(vec2[2])
-			if(vec2[1] < 0)	then
-				rad = rad * (-1)
-			end
-			componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
-		else
-			destination = nil
+		-- Rotation
+		local rad = math.acos(vec2[2])
+		if(vec2[1] < 0)	then
+			rad = rad * (-1)
+		end
+		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
+	else
+		
+		destination = nil
+		if (componentRigidBody ~= nil) then
+			componentRigidBody:Set2DVelocity(float2.new(0,0))
+		end
 	end
 end
 
@@ -78,3 +83,5 @@ function Distance(a, b)
     return math.sqrt(dx * dx + dy * dy)
 
 end
+
+print("All good")

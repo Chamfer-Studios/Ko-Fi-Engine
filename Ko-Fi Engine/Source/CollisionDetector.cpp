@@ -22,7 +22,6 @@ CollisionDetector::CollisionDetector(KoFiEngine* engine)
 
 CollisionDetector::~CollisionDetector()
 {
-	CleanUp();
 }
 
 bool CollisionDetector::Awake(Json configModule)
@@ -47,16 +46,7 @@ bool CollisionDetector::Update(float dt)
 
 bool CollisionDetector::CleanUp()
 {
-	for (std::vector<GameObject*>::const_iterator it = collidableEntities.begin(); it != collidableEntities.end(); ++it)
-	{
-		collidableEntities.erase(it);
-	}
-
 	collidableEntities.clear();
-	collidableEntities.shrink_to_fit();
-
-	engine = nullptr;
-
 	return true;
 }
 

@@ -54,6 +54,7 @@ public:
 	void SetColliding(bool collides) { isColliding = collides; }
 	void SetNewCollision(GameObject* collidedGO) { isColliding = true; lastObjectCollided = collidedGO; }
 	// -------------------------------------
+
 	
 private:
 	bool isTrigger = false;
