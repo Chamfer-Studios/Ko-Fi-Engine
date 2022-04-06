@@ -75,7 +75,8 @@ bool PanelHierarchy::Update()
 			ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 
 		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-		DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo, flags);
+		int id = 0;
+		DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo, flags, id);
 
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
@@ -112,8 +113,9 @@ bool PanelHierarchy::PostUpdate()
 	return true;
 }
 
-void PanelHierarchy::DisplayTree(GameObject* go, int flags)
+void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 {
+	ImGui::PushID(id);
 	if (go->isPrefab)
 	{
 		ImGuiStyle* style = &ImGui::GetStyle();
@@ -162,7 +164,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 		for (int i = 0; i < go->GetChildren().size(); i++)
 		{
 
-			DisplayTree(go->GetChildren().at(i), flags);
+			DisplayTree(go->GetChildren().at(i), flags, ++id);
 
 		}
 		ImGui::TreePop();
@@ -177,6 +179,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags)
 		ImGuiStyle* style = &ImGui::GetStyle();
 		style->Colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.f);
 	}
+	ImGui::PopID();
 }
 
 void PanelHierarchy::DragNDrop(GameObject* go)

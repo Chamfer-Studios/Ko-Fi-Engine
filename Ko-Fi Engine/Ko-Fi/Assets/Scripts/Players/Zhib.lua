@@ -54,12 +54,19 @@ end
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
+rigidBodyFlag = true
 
 -------------------- Methods ---------------------
 
 -- Called each loop iteration
 function Update(dt)
 
+	if (rigidBodyFlag == true) then
+		if (componentRigidBody ~= nil) then
+			rigidBodyFlag = false
+			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 0, componentTransform:GetPosition().z))
+		end
+	end
 	-- Timers & Helpers
 	if (isAttacking == true and componentAnimator ~= nil) then
 		animationTimer = animationTimer + dt
@@ -104,6 +111,9 @@ function Update(dt)
 					target = GetGameObjectHovered()
 					if (target.tag == Tag.ENEMY) then
 						Fire()
+						if (componentSwitch ~= nil) then
+							componentSwitch:PlayAudio(0)
+						end
 					end
 				else
 					print("Out of ammo")

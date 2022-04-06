@@ -41,6 +41,7 @@ enum INSPECTOR_VARIABLE_TYPE
 	INSPECTOR_BOOL,
 	INSPECTOR_STRING,
 	INSPECTOR_TO_STRING,
+	INSPECTOR_TEXTAREA,
 	INSPECTOR_FLOAT3_ARRAY,
 	INSPECTOR_GAMEOBJECT,
 };
@@ -423,35 +424,37 @@ public:
 			ComponentScript *script = go->GetComponent<ComponentScript>();
 			if (script)
 			{
-				if (path == script->path.substr(script->path.find_last_of('/') + 1))
-				{
-					switch (type)
+				for (auto s : script->scripts) {
+					if (path == s->path.substr(s->path.find_last_of('/') + 1))
 					{
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
-					{
-						return (int)script->handler->lua[variable.c_str()];
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
-					{
-						return (float)script->handler->lua[variable.c_str()];
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
-					{
-						return (float2)script->handler->lua[variable.c_str()];
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
-					{
-						return (float3)script->handler->lua[variable.c_str()];
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
-					{
-						return (bool)script->handler->lua[variable.c_str()];
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
-					{
-						std::string a = script->handler->lua[variable.c_str()];
-						return a;
-					}
+						switch (type)
+						{
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
+						{
+							return (int)s->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
+						{
+							return (float)s->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
+						{
+							return (float2)s->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
+						{
+							return (float3)s->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
+						{
+							return (bool)s->handler->lua[variable.c_str()];
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
+						{
+							std::string a = s->handler->lua[variable.c_str()];
+							return a;
+						}
+						}
 					}
 				}
 			}
@@ -467,40 +470,42 @@ public:
 			ComponentScript *script = go->GetComponent<ComponentScript>();
 			if (script)
 			{
-				if (path == script->path.substr(script->path.find_last_of('/') + 1))
-				{
-					switch (type)
+				for (auto s : script->scripts) {
+					if (path == s->path.substr(s->path.find_last_of('/') + 1))
 					{
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
-					{
-						script->handler->lua[variable.c_str()] = std::get<int>(value);
-						return;
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
-					{
-						script->handler->lua[variable.c_str()] = std::get<float>(value);
-						return;
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
-					{
-						script->handler->lua[variable.c_str()] = std::get<float2>(value);
-						return;
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
-					{
-						script->handler->lua[variable.c_str()] = std::get<float3>(value);
-						return;
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
-					{
-						script->handler->lua[variable.c_str()] = std::get<bool>(value);
-						return;
-					}
-					case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
-					{
-						script->handler->lua[variable.c_str()] = std::get<std::string>(value);
-						return;
-					}
+						switch (type)
+						{
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
+						{
+							s->handler->lua[variable.c_str()] = std::get<int>(value);
+							return;
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
+						{
+							s->handler->lua[variable.c_str()] = std::get<float>(value);
+							return;
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
+						{
+							s->handler->lua[variable.c_str()] = std::get<float2>(value);
+							return;
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
+						{
+							s->handler->lua[variable.c_str()] = std::get<float3>(value);
+							return;
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
+						{
+							s->handler->lua[variable.c_str()] = std::get<bool>(value);
+							return;
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
+						{
+							s->handler->lua[variable.c_str()] = std::get<std::string>(value);
+							return;
+						}
+						}
 					}
 				}
 			}
@@ -511,61 +516,63 @@ public:
 	{
 		ComponentScript *script = gameObject->GetComponent<ComponentScript>();
 
-		for (std::vector<InspectorVariable *>::iterator var = script->inspectorVariables.begin(); var != script->inspectorVariables.end(); ++var)
-		{
-			if (inspectorVariable->name == (*var)->name)
+		for (auto s : script->scripts) {
+			for (std::vector<InspectorVariable*>::iterator var = s->inspectorVariables.begin(); var != s->inspectorVariables.end(); ++var)
 			{
-				switch (inspectorVariable->type)
+				if (inspectorVariable->name == (*var)->name)
 				{
-				case INSPECTOR_INT:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<int>((*var)->value);
-					return;
-				}
-				case INSPECTOR_FLOAT:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<float>((*var)->value);
-					return;
-				}
-				case INSPECTOR_FLOAT2:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<float2>((*var)->value);
-					return;
-				}
-				case INSPECTOR_FLOAT3:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<float3>((*var)->value);
-					return;
-				}
-				case INSPECTOR_BOOL:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<bool>((*var)->value);
-					return;
-				}
-				case INSPECTOR_STRING:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<std::string>((*var)->value);
-					return;
-				}
-				case INSPECTOR_TO_STRING:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<std::string>((*var)->value);
-					return;
-				}
-				case INSPECTOR_FLOAT3_ARRAY:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<std::vector<float3>>((*var)->value);
-					return;
-				}
-				case INSPECTOR_GAMEOBJECT:
-				{
-					lua[inspectorVariable->name.c_str()] = std::get<GameObject *>((*var)->value);
-					return;
-				}
+					switch (inspectorVariable->type)
+					{
+					case INSPECTOR_INT:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<int>((*var)->value);
+						return;
+					}
+					case INSPECTOR_FLOAT:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<float>((*var)->value);
+						return;
+					}
+					case INSPECTOR_FLOAT2:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<float2>((*var)->value);
+						return;
+					}
+					case INSPECTOR_FLOAT3:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<float3>((*var)->value);
+						return;
+					}
+					case INSPECTOR_BOOL:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<bool>((*var)->value);
+						return;
+					}
+					case INSPECTOR_STRING:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<std::string>((*var)->value);
+						return;
+					}
+					case INSPECTOR_TO_STRING:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<std::string>((*var)->value);
+						return;
+					}
+					case INSPECTOR_FLOAT3_ARRAY:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<std::vector<float3>>((*var)->value);
+						return;
+					}
+					case INSPECTOR_GAMEOBJECT:
+					{
+						lua[inspectorVariable->name.c_str()] = std::get<GameObject*>((*var)->value);
+						return;
+					}
+					}
 				}
 			}
+			s->inspectorVariables.push_back(inspectorVariable);
 		}
-		script->inspectorVariables.push_back(inspectorVariable);
 	}
 
 	GameState LuaGetRuntimeState() const
@@ -594,11 +601,14 @@ public:
 		if (go == nullptr)
 			return;
 
+
 		ComponentScript *goScript = go->GetComponent<ComponentScript>();
 		if (goScript == nullptr)
 			return;
 
-		goScript->handler->lua[variable.c_str()] = value;
+		for (auto s : goScript->scripts) {
+			s->handler->lua[variable.c_str()] = value;
+		}
 	}
 
 	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length) {

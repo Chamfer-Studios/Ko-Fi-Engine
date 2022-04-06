@@ -3,13 +3,26 @@
 #include "Component.h"
 #include <lua.hpp>
 #include <sol.hpp>
+#include <vector>
+
+class Scripting;
 
 class GameObject;
 class ComponentTransform;
 using Json = nlohmann::json;
 
-class Scripting;
 class InspectorVariable;
+
+struct ScriptHandler {
+	ScriptHandler(GameObject* owner);
+
+	sol::protected_function_result script; // Check if it can be private
+	Scripting* handler = nullptr;
+	std::string path = "";
+	std::vector<InspectorVariable*> inspectorVariables;
+	sol::protected_function lua_update;
+	bool isScriptLoaded = false;
+};
 
 class ComponentScript : public Component 
 {
@@ -26,18 +39,8 @@ public:
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 	void LoadInspectorVariables(Json& json);
-	void ReloadScript();
+	void ReloadScript(ScriptHandler* script);
 
-public:
-	sol::protected_function_result script; // Check if it can be private
-	Scripting* handler = nullptr;
-	std::string path = "";
-	std::vector<InspectorVariable*> inspectorVariables;
-
-private:
-	int numScript;
-	bool isScriptLoaded = false;
-
-	sol::protected_function lua_update;
-
+	int nScripts = 0;
+	std::vector<ScriptHandler*> scripts;
 };

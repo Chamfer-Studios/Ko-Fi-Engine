@@ -213,11 +213,11 @@ void ComponentCollider2::Save(Json &json) const
 	json["type"] = "collider2";
 
 	json["collider_type"] = (int)colliderShape;
+	json["filter"] = filter;
 
 	json["enabled"] = enabled;
 	json["is_trigger"] = isTrigger;
 	json["draw_collider"] = drawCollider;
-	json["filter"] = filter;
 
 	json["box_collider_size"] = {boxCollSize.x, boxCollSize.y, boxCollSize.z};
 	json["offset"] = {offset.x, offset.y, offset.z};
@@ -225,19 +225,30 @@ void ComponentCollider2::Save(Json &json) const
 
 void ComponentCollider2::Load(Json &json)
 {
-	colliderShape = (ColliderShape)json.at("collider_type");
+	if (json.contains("collider_type"))
+		colliderShape = (ColliderShape)json.at("collider_type");
+	if (json.contains("filter"))
+		filter = json.at("filter");
 
-	enabled = json.at("enabled");
-	isTrigger = json.at("is_trigger");
-	drawCollider = json.at("draw_collider");
-	filter = json.at("filter");
+	if (json.contains("enabled"))
+		enabled = json.at("enabled");
+	if (json.contains("is_trigger"))
+		isTrigger = json.at("is_trigger");
+	if (json.contains("draw_collider"))
+		drawCollider = json.at("draw_collider");
 
-	std::vector<float> values = json.at("box_collider_size").get<std::vector<float>>();
-	boxCollSize = float3(values[0], values[1], values[2]);
-	values.clear();
-	/*values = json.at("offset").get<std::vector<float>>();
-	offset = float3(values[0], values[1], values[2]);
-	values.clear();*/
+	if (json.contains("box_collider_size"))
+	{
+		std::vector<float> values = json.at("box_collider_size").get<std::vector<float>>();
+		boxCollSize = float3(values[0], values[1], values[2]);
+		values.clear();
+	}
+	if (json.contains("offset"))
+	{
+		std::vector<float> values = json.at("offset").get<std::vector<float>>();
+		offset = float3(values[0], values[1], values[2]);
+		values.clear();
+	}
 
 	setFromAABB = true;
 	hasUpdated = true;

@@ -962,6 +962,8 @@ void GameObject::LoadSceneFromName(std::string name)
 
 std::string GameObject::SetObjectNumberedName(const char* _name)
 {
+	return _name;
+
 	int count = 0;
 	std::string name = std::string(_name);
 	std::string number = std::string("");

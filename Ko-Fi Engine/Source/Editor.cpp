@@ -254,6 +254,8 @@ bool Editor::PostUpdate(float dt)
 {
 	bool ret = true;
 
+	idTracker = 0;
+
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	ImGui::Render();

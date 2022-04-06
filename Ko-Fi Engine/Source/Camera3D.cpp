@@ -295,6 +295,8 @@ bool Camera3D::InspectorDraw()
 
 void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
 {
+	if (this->gameCamera != nullptr && this->gameCamera != gameCamera)this->gameCamera->isMainCamera = false;
+
 	this->gameCamera = gameCamera;
 	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
 	{
