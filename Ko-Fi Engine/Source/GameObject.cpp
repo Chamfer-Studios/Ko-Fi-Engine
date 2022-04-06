@@ -223,8 +223,8 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 		if (component->GetType() == componentType)
 		{
-			LOG_BOTH("Components cannot be duplicated!");
-			return component;
+			/*LOG_BOTH("Components cannot be duplicated!");
+			return component;*/
 		}
 	}
 
@@ -346,7 +346,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::ANIMATOR:
 	{
-		this->CreateComponent<ComponentAnimator>();
+		c = this->CreateComponent<ComponentAnimator>();
 		break;
 	}
 	case ComponentType::LIGHT_SOURCE:
@@ -399,7 +399,7 @@ void GameObject::SetName(const char* name)
 		this->name = SetObjectNumberedName(name).c_str();
 }
 
-const char* GameObject::GetName()
+const char *GameObject::GetName() const
 {
 	return name.c_str();
 }
@@ -419,7 +419,7 @@ GameObject* GameObject::GetParent() const
 	return parent;
 }
 
-ComponentTransform* GameObject::GetTransform()
+ComponentTransform *GameObject::GetTransform() const
 {
 	return this->transform;
 }

@@ -18,14 +18,16 @@ enum class CollisionLayer
 	DEFAULT,
 	PLAYER,
 	ENEMY,
-	BULLET,
+	PROJECTILE,
 	TERRAIN
 };
+
+class ComponentTransform;
 
 class ComponentCollider2 : public Component
 {
 public:
-	ComponentCollider2(GameObject* parent, ColliderShape collType);
+	ComponentCollider2(GameObject* parent, ColliderShape collType = ColliderShape::NONE);
 	~ComponentCollider2();
 
 	bool Update(float dt) override;
@@ -37,7 +39,6 @@ public:
 
 	void DrawCollider();
 	void DrawBoxCollider();
-
 
 	// Serialization 
 	void Save(Json& json) const override;
@@ -51,9 +52,6 @@ public:
 	inline const const char* GetColliderShapeString() { return ColliderShapeToString(colliderShape); }
 	inline void SetColliderShape(const ColliderShape colliderShape) { if (colliderShape == this->colliderShape) return; this->colliderShape = colliderShape; hasUpdated = true; } // We will have to delete actual shape and re-do again a new one
 	
-	inline const CollisionLayer GetCollisionLayer() { return collisionLayer; }
-	inline const const char* GetCollisionLayerString() { return CollisionLayerToString(collisionLayer); }
-	inline void SetCollisionLayer(const CollisionLayer collisionLayer) { if (collisionLayer == this->collisionLayer) return; this->collisionLayer = collisionLayer; hasUpdated = true; }
 	inline const std::string* GetFilter() const { return &filter; }
 	inline void SetFilter(const std::string newFilter) { if (newFilter == filter) return; filter = newFilter; hasUpdated = true; }
 	
@@ -64,12 +62,14 @@ public:
 	inline void SetCollSize(const float3 size) { boxCollSize = size; hasUpdated = true; }
 	inline void SetCollSize(const float x, const float y, const float z) { boxCollSize = float3(x, y, z); hasUpdated = true; }
 
-	inline const float3 GetCenterPosition() { return centerPosition; }
-	inline void SetCenterPosition(const float3 newCenterPos) { centerPosition = newCenterPos; hasUpdated = true; }
-	inline void SetCenterPosition(const float x, const float y, const float z) { centerPosition = float3(x, y, z); hasUpdated = true; }
+	inline const float3 GetOffset() { return offset; }
+	inline void SetOffset(const float3 offset) { this->offset = offset; hasUpdated = true; }
+	inline void SetOffset(const float x, const float y, const float z) { offset = float3(x, y, z); hasUpdated = true; }
 
 	inline const bool GetDrawCollider() { return drawCollider; }
 	inline void SetDrawCollider(const bool newDrawCollider) { drawCollider = newDrawCollider; }
+
+	inline void UpdateCollSizeFromAABB() { this->setFromAABB = true; this->hasUpdated = true; }
 
 private:
 	// Private methods
@@ -86,16 +86,16 @@ private:
 	ColliderShape colliderShape = ColliderShape::NONE;
 	int colliderShapeInt = 0;
 
-	CollisionLayer collisionLayer = CollisionLayer::DEFAULT;
-	int collisionLayerInt = 0;
 	std::string filter = "default";
 
 	float3 boxCollSize = float3(5, 5, 5); // Box collider size
-	float3 centerPosition = float3(0, 0, 0); // Center position of the collider
+	float3 offset = float3::zero;
+	bool setFromAABB = false;
 
 	bool drawCollider = false;
 
 	std::string* debugFilter;
+	ComponentTransform* prevTransform;
 };
 
 #endif // !__C_COLLIDER_H__

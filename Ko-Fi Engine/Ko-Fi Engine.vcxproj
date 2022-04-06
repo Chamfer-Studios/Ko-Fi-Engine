@@ -166,9 +166,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Audio.cpp" />
-    <ClCompile Include="Source\Animation.cpp" />
+    <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
     <ClCompile Include="Source\Camera3D.cpp" />
+    <ClCompile Include="Source\Channel.cpp" />
     <ClCompile Include="Source\CollisionDetector.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\color_node_editor.cpp" />
@@ -294,6 +295,7 @@
     <ClCompile Include="Source\ParticleResource.cpp" />
     <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp" />
+    <ClCompile Include="Source\PieShape.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
@@ -320,11 +322,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
-    <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\R_Animation.h" />
     <ClInclude Include="Source\AnimatorClip.h" />
     <ClInclude Include="Source\Assimp.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\ComponentLightSource.h" />
+    <ClInclude Include="Source\Channel.h" />
     <ClInclude Include="Source\C_Audio.h" />
     <ClInclude Include="Source\C_AudioSource.h" />
     <ClInclude Include="Source\C_AudioSpacial.h" />
@@ -333,6 +336,7 @@
     <ClInclude Include="Source\Event.h" />
     <ClInclude Include="Source\I_Track.h" />
     <ClInclude Include="Source\par_shapes.h" />
+    <ClInclude Include="Source\PieShape.h" />
     <ClInclude Include="Source\R_Track.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\CollisionDetector.h" />
@@ -712,11 +716,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\EnemyPathfinder.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes&amp;SFX.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />

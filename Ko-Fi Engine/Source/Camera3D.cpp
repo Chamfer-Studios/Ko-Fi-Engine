@@ -11,6 +11,7 @@
 #include "Renderer3D.h"
 #include "PanelViewport.h"
 #include "Scripting.h"
+#include "GameObject.h"
 
 #include "SDL.h"
 #include "Log.h"
@@ -294,6 +295,8 @@ bool Camera3D::InspectorDraw()
 
 void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
 {
+	if (this->gameCamera != nullptr && this->gameCamera != gameCamera)this->gameCamera->isMainCamera = false;
+
 	this->gameCamera = gameCamera;
 	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
 	{
@@ -437,35 +440,21 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 				const Triangle triangle(v1, v2, v3);
 
 				float distance;
-				float3 intersectionPoint;
-				//if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
-
-				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
+				if (rayLocal.Intersects(triangle, &distance, &lastMouseClick))
 				{
-					if (!isRightButton)
-						return gameObject;
-
-					for (GameObject* go : sceneGameObjects)
-					{
-						//if (gameObject != go && engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == go->GetUID())
-						{
-							ComponentScript* script = go->GetComponent<ComponentScript>();
-							if (script != nullptr)
-							{
-								if (script->path.substr(script->path.find_last_of('/') + 1) == "Player.lua" && (bool)script->handler->lua["IsSelected"]())
-								{
-									intersectionPoint.x *= gameObject->GetTransform()->GetScale().x;
-									intersectionPoint.y *= gameObject->GetTransform()->GetScale().y;
-									intersectionPoint.z *= gameObject->GetTransform()->GetScale().z;
-									script->handler->lua["destination"] = intersectionPoint;
-								}
-							}
-						}
-					}
+					lastMouseClick.x *= gameObject->GetTransform()->GetScale().x;
+					lastMouseClick.y *= gameObject->GetTransform()->GetScale().y;
+					lastMouseClick.z *= gameObject->GetTransform()->GetScale().z;
+					return gameObject;
 				}
 			}
 		}
 	}
 
 	return nullptr;
+}
+
+float3 Camera3D::GetLastMouseClick() const
+{
+	return lastMouseClick;
 }

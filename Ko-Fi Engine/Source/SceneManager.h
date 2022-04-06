@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include <string>
 #include <list>
+#include "MathGeoLib/Math/float2.h"
 
 #include "ImGuizmo.h"
 
@@ -40,7 +41,6 @@ public:
 
 	bool Awake(Json configModule);
 	// Called before render is available
-	virtual bool Awake();
 
 	// Called before the first frame
 	virtual bool Start();
@@ -79,6 +79,7 @@ public:
 	inline float const GetGameTime() { return time; }
 	inline float GetGameDt() const { return gameDt; }
 	inline float GetTotalGameTime() const { return gameTime; }
+	inline std::string GetDefaultScene() const { return defaultScene; }
 
 	void OnPlay();
 	void OnStop();
@@ -105,11 +106,11 @@ private:
 	std::vector<Scene*> scenes;
 	Scene* currentScene = nullptr;
 	SceneIntro* sceneIntro = nullptr;
-
+	std::string defaultScene = "";
 	// Guizmo
 	ImGuizmo::OPERATION currentGizmoOperation;
 	ImGuizmo::MODE currentGizmoMode;
-
+	float2 cornerPos;
 	// TIME MANAGEMENT
 	// --------------------------------------------------
 	// Frame Count: app graphics frames since game start

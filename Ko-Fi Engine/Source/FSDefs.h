@@ -16,6 +16,7 @@
 #define MATERIALS_DIR "Library/Materials/"
 #define TEXTURES_DIR "Library/Textures/"
 #define SHADERS_DIR "Library/Shaders/"
+#define ANIMATIONS_DIR "Library/Animations/"
 
 #define CONFIG_DIR "EngineConfig/"
 
@@ -24,5 +25,6 @@
 #define MATERIAL_EXTENSION ".milk"
 #define SHADER_EXTENSION ".glsl"
 #define SCENE_EXTENSION ".json"
+#define ANIMATION_EXTENSION ".cake"
 
 #endif // !__FSDIRECTORIES_H__

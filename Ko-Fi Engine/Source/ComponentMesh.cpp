@@ -81,13 +81,17 @@ void ComponentMesh::Save(Json& json) const
 
 	std::string name = owner->GetName();
 	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
-
 	Importer::GetInstance()->meshImporter->Save(mesh, mesh->path.c_str());
 
 	json["path"] = mesh->path;
 	json["shape_type"] = (int)mesh->meshType;
 	json["draw_vertex_normals"] = mesh->GetVertexNormals();
 	json["draw_face_normals"] = mesh->GetFaceNormals();
+	json["isAnimated"] = mesh->IsAnimated();
+	if (mesh->IsAnimated())
+	{
+		json["rootNodeUID"] = mesh->GetRootNode()->GetUID();
+	}
 }
 
 void ComponentMesh::Load(Json& json)
@@ -124,12 +128,32 @@ void ComponentMesh::Load(Json& json)
 
 		mesh->meshType = meshType;
 	}
+
 	std::string path = json.at("path");
+	if (json.contains("isAnimated"))
+	{
+		mesh->SetIsAnimated(json.at("isAnimated"));
+
+	}
+	else
+	{
+		mesh->SetIsAnimated(false);
+	}
 	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
 	mesh->path = path;
 
 	SetVertexNormals(json.at("draw_vertex_normals"));
 	SetFaceNormals(json.at("draw_face_normals"));
+	if (mesh->IsAnimated())
+	{
+		uint uid = (uint)json.at("rootNodeUID");
+
+		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
+		this->GetMesh()->SetRootNode(object);
+	}
+		
+	
+
 }
 
 void ComponentMesh::SetMesh(Mesh* mesh)
@@ -272,7 +296,6 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 }
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
-
 	bool ret = true;
 	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
 	{

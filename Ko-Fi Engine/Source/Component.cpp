@@ -98,7 +98,6 @@ void Component::DrawDeleteButton(GameObject* owner, Component* component)
 
 		ImGui::EndPopup();
 	}
-
 }
 
 const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
@@ -129,8 +128,3 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 		return it == componentTypeStrings.end() ? "Out of range" : it->second;
 	
 }
-
-
-
-
-

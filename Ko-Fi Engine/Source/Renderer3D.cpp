@@ -31,6 +31,7 @@
 #include "ComponentRenderedUI.h"
 #include "ComponentLightSource.h"
 #include "Material.h"
+#include "PieShape.h"
 
 #include "PanelViewport.h"
 
@@ -427,7 +428,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-			if (mesh->isAnimated)
+			if (mesh->IsAnimated())
 			{
 				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
 				std::vector<float4x4> transformsAnim;
@@ -436,7 +437,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->isAnimated);
+				glUniform1i(isAnimated, mesh->IsAnimated());
 			}			
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
@@ -632,7 +633,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->gameCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-			if (mesh->isAnimated)
+			if (mesh->IsAnimated())
 			{
 				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
 				std::vector<float4x4> transformsAnim;
@@ -641,7 +642,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->isAnimated);
+				glUniform1i(isAnimated, mesh->IsAnimated());
 			}
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
@@ -848,6 +849,39 @@ void Renderer3D::OnResize()
 		CONSOLE_LOG("[ERROR] Renderer 3D: Could not recalculate the aspect ratio! Error: Current Camera was nullptr.");
 	}
 	RecalculateProjectionMatrix();
+}
+
+void Renderer3D::DrawCylinder(float4x4 transform)
+{
+}
+
+void Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float angle, int length)
+{
+	glColor3f(0.0f, 1.0f, 1.0f);
+	glLineWidth(6.0f);
+
+	Quat rot;
+
+	rot.SetFromAxisAngle(up, angle / 2 * DEGTORAD);
+	float3 av = rot * forward;
+
+	rot.SetFromAxisAngle(up, -angle / 2 * DEGTORAD);
+	float3 bv = rot * forward;
+
+	float3 a = position + av * length;
+	float3 b = position + bv * length;
+
+	glBegin(GL_LINES);
+	glVertex3f(position.x, position.y, position.z);
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+	glVertex3f(b.x, b.y, b.z);
+	glVertex3f(position.x, position.y, position.z);
+	glEnd();
+
+	glLineWidth(1.0f);
+	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
 // Debug ray for mouse picking
