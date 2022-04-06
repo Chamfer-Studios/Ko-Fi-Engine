@@ -102,8 +102,7 @@ void Mesh::CleanUp()
 	path.clear();
 	path.shrink_to_fit();
 
-	if(assimpScene)
-		RELEASE(assimpScene);
+	assimpScene = nullptr;
 }
 
 void Mesh::SetUpMeshBuffers()
