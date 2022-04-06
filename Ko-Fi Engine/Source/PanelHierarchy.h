@@ -18,7 +18,7 @@ public:
 	bool Update();
 	bool PostUpdate();
 	bool CleanUp();
-	void DisplayTree(GameObject* go, int flags);
+	void DisplayTree(GameObject* go, int flags, int& id);
 	void DragNDrop(GameObject* go);
 	GameObject* GetSelectedGameObject() { return selectedGameObject; };
 private:
