@@ -140,6 +140,9 @@
     <Filter Include="Scripts\Enemies">
       <UniqueIdentifier>{eaea32bb-f20e-4cce-a1a5-b570cd06a4a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\UI">
+      <UniqueIdentifier>{116bf457-0b8c-4108-82e6-e2cef9c3e313}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -610,7 +613,7 @@
     </ClCompile>
     <ClCompile Include="Source\Model.cpp">
       <Filter>Source\Resources</Filter>
-      </ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\PieShape.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
@@ -625,7 +628,7 @@
     </ClCompile>
     <ClCompile Include="Source\SimulationEventCallback.cpp">
       <Filter>Source\Helpers\Physics</Filter>
-      </ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\Channel.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
@@ -1746,7 +1749,7 @@
     </ClInclude>
     <ClInclude Include="Source\Model.h">
       <Filter>Source\Resources</Filter>
-     </ClInclude>
+    </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Source\Physics</Filter>
     </ClInclude>
@@ -1856,12 +1859,26 @@
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
       <Filter>Scripts\Enemies</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_Lives.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_1.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_2.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_3.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_SFX.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_1.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_2.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_3.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\UI_SFX.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
   </ItemGroup>
 </Project>

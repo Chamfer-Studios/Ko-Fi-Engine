@@ -43,8 +43,10 @@ bool ResourceManager::Start()
 	fileRefreshRate = 5.0f;
 
 	//RefreshDirectoryFiles()
-
+	RefreshDirectoryFiles(ASSETS_DIR);
+	RefreshDirectoryFiles(LIBRARY_DIR);
 	//Trim library
+	TrimLibrary();
 
 	//Find prefabs
 

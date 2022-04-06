@@ -151,7 +151,7 @@ bool FileSystem::SaveFile(const char* path, std::string text) const
 
 void FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs)
 {
-	std::string p = rootPath.string() + path;
+	std::string p = rootPath.string() + "/" + path;
 	for (const auto& file : std::filesystem::directory_iterator(p))
 	{
 		if (std::filesystem::is_directory(file.path()))
