@@ -1110,6 +1110,7 @@ ResourceType ResourceManager::GetTypeFromExtension(const char* extension)
 {
 	ResourceType ret = ResourceType::UNKNOWN;
 
+	// TODO
 	//LUA?
 	if (engine->GetFileSystem()->StringCompare(extension, TEXTURE_EXTENSION) == 0)
 		ret = ResourceType::TEXTURE;
