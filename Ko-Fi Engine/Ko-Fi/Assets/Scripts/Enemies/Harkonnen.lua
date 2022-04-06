@@ -41,6 +41,9 @@ deathMarkDuration = nil
 
 invisibilityTimer = 0
 
+componentRigidBody = gameObject:GetRigidBody()
+rigidBodyFlag = true
+
 function Float3Length(v)
     return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
 end
@@ -155,6 +158,13 @@ hasSwitchedState = false
 
 function Update(dt)
 
+    if (rigidBodyFlag == true) then
+		if (componentRigidBody ~= nil) then
+			rigidBodyFlag = false
+			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 15, componentTransform:GetPosition().z))
+		end
+	end
+
     if (deathMarkDuration ~= nil) then
         if (invisibilityTimer >= deathMarkDuration) then
             print("Die")
@@ -192,7 +202,7 @@ function Update(dt)
 end
 
 function OnTriggerEnter(go)
-    print("a")
+
 	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
 		DeleteGameObject()
 	end
