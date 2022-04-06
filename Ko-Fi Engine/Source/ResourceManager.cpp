@@ -15,6 +15,15 @@ ResourceManager::~ResourceManager()
 
 }
 
+bool ResourceManager::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool ResourceManager::Start()
 {
 	CONSOLE_LOG("Starting ResourceManager...");
@@ -173,4 +182,19 @@ Resource::Type ResourceManager::GetTypeFromExtension(const char* extension) cons
 	Resource::Type ret = Resource::Type::MESH;
 
 	return ret;
+}
+
+bool ResourceManager::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool ResourceManager::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool ResourceManager::InspectorDraw()
+{
+	return true;
 }

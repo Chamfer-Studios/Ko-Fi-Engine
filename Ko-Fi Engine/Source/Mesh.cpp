@@ -6,7 +6,10 @@
 #include "ComponentTransform.h"
 #include "ComponentAnimator.h"
 
+#include "R_Animation.h"
 #include "AnimatorClip.h"
+#include "R_Animation.h"
+#include "Channel.h"
 
 #include "Globals.h"
 
@@ -361,7 +364,7 @@ void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transfo
 
 	float4x4 identity = float4x4::identity;
 
-	float ticksPerSecond = (float)(assimpScene->mAnimations[0]->mTicksPerSecond != 0 ? assimpScene->mAnimations[0]->mTicksPerSecond : 25.0f);
+	float ticksPerSecond = (float)(animation->GetTicksPerSecond() != 0 ? animation->GetTicksPerSecond() : 25.0f);
 	float timeInTicks = timeInSeconds * ticksPerSecond;
 
 	float startFrame, endFrame, animDur;
@@ -376,13 +379,13 @@ void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transfo
 	{
 		startFrame = 0.0f;
 		endFrame = 0.0f;
-		float animDur = assimpScene->mAnimations[0]->mDuration;
+		float animDur = animation->GetDuration();
 	}
 	
 
 	float animationTimeTicks = fmod(timeInTicks, (float)animDur); // This divides the whole animation into segments of animDur.
 
-	ReadNodeHeirarchy(animationTimeTicks + startFrame, assimpScene->mRootNode, identity); // We add startFrame as an offset to the duration.
+	ReadNodeHeirarchy(animationTimeTicks + startFrame, rootNode, identity); // We add startFrame as an offset to the duration.
 	transforms.resize(boneInfo.size());
 
 	for (uint i = 0; i < boneInfo.size(); i++)
@@ -391,31 +394,28 @@ void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transfo
 	}
 }
 
-void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, const float4x4& parentTransform)
+void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode, const float4x4& parentTransform)
 {
-	std::string nodeName(pNode->mName.data);
+	std::string nodeName(pNode->GetName());
 
-	const aiAnimation* pAnimation = assimpScene->mAnimations[0];
+	float4x4 nodeTransformation(pNode->GetTransform()->GetGlobalTransform());
 
-	aiMatrix4x4 transformation = pNode->mTransformation;
-	float4x4 nodeTransformation(Importer::GetInstance()->meshImporter->aiMatrix2Float4x4(transformation));
-
-	const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, nodeName);
+	const Channel* pNodeAnim = FindNodeAnim(nodeName);
 
 	if (pNodeAnim)
 	{
 		// Interpolate scaling and generate scaling transformation matrix
-		aiVector3D scaling;
+		float3 scaling;
 		CalcInterpolatedScaling(scaling, animationTimeTicks, pNodeAnim);
 		float4x4 scalingM = InitScaleTransform(scaling.x, scaling.y, scaling.z);
 
 		// Interpolate rotation and generate rotation transformation matrix
-		aiQuaternion rotationQ;
+		Quat rotationQ;
 		CalcInterpolatedRotation(rotationQ, animationTimeTicks, pNodeAnim);
-		float4x4 rotationM = aiMatrix3x32Float4x4(rotationQ.GetMatrix());
+		float4x4 rotationM = GetMatrixFromQuat(rotationQ).Transposed();
 
 		// Interpolate translation and generate translation transformation matrix
-		aiVector3D translation;
+		float3 translation;
 		CalcInterpolatedPosition(translation, animationTimeTicks, pNodeAnim);
 		float4x4 translationM = InitTranslationTransform(translation.x, translation.y, translation.z);
 
@@ -428,29 +428,24 @@ void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const aiNode* pNode, cons
 	if (boneNameToIndexMap.find(nodeName) != boneNameToIndexMap.end())
 	{
 		uint boneIndex = boneNameToIndexMap[nodeName];
-		float4x4 rootTransform = Importer::GetInstance()->meshImporter->aiMatrix2Float4x4(assimpScene->mRootNode->mTransformation.Inverse());
+		float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
 		float4x4 delta = rootTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
 		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
-	for (uint i = 0; i < pNode->mNumChildren; i++)
+	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
-		ReadNodeHeirarchy(animationTimeTicks, pNode->mChildren[i], globalTransformation);
+		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);
 	}
 }
 
-void Mesh::SetRootNode(const aiScene* assimpScene)
+const Channel* Mesh::FindNodeAnim(const std::string nodeName)
 {
-	this->assimpScene = assimpScene;
-}
-
-const aiNodeAnim* Mesh::FindNodeAnim(const aiAnimation* pAnimation, const std::string nodeName)
-{
-	for (uint i = 0; i < pAnimation->mNumChannels; i++)
+	for (uint i = 0; i < animation->channels.size(); i++)
 	{
-		const aiNodeAnim* pNodeAnim = pAnimation->mChannels[i];
+		const Channel* pNodeAnim = &animation->channels.at(i);
 
-		if (std::string(pNodeAnim->mNodeName.data) == nodeName)
+		if (std::string(pNodeAnim->name) == nodeName)
 		{
 			return pNodeAnim;
 		}
@@ -459,10 +454,10 @@ const aiNodeAnim* Mesh::FindNodeAnim(const aiAnimation* pAnimation, const std::s
 	return nullptr;
 }
 
-uint Mesh::FindPosition(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
+uint Mesh::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
 {
-	for (uint i = 0; i < pNodeAnim->mNumPositionKeys - 1; i++) {
-		float t = (float)pNodeAnim->mPositionKeys[i + 1].mTime;
+	for (uint i = 0; i < pNodeAnim->positionKeyframes.size() - 1; i++) {
+		float t = (float)pNodeAnim->positionKeyframes.at(i + 1).time;
 		if (AnimationTimeTicks < t) {
 			return i;
 		}
@@ -471,34 +466,34 @@ uint Mesh::FindPosition(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
 	return 0;
 }
 
-void Mesh::CalcInterpolatedPosition(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
+void Mesh::CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	if (pNodeAnim->mNumPositionKeys == 1) {
-		Out = pNodeAnim->mPositionKeys[0].mValue;
+	if (pNodeAnim->positionKeyframes.size() == 1) {
+		Out = pNodeAnim->positionKeyframes.at(0).value;
 		return;
 	}
 
 	uint PositionIndex = FindPosition(AnimationTimeTicks, pNodeAnim);
 	uint NextPositionIndex = PositionIndex + 1;
-	assert(NextPositionIndex < pNodeAnim->mNumPositionKeys);
-	float t1 = (float)pNodeAnim->mPositionKeys[PositionIndex].mTime;
-	float t2 = (float)pNodeAnim->mPositionKeys[NextPositionIndex].mTime;
+	assert(NextPositionIndex < pNodeAnim->positionKeyframes.size());
+	float t1 = (float)pNodeAnim->positionKeyframes.at(PositionIndex).time;
+	float t2 = (float)pNodeAnim->positionKeyframes.at(NextPositionIndex).time;
 	float DeltaTime = t2 - t1;
 	float Factor = (AnimationTimeTicks - t1) / DeltaTime;
 	assert(Factor >= 0.0f && Factor <= 1.0f);
-	const aiVector3D& Start = pNodeAnim->mPositionKeys[PositionIndex].mValue;
-	const aiVector3D& End = pNodeAnim->mPositionKeys[NextPositionIndex].mValue;
-	aiVector3D Delta = End - Start;
+	const float3& Start = pNodeAnim->positionKeyframes.at(PositionIndex).value;
+	const float3& End = pNodeAnim->positionKeyframes.at(NextPositionIndex).value;
+	float3 Delta = End - Start;
 	Out = Start + Factor * Delta;
 }
 
-uint Mesh::FindRotation(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
+uint Mesh::FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim)
 {
-	assert(pNodeAnim->mNumRotationKeys > 0);
+	assert(pNodeAnim->rotationKeyframes.size() > 0);
 
-	for (uint i = 0; i < pNodeAnim->mNumRotationKeys - 1; i++) {
-		float t = (float)pNodeAnim->mRotationKeys[i + 1].mTime;
+	for (uint i = 0; i < pNodeAnim->rotationKeyframes.size() - 1; i++) {
+		float t = (float)pNodeAnim->rotationKeyframes.at(i + 1).time;
 		if (AnimationTimeTicks < t) {
 			return i;
 		}
@@ -508,36 +503,36 @@ uint Mesh::FindRotation(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
 }
 
 
-void Mesh::CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
+void Mesh::CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	if (pNodeAnim->mNumRotationKeys == 1) {
-		Out = pNodeAnim->mRotationKeys[0].mValue;
+	if (pNodeAnim->rotationKeyframes.size() == 1) {
+		Out = pNodeAnim->rotationKeyframes.at(0).value;
 		return;
 	}
 
 	uint RotationIndex = FindRotation(AnimationTimeTicks, pNodeAnim);
 	uint NextRotationIndex = RotationIndex + 1;
-	assert(NextRotationIndex < pNodeAnim->mNumRotationKeys);
-	float t1 = (float)pNodeAnim->mRotationKeys[RotationIndex].mTime;
-	float t2 = (float)pNodeAnim->mRotationKeys[NextRotationIndex].mTime;
+	assert(NextRotationIndex < pNodeAnim->rotationKeyframes.size());
+	float t1 = (float)pNodeAnim->rotationKeyframes.at(RotationIndex).time;
+	float t2 = (float)pNodeAnim->rotationKeyframes.at(NextRotationIndex).time;
 	float DeltaTime = t2 - t1;
 	float Factor = (AnimationTimeTicks - t1) / DeltaTime;
 	assert(Factor >= 0.0f && Factor <= 1.0f);
-	const aiQuaternion& StartRotationQ = pNodeAnim->mRotationKeys[RotationIndex].mValue;
-	const aiQuaternion& EndRotationQ = pNodeAnim->mRotationKeys[NextRotationIndex].mValue;
-	aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, Factor);
+	const Quat& StartRotationQ = pNodeAnim->rotationKeyframes.at(RotationIndex).value;
+	const Quat& EndRotationQ = pNodeAnim->rotationKeyframes.at(NextRotationIndex).value;
+	StartRotationQ.Slerp(EndRotationQ, Factor);
 	Out = StartRotationQ;
 	Out.Normalize();
 }
 
 
-uint Mesh::FindScaling(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
+uint Mesh::FindScaling(float AnimationTimeTicks, const Channel* pNodeAnim)
 {
-	assert(pNodeAnim->mNumScalingKeys > 0);
+	assert(pNodeAnim->scaleKeyframes.size() > 0);
 
-	for (uint i = 0; i < pNodeAnim->mNumScalingKeys - 1; i++) {
-		float t = (float)pNodeAnim->mScalingKeys[i + 1].mTime;
+	for (uint i = 0; i < pNodeAnim->scaleKeyframes.size() - 1; i++) {
+		float t = (float)pNodeAnim->scaleKeyframes.at(i + 1).time;
 		if (AnimationTimeTicks < t) {
 			return i;
 		}
@@ -546,25 +541,25 @@ uint Mesh::FindScaling(float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
 	return 0;
 }
 
-void Mesh::CalcInterpolatedScaling(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* pNodeAnim)
+void Mesh::CalcInterpolatedScaling(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	if (pNodeAnim->mNumScalingKeys == 1) {
-		Out = pNodeAnim->mScalingKeys[0].mValue;
+	if (pNodeAnim->scaleKeyframes.size() == 1) {
+		Out = pNodeAnim->scaleKeyframes.at(0).value;
 		return;
 	}
 
 	uint ScalingIndex = FindScaling(AnimationTimeTicks, pNodeAnim);
 	uint NextScalingIndex = ScalingIndex + 1;
-	assert(NextScalingIndex < pNodeAnim->mNumScalingKeys);
-	float t1 = (float)pNodeAnim->mScalingKeys[ScalingIndex].mTime;
-	float t2 = (float)pNodeAnim->mScalingKeys[NextScalingIndex].mTime;
+	assert(NextScalingIndex < pNodeAnim->scaleKeyframes.size());
+	float t1 = (float)pNodeAnim->scaleKeyframes.at(ScalingIndex).time;
+	float t2 = (float)pNodeAnim->scaleKeyframes.at(NextScalingIndex).time;
 	float DeltaTime = t2 - t1;
 	float Factor = (AnimationTimeTicks - (float)t1) / DeltaTime;
 	assert(Factor >= 0.0f && Factor <= 1.0f);
-	const aiVector3D& Start = pNodeAnim->mScalingKeys[ScalingIndex].mValue;
-	const aiVector3D& End = pNodeAnim->mScalingKeys[NextScalingIndex].mValue;
-	aiVector3D Delta = End - Start;
+	const float3& Start = pNodeAnim->scaleKeyframes.at(ScalingIndex).value;
+	const float3& End = pNodeAnim->scaleKeyframes.at(NextScalingIndex).value;
+	float3 Delta = End - Start;
 	Out = Start + Factor * Delta;
 }
 
@@ -631,6 +626,37 @@ float4x4 Mesh::aiMatrix3x32Float4x4(aiMatrix3x3 assimpMatrix)
 	m[1][0] = assimpMatrix.b1; m[1][1] = assimpMatrix.b2; m[1][2] = assimpMatrix.b3; m[1][3] = 0.0f;
 	m[2][0] = assimpMatrix.c1; m[2][1] = assimpMatrix.c2; m[2][2] = assimpMatrix.c3; m[2][3] = 0.0f;
 	m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[3][3] = 1.0f;
+
+	return m;
+}
+
+float4x4 Mesh::GetMatrixFromQuat(Quat quat)
+{
+	float4x4 m;
+
+	float yy2 = 2.0f * quat.y * quat.y;
+	float xy2 = 2.0f * quat.x * quat.y;
+	float xz2 = 2.0f * quat.x * quat.z;
+	float yz2 = 2.0f * quat.y * quat.z;
+	float zz2 = 2.0f * quat.z * quat.z;
+	float wz2 = 2.0f * quat.w * quat.z;
+	float wy2 = 2.0f * quat.w * quat.y;
+	float wx2 = 2.0f * quat.w * quat.x;
+	float xx2 = 2.0f * quat.x * quat.x;
+	m[0][0] = -yy2 - zz2 + 1.0f;
+	m[0][1] = xy2 + wz2;
+	m[0][2] = xz2 - wy2;
+	m[0][3] = 0;
+	m[1][0] = xy2 - wz2;
+	m[1][1] = -xx2 - zz2 + 1.0f;
+	m[1][2] = yz2 + wx2;
+	m[1][3] = 0;
+	m[2][0] = xz2 + wy2;
+	m[2][1] = yz2 - wx2;
+	m[2][2] = -xx2 - yy2 + 1.0f;
+	m[2][3] = 0.0f;
+	m[3][0] = m[3][1] = m[3][2] = 0;
+	m[3][3] = 1.0f;
 
 	return m;
 }

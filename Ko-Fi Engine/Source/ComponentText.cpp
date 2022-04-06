@@ -51,11 +51,16 @@ bool ComponentText::PostUpdate(float dt)
 
 bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Text")) {
+	if (ImGui::CollapsingHeader("Text", ImGuiTreeNodeFlags_AllowItemOverlap)) 
+	{
+		DrawDeleteButton(owner, this);
+
 		if (ImGui::InputText("Value", &(textValue))) {
 			SetTextValue(textValue);
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }

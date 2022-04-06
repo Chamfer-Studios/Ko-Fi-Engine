@@ -15,6 +15,16 @@ class ComponentScript;
 class ComponentCollider;
 class ComponentCollider2;
 class ComponentAnimator;
+class ComponentLightSource;
+
+enum class Tag 
+{
+	TAG_UNTAGGED,
+	TAG_PLAYER,
+	TAG_ENEMY,
+	TAG_WALL,
+	TAG_PROJECTILE
+};
 
 class GameObject
 {
@@ -29,7 +39,12 @@ public:
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
+
 	bool OnPlay();
+	bool OnPause();
+	bool OnStop();
+	bool OnResume();
+	bool OnTick();
 
 	void Enable();
 	void Disable();
@@ -45,10 +60,10 @@ public:
 		}
 		return component;
 	}
-
+	
 	// New way
 	void DeleteComponent(Component* component);
-	void AddComponent(Component* component);
+	void PushBackComponent(Component* component) { components.push_back(component); }
 	Component* AddComponentByType(ComponentType componentType);
 	void AttachChild(GameObject* child);
 	void RemoveChild(GameObject* child);
@@ -57,13 +72,13 @@ public:
 
 	// Old way
 	void SetName(const char* name);
-	const char* GetName();
+	const char* GetName() const;
 
 	std::vector<GameObject*> GetChildren() const;
 	void SetChild(GameObject* child);
 	GameObject* GetParent() const;
 
-	ComponentTransform* GetTransform();
+	ComponentTransform* GetTransform() const;
 	std::vector<Component*> GetComponents() const;
 	AABB BoundingAABB();
 	void SetUID(uint uid);
@@ -85,6 +100,11 @@ public:
 	bool UpdatePrefab(Json& jsonFile);
 
 	bool IsSelected();
+	void LoadSceneFromName(std::string name);
+	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
+private:
+	std::string SetObjectNumberedName(const char* _name);
+
 public:
 	template<class T> T* CreateComponent()
 	{
@@ -92,16 +112,20 @@ public:
 		return newComponent;
 	}
 
+
 public:
-	std::string name;
 	bool active = true;
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
+	bool changeScene = false;
+	std::string sceneName;
 	std::string prefabPath;
+	Tag tag;
 
 	std::vector<GameObject*> children;
 private:
+	std::string name;
 	std::vector<Component*> components;
 	GameObject* parent = nullptr;
 	uint uid;

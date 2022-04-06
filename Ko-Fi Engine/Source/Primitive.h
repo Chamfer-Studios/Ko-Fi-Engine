@@ -12,7 +12,6 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder,
 	Primitive_Pyramid
 };
 
@@ -64,18 +63,6 @@ public:
 	float radius;
 	unsigned int stacks;
 	unsigned int sectors;
-};
-
-// ============================================
-class Cylinder : public Primitive
-{
-public:
-	Cylinder();
-	Cylinder(float radius, float height);
-	void InnerRender() const;
-public:
-	float radius;
-	float height;
 };
 
 // ============================================

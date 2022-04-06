@@ -28,6 +28,15 @@ Navigation::~Navigation()
 {
 }
 
+bool Navigation::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool Navigation::Start()
 {
 	return true;
@@ -45,6 +54,8 @@ bool Navigation::Update(float dt)
 
 bool Navigation::PostUpdate(float dt)
 {
+	return true;
+
 	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
 
 	if (navMeshDetail == nullptr) return true;
@@ -125,6 +136,8 @@ void Navigation::PrepareDetour()
 {
 	if (navMeshDetail == nullptr) return;
 
+	if (dtNavMesh != nullptr) dtFreeNavMesh(dtNavMesh);
+
 	for (int i = 0; i < navMesh->npolys; ++i)
 	{
 		if (navMesh->areas[i] == RC_WALKABLE_AREA)
@@ -175,12 +188,17 @@ void Navigation::PrepareDetour()
 		appLog->AddLog("Could not create DT navmesh!");
 		return;
 	}
+
+	appLog->AddLog("Sucessfully prepared pathfinding.\n");
 }
 
 rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 {
 	// https://wiki.jmonkeyengine.org/docs/3.4/contributions/ai/recast.html
 	// https://github.com/recastnavigation/recastnavigation/blob/c5cbd53024c8a9d8d097a4371215e3342d2fdc87/RecastDemo/Source/Sample_SoloMesh.cpp
+
+	if (navMesh != nullptr) rcFreePolyMesh(navMesh);
+	if (navMeshDetail != nullptr) rcFreePolyMeshDetail(navMeshDetail);
 
 	rcConfig* config = new rcConfig();
 
@@ -275,6 +293,16 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 		return nullptr;
 	}
 
+	delete config;
+	delete context;
+
+	rcFreeHeightField(heightfield);
+	delete[] areas;
+	rcFreeCompactHeightfield(compactHeightfield);
+	rcFreeContourSet(contourSet);
+
+	appLog->AddLog("Successfully created navmesh.\n");
+
 	return polyMeshDetail;
 }
 
@@ -292,15 +320,16 @@ std::vector<GameObject*> Navigation::CollectWalkableObjects()
 	return res;
 }
 
-std::tuple<std::vector<float3>> Navigation::FindPath(float3 origin, float3 destination, int maxLength)
+std::tuple<std::vector<float3>> Navigation::FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength)
 {
 	std::vector<float3> path;
 	if (dtNavMesh == nullptr) return std::make_tuple(path);
-	int actualLength = 0;
+	int actualPolyLength = 0;
+	int actualVectorLength = 0;
 
 	dtNavMeshQuery* query = dtAllocNavMeshQuery();
 
-	query->init(dtNavMesh, maxLength);
+	query->init(dtNavMesh, maxPolyLength);
 
 	float extents[3] = { 5, 5, 5 };
 	dtQueryFilter* filter = new dtQueryFilter();
@@ -315,20 +344,23 @@ std::tuple<std::vector<float3>> Navigation::FindPath(float3 origin, float3 desti
 	float destinationPolyPos[3] = { 0, 0, 0 };
 	query->findNearestPoly(destinationArray, extents, filter, &destinationPoly, destinationPolyPos);
 
-	dtPolyRef* polyPath = (dtPolyRef*)malloc(sizeof(dtPolyRef*) * maxLength);
-	memset(polyPath, 0, sizeof(dtPolyRef) * maxLength);
-	query->findPath(originPoly, destinationPoly, originPolyPos, destinationPolyPos, filter, polyPath, &actualLength, maxLength);
+	dtPolyRef* polyPath = (dtPolyRef*)malloc(sizeof(dtPolyRef*) * maxPolyLength);
+	memset(polyPath, 0, sizeof(dtPolyRef) * maxPolyLength);
 
-	float3 currentPos = origin;
-	for (int i = 0; i < actualLength; i++) {
-		dtPolyRef currentPoly = polyPath[i];
-		float nextPos[3] = { 0, 0, 0 };
-		bool _p;
-		query->closestPointOnPoly(currentPoly, &currentPos[0], nextPos, &_p);
-		float3 nextPosAsF3 = float3(nextPos[0], nextPos[1], nextPos[2]);
-		path.push_back(nextPosAsF3);
-		currentPos = nextPosAsF3;
+	query->findPath(originPoly, destinationPoly, originPolyPos, destinationPolyPos, filter, polyPath, &actualPolyLength, maxPolyLength);
+
+	float* vectorPath = (float*)malloc(sizeof(float*) * maxVectorLength);
+	memset(vectorPath, 0, sizeof(float*) * maxVectorLength);
+	query->findStraightPath(origin.ptr(), destination.ptr(), polyPath, actualPolyLength, vectorPath, nullptr, nullptr, &actualVectorLength, maxVectorLength);
+
+	for (int i = 0; i < actualVectorLength; i++) {
+		path.push_back(float3(vectorPath[i * 3], vectorPath[i * 3 + 1], vectorPath[i * 3 + 2]));
 	}
+
+	dtFreeNavMeshQuery(query);
+	delete filter;
+	free(polyPath);
+	free(vectorPath);
 
 	return std::make_tuple(path);
 }
@@ -539,4 +571,40 @@ void Navigation::OnGui()
 	}
 
 	ImGui::End();
+}
+
+bool Navigation::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Navigation::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Navigation::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("Navigator##"))
+	{
+		ImGui::DragFloat("Cell Size", &navMeshConfig.cs, 0.001f);
+		ImGui::DragFloat("Cell Height", &navMeshConfig.ch, 0.001f);
+		ImGui::DragFloat("Slope Angle", &navMeshConfig.walkableSlopeAngle, 0.5f);
+		ImGui::DragFloat("Walkable Climb", &navMeshConfig.walkableClimb, 0.02f);
+		ImGui::DragInt("Walkable Height", &navMeshConfig.walkableHeight, 0.05f);
+		ImGui::DragFloat("Walkable Radius", &navMeshConfig.walkableRadius, 0.02f);
+		ImGui::DragFloat("Min Region Area", &navMeshConfig.minRegionArea, 0.02f);
+		ImGui::DragFloat("Merge Region Area", &navMeshConfig.mergeRegionArea, 0.02f);
+		ImGui::DragFloat("Border Size", &navMeshConfig.borderSize, 0.001f);
+		ImGui::DragFloat("Max Edge Length", &navMeshConfig.maxEdgeLen, 0.5f);
+		ImGui::DragInt("Max Verts Poly", &navMeshConfig.maxVertsPerPoly, 0.2f, 3, 6);
+		ImGui::DragFloat("Detail Sample Error", &navMeshConfig.detailSampleMaxError, 0.02f);
+		ImGui::DragFloat("Detail Sample Distance", &navMeshConfig.detailSampleDist, 0.02f);
+
+		if (ImGui::Button("Bake Navmesh")) {
+			ComputeNavmesh();
+			PrepareDetour();
+		}
+	}
+	return true;
 }

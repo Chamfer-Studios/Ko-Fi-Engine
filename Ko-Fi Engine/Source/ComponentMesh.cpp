@@ -79,15 +79,19 @@ void ComponentMesh::Save(Json& json) const
 {
 	json["type"] = "mesh";
 
-	std::string name = owner->name;
+	std::string name = owner->GetName();
 	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
-
 	Importer::GetInstance()->meshImporter->Save(mesh, mesh->path.c_str());
 
 	json["path"] = mesh->path;
 	json["shape_type"] = (int)mesh->meshType;
 	json["draw_vertex_normals"] = mesh->GetVertexNormals();
 	json["draw_face_normals"] = mesh->GetFaceNormals();
+	json["isAnimated"] = mesh->IsAnimated();
+	if (mesh->IsAnimated())
+	{
+		json["rootNodeUID"] = mesh->GetRootNode()->GetUID();
+	}
 }
 
 void ComponentMesh::Load(Json& json)
@@ -124,12 +128,32 @@ void ComponentMesh::Load(Json& json)
 
 		mesh->meshType = meshType;
 	}
+
 	std::string path = json.at("path");
+	if (json.contains("isAnimated"))
+	{
+		mesh->SetIsAnimated(json.at("isAnimated"));
+
+	}
+	else
+	{
+		mesh->SetIsAnimated(false);
+	}
 	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
 	mesh->path = path;
 
 	SetVertexNormals(json.at("draw_vertex_normals"));
 	SetFaceNormals(json.at("draw_face_normals"));
+	if (mesh->IsAnimated())
+	{
+		uint uid = (uint)json.at("rootNodeUID");
+
+		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
+		this->GetMesh()->SetRootNode(object);
+	}
+		
+	
+
 }
 
 void ComponentMesh::SetMesh(Mesh* mesh)
@@ -150,7 +174,7 @@ uint ComponentMesh::GetVertices()
 
 float3 ComponentMesh::GetCenterPointInWorldCoords() const
 {
-	return owner->GetTransform()->transformMatrix.TransformPos(centerPoint);
+	return owner->GetTransform()->GetGlobalTransform().TransformPos(centerPoint);
 }
 
 void ComponentMesh::SetVertexNormals(bool vertexNormals)
@@ -219,14 +243,12 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
 	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->transformMatrix.Transposed().ptr());
+	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 	glBegin(GL_LINES);
 
 	// Bottom 1
 	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
 	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
-
-	aabb.Size();
 
 	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
 	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
@@ -274,7 +296,6 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 }
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
-
 	bool ret = true;
 	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
 	{

@@ -36,6 +36,15 @@ Input::~Input()
 	delete[] keyboard;
 }
 
+bool Input::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 // Called before render is available
 bool Input::Init()
 {
@@ -229,4 +238,19 @@ bool Input::CleanUp()
 void Input::OnNotify(const Event& event)
 {
 	// Manage events
+}
+
+bool Input::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Input::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Input::InspectorDraw()
+{
+	return true;
 }

@@ -48,6 +48,7 @@ public:
 	Navigation(KoFiEngine* engine);
 	~Navigation();
 
+	bool Awake(Json configModule);
 	bool Start() override;
 	bool PreUpdate(float dt) override;
 	bool Update(float dt) override;
@@ -59,12 +60,21 @@ public:
 	void PrepareDetour();
 	std::vector<GameObject*> CollectWalkableObjects();
 
-	std::tuple<std::vector<float3>> FindPath(float3 origin, float3 destination, int maxLength);
+	std::tuple<std::vector<float3>> FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength);
 
 	void Save(Json& json) const;
 	void Load(Json& json);
 
 	void OnGui() override;
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 private:
 	rcPolyMeshDetail* ComputeNavmesh(Mesh* mesh);
 	KoFiEngine* engine = nullptr;

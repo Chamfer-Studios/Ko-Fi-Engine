@@ -11,6 +11,7 @@
 #include "Renderer3D.h"
 #include "PanelViewport.h"
 #include "Scripting.h"
+#include "GameObject.h"
 
 #include "SDL.h"
 #include "Log.h"
@@ -27,6 +28,15 @@ Camera3D::Camera3D(KoFiEngine* engine) : Module()
 
 Camera3D::~Camera3D()
 {
+}
+
+bool Camera3D::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
 }
 
 bool Camera3D::Start()
@@ -64,8 +74,7 @@ bool Camera3D::Update(float dt)
 
 	if (currentCamera->isEngineCamera)
 	{
-		CheckInput(dt);
-		CheckMouseMotion();
+		CheckMouseMotion(dt);
 	}
 
 	return true;
@@ -174,7 +183,7 @@ void Camera3D::CheckInput(float dt)
 	currentCamera->position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
 }
 
-void Camera3D::CheckMouseMotion()
+void Camera3D::CheckMouseMotion(float dt)
 {
 
 	// Mouse motion ----------------
@@ -183,6 +192,7 @@ void Camera3D::CheckMouseMotion()
 
 	if (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
+		CheckInput(dt);
 		int dx = -engine->GetInput()->GetMouseXMotion();
 		int dy = -engine->GetInput()->GetMouseYMotion();
 
@@ -268,9 +278,28 @@ void Camera3D::OnStop()
 	currentCamera = engineCamera;
 }
 
+bool Camera3D::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Camera3D::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Camera3D::InspectorDraw()
+{
+	return true;
+}
+
 void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
 {
 	this->gameCamera = gameCamera;
+	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
+	{
+		this->currentCamera = this->gameCamera;
+	}
 }
 
 void Camera3D::OnClick(SDL_Event event)
@@ -409,35 +438,21 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 				const Triangle triangle(v1, v2, v3);
 
 				float distance;
-				float3 intersectionPoint;
-				//if (rayLocal.Intersects(triangle, &distance, &intersectionPoint)) return gameObject;
-
-				if (rayLocal.Intersects(triangle, &distance, &intersectionPoint))
+				if (rayLocal.Intersects(triangle, &distance, &lastMouseClick))
 				{
-					if (!isRightButton)
-						return gameObject;
-
-					for (GameObject* go : sceneGameObjects)
-					{
-						//if (gameObject != go && engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == go->GetUID())
-						{
-							ComponentScript* script = go->GetComponent<ComponentScript>();
-							if (script != nullptr)
-							{
-								if (script->path.substr(script->path.find_last_of('/') + 1) == "Player.lua" && (bool)script->handler->lua["IsSelected"]())
-								{
-									intersectionPoint.x *= gameObject->GetTransform()->GetScale().x;
-									intersectionPoint.y *= gameObject->GetTransform()->GetScale().y;
-									intersectionPoint.z *= gameObject->GetTransform()->GetScale().z;
-									script->handler->lua["destination"] = intersectionPoint;
-								}
-							}
-						}
-					}
+					lastMouseClick.x *= gameObject->GetTransform()->GetScale().x;
+					lastMouseClick.y *= gameObject->GetTransform()->GetScale().y;
+					lastMouseClick.z *= gameObject->GetTransform()->GetScale().z;
+					return gameObject;
 				}
 			}
 		}
 	}
 
 	return nullptr;
+}
+
+float3 Camera3D::GetLastMouseClick() const
+{
+	return lastMouseClick;
 }
