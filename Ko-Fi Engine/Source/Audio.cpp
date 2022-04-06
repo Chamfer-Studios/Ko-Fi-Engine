@@ -47,13 +47,15 @@ bool Audio::Start()
 	if (!device)
 		CONSOLE_LOG("Failed to get the default device for OpenAL");
 
-	CONSOLE_LOG("OpenAL Device", alcGetString(device, ALC_DEVICE_SPECIFIER));
+	CONSOLE_LOG("OpenAL Device %s", alcGetString(device, ALC_DEVICE_SPECIFIER));
 
-	ListAudioDevices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
-	ALboolean enumeration;
-	enumeration = alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT");
-	if (enumeration == AL_FALSE)
-		CONSOLE_LOG("Enumeration not supported");
+	//ALboolean enumeration;
+	//enumeration = alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT");
+
+	//if (enumeration == AL_FALSE)
+	//	CONSOLE_LOG("Enumeration not supported");
+	//else
+	//	ListAudioDevices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
 
 	context = alcCreateContext(device, nullptr);
 
@@ -114,7 +116,7 @@ void Audio::ListAudioDevices(const ALCchar* devices)
 	size_t len = 0;
 
 	//LOG("Devices list: ");
-	fprintf(stdout, "----------\n");
+	//fprintf(stdout, "----------\n");
 	while (device && *device != '\0' && next && *next != '\0')
 	{
 		len = strlen(device);

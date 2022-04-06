@@ -93,7 +93,7 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
-	for (GameObject *go : this->gameObjectList)
+	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update(dt);
 		if (go->changeScene)
@@ -105,14 +105,14 @@ bool SceneIntro::Update(float dt)
 	}
 
 	// example::NodeEditorShow();
-	if (ray.IsFinite())
+	//if (ray.IsFinite())
 		// DrawDebugRay(ray);
 
-		if (sceneTree != nullptr && drawSceneTree)
-		{
-			ComputeQuadTree();
-			sceneTree->Draw();
-		}
+	if (sceneTree != nullptr && drawSceneTree)
+	{
+		ComputeQuadTree();
+		sceneTree->Draw();
+	}
 	return true;
 }
 
@@ -144,12 +144,12 @@ bool SceneIntro::PostUpdate(float dt)
 			knife->GetTransform()->SetRotationEuler(rot);
 
 			ComponentMesh *componentMesh = knife->CreateComponent<ComponentMesh>();
-			Mesh *mesh = parent->GetComponent<ComponentScript>()->handler->LuaFind("Karambit")->GetComponent<ComponentMesh>()->GetMesh();
+			Mesh *mesh = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<ComponentMesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			ComponentMaterial *componentMaterial = knife->CreateComponent<ComponentMaterial>();
 			//Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
-			Material *material = parent->GetComponent<ComponentScript>()->handler->LuaFind("Karambit")->GetComponent<ComponentMaterial>()->GetMaterial();
+			Material *material = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<ComponentMaterial>()->GetMaterial();
 			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 			componentMaterial->SetMaterial(material);
 

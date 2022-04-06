@@ -42,11 +42,10 @@ bool ResourceManager::Start()
 
 	fileRefreshRate = 5.0f;
 
-	//RefreshDirectoryFiles()
-	RefreshDirectoryFiles(ASSETS_DIR);
-	RefreshDirectoryFiles(LIBRARY_DIR);
-	//Trim library
-	TrimLibrary();
+	//RefreshDirectoryFiles(ASSETS_DIR);
+	//RefreshDirectoryFiles(LIBRARY_DIR);
+
+	//TrimLibrary();
 
 	//Find prefabs
 
@@ -83,15 +82,15 @@ bool ResourceManager::CleanUp()
 
 	bool ret = true;
 
-	std::map<UID, Resource*>::iterator it;
-	for (it = resourcesMap.begin(); it != resourcesMap.end(); ++it)
-	{
-		it->second->CleanUp();
-		RELEASE(it->second);
-	}
+	//std::map<UID, Resource*>::iterator it;
+	//for (it = resourcesMap.begin(); it != resourcesMap.end(); ++it)
+	//{
+	//	it->second->CleanUp();
+	//	RELEASE(it->second);
+	//}
 
-	resourcesMap.clear();
-	library.clear();
+	//resourcesMap.clear();
+	//library.clear();
 
 	return ret;
 }

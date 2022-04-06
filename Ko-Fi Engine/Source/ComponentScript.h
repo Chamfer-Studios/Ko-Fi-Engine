@@ -13,7 +13,8 @@ using Json = nlohmann::json;
 
 class InspectorVariable;
 
-struct ScriptHandler {
+struct ScriptHandler
+{
 	ScriptHandler(GameObject* owner);
 
 	sol::protected_function_result script; // Check if it can be private

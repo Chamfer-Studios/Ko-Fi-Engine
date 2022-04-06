@@ -289,12 +289,14 @@ void ComponentScript::ReloadScript(ScriptHandler* handler)
 {
 	if (handler->path == "")
 		return;
+
 	//inspectorVariables.clear();
 	//inspectorVariables.shrink_to_fit();
 	//script = handler->lua.load_file(path);
 	//script();
-	script = handler->lua.script_file(path);
-	isScriptLoaded = true;
+
+	handler->script = handler->handler->lua.script_file(handler->path);
+	handler->isScriptLoaded = true;
 }
 
 void ComponentScript::Save(Json &json) const

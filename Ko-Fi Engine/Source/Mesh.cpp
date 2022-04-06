@@ -99,8 +99,6 @@ Mesh::~Mesh()
 	boneNameToIndexMap.clear();
 	path.clear();
 	path.shrink_to_fit();
-
-	assimpScene = nullptr;
 }
 
 void Mesh::SetUpMeshBuffers()
