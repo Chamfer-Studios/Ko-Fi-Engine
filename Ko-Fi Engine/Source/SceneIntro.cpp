@@ -160,11 +160,12 @@ bool SceneIntro::PostUpdate(float dt)
 			collider->SetIsTrigger(true);
 
 			ComponentScript *knifeScript = (ComponentScript *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<ComponentScript>();
-			knifeScript->path = "Assets/Scripts/Knife.lua";
-			knifeScript->ReloadScript();
-			GameObject *target = parent->GetComponent<ComponentScript>()->handler->lua["target"];
-			knifeScript->handler->lua["target"] = target;
-			knifeScript->handler->lua["SetDestination"]();
+			knifeScript->scripts.push_back(new ScriptHandler(knife));
+			knifeScript->scripts[0]->path = "Assets/Scripts/Knife.lua";
+			knifeScript->ReloadScript(knifeScript->scripts[0]);
+			GameObject *target = parent->GetComponent<ComponentScript>()->scripts[0]->handler->lua["target"];
+			knifeScript->scripts[0]->handler->lua["target"] = target;
+			knifeScript->scripts[0]->handler->lua["SetDestination"]();
 		}
 	}
 	gameObjectListToCreate.clear();

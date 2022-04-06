@@ -91,6 +91,16 @@ Mesh::~Mesh()
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	bones.clear();
+	bones.shrink_to_fit();
+	boneInfo.clear();
+	boneInfo.shrink_to_fit();
+	boneNameToIndexMap.clear();
+	path.clear();
+	path.shrink_to_fit();
+
+	assimpScene = nullptr;
 }
 
 void Mesh::SetUpMeshBuffers()

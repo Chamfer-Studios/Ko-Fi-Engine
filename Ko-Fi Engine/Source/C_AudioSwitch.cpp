@@ -191,7 +191,8 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
             // TRACK LIST
             for (uint i = 0; i < tracks.size(); ++i)
             {
-                ImGui::PushID(i + 50);
+                ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
 
                 R_Track* index = tracks[i];
                 if (index == nullptr)

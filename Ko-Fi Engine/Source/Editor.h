@@ -106,7 +106,10 @@ public:
 	bool toggleSettingsPanel = false;
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
+	PanelInspector* panelGameObject = nullptr;
 	KoFiEngine* engine = nullptr;
+
+	int idTracker = 0;
 
 private:
 	// Style
@@ -121,7 +124,6 @@ private:
 	PanelLog* panelLog = nullptr;
 	PanelAbout* panelAbout = nullptr;
 	PanelChooser* panelChooser = nullptr;
-	PanelInspector* panelGameObject = nullptr;
 	PanelGame* panelGame = nullptr;
 	PanelViewport* panelViewport = nullptr;
 	PanelCameraViewport* panelCameraViewport = nullptr;

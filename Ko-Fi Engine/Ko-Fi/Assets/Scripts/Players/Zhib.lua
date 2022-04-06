@@ -111,6 +111,9 @@ function Update(dt)
 					target = GetGameObjectHovered()
 					if (target.tag == Tag.ENEMY) then
 						Fire()
+						if (componentSwitch ~= nil) then
+							componentSwitch:PlayAudio(0)
+						end
 					end
 				else
 					print("Out of ammo")
