@@ -183,7 +183,7 @@ void FileSystem::DiscoverAllFiles(const char* directory, std::vector<std::string
 
 	for (const auto dir : directories)
 	{
-		std::string path = directory + std::string("/") + dir.c_str();
+		std::string path = directory + dir + std::string("/");
 		DiscoverAllFiles(path.c_str(), files);
 	}
 
@@ -224,7 +224,7 @@ void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std
 
 	for (const auto dir : directories)
 	{
-		std::string path = directory + std::string("/") + dir.c_str();
+		std::string path = directory + dir + std::string("/");
 		DiscoverAllFilesFiltered(path.c_str(), files, filteredFiles, filter);
 	}
 
