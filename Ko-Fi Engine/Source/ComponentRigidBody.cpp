@@ -240,28 +240,47 @@ void ComponentRigidBody::Save(Json &json) const
 }
 void ComponentRigidBody::Load(Json &json)
 {
-	isStatic = json.at("is_static");
-	isKinematic = json.at("is_kinematic");
-	useGravity = json.at("use_gravity");
+	if (json.contains("is_static"))
+		isStatic = json.at("is_static");
+	if (json.contains("is_kinematic"))
+		isKinematic = json.at("is_kinematic");
+	if (json.contains("use_gravity"))
+		useGravity = json.at("use_gravity");
 
-	mass = json.at("mass");
-	density = json.at("density");
+	if (json.contains("mass"))
+		mass = json.at("mass");
+	if (json.contains("density"))
+		density = json.at("density");
 
-	std::vector<float> values = json.at("linear_velocity").get<std::vector<float>>();
-	linearVel = float3(values[0], values[1], values[2]);
-	values.clear();
-	linearDamping = json.at("linear_damping");
-	values = json.at("angular_velocity").get<std::vector<float>>();
-	angularVel = float3(values[0], values[1], values[2]);
-	values.clear();
-	angularDamping = json.at("angular_damping");
+	if (json.contains("linear_velocity"))
+	{
+		std::vector<float> values = json.at("linear_velocity").get<std::vector<float>>();
+		linearVel = float3(values[0], values[1], values[2]);
+		values.clear();
+	}
+	if (json.contains("linear_damping"))
+		linearDamping = json.at("linear_damping");
+	if (json.contains("angular_velocity"))
+	{
+		std::vector<float> values = json.at("angular_velocity").get<std::vector<float>>();
+		angularVel = float3(values[0], values[1], values[2]);
+		values.clear();
+	}
+	if (json.contains("angular_damping"))
+		angularDamping = json.at("angular_damping");
 
-	freezePositionX = json.at("freeze_position_x");
-	freezePositionY = json.at("freeze_position_y");
-	freezePositionZ = json.at("freeze_position_z");
-	freezeRotationX = json.at("freeze_rotation_x");
-	freezeRotationY = json.at("freeze_rotation_y");
-	freezeRotationZ = json.at("freeze_rotation_z");
+	if (json.contains("freeze_position_x"))
+		freezePositionX = json.at("freeze_position_x");
+	if (json.contains("freeze_position_y"))
+		freezePositionY = json.at("freeze_position_y");
+	if (json.contains("freeze_position_z"))
+		freezePositionZ = json.at("freeze_position_z");
+	if (json.contains("freeze_rotation_x"))
+		freezeRotationX = json.at("freeze_rotation_x");
+	if (json.contains("freeze_rotation_y"))
+		freezeRotationY = json.at("freeze_rotation_y");
+	if (json.contains("freeze_rotation_z"))
+		freezeRotationZ = json.at("freeze_rotation_z");
 
 	if (!isStatic)
 		CreateDynamic();
