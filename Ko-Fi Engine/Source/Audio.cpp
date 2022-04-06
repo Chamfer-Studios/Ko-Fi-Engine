@@ -29,6 +29,15 @@ Audio::~Audio()
     
 }
 
+bool Audio::Awake(Json configModule)
+{
+	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
+	return ret;
+}
+
 bool Audio::Start()
 {
 	CONSOLE_LOG("Initializing Audio System...");
@@ -82,6 +91,21 @@ void Audio::CreateAudioListener(float x, float y, float z)
 		0.0f, 1.0f, 0.0f
 	};
 	alec(alListenerfv(AL_ORIENTATION, forwardUpVec));
+}
+
+bool Audio::SaveConfiguration(Json& configModule) const
+{
+	return true;
+}
+
+bool Audio::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
+
+bool Audio::InspectorDraw()
+{
+	return true;
 }
 
 void Audio::ListAudioDevices(const ALCchar* devices)

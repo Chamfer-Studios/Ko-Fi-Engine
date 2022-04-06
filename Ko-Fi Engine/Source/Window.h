@@ -27,6 +27,10 @@ public:
 	bool LoadConfiguration(Json& configModule) override; 
 	// ------------------------------------------------------------------
 
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
@@ -80,6 +84,8 @@ private:
 	std::string iconFile;
 
 	KoFiEngine* engine = nullptr;
+
+	int currentResolution;
 };
 
 #endif // !__WINDOW_H__

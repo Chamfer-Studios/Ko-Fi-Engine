@@ -102,8 +102,10 @@ bool ComponentTransform2D::Update(float dt)
 
 bool ComponentTransform2D::InspectorDraw(PanelChooser* chooser)
 {
-	if (ImGui::CollapsingHeader("Transform 2D"))
+	if (ImGui::CollapsingHeader("Transform 2D", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
+		DrawDeleteButton(owner, this);
+
 		float2 newPosition = GetPosition();
 		if (ImGui::DragFloat2("Location", &newPosition[0])) // POSITION
 		{
@@ -143,6 +145,8 @@ bool ComponentTransform2D::InspectorDraw(PanelChooser* chooser)
 			glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * drawablePlane->texCoords.size(), &drawablePlane->texCoords[0], GL_STATIC_DRAW);
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }

@@ -17,6 +17,7 @@ public:
 	Camera3D(KoFiEngine* engine);
 	~Camera3D();
 
+	bool Awake(Json configModule);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
@@ -28,15 +29,24 @@ public:
 
 	void OnPlay();
 	void OnStop();
-	//void OnSave(JSONWriter& writer) const override;
-	//void OnLoad(const JSONReader& reader) override;
+
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
 
 	void CheckInput(float dt);
-	void CheckMouseMotion();
+	void CheckMouseMotion(float dt);
 
 	void SetGameCamera(ComponentCamera* gameCamera);
 	
 	GameObject* MousePicking(const bool& isRightButton = false);
+
+	float3 GetLastMouseClick() const;
 
 public:
 	GameObject* engineCameraObject = nullptr; // The engine camera needs a game object as holder if we want to be able to access "engine" from component camera.
@@ -46,7 +56,7 @@ public:
 	ComponentCamera* gameCamera = nullptr; // The game camera, asigning this to currentCamera will display de game camera
 
 private:
-
+	float3 lastMouseClick;
 	KoFiEngine* engine = nullptr;
 };
 

@@ -4,6 +4,7 @@
 #include "SceneIntro.h"
 #include "Camera3D.h"
 #include "Window.h"
+#include <imgui_stdlib.h>
 
 #include "GameObject.h"
 #include "Material.h"
@@ -46,9 +47,12 @@ SceneManager::~SceneManager()
 	CleanUp();
 }
 
-bool SceneManager::Awake()
+bool SceneManager::Awake(Json configModule)
 {
 	bool ret = true;
+
+	ret = LoadConfiguration(configModule);
+
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
@@ -57,6 +61,7 @@ bool SceneManager::Awake()
 
 	return ret;
 }
+
 
 bool SceneManager::Start()
 {
@@ -135,6 +140,27 @@ void SceneManager::OnNotify(const Event& event)
 	// Manage events
 }
 
+bool SceneManager::SaveConfiguration(Json& configModule) const
+{
+	configModule["DefaultScene"] = defaultScene;
+	return true;
+}
+
+bool SceneManager::LoadConfiguration(Json& configModule)
+{
+	defaultScene = configModule["DefaultScene"];
+	return true;
+}
+
+bool SceneManager::InspectorDraw()
+{
+	if (ImGui::CollapsingHeader("SceneManager##"))
+	{
+		ImGui::InputText("Default Scene: ", &defaultScene);
+	}
+	return true;
+}
+
 bool SceneManager::PrepareUpdate()
 {
 	bool ret = true;
@@ -178,16 +204,6 @@ GameState SceneManager::GetGameState()
 	return runtimeState;
 }
 
-float SceneManager::GetGameDt()
-{
-	return gameDt;
-}
-
-float SceneManager::GetGameTime()
-{
-	return time;
-}
-
 void SceneManager::OnPlay()
 {
 	runtimeState = GameState::PLAYING;
@@ -208,6 +224,11 @@ void SceneManager::OnPause()
 {
 	runtimeState = GameState::PAUSED;
 	gameClockSpeed = 0.0f;
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnPause();
+	}
 }
 
 void SceneManager::OnStop()
@@ -221,18 +242,32 @@ void SceneManager::OnStop()
 	Importer::GetInstance()->sceneImporter->Load(currentScene,currentScene->name.c_str());
 	// Load the scene we saved before in .json
 	//LoadScene(currentScene, "SceneIntro");
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnStop();
+	}
 }
 
 void SceneManager::OnResume()
 {
 	runtimeState = GameState::PLAYING;
 	gameClockSpeed = timeScale;
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnResume();
+	}
 }
 
 void SceneManager::OnTick()
 {
 	runtimeState = GameState::TICK;
 	gameClockSpeed = timeScale;
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnTick();
+	}
 }
 
 void SceneManager::OnClick(SDL_Event event)
@@ -242,31 +277,33 @@ void SceneManager::OnClick(SDL_Event event)
 void SceneManager::GuizmoTransformation()
 {
 	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+	if (!selectedGameObject->GetComponent<ComponentTransform>()) return;
+
 	if (selectedGameObject == nullptr || selectedGameObject->GetUID() == -1)
 		return;
 
-	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->viewMatrix.Transposed();
-	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
-	ComponentTransform* cTrans = selectedGameObject->GetComponent<ComponentTransform>();
-	if (cTrans == nullptr) return;
-	float4x4 objectTransform = cTrans->GetGlobalTransform().Transposed();
+	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ViewMatrix();
+	viewMatrix.Transpose();
 
-	float tempTransform[16];
-	memcpy(tempTransform, objectTransform.ptr(), 16 * sizeof(float));
+	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
+	float4x4 modelProjection = selectedGameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Transposed();
+
+	//ImGuizmo::SetDrawlist();
 
 	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
-	ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, currentGizmoOperation != ImGuizmo::OPERATION::SCALE ? currentGizmoMode : ImGuizmo::MODE::LOCAL, tempTransform);
+
+	float tempTransform[16];
+	memcpy(tempTransform, modelProjection.ptr(), 16 * sizeof(float));
 	
+	ImGuizmo::MODE finalMode = (currentGizmoOperation == ImGuizmo::OPERATION::SCALE ? ImGuizmo::MODE::LOCAL : currentGizmoMode);
+	ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform);
 
 	if (ImGuizmo::IsUsing())
 	{
 		float4x4 newTransform;
 		newTransform.Set(tempTransform);
-		if (newTransform.IsFinite())
-		{
-			objectTransform = newTransform.Transposed();
-			selectedGameObject->GetComponent<ComponentTransform>()->UpdateGuizmoParameters(objectTransform);
-		}
+		modelProjection = newTransform.Transposed();
+		selectedGameObject->GetComponent<ComponentTransform>()->SetGlobalTransform(modelProjection);
 	}
 }
 

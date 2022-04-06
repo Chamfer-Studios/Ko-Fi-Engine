@@ -131,6 +131,18 @@
     <Filter Include="Source\Importers">
       <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Dialogue">
+      <UniqueIdentifier>{d8aab11d-2215-4e32-83a2-dcd4ccc3d9ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Helpers\Physics">
+      <UniqueIdentifier>{5e576769-6fa5-4e63-9e84-299ec3eb37f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Players">
+      <UniqueIdentifier>{b60b2e15-ad68-4868-b194-05cbcd60c8cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemies">
+      <UniqueIdentifier>{eaea32bb-f20e-4cce-a1a5-b570cd06a4a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -370,6 +382,9 @@
     <ClCompile Include="Source\TextEditor.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ComponentRigidBody.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Source\ComponentParticle.cpp">
       <Filter>Source\GameObject\Components\Particles</Filter>
     </ClCompile>
@@ -472,6 +487,9 @@
     <ClCompile Include="Source\PanelSettings.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c">
+      <Filter>Libs\SDL_ttf</Filter>
+    </ClCompile>
     <ClCompile Include="Source\ParticleResource.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
@@ -490,7 +508,7 @@
     <ClCompile Include="Source\R_Track.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Animation.cpp">
+    <ClCompile Include="Source\R_Animation.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\AnimatorClip.cpp">
@@ -562,8 +580,6 @@
     <ClCompile Include="Source\ComponentFollowPath.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\par_shapes.cpp" />
-    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -589,6 +605,24 @@
       <Filter>Libs\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="Source\par_shapes.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PieShape.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentLightSource.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_Collider.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SimulationEventCallback.cpp">
+      <Filter>Source\Helpers\Physics</Filter>
+      </ClCompile>
+    <ClCompile Include="Source\Channel.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1547,6 +1581,9 @@
     <ClInclude Include="Source\External\PhysX_4.1\include\foundation\windows\PxWindowsIntrinsics.h">
       <Filter>Libs\PhysX</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ComponentRigidBody.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Iterable.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
@@ -1646,7 +1683,7 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Animation.h">
+    <ClInclude Include="Source\R_Animation.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimatorClip.h">
@@ -1686,6 +1723,24 @@
       <Filter>Libs\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PieShape.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentLightSource.h">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Source\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SimulationEventCallback.h">
+      <Filter>Source\Helpers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Channel.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1767,17 +1822,48 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua">
+    <None Include="Ko-Fi\Assets\Scripts\Knife.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\EnemyPathfinder.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua">
+      <Filter>Scripts\Dialogue</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua">
+      <Filter>Scripts\Players</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua">
+      <Filter>Scripts\Players</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua">
+      <Filter>Scripts\Players</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
+      <Filter>Scripts\Enemies</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_1.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_3.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\UI_SFX.lua" />
   </ItemGroup>
 </Project>

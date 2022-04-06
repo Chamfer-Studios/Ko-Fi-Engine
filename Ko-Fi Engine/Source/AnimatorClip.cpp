@@ -1,7 +1,7 @@
 #include "AnimatorClip.h"
 #include <string>
 
-class Animation;
+class R_Animation;
 
 typedef unsigned int uint;
 
@@ -23,7 +23,7 @@ AnimatorClip::AnimatorClip() :
 
 }
 
-AnimatorClip::AnimatorClip(const Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop) :
+AnimatorClip::AnimatorClip(const R_Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop) :
 	clipAnim(animation),
 	name(name),
 	start(start),

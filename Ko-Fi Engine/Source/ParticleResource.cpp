@@ -9,22 +9,19 @@ ParticleResource::ParticleResource(const char* resourceName)
 
 ParticleResource::~ParticleResource()
 {
-	if (emitters.size() > 0)
-	{
-		for (std::vector<Emitter*>::iterator it = emitters.begin(); it < emitters.end(); ++it)
-		{
-			it = emitters.erase(it);
-		}
-	}
-	name.clear();
+	
 }
 
 bool ParticleResource::CleanUp()
 {
-	for (std::vector<Emitter*>::iterator it = emitters.begin(); it < emitters.end(); ++it)
+	for (std::vector<Emitter*>::iterator it = emitters.begin(); it != emitters.end(); ++it)
 	{
-		it = emitters.erase(it);
+		emitters.erase(it);
+		if (emitters.empty())
+			break;
 	}
+	emitters.clear();
+	emitters.shrink_to_fit();
 	name.clear();
 	return true;
 }

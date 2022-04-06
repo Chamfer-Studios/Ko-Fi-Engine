@@ -7,6 +7,7 @@
 #include "Light.h"
 #include "SDL_video.h"
 #include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/float3.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
 
@@ -16,6 +17,7 @@ class GameObject;
 typedef unsigned int GLenum;
 class ComponentMesh;
 class Texture;
+class PieShape;
 
 struct ParticleRenderer
 {
@@ -44,18 +46,26 @@ public:
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	// ------------------------------------------------------------------
+	
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	// Method to receive and manage events
 	//Renderer Set Up Functions
 	bool InitOpenGL();
 	bool InitGlew();
 	void SetGLFlag(GLenum flag, bool setTo);
 	void PassProjectionAndViewToRenderer();
+	void PassPreviewProjectionAndViewToRenderer();
 	void RecalculateProjectionMatrix();
 	
 	//Render Functions
 	void RenderScene();
+	void RenderPreviewScene();
 	void RenderBoundingBox(ComponentMesh* cMesh);
 	void RenderMeshes(GameObject* go);
+	void RenderPreviewMeshes(GameObject* go);
 
 	void RenderUI(GameObject* go);
 
@@ -64,6 +74,9 @@ public:
 	bool GetVsync() const;
 	void SetVsync(bool vsync);
 	void OnResize();
+
+	void DrawCylinder(float4x4 transform);
+	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length);
 
 	// Debug ray for mouse picking
 	void DrawRay();
@@ -75,9 +88,11 @@ public:
 	void PrepareFrameBuffers();
 	void UnbindFrameBuffers();
 	void ResizeFrameBuffers(int width, int height);
+	void ResizePreviewFrameBuffers(int width, int height);
 	void ReleaseFrameBuffers();
 
 	uint GetTextureBuffer();
+	uint GetPreviewTextureBuffer();
 	void AddParticle(Texture& tex, Color color, const float4x4 transform, float distanceToCamera);
 	void RenderParticle(ParticleRenderer* particle);
 	void RenderAllParticles();
@@ -98,8 +113,11 @@ private:
 
 	// Viewport frame buffer
 	uint frameBuffer = 0;
+	uint previewFrameBuffer = 0;
 	uint renderBufferoutput = 0;
+	uint renderPreviewBufferoutput = 0;
 	uint textureBuffer = 0;
+	uint previewTextureBuffer = 0;
 	bool show_viewport_window = true;
 
 	//Particle Map

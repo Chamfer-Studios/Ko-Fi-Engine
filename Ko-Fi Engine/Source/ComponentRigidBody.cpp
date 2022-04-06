@@ -1,6 +1,6 @@
 #include "ComponentRigidBody.h"
 
-ComponentRigidBody::ComponentRigidBody(GameObject* parent) : Component(parent)
+ComponentRigidBody::ComponentRigidBody(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
 
@@ -16,7 +16,7 @@ ComponentRigidBody::~ComponentRigidBody()
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
 		dynamicBody->release();
-	}	
+	}
 	if (staticBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
@@ -26,7 +26,7 @@ ComponentRigidBody::~ComponentRigidBody()
 
 bool ComponentRigidBody::CleanUp()
 {
-	if (dynamicBody)
+	/*if (dynamicBody)
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(dynamicBody);
 		dynamicBody->release();
@@ -35,7 +35,7 @@ bool ComponentRigidBody::CleanUp()
 	{
 		owner->GetEngine()->GetPhysics()->DeleteActor(staticBody);
 		staticBody->release();
-	}
+	}*/
 	return true;
 }
 
@@ -52,9 +52,10 @@ bool ComponentRigidBody::Update(float dt)
 			physx::PxVec3 lVel = dynamicBody->getLinearVelocity();
 			physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
 			// Speed limiters
-			if (lVel.y > 30.0f) lVel.y = 30.0f;
-			linearVel = { lVel.x, lVel.y, lVel.z };
-			angularVel = { aVel.x, aVel.y, aVel.z };
+			if (lVel.y > 30.0f)
+				lVel.y = 30.0f;
+			linearVel = {lVel.x, lVel.y, lVel.z};
+			angularVel = {aVel.x, aVel.y, aVel.z};
 
 			// Check each frame if rigid body attributes have a pending update
 			if (hasUpdated)
@@ -130,10 +131,11 @@ void ComponentRigidBody::UpdatePhysicsValues()
 // Update rigid body by the owner's transform
 bool ComponentRigidBody::TransformUpdatesRigidBody()
 {
-	physx::PxRigidActor* body = nullptr;
+	physx::PxRigidActor *body = nullptr;
 	if (!isStatic)
 		body = dynamicBody;
-	else body = staticBody;
+	else
+		body = staticBody;
 
 	if (!body)
 		return false;
@@ -141,7 +143,7 @@ bool ComponentRigidBody::TransformUpdatesRigidBody()
 	owner->GetEngine()->GetPhysics()->DeleteActor(body);
 
 	float3 pos = owner->GetTransform()->GetPosition();
-	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 
 	physx::PxTransform pxTransform;
 	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
@@ -155,10 +157,11 @@ bool ComponentRigidBody::TransformUpdatesRigidBody()
 
 bool ComponentRigidBody::RigidBodyUpdatesTransform()
 {
-	physx::PxRigidActor* body = nullptr;
+	physx::PxRigidActor *body = nullptr;
 	if (!isStatic)
 		body = dynamicBody;
-	else body = staticBody;
+	else
+		body = staticBody;
 
 	if (!body)
 		return false;
@@ -170,7 +173,7 @@ bool ComponentRigidBody::RigidBodyUpdatesTransform()
 	float3 scale = owner->GetTransform()->GetScale();
 
 	owner->GetTransform()->SetPosition(position);
-	owner->GetTransform()->SetRotation(rot);
+	owner->GetTransform()->SetRotationEuler(rot);
 	owner->GetTransform()->SetScale(scale);
 
 	return true;
@@ -186,6 +189,17 @@ void ComponentRigidBody::Set2DVelocity(float2 vel)
 	}
 }
 
+void ComponentRigidBody::SetRigidBodyPos(float3 pos)
+{
+	physx::PxTransform transform;
+	transform.p = physx::PxVec3(pos.x, pos.y, pos.z);
+	math::Quat quat = owner->GetComponent<ComponentTransform>()->GetRotationQuat();
+	transform.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
+
+	GetRigidBody()->setGlobalPose(transform); 
+	hasUpdated = true; 
+}
+
 void ComponentRigidBody::StopMovement()
 {
 	if (isStatic)
@@ -195,13 +209,13 @@ void ComponentRigidBody::StopMovement()
 	dynamicBody->setAngularVelocity(physx::PxVec3(0, 0, 0));
 
 	physx::PxVec3 lVel = dynamicBody->getLinearVelocity();
-	linearVel = { lVel.x, lVel.y, lVel.z };
+	linearVel = {lVel.x, lVel.y, lVel.z};
 	physx::PxVec3 aVel = dynamicBody->getAngularVelocity();
-	angularVel = { aVel.x, aVel.y, aVel.z };
+	angularVel = {aVel.x, aVel.y, aVel.z};
 }
 
-// Serialization 
-void ComponentRigidBody::Save(Json& json) const
+// Serialization
+void ComponentRigidBody::Save(Json &json) const
 {
 	json["type"] = "rigidBody";
 
@@ -212,9 +226,9 @@ void ComponentRigidBody::Save(Json& json) const
 	json["mass"] = mass;
 	json["density"] = density;
 
-	json["linear_velocity"] = { linearVel.x, linearVel.y, linearVel.z };
+	json["linear_velocity"] = {linearVel.x, linearVel.y, linearVel.z};
 	json["linear_damping"] = linearDamping;
-	json["angular_velocity"] = { angularVel.x, angularVel.y, angularVel.z };
+	json["angular_velocity"] = {angularVel.x, angularVel.y, angularVel.z};
 	json["angular_damping"] = angularDamping;
 
 	json["freeze_position_x"] = freezePositionX;
@@ -224,7 +238,7 @@ void ComponentRigidBody::Save(Json& json) const
 	json["freeze_rotation_y"] = freezeRotationY;
 	json["freeze_rotation_z"] = freezeRotationZ;
 }
-void ComponentRigidBody::Load(Json& json)
+void ComponentRigidBody::Load(Json &json)
 {
 	isStatic = json.at("is_static");
 	isKinematic = json.at("is_kinematic");
@@ -251,26 +265,29 @@ void ComponentRigidBody::Load(Json& json)
 
 	if (!isStatic)
 		CreateDynamic();
-	else CreateStatic();
+	else
+		CreateStatic();
 
 	hasUpdated = true;
 }
 
 // On inspector draw
-bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
+bool ComponentRigidBody::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true;
 
 	if (isStatic)
 	{
-		if (ImGui::CollapsingHeader("Static body"))
+		if (ImGui::CollapsingHeader("Static body", ImGuiTreeNodeFlags_AllowItemOverlap))
 		{
+			DrawDeleteButton(owner, this);
+
 			// ---------------------------------------------------------------------------------
 			if (ImGui::Button("Make Dynamic"))
 				SetDynamic();
 			ImGui::Separator();
 			// ---------------------------------------------------------------------------------
-			
+
 			// ---------------------------------------------------------------------------------
 			if (ImGui::TreeNodeEx("Constraints"))
 			{
@@ -297,10 +314,15 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			}
 			// ---------------------------------------------------------------------------------
 		}
-	}else 
+		else
+			DrawDeleteButton(owner, this);
+	}
+	else
 	{
-		if (ImGui::CollapsingHeader("Rigid body"))
+		if (ImGui::CollapsingHeader("Rigid body", ImGuiTreeNodeFlags_AllowItemOverlap))
 		{
+			DrawDeleteButton(owner, this);
+
 			// ---------------------------------------------------------------------------------
 			if (ImGui::Button("Make Static"))
 				SetStatic();
@@ -363,33 +385,39 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser* chooser)
 			// ---------------------------------------------------------------------------------
 			if (ImGui::TreeNodeEx("Velocity info (read only)"))
 			{
-				ImGui::Text("Speed");
-				ImGui::SameLine();
 				float speed = GetSpeed();
 				ImGui::DragFloat("##speed", &speed, 0.1f, ImGuiInputTextFlags_ReadOnly);
-				ImGui::Text("Linear Velocity");
 				ImGui::SameLine();
+				ImGui::Text("Speed");
+
 				float3 vel2 = GetLinearVelocity();
-				float vel[3] = { vel2.x, vel2.y, vel2.z };
+				float vel[3] = {vel2.x, vel2.y, vel2.z};
 				ImGui::InputFloat3("##linearvelinput", vel, "%.3f", ImGuiInputTextFlags_ReadOnly);
-				ImGui::Text("Linear Damping");
 				ImGui::SameLine();
+				ImGui::Text("Linear Velocity");
+
 				float newLinDamp = GetLinearDamping();
 				ImGui::DragFloat("##lineardamping", &newLinDamp, 0.1f, ImGuiInputTextFlags_ReadOnly);
-				ImGui::Text("Angular Velocity");
 				ImGui::SameLine();
+				ImGui::Text("Linear Damping");
+
 				vel2 = GetAngularVelocity();
-				float angVel[3] = { vel2.x, vel2.y, vel2.z };
+				float angVel[3] = {vel2.x, vel2.y, vel2.z};
 				ImGui::InputFloat3("##angularvelinput", angVel, "%.3f", ImGuiInputTextFlags_ReadOnly);
-				ImGui::Text("Angular Damping");
 				ImGui::SameLine();
+				ImGui::Text("Angular Velocity");
+
 				float newAngDamp = GetAngularDamping();
 				ImGui::DragFloat("##angulardamping", &newAngDamp, 0.1f, ImGuiInputTextFlags_ReadOnly);
+				ImGui::SameLine();
+				ImGui::Text("Angular Damping");
 
 				ImGui::TreePop();
 			}
 			// ---------------------------------------------------------------------------------
 		}
+		else
+			DrawDeleteButton(owner, this);
 	}
 
 	return ret;
@@ -410,7 +438,7 @@ void ComponentRigidBody::SetStatic()
 
 		// Create static body
 		float3 pos = owner->GetTransform()->GetPosition();
-		Quat rot = Quat::FromEulerXYX(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+		Quat rot = Quat::FromEulerXYX(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 		physx::PxTransform pxTransform;
 		pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
 		pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
@@ -460,7 +488,7 @@ void ComponentRigidBody::SetDynamic()
 
 		// Create dynamic object
 		float3 pos = owner->GetTransform()->GetPosition();
-		Quat rot = Quat::FromEulerXYX(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+		Quat rot = Quat::FromEulerXYX(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 		physx::PxTransform pxTransform;
 		pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
 		pxTransform.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
@@ -502,7 +530,7 @@ void ComponentRigidBody::CreateDynamic()
 	hasUpdated = true;
 
 	float3 pos = owner->GetTransform()->GetPosition();
-	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 
 	physx::PxTransform pxTransform;
 	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);
@@ -525,7 +553,7 @@ void ComponentRigidBody::CreateStatic()
 	hasUpdated = true;
 
 	float3 pos = owner->GetTransform()->GetPosition();
-	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotation().x, owner->GetTransform()->GetRotation().y, owner->GetTransform()->GetRotation().z);
+	Quat rot = Quat::FromEulerXYZ(owner->GetTransform()->GetRotationEuler().x, owner->GetTransform()->GetRotationEuler().y, owner->GetTransform()->GetRotationEuler().z);
 
 	physx::PxTransform pxTransform;
 	pxTransform.p = physx::PxVec3(pos.x, pos.y, pos.z);

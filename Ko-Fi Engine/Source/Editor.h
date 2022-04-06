@@ -57,9 +57,19 @@ public:
 	void OnNotify(const Event& event);
 	void OnPlay();
 
+	// Engine config serialization --------------------------------------
+	bool SaveConfiguration(Json& configModule) const override;
+	bool LoadConfiguration(Json& configModule) override;
+	// ------------------------------------------------------------------
+
+	// Engine config inspector draw -------------------------------------
+	bool InspectorDraw() override;
+	// ------------------------------------------------------------------
+
 	void AddPanel(Panel* panel);
 	void RemovePanel(Panel* panel);
 	PanelChooser* GetPanelChooser();
+	PanelHierarchy* GetPanelHierarchy() { return panelHierarchy; };
 	void Markdown(const std::string& markdown_);
 	void MarkdownExample();
 	void UpdatePanelsState();
@@ -83,7 +93,9 @@ public:
 public:
 	PanelsState panelsState;
 	ImVec2 lastViewportSize;
+	ImVec2 lastCameraViewportSize;
 	ImVec2 viewportSize;
+	ImVec2 cameraViewportSize;
 	ImVec2 scenePanelOrigin;
 	ImVec2 mouseScenePosition;
 

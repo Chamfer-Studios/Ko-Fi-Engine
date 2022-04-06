@@ -26,14 +26,7 @@ bool PanelNavigation::PreUpdate()
 
 bool PanelNavigation::Update()
 {
-	ImGui::Begin("Navigator");
-
-	if (ImGui::Button("Bake Navmesh")) {
-		editor->engine->GetNavigation()->ComputeNavmesh();
-		editor->engine->GetNavigation()->PrepareDetour();
-	}
-
-	ImGui::End();
+	editor->engine->GetNavigation()->OnGui();
 
 	return true;
 }

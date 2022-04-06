@@ -25,7 +25,6 @@ public:
 	//Temp Function to load file and directory icons
 	void LoadIcons(TextureIcon& texture,const char* path);
 
-private:
 	std::string FileExistsScene(std::string fileName, int i);
 	std::string FileExistsMaterial(std::string fileName, int i);
 	std::string FileExsistsShader(std::string fileName, int i);

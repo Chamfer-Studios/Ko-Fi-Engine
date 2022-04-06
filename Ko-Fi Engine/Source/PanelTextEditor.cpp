@@ -84,7 +84,7 @@ void PanelTextEditor::RenderWindow(bool* toggleEditText)
 void PanelTextEditor::LoadFile(std::string path,std::string ext)
 {
 	if (path.empty()) {
-		editor->GetPanelChooser()->OpenPanel("TextEditor", "glsl");
+		editor->GetPanelChooser()->OpenPanel("TextEditor", "glsl", {"glsl"});
 	}
 	else {
 		this->filePath = path;

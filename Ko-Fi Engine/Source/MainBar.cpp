@@ -17,6 +17,8 @@
 #include "ComponentButton.h"
 #include "ComponentText.h"
 #include "ComponentCamera.h"
+#include "Material.h"
+#include "ComponentMesh.h"
 
 MainBar::MainBar(Editor* editor)
 {
@@ -49,12 +51,12 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Import Model"))
 			{
-				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx");
+				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
 			}
 			if (ImGui::MenuItem("Save Scene"))
 			{
 				saveAsSceneName = editor->engine->GetSceneManager()->GetCurrentScene()->name.c_str();
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName.c_str());
+				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
 			}
 			if (ImGui::MenuItem("Save Scene As"))
 			{
@@ -63,7 +65,7 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Load Scene"))
 			{
-				editor->GetPanelChooser()->OpenPanel("LoadScene", "json");
+				editor->GetPanelChooser()->OpenPanel("LoadScene", "json", { "json" });
 			}
 			if (ImGui::MenuItem("Settings"))
 			{
@@ -71,15 +73,8 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
-				std::vector<GameObject*> gameObjectList = editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
-				for (GameObject* gameObject : gameObjectList)
-				{
-					RELEASE(gameObject);
-				}
-				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.clear();
-				editor->panelGameObjectInfo.selectedGameObjectID = -1;
-				editor->engine->GetSceneManager()->GetCurrentScene()->rootGo = new GameObject(-1, editor->engine, "Root");
-				editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.push_back(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo);
+				editor->engine->GetSceneManager()->GetCurrentScene()->DeleteCurrentScene();
+			
 			}
 			if (ImGui::MenuItem("Quit"))
 			{
@@ -95,12 +90,8 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Create Camera"))
 			{
-				//GameObject* camera = Importer::GetInstance()->ImportModel("Assets/Models/camera.fbx");
-				//camera->CreateComponent<ComponentCamera>();
-
 				GameObject* camera = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("camera");
 				camera->CreateComponent<ComponentCamera>();
-
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
@@ -138,24 +129,116 @@ bool MainBar::Update()
 					go->CreateComponent<ComponentCanvas>();
 				}
 				if (ImGui::MenuItem("Image")) {
+					//create canvas first 
+					bool canvasExists = false;
+					GameObject* lastCanvas = nullptr;
+					for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+					{
+						if (goit->GetComponent<ComponentCanvas>() != nullptr)
+						{
+							lastCanvas = goit;
+							canvasExists = true;
+							break;
+						}
+					}
+
+					GameObject* newCanvas = nullptr;
+					if (canvasExists == false)
+					{
+						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+						newCanvas->SetName("Canvas");
+						newCanvas->CreateComponent<ComponentCanvas>();
+					}
+
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Image");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentImage>();
+
+					if (canvasExists == true && lastCanvas != nullptr)
+					{
+						lastCanvas->AttachChild(go);
+					}
+					else if(newCanvas != nullptr)
+					{
+						newCanvas->AttachChild(go);
+					}
+					
 					//go->CreateComponent<ComponentMaterial>();
 				}
 				if (ImGui::MenuItem("Button")) {
+
+					bool canvasExists = false;
+					GameObject* lastCanvas = nullptr;
+					for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+					{
+						if (goit->GetComponent<ComponentCanvas>() != nullptr)
+						{
+							lastCanvas = goit;
+							canvasExists = true;
+							break;
+						}
+					}
+
+					GameObject* newCanvas = nullptr;
+					if (canvasExists == false)
+					{
+						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+						newCanvas->SetName("Canvas");
+						newCanvas->CreateComponent<ComponentCanvas>();
+					}
+
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Button");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentButton>();
 					//go->CreateComponent<ComponentMaterial>();
+
+					if (canvasExists == true && lastCanvas != nullptr)
+					{
+						lastCanvas->AttachChild(go);
+					}
+					else if (newCanvas != nullptr)
+					{
+						newCanvas->AttachChild(go);
+					}
 				}
 				if (ImGui::MenuItem("Text")) {
+
+					//create canvas first 
+					bool canvasExists = false;
+					GameObject* lastCanvas = nullptr;
+					for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+					{
+						if (goit->GetComponent<ComponentCanvas>() != nullptr)
+						{
+							lastCanvas = goit;
+							canvasExists = true;
+							break;
+						}
+					}
+
+					GameObject* newCanvas = nullptr;
+					if (canvasExists == false)
+					{
+						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+						newCanvas->SetName("Canvas");
+						newCanvas->CreateComponent<ComponentCanvas>();
+					}
+
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Text");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentText>();
+
+					if (canvasExists == true && lastCanvas != nullptr)
+					{
+						lastCanvas->AttachChild(go);
+					}
+					else if (newCanvas != nullptr)
+					{
+						newCanvas->AttachChild(go);
+					}
 					//go->CreateComponent<ComponentMaterial>();
 				}
 				ImGui::EndMenu();
@@ -213,7 +296,37 @@ void MainBar::ChoosersListener()
 		const char* file = editor->GetPanelChooser()->OnChooserClosed();
 		if (file != nullptr)
 		{
-			Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+	#pragma omp parallel private()
+			{
+				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), Importer::GetInstance()->GetNameFromPath(file).c_str());
+			}
+			
 		}
+	}
+}
+
+void MainBar::ThreadLoadScene()
+{
+}
+
+void MainBar::SafeUIPlacing(GameObject* go)
+{
+	bool canvasExists = false;
+	for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (goit->GetComponent<ComponentCanvas>() != nullptr)
+		{
+			goit->AttachChild(go);
+			canvasExists = true;
+			break;
+		}
+	}
+
+	if (!canvasExists)
+	{
+		/*GameObject* newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
+		newCanvas->SetName("Canvas");
+		newCanvas->CreateComponent<ComponentCanvas>();
+		newCanvas->AttachChild(go);*/
 	}
 }

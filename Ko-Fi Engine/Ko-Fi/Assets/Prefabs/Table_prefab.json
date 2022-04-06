@@ -1,0 +1,70 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                11.0,
+                112.0
+            ],
+            "rotation": [
+                -0.7071068286895752,
+                0.0,
+                0.0,
+                0.7071067094802856
+            ],
+            "scale": [
+                10.0,
+                19.9998722076416,
+                0.9999959468841553
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "draw_face_normals": false,
+            "draw_vertex_normals": false,
+            "path": "Library/Meshes/Table.sugar",
+            "shape_type": 0,
+            "type": "mesh"
+        },
+        {
+            "active": true,
+            "color": [
+                0.800000011920929,
+                0.800000011920929,
+                0.800000011920929,
+                1.0
+            ],
+            "shader_path": "Assets/Shaders/default_shader.glsl",
+            "texture_path": "Assets/Textures/Blue.png",
+            "type": "material",
+            "uniforms": [
+                {
+                    "name": "albedoTint",
+                    "type": 35666,
+                    "value": {
+                        "w": 1.0,
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            ]
+        },
+        {
+            "active": true,
+            "collider_type": 3,
+            "is_trigger": false,
+            "type": "collider"
+        }
+    ],
+    "isPrefab": true,
+    "name": "Table"
+}
