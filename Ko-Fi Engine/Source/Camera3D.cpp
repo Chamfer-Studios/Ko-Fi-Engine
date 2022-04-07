@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
-#include "ComponentScript.h"
+#include "C_Script.h"
 #include "Renderer3D.h"
 #include "PanelViewport.h"
 #include "Scripting.h"

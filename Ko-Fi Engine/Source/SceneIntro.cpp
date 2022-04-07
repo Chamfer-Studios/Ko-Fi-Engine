@@ -12,7 +12,7 @@
 #include "C_Material.h"
 #include "C_Camera.h"
 #include "ComponentParticle.h"
-#include "ComponentScript.h"
+#include "C_Script.h"
 #include "C_Collider.h"
 #include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "C_Transform.h"
@@ -144,12 +144,12 @@ bool SceneIntro::PostUpdate(float dt)
 			knife->GetTransform()->SetRotationEuler(rot);
 
 			C_Mesh *componentMesh = knife->CreateComponent<C_Mesh>();
-			Mesh *mesh = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
+			Mesh *mesh = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			C_Material *cMaterial = knife->CreateComponent<C_Material>();
 			//Importer::GetInstance()->textureImporter->Import(nullptr, &C_Material->texture);
-			Material *material = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
+			Material *material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
 			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 			cMaterial->SetMaterial(material);
 
@@ -159,11 +159,11 @@ bool SceneIntro::PostUpdate(float dt)
 			collider->SetFilter("projectile");
 			collider->SetIsTrigger(true);
 
-			ComponentScript *knifeScript = (ComponentScript *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<ComponentScript>();
+			C_Script *knifeScript = (C_Script *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
 			knifeScript->scripts.push_back(new ScriptHandler(knife));
 			knifeScript->scripts[0]->path = "Assets/Scripts/Knife.lua";
 			knifeScript->ReloadScript(knifeScript->scripts[0]);
-			GameObject *target = parent->GetComponent<ComponentScript>()->scripts[0]->handler->lua["target"];
+			GameObject *target = parent->GetComponent<C_Script>()->scripts[0]->handler->lua["target"];
 			knifeScript->scripts[0]->handler->lua["target"] = target;
 			knifeScript->scripts[0]->handler->lua["SetDestination"]();
 		}

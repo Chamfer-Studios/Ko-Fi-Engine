@@ -124,7 +124,7 @@
     <ClCompile Include="Source\ComponentImage.cpp" />
     <ClCompile Include="Source\C_LightSource.cpp" />
     <ClCompile Include="Source\C_Material.cpp" />
-    <ClCompile Include="Source\ComponentScript.cpp" />
+    <ClCompile Include="Source\C_Script.cpp" />
     <ClCompile Include="Source\ComponentText.cpp" />
     <ClCompile Include="Source\C_Info.cpp" />
     <ClCompile Include="Source\C_RigidBody.cpp" />
@@ -298,7 +298,7 @@
     <ClInclude Include="Source\C_Mesh.h" />
     <ClInclude Include="Source\ComponentRenderedUI.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
-    <ClInclude Include="Source\ComponentScript.h" />
+    <ClInclude Include="Source\C_Script.h" />
     <ClInclude Include="Source\ComponentText.h" />
     <ClInclude Include="Source\C_Transform.h" />
     <ClInclude Include="Source\ComponentTransform2D.h" />

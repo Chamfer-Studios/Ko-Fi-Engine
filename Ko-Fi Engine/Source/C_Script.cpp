@@ -1,5 +1,5 @@
 #include "Scripting.h"
-#include "ComponentScript.h"
+#include "C_Script.h"
 #include "Engine.h"
 
 #include "GameObject.h"
@@ -18,23 +18,23 @@
 #include "MathGeoLib/Math/float2.h"
 #include "PanelHierarchy.h"
 
-ComponentScript::ComponentScript(GameObject *parent) : Component(parent)
+C_Script::C_Script(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
 }
 
-ComponentScript::~ComponentScript()
+C_Script::~C_Script()
 {
 	CleanUp();
 }
 
-bool ComponentScript::Start()
+bool C_Script::Start()
 {
 	bool ret = true;
 	return ret;
 }
 
-bool ComponentScript::CleanUp()
+bool C_Script::CleanUp()
 {
 	for (auto s : scripts) {
 		s->handler->CleanUp();
@@ -46,7 +46,7 @@ bool ComponentScript::CleanUp()
 	return true;
 }
 
-bool ComponentScript::Update(float dt)
+bool C_Script::Update(float dt)
 {
 	for (auto s : scripts) {
 		s->lua_update = sol::protected_function(s->handler->lua["Update"]);
@@ -74,7 +74,7 @@ bool ComponentScript::Update(float dt)
 	return true;
 }
 
-bool ComponentScript::PostUpdate(float dt)
+bool C_Script::PostUpdate(float dt)
 {
 	for (auto s : scripts) {
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
@@ -89,7 +89,7 @@ bool ComponentScript::PostUpdate(float dt)
 	return true;
 }
 
-bool ComponentScript::OnPlay()
+bool C_Script::OnPlay()
 {
 	bool ret = true;
 
@@ -98,7 +98,7 @@ bool ComponentScript::OnPlay()
 	return ret;
 }
 
-bool ComponentScript::InspectorDraw(PanelChooser *chooser)
+bool C_Script::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
@@ -283,7 +283,7 @@ bool ComponentScript::InspectorDraw(PanelChooser *chooser)
 	return ret;
 }
 
-void ComponentScript::ReloadScript(ScriptHandler* handler)
+void C_Script::ReloadScript(ScriptHandler* handler)
 {
 	if (handler->path == "")
 		return;
@@ -297,7 +297,7 @@ void ComponentScript::ReloadScript(ScriptHandler* handler)
 	handler->isScriptLoaded = true;
 }
 
-void ComponentScript::Save(Json &json) const
+void C_Script::Save(Json &json) const
 {
 	/*json["type"] = "script";
 	json["file_name"] = path;
@@ -388,14 +388,14 @@ void ComponentScript::Save(Json &json) const
 	}*/
 }
 
-void ComponentScript::Load(Json &json)
+void C_Script::Load(Json &json)
 {
 	/*path = json.at("file_name");
 	numScript = json.at("script_number");
 	LoadInspectorVariables(json);*/
 }
 
-void ComponentScript::LoadInspectorVariables(Json &json)
+void C_Script::LoadInspectorVariables(Json &json)
 {
 	/*if (!json.contains("inspector_variables"))
 		return;

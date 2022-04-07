@@ -20,7 +20,7 @@
 #include "ComponentImage.h"
 #include "ComponentButton.h"
 #include "ComponentText.h"
-#include "ComponentScript.h"
+#include "C_Script.h"
 
 #include "PanelViewport.h"
 #include "Log.h"

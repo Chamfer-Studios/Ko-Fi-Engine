@@ -20,7 +20,7 @@
 #include "C_Camera.h"
 #include "C_Collider.h"
 #include "C_RigidBody.h"
-#include "ComponentScript.h"
+#include "C_Script.h"
 #include "ComponentButton.h"
 #include "ComponentCanvas.h"
 #include "ComponentImage.h"
@@ -405,7 +405,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::SCRIPT:
 			{
-				ComponentScript* scriptCmp = (ComponentScript*)component;
+				C_Script* scriptCmp = (C_Script*)component;
 				scriptCmp->Save(jsonComponent);
 				break;
 			}
@@ -629,10 +629,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "script")
 					{
-						ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
+						C_Script* scriptCmp = go->GetComponent<C_Script>();
 						if (scriptCmp == nullptr)
 						{
-							scriptCmp = (ComponentScript*)go->AddComponentByType(ComponentType::SCRIPT);
+							scriptCmp = (C_Script*)go->AddComponentByType(ComponentType::SCRIPT);
 						}
 						scriptCmp->active = true;
 						scriptCmp->Load(jsonCmp);

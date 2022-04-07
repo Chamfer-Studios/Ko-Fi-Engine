@@ -8,7 +8,7 @@
 #include "C_Material.h"
 #include "ComponentParticle.h"
 #include "C_Camera.h"
-#include "ComponentScript.h"
+#include "C_Script.h"
 #include "C_Animator.h"
 #include "C_Collider.h"
 #include "ComponentCanvas.h"
@@ -281,7 +281,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::SCRIPT:
 	{
-		c = this->CreateComponent<ComponentScript>();
+		c = this->CreateComponent<C_Script>();
 		break;
 	}
 	case ComponentType::RIGID_BODY:
@@ -569,7 +569,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::SCRIPT:
 		{
-			ComponentScript* scriptCmp = (ComponentScript*)component;
+			C_Script* scriptCmp = (C_Script*)component;
 			scriptCmp->Save(jsonComponent);
 			break;
 		}
@@ -701,10 +701,10 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "script")
 		{
-			ComponentScript* scriptCmp = this->GetComponent<ComponentScript>();
+			C_Script* scriptCmp = this->GetComponent<C_Script>();
 			if (scriptCmp == nullptr)
 			{
-				scriptCmp = this->CreateComponent<ComponentScript>();
+				scriptCmp = this->CreateComponent<C_Script>();
 			}
 			scriptCmp->active = true;
 			scriptCmp->Load(jsonCmp);
@@ -840,10 +840,10 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "script")
 		{
-			ComponentScript* scriptCmp = this->GetComponent<ComponentScript>();
+			C_Script* scriptCmp = this->GetComponent<C_Script>();
 			if (scriptCmp == nullptr)
 			{
-				scriptCmp = this->CreateComponent<ComponentScript>();
+				scriptCmp = this->CreateComponent<C_Script>();
 			}
 			scriptCmp->active = true;
 			scriptCmp->Load(jsonCmp);

@@ -11,7 +11,7 @@ class KoFiEngine;
 class C_Transform;
 class C_Mesh;
 class C_Info;
-class ComponentScript;
+class C_Script;
 class C_Collider;
 class C_Animator;
 class C_LightSource;

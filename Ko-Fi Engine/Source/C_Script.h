@@ -25,11 +25,11 @@ struct ScriptHandler
 	bool isScriptLoaded = false;
 };
 
-class ComponentScript : public Component 
+class C_Script : public Component 
 {
 public:
-	ComponentScript(GameObject* gameObject);
-	~ComponentScript();
+	C_Script(GameObject* gameObject);
+	~C_Script();
 
 	bool Start() override;
 	bool Update(float dt) override;

@@ -21,7 +21,7 @@
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_RigidBody.h"
-#include "ComponentScript.h"
+#include "C_Script.h"
 #include "ComponentText.h"
 #include "ComponentImage.h"
 #include "ComponentButton.h"
@@ -421,7 +421,7 @@ public:
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			ComponentScript *script = go->GetComponent<ComponentScript>();
+			C_Script *script = go->GetComponent<C_Script>();
 			if (script)
 			{
 				for (auto s : script->scripts) {
@@ -467,7 +467,7 @@ public:
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			ComponentScript *script = go->GetComponent<ComponentScript>();
+			C_Script *script = go->GetComponent<C_Script>();
 			if (script)
 			{
 				for (auto s : script->scripts) {
@@ -514,7 +514,7 @@ public:
 
 	void LuaNewVariable(InspectorVariable *inspectorVariable)
 	{
-		ComponentScript *script = gameObject->GetComponent<ComponentScript>();
+		C_Script *script = gameObject->GetComponent<C_Script>();
 
 		for (auto s : script->scripts) {
 			for (std::vector<InspectorVariable*>::iterator var = s->inspectorVariables.begin(); var != s->inspectorVariables.end(); ++var)
@@ -602,7 +602,7 @@ public:
 			return;
 
 
-		ComponentScript *goScript = go->GetComponent<ComponentScript>();
+		C_Script *goScript = go->GetComponent<C_Script>();
 		if (goScript == nullptr)
 			return;
 
