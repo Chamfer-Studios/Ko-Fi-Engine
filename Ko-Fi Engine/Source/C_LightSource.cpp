@@ -1,11 +1,11 @@
-#include "ComponentLightSource.h"
+#include "C_LightSource.h"
 #include "ComponentTransform.h"
 #include "Globals.h"
 #include "Engine.h"
 #include "SceneManager.h"
 #include "SceneIntro.h"
 
-ComponentLightSource::ComponentLightSource(GameObject* parent) : Component(parent)
+C_LightSource::C_LightSource(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::LIGHT_SOURCE;
 	sourceType = SourceType::DIRECTIONAL;
@@ -14,30 +14,30 @@ ComponentLightSource::ComponentLightSource(GameObject* parent) : Component(paren
 	lightSource->position = owner->GetTransform()->GetPosition();
 }
 
-ComponentLightSource::~ComponentLightSource()
+C_LightSource::~C_LightSource()
 {
 }
 
-bool ComponentLightSource::Start()
+bool C_LightSource::Start()
 {
 	return true;
 }
 
-bool ComponentLightSource::Update(float dt)
+bool C_LightSource::Update(float dt)
 {
 	lightSource->position = owner->GetTransform()->GetPosition();
 
 	return true;
 }
 
-bool ComponentLightSource::CleanUp()
+bool C_LightSource::CleanUp()
 {
 	RELEASE(lightSource);
 
 	return true;
 }
 
-void ComponentLightSource::Save(Json& json) const
+void C_LightSource::Save(Json& json) const
 {
 	json["type"] = "lightSource";
 	json["sourceType"] = (int)sourceType;
@@ -79,7 +79,7 @@ void ComponentLightSource::Save(Json& json) const
 	}
 }
 
-void ComponentLightSource::Load(Json& json)
+void C_LightSource::Load(Json& json)
 {
 	SourceType type = (SourceType)json.at("sourceType");
 
@@ -130,7 +130,7 @@ void ComponentLightSource::Load(Json& json)
 	
 }
 
-bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
+bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
@@ -216,7 +216,7 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-LightSource* ComponentLightSource::ChangeSourceType(SourceType type)
+LightSource* C_LightSource::ChangeSourceType(SourceType type)
 {
 	if (type == sourceType)
 		return this->GetLightSource();
@@ -242,7 +242,7 @@ LightSource* ComponentLightSource::ChangeSourceType(SourceType type)
 			numOfDirectional++;
 		}
 		else
-			CONSOLE_LOG("[ComponentLightSource]: MAX of directional lights reached");
+			CONSOLE_LOG("[C_LightSource]: MAX of directional lights reached");
 		break;
 	}
 	case SourceType::POINT:
@@ -255,7 +255,7 @@ LightSource* ComponentLightSource::ChangeSourceType(SourceType type)
 			numOfPoint++;
 		}
 		else
-			CONSOLE_LOG("[ComponentLightSource]: MAX of point lights reached");
+			CONSOLE_LOG("[C_LightSource]: MAX of point lights reached");
 		break;
 	}
 	case SourceType::FOCAL:
@@ -267,7 +267,7 @@ LightSource* ComponentLightSource::ChangeSourceType(SourceType type)
 			numOfFocal++;
 		}
 		else
-			CONSOLE_LOG("[ComponentLightSource]: MAX of focal lights reached");*/
+			CONSOLE_LOG("[C_LightSource]: MAX of focal lights reached");*/
 		break;
 	}
 	}

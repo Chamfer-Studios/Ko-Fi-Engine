@@ -30,7 +30,7 @@
 #include "C_Camera.h"
 #include "C_Collider.h"
 #include "ComponentRenderedUI.h"
-#include "ComponentLightSource.h"
+#include "C_LightSource.h"
 #include "Material.h"
 #include "PieShape.h"
 
@@ -508,7 +508,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 						//current iteration to string
 						std::string number = std::to_string(i);
 						//get corresponding directional light
-						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
+						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
 						//fill the first variable of the DirLight struct: vec3 direction
 						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
 						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
@@ -542,7 +542,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 						std::string number = std::to_string(i);
 
 						//get corresponding point light
-						PointLight* lightSource = (PointLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
+						PointLight* lightSource = (PointLight*)light->GetComponent<C_LightSource>()->GetLightSource();
 						
 						// --- basic light parameters ---
 						
@@ -580,7 +580,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 				}
 				//for (int i = 0; i < engine->GetSceneManager()->GetCurrentScene()->lights.size(), i++)
 				//{
-				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<ComponentLightSource>()->GetLightSource();
+				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<C_LightSource>()->GetLightSource();
 				//}
 			}
 
@@ -713,7 +713,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 						//current iteration to string
 						std::string number = std::to_string(i);
 						//get corresponding directional light
-						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
+						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
 						//fill the first variable of the DirLight struct: vec3 direction
 						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
 						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
@@ -747,7 +747,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 						std::string number = std::to_string(i);
 
 						//get corresponding point light
-						PointLight* lightSource = (PointLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
+						PointLight* lightSource = (PointLight*)light->GetComponent<C_LightSource>()->GetLightSource();
 
 						// --- basic light parameters ---
 
@@ -785,7 +785,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 				}
 				//for (int i = 0; i < engine->GetSceneManager()->GetCurrentScene()->lights.size(), i++)
 				//{
-				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<ComponentLightSource>()->GetLightSource();
+				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<C_LightSource>()->GetLightSource();
 				//}
 			}
 

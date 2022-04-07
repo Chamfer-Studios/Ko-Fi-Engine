@@ -7,7 +7,7 @@
 #include "QuadTree3D.h"
 #include "RNG.h"
 #include "Resource.h"
-#include "ComponentLightSource.h"
+#include "C_LightSource.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
 
@@ -112,7 +112,7 @@ public:
 
 		for (int i = 0; i < lights.size(); i++)
 		{
-			if (lights[i]->GetComponent<ComponentLightSource>()->GetSourceType() == type)
+			if (lights[i]->GetComponent<C_LightSource>()->GetSourceType() == type)
 			{
 				ret.push_back(lights[i]);
 			}

@@ -23,7 +23,7 @@
 #include "C_AudioSwitch.h"
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
-#include "ComponentLightSource.h"
+#include "C_LightSource.h"
 #include "Material.h"
 
 // Used with a path for the .fbx load
@@ -351,7 +351,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::LIGHT_SOURCE:
 	{
-		c = this->CreateComponent<ComponentLightSource>();
+		c = this->CreateComponent<C_LightSource>();
 		engine->GetSceneManager()->GetCurrentScene()->AddLight(this);
 		break;
 	}

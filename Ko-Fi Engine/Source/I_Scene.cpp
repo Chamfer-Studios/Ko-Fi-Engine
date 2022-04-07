@@ -28,7 +28,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentParticle.h"
 #include "C_Animator.h"
-#include "ComponentLightSource.h"
+#include "C_LightSource.h"
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
@@ -489,7 +489,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::LIGHT_SOURCE:
 			{
-				ComponentLightSource* componentLightSource = (ComponentLightSource*)component;
+				C_LightSource* componentLightSource = (C_LightSource*)component;
 				componentLightSource->Save(jsonComponent);
 				break;
 			}
@@ -768,10 +768,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "lightSource")
 					{
-						ComponentLightSource* componentLightSource = go->GetComponent<ComponentLightSource>();
+						C_LightSource* componentLightSource = go->GetComponent<C_LightSource>();
 						if (componentLightSource == nullptr)
 						{
-							componentLightSource = (ComponentLightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+							componentLightSource = (C_LightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
 						}
 						componentLightSource->active = true;
 						componentLightSource->Load(jsonCmp);

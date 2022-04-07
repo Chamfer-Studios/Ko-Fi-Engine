@@ -54,11 +54,11 @@ struct FocalLight : public LightSource
 
 };
 
-class ComponentLightSource : public Component
+class C_LightSource : public Component
 {
 public:
-	ComponentLightSource(GameObject* parent);
-	~ComponentLightSource();
+	C_LightSource(GameObject* parent);
+	~C_LightSource();
 
 	bool Start();
 	bool Update(float dt);

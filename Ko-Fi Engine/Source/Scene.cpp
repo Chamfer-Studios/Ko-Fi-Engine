@@ -89,7 +89,7 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 		}
 		parent->RemoveChild(gameObject);
 
-		if (gameObject->GetComponent<ComponentLightSource>() != nullptr)
+		if (gameObject->GetComponent<C_LightSource>() != nullptr)
 			RemoveLight(gameObject);
 
 		gameObject->CleanUp();

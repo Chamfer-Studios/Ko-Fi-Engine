@@ -611,7 +611,7 @@
     <ClCompile Include="Source\PieShape.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentLightSource.cpp">
+    <ClCompile Include="Source\C_LightSource.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
@@ -1732,7 +1732,7 @@
     <ClInclude Include="Source\PieShape.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentLightSource.h">
+    <ClInclude Include="Source\C_LightSource.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">

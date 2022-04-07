@@ -14,7 +14,7 @@ class C_Info;
 class ComponentScript;
 class C_Collider;
 class C_Animator;
-class ComponentLightSource;
+class C_LightSource;
 
 enum class Tag 
 {

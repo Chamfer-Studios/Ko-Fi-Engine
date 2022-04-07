@@ -12,7 +12,7 @@
 #include "ComponentTransform.h"
 #include "C_RigidBody.h"
 #include "C_Animator.h"
-#include "ComponentLightSource.h"
+#include "C_LightSource.h"
 
 #include <queue>
 
