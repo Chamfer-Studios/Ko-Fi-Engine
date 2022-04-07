@@ -334,7 +334,7 @@
     <ClCompile Include="Source\PanelInspector.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentMesh.cpp">
+    <ClCompile Include="Source\C_Mesh.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentTransform.cpp">
@@ -1779,7 +1779,7 @@
     <ClInclude Include="Source\I_Scene.h">
       <Filter>Source\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentMesh.h">
+    <ClInclude Include="Source\C_Mesh.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Importer.h">

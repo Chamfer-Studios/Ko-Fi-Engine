@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 #include "C_RigidBody.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 
 #include "Physics.h"
 #include "PxPhysicsAPI.h"
@@ -100,7 +100,7 @@ void C_Collider::CreateBoxCollider()
 
 	if (setFromAABB)
 	{
-		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
+		boxCollSize = owner->GetComponent<C_Mesh>()->GetGlobalAABB().Size();
 		setFromAABB = false;
 	}
 	
@@ -109,7 +109,7 @@ void C_Collider::CreateBoxCollider()
 	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
 	physx::PxTransform localPose;
-	float3 center = owner->GetComponent<ComponentMesh>()->GetLocalAABB().CenterPoint();
+	float3 center = owner->GetComponent<C_Mesh>()->GetLocalAABB().CenterPoint();
 	localPose.p = physx::PxVec3(offset.x, offset.y, offset.z - boxCollSize.z / 2);
 	localPose.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
 	shape->setLocalPose(localPose);

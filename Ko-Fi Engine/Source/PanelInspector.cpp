@@ -5,7 +5,7 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 #include "C_Material.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "ComponentScript.h"
 #include "C_Camera.h"
 #include "C_Info.h"
@@ -46,8 +46,8 @@ bool PanelInspector::Update()
 	{
 		// Current game object (the one we have selected at the moment)
 		GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->GetGameObject(editor->panelGameObjectInfo.selectedGameObjectID);
-		/*if (currentGameObject->GetComponent<ComponentMesh>() != nullptr && (currentGameObject->GetComponent<ComponentMesh>()->GetMesh() != nullptr))
-			currentGameObject->GetComponent<ComponentMesh>()->DrawBoundingBox(currentGameObject->GetComponent<ComponentMesh>()->GetMesh()->localAABB, float3(1.0f, 0.0f, 0.0f));*/
+		/*if (currentGameObject->GetComponent<C_Mesh>() != nullptr && (currentGameObject->GetComponent<C_Mesh>()->GetMesh() != nullptr))
+			currentGameObject->GetComponent<C_Mesh>()->DrawBoundingBox(currentGameObject->GetComponent<C_Mesh>()->GetMesh()->localAABB, float3(1.0f, 0.0f, 0.0f));*/
 
 		if (currentGameObject->isPrefab)
 		{

@@ -7,7 +7,7 @@
 #include "Scene.h"
 
 #include "ComponentWalkable.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "ComponentTransform.h"
 #include "DetourNavMeshBuilder.h"
 #include "DetourNavMeshQuery.h"
@@ -119,7 +119,7 @@ void Navigation::ComputeNavmesh()
 	std::vector<float4x4> transforms;
 
 	for (auto go : walkableObjects) {
-		ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+		C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 		ComponentTransform* cTransform = go->GetComponent<ComponentTransform>();
 		if (cMesh != nullptr && cTransform != nullptr) {
 			meshes.push_back(cMesh->GetMesh());

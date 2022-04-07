@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Globals.h"
 #include "FSDefs.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "Engine.h"
 #include "Importer.h"
 #include "R_Animation.h"
@@ -177,8 +177,8 @@ void C_Animator::Load(Json& json)
 	{
 		std::string path = json.at("path");
 		Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
-		owner->GetComponent<ComponentMesh>()->GetMesh()->SetIsAnimated(true);
-		owner->GetComponent<ComponentMesh>()->GetMesh()->SetAnimation(animation);
+		owner->GetComponent<C_Mesh>()->GetMesh()->SetIsAnimated(true);
+		owner->GetComponent<C_Mesh>()->GetMesh()->SetAnimation(animation);
 
 		if (!json.empty())
 		{

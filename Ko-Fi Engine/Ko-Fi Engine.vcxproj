@@ -261,7 +261,7 @@
     <ClCompile Include="Source\Primitive.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
-    <ClCompile Include="Source\ComponentMesh.cpp" />
+    <ClCompile Include="Source\C_Mesh.cpp" />
     <ClCompile Include="Source\ComponentWalkable.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
@@ -295,7 +295,7 @@
     <ClInclude Include="Source\ComponentImage.h" />
     <ClInclude Include="Source\C_Info.h" />
     <ClInclude Include="Source\C_Material.h" />
-    <ClInclude Include="Source\ComponentMesh.h" />
+    <ClInclude Include="Source\C_Mesh.h" />
     <ClInclude Include="Source\ComponentRenderedUI.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\ComponentScript.h" />

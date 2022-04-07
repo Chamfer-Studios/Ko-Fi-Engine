@@ -19,7 +19,7 @@
 #include "MathGeoLib/Math/Quat.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "C_RigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentText.h"
@@ -172,7 +172,7 @@ public:
 									 "GetParent", &GameObject::GetParent,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
-									 "GetComponentMesh", &GameObject::GetComponent<ComponentMesh>,
+									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
 									 "GetText", &GameObject::GetComponent<ComponentText>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
@@ -220,17 +220,17 @@ public:
 			"up", &C_Camera::up
 			);
 		// Component Mesh
-		lua.new_usertype<ComponentMesh>("ComponentMesh",
+		lua.new_usertype<C_Mesh>("C_Mesh",
 			sol::constructors<void(GameObject *)>(),
-			"Disable", &ComponentMesh::Disable,
-			"Enable", &ComponentMesh::Enable
+			"Disable", &C_Mesh::Disable,
+			"Enable", &C_Mesh::Enable
 			);
 
 		// Component Mesh
-		lua.new_usertype<ComponentMesh>("ComponentMesh",
+		lua.new_usertype<C_Mesh>("C_Mesh",
 			sol::constructors<void(GameObject*)>(),
-			"Disable",	&ComponentMesh::Disable,
-			"Enable",	&ComponentMesh::Enable
+			"Disable",	&C_Mesh::Disable,
+			"Enable",	&C_Mesh::Enable
 			);
 
 		// Component Text

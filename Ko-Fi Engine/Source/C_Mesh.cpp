@@ -1,4 +1,4 @@
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "Globals.h"
 #include "Engine.h"
 #include "FSDefs.h"
@@ -31,7 +31,7 @@
 #include <MathGeoLib/Math/float4.h>
 
 
-ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
+C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MESH;
 	radius = 0.0f;
@@ -41,23 +41,23 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 
 }
 
-ComponentMesh::~ComponentMesh()
+C_Mesh::~C_Mesh()
 {
 	RELEASE(mesh);
 }
 
-bool ComponentMesh::Start()
+bool C_Mesh::Start()
 {
 	GenerateLocalBoundingBox();
 	return true;
 }
 
-bool ComponentMesh::Update(float dt)
+bool C_Mesh::Update(float dt)
 {
 	return true;
 }
 
-bool ComponentMesh::PostUpdate(float dt) //AKA the real render
+bool C_Mesh::PostUpdate(float dt) //AKA the real render
 {
 	bool ret = true;
 
@@ -65,14 +65,14 @@ bool ComponentMesh::PostUpdate(float dt) //AKA the real render
 	return ret;
 }
 
-bool ComponentMesh::CleanUp()
+bool C_Mesh::CleanUp()
 {
 	RELEASE(mesh);
 
 	return true;
 }
 
-void ComponentMesh::Save(Json& json) const
+void C_Mesh::Save(Json& json) const
 {
 	json["type"] = "mesh";
 
@@ -91,7 +91,7 @@ void ComponentMesh::Save(Json& json) const
 	}
 }
 
-void ComponentMesh::Load(Json& json)
+void C_Mesh::Load(Json& json)
 {
 	if (mesh == nullptr)
 	{
@@ -151,7 +151,7 @@ void ComponentMesh::Load(Json& json)
 
 }
 
-void ComponentMesh::SetMesh(Mesh* mesh)
+void C_Mesh::SetMesh(Mesh* mesh)
 {
 	if (this->mesh != nullptr)
 		RELEASE(this->mesh);
@@ -160,50 +160,50 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 	GenerateLocalBoundingBox();
 }
 
-void ComponentMesh::SetVertexNormals(bool vertexNormals)
+void C_Mesh::SetVertexNormals(bool vertexNormals)
 {
 	this->mesh->SetVertexNormals(vertexNormals);
 }
 
-void ComponentMesh::SetFaceNormals(bool facesNormals)
+void C_Mesh::SetFaceNormals(bool facesNormals)
 {
 	this->mesh->SetFaceNormals(facesNormals);
 }
 
-float3 ComponentMesh::GetCenterPointInWorldCoords() const
+float3 C_Mesh::GetCenterPointInWorldCoords() const
 {
 	return owner->GetTransform()->GetGlobalTransform().TransformPos(GetCenterPoint());
 }
 
-uint ComponentMesh::GetVertices()
+uint C_Mesh::GetVertices()
 {
 	uint numVertices = 0;
 	numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
 	return numVertices;
 }
 
-bool ComponentMesh::GetVertexNormals() const
+bool C_Mesh::GetVertexNormals() const
 {
 	return mesh->GetVertexNormals();
 }
 
-bool ComponentMesh::GetFaceNormals() const
+bool C_Mesh::GetFaceNormals() const
 {
 	return mesh->GetFaceNormals();
 }
 
-const AABB ComponentMesh::GetLocalAABB()
+const AABB C_Mesh::GetLocalAABB()
 {
 	GenerateLocalBoundingBox();
 	return mesh->localAABB;
 }
 
-const AABB ComponentMesh::GetGlobalAABB() const
+const AABB C_Mesh::GetGlobalAABB() const
 {
 	return aabb;
 }
 
-void ComponentMesh::GenerateLocalBoundingBox()
+void C_Mesh::GenerateLocalBoundingBox()
 {
 	// Generate AABB
 	if (mesh != nullptr)
@@ -221,7 +221,7 @@ void ComponentMesh::GenerateLocalBoundingBox()
 	}
 }
 
-void ComponentMesh::GenerateGlobalBoundingBox()
+void C_Mesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
 
@@ -233,7 +233,7 @@ void ComponentMesh::GenerateGlobalBoundingBox()
 	aabb.Enclose(obb);
 }
 
-void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
+void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 {
 	glLineWidth(2.0f);
 	glColor3f(rgb.x, rgb.y, rgb.z);
@@ -290,7 +290,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 
 }
 
-bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
+bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))

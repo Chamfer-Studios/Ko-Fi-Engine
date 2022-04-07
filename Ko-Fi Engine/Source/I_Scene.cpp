@@ -14,7 +14,7 @@
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Info.h"
 #include "C_Camera.h"
@@ -214,7 +214,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		return;
 	}
 
-	ComponentMesh* cMesh = (ComponentMesh*)gameObj->AddComponentByType(ComponentType::MESH);
+	C_Mesh* cMesh = (C_Mesh*)gameObj->AddComponentByType(ComponentType::MESH);
 	if (cMesh != nullptr)
 	{
 		cMesh->SetMesh(mesh);
@@ -375,7 +375,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::MESH:
 			{
-				ComponentMesh* meshCmp = (ComponentMesh*)component;
+				C_Mesh* meshCmp = (C_Mesh*)component;
 				meshCmp->Save(jsonComponent);
 				break;
 			}
@@ -593,10 +593,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "mesh")
 					{
-						ComponentMesh* meshCmp = go->GetComponent<ComponentMesh>();
+						C_Mesh* meshCmp = go->GetComponent<C_Mesh>();
 						if (meshCmp == nullptr)
 						{
-							meshCmp = (ComponentMesh*)go->AddComponentByType(ComponentType::MESH);
+							meshCmp = (C_Mesh*)go->AddComponentByType(ComponentType::MESH);
 						}
 						meshCmp->active = true;
 						meshCmp->Load(jsonCmp);

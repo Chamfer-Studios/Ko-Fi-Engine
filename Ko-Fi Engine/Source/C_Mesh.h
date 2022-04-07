@@ -11,11 +11,11 @@ class ComponentTransform;
 class C_Material;
 using Json = nlohmann::json;
 
-class ComponentMesh : public Component
+class C_Mesh : public Component
 {
 public:
-	ComponentMesh(GameObject* parent);
-	~ComponentMesh();
+	C_Mesh(GameObject* parent);
+	~C_Mesh();
 
 	// Game Loop
 	bool Start();

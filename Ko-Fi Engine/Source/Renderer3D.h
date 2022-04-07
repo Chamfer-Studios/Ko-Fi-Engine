@@ -15,7 +15,7 @@
 
 class GameObject;
 typedef unsigned int GLenum;
-class ComponentMesh;
+class C_Mesh;
 class Texture;
 class PieShape;
 
@@ -63,7 +63,7 @@ public:
 	//Render Functions
 	void RenderScene();
 	void RenderPreviewScene();
-	void RenderBoundingBox(ComponentMesh* cMesh);
+	void RenderBoundingBox(C_Mesh* cMesh);
 	void RenderMeshes(GameObject* go);
 	void RenderPreviewMeshes(GameObject* go);
 

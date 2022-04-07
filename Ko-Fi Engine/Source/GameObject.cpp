@@ -4,7 +4,7 @@
 #include "Primitive.h"
 #include "Globals.h"
 
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "C_Material.h"
 #include "ComponentParticle.h"
 #include "C_Camera.h"
@@ -249,10 +249,10 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 		//this->GetComponent<C_Material>()->SetMaterial(material);
 
 		//// Set a Default Model
-		c = this->CreateComponent<ComponentMesh>();
+		c = this->CreateComponent<C_Mesh>();
 		//Mesh* mesh = new Mesh();
 		//Importer::GetInstance()->meshImporter->Load("Library/Meshes/Sphere.sugar", mesh);
-		//this->GetComponent<ComponentMesh>()->SetMesh(mesh);
+		//this->GetComponent<C_Mesh>()->SetMesh(mesh);
 
 		break;
 	}
@@ -481,7 +481,7 @@ void GameObject::SetEngine(KoFiEngine* engine)
 }
 AABB GameObject::BoundingAABB()
 {
-	return GetComponent<ComponentMesh>()->GetGlobalAABB();
+	return GetComponent<C_Mesh>()->GetGlobalAABB();
 }
 
 bool GameObject::PrefabSaveJson()
@@ -533,7 +533,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::MESH:
 		{
-			ComponentMesh* meshCmp = (ComponentMesh*)component;
+			C_Mesh* meshCmp = (C_Mesh*)component;
 			meshCmp->Save(jsonComponent);
 			break;
 		}
@@ -665,10 +665,10 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		if (type == "mesh")
 		{
-			ComponentMesh* meshCmp = this->GetComponent<ComponentMesh>();
+			C_Mesh* meshCmp = this->GetComponent<C_Mesh>();
 			if (meshCmp == nullptr)
 			{
-				meshCmp = this->CreateComponent<ComponentMesh>();
+				meshCmp = this->CreateComponent<C_Mesh>();
 			}
 			meshCmp->active = true;
 			meshCmp->Load(jsonCmp);
@@ -804,10 +804,10 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 
 		if (type == "mesh")
 		{
-			ComponentMesh* meshCmp = this->GetComponent<ComponentMesh>();
+			C_Mesh* meshCmp = this->GetComponent<C_Mesh>();
 			if (meshCmp == nullptr)
 			{
-				meshCmp = this->CreateComponent<ComponentMesh>();
+				meshCmp = this->CreateComponent<C_Mesh>();
 			}
 			meshCmp->active = true;
 			meshCmp->Load(jsonCmp);

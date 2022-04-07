@@ -4,7 +4,7 @@
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 
 #include "Globals.h"
 #include "Log.h"
@@ -307,7 +307,7 @@ void C_Camera::FrustumCulling()
 	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 	{
 		GameObject* gameObject = (*go);
-		ComponentMesh* componentMesh = gameObject->GetComponent<ComponentMesh>();
+		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
 
 		if (componentMesh == nullptr || gameObject == owner)
 			continue;
@@ -326,7 +326,7 @@ void C_Camera::ResetFrustumCulling()
 	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 	{
 		GameObject* gameObject = (*go);
-		ComponentMesh* componentMesh = gameObject->GetComponent<ComponentMesh>();
+		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
 
 		if (componentMesh == nullptr || gameObject == owner)
 			continue;

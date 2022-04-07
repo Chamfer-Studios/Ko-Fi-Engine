@@ -1,6 +1,6 @@
 #include "QuadTree3D.h"
 #include <algorithm>
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 
 #include "SDL_opengl.h"
 
@@ -127,7 +127,7 @@ void QuadTreeNode3D::PutChildrenInDivisions()
 {
 	for (auto it = objects.begin(); it != objects.end();)
 	{
-		if ((*it)->GetComponent<ComponentMesh>() == nullptr) {
+		if ((*it)->GetComponent<C_Mesh>() == nullptr) {
 			it++;
 			continue;
 		}
@@ -199,7 +199,7 @@ void QuadTree3D::AddObjects(std::vector<GameObject*>& objects)
 {
 	for (auto it = objects.begin(); it != objects.end(); ++it)
 	{
-		if ((*it)->GetComponent<ComponentMesh>() == nullptr) continue;
+		if ((*it)->GetComponent<C_Mesh>() == nullptr) continue;
 		Insert(*it);
 		AddObjects((*it)->children);
 	}

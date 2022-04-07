@@ -7,9 +7,9 @@
 #include "Component.h"
 
 class KoFiEngine;
-//class ComponentMesh;
+//class C_Mesh;
 class ComponentTransform;
-class ComponentMesh;
+class C_Mesh;
 class C_Info;
 class ComponentScript;
 class C_Collider;

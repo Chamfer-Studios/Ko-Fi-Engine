@@ -11,7 +11,7 @@
 #include "Texture.h"
 
 #include "ComponentTransform.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Info.h"
 #include "C_Camera.h"

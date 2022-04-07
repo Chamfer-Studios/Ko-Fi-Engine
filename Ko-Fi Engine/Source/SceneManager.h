@@ -15,7 +15,7 @@ class KoFiEngine;
 class SceneIntro;
 class GameObject;
 class ComponentTransform;
-class ComponentMesh;
+class C_Mesh;
 class C_Material;
 class C_Info;
 class C_Camera;

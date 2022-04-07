@@ -1,6 +1,6 @@
 #include "ComponentImage.h"
 
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "GameObject.h"
 #include "ComponentTransform2D.h"
 #include "C_Material.h"

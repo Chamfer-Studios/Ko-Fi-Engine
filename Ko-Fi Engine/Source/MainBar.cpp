@@ -17,7 +17,7 @@
 #include "ComponentButton.h"
 #include "ComponentText.h"
 #include "Material.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 
 MainBar::MainBar(Editor* editor)
 {

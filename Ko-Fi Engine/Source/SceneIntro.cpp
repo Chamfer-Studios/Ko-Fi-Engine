@@ -8,7 +8,7 @@
 #include "Primitive.h"
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Camera.h"
 #include "ComponentParticle.h"
@@ -143,8 +143,8 @@ bool SceneIntro::PostUpdate(float dt)
 			float3 rot = {parentRot.x - 55, parentRot.y, parentRot.z};
 			knife->GetTransform()->SetRotationEuler(rot);
 
-			ComponentMesh *componentMesh = knife->CreateComponent<ComponentMesh>();
-			Mesh *mesh = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<ComponentMesh>()->GetMesh();
+			C_Mesh *componentMesh = knife->CreateComponent<C_Mesh>();
+			Mesh *mesh = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			C_Material *cMaterial = knife->CreateComponent<C_Material>();

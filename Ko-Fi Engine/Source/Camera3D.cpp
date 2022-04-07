@@ -6,7 +6,7 @@
 #include "Editor.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "ComponentScript.h"
 #include "Renderer3D.h"
 #include "PanelViewport.h"
@@ -137,8 +137,8 @@ void Camera3D::CheckInput(float dt)
 			GameObject* gameObjectSelected =
 				engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 
-			if (ComponentMesh* mesh = /*App->editor->gameobjectSelected->GetComponent<ComponentMesh>()*/
-				gameObjectSelected->GetComponent<ComponentMesh>())
+			if (C_Mesh* mesh = /*App->editor->gameobjectSelected->GetComponent<C_Mesh>()*/
+				gameObjectSelected->GetComponent<C_Mesh>())
 			{
 				const float3 meshCenter = mesh->GetCenterPointInWorldCoords(); // FIX THIS FUNCTION
 				currentCamera->LookAt(meshCenter);
@@ -381,7 +381,7 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 	// Find all hit GameObjects
 	for (size_t i = 0; i < sceneGameObjects.size(); i++)
 	{
-		ComponentMesh* m = sceneGameObjects[i]->GetComponent<ComponentMesh>();
+		C_Mesh* m = sceneGameObjects[i]->GetComponent<C_Mesh>();
 		if (m != nullptr)
 		{
 			bool hit = newRay.Intersects(m->GetGlobalAABB());
@@ -403,7 +403,7 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 		LineSegment rayLocal = newRay;
 		rayLocal.Transform(gameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Inverted());
 
-		ComponentMesh* cMesh = gameObject->GetComponent<ComponentMesh>();
+		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
 
 		if (cMesh != nullptr)
 		{

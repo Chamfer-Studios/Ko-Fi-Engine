@@ -25,7 +25,7 @@
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Camera.h"
 #include "C_Collider.h"
@@ -306,7 +306,7 @@ void Renderer3D::RenderScene()
 	{
 		if (go->active)
 		{
-			ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
 				RenderMeshes(go);
@@ -350,7 +350,7 @@ void Renderer3D::RenderPreviewScene()
 	{
 		if (go->active)
 		{
-			ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
 				RenderPreviewMeshes(go);
@@ -387,7 +387,7 @@ void Renderer3D::RenderPreviewScene()
 	}
 }
 
-void Renderer3D::RenderBoundingBox(ComponentMesh* cMesh)
+void Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	cMesh->GenerateGlobalBoundingBox();
 	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
@@ -400,7 +400,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 {
 	//Get needed variables
 	C_Material* cMat = go->GetComponent<C_Material>();
-	ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 	Mesh* mesh = cMesh->GetMesh();
 	//Check textures
 	if (cMat && mesh)
@@ -605,7 +605,7 @@ void Renderer3D::RenderPreviewMeshes(GameObject* go)
 {
 	//Get needed variables
 	C_Material* cMat = go->GetComponent<C_Material>();
-	ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
+	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 	Mesh* mesh = cMesh->GetMesh();
 	//Check textures
 	if (cMat && mesh)

@@ -15,7 +15,7 @@
 
 #include <string>
 
-#include "ComponentMesh.h"
+#include "C_Mesh.h"
 #include "ComponentTransform2D.h"
 #include "C_Camera.h"
 
