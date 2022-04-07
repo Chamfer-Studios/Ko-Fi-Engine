@@ -27,6 +27,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "C_Camera.h"
 #include "C_Collider.h"
 #include "ComponentRenderedUI.h"
 #include "ComponentLightSource.h"
@@ -312,7 +313,7 @@ void Renderer3D::RenderScene()
 				RenderBoundingBox(cMesh);
 			}
 
-			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
+			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
 				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
 				{
@@ -356,7 +357,7 @@ void Renderer3D::RenderPreviewScene()
 				RenderBoundingBox(cMesh);
 			}
 
-			ComponentCamera* cCamera = go->GetComponent<ComponentCamera>();
+			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
 				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
 				{

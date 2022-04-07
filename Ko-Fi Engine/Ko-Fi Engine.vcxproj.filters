@@ -364,7 +364,7 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentCamera.cpp">
+    <ClCompile Include="Source\C_Camera.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelAssets.cpp">
@@ -595,7 +595,7 @@
     <ClCompile Include="Source\ComponentRigidBody.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentAnimator.cpp">
+    <ClCompile Include="Source\C_Animator.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\stb_image\stb_image.cpp">
@@ -634,6 +634,9 @@
     </ClCompile>
     <ClCompile Include="Source\ComponentRigidBody.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -973,7 +976,7 @@
     <ClInclude Include="Source\PanelRuntimeState.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentCamera.h">
+    <ClInclude Include="Source\C_Camera.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelAssets.h">
@@ -1717,7 +1720,7 @@
     <ClInclude Include="Source\I_Track.h">
       <Filter>Source\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentAnimator.h">
+    <ClInclude Include="Source\C_Animator.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Effects.h">

@@ -17,7 +17,7 @@
 
 #include "ComponentMesh.h"
 #include "ComponentTransform2D.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 
 #include "SDL.h"
 

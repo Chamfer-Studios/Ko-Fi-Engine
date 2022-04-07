@@ -1,4 +1,4 @@
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "Engine.h"
 #include "SceneManager.h"
 
@@ -17,7 +17,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-ComponentCamera::ComponentCamera(GameObject* parent, bool isEngineCamera) : Component(parent)
+C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 {
 	this->isEngineCamera = isEngineCamera;
 	type = ComponentType::CAMERA;
@@ -47,11 +47,11 @@ ComponentCamera::ComponentCamera(GameObject* parent, bool isEngineCamera) : Comp
 
 }
 
-ComponentCamera::~ComponentCamera()
+C_Camera::~C_Camera()
 {
 }
 
-bool ComponentCamera::Start()
+bool C_Camera::Start()
 {
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
@@ -63,7 +63,7 @@ bool ComponentCamera::Start()
 	return ret;
 }
 
-bool ComponentCamera::CleanUp()
+bool C_Camera::CleanUp()
 {
 	CONSOLE_LOG("Cleaning up the camera");
 	appLog->AddLog("Cleaning up the camera\n");
@@ -71,7 +71,7 @@ bool ComponentCamera::CleanUp()
 	return true;
 }
 
-bool ComponentCamera::Update(float dt)
+bool C_Camera::Update(float dt)
 {
 	// Add update functionality when we are able to change the main camera.
 	if (!isEngineCamera)
@@ -92,7 +92,7 @@ bool ComponentCamera::Update(float dt)
 	return true;
 }
 
-void ComponentCamera::LookAt(const float3& point)
+void C_Camera::LookAt(const float3& point)
 {
 	reference = point;
 
@@ -103,7 +103,7 @@ void ComponentCamera::LookAt(const float3& point)
 	CalculateViewMatrix();
 }
 
-void ComponentCamera::CalculateViewMatrix(bool ortho)
+void C_Camera::CalculateViewMatrix(bool ortho)
 {
 	if (projectionIsDirty)
 		RecalculateProjection(ortho);
@@ -116,7 +116,7 @@ void ComponentCamera::CalculateViewMatrix(bool ortho)
 	viewMatrix = cameraFrustum.ViewMatrix();
 }
 
-void ComponentCamera::RecalculateProjection(bool ortho)
+void C_Camera::RecalculateProjection(bool ortho)
 {
 	if (!ortho ) {
 		cameraFrustum.type = FrustumType::PerspectiveFrustum;
@@ -138,7 +138,7 @@ void ComponentCamera::RecalculateProjection(bool ortho)
 	}
 }
 
-bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
+bool C_Camera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
@@ -175,7 +175,7 @@ bool ComponentCamera::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-void ComponentCamera::Save(Json& json) const
+void C_Camera::Save(Json& json) const
 {
 	json["type"] = "camera";
 	json["vertical_fov"] = verticalFOV;
@@ -186,7 +186,7 @@ void ComponentCamera::Save(Json& json) const
 	json["isMainCamera"] = isMainCamera;
 }
 
-void ComponentCamera::Load(Json& json)
+void C_Camera::Load(Json& json)
 {
 	verticalFOV = json.at("vertical_fov");
 	nearPlaneDistance = json.at("near_plane_distance");
@@ -224,7 +224,7 @@ void ComponentCamera::Load(Json& json)
 //	RecalculateProjection();
 //}
 
-void ComponentCamera::DrawFrustum() const
+void C_Camera::DrawFrustum() const
 {
 	glPushMatrix();
 	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
@@ -280,7 +280,7 @@ void ComponentCamera::DrawFrustum() const
 
 }
 
-bool ComponentCamera::ClipsWithBBox(const AABB& refBox) const
+bool C_Camera::ClipsWithBBox(const AABB& refBox) const
 {
 	float3 vertexCorner[8];
 
@@ -300,7 +300,7 @@ bool ComponentCamera::ClipsWithBBox(const AABB& refBox) const
 	}
 }
 
-void ComponentCamera::FrustumCulling()
+void C_Camera::FrustumCulling()
 {
 	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
@@ -319,7 +319,7 @@ void ComponentCamera::FrustumCulling()
 	}
 }
 
-void ComponentCamera::ResetFrustumCulling()
+void C_Camera::ResetFrustumCulling()
 {
 	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
@@ -336,7 +336,7 @@ void ComponentCamera::ResetFrustumCulling()
 	}
 }
 
-void ComponentCamera::SetAspectRatio(const float& aspectRatio)
+void C_Camera::SetAspectRatio(const float& aspectRatio)
 {
 	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
 	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));

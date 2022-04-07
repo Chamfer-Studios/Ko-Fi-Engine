@@ -3,7 +3,6 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
-#include "GameObject.h"
 #include "SDL_ttf.h"
 
 #include "glew.h"
@@ -12,9 +11,9 @@
 
 #include "SDL.h"
 
-class ComponentCamera;
+class C_Camera;
 class Texture;
-
+class GameObject;
 class MyPlane
 {
 public:

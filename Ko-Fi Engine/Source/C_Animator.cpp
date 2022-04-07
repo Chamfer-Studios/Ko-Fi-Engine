@@ -1,4 +1,4 @@
-#include "ComponentAnimator.h"
+#include "C_Animator.h"
 
 #include "GameObject.h"
 #include "Globals.h"
@@ -12,32 +12,32 @@
 #include <vector>
 #include <string>
 
-ComponentAnimator::ComponentAnimator(GameObject* parent) : Component(parent)
+C_Animator::C_Animator(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::ANIMATOR;
 	playing = true;
 }
 
-ComponentAnimator::~ComponentAnimator()
+C_Animator::~C_Animator()
 {
 }
 
-bool ComponentAnimator::Start()
-{
-	return true;
-}
-
-bool ComponentAnimator::Update(float dt)
+bool C_Animator::Start()
 {
 	return true;
 }
 
-bool ComponentAnimator::CleanUp()
+bool C_Animator::Update(float dt)
 {
 	return true;
 }
 
-bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
+bool C_Animator::CleanUp()
+{
+	return true;
+}
+
+bool C_Animator::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 	if (ImGui::CollapsingHeader("Animator"))
@@ -138,7 +138,7 @@ bool ComponentAnimator::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-void ComponentAnimator::Save(Json& json) const
+void C_Animator::Save(Json& json) const
 {
 	CONSOLE_LOG("hey");
 	json["type"] = "animator";
@@ -162,7 +162,7 @@ void ComponentAnimator::Save(Json& json) const
 	json["selectedClip"] = selectedClip->GetName();
 }
 
-void ComponentAnimator::Load(Json& json)
+void C_Animator::Load(Json& json)
 {
 	if (animation)
 	{
@@ -209,12 +209,12 @@ void ComponentAnimator::Load(Json& json)
 	/*}*/
 }
 
-void ComponentAnimator::Reset()
+void C_Animator::Reset()
 {
 	//set the animation to the initial time value
 }
 
-bool ComponentAnimator::CreateClip(const AnimatorClip& clip)
+bool C_Animator::CreateClip(const AnimatorClip& clip)
 {
 	if (clip.GetAnimation() == nullptr)
 	{
@@ -230,7 +230,7 @@ bool ComponentAnimator::CreateClip(const AnimatorClip& clip)
 	clips.emplace(clip.GetName(), clip);
 }
 
-bool ComponentAnimator::CreateDefaultClip(AnimatorClip* clip)
+bool C_Animator::CreateDefaultClip(AnimatorClip* clip)
 {
 	if (clip->GetAnimation() == nullptr)
 	{
@@ -248,7 +248,7 @@ bool ComponentAnimator::CreateDefaultClip(AnimatorClip* clip)
 	selectedClip = clip;
 }
 
-void ComponentAnimator::SetAnim(R_Animation* anim)
+void C_Animator::SetAnim(R_Animation* anim)
 {
 	if (this->animation != nullptr)
 		RELEASE(this->animation);
@@ -256,12 +256,12 @@ void ComponentAnimator::SetAnim(R_Animation* anim)
 	this->animation = anim;
 }
 
-AnimatorClip* ComponentAnimator::GetSelectedClip()
+AnimatorClip* C_Animator::GetSelectedClip()
 {
 	return selectedClip;
 }
 
-void ComponentAnimator::SetSelectedClip(std::string name)
+void C_Animator::SetSelectedClip(std::string name)
 {
 	for (std::map<std::string, AnimatorClip>::iterator clip = clips.begin(); clip != clips.end(); ++clip)
 	{

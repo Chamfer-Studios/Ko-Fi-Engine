@@ -14,7 +14,7 @@ class ComponentInfo;
 class ComponentScript;
 class ComponentCollider;
 class ComponentCollider2;
-class ComponentAnimator;
+class C_Animator;
 class ComponentLightSource;
 
 enum class Tag 

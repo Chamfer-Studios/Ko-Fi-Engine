@@ -119,7 +119,7 @@
     <ClCompile Include="Source\color_node_editor.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\ComponentButton.cpp" />
-    <ClCompile Include="Source\ComponentCamera.cpp" />
+    <ClCompile Include="Source\C_Camera.cpp" />
     <ClCompile Include="Source\ComponentCanvas.cpp" />
     <ClCompile Include="Source\ComponentFollowPath.cpp" />
     <ClCompile Include="Source\ComponentImage.cpp" />
@@ -132,7 +132,7 @@
     <ClCompile Include="Source\ComponentRigidBody.cpp" />
     <ClCompile Include="Source\ComponentTransform.cpp" />
     <ClCompile Include="Source\ComponentTransform2D.cpp" />
-    <ClCompile Include="Source\ComponentAnimator.cpp" />
+    <ClCompile Include="Source\C_Animator.cpp" />
     <ClCompile Include="Source\C_Collider.cpp" />
     <ClCompile Include="Source\C_AudioSource.cpp" />
     <ClCompile Include="Source\C_AudioSwitch.cpp" />
@@ -247,6 +247,7 @@
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\RNG.cpp" />
     <ClCompile Include="Source\R_Track.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SimulationEventCallback.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
@@ -291,7 +292,7 @@
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentButton.h" />
-    <ClInclude Include="Source\ComponentCamera.h" />
+    <ClInclude Include="Source\C_Camera.h" />
     <ClInclude Include="Source\ComponentCanvas.h" />
     <ClInclude Include="Source\ComponentFollowPath.h" />
     <ClInclude Include="Source\ComponentImage.h" />
@@ -305,7 +306,7 @@
     <ClInclude Include="Source\ComponentText.h" />
     <ClInclude Include="Source\ComponentTransform.h" />
     <ClInclude Include="Source\ComponentTransform2D.h" />
-    <ClInclude Include="Source\ComponentAnimator.h" />
+    <ClInclude Include="Source\C_Animator.h" />
     <ClInclude Include="Source\C_Collider.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />

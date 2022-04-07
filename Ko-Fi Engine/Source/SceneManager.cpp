@@ -14,7 +14,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
 #include "ComponentImage.h"
@@ -311,7 +311,7 @@ void SceneManager::GuizmoTransformation()
 void SceneManager::UpdateGuizmo()
 {
 	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-	if (selectedGameObject != nullptr && selectedGameObject->GetComponent<ComponentCamera>() != nullptr && currentGizmoOperation == ImGuizmo::OPERATION::SCALE)
+	if (selectedGameObject != nullptr && selectedGameObject->GetComponent<C_Camera>() != nullptr && currentGizmoOperation == ImGuizmo::OPERATION::SCALE)
 		currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 
 	if (engine->GetEditor()->MouseOnScene() && (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT))
@@ -327,7 +327,7 @@ void SceneManager::UpdateGuizmo()
 			currentGizmoOperation = ImGuizmo::OPERATION::ROTATE;
 			CONSOLE_LOG("Set Guizmo to Rotate");
 		}
-		if (selectedGameObject != nullptr && selectedGameObject->GetComponent<ComponentCamera>() == nullptr)
+		if (selectedGameObject != nullptr && selectedGameObject->GetComponent<C_Camera>() == nullptr)
 		{
 			if ((engine->GetInput()->GetKey(SDL_SCANCODE_R) == KEY_DOWN))
 			{

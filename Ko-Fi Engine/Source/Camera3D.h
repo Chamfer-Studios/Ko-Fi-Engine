@@ -7,9 +7,10 @@
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Geometry/Frustum.h"
 #include "glmath.h"
-#include "ComponentCamera.h"
+
 
 class GameObject;
+class C_Camera;
 
 class Camera3D : public Module
 {
@@ -42,7 +43,7 @@ public:
 	void CheckInput(float dt);
 	void CheckMouseMotion(float dt);
 
-	void SetGameCamera(ComponentCamera* gameCamera);
+	void SetGameCamera(C_Camera* gameCamera);
 	
 	GameObject* MousePicking(const bool& isRightButton = false);
 
@@ -51,9 +52,9 @@ public:
 public:
 	GameObject* engineCameraObject = nullptr; // The engine camera needs a game object as holder if we want to be able to access "engine" from component camera.
 
-	ComponentCamera* currentCamera = nullptr; // The camera that will display on screen
-	ComponentCamera* engineCamera = nullptr; // The engine camera, asigning this to currentCamera will display de engine camera
-	ComponentCamera* gameCamera = nullptr; // The game camera, asigning this to currentCamera will display de game camera
+	C_Camera* currentCamera = nullptr; // The camera that will display on screen
+	C_Camera* engineCamera = nullptr; // The engine camera, asigning this to currentCamera will display de engine camera
+	C_Camera* gameCamera = nullptr; // The game camera, asigning this to currentCamera will display de game camera
 
 private:
 	float3 lastMouseClick;

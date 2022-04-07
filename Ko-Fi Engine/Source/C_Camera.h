@@ -12,11 +12,11 @@ class GameObject;
 class ComponentTransform;
 using Json = nlohmann::json;
 
-class ComponentCamera : public Component
+class C_Camera : public Component
 {
 public:
-	ComponentCamera(GameObject* gameObject, bool isEngineCamera = false);
-	~ComponentCamera();
+	C_Camera(GameObject* gameObject, bool isEngineCamera = false);
+	~C_Camera();
 
 	bool Start() override;
 	bool Update(float dt) override;

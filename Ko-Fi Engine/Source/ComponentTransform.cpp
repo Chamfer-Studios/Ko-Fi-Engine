@@ -7,7 +7,7 @@
 #include "PanelChooser.h"
 
 #include "GameObject.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "C_Collider.h"
 
 #include "MathGeoLib/MathGeoLib.h"

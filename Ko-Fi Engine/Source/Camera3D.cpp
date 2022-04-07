@@ -45,7 +45,7 @@ bool Camera3D::Start()
 	appLog->AddLog("Setting up the camera\n");
 
 	engineCameraObject = new GameObject(0, engine, "");
-	engineCamera = new ComponentCamera(engineCameraObject, true);
+	engineCamera = new C_Camera(engineCameraObject, true);
 	engineCamera->isEngineCamera = true;
 	
 	currentCamera = engineCamera;
@@ -264,7 +264,7 @@ void Camera3D::OnPlay()
 	if (gameCamera == nullptr)
 	{
 		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("MainCamera");
-		ComponentCamera* cCamera = go->CreateComponent<ComponentCamera>();
+		C_Camera* cCamera = go->CreateComponent<C_Camera>();
 		cCamera->isMainCamera = true;
 		gameCamera = cCamera;
 
@@ -293,7 +293,7 @@ bool Camera3D::InspectorDraw()
 	return true;
 }
 
-void Camera3D::SetGameCamera(ComponentCamera* gameCamera)
+void Camera3D::SetGameCamera(C_Camera* gameCamera)
 {
 	if (this->gameCamera != nullptr && this->gameCamera != gameCamera)this->gameCamera->isMainCamera = false;
 

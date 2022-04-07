@@ -17,7 +17,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentInfo.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "C_Collider.h"
 #include "ComponentRigidBody.h"
 #include "ComponentCollider.h"
@@ -28,12 +28,11 @@
 #include "ComponentText.h"
 #include "ComponentTransform2D.h"
 #include "ComponentParticle.h"
-#include "ComponentAnimator.h"
+#include "C_Animator.h"
 #include "ComponentLightSource.h"
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
-#include "ComponentAnimator.h"
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
 
@@ -239,7 +238,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	mesh->SetIsAnimated(true);
 	mesh->SetAnimation(anim);
 
-	ComponentAnimator* cAnim = gameObj->CreateComponent<ComponentAnimator>();
+	C_Animator* cAnim = gameObj->CreateComponent<C_Animator>();
 	if (cAnim != nullptr)
 		cAnim->SetAnim(anim);
 	else
@@ -395,7 +394,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::CAMERA:
 			{
-				ComponentCamera* cameraCmp = (ComponentCamera*)component;
+				C_Camera* cameraCmp = (C_Camera*)component;
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
@@ -479,7 +478,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::ANIMATOR:
 			{
-				ComponentAnimator* cAnimator = (ComponentAnimator*)component;
+				C_Animator* cAnimator = (C_Animator*)component;
 				cAnimator->Save(jsonComponent);
 				break;
 			}
@@ -627,10 +626,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "camera")
 					{
-						ComponentCamera* cameraCmp = go->GetComponent<ComponentCamera>();
+						C_Camera* cameraCmp = go->GetComponent<C_Camera>();
 						if (cameraCmp == nullptr)
 						{
-							cameraCmp = (ComponentCamera*)go->AddComponentByType(ComponentType::CAMERA);
+							cameraCmp = (C_Camera*)go->AddComponentByType(ComponentType::CAMERA);
 						}
 						cameraCmp->active = true;
 						cameraCmp->Load(jsonCmp);
@@ -757,10 +756,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "animator")
 					{
-						ComponentAnimator* cAnimator = go->GetComponent<ComponentAnimator>();
+						C_Animator* cAnimator = go->GetComponent<C_Animator>();
 						if (cAnimator == nullptr)
 						{
-							cAnimator = (ComponentAnimator*)go->AddComponentByType(ComponentType::ANIMATOR);
+							cAnimator = (C_Animator*)go->AddComponentByType(ComponentType::ANIMATOR);
 						}
 						cAnimator->active = true;
 						cAnimator->Load(jsonCmp);

@@ -18,7 +18,7 @@ class ComponentTransform;
 class ComponentMesh;
 class ComponentMaterial;
 class ComponentInfo;
-class ComponentCamera;
+class C_Camera;
 class ComponentCanvas;
 class ComponentTransform2D;
 class ComponentText;

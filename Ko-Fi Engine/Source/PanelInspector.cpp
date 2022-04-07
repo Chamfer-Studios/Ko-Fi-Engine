@@ -7,12 +7,12 @@
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentScript.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "ComponentInfo.h"
 #include "ComponentTransform.h"
 #include "ComponentCollider.h"
 #include "ComponentRigidBody.h"
-#include "ComponentAnimator.h"
+#include "C_Animator.h"
 #include "ComponentLightSource.h"
 
 #include <queue>

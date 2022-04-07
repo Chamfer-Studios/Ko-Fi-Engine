@@ -10,7 +10,7 @@
 #include "FileSystem.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "ComponentParticle.h"
 #include "ComponentScript.h"
 #include "C_Collider.h"
@@ -60,7 +60,7 @@ bool SceneIntro::Start()
 	if (!engine->GetCamera3D()->gameCamera)
 	{
 		GameObject *camera = CreateEmptyGameObject("camera");
-		ComponentCamera *cCamera = camera->CreateComponent<ComponentCamera>();
+		C_Camera *cCamera = camera->CreateComponent<C_Camera>();
 		cCamera->isMainCamera = true;
 		engine->GetCamera3D()->SetGameCamera(cCamera);
 	}

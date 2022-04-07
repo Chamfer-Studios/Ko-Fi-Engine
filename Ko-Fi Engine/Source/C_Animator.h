@@ -10,11 +10,11 @@ class GameObject;
 class R_Animation;
 class AnimatorClip;
 
-class ComponentAnimator : public Component
+class C_Animator : public Component
 {
 public:
-	ComponentAnimator(GameObject* parent);
-	~ComponentAnimator();
+	C_Animator(GameObject* parent);
+	~C_Animator();
 
 	bool Start();
 	bool Update(float dt);

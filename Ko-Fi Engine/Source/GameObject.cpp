@@ -7,10 +7,10 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentParticle.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "ComponentCollider.h"
 #include "ComponentScript.h"
-#include "ComponentAnimator.h"
+#include "C_Animator.h"
 #include "C_Collider.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
@@ -269,7 +269,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::CAMERA:
 	{
-		c = this->CreateComponent<ComponentCamera>();
+		c = this->CreateComponent<C_Camera>();
 		break;
 	}
 	case ComponentType::COLLIDER:
@@ -356,7 +356,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::ANIMATOR:
 	{
-		c = this->CreateComponent<ComponentAnimator>();
+		c = this->CreateComponent<C_Animator>();
 		break;
 	}
 	case ComponentType::LIGHT_SOURCE:
@@ -561,7 +561,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::CAMERA:
 		{
-			ComponentCamera* cameraCmp = (ComponentCamera*)component;
+			C_Camera* cameraCmp = (C_Camera*)component;
 			cameraCmp->Save(jsonComponent);
 			break;
 		}
@@ -701,10 +701,10 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "camera")
 		{
-			ComponentCamera* cameraCmp = this->GetComponent<ComponentCamera>();
+			C_Camera* cameraCmp = this->GetComponent<C_Camera>();
 			if (cameraCmp == nullptr)
 			{
-				cameraCmp = this->CreateComponent<ComponentCamera>();
+				cameraCmp = this->CreateComponent<C_Camera>();
 			}
 			cameraCmp->active = true;
 			cameraCmp->Load(jsonCmp);
@@ -840,10 +840,10 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "camera")
 		{
-			ComponentCamera* cameraCmp = this->GetComponent<ComponentCamera>();
+			C_Camera* cameraCmp = this->GetComponent<C_Camera>();
 			if (cameraCmp == nullptr)
 			{
-				cameraCmp = this->CreateComponent<ComponentCamera>();
+				cameraCmp = this->CreateComponent<C_Camera>();
 			}
 			cameraCmp->active = true;
 			cameraCmp->Load(jsonCmp);

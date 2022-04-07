@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
-#include "ComponentAnimator.h"
+#include "C_Animator.h"
 
 #include "R_Animation.h"
 #include "AnimatorClip.h"
@@ -376,7 +376,7 @@ void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transfo
 	float timeInTicks = timeInSeconds * ticksPerSecond;
 
 	float startFrame, endFrame, animDur;
-	ComponentAnimator* cAnimator = gameObject->GetComponent<ComponentAnimator>();
+	C_Animator* cAnimator = gameObject->GetComponent<C_Animator>();
 	if (cAnimator != nullptr && cAnimator->GetSelectedClip() != nullptr)
 	{
 		startFrame = cAnimator->GetSelectedClip()->GetStartFrame();

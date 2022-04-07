@@ -9,14 +9,13 @@
 #include <imgui_stdlib.h>
 #include "Primitive.h"
 #include "Importer.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
 #include "ComponentMaterial.h"
 #include "ComponentImage.h"
 #include "ComponentButton.h"
 #include "ComponentText.h"
-#include "ComponentCamera.h"
 #include "Material.h"
 #include "ComponentMesh.h"
 
@@ -91,7 +90,7 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Create Camera"))
 			{
 				GameObject* camera = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("camera");
-				camera->CreateComponent<ComponentCamera>();
+				camera->CreateComponent<C_Camera>();
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{

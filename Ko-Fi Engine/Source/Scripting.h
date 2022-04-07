@@ -25,9 +25,9 @@
 #include "ComponentText.h"
 #include "ComponentImage.h"
 #include "ComponentButton.h"
-#include "ComponentAnimator.h"
+#include "C_Animator.h"
 #include "ComponentParticle.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 
@@ -175,10 +175,10 @@ public:
 									 "GetComponentMesh", &GameObject::GetComponent<ComponentMesh>,
 									 "GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>,
 									 "GetText", &GameObject::GetComponent<ComponentText>,
-									 "GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
+									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
-									 "GetCamera", &GameObject::GetComponent<ComponentCamera>,
+									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
 									 "GetButton", &GameObject::GetComponent<ComponentButton>,
 									 "GetImage", &GameObject::GetComponent<ComponentImage>,
@@ -213,11 +213,11 @@ public:
 			);
 
 		// Component Camera
-		lua.new_usertype<ComponentCamera>("ComponentTransform",
+		lua.new_usertype<C_Camera>("ComponentTransform",
 			sol::constructors<void(GameObject*)>(),
-			"LookAt", &ComponentCamera::LookAt,
-			"right", &ComponentCamera::right,
-			"up", &ComponentCamera::up
+			"LookAt", &C_Camera::LookAt,
+			"right", &C_Camera::right,
+			"up", &C_Camera::up
 			);
 		// Component Mesh
 		lua.new_usertype<ComponentMesh>("ComponentMesh",
@@ -250,9 +250,9 @@ public:
 										  "IsHovered", &ComponentButton::IsHovered);
 
 		// Component Animator
-		lua.new_usertype<ComponentAnimator>("ComponentAnimator",
+		lua.new_usertype<C_Animator>("ComponentAnimator",
 											sol::constructors<void(GameObject *)>(),
-											"SetSelectedClip", &ComponentAnimator::SetSelectedClip);
+											"SetSelectedClip", &C_Animator::SetSelectedClip);
 
 		// Component Particle
 		lua.new_usertype<ComponentParticle>("ComponentParticle",
