@@ -3,7 +3,7 @@
 #include "Window.h"
 #include "Input.h"
 #include "Renderer3D.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 #include "SceneManager.h"
 #include "Editor.h"
 #include "FileSystem.h"
@@ -32,7 +32,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	window = new Window(this);
 	fileSystem = new FileSystem(this);
 	input = new Input(this);
-	camera = new Camera3D(this);
+	camera = new M_Camera3D(this);
 	renderer = new Renderer3D(this);
 	editor = new Editor(this);
 	sceneManager = new SceneManager(this);
@@ -426,7 +426,7 @@ Renderer3D* KoFiEngine::GetRenderer()const
 	return this->renderer;
 }
 
-Camera3D* KoFiEngine::GetCamera3D()const
+M_Camera3D* KoFiEngine::GetCamera3D()const
 {
 	return this->camera;
 }

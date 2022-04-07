@@ -3,7 +3,7 @@
 #include "Editor.h"
 #include "Engine.h"
 #include "SceneManager.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 #include "Input.h"
 
 PanelRuntimeState::PanelRuntimeState(Editor* editor, KoFiEngine* engine)
@@ -45,7 +45,7 @@ void PanelRuntimeState::DrawRuntimePanel()
     {
         SceneManager* sceneManager = engine->GetSceneManager();
         Editor* editor = engine->GetEditor();
-        Camera3D* camera = engine->GetCamera3D();
+        M_Camera3D* camera = engine->GetCamera3D();
         Input* input = engine->GetInput();
         GameState state = sceneManager->GetGameState();
 

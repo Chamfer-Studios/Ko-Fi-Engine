@@ -12,11 +12,11 @@
 class GameObject;
 class C_Camera;
 
-class Camera3D : public Module
+class M_Camera3D : public Module
 {
 public:
-	Camera3D(KoFiEngine* engine);
-	~Camera3D();
+	M_Camera3D(KoFiEngine* engine);
+	~M_Camera3D();
 
 	bool Awake(Json configModule);
 	bool Start();

@@ -12,7 +12,7 @@ class Window;
 class Input;
 class SceneManager;
 class Renderer3D;
-class Camera3D;
+class M_Camera3D;
 class Editor;
 class FileSystem;
 class Physics;
@@ -60,7 +60,7 @@ public:
 	Input* GetInput() const;
 	SceneManager* GetSceneManager() const;
 	Renderer3D* GetRenderer() const;
-	Camera3D* GetCamera3D() const;
+	M_Camera3D* GetCamera3D() const;
 	Editor* GetEditor() const;
 	FileSystem* GetFileSystem() const;
 	Physics* GetPhysics() const;
@@ -99,7 +99,7 @@ private:
 	Input* input = nullptr;
 	SceneManager* sceneManager = nullptr;
 	Renderer3D* renderer = nullptr;
-	Camera3D* camera = nullptr;
+	M_Camera3D* camera = nullptr;
 	Editor* editor = nullptr;
 	FileSystem* fileSystem = nullptr;
 	Physics* physics = nullptr;

@@ -10,7 +10,7 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 
 #include "glew.h"
 #include "SDL_opengl.h"

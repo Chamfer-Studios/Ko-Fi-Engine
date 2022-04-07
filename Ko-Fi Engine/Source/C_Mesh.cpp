@@ -3,7 +3,7 @@
 #include "Engine.h"
 #include "FSDefs.h"
 //#include "Color.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 
 #include "GameObject.h"
 #include "C_Transform.h"
@@ -12,7 +12,7 @@
 #include "SceneManager.h"
 #include "Engine.h"
 #include "Renderer3D.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 #include "PanelChooser.h"
 #include "PanelViewport.h"
 #include "Editor.h"

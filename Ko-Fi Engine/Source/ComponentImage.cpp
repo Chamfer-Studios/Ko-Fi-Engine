@@ -5,7 +5,7 @@
 #include "ComponentTransform2D.h"
 #include "C_Material.h"
 #include "C_Transform.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 #include "Engine.h"
 #include "Editor.h"
 #include "Window.h"

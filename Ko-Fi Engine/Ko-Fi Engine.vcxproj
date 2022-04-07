@@ -112,7 +112,7 @@
     <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
-    <ClCompile Include="Source\Camera3D.cpp" />
+    <ClCompile Include="Source\M_Camera3D.cpp" />
     <ClCompile Include="Source\Channel.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\color_node_editor.cpp" />
@@ -285,7 +285,7 @@
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\PieShape.h" />
     <ClInclude Include="Source\R_Track.h" />
-    <ClInclude Include="Source\Camera3D.h" />
+    <ClInclude Include="Source\M_Camera3D.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentButton.h" />

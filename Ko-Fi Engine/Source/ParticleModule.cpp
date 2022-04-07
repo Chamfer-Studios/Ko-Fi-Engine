@@ -2,7 +2,7 @@
 #include <vector>
 #include "MathGeoLib/Algorithm/Random/LCG.h"
 #include "MathGeoLib/Math/MathFunc.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 #include "C_Camera.h"
 
 ParticleModule::ParticleModule()

@@ -172,7 +172,7 @@
     <ClCompile Include="Source\glmath.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera3D.cpp">
+    <ClCompile Include="Source\M_Camera3D.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Input.cpp">
@@ -664,7 +664,7 @@
     <ClInclude Include="Source\glmath.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera3D.h">
+    <ClInclude Include="Source\M_Camera3D.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\Input.h">

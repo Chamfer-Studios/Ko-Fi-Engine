@@ -10,7 +10,7 @@
 #include "Log.h"
 #include "Window.h"
 #include "Engine.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 #include "SceneManager.h"
 #include "Editor.h"
 #include "Input.h"
@@ -238,7 +238,7 @@ void Renderer3D::PassProjectionAndViewToRenderer()
 {
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
-	Camera3D* currentCamera3D = engine->GetCamera3D();
+	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->currentCamera)
 	{
 		if (currentCamera3D->currentCamera->projectionIsDirty) {
@@ -263,7 +263,7 @@ void Renderer3D::PassPreviewProjectionAndViewToRenderer()
 {
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
-	Camera3D* currentCamera3D = engine->GetCamera3D();
+	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->gameCamera)
 	{
 		if (currentCamera3D->gameCamera->projectionIsDirty) {

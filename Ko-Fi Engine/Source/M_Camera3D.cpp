@@ -1,5 +1,5 @@
 #include "Globals.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 #include "Engine.h"
 #include "Input.h"
 #include "SceneManager.h"
@@ -19,18 +19,18 @@
 #include "MathGeoLib/Geometry/LineSegment.h"
 #include "MathGeoLib/Geometry/Triangle.h"
 
-Camera3D::Camera3D(KoFiEngine* engine) : Module()
+M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 {
 	name = "Camera";
 	this->engine = engine;
 
 }
 
-Camera3D::~Camera3D()
+M_Camera3D::~M_Camera3D()
 {
 }
 
-bool Camera3D::Awake(Json configModule)
+bool M_Camera3D::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -39,7 +39,7 @@ bool Camera3D::Awake(Json configModule)
 	return ret;
 }
 
-bool Camera3D::Start()
+bool M_Camera3D::Start()
 {
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
@@ -66,7 +66,7 @@ bool Camera3D::Start()
 }
 
 // -----------------------------------------------------------------
-bool Camera3D::Update(float dt)
+bool M_Camera3D::Update(float dt)
 {
 	if (engine->GetEditor()->GetPanel<PanelViewport>())
 		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
@@ -81,7 +81,7 @@ bool Camera3D::Update(float dt)
 }
 
 // -----------------------------------------------------------------
-bool Camera3D::CleanUp()
+bool M_Camera3D::CleanUp()
 {
 	CONSOLE_LOG("Cleaning camera");
 	appLog->AddLog("Cleaning camera\n");
@@ -92,12 +92,12 @@ bool Camera3D::CleanUp()
 }
 
 // Method to receive and manage events
-void Camera3D::OnNotify(const Event& event)
+void M_Camera3D::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
-void Camera3D::OnGui()
+void M_Camera3D::OnGui()
 {
 	if (ImGui::CollapsingHeader("Editor Camera"))
 	{
@@ -116,7 +116,7 @@ void Camera3D::OnGui()
 	}
 }
 
-void Camera3D::CheckInput(float dt)
+void M_Camera3D::CheckInput(float dt)
 {
 	float3 newPos(0, 0, 0);
 	float speed = currentCamera->cameraSpeed * dt;
@@ -183,7 +183,7 @@ void Camera3D::CheckInput(float dt)
 	currentCamera->position += newPos; // MODULE CAMERA REVISION CHECKPOINT --> CHECK AND FIX ERRORS FIRST!
 }
 
-void Camera3D::CheckMouseMotion(float dt)
+void M_Camera3D::CheckMouseMotion(float dt)
 {
 
 	// Mouse motion ----------------
@@ -259,7 +259,7 @@ void Camera3D::CheckMouseMotion(float dt)
 	currentCamera->CalculateViewMatrix();
 }
 
-void Camera3D::OnPlay()
+void M_Camera3D::OnPlay()
 {
 	if (gameCamera == nullptr)
 	{
@@ -273,27 +273,27 @@ void Camera3D::OnPlay()
 	currentCamera = gameCamera;
 }
 
-void Camera3D::OnStop()
+void M_Camera3D::OnStop()
 {
 	currentCamera = engineCamera;
 }
 
-bool Camera3D::SaveConfiguration(Json& configModule) const
+bool M_Camera3D::SaveConfiguration(Json& configModule) const
 {
 	return true;
 }
 
-bool Camera3D::LoadConfiguration(Json& configModule)
+bool M_Camera3D::LoadConfiguration(Json& configModule)
 {
 	return true;
 }
 
-bool Camera3D::InspectorDraw()
+bool M_Camera3D::InspectorDraw()
 {
 	return true;
 }
 
-void Camera3D::SetGameCamera(C_Camera* gameCamera)
+void M_Camera3D::SetGameCamera(C_Camera* gameCamera)
 {
 	if (this->gameCamera != nullptr && this->gameCamera != gameCamera)this->gameCamera->isMainCamera = false;
 
@@ -304,7 +304,7 @@ void Camera3D::SetGameCamera(C_Camera* gameCamera)
 	}
 }
 
-void Camera3D::OnClick(SDL_Event event)
+void M_Camera3D::OnClick(SDL_Event event)
 {
 	if (event.button.type != SDL_MOUSEBUTTONDOWN || (event.button.button != SDL_BUTTON_LEFT && event.button.button != SDL_BUTTON_RIGHT)) return;
 	if (engine->GetEditor()->GetPanel<PanelViewport>())
@@ -336,7 +336,7 @@ void Camera3D::OnClick(SDL_Event event)
 	}
 }
 
-//void Camera3D::OnSave(JSONWriter& writer) const
+//void M_Camera3D::OnSave(JSONWriter& writer) const
 //{
 //	writer.String("camera");
 //	writer.StartObject();
@@ -348,7 +348,7 @@ void Camera3D::OnClick(SDL_Event event)
 //		writer.EndObject();
 //}
 //
-//void Camera3D::OnLoad(const JSONReader& reader)
+//void M_Camera3D::OnLoad(const JSONReader& reader)
 //{
 //	if (reader.HasMember("camera"))
 //	{
@@ -362,7 +362,7 @@ void Camera3D::OnClick(SDL_Event event)
 //	RecalculateProjection();
 //}
 
-GameObject* Camera3D::MousePicking(const bool& isRightButton)
+GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 {
 	float normalX = engine->GetEditor()->mouseScenePosition.x / engine->GetEditor()->lastViewportSize.x;
 	float normalY = engine->GetEditor()->mouseScenePosition.y / engine->GetEditor()->lastViewportSize.y;
@@ -454,7 +454,7 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 	return nullptr;
 }
 
-float3 Camera3D::GetLastMouseClick() const
+float3 M_Camera3D::GetLastMouseClick() const
 {
 	return lastMouseClick;
 }
