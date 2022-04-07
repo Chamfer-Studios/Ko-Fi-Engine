@@ -230,8 +230,11 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 		if (component->GetType() == componentType)
 		{
-			/*LOG_BOTH("Components cannot be duplicated!");
-			return component;*/
+			if (componentType != ComponentType::SCRIPT)
+			{
+				LOG_BOTH("Components cannot be duplicated!");
+				return component;
+			}
 		}
 	}
 
