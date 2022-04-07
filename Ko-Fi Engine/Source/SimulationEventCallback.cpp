@@ -20,8 +20,8 @@ void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHe
 		
 		if (gameObject1 && gameObject2)
 		{
-			const std::string* fil1 = gameObject1->GetComponent<ComponentCollider2>()->GetFilter();
-			const std::string* fil2 = gameObject2->GetComponent<ComponentCollider2>()->GetFilter();
+			const std::string* fil1 = gameObject1->GetComponent<C_Collider>()->GetFilter();
+			const std::string* fil2 = gameObject2->GetComponent<C_Collider>()->GetFilter();
 			int fil1pos = callback->GetFilterID(fil1);
 			int fil2pos = callback->GetFilterID(fil2);
 
@@ -85,8 +85,8 @@ void SimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU3
 
 		if (gameObject1 && gameObject2)
 		{
-			const std::string* fil1 = gameObject1->GetComponent<ComponentCollider2>()->GetFilter();
-			const std::string* fil2 = gameObject2->GetComponent<ComponentCollider2>()->GetFilter();
+			const std::string* fil1 = gameObject1->GetComponent<C_Collider>()->GetFilter();
+			const std::string* fil2 = gameObject2->GetComponent<C_Collider>()->GetFilter();
 			int fil1pos = callback->GetFilterID(fil1);
 			int fil2pos = callback->GetFilterID(fil2);
 

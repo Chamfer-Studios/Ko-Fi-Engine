@@ -154,7 +154,7 @@ bool SceneIntro::PostUpdate(float dt)
 			componentMaterial->SetMaterial(material);
 
 			rigidBody->FreezePositionY(true);
-			ComponentCollider2 *collider = knife->CreateComponent<ComponentCollider2>();
+			C_Collider *collider = knife->CreateComponent<C_Collider>();
 			collider->SetColliderShape(ColliderShape::BOX);
 			collider->SetFilter("projectile");
 			collider->SetIsTrigger(true);

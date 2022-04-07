@@ -20,7 +20,6 @@
 #include "C_Camera.h"
 #include "C_Collider.h"
 #include "ComponentRigidBody.h"
-#include "ComponentCollider.h"
 #include "ComponentScript.h"
 #include "ComponentButton.h"
 #include "ComponentCanvas.h"
@@ -398,16 +397,10 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::COLLIDER2:
-			{
-				ComponentCollider2* collCmp = (ComponentCollider2*)component;
-				collCmp->Save(jsonComponent);
-				break;
-			}
 			case ComponentType::COLLIDER:
 			{
-				ComponentCollider* collisionCmp = (ComponentCollider*)component;
-				collisionCmp->Save(jsonComponent);
+				C_Collider* collCmp = (C_Collider*)component;
+				collCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::SCRIPT:
@@ -704,25 +697,15 @@ bool I_Scene::Load(Scene* scene, const char* name)
 						rbCmp->active = true;
 						rbCmp->Load(jsonCmp);
 					}
-					else if (type == "collider2")
+					else if (type == "collider")
 					{
-						ComponentCollider2* collCmp = go->GetComponent<ComponentCollider2>();
+						C_Collider* collCmp = go->GetComponent<C_Collider>();
 						if (collCmp == nullptr)
 						{
-							collCmp = new ComponentCollider2(go, ColliderShape::NONE);
+							collCmp = new C_Collider(go, ColliderShape::NONE);
 						}
 						collCmp->active = true;
 						collCmp->Load(jsonCmp);
-					}
-					else if (type == "collider")
-					{
-						ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
-						if (colCmp == nullptr)
-						{
-							colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);
-						}
-						colCmp->active = true;
-						colCmp->Load(jsonCmp);
 					}
 					else if (type == "particle")
 					{

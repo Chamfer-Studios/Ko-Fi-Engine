@@ -31,8 +31,8 @@ bool ComponentTransform::Update(float dt)
 	{
 		RecomputeGlobalMatrix();
 		owner->PropagateTransform();
-		if (owner->GetComponent<ComponentCollider2>())
-			owner->GetComponent<ComponentCollider2>()->UpdateCollSizeFromAABB();
+		if (owner->GetComponent<C_Collider>())
+			owner->GetComponent<C_Collider>()->UpdateCollSizeFromAABB();
 		isDirty = false;
 	}
 

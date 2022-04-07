@@ -321,7 +321,7 @@ void Renderer3D::RenderScene()
 				}
 
 			}
-			ComponentCollider2* cCol = go->GetComponent<ComponentCollider2>();
+			C_Collider* cCol = go->GetComponent<C_Collider>();
 			if (cCol)
 			{
 				cCol->DrawCollider();
@@ -365,7 +365,7 @@ void Renderer3D::RenderPreviewScene()
 				}
 
 			}
-			ComponentCollider2* cCol = go->GetComponent<ComponentCollider2>();
+			C_Collider* cCol = go->GetComponent<C_Collider>();
 			if (cCol)
 			{
 				cCol->DrawCollider();

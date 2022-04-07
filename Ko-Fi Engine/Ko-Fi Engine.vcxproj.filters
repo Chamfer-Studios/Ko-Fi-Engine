@@ -460,9 +460,6 @@
     <ClCompile Include="Source\ComponentText.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CollisionDetector.cpp">
-      <Filter>Source\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\External\ImGuizmo\include\GraphEditor.cpp">
       <Filter>Libs\ImGuizmo</Filter>
     </ClCompile>
@@ -584,9 +581,6 @@
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentRigidBody.cpp">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ComponentCollider.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Track.cpp">
@@ -1714,9 +1708,6 @@
     <ClInclude Include="Source\ComponentRigidBody.h">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentCollider.h">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\I_Track.h">
       <Filter>Source\Importers</Filter>
     </ClInclude>
@@ -1832,9 +1823,6 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentText.h">
       <Filter>Source\GameObject\Components\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CollisionDetector.h">
-      <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\ComponentRigidBody.h">
       <Filter>Source\GameObject\Components</Filter>

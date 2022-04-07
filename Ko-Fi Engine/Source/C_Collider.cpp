@@ -8,15 +8,15 @@
 #include "Physics.h"
 #include "PxPhysicsAPI.h"
 
-ComponentCollider2::ComponentCollider2(GameObject *parent, ColliderShape collType) : Component(parent)
+C_Collider::C_Collider(GameObject *parent, ColliderShape collType) : Component(parent)
 {
-	type = ComponentType::COLLIDER2;
+	type = ComponentType::COLLIDER;
 	colliderShape = collType;
 
 	CreateCollider(colliderShape);
 }
 
-ComponentCollider2::~ComponentCollider2()
+C_Collider::~C_Collider()
 {
 	if (shape)
 	{
@@ -27,7 +27,7 @@ ComponentCollider2::~ComponentCollider2()
 	}
 }
 
-bool ComponentCollider2::Update(float dt)
+bool C_Collider::Update(float dt)
 {
 	bool ret = true;
 
@@ -40,14 +40,14 @@ bool ComponentCollider2::Update(float dt)
 	return ret;
 }
 
-bool ComponentCollider2::PostUpdate(float dt)
+bool C_Collider::PostUpdate(float dt)
 {
 	bool ret = true;
 
 	return ret;
 }
 
-bool ComponentCollider2::UpdateCollider()
+bool C_Collider::UpdateCollider()
 {
 	bool ret = true;
 
@@ -56,7 +56,7 @@ bool ComponentCollider2::UpdateCollider()
 	return ret;
 }
 
-void ComponentCollider2::CreateCollider(ColliderShape collType)
+void C_Collider::CreateCollider(ColliderShape collType)
 {
 	switch (collType)
 	{
@@ -78,7 +78,7 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 	}
 }
 
-void ComponentCollider2::CreateBoxCollider()
+void C_Collider::CreateBoxCollider()
 {
 	if (shape)
 		debugFilter = (std::string *)shape->getSimulationFilterData().word0;
@@ -133,7 +133,7 @@ void ComponentCollider2::CreateBoxCollider()
 	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
 }
 
-void ComponentCollider2::DrawCollider()
+void C_Collider::DrawCollider()
 {
 	if (drawCollider)
 	{
@@ -144,7 +144,7 @@ void ComponentCollider2::DrawCollider()
 	}
 }
 
-void ComponentCollider2::DrawBoxCollider()
+void C_Collider::DrawBoxCollider()
 {
 	float3 transformOffset = owner->GetComponent<ComponentTransform>()->GetPosition();
 	physx::PxTransform localPose;
@@ -208,9 +208,9 @@ void ComponentCollider2::DrawBoxCollider()
 }
 
 // Serialization
-void ComponentCollider2::Save(Json &json) const
+void C_Collider::Save(Json &json) const
 {
-	json["type"] = "collider2";
+	json["type"] = "collider";
 
 	json["collider_type"] = (int)colliderShape;
 	json["filter"] = filter;
@@ -223,7 +223,7 @@ void ComponentCollider2::Save(Json &json) const
 	json["offset"] = {offset.x, offset.y, offset.z};
 }
 
-void ComponentCollider2::Load(Json &json)
+void C_Collider::Load(Json &json)
 {
 	if (json.contains("collider_type"))
 		colliderShape = (ColliderShape)json.at("collider_type");
@@ -255,7 +255,7 @@ void ComponentCollider2::Load(Json &json)
 }
 
 // On inspector draw
-bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
+bool C_Collider::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
@@ -345,7 +345,7 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 }
 
 // Private methods
-const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collShape)
+const char* C_Collider::ColliderShapeToString(const ColliderShape collShape)
 {
 	switch (collShape)
 	{
@@ -362,7 +362,7 @@ const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collSh
 	}
 	return "ERROR, NO COLLIDER SHAPE";
 }
-const char *ComponentCollider2::CollisionLayerToString(const CollisionLayer collLayer)
+const char *C_Collider::CollisionLayerToString(const CollisionLayer collLayer)
 {
 	switch (collLayer)
 	{

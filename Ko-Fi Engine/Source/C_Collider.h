@@ -24,11 +24,11 @@ enum class CollisionLayer
 
 class ComponentTransform;
 
-class ComponentCollider2 : public Component
+class C_Collider : public Component
 {
 public:
-	ComponentCollider2(GameObject* parent, ColliderShape collType = ColliderShape::NONE);
-	~ComponentCollider2();
+	C_Collider(GameObject* parent, ColliderShape collType = ColliderShape::NONE);
+	~C_Collider();
 
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;

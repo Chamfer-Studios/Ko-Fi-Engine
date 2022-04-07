@@ -12,8 +12,7 @@ class ComponentTransform;
 class ComponentMesh;
 class ComponentInfo;
 class ComponentScript;
-class ComponentCollider;
-class ComponentCollider2;
+class C_Collider;
 class C_Animator;
 class ComponentLightSource;
 

@@ -8,7 +8,6 @@
 #include "ComponentMaterial.h"
 #include "ComponentParticle.h"
 #include "C_Camera.h"
-#include "ComponentCollider.h"
 #include "ComponentScript.h"
 #include "C_Animator.h"
 #include "C_Collider.h"
@@ -274,7 +273,10 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::COLLIDER:
 	{
-		c = this->CreateComponent<ComponentCollider>();
+		if (!this->GetComponent<ComponentRigidBody>())
+			AddComponentByType(ComponentType::RIGID_BODY);
+
+		c = this->CreateComponent<C_Collider>();
 		break;
 	}
 	case ComponentType::SCRIPT:
@@ -320,18 +322,6 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::INFO:
 	{
 		c = this->CreateComponent<ComponentInfo>();
-		break;
-	}
-	case ComponentType::COLLIDER2:
-	{
-		/*this->CreateComponent<ComponentCollider2>();*/
-		if (!this->GetComponent<ComponentRigidBody>())
-		{
-			
-			AddComponentByType(ComponentType::RIGID_BODY);
-		}
-			
-		c = new ComponentCollider2(this, ColliderShape::NONE);
 		break;
 	}
 	case ComponentType::WALKABLE:
@@ -573,7 +563,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::COLLIDER:
 		{
-			ComponentCollider* collisionCmp = (ComponentCollider*)component;
+			C_Collider* collisionCmp = (C_Collider*)component;
 			collisionCmp->Save(jsonComponent);
 			break;
 		}
@@ -781,10 +771,10 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "collider")
 		{
-			ComponentCollider* colCmp = this->GetComponent<ComponentCollider>();
+			C_Collider* colCmp = this->GetComponent<C_Collider>();
 			if (colCmp == nullptr)
 			{
-				colCmp = this->CreateComponent<ComponentCollider>();
+				colCmp = this->CreateComponent<C_Collider>();
 			}
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);
@@ -920,10 +910,10 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "collider")
 		{
-			ComponentCollider* colCmp = this->GetComponent<ComponentCollider>();
+			C_Collider* colCmp = this->GetComponent<C_Collider>();
 			if (colCmp == nullptr)
 			{
-				colCmp = this->CreateComponent<ComponentCollider>();
+				colCmp = this->CreateComponent<C_Collider>();
 			}
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);

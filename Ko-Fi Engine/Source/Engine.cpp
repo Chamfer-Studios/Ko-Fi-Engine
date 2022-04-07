@@ -14,7 +14,6 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "Physics.h"
-#include "CollisionDetector.h"
 #include "ResourceManager.h"
 #include "Audio.h"
 #include "Navigation.h"
@@ -40,7 +39,6 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	ui = new UI(this);
 	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new Physics(this);
-	collisionDetector = new CollisionDetector(this);
 	resourceManager = new ResourceManager(this);
 	audio = new Audio(this);
 	navigation = new Navigation(this);
@@ -53,7 +51,6 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(ui);
-	AddModule(collisionDetector);
 	AddModule(sceneManager);
 	AddModule(resourceManager);
 
