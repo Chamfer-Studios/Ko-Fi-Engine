@@ -8,7 +8,7 @@
 #include "ComponentMesh.h"
 #include "ComponentScript.h"
 #include "C_Camera.h"
-#include "ComponentInfo.h"
+#include "C_Info.h"
 #include "ComponentTransform.h"
 #include "C_RigidBody.h"
 #include "C_Animator.h"

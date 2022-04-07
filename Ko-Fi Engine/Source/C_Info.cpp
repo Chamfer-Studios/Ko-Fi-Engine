@@ -1,4 +1,4 @@
-#include "ComponentInfo.h"
+#include "C_Info.h"
 #include "GameObject.h"
 #include "Engine.h"
 #include "SceneManager.h"
@@ -6,25 +6,25 @@
 #include "imgui_stdlib.h"
 #include "PanelChooser.h"
 
-ComponentInfo::ComponentInfo(GameObject* parent) : Component(parent)
+C_Info::C_Info(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::INFO;
 }
 
-ComponentInfo::~ComponentInfo()
+C_Info::~C_Info()
 {}
 
-bool ComponentInfo::CleanUp()
+bool C_Info::CleanUp()
 {
 	return true;
 }
 
-bool ComponentInfo::Update(float dt)
+bool C_Info::Update(float dt)
 {
 	return true;
 }
 
-bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
+bool C_Info::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
@@ -51,11 +51,11 @@ bool ComponentInfo::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-void ComponentInfo::Save(Json& json) const
+void C_Info::Save(Json& json) const
 {
 	json["type"] = "info";
 }
 
-void ComponentInfo::Load(Json& json)
+void C_Info::Load(Json& json)
 {
 }

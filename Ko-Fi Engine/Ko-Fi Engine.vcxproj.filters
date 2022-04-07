@@ -346,7 +346,7 @@
     <ClCompile Include="Source\PanelHierarchy.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentInfo.cpp">
+    <ClCompile Include="Source\C_Info.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_stdlib.cpp">
@@ -952,7 +952,7 @@
     <ClInclude Include="Source\PanelHierarchy.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentInfo.h">
+    <ClInclude Include="Source\C_Info.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_stdlib.h">

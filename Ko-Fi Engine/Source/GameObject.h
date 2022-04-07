@@ -10,7 +10,7 @@ class KoFiEngine;
 //class ComponentMesh;
 class ComponentTransform;
 class ComponentMesh;
-class ComponentInfo;
+class C_Info;
 class ComponentScript;
 class C_Collider;
 class C_Animator;

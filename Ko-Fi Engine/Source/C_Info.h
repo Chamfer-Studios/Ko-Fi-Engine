@@ -5,11 +5,11 @@
 
 using Json = nlohmann::json;
 
-class ComponentInfo : public Component
+class C_Info : public Component
 {
 public:
-	ComponentInfo(GameObject* parent);
-	~ComponentInfo();
+	C_Info(GameObject* parent);
+	~C_Info();
 
 	bool Update(float dt) override;
 	bool CleanUp() override;

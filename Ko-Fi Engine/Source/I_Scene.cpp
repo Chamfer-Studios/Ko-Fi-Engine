@@ -16,7 +16,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
-#include "ComponentInfo.h"
+#include "C_Info.h"
 #include "C_Camera.h"
 #include "C_Collider.h"
 #include "C_RigidBody.h"
@@ -453,7 +453,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::INFO:
 			{
-				ComponentInfo* infoCmp = (ComponentInfo*)component;
+				C_Info* infoCmp = (C_Info*)component;
 				infoCmp->Save(jsonComponent);
 				break;
 			}
@@ -613,7 +613,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "info")
 					{
-						ComponentInfo* infoCmp = (ComponentInfo*)go->AddComponentByType(ComponentType::INFO);
+						C_Info* infoCmp = (C_Info*)go->AddComponentByType(ComponentType::INFO);
 						infoCmp->active = true;
 						infoCmp->Load(jsonCmp); // Does nothing as of now
 					}

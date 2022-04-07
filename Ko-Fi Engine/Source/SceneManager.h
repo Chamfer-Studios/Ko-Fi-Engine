@@ -17,7 +17,7 @@ class GameObject;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentMaterial;
-class ComponentInfo;
+class C_Info;
 class C_Camera;
 class ComponentCanvas;
 class ComponentTransform2D;

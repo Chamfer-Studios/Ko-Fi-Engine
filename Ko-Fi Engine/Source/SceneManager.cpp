@@ -13,7 +13,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
-#include "ComponentInfo.h"
+#include "C_Info.h"
 #include "C_Camera.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"

@@ -18,7 +18,7 @@
 #include "ComponentText.h"
 #include "C_RigidBody.h"
 #include "ComponentTransform.h"
-#include "ComponentInfo.h"
+#include "C_Info.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 #include "ComponentWalkable.h"
@@ -41,7 +41,7 @@ GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D
 	else
 		SetName(name);
 
-	CreateComponent<ComponentInfo>();
+	CreateComponent<C_Info>();
 
 	is3D = _is3D;
 	if (is3D)
@@ -63,7 +63,7 @@ GameObject::GameObject()
 	this->uid = uid;
 	this->engine = engine;
 
-	CreateComponent<ComponentInfo>();
+	CreateComponent<C_Info>();
 	transform = CreateComponent<ComponentTransform>();
 
 	tag = Tag::TAG_UNTAGGED;
@@ -321,7 +321,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::INFO:
 	{
-		c = this->CreateComponent<ComponentInfo>();
+		c = this->CreateComponent<C_Info>();
 		break;
 	}
 	case ComponentType::WALKABLE:
@@ -545,7 +545,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::INFO:
 		{
-			ComponentInfo* infoCmp = (ComponentInfo*)component;
+			C_Info* infoCmp = (C_Info*)component;
 			infoCmp->Save(jsonComponent);
 			break;
 		}
@@ -685,7 +685,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "info")
 		{
-			ComponentInfo* infoCmp = this->GetComponent<ComponentInfo>();
+			C_Info* infoCmp = this->GetComponent<C_Info>();
 			infoCmp->active = true;
 			infoCmp->Load(jsonCmp); // does nothing as of now
 		}
@@ -824,7 +824,7 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "info")
 		{
-			ComponentInfo* infoCmp = this->GetComponent<ComponentInfo>();
+			C_Info* infoCmp = this->GetComponent<C_Info>();
 			infoCmp->active = true;
 			infoCmp->Load(jsonCmp); //does nothing as of now
 		}
