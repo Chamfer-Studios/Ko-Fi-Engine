@@ -218,7 +218,7 @@
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MainBar.cpp" />
-    <ClCompile Include="Source\FileSystem.cpp" />
+    <ClCompile Include="Source\M_FileSystem.cpp" />
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
@@ -608,7 +608,7 @@
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\MainBar.h" />
-    <ClInclude Include="Source\FileSystem.h" />
+    <ClInclude Include="Source\M_FileSystem.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\MaterialNode.h" />
     <ClInclude Include="Source\MathGeoTransform.h" />

@@ -4,7 +4,7 @@
 #include "RNG.h"
 #include "FSDefs.h"
 #include "Importer.h"
-#include "FileSystem.h"
+#include "M_FileSystem.h"
 #include "ResourceBase.h"
 
 #include "json.hpp"

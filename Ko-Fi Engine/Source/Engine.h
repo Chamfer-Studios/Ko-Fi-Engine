@@ -14,7 +14,7 @@ class SceneManager;
 class Renderer3D;
 class M_Camera3D;
 class M_Editor;
-class FileSystem;
+class M_FileSystem;
 class Physics;
 class UI;
 class CollisionDetector;
@@ -62,7 +62,7 @@ public:
 	Renderer3D* GetRenderer() const;
 	M_Camera3D* GetCamera3D() const;
 	M_Editor* GetEditor() const;
-	FileSystem* GetFileSystem() const;
+	M_FileSystem* GetFileSystem() const;
 	Physics* GetPhysics() const;
 	UI* GetUI() const;
 	CollisionDetector* GetCollisionDetector() const;
@@ -101,7 +101,7 @@ private:
 	Renderer3D* renderer = nullptr;
 	M_Camera3D* camera = nullptr;
 	M_Editor* editor = nullptr;
-	FileSystem* fileSystem = nullptr;
+	M_FileSystem* fileSystem = nullptr;
 	Physics* physics = nullptr;
 	UI* ui = nullptr;
 	CollisionDetector* collisionDetector = nullptr;

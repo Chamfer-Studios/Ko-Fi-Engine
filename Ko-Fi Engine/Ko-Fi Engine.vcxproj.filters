@@ -322,7 +322,7 @@
     <ClCompile Include="Source\MainBar.cpp">
       <Filter>Source\Editor\MenuBars</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FileSystem.cpp">
+    <ClCompile Include="Source\M_FileSystem.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelChooser.cpp">
@@ -925,7 +925,7 @@
     <ClInclude Include="Source\MainBar.h">
       <Filter>Source\Editor\MenuBars</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FileSystem.h">
+    <ClInclude Include="Source\M_FileSystem.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelChooser.h">

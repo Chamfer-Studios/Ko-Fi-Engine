@@ -12,11 +12,11 @@ class Renderer3D;
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
 
-class FileSystem : public Module
+class M_FileSystem : public Module
 {
 public:
-	FileSystem(KoFiEngine* engien);
-	~FileSystem();
+	M_FileSystem(KoFiEngine* engien);
+	~M_FileSystem();
 
 	bool Awake(Json configModule);
 	bool Start();
@@ -36,7 +36,7 @@ public:
 	bool InspectorDraw() override;
 	// ------------------------------------------------------------------
 
-	// FileSystem Functions
+	// M_FileSystem Functions
 	std::string OpenFile(const char* path) const;
 	std::string OpenFileBinary(const char* path) const;
 	bool SaveFile(const char* path, std::string text) const;

@@ -1,4 +1,4 @@
-#include "FileSystem.h"
+#include "M_FileSystem.h"
 #include "Engine.h"
 #include "SceneIntro.h"
 #include "Log.h"
@@ -10,7 +10,7 @@
 #include <iomanip>
 #include "JsonHandler.h"
 
-FileSystem::FileSystem(KoFiEngine* engine)
+M_FileSystem::M_FileSystem(KoFiEngine* engine)
 {
 	name = "ModelLoader";
 
@@ -28,17 +28,17 @@ FileSystem::FileSystem(KoFiEngine* engine)
 	appLog->AddLog("Filesystem: %s\n", rootPath.string());
 }
 
-FileSystem::~FileSystem()
+M_FileSystem::~M_FileSystem()
 {
 
 }
 
-bool FileSystem::Awake(Json configModule)
+bool M_FileSystem::Awake(Json configModule)
 {
 	bool ret = true;
 
-	CONSOLE_LOG("Turning on FileSystem debugger...");
-	appLog->AddLog("Turning on FileSystem debugger...\n");
+	CONSOLE_LOG("Turning on M_FileSystem debugger...");
+	appLog->AddLog("Turning on M_FileSystem debugger...\n");
 
 	//Prepare filesystem
 	//std::filesystem::directory_entry().assign(addPath);
@@ -49,33 +49,33 @@ bool FileSystem::Awake(Json configModule)
 	return ret;
 }
 
-bool FileSystem::Start()
+bool M_FileSystem::Start()
 {
-	CONSOLE_LOG("Starting FileSystem...");
-	appLog->AddLog("Starting FileSystem...\n");
+	CONSOLE_LOG("Starting M_FileSystem...");
+	appLog->AddLog("Starting M_FileSystem...\n");
 
 	return true;
 }
 
-bool FileSystem::PreUpdate(float dt)
+bool M_FileSystem::PreUpdate(float dt)
 {
 	return true;
 }
 
-bool FileSystem::Update(float dt)
+bool M_FileSystem::Update(float dt)
 {
 	return true;
 }
 
-bool FileSystem::PostUpdate(float dt)
+bool M_FileSystem::PostUpdate(float dt)
 {
 	return true;
 }
 
-bool FileSystem::CleanUp()
+bool M_FileSystem::CleanUp()
 {
-	CONSOLE_LOG("Cleaning FileSystem up...");
-	appLog->AddLog("Cleaning FileSystem up...\n");
+	CONSOLE_LOG("Cleaning M_FileSystem up...");
+	appLog->AddLog("Cleaning M_FileSystem up...\n");
 
 	// detach log stream
 
@@ -83,27 +83,27 @@ bool FileSystem::CleanUp()
 }
 
 // Method to receive and manage events
-void FileSystem::OnNotify(const Event& event)
+void M_FileSystem::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
-bool FileSystem::SaveConfiguration(Json& configModule) const
+bool M_FileSystem::SaveConfiguration(Json& configModule) const
 {
 	return true;
 }
 
-bool FileSystem::LoadConfiguration(Json& configModule)
+bool M_FileSystem::LoadConfiguration(Json& configModule)
 {
 	return true;
 }
 
-bool FileSystem::InspectorDraw()
+bool M_FileSystem::InspectorDraw()
 {
 	return true;
 }
 
-std::string FileSystem::OpenFile(const char* path) const
+std::string M_FileSystem::OpenFile(const char* path) const
 {
 	std::string fileText;
 
@@ -120,7 +120,7 @@ std::string FileSystem::OpenFile(const char* path) const
 	return fileText;
 }
 
-std::string FileSystem::OpenFileBinary(const char* path) const
+std::string M_FileSystem::OpenFileBinary(const char* path) const
 {
 	std::string fileText;
 
@@ -137,7 +137,7 @@ std::string FileSystem::OpenFileBinary(const char* path) const
 	return fileText;
 }
 
-bool FileSystem::SaveFile(const char* path, std::string text) const
+bool M_FileSystem::SaveFile(const char* path, std::string text) const
 {
 	bool ret = true;
 	SDL_assert(path != nullptr);
@@ -149,7 +149,7 @@ bool FileSystem::SaveFile(const char* path, std::string text) const
 	return ret;
 }
 
-void FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs)
+void M_FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& files, std::vector<std::string>& dirs)
 {
 	std::string p = rootPath.string() + "/" + path;
 	for (const auto& file : std::filesystem::directory_iterator(p))
@@ -165,7 +165,7 @@ void FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& file
 	}
 }
 
-void FileSystem::DiscoverAllFiles(const char* directory, std::vector<std::string>& files)
+void M_FileSystem::DiscoverAllFiles(const char* directory, std::vector<std::string>& files)
 {
 	if (directory == nullptr)
 	{
@@ -191,7 +191,7 @@ void FileSystem::DiscoverAllFiles(const char* directory, std::vector<std::string
 	directories.shrink_to_fit();
 }
 
-void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std::string>& files, std::vector<std::string>& filteredFiles, const char* filter)
+void M_FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std::string>& files, std::vector<std::string>& filteredFiles, const char* filter)
 {
 	if (directory == nullptr)
 	{
@@ -232,12 +232,12 @@ void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std
 	directories.shrink_to_fit();
 }
 
-void FileSystem::GetLastModTime(const char* path)
+void M_FileSystem::GetLastModTime(const char* path)
 {
 	auto fTime = std::filesystem::last_write_time(path);
 }
 
-const char* FileSystem::GetFileName(const char* path) const
+const char* M_FileSystem::GetFileName(const char* path) const
 {
 	std::string p = path;
 	std::string name = p.substr(p.find_last_of("/") + 1, p.size());
@@ -245,7 +245,7 @@ const char* FileSystem::GetFileName(const char* path) const
 	return n;
 }
 
-std::string FileSystem::GetNameFromPath(std::string path)
+std::string M_FileSystem::GetNameFromPath(std::string path)
 {
 	std::string name = path;
 	name = name.substr(name.find_last_of("/\\") + 1);
@@ -254,7 +254,7 @@ std::string FileSystem::GetNameFromPath(std::string path)
 	return name;
 }
 
-int FileSystem::StringCompare(const char* a, const char* b) {
+int M_FileSystem::StringCompare(const char* a, const char* b) {
 	int ca, cb;
 	do
 	{
@@ -268,12 +268,12 @@ int FileSystem::StringCompare(const char* a, const char* b) {
 	return ca - cb;
 }
 
-void FileSystem::AddPath(const char* path)
+void M_FileSystem::AddPath(const char* path)
 {
 	rootPath += path;
 }
 
-void FileSystem::CreateMaterial(const char* path, const char* filename, const char* texturePath)
+void M_FileSystem::CreateMaterial(const char* path, const char* filename, const char* texturePath)
 {
 	JsonHandler jsonHandler;
 	auto materialJson = R"(
@@ -304,7 +304,7 @@ void FileSystem::CreateMaterial(const char* path, const char* filename, const ch
 	jsonHandler.SaveJson(materialJson, path);
 }
 
-void FileSystem::CreateMaterial(const char* path)
+void M_FileSystem::CreateMaterial(const char* path)
 {
 	JsonHandler jsonHandler;
 	auto materialJson = R"(
@@ -331,7 +331,7 @@ void FileSystem::CreateMaterial(const char* path)
 	jsonHandler.SaveJson(materialJson, path);
 }
 
-void FileSystem::CreateShader(const char* path)
+void M_FileSystem::CreateShader(const char* path)
 {
 	const char* text = R"(
 	#shader vertex
@@ -389,7 +389,7 @@ void FileSystem::CreateShader(const char* path)
 	stream.close();
 }
 
-void FileSystem::CreateScene(const char* path,const char* sceneName)
+void M_FileSystem::CreateScene(const char* path,const char* sceneName)
 {
 	Json sceneJson;
 	std::string name = GetNameFromPath(sceneName);

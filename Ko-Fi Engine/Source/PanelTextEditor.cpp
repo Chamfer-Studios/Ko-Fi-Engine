@@ -1,7 +1,7 @@
 #include "PanelTextEditor.h"
 #include "M_Editor.h"
 #include "Engine.h"
-#include "FileSystem.h"
+#include "M_FileSystem.h"
 #include "PanelChooser.h"
 #include "SceneManager.h"
 #include "C_Material.h"

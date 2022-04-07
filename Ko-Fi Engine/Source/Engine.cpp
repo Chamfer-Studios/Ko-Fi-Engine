@@ -6,7 +6,7 @@
 #include "M_Camera3D.h"
 #include "SceneManager.h"
 #include "M_Editor.h"
-#include "FileSystem.h"
+#include "M_FileSystem.h"
 #include "FSDefs.h"
 #include "UI.h"
 #include "Importer.h"
@@ -30,7 +30,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	PERF_START(ptimer);
 	Importer::GetInstance(this);
 	window = new Window(this);
-	fileSystem = new FileSystem(this);
+	fileSystem = new M_FileSystem(this);
 	input = new Input(this);
 	camera = new M_Camera3D(this);
 	renderer = new Renderer3D(this);
@@ -436,7 +436,7 @@ M_Editor* KoFiEngine::GetEditor()const
 	return this->editor;
 }
 
-FileSystem* KoFiEngine::GetFileSystem()const
+M_FileSystem* KoFiEngine::GetFileSystem()const
 {
 	return this->fileSystem;
 }
