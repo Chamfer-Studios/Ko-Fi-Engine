@@ -15,7 +15,7 @@
 #include "M_Camera3D.h"
 #include "PanelChooser.h"
 #include "PanelViewport.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "EmitterInstance.h"
 #include "Log.h"
 

@@ -4,13 +4,13 @@
 #include "Panel.h"
 #include "EditorStyleHandler.h"
 
-class Editor;
+class M_Editor;
 class GameObject;
 
 class PanelHierarchy : public Panel
 {
 public:
-	PanelHierarchy(Editor* editor);
+	PanelHierarchy(M_Editor* editor);
 	~PanelHierarchy();
 
 	bool Awake();
@@ -25,7 +25,7 @@ private:
 	EditorStyleHandler styleHandler;
 
 	// Needed modules
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 	GameObject* selectedGameObject = nullptr;
 	GameObject* destinationGameObject = nullptr;
 	bool is_selected = false;

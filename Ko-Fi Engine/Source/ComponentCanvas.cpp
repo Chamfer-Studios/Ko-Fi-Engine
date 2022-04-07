@@ -1,6 +1,6 @@
 #include "ComponentCanvas.h"
 #include "Engine.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "UI.h"
 #include "Window.h"
 #include "GameObject.h"

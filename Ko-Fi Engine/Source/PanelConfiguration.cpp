@@ -6,11 +6,11 @@
 #include "Renderer3D.h"
 #include "Input.h"
 #include "EngineConfig.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include <imgui.h>
 #include "glew.h"
 
-PanelConfiguration::PanelConfiguration(Editor* editor, EngineConfig* engineConfig)
+PanelConfiguration::PanelConfiguration(M_Editor* editor, EngineConfig* engineConfig)
 {
 	panelName = "Configuration";
 	

@@ -3,7 +3,7 @@
 #include "Engine.h"
 #include "Input.h"
 #include "UI.h"
-#include "Editor.h"
+#include "M_Editor.h"
 
 #include "GameObject.h"
 #include "ComponentCanvas.h"

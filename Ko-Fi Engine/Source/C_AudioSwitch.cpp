@@ -523,7 +523,7 @@ void C_AudioSwitch::DisablePlayOnStart(R_Track* trackToChange)
 
 void C_AudioSwitch::DrawEditor(R_Track* track)
 {
-    if (ImGui::Begin("Audio Editor", &openEditor))
+    if (ImGui::Begin("Audio M_Editor", &openEditor))
     {
         bool mono = track->channels == 1;
 

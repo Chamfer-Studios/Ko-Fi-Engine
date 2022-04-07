@@ -1,6 +1,6 @@
 // Modules
 #include "PanelViewport.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Engine.h"
 #include "M_Camera3D.h"
 #include "SceneManager.h"
@@ -22,7 +22,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_internal.h"
 
-PanelViewport::PanelViewport(Editor* editor, KoFiEngine* engine)
+PanelViewport::PanelViewport(M_Editor* editor, KoFiEngine* engine)
 {
 	this->editor = editor;
 	this->engine = engine;

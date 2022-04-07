@@ -3,7 +3,7 @@
 
 #include "Importer.h"
 #include "Engine.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "QuadTree3D.h"
 #include "RNG.h"
 #include "Resource.h"

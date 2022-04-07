@@ -3,12 +3,12 @@
 
 #include "Panel.h"
 
-class Editor;
+class M_Editor;
 
 class PanelInspector : public Panel
 {
 public:
-	PanelInspector(Editor* editor);
+	PanelInspector(M_Editor* editor);
 	~PanelInspector();
 
 	bool Awake();
@@ -17,7 +17,7 @@ public:
 	bool PostUpdate();
 private:
 	// Needed modules
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 	int componentType;
 
 	// Bools for the different options

@@ -3,12 +3,12 @@
 #include "PanelTextEditor.h"
 #include "Engine.h"
 #include <imgui.h>
-#include "Editor.h"
+#include "M_Editor.h"
 #include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-PanelAssets::PanelAssets(Editor* editor) : currentDir(assetsDir), fileIcon("Assets/Icons/file_icon.png"), directoryIcon("Assets/Icons/directory_icon.png")
+PanelAssets::PanelAssets(M_Editor* editor) : currentDir(assetsDir), fileIcon("Assets/Icons/file_icon.png"), directoryIcon("Assets/Icons/directory_icon.png")
 {
 	panelName = "Assets";
 	this->editor = editor;

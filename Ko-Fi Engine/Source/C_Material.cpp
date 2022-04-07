@@ -3,7 +3,7 @@
 #include "Log.h"
 #include "GameObject.h"
 #include "Engine.h"
-#include "Editor.h"
+#include "M_Editor.h"
 
 #include "Importer.h"
 #include "I_Material.h"

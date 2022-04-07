@@ -7,7 +7,7 @@
 #include "C_Transform.h"
 #include "M_Camera3D.h"
 #include "Engine.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Window.h"
 
 #include "PanelChooser.h"

@@ -2,7 +2,7 @@
 #include <imgui_impl_sdl.h>
 #include <imgui_impl_opengl3.h>
 #include "Engine.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Window.h"
 #include "Renderer3D.h"
 #include "FileSystem.h"
@@ -30,10 +30,10 @@
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
 
-Editor::Editor(KoFiEngine* engine)
+M_Editor::M_Editor(KoFiEngine* engine)
 {
 	this->engine = engine;
-	name = "Editor";
+	name = "M_Editor";
 
 	// We need to check whether or not each panel is activated.
 	// We have to set a bool for each of them in order to be able to close and open again a panel.
@@ -98,30 +98,30 @@ Editor::Editor(KoFiEngine* engine)
 	AddPanel(panelTextEditor);
 }
 
-Editor::~Editor()
+M_Editor::~M_Editor()
 {
 	CleanUp();
 }
 
-void Editor::AddPanel(Panel* panel)
+void M_Editor::AddPanel(Panel* panel)
 {
 	panel->Init();
 	panels.push_back(panel);
 }
 
-void Editor::RemovePanel(Panel* panel)
+void M_Editor::RemovePanel(Panel* panel)
 {
 	panel->CleanUp();
 	panels.remove(panel);
 	RELEASE(panel);
 }
 
-PanelChooser* Editor::GetPanelChooser()
+PanelChooser* M_Editor::GetPanelChooser()
 {
 	return this->panelChooser;
 }
 
-bool Editor::Awake(Json configModule)
+bool M_Editor::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -147,7 +147,7 @@ bool Editor::Awake(Json configModule)
 	return ret;
 }
 
-bool Editor::Start()
+bool M_Editor::Start()
 {
 	appLog->AddLog("Starting panel editor\n");
 	bool ret = true;
@@ -181,7 +181,7 @@ bool Editor::Start()
 	return ret;
 }
 
-bool Editor::PreUpdate(float dt)
+bool M_Editor::PreUpdate(float dt)
 {
 	bool ret = true;
 	ImGui_ImplOpenGL3_NewFrame();
@@ -204,7 +204,7 @@ bool Editor::PreUpdate(float dt)
 	return true;
 }
 
-bool Editor::Update(float dt)
+bool M_Editor::Update(float dt)
 {
 	bool ret = true;
 
@@ -250,7 +250,7 @@ bool Editor::Update(float dt)
 	return ret;
 }
 
-bool Editor::PostUpdate(float dt)
+bool M_Editor::PostUpdate(float dt)
 {
 	bool ret = true;
 
@@ -291,7 +291,7 @@ bool Editor::PostUpdate(float dt)
 	return ret;
 }
 
-bool Editor::CleanUp()
+bool M_Editor::CleanUp()
 {
 	appLog->AddLog("Cleaning panel editor\n");
 	bool ret = true;
@@ -326,27 +326,27 @@ bool Editor::CleanUp()
 }
 
 // Method to receive and manage events
-void Editor::OnNotify(const Event& event)
+void M_Editor::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
-void Editor::OnPlay()
+void M_Editor::OnPlay()
 {
 	panelGameObjectInfo.selectedGameObjectID = -1;
 }
 
-bool Editor::SaveConfiguration(Json& configModule) const
+bool M_Editor::SaveConfiguration(Json& configModule) const
 {
 	return true;
 }
 
-bool Editor::LoadConfiguration(Json& configModule)
+bool M_Editor::LoadConfiguration(Json& configModule)
 {
 	return true;
 }
 
-bool Editor::InspectorDraw()
+bool M_Editor::InspectorDraw()
 {
 	return true;
 }
@@ -448,7 +448,7 @@ void ExampleMarkdownFormatCallback(const ImGui::MarkdownFormatInfo& markdownForm
 	}
 }
 
-void Editor::Markdown(const std::string& markdown_)
+void M_Editor::Markdown(const std::string& markdown_)
 {
 	// You can make your own Markdown function with your prefered string container and markdown config.
 	// > C++14 can use ImGui::MarkdownConfig mdConfig{ LinkCallback, NULL, ImageCallback, ICON_FA_LINK, { { H1, true }, { H2, true }, { H3, false } }, NULL };
@@ -464,7 +464,7 @@ void Editor::Markdown(const std::string& markdown_)
 	ImGui::Markdown(markdown_.c_str(), markdown_.length(), mdConfig);
 }
 
-void Editor::MarkdownExample()
+void M_Editor::MarkdownExample()
 {
 	const std::string markdownText = u8R"(
 # H1 Header: Text and Links
@@ -486,7 +486,7 @@ ___
 }
 
 // Refactor this function (it's not done the right way right now...).
-void Editor::UpdatePanelsState()
+void M_Editor::UpdatePanelsState()
 {
 	if (panelsState.showViewportWindow == true)
 	{
@@ -523,19 +523,19 @@ void Editor::UpdatePanelsState()
 	}
 }
 
-std::list<Panel*> Editor::GetPanels()
+std::list<Panel*> M_Editor::GetPanels()
 {
 	return panels;
 }
 
-bool Editor::MouseOnScene()
+bool M_Editor::MouseOnScene()
 {
 	return mouseScenePosition.x > 0 && mouseScenePosition.x < viewportSize.x
 		&& mouseScenePosition.y > 0 && mouseScenePosition.y < viewportSize.y;
 }
 
 
-void Editor::OpenTextEditor(std::string path, const char* ext)
+void M_Editor::OpenTextEditor(std::string path, const char* ext)
 {
 	toggleTextEditor = true;
 	panelTextEditor->LoadFile(path,ext);

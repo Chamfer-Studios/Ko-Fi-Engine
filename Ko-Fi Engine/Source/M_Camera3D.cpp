@@ -3,7 +3,7 @@
 #include "Engine.h"
 #include "Input.h"
 #include "SceneManager.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
@@ -99,7 +99,7 @@ void M_Camera3D::OnNotify(const Event& event)
 
 void M_Camera3D::OnGui()
 {
-	if (ImGui::CollapsingHeader("Editor Camera"))
+	if (ImGui::CollapsingHeader("M_Editor Camera"))
 	{
 		if (ImGui::DragFloat("Vertical fov", &currentCamera->verticalFOV))
 		{

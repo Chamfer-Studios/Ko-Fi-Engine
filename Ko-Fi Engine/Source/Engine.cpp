@@ -5,7 +5,7 @@
 #include "Renderer3D.h"
 #include "M_Camera3D.h"
 #include "SceneManager.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "FileSystem.h"
 #include "FSDefs.h"
 #include "UI.h"
@@ -34,7 +34,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	input = new Input(this);
 	camera = new M_Camera3D(this);
 	renderer = new Renderer3D(this);
-	editor = new Editor(this);
+	editor = new M_Editor(this);
 	sceneManager = new SceneManager(this);
 	ui = new UI(this);
 	//viewportBuffer = new ViewportFrameBuffer(this);
@@ -431,7 +431,7 @@ M_Camera3D* KoFiEngine::GetCamera3D()const
 	return this->camera;
 }
 
-Editor* KoFiEngine::GetEditor()const
+M_Editor* KoFiEngine::GetEditor()const
 {
 	return this->editor;
 }

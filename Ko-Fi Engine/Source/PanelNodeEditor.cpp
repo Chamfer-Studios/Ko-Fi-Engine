@@ -1,5 +1,5 @@
 #include "PanelNodeEditor.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include <fstream>
 #include <ios> // for std::streamsize
 #include "PanelChooser.h"
@@ -10,10 +10,10 @@
 #include "AdditionNode.h"
 
 #include <ImNodes.h>
-PanelNodeEditor::PanelNodeEditor(Editor* editor)
+PanelNodeEditor::PanelNodeEditor(M_Editor* editor)
 {
 	this->editor = editor;
-	panelName = "Node Editor";
+	panelName = "Node M_Editor";
 }
 
 PanelNodeEditor::~PanelNodeEditor()

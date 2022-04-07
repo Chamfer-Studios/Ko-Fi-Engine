@@ -1,8 +1,8 @@
 #include "PanelAbout.h"
 #include <imgui.h>
-#include "Editor.h"
+#include "M_Editor.h"
 
-PanelAbout::PanelAbout(Editor* editor)
+PanelAbout::PanelAbout(M_Editor* editor)
 {
 	panelName = "About";
 	this->editor = editor;

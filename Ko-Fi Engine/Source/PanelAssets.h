@@ -6,7 +6,7 @@
 #include <fstream>
 #include "stb_image.h"
 
-class Editor;
+class M_Editor;
 struct TextureIcon
 {
 	unsigned int id = 0;
@@ -16,7 +16,7 @@ struct TextureIcon
 class PanelAssets : public Panel
 {
 public:
-	PanelAssets(Editor* editor);
+	PanelAssets(M_Editor* editor);
 	~PanelAssets();
 	bool Start();
 	bool Update();
@@ -30,7 +30,7 @@ public:
 	std::string FileExsistsShader(std::string fileName, int i);
 
 private:
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 	TextureIcon fileTexture;
 	TextureIcon directoryTexture;
 	std::string fileIcon, directoryIcon;

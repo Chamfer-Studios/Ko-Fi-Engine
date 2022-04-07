@@ -1,11 +1,11 @@
 #include "PanelChooser.h"
 #include "Engine.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "FileSystem.h"
 #include <imgui.h>
 #include <string>
 #include <vector>
-PanelChooser::PanelChooser(Editor* editor)
+PanelChooser::PanelChooser(M_Editor* editor)
 {
 	this->editor = editor;
 	panelName = "Chooser";

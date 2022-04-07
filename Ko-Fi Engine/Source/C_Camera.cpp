@@ -142,7 +142,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
-	if (ImGui::CollapsingHeader("Editor Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
+	if (ImGui::CollapsingHeader("M_Editor Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 

@@ -1,5 +1,5 @@
 #include "MainBar.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Engine.h"
 #include "FileSystem.h"
 #include "SceneManager.h"
@@ -19,7 +19,7 @@
 #include "Material.h"
 #include "C_Mesh.h"
 
-MainBar::MainBar(Editor* editor)
+MainBar::MainBar(M_Editor* editor)
 {
 
 	this->editor = editor;

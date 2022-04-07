@@ -4,7 +4,7 @@
 #include "SDL.h"
 #include "Renderer3D.h"
 #include "SceneManager.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
 #include "Window.h"

@@ -2,7 +2,7 @@
 #include <imgui.h>
 
 #include "Engine.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "SceneManager.h"
 #include "GameObject.h"
 #include "Log.h"
@@ -25,7 +25,7 @@ static void HelpMarker(const char* desc)
 	ImGui::PopStyleColor();
 }
 
-PanelHierarchy::PanelHierarchy(Editor* editor)
+PanelHierarchy::PanelHierarchy(M_Editor* editor)
 {
 	this->editor = editor;
 	panelName = "Hierarchy";

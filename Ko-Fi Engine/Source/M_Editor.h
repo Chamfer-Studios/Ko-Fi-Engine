@@ -41,11 +41,11 @@ struct PanelsState
 	bool showGameWindow = true;
 };
 
-class Editor : public Module
+class M_Editor : public Module
 {
 public:
-	Editor(KoFiEngine* engine);
-	~Editor();
+	M_Editor(KoFiEngine* engine);
+	~M_Editor();
 
 	bool Awake(Json configModule);
 	bool Start();

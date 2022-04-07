@@ -3,14 +3,14 @@
 
 #include "Panel.h"
 
-class Editor;
+class M_Editor;
 class Importer;
 class GameObject;
 
 class MainBar : public Panel
 {
 public:
-	MainBar(Editor* editor);
+	MainBar(M_Editor* editor);
 	~MainBar();
 
 	bool Awake();
@@ -23,7 +23,7 @@ public:
 	void ChoosersListener();
 
 private:
-	Editor* editor;
+	M_Editor* editor;
 	bool loadingModel = false;
 	bool openSaveAsPopup = false; //This is a temporal solution since imgui doesnt allow to call openpopup from MenuItem() yet. However we will use the panelchooser to do this task soon so just temp code.
 	std::string saveAsSceneName = "Scene Name";

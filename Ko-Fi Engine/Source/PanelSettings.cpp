@@ -1,6 +1,6 @@
 #include "PanelSettings.h"
 #include <imgui.h>
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Engine.h"
 #include "Window.h"
 #include "Renderer3D.h"
@@ -8,7 +8,7 @@
 #include "Physics.h"
 
 
-PanelSettings::PanelSettings(Editor* editor)
+PanelSettings::PanelSettings(M_Editor* editor)
 {
     panelName = "Settings";
     this->editor = editor;

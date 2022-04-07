@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 #include "Engine.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
 #include "Window.h"

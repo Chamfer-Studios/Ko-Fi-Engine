@@ -259,7 +259,7 @@ void C_AudioSource::UpdatePlayState()
 
 void C_AudioSource::DrawEditor()
 {
-    if (ImGui::Begin("Audio Editor", &openEditor))
+    if (ImGui::Begin("Audio M_Editor", &openEditor))
     {
         bool mono = track->channels == 1;
 

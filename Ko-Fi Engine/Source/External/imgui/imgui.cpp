@@ -4263,7 +4263,7 @@ void ImGui::NewFrame()
 
     g.MouseCursor = ImGuiMouseCursor_Arrow;
     g.WantCaptureMouseNextFrame = g.WantCaptureKeyboardNextFrame = g.WantTextInputNextFrame = -1;
-    g.PlatformImePos = ImVec2(1.0f, 1.0f); // OS Input Method Editor showing on top-left of our window by default
+    g.PlatformImePos = ImVec2(1.0f, 1.0f); // OS Input Method M_Editor showing on top-left of our window by default
     g.PlatformImePosViewport = NULL;
 
     // Mouse wheel scrolling, scale
@@ -4704,7 +4704,7 @@ void ImGui::EndFrame()
 
     ErrorCheckEndFrameSanityChecks();
 
-    // Notify OS when our Input Method Editor cursor has moved (e.g. CJK inputs using Microsoft IME)
+    // Notify OS when our Input Method M_Editor cursor has moved (e.g. CJK inputs using Microsoft IME)
     if (g.PlatformIO.Platform_SetImeInputPos && (g.PlatformImeLastPos.x == FLT_MAX || ImLengthSqr(g.PlatformImePos - g.PlatformImeLastPos) > 0.0001f))
         if (g.PlatformImePosViewport && g.PlatformImePosViewport->PlatformWindowCreated)
         {

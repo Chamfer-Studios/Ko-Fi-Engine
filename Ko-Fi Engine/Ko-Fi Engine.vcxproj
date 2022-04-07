@@ -135,7 +135,7 @@
     <ClCompile Include="Source\C_AudioSource.cpp" />
     <ClCompile Include="Source\C_AudioSwitch.cpp" />
     <ClCompile Include="Source\dr_wav_impl.c" />
-    <ClCompile Include="Source\Editor.cpp" />
+    <ClCompile Include="Source\M_Editor.cpp" />
     <ClCompile Include="Source\EditorStyleHandler.cpp" />
     <ClCompile Include="Source\Emitter.cpp" />
     <ClCompile Include="Source\EmitterInstance.cpp" />
@@ -304,7 +304,7 @@
     <ClInclude Include="Source\ComponentTransform2D.h" />
     <ClInclude Include="Source\C_Animator.h" />
     <ClInclude Include="Source\C_Collider.h" />
-    <ClInclude Include="Source\Editor.h" />
+    <ClInclude Include="Source\M_Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
     <ClInclude Include="Source\Emitter.h" />
     <ClInclude Include="Source\EmitterInstance.h" />

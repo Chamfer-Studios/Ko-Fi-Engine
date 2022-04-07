@@ -1,6 +1,6 @@
 #include "PanelInspector.h"
 #include <imgui.h>
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Engine.h"
 #include "SceneManager.h"
 #include "GameObject.h"
@@ -16,7 +16,7 @@
 
 #include <queue>
 
-PanelInspector::PanelInspector(Editor* editor)
+PanelInspector::PanelInspector(M_Editor* editor)
 {
 	this->editor = editor;
 	panelName = "Inspector";

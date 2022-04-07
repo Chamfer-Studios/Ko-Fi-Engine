@@ -304,7 +304,7 @@
     <ClCompile Include="Source\EditorStyleHandler.cpp">
       <Filter>Source\Editor\Style</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Editor.cpp">
+    <ClCompile Include="Source\M_Editor.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\mmgr\mmgr.cpp">
@@ -895,7 +895,7 @@
     <ClInclude Include="Source\Panel.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Editor.h">
+    <ClInclude Include="Source\M_Editor.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\mmgr\mmgr.h">
