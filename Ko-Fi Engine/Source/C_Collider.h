@@ -22,7 +22,7 @@ enum class CollisionLayer
 	TERRAIN
 };
 
-class ComponentTransform;
+class C_Transform;
 
 class C_Collider : public Component
 {
@@ -95,7 +95,7 @@ private:
 	bool drawCollider = false;
 
 	std::string* debugFilter;
-	ComponentTransform* prevTransform;
+	C_Transform* prevTransform;
 };
 
 #endif // !__C_COLLIDER_H__

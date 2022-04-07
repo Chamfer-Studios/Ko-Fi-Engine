@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 
 #include "GameObject.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_Mesh.h"
 
 #include "Globals.h"

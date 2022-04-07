@@ -6,7 +6,7 @@
 
 #include "GameObject.h"
 #include "Component.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 
 #include "SceneManager.h"
 

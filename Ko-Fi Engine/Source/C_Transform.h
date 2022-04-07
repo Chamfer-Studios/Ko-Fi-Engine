@@ -1,5 +1,5 @@
-#ifndef __COMPONENT_TRANSFORM_H__
-#define __COMPONENT_TRANSFORM_H__
+#ifndef __C_TRANSFORM_H__
+#define __C_TRANSFORM_H__
 
 #include "Component.h"
 #include "MathGeoLib/Math/float3.h"
@@ -7,13 +7,14 @@
 #include "MathGeoLib/Math/Quat.h"
 
 using Json = nlohmann::json;
+class GameObject;
 
-class ComponentTransform : public Component
+class C_Transform : public Component
 {
 public:
 	// Constructors
-	ComponentTransform(GameObject *parent);
-	~ComponentTransform();
+	C_Transform(GameObject *parent);
+	~C_Transform();
 
 	// Game Loop
 	bool Update(float dt) override;
@@ -54,4 +55,4 @@ private:
 	bool isDirty = true;
 };
 
-#endif // !__COMPONENT_TRANSFORM_H__
+#endif // !__C_TRANSFORM_H__

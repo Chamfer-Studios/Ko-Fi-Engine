@@ -337,7 +337,7 @@
     <ClCompile Include="Source\C_Mesh.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentTransform.cpp">
+    <ClCompile Include="Source\C_Transform.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_Material.cpp">
@@ -940,7 +940,7 @@
     <ClInclude Include="Source\Component.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentTransform.h">
+    <ClInclude Include="Source\C_Transform.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\C_Material.h">

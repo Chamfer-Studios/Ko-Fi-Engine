@@ -7,7 +7,7 @@
 #include "MathGeoLib/Geometry/AABB.h"
 #include "MathGeoLib/Geometry/Sphere.h"
 
-class ComponentTransform;
+class C_Transform;
 class C_Material;
 using Json = nlohmann::json;
 

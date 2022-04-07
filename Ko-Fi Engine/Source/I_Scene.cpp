@@ -13,7 +13,7 @@
 #include "Navigation.h"
 
 #include "GameObject.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Info.h"
@@ -145,9 +145,9 @@ const aiNode* I_Scene::ImportTransform(const aiNode* assimpNode, GameObject* chi
 		scale = { scale.x * dummyScale.x, scale.y * dummyScale.y, scale.z * dummyScale.z };
 	}
 
-	child->GetComponent<ComponentTransform>()->SetPosition(position);
-	child->GetComponent<ComponentTransform>()->SetRotationQuat(rotation);
-	child->GetComponent<ComponentTransform>()->SetScale(scale);
+	child->GetComponent<C_Transform>()->SetPosition(position);
+	child->GetComponent<C_Transform>()->SetRotationQuat(rotation);
+	child->GetComponent<C_Transform>()->SetScale(scale);
 
 	CONSOLE_LOG("[STATUS] Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());
 
@@ -447,7 +447,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::TRANSFORM:
 			{
-				ComponentTransform* transformCmp = (ComponentTransform*)component;
+				C_Transform* transformCmp = (C_Transform*)component;
 				transformCmp->Save(jsonComponent);
 				break;
 			}
@@ -587,7 +587,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 					if (type == "transform")
 					{
-						ComponentTransform* transformCmp = go->GetComponent<ComponentTransform>();
+						C_Transform* transformCmp = go->GetComponent<C_Transform>();
 						transformCmp->active = true;
 						transformCmp->Load(jsonCmp);
 					}

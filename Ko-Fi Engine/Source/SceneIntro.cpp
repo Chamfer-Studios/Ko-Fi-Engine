@@ -15,7 +15,7 @@
 #include "ComponentScript.h"
 #include "C_Collider.h"
 #include "Scripting.h" // Consider moving this to Globals.h or smth
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "Material.h"
 #include "ComponentTransform2D.h"
 #include "GameObject.h"

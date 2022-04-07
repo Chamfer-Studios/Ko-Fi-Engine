@@ -18,7 +18,7 @@
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/Quat.h"
 #include "GameObject.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_RigidBody.h"
 #include "ComponentScript.h"
@@ -198,22 +198,22 @@ public:
 									"GetType", &Component::GetType);
 
 		// Transform structure
-		lua.new_usertype<ComponentTransform>("ComponentTransform",
+		lua.new_usertype<C_Transform>("C_Transform",
 			sol::constructors<void(GameObject *)>(),
-			"GetPosition", &ComponentTransform::GetPosition,
-			"SetPosition", &ComponentTransform::SetPosition,
-			"GetRotation", &ComponentTransform::GetRotationEuler,
-			"SetRotation", &ComponentTransform::SetRotationEuler,
-			"SetRotationQuat", &ComponentTransform::SetRotationQuat,
-			"GetRotationQuat", &ComponentTransform::GetRotationQuat,
-			"GetScale", &ComponentTransform::GetScale,
-			"SetScale", &ComponentTransform::SetScale,
-			"GetFront", &ComponentTransform::Front,
-			"SetFront", &ComponentTransform::SetFront
+			"GetPosition", &C_Transform::GetPosition,
+			"SetPosition", &C_Transform::SetPosition,
+			"GetRotation", &C_Transform::GetRotationEuler,
+			"SetRotation", &C_Transform::SetRotationEuler,
+			"SetRotationQuat", &C_Transform::SetRotationQuat,
+			"GetRotationQuat", &C_Transform::GetRotationQuat,
+			"GetScale", &C_Transform::GetScale,
+			"SetScale", &C_Transform::SetScale,
+			"GetFront", &C_Transform::Front,
+			"SetFront", &C_Transform::SetFront
 			);
 
 		// Component Camera
-		lua.new_usertype<C_Camera>("ComponentTransform",
+		lua.new_usertype<C_Camera>("C_Transform",
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
 			"right", &C_Camera::right,
@@ -623,7 +623,7 @@ public:
 public:
 	sol::state lua;
 	GameObject *gameObject = nullptr;
-	ComponentTransform *componentTransform = nullptr;
+	C_Transform *componentTransform = nullptr;
 };
 
 #endif // !__SCRIPTING_H__

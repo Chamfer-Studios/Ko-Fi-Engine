@@ -9,7 +9,7 @@
 #include "MathGeoLib/Geometry/Plane.h"
 
 class GameObject;
-class ComponentTransform;
+class C_Transform;
 using Json = nlohmann::json;
 
 class C_Camera : public Component
@@ -61,7 +61,7 @@ public:
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 private:
 
-	ComponentTransform* componentTransform = nullptr;
+	C_Transform* componentTransform = nullptr;
 	
 };
 

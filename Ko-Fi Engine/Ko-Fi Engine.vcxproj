@@ -128,7 +128,7 @@
     <ClCompile Include="Source\ComponentText.cpp" />
     <ClCompile Include="Source\C_Info.cpp" />
     <ClCompile Include="Source\C_RigidBody.cpp" />
-    <ClCompile Include="Source\ComponentTransform.cpp" />
+    <ClCompile Include="Source\C_Transform.cpp" />
     <ClCompile Include="Source\ComponentTransform2D.cpp" />
     <ClCompile Include="Source\C_Animator.cpp" />
     <ClCompile Include="Source\C_Collider.cpp" />
@@ -300,7 +300,7 @@
     <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\ComponentScript.h" />
     <ClInclude Include="Source\ComponentText.h" />
-    <ClInclude Include="Source\ComponentTransform.h" />
+    <ClInclude Include="Source\C_Transform.h" />
     <ClInclude Include="Source\ComponentTransform2D.h" />
     <ClInclude Include="Source\C_Animator.h" />
     <ClInclude Include="Source\C_Collider.h" />

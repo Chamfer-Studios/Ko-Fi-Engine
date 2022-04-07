@@ -9,7 +9,7 @@
 #include "ComponentScript.h"
 #include "C_Camera.h"
 #include "C_Info.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_RigidBody.h"
 #include "C_Animator.h"
 #include "C_LightSource.h"

@@ -193,7 +193,7 @@ void C_RigidBody::SetRigidBodyPos(float3 pos)
 {
 	physx::PxTransform transform;
 	transform.p = physx::PxVec3(pos.x, pos.y, pos.z);
-	math::Quat quat = owner->GetComponent<ComponentTransform>()->GetRotationQuat();
+	math::Quat quat = owner->GetComponent<C_Transform>()->GetRotationQuat();
 	transform.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
 
 	GetRigidBody()->setGlobalPose(transform); 

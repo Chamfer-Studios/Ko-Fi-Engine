@@ -1,5 +1,5 @@
 #include "C_LightSource.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "Globals.h"
 #include "Engine.h"
 #include "SceneManager.h"

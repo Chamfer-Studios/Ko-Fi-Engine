@@ -6,7 +6,7 @@
 #include "Camera3D.h"
 
 #include "GameObject.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_Material.h"
 #include "C_Camera.h"
 #include "SceneManager.h"

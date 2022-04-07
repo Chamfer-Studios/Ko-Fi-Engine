@@ -91,7 +91,7 @@ void C_Collider::CreateBoxCollider()
 
 	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<C_RigidBody>()->GetRigidBody());
 
-	ComponentTransform* currentTransform = owner->GetComponent<ComponentTransform>();
+	C_Transform* currentTransform = owner->GetComponent<C_Transform>();
 	float3 pos, scale;
 	Quat quat;
 	currentTransform->GetGlobalTransform().Decompose(pos, quat, scale);
@@ -146,7 +146,7 @@ void C_Collider::DrawCollider()
 
 void C_Collider::DrawBoxCollider()
 {
-	float3 transformOffset = owner->GetComponent<ComponentTransform>()->GetPosition();
+	float3 transformOffset = owner->GetComponent<C_Transform>()->GetPosition();
 	physx::PxTransform localPose;
 	physx::PxVec3 center;
 	if (shape)

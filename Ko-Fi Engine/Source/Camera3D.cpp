@@ -5,7 +5,7 @@
 #include "SceneManager.h"
 #include "Editor.h"
 #include "GameObject.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_Mesh.h"
 #include "ComponentScript.h"
 #include "Renderer3D.h"
@@ -149,7 +149,7 @@ void Camera3D::CheckInput(float dt)
 			}
 			else
 			{
-				ComponentTransform* transform = gameObjectSelected->GetTransform();
+				C_Transform* transform = gameObjectSelected->GetTransform();
 				if (transform != nullptr)
 					currentCamera->LookAt(gameObjectSelected->GetTransform()->GetPosition());
 			}
@@ -159,7 +159,7 @@ void Camera3D::CheckInput(float dt)
 	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
 	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
 	{
-		ComponentTransform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform();
+		C_Transform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform();
 		if (transform != nullptr) {
 			spot.x = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().x;
 			spot.y = (engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform())->GetPosition().y;
@@ -205,7 +205,7 @@ void Camera3D::CheckMouseMotion(float dt)
 
 				currentCamera->reference = /*engine->GetEditor()->gameobjectSelected->transform->GetPosition()*/
 					engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()
-						->panelGameObjectInfo.selectedGameObjectID)->GetComponent<ComponentTransform>()->GetPosition();
+						->panelGameObjectInfo.selectedGameObjectID)->GetComponent<C_Transform>()->GetPosition();
 				Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
 
 				if (abs(currentCamera->up.y) < 0.3f) // Avoid gimball lock on up & down apex
@@ -401,7 +401,7 @@ GameObject* Camera3D::MousePicking(const bool& isRightButton)
 		GameObject* gameObject = it->second;
 
 		LineSegment rayLocal = newRay;
-		rayLocal.Transform(gameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Inverted());
+		rayLocal.Transform(gameObject->GetComponent<C_Transform>()->GetGlobalTransform().Inverted());
 
 		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
 

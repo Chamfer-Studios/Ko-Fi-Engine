@@ -8,7 +8,7 @@
 class Scripting;
 
 class GameObject;
-class ComponentTransform;
+class C_Transform;
 using Json = nlohmann::json;
 
 class InspectorVariable;

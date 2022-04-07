@@ -8,7 +8,7 @@
 
 class KoFiEngine;
 //class C_Mesh;
-class ComponentTransform;
+class C_Transform;
 class C_Mesh;
 class C_Info;
 class ComponentScript;
@@ -77,7 +77,7 @@ public:
 	void SetChild(GameObject* child);
 	GameObject* GetParent() const;
 
-	ComponentTransform* GetTransform() const;
+	C_Transform* GetTransform() const;
 	std::vector<Component*> GetComponents() const;
 	AABB BoundingAABB();
 	void SetUID(uint uid);
@@ -131,7 +131,7 @@ private:
 	uint parentUid;
 
 	KoFiEngine* engine = nullptr;
-	ComponentTransform* transform = nullptr;
+	C_Transform* transform = nullptr;
 };
 
 #endif // !__GAMEOBJECT_H__

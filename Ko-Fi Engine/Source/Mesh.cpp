@@ -3,7 +3,7 @@
 
 #include "GameObject.h"
 #include "C_Material.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_Animator.h"
 
 #include "R_Animation.h"
@@ -26,7 +26,7 @@
 #include "MathGeoLib/Math/float4x4.h"
 
 #include "C_Material.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "GameObject.h"
 #include "Globals.h"
 

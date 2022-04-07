@@ -8,7 +8,7 @@
 
 #include "ComponentWalkable.h"
 #include "C_Mesh.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "DetourNavMeshBuilder.h"
 #include "DetourNavMeshQuery.h"
 #include "DetourNavMesh.h"
@@ -120,7 +120,7 @@ void Navigation::ComputeNavmesh()
 
 	for (auto go : walkableObjects) {
 		C_Mesh* cMesh = go->GetComponent<C_Mesh>();
-		ComponentTransform* cTransform = go->GetComponent<ComponentTransform>();
+		C_Transform* cTransform = go->GetComponent<C_Transform>();
 		if (cMesh != nullptr && cTransform != nullptr) {
 			meshes.push_back(cMesh->GetMesh());
 			transforms.push_back(cTransform->GetGlobalTransform());

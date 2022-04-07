@@ -3,7 +3,7 @@
 #include "Engine.h"
 
 #include "GameObject.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "Input.h"
 #include "PanelInspector.h"
 

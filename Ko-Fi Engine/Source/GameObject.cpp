@@ -17,7 +17,7 @@
 #include "ComponentImage.h"
 #include "ComponentText.h"
 #include "C_RigidBody.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_Info.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
@@ -45,7 +45,7 @@ GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D
 
 	is3D = _is3D;
 	if (is3D)
-		transform = CreateComponent<ComponentTransform>();
+		transform = CreateComponent<C_Transform>();
 
 	tag = Tag::TAG_UNTAGGED;
 
@@ -64,7 +64,7 @@ GameObject::GameObject()
 	this->engine = engine;
 
 	CreateComponent<C_Info>();
-	transform = CreateComponent<ComponentTransform>();
+	transform = CreateComponent<C_Transform>();
 
 	tag = Tag::TAG_UNTAGGED;
 
@@ -316,7 +316,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::TRANSFORM:
 	{
-		c = this->CreateComponent<ComponentTransform>();
+		c = this->CreateComponent<C_Transform>();
 		break;
 	}
 	case ComponentType::INFO:
@@ -419,7 +419,7 @@ GameObject* GameObject::GetParent() const
 	return parent;
 }
 
-ComponentTransform *GameObject::GetTransform() const
+C_Transform *GameObject::GetTransform() const
 {
 	return this->transform;
 }
@@ -527,7 +527,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			break;
 		case ComponentType::TRANSFORM:
 		{
-			ComponentTransform* transformCmp = (ComponentTransform*)component;
+			C_Transform* transformCmp = (C_Transform*)component;
 			transformCmp->Save(jsonComponent);
 			break;
 		}
@@ -659,7 +659,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 
 		if (type == "transform")
 		{
-			ComponentTransform* transformCmp = this->GetComponent<ComponentTransform>();
+			C_Transform* transformCmp = this->GetComponent<C_Transform>();
 			transformCmp->active = true;
 			transformCmp->Load(jsonCmp);
 		}

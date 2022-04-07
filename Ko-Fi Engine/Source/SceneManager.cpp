@@ -10,7 +10,7 @@
 #include "Material.h"
 #include "Texture.h"
 
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Info.h"
@@ -278,7 +278,7 @@ void SceneManager::OnClick(SDL_Event event)
 void SceneManager::GuizmoTransformation()
 {
 	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-	if (!selectedGameObject->GetComponent<ComponentTransform>()) return;
+	if (!selectedGameObject->GetComponent<C_Transform>()) return;
 
 	if (selectedGameObject == nullptr || selectedGameObject->GetUID() == -1)
 		return;
@@ -287,7 +287,7 @@ void SceneManager::GuizmoTransformation()
 	viewMatrix.Transpose();
 
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
-	float4x4 modelProjection = selectedGameObject->GetComponent<ComponentTransform>()->GetGlobalTransform().Transposed();
+	float4x4 modelProjection = selectedGameObject->GetComponent<C_Transform>()->GetGlobalTransform().Transposed();
 
 	//ImGuizmo::SetDrawlist();
 
@@ -304,7 +304,7 @@ void SceneManager::GuizmoTransformation()
 		float4x4 newTransform;
 		newTransform.Set(tempTransform);
 		modelProjection = newTransform.Transposed();
-		selectedGameObject->GetComponent<ComponentTransform>()->SetGlobalTransform(modelProjection);
+		selectedGameObject->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection);
 	}
 }
 
