@@ -109,8 +109,8 @@ void ComponentCollider2::CreateBoxCollider()
 	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
 	physx::PxTransform localPose;
-	float3 center = owner->GetComponent<ComponentMesh>()->GetLocalAABB().CenterPoint();
-	localPose.p = physx::PxVec3(offset.x, offset.y, offset.z - boxCollSize.z / 2);
+	float3 center = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().CenterPoint();
+	localPose.p = physx::PxVec3(center.x, center.y, center.z);
 	localPose.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
 	shape->setLocalPose(localPose);
 
