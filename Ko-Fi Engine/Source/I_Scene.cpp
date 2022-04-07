@@ -5,6 +5,7 @@
 #include "MathGeoTransform.h"
 #include "FSDefs.h"
 #include "JsonHandler.h"
+#include "Window.h"
 
 #include "Scene.h"
 #include "SceneManager.h"
@@ -531,6 +532,13 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		ret = true;
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
+
+		char result[100] = "Ko-Fi Engine  - ";
+
+		strcat(result, scene->name.c_str());
+
+		engine->GetWindow()->SetTitle(result);
+
 		scene->active = jsonScene.at("active");
 		//Create Root
 		scene->rootGo->SetName(scene->name.c_str());
@@ -581,209 +589,215 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			{
 				Json jsonCmp = cmpIt.value();
 				bool active = jsonCmp.at("active");
-				std::string type = jsonCmp.at("type");
+				if (jsonCmp.contains("type"))
+				{
+					std::string type = jsonCmp.at("type");
 
-				if (type == "transform")
-				{
-					ComponentTransform* transformCmp = go->GetComponent<ComponentTransform>();
-					transformCmp->active = true;
-					transformCmp->Load(jsonCmp);
-				}
-				else if (type == "mesh")
-				{
-					ComponentMesh* meshCmp = go->GetComponent<ComponentMesh>();
-					if (meshCmp == nullptr)
+					if (type == "transform")
 					{
-						meshCmp = (ComponentMesh*)go->AddComponentByType(ComponentType::MESH);
+						ComponentTransform* transformCmp = go->GetComponent<ComponentTransform>();
+						transformCmp->active = true;
+						transformCmp->Load(jsonCmp);
 					}
-					meshCmp->active = true;
-					meshCmp->Load(jsonCmp);
-				}
-				else if (type == "material")
-				{
-					ComponentMaterial* materialCmp = go->GetComponent<ComponentMaterial>();
-					if (materialCmp == nullptr)
+					else if (type == "mesh")
 					{
-						materialCmp = (ComponentMaterial*)go->AddComponentByType(ComponentType::MATERIAL);
+						ComponentMesh* meshCmp = go->GetComponent<ComponentMesh>();
+						if (meshCmp == nullptr)
+						{
+							meshCmp = (ComponentMesh*)go->AddComponentByType(ComponentType::MESH);
+						}
+						meshCmp->active = true;
+						meshCmp->Load(jsonCmp);
 					}
-					materialCmp->active = true;
-					materialCmp->Load(jsonCmp);
-				}
-				else if (type == "info")
-				{
-					ComponentInfo* infoCmp = (ComponentInfo*)go->AddComponentByType(ComponentType::INFO);
-					infoCmp->active = true;
-					infoCmp->Load(jsonCmp); // Does nothing as of now
-				}
-				else if (type == "camera")
-				{
-					ComponentCamera* cameraCmp = go->GetComponent<ComponentCamera>();
-					if (cameraCmp == nullptr)
+					else if (type == "material")
 					{
-						cameraCmp = (ComponentCamera*)go->AddComponentByType(ComponentType::CAMERA);
+						ComponentMaterial* materialCmp = go->GetComponent<ComponentMaterial>();
+						if (materialCmp == nullptr)
+						{
+							materialCmp = (ComponentMaterial*)go->AddComponentByType(ComponentType::MATERIAL);
+						}
+						materialCmp->active = true;
+						materialCmp->Load(jsonCmp);
 					}
-					cameraCmp->active = true;
-					cameraCmp->Load(jsonCmp);
-				}
-				else if (type == "script")
-				{
-					ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
-					if (scriptCmp == nullptr)
+					else if (type == "info")
 					{
-						scriptCmp = (ComponentScript*)go->AddComponentByType(ComponentType::SCRIPT);
+						ComponentInfo* infoCmp = (ComponentInfo*)go->AddComponentByType(ComponentType::INFO);
+						infoCmp->active = true;
+						infoCmp->Load(jsonCmp); // Does nothing as of now
 					}
-					scriptCmp->active = true;
-					scriptCmp->Load(jsonCmp);
-				}
-				else if (type == "transform2D")
-				{
-					ComponentTransform2D* transform2DCmp = go->GetComponent<ComponentTransform2D>();
-					if (transform2DCmp == nullptr)
+					else if (type == "camera")
 					{
-						transform2DCmp = (ComponentTransform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);
+						ComponentCamera* cameraCmp = go->GetComponent<ComponentCamera>();
+						if (cameraCmp == nullptr)
+						{
+							cameraCmp = (ComponentCamera*)go->AddComponentByType(ComponentType::CAMERA);
+						}
+						cameraCmp->active = true;
+						cameraCmp->Load(jsonCmp);
 					}
-					transform2DCmp->active = true;
-					transform2DCmp->Load(jsonCmp);
-				}
-				else if (type == "canvas")
-				{
-					ComponentCanvas* canvasCmp = go->GetComponent<ComponentCanvas>();
-					if (canvasCmp == nullptr)
+					else if (type == "script")
 					{
-						canvasCmp = (ComponentCanvas*)go->AddComponentByType(ComponentType::CANVAS);
+						ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
+						if (scriptCmp == nullptr)
+						{
+							scriptCmp = (ComponentScript*)go->AddComponentByType(ComponentType::SCRIPT);
+						}
+						scriptCmp->active = true;
+						scriptCmp->Load(jsonCmp);
 					}
-					canvasCmp->active = true;
-					canvasCmp->Load(jsonCmp);
-				}
-				else if (type == "image")
-				{
-					ComponentImage* imageCmp = go->GetComponent<ComponentImage>();
-					if (imageCmp == nullptr)
+					else if (type == "transform2D")
 					{
-						imageCmp = (ComponentImage*)go->AddComponentByType(ComponentType::IMAGE);
+						ComponentTransform2D* transform2DCmp = go->GetComponent<ComponentTransform2D>();
+						if (transform2DCmp == nullptr)
+						{
+							transform2DCmp = (ComponentTransform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);
+						}
+						transform2DCmp->active = true;
+						transform2DCmp->Load(jsonCmp);
 					}
-					imageCmp->active = true;
-					imageCmp->Load(jsonCmp);
-				}
-				else if (type == "button")
-				{
-					ComponentButton* buttonCmp = go->GetComponent<ComponentButton>();
-					if (buttonCmp == nullptr)
+					else if (type == "canvas")
 					{
-						buttonCmp = (ComponentButton*)go->AddComponentByType(ComponentType::BUTTON);
+						ComponentCanvas* canvasCmp = go->GetComponent<ComponentCanvas>();
+						if (canvasCmp == nullptr)
+						{
+							canvasCmp = (ComponentCanvas*)go->AddComponentByType(ComponentType::CANVAS);
+						}
+						canvasCmp->active = true;
+						canvasCmp->Load(jsonCmp);
 					}
-					buttonCmp->active = true;
-					buttonCmp->Load(jsonCmp);
-				}
-				else if (type == "text")
-				{
-					ComponentText* textCmp = go->GetComponent<ComponentText>();
-					if (textCmp == nullptr)
+					else if (type == "image")
 					{
-						textCmp = (ComponentText*)go->AddComponentByType(ComponentType::TEXT);
+						ComponentImage* imageCmp = go->GetComponent<ComponentImage>();
+						if (imageCmp == nullptr)
+						{
+							imageCmp = (ComponentImage*)go->AddComponentByType(ComponentType::IMAGE);
+						}
+						imageCmp->active = true;
+						imageCmp->Load(jsonCmp);
 					}
-					textCmp->active = true;
-					textCmp->Load(jsonCmp);
-				}
-				else if (type == "rigidBody")
-				{
-					ComponentRigidBody* rbCmp = go->GetComponent<ComponentRigidBody>();
-					if (rbCmp == nullptr)
+					else if (type == "button")
 					{
-						rbCmp = (ComponentRigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
+						ComponentButton* buttonCmp = go->GetComponent<ComponentButton>();
+						if (buttonCmp == nullptr)
+						{
+							buttonCmp = (ComponentButton*)go->AddComponentByType(ComponentType::BUTTON);
+						}
+						buttonCmp->active = true;
+						buttonCmp->Load(jsonCmp);
 					}
-					rbCmp->active = true;
-					rbCmp->Load(jsonCmp);
-				}
-				else if (type == "collider2")
-				{
-					ComponentCollider2* collCmp = go->GetComponent<ComponentCollider2>();
-					if (collCmp == nullptr)
+					else if (type == "text")
 					{
-						collCmp = new ComponentCollider2(go, ColliderShape::NONE);
+						ComponentText* textCmp = go->GetComponent<ComponentText>();
+						if (textCmp == nullptr)
+						{
+							textCmp = (ComponentText*)go->AddComponentByType(ComponentType::TEXT);
+						}
+						textCmp->active = true;
+						textCmp->Load(jsonCmp);
 					}
-					collCmp->active = true;
-					collCmp->Load(jsonCmp);
-				}
-				else if (type == "collider")
-				{
-					ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
-					if (colCmp == nullptr)
+					else if (type == "rigidBody")
 					{
-						colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);
+						ComponentRigidBody* rbCmp = go->GetComponent<ComponentRigidBody>();
+						if (rbCmp == nullptr)
+						{
+							rbCmp = (ComponentRigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
+						}
+						rbCmp->active = true;
+						rbCmp->Load(jsonCmp);
 					}
-					colCmp->active = true;
-					colCmp->Load(jsonCmp);
-				}
-				else if (type == "particle")
-				{
-					ComponentParticle* partCmp = go->GetComponent<ComponentParticle>();
-					if (partCmp == nullptr)
+					else if (type == "collider2")
 					{
-						partCmp = (ComponentParticle*)go->AddComponentByType(ComponentType::PARTICLE);
+						ComponentCollider2* collCmp = go->GetComponent<ComponentCollider2>();
+						if (collCmp == nullptr)
+						{
+							collCmp = new ComponentCollider2(go, ColliderShape::NONE);
+						}
+						collCmp->active = true;
+						collCmp->Load(jsonCmp);
 					}
-					partCmp->active = true;
-					partCmp->Load(jsonCmp);
-				}
-				else if (type == "audio_source")
-				{
-					C_AudioSource* audioSrcCmp = go->GetComponent<C_AudioSource>();
-					if (audioSrcCmp == nullptr)
+					else if (type == "collider")
 					{
-						audioSrcCmp = go->CreateComponent<C_AudioSource>();
+						ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
+						if (colCmp == nullptr)
+						{
+							colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);
+						}
+						colCmp->active = true;
+						colCmp->Load(jsonCmp);
 					}
-					audioSrcCmp->active = true;
-					audioSrcCmp->Load(jsonCmp);
-				}
-				else if (type == "audio_switch")
-				{
-					C_AudioSwitch* audioSwitchCmp = go->GetComponent<C_AudioSwitch>();
-					if (audioSwitchCmp == nullptr)
+					else if (type == "particle")
 					{
-						audioSwitchCmp = go->CreateComponent<C_AudioSwitch>();
+						ComponentParticle* partCmp = go->GetComponent<ComponentParticle>();
+						if (partCmp == nullptr)
+						{
+							partCmp = (ComponentParticle*)go->AddComponentByType(ComponentType::PARTICLE);
+						}
+						partCmp->active = true;
+						partCmp->Load(jsonCmp);
 					}
-					audioSwitchCmp->active = true;
-					audioSwitchCmp->Load(jsonCmp);
-				}
-				else if (type == "animator")
-				{
-					ComponentAnimator* cAnimator = go->GetComponent<ComponentAnimator>();
-					if (cAnimator == nullptr)
+					else if (type == "audio_source")
 					{
-						cAnimator = (ComponentAnimator*)go->AddComponentByType(ComponentType::ANIMATOR);
+						C_AudioSource* audioSrcCmp = go->GetComponent<C_AudioSource>();
+						if (audioSrcCmp == nullptr)
+						{
+							audioSrcCmp = go->CreateComponent<C_AudioSource>();
+						}
+						audioSrcCmp->active = true;
+						audioSrcCmp->Load(jsonCmp);
 					}
-					cAnimator->active = true;
-					cAnimator->Load(jsonCmp);
-				}
-				else if (type == "walkable")
-				{
-					ComponentWalkable* walCmp = go->GetComponent<ComponentWalkable>();
-					if (walCmp == nullptr)
+					else if (type == "audio_switch")
 					{
-						walCmp = go->CreateComponent<ComponentWalkable>();
+						C_AudioSwitch* audioSwitchCmp = go->GetComponent<C_AudioSwitch>();
+						if (audioSwitchCmp == nullptr)
+						{
+							audioSwitchCmp = go->CreateComponent<C_AudioSwitch>();
+						}
+						audioSwitchCmp->active = true;
+						audioSwitchCmp->Load(jsonCmp);
 					}
-					walCmp->active = true;
-					walCmp->Load(jsonCmp);
-				}
-				else if (type == "followPath")
-				{
-					ComponentFollowPath* follCmp = go->GetComponent<ComponentFollowPath>();
-					if (follCmp == nullptr)
+					else if (type == "animator")
 					{
-						follCmp = go->CreateComponent<ComponentFollowPath>();
+						ComponentAnimator* cAnimator = go->GetComponent<ComponentAnimator>();
+						if (cAnimator == nullptr)
+						{
+							cAnimator = (ComponentAnimator*)go->AddComponentByType(ComponentType::ANIMATOR);
+						}
+						cAnimator->active = true;
+						cAnimator->Load(jsonCmp);
 					}
-					follCmp->active = true;
-				}
-				else if (type == "lightSource")
-				{
-					ComponentLightSource* componentLightSource = go->GetComponent<ComponentLightSource>();
-					if (componentLightSource == nullptr)
+					else if (type == "walkable")
 					{
-						componentLightSource = (ComponentLightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+						ComponentWalkable* walCmp = go->GetComponent<ComponentWalkable>();
+						if (walCmp == nullptr)
+						{
+							walCmp = go->CreateComponent<ComponentWalkable>();
+						}
+						walCmp->active = true;
+						walCmp->Load(jsonCmp);
 					}
-					componentLightSource->active = true;
-					componentLightSource->Load(jsonCmp);
+					else if (type == "followPath")
+					{
+						ComponentFollowPath* follCmp = go->GetComponent<ComponentFollowPath>();
+						if (follCmp == nullptr)
+						{
+							follCmp = go->CreateComponent<ComponentFollowPath>();
+						}
+						follCmp->active = true;
+					}
+					else if (type == "lightSource")
+					{
+						ComponentLightSource* componentLightSource = go->GetComponent<ComponentLightSource>();
+						if (componentLightSource == nullptr)
+						{
+							componentLightSource = (ComponentLightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+						}
+						componentLightSource->active = true;
+						componentLightSource->Load(jsonCmp);
+					}
+
+					//..
 				}
+					
 			}
 			if (!exists)
 				scene->gameObjectList.push_back(go);
