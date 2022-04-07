@@ -34,20 +34,17 @@
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MESH;
-	centerPoint = float3::zero;
 	radius = 0.0f;
 	mesh = nullptr;
 	renderMesh = true;
 	time = 0.0f;
-}
 
+}
 
 ComponentMesh::~ComponentMesh()
 {
 	RELEASE(mesh);
 }
-
-
 
 bool ComponentMesh::Start()
 {
@@ -124,7 +121,7 @@ void ComponentMesh::Load(Json& json)
 			meshType = Shape::CONE;
 			break;
 		}
-		mesh = new Mesh(meshType);
+		SetMesh(new Mesh(meshType));
 
 		mesh->meshType = meshType;
 	}
@@ -151,8 +148,6 @@ void ComponentMesh::Load(Json& json)
 		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
 		this->GetMesh()->SetRootNode(object);
 	}
-		
-	
 
 }
 
@@ -165,26 +160,9 @@ void ComponentMesh::SetMesh(Mesh* mesh)
 	GenerateLocalBoundingBox();
 }
 
-uint ComponentMesh::GetVertices()
-{
-	uint numVertices = 0;
-	numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
-	return numVertices;
-}
-
-float3 ComponentMesh::GetCenterPointInWorldCoords() const
-{
-	return owner->GetTransform()->GetGlobalTransform().TransformPos(centerPoint);
-}
-
 void ComponentMesh::SetVertexNormals(bool vertexNormals)
 {
 	this->mesh->SetVertexNormals(vertexNormals);
-}
-
-bool ComponentMesh::GetVertexNormals() const
-{
-	return mesh->GetVertexNormals();
 }
 
 void ComponentMesh::SetFaceNormals(bool facesNormals)
@@ -192,9 +170,37 @@ void ComponentMesh::SetFaceNormals(bool facesNormals)
 	this->mesh->SetFaceNormals(facesNormals);
 }
 
+float3 ComponentMesh::GetCenterPointInWorldCoords() const
+{
+	return owner->GetTransform()->GetGlobalTransform().TransformPos(GetCenterPoint());
+}
+
+uint ComponentMesh::GetVertices()
+{
+	uint numVertices = 0;
+	numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
+	return numVertices;
+}
+
+bool ComponentMesh::GetVertexNormals() const
+{
+	return mesh->GetVertexNormals();
+}
+
 bool ComponentMesh::GetFaceNormals() const
 {
 	return mesh->GetFaceNormals();
+}
+
+const AABB ComponentMesh::GetLocalAABB()
+{
+	GenerateLocalBoundingBox();
+	return mesh->localAABB;
+}
+
+const AABB ComponentMesh::GetGlobalAABB() const
+{
+	return aabb;
 }
 
 void ComponentMesh::GenerateLocalBoundingBox()
@@ -215,27 +221,16 @@ void ComponentMesh::GenerateLocalBoundingBox()
 	}
 }
 
-const AABB ComponentMesh::GetLocalAABB()
-{
-	GenerateLocalBoundingBox();
-
-	return mesh->localAABB;
-}
-
 void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
+
 	obb.SetFrom(GetLocalAABB());
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
 	// Generate global AABB
 	aabb.SetNegativeInfinity();
 	aabb.Enclose(obb);
-}
-
-const AABB ComponentMesh::GetGlobalAABB() const
-{
-	return aabb;
 }
 
 void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
@@ -294,6 +289,7 @@ void ComponentMesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 	glPopMatrix();
 
 }
+
 bool ComponentMesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
