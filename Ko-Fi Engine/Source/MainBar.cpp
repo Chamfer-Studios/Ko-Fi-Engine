@@ -163,7 +163,7 @@ bool MainBar::Update()
 						newCanvas->AttachChild(go);
 					}
 					
-					//go->CreateComponent<ComponentMaterial>();
+					//go->CreateComponent<C_Material>();
 				}
 				if (ImGui::MenuItem("Button")) {
 
@@ -191,7 +191,7 @@ bool MainBar::Update()
 					go->SetName("Button");
 					go->CreateComponent<ComponentTransform2D>();
 					go->CreateComponent<ComponentButton>();
-					//go->CreateComponent<ComponentMaterial>();
+					//go->CreateComponent<C_Material>();
 
 					if (canvasExists == true && lastCanvas != nullptr)
 					{
@@ -238,7 +238,7 @@ bool MainBar::Update()
 					{
 						newCanvas->AttachChild(go);
 					}
-					//go->CreateComponent<ComponentMaterial>();
+					//go->CreateComponent<C_Material>();
 				}
 				ImGui::EndMenu();
 			}

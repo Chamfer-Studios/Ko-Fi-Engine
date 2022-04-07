@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __C_LIGHTSOURCE_H__
+#define __C_LIGHTSOURCE_H__
+
 #include "Component.h"
 #include "GameObject.h"
 
@@ -98,3 +100,5 @@ private:
 	//inspector variables
 	int sType;
 };
+
+#endif // !__C_LIGHTSOURCE_H__

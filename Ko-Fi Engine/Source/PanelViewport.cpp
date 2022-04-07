@@ -98,12 +98,12 @@ bool PanelViewport::Update()
 						{
 							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 
-							if (go->GetComponent<ComponentMaterial>())
+							if (go->GetComponent<C_Material>())
 							{
 								Texture texture = Texture();
 								Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
 
-								go->GetComponent<ComponentMaterial>()->texture = texture;
+								go->GetComponent<C_Material>()->texture = texture;
 								//cMaterial->textures.push_back(texture);
 							}
 						}

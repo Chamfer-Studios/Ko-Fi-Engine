@@ -147,9 +147,9 @@ bool SceneIntro::PostUpdate(float dt)
 			Mesh *mesh = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<ComponentMesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
-			ComponentMaterial *componentMaterial = knife->CreateComponent<ComponentMaterial>();
+			C_Material *componentMaterial = knife->CreateComponent<C_Material>();
 			//Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
-			Material *material = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<ComponentMaterial>()->GetMaterial();
+			Material *material = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
 			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 			componentMaterial->SetMaterial(material);
 

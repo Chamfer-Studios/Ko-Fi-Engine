@@ -260,7 +260,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	}
 
 	// Import Material to GameObject
-	ComponentMaterial* cMaterial = (ComponentMaterial*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<ComponentMaterial>();
+	C_Material* cMaterial = (C_Material*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<C_Material>();
 
 	if (cMaterial == nullptr)
 	{
@@ -381,7 +381,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::MATERIAL:
 			{
-				ComponentMaterial* materialCmp = (ComponentMaterial*)component;
+				C_Material* materialCmp = (C_Material*)component;
 				materialCmp->Save(jsonComponent);
 				break;
 			}
@@ -603,10 +603,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "material")
 					{
-						ComponentMaterial* materialCmp = go->GetComponent<ComponentMaterial>();
+						C_Material* materialCmp = go->GetComponent<C_Material>();
 						if (materialCmp == nullptr)
 						{
-							materialCmp = (ComponentMaterial*)go->AddComponentByType(ComponentType::MATERIAL);
+							materialCmp = (C_Material*)go->AddComponentByType(ComponentType::MATERIAL);
 						}
 						materialCmp->active = true;
 						materialCmp->Load(jsonCmp);

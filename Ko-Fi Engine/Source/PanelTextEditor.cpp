@@ -109,9 +109,9 @@ void PanelTextEditor::SaveFile(std::string path)
 	editor->engine->GetFileSystem()->SaveFile(path.c_str(), textEditor.GetText());
 	for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
-		if (go->GetComponent<ComponentMaterial>() != nullptr)
+		if (go->GetComponent<C_Material>() != nullptr)
 		{
-			Material* material = go->GetComponent<ComponentMaterial>()->GetMaterial();
+			Material* material = go->GetComponent<C_Material>()->GetMaterial();
 			if (material->shaderProgramID != 0)
 				glDeleteProgram(material->shaderProgramID);
 

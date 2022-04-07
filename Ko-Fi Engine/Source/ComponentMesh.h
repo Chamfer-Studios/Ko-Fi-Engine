@@ -8,7 +8,7 @@
 #include "MathGeoLib/Geometry/Sphere.h"
 
 class ComponentTransform;
-class ComponentMaterial;
+class C_Material;
 using Json = nlohmann::json;
 
 class ComponentMesh : public Component

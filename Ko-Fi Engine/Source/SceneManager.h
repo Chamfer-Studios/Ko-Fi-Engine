@@ -16,7 +16,7 @@ class SceneIntro;
 class GameObject;
 class ComponentTransform;
 class ComponentMesh;
-class ComponentMaterial;
+class C_Material;
 class C_Info;
 class C_Camera;
 class ComponentCanvas;

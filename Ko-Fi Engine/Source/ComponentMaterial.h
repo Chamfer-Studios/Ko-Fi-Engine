@@ -1,5 +1,5 @@
-#ifndef __COMPONENT_MATERIAL_H__
-#define __COMPONENT_MATERIAL_H__
+#ifndef __C_MATERIAL_H__
+#define __C_MATERIAL_H__
 
 #include "Component.h"
 #include "Texture.h"
@@ -14,11 +14,11 @@ using Json = nlohmann::json;
 class PanelChooser;
 class Material;
 
-class ComponentMaterial : public Component
+class C_Material : public Component
 {
 public:
-	ComponentMaterial(GameObject* parent);
-	~ComponentMaterial();
+	C_Material(GameObject* parent);
+	~C_Material();
 
 	bool Update(float dt) override;
 	bool CleanUp() override;
@@ -45,4 +45,4 @@ private:
 	int currentTextureId = 0;
 };
 
-#endif // !__COMPONENT_MATERIAL_H__
+#endif // !__C_MATERIAL_H__

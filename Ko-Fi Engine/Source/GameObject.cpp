@@ -243,10 +243,10 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::MESH:
 	{
 		//// Set Default Material
-		//c = this->CreateComponent<ComponentMaterial>();
+		//c = this->CreateComponent<C_Material>();
 		//Material* material = new Material();
 		//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-		//this->GetComponent<ComponentMaterial>()->SetMaterial(material);
+		//this->GetComponent<C_Material>()->SetMaterial(material);
 
 		//// Set a Default Model
 		c = this->CreateComponent<ComponentMesh>();
@@ -258,7 +258,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::MATERIAL:
 	{
-		c = this->CreateComponent<ComponentMaterial>();
+		c = this->CreateComponent<C_Material>();
 		break;
 	}
 	case ComponentType::PARTICLE:
@@ -539,7 +539,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::MATERIAL:
 		{
-			ComponentMaterial* materialCmp = (ComponentMaterial*)component;
+			C_Material* materialCmp = (C_Material*)component;
 			materialCmp->Save(jsonComponent);
 			break;
 		}
@@ -675,10 +675,10 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "material")
 		{
-			ComponentMaterial* materialCmp = this->GetComponent<ComponentMaterial>();
+			C_Material* materialCmp = this->GetComponent<C_Material>();
 			if (materialCmp == nullptr)
 			{
-				materialCmp = this->CreateComponent<ComponentMaterial>();
+				materialCmp = this->CreateComponent<C_Material>();
 			}
 			materialCmp->active = true;
 			materialCmp->Load(jsonCmp);
@@ -814,10 +814,10 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "material")
 		{
-			ComponentMaterial* materialCmp = this->GetComponent<ComponentMaterial>();
+			C_Material* materialCmp = this->GetComponent<C_Material>();
 			if (materialCmp == nullptr)
 			{
-				materialCmp = this->CreateComponent<ComponentMaterial>();
+				materialCmp = this->CreateComponent<C_Material>();
 			}
 			materialCmp->active = true;
 			materialCmp->Load(jsonCmp);

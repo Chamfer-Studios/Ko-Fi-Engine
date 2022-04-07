@@ -399,7 +399,7 @@ void Renderer3D::RenderBoundingBox(ComponentMesh* cMesh)
 void Renderer3D::RenderMeshes(GameObject* go)
 {
 	//Get needed variables
-	ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
+	C_Material* cMat = go->GetComponent<C_Material>();
 	ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
 	Mesh* mesh = cMesh->GetMesh();
 	//Check textures
@@ -604,7 +604,7 @@ void Renderer3D::RenderMeshes(GameObject* go)
 void Renderer3D::RenderPreviewMeshes(GameObject* go)
 {
 	//Get needed variables
-	ComponentMaterial* cMat = go->GetComponent<ComponentMaterial>();
+	C_Material* cMat = go->GetComponent<C_Material>();
 	ComponentMesh* cMesh = go->GetComponent<ComponentMesh>();
 	Mesh* mesh = cMesh->GetMesh();
 	//Check textures

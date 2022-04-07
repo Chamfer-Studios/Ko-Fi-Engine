@@ -23,7 +23,7 @@
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/float4x4.h"
 
-ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
+C_Material::C_Material(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
 
@@ -31,13 +31,13 @@ ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 	currentTextureId = 0;
 }
 
-ComponentMaterial::~ComponentMaterial()
+C_Material::~C_Material()
 {
 	if(material != nullptr)
 		RELEASE(material);
 }
 
-bool ComponentMaterial::CleanUp()
+bool C_Material::CleanUp()
 {
 	if(material != nullptr)
 		RELEASE(material);// peta por el karambit
@@ -45,12 +45,12 @@ bool ComponentMaterial::CleanUp()
 	return true;
 }
 
-bool ComponentMaterial::Update(float dt)
+bool C_Material::Update(float dt)
 {
 	return true;
 }
 
-void ComponentMaterial::Save(Json& json) const
+void C_Material::Save(Json& json) const
 {
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
@@ -126,7 +126,7 @@ void ComponentMaterial::Save(Json& json) const
 	}
 }
 
-void ComponentMaterial::Load(Json& json)
+void C_Material::Load(Json& json)
 {
 	if (!json.empty())
 	{
@@ -214,7 +214,7 @@ void ComponentMaterial::Load(Json& json)
 	}
 }
 
-void ComponentMaterial::SetMaterial(Material* material)
+void C_Material::SetMaterial(Material* material)
 {
 	if (this->material != nullptr)
 		RELEASE(this->material);
@@ -222,7 +222,7 @@ void ComponentMaterial::SetMaterial(Material* material)
 	this->material = material;
 }
 
-void ComponentMaterial::LoadMaterial(const char* path)
+void C_Material::LoadMaterial(const char* path)
 {
 	/*std::string materialPath = path;
 
@@ -271,7 +271,7 @@ void ComponentMaterial::LoadMaterial(const char* path)
 	};*/
 }
 
-bool ComponentMaterial::LoadDefaultMaterial()
+bool C_Material::LoadDefaultMaterial()
 {
 	bool ret = false;
 
@@ -307,7 +307,7 @@ bool ComponentMaterial::LoadDefaultMaterial()
 	return ret;
 }
 
-bool ComponentMaterial::InspectorDraw(PanelChooser* panelChooser)
+bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Material"))
 	{
