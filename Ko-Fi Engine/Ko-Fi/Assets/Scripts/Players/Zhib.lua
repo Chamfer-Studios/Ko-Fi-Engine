@@ -104,8 +104,11 @@ function Update(dt)
 	
 	--Gather Inputs
 	if (IsSelected() == true) then 
-	
-		if (GetInput(1) == KEY_STATE.KEY_DOWN) then -- Left Click
+		
+		-- Left Click
+		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
+
+			-- Knife
 			if (currentAction == Action.AIMING_KNIFE) then -- Fire Knife (infinite range for now)
 				if (knifeCount > 0) then
 					target = GetGameObjectHovered()
@@ -118,6 +121,8 @@ function Update(dt)
 				else
 					print("Out of ammo")
 				end
+
+			-- Ultimate
 			elseif (currentAction == Action.AIMING_ULTIMATE) then -- Cast Ultimate (infinite range for now)
 
 				GetGameObjectHovered()
@@ -126,6 +131,7 @@ function Update(dt)
 			end
 		end
 	
+		-- Right Click
 		if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
 			goHit = GetGameObjectHovered()
 			if (goHit ~= hit and goHit ~= gameObject) then
@@ -152,7 +158,7 @@ function Update(dt)
 		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- SPACE
 			currentAction = Action.AIMING_ULTIMATE
 		end
-		if (GetInput(8) == KEY_STATE.KEY_DOWN) then -- X -> Toggle crouch
+		if (GetInput(9) == KEY_STATE.KEY_DOWN) then -- C -> Toggle crouch
 			if (currentAction == Action.CROUCHING) then
 				currentAction = Action.WALKING
 				if (componentSwitch ~= nil) then
@@ -214,6 +220,11 @@ function MoveToDestination(dt)
 			s = speed * 0.66
 		elseif (currentAction == Action.RUNNING) then
 			s = speed * 1.5
+		end
+
+		-- Adapt speed on arrive
+		if (d < 10) then
+			s = s * 0.5
 		end
 
 		-- Movement

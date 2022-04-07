@@ -327,55 +327,55 @@ public:
 
 		switch (button)
 		{
-		case 4:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
-		}
-		case 5:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H);
-		}
-		case 6:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K);
-		}
-		case 7:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_G);
-		}
-		case 8:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X);
-		}
-		case 9:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_C);
-		}
-		case 10:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_R);
-		}
-		case 11:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_B);
-		}
+			case 4:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
+			}
+			case 5:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H);
+			}
+			case 6:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K);
+			}
+			case 7:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_G);
+			}
+			case 8:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X);
+			}
+			case 9:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_C);
+			}
+			case 10:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_R);
+			}
+			case 11:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_B);
+			}
 
-		case 21:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_1);
-		}
-		case 22:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_2);
-		}
-		case 23:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_3);
-		}
-		case 24:
-		{
-			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4);
-		}
+			case 21:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_1);
+			}
+			case 22:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_2);
+			}
+			case 23:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_3);
+			}
+			case 24:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4);
+			}
 		}
 	}
 
@@ -429,31 +429,31 @@ public:
 					{
 						switch (type)
 						{
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
-						{
-							return (int)s->handler->lua[variable.c_str()];
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
-						{
-							return (float)s->handler->lua[variable.c_str()];
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
-						{
-							return (float2)s->handler->lua[variable.c_str()];
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
-						{
-							return (float3)s->handler->lua[variable.c_str()];
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
-						{
-							return (bool)s->handler->lua[variable.c_str()];
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
-						{
-							std::string a = s->handler->lua[variable.c_str()];
-							return a;
-						}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
+							{
+								return (int)s->handler->lua[variable.c_str()];
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
+							{
+								return (float)s->handler->lua[variable.c_str()];
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
+							{
+								return (float2)s->handler->lua[variable.c_str()];
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
+							{
+								return (float3)s->handler->lua[variable.c_str()];
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
+							{
+								return (bool)s->handler->lua[variable.c_str()];
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
+							{
+								std::string a = s->handler->lua[variable.c_str()];
+								return a;
+							}
 						}
 					}
 				}
@@ -475,36 +475,36 @@ public:
 					{
 						switch (type)
 						{
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
-						{
-							s->handler->lua[variable.c_str()] = std::get<int>(value);
-							return;
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
-						{
-							s->handler->lua[variable.c_str()] = std::get<float>(value);
-							return;
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
-						{
-							s->handler->lua[variable.c_str()] = std::get<float2>(value);
-							return;
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
-						{
-							s->handler->lua[variable.c_str()] = std::get<float3>(value);
-							return;
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
-						{
-							s->handler->lua[variable.c_str()] = std::get<bool>(value);
-							return;
-						}
-						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
-						{
-							s->handler->lua[variable.c_str()] = std::get<std::string>(value);
-							return;
-						}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
+							{
+								s->handler->lua[variable.c_str()] = std::get<int>(value);
+								return;
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
+							{
+								s->handler->lua[variable.c_str()] = std::get<float>(value);
+								return;
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT2:
+							{
+								s->handler->lua[variable.c_str()] = std::get<float2>(value);
+								return;
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT3:
+							{
+								s->handler->lua[variable.c_str()] = std::get<float3>(value);
+								return;
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_BOOL:
+							{
+								s->handler->lua[variable.c_str()] = std::get<bool>(value);
+								return;
+							}
+							case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
+							{
+								s->handler->lua[variable.c_str()] = std::get<std::string>(value);
+								return;
+							}
 						}
 					}
 				}
