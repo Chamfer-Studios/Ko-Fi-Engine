@@ -9,7 +9,7 @@
 #include "Importer.h"
 #include "Renderer3D.h"
 #include "Texture.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 
 #include "Log.h"
 // Tools

@@ -12,7 +12,7 @@
 #include "Renderer3D.h"
 #include "Texture.h"
 
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "C_Camera.h"
 
 #include "Log.h"

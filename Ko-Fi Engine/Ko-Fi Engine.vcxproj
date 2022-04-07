@@ -123,7 +123,7 @@
     <ClCompile Include="Source\ComponentFollowPath.cpp" />
     <ClCompile Include="Source\ComponentImage.cpp" />
     <ClCompile Include="Source\C_LightSource.cpp" />
-    <ClCompile Include="Source\ComponentMaterial.cpp" />
+    <ClCompile Include="Source\C_Material.cpp" />
     <ClCompile Include="Source\ComponentScript.cpp" />
     <ClCompile Include="Source\ComponentText.cpp" />
     <ClCompile Include="Source\C_Info.cpp" />
@@ -294,7 +294,7 @@
     <ClInclude Include="Source\ComponentFollowPath.h" />
     <ClInclude Include="Source\ComponentImage.h" />
     <ClInclude Include="Source\C_Info.h" />
-    <ClInclude Include="Source\ComponentMaterial.h" />
+    <ClInclude Include="Source\C_Material.h" />
     <ClInclude Include="Source\ComponentMesh.h" />
     <ClInclude Include="Source\ComponentRenderedUI.h" />
     <ClInclude Include="Source\C_RigidBody.h" />

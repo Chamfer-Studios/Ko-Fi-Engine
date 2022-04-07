@@ -1,5 +1,5 @@
-#ifndef __COMPONENT_ANIMATOR_H__
-#define __COMPONENT_ANIMATOR_H__
+#ifndef __C_ANIMATOR_H__
+#define __C_ANIMATOR_H__
 
 #include <vector>
 #include "Component.h"
@@ -43,4 +43,4 @@ private:
 	AnimatorClip* selectedClip = nullptr;
 };
 
-#endif // __COMPONENT_ANIMATOR_H__
+#endif // __C_ANIMATOR_H__

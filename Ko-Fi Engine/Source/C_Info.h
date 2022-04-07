@@ -1,5 +1,5 @@
-#ifndef __COMPONENT_INFO_H__
-#define __COMPONENT_INFO_H__
+#ifndef __C_INFO_H__
+#define __C_INFO_H__
 
 #include "Component.h"
 
@@ -21,4 +21,4 @@ private:
 	int tag;
 };
 
-#endif // !__COMPONENT_INFO_H__
+#endif // !__C_INFO_H__

@@ -5,7 +5,7 @@
 #include "Globals.h"
 
 #include "ComponentMesh.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "ComponentParticle.h"
 #include "C_Camera.h"
 #include "ComponentScript.h"

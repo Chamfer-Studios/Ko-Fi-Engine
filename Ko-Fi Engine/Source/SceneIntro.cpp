@@ -9,7 +9,7 @@
 #include "ImGuiAppLog.h"
 #include "FileSystem.h"
 #include "ComponentMesh.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "C_Camera.h"
 #include "ComponentParticle.h"
 #include "ComponentScript.h"
@@ -147,11 +147,11 @@ bool SceneIntro::PostUpdate(float dt)
 			Mesh *mesh = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<ComponentMesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
-			C_Material *componentMaterial = knife->CreateComponent<C_Material>();
-			//Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
+			C_Material *cMaterial = knife->CreateComponent<C_Material>();
+			//Importer::GetInstance()->textureImporter->Import(nullptr, &C_Material->texture);
 			Material *material = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
 			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-			componentMaterial->SetMaterial(material);
+			cMaterial->SetMaterial(material);
 
 			rigidBody->FreezePositionY(true);
 			C_Collider *collider = knife->CreateComponent<C_Collider>();

@@ -10,7 +10,7 @@
 #include "Window.h"
 #include "FileSystem.h"
 #include "Importer.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "Importer.h"
 // FIXME: The list of meshes should be in scene intro.
 #include "GameObject.h"

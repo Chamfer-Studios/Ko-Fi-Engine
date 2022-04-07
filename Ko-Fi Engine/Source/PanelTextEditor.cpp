@@ -4,7 +4,7 @@
 #include "FileSystem.h"
 #include "PanelChooser.h"
 #include "SceneManager.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "Material.h"
 
 #include "glew.h"

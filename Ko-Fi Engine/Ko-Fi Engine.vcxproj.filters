@@ -340,7 +340,7 @@
     <ClCompile Include="Source\ComponentTransform.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentMaterial.cpp">
+    <ClCompile Include="Source\C_Material.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelHierarchy.cpp">
@@ -585,9 +585,6 @@
     </ClCompile>
     <ClCompile Include="Source\I_Track.cpp">
       <Filter>Source\Importers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp">
-      <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_Animator.cpp">
       <Filter>Source\GameObject\Components</Filter>
@@ -946,7 +943,7 @@
     <ClInclude Include="Source\ComponentTransform.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentMaterial.h">
+    <ClInclude Include="Source\C_Material.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelHierarchy.h">
@@ -1752,9 +1749,6 @@
     </ClInclude>
     <ClInclude Include="Source\Channel.h">
       <Filter>Source\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentRigidBody.h">
-      <Filter>Source\GameObject\Components\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

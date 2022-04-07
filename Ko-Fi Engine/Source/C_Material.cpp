@@ -1,4 +1,4 @@
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "Material.h"
 #include "Log.h"
 #include "GameObject.h"

@@ -4,7 +4,7 @@
 #include "Engine.h"
 #include "SceneManager.h"
 #include "GameObject.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "ComponentMesh.h"
 #include "ComponentScript.h"
 #include "C_Camera.h"

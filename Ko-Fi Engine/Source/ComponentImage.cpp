@@ -3,7 +3,7 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
 #include "ComponentTransform2D.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "ComponentTransform.h"
 #include "Camera3D.h"
 #include "Engine.h"

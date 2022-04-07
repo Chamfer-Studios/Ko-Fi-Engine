@@ -2,7 +2,7 @@
 #include "Texture.h"
 
 #include "GameObject.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "ComponentTransform.h"
 #include "C_Animator.h"
 
@@ -25,7 +25,7 @@
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/float4x4.h"
 
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "ComponentTransform.h"
 #include "GameObject.h"
 #include "Globals.h"

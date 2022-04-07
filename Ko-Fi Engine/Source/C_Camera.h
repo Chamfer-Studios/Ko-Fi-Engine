@@ -1,5 +1,5 @@
-#ifndef __COMPONENT_CAMERA_H__
-#define __COMPONENT_CAMERA_H__
+#ifndef __C_CAMERA_H__
+#define __C_CAMERA_H__
 
 #include "Component.h"
 
@@ -65,4 +65,4 @@ private:
 	
 };
 
-#endif // !__COMPONENT_CAMERA_H__
+#endif // !__C_CAMERA_H__

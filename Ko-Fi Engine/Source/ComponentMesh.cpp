@@ -7,7 +7,7 @@
 
 #include "GameObject.h"
 #include "ComponentTransform.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "C_Camera.h"
 #include "SceneManager.h"
 #include "Engine.h"

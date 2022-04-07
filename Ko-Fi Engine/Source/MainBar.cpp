@@ -12,7 +12,7 @@
 #include "C_Camera.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "ComponentImage.h"
 #include "ComponentButton.h"
 #include "ComponentText.h"

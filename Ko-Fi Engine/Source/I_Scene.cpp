@@ -15,7 +15,7 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
-#include "ComponentMaterial.h"
+#include "C_Material.h"
 #include "C_Info.h"
 #include "C_Camera.h"
 #include "C_Collider.h"
