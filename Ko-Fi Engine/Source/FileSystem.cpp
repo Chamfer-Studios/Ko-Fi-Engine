@@ -210,15 +210,18 @@ void FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<std
 	}
 
 	std::vector<std::string> directories;
-	EnumerateFiles(directory, files, directories);
+	std::vector<std::string> allFiles;
+	EnumerateFiles(directory, allFiles, directories);
 
-	for (auto & file : files)
+	for (auto & file : allFiles)
 	{
 		std::filesystem::path fileTmp = file;
 		if (!fileTmp.extension().empty())
 		{
 			if (StringCompare((const char*)fileTmp.extension().c_str(), filter) == 0)
-				files.push_back(file);
+				filteredFiles.push_back(directory + file);
+			else
+				files.push_back(directory + file);
 		}
 	}
 

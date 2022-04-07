@@ -42,10 +42,10 @@ bool ResourceManager::Start()
 
 	fileRefreshRate = 5.0f;
 
-	//RefreshDirectoryFiles(ASSETS_DIR);
-	//RefreshDirectoryFiles(LIBRARY_DIR);
+	RefreshDirectoryFiles(ASSETS_DIR);
+	RefreshDirectoryFiles(LIBRARY_DIR);
 
-	//TrimLibrary();
+	TrimLibrary();
 
 	//Find prefabs
 
@@ -152,7 +152,7 @@ UID ResourceManager::ImportFile(const char* assetPath)
 
 	if (type == ResourceType::UNKNOWN)
 	{
-		LOG_BOTH("[ERROR] Resource Manager: loading file, unkown file type.");
+		LOG_BOTH("[ERROR] Resource Manager: loading file, unknown file type.");
 		return uid;
 	}
 
@@ -791,12 +791,13 @@ bool ResourceManager::ResourceHasMetaType(Resource* resource) const
 		return false;
 	}
 
-	switch (resource->GetType())
-	{
-	case ResourceType::TEXTURE: { return true; } break;
-	case ResourceType::SHADER: { return true; } break;
-	default: break;
-	}
+	//TODO: META SHIT
+	//switch (resource->GetType())
+	//{
+	//case ResourceType::TEXTURE: { return true; } break;
+	//case ResourceType::SHADER: { return true; } break;
+	//default: break;
+	//}
 
 	return false;
 }
@@ -1064,6 +1065,7 @@ UID ResourceManager::ImportFromAssets(const char* assetsPath)
 		return -1;
 	}
 
+	//TODO: META SHIT
 	//char* buffer = nullptr;
 	//uint read = App->fileSystem->Load(assetsPath, &buffer);
 	//if (read == 0)
@@ -1077,20 +1079,26 @@ UID ResourceManager::ImportFromAssets(const char* assetsPath)
 
 	switch (type)
 	{
-	case ResourceType::MESH:
-		//Importer::GetInstance()->meshImporter->Import();
-		break;
 	case ResourceType::TEXTURE:
-		//Importer::GetInstance()->textureImporter->Import();
-		break;
-	case ResourceType::SCENE:
-		//Importer::GetInstance()->sceneImporter->Import();
-		break;
-	case ResourceType::SHADER:
+		Importer::GetInstance()->textureImporter->Import(assetsPath,(Texture*)resource);
 		break;
 	case ResourceType::FONT:
+		//TODO: FONT IMPORT
 		break;
-	case ResourceType::UNKNOWN:
+	case ResourceType::TRACK:
+		//TODO: TRACK IMPORT
+		break;
+	case ResourceType::PARTICLE:
+		//TODO: PARTICLE IMPORT
+		break;
+	case ResourceType::MODEL:
+		//TODO: MODEL IMPORT
+		break;
+	case ResourceType::MATERIAL:
+		//TODO: MATERIAL IMPORT
+		break;
+	case ResourceType::ANIMATION:
+		//TODO: ANIMATION IMPORT
 		break;
 	default:
 		break;
@@ -1113,14 +1121,18 @@ ResourceType ResourceManager::GetTypeFromExtension(const char* extension)
 	//LUA?
 	if (engine->GetFileSystem()->StringCompare(extension, TEXTURE_EXTENSION) == 0)
 		ret = ResourceType::TEXTURE;
-	else if (engine->GetFileSystem()->StringCompare(extension, ".fbx") == 0)
-		ret = ResourceType::MESH;
+	else if (engine->GetFileSystem()->StringCompare(extension, MODEL_EXTENSION) == 0)
+		ret = ResourceType::MODEL;
 	else if (engine->GetFileSystem()->StringCompare(extension, SCENE_EXTENSION) == 0)
 		ret = ResourceType::SCENE;
 	else if (engine->GetFileSystem()->StringCompare(extension, SHADER_EXTENSION) == 0)
-		ret = ResourceType::SHADER;
+		ret = ResourceType::MATERIAL;
 	else if (engine->GetFileSystem()->StringCompare(extension, FONT_EXTENSION) == 0)
 		ret = ResourceType::FONT;
+	else if (engine->GetFileSystem()->StringCompare(extension, MESH_EXTENSION) == 0)
+		ret = ResourceType::MESH;
+	else if (engine->GetFileSystem()->StringCompare(extension, ANIMATION_EXTENSION) == 0)
+		ret = ResourceType::ANIMATION;
 
 	return ret;
 }
@@ -1140,7 +1152,7 @@ const char* ResourceManager::GetAssetsDirectoryFromType(const ResourceType type)
 	case ResourceType::SCENE:
 		ret = ASSETS_SCENES_DIR;
 		break;
-	case ResourceType::SHADER:
+	case ResourceType::MATERIAL:
 		ret = ASSETS_SHADERS_DIR;
 		break;
 	case ResourceType::FONT:

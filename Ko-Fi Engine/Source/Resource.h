@@ -12,7 +12,6 @@ enum class ResourceType
 	MESH,
 	TEXTURE,
 	SCENE,
-	SHADER,
 	FONT,
 	TRACK,
 	PARTICLE,

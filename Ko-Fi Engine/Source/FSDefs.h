@@ -26,10 +26,12 @@
 #define MESH_EXTENSION ".sugar"
 #define MATERIAL_EXTENSION ".milk"
 #define SHADER_EXTENSION ".glsl"
-#define SCENE_EXTENSION ".json"
-#define FONT_EXTENSION ".ttf"		//not sure
-#define TEXTURE_EXTENSION ".png"	//not sure
-#define META_EXTENSION ".meta"
 #define ANIMATION_EXTENSION ".cake"
+#define SCENE_EXTENSION ".json"
+#define META_EXTENSION ".meta"
+
+#define MODEL_EXTENSION ".fbx"
+#define FONT_EXTENSION ".ttf"
+#define TEXTURE_EXTENSION ".png"
 
 #endif // !__FSDIRECTORIES_H__
