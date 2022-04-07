@@ -19,7 +19,7 @@
 #include "ComponentInfo.h"
 #include "C_Camera.h"
 #include "C_Collider.h"
-#include "ComponentRigidBody.h"
+#include "C_RigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentButton.h"
 #include "ComponentCanvas.h"
@@ -411,7 +411,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::RIGID_BODY:
 			{
-				ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
+				C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
 				rigidBodyCmp->Save(jsonComponent);
 				break;
 			}
@@ -689,10 +689,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "rigidBody")
 					{
-						ComponentRigidBody* rbCmp = go->GetComponent<ComponentRigidBody>();
+						C_RigidBody* rbCmp = go->GetComponent<C_RigidBody>();
 						if (rbCmp == nullptr)
 						{
-							rbCmp = (ComponentRigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
+							rbCmp = (C_RigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
 						}
 						rbCmp->active = true;
 						rbCmp->Load(jsonCmp);

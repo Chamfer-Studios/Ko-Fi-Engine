@@ -20,7 +20,7 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
-#include "ComponentRigidBody.h"
+#include "C_RigidBody.h"
 #include "ComponentScript.h"
 #include "ComponentText.h"
 #include "ComponentImage.h"
@@ -173,7 +173,7 @@ public:
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetComponentMesh", &GameObject::GetComponent<ComponentMesh>,
-									 "GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>,
+									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
 									 "GetText", &GameObject::GetComponent<ComponentText>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
@@ -276,16 +276,16 @@ public:
 											"value", &InspectorVariable::value);
 
 		// Rigid Body structure
-		lua.new_usertype<ComponentRigidBody>("ComponentRigidBody",
+		lua.new_usertype<C_RigidBody>("C_RigidBody",
 											 sol::constructors<void(GameObject *)>(),
-											 "IsStatic", &ComponentRigidBody::IsStatic,
-											 "IsKinematic", &ComponentRigidBody::IsKinematic,
-											 "SetStatic", &ComponentRigidBody::SetStatic,
-											 "SetDynamic", &ComponentRigidBody::SetDynamic,
-											 "SetLinearVelocity", &ComponentRigidBody::SetLinearVelocity,
-											 "FreezePositionY", &ComponentRigidBody::FreezePositionY,
-											 "Set2DVelocity", &ComponentRigidBody::Set2DVelocity,
-											 "SetRigidBodyPos", &ComponentRigidBody::SetRigidBodyPos);
+											 "IsStatic", &C_RigidBody::IsStatic,
+											 "IsKinematic", &C_RigidBody::IsKinematic,
+											 "SetStatic", &C_RigidBody::SetStatic,
+											 "SetDynamic", &C_RigidBody::SetDynamic,
+											 "SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+											 "FreezePositionY", &C_RigidBody::FreezePositionY,
+											 "Set2DVelocity", &C_RigidBody::Set2DVelocity,
+											 "SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
 
 		lua.new_usertype<Navigation>("Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),

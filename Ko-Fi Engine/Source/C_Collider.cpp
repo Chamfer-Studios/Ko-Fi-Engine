@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-#include "ComponentRigidBody.h"
+#include "C_RigidBody.h"
 #include "ComponentMesh.h"
 
 #include "Physics.h"
@@ -20,8 +20,8 @@ C_Collider::~C_Collider()
 {
 	if (shape)
 	{
-		/*if (owner->GetComponent<ComponentRigidBody>())
-			owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);*/
+		/*if (owner->GetComponent<C_RigidBody>())
+			owner->GetComponent<C_RigidBody>()->GetRigidBody()->detachShape(*shape);*/
 		shape->release();
 		shape = nullptr;
 	}
@@ -87,9 +87,9 @@ void C_Collider::CreateBoxCollider()
 	if (shape)
 		shape->release();
 	if (shape)
-		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);
+		owner->GetComponent<C_RigidBody>()->GetRigidBody()->detachShape(*shape);
 
-	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody());
+	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<C_RigidBody>()->GetRigidBody());
 
 	ComponentTransform* currentTransform = owner->GetComponent<ComponentTransform>();
 	float3 pos, scale;
@@ -127,10 +127,10 @@ void C_Collider::CreateBoxCollider()
 		shape->setSimulationFilterData(filterData);
 		shape->setQueryFilterData(filterData);
 
-		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
+		owner->GetComponent<C_RigidBody>()->GetRigidBody()->attachShape(*shape);
 	}
 
-	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
+	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<C_RigidBody>()->GetRigidBody(), owner);
 }
 
 void C_Collider::DrawCollider()

@@ -1,6 +1,6 @@
-#include "ComponentRigidBody.h"
+#include "C_RigidBody.h"
 
-ComponentRigidBody::ComponentRigidBody(GameObject *parent) : Component(parent)
+C_RigidBody::C_RigidBody(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
 
@@ -10,7 +10,7 @@ ComponentRigidBody::ComponentRigidBody(GameObject *parent) : Component(parent)
 		CreateStatic();
 }
 
-ComponentRigidBody::~ComponentRigidBody()
+C_RigidBody::~C_RigidBody()
 {
 	if (dynamicBody)
 	{
@@ -24,7 +24,7 @@ ComponentRigidBody::~ComponentRigidBody()
 	}
 }
 
-bool ComponentRigidBody::CleanUp()
+bool C_RigidBody::CleanUp()
 {
 	/*if (dynamicBody)
 	{
@@ -39,7 +39,7 @@ bool ComponentRigidBody::CleanUp()
 	return true;
 }
 
-bool ComponentRigidBody::Update(float dt)
+bool C_RigidBody::Update(float dt)
 {
 	bool ret = true;
 
@@ -75,7 +75,7 @@ bool ComponentRigidBody::Update(float dt)
 }
 
 // Called whenever a rigid body attribute is changed
-void ComponentRigidBody::UpdatePhysicsValues()
+void C_RigidBody::UpdatePhysicsValues()
 {
 	if (!isStatic)
 	{
@@ -129,7 +129,7 @@ void ComponentRigidBody::UpdatePhysicsValues()
 }
 
 // Update rigid body by the owner's transform
-bool ComponentRigidBody::TransformUpdatesRigidBody()
+bool C_RigidBody::TransformUpdatesRigidBody()
 {
 	physx::PxRigidActor *body = nullptr;
 	if (!isStatic)
@@ -155,7 +155,7 @@ bool ComponentRigidBody::TransformUpdatesRigidBody()
 	return true;
 }
 
-bool ComponentRigidBody::RigidBodyUpdatesTransform()
+bool C_RigidBody::RigidBodyUpdatesTransform()
 {
 	physx::PxRigidActor *body = nullptr;
 	if (!isStatic)
@@ -179,7 +179,7 @@ bool ComponentRigidBody::RigidBodyUpdatesTransform()
 	return true;
 }
 
-void ComponentRigidBody::Set2DVelocity(float2 vel)
+void C_RigidBody::Set2DVelocity(float2 vel)
 {
 	linearVel.x = vel.x;
 	linearVel.z = vel.y;
@@ -189,7 +189,7 @@ void ComponentRigidBody::Set2DVelocity(float2 vel)
 	}
 }
 
-void ComponentRigidBody::SetRigidBodyPos(float3 pos)
+void C_RigidBody::SetRigidBodyPos(float3 pos)
 {
 	physx::PxTransform transform;
 	transform.p = physx::PxVec3(pos.x, pos.y, pos.z);
@@ -200,7 +200,7 @@ void ComponentRigidBody::SetRigidBodyPos(float3 pos)
 	hasUpdated = true; 
 }
 
-void ComponentRigidBody::StopMovement()
+void C_RigidBody::StopMovement()
 {
 	if (isStatic)
 		return;
@@ -215,7 +215,7 @@ void ComponentRigidBody::StopMovement()
 }
 
 // Serialization
-void ComponentRigidBody::Save(Json &json) const
+void C_RigidBody::Save(Json &json) const
 {
 	json["type"] = "rigidBody";
 
@@ -238,7 +238,7 @@ void ComponentRigidBody::Save(Json &json) const
 	json["freeze_rotation_y"] = freezeRotationY;
 	json["freeze_rotation_z"] = freezeRotationZ;
 }
-void ComponentRigidBody::Load(Json &json)
+void C_RigidBody::Load(Json &json)
 {
 	if (json.contains("is_static"))
 		isStatic = json.at("is_static");
@@ -291,7 +291,7 @@ void ComponentRigidBody::Load(Json &json)
 }
 
 // On inspector draw
-bool ComponentRigidBody::InspectorDraw(PanelChooser *chooser)
+bool C_RigidBody::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true;
 
@@ -443,7 +443,7 @@ bool ComponentRigidBody::InspectorDraw(PanelChooser *chooser)
 }
 // ------------------------------------------------------
 
-void ComponentRigidBody::SetStatic()
+void C_RigidBody::SetStatic()
 {
 	isStatic = true;
 	isKinematic = false;
@@ -493,7 +493,7 @@ void ComponentRigidBody::SetStatic()
 	}
 }
 
-void ComponentRigidBody::SetDynamic()
+void C_RigidBody::SetDynamic()
 {
 	isStatic = false;
 	isKinematic = false;
@@ -543,7 +543,7 @@ void ComponentRigidBody::SetDynamic()
 	}
 }
 
-void ComponentRigidBody::CreateDynamic()
+void C_RigidBody::CreateDynamic()
 {
 	isStatic = false;
 	hasUpdated = true;
@@ -566,7 +566,7 @@ void ComponentRigidBody::CreateDynamic()
 	}
 }
 
-void ComponentRigidBody::CreateStatic()
+void C_RigidBody::CreateStatic()
 {
 	isStatic = true;
 	hasUpdated = true;

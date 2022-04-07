@@ -16,11 +16,11 @@
 #include "MathGeoLib/Math/Quat.h"
 #include "MathGeoLib/Math/float3.h"
 
-class ComponentRigidBody : public Component
+class C_RigidBody : public Component
 {
 public:
-	ComponentRigidBody(GameObject *parent);
-	~ComponentRigidBody();
+	C_RigidBody(GameObject *parent);
+	~C_RigidBody();
 
 	bool Update(float dt) override;
 	bool CleanUp() override;

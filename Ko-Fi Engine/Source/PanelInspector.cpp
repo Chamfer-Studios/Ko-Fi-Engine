@@ -10,7 +10,7 @@
 #include "C_Camera.h"
 #include "ComponentInfo.h"
 #include "ComponentTransform.h"
-#include "ComponentRigidBody.h"
+#include "C_RigidBody.h"
 #include "C_Animator.h"
 #include "ComponentLightSource.h"
 

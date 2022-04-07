@@ -132,7 +132,7 @@ bool SceneIntro::PostUpdate(float dt)
 		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
 		{
 			knife->tag = Tag::TAG_PROJECTILE;
-			ComponentRigidBody *rigidBody = knife->CreateComponent<ComponentRigidBody>();
+			C_RigidBody *rigidBody = knife->CreateComponent<C_RigidBody>();
 
 			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 			float3 pos = parent->GetTransform()->GetPosition();
