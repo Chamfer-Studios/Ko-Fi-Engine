@@ -15,60 +15,52 @@ class ComponentMesh : public Component
 {
 public:
 	ComponentMesh(GameObject* parent);
-	//ComponentMesh(GameObject* parent,Shape shape);
 	~ComponentMesh();
 
-	//void CopyParMesh(par_shapes_mesh* parMesh);
-
+	// Game Loop
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
+	// Serialization
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
+	// SetMesh
 	void SetMesh(Mesh* mesh);
-	inline Mesh* GetMesh() const { return mesh; }
-	//void SetMesh(par_shapes_mesh* parMesh);
-	//void CopyParMesh(par_shapes_mesh* parMesh);
-
 	inline void SetPath(const char* path) { mesh->path = path; }
-	inline const char* GetMeshPath() const { mesh->path.c_str(); }
-
-	uint GetVertices();
-
-	float3 GetCenterPointInWorldCoords() const;
-	inline float GetSphereRadius() const { return radius; }
-
 	void SetVertexNormals(bool vertexNormals);
-	bool GetVertexNormals() const;
 	void SetFaceNormals(bool facesNormals);
-	bool GetFaceNormals() const;
-
-	void GenerateLocalBoundingBox();
-	const AABB GetLocalAABB();
-
-	void GenerateGlobalBoundingBox();
-	const AABB GetGlobalAABB() const;
-	
-	inline bool GetRenderMesh() const { return renderMesh; }
 	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
+	
+	// Getters
+	inline Mesh* GetMesh() const { return mesh; }
+	inline const char* GetMeshPath() const { mesh->path.c_str(); }
+	inline float GetSphereRadius() const { return radius; }
+	inline bool GetRenderMesh() const { return renderMesh; }
+	float3 GetCenterPoint() const { return mesh->localAABB.CenterPoint();  }
+	float3 GetCenterPointInWorldCoords() const;
+	uint GetVertices();
+	bool GetVertexNormals() const;
+	bool GetFaceNormals() const;
+	const AABB GetLocalAABB();
+	const AABB GetGlobalAABB() const;
 
+	// Mesh Functions
+	void GenerateLocalBoundingBox();
+	void GenerateGlobalBoundingBox();
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
-
 	bool InspectorDraw(PanelChooser* chooser);
-
+	
 private:
 	Mesh* mesh = nullptr;
-
 	bool renderMesh = true;
 	float time = 0;
 
 	//COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
 
 	// Bounding sphere
-	float3 centerPoint = float3::zero;
 	float radius;
 
 	// Bounding boxes

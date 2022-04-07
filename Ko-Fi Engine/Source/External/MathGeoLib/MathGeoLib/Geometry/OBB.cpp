@@ -664,6 +664,7 @@ void OBBTransform(OBB &o, const Matrix &transform)
 	o.axis[0] = transform.MulDir(o.r.x * o.axis[0]);
 	o.axis[1] = transform.MulDir(o.r.y * o.axis[1]);
 	o.axis[2] = transform.MulDir(o.r.z * o.axis[2]);
+	
 	o.r.x = o.axis[0].Normalize();
 	o.r.y = o.axis[1].Normalize();
 	o.r.z = o.axis[2].Normalize();
