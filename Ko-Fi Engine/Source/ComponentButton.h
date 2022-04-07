@@ -4,7 +4,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentRenderedUI.h"
 
-#include "Texture.h"
+#include "R_Texture.h"
 
 #include "glew.h"
 
@@ -34,9 +34,9 @@ public:
 
 	void Draw() override;
 
-	Texture GetIdleTexture() { return idleOpenGLTexture; };
-	Texture GetHoverTexture() { return hoverOpenGLTexture; };
-	Texture GetPressedTexture() { return pressedOpenGLTexture; };
+	R_Texture GetIdleTexture() { return idleOpenGLTexture; };
+	R_Texture GetHoverTexture() { return hoverOpenGLTexture; };
+	R_Texture GetPressedTexture() { return pressedOpenGLTexture; };
 
 	void SetIdleTexture(const char* path);
 	void SetHoverTexture(const char* path);
@@ -54,9 +54,9 @@ private:
 
 	void FreeTextures(BUTTON_STATE type);
 
-	Texture idleOpenGLTexture;
-	Texture hoverOpenGLTexture;
-	Texture pressedOpenGLTexture;
+	R_Texture idleOpenGLTexture;
+	R_Texture hoverOpenGLTexture;
+	R_Texture pressedOpenGLTexture;
 
 	BUTTON_STATE state = BUTTON_STATE::IDLE;
 

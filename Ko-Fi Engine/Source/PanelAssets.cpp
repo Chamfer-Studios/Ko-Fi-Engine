@@ -117,7 +117,7 @@ bool PanelAssets::Update()
 				std::string path = currentDir.string() + fileName;
 				editor->engine->GetFileSystem()->CreateScene(path.c_str(),fileName.c_str());
 			}
-			if (ImGui::MenuItem("Material"))
+			if (ImGui::MenuItem("R_Material"))
 			{
 				std::string fileName =  FileExistsMaterial("/material.milk",1);
 			

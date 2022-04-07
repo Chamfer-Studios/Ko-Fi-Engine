@@ -3,10 +3,10 @@
 
 #include "Globals.h"
 #include "Engine.h"
-#include "Navigation.h"
-#include "Renderer3D.h"
-#include "Input.h" 
-#include "SceneManager.h"
+#include "M_Navigation.h"
+#include "M_Renderer3D.h"
+#include "M_Input.h" 
+#include "M_SceneManager.h"
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
 #include "ImGuiAppLog.h"
@@ -219,14 +219,14 @@ public:
 			"right", &C_Camera::right,
 			"up", &C_Camera::up
 			);
-		// Component Mesh
+		// Component R_Mesh
 		lua.new_usertype<C_Mesh>("C_Mesh",
 			sol::constructors<void(GameObject *)>(),
 			"Disable", &C_Mesh::Disable,
 			"Enable", &C_Mesh::Enable
 			);
 
-		// Component Mesh
+		// Component R_Mesh
 		lua.new_usertype<C_Mesh>("C_Mesh",
 			sol::constructors<void(GameObject*)>(),
 			"Disable",	&C_Mesh::Disable,
@@ -287,9 +287,9 @@ public:
 											 "Set2DVelocity", &C_RigidBody::Set2DVelocity,
 											 "SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
 
-		lua.new_usertype<Navigation>("Navigation",
+		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
-									 "FindPath", &Navigation::FindPath);
+									 "FindPath", &M_Navigation::FindPath);
 
 		/// Variables
 		lua["gameObject"] = gameObject;
@@ -379,7 +379,7 @@ public:
 		}
 	}
 
-	Navigation *GetNavigation()
+	M_Navigation *GetNavigation()
 	{
 		return gameObject->GetEngine()->GetNavigation();
 	}

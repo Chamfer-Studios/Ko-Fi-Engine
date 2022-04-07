@@ -278,12 +278,12 @@ ImVec2 GetNodeDimensions(int id);
 void BeginNodeTitleBar();
 void EndNodeTitleBar();
 
-// Attributes are ImGui UI elements embedded within the node. Attributes can have pin shapes
+// Attributes are ImGui M_UI elements embedded within the node. Attributes can have pin shapes
 // rendered next to them. Links are created between pins.
 //
 // The activity status of an attribute can be checked via the IsAttributeActive() and
 // IsAnyAttributeActive() function calls. This is one easy way of checking for any changes made to
-// an attribute's drag float UI, for instance.
+// an attribute's drag float M_UI, for instance.
 //
 // Each attribute id must be unique.
 
@@ -304,7 +304,7 @@ void PushAttributeFlag(ImNodesAttributeFlags flag);
 void PopAttributeFlag();
 
 // Render a link between attributes.
-// The attributes ids used here must match the ids used in Begin(Input|Output)Attribute function
+// The attributes ids used here must match the ids used in Begin(M_Input|Output)Attribute function
 // calls. The order of start_attr and end_attr doesn't make a difference for rendering the link.
 void Link(int id, int start_attribute_id, int end_attribute_id);
 
@@ -331,8 +331,8 @@ ImVec2 GetNodeGridSpacePos(const int node_id);
 // Returns true if the current node editor canvas is being hovered over by the mouse, and is not
 // blocked by any other windows.
 bool IsEditorHovered();
-// The following functions return true if a UI element is being hovered over by the mouse cursor.
-// Assigns the id of the UI element being hovered over to the function argument. Use these functions
+// The following functions return true if a M_UI element is being hovered over by the mouse cursor.
+// Assigns the id of the M_UI element being hovered over to the function argument. Use these functions
 // after EndNodeEditor() has been called.
 bool IsNodeHovered(int* node_id);
 bool IsLinkHovered(int* link_id);
@@ -364,7 +364,7 @@ void ClearLinkSelection(int link_id);
 bool IsLinkSelected(int link_id);
 
 // Was the previous attribute active? This will continuously return true while the left mouse button
-// is being pressed over the UI content of the attribute.
+// is being pressed over the M_UI content of the attribute.
 bool IsAttributeActive();
 // Was any attribute active? If so, sets the active attribute id to the output function argument.
 bool IsAnyAttributeActive(int* attribute_id = NULL);

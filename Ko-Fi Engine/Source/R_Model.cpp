@@ -1,7 +1,7 @@
 #include "R_Model.h"
 #include "FSDefs.h"
 
-R_Model::R_Model() : R_Resource(ResourceType::MODEL)
+R_Model::R_Model() : Resource(ResourceType::MODEL)
 {
 }
 

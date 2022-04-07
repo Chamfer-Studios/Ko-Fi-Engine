@@ -1,27 +1,27 @@
-#include "Window.h"
+#include "M_Window.h"
 #include "Engine.h"
 #include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
-#include "Renderer3D.h"
+#include "M_Renderer3D.h"
 
 #include "SDL.h"
 
-Window::Window(KoFiEngine* engine) : Module()
+M_Window::M_Window(KoFiEngine* engine) : Module()
 {
 	window = NULL;
 	screenSurface = NULL;
-	name = "Window";
+	name = "M_Window";
 	this->engine = engine;
 }
 
 // Destructor
-Window::~Window()
+M_Window::~M_Window()
 {
 }
 
 // Called before render is available
-bool Window::Awake(Json configModule)
+bool M_Window::Awake(Json configModule)
 {
 	CONSOLE_LOG("Init SDL window & surface");
 	appLog->AddLog("Init SDL window & surface\n");
@@ -58,8 +58,8 @@ bool Window::Awake(Json configModule)
 		if (window == NULL)
 		{
 
-			CONSOLE_LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-			appLog->AddLog("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			CONSOLE_LOG("M_Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			appLog->AddLog("M_Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			SDL_assert(window != NULL);
 			ret = false;
 		}
@@ -103,8 +103,8 @@ bool Window::Awake(Json configModule)
 //	window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 //	if(window == NULL)
 //	{
-//		CONSOLE_LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-//		appLog->AddLog("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+//		CONSOLE_LOG("M_Window could not be created! SDL_Error: %s\n", SDL_GetError());
+//		appLog->AddLog("M_Window could not be created! SDL_Error: %s\n", SDL_GetError());
 //		SDL_assert(window != NULL);
 //		ret = false;
 //	}
@@ -128,7 +128,7 @@ return ret;
 }
 
 // Called before quitting
-bool Window::CleanUp()
+bool M_Window::CleanUp()
 {
 	CONSOLE_LOG("Destroying SDL window and quitting all SDL systems");
 	appLog->AddLog("Destroying SDL window and quitting all SDL systems\n");
@@ -146,7 +146,7 @@ bool Window::CleanUp()
 	return true;
 }
 
-bool Window::SaveConfiguration(Json& configModule) const
+bool M_Window::SaveConfiguration(Json& configModule) const
 {
 	configModule["Width"] = GetWidth();
 	configModule["Height"] = GetHeight();
@@ -160,7 +160,7 @@ bool Window::SaveConfiguration(Json& configModule) const
 	return true;
 }
 
-bool Window::LoadConfiguration(Json& configModule)
+bool M_Window::LoadConfiguration(Json& configModule)
 {
 	//SetWidth(configModule["Width"]);
 	//SetHeight(configModule["Height"]);
@@ -174,9 +174,9 @@ bool Window::LoadConfiguration(Json& configModule)
 	return true;
 }
 
-bool Window::InspectorDraw()
+bool M_Window::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("Window##"))
+	if (ImGui::CollapsingHeader("M_Window##"))
 	{
 		ImGui::Combo("##resolutionCombo", &currentResolution, "Select Resolution\0 1024x768\0 1920x1080\0 1280x720");
 
@@ -215,20 +215,20 @@ bool Window::InspectorDraw()
 }
 
 // Method to receive and manage events
-void Window::OnNotify(const Event& event)
+void M_Window::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
 // Set new window title
-void Window::SetTitle(const char* new_title)
+void M_Window::SetTitle(const char* new_title)
 {
 	//title.create(new_title);
 	SDL_SetWindowTitle(window, new_title);
 	title = new_title;
 }
 
-void Window::AdjustBrightness(float brightness)
+void M_Window::AdjustBrightness(float brightness)
 {
 	brightness = brightness < 0 ? 0 : brightness;
 	brightness = brightness > 1 ? 1 : brightness;
@@ -237,48 +237,48 @@ void Window::AdjustBrightness(float brightness)
 	this->brightness = SDL_GetWindowBrightness(window);
 }
 
-float Window::GetBrightness()
+float M_Window::GetBrightness()
 {
 	return this->brightness;
 }
 
-void Window::GetWindowSize(uint& width, uint& height) const
+void M_Window::GetWindowSize(uint& width, uint& height) const
 {
 	width = this->width;
 	height = this->height;
 }
 
-int Window::GetWidth() const
+int M_Window::GetWidth() const
 {
 	return (int)this->width;
 }
 
-int Window::GetHeight() const
+int M_Window::GetHeight() const
 {
 	return (int)this->height;
 }
 
-bool Window::GetFullscreen() const
+bool M_Window::GetFullscreen() const
 {
 	return fullscreen;
 }
 
-bool Window::GetFullscreenDesktop() const
+bool M_Window::GetFullscreenDesktop() const
 {
 	return fullscreenDesktop;
 }
 
-bool Window::GetResizable() const
+bool M_Window::GetResizable() const
 {
 	return resizable;
 }
 
-bool Window::GetBorderless() const
+bool M_Window::GetBorderless() const
 {
 	return borderless;
 }
 
-uint Window::GetRefreshRate() const
+uint M_Window::GetRefreshRate() const
 {
 	uint ret = 0;
 
@@ -290,41 +290,41 @@ uint Window::GetRefreshRate() const
 	return ret;
 }
 
-const char* Window::GetIcon() const
+const char* M_Window::GetIcon() const
 {
 	return iconFile.c_str();
 }
 
-const char* Window::GetTitle() const
+const char* M_Window::GetTitle() const
 {
 	return SDL_GetWindowTitle(this->window);
 }
 
-void Window::SetFullscreen(bool fullscreen)
+void M_Window::SetFullscreen(bool fullscreen)
 {
 	this->fullscreen = fullscreen;
 	SDL_SetWindowFullscreen(window, fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
 }
 
-void Window::SetFullscreenDesktop(bool fullscreenDesktop)
+void M_Window::SetFullscreenDesktop(bool fullscreenDesktop)
 {
 	this->fullscreenDesktop = fullscreenDesktop;
 	SDL_SetWindowFullscreen(window, fullscreenDesktop ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
 }
 
-void Window::SetResizable(bool resizable)
+void M_Window::SetResizable(bool resizable)
 {
 	this->resizable = resizable;
 	SDL_SetWindowResizable(window, (SDL_bool)resizable);
 }
 
-void Window::SetBorderless(bool borderless)
+void M_Window::SetBorderless(bool borderless)
 {
 	this->borderless = borderless;
 	SDL_SetWindowBordered(window, (SDL_bool)!borderless);
 }
 
-void Window::SetWidth(int width)
+void M_Window::SetWidth(int width)
 {
 	SDL_assert(width >= 0);
 	this->width = (uint)width;
@@ -332,7 +332,7 @@ void Window::SetWidth(int width)
 	engine->GetRenderer()->OnResize();
 }
 
-void Window::SetHeight(int height)
+void M_Window::SetHeight(int height)
 {
 	SDL_assert(height >= 0);
 	this->height = (uint)height;
@@ -340,7 +340,7 @@ void Window::SetHeight(int height)
 	engine->GetRenderer()->OnResize();
 }
 
-void Window::SetIcon(const char* file)
+void M_Window::SetIcon(const char* file)
 {
 	if (file != nullptr && file != iconFile)
 	{
@@ -352,12 +352,12 @@ void Window::SetIcon(const char* file)
 	}
 }
 
-uint Window::GetScale() const
+uint M_Window::GetScale() const
 {
 	return scale;
 }
 
-void Window::GetPosition(int& x, int& y)
+void M_Window::GetPosition(int& x, int& y)
 {
 	SDL_GetWindowPosition(window, &x, &y);
 }

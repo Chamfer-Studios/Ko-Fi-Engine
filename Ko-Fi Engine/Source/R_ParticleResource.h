@@ -4,11 +4,11 @@
 #include "Emitter.h"
 #include "Resource.h"
 
-class ParticleResource : public Resource
+class R_ParticleResource : public Resource
 {
 public:
-	ParticleResource(const char* resourceName = "New Resource");
-	~ParticleResource();
+	R_ParticleResource(const char* resourceName = "New Resource");
+	~R_ParticleResource();
 
 	bool CleanUp();
 

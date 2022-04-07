@@ -149,7 +149,7 @@ struct PxModifiableContact : public PxExtendedContact
 	PxReal	restitution;							//48
 	
 	/**
-	\brief Material Flags
+	\brief R_Material Flags
 	*/
 	PxU32	materialFlags;							//52
 	

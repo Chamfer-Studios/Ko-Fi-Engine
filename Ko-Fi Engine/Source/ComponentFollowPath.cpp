@@ -1,7 +1,7 @@
 #include "ComponentFollowPath.h"
 
 #include "Engine.h"
-#include "Navigation.h"
+#include "M_Navigation.h"
 #include "GameObject.h"
 #include "C_Transform.h"
 

@@ -2,10 +2,10 @@
 #include <imgui.h>
 #include "M_Editor.h"
 #include "Engine.h"
-#include "Window.h"
-#include "Renderer3D.h"
-#include "SceneManager.h"
-#include "Physics.h"
+#include "M_Window.h"
+#include "M_Renderer3D.h"
+#include "M_SceneManager.h"
+#include "M_Physics.h"
 
 
 PanelSettings::PanelSettings(M_Editor* editor)

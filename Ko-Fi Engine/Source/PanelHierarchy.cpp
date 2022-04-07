@@ -3,7 +3,7 @@
 
 #include "Engine.h"
 #include "M_Editor.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "GameObject.h"
 #include "Log.h"
 #include "PanelChooser.h"

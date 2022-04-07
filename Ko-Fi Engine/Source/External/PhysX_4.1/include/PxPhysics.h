@@ -59,7 +59,7 @@ class PxPruningStructure;
 class PxBVHStructure;
 
 /**
-\brief Abstract singleton factory class used for instancing objects in the Physics SDK.
+\brief Abstract singleton factory class used for instancing objects in the M_Physics SDK.
 
 In addition you can use PxPhysics to set global parameters which will effect all scenes and create 
 objects that can be shared across multiple scenes.
@@ -708,11 +708,11 @@ PX_INLINE physx::PxPhysics* PxCreatePhysics(physx::PxU32 version,
 
 
 /**
-\brief Retrieves the Physics SDK after it has been created.
+\brief Retrieves the M_Physics SDK after it has been created.
 
 Before using this function the user must call #PxCreatePhysics().
 
-\note The behavior of this method is undefined if the Physics SDK instance has not been created already.
+\note The behavior of this method is undefined if the M_Physics SDK instance has not been created already.
 */
 #ifdef __clang__
 #pragma clang diagnostic push

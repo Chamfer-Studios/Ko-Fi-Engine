@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "json.hpp"
-#include "R_Resource.h"
+#include "Resource.h"
 
 using Json = nlohmann::json;
 
@@ -28,7 +28,7 @@ public:
 	std::string textureName;
 };
 
-class R_Model : public R_Resource
+class R_Model : public Resource
 {
 public:
 	R_Model();

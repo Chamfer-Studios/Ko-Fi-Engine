@@ -1,7 +1,7 @@
 #ifndef __GAMEOBJECT_H__
 #define __GAMEOBJECT_H__
 
-#include "Mesh.h"
+#include "R_Mesh.h"
 #include <vector>
 
 #include "Component.h"

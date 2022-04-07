@@ -2,7 +2,7 @@
 #define __C_MATERIAL_H__
 
 #include "Component.h"
-#include "Texture.h"
+#include "R_Texture.h"
 #include <vector>
 #include <string>
 
@@ -12,7 +12,7 @@
 using Json = nlohmann::json;
 
 class PanelChooser;
-class Material;
+class R_Material;
 
 class C_Material : public Component
 {
@@ -26,8 +26,8 @@ public:
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
-	void SetMaterial(Material* material);
-	inline Material* GetMaterial() const { return material; }
+	void SetMaterial(R_Material* material);
+	inline R_Material* GetMaterial() const { return material; }
 
 	void LoadMaterial(const char* path = "");
 
@@ -36,11 +36,11 @@ public:
 	bool LoadDefaultMaterial();
 
 public:
-	Texture texture;
-	//std::vector<Texture> textures;
+	R_Texture texture;
+	//std::vector<R_Texture> textures;
 
 private:
-	Material* material = nullptr;
+	R_Material* material = nullptr;
 
 	int currentTextureId = 0;
 };

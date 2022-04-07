@@ -79,13 +79,13 @@ struct BoneInfo
 	}
 };
 
-class Mesh : public Resource
+class R_Mesh : public Resource
 {
 public:
-	Mesh(Shape shape = Shape::NONE);
-	~Mesh();
+	R_Mesh(Shape shape = Shape::NONE);
+	~R_Mesh();
 
-	// Mesh Functions
+	// R_Mesh Functions
 	void SetUpMeshBuffers();
 
 	void Draw();
@@ -122,7 +122,7 @@ public:
 	float4x4 aiMatrix3x32Float4x4(aiMatrix3x3 assimpMatrix);
 	float* GetTransformedVertices(float4x4 transform);
 
-	static Mesh* MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transformations);
+	static R_Mesh* MeshUnion(std::vector<R_Mesh*> meshes, std::vector<float4x4> transformations);
 
 	float4x4 GetMatrixFromQuat(Quat quat);
 
@@ -144,7 +144,7 @@ public:
 	uint idNormal = 0;
 	float* normals = nullptr;
 
-	// Texture coordinates
+	// R_Texture coordinates
 	uint idTexCoord = 0;
 	float* texCoords = nullptr;
 

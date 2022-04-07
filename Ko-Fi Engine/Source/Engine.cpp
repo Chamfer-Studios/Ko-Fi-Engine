@@ -1,22 +1,22 @@
 #include "Engine.h"
 
-#include "Window.h"
-#include "Input.h"
-#include "Renderer3D.h"
+#include "M_Window.h"
+#include "M_Input.h"
+#include "M_Renderer3D.h"
 #include "M_Camera3D.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "M_Editor.h"
 #include "M_FileSystem.h"
 #include "FSDefs.h"
-#include "UI.h"
+#include "M_UI.h"
 #include "Importer.h"
 #include "Globals.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
-#include "Physics.h"
-#include "ResourceManager.h"
+#include "M_Physics.h"
+#include "M_ResourceManager.h"
 #include "M_Audio.h"
-#include "Navigation.h"
+#include "M_Navigation.h"
 
 #include <iostream>
 #include <sstream>
@@ -29,19 +29,19 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	engineConfig = new EngineConfig();
 	PERF_START(ptimer);
 	Importer::GetInstance(this);
-	window = new Window(this);
+	window = new M_Window(this);
 	fileSystem = new M_FileSystem(this);
-	input = new Input(this);
+	input = new M_Input(this);
 	camera = new M_Camera3D(this);
-	renderer = new Renderer3D(this);
+	renderer = new M_Renderer3D(this);
 	editor = new M_Editor(this);
-	sceneManager = new SceneManager(this);
-	ui = new UI(this);
+	sceneManager = new M_SceneManager(this);
+	ui = new M_UI(this);
 	//viewportBuffer = new ViewportFrameBuffer(this);
-	physics = new Physics(this);
-	resourceManager = new ResourceManager(this);
+	physics = new M_Physics(this);
+	resourceManager = new M_ResourceManager(this);
 	audio = new M_Audio(this);
-	navigation = new Navigation(this);
+	navigation = new M_Navigation(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -406,22 +406,22 @@ EngineConfig* KoFiEngine::GetEngineConfig()
 	return this->engineConfig;
 }
 
-Window* KoFiEngine::GetWindow() const
+M_Window* KoFiEngine::GetWindow() const
 {
 	return this->window;
 }
 
-Input* KoFiEngine::GetInput()const
+M_Input* KoFiEngine::GetInput()const
 {
 	return this->input;
 }
 
-SceneManager* KoFiEngine::GetSceneManager()const
+M_SceneManager* KoFiEngine::GetSceneManager()const
 {
 	return this->sceneManager;
 }
 
-Renderer3D* KoFiEngine::GetRenderer()const
+M_Renderer3D* KoFiEngine::GetRenderer()const
 {
 	return this->renderer;
 }
@@ -441,11 +441,11 @@ M_FileSystem* KoFiEngine::GetFileSystem()const
 	return this->fileSystem;
 }
 
-Physics* KoFiEngine::GetPhysics()const
+M_Physics* KoFiEngine::GetPhysics()const
 {
 	return this->physics;
 }
-UI* KoFiEngine::GetUI() const
+M_UI* KoFiEngine::GetUI() const
 {
 	return this->ui;
 }
@@ -454,11 +454,11 @@ CollisionDetector* KoFiEngine::GetCollisionDetector() const
 	return this->collisionDetector;
 }
 
-ResourceManager* KoFiEngine::GetResourceManager() const
+M_ResourceManager* KoFiEngine::GetResourceManager() const
 {
 	return this->resourceManager;
 }
-Navigation* KoFiEngine::GetNavigation() const
+M_Navigation* KoFiEngine::GetNavigation() const
 {
 	return this->navigation;
 }
