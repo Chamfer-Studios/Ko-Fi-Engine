@@ -1,5 +1,5 @@
-#ifndef __AUDIO_H__
-#define __AUDIO_H__
+#ifndef __M_AUDIO_H__
+#define __M_AUDIO_H__
 
 #include "al.h"
 #include "alc.h"
@@ -11,12 +11,12 @@
 #include "Module.h"
 #include <iostream>
 
-class Audio : public Module
+class M_Audio : public Module
 {
 public:
 
-    Audio(KoFiEngine* engine);
-    ~Audio();
+    M_Audio(KoFiEngine* engine);
+    ~M_Audio();
 
     bool Awake(Json configModule);
     bool Start();
@@ -25,7 +25,7 @@ public:
 
     void OnNotify(const Event& event);
 
-    void CreateAudioListener(float x, float y, float z);
+    void CreateM_AudioListener(float x, float y, float z);
 
     // Engine config serialization --------------------------------------
     bool SaveConfiguration(Json& configModule) const override;
@@ -37,7 +37,7 @@ public:
     // ------------------------------------------------------------------
 
 private:
-    void ListAudioDevices(const ALCchar* devices);
+    void ListM_AudioDevices(const ALCchar* devices);
 
 private:
 
@@ -47,4 +47,4 @@ private:
     ALCcontext* context;
 };
 
-#endif // !__AUDIO_H__
+#endif // !__M_AUDIO_H__

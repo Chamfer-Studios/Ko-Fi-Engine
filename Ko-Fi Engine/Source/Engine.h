@@ -19,7 +19,7 @@ class Physics;
 class UI;
 class CollisionDetector;
 class ResourceManager;
-class Audio;
+class M_Audio;
 class Navigation;
 
 class KoFiEngine
@@ -106,7 +106,7 @@ private:
 	UI* ui = nullptr;
 	CollisionDetector* collisionDetector = nullptr;
 	ResourceManager* resourceManager = nullptr;
-	Audio* audio = nullptr;
+	M_Audio* audio = nullptr;
 	Navigation* navigation = nullptr;
 
 private:

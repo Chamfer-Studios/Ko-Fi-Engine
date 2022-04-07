@@ -1,4 +1,4 @@
-#include "Audio.h"
+#include "M_Audio.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
@@ -15,21 +15,21 @@
 FUNCTION_CALL;\
 OpenAL_ErrorCheck(FUNCTION_CALL)
 
-Audio::Audio(KoFiEngine* engine)
+M_Audio::M_Audio(KoFiEngine* engine)
 {
-	name = "Audio";
+	name = "M_Audio";
 	this->engine = engine;
 
 	context = nullptr;
 	device = nullptr;
 }
 
-Audio::~Audio()
+M_Audio::~M_Audio()
 {
     
 }
 
-bool Audio::Awake(Json configModule)
+bool M_Audio::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -38,10 +38,10 @@ bool Audio::Awake(Json configModule)
 	return ret;
 }
 
-bool Audio::Start()
+bool M_Audio::Start()
 {
-	CONSOLE_LOG("Initializing Audio System...");
-	appLog->AddLog("Initializing Audio System...\n");
+	CONSOLE_LOG("Initializing M_Audio System...");
+	appLog->AddLog("Initializing M_Audio System...\n");
 
 	device = alcOpenDevice(NULL);
 	if (!device)
@@ -55,7 +55,7 @@ bool Audio::Start()
 	//if (enumeration == AL_FALSE)
 	//	CONSOLE_LOG("Enumeration not supported");
 	//else
-	//	ListAudioDevices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
+	//	ListM_AudioDevices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
 
 	context = alcCreateContext(device, nullptr);
 
@@ -69,22 +69,22 @@ bool Audio::Start()
 	return true;
 }
 
-bool Audio::Update(float dt)
+bool M_Audio::Update(float dt)
 {
 	return true;
 }
 
-bool Audio::CleanUp()
+bool M_Audio::CleanUp()
 {
 	return true;
 }
 
-void Audio::OnNotify(const Event& event)
+void M_Audio::OnNotify(const Event& event)
 {
 
 }
 
-void Audio::CreateAudioListener(float x, float y, float z)
+void M_Audio::CreateM_AudioListener(float x, float y, float z)
 {
 	alec(alListener3f(AL_POSITION, x, y, z));
 	alec(alListener3f(AL_VELOCITY, 0.0f, 0.0f, 0.0f));
@@ -95,22 +95,22 @@ void Audio::CreateAudioListener(float x, float y, float z)
 	alec(alListenerfv(AL_ORIENTATION, forwardUpVec));
 }
 
-bool Audio::SaveConfiguration(Json& configModule) const
+bool M_Audio::SaveConfiguration(Json& configModule) const
 {
 	return true;
 }
 
-bool Audio::LoadConfiguration(Json& configModule)
+bool M_Audio::LoadConfiguration(Json& configModule)
 {
 	return true;
 }
 
-bool Audio::InspectorDraw()
+bool M_Audio::InspectorDraw()
 {
 	return true;
 }
 
-void Audio::ListAudioDevices(const ALCchar* devices)
+void M_Audio::ListM_AudioDevices(const ALCchar* devices)
 {
 	const ALCchar* device = devices, * next = devices + 1;
 	size_t len = 0;

@@ -487,7 +487,7 @@
     <ClCompile Include="Source\ParticleResource.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
+    <ClCompile Include="Source\M_Audio.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_AudioSource.cpp">
@@ -1654,7 +1654,7 @@
     <ClInclude Include="Source\ParticleResource.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Audio.h">
+    <ClInclude Include="Source\M_Audio.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\R_Track.h">

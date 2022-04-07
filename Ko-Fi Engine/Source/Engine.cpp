@@ -15,7 +15,7 @@
 #include "ImGuiAppLog.h"
 #include "Physics.h"
 #include "ResourceManager.h"
-#include "Audio.h"
+#include "M_Audio.h"
 #include "Navigation.h"
 
 #include <iostream>
@@ -40,7 +40,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new Physics(this);
 	resourceManager = new ResourceManager(this);
-	audio = new Audio(this);
+	audio = new M_Audio(this);
 	navigation = new Navigation(this);
 
 	// Ordered for awake / Start / Update

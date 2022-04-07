@@ -109,7 +109,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Audio.cpp" />
+    <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
     <ClCompile Include="Source\Camera3D.cpp" />
@@ -270,7 +270,7 @@
     <ClInclude Include="Source\R_Animation.h" />
     <ClInclude Include="Source\AnimatorClip.h" />
     <ClInclude Include="Source\Assimp.h" />
-    <ClInclude Include="Source\Audio.h" />
+    <ClInclude Include="Source\M_Audio.h" />
     <ClInclude Include="Source\C_LightSource.h" />
     <ClInclude Include="Source\Channel.h" />
     <ClInclude Include="Source\C_Audio.h" />
