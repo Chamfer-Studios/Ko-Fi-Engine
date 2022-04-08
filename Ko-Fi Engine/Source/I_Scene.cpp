@@ -5,42 +5,40 @@
 #include "MathGeoTransform.h"
 #include "FSDefs.h"
 #include "JsonHandler.h"
-#include "Window.h"
+#include "M_Window.h"
 
 #include "Scene.h"
-#include "SceneManager.h"
-#include "FileSystem.h"
-#include "Navigation.h"
+#include "M_SceneManager.h"
+#include "M_FileSystem.h"
+#include "M_Navigation.h"
 
 #include "GameObject.h"
-#include "ComponentTransform.h"
-#include "ComponentMesh.h"
-#include "ComponentMaterial.h"
-#include "ComponentInfo.h"
-#include "ComponentCamera.h"
+#include "C_Transform.h"
+#include "C_Mesh.h"
+#include "C_Material.h"
+#include "C_Info.h"
+#include "C_Camera.h"
 #include "C_Collider.h"
-#include "ComponentRigidBody.h"
-#include "ComponentCollider.h"
-#include "ComponentScript.h"
-#include "ComponentButton.h"
-#include "ComponentCanvas.h"
-#include "ComponentImage.h"
-#include "ComponentText.h"
-#include "ComponentTransform2D.h"
+#include "C_RigidBody.h"
+#include "C_Script.h"
+#include "C_Button.h"
+#include "C_Canvas.h"
+#include "C_Image.h"
+#include "C_Text.h"
+#include "C_Transform2D.h"
 #include "ComponentParticle.h"
-#include "ComponentAnimator.h"
-#include "ComponentLightSource.h"
+#include "C_Animator.h"
+#include "C_LightSource.h"
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
-#include "ComponentAnimator.h"
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
 
-#include "Mesh.h"
+#include "R_Mesh.h"
 #include "R_Animation.h"
-#include "Texture.h"
-#include "Material.h"
+#include "R_Texture.h"
+#include "R_Material.h"
 
 #include "Importer.h"
 #include "I_Mesh.h"
@@ -63,7 +61,7 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 {
 	CONSOLE_LOG("[STATUS] Importer: Importing Scene: %s", path);
 
-	std::string errorString = "[ERROR] Importer: Could not Import Model { " + std::string(path) + " }";
+	std::string errorString = "[ERROR] Importer: Could not Import R_Model { " + std::string(path) + " }";
 
 	if (path == nullptr)
 		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
@@ -147,9 +145,9 @@ const aiNode* I_Scene::ImportTransform(const aiNode* assimpNode, GameObject* chi
 		scale = { scale.x * dummyScale.x, scale.y * dummyScale.y, scale.z * dummyScale.z };
 	}
 
-	child->GetComponent<ComponentTransform>()->SetPosition(position);
-	child->GetComponent<ComponentTransform>()->SetRotationQuat(rotation);
-	child->GetComponent<ComponentTransform>()->SetScale(scale);
+	child->GetComponent<C_Transform>()->SetPosition(position);
+	child->GetComponent<C_Transform>()->SetRotationQuat(rotation);
+	child->GetComponent<C_Transform>()->SetScale(scale);
 
 	CONSOLE_LOG("[STATUS] Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());
 
@@ -172,7 +170,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 	
 	if (!assimpScene->HasMeshes())
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any Mesh.");
+		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any R_Mesh.");
 		return;
 	}
 
@@ -206,17 +204,17 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		return;
 	}
 
-	// Import Mesh to GameObject
-	Mesh* mesh = new Mesh(Shape::NONE);
+	// Import R_Mesh to GameObject
+	R_Mesh* mesh = new R_Mesh(Shape::NONE);
 	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh, assimpScene);
 
 	if (mesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Mesh (name: %s) was not imported correctly.", nodeName);
+		CONSOLE_LOG("[ERROR] Importer: R_Mesh (name: %s) was not imported correctly.", nodeName);
 		return;
 	}
 
-	ComponentMesh* cMesh = (ComponentMesh*)gameObj->AddComponentByType(ComponentType::MESH);
+	C_Mesh* cMesh = (C_Mesh*)gameObj->AddComponentByType(ComponentType::MESH);
 	if (cMesh != nullptr)
 	{
 		cMesh->SetMesh(mesh);
@@ -224,13 +222,13 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
+		CONSOLE_LOG("[ERROR] Component R_Mesh is nullptr.");
 		return;
 	}
 
 	if (!assimpScene->HasAnimations())
 	{
-		CONSOLE_LOG("[WARNING] Scene Importer: Model had no animations to import.");
+		CONSOLE_LOG("[WARNING] Scene Importer: R_Model had no animations to import.");
 		return;
 	}
 
@@ -239,7 +237,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	mesh->SetIsAnimated(true);
 	mesh->SetAnimation(anim);
 
-	ComponentAnimator* cAnim = gameObj->CreateComponent<ComponentAnimator>();
+	C_Animator* cAnim = gameObj->CreateComponent<C_Animator>();
 	if (cAnim != nullptr)
 		cAnim->SetAnim(anim);
 	else
@@ -261,18 +259,18 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
-	// Import Material to GameObject
-	ComponentMaterial* cMaterial = (ComponentMaterial*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<ComponentMaterial>();
+	// Import R_Material to GameObject
+	C_Material* cMaterial = (C_Material*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<C_Material>();
 
 	if (cMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
+		CONSOLE_LOG("[ERROR] Component R_Material is nullptr.");
 		return;
 	}
 
 	aiString aiTexturePath;
 	std::string texturePath;
-	Texture texture;
+	R_Texture *texture;
 	//if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
 	if(assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
@@ -282,8 +280,8 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 
 		texturePath = ASSETS_TEXTURES_DIR + textureFilename;
 
-		texture = Texture();
-		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
+		texture = new R_Texture();
+		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
 
 		if (ret)
 		{
@@ -292,7 +290,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		}
 	}
 
-	Material* material = new Material();
+	R_Material* material = new R_Material();
 
 	if (!Importer::GetInstance()->materialImporter->Import(assimpMaterial, material))
 	{
@@ -377,13 +375,13 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::MESH:
 			{
-				ComponentMesh* meshCmp = (ComponentMesh*)component;
+				C_Mesh* meshCmp = (C_Mesh*)component;
 				meshCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::MATERIAL:
 			{
-				ComponentMaterial* materialCmp = (ComponentMaterial*)component;
+				C_Material* materialCmp = (C_Material*)component;
 				materialCmp->Save(jsonComponent);
 				break;
 			}
@@ -395,73 +393,67 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::CAMERA:
 			{
-				ComponentCamera* cameraCmp = (ComponentCamera*)component;
+				C_Camera* cameraCmp = (C_Camera*)component;
 				cameraCmp->Save(jsonComponent);
-				break;
-			}
-			case ComponentType::COLLIDER2:
-			{
-				ComponentCollider2* collCmp = (ComponentCollider2*)component;
-				collCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::COLLIDER:
 			{
-				ComponentCollider* collisionCmp = (ComponentCollider*)component;
-				collisionCmp->Save(jsonComponent);
+				C_Collider* collCmp = (C_Collider*)component;
+				collCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::SCRIPT:
 			{
-				ComponentScript* scriptCmp = (ComponentScript*)component;
+				C_Script* scriptCmp = (C_Script*)component;
 				scriptCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::RIGID_BODY:
 			{
-				ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
+				C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
 				rigidBodyCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::TRANSFORM2D:
 			{
-				ComponentTransform2D* transform2DCmp = (ComponentTransform2D*)component;
+				C_Transform2D* transform2DCmp = (C_Transform2D*)component;
 				transform2DCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::CANVAS:
 			{
-				ComponentCanvas* canvasCmp = (ComponentCanvas*)component;
+				C_Canvas* canvasCmp = (C_Canvas*)component;
 				canvasCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::IMAGE:
 			{
-				ComponentImage* imageCmp = (ComponentImage*)component;
+				C_Image* imageCmp = (C_Image*)component;
 				imageCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::BUTTON:
 			{
-				ComponentButton* buttonCmp = (ComponentButton*)component;
+				C_Button* buttonCmp = (C_Button*)component;
 				buttonCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::TEXT:
 			{
-				ComponentText* textCmp = (ComponentText*)component;
+				C_Text* textCmp = (C_Text*)component;
 				textCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::TRANSFORM:
 			{
-				ComponentTransform* transformCmp = (ComponentTransform*)component;
+				C_Transform* transformCmp = (C_Transform*)component;
 				transformCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::INFO:
 			{
-				ComponentInfo* infoCmp = (ComponentInfo*)component;
+				C_Info* infoCmp = (C_Info*)component;
 				infoCmp->Save(jsonComponent);
 				break;
 			}
@@ -479,7 +471,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::ANIMATOR:
 			{
-				ComponentAnimator* cAnimator = (ComponentAnimator*)component;
+				C_Animator* cAnimator = (C_Animator*)component;
 				cAnimator->Save(jsonComponent);
 				break;
 			}
@@ -497,7 +489,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::LIGHT_SOURCE:
 			{
-				ComponentLightSource* componentLightSource = (ComponentLightSource*)component;
+				C_LightSource* componentLightSource = (C_LightSource*)component;
 				componentLightSource->Save(jsonComponent);
 				break;
 			}
@@ -595,135 +587,125 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 					if (type == "transform")
 					{
-						ComponentTransform* transformCmp = go->GetComponent<ComponentTransform>();
+						C_Transform* transformCmp = go->GetComponent<C_Transform>();
 						transformCmp->active = true;
 						transformCmp->Load(jsonCmp);
 					}
 					else if (type == "mesh")
 					{
-						ComponentMesh* meshCmp = go->GetComponent<ComponentMesh>();
+						C_Mesh* meshCmp = go->GetComponent<C_Mesh>();
 						if (meshCmp == nullptr)
 						{
-							meshCmp = (ComponentMesh*)go->AddComponentByType(ComponentType::MESH);
+							meshCmp = (C_Mesh*)go->AddComponentByType(ComponentType::MESH);
 						}
 						meshCmp->active = true;
 						meshCmp->Load(jsonCmp);
 					}
 					else if (type == "material")
 					{
-						ComponentMaterial* materialCmp = go->GetComponent<ComponentMaterial>();
+						C_Material* materialCmp = go->GetComponent<C_Material>();
 						if (materialCmp == nullptr)
 						{
-							materialCmp = (ComponentMaterial*)go->AddComponentByType(ComponentType::MATERIAL);
+							materialCmp = (C_Material*)go->AddComponentByType(ComponentType::MATERIAL);
 						}
 						materialCmp->active = true;
 						materialCmp->Load(jsonCmp);
 					}
 					else if (type == "info")
 					{
-						ComponentInfo* infoCmp = (ComponentInfo*)go->AddComponentByType(ComponentType::INFO);
+						C_Info* infoCmp = (C_Info*)go->AddComponentByType(ComponentType::INFO);
 						infoCmp->active = true;
 						infoCmp->Load(jsonCmp); // Does nothing as of now
 					}
 					else if (type == "camera")
 					{
-						ComponentCamera* cameraCmp = go->GetComponent<ComponentCamera>();
+						C_Camera* cameraCmp = go->GetComponent<C_Camera>();
 						if (cameraCmp == nullptr)
 						{
-							cameraCmp = (ComponentCamera*)go->AddComponentByType(ComponentType::CAMERA);
+							cameraCmp = (C_Camera*)go->AddComponentByType(ComponentType::CAMERA);
 						}
 						cameraCmp->active = true;
 						cameraCmp->Load(jsonCmp);
 					}
 					else if (type == "script")
 					{
-						ComponentScript* scriptCmp = go->GetComponent<ComponentScript>();
+						C_Script* scriptCmp = go->GetComponent<C_Script>();
 						if (scriptCmp == nullptr)
 						{
-							scriptCmp = (ComponentScript*)go->AddComponentByType(ComponentType::SCRIPT);
+							scriptCmp = (C_Script*)go->AddComponentByType(ComponentType::SCRIPT);
 						}
 						scriptCmp->active = true;
 						scriptCmp->Load(jsonCmp);
 					}
 					else if (type == "transform2D")
 					{
-						ComponentTransform2D* transform2DCmp = go->GetComponent<ComponentTransform2D>();
+						C_Transform2D* transform2DCmp = go->GetComponent<C_Transform2D>();
 						if (transform2DCmp == nullptr)
 						{
-							transform2DCmp = (ComponentTransform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);
+							transform2DCmp = (C_Transform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);
 						}
 						transform2DCmp->active = true;
 						transform2DCmp->Load(jsonCmp);
 					}
 					else if (type == "canvas")
 					{
-						ComponentCanvas* canvasCmp = go->GetComponent<ComponentCanvas>();
+						C_Canvas* canvasCmp = go->GetComponent<C_Canvas>();
 						if (canvasCmp == nullptr)
 						{
-							canvasCmp = (ComponentCanvas*)go->AddComponentByType(ComponentType::CANVAS);
+							canvasCmp = (C_Canvas*)go->AddComponentByType(ComponentType::CANVAS);
 						}
 						canvasCmp->active = true;
 						canvasCmp->Load(jsonCmp);
 					}
 					else if (type == "image")
 					{
-						ComponentImage* imageCmp = go->GetComponent<ComponentImage>();
+						C_Image* imageCmp = go->GetComponent<C_Image>();
 						if (imageCmp == nullptr)
 						{
-							imageCmp = (ComponentImage*)go->AddComponentByType(ComponentType::IMAGE);
+							imageCmp = (C_Image*)go->AddComponentByType(ComponentType::IMAGE);
 						}
 						imageCmp->active = true;
 						imageCmp->Load(jsonCmp);
 					}
 					else if (type == "button")
 					{
-						ComponentButton* buttonCmp = go->GetComponent<ComponentButton>();
+						C_Button* buttonCmp = go->GetComponent<C_Button>();
 						if (buttonCmp == nullptr)
 						{
-							buttonCmp = (ComponentButton*)go->AddComponentByType(ComponentType::BUTTON);
+							buttonCmp = (C_Button*)go->AddComponentByType(ComponentType::BUTTON);
 						}
 						buttonCmp->active = true;
 						buttonCmp->Load(jsonCmp);
 					}
 					else if (type == "text")
 					{
-						ComponentText* textCmp = go->GetComponent<ComponentText>();
+						C_Text* textCmp = go->GetComponent<C_Text>();
 						if (textCmp == nullptr)
 						{
-							textCmp = (ComponentText*)go->AddComponentByType(ComponentType::TEXT);
+							textCmp = (C_Text*)go->AddComponentByType(ComponentType::TEXT);
 						}
 						textCmp->active = true;
 						textCmp->Load(jsonCmp);
 					}
 					else if (type == "rigidBody")
 					{
-						ComponentRigidBody* rbCmp = go->GetComponent<ComponentRigidBody>();
+						C_RigidBody* rbCmp = go->GetComponent<C_RigidBody>();
 						if (rbCmp == nullptr)
 						{
-							rbCmp = (ComponentRigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
+							rbCmp = (C_RigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
 						}
 						rbCmp->active = true;
 						rbCmp->Load(jsonCmp);
 					}
-					else if (type == "collider2")
+					else if (type == "collider")
 					{
-						ComponentCollider2* collCmp = go->GetComponent<ComponentCollider2>();
+						C_Collider* collCmp = go->GetComponent<C_Collider>();
 						if (collCmp == nullptr)
 						{
-							collCmp = new ComponentCollider2(go, ColliderShape::NONE);
+							collCmp = new C_Collider(go, ColliderShape::NONE);
 						}
 						collCmp->active = true;
 						collCmp->Load(jsonCmp);
-					}
-					else if (type == "collider")
-					{
-						ComponentCollider* colCmp = go->GetComponent<ComponentCollider>();
-						if (colCmp == nullptr)
-						{
-							colCmp = (ComponentCollider*)go->AddComponentByType(ComponentType::COLLIDER);
-						}
-						colCmp->active = true;
-						colCmp->Load(jsonCmp);
 					}
 					else if (type == "particle")
 					{
@@ -757,10 +739,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "animator")
 					{
-						ComponentAnimator* cAnimator = go->GetComponent<ComponentAnimator>();
+						C_Animator* cAnimator = go->GetComponent<C_Animator>();
 						if (cAnimator == nullptr)
 						{
-							cAnimator = (ComponentAnimator*)go->AddComponentByType(ComponentType::ANIMATOR);
+							cAnimator = (C_Animator*)go->AddComponentByType(ComponentType::ANIMATOR);
 						}
 						cAnimator->active = true;
 						cAnimator->Load(jsonCmp);
@@ -786,10 +768,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "lightSource")
 					{
-						ComponentLightSource* componentLightSource = go->GetComponent<ComponentLightSource>();
+						C_LightSource* componentLightSource = go->GetComponent<C_LightSource>();
 						if (componentLightSource == nullptr)
 						{
-							componentLightSource = (ComponentLightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+							componentLightSource = (C_LightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
 						}
 						componentLightSource->active = true;
 						componentLightSource->Load(jsonCmp);

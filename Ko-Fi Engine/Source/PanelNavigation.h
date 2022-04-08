@@ -4,12 +4,12 @@
 
 #include "MathGeoLib/Math/float3.h"
 
-class Editor;
+class M_Editor;
 
 class PanelNavigation : public Panel
 {
 public:
-	PanelNavigation(Editor* editor);
+	PanelNavigation(M_Editor* editor);
 	~PanelNavigation();
 
 	bool Awake();
@@ -18,7 +18,7 @@ public:
 	bool PostUpdate();
 
 private:
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 
 	float3 origin = { 0, 0, 0 };
 	float3 destination = { 0, 0, 0 };

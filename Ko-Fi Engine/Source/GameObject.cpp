@@ -1,31 +1,36 @@
 #include "GameObject.h"
-#include "Engine.h"
 
 #include "Primitive.h"
 #include "Globals.h"
 
-#include "ComponentMesh.h"
-#include "ComponentMaterial.h"
+// Modules
+#include "Engine.h"
+#include "M_Editor.h"
+
+// Components
+#include "C_Mesh.h"
+#include "C_Material.h"
 #include "ComponentParticle.h"
-#include "ComponentCamera.h"
-#include "ComponentCollider.h"
-#include "ComponentScript.h"
-#include "ComponentAnimator.h"
+#include "C_Camera.h"
+#include "C_Script.h"
+#include "C_Animator.h"
 #include "C_Collider.h"
-#include "ComponentCanvas.h"
-#include "ComponentTransform2D.h"
-#include "ComponentButton.h"
-#include "ComponentImage.h"
-#include "ComponentText.h"
-#include "ComponentRigidBody.h"
-#include "ComponentTransform.h"
-#include "ComponentInfo.h"
+#include "C_Canvas.h"
+#include "C_Transform2D.h"
+#include "C_Button.h"
+#include "C_Image.h"
+#include "C_Text.h"
+#include "C_RigidBody.h"
+#include "C_Transform.h"
+#include "C_Info.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
-#include "ComponentLightSource.h"
-#include "Material.h"
+#include "C_LightSource.h"
+
+// Resources
+#include "R_Material.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -42,11 +47,11 @@ GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D
 	else
 		SetName(name);
 
-	CreateComponent<ComponentInfo>();
+	CreateComponent<C_Info>();
 
 	is3D = _is3D;
 	if (is3D)
-		transform = CreateComponent<ComponentTransform>();
+		transform = CreateComponent<C_Transform>();
 
 	tag = Tag::TAG_UNTAGGED;
 
@@ -64,8 +69,8 @@ GameObject::GameObject()
 	this->uid = uid;
 	this->engine = engine;
 
-	CreateComponent<ComponentInfo>();
-	transform = CreateComponent<ComponentTransform>();
+	CreateComponent<C_Info>();
+	transform = CreateComponent<C_Transform>();
 
 	tag = Tag::TAG_UNTAGGED;
 
@@ -243,23 +248,23 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 	case ComponentType::MESH:
 	{
-		//// Set Default Material
-		//c = this->CreateComponent<ComponentMaterial>();
-		//Material* material = new Material();
+		//// Set Default R_Material
+		//c = this->CreateComponent<C_Material>();
+		//R_Material* material = new R_Material();
 		//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-		//this->GetComponent<ComponentMaterial>()->SetMaterial(material);
+		//this->GetComponent<C_Material>()->SetMaterial(material);
 
-		//// Set a Default Model
-		c = this->CreateComponent<ComponentMesh>();
-		//Mesh* mesh = new Mesh();
+		//// Set a Default R_Model
+		c = this->CreateComponent<C_Mesh>();
+		//R_Mesh* mesh = new R_Mesh();
 		//Importer::GetInstance()->meshImporter->Load("Library/Meshes/Sphere.sugar", mesh);
-		//this->GetComponent<ComponentMesh>()->SetMesh(mesh);
+		//this->GetComponent<C_Mesh>()->SetMesh(mesh);
 
 		break;
 	}
 	case ComponentType::MATERIAL:
 	{
-		c = this->CreateComponent<ComponentMaterial>();
+		c = this->CreateComponent<C_Material>();
 		break;
 	}
 	case ComponentType::PARTICLE:
@@ -269,69 +274,60 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::CAMERA:
 	{
-		c = this->CreateComponent<ComponentCamera>();
+		c = this->CreateComponent<C_Camera>();
 		break;
 	}
 	case ComponentType::COLLIDER:
 	{
-		c = this->CreateComponent<ComponentCollider>();
+		if (!this->GetComponent<C_RigidBody>())
+			AddComponentByType(ComponentType::RIGID_BODY);
+
+		c = this->CreateComponent<C_Collider>();
 		break;
 	}
 	case ComponentType::SCRIPT:
 	{
-		c = this->CreateComponent<ComponentScript>();
+		c = this->CreateComponent<C_Script>();
 		break;
 	}
 	case ComponentType::RIGID_BODY:
 	{
-		c = this->CreateComponent<ComponentRigidBody>();
+		c = this->CreateComponent<C_RigidBody>();
 		break;
 	}
 	case ComponentType::TRANSFORM2D:
 	{
-		c = this->CreateComponent<ComponentTransform2D>();
+		c = this->CreateComponent<C_Transform2D>();
 		break;
 	}
 	case ComponentType::CANVAS:
 	{
-		c = this->CreateComponent<ComponentCanvas>();
+		c = this->CreateComponent<C_Canvas>();
 		break;
 	}
 	case ComponentType::IMAGE:
 	{
-		c = this->CreateComponent<ComponentImage>();
+		c = this->CreateComponent<C_Image>();
 		break;
 	}
 	case ComponentType::BUTTON:
 	{
-		c = this->CreateComponent<ComponentButton>();
+		c = this->CreateComponent<C_Button>();
 		break;
 	}
 	case ComponentType::TEXT:
 	{
-		c = this->CreateComponent<ComponentText>();
+		c = this->CreateComponent<C_Text>();
 		break;
 	}
 	case ComponentType::TRANSFORM:
 	{
-		c = this->CreateComponent<ComponentTransform>();
+		c = this->CreateComponent<C_Transform>();
 		break;
 	}
 	case ComponentType::INFO:
 	{
-		c = this->CreateComponent<ComponentInfo>();
-		break;
-	}
-	case ComponentType::COLLIDER2:
-	{
-		/*this->CreateComponent<ComponentCollider2>();*/
-		if (!this->GetComponent<ComponentRigidBody>())
-		{
-			
-			AddComponentByType(ComponentType::RIGID_BODY);
-		}
-			
-		c = new ComponentCollider2(this, ColliderShape::NONE);
+		c = this->CreateComponent<C_Info>();
 		break;
 	}
 	case ComponentType::WALKABLE:
@@ -356,12 +352,12 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::ANIMATOR:
 	{
-		c = this->CreateComponent<ComponentAnimator>();
+		c = this->CreateComponent<C_Animator>();
 		break;
 	}
 	case ComponentType::LIGHT_SOURCE:
 	{
-		c = this->CreateComponent<ComponentLightSource>();
+		c = this->CreateComponent<C_LightSource>();
 		engine->GetSceneManager()->GetCurrentScene()->AddLight(this);
 		break;
 	}
@@ -429,7 +425,7 @@ GameObject* GameObject::GetParent() const
 	return parent;
 }
 
-ComponentTransform *GameObject::GetTransform() const
+C_Transform *GameObject::GetTransform() const
 {
 	return this->transform;
 }
@@ -491,7 +487,7 @@ void GameObject::SetEngine(KoFiEngine* engine)
 }
 AABB GameObject::BoundingAABB()
 {
-	return GetComponent<ComponentMesh>()->GetGlobalAABB();
+	return GetComponent<C_Mesh>()->GetGlobalAABB();
 }
 
 bool GameObject::PrefabSaveJson()
@@ -537,79 +533,79 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			break;
 		case ComponentType::TRANSFORM:
 		{
-			ComponentTransform* transformCmp = (ComponentTransform*)component;
+			C_Transform* transformCmp = (C_Transform*)component;
 			transformCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::MESH:
 		{
-			ComponentMesh* meshCmp = (ComponentMesh*)component;
+			C_Mesh* meshCmp = (C_Mesh*)component;
 			meshCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::MATERIAL:
 		{
-			ComponentMaterial* materialCmp = (ComponentMaterial*)component;
+			C_Material* materialCmp = (C_Material*)component;
 			materialCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::INFO:
 		{
-			ComponentInfo* infoCmp = (ComponentInfo*)component;
+			C_Info* infoCmp = (C_Info*)component;
 			infoCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::CAMERA:
 		{
-			ComponentCamera* cameraCmp = (ComponentCamera*)component;
+			C_Camera* cameraCmp = (C_Camera*)component;
 			cameraCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::RIGID_BODY:
 		{
-			ComponentRigidBody* rigidBodyCmp = (ComponentRigidBody*)component;
+			C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
 			rigidBodyCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::COLLIDER:
 		{
-			ComponentCollider* collisionCmp = (ComponentCollider*)component;
+			C_Collider* collisionCmp = (C_Collider*)component;
 			collisionCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::SCRIPT:
 		{
-			ComponentScript* scriptCmp = (ComponentScript*)component;
+			C_Script* scriptCmp = (C_Script*)component;
 			scriptCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::TRANSFORM2D:
 		{
-			ComponentTransform2D* transform2DCmp = (ComponentTransform2D*)component;
+			C_Transform2D* transform2DCmp = (C_Transform2D*)component;
 			transform2DCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::CANVAS:
 		{
-			ComponentCanvas* canvasCmp = (ComponentCanvas*)component;
+			C_Canvas* canvasCmp = (C_Canvas*)component;
 			canvasCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::IMAGE:
 		{
-			ComponentImage* imageCmp = (ComponentImage*)component;
+			C_Image* imageCmp = (C_Image*)component;
 			imageCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::BUTTON:
 		{
-			ComponentButton* buttonCmp = (ComponentButton*)component;
+			C_Button* buttonCmp = (C_Button*)component;
 			buttonCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::TEXT:
 		{
-			ComponentText* textCmp = (ComponentText*)component;
+			C_Text* textCmp = (C_Text*)component;
 			textCmp->Save(jsonComponent);
 			break;
 		}
@@ -669,122 +665,122 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 
 		if (type == "transform")
 		{
-			ComponentTransform* transformCmp = this->GetComponent<ComponentTransform>();
+			C_Transform* transformCmp = this->GetComponent<C_Transform>();
 			transformCmp->active = true;
 			transformCmp->Load(jsonCmp);
 		}
 		if (type == "mesh")
 		{
-			ComponentMesh* meshCmp = this->GetComponent<ComponentMesh>();
+			C_Mesh* meshCmp = this->GetComponent<C_Mesh>();
 			if (meshCmp == nullptr)
 			{
-				meshCmp = this->CreateComponent<ComponentMesh>();
+				meshCmp = this->CreateComponent<C_Mesh>();
 			}
 			meshCmp->active = true;
 			meshCmp->Load(jsonCmp);
 		}
 		else if (type == "material")
 		{
-			ComponentMaterial* materialCmp = this->GetComponent<ComponentMaterial>();
+			C_Material* materialCmp = this->GetComponent<C_Material>();
 			if (materialCmp == nullptr)
 			{
-				materialCmp = this->CreateComponent<ComponentMaterial>();
+				materialCmp = this->CreateComponent<C_Material>();
 			}
 			materialCmp->active = true;
 			materialCmp->Load(jsonCmp);
 		}
 		else if (type == "info")
 		{
-			ComponentInfo* infoCmp = this->GetComponent<ComponentInfo>();
+			C_Info* infoCmp = this->GetComponent<C_Info>();
 			infoCmp->active = true;
 			infoCmp->Load(jsonCmp); // does nothing as of now
 		}
 		else if (type == "camera")
 		{
-			ComponentCamera* cameraCmp = this->GetComponent<ComponentCamera>();
+			C_Camera* cameraCmp = this->GetComponent<C_Camera>();
 			if (cameraCmp == nullptr)
 			{
-				cameraCmp = this->CreateComponent<ComponentCamera>();
+				cameraCmp = this->CreateComponent<C_Camera>();
 			}
 			cameraCmp->active = true;
 			cameraCmp->Load(jsonCmp);
 		}
 		else if (type == "script")
 		{
-			ComponentScript* scriptCmp = this->GetComponent<ComponentScript>();
+			C_Script* scriptCmp = this->GetComponent<C_Script>();
 			if (scriptCmp == nullptr)
 			{
-				scriptCmp = this->CreateComponent<ComponentScript>();
+				scriptCmp = this->CreateComponent<C_Script>();
 			}
 			scriptCmp->active = true;
 			scriptCmp->Load(jsonCmp);
 		}
 		else if (type == "transform2D")
 		{
-			ComponentTransform2D* transform2DCmp = this->GetComponent<ComponentTransform2D>();
+			C_Transform2D* transform2DCmp = this->GetComponent<C_Transform2D>();
 			if (transform2DCmp == nullptr)
 			{
-				transform2DCmp = this->CreateComponent<ComponentTransform2D>();
+				transform2DCmp = this->CreateComponent<C_Transform2D>();
 			}
 			transform2DCmp->active = true;
 			transform2DCmp->Load(jsonCmp);
 		}
 		else if (type == "canvas")
 		{
-			ComponentCanvas* canvasCmp = this->GetComponent<ComponentCanvas>();
+			C_Canvas* canvasCmp = this->GetComponent<C_Canvas>();
 			if (canvasCmp == nullptr)
 			{
-				canvasCmp = this->CreateComponent<ComponentCanvas>();
+				canvasCmp = this->CreateComponent<C_Canvas>();
 			}
 			canvasCmp->active = true;
 			canvasCmp->Load(jsonCmp);
 		}
 		else if (type == "image")
 		{
-			ComponentImage* imageCmp = this->GetComponent<ComponentImage>();
+			C_Image* imageCmp = this->GetComponent<C_Image>();
 			if (imageCmp == nullptr)
 			{
-				imageCmp = this->CreateComponent<ComponentImage>();
+				imageCmp = this->CreateComponent<C_Image>();
 			}
 			imageCmp->active = true;
 			imageCmp->Load(jsonCmp);
 		}
 		else if (type == "button")
 		{
-			ComponentButton* buttonCmp = this->GetComponent<ComponentButton>();
+			C_Button* buttonCmp = this->GetComponent<C_Button>();
 			if (buttonCmp == nullptr)
 			{
-				buttonCmp = this->CreateComponent<ComponentButton>();
+				buttonCmp = this->CreateComponent<C_Button>();
 			}
 			buttonCmp->active = true;
 			buttonCmp->Load(jsonCmp);
 		}
 		else if (type == "text")
 		{
-			ComponentText* textCmp = this->GetComponent<ComponentText>();
+			C_Text* textCmp = this->GetComponent<C_Text>();
 			if (textCmp == nullptr)
 			{
-				textCmp = this->CreateComponent<ComponentText>();
+				textCmp = this->CreateComponent<C_Text>();
 			}
 			textCmp->active = true;
 			textCmp->Load(jsonCmp);
 		}
 		else if (type == "rigidBody")
 		{
-			ComponentRigidBody* rbCmp = this->GetComponent<ComponentRigidBody>();
+			C_RigidBody* rbCmp = this->GetComponent<C_RigidBody>();
 			if (rbCmp == nullptr)
 			{
-				rbCmp = this->CreateComponent<ComponentRigidBody>();
+				rbCmp = this->CreateComponent<C_RigidBody>();
 			}
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
 		else if (type == "collider")
 		{
-			ComponentCollider* colCmp = this->GetComponent<ComponentCollider>();
+			C_Collider* colCmp = this->GetComponent<C_Collider>();
 			if (colCmp == nullptr)
 			{
-				colCmp = this->CreateComponent<ComponentCollider>();
+				colCmp = this->CreateComponent<C_Collider>();
 			}
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);
@@ -814,116 +810,116 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 
 		if (type == "mesh")
 		{
-			ComponentMesh* meshCmp = this->GetComponent<ComponentMesh>();
+			C_Mesh* meshCmp = this->GetComponent<C_Mesh>();
 			if (meshCmp == nullptr)
 			{
-				meshCmp = this->CreateComponent<ComponentMesh>();
+				meshCmp = this->CreateComponent<C_Mesh>();
 			}
 			meshCmp->active = true;
 			meshCmp->Load(jsonCmp);
 		}
 		else if (type == "material")
 		{
-			ComponentMaterial* materialCmp = this->GetComponent<ComponentMaterial>();
+			C_Material* materialCmp = this->GetComponent<C_Material>();
 			if (materialCmp == nullptr)
 			{
-				materialCmp = this->CreateComponent<ComponentMaterial>();
+				materialCmp = this->CreateComponent<C_Material>();
 			}
 			materialCmp->active = true;
 			materialCmp->Load(jsonCmp);
 		}
 		else if (type == "info")
 		{
-			ComponentInfo* infoCmp = this->GetComponent<ComponentInfo>();
+			C_Info* infoCmp = this->GetComponent<C_Info>();
 			infoCmp->active = true;
 			infoCmp->Load(jsonCmp); //does nothing as of now
 		}
 		else if (type == "camera")
 		{
-			ComponentCamera* cameraCmp = this->GetComponent<ComponentCamera>();
+			C_Camera* cameraCmp = this->GetComponent<C_Camera>();
 			if (cameraCmp == nullptr)
 			{
-				cameraCmp = this->CreateComponent<ComponentCamera>();
+				cameraCmp = this->CreateComponent<C_Camera>();
 			}
 			cameraCmp->active = true;
 			cameraCmp->Load(jsonCmp);
 		}
 		else if (type == "script")
 		{
-			ComponentScript* scriptCmp = this->GetComponent<ComponentScript>();
+			C_Script* scriptCmp = this->GetComponent<C_Script>();
 			if (scriptCmp == nullptr)
 			{
-				scriptCmp = this->CreateComponent<ComponentScript>();
+				scriptCmp = this->CreateComponent<C_Script>();
 			}
 			scriptCmp->active = true;
 			scriptCmp->Load(jsonCmp);
 		}
 		else if (type == "transform2D")
 		{
-			ComponentTransform2D* transform2DCmp = this->GetComponent<ComponentTransform2D>();
+			C_Transform2D* transform2DCmp = this->GetComponent<C_Transform2D>();
 			if (transform2DCmp == nullptr)
 			{
-				transform2DCmp = this->CreateComponent<ComponentTransform2D>();
+				transform2DCmp = this->CreateComponent<C_Transform2D>();
 			}
 			transform2DCmp->active = true;
 			transform2DCmp->Load(jsonCmp);
 		}
 		else if (type == "canvas")
 		{
-			ComponentCanvas* canvasCmp = this->GetComponent<ComponentCanvas>();
+			C_Canvas* canvasCmp = this->GetComponent<C_Canvas>();
 			if (canvasCmp == nullptr)
 			{
-				canvasCmp = this->CreateComponent<ComponentCanvas>();
+				canvasCmp = this->CreateComponent<C_Canvas>();
 			}
 			canvasCmp->active = true;
 			canvasCmp->Load(jsonCmp);
 		}
 		else if (type == "image")
 		{
-			ComponentImage* imageCmp = this->GetComponent<ComponentImage>();
+			C_Image* imageCmp = this->GetComponent<C_Image>();
 			if (imageCmp == nullptr)
 			{
-				imageCmp = this->CreateComponent<ComponentImage>();
+				imageCmp = this->CreateComponent<C_Image>();
 			}
 			imageCmp->active = true;
 			imageCmp->Load(jsonCmp);
 		}
 		else if (type == "button")
 		{
-			ComponentButton* buttonCmp = this->GetComponent<ComponentButton>();
+			C_Button* buttonCmp = this->GetComponent<C_Button>();
 			if (buttonCmp == nullptr)
 			{
-				buttonCmp = this->CreateComponent<ComponentButton>();
+				buttonCmp = this->CreateComponent<C_Button>();
 			}
 			buttonCmp->active = true;
 			buttonCmp->Load(jsonCmp);
 		}
 		else if (type == "text")
 		{
-			ComponentText* textCmp = this->GetComponent<ComponentText>();
+			C_Text* textCmp = this->GetComponent<C_Text>();
 			if (textCmp == nullptr)
 			{
-				textCmp = this->CreateComponent<ComponentText>();
+				textCmp = this->CreateComponent<C_Text>();
 			}
 			textCmp->active = true;
 			textCmp->Load(jsonCmp);
 		}
 		else if (type == "rigidBody")
 		{
-			ComponentRigidBody* rbCmp = this->GetComponent<ComponentRigidBody>();
+			C_RigidBody* rbCmp = this->GetComponent<C_RigidBody>();
 			if (rbCmp == nullptr)
 			{
-				rbCmp = this->CreateComponent<ComponentRigidBody>();
+				rbCmp = this->CreateComponent<C_RigidBody>();
 			}
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
 		else if (type == "collider")
 		{
-			ComponentCollider* colCmp = this->GetComponent<ComponentCollider>();
+			C_Collider* colCmp = this->GetComponent<C_Collider>();
 			if (colCmp == nullptr)
 			{
-				colCmp = this->CreateComponent<ComponentCollider>();
+				colCmp = this->CreateComponent<C_Collider>();
 			}
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);

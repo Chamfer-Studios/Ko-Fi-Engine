@@ -2,7 +2,7 @@
 #define __C_COLLIDER_H__
 
 #include "Component.h"
-#include "Physics.h"
+#include "M_Physics.h"
 #include "MathGeoLib/Math/float3.h"
 
 enum class ColliderShape
@@ -22,13 +22,13 @@ enum class CollisionLayer
 	TERRAIN
 };
 
-class ComponentTransform;
+class C_Transform;
 
-class ComponentCollider2 : public Component
+class C_Collider : public Component
 {
 public:
-	ComponentCollider2(GameObject* parent, ColliderShape collType = ColliderShape::NONE);
-	~ComponentCollider2();
+	C_Collider(GameObject* parent, ColliderShape collType = ColliderShape::NONE);
+	~C_Collider();
 
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
@@ -95,7 +95,7 @@ private:
 	bool drawCollider = false;
 
 	std::string* debugFilter;
-	ComponentTransform* prevTransform;
+	C_Transform* prevTransform;
 };
 
 #endif // !__C_COLLIDER_H__

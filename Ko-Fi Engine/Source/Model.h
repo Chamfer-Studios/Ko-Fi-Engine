@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "json.hpp"
-#include "Resource.h"
+#include "R_Resource.h"
 
 using Json = nlohmann::json;
 
@@ -28,11 +28,11 @@ public:
 	std::string textureName;
 };
 
-class Model : public Resource
+class R_Model : public R_Resource
 {
 public:
-	Model();
-	~Model();
+	R_Model();
+	~R_Model();
 	bool SaveMeta(Json& json) const override;
 	bool LoadMeta(Json& json) override;
 

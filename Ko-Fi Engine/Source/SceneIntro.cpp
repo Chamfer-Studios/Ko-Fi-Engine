@@ -1,26 +1,32 @@
-#include "Editor.h"
 #include "SceneIntro.h"
-#include "Log.h"
+
+// Modules
 #include "Engine.h"
-#include "Camera3D.h"
-#include "Renderer3D.h"
-#include "Window.h"
+#include "M_Editor.h"
+#include "M_Camera3D.h"
+#include "M_Renderer3D.h"
+#include "M_Window.h"
+#include "M_FileSystem.h"
+#include "M_SceneManager.h"
+
+// GameObject
+#include "GameObject.h"
+#include "C_Mesh.h"
+#include "C_Material.h"
+#include "C_Camera.h"
+#include "C_Script.h"
+#include "C_Collider.h"
+#include "C_Transform.h"
+#include "C_Transform2D.h"
+#include "ComponentParticle.h"
+
+#include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "Primitive.h"
 #include "ImGuiAppLog.h"
-#include "FileSystem.h"
-#include "ComponentMesh.h"
-#include "ComponentMaterial.h"
-#include "ComponentCamera.h"
-#include "ComponentParticle.h"
-#include "ComponentScript.h"
-#include "C_Collider.h"
-#include "Scripting.h" // Consider moving this to Globals.h or smth
-#include "ComponentTransform.h"
-#include "Material.h"
-#include "ComponentTransform2D.h"
-#include "GameObject.h"
-#include "SceneManager.h"
+#include "R_Material.h"
+#include "Log.h"
 #include "node_editor.h"
+#include "QuadTree3D.h"
 
 #include "SDL_assert.h"
 
@@ -60,7 +66,7 @@ bool SceneIntro::Start()
 	if (!engine->GetCamera3D()->gameCamera)
 	{
 		GameObject *camera = CreateEmptyGameObject("camera");
-		ComponentCamera *cCamera = camera->CreateComponent<ComponentCamera>();
+		C_Camera *cCamera = camera->CreateComponent<C_Camera>();
 		cCamera->isMainCamera = true;
 		engine->GetCamera3D()->SetGameCamera(cCamera);
 	}
@@ -132,7 +138,7 @@ bool SceneIntro::PostUpdate(float dt)
 		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
 		{
 			knife->tag = Tag::TAG_PROJECTILE;
-			ComponentRigidBody *rigidBody = knife->CreateComponent<ComponentRigidBody>();
+			C_RigidBody *rigidBody = knife->CreateComponent<C_RigidBody>();
 
 			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 			float3 pos = parent->GetTransform()->GetPosition();
@@ -143,27 +149,27 @@ bool SceneIntro::PostUpdate(float dt)
 			float3 rot = {parentRot.x - 55, parentRot.y, parentRot.z};
 			knife->GetTransform()->SetRotationEuler(rot);
 
-			ComponentMesh *componentMesh = knife->CreateComponent<ComponentMesh>();
-			Mesh *mesh = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<ComponentMesh>()->GetMesh();
+			C_Mesh *componentMesh = knife->CreateComponent<C_Mesh>();
+			R_Mesh *mesh = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
-			ComponentMaterial *componentMaterial = knife->CreateComponent<ComponentMaterial>();
-			//Importer::GetInstance()->textureImporter->Import(nullptr, &componentMaterial->texture);
-			Material *material = parent->GetComponent<ComponentScript>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<ComponentMaterial>()->GetMaterial();
+			C_Material *cMaterial = knife->CreateComponent<C_Material>();
+			//Importer::GetInstance()->textureImporter->Import(nullptr, &C_Material->texture);
+			R_Material *material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
 			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-			componentMaterial->SetMaterial(material);
+			cMaterial->SetMaterial(material);
 
 			rigidBody->FreezePositionY(true);
-			ComponentCollider2 *collider = knife->CreateComponent<ComponentCollider2>();
+			C_Collider *collider = knife->CreateComponent<C_Collider>();
 			collider->SetColliderShape(ColliderShape::BOX);
 			collider->SetFilter("projectile");
 			collider->SetIsTrigger(true);
 
-			ComponentScript *knifeScript = (ComponentScript *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<ComponentScript>();
+			C_Script *knifeScript = (C_Script *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
 			knifeScript->scripts.push_back(new ScriptHandler(knife));
 			knifeScript->scripts[0]->path = "Assets/Scripts/Knife.lua";
 			knifeScript->ReloadScript(knifeScript->scripts[0]);
-			GameObject *target = parent->GetComponent<ComponentScript>()->scripts[0]->handler->lua["target"];
+			GameObject *target = parent->GetComponent<C_Script>()->scripts[0]->handler->lua["target"];
 			knifeScript->scripts[0]->handler->lua["target"] = target;
 			knifeScript->scripts[0]->handler->lua["SetDestination"]();
 		}

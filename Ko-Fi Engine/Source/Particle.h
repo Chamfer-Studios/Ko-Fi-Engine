@@ -2,7 +2,7 @@
 #define __PARTICLE_H__
 
 #include "MathGeoLib/Math/float3.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 #include "Color.h"
 #include "Globals.h"
 
