@@ -8,15 +8,15 @@
 #include "M_Camera3D.h"
 #include "Engine.h"
 #include "M_Editor.h"
-#include "Window.h"
+#include "M_Window.h"
 
 #include "PanelChooser.h"
 #include "SceneIntro.h"
 
 #include "par_shapes.h"
 #include "Log.h"
-#include "UI.h"
-#include "Material.h"
+#include "M_UI.h"
+#include "R_Material.h"
 
 #include "MathGeoLib/Math/Quat.h"
 #include "ImGuiAppLog.h"
@@ -71,8 +71,8 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 	if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 		DrawDeleteButton(owner, this);
 
-		// Texture display
-		ImGui::Text("Texture: ");
+		// R_Texture display
+		ImGui::Text("R_Texture: ");
 		ImGui::SameLine();
 		if (openGLTexture.GetTextureId() == TEXTUREID_DEFAULT) // Supposedly there is no textureId = 0 in textures array
 		{
@@ -91,7 +91,7 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 			}
 		}
 
-		if (ImGui::Button("Set Texture")) {
+		if (ImGui::Button("Set R_Texture")) {
 			panelChooser->OpenPanel("AddTextureImage", "png", { "png","jpg","jpeg" });
 		}
 	}

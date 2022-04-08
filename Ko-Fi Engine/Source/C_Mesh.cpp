@@ -9,9 +9,9 @@
 #include "C_Transform.h"
 #include "C_Material.h"
 #include "C_Camera.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "Engine.h"
-#include "Renderer3D.h"
+#include "M_Renderer3D.h"
 #include "M_Camera3D.h"
 #include "PanelChooser.h"
 #include "PanelViewport.h"
@@ -21,7 +21,7 @@
 
 #include "Importer.h"
 
-#include "Material.h"
+#include "R_Material.h"
 
 #include "glew.h"
 #include <gl/GL.h>
@@ -121,7 +121,7 @@ void C_Mesh::Load(Json& json)
 			meshType = Shape::CONE;
 			break;
 		}
-		SetMesh(new Mesh(meshType));
+		SetMesh(new R_Mesh(meshType));
 
 		mesh->meshType = meshType;
 	}
@@ -151,7 +151,7 @@ void C_Mesh::Load(Json& json)
 
 }
 
-void C_Mesh::SetMesh(Mesh* mesh)
+void C_Mesh::SetMesh(R_Mesh* mesh)
 {
 	if (this->mesh != nullptr)
 		RELEASE(this->mesh);
@@ -293,11 +293,11 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
-	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
+	if (mesh != nullptr && ImGui::CollapsingHeader("R_Mesh"))
 	{
 		DrawDeleteButton(owner, this);
 
-		ImGui::Text("Mesh Path: ");
+		ImGui::Text("R_Mesh Path: ");
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
 		if (ImGui::Selectable(mesh->path.c_str())) {}

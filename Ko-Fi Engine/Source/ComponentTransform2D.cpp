@@ -1,13 +1,13 @@
 #include "ComponentTransform2D.h"
 
 #include "Engine.h"
-#include "Input.h"
-#include "UI.h"
+#include "M_Input.h"
+#include "M_UI.h"
 #include "M_Editor.h"
 
 #include "GameObject.h"
 #include "ComponentCanvas.h"
-#include "Window.h"
+#include "M_Window.h"
 
 #include "ImGuiAppLog.h"
 

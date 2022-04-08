@@ -35,7 +35,7 @@
 */
 
 /**
-This is the main include header for the Physics SDK, for users who
+This is the main include header for the M_Physics SDK, for users who
 want to use a single #include file.
 
 Alternatively, one can instead directly #include a subset of the below files.

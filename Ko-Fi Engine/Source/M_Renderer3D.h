@@ -16,25 +16,25 @@
 class GameObject;
 typedef unsigned int GLenum;
 class C_Mesh;
-class Texture;
+class R_Texture;
 class PieShape;
 
 struct ParticleRenderer
 {
-	ParticleRenderer(Texture& tex, Color color, const float4x4 transform);
+	ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform);
 
 	//void Render();
 
-	Texture&	tex;
+	R_Texture&	tex;
 	Color		color;
 	float4x4	transform;
 };
 
-class Renderer3D : public Module
+class M_Renderer3D : public Module
 {
 public:
-	Renderer3D(KoFiEngine* engine);
-	~Renderer3D();
+	M_Renderer3D(KoFiEngine* engine);
+	~M_Renderer3D();
 
 	bool Awake(Json configModule);
 	bool PreUpdate(float dt);
@@ -93,7 +93,7 @@ public:
 
 	uint GetTextureBuffer();
 	uint GetPreviewTextureBuffer();
-	void AddParticle(Texture& tex, Color color, const float4x4 transform, float distanceToCamera);
+	void AddParticle(R_Texture& tex, Color color, const float4x4 transform, float distanceToCamera);
 	void RenderParticle(ParticleRenderer* particle);
 	void RenderAllParticles();
 

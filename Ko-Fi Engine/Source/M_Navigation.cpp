@@ -1,9 +1,9 @@
-#include "Navigation.h"
+#include "M_Navigation.h"
 
 #include "Recast.h"
 
 #include "Engine.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "Scene.h"
 
 #include "ComponentWalkable.h"
@@ -12,23 +12,23 @@
 #include "DetourNavMeshBuilder.h"
 #include "DetourNavMeshQuery.h"
 #include "DetourNavMesh.h"
-#include "Mesh.h"
+#include "R_Mesh.h"
 #include "JsonHandler.h"
 
 #include <lua.hpp>
 #include <sol.hpp>
 
-Navigation::Navigation(KoFiEngine* engine) : Module()
+M_Navigation::M_Navigation(KoFiEngine* engine) : Module()
 {
-	name = "Navigation";
+	name = "M_Navigation";
 	this->engine = engine;
 }
 
-Navigation::~Navigation()
+M_Navigation::~M_Navigation()
 {
 }
 
-bool Navigation::Awake(Json configModule)
+bool M_Navigation::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -37,22 +37,22 @@ bool Navigation::Awake(Json configModule)
 	return ret;
 }
 
-bool Navigation::Start()
+bool M_Navigation::Start()
 {
 	return true;
 }
 
-bool Navigation::PreUpdate(float dt)
+bool M_Navigation::PreUpdate(float dt)
 {
 	return true;
 }
 
-bool Navigation::Update(float dt)
+bool M_Navigation::Update(float dt)
 {
 	return true;
 }
 
-bool Navigation::PostUpdate(float dt)
+bool M_Navigation::PostUpdate(float dt)
 {
 	return true;
 
@@ -102,20 +102,20 @@ bool Navigation::PostUpdate(float dt)
 	return true;
 }
 
-bool Navigation::CleanUp()
+bool M_Navigation::CleanUp()
 {
 	return true;
 }
 
-void Navigation::OnNotify(const Event& event)
+void M_Navigation::OnNotify(const Event& event)
 {
 
 }
 
-void Navigation::ComputeNavmesh()
+void M_Navigation::ComputeNavmesh()
 {
 	std::vector<GameObject*> walkableObjects = CollectWalkableObjects();
-	std::vector<Mesh*> meshes;
+	std::vector<R_Mesh*> meshes;
 	std::vector<float4x4> transforms;
 
 	for (auto go : walkableObjects) {
@@ -127,12 +127,12 @@ void Navigation::ComputeNavmesh()
 		}
 	}
 
-	Mesh* combined = Mesh::MeshUnion(meshes, transforms);
+	R_Mesh* combined = R_Mesh::MeshUnion(meshes, transforms);
 
 	navMeshDetail = ComputeNavmesh(combined);
 }
 
-void Navigation::PrepareDetour()
+void M_Navigation::PrepareDetour()
 {
 	if (navMeshDetail == nullptr) return;
 
@@ -192,7 +192,7 @@ void Navigation::PrepareDetour()
 	appLog->AddLog("Sucessfully prepared pathfinding.\n");
 }
 
-rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
+rcPolyMeshDetail* M_Navigation::ComputeNavmesh(R_Mesh* mesh)
 {
 	// https://wiki.jmonkeyengine.org/docs/3.4/contributions/ai/recast.html
 	// https://github.com/recastnavigation/recastnavigation/blob/c5cbd53024c8a9d8d097a4371215e3342d2fdc87/RecastDemo/Source/Sample_SoloMesh.cpp
@@ -306,7 +306,7 @@ rcPolyMeshDetail* Navigation::ComputeNavmesh(Mesh* mesh)
 	return polyMeshDetail;
 }
 
-std::vector<GameObject*> Navigation::CollectWalkableObjects()
+std::vector<GameObject*> M_Navigation::CollectWalkableObjects()
 {
 	std::vector<GameObject*> list = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
 	std::vector<GameObject*> res;
@@ -320,7 +320,7 @@ std::vector<GameObject*> Navigation::CollectWalkableObjects()
 	return res;
 }
 
-std::tuple<std::vector<float3>> Navigation::FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength)
+std::tuple<std::vector<float3>> M_Navigation::FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength)
 {
 	std::vector<float3> path;
 	if (dtNavMesh == nullptr) return std::make_tuple(path);
@@ -365,7 +365,7 @@ std::tuple<std::vector<float3>> Navigation::FindPath(float3 origin, float3 desti
 	return std::make_tuple(path);
 }
 
-void Navigation::Save(Json& json) const
+void M_Navigation::Save(Json& json) const
 {
 	if (navMesh == nullptr)
 		return;
@@ -462,7 +462,7 @@ void Navigation::Save(Json& json) const
 	json.emplace("detail", detailNavmeshJson);
 }
 
-void Navigation::Load(Json& json)
+void M_Navigation::Load(Json& json)
 {
 	if (json.find("basic") == json.end() || json.find("detail") == json.end()) return;
 
@@ -547,7 +547,7 @@ void Navigation::Load(Json& json)
 	PrepareDetour();
 }
 
-void Navigation::OnGui()
+void M_Navigation::OnGui()
 {
 	ImGui::Begin("Navigator");
 
@@ -573,17 +573,17 @@ void Navigation::OnGui()
 	ImGui::End();
 }
 
-bool Navigation::SaveConfiguration(Json& configModule) const
+bool M_Navigation::SaveConfiguration(Json& configModule) const
 {
 	return true;
 }
 
-bool Navigation::LoadConfiguration(Json& configModule)
+bool M_Navigation::LoadConfiguration(Json& configModule)
 {
 	return true;
 }
 
-bool Navigation::InspectorDraw()
+bool M_Navigation::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Navigator##"))
 	{

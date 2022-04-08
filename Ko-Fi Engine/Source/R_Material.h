@@ -21,11 +21,11 @@ struct UniformT : public Uniform
 	T value;
 };
 
-class Material : public Resource
+class R_Material : public Resource
 {
 public:
-	Material();
-	~Material();
+	R_Material();
+	~R_Material();
 
 	Uniform* FindUniform(std::string name);
 	void AddUniform(Uniform* uniform);

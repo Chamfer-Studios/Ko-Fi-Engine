@@ -1,6 +1,6 @@
-#include "Texture.h"
+#include "R_Texture.h"
 
-Texture::Texture() : Resource(ResourceType::TEXTURE)
+R_Texture::R_Texture() : Resource(ResourceType::TEXTURE)
 {
 	textureID = TEXTUREID_DEFAULT;
 	width = 0;
@@ -8,7 +8,7 @@ Texture::Texture() : Resource(ResourceType::TEXTURE)
 	nrChannels = 1;
 }
 
-Texture::~Texture()
+R_Texture::~R_Texture()
 {
 	path.clear();
 	path.shrink_to_fit();

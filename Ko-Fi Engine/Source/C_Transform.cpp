@@ -1,7 +1,7 @@
 #include "C_Transform.h"
 
 #include "Engine.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "Globals.h"
 
 #include "PanelChooser.h"

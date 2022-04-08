@@ -108,7 +108,7 @@ PX_FLAGS_OPERATORS(PxMaterialFlag::Enum,PxU16)
 
 When two actors come in contact with each other, they each have materials with various coefficients, but we only need a single set of coefficients for the pair.
 
-Physics doesn't have any inherent combinations because the coefficients are determined empirically on a case by case
+M_Physics doesn't have any inherent combinations because the coefficients are determined empirically on a case by case
 basis. However, simulating this with a pairwise lookup table is often impractical.
 
 For this reason the following combine behaviors are available:
@@ -136,7 +136,7 @@ struct PxCombineMode
 };
 
 /**
-\brief Material class to represent a set of surface properties. 
+\brief R_Material class to represent a set of surface properties. 
 
 @see PxPhysics.createMaterial
 */

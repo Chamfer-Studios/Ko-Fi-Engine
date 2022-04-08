@@ -12,14 +12,14 @@
 #include "SDL.h"
 
 class C_Camera;
-class Texture;
+class R_Texture;
 class GameObject;
 class MyPlane
 {
 public:
 	MyPlane(GameObject* owner);
 	~MyPlane();
-	void DrawPlane2D(Texture* texture, SDL_Color color);
+	void DrawPlane2D(R_Texture* texture, SDL_Color color);
 	void DrawPlane2D(unsigned int texture, SDL_Color color);
 public:
 	unsigned int vertexBufferId = 0;
@@ -32,11 +32,11 @@ public:
 	std::vector<float3> vertices;
 };
 
-class UI : public Module
+class M_UI : public Module
 {
 public:
-	UI(KoFiEngine* engine);
-	~UI();
+	M_UI(KoFiEngine* engine);
+	~M_UI();
 
 	bool Awake(Json configModule);
 	bool Start() override;

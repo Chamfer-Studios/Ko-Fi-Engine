@@ -5,7 +5,7 @@
 #include "C_RigidBody.h"
 #include "C_Mesh.h"
 
-#include "Physics.h"
+#include "M_Physics.h"
 #include "PxPhysicsAPI.h"
 
 C_Collider::C_Collider(GameObject *parent, ColliderShape collType) : Component(parent)

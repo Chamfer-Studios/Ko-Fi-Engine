@@ -14,22 +14,22 @@ ImGuiStyle* EditorStyleHandler::SetKoFiStyle()
 {
 	jsonHandler.LoadJson(styleJson, "EngineConfig/style.json");
 	ImGuiStyle* style = &ImGui::GetStyle();
-	style->WindowPadding = ImVec2(styleJson.at("Window").at("WindowPadding").at("x"), styleJson.at("Window").at("WindowPadding").at("y"));
-	style->WindowRounding = styleJson.at("Window").at("WindowRounding");
-	style->ChildBorderSize = styleJson.at("Window").at("ChildBorderSize");
-	style->ChildRounding = styleJson.at("Window").at("ChildRounding");
-	style->FramePadding = ImVec2(styleJson.at("Window").at("FramePadding").at("x"), styleJson.at("Window").at("FramePadding").at("y"));
-	style->FrameRounding = styleJson.at("Window").at("FrameRounding");
-	style->ItemSpacing = ImVec2(styleJson.at("Window").at("ItemSpacing").at("x"), styleJson.at("Window").at("ItemSpacing").at("y"));
-	style->ItemInnerSpacing = ImVec2(styleJson.at("Window").at("ItemInnerSpacing").at("x"), styleJson.at("Window").at("ItemInnerSpacing").at("y"));
-	style->IndentSpacing = styleJson.at("Window").at("IndentSpacing");
-	style->ButtonTextAlign = ImVec2(styleJson.at("Window").at("ButtonTextAlign").at("x"), styleJson.at("Window").at("ButtonTextAlign").at("y"));
-	style->ScrollbarSize = styleJson.at("Window").at("ScrollbarSize");
-	style->ScrollbarRounding = styleJson.at("Window").at("ScrollbarRounding");
-	style->GrabMinSize = styleJson.at("Window").at("GrabMinSize");
-	style->GrabRounding = styleJson.at("Window").at("GrabRounding");
-	style->DisplaySafeAreaPadding = ImVec2(styleJson.at("Window").at("DisplaySafeAreaPadding").at("x"), styleJson.at("Window").at("DisplaySafeAreaPadding").at("y"));
-	style->DisplayWindowPadding = ImVec2(styleJson.at("Window").at("DisplayWindowPadding").at("x"), styleJson.at("Window").at("DisplayWindowPadding").at("y"));
+	style->WindowPadding = ImVec2(styleJson.at("M_Window").at("WindowPadding").at("x"), styleJson.at("M_Window").at("WindowPadding").at("y"));
+	style->WindowRounding = styleJson.at("M_Window").at("WindowRounding");
+	style->ChildBorderSize = styleJson.at("M_Window").at("ChildBorderSize");
+	style->ChildRounding = styleJson.at("M_Window").at("ChildRounding");
+	style->FramePadding = ImVec2(styleJson.at("M_Window").at("FramePadding").at("x"), styleJson.at("M_Window").at("FramePadding").at("y"));
+	style->FrameRounding = styleJson.at("M_Window").at("FrameRounding");
+	style->ItemSpacing = ImVec2(styleJson.at("M_Window").at("ItemSpacing").at("x"), styleJson.at("M_Window").at("ItemSpacing").at("y"));
+	style->ItemInnerSpacing = ImVec2(styleJson.at("M_Window").at("ItemInnerSpacing").at("x"), styleJson.at("M_Window").at("ItemInnerSpacing").at("y"));
+	style->IndentSpacing = styleJson.at("M_Window").at("IndentSpacing");
+	style->ButtonTextAlign = ImVec2(styleJson.at("M_Window").at("ButtonTextAlign").at("x"), styleJson.at("M_Window").at("ButtonTextAlign").at("y"));
+	style->ScrollbarSize = styleJson.at("M_Window").at("ScrollbarSize");
+	style->ScrollbarRounding = styleJson.at("M_Window").at("ScrollbarRounding");
+	style->GrabMinSize = styleJson.at("M_Window").at("GrabMinSize");
+	style->GrabRounding = styleJson.at("M_Window").at("GrabRounding");
+	style->DisplaySafeAreaPadding = ImVec2(styleJson.at("M_Window").at("DisplaySafeAreaPadding").at("x"), styleJson.at("M_Window").at("DisplaySafeAreaPadding").at("y"));
+	style->DisplayWindowPadding = ImVec2(styleJson.at("M_Window").at("DisplayWindowPadding").at("x"), styleJson.at("M_Window").at("DisplayWindowPadding").at("y"));
 	//Text Color
 	style->Colors[ImGuiCol_Text] = ImVec4(
 		styleJson.at("Colors").at("Text").at("x"),

@@ -1,14 +1,14 @@
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "Engine.h"
 #include "M_Editor.h"
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
-#include "Window.h"
+#include "M_Window.h"
 #include <imgui_stdlib.h>
 
 #include "GameObject.h"
-#include "Material.h"
-#include "Texture.h"
+#include "R_Material.h"
+#include "R_Texture.h"
 
 #include "C_Transform.h"
 #include "C_Mesh.h"
@@ -30,9 +30,9 @@
 #include "Globals.h"
 
 
-SceneManager::SceneManager(KoFiEngine* engine)
+M_SceneManager::M_SceneManager(KoFiEngine* engine)
 {
-	name = "SceneManager";
+	name = "M_SceneManager";
 	this->engine = engine;
 
 	sceneIntro = new SceneIntro(engine);
@@ -42,12 +42,12 @@ SceneManager::SceneManager(KoFiEngine* engine)
 	gameTime = 0.0f;
 }
 
-SceneManager::~SceneManager()
+M_SceneManager::~M_SceneManager()
 {
 	CleanUp();
 }
 
-bool SceneManager::Awake(Json configModule)
+bool M_SceneManager::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -63,7 +63,7 @@ bool SceneManager::Awake(Json configModule)
 }
 
 
-bool SceneManager::Start()
+bool M_SceneManager::Start()
 {
 	bool ret = true;
 
@@ -78,7 +78,7 @@ bool SceneManager::Start()
 	return ret;
 }
 
-bool SceneManager::PreUpdate(float dt)
+bool M_SceneManager::PreUpdate(float dt)
 {
 	bool ret = true;
 
@@ -93,7 +93,7 @@ bool SceneManager::PreUpdate(float dt)
 	return ret;
 }
 
-bool SceneManager::Update(float dt)
+bool M_SceneManager::Update(float dt)
 {
 	bool ret = true;
 	
@@ -105,7 +105,7 @@ bool SceneManager::Update(float dt)
 	return ret;
 }
 
-bool SceneManager::PostUpdate(float dt)
+bool M_SceneManager::PostUpdate(float dt)
 {
 	bool ret = true;
 
@@ -119,7 +119,7 @@ bool SceneManager::PostUpdate(float dt)
 	return ret;
 }
 
-bool SceneManager::CleanUp()
+bool M_SceneManager::CleanUp()
 {
 	bool ret = true;
 	ImGuizmo::Enable(false);
@@ -136,33 +136,33 @@ bool SceneManager::CleanUp()
 }
 
 // Method to receive and manage events
-void SceneManager::OnNotify(const Event& event)
+void M_SceneManager::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
-bool SceneManager::SaveConfiguration(Json& configModule) const
+bool M_SceneManager::SaveConfiguration(Json& configModule) const
 {
 	configModule["DefaultScene"] = defaultScene;
 	return true;
 }
 
-bool SceneManager::LoadConfiguration(Json& configModule)
+bool M_SceneManager::LoadConfiguration(Json& configModule)
 {
 	defaultScene = configModule["DefaultScene"];
 	return true;
 }
 
-bool SceneManager::InspectorDraw()
+bool M_SceneManager::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("SceneManager##"))
+	if (ImGui::CollapsingHeader("M_SceneManager##"))
 	{
 		ImGui::InputText("Default Scene: ", &defaultScene);
 	}
 	return true;
 }
 
-bool SceneManager::PrepareUpdate()
+bool M_SceneManager::PrepareUpdate()
 {
 	bool ret = true;
 
@@ -179,7 +179,7 @@ bool SceneManager::PrepareUpdate()
 	return ret;
 }
 
-bool SceneManager::FinishUpdate()
+bool M_SceneManager::FinishUpdate()
 {
 	bool ret = true;
 
@@ -189,23 +189,23 @@ bool SceneManager::FinishUpdate()
 	return ret;
 }
 
-void SceneManager::AddScene(Scene* scene)
+void M_SceneManager::AddScene(Scene* scene)
 {
 	scene->Init();
 	scenes.push_back(scene);
 }
 
-Scene* SceneManager::GetCurrentScene()
+Scene* M_SceneManager::GetCurrentScene()
 {
 	return currentScene;
 }
 
-GameState SceneManager::GetGameState()
+GameState M_SceneManager::GetGameState()
 {
 	return runtimeState;
 }
 
-void SceneManager::OnPlay()
+void M_SceneManager::OnPlay()
 {
 	runtimeState = GameState::PLAYING;
 	gameClockSpeed = timeScale;
@@ -221,7 +221,7 @@ void SceneManager::OnPlay()
 	}
 }
 
-void SceneManager::OnPause()
+void M_SceneManager::OnPause()
 {
 	runtimeState = GameState::PAUSED;
 	gameClockSpeed = 0.0f;
@@ -232,7 +232,7 @@ void SceneManager::OnPause()
 	}
 }
 
-void SceneManager::OnStop()
+void M_SceneManager::OnStop()
 {
 	runtimeState = GameState::STOPPED;
 	gameClockSpeed = 0.0f;
@@ -249,7 +249,7 @@ void SceneManager::OnStop()
 	}
 }
 
-void SceneManager::OnResume()
+void M_SceneManager::OnResume()
 {
 	runtimeState = GameState::PLAYING;
 	gameClockSpeed = timeScale;
@@ -260,7 +260,7 @@ void SceneManager::OnResume()
 	}
 }
 
-void SceneManager::OnTick()
+void M_SceneManager::OnTick()
 {
 	runtimeState = GameState::TICK;
 	gameClockSpeed = timeScale;
@@ -271,11 +271,11 @@ void SceneManager::OnTick()
 	}
 }
 
-void SceneManager::OnClick(SDL_Event event)
+void M_SceneManager::OnClick(SDL_Event event)
 {
 }
 
-void SceneManager::GuizmoTransformation()
+void M_SceneManager::GuizmoTransformation()
 {
 	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 	if (!selectedGameObject->GetComponent<C_Transform>()) return;
@@ -308,7 +308,7 @@ void SceneManager::GuizmoTransformation()
 	}
 }
 
-void SceneManager::UpdateGuizmo()
+void M_SceneManager::UpdateGuizmo()
 {
 	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 	if (selectedGameObject != nullptr && selectedGameObject->GetComponent<C_Camera>() != nullptr && currentGizmoOperation == ImGuizmo::OPERATION::SCALE)

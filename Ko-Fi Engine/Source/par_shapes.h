@@ -100,7 +100,7 @@ extern "C" {
         int stacks, void* userdata);
 
     // Generate points for a 20-sided polyhedron that fits in the unit sphere.
-    // Texture coordinates and normals are not generated.
+    // R_Texture coordinates and normals are not generated.
     par_shapes_mesh* par_shapes_create_icosahedron();
 
     // Generate points for a 12-sided polyhedron that fits in the unit sphere.
@@ -127,7 +127,7 @@ extern "C" {
 
     // Create trees or vegetation by executing a recursive turtle graphics program.
     // The program is a list of command-argument pairs.  See the unit test for
-    // an example.  Texture coordinates and normals are not generated.
+    // an example.  R_Texture coordinates and normals are not generated.
     par_shapes_mesh* par_shapes_create_lsystem(char const* program, int slices,
         int maxdepth);
 

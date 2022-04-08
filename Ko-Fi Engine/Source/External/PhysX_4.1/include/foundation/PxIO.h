@@ -42,7 +42,7 @@ namespace physx
 #endif
 
 /**
-\brief Input stream class for I/O.
+\brief M_Input stream class for I/O.
 
 The user needs to supply a PxInputStream implementation to a number of methods to allow the SDK to read data.
 */
@@ -67,7 +67,7 @@ class PxInputStream
 };
 
 /**
-\brief Input data class for I/O which provides random read access.
+\brief M_Input data class for I/O which provides random read access.
 
 The user needs to supply a PxInputData implementation to a number of methods to allow the SDK to read data.
 */

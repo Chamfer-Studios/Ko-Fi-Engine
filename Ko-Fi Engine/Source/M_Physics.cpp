@@ -1,9 +1,9 @@
-#include "Physics.h"
+#include "M_Physics.h"
 
 #include "PxPhysicsAPI.h"
 #include "Globals.h"
 #include "Engine.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "SimulationEventCallback.h"
 
 #include <vector>
@@ -31,18 +31,18 @@ physx::PxFilterFlags customFilterShader(
 }
 
 // Module constructor
-Physics::Physics(KoFiEngine* engine) : Module()
+M_Physics::M_Physics(KoFiEngine* engine) : Module()
 {
-	name = "Physics";
+	name = "M_Physics";
 	this->engine = engine;
 }
 
 // Module destructor
-Physics::~Physics()
+M_Physics::~M_Physics()
 {
 }
 
-bool Physics::Awake(Json configModule)
+bool M_Physics::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -51,20 +51,20 @@ bool Physics::Awake(Json configModule)
 	return ret;
 }
 
-bool Physics::Start()
+bool M_Physics::Start()
 {
 	bool ret = true;
 
-	LOG_BOTH("Initializing Module Physics ------------------------------------------------");
+	LOG_BOTH("Initializing Module M_Physics ------------------------------------------------");
 
 	ret = InitializePhysX();
 
-	LOG_BOTH("Finished initializing Module Physics ---------------------------------------");
+	LOG_BOTH("Finished initializing Module M_Physics ---------------------------------------");
 
 	return ret;
 }
 
-bool Physics::Update(float dt)
+bool M_Physics::Update(float dt)
 {
 	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING || engine->GetSceneManager()->GetGameState() == GameState::PAUSED)
 	{
@@ -82,7 +82,7 @@ bool Physics::Update(float dt)
 	return true;
 }
 
-bool Physics::CleanUp()
+bool M_Physics::CleanUp()
 {
 	RELEASE(simulationEventCallback);
 
@@ -111,7 +111,7 @@ bool Physics::CleanUp()
 	return true;
 }
 
-bool Physics::SaveConfiguration(Json& configModule) const
+bool M_Physics::SaveConfiguration(Json& configModule) const
 {
 	configModule["Gravity"] =  gravity;
 	configModule["Number_threads"] = nbThreads;
@@ -135,7 +135,7 @@ bool Physics::SaveConfiguration(Json& configModule) const
 	return true;
 }
 
-bool Physics::LoadConfiguration(Json& configModule)
+bool M_Physics::LoadConfiguration(Json& configModule)
 {
 	gravity = configModule["Gravity"];
 	nbThreads = configModule["Number_threads"];
@@ -178,9 +178,9 @@ bool Physics::LoadConfiguration(Json& configModule)
 	return true;
 }
 
-bool Physics::InspectorDraw()
+bool M_Physics::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("Physics##"))
+	if (ImGui::CollapsingHeader("M_Physics##"))
 	{
 		// NUMBER OF THREADS ----------------------------------------------------
 		int newNbThreads = GetNbThreads();
@@ -292,11 +292,11 @@ bool Physics::InspectorDraw()
 	return true;
 }
 
-void Physics::OnNotify(const Event& event)
+void M_Physics::OnNotify(const Event& event)
 {
 }
 
-bool Physics::InitializePhysX()
+bool M_Physics::InitializePhysX()
 {
 	// PxFoundation object creation
 	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
@@ -357,7 +357,7 @@ bool Physics::InitializePhysX()
 	return true;
 }
 
-void Physics::AddActor(physx::PxActor* actor, GameObject* owner)
+void M_Physics::AddActor(physx::PxActor* actor, GameObject* owner)
 {
 	if (actor)
 	{
@@ -366,7 +366,7 @@ void Physics::AddActor(physx::PxActor* actor, GameObject* owner)
 	}
 }
 
-void Physics::DeleteActor(physx::PxActor* actor)
+void M_Physics::DeleteActor(physx::PxActor* actor)
 {
 	if (actor)
 	{
@@ -375,7 +375,7 @@ void Physics::DeleteActor(physx::PxActor* actor)
 	}
 }
 
-void Physics::AddFilter(const std::string newFilter)
+void M_Physics::AddFilter(const std::string newFilter)
 {
 	// Filter repeated filters
 	for (int i = 0; i < filters.size(); ++i)
@@ -415,7 +415,7 @@ void Physics::AddFilter(const std::string newFilter)
 	SetFilterMatrix(newFilterMatrix);
 }
 
-void Physics::DeleteFilter(const std::string deletedFilter)
+void M_Physics::DeleteFilter(const std::string deletedFilter)
 {
 	// Check if it is contained in the filter list
 	bool contains = false;
@@ -477,7 +477,7 @@ void Physics::DeleteFilter(const std::string deletedFilter)
 
 }
 
-std::string const Physics::GetFilterByID(const uint ID)
+std::string const M_Physics::GetFilterByID(const uint ID)
 {
 	if (ID < 0 || ID >= filters.size())
 		return defaultFilter;
@@ -485,7 +485,7 @@ std::string const Physics::GetFilterByID(const uint ID)
 		return filters[ID];
 }
 
-uint const Physics::GetFilterID(const std::string* newFilter)
+uint const M_Physics::GetFilterID(const std::string* newFilter)
 {
 	for (int i = 0; i < filters.size(); ++i)
 	{

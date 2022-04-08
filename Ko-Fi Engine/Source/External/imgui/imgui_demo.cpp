@@ -24,7 +24,7 @@
 // In this demo code, we frequently use 'static' variables inside functions. A static variable persists across calls,
 // so it is essentially like a global variable but declared inside the scope of the function. We do this as a way to
 // gather code and data in the same place, to make the demo source code faster to read, faster to write, and smaller
-// in size. It also happens to be a convenient way of storing simple UI related information as long as your function
+// in size. It also happens to be a convenient way of storing simple M_UI related information as long as your function
 // doesn't need to be reentrant or used in multiple threads. This might be a pattern you will want to use in your code,
 // but most of the real data you would be editing is likely going to be stored outside your functions.
 
@@ -47,13 +47,13 @@
 Index of this file:
 
 // [SECTION] Forward Declarations, Helpers
-// [SECTION] Demo Window / ShowDemoWindow()
+// [SECTION] Demo M_Window / ShowDemoWindow()
 // - sub section: ShowDemoWindowWidgets()
 // - sub section: ShowDemoWindowLayout()
 // - sub section: ShowDemoWindowPopups()
 // - sub section: ShowDemoWindowTables()
 // - sub section: ShowDemoWindowMisc()
-// [SECTION] About Window / ShowAboutWindow()
+// [SECTION] About M_Window / ShowAboutWindow()
 // [SECTION] Style M_Editor / ShowStyleEditor()
 // [SECTION] Example App: Main Menu Bar / ShowExampleAppMainMenuBar()
 // [SECTION] Example App: Debug Console / ShowExampleAppConsole()
@@ -245,7 +245,7 @@ void ImGui::ShowUserGuide()
 }
 
 //-----------------------------------------------------------------------------
-// [SECTION] Demo Window / ShowDemoWindow()
+// [SECTION] Demo M_Window / ShowDemoWindow()
 //-----------------------------------------------------------------------------
 // - ShowDemoWindowWidgets()
 // - ShowDemoWindowLayout()
@@ -265,7 +265,7 @@ static void ShowDemoWindowColumns();
 static void ShowDemoWindowMisc();
 
 // Demonstrate most Dear ImGui features (this is big function!)
-// You may execute this function to experiment with the UI and understand what it does.
+// You may execute this function to experiment with the M_UI and understand what it does.
 // You may then search for keywords in the code when you are interested by a specific feature.
 void ImGui::ShowDemoWindow(bool* p_open)
 {
@@ -549,7 +549,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
         }
     }
 
-    if (ImGui::CollapsingHeader("Window options"))
+    if (ImGui::CollapsingHeader("M_Window options"))
     {
         if (ImGui::BeginTable("split", 3))
         {
@@ -672,7 +672,7 @@ static void ShowDemoWindowWidgets()
 
         {
             // To wire InputText() with std::string or any other custom string type,
-            // see the "Text Input > Resize Callback" section of this demo, and the misc/cpp/imgui_stdlib.h file.
+            // see the "Text M_Input > Resize Callback" section of this demo, and the misc/cpp/imgui_stdlib.h file.
             static char str0[128] = "Hello, world!";
             ImGui::InputText("input text", str0, IM_ARRAYSIZE(str0));
             ImGui::SameLine(); HelpMarker(
@@ -1313,10 +1313,10 @@ static void ShowDemoWindowWidgets()
     }
 
     // To wire InputText() with std::string or any other custom string type,
-    // see the "Text Input > Resize Callback" section of this demo, and the misc/cpp/imgui_stdlib.h file.
-    if (ImGui::TreeNode("Text Input"))
+    // see the "Text M_Input > Resize Callback" section of this demo, and the misc/cpp/imgui_stdlib.h file.
+    if (ImGui::TreeNode("Text M_Input"))
     {
-        if (ImGui::TreeNode("Multi-line Text Input"))
+        if (ImGui::TreeNode("Multi-line Text M_Input"))
         {
             // Note: we are using a fixed-sized buffer for simplicity here. See ImGuiInputTextFlags_CallbackResize
             // and the code in misc/cpp/imgui_stdlib.h for how to setup InputText() for dynamically resizing strings.
@@ -1341,7 +1341,7 @@ static void ShowDemoWindowWidgets()
             ImGui::TreePop();
         }
 
-        if (ImGui::TreeNode("Filtered Text Input"))
+        if (ImGui::TreeNode("Filtered Text M_Input"))
         {
             struct TextFilters
             {
@@ -1363,7 +1363,7 @@ static void ShowDemoWindowWidgets()
             ImGui::TreePop();
         }
 
-        if (ImGui::TreeNode("Password Input"))
+        if (ImGui::TreeNode("Password M_Input"))
         {
             static char password[64] = "password123";
             ImGui::InputText("password", password, IM_ARRAYSIZE(password), ImGuiInputTextFlags_Password);
@@ -2332,7 +2332,7 @@ static void ShowDemoWindowWidgets()
         ImGui::TreePop();
     }
 
-    if (ImGui::TreeNode("Querying Window Status (Focused/Hovered etc.)"))
+    if (ImGui::TreeNode("Querying M_Window Status (Focused/Hovered etc.)"))
     {
         static bool embed_all_inside_a_child_window = false;
         ImGui::Checkbox("Embed everything inside a child window for testing _RootWindow flag.", &embed_all_inside_a_child_window);
@@ -3309,7 +3309,7 @@ static void ShowDemoWindowPopups()
 
     if (ImGui::TreeNode("Context menus"))
     {
-        HelpMarker("\"Context\" functions are simple helpers to associate a Popup to a given Item or Window identifier.");
+        HelpMarker("\"Context\" functions are simple helpers to associate a Popup to a given Item or M_Window identifier.");
 
         // BeginPopupContextItem() is a helper to provide common/simple popup behavior of essentially doing:
         //     if (id == 0)
@@ -3554,7 +3554,7 @@ struct MyItem
 const ImGuiTableSortSpecs* MyItem::s_current_sort_specs = NULL;
 }
 
-// Make the UI compact because there are so many fields
+// Make the M_UI compact because there are so many fields
 static void PushStyleCompact()
 {
     ImGuiStyle& style = ImGui::GetStyle();
@@ -4342,7 +4342,7 @@ static void ShowDemoWindowTables()
                 ImGui::AlignTextToFramePadding(); // FIXME-TABLE: Workaround for wrong text baseline propagation
                 ImGui::Text("'%s'", column_names[column]);
                 ImGui::Spacing();
-                ImGui::Text("Input flags:");
+                ImGui::Text("M_Input flags:");
                 EditTableColumnsFlags(&column_flags[column]);
                 ImGui::Spacing();
                 ImGui::Text("Output flags:");
@@ -5055,7 +5055,7 @@ static void ShowDemoWindowTables()
         //ImGui::SetNextItemOpen(true, ImGuiCond_Once); // FIXME-TABLE: Enabling this results in initial clipped first pass on table which tend to affects column sizing
         if (ImGui::TreeNode("Options"))
         {
-            // Make the UI compact because there are so many fields
+            // Make the M_UI compact because there are so many fields
             PushStyleCompact();
             ImGui::PushItemWidth(TEXT_BASE_WIDTH * 28.0f);
 
@@ -5560,7 +5560,7 @@ static void ShowDemoWindowMisc()
                 ImGui::BulletText("%s", lines[i]);
     }
 
-    if (ImGui::CollapsingHeader("Inputs, Navigation & Focus"))
+    if (ImGui::CollapsingHeader("Inputs, M_Navigation & Focus"))
     {
         ImGuiIO& io = ImGui::GetIO();
 
@@ -5590,7 +5590,7 @@ static void ShowDemoWindowMisc()
         }
 
         // Display Keyboard/Mouse state
-        if (ImGui::TreeNode("Keyboard & Navigation State"))
+        if (ImGui::TreeNode("Keyboard & M_Navigation State"))
         {
             ImGui::Text("Keys down:");          for (int i = 0; i < IM_ARRAYSIZE(io.KeysDown); i++) if (ImGui::IsKeyDown(i))        { ImGui::SameLine(); ImGui::Text("%d (0x%X) (%.02f secs)", i, i, io.KeysDownDuration[i]); }
             ImGui::Text("Keys pressed:");       for (int i = 0; i < IM_ARRAYSIZE(io.KeysDown); i++) if (ImGui::IsKeyPressed(i))     { ImGui::SameLine(); ImGui::Text("%d (0x%X)", i, i); }
@@ -5721,7 +5721,7 @@ static void ShowDemoWindowMisc()
 }
 
 //-----------------------------------------------------------------------------
-// [SECTION] About Window / ShowAboutWindow()
+// [SECTION] About M_Window / ShowAboutWindow()
 // Access from Dear ImGui Demo -> Tools -> About
 //-----------------------------------------------------------------------------
 
@@ -6101,7 +6101,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
             const float MAX_SCALE = 2.0f;
             HelpMarker(
                 "Those are old settings provided for convenience.\n"
-                "However, the _correct_ way of scaling your UI is currently to reload your font at the designed size, "
+                "However, the _correct_ way of scaling your M_UI is currently to reload your font at the designed size, "
                 "rebuild the font atlas, and call style.ScaleAllSizes() on a reference ImGuiStyle structure.\n"
                 "Using those settings here will give you poor quality results.");
             static float window_scale = 1.0f;
@@ -6171,7 +6171,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
             ImGui::SameLine();
             HelpMarker("When drawing circle primitives with \"num_segments == 0\" tesselation will be calculated automatically.");
 
-            ImGui::DragFloat("Global Alpha", &style.Alpha, 0.005f, 0.20f, 1.0f, "%.2f"); // Not exposing zero here so user doesn't "lose" the UI (zero alpha clips all widgets). But application code could have a toggle to switch between zero and non-zero.
+            ImGui::DragFloat("Global Alpha", &style.Alpha, 0.005f, 0.20f, 1.0f, "%.2f"); // Not exposing zero here so user doesn't "lose" the M_UI (zero alpha clips all widgets). But application code could have a toggle to switch between zero and non-zero.
             ImGui::DragFloat("Disabled Alpha", &style.DisabledAlpha, 0.005f, 0.0f, 1.0f, "%.2f"); ImGui::SameLine(); HelpMarker("Additional alpha multiplier for disabled items (multiply over current value of Alpha).");
             ImGui::PopItemWidth();
 
@@ -6258,7 +6258,7 @@ static void ShowExampleMenuFile()
         static float f = 0.5f;
         static int n = 0;
         ImGui::SliderFloat("Value", &f, 0.0f, 1.0f);
-        ImGui::InputFloat("Input", &f, 0.1f);
+        ImGui::InputFloat("M_Input", &f, 0.1f);
         ImGui::Combo("Combo", &n, "Yes\0No\0Maybe\0\0");
         ImGui::EndMenu();
     }
@@ -6479,7 +6479,7 @@ struct ExampleAppConsole
         // Command-line
         bool reclaim_focus = false;
         ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory;
-        if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf), input_text_flags, &TextEditCallbackStub, (void*)this))
+        if (ImGui::InputText("M_Input", InputBuf, IM_ARRAYSIZE(InputBuf), input_text_flags, &TextEditCallbackStub, (void*)this))
         {
             char* s = InputBuf;
             Strtrim(s);
@@ -7037,7 +7037,7 @@ static void ShowExampleAppAutoResize(bool* p_open)
 
     static int lines = 10;
     ImGui::TextUnformatted(
-        "Window will resize every-frame to the size of its content.\n"
+        "M_Window will resize every-frame to the size of its content.\n"
         "Note that you probably don't want to query the window size to\n"
         "output your content because that would create a feedback loop.");
     ImGui::SliderInt("Number of lines", &lines, 1, 20);
@@ -7187,7 +7187,7 @@ static void ShowExampleAppFullscreen(bool* p_open)
 }
 
 //-----------------------------------------------------------------------------
-// [SECTION] Example App: Manipulating Window Titles / ShowExampleAppWindowTitles()
+// [SECTION] Example App: Manipulating M_Window Titles / ShowExampleAppWindowTitles()
 //-----------------------------------------------------------------------------
 
 // Demonstrate using "##" and "###" in identifiers to manipulate ID generation.
@@ -7750,7 +7750,7 @@ void ShowExampleAppDocuments(bool* p_open)
         ImGui::PopID();
     }
     ImGui::PushItemWidth(ImGui::GetFontSize() * 12);
-    ImGui::Combo("Output", (int*)&opt_target, "None\0TabBar+Tabs\0DockSpace+Window\0");
+    ImGui::Combo("Output", (int*)&opt_target, "None\0TabBar+Tabs\0DockSpace+M_Window\0");
     ImGui::PopItemWidth();
     bool redock_all = false;
     if (opt_target == Target_Tab)                { ImGui::SameLine(); ImGui::Checkbox("Reorderable Tabs", &opt_reorderable); }
@@ -7873,7 +7873,7 @@ void ShowExampleAppDocuments(bool* p_open)
         }
     }
 
-    // Display closing confirmation UI
+    // Display closing confirmation M_UI
     if (!close_queue.empty())
     {
         int close_queue_unsaved_documents = 0;

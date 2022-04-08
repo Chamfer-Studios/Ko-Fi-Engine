@@ -1,14 +1,14 @@
 #include "Globals.h"
 #include "M_Camera3D.h"
 #include "Engine.h"
-#include "Input.h"
-#include "SceneManager.h"
+#include "M_Input.h"
+#include "M_SceneManager.h"
 #include "M_Editor.h"
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Script.h"
-#include "Renderer3D.h"
+#include "M_Renderer3D.h"
 #include "PanelViewport.h"
 #include "Scripting.h"
 #include "GameObject.h"
@@ -407,7 +407,7 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 
 		if (cMesh != nullptr)
 		{
-			Mesh* rMesh = cMesh->GetMesh();
+			R_Mesh* rMesh = cMesh->GetMesh();
 
 			if (rMesh == nullptr) continue;
 

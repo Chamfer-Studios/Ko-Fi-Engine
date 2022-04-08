@@ -3,14 +3,14 @@
 #include "M_Editor.h"
 #include "Engine.h"
 #include "M_Camera3D.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 //#include "ViewportFrameBuffer.h"
-#include "Input.h"
-#include "Window.h"
+#include "M_Input.h"
+#include "M_Window.h"
 #include "M_FileSystem.h"
 #include "Importer.h"
-#include "Renderer3D.h"
-#include "Texture.h"
+#include "M_Renderer3D.h"
+#include "R_Texture.h"
 
 #include "C_Material.h"
 #include "C_Camera.h"
@@ -100,7 +100,7 @@ bool PanelViewport::Update()
 
 							if (go->GetComponent<C_Material>())
 							{
-								Texture texture = Texture();
+								R_Texture texture = R_Texture();
 								Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
 
 								go->GetComponent<C_Material>()->texture = texture;

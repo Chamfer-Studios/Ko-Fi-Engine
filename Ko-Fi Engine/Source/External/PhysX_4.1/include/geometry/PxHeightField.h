@@ -212,7 +212,7 @@ class PxHeightField	: public PxBase
 	\note This function takes a post cooking triangle index.
 
 	\param[in] triangleIndex (internal) index of desired triangle
-	\return Material table index, or 0xffff if no per-triangle materials are used
+	\return R_Material table index, or 0xffff if no per-triangle materials are used
 	*/
 	PX_PHYSX_COMMON_API virtual	PxMaterialTableIndex	getTriangleMaterialIndex(PxTriangleID triangleIndex) const = 0;
 

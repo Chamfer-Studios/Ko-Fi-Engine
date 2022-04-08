@@ -189,7 +189,7 @@ struct PxVisualizationParameter
 		eCOLLISION_COMPOUNDS,
 
 		/**
-		\brief Mesh & convex face normals
+		\brief R_Mesh & convex face normals
 
 		@see PxTriangleMesh PxConvexMesh
 		*/
