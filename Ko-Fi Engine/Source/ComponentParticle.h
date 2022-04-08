@@ -7,7 +7,8 @@
 #include "Color.h"
 
 class EmitterInstance;
-class ParticleResource;
+class R_ParticleResource;
+class GameObject;
 
 class ComponentParticle : public Component
 {
@@ -34,7 +35,7 @@ private:
 
 public:
 	std::vector<EmitterInstance*> emitterInstances;
-	ParticleResource* resource = nullptr;
+	R_ParticleResource* resource = nullptr;
 	int moduleToAdd = 0;
 	int resourceToAdd = 0;
 	int currentTextureId = 0;

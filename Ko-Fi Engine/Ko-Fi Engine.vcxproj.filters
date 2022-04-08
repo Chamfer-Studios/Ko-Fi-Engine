@@ -154,13 +154,13 @@
     <ClCompile Include="Source\Engine.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Window.cpp">
+    <ClCompile Include="Source\M_Window.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Log.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer3D.cpp">
+    <ClCompile Include="Source\M_Renderer3D.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Light.cpp">
@@ -172,10 +172,10 @@
     <ClCompile Include="Source\glmath.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera3D.cpp">
+    <ClCompile Include="Source\M_Camera3D.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
+    <ClCompile Include="Source\M_Input.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneIntro.cpp">
@@ -304,7 +304,7 @@
     <ClCompile Include="Source\EditorStyleHandler.cpp">
       <Filter>Source\Editor\Style</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Editor.cpp">
+    <ClCompile Include="Source\M_Editor.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\mmgr\mmgr.cpp">
@@ -322,7 +322,7 @@
     <ClCompile Include="Source\MainBar.cpp">
       <Filter>Source\Editor\MenuBars</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FileSystem.cpp">
+    <ClCompile Include="Source\M_FileSystem.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelChooser.cpp">
@@ -334,19 +334,19 @@
     <ClCompile Include="Source\PanelInspector.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentMesh.cpp">
+    <ClCompile Include="Source\C_Mesh.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentTransform.cpp">
+    <ClCompile Include="Source\C_Transform.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentMaterial.cpp">
+    <ClCompile Include="Source\C_Material.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelHierarchy.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentInfo.cpp">
+    <ClCompile Include="Source\C_Info.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_stdlib.cpp">
@@ -364,7 +364,7 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentCamera.cpp">
+    <ClCompile Include="Source\C_Camera.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelAssets.cpp">
@@ -403,19 +403,19 @@
     <ClCompile Include="Source\QuadTree3D.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
+    <ClCompile Include="Source\M_SceneManager.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentScript.cpp">
+    <ClCompile Include="Source\C_Script.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ResourceManager.cpp">
+    <ClCompile Include="Source\M_ResourceManager.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
+    <ClCompile Include="Source\R_Mesh.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
+    <ClCompile Include="Source\R_Texture.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\RNG.cpp">
@@ -436,32 +436,29 @@
     <ClCompile Include="Source\Importer.cpp">
       <Filter>Source\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Material.cpp">
+    <ClCompile Include="Source\R_Material.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI.cpp">
+    <ClCompile Include="Source\M_UI.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentTransform2D.cpp">
+    <ClCompile Include="Source\C_Transform2D.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentCanvas.cpp">
+    <ClCompile Include="Source\C_Canvas.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentImage.cpp">
+    <ClCompile Include="Source\C_Image.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\par_shapes.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentButton.cpp">
+    <ClCompile Include="Source\C_Button.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentText.cpp">
+    <ClCompile Include="Source\C_Text.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CollisionDetector.cpp">
-      <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\ImGuizmo\include\GraphEditor.cpp">
       <Filter>Libs\ImGuizmo</Filter>
@@ -487,10 +484,10 @@
     <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c">
       <Filter>Libs\SDL_ttf</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ParticleResource.cpp">
+    <ClCompile Include="Source\R_ParticleResource.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
+    <ClCompile Include="Source\M_Audio.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_AudioSource.cpp">
@@ -517,7 +514,7 @@
     <ClCompile Include="Source\ComponentWalkable.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Navigation.cpp">
+    <ClCompile Include="Source\M_Navigation.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\PanelNavigation.cpp">
@@ -577,25 +574,19 @@
     <ClCompile Include="Source\ComponentFollowPath.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
+    <ClCompile Include="Source\M_Physics.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_Collider.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ComponentCollider.cpp">
+    <ClCompile Include="Source\C_RigidBody.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Track.cpp">
       <Filter>Source\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ComponentAnimator.cpp">
+    <ClCompile Include="Source\C_Animator.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\stb_image\stb_image.cpp">
@@ -607,21 +598,17 @@
     <ClCompile Include="Source\Resource.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp" />
-    <ClCompile Include="Source\ResourceBase.cpp">
+    <ClCompile Include="Source\R_ResourceBase.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Model.cpp">
+    <ClCompile Include="Source\R_Model.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\PieShape.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentLightSource.cpp">
+    <ClCompile Include="Source\C_LightSource.cpp">
       <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>Source\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_Collider.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
@@ -632,8 +619,8 @@
     <ClCompile Include="Source\Channel.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp">
-      <Filter>Source\GameObject\Components\Physics</Filter>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -652,10 +639,10 @@
     <ClInclude Include="Source\Module.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Window.h">
+    <ClInclude Include="Source\M_Window.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Renderer3D.h">
+    <ClInclude Include="Source\M_Renderer3D.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\Light.h">
@@ -670,10 +657,10 @@
     <ClInclude Include="Source\glmath.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera3D.h">
+    <ClInclude Include="Source\M_Camera3D.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Input.h">
+    <ClInclude Include="Source\M_Input.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneIntro.h">
@@ -901,7 +888,7 @@
     <ClInclude Include="Source\Panel.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Editor.h">
+    <ClInclude Include="Source\M_Editor.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\mmgr\mmgr.h">
@@ -931,7 +918,7 @@
     <ClInclude Include="Source\MainBar.h">
       <Filter>Source\Editor\MenuBars</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FileSystem.h">
+    <ClInclude Include="Source\M_FileSystem.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelChooser.h">
@@ -946,16 +933,16 @@
     <ClInclude Include="Source\Component.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentTransform.h">
+    <ClInclude Include="Source\C_Transform.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentMaterial.h">
+    <ClInclude Include="Source\C_Material.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelHierarchy.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentInfo.h">
+    <ClInclude Include="Source\C_Info.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_stdlib.h">
@@ -973,7 +960,7 @@
     <ClInclude Include="Source\PanelRuntimeState.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentCamera.h">
+    <ClInclude Include="Source\C_Camera.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelAssets.h">
@@ -1597,7 +1584,7 @@
     <ClInclude Include="Source\QuadTree3D.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
+    <ClInclude Include="Source\M_SceneManager.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\lua\include\lauxlib.h">
@@ -1624,7 +1611,7 @@
     <ClInclude Include="Source\External\sol\sol.hpp">
       <Filter>Libs\sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentScript.h">
+    <ClInclude Include="Source\C_Script.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scripting.h">
@@ -1654,13 +1641,13 @@
     <ClInclude Include="Source\PanelSettings.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentRenderedUI.h">
+    <ClInclude Include="Source\C_RenderedUI.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ParticleResource.h">
+    <ClInclude Include="Source\R_ParticleResource.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Audio.h">
+    <ClInclude Include="Source\M_Audio.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\R_Track.h">
@@ -1681,7 +1668,7 @@
     <ClInclude Include="Source\ComponentWalkable.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Navigation.h">
+    <ClInclude Include="Source\M_Navigation.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelNavigation.h">
@@ -1702,22 +1689,19 @@
     <ClInclude Include="Source\ComponentFollowPath.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Physics.h">
+    <ClInclude Include="Source\M_Physics.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\C_Collider.h">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentRigidBody.h">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentCollider.h">
+    <ClInclude Include="Source\C_RigidBody.h">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Track.h">
       <Filter>Source\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentAnimator.h">
+    <ClInclude Include="Source\C_Animator.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Effects.h">
@@ -1738,20 +1722,17 @@
     <ClInclude Include="Source\PieShape.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentLightSource.h">
+    <ClInclude Include="Source\C_LightSource.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ResourceBase.h">
+    <ClInclude Include="Source\R_ResourceBase.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Model.h">
+    <ClInclude Include="Source\R_Model.h">
       <Filter>Source\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Source\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Source\SimulationEventCallback.h">
       <Filter>Source\Helpers\Physics</Filter>
@@ -1759,21 +1740,18 @@
     <ClInclude Include="Source\Channel.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentRigidBody.h">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\ResourceManager.h">
+    <ClInclude Include="Source\M_ResourceManager.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
+    <ClInclude Include="Source\R_Mesh.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Material.h">
+    <ClInclude Include="Source\R_Material.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Texture.h">
+    <ClInclude Include="Source\R_Texture.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\FSDefs.h">
@@ -1791,7 +1769,7 @@
     <ClInclude Include="Source\I_Scene.h">
       <Filter>Source\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentMesh.h">
+    <ClInclude Include="Source\C_Mesh.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Importer.h">
@@ -1803,22 +1781,22 @@
     <ClInclude Include="Source\Assimp.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UI.h">
+    <ClInclude Include="Source\M_UI.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentTransform2D.h">
+    <ClInclude Include="Source\C_Transform2D.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentCanvas.h">
+    <ClInclude Include="Source\C_Canvas.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentImage.h">
+    <ClInclude Include="Source\C_Image.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\IconsFontAwesome5.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentButton.h">
+    <ClInclude Include="Source\C_Button.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_truetype\stb_truetype.h">
@@ -1827,14 +1805,8 @@
     <ClInclude Include="Source\External\SDL_ttf\include\SDL_ttf.h">
       <Filter>Libs\SDL_ttf</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentText.h">
+    <ClInclude Include="Source\C_Text.h">
       <Filter>Source\GameObject\Components\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CollisionDetector.h">
-      <Filter>Source\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentRigidBody.h">
-      <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

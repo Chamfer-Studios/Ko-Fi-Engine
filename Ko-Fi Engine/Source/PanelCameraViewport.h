@@ -3,13 +3,13 @@
 
 #include "Panel.h"
 
-class Editor;
+class M_Editor;
 class KoFiEngine;
 
 class PanelCameraViewport : public Panel
 {
 public:
-	PanelCameraViewport(Editor* editor, KoFiEngine* engine);
+	PanelCameraViewport(M_Editor* editor, KoFiEngine* engine);
 	~PanelCameraViewport();
 
 	bool Awake();
@@ -20,7 +20,7 @@ public:
 
 private:
 
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 	KoFiEngine* engine = nullptr;
 };
 

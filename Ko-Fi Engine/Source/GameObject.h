@@ -1,21 +1,20 @@
 #ifndef __GAMEOBJECT_H__
 #define __GAMEOBJECT_H__
 
-#include "Mesh.h"
+#include "R_Mesh.h"
 #include <vector>
 
 #include "Component.h"
 
 class KoFiEngine;
-//class ComponentMesh;
-class ComponentTransform;
-class ComponentMesh;
-class ComponentInfo;
-class ComponentScript;
-class ComponentCollider;
-class ComponentCollider2;
-class ComponentAnimator;
-class ComponentLightSource;
+//class C_Mesh;
+class C_Transform;
+class C_Mesh;
+class C_Info;
+class C_Script;
+class C_Collider;
+class C_Animator;
+class C_LightSource;
 
 enum class Tag 
 {
@@ -78,7 +77,7 @@ public:
 	void SetChild(GameObject* child);
 	GameObject* GetParent() const;
 
-	ComponentTransform* GetTransform() const;
+	C_Transform* GetTransform() const;
 	std::vector<Component*> GetComponents() const;
 	AABB BoundingAABB();
 	void SetUID(uint uid);
@@ -132,7 +131,7 @@ private:
 	uint parentUid;
 
 	KoFiEngine* engine = nullptr;
-	ComponentTransform* transform = nullptr;
+	C_Transform* transform = nullptr;
 };
 
 #endif // !__GAMEOBJECT_H__

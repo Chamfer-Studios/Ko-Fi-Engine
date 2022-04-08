@@ -1,16 +1,16 @@
 #include "PanelConfiguration.h"
 #include "PanelChooser.h"
 #include "Engine.h"
-#include "Window.h"
-#include "SceneManager.h"
-#include "Renderer3D.h"
-#include "Input.h"
+#include "M_Window.h"
+#include "M_SceneManager.h"
+#include "M_Renderer3D.h"
+#include "M_Input.h"
 #include "EngineConfig.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include <imgui.h>
 #include "glew.h"
 
-PanelConfiguration::PanelConfiguration(Editor* editor, EngineConfig* engineConfig)
+PanelConfiguration::PanelConfiguration(M_Editor* editor, EngineConfig* engineConfig)
 {
 	panelName = "Configuration";
 	
@@ -81,7 +81,7 @@ bool PanelConfiguration::Update()
 		if (ImGui::Checkbox("Draw scene partition tree", &editor->engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {}
 	}
 
-	if (ImGui::CollapsingHeader("Input")) {
+	if (ImGui::CollapsingHeader("M_Input")) {
 		int mouseX = editor->engine->GetInput()->GetMouseX();
 		int mouseY = editor->engine->GetInput()->GetMouseY();
 		ImGui::Text("Mouse Position:");
@@ -221,11 +221,11 @@ bool PanelConfiguration::Update()
 				enabled ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
 
 			enabled = glIsEnabled(GL_COLOR_MATERIAL);
-			if (ImGui::Checkbox("Color Material", &enabled))
+			if (ImGui::Checkbox("Color R_Material", &enabled))
 				enabled ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
 
 			enabled = glIsEnabled(GL_TEXTURE_2D);
-			if (ImGui::Checkbox("Texture 2D", &enabled))
+			if (ImGui::Checkbox("R_Texture 2D", &enabled))
 				enabled ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
 		}
 

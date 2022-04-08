@@ -2,32 +2,32 @@
 
 #include "GameObject.h"
 
-#include "ComponentRigidBody.h"
-#include "ComponentMesh.h"
+#include "C_RigidBody.h"
+#include "C_Mesh.h"
 
-#include "Physics.h"
+#include "M_Physics.h"
 #include "PxPhysicsAPI.h"
 
-ComponentCollider2::ComponentCollider2(GameObject *parent, ColliderShape collType) : Component(parent)
+C_Collider::C_Collider(GameObject *parent, ColliderShape collType) : Component(parent)
 {
-	type = ComponentType::COLLIDER2;
+	type = ComponentType::COLLIDER;
 	colliderShape = collType;
 
 	CreateCollider(colliderShape);
 }
 
-ComponentCollider2::~ComponentCollider2()
+C_Collider::~C_Collider()
 {
 	if (shape)
 	{
-		/*if (owner->GetComponent<ComponentRigidBody>())
-			owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);*/
+		/*if (owner->GetComponent<C_RigidBody>())
+			owner->GetComponent<C_RigidBody>()->GetRigidBody()->detachShape(*shape);*/
 		shape->release();
 		shape = nullptr;
 	}
 }
 
-bool ComponentCollider2::Update(float dt)
+bool C_Collider::Update(float dt)
 {
 	bool ret = true;
 
@@ -40,14 +40,14 @@ bool ComponentCollider2::Update(float dt)
 	return ret;
 }
 
-bool ComponentCollider2::PostUpdate(float dt)
+bool C_Collider::PostUpdate(float dt)
 {
 	bool ret = true;
 
 	return ret;
 }
 
-bool ComponentCollider2::UpdateCollider()
+bool C_Collider::UpdateCollider()
 {
 	bool ret = true;
 
@@ -56,7 +56,7 @@ bool ComponentCollider2::UpdateCollider()
 	return ret;
 }
 
-void ComponentCollider2::CreateCollider(ColliderShape collType)
+void C_Collider::CreateCollider(ColliderShape collType)
 {
 	switch (collType)
 	{
@@ -78,7 +78,7 @@ void ComponentCollider2::CreateCollider(ColliderShape collType)
 	}
 }
 
-void ComponentCollider2::CreateBoxCollider()
+void C_Collider::CreateBoxCollider()
 {
 	if (shape)
 		debugFilter = (std::string *)shape->getSimulationFilterData().word0;
@@ -87,11 +87,11 @@ void ComponentCollider2::CreateBoxCollider()
 	if (shape)
 		shape->release();
 	if (shape)
-		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->detachShape(*shape);
+		owner->GetComponent<C_RigidBody>()->GetRigidBody()->detachShape(*shape);
 
-	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody());
+	owner->GetEngine()->GetPhysics()->DeleteActor(owner->GetComponent<C_RigidBody>()->GetRigidBody());
 
-	ComponentTransform* currentTransform = owner->GetComponent<ComponentTransform>();
+	C_Transform* currentTransform = owner->GetComponent<C_Transform>();
 	float3 pos, scale;
 	Quat quat;
 	currentTransform->GetGlobalTransform().Decompose(pos, quat, scale);
@@ -100,7 +100,7 @@ void ComponentCollider2::CreateBoxCollider()
 
 	if (setFromAABB)
 	{
-		boxCollSize = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().Size();
+		boxCollSize = owner->GetComponent<C_Mesh>()->GetGlobalAABB().Size();
 		setFromAABB = false;
 	}
 	
@@ -109,8 +109,8 @@ void ComponentCollider2::CreateBoxCollider()
 	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
 	physx::PxTransform localPose;
-	float3 center = owner->GetComponent<ComponentMesh>()->GetGlobalAABB().CenterPoint();
-	localPose.p = physx::PxVec3(center.x, center.y, center.z);
+	float3 center = owner->GetComponent<C_Mesh>()->GetLocalAABB().CenterPoint();
+	localPose.p = physx::PxVec3(offset.x, offset.y, offset.z - boxCollSize.z / 2);
 	localPose.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
 	shape->setLocalPose(localPose);
 
@@ -127,13 +127,13 @@ void ComponentCollider2::CreateBoxCollider()
 		shape->setSimulationFilterData(filterData);
 		shape->setQueryFilterData(filterData);
 
-		owner->GetComponent<ComponentRigidBody>()->GetRigidBody()->attachShape(*shape);
+		owner->GetComponent<C_RigidBody>()->GetRigidBody()->attachShape(*shape);
 	}
 
-	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<ComponentRigidBody>()->GetRigidBody(), owner);
+	owner->GetEngine()->GetPhysics()->AddActor(owner->GetComponent<C_RigidBody>()->GetRigidBody(), owner);
 }
 
-void ComponentCollider2::DrawCollider()
+void C_Collider::DrawCollider()
 {
 	if (drawCollider)
 	{
@@ -144,9 +144,9 @@ void ComponentCollider2::DrawCollider()
 	}
 }
 
-void ComponentCollider2::DrawBoxCollider()
+void C_Collider::DrawBoxCollider()
 {
-	float3 transformOffset = owner->GetComponent<ComponentTransform>()->GetPosition();
+	float3 transformOffset = owner->GetComponent<C_Transform>()->GetPosition();
 	physx::PxTransform localPose;
 	physx::PxVec3 center;
 	if (shape)
@@ -208,9 +208,9 @@ void ComponentCollider2::DrawBoxCollider()
 }
 
 // Serialization
-void ComponentCollider2::Save(Json &json) const
+void C_Collider::Save(Json &json) const
 {
-	json["type"] = "collider2";
+	json["type"] = "collider";
 
 	json["collider_type"] = (int)colliderShape;
 	json["filter"] = filter;
@@ -223,7 +223,7 @@ void ComponentCollider2::Save(Json &json) const
 	json["offset"] = {offset.x, offset.y, offset.z};
 }
 
-void ComponentCollider2::Load(Json &json)
+void C_Collider::Load(Json &json)
 {
 	if (json.contains("collider_type"))
 		colliderShape = (ColliderShape)json.at("collider_type");
@@ -255,7 +255,7 @@ void ComponentCollider2::Load(Json &json)
 }
 
 // On inspector draw
-bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
+bool C_Collider::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
@@ -345,7 +345,7 @@ bool ComponentCollider2::InspectorDraw(PanelChooser* chooser)
 }
 
 // Private methods
-const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collShape)
+const char* C_Collider::ColliderShapeToString(const ColliderShape collShape)
 {
 	switch (collShape)
 	{
@@ -362,7 +362,7 @@ const char* ComponentCollider2::ColliderShapeToString(const ColliderShape collSh
 	}
 	return "ERROR, NO COLLIDER SHAPE";
 }
-const char *ComponentCollider2::CollisionLayerToString(const CollisionLayer collLayer)
+const char *C_Collider::CollisionLayerToString(const CollisionLayer collLayer)
 {
 	switch (collLayer)
 	{

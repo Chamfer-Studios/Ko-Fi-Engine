@@ -14,8 +14,6 @@
 #include <dr_flac.h>
 
 #include <iostream>
-#include <vector>
-#include <string>
 
 class Effect;
 
