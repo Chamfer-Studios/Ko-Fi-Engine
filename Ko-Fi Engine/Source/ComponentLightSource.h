@@ -16,7 +16,7 @@ class LightSource
 public:
 	LightSource();
 
-	float3 position;
+	float3 position; //global
 	float3 color;
 
 	float ambient;

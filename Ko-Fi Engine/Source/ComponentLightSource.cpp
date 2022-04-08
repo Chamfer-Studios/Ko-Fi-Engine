@@ -25,7 +25,7 @@ bool ComponentLightSource::Start()
 
 bool ComponentLightSource::Update(float dt)
 {
-	lightSource->position = owner->GetTransform()->GetPosition();
+	lightSource->position = owner->GetTransform()->GetGlobalTransform().TranslatePart();
 
 	return true;
 }
