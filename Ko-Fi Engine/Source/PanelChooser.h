@@ -6,12 +6,12 @@
 #include <string>
 
 #define FILE_MAX 250
-class Editor;
+class M_Editor;
 
 class PanelChooser : public Panel
 {
 public:
-	PanelChooser(Editor* editor);
+	PanelChooser(M_Editor* editor);
 	~PanelChooser();
 
 	bool Awake();
@@ -34,7 +34,7 @@ private:
 		READY_TO_CLOSE
 	} chooserState = CLOSED;
 	std::string fileDialogOrigin;
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 	const char* currentExtension = "fbx";
 	std::vector<std::string> extensionList;
 	char selectedFile[FILE_MAX];

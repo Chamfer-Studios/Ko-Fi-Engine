@@ -1,8 +1,8 @@
 #include "PanelGame.h"
 #include <imgui.h>
-#include "Editor.h"
+#include "M_Editor.h"
 
-PanelGame::PanelGame(Editor* editor)
+PanelGame::PanelGame(M_Editor* editor)
 {
 	this->editor = editor;
 	panelName = "Game";

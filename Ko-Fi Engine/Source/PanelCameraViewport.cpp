@@ -1,15 +1,15 @@
 // Modules
 #include "PanelCameraViewport.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Engine.h"
-#include "Camera3D.h"
-#include "SceneManager.h"
-#include "Input.h"
-#include "Window.h"
+#include "M_Camera3D.h"
+#include "M_SceneManager.h"
+#include "M_Input.h"
+#include "M_Window.h"
 #include "Importer.h"
-#include "Renderer3D.h"
-#include "Texture.h"
-#include "ComponentMaterial.h"
+#include "M_Renderer3D.h"
+#include "R_Texture.h"
+#include "C_Material.h"
 
 #include "Log.h"
 // Tools
@@ -17,7 +17,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_internal.h"
-PanelCameraViewport::PanelCameraViewport(Editor* editor, KoFiEngine* engine)
+PanelCameraViewport::PanelCameraViewport(M_Editor* editor, KoFiEngine* engine)
 {
 	this->editor = editor;
 	this->engine = engine;

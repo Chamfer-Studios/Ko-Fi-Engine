@@ -11,11 +11,15 @@
 
 #include "Globals.h"
 #include "Log.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "GameObject.h"
 #include "Effects.h"
 #include "Importer.h"
 #include "PanelChooser.h"
+#include "Engine.h"
+#include "M_Editor.h"
+
+#include "MathGeoLib/Math/MathFunc.h"
 
 C_AudioSwitch::C_AudioSwitch(GameObject* parent) : C_Audio(parent)
 {
@@ -523,7 +527,7 @@ void C_AudioSwitch::DisablePlayOnStart(R_Track* trackToChange)
 
 void C_AudioSwitch::DrawEditor(R_Track* track)
 {
-    if (ImGui::Begin("Audio Editor", &openEditor))
+    if (ImGui::Begin("Audio M_Editor", &openEditor))
     {
         bool mono = track->channels == 1;
 

@@ -11,11 +11,12 @@
 
 #include "Globals.h"
 #include "ImGuiAppLog.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "GameObject.h"
 #include "Effects.h"
 #include "Importer.h"
 #include "PanelChooser.h"
+#include "Engine.h"
 
 C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 {
@@ -259,7 +260,7 @@ void C_AudioSource::UpdatePlayState()
 
 void C_AudioSource::DrawEditor()
 {
-    if (ImGui::Begin("Audio Editor", &openEditor))
+    if (ImGui::Begin("Audio M_Editor", &openEditor))
     {
         bool mono = track->channels == 1;
 

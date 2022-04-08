@@ -8,19 +8,19 @@
 #include <list>
 
 // Modules
-class Window;
-class Input;
-class SceneManager;
-class Renderer3D;
-class Camera3D;
-class Editor;
-class FileSystem;
-class Physics;
-class UI;
+class M_Window;
+class M_Input;
+class M_SceneManager;
+class M_Renderer3D;
+class M_Camera3D;
+class M_Editor;
+class M_FileSystem;
+class M_Physics;
+class M_UI;
 class CollisionDetector;
-class ResourceManager;
-class Audio;
-class Navigation;
+class M_ResourceManager;
+class M_Audio;
+class M_Navigation;
 
 class KoFiEngine
 {
@@ -56,18 +56,18 @@ public:
 	const uint64 GetFps() const;
 	EngineConfig* GetEngineConfig();
 	// Getters for the modules
-	Window* GetWindow() const;
-	Input* GetInput() const;
-	SceneManager* GetSceneManager() const;
-	Renderer3D* GetRenderer() const;
-	Camera3D* GetCamera3D() const;
-	Editor* GetEditor() const;
-	FileSystem* GetFileSystem() const;
-	Physics* GetPhysics() const;
-	UI* GetUI() const;
+	M_Window* GetWindow() const;
+	M_Input* GetInput() const;
+	M_SceneManager* GetSceneManager() const;
+	M_Renderer3D* GetRenderer() const;
+	M_Camera3D* GetCamera3D() const;
+	M_Editor* GetEditor() const;
+	M_FileSystem* GetFileSystem() const;
+	M_Physics* GetPhysics() const;
+	M_UI* GetUI() const;
 	CollisionDetector* GetCollisionDetector() const;
-	ResourceManager* GetResourceManager() const;
-	Navigation* GetNavigation() const;
+	M_ResourceManager* GetResourceManager() const;
+	M_Navigation* GetNavigation() const;
 
 	double GetEngineTime() { return ptimer.ReadMs(); };
 
@@ -95,19 +95,19 @@ private:
 
 private:
 	// Modules
-	Window* window = nullptr;
-	Input* input = nullptr;
-	SceneManager* sceneManager = nullptr;
-	Renderer3D* renderer = nullptr;
-	Camera3D* camera = nullptr;
-	Editor* editor = nullptr;
-	FileSystem* fileSystem = nullptr;
-	Physics* physics = nullptr;
-	UI* ui = nullptr;
+	M_Window* window = nullptr;
+	M_Input* input = nullptr;
+	M_SceneManager* sceneManager = nullptr;
+	M_Renderer3D* renderer = nullptr;
+	M_Camera3D* camera = nullptr;
+	M_Editor* editor = nullptr;
+	M_FileSystem* fileSystem = nullptr;
+	M_Physics* physics = nullptr;
+	M_UI* ui = nullptr;
 	CollisionDetector* collisionDetector = nullptr;
-	ResourceManager* resourceManager = nullptr;
-	Audio* audio = nullptr;
-	Navigation* navigation = nullptr;
+	M_ResourceManager* resourceManager = nullptr;
+	M_Audio* audio = nullptr;
+	M_Navigation* navigation = nullptr;
 
 private:
 	int argc;

@@ -95,7 +95,7 @@ ImU32 evaluate(const Graph<Node>& graph, const int root_node)
         {
             // If the edge does not have an edge connecting to another node, then just use the value
             // at this node. It means the node's input pin has not been connected to anything and
-            // the value comes from the node's UI.
+            // the value comes from the node's M_UI.
             if (graph.num_edges_from_node(id) == 0ull)
             {
                 value_stack.push(node.value);

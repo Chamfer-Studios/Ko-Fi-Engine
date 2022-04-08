@@ -1,7 +1,7 @@
 #include "SimulationEventCallback.h"
 #include "GameObject.h"
-#include "Physics.h"
-#include "ComponentScript.h"
+#include "M_Physics.h"
+#include "C_Script.h"
 #include "C_Collider.h"
 #include "PxSimulationEventCallback.h"
 #include "Globals.h"
@@ -20,16 +20,16 @@ void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHe
 		
 		if (gameObject1 && gameObject2)
 		{
-			const std::string* fil1 = gameObject1->GetComponent<ComponentCollider2>()->GetFilter();
-			const std::string* fil2 = gameObject2->GetComponent<ComponentCollider2>()->GetFilter();
+			const std::string* fil1 = gameObject1->GetComponent<C_Collider>()->GetFilter();
+			const std::string* fil2 = gameObject2->GetComponent<C_Collider>()->GetFilter();
 			int fil1pos = callback->GetFilterID(fil1);
 			int fil2pos = callback->GetFilterID(fil2);
 
 			bool** filMatrix = callback->GetFilterMatrix();
 			if (filMatrix[fil1pos][fil2pos])
 			{
-				ComponentScript* cScript1 = gameObject1->GetComponent<ComponentScript>();
-				ComponentScript* cScript2 = gameObject2->GetComponent<ComponentScript>();
+				C_Script* cScript1 = gameObject1->GetComponent<C_Script>();
+				C_Script* cScript2 = gameObject2->GetComponent<C_Script>();
 				if (contactPairs.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 				{
 					if (cScript1) {
@@ -85,16 +85,16 @@ void SimulationEventCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU3
 
 		if (gameObject1 && gameObject2)
 		{
-			const std::string* fil1 = gameObject1->GetComponent<ComponentCollider2>()->GetFilter();
-			const std::string* fil2 = gameObject2->GetComponent<ComponentCollider2>()->GetFilter();
+			const std::string* fil1 = gameObject1->GetComponent<C_Collider>()->GetFilter();
+			const std::string* fil2 = gameObject2->GetComponent<C_Collider>()->GetFilter();
 			int fil1pos = callback->GetFilterID(fil1);
 			int fil2pos = callback->GetFilterID(fil2);
 
 			bool** filMatrix = callback->GetFilterMatrix();
 			if (filMatrix[fil1pos][fil2pos])
 			{
-				ComponentScript* cScript1 = gameObject1->GetComponent<ComponentScript>();
-				ComponentScript* cScript2 = gameObject2->GetComponent<ComponentScript>();
+				C_Script* cScript1 = gameObject1->GetComponent<C_Script>();
+				C_Script* cScript2 = gameObject2->GetComponent<C_Script>();
 				if (pairs[i].status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
 				{
 					if (cScript1) {

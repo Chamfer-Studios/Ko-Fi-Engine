@@ -1,23 +1,22 @@
 #include "PanelInspector.h"
 #include <imgui.h>
-#include "Editor.h"
+#include "M_Editor.h"
 #include "Engine.h"
-#include "SceneManager.h"
+#include "M_SceneManager.h"
 #include "GameObject.h"
-#include "ComponentMaterial.h"
-#include "ComponentMesh.h"
-#include "ComponentScript.h"
-#include "ComponentCamera.h"
-#include "ComponentInfo.h"
-#include "ComponentTransform.h"
-#include "ComponentCollider.h"
-#include "ComponentRigidBody.h"
-#include "ComponentAnimator.h"
-#include "ComponentLightSource.h"
+#include "C_Material.h"
+#include "C_Mesh.h"
+#include "C_Script.h"
+#include "C_Camera.h"
+#include "C_Info.h"
+#include "C_Transform.h"
+#include "C_RigidBody.h"
+#include "C_Animator.h"
+#include "C_LightSource.h"
 
 #include <queue>
 
-PanelInspector::PanelInspector(Editor* editor)
+PanelInspector::PanelInspector(M_Editor* editor)
 {
 	this->editor = editor;
 	panelName = "Inspector";
@@ -47,8 +46,8 @@ bool PanelInspector::Update()
 	{
 		// Current game object (the one we have selected at the moment)
 		GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->GetGameObject(editor->panelGameObjectInfo.selectedGameObjectID);
-		/*if (currentGameObject->GetComponent<ComponentMesh>() != nullptr && (currentGameObject->GetComponent<ComponentMesh>()->GetMesh() != nullptr))
-			currentGameObject->GetComponent<ComponentMesh>()->DrawBoundingBox(currentGameObject->GetComponent<ComponentMesh>()->GetMesh()->localAABB, float3(1.0f, 0.0f, 0.0f));*/
+		/*if (currentGameObject->GetComponent<C_Mesh>() != nullptr && (currentGameObject->GetComponent<C_Mesh>()->GetMesh() != nullptr))
+			currentGameObject->GetComponent<C_Mesh>()->DrawBoundingBox(currentGameObject->GetComponent<C_Mesh>()->GetMesh()->localAABB, float3(1.0f, 0.0f, 0.0f));*/
 
 		if (currentGameObject->isPrefab)
 		{

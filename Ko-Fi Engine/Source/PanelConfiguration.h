@@ -3,13 +3,13 @@
 
 #include "Panel.h"
 
-class Editor;
+class M_Editor;
 struct EngineConfig;
 
 class PanelConfiguration : public Panel
 {
 public:
-	PanelConfiguration(Editor* editor, EngineConfig* engineConfig);
+	PanelConfiguration(M_Editor* editor, EngineConfig* engineConfig);
 	~PanelConfiguration();
 
 	bool Awake();
@@ -19,7 +19,7 @@ public:
 
 private:
 	EngineConfig* engineConfig = nullptr;
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 	bool modifyAttributesMenu = false;
 	bool wireframe = false;
 	bool loadingIcon = false;

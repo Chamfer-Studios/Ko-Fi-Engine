@@ -3,12 +3,12 @@
 
 #include "Globals.h"
 #include "Engine.h"
-#include "Navigation.h"
-#include "Renderer3D.h"
-#include "Input.h" 
-#include "SceneManager.h"
+#include "M_Navigation.h"
+#include "M_Renderer3D.h"
+#include "M_Input.h" 
+#include "M_SceneManager.h"
 #include "SceneIntro.h"
-#include "Camera3D.h"
+#include "M_Camera3D.h"
 #include "ImGuiAppLog.h"
 
 #include <vector>
@@ -18,16 +18,16 @@
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/Quat.h"
 #include "GameObject.h"
-#include "ComponentTransform.h"
-#include "ComponentMesh.h"
-#include "ComponentRigidBody.h"
-#include "ComponentScript.h"
-#include "ComponentText.h"
-#include "ComponentImage.h"
-#include "ComponentButton.h"
-#include "ComponentAnimator.h"
+#include "C_Transform.h"
+#include "C_Mesh.h"
+#include "C_RigidBody.h"
+#include "C_Script.h"
+#include "C_Text.h"
+#include "C_Image.h"
+#include "C_Button.h"
+#include "C_Animator.h"
 #include "ComponentParticle.h"
-#include "ComponentCamera.h"
+#include "C_Camera.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 
@@ -172,16 +172,16 @@ public:
 									 "GetParent", &GameObject::GetParent,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
-									 "GetComponentMesh", &GameObject::GetComponent<ComponentMesh>,
-									 "GetRigidBody", &GameObject::GetComponent<ComponentRigidBody>,
-									 "GetText", &GameObject::GetComponent<ComponentText>,
-									 "GetComponentAnimator", &GameObject::GetComponent<ComponentAnimator>,
+									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
+									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
+									 "GetText", &GameObject::GetComponent<C_Text>,
+									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
-									 "GetCamera", &GameObject::GetComponent<ComponentCamera>,
+									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
-									 "GetButton", &GameObject::GetComponent<ComponentButton>,
-									 "GetImage", &GameObject::GetComponent<ComponentImage>,
+									 "GetButton", &GameObject::GetComponent<C_Button>,
+									 "GetImage", &GameObject::GetComponent<C_Image>,
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "ChangeScene", &GameObject::SetChangeScene
 
@@ -198,61 +198,61 @@ public:
 									"GetType", &Component::GetType);
 
 		// Transform structure
-		lua.new_usertype<ComponentTransform>("ComponentTransform",
+		lua.new_usertype<C_Transform>("C_Transform",
 			sol::constructors<void(GameObject *)>(),
-			"GetPosition", &ComponentTransform::GetPosition,
-			"SetPosition", &ComponentTransform::SetPosition,
-			"GetRotation", &ComponentTransform::GetRotationEuler,
-			"SetRotation", &ComponentTransform::SetRotationEuler,
-			"SetRotationQuat", &ComponentTransform::SetRotationQuat,
-			"GetRotationQuat", &ComponentTransform::GetRotationQuat,
-			"GetScale", &ComponentTransform::GetScale,
-			"SetScale", &ComponentTransform::SetScale,
-			"GetFront", &ComponentTransform::Front,
-			"SetFront", &ComponentTransform::SetFront
+			"GetPosition", &C_Transform::GetPosition,
+			"SetPosition", &C_Transform::SetPosition,
+			"GetRotation", &C_Transform::GetRotationEuler,
+			"SetRotation", &C_Transform::SetRotationEuler,
+			"SetRotationQuat", &C_Transform::SetRotationQuat,
+			"GetRotationQuat", &C_Transform::GetRotationQuat,
+			"GetScale", &C_Transform::GetScale,
+			"SetScale", &C_Transform::SetScale,
+			"GetFront", &C_Transform::Front,
+			"SetFront", &C_Transform::SetFront
 			);
 
 		// Component Camera
-		lua.new_usertype<ComponentCamera>("ComponentTransform",
+		lua.new_usertype<C_Camera>("C_Transform",
 			sol::constructors<void(GameObject*)>(),
-			"LookAt", &ComponentCamera::LookAt,
-			"right", &ComponentCamera::right,
-			"up", &ComponentCamera::up
+			"LookAt", &C_Camera::LookAt,
+			"right", &C_Camera::right,
+			"up", &C_Camera::up
 			);
-		// Component Mesh
-		lua.new_usertype<ComponentMesh>("ComponentMesh",
+		// Component R_Mesh
+		lua.new_usertype<C_Mesh>("C_Mesh",
 			sol::constructors<void(GameObject *)>(),
-			"Disable", &ComponentMesh::Disable,
-			"Enable", &ComponentMesh::Enable
+			"Disable", &C_Mesh::Disable,
+			"Enable", &C_Mesh::Enable
 			);
 
-		// Component Mesh
-		lua.new_usertype<ComponentMesh>("ComponentMesh",
+		// Component R_Mesh
+		lua.new_usertype<C_Mesh>("C_Mesh",
 			sol::constructors<void(GameObject*)>(),
-			"Disable",	&ComponentMesh::Disable,
-			"Enable",	&ComponentMesh::Enable
+			"Disable",	&C_Mesh::Disable,
+			"Enable",	&C_Mesh::Enable
 			);
 
 		// Component Text
-		lua.new_usertype<ComponentText>("ComponentText",
+		lua.new_usertype<C_Text>("C_Text",
 										sol::constructors<void(GameObject *)>(),
-										"GetTextValue", &ComponentText::GetTextValue,
-										"SetTextValue", &ComponentText::SetTextValue);
+										"GetTextValue", &C_Text::GetTextValue,
+										"SetTextValue", &C_Text::SetTextValue);
 
 		// Component Image
-		lua.new_usertype<ComponentImage>("ComponentImage",
+		lua.new_usertype<C_Image>("C_Image",
 										 sol::constructors<void(GameObject *)>(),
-										 "SetTexture", &ComponentImage::SetTexture);
+										 "SetTexture", &C_Image::SetTexture);
 
-		lua.new_usertype<ComponentButton>("ComponentButton",
+		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),
-										  "IsPressed", &ComponentButton::IsPressed,
-										  "IsHovered", &ComponentButton::IsHovered);
+										  "IsPressed", &C_Button::IsPressed,
+										  "IsHovered", &C_Button::IsHovered);
 
 		// Component Animator
-		lua.new_usertype<ComponentAnimator>("ComponentAnimator",
+		lua.new_usertype<C_Animator>("ComponentAnimator",
 											sol::constructors<void(GameObject *)>(),
-											"SetSelectedClip", &ComponentAnimator::SetSelectedClip);
+											"SetSelectedClip", &C_Animator::SetSelectedClip);
 
 		// Component Particle
 		lua.new_usertype<ComponentParticle>("ComponentParticle",
@@ -276,20 +276,20 @@ public:
 											"value", &InspectorVariable::value);
 
 		// Rigid Body structure
-		lua.new_usertype<ComponentRigidBody>("ComponentRigidBody",
+		lua.new_usertype<C_RigidBody>("C_RigidBody",
 											 sol::constructors<void(GameObject *)>(),
-											 "IsStatic", &ComponentRigidBody::IsStatic,
-											 "IsKinematic", &ComponentRigidBody::IsKinematic,
-											 "SetStatic", &ComponentRigidBody::SetStatic,
-											 "SetDynamic", &ComponentRigidBody::SetDynamic,
-											 "SetLinearVelocity", &ComponentRigidBody::SetLinearVelocity,
-											 "FreezePositionY", &ComponentRigidBody::FreezePositionY,
-											 "Set2DVelocity", &ComponentRigidBody::Set2DVelocity,
-											 "SetRigidBodyPos", &ComponentRigidBody::SetRigidBodyPos);
+											 "IsStatic", &C_RigidBody::IsStatic,
+											 "IsKinematic", &C_RigidBody::IsKinematic,
+											 "SetStatic", &C_RigidBody::SetStatic,
+											 "SetDynamic", &C_RigidBody::SetDynamic,
+											 "SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+											 "FreezePositionY", &C_RigidBody::FreezePositionY,
+											 "Set2DVelocity", &C_RigidBody::Set2DVelocity,
+											 "SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
 
-		lua.new_usertype<Navigation>("Navigation",
+		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
-									 "FindPath", &Navigation::FindPath);
+									 "FindPath", &M_Navigation::FindPath);
 
 		/// Variables
 		lua["gameObject"] = gameObject;
@@ -379,7 +379,7 @@ public:
 		}
 	}
 
-	Navigation *GetNavigation()
+	M_Navigation *GetNavigation()
 	{
 		return gameObject->GetEngine()->GetNavigation();
 	}
@@ -421,7 +421,7 @@ public:
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			ComponentScript *script = go->GetComponent<ComponentScript>();
+			C_Script *script = go->GetComponent<C_Script>();
 			if (script)
 			{
 				for (auto s : script->scripts) {
@@ -467,7 +467,7 @@ public:
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			ComponentScript *script = go->GetComponent<ComponentScript>();
+			C_Script *script = go->GetComponent<C_Script>();
 			if (script)
 			{
 				for (auto s : script->scripts) {
@@ -514,7 +514,7 @@ public:
 
 	void LuaNewVariable(InspectorVariable *inspectorVariable)
 	{
-		ComponentScript *script = gameObject->GetComponent<ComponentScript>();
+		C_Script *script = gameObject->GetComponent<C_Script>();
 
 		for (auto s : script->scripts) {
 			for (std::vector<InspectorVariable*>::iterator var = s->inspectorVariables.begin(); var != s->inspectorVariables.end(); ++var)
@@ -602,7 +602,7 @@ public:
 			return;
 
 
-		ComponentScript *goScript = go->GetComponent<ComponentScript>();
+		C_Script *goScript = go->GetComponent<C_Script>();
 		if (goScript == nullptr)
 			return;
 
@@ -623,7 +623,7 @@ public:
 public:
 	sol::state lua;
 	GameObject *gameObject = nullptr;
-	ComponentTransform *componentTransform = nullptr;
+	C_Transform *componentTransform = nullptr;
 };
 
 #endif // !__SCRIPTING_H__

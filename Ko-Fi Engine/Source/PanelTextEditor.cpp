@@ -1,33 +1,37 @@
 #include "PanelTextEditor.h"
-#include "Editor.h"
+// Modules
 #include "Engine.h"
-#include "FileSystem.h"
-#include "PanelChooser.h"
-#include "SceneManager.h"
-#include "ComponentMaterial.h"
-#include "Material.h"
+#include "M_Editor.h"
+#include "M_FileSystem.h"
+#include "M_SceneManager.h"
 
+// GameObject
+#include "GameObject.h"
+#include "C_Material.h"
+
+#include "R_Material.h"
+#include "PanelChooser.h"
 #include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-PanelTextEditor::PanelTextEditor(Editor* editor)
+PanelTextEditor::PanelTextEditor(M_Editor* editor)
 {
 	this->editor = editor;
-	panelName = "Text Editor";
-	//Editor configuration
+	panelName = "Text M_Editor";
+	//M_Editor configuration
 	textEditor.SetShowWhitespaces(false);
 	textEditor.SetReadOnly(false);
 	textEditor.SetPalette(TextEditor::GetDarkPalette());
 	textEditor.SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
 }
 
-PanelTextEditor::PanelTextEditor(Editor* editor,const char* path)
+PanelTextEditor::PanelTextEditor(M_Editor* editor,const char* path)
 {
 	this->editor = editor;
-	panelName = "Text Editor";
+	panelName = "Text M_Editor";
 	editor->engine->GetFileSystem()->OpenFile(path);
-	//Editor configuration
+	//M_Editor configuration
 	textEditor.SetShowWhitespaces(false);
 	textEditor.SetReadOnly(false);
 	textEditor.SetPalette(TextEditor::GetDarkPalette());
@@ -109,9 +113,9 @@ void PanelTextEditor::SaveFile(std::string path)
 	editor->engine->GetFileSystem()->SaveFile(path.c_str(), textEditor.GetText());
 	for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
-		if (go->GetComponent<ComponentMaterial>() != nullptr)
+		if (go->GetComponent<C_Material>() != nullptr)
 		{
-			Material* material = go->GetComponent<ComponentMaterial>()->GetMaterial();
+			R_Material* material = go->GetComponent<C_Material>()->GetMaterial();
 			if (material->shaderProgramID != 0)
 				glDeleteProgram(material->shaderProgramID);
 

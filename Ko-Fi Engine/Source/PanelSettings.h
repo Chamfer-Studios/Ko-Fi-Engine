@@ -3,12 +3,12 @@
 
 #include "Panel.h"
 
-class Editor;
+class M_Editor;
 
 class PanelSettings : public Panel
 {
 public:
-	PanelSettings(Editor* editor);
+	PanelSettings(M_Editor* editor);
 	~PanelSettings();
 
 	bool Awake();
@@ -19,7 +19,7 @@ public:
 	bool ShowPanel(bool* toggleSettingsPanel);
 
 private:
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 };
 
 
