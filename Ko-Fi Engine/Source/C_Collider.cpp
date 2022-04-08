@@ -155,8 +155,8 @@ void ComponentCollider2::DrawBoxCollider()
 		center = localPose.p;
 	}
 
-	float3 min = float3(center.x, center.y, center.z) - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
-	float3 max = float3(center.x, center.y, center.z) + float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
+	float3 min = float3(center.x, center.y, center.z) - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
+	float3 max = float3(center.x, center.y, center.z) + float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
 
 	glLineWidth(2.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);

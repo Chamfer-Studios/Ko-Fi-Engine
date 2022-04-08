@@ -224,7 +224,6 @@ void ComponentMesh::GenerateLocalBoundingBox()
 void ComponentMesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
-
 	obb.SetFrom(GetLocalAABB());
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 
