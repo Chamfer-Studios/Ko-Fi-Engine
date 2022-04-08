@@ -11,7 +11,7 @@ const int MAX_BONE_INFLUENCE = 4;
 
 out vec4 ourColor;
 out vec2 TexCoord;
-out vec3 normal;
+out vec4 normal;
 out vec3 fragPos;
 
 uniform mat4 model_matrix;
@@ -47,7 +47,7 @@ void main() {
     fragPos = vec3(model_matrix * totalPosition);
     ourColor = albedoTint;
     TexCoord = texCoord;
-    normal = normals;
+    normal = model_matrix * vec4(normals, 1.0);
 }
 
 #shader fragment
@@ -59,7 +59,7 @@ const int MAX_FOCAL_LIGHTS = 5;
 
 in vec4 ourColor;
 in vec2 TexCoord;
-in vec3 normal;
+in vec4 normal;
 in vec3 fragPos;
 
 out vec4 color;
@@ -124,7 +124,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos)
     float diff = max(dot(normal, lightDir), 0.0);
 
     // --- specular shading ---
-    //vec3 reflectDir = reflect(-lightDir, normal);
+    //vec3 reflectDir = reflect(-lightDir, vec3(normal));
     //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
     // --- attenuation --- 
@@ -151,14 +151,14 @@ void main() {
     //loop dirLights
     for(int i = 0; i < numOfDirectionalLights; i++)
     {
-        outputColor += CalcDirLight(dirLights[i], normal); 
+        outputColor += CalcDirLight(dirLights[i], vec3(normal)); 
     }
 
     // --- Add the point light's contribution to the output color ---
     //loop dirLights
     for(int i = 0; i < numOfPointLights; i++)
     {
-        outputColor += CalcPointLight(pointLights[i], normal, fragPos); 
+        outputColor += CalcPointLight(pointLights[i], vec3(normal), fragPos); 
     }
 
     // --- Add the focal light's contribution to the output color ---
