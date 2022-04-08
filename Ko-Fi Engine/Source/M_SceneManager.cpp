@@ -7,20 +7,21 @@
 #include <imgui_stdlib.h>
 
 #include "GameObject.h"
-#include "R_Material.h"
-#include "R_Texture.h"
-
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Info.h"
 #include "C_Camera.h"
+#include "C_Script.h"
+// UI
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
 #include "ComponentImage.h"
 #include "ComponentButton.h"
 #include "ComponentText.h"
-#include "C_Script.h"
+
+#include "R_Material.h"
+#include "R_Texture.h"
 
 #include "PanelViewport.h"
 #include "Log.h"

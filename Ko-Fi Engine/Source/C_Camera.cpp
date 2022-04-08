@@ -1,7 +1,12 @@
 #include "C_Camera.h"
+
+// Modules
 #include "Engine.h"
 #include "M_SceneManager.h"
+#include "M_Camera3D.h"
+#include "M_Editor.h"
 
+// GameObject
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
@@ -10,12 +15,12 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
-#include "M_Camera3D.h"
-
 #include "glew.h"
 #include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+
+#include "MathGeoLib/Math/MathFunc.h"
 
 C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 {

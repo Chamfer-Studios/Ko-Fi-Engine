@@ -1,8 +1,6 @@
 #ifndef __MATERIAL_H__
 #define __MATERIAL_H__
 
-#include <string>
-#include <vector>
 #include "Globals.h"
 #include "Color.h"
 #include "Resource.h"
@@ -46,7 +44,7 @@ public:
 
 private:
 	//std::string materialPath;
-	std::string shaderPath;
+	std::string shaderPath = "";
 };
 
 #endif // !__MATERIAL_H__

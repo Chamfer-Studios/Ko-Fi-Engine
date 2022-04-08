@@ -19,6 +19,7 @@ class C_Mesh;
 class R_Texture;
 class PieShape;
 
+
 struct ParticleRenderer
 {
 	ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform);

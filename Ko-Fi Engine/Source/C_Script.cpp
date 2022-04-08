@@ -1,22 +1,32 @@
-#include "Scripting.h"
 #include "C_Script.h"
+#include "Scripting.h"
+
+// General
 #include "Engine.h"
-
-#include "GameObject.h"
-#include "C_Transform.h"
-#include "M_Input.h"
-#include "PanelInspector.h"
-
 #include "Globals.h"
 #include "Log.h"
-#include "ImGuiAppLog.h"
+
+// Modules
+#include "M_Input.h"
+#include "M_Editor.h"
+
+// GameObject
+#include "GameObject.h"
+#include "C_Transform.h"
+
+// Panels
+#include "PanelInspector.h"
 #include "PanelChooser.h"
+#include "PanelHierarchy.h"
+
+// Extra
 #include "imgui_stdlib.h"
-#include <fstream>
-#include <vector>
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float2.h"
-#include "PanelHierarchy.h"
+#include "ImGuiAppLog.h"
+
+#include <fstream>
+#include <vector>
 
 C_Script::C_Script(GameObject *parent) : Component(parent)
 {

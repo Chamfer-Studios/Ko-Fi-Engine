@@ -1,9 +1,13 @@
 #include "GameObject.h"
-#include "Engine.h"
 
 #include "Primitive.h"
 #include "Globals.h"
 
+// Modules
+#include "Engine.h"
+#include "M_Editor.h"
+
+// Components
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "ComponentParticle.h"
@@ -24,6 +28,8 @@
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
 #include "C_LightSource.h"
+
+// Resources
 #include "R_Material.h"
 
 // Used with a path for the .fbx load

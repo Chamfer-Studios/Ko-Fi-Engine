@@ -2,13 +2,17 @@
 
 #include "Recast.h"
 
+// Modules
 #include "Engine.h"
 #include "M_SceneManager.h"
 #include "Scene.h"
 
-#include "ComponentWalkable.h"
+// GameObject
+#include "GameObject.h"
 #include "C_Mesh.h"
 #include "C_Transform.h"
+#include "ComponentWalkable.h"
+
 #include "DetourNavMeshBuilder.h"
 #include "DetourNavMeshQuery.h"
 #include "DetourNavMesh.h"
@@ -17,6 +21,8 @@
 
 #include <lua.hpp>
 #include <sol.hpp>
+#include <vector>
+#include <tuple>
 
 M_Navigation::M_Navigation(KoFiEngine* engine) : Module()
 {

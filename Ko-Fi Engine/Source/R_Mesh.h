@@ -1,10 +1,6 @@
 #ifndef __MESH_H__
 #define __MESH_H__
 
-#include <vector>
-#include <map>
-#include <string>
-
 #include "MathGeoLib/Geometry/AABB.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Math/float3.h"

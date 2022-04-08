@@ -2,12 +2,8 @@
 #define __SCENE_H__
 
 #include "Importer.h"
-#include "Engine.h"
-#include "M_Editor.h"
-#include "QuadTree3D.h"
 #include "RNG.h"
 #include "Resource.h"
-#include "C_LightSource.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
 
@@ -17,7 +13,10 @@
 #include <gl/GLU.h>
 
 class GameObject;
-class vector;
+class KoFiEngine;
+class C_LightSource;
+class QuadTree3D;
+enum class SourceType;
 
 class Scene : public Resource
 {
@@ -86,44 +85,21 @@ public:
 	template<class UnaryFunction>
 	void ApplyToObjects(UnaryFunction f);
 
+	template<class UnaryFunction>
+	void recursive_iterate(const GameObject* o, UnaryFunction f);
+
 	void ComputeQuadTree(); // Compute Space Partitioning
 
 	// ----- Lighting -----
-	void AddLight(GameObject* newLight)
-	{
-		if (newLight != nullptr)
-			lights.push_back(newLight);
-	}
+	void AddLight(GameObject* newLight);
 
-	void RemoveLight(GameObject* lightToDelete)
-	{
-		for (std::vector<GameObject*>::iterator light = lights.begin(); light != lights.end(); light++)
-		{
-			if (lightToDelete == *light)
-			{
-				lights.erase(light);
-			}
-		}
-	}
+	void RemoveLight(GameObject* lightToDelete);
 
-	std::vector<GameObject*> GetLights(SourceType type)
-	{
-		std::vector<GameObject*> ret;
-
-		for (int i = 0; i < lights.size(); i++)
-		{
-			if (lights[i]->GetComponent<C_LightSource>()->GetSourceType() == type)
-			{
-				ret.push_back(lights[i]);
-			}
-		}
-
-		return ret;
-	}
+	std::vector<GameObject*> GetLights(SourceType type);
 
 
 public:
-	std::string name;
+	std::string name = "";
 	bool active;
 
 	KoFiEngine* engine = nullptr;
@@ -143,25 +119,7 @@ public:
 	std::vector<GameObject*> lights;
 	LineSegment ray;
 
-	// Space Partitioning Functions...
-	private:
-		template<class UnaryFunction>
-		void recursive_iterate(const GameObject* o, UnaryFunction f)
-		{
-			for (auto c = o->children.begin(); c != o->children.end(); ++c)
-			{
-				recursive_iterate(*c, f);
-				f(*c);
-			}
-		}
-
 };
-
-template<class UnaryFunction>
-inline void Scene::ApplyToObjects(UnaryFunction f)
-{
-	recursive_iterate(rootGo, f);
-}
 
 
 #endif // __SCENE_H__

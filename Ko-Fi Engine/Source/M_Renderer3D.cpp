@@ -411,7 +411,7 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 		}
 		else
 		{
-			glBindTexture(GL_TEXTURE_2D, cMat->texture.GetTextureId());
+			glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
 		}
 	}
 	//Set Shaders
@@ -616,7 +616,7 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 		}
 		else
 		{
-			glBindTexture(GL_TEXTURE_2D, cMat->texture.GetTextureId());
+			glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
 		}
 	}
 	//Set Shaders

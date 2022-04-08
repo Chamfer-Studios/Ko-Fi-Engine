@@ -16,6 +16,10 @@
 #include "Effects.h"
 #include "Importer.h"
 #include "PanelChooser.h"
+#include "Engine.h"
+#include "M_Editor.h"
+
+#include "MathGeoLib/Math/MathFunc.h"
 
 C_AudioSwitch::C_AudioSwitch(GameObject* parent) : C_Audio(parent)
 {

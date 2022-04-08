@@ -2,9 +2,6 @@
 #define __C_MATERIAL_H__
 
 #include "Component.h"
-#include "R_Texture.h"
-#include <vector>
-#include <string>
 
 #define CHECKERS_HEIGHT 128
 #define CHECKERS_WIDTH 128
@@ -13,6 +10,10 @@ using Json = nlohmann::json;
 
 class PanelChooser;
 class R_Material;
+class R_Texture;
+class vector;
+class string;
+class GameObject;
 
 class C_Material : public Component
 {
@@ -36,7 +37,7 @@ public:
 	bool LoadDefaultMaterial();
 
 public:
-	R_Texture texture;
+	R_Texture *texture = nullptr;
 	//std::vector<R_Texture> textures;
 
 private:

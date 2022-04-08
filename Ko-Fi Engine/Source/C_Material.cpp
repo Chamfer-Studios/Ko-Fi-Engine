@@ -1,13 +1,19 @@
 #include "C_Material.h"
 #include "R_Material.h"
 #include "Log.h"
-#include "GameObject.h"
+
+// Modules
 #include "Engine.h"
 #include "M_Editor.h"
 
+// GameObject
+#include "GameObject.h"
+
+// Importers
 #include "Importer.h"
 #include "I_Material.h"
 #include "I_Texture.h"
+#include "R_Texture.h"
 
 #include "JsonHandler.h"
 #include "ImGuiAppLog.h"
@@ -19,6 +25,8 @@
 #include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include <vector>
+#include <string>
 
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/float4x4.h"
@@ -27,7 +35,8 @@ C_Material::C_Material(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
 
-	material = nullptr;
+	material = new R_Material();
+	texture = new R_Texture();
 	currentTextureId = 0;
 }
 
@@ -42,6 +51,9 @@ bool C_Material::CleanUp()
 	if(material != nullptr)
 		RELEASE(material);// peta por el karambit
 
+	if (texture != nullptr)
+		RELEASE(texture);// peta por el karambit
+
 	return true;
 }
 
@@ -55,7 +67,7 @@ void C_Material::Save(Json& json) const
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
 	json["shader_path"] = material->GetShaderPath();
-	json["texture_path"] = texture.path;
+	json["texture_path"] = texture->path;
 
 	//json["material_path"] = material->GetMaterialPath();
 	//json["material_name"] = material->materialName;
@@ -155,7 +167,7 @@ void C_Material::Load(Json& json)
 		values.clear();
 		values.shrink_to_fit();
 
-		Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), &texture);
+		Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), texture);
 		//for (const auto& tex : json.at("textures").items())
 		//{
 		//	R_Texture t = R_Texture();
@@ -338,13 +350,13 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				//		textures.push_back(texture);
 				//	}
 				//}
-				if (!path.empty() && texture.textureID == currentTextureId)
+				if (!path.empty() && texture->textureID == currentTextureId)
 				{
-					texture.textureID = 0;
-					texture.SetTexturePath(nullptr);
+					texture->textureID = 0;
+					texture->SetTexturePath(nullptr);
 
-					R_Texture tex;
-					Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
+					R_Texture* tex = new R_Texture();
+					Importer::GetInstance()->textureImporter->Import(path.c_str(), tex);
 					texture = tex;
 				}
 			}
@@ -379,18 +391,18 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
 		ImGui::Text("R_Material R_Texture:");
 		//for (R_Texture& tex : textures)
-		if (texture.textureID != -1)
+		if (texture->textureID != -1)
 		{
-			ImGui::Image((ImTextureID)texture.textureID, ImVec2(85, 85));
+			ImGui::Image((ImTextureID)texture->textureID, ImVec2(85, 85));
 			ImGui::SameLine();
 			ImGui::BeginGroup();
-			ImGui::Text(texture.GetTexturePath());
+			ImGui::Text(texture->GetTexturePath());
 			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 			if (ImGui::Button("Change R_Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
-				currentTextureId = texture.textureID;
+				currentTextureId = texture->textureID;
 			}
 
 			ImGui::PopID();
@@ -401,8 +413,8 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			if (ImGui::Button("Delete R_Texture"))
 			{
 				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
-				texture.textureID = -1;
-				texture.SetTexturePath(nullptr);
+				texture->textureID = -1;
+				texture->SetTexturePath(nullptr);
 			}
 			ImGui::PopID();
 			ImGui::EndGroup();
@@ -412,7 +424,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			if (ImGui::Button("Add R_Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
-				currentTextureId = texture.textureID;
+				currentTextureId = texture->textureID;
 			}
 		}
 

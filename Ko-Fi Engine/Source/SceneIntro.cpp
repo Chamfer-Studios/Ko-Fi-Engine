@@ -1,26 +1,32 @@
-#include "M_Editor.h"
 #include "SceneIntro.h"
-#include "Log.h"
+
+// Modules
 #include "Engine.h"
+#include "M_Editor.h"
 #include "M_Camera3D.h"
 #include "M_Renderer3D.h"
 #include "M_Window.h"
-#include "Primitive.h"
-#include "ImGuiAppLog.h"
 #include "M_FileSystem.h"
+#include "M_SceneManager.h"
+
+// GameObject
+#include "GameObject.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Camera.h"
-#include "ComponentParticle.h"
 #include "C_Script.h"
 #include "C_Collider.h"
-#include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "C_Transform.h"
-#include "R_Material.h"
 #include "ComponentTransform2D.h"
-#include "GameObject.h"
-#include "M_SceneManager.h"
+#include "ComponentParticle.h"
+
+#include "Scripting.h" // Consider moving this to Globals.h or smth
+#include "Primitive.h"
+#include "ImGuiAppLog.h"
+#include "R_Material.h"
+#include "Log.h"
 #include "node_editor.h"
+#include "QuadTree3D.h"
 
 #include "SDL_assert.h"
 

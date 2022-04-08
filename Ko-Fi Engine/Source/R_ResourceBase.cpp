@@ -1,5 +1,6 @@
 #include "R_ResourceBase.h"
 #include "Resource.h"
+#include <string>
 
 R_ResourceBase::R_ResourceBase(const Resource* r)
 {

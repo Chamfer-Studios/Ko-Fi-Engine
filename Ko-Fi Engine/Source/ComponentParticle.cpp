@@ -1,12 +1,20 @@
 #include "ComponentParticle.h"
 #include "ParticleModule.h"
-#include "M_Renderer3D.h"
+
+// Modules
 #include "Engine.h"
+#include "M_Renderer3D.h"
+#include "M_Editor.h"
+
+#include "GameObject.h"
+
+#include "R_Texture.h"
+#include "R_ParticleResource.h"
+
+#include "PanelChooser.h"
+
 #include "Log.h"
 #include "imgui_stdlib.h"
-#include "R_Texture.h"
-#include "PanelChooser.h"
-#include "R_ParticleResource.h"
 
 #include "MathGeoLib/Math/float4x4.h"
 

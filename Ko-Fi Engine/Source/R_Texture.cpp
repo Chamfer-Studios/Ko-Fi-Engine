@@ -6,6 +6,7 @@ R_Texture::R_Texture() : Resource(ResourceType::TEXTURE)
 	width = 0;
 	height = 0;
 	nrChannels = 1;
+	path = "";
 }
 
 R_Texture::~R_Texture()

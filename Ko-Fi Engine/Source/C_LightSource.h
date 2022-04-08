@@ -2,9 +2,9 @@
 #define __C_LIGHTSOURCE_H__
 
 #include "Component.h"
-#include "GameObject.h"
-
 #include "MathGeoLib/Math/float3.h"
+
+class GameObject;
 
 enum class SourceType
 {
@@ -88,7 +88,7 @@ public:
 private:
 
 	//light parameters
-	SourceType sourceType;
+	SourceType sourceType = SourceType::DIRECTIONAL;
 
 	//updated number of each light type
 	int numOfDirectional = 0;
@@ -98,7 +98,7 @@ private:
 	LightSource* lightSource;
 
 	//inspector variables
-	int sType;
+	int sType = 0;
 };
 
 #endif // !__C_LIGHTSOURCE_H__

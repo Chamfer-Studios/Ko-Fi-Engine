@@ -26,7 +26,6 @@ class PanelSettings;
 class PanelNavigation;
 
 class GameObject;
-
 struct EngineConfig;
 
 struct PanelGameObjectInfo

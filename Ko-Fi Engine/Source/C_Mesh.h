@@ -2,14 +2,15 @@
 #define __COMPONENT_MESH_H__
 
 #include "Component.h"
-#include "R_Mesh.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
 #include "MathGeoLib/Geometry/Sphere.h"
+#include "R_Mesh.h"
 
 class C_Transform;
 class C_Material;
 using Json = nlohmann::json;
+typedef unsigned int uint;
 
 class C_Mesh : public Component
 {

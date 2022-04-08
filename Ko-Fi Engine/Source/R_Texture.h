@@ -1,13 +1,12 @@
 #ifndef __TEXTURE_H__
 #define __TEXTURE_H__
 
-#include <string>
 #include "MathGeoLib/Math/float2.h"
 #include "Globals.h"
 #include "Resource.h"
 
 #define TEXTUREID_DEFAULT 4294967295
-
+class string;
 
 class R_Texture : public Resource
 {

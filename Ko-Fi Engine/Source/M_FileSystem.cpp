@@ -1,4 +1,6 @@
 #include "M_FileSystem.h"
+
+#include "GameObject.h"
 #include "Engine.h"
 #include "SceneIntro.h"
 #include "Log.h"

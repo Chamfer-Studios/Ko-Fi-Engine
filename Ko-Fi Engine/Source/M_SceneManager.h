@@ -1,15 +1,13 @@
-#ifndef __SCENE_MANAGER_H__
-#define __SCENE_MANAGER_H__
+#ifndef __M_SCENE_MANAGER_H__
+#define __M_SCENE_MANAGER_H__
 
 #include "Module.h"
-#include "Scene.h"
 
 #include "Timer.h"
-#include <string>
-#include <list>
 #include "MathGeoLib/Math/float2.h"
 
 #include "ImGuizmo.h"
+#include "Scene.h"
 
 class KoFiEngine;
 class SceneIntro;
@@ -24,6 +22,7 @@ class ComponentTransform2D;
 class ComponentText;
 class ComponentImage;
 class ComponentButton;
+
 
 enum class GameState
 {
@@ -133,4 +132,4 @@ private:
 	GameState runtimeState = GameState::STOPPED;
 };
 
-#endif // !__SCENE_MANAGER_H__
+#endif // !__M_SCENE_MANAGER_H__

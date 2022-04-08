@@ -18,10 +18,10 @@ public:
 public:
 	UID uid;
 	ResourceType type;
-	std::string assetsPath;
-	std::string assetsFile;
-	std::string libraryPath;
-	std::string libraryFile;
+	std::string assetsPath = "";
+	std::string assetsFile = "";
+	std::string libraryPath = "";
+	std::string libraryFile = "";
 };
 
 #endif // !__RESOURCE_BASE_H__

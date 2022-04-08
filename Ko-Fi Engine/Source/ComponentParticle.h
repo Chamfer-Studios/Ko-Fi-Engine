@@ -8,6 +8,7 @@
 
 class EmitterInstance;
 class R_ParticleResource;
+class GameObject;
 
 class ComponentParticle : public Component
 {

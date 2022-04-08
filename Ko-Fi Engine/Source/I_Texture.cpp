@@ -3,6 +3,7 @@
 #include "ImGuiAppLog.h"
 #include "glew.h"
 #include "stb_image.h"
+#include <string>
 
 #define CHECKERS_SIZE 32
 

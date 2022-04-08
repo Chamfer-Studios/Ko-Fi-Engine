@@ -5,8 +5,6 @@
 
 #include "glew.h"
 #include "MathGeoLib/Math/float3.h"
-#include <vector>
-#include <tuple>
 #include "json.hpp"
 
 class GameObject;
@@ -15,6 +13,8 @@ class rcPolyMeshDetail;
 class dtNavMesh;
 typedef unsigned int dtPolyRef;
 class R_Mesh;
+class vector;
+class tuple;
 
 class M_Navigation : public Module
 {

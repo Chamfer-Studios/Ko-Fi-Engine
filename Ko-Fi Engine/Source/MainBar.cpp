@@ -1,14 +1,13 @@
 #include "MainBar.h"
-#include "M_Editor.h"
+
+// Modules
 #include "Engine.h"
+#include "M_Editor.h"
 #include "M_FileSystem.h"
 #include "M_SceneManager.h"
-#include "PanelChooser.h"
-#include "SDL.h"
-#include <imgui.h>
-#include <imgui_stdlib.h>
-#include "Primitive.h"
-#include "Importer.h"
+
+// GameObject
+#include "GameObject.h"
 #include "C_Camera.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
@@ -16,8 +15,15 @@
 #include "ComponentImage.h"
 #include "ComponentButton.h"
 #include "ComponentText.h"
-#include "R_Material.h"
 #include "C_Mesh.h"
+
+#include "PanelChooser.h"
+#include "SDL.h"
+#include <imgui.h>
+#include <imgui_stdlib.h>
+#include "Primitive.h"
+#include "Importer.h"
+#include "R_Material.h"
 
 MainBar::MainBar(M_Editor* editor)
 {

@@ -13,7 +13,6 @@
 #include "M_FileSystem.h"
 #include "R_Texture.h"
 
-#include <string>
 
 #include "C_Mesh.h"
 #include "ComponentTransform2D.h"
@@ -22,6 +21,8 @@
 #include "SDL.h"
 
 #include <queue>
+#include <string>
+#include <vector>
 
 MyPlane::MyPlane(GameObject* _owner) {
 	vertices.push_back({ 0, 0, 0 });

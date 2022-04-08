@@ -1,16 +1,23 @@
 #include "C_Animator.h"
 
-#include "GameObject.h"
+// Modules
 #include "Globals.h"
-#include "FSDefs.h"
-#include "C_Mesh.h"
 #include "Engine.h"
 #include "Importer.h"
+
+// GameObject
+#include "GameObject.h"
+#include "C_Mesh.h"
+
+// Resources
 #include "R_Animation.h"
 #include "AnimatorClip.h"
 
+
+#include "FSDefs.h"
 #include <vector>
 #include <string>
+#include <map>
 
 C_Animator::C_Animator(GameObject* parent) : Component(parent)
 {

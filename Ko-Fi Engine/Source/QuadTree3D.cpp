@@ -1,8 +1,10 @@
 #include "QuadTree3D.h"
-#include <algorithm>
+
+#include "GameObject.h"
 #include "C_Mesh.h"
 
 #include "SDL_opengl.h"
+#include <algorithm>
 
 QuadTreeNode3D::QuadTreeNode3D(const AABB aabb, QuadTreeNode3D* parent = nullptr) : aabb(aabb), parent(parent)
 {
@@ -221,4 +223,30 @@ void QuadTree3D::Remove(GameObject* object)
 void QuadTree3D::GetAllObjects(std::vector<GameObject*>& result)
 {
 	root->GetAllObjects(result);
+}
+
+template<typename CULL>
+void QuadTreeNode3D::TestIntersection(const CULL& culler, std::queue<GameObject*>& result) const
+{
+	if (!culler.Intersects(aabb))
+		return;
+
+	for (auto it = objects.begin(); it != objects.end(); ++it)
+	{
+		if (culler.Intersects((*it)->BoundingAABB()))
+			result.push(*it);
+	}
+
+	for (int i = 0; i < 4; ++i)
+	{
+		if (children[i] != nullptr)
+			children[i]->TestIntersection(culler, result);
+	}
+}
+
+template<typename CULL>
+inline void QuadTree3D::TestIntersection(const CULL& culler, std::queue<GameObject*>& result) const
+{
+	if (root != nullptr)
+		root->TestIntersection(culler, result);
 }

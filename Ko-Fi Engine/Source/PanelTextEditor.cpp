@@ -1,12 +1,16 @@
 #include "PanelTextEditor.h"
-#include "M_Editor.h"
+// Modules
 #include "Engine.h"
+#include "M_Editor.h"
 #include "M_FileSystem.h"
-#include "PanelChooser.h"
 #include "M_SceneManager.h"
-#include "C_Material.h"
-#include "R_Material.h"
 
+// GameObject
+#include "GameObject.h"
+#include "C_Material.h"
+
+#include "R_Material.h"
+#include "PanelChooser.h"
 #include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>

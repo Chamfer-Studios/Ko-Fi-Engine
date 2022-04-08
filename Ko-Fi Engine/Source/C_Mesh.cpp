@@ -5,22 +5,27 @@
 //#include "Color.h"
 #include "M_Camera3D.h"
 
+#include "EmitterInstance.h"
+#include "Log.h"
+// Modules
+#include "Engine.h"
+#include "M_SceneManager.h"
+#include "M_Renderer3D.h"
+#include "M_Camera3D.h"
+#include "M_Editor.h"
+
+// GameObject
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Material.h"
 #include "C_Camera.h"
-#include "M_SceneManager.h"
-#include "Engine.h"
-#include "M_Renderer3D.h"
-#include "M_Camera3D.h"
+
+// Panels
 #include "PanelChooser.h"
 #include "PanelViewport.h"
-#include "M_Editor.h"
-#include "EmitterInstance.h"
-#include "Log.h"
 
+// Resources
 #include "Importer.h"
-
 #include "R_Material.h"
 
 #include "glew.h"

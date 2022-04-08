@@ -6,7 +6,6 @@
 #include "SDL_ttf.h"
 
 #include "glew.h"
-#include <vector>
 #include "MathGeoLib/Geometry/Frustum.h"
 
 #include "SDL.h"
@@ -14,6 +13,8 @@
 class C_Camera;
 class R_Texture;
 class GameObject;
+class vector;
+
 class MyPlane
 {
 public:

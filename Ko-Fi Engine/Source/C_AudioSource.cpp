@@ -16,6 +16,7 @@
 #include "Effects.h"
 #include "Importer.h"
 #include "PanelChooser.h"
+#include "Engine.h"
 
 C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 {

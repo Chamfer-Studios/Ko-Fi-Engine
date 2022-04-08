@@ -270,7 +270,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 
 	aiString aiTexturePath;
 	std::string texturePath;
-	R_Texture texture;
+	R_Texture *texture;
 	//if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
 	if(assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
@@ -280,8 +280,8 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 
 		texturePath = ASSETS_TEXTURES_DIR + textureFilename;
 
-		texture = R_Texture();
-		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
+		texture = new R_Texture();
+		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
 
 		if (ret)
 		{

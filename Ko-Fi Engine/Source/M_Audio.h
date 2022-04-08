@@ -1,6 +1,7 @@
 #ifndef __M_AUDIO_H__
 #define __M_AUDIO_H__
 
+
 #include "al.h"
 #include "alc.h"
 #include "alext.h"
@@ -10,6 +11,8 @@
 
 #include "Module.h"
 #include <iostream>
+
+class KoFiEngine;
 
 class M_Audio : public Module
 {

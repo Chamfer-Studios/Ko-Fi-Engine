@@ -1,17 +1,17 @@
-#pragma once
+#ifndef __C_SCRIPT_H__
+#define __C_SCRIPT_H__
 
 #include "Component.h"
 #include <lua.hpp>
 #include <sol.hpp>
-#include <vector>
 
 class Scripting;
-
 class GameObject;
 class C_Transform;
-using Json = nlohmann::json;
-
+class vector;
 class InspectorVariable;
+
+using Json = nlohmann::json;
 
 struct ScriptHandler
 {
@@ -45,3 +45,5 @@ public:
 	int nScripts = 0;
 	std::vector<ScriptHandler*> scripts;
 };
+
+#endif // __C_SCRIPT_H__

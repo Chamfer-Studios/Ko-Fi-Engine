@@ -1,6 +1,14 @@
 #include "Scene.h"
-#include "GameObject.h"
 
+// Modules
+#include "Engine.h"
+#include "M_Editor.h"
+
+// GameObject
+#include "GameObject.h"
+#include "C_LightSource.h"
+
+#include "QuadTree3D.h"
 #include <vector>
 
 GameObject* Scene::GetGameObject(int uid)
@@ -140,5 +148,53 @@ void Scene::ComputeQuadTree()
 
 		sceneTree->AddObjects(*objects);
 		delete objects;
+	}
+}
+
+void Scene::AddLight(GameObject* newLight)
+{
+	if (newLight != nullptr)
+		lights.push_back(newLight);
+}
+
+void Scene::RemoveLight(GameObject* lightToDelete)
+{
+	for (std::vector<GameObject*>::iterator light = lights.begin(); light != lights.end(); light++)
+	{
+		if (lightToDelete == *light)
+		{
+			lights.erase(light);
+		}
+	}
+}
+
+std::vector<GameObject*> Scene::GetLights(SourceType type)
+{
+	std::vector<GameObject*> ret;
+
+	for (int i = 0; i < lights.size(); i++)
+	{
+		if (lights[i]->GetComponent<C_LightSource>()->GetSourceType() == type)
+		{
+			ret.push_back(lights[i]);
+		}
+	}
+
+	return ret;
+}
+
+template<class UnaryFunction>
+inline void Scene::ApplyToObjects(UnaryFunction f)
+{
+	recursive_iterate(rootGo, f);
+}
+
+template<class UnaryFunction>
+inline void Scene::recursive_iterate(const GameObject* o, UnaryFunction f)
+{
+	for (auto c = o->children.begin(); c != o->children.end(); ++c)
+	{
+		recursive_iterate(*c, f);
+		f(*c);
 	}
 }

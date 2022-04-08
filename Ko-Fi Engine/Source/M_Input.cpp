@@ -1,20 +1,25 @@
 #include "Globals.h"
 #include "M_Input.h"
+// Modules
 #include "Engine.h"
-#include "SDL.h"
 #include "M_Renderer3D.h"
 #include "M_SceneManager.h"
 #include "M_Editor.h"
-#include "Log.h"
-#include "ImGuiAppLog.h"
 #include "M_Window.h"
 #include "M_FileSystem.h"
-#include "Importer.h"
-#include "C_Material.h"
-#include "Importer.h"
-// FIXME: The list of meshes should be in scene intro.
+
+// GameObject
 #include "GameObject.h"
+#include "C_Material.h"
+
+// Resources
+#include "Importer.h"
 #include "R_Texture.h"
+
+#include "Log.h"
+#include "ImGuiAppLog.h"
+#include "SDL.h"
+// FIXME: The list of meshes should be in scene intro.
 
 #include <imgui_impl_sdl.h>
 
@@ -205,8 +210,8 @@ bool M_Input::PreUpdate(float dt)
 
 						if (go->GetComponent<C_Material>())
 						{
-							R_Texture texture = R_Texture();
-							Importer::GetInstance()->textureImporter->Import(tmp.c_str(), &texture);
+							R_Texture *texture = new R_Texture();
+							Importer::GetInstance()->textureImporter->Import(tmp.c_str(), texture);
 
 							go->GetComponent<C_Material>()->texture = texture;
 							//cMaterial->textures.push_back(texture);

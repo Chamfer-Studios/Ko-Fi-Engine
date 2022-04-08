@@ -32,7 +32,7 @@ public:
 	void PauseTrack();
 
 private:
-    R_Track* track;
+    R_Track* track = nullptr;
 };
 
 #endif // !__C_AUDIO_SOURCE_H__

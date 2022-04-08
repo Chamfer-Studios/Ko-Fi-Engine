@@ -1,19 +1,23 @@
 // Modules
 #include "PanelViewport.h"
-#include "M_Editor.h"
+//#include "ViewportFrameBuffer.h"
+// Modules
 #include "Engine.h"
 #include "M_Camera3D.h"
 #include "M_SceneManager.h"
-//#include "ViewportFrameBuffer.h"
+#include "M_Editor.h"
 #include "M_Input.h"
 #include "M_Window.h"
 #include "M_FileSystem.h"
-#include "Importer.h"
 #include "M_Renderer3D.h"
-#include "R_Texture.h"
 
+// GameObject
+#include "GameObject.h"
 #include "C_Material.h"
 #include "C_Camera.h"
+
+#include "Importer.h"
+#include "R_Texture.h"
 
 #include "Log.h"
 // Tools
@@ -100,8 +104,8 @@ bool PanelViewport::Update()
 
 							if (go->GetComponent<C_Material>())
 							{
-								R_Texture texture = R_Texture();
-								Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
+								R_Texture *texture = new R_Texture();
+								Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
 
 								go->GetComponent<C_Material>()->texture = texture;
 								//cMaterial->textures.push_back(texture);

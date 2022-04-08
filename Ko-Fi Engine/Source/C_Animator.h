@@ -1,14 +1,13 @@
 #ifndef __C_ANIMATOR_H__
 #define __C_ANIMATOR_H__
 
-#include <vector>
 #include "Component.h"
 #include "MathGeoLib/Math/float4x4.h"
-#include <map>
 
 class GameObject;
 class R_Animation;
 class AnimatorClip;
+class map;
 
 class C_Animator : public Component
 {

@@ -1,13 +1,14 @@
 #pragma once
 
 #include "MathGeoLib/MathGeoLib.h"
-#include "GameObject.h"
 
 #include <queue>
 #include <vector>
 
 #define QUADTREE_MAX_ITEMS 4
 #define QUADTREE_MIN_SIZE 5.0f
+
+class GameObject;
 
 class QuadTreeNode3D
 {
@@ -63,28 +64,3 @@ public:
 	QuadTreeNode3D* root = nullptr;
 };
 
-template<typename CULL>
-void QuadTreeNode3D::TestIntersection(const CULL& culler, std::queue<GameObject*>& result) const
-{
-	if (!culler.Intersects(aabb))
-		return;
-
-	for (auto it = objects.begin(); it != objects.end(); ++it)
-	{
-		if (culler.Intersects((*it)->BoundingAABB()))
-			result.push(*it);
-	}
-
-	for (int i = 0; i < 4; ++i)
-	{
-		if (children[i] != nullptr)
-			children[i]->TestIntersection(culler, result);
-	}
-}
-
-template<typename CULL>
-inline void QuadTree3D::TestIntersection(const CULL& culler, std::queue<GameObject*>& result) const
-{
-	if (root != nullptr)
-		root->TestIntersection(culler, result);
-}
