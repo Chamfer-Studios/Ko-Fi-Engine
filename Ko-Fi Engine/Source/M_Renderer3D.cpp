@@ -45,7 +45,7 @@
 
 M_Renderer3D::M_Renderer3D(KoFiEngine* engine) : Module()
 {
-	name = "M_Renderer3D";
+	name = "Renderer3D";
 
 	this->engine = engine;
 }

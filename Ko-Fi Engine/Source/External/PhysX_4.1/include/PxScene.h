@@ -234,7 +234,7 @@ class PxScene
 
 
 	/**
-	\brief Call this method to retrieve the M_Physics SDK.
+	\brief Call this method to retrieve the Physics SDK.
 
 	\return The physics SDK this scene is associated with.
 

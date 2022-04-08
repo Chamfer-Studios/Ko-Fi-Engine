@@ -2175,7 +2175,7 @@ void BeginNodeEditor()
         GImNodes->CanvasOriginScreenSpace = ImGui::GetCursorScreenPos();
 
         // NOTE: we have to fetch the canvas draw list *after* we call
-        // BeginChild(), otherwise the ImGui M_UI elements are going to be
+        // BeginChild(), otherwise the ImGui UI elements are going to be
         // rendered into the parent window draw list.
         DrawListSet(ImGui::GetWindowDrawList());
 
@@ -2205,15 +2205,15 @@ void EndNodeEditor()
         editor.GridContentBounds = ScreenSpaceToGridSpace(editor, GImNodes->CanvasRectScreenSpace);
     }
 
-    // Detect ImGui interaction first, because it blocks interaction with the rest of the M_UI
+    // Detect ImGui interaction first, because it blocks interaction with the rest of the UI
 
     if (GImNodes->LeftMouseClicked && ImGui::IsAnyItemActive())
     {
         editor.ClickInteraction.Type = ImNodesClickInteractionType_ImGuiItem;
     }
 
-    // Detect which M_UI element is being hovered over. Detection is done in a hierarchical fashion,
-    // because a M_UI element being hovered excludes any other as being hovered over.
+    // Detect which UI element is being hovered over. Detection is done in a hierarchical fashion,
+    // because a UI element being hovered excludes any other as being hovered over.
 
     // Don't do hovering detection for nodes/links/pins when interacting with the mini-map, since
     // its an *overlay* with its own interaction behavior and must have precedence during mouse
@@ -2264,7 +2264,7 @@ void EndNodeEditor()
         }
     }
 
-    // Render the click interaction M_UI elements (partial links, box selector) on top of everything
+    // Render the click interaction UI elements (partial links, box selector) on top of everything
     // else.
 
     DrawListAppendClickInteractionChannel();
@@ -2412,7 +2412,7 @@ void EndNode()
 
     ImNodesEditorContext& editor = EditorContextGet();
 
-    // The node's rectangle depends on the ImGui M_UI group size.
+    // The node's rectangle depends on the ImGui UI group size.
     ImGui::EndGroup();
     ImGui::PopID();
 

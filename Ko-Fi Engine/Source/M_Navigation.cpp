@@ -20,7 +20,7 @@
 
 M_Navigation::M_Navigation(KoFiEngine* engine) : Module()
 {
-	name = "M_Navigation";
+	name = "Navigation";
 	this->engine = engine;
 }
 

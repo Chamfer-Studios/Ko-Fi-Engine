@@ -459,7 +459,7 @@ bool dtCreateNavMeshData(dtNavMeshCreateParams* params, unsigned char** outData,
 	const int offMeshPolyBase = params->polyCount;
 	
 	// Store vertices
-	// R_Mesh vertices
+	// Mesh vertices
 	for (int i = 0; i < params->vertCount; ++i)
 	{
 		const unsigned short* iv = &params->verts[i*3];
@@ -484,7 +484,7 @@ bool dtCreateNavMeshData(dtNavMeshCreateParams* params, unsigned char** outData,
 	}
 	
 	// Store polygons
-	// R_Mesh polys
+	// Mesh polys
 	const unsigned short* src = params->polys;
 	for (int i = 0; i < params->polyCount; ++i)
 	{
@@ -602,7 +602,7 @@ bool dtCreateNavMeshData(dtNavMeshCreateParams* params, unsigned char** outData,
 					 nvp, params->cs, params->ch, params->polyCount*2, navBvtree);
 	}
 	
-	// Store Off-R_Mesh connections.
+	// Store Off-Mesh connections.
 	n = 0;
 	for (int i = 0; i < params->offMeshConCount; ++i)
 	{

@@ -100,7 +100,7 @@ bool PanelConfiguration::Update()
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%i", wheel);
 	}
 
-	if (ImGui::CollapsingHeader("M_Window"))
+	if (ImGui::CollapsingHeader("Window"))
 	{
 
 		

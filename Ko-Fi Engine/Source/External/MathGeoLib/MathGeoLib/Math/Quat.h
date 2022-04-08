@@ -183,7 +183,7 @@ public:
 	/** This function slerps the given 'from' vector towards the 'to' vector.
 		@param from A normalized direction vector specifying the direction of rotation at t=0.
 		@param to A normalized direction vector specifying the direction of rotation at t=1.
-		@param t The interpolation time parameter, in the range [0,1]. M_Input values outside this range are
+		@param t The interpolation time parameter, in the range [0,1]. Input values outside this range are
 			silently clamped to the [0, 1] interval.
 		@return A spherical linear interpolation of the vector 'from' towards the vector 'to'. */
 	static MUST_USE_RESULT float3 SlerpVector(const float3 &from, const float3 &to, float t);
@@ -194,7 +194,7 @@ public:
 		@param to A normalized direction vector specifying the target direction to rotate towards.
 		@param angleRadians The maximum angle to rotate the 'from' vector by, in the range [0, pi]. If the
 			angle between 'from' and 'to' is smaller than this angle, then the vector 'to' is returned.
-			M_Input values outside this range are silently clamped to the [0, pi] interval.
+			Input values outside this range are silently clamped to the [0, pi] interval.
 		@return A spherical linear interpolation of the vector 'from' towards the vector 'to'. */
 	static MUST_USE_RESULT float3 SlerpVectorAbs(const float3 &from, const float3 &to, float angleRadians);
 

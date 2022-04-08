@@ -11,7 +11,7 @@ M_Window::M_Window(KoFiEngine* engine) : Module()
 {
 	window = NULL;
 	screenSurface = NULL;
-	name = "M_Window";
+	name = "Window";
 	this->engine = engine;
 }
 
@@ -176,7 +176,7 @@ bool M_Window::LoadConfiguration(Json& configModule)
 
 bool M_Window::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("M_Window##"))
+	if (ImGui::CollapsingHeader("Window##"))
 	{
 		ImGui::Combo("##resolutionCombo", &currentResolution, "Select Resolution\0 1024x768\0 1920x1080\0 1280x720");
 

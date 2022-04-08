@@ -17,7 +17,7 @@ OpenAL_ErrorCheck(FUNCTION_CALL)
 
 M_Audio::M_Audio(KoFiEngine* engine)
 {
-	name = "M_Audio";
+	name = "Audio";
 	this->engine = engine;
 
 	context = nullptr;

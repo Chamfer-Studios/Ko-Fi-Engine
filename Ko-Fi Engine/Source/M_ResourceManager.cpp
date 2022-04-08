@@ -17,7 +17,7 @@ M_ResourceManager::M_ResourceManager(KoFiEngine* engine) : Module(),
 fileRefreshRate(0.0f),
 fileRefreshTime(0.0f)
 {
-	name = "M_ResourceManager";
+	name = "ResourceManager";
 	this->engine = engine;
 }
 

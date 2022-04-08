@@ -22,7 +22,7 @@
 
 M_Input::M_Input(KoFiEngine* engine) : Module()
 {
-	name = "M_Input";
+	name = "Input";
 
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);

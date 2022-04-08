@@ -126,7 +126,7 @@ void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 
 M_UI::M_UI(KoFiEngine* engine) : Module()
 {
-	name = "M_UI";
+	name = "UI";
 	this->engine = engine;
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 	renderer = SDL_CreateRenderer(engine->GetWindow()->window, -1, flags);

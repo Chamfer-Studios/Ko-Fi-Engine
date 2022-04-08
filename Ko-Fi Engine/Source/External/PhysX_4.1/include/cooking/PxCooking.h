@@ -253,14 +253,14 @@ struct PxCookingParams
 	PxTolerancesScale scale;
 
 	/**
-	\brief R_Mesh pre-processing parameters. Used to control options like whether the mesh cooking performs vertex welding before cooking.
+	\brief Mesh pre-processing parameters. Used to control options like whether the mesh cooking performs vertex welding before cooking.
 
 	<b>Default value:</b> 0
 	*/
 	PxMeshPreprocessingFlags	meshPreprocessParams;
 
 	/**
-	\brief R_Mesh weld tolerance. If mesh welding is enabled, this controls the distance at which vertices are welded.
+	\brief Mesh weld tolerance. If mesh welding is enabled, this controls the distance at which vertices are welded.
 	If mesh welding is not enabled, this value defines the acceptance distance for mesh validation. Provided no two vertices are within this distance, the mesh is considered to be
 	clean. If not, a warning will be emitted. Having a clean, welded mesh is required to achieve the best possible performance.
 
@@ -543,7 +543,7 @@ protected:
 
 Note that the foundation object is handled as an application-wide singleton in statically linked executables
 and a DLL-wide singleton in dynamically linked executables. Therefore, if you are using the runtime SDK in the
-same executable as cooking, you should pass the M_Physics's copy of foundation (acquired with
+same executable as cooking, you should pass the Physics's copy of foundation (acquired with
 PxPhysics::getFoundation()) to the cooker. This will also ensure correct handling of memory for objects
 passed from the cooker to the SDK.
 

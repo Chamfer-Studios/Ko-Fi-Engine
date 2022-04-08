@@ -32,7 +32,7 @@
 
 M_SceneManager::M_SceneManager(KoFiEngine* engine)
 {
-	name = "M_SceneManager";
+	name = "SceneManager";
 	this->engine = engine;
 
 	sceneIntro = new SceneIntro(engine);

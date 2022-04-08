@@ -33,7 +33,7 @@ void LoadFontsEditor(float fontSize_ = 12.0f);
 M_Editor::M_Editor(KoFiEngine* engine)
 {
 	this->engine = engine;
-	name = "M_Editor";
+	name = "Editor";
 
 	// We need to check whether or not each panel is activated.
 	// We have to set a bool for each of them in order to be able to close and open again a panel.

@@ -33,7 +33,7 @@ physx::PxFilterFlags customFilterShader(
 // Module constructor
 M_Physics::M_Physics(KoFiEngine* engine) : Module()
 {
-	name = "M_Physics";
+	name = "Physics";
 	this->engine = engine;
 }
 

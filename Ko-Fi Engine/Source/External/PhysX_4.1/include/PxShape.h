@@ -440,7 +440,7 @@ public:
 	shape, regardless of the index.
 
 	\param[in] faceIndex The internal triangle index whose material you want to retrieve.
-	\return R_Material from input triangle
+	\return Material from input triangle
 
 	\note If faceIndex value of 0xFFFFffff is passed as an input for mesh and heightfield shapes, this function will issue a warning and return NULL.
 	\note Scene queries set the value of PxQueryHit::faceIndex to 0xFFFFffff whenever it is undefined or does not apply.

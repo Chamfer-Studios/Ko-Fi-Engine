@@ -316,7 +316,7 @@ struct ImNodesContext
     int           CurrentAttributeFlags;
     ImVector<int> AttributeFlagStack;
 
-    // M_UI element state
+    // UI element state
     int CurrentNodeIdx;
     int CurrentPinIdx;
     int CurrentAttributeId;
