@@ -222,11 +222,11 @@ public:
 
 	void RemoveLight(GameObject* lightToDelete)
 	{
-		for (std::vector<GameObject*>::iterator light = lights.begin(); light != lights.end(); light++)
+		for (int i = 0; i < lights.size(); i++)
 		{
-			if (lightToDelete == *light)
+			if (lightToDelete == lights[i])
 			{
-				lights.erase(light);
+				lights.erase(lights.begin() + i);
 			}
 		}
 	}

@@ -511,10 +511,10 @@ void Renderer3D::RenderMeshes(GameObject* go)
 						//fill the first variable of the DirLight struct: vec3 direction
 						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
 						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
-						//fill the second variable of the DirLight struct: float ambient
+						//second variable: float ambient
 						GLint ambientValue = glGetUniformLocation(shader, ("dirLights[" + number + "].ambient").c_str());
 						glUniform1f(ambientValue, lightSource->ambient);
-						//fill the third variable of the DirLight struct: float diffuse
+						//third variable: float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("dirLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
 						i++;

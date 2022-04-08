@@ -33,7 +33,7 @@ bool ComponentLightSource::Update(float dt)
 bool ComponentLightSource::CleanUp()
 {
 	RELEASE(lightSource);
-
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->RemoveLight(owner);
 	return true;
 }
 
@@ -124,6 +124,7 @@ void ComponentLightSource::Load(Json& json)
 		currentLight->constant = json.at("constantAttenuationValue");
 		currentLight->linear = json.at("linearAttenuationValue");
 		currentLight->quadratic = json.at("quadraticAttenuationValue");
+
 		break;
 	}
 	}
@@ -136,7 +137,6 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Component LightSource"))
 	{	
-		DrawDeleteButton(owner, this);
 
 		ImGui::Combo("###combo", &sType, "Directional Light Source\0Point Light Source\0Focal Light Source");
 
@@ -209,6 +209,9 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 			break;
 		} 
 		} 
+		ImGui::NewLine();
+
+		DrawDeleteButton(owner, this);
 	}
 	else
 		DrawDeleteButton(owner, this);
