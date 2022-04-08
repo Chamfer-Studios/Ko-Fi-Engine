@@ -17,10 +17,10 @@ class SDL_Texture;
 class SDL_Surface;
 class MyPlane;
 
-class ComponentButton : public ComponentRenderedUI {
+class C_Button : public ComponentRenderedUI {
 public:
-	ComponentButton(GameObject* parent);
-	~ComponentButton();
+	C_Button(GameObject* parent);
+	~C_Button();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

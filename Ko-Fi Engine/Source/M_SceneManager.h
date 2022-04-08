@@ -21,7 +21,7 @@ class ComponentCanvas;
 class ComponentTransform2D;
 class ComponentText;
 class ComponentImage;
-class ComponentButton;
+class C_Button;
 
 
 enum class GameState

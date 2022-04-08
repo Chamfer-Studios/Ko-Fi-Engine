@@ -17,7 +17,7 @@
 #include "C_Collider.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
-#include "ComponentButton.h"
+#include "C_Button.h"
 #include "ComponentImage.h"
 #include "ComponentText.h"
 #include "C_RigidBody.h"
@@ -312,7 +312,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::BUTTON:
 	{
-		c = this->CreateComponent<ComponentButton>();
+		c = this->CreateComponent<C_Button>();
 		break;
 	}
 	case ComponentType::TEXT:
@@ -599,7 +599,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::BUTTON:
 		{
-			ComponentButton* buttonCmp = (ComponentButton*)component;
+			C_Button* buttonCmp = (C_Button*)component;
 			buttonCmp->Save(jsonComponent);
 			break;
 		}
@@ -747,10 +747,10 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "button")
 		{
-			ComponentButton* buttonCmp = this->GetComponent<ComponentButton>();
+			C_Button* buttonCmp = this->GetComponent<C_Button>();
 			if (buttonCmp == nullptr)
 			{
-				buttonCmp = this->CreateComponent<ComponentButton>();
+				buttonCmp = this->CreateComponent<C_Button>();
 			}
 			buttonCmp->active = true;
 			buttonCmp->Load(jsonCmp);
@@ -886,10 +886,10 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "button")
 		{
-			ComponentButton* buttonCmp = this->GetComponent<ComponentButton>();
+			C_Button* buttonCmp = this->GetComponent<C_Button>();
 			if (buttonCmp == nullptr)
 			{
-				buttonCmp = this->CreateComponent<ComponentButton>();
+				buttonCmp = this->CreateComponent<C_Button>();
 			}
 			buttonCmp->active = true;
 			buttonCmp->Load(jsonCmp);

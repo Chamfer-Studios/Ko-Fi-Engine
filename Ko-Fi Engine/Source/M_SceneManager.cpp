@@ -17,7 +17,7 @@
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
 #include "ComponentImage.h"
-#include "ComponentButton.h"
+#include "C_Button.h"
 #include "ComponentText.h"
 
 #include "R_Material.h"

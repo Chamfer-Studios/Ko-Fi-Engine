@@ -24,7 +24,7 @@
 #include "C_Script.h"
 #include "ComponentText.h"
 #include "ComponentImage.h"
-#include "ComponentButton.h"
+#include "C_Button.h"
 #include "C_Animator.h"
 #include "ComponentParticle.h"
 #include "C_Camera.h"
@@ -180,7 +180,7 @@ public:
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
 									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
-									 "GetButton", &GameObject::GetComponent<ComponentButton>,
+									 "GetButton", &GameObject::GetComponent<C_Button>,
 									 "GetImage", &GameObject::GetComponent<ComponentImage>,
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "ChangeScene", &GameObject::SetChangeScene
@@ -244,10 +244,10 @@ public:
 										 sol::constructors<void(GameObject *)>(),
 										 "SetTexture", &ComponentImage::SetTexture);
 
-		lua.new_usertype<ComponentButton>("ComponentButton",
+		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),
-										  "IsPressed", &ComponentButton::IsPressed,
-										  "IsHovered", &ComponentButton::IsHovered);
+										  "IsPressed", &C_Button::IsPressed,
+										  "IsHovered", &C_Button::IsHovered);
 
 		// Component Animator
 		lua.new_usertype<C_Animator>("ComponentAnimator",

@@ -454,7 +454,7 @@
     <ClCompile Include="Source\par_shapes.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentButton.cpp">
+    <ClCompile Include="Source\C_Button.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentText.cpp">
@@ -610,9 +610,6 @@
     <ClCompile Include="Source\C_LightSource.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>Source\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\C_Collider.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
@@ -621,9 +618,6 @@
     </ClCompile>
     <ClCompile Include="Source\Channel.cpp">
       <Filter>Source\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ComponentRigidBody.cpp">
-      <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Source\Scenes</Filter>
@@ -1740,9 +1734,6 @@
     <ClInclude Include="Source\R_Model.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Source\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SimulationEventCallback.h">
       <Filter>Source\Helpers\Physics</Filter>
     </ClInclude>
@@ -1805,7 +1796,7 @@
     <ClInclude Include="Source\IconsFontAwesome5.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentButton.h">
+    <ClInclude Include="Source\C_Button.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_truetype\stb_truetype.h">

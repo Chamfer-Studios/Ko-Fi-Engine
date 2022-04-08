@@ -13,7 +13,7 @@
 #include "ComponentTransform2D.h"
 #include "C_Material.h"
 #include "ComponentImage.h"
-#include "ComponentButton.h"
+#include "C_Button.h"
 #include "ComponentText.h"
 #include "C_Mesh.h"
 
@@ -126,7 +126,7 @@ bool MainBar::Update()
 				}
 				ImGui::EndMenu();
 			}
-			if (ImGui::BeginMenu("M_UI"))
+			if (ImGui::BeginMenu("UI"))
 			{
 				if (ImGui::MenuItem("Canvas")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr,nullptr, false);
@@ -196,7 +196,7 @@ bool MainBar::Update()
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Button");
 					go->CreateComponent<ComponentTransform2D>();
-					go->CreateComponent<ComponentButton>();
+					go->CreateComponent<C_Button>();
 					//go->CreateComponent<C_Material>();
 
 					if (canvasExists == true && lastCanvas != nullptr)

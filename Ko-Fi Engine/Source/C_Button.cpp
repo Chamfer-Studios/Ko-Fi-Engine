@@ -1,31 +1,34 @@
-#include "ComponentButton.h"
+#include "C_Button.h"
 
 #include "SDL.h"
 #include "SDL_image.h"
 
-#include "ImGuiAppLog.h"
-#include "GameObject.h"
+// Modules
 #include "Engine.h"
 #include "M_UI.h"
-#include "PanelChooser.h"
-#include "ComponentTransform2D.h"
-#include "ComponentCanvas.h"
 #include "M_Input.h"
-#include "Importer.h"
 
-ComponentButton::ComponentButton(GameObject* parent) : ComponentRenderedUI(parent)
+// GameObject
+#include "GameObject.h"
+#include "ComponentCanvas.h"
+
+#include "Importer.h"
+#include "PanelChooser.h"
+#include "ImGuiAppLog.h"
+
+C_Button::C_Button(GameObject* parent) : ComponentRenderedUI(parent)
 {
 	type = ComponentType::BUTTON;
 }
 
-ComponentButton::~ComponentButton()
+C_Button::~C_Button()
 {
 	FreeTextures(BUTTON_STATE::IDLE);
 	FreeTextures(BUTTON_STATE::HOVER);
 	FreeTextures(BUTTON_STATE::PRESSED);
 }
 
-bool ComponentButton::CleanUp()
+bool C_Button::CleanUp()
 {
 	FreeTextures(BUTTON_STATE::IDLE);
 	FreeTextures(BUTTON_STATE::HOVER);
@@ -34,7 +37,7 @@ bool ComponentButton::CleanUp()
 }
 
 
-bool ComponentButton::Update(float dt)
+bool C_Button::Update(float dt)
 {
 	float2 mouseScreenPosition = { (float)owner->GetEngine()->GetInput()->GetMouseX(), (float)owner->GetEngine()->GetInput()->GetMouseY() };
 	ComponentCanvas* canvas = owner->GetComponent<ComponentTransform2D>()->GetCanvas();
@@ -63,12 +66,12 @@ bool ComponentButton::Update(float dt)
 	return true;
 }
 
-bool ComponentButton::PostUpdate(float dt)
+bool C_Button::PostUpdate(float dt)
 {
 	return true;
 }
 
-bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
+bool C_Button::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Button", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
@@ -152,7 +155,7 @@ bool ComponentButton::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-void ComponentButton::Save(Json& json) const
+void C_Button::Save(Json& json) const
 {
 	json["type"] = "button";
 	json["idleTexture"] = idleOpenGLTexture.path;
@@ -160,7 +163,7 @@ void ComponentButton::Save(Json& json) const
 	json["pressedTexture"] = pressedOpenGLTexture.path;
 }
 
-void ComponentButton::Load(Json& json)
+void C_Button::Load(Json& json)
 {
 	std::string path = json["idleTexture"].get<std::string>();
 	SetIdleTexture(path.c_str());
@@ -172,7 +175,7 @@ void ComponentButton::Load(Json& json)
 	SetPressedTexture(path.c_str());
 }
 
-void ComponentButton::Draw()
+void C_Button::Draw()
 {
 	R_Texture openGLTexture;
 
@@ -193,25 +196,25 @@ void ComponentButton::Draw()
 	owner->GetEngine()->GetUI()->EndUIRender();
 }
 
-void ComponentButton::SetIdleTexture(const char* path)
+void C_Button::SetIdleTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::IDLE);
 	Importer::GetInstance()->textureImporter->Import(path,&idleOpenGLTexture);
 }
 
-void ComponentButton::SetHoverTexture(const char* path)
+void C_Button::SetHoverTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::HOVER);
 	Importer::GetInstance()->textureImporter->Import(path, &hoverOpenGLTexture);
 }
 
-void ComponentButton::SetPressedTexture(const char* path)
+void C_Button::SetPressedTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::PRESSED);
 	Importer::GetInstance()->textureImporter->Import(path, &pressedOpenGLTexture);
 }
 
-void ComponentButton::FreeTextures(BUTTON_STATE type)
+void C_Button::FreeTextures(BUTTON_STATE type)
 {
 	GLuint id = 0;
 	switch (type) {
@@ -239,7 +242,7 @@ void ComponentButton::FreeTextures(BUTTON_STATE type)
 	}
 }
 
-bool ComponentButton::IsPressed()
+bool C_Button::IsPressed()
 {
 	if (state == BUTTON_STATE::PRESSED && !isPressed)
 	{
@@ -253,7 +256,7 @@ bool ComponentButton::IsPressed()
 	return false;
 }
 
-bool ComponentButton::IsHovered()
+bool C_Button::IsHovered()
 {
 	if (state == BUTTON_STATE::HOVER && !isHovered)
 	{

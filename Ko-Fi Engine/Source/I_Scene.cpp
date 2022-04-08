@@ -21,7 +21,7 @@
 #include "C_Collider.h"
 #include "C_RigidBody.h"
 #include "C_Script.h"
-#include "ComponentButton.h"
+#include "C_Button.h"
 #include "ComponentCanvas.h"
 #include "ComponentImage.h"
 #include "ComponentText.h"
@@ -435,7 +435,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::BUTTON:
 			{
-				ComponentButton* buttonCmp = (ComponentButton*)component;
+				C_Button* buttonCmp = (C_Button*)component;
 				buttonCmp->Save(jsonComponent);
 				break;
 			}
@@ -669,10 +669,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "button")
 					{
-						ComponentButton* buttonCmp = go->GetComponent<ComponentButton>();
+						C_Button* buttonCmp = go->GetComponent<C_Button>();
 						if (buttonCmp == nullptr)
 						{
-							buttonCmp = (ComponentButton*)go->AddComponentByType(ComponentType::BUTTON);
+							buttonCmp = (C_Button*)go->AddComponentByType(ComponentType::BUTTON);
 						}
 						buttonCmp->active = true;
 						buttonCmp->Load(jsonCmp);
