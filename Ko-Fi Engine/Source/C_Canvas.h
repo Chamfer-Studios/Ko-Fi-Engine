@@ -4,15 +4,15 @@
 
 #include "MathGeoLib/Math/float2.h"
 
-#include "ComponentTransform2D.h"
+#include "C_Transform2D.h"
 
 class KoFiEngine;
 
-class ComponentCanvas : public ComponentTransform2D
+class C_Canvas : public C_Transform2D
 {
 public:
-	ComponentCanvas(GameObject* parent);
-	~ComponentCanvas();
+	C_Canvas(GameObject* parent);
+	~C_Canvas();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

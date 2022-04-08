@@ -10,13 +10,13 @@
 
 // GameObject
 #include "GameObject.h"
-#include "ComponentCanvas.h"
+#include "C_Canvas.h"
 
 #include "Importer.h"
 #include "PanelChooser.h"
 #include "ImGuiAppLog.h"
 
-C_Button::C_Button(GameObject* parent) : ComponentRenderedUI(parent)
+C_Button::C_Button(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::BUTTON;
 }
@@ -40,10 +40,10 @@ bool C_Button::CleanUp()
 bool C_Button::Update(float dt)
 {
 	float2 mouseScreenPosition = { (float)owner->GetEngine()->GetInput()->GetMouseX(), (float)owner->GetEngine()->GetInput()->GetMouseY() };
-	ComponentCanvas* canvas = owner->GetComponent<ComponentTransform2D>()->GetCanvas();
+	C_Canvas* canvas = owner->GetComponent<C_Transform2D>()->GetCanvas();
 	if (canvas != nullptr) {
 		float2 mouseLogicalPosition = canvas->ScreenToLogical(mouseScreenPosition);
-		bool mouseWithinBounds = owner->GetComponent<ComponentTransform2D>()->CheckPointWithinBounds(mouseLogicalPosition);
+		bool mouseWithinBounds = owner->GetComponent<C_Transform2D>()->CheckPointWithinBounds(mouseLogicalPosition);
 
 		bool mouseLeftRepeat = owner->GetEngine()->GetInput()->GetMouseButton(1) == KEY_STATE::KEY_REPEAT;
 		bool mouseLeftUp = owner->GetEngine()->GetInput()->GetMouseButton(1) == KEY_STATE::KEY_UP;
@@ -192,7 +192,7 @@ void C_Button::Draw()
 	}
 
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
+	owner->GetComponent<C_Transform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
 	owner->GetEngine()->GetUI()->EndUIRender();
 }
 

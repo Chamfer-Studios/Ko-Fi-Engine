@@ -14,11 +14,11 @@
 #include "C_Camera.h"
 #include "C_Script.h"
 // UI
-#include "ComponentCanvas.h"
-#include "ComponentTransform2D.h"
-#include "ComponentImage.h"
+#include "C_Canvas.h"
+#include "C_Transform2D.h"
+#include "C_Image.h"
 #include "C_Button.h"
-#include "ComponentText.h"
+#include "C_Text.h"
 
 #include "R_Material.h"
 #include "R_Texture.h"

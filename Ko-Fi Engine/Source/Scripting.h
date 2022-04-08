@@ -22,8 +22,8 @@
 #include "C_Mesh.h"
 #include "C_RigidBody.h"
 #include "C_Script.h"
-#include "ComponentText.h"
-#include "ComponentImage.h"
+#include "C_Text.h"
+#include "C_Image.h"
 #include "C_Button.h"
 #include "C_Animator.h"
 #include "ComponentParticle.h"
@@ -174,14 +174,14 @@ public:
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
-									 "GetText", &GameObject::GetComponent<ComponentText>,
+									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
 									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
 									 "GetButton", &GameObject::GetComponent<C_Button>,
-									 "GetImage", &GameObject::GetComponent<ComponentImage>,
+									 "GetImage", &GameObject::GetComponent<C_Image>,
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "ChangeScene", &GameObject::SetChangeScene
 
@@ -234,15 +234,15 @@ public:
 			);
 
 		// Component Text
-		lua.new_usertype<ComponentText>("ComponentText",
+		lua.new_usertype<C_Text>("C_Text",
 										sol::constructors<void(GameObject *)>(),
-										"GetTextValue", &ComponentText::GetTextValue,
-										"SetTextValue", &ComponentText::SetTextValue);
+										"GetTextValue", &C_Text::GetTextValue,
+										"SetTextValue", &C_Text::SetTextValue);
 
 		// Component Image
-		lua.new_usertype<ComponentImage>("ComponentImage",
+		lua.new_usertype<C_Image>("C_Image",
 										 sol::constructors<void(GameObject *)>(),
-										 "SetTexture", &ComponentImage::SetTexture);
+										 "SetTexture", &C_Image::SetTexture);
 
 		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),

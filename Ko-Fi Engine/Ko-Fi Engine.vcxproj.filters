@@ -442,13 +442,13 @@
     <ClCompile Include="Source\M_UI.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentTransform2D.cpp">
+    <ClCompile Include="Source\C_Transform2D.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentCanvas.cpp">
+    <ClCompile Include="Source\C_Canvas.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentImage.cpp">
+    <ClCompile Include="Source\C_Image.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\par_shapes.cpp">
@@ -457,7 +457,7 @@
     <ClCompile Include="Source\C_Button.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentText.cpp">
+    <ClCompile Include="Source\C_Text.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\ImGuizmo\include\GraphEditor.cpp">
@@ -1641,7 +1641,7 @@
     <ClInclude Include="Source\PanelSettings.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentRenderedUI.h">
+    <ClInclude Include="Source\C_RenderedUI.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\R_ParticleResource.h">
@@ -1784,13 +1784,13 @@
     <ClInclude Include="Source\M_UI.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentTransform2D.h">
+    <ClInclude Include="Source\C_Transform2D.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentCanvas.h">
+    <ClInclude Include="Source\C_Canvas.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentImage.h">
+    <ClInclude Include="Source\C_Image.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\IconsFontAwesome5.h">
@@ -1805,7 +1805,7 @@
     <ClInclude Include="Source\External\SDL_ttf\include\SDL_ttf.h">
       <Filter>Libs\SDL_ttf</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentText.h">
+    <ClInclude Include="Source\C_Text.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>

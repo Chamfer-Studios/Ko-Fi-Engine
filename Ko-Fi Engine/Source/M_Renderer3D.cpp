@@ -29,7 +29,7 @@
 #include "C_Material.h"
 #include "C_Camera.h"
 #include "C_Collider.h"
-#include "ComponentRenderedUI.h"
+#include "C_RenderedUI.h"
 #include "C_LightSource.h"
 #include "R_Material.h"
 #include "PieShape.h"
@@ -334,7 +334,7 @@ void M_Renderer3D::RenderScene()
 	{
 		if (go->active)
 		{
-			ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 			if (cRenderedUI)
 			{
 				RenderUI(go);
@@ -378,7 +378,7 @@ void M_Renderer3D::RenderPreviewScene()
 	{
 		if (go->active)
 		{
-			ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 			if (cRenderedUI)
 			{
 				RenderUI(go);
@@ -808,7 +808,7 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 
 void M_Renderer3D::RenderUI(GameObject* go)
 {
-	ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
+	C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 	cRenderedUI->Draw();
 }
 

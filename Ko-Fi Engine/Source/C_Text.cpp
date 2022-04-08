@@ -1,7 +1,7 @@
-#include "ComponentText.h"
+#include "C_Text.h"
 
 #include "GameObject.h"
-#include "ComponentTransform2D.h"
+#include "C_Transform2D.h"
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "Engine.h"
@@ -10,46 +10,46 @@
 #include "M_Editor.h"
 #include "M_UI.h"
 
-ComponentText::ComponentText(GameObject* parent) : ComponentRenderedUI(parent)
+C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::TEXT;
 	SetTextValue("Hello world!");
 }
 
-ComponentText::~ComponentText()
+C_Text::~C_Text()
 {
 	FreeTextures();
 }
 
-bool ComponentText::CleanUp()
+bool C_Text::CleanUp()
 {
 	FreeTextures();
 	return true;
 }
 
-void ComponentText::Save(Json& json) const
+void C_Text::Save(Json& json) const
 {
 	json["type"] = "text";
 	json["value"] = textValue;
 }
 
-void ComponentText::Load(Json& json)
+void C_Text::Load(Json& json)
 {
 	std::string value = json["value"].get<std::string>();
 	SetTextValue(value);
 }
 
-bool ComponentText::Update(float dt)
+bool C_Text::Update(float dt)
 {
 	return true;
 }
 
-bool ComponentText::PostUpdate(float dt)
+bool C_Text::PostUpdate(float dt)
 {
 	return true;
 }
 
-bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
+bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Text", ImGuiTreeNodeFlags_AllowItemOverlap)) 
 	{
@@ -65,7 +65,7 @@ bool ComponentText::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-void ComponentText::SetTextValue(std::string newValue)
+void C_Text::SetTextValue(std::string newValue)
 {
 	FreeTextures();
 
@@ -94,7 +94,7 @@ void ComponentText::SetTextValue(std::string newValue)
 
 	int w, h;
 	TTF_SizeUTF8(owner->GetEngine()->GetUI()->rubik, newValue.c_str(), &w, &h);
-	owner->GetComponent<ComponentTransform2D>()->SetSize({ (float)w, (float)h });
+	owner->GetComponent<C_Transform2D>()->SetSize({ (float)w, (float)h });
 
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
@@ -103,14 +103,14 @@ void ComponentText::SetTextValue(std::string newValue)
 	SDL_FreeSurface(dstSurface);
 }
 
-void ComponentText::Draw()
+void C_Text::Draw()
 {
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture, { 255, 255, 255 });
+	owner->GetComponent<C_Transform2D>()->drawablePlane->DrawPlane2D(openGLTexture, { 255, 255, 255 });
 	owner->GetEngine()->GetUI()->EndUIRender();
 }
 
-GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)
+GLuint C_Text::SurfaceToOpenGLTexture(SDL_Surface* surface)
 {
 	GLenum textureFormat;
 	Uint8 nOfColors = surface->format->BytesPerPixel;
@@ -146,7 +146,7 @@ GLuint ComponentText::SurfaceToOpenGLTexture(SDL_Surface* surface)
 	return id;
 }
 
-void ComponentText::FreeTextures()
+void C_Text::FreeTextures()
 {
 	if (openGLTexture != 0)
 		glDeleteTextures(1, &openGLTexture);

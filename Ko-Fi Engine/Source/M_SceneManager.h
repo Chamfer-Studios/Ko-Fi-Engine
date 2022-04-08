@@ -17,10 +17,10 @@ class C_Mesh;
 class C_Material;
 class C_Info;
 class C_Camera;
-class ComponentCanvas;
-class ComponentTransform2D;
-class ComponentText;
-class ComponentImage;
+class C_Canvas;
+class C_Transform2D;
+class C_Text;
+class C_Image;
 class C_Button;
 
 

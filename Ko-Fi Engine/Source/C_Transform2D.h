@@ -5,10 +5,10 @@
 #include "MathGeoLib/Math/float3.h"
 
 class KoFiEngine;
-class ComponentCanvas;
+class C_Canvas;
 class MyPlane;
 
-class ComponentTransform2D : public Component {
+class C_Transform2D : public Component {
 public:
 	enum class Anchor {
 		TOP_LEFT,
@@ -22,8 +22,8 @@ public:
 		BOTTOM_RIGHT,
 	};
 public:
-	ComponentTransform2D(GameObject* parent);
-	~ComponentTransform2D();
+	C_Transform2D(GameObject* parent);
+	~C_Transform2D();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
@@ -51,7 +51,7 @@ public:
 	virtual float2 GetNormalizedPivotOffset();
 	virtual float2 GetAnchorPosition(Anchor _anchor);
 
-	virtual ComponentCanvas* GetCanvas();
+	virtual C_Canvas* GetCanvas();
 	virtual float2 GetCanvasLogicalSize();
 
 	bool CheckPointWithinBounds(float2 vec);

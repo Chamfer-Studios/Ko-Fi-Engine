@@ -1,4 +1,4 @@
-#include "ComponentTransform2D.h"
+#include "C_Transform2D.h"
 
 #include "Engine.h"
 #include "M_Input.h"
@@ -6,14 +6,14 @@
 #include "M_Editor.h"
 
 #include "GameObject.h"
-#include "ComponentCanvas.h"
+#include "C_Canvas.h"
 #include "M_Window.h"
 
 #include "ImGuiAppLog.h"
 
 #include "PanelChooser.h"
 
-ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(parent)
+C_Transform2D::C_Transform2D(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::TRANSFORM2D;
 
@@ -26,17 +26,17 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	drawablePlane = new MyPlane(owner);
 }
 
-ComponentTransform2D::~ComponentTransform2D()
+C_Transform2D::~C_Transform2D()
 {
 	delete drawablePlane;
 }
 
-bool ComponentTransform2D::CleanUp()
+bool C_Transform2D::CleanUp()
 {
 	return true;
 }
 
-void ComponentTransform2D::Save(Json& json) const
+void C_Transform2D::Save(Json& json) const
 {
 	json["type"] = "transform2D";
 
@@ -60,7 +60,7 @@ void ComponentTransform2D::Save(Json& json) const
 	json["anchor"] = (int)GetAnchor();
 }
 
-void ComponentTransform2D::Load(Json& json)
+void C_Transform2D::Load(Json& json)
 {
 	std::vector<float> values = json["position"].get<std::vector<float>>();
 	float2 position;
@@ -92,15 +92,15 @@ void ComponentTransform2D::Load(Json& json)
 	SetPivot(pivot);
 
 	int anchor = json["anchor"].get<int>();
-	SetAnchor((ComponentTransform2D::Anchor)anchor);
+	SetAnchor((C_Transform2D::Anchor)anchor);
 }
 
-bool ComponentTransform2D::Update(float dt)
+bool C_Transform2D::Update(float dt)
 {
 	return true;
 }
 
-bool ComponentTransform2D::InspectorDraw(PanelChooser* chooser)
+bool C_Transform2D::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Transform 2D", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
@@ -152,30 +152,30 @@ bool ComponentTransform2D::InspectorDraw(PanelChooser* chooser)
 	return true;
 }
 
-void ComponentTransform2D::SetPosition(const float2& newPosition)
+void C_Transform2D::SetPosition(const float2& newPosition)
 {
 	position = newPosition;
 }
-void ComponentTransform2D::SetPivot(const float2& newPivot)
+void C_Transform2D::SetPivot(const float2& newPivot)
 {
 	pivot = newPivot;
 }
-void ComponentTransform2D::SetRotation(const float3& newRotation)
+void C_Transform2D::SetRotation(const float3& newRotation)
 {
 	rotation = newRotation;
 }
-void ComponentTransform2D::SetSize(const float2& newSize)
+void C_Transform2D::SetSize(const float2& newSize)
 {
 	size = newSize;
 }
-void ComponentTransform2D::SetAnchor(const Anchor& newAnchor)
+void C_Transform2D::SetAnchor(const Anchor& newAnchor)
 {
 	anchor = newAnchor;
 }
 
-float2 ComponentTransform2D::GetNormalizedPosition()
+float2 C_Transform2D::GetNormalizedPosition()
 {
-	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
+	C_Transform2D* parentTransform = owner->GetParent()->GetComponent<C_Transform2D>();
 	if (parentTransform == nullptr) return float2(position.x, position.y);
 
 	float2 normalizedPosition = GetCanvas()->LogicalToViewport(position);
@@ -185,60 +185,60 @@ float2 ComponentTransform2D::GetNormalizedPosition()
 	return float2(normalizedPosition.x - (1.0f - mask.x) * (normalizedSize.x * pivot.x), normalizedPosition.y - (1.0f - mask.y) * (normalizedSize.y * pivot.y)); // VODOO
 }
 
-float2 ComponentTransform2D::GetNormalizedSize()
+float2 C_Transform2D::GetNormalizedSize()
 {
-	ComponentTransform2D* parentTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
+	C_Transform2D* parentTransform = owner->GetParent()->GetComponent<C_Transform2D>();
 	if (parentTransform == nullptr) return size;
 
 	float2 normalizedSize = GetCanvas()->LogicalToViewport(size);
 	return { normalizedSize.x * mask.x, normalizedSize.y * mask.y };
 }
 
-float2 ComponentTransform2D::GetNormalizedPivotOffset()
+float2 C_Transform2D::GetNormalizedPivotOffset()
 {
 	float2 normalizedSize = GetNormalizedSize();
 	return { pivot.x * normalizedSize.x, pivot.y * normalizedSize.y };
 }
 
-float2 ComponentTransform2D::GetAnchorPosition(Anchor _anchor)
+float2 C_Transform2D::GetAnchorPosition(Anchor _anchor)
 {
 	float2 normalizedPosition = GetNormalizedPosition();
 	float2 normalizedSize = GetNormalizedSize();
 
 	switch (_anchor)
 	{
-	case ComponentTransform2D::Anchor::TOP_LEFT:
+	case C_Transform2D::Anchor::TOP_LEFT:
 		return { normalizedPosition.x, normalizedPosition.y + normalizedSize.y };
 		break;
-	case ComponentTransform2D::Anchor::TOP_CENTER:
+	case C_Transform2D::Anchor::TOP_CENTER:
 		return { normalizedPosition.x + normalizedSize.x / 2, normalizedPosition.y + normalizedSize.y };
 
 		break;
-	case ComponentTransform2D::Anchor::TOP_RIGHT:
+	case C_Transform2D::Anchor::TOP_RIGHT:
 		return { normalizedPosition.x + normalizedSize.x, normalizedPosition.y + normalizedSize.y };
 
 		break;
-	case ComponentTransform2D::Anchor::LEFT:
+	case C_Transform2D::Anchor::LEFT:
 		return { normalizedPosition.x, normalizedPosition.y + normalizedSize.y / 2 };
 
 		break;
-	case ComponentTransform2D::Anchor::CENTER:
+	case C_Transform2D::Anchor::CENTER:
 		return { normalizedPosition.x + normalizedSize.x / 2, normalizedPosition.y + normalizedSize.y / 2 };
 
 		break;
-	case ComponentTransform2D::Anchor::RIGHT:
+	case C_Transform2D::Anchor::RIGHT:
 		return { normalizedPosition.x + normalizedSize.x, normalizedPosition.y + normalizedSize.y / 2 };
 
 		break;
-	case ComponentTransform2D::Anchor::BOTTOM_LEFT:
+	case C_Transform2D::Anchor::BOTTOM_LEFT:
 		return { normalizedPosition.x, normalizedPosition.y };
 
 		break;
-	case ComponentTransform2D::Anchor::BOTTOM_CENTER:
+	case C_Transform2D::Anchor::BOTTOM_CENTER:
 		return { normalizedPosition.x + normalizedSize.x / 2, normalizedPosition.y };
 
 		break;
-	case ComponentTransform2D::Anchor::BOTTOM_RIGHT:
+	case C_Transform2D::Anchor::BOTTOM_RIGHT:
 		return { normalizedPosition.x + normalizedSize.x, normalizedPosition.y };
 
 		break;
@@ -248,25 +248,25 @@ float2 ComponentTransform2D::GetAnchorPosition(Anchor _anchor)
 	return { 0, 0 };
 }
 
-ComponentCanvas* ComponentTransform2D::GetCanvas()
+C_Canvas* C_Transform2D::GetCanvas()
 {
-	ComponentCanvas* canvas = owner->GetParent()->GetComponent<ComponentCanvas>();
+	C_Canvas* canvas = owner->GetParent()->GetComponent<C_Canvas>();
 	if (canvas != nullptr) return canvas;
-	ComponentTransform2D* pTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
+	C_Transform2D* pTransform = owner->GetParent()->GetComponent<C_Transform2D>();
 	if (pTransform != nullptr) return pTransform->GetCanvas();
 	return nullptr;
 }
 
-float2 ComponentTransform2D::GetCanvasLogicalSize()
+float2 C_Transform2D::GetCanvasLogicalSize()
 {
-	ComponentCanvas* canvas = owner->GetParent()->GetComponent<ComponentCanvas>();
+	C_Canvas* canvas = owner->GetParent()->GetComponent<C_Canvas>();
 	if (canvas != nullptr) return canvas->GetLogicalSize();
-	ComponentTransform2D* pTransform = owner->GetParent()->GetComponent<ComponentTransform2D>();
+	C_Transform2D* pTransform = owner->GetParent()->GetComponent<C_Transform2D>();
 	if (pTransform != nullptr) return pTransform->GetCanvasLogicalSize();
 	return { 0, 0 };
 }
 
-bool ComponentTransform2D::CheckPointWithinBounds(float2 vec)
+bool C_Transform2D::CheckPointWithinBounds(float2 vec)
 {
 	float2 normalizedPosition = GetNormalizedPosition();
 	float2 normalizedSize = GetNormalizedSize();

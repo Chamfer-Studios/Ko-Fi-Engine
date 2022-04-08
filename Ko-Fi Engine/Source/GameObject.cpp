@@ -15,11 +15,11 @@
 #include "C_Script.h"
 #include "C_Animator.h"
 #include "C_Collider.h"
-#include "ComponentCanvas.h"
-#include "ComponentTransform2D.h"
+#include "C_Canvas.h"
+#include "C_Transform2D.h"
 #include "C_Button.h"
-#include "ComponentImage.h"
-#include "ComponentText.h"
+#include "C_Image.h"
+#include "C_Text.h"
 #include "C_RigidBody.h"
 #include "C_Transform.h"
 #include "C_Info.h"
@@ -297,17 +297,17 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::TRANSFORM2D:
 	{
-		c = this->CreateComponent<ComponentTransform2D>();
+		c = this->CreateComponent<C_Transform2D>();
 		break;
 	}
 	case ComponentType::CANVAS:
 	{
-		c = this->CreateComponent<ComponentCanvas>();
+		c = this->CreateComponent<C_Canvas>();
 		break;
 	}
 	case ComponentType::IMAGE:
 	{
-		c = this->CreateComponent<ComponentImage>();
+		c = this->CreateComponent<C_Image>();
 		break;
 	}
 	case ComponentType::BUTTON:
@@ -317,7 +317,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::TEXT:
 	{
-		c = this->CreateComponent<ComponentText>();
+		c = this->CreateComponent<C_Text>();
 		break;
 	}
 	case ComponentType::TRANSFORM:
@@ -581,19 +581,19 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::TRANSFORM2D:
 		{
-			ComponentTransform2D* transform2DCmp = (ComponentTransform2D*)component;
+			C_Transform2D* transform2DCmp = (C_Transform2D*)component;
 			transform2DCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::CANVAS:
 		{
-			ComponentCanvas* canvasCmp = (ComponentCanvas*)component;
+			C_Canvas* canvasCmp = (C_Canvas*)component;
 			canvasCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::IMAGE:
 		{
-			ComponentImage* imageCmp = (ComponentImage*)component;
+			C_Image* imageCmp = (C_Image*)component;
 			imageCmp->Save(jsonComponent);
 			break;
 		}
@@ -605,7 +605,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::TEXT:
 		{
-			ComponentText* textCmp = (ComponentText*)component;
+			C_Text* textCmp = (C_Text*)component;
 			textCmp->Save(jsonComponent);
 			break;
 		}
@@ -717,30 +717,30 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "transform2D")
 		{
-			ComponentTransform2D* transform2DCmp = this->GetComponent<ComponentTransform2D>();
+			C_Transform2D* transform2DCmp = this->GetComponent<C_Transform2D>();
 			if (transform2DCmp == nullptr)
 			{
-				transform2DCmp = this->CreateComponent<ComponentTransform2D>();
+				transform2DCmp = this->CreateComponent<C_Transform2D>();
 			}
 			transform2DCmp->active = true;
 			transform2DCmp->Load(jsonCmp);
 		}
 		else if (type == "canvas")
 		{
-			ComponentCanvas* canvasCmp = this->GetComponent<ComponentCanvas>();
+			C_Canvas* canvasCmp = this->GetComponent<C_Canvas>();
 			if (canvasCmp == nullptr)
 			{
-				canvasCmp = this->CreateComponent<ComponentCanvas>();
+				canvasCmp = this->CreateComponent<C_Canvas>();
 			}
 			canvasCmp->active = true;
 			canvasCmp->Load(jsonCmp);
 		}
 		else if (type == "image")
 		{
-			ComponentImage* imageCmp = this->GetComponent<ComponentImage>();
+			C_Image* imageCmp = this->GetComponent<C_Image>();
 			if (imageCmp == nullptr)
 			{
-				imageCmp = this->CreateComponent<ComponentImage>();
+				imageCmp = this->CreateComponent<C_Image>();
 			}
 			imageCmp->active = true;
 			imageCmp->Load(jsonCmp);
@@ -757,10 +757,10 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "text")
 		{
-			ComponentText* textCmp = this->GetComponent<ComponentText>();
+			C_Text* textCmp = this->GetComponent<C_Text>();
 			if (textCmp == nullptr)
 			{
-				textCmp = this->CreateComponent<ComponentText>();
+				textCmp = this->CreateComponent<C_Text>();
 			}
 			textCmp->active = true;
 			textCmp->Load(jsonCmp);
@@ -856,30 +856,30 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "transform2D")
 		{
-			ComponentTransform2D* transform2DCmp = this->GetComponent<ComponentTransform2D>();
+			C_Transform2D* transform2DCmp = this->GetComponent<C_Transform2D>();
 			if (transform2DCmp == nullptr)
 			{
-				transform2DCmp = this->CreateComponent<ComponentTransform2D>();
+				transform2DCmp = this->CreateComponent<C_Transform2D>();
 			}
 			transform2DCmp->active = true;
 			transform2DCmp->Load(jsonCmp);
 		}
 		else if (type == "canvas")
 		{
-			ComponentCanvas* canvasCmp = this->GetComponent<ComponentCanvas>();
+			C_Canvas* canvasCmp = this->GetComponent<C_Canvas>();
 			if (canvasCmp == nullptr)
 			{
-				canvasCmp = this->CreateComponent<ComponentCanvas>();
+				canvasCmp = this->CreateComponent<C_Canvas>();
 			}
 			canvasCmp->active = true;
 			canvasCmp->Load(jsonCmp);
 		}
 		else if (type == "image")
 		{
-			ComponentImage* imageCmp = this->GetComponent<ComponentImage>();
+			C_Image* imageCmp = this->GetComponent<C_Image>();
 			if (imageCmp == nullptr)
 			{
-				imageCmp = this->CreateComponent<ComponentImage>();
+				imageCmp = this->CreateComponent<C_Image>();
 			}
 			imageCmp->active = true;
 			imageCmp->Load(jsonCmp);
@@ -896,10 +896,10 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "text")
 		{
-			ComponentText* textCmp = this->GetComponent<ComponentText>();
+			C_Text* textCmp = this->GetComponent<C_Text>();
 			if (textCmp == nullptr)
 			{
-				textCmp = this->CreateComponent<ComponentText>();
+				textCmp = this->CreateComponent<C_Text>();
 			}
 			textCmp->active = true;
 			textCmp->Load(jsonCmp);

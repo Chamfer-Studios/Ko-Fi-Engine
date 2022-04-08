@@ -2,10 +2,10 @@
 
 #include "Component.h"
 
-class ComponentRenderedUI : public Component {
+class C_RenderedUI : public Component {
 public:
-	ComponentRenderedUI(GameObject* parent) : Component(parent) {};
-	~ComponentRenderedUI() {};
+	C_RenderedUI(GameObject* parent) : Component(parent) {};
+	~C_RenderedUI() {};
 
 	virtual void Save(Json& json) const {};
 	virtual void Load(Json& json) {};

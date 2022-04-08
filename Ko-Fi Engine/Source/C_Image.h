@@ -2,8 +2,8 @@
 #define _COMPONENT_IMAGE_H_
 
 #include "Component.h"
-#include "ComponentTransform2D.h"
-#include "ComponentRenderedUI.h"
+#include "C_Transform2D.h"
+#include "C_RenderedUI.h"
 
 #include "R_Texture.h"
 
@@ -20,10 +20,10 @@ class SDL_Texture;
 class SDL_Surface;
 class MyPlane;
 
-class ComponentImage : public ComponentRenderedUI {
+class C_Image : public C_RenderedUI {
 public:
-	ComponentImage(GameObject* parent);
-	~ComponentImage();
+	C_Image(GameObject* parent);
+	~C_Image();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

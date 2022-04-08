@@ -22,10 +22,10 @@
 #include "C_RigidBody.h"
 #include "C_Script.h"
 #include "C_Button.h"
-#include "ComponentCanvas.h"
-#include "ComponentImage.h"
-#include "ComponentText.h"
-#include "ComponentTransform2D.h"
+#include "C_Canvas.h"
+#include "C_Image.h"
+#include "C_Text.h"
+#include "C_Transform2D.h"
 #include "ComponentParticle.h"
 #include "C_Animator.h"
 #include "C_LightSource.h"
@@ -417,19 +417,19 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::TRANSFORM2D:
 			{
-				ComponentTransform2D* transform2DCmp = (ComponentTransform2D*)component;
+				C_Transform2D* transform2DCmp = (C_Transform2D*)component;
 				transform2DCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::CANVAS:
 			{
-				ComponentCanvas* canvasCmp = (ComponentCanvas*)component;
+				C_Canvas* canvasCmp = (C_Canvas*)component;
 				canvasCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::IMAGE:
 			{
-				ComponentImage* imageCmp = (ComponentImage*)component;
+				C_Image* imageCmp = (C_Image*)component;
 				imageCmp->Save(jsonComponent);
 				break;
 			}
@@ -441,7 +441,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::TEXT:
 			{
-				ComponentText* textCmp = (ComponentText*)component;
+				C_Text* textCmp = (C_Text*)component;
 				textCmp->Save(jsonComponent);
 				break;
 			}
@@ -639,30 +639,30 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "transform2D")
 					{
-						ComponentTransform2D* transform2DCmp = go->GetComponent<ComponentTransform2D>();
+						C_Transform2D* transform2DCmp = go->GetComponent<C_Transform2D>();
 						if (transform2DCmp == nullptr)
 						{
-							transform2DCmp = (ComponentTransform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);
+							transform2DCmp = (C_Transform2D*)go->AddComponentByType(ComponentType::TRANSFORM2D);
 						}
 						transform2DCmp->active = true;
 						transform2DCmp->Load(jsonCmp);
 					}
 					else if (type == "canvas")
 					{
-						ComponentCanvas* canvasCmp = go->GetComponent<ComponentCanvas>();
+						C_Canvas* canvasCmp = go->GetComponent<C_Canvas>();
 						if (canvasCmp == nullptr)
 						{
-							canvasCmp = (ComponentCanvas*)go->AddComponentByType(ComponentType::CANVAS);
+							canvasCmp = (C_Canvas*)go->AddComponentByType(ComponentType::CANVAS);
 						}
 						canvasCmp->active = true;
 						canvasCmp->Load(jsonCmp);
 					}
 					else if (type == "image")
 					{
-						ComponentImage* imageCmp = go->GetComponent<ComponentImage>();
+						C_Image* imageCmp = go->GetComponent<C_Image>();
 						if (imageCmp == nullptr)
 						{
-							imageCmp = (ComponentImage*)go->AddComponentByType(ComponentType::IMAGE);
+							imageCmp = (C_Image*)go->AddComponentByType(ComponentType::IMAGE);
 						}
 						imageCmp->active = true;
 						imageCmp->Load(jsonCmp);
@@ -679,10 +679,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "text")
 					{
-						ComponentText* textCmp = go->GetComponent<ComponentText>();
+						C_Text* textCmp = go->GetComponent<C_Text>();
 						if (textCmp == nullptr)
 						{
-							textCmp = (ComponentText*)go->AddComponentByType(ComponentType::TEXT);
+							textCmp = (C_Text*)go->AddComponentByType(ComponentType::TEXT);
 						}
 						textCmp->active = true;
 						textCmp->Load(jsonCmp);

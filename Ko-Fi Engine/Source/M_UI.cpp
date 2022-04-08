@@ -15,7 +15,7 @@
 
 
 #include "C_Mesh.h"
-#include "ComponentTransform2D.h"
+#include "C_Transform2D.h"
 #include "C_Camera.h"
 
 #include "SDL.h"
@@ -78,7 +78,7 @@ void MyPlane::DrawPlane2D(R_Texture* texture, SDL_Color color)
 
 void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 	if (texture == 0) return;
-	ComponentTransform2D* cTransform = owner->GetComponent<ComponentTransform2D>();
+	C_Transform2D* cTransform = owner->GetComponent<C_Transform2D>();
 
 	float2 normalizedPosition = cTransform->GetNormalizedPosition();
 	float2 normalizedSize = cTransform->GetNormalizedSize();

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Component.h"
-#include "ComponentTransform2D.h"
-#include "ComponentRenderedUI.h"
+#include "C_Transform2D.h"
+#include "C_RenderedUI.h"
 
 #include "R_Texture.h"
 
@@ -19,10 +19,10 @@ class SDL_Texture;
 class SDL_Surface;
 class MyPlane;
 
-class ComponentText : public ComponentRenderedUI {
+class C_Text : public C_RenderedUI {
 public:
-	ComponentText(GameObject* parent);
-	~ComponentText();
+	C_Text(GameObject* parent);
+	~C_Text();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

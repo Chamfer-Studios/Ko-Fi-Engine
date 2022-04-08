@@ -1,8 +1,8 @@
-#include "ComponentImage.h"
+#include "C_Image.h"
 
 #include "C_Mesh.h"
 #include "GameObject.h"
-#include "ComponentTransform2D.h"
+#include "C_Transform2D.h"
 #include "C_Material.h"
 #include "C_Transform.h"
 #include "M_Camera3D.h"
@@ -27,46 +27,46 @@
 #include "glew.h"
 #include <vector>
 
-ComponentImage::ComponentImage(GameObject* parent) : ComponentRenderedUI(parent)
+C_Image::C_Image(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::IMAGE;
 }
 
-ComponentImage::~ComponentImage()
+C_Image::~C_Image()
 {
 	FreeTextures();
 }
 
-bool ComponentImage::CleanUp()
+bool C_Image::CleanUp()
 {
 	FreeTextures();
 	return true;
 }
 
-void ComponentImage::Save(Json& json) const
+void C_Image::Save(Json& json) const
 {
 	json["type"] = "image";
 
 	json["texture"] = openGLTexture.path;
 }
 
-void ComponentImage::Load(Json& json)
+void C_Image::Load(Json& json)
 {
 	std::string path = json["texture"].get<std::string>();
 	SetTexture(path.c_str());
 }
 
-bool ComponentImage::Update(float dt)
+bool C_Image::Update(float dt)
 {
 	return true;
 }
 
-bool ComponentImage::PostUpdate(float dt)
+bool C_Image::PostUpdate(float dt)
 {
 	return true;
 }
 
-bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
+bool C_Image::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 		DrawDeleteButton(owner, this);
@@ -101,20 +101,20 @@ bool ComponentImage::InspectorDraw(PanelChooser* panelChooser)
 	return true;
 }
 
-void ComponentImage::SetTexture(const char* path)
+void C_Image::SetTexture(const char* path)
 {
 	FreeTextures();
 	Importer::GetInstance()->textureImporter->Import(path, &openGLTexture);
 }
 
-void ComponentImage::Draw()
+void C_Image::Draw()
 {
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	owner->GetComponent<ComponentTransform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
+	owner->GetComponent<C_Transform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
 	owner->GetEngine()->GetUI()->EndUIRender();
 }
 
-void ComponentImage::FreeTextures()
+void C_Image::FreeTextures()
 {
 	if (openGLTexture.GetTextureId() != TEXTUREID_DEFAULT) {
 		GLuint id = openGLTexture.GetTextureId();

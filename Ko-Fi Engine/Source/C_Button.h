@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Component.h"
-#include "ComponentTransform2D.h"
-#include "ComponentRenderedUI.h"
+#include "C_Transform2D.h"
+#include "C_RenderedUI.h"
 
 #include "R_Texture.h"
 
@@ -17,7 +17,7 @@ class SDL_Texture;
 class SDL_Surface;
 class MyPlane;
 
-class C_Button : public ComponentRenderedUI {
+class C_Button : public C_RenderedUI {
 public:
 	C_Button(GameObject* parent);
 	~C_Button();
