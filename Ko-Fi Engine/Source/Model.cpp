@@ -1,15 +1,15 @@
-#include "R_Model.h"
+#include "Model.h"
 #include "FSDefs.h"
 
-R_Model::R_Model() : R_Resource(ResourceType::MODEL)
+Model::Model() : Resource(ResourceType::MODEL)
 {
 }
 
-R_Model::~R_Model()
+Model::~Model()
 {
 }
 
-bool R_Model::SaveMeta(Json& json) const
+bool Model::SaveMeta(Json& json) const
 {
 	Json jsonResources;
 	for (auto node : nodes)
@@ -64,7 +64,7 @@ bool R_Model::SaveMeta(Json& json) const
 	return true;
 }
 
-bool R_Model::LoadMeta(Json& json)
+bool Model::LoadMeta(Json& json)
 {
 	return true;
 }

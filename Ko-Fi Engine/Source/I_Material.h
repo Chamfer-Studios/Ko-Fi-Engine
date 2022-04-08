@@ -17,7 +17,7 @@
 #include "Assimp.h"
 
 
-class R_Material;
+class Material;
 class aiMaterial;
 
 enum class ShaderType
@@ -33,15 +33,15 @@ public:
 	I_Material();
 	~I_Material();
 
-	bool Import(const aiMaterial* aiMaterial, R_Material* material);
-	//bool Save(const R_Material* material);
-	//bool Load(R_Material* material);
+	bool Import(const aiMaterial* aiMaterial, Material* material);
+	//bool Save(const Material* material);
+	//bool Load(Material* material);
 
-	bool LoadAndCreateShader(const char* shaderPath, R_Material* material);
+	bool LoadAndCreateShader(const char* shaderPath, Material* material);
 
 private:
 	unsigned int CreateShaderStage(unsigned int type, const std::string& source);
-	bool LoadUniforms(R_Material* material);
+	bool LoadUniforms(Material* material);
 	bool CheckUniformName(std::string name);
 };
 

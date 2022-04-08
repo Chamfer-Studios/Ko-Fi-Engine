@@ -1,5 +1,5 @@
 #include "I_Material.h"
-#include "R_Material.h"
+#include "Material.h"
 
 #include "FSDefs.h"
 #include "Globals.h"
@@ -14,18 +14,18 @@ I_Material::~I_Material()
 {
 }
 
-bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
+bool I_Material::Import(const aiMaterial* aiMaterial, Material* material)
 {
 	bool ret = true;
 
 	if (material == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import R_Material! Error: R_Material* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: R_Material* was nullptr.");
 		return false;
 	}
 	if (aiMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import R_Material! Error: aiMaterial* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: aiMaterial* was nullptr.");
 		return false;
 	}
 
@@ -43,21 +43,21 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 	return ret;
 }
 
-//bool I_Material::Save(const R_Material* material)
+//bool I_Material::Save(const Material* material)
 //{
 //	bool ret = true;
 //
 //	return ret;
 //}
 //
-//bool I_Material::Load(R_Material* material)
+//bool I_Material::Load(Material* material)
 //{
 //	bool ret = true;
 //
 //	return ret;
 //}
 
-bool I_Material::LoadAndCreateShader(const char* shaderPath, R_Material* material)
+bool I_Material::LoadAndCreateShader(const char* shaderPath, Material* material)
 {
 	bool ret = true;
 
@@ -165,7 +165,7 @@ unsigned int I_Material::CreateShaderStage(unsigned int type, const std::string&
 	return id;
 }
 
-bool I_Material::LoadUniforms(R_Material* material)
+bool I_Material::LoadUniforms(Material* material)
 {
 	material->uniforms.clear();
 	material->uniforms.shrink_to_fit();

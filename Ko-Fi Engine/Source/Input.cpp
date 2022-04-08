@@ -1,28 +1,28 @@
 #include "Globals.h"
-#include "M_Input.h"
+#include "Input.h"
 #include "Engine.h"
 #include "SDL.h"
-#include "M_Renderer3D.h"
-#include "M_SceneManager.h"
+#include "Renderer3D.h"
+#include "SceneManager.h"
 #include "M_Editor.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
-#include "M_Window.h"
+#include "Window.h"
 #include "M_FileSystem.h"
 #include "Importer.h"
 #include "C_Material.h"
 #include "Importer.h"
 // FIXME: The list of meshes should be in scene intro.
 #include "GameObject.h"
-#include "R_Texture.h"
+#include "Texture.h"
 
 #include <imgui_impl_sdl.h>
 
 #define MAX_KEYS 300
 
-M_Input::M_Input(KoFiEngine* engine) : Module()
+Input::Input(KoFiEngine* engine) : Module()
 {
-	name = "M_Input";
+	name = "Input";
 
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
@@ -31,12 +31,12 @@ M_Input::M_Input(KoFiEngine* engine) : Module()
 }
 
 // Destructor
-M_Input::~M_Input()
+Input::~Input()
 {
 	delete[] keyboard;
 }
 
-bool M_Input::Awake(Json configModule)
+bool Input::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -46,7 +46,7 @@ bool M_Input::Awake(Json configModule)
 }
 
 // Called before render is available
-bool M_Input::Init()
+bool Input::Init()
 {
 	CONSOLE_LOG("Init SDL input event system");
 	appLog->AddLog("Init SDL input event system\n");
@@ -66,7 +66,7 @@ bool M_Input::Init()
 }
 
 // Called every draw update
-bool M_Input::PreUpdate(float dt)
+bool Input::PreUpdate(float dt)
 {
 	SDL_PumpEvents();
 
@@ -205,7 +205,7 @@ bool M_Input::PreUpdate(float dt)
 
 						if (go->GetComponent<C_Material>())
 						{
-							R_Texture texture = R_Texture();
+							Texture texture = Texture();
 							Importer::GetInstance()->textureImporter->Import(tmp.c_str(), &texture);
 
 							go->GetComponent<C_Material>()->texture = texture;
@@ -227,7 +227,7 @@ bool M_Input::PreUpdate(float dt)
 }
 
 // Called before quitting
-bool M_Input::CleanUp()
+bool Input::CleanUp()
 {
 	CONSOLE_LOG("Quitting SDL input event subsystem");
 	appLog->AddLog("Quitting SDL input event subsystem\n");
@@ -236,22 +236,22 @@ bool M_Input::CleanUp()
 }
 
 // Method to receive and manage events
-void M_Input::OnNotify(const Event& event)
+void Input::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
-bool M_Input::SaveConfiguration(Json& configModule) const
+bool Input::SaveConfiguration(Json& configModule) const
 {
 	return true;
 }
 
-bool M_Input::LoadConfiguration(Json& configModule)
+bool Input::LoadConfiguration(Json& configModule)
 {
 	return true;
 }
 
-bool M_Input::InspectorDraw()
+bool Input::InspectorDraw()
 {
 	return true;
 }

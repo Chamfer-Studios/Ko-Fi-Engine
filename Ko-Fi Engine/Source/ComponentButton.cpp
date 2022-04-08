@@ -6,11 +6,11 @@
 #include "ImGuiAppLog.h"
 #include "GameObject.h"
 #include "Engine.h"
-#include "M_UI.h"
+#include "UI.h"
 #include "PanelChooser.h"
 #include "ComponentTransform2D.h"
 #include "ComponentCanvas.h"
-#include "M_Input.h"
+#include "Input.h"
 #include "Importer.h"
 
 ComponentButton::ComponentButton(GameObject* parent) : ComponentRenderedUI(parent)
@@ -174,7 +174,7 @@ void ComponentButton::Load(Json& json)
 
 void ComponentButton::Draw()
 {
-	R_Texture openGLTexture;
+	Texture openGLTexture;
 
 	switch (state) {
 	case BUTTON_STATE::IDLE:

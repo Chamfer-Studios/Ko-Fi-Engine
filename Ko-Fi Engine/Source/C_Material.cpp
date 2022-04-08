@@ -1,5 +1,5 @@
 #include "C_Material.h"
-#include "R_Material.h"
+#include "Material.h"
 #include "Log.h"
 #include "GameObject.h"
 #include "Engine.h"
@@ -131,7 +131,7 @@ void C_Material::Load(Json& json)
 	if (!json.empty())
 	{
 		if (material == nullptr)
-			material = new R_Material();
+			material = new Material();
 
 		//material->materialName = json["material_name"];
 		//material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
@@ -158,7 +158,7 @@ void C_Material::Load(Json& json)
 		Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), &texture);
 		//for (const auto& tex : json.at("textures").items())
 		//{
-		//	R_Texture t = R_Texture();
+		//	Texture t = Texture();
 		//	Importer::GetInstance()->textureImporter->Import(tex.value().at("path").get<std::string>().c_str(), &t);
 		//	textures.push_back(t);
 		//}
@@ -214,7 +214,7 @@ void C_Material::Load(Json& json)
 	}
 }
 
-void C_Material::SetMaterial(R_Material* material)
+void C_Material::SetMaterial(Material* material)
 {
 	if (this->material != nullptr)
 		RELEASE(this->material);
@@ -248,13 +248,13 @@ void C_Material::LoadMaterial(const char* path)
 			std::string texturePath = texturePaths.at(i);
 			if (textures.empty())
 			{
-				R_Texture texture;
+				Texture texture;
 				Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
 				textures.push_back(texture);
 			}
 			else if (texturePath != textures[i].GetTexturePath())
 			{
-				R_Texture texture;
+				Texture texture;
 				Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
 				textures.push_back(texture);
 			}
@@ -285,13 +285,13 @@ bool C_Material::LoadDefaultMaterial()
 	//if (!jsonMaterial.empty())
 	//{
 	//	ret = true;
-	//	R_Material* material = new R_Material();
+	//	Material* material = new Material();
 	//	//material->SetShaderPath(defaultMaterialPath);
 	//	Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(),material);
 	//	this->SetMaterial(material);
 	//	//material->materialName = jsonMaterial.at("name").get<std::string>();
 	//	//material->SetMaterialPath(defaultMaterialPath.c_str());
-	//	R_Texture texture;
+	//	Texture texture;
 	//	Importer::GetInstance()->textureImporter->Import(0, &texture);
 	//	this->texture = texture;
 	//	UniformT<float4>* albedoTint = (UniformT<float4>*)material->FindUniform("albedoTint");
@@ -309,7 +309,7 @@ bool C_Material::LoadDefaultMaterial()
 
 bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("R_Material"))
+	if (ImGui::CollapsingHeader("Material"))
 	{
 		DrawDeleteButton(owner, this);
 		//if (panelChooser->IsReadyToClose("AddTexture"))
@@ -318,7 +318,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 		//	{
 		//		std::string path = panelChooser->OnChooserClosed();
 
-		//		R_Texture tex = R_Texture();
+		//		Texture tex = Texture();
 		//		Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
 		//		textures.push_back(texture);
 		//	}
@@ -329,11 +329,11 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			if (panelChooser->OnChooserClosed() != nullptr)
 			{
 				std::string path = panelChooser->OnChooserClosed();
-				//for (R_Texture& tex : textures)
+				//for (Texture& tex : textures)
 				//{
 				//	if (tex.textureID == currentTextureId)
 				//	{
-				//		R_Texture tex;
+				//		Texture tex;
 				//		Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
 				//		textures.push_back(texture);
 				//	}
@@ -343,7 +343,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 					texture.textureID = 0;
 					texture.SetTexturePath(nullptr);
 
-					R_Texture tex;
+					Texture tex;
 					Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
 					texture = tex;
 				}
@@ -374,11 +374,11 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			}
 		}
 
-		//ImGui::Text("R_Material Name:");
+		//ImGui::Text("Material Name:");
 		//ImGui::SameLine();
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
-		ImGui::Text("R_Material R_Texture:");
-		//for (R_Texture& tex : textures)
+		ImGui::Text("Material Texture:");
+		//for (Texture& tex : textures)
 		if (texture.textureID != -1)
 		{
 			ImGui::Image((ImTextureID)texture.textureID, ImVec2(85, 85));
@@ -387,7 +387,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			ImGui::Text(texture.GetTexturePath());
 			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
-			if (ImGui::Button("Change R_Texture"))
+			if (ImGui::Button("Change Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
 				currentTextureId = texture.textureID;
@@ -398,7 +398,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 
-			if (ImGui::Button("Delete R_Texture"))
+			if (ImGui::Button("Delete Texture"))
 			{
 				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
 				texture.textureID = -1;
@@ -409,14 +409,14 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 		}
 		else
 		{
-			if (ImGui::Button("Add R_Texture"))
+			if (ImGui::Button("Add Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
 				currentTextureId = texture.textureID;
 			}
 		}
 
-		//if (ImGui::Button("Add R_Texture"))
+		//if (ImGui::Button("Add Texture"))
 		//	panelChooser->OpenPanel("AddTexture", "png");
 
 		ImGui::Separator();

@@ -24,7 +24,7 @@
 #include "MathTypes.h"
 #include "SSEMath.h"
 
-// M_Input: [w,z,y,x], Output: x+y+z in all four channels.
+// Input: [w,z,y,x], Output: x+y+z in all four channels.
 FORCE_INLINE __m128 sum_xyz_ps(__m128 m)
 {
 #ifdef MATH_SSE3 // If we have SSE 3, we can use the haddps (horizontal add) instruction, _mm_hadd_ps intrinsic.
@@ -41,7 +41,7 @@ FORCE_INLINE __m128 sum_xyz_ps(__m128 m)
 #endif
 }
 
-// M_Input: [w,z,y,x], Output: x+y+z in three lowest channels, w is undefined.
+// Input: [w,z,y,x], Output: x+y+z in three lowest channels, w is undefined.
 FORCE_INLINE __m128 sum_xyz_ps3(__m128 m)
 {
 	__m128 yzx = shuffle1_ps(m, _MM_SHUFFLE(3,0,2,1)); // [_, x, z, y]

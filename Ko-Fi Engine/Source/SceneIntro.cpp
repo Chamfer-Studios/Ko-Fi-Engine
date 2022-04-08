@@ -3,8 +3,8 @@
 #include "Log.h"
 #include "Engine.h"
 #include "M_Camera3D.h"
-#include "M_Renderer3D.h"
-#include "M_Window.h"
+#include "Renderer3D.h"
+#include "Window.h"
 #include "Primitive.h"
 #include "ImGuiAppLog.h"
 #include "M_FileSystem.h"
@@ -16,10 +16,10 @@
 #include "C_Collider.h"
 #include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "C_Transform.h"
-#include "R_Material.h"
+#include "Material.h"
 #include "ComponentTransform2D.h"
 #include "GameObject.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "node_editor.h"
 
 #include "SDL_assert.h"
@@ -144,12 +144,12 @@ bool SceneIntro::PostUpdate(float dt)
 			knife->GetTransform()->SetRotationEuler(rot);
 
 			C_Mesh *componentMesh = knife->CreateComponent<C_Mesh>();
-			R_Mesh *mesh = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
+			Mesh *mesh = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			C_Material *cMaterial = knife->CreateComponent<C_Material>();
 			//Importer::GetInstance()->textureImporter->Import(nullptr, &C_Material->texture);
-			R_Material *material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
+			Material *material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
 			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 			cMaterial->SetMaterial(material);
 

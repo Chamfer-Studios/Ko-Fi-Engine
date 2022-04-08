@@ -5,12 +5,12 @@
 #include "MathGeoTransform.h"
 #include "FSDefs.h"
 #include "JsonHandler.h"
-#include "M_Window.h"
+#include "Window.h"
 
 #include "Scene.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "M_FileSystem.h"
-#include "M_Navigation.h"
+#include "Navigation.h"
 
 #include "GameObject.h"
 #include "C_Transform.h"
@@ -35,10 +35,10 @@
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
 
-#include "R_Mesh.h"
+#include "Mesh.h"
 #include "R_Animation.h"
-#include "R_Texture.h"
-#include "R_Material.h"
+#include "Texture.h"
+#include "Material.h"
 
 #include "Importer.h"
 #include "I_Mesh.h"
@@ -61,7 +61,7 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 {
 	CONSOLE_LOG("[STATUS] Importer: Importing Scene: %s", path);
 
-	std::string errorString = "[ERROR] Importer: Could not Import R_Model { " + std::string(path) + " }";
+	std::string errorString = "[ERROR] Importer: Could not Import Model { " + std::string(path) + " }";
 
 	if (path == nullptr)
 		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
@@ -170,7 +170,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 	
 	if (!assimpScene->HasMeshes())
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any R_Mesh.");
+		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any Mesh.");
 		return;
 	}
 
@@ -204,13 +204,13 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		return;
 	}
 
-	// Import R_Mesh to GameObject
-	R_Mesh* mesh = new R_Mesh(Shape::NONE);
+	// Import Mesh to GameObject
+	Mesh* mesh = new Mesh(Shape::NONE);
 	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh, assimpScene);
 
 	if (mesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: R_Mesh (name: %s) was not imported correctly.", nodeName);
+		CONSOLE_LOG("[ERROR] Importer: Mesh (name: %s) was not imported correctly.", nodeName);
 		return;
 	}
 
@@ -222,13 +222,13 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Component R_Mesh is nullptr.");
+		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
 		return;
 	}
 
 	if (!assimpScene->HasAnimations())
 	{
-		CONSOLE_LOG("[WARNING] Scene Importer: R_Model had no animations to import.");
+		CONSOLE_LOG("[WARNING] Scene Importer: Model had no animations to import.");
 		return;
 	}
 
@@ -259,18 +259,18 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
-	// Import R_Material to GameObject
+	// Import Material to GameObject
 	C_Material* cMaterial = (C_Material*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<C_Material>();
 
 	if (cMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Component R_Material is nullptr.");
+		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
 		return;
 	}
 
 	aiString aiTexturePath;
 	std::string texturePath;
-	R_Texture texture;
+	Texture texture;
 	//if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
 	if(assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
@@ -280,7 +280,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 
 		texturePath = ASSETS_TEXTURES_DIR + textureFilename;
 
-		texture = R_Texture();
+		texture = Texture();
 		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), &texture);
 
 		if (ret)
@@ -290,7 +290,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		}
 	}
 
-	R_Material* material = new R_Material();
+	Material* material = new Material();
 
 	if (!Importer::GetInstance()->materialImporter->Import(assimpMaterial, material))
 	{

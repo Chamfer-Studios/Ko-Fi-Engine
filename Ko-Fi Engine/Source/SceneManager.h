@@ -33,11 +33,11 @@ enum class GameState
 	TICK
 };
 
-class M_SceneManager : public Module
+class SceneManager : public Module
 {
 public:
-	M_SceneManager(KoFiEngine* engine);
-	~M_SceneManager();
+	SceneManager(KoFiEngine* engine);
+	~SceneManager();
 
 	bool Awake(Json configModule);
 	// Called before render is available

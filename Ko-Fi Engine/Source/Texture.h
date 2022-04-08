@@ -9,11 +9,11 @@
 #define TEXTUREID_DEFAULT 4294967295
 
 
-class R_Texture : public Resource
+class Texture : public Resource
 {
 public:
-	R_Texture();
-	~R_Texture();
+	Texture();
+	~Texture();
 
 	inline const char* GetTexturePath() { return path.c_str(); }
 	inline void SetTexturePath(const char* path)

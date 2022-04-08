@@ -5,7 +5,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentRenderedUI.h"
 
-#include "R_Texture.h"
+#include "Texture.h"
 
 #include "glew.h"
 
@@ -37,7 +37,7 @@ public:
 
 	void Draw() override;
 
-	R_Texture openGLTexture;
+	Texture openGLTexture;
 
 private:
 	void FreeTextures();

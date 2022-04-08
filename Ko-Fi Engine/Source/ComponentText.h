@@ -4,7 +4,7 @@
 #include "ComponentTransform2D.h"
 #include "ComponentRenderedUI.h"
 
-#include "R_Texture.h"
+#include "Texture.h"
 
 #include "glew.h"
 

@@ -17,11 +17,11 @@ enum KEY_STATE
 	KEY_UP
 };
 
-class M_Input : public Module
+class Input : public Module
 {
 public:
-	M_Input(KoFiEngine* engine);
-	~M_Input();
+	Input(KoFiEngine* engine);
+	~Input();
 
 	bool Awake(Json configModule);
 	bool Init();
@@ -83,7 +83,7 @@ private:
 	int mouse_x_motion;
 	int mouse_y_motion;
 	//int mouse_z_motion;
-	//M_Renderer3D* renderer = nullptr;
+	//Renderer3D* renderer = nullptr;
 	char* dropped_filedir;
 	KoFiEngine* engine = nullptr;
 };

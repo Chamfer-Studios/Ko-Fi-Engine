@@ -1,8 +1,8 @@
 #include "ComponentCanvas.h"
 #include "Engine.h"
 #include "M_Editor.h"
-#include "M_UI.h"
-#include "M_Window.h"
+#include "UI.h"
+#include "Window.h"
 #include "GameObject.h"
 
 #include "glew.h"

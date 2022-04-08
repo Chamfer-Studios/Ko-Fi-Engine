@@ -24,7 +24,7 @@
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
 #include "C_LightSource.h"
-#include "R_Material.h"
+#include "Material.h"
 
 // Used with a path for the .fbx load
 GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
@@ -242,15 +242,15 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 	case ComponentType::MESH:
 	{
-		//// Set Default R_Material
+		//// Set Default Material
 		//c = this->CreateComponent<C_Material>();
-		//R_Material* material = new R_Material();
+		//Material* material = new Material();
 		//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 		//this->GetComponent<C_Material>()->SetMaterial(material);
 
-		//// Set a Default R_Model
+		//// Set a Default Model
 		c = this->CreateComponent<C_Mesh>();
-		//R_Mesh* mesh = new R_Mesh();
+		//Mesh* mesh = new Mesh();
 		//Importer::GetInstance()->meshImporter->Load("Library/Meshes/Sphere.sugar", mesh);
 		//this->GetComponent<C_Mesh>()->SetMesh(mesh);
 

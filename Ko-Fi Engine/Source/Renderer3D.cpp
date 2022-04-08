@@ -1,4 +1,4 @@
-#include "M_Renderer3D.h"
+#include "Renderer3D.h"
 #include "Primitive.h"
 
 // OpenGL / GLEW
@@ -8,15 +8,15 @@
 #include <gl/GLU.h>
 
 #include "Log.h"
-#include "M_Window.h"
+#include "Window.h"
 #include "Engine.h"
 #include "M_Camera3D.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "M_Editor.h"
-#include "M_Input.h"
+#include "Input.h"
 #include "ImGuiAppLog.h"
 #include "M_FileSystem.h"
-#include "R_Texture.h"
+#include "Texture.h"
 
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -31,31 +31,31 @@
 #include "C_Collider.h"
 #include "ComponentRenderedUI.h"
 #include "C_LightSource.h"
-#include "R_Material.h"
+#include "Material.h"
 #include "PieShape.h"
 
 #include "PanelViewport.h"
 
-#include "M_UI.h"
+#include "UI.h"
 
 #include <iostream>
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-M_Renderer3D::M_Renderer3D(KoFiEngine* engine) : Module()
+Renderer3D::Renderer3D(KoFiEngine* engine) : Module()
 {
-	name = "M_Renderer3D";
+	name = "Renderer3D";
 
 	this->engine = engine;
 }
 
 // Destructor
-M_Renderer3D::~M_Renderer3D()
+Renderer3D::~Renderer3D()
 {}
 
 // Called before render is available
-bool M_Renderer3D::Awake(Json configModule)
+bool Renderer3D::Awake(Json configModule)
 {
 	CONSOLE_LOG("Creating 3D Renderer context");
 	appLog->AddLog("Creating 3D Renderer context\n");
@@ -72,7 +72,7 @@ bool M_Renderer3D::Awake(Json configModule)
 }
 
 // PreUpdate: clear buffer
-bool M_Renderer3D::PreUpdate(float dt)
+bool Renderer3D::PreUpdate(float dt)
 {
 	bool ret = true;
 	PrepareFrameBuffers();
@@ -80,13 +80,13 @@ bool M_Renderer3D::PreUpdate(float dt)
 	return ret;
 }
 
-bool M_Renderer3D::Update(float dt)
+bool Renderer3D::Update(float dt)
 {
 	return true;
 }
 
 // PostUpdate present buffer to screen
-bool M_Renderer3D::PostUpdate(float dt)
+bool Renderer3D::PostUpdate(float dt)
 {
 	PassProjectionAndViewToRenderer();
 	RenderScene();
@@ -103,7 +103,7 @@ bool M_Renderer3D::PostUpdate(float dt)
 }
 
 // Called before quitting
-bool M_Renderer3D::CleanUp()
+bool Renderer3D::CleanUp()
 {
 	CONSOLE_LOG("Destroying 3D Renderer");
 	appLog->AddLog("Destroying 3D Renderer\n");
@@ -115,19 +115,19 @@ bool M_Renderer3D::CleanUp()
 	return true;
 }
 
-bool M_Renderer3D::SaveConfiguration(Json& configModule) const
+bool Renderer3D::SaveConfiguration(Json& configModule) const
 {
 	configModule["Vsync"] = vsync;
 	return true;
 }
 
-bool M_Renderer3D::LoadConfiguration(Json& configModule)
+bool Renderer3D::LoadConfiguration(Json& configModule)
 {
 	vsync = configModule["Vsync"];
 	return true;
 }
 
-bool M_Renderer3D::InspectorDraw()
+bool Renderer3D::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Renderer##"))
 	{
@@ -145,7 +145,7 @@ bool M_Renderer3D::InspectorDraw()
 	return true;
 }
 
-bool M_Renderer3D::InitOpenGL()
+bool Renderer3D::InitOpenGL()
 {
 	bool ret = true;
 	context = SDL_GL_CreateContext(engine->GetWindow()->GetWindow());
@@ -212,7 +212,7 @@ bool M_Renderer3D::InitOpenGL()
 	return ret;
 }
 
-bool M_Renderer3D::InitGlew()
+bool Renderer3D::InitGlew()
 {
 	bool ret = true;
 
@@ -226,7 +226,7 @@ bool M_Renderer3D::InitGlew()
 	return ret;
 }
 
-void M_Renderer3D::SetGLFlag(GLenum flag, bool setTo)
+void Renderer3D::SetGLFlag(GLenum flag, bool setTo)
 {
 	if (setTo != (bool)glIsEnabled(flag))
 	{
@@ -234,7 +234,7 @@ void M_Renderer3D::SetGLFlag(GLenum flag, bool setTo)
 	}
 }
 
-void M_Renderer3D::PassProjectionAndViewToRenderer()
+void Renderer3D::PassProjectionAndViewToRenderer()
 {
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
@@ -259,7 +259,7 @@ void M_Renderer3D::PassProjectionAndViewToRenderer()
 	}
 }
 
-void M_Renderer3D::PassPreviewProjectionAndViewToRenderer()
+void Renderer3D::PassPreviewProjectionAndViewToRenderer()
 {
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
@@ -284,7 +284,7 @@ void M_Renderer3D::PassPreviewProjectionAndViewToRenderer()
 	}
 }
 
-void M_Renderer3D::RecalculateProjectionMatrix()
+void Renderer3D::RecalculateProjectionMatrix()
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -294,13 +294,13 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] M_Renderer3D: Could not recalculate the projection matrix!Error : Current Camera was nullptr.");
+		CONSOLE_LOG("[ERROR] Renderer3D: Could not recalculate the projection matrix!Error : Current Camera was nullptr.");
 	}
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
 
-void M_Renderer3D::RenderScene()
+void Renderer3D::RenderScene()
 {
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
@@ -344,7 +344,7 @@ void M_Renderer3D::RenderScene()
 
 }
 
-void M_Renderer3D::RenderPreviewScene()
+void Renderer3D::RenderPreviewScene()
 {
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
@@ -387,7 +387,7 @@ void M_Renderer3D::RenderPreviewScene()
 	}
 }
 
-void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
+void Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	cMesh->GenerateGlobalBoundingBox();
 	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
@@ -396,12 +396,12 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 		cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
 }
 
-void M_Renderer3D::RenderMeshes(GameObject* go)
+void Renderer3D::RenderMeshes(GameObject* go)
 {
 	//Get needed variables
 	C_Material* cMat = go->GetComponent<C_Material>();
 	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
-	R_Mesh* mesh = cMesh->GetMesh();
+	Mesh* mesh = cMesh->GetMesh();
 	//Check textures
 	if (cMat && mesh)
 	{
@@ -593,7 +593,7 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 				glUniform1i(numPointLights, 0);
 
 			}
-			//Draw R_Mesh
+			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);
 
@@ -601,12 +601,12 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 	}
 }
 
-void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
+void Renderer3D::RenderPreviewMeshes(GameObject* go)
 {
 	//Get needed variables
 	C_Material* cMat = go->GetComponent<C_Material>();
 	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
-	R_Mesh* mesh = cMesh->GetMesh();
+	Mesh* mesh = cMesh->GetMesh();
 	//Check textures
 	if (cMat && mesh)
 	{
@@ -798,7 +798,7 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 				glUniform1i(numPointLights, 0);
 
 			}
-			//Draw R_Mesh
+			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);
 
@@ -806,24 +806,24 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 	}
 }
 
-void M_Renderer3D::RenderUI(GameObject* go)
+void Renderer3D::RenderUI(GameObject* go)
 {
 	ComponentRenderedUI* cRenderedUI = go->GetComponent<ComponentRenderedUI>();
 	cRenderedUI->Draw();
 }
 
 // Method to receive and manage events
-void M_Renderer3D::OnNotify(const Event& event)
+void Renderer3D::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
-bool M_Renderer3D::GetVsync() const
+bool Renderer3D::GetVsync() const
 {
 	return vsync;
 }
 
-void M_Renderer3D::SetVsync(bool vsync)
+void Renderer3D::SetVsync(bool vsync)
 {
 	if (this->vsync != vsync)
 	{
@@ -837,7 +837,7 @@ void M_Renderer3D::SetVsync(bool vsync)
 	}
 }
 
-void M_Renderer3D::OnResize()
+void Renderer3D::OnResize()
 {
 	glViewport(0, 0, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
 	if (engine->GetCamera3D()->currentCamera)
@@ -852,11 +852,11 @@ void M_Renderer3D::OnResize()
 	RecalculateProjectionMatrix();
 }
 
-void M_Renderer3D::DrawCylinder(float4x4 transform)
+void Renderer3D::DrawCylinder(float4x4 transform)
 {
 }
 
-void M_Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float angle, int length)
+void Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float angle, int length)
 {
 	glColor3f(0.0f, 1.0f, 1.0f);
 	glLineWidth(6.0f);
@@ -886,7 +886,7 @@ void M_Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float an
 }
 
 // Debug ray for mouse picking
-void M_Renderer3D::DrawRay()
+void Renderer3D::DrawRay()
 {
 	glColor3f(0.0f, 1.0f, 1.0f);
 	glLineWidth(3.0f);
@@ -900,17 +900,17 @@ void M_Renderer3D::DrawRay()
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
-void M_Renderer3D::SetRay(LineSegment ray)
+void Renderer3D::SetRay(LineSegment ray)
 {
 	this->ray = ray;
 }
 
-LineSegment M_Renderer3D::GetRay()
+LineSegment Renderer3D::GetRay()
 {
 	return ray;
 }
 
-void M_Renderer3D::InitFrameBuffers()
+void Renderer3D::InitFrameBuffers()
 {
 	show_viewport_window = true;
 
@@ -965,19 +965,19 @@ void M_Renderer3D::InitFrameBuffers()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void M_Renderer3D::PrepareFrameBuffers()
+void Renderer3D::PrepareFrameBuffers()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void M_Renderer3D::UnbindFrameBuffers()
+void Renderer3D::UnbindFrameBuffers()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void M_Renderer3D::ResizeFrameBuffers(int width, int height)
+void Renderer3D::ResizeFrameBuffers(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
@@ -992,7 +992,7 @@ void M_Renderer3D::ResizeFrameBuffers(int width, int height)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void M_Renderer3D::ResizePreviewFrameBuffers(int width, int height)
+void Renderer3D::ResizePreviewFrameBuffers(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
@@ -1008,7 +1008,7 @@ void M_Renderer3D::ResizePreviewFrameBuffers(int width, int height)
 
 }
 
-void M_Renderer3D::ReleaseFrameBuffers()
+void Renderer3D::ReleaseFrameBuffers()
 {
 	if (textureBuffer != 0) glDeleteTextures(1, &textureBuffer);
 	if (previewTextureBuffer != 0) glDeleteTextures(1, &previewTextureBuffer);
@@ -1018,21 +1018,21 @@ void M_Renderer3D::ReleaseFrameBuffers()
 	if (renderPreviewBufferoutput != 0) glDeleteRenderbuffers(1, &renderPreviewBufferoutput);
 }
 
-uint M_Renderer3D::GetTextureBuffer()
+uint Renderer3D::GetTextureBuffer()
 {
 	return textureBuffer;
 }
-uint M_Renderer3D::GetPreviewTextureBuffer()
+uint Renderer3D::GetPreviewTextureBuffer()
 {
 	return previewTextureBuffer;
 }
-void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 transform, float distanceToCamera)
+void Renderer3D::AddParticle(Texture& tex, Color color, const float4x4 transform, float distanceToCamera)
 {
 	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
 	particles.insert(std::map<float, ParticleRenderer>::value_type(distanceToCamera, pRenderer));
 }
 
-void M_Renderer3D::RenderAllParticles()
+void Renderer3D::RenderAllParticles()
 {
 	for (auto particle : particles)
 	{
@@ -1042,7 +1042,7 @@ void M_Renderer3D::RenderAllParticles()
 	particles.clear();
 }
 
-ParticleRenderer::ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform):
+ParticleRenderer::ParticleRenderer(Texture& tex, Color color, const float4x4 transform):
 tex(tex),
 color(color),
 transform(transform)
@@ -1051,7 +1051,7 @@ transform(transform)
 }
 
 
-void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
+void Renderer3D::RenderParticle(ParticleRenderer* particle)
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

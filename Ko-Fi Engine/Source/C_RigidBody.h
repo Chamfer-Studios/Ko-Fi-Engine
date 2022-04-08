@@ -8,10 +8,10 @@
 #include "Component.h"
 #include "C_Transform.h"
 
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 
 #include "PxPhysicsAPI.h"
-#include "M_Physics.h"
+#include "Physics.h"
 
 #include "MathGeoLib/Math/Quat.h"
 #include "MathGeoLib/Math/float3.h"

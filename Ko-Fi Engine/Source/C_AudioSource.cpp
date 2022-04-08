@@ -11,7 +11,7 @@
 
 #include "Globals.h"
 #include "ImGuiAppLog.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "GameObject.h"
 #include "Effects.h"
 #include "Importer.h"

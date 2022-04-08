@@ -2,7 +2,7 @@
 #define __COMPONENT_MESH_H__
 
 #include "Component.h"
-#include "R_Mesh.h"
+#include "Mesh.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
 #include "MathGeoLib/Geometry/Sphere.h"
@@ -28,14 +28,14 @@ public:
 	void Load(Json& json) override;
 
 	// SetMesh
-	void SetMesh(R_Mesh* mesh);
+	void SetMesh(Mesh* mesh);
 	inline void SetPath(const char* path) { mesh->path = path; }
 	void SetVertexNormals(bool vertexNormals);
 	void SetFaceNormals(bool facesNormals);
 	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
 	
 	// Getters
-	inline R_Mesh* GetMesh() const { return mesh; }
+	inline Mesh* GetMesh() const { return mesh; }
 	inline const char* GetMeshPath() const { mesh->path.c_str(); }
 	inline float GetSphereRadius() const { return radius; }
 	inline bool GetRenderMesh() const { return renderMesh; }
@@ -47,14 +47,14 @@ public:
 	const AABB GetLocalAABB();
 	const AABB GetGlobalAABB() const;
 
-	// R_Mesh Functions
+	// Mesh Functions
 	void GenerateLocalBoundingBox();
 	void GenerateGlobalBoundingBox();
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
 	bool InspectorDraw(PanelChooser* chooser);
 	
 private:
-	R_Mesh* mesh = nullptr;
+	Mesh* mesh = nullptr;
 	bool renderMesh = true;
 	float time = 0;
 

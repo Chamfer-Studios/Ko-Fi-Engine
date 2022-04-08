@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "Globals.h"
-#include "R_Texture.h"
+#include "Texture.h"
 
 enum class ParticleModuleType;
 class ParticleModule;
@@ -13,7 +13,7 @@ class EmitterMovement;
 class EmitterColor;
 class EmitterSize;
 class ParticleBillboarding;
-//class R_Texture;
+//class Texture;
 
 class Emitter
 {
@@ -50,7 +50,7 @@ public:
 	uint maxParticles = 50;
 	std::vector<ParticleModule*> modules;
 	std::string name = "Emitter";
-	R_Texture texture;
+	Texture texture;
 };
 
 #endif // !__EMITTER_H__

@@ -1,6 +1,6 @@
-#include "R_ParticleResource.h"
+#include "ParticleResource.h"
 
-R_ParticleResource::R_ParticleResource(const char* resourceName) : Resource(ResourceType::PARTICLE)
+ParticleResource::ParticleResource(const char* resourceName) : Resource(ResourceType::PARTICLE)
 {
 	emitters.clear();
 	emitters.shrink_to_fit();
@@ -8,12 +8,12 @@ R_ParticleResource::R_ParticleResource(const char* resourceName) : Resource(Reso
 	name = resourceName;
 }
 
-R_ParticleResource::~R_ParticleResource()
+ParticleResource::~ParticleResource()
 {
 	CleanUp();
 }
 
-bool R_ParticleResource::CleanUp()
+bool ParticleResource::CleanUp()
 {
 	for (std::vector<Emitter*>::iterator it = emitters.begin(); it != emitters.end(); ++it)
 	{

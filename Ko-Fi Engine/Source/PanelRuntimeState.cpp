@@ -2,9 +2,9 @@
 #include <imgui.h>
 #include "M_Editor.h"
 #include "Engine.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "M_Camera3D.h"
-#include "M_Input.h"
+#include "Input.h"
 
 PanelRuntimeState::PanelRuntimeState(M_Editor* editor, KoFiEngine* engine)
 {
@@ -43,10 +43,10 @@ void PanelRuntimeState::DrawRuntimePanel()
 {
     if (ImGui::Begin("Game state"/*, ImVec2(405, 38), true, ImGuiWindowFlags_NoMove*/))
     {
-        M_SceneManager* sceneManager = engine->GetSceneManager();
+        SceneManager* sceneManager = engine->GetSceneManager();
         M_Editor* editor = engine->GetEditor();
         M_Camera3D* camera = engine->GetCamera3D();
-        M_Input* input = engine->GetInput();
+        Input* input = engine->GetInput();
         GameState state = sceneManager->GetGameState();
 
         if (state == GameState::PLAYING)

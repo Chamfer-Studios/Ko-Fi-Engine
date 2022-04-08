@@ -72,7 +72,7 @@ struct ContactPoint
 	PxReal staticFriction;
 
 	/**
-	\brief R_Material flags for this contact (eDISABLE_FRICTION, eDISABLE_STRONG_FRICTION). @see PxMaterialFlag
+	\brief Material flags for this contact (eDISABLE_FRICTION, eDISABLE_STRONG_FRICTION). @see PxMaterialFlag
 	*/
 	PxU8 materialFlags;
 

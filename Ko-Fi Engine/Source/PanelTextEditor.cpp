@@ -3,9 +3,9 @@
 #include "Engine.h"
 #include "M_FileSystem.h"
 #include "PanelChooser.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "C_Material.h"
-#include "R_Material.h"
+#include "Material.h"
 
 #include "glew.h"
 #include <gl/GL.h>
@@ -111,7 +111,7 @@ void PanelTextEditor::SaveFile(std::string path)
 	{
 		if (go->GetComponent<C_Material>() != nullptr)
 		{
-			R_Material* material = go->GetComponent<C_Material>()->GetMaterial();
+			Material* material = go->GetComponent<C_Material>()->GetMaterial();
 			if (material->shaderProgramID != 0)
 				glDeleteProgram(material->shaderProgramID);
 

@@ -1,5 +1,5 @@
-#include "R_Mesh.h"
-#include "R_Texture.h"
+#include "Mesh.h"
+#include "Texture.h"
 
 #include "GameObject.h"
 #include "C_Material.h"
@@ -30,7 +30,7 @@
 #include "GameObject.h"
 #include "Globals.h"
 
-R_Mesh::R_Mesh(Shape shape) : Resource(ResourceType::MESH)
+Mesh::Mesh(Shape shape) : Resource(ResourceType::MESH)
 {
 	verticesSizeBytes = 0;
 	normalsSizeBytes = 0;
@@ -65,7 +65,7 @@ R_Mesh::R_Mesh(Shape shape) : Resource(ResourceType::MESH)
 	}
 }
 
-R_Mesh::~R_Mesh()
+Mesh::~Mesh()
 {
 	glDeleteVertexArrays(1, &VAO);
 
@@ -84,7 +84,7 @@ R_Mesh::~R_Mesh()
 	glDeleteBuffers(1, &idNormal);
 	RELEASE_MALLOC(normals);
 
-	// R_Texture coords
+	// Texture coords
 	glBindBuffer(GL_ARRAY_BUFFER, idTexCoord);
 	glDeleteBuffers(1, &idTexCoord);
 	RELEASE_MALLOC(texCoords);
@@ -101,7 +101,7 @@ R_Mesh::~R_Mesh()
 	path.shrink_to_fit();
 }
 
-void R_Mesh::SetUpMeshBuffers()
+void Mesh::SetUpMeshBuffers()
 {
 	// Vertex Array Object (VAO)
 	glGenVertexArrays(1, &VAO);
@@ -128,7 +128,7 @@ void R_Mesh::SetUpMeshBuffers()
 	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(NORMAL_LOCATION);
 
-	// R_Texture coords
+	// Texture coords
 	if (texCoords)
 	{
 		glGenBuffers(1, &idTexCoord);
@@ -154,7 +154,7 @@ void R_Mesh::SetUpMeshBuffers()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void R_Mesh::Draw()
+void Mesh::Draw()
 {
 	glBindVertexArray(VAO);
 
@@ -164,11 +164,11 @@ void R_Mesh::Draw()
 
 	glBindVertexArray(0);
 
-	// Unbind R_Texture
+	// Unbind Texture
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void R_Mesh::DebugDraw()
+void Mesh::DebugDraw()
 {
 	// Debug draw
 	if (drawVertexNormals)
@@ -178,7 +178,7 @@ void R_Mesh::DebugDraw()
 		DrawFaceNormals();
 }
 
-float* R_Mesh::GetTransformedVertices(float4x4 transform)
+float* Mesh::GetTransformedVertices(float4x4 transform)
 {
 	float* ret = (float*)malloc(verticesSizeBytes);
 
@@ -196,9 +196,9 @@ float* R_Mesh::GetTransformedVertices(float4x4 transform)
 	return ret;
 }
 
-R_Mesh* R_Mesh::MeshUnion(std::vector<R_Mesh*> meshes, std::vector<float4x4> transformations)
+Mesh* Mesh::MeshUnion(std::vector<Mesh*> meshes, std::vector<float4x4> transformations)
 {
-	R_Mesh* ret = new R_Mesh();
+	Mesh* ret = new Mesh();
 
 	int verticesSizeBytes = 0;
 	int indicesSizeBytes = 0;
@@ -216,7 +216,7 @@ R_Mesh* R_Mesh::MeshUnion(std::vector<R_Mesh*> meshes, std::vector<float4x4> tra
 	std::vector<float> outputVertices;
 	std::vector<unsigned int> outputIndices;
 	for (int i = 0; i < meshes.size(); i++) {
-		R_Mesh* m = meshes[i];
+		Mesh* m = meshes[i];
 		float4x4 t = transformations[i];
 
 		float* vertices = m->GetTransformedVertices(t);
@@ -248,7 +248,7 @@ R_Mesh* R_Mesh::MeshUnion(std::vector<R_Mesh*> meshes, std::vector<float4x4> tra
 	return ret;
 }
 
-void R_Mesh::DrawVertexNormals() const
+void Mesh::DrawVertexNormals() const
 {
 	if (idNormal == -1 || normals == nullptr)
 		return;
@@ -272,7 +272,7 @@ void R_Mesh::DrawVertexNormals() const
 	glEnd();
 }
 
-void R_Mesh::DrawFaceNormals() const
+void Mesh::DrawFaceNormals() const
 {
 	if (idNormal == -1 || normals == nullptr)
 		return;
@@ -302,7 +302,7 @@ void R_Mesh::DrawFaceNormals() const
 	glEnd();
 }
 
-void R_Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
+void Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 {
 	//vertexNum = primitiveMesh->npoints;
 	//indexNum = primitiveMesh->ntriangles * 3;
@@ -366,7 +366,7 @@ void R_Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 	par_shapes_free_mesh(primitiveMesh);
 }
 
-void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject)
+void Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject)
 {
 	transforms.resize(boneInfo.size());
 
@@ -402,7 +402,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	}
 }
 
-void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode, const float4x4& parentTransform)
+void Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode, const float4x4& parentTransform)
 {
 	std::string nodeName(pNode->GetName());
 
@@ -447,7 +447,7 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 	}
 }
 
-const Channel* R_Mesh::FindNodeAnim(const std::string nodeName)
+const Channel* Mesh::FindNodeAnim(const std::string nodeName)
 {
 	for (uint i = 0; i < animation->channels.size(); i++)
 	{
@@ -462,7 +462,7 @@ const Channel* R_Mesh::FindNodeAnim(const std::string nodeName)
 	return nullptr;
 }
 
-uint R_Mesh::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
+uint Mesh::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	for (uint i = 0; i < pNodeAnim->positionKeyframes.size() - 1; i++) {
 		float t = (float)pNodeAnim->positionKeyframes.at(i + 1).time;
@@ -474,7 +474,7 @@ uint R_Mesh::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
 	return 0;
 }
 
-void R_Mesh::CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
+void Mesh::CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	// we need at least two values to interpolate...
 	if (pNodeAnim->positionKeyframes.size() == 1) {
@@ -496,7 +496,7 @@ void R_Mesh::CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, con
 	Out = Start + Factor * Delta;
 }
 
-uint R_Mesh::FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim)
+uint Mesh::FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	assert(pNodeAnim->rotationKeyframes.size() > 0);
 
@@ -511,7 +511,7 @@ uint R_Mesh::FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim)
 }
 
 
-void R_Mesh::CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
+void Mesh::CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	// we need at least two values to interpolate...
 	if (pNodeAnim->rotationKeyframes.size() == 1) {
@@ -535,7 +535,7 @@ void R_Mesh::CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const
 }
 
 
-uint R_Mesh::FindScaling(float AnimationTimeTicks, const Channel* pNodeAnim)
+uint Mesh::FindScaling(float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	assert(pNodeAnim->scaleKeyframes.size() > 0);
 
@@ -549,7 +549,7 @@ uint R_Mesh::FindScaling(float AnimationTimeTicks, const Channel* pNodeAnim)
 	return 0;
 }
 
-void R_Mesh::CalcInterpolatedScaling(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
+void Mesh::CalcInterpolatedScaling(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
 	// we need at least two values to interpolate...
 	if (pNodeAnim->scaleKeyframes.size() == 1) {
@@ -571,7 +571,7 @@ void R_Mesh::CalcInterpolatedScaling(float3& Out, float AnimationTimeTicks, cons
 	Out = Start + Factor * Delta;
 }
 
-float4x4 R_Mesh::InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ)
+float4x4 Mesh::InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ)
 {
 	float4x4 m;
 
@@ -583,7 +583,7 @@ float4x4 R_Mesh::InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ)
 	return m;
 }
 
-float4x4 R_Mesh::InitRotateTransform(const aiQuaternion& quat)
+float4x4 Mesh::InitRotateTransform(const aiQuaternion& quat)
 {
 	float4x4 m;
 
@@ -614,7 +614,7 @@ float4x4 R_Mesh::InitRotateTransform(const aiQuaternion& quat)
 	return m;
 }
 
-float4x4 R_Mesh::InitTranslationTransform(float x, float y, float z)
+float4x4 Mesh::InitTranslationTransform(float x, float y, float z)
 {
 	float4x4 m;
 
@@ -626,7 +626,7 @@ float4x4 R_Mesh::InitTranslationTransform(float x, float y, float z)
 	return m;
 }
 
-float4x4 R_Mesh::aiMatrix3x32Float4x4(aiMatrix3x3 assimpMatrix)
+float4x4 Mesh::aiMatrix3x32Float4x4(aiMatrix3x3 assimpMatrix)
 {
 	float4x4 m;
 
@@ -638,7 +638,7 @@ float4x4 R_Mesh::aiMatrix3x32Float4x4(aiMatrix3x3 assimpMatrix)
 	return m;
 }
 
-float4x4 R_Mesh::GetMatrixFromQuat(Quat quat)
+float4x4 Mesh::GetMatrixFromQuat(Quat quat)
 {
 	float4x4 m;
 

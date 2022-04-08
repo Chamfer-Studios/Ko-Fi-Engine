@@ -2,7 +2,7 @@
 #include "M_Editor.h"
 #include "Engine.h"
 #include "M_FileSystem.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "PanelChooser.h"
 #include "SDL.h"
 #include <imgui.h>
@@ -16,7 +16,7 @@
 #include "ComponentImage.h"
 #include "ComponentButton.h"
 #include "ComponentText.h"
-#include "R_Material.h"
+#include "Material.h"
 #include "C_Mesh.h"
 
 MainBar::MainBar(M_Editor* editor)
@@ -48,7 +48,7 @@ bool MainBar::Update()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Import R_Model"))
+			if (ImGui::MenuItem("Import Model"))
 			{
 				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
 			}
@@ -120,7 +120,7 @@ bool MainBar::Update()
 				}
 				ImGui::EndMenu();
 			}
-			if (ImGui::BeginMenu("M_UI"))
+			if (ImGui::BeginMenu("UI"))
 			{
 				if (ImGui::MenuItem("Canvas")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr,nullptr, false);

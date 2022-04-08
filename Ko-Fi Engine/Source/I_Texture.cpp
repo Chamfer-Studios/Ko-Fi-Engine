@@ -1,5 +1,5 @@
 #include "I_Texture.h"
-#include "R_Texture.h"
+#include "Texture.h"
 #include "ImGuiAppLog.h"
 #include "glew.h"
 #include "stb_image.h"
@@ -12,7 +12,7 @@ I_Texture::I_Texture()
 I_Texture::~I_Texture()
 {}
 
-bool I_Texture::Import(const char* path, R_Texture* texture)
+bool I_Texture::Import(const char* path, Texture* texture)
 {
 	texture->SetTexturePath(path);
 
@@ -66,7 +66,7 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
-		appLog->AddLog("%s", "R_Texture Image not loaded correctly: %s\n", path);
+		appLog->AddLog("%s", "Texture Image not loaded correctly: %s\n", path);
 
 	stbi_image_free(pixels);
 

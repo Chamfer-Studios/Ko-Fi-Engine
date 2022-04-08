@@ -4,7 +4,7 @@
 
 #include "GameObject.h"
 #include "C_Transform.h"
-#include "M_Input.h"
+#include "Input.h"
 #include "PanelInspector.h"
 
 #include "Globals.h"

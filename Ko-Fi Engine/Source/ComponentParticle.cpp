@@ -1,19 +1,19 @@
 #include "ComponentParticle.h"
 #include "ParticleModule.h"
-#include "M_Renderer3D.h"
+#include "Renderer3D.h"
 #include "Engine.h"
 #include "Log.h"
 #include "imgui_stdlib.h"
-#include "R_Texture.h"
+#include "Texture.h"
 #include "PanelChooser.h"
-#include "R_ParticleResource.h"
+#include "ParticleResource.h"
 
 #include "MathGeoLib/Math/float4x4.h"
 
 ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::PARTICLE;
-	//resource = new R_ParticleResource();
+	//resource = new ParticleResource();
 	resource = nullptr;
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
@@ -130,7 +130,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 				ImGui::SameLine();
 				ImGui::InputText(emitterName.c_str(), &(emitter->name));
 
-				std::string changeTexture = "Change R_Texture to " + emitter->name;
+				std::string changeTexture = "Change Texture to " + emitter->name;
 				if (chooser->IsReadyToClose(changeTexture.c_str()))
 				{
 					if (chooser->OnChooserClosed() != nullptr)
@@ -141,14 +141,14 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 							emitter->texture.textureID = TEXTUREID_DEFAULT;
 							emitter->texture.SetTexturePath(nullptr);
 
-							R_Texture tex;
+							Texture tex;
 							Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
 							emitter->texture = tex;
 						}
 					}
 				}
 
-				ImGui::Text("R_Material R_Texture:");
+				ImGui::Text("Material Texture:");
 				if (emitter->texture.textureID != -1)
 				{
 					ImGui::Image((ImTextureID)emitter->texture.textureID, ImVec2(85, 85));
@@ -158,7 +158,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 
-					std::string changeTexture = "Change R_Texture to " + emitter->name;
+					std::string changeTexture = "Change Texture to " + emitter->name;
 					if (ImGui::Button(changeTexture.c_str()))
 					{
 						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg"});
@@ -169,7 +169,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 
-					std::string deleteTexture = "Delete R_Texture to " + emitter->name;
+					std::string deleteTexture = "Delete Texture to " + emitter->name;
 					if (ImGui::Button(deleteTexture.c_str()))
 					{
 						emitter->texture.textureID = -1;
@@ -180,10 +180,10 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 				}
 				else
 				{
-					std::string addTexture = "Add R_Texture to " + emitter->name;
+					std::string addTexture = "Add Texture to " + emitter->name;
 					if (ImGui::Button(addTexture.c_str()))
 					{
-						std::string changeTexture = "Change R_Texture to " + emitter->name;
+						std::string changeTexture = "Change Texture to " + emitter->name;
 						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg" });
 						currentTextureId = emitter->texture.textureID;
 					}
@@ -550,7 +550,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 			{
 				if (resourceToAdd == 1)
 				{
-					resource = new R_ParticleResource();
+					resource = new ParticleResource();
 					Emitter* e = new Emitter();
 					resource->emitters.push_back(e);
 					EmitterInstance* eI = new EmitterInstance(e, this);
@@ -714,7 +714,7 @@ void ComponentParticle::Load(Json& json)
 	if (!json.empty())
 	{
 		if (resource == nullptr)
-			resource = new R_ParticleResource();
+			resource = new ParticleResource();
 
 		resource->emitters.clear();
 		resource->emitters.shrink_to_fit();
@@ -731,7 +731,7 @@ void ComponentParticle::Load(Json& json)
 				emitterInstances.push_back(ei);
 				ei->Init();
 				e->maxParticles = emitter.value().at("maxParticles");
-				e->texture = R_Texture();
+				e->texture = Texture();
 				e->texture.path = emitter.value().at("texture_path").get<std::string>();
 				if (e->texture.path != "")
 					Importer::GetInstance()->textureImporter->Import(e->texture.path.c_str(), &e->texture);

@@ -1,7 +1,7 @@
-#include "R_ResourceBase.h"
+#include "ResourceBase.h"
 #include "Resource.h"
 
-R_ResourceBase::R_ResourceBase(const Resource* r)
+ResourceBase::ResourceBase(const Resource* r)
 {
 	if (r != nullptr)
 	{
@@ -23,11 +23,11 @@ R_ResourceBase::R_ResourceBase(const Resource* r)
 	}
 }
 
-R_ResourceBase::~R_ResourceBase()
+ResourceBase::~ResourceBase()
 {
 }
 
-bool R_ResourceBase::CleanUp()
+bool ResourceBase::CleanUp()
 {
 	return true;
 }

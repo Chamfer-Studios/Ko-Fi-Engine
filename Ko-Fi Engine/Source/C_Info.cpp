@@ -1,7 +1,7 @@
 #include "C_Info.h"
 #include "GameObject.h"
 #include "Engine.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 
 #include "imgui_stdlib.h"
 #include "PanelChooser.h"

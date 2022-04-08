@@ -31,11 +31,11 @@ namespace physx
 	typedef uint32_t PxU32;
 };
 
-class M_Physics : public Module
+class Physics : public Module
 {
 public:
-	M_Physics(KoFiEngine* engine); // Module constructor
-	~M_Physics(); // Module destructor, but module cleaning is done in CleanUp()
+	Physics(KoFiEngine* engine); // Module constructor
+	~Physics(); // Module destructor, but module cleaning is done in CleanUp()
 
 	bool Awake(Json configModule);
 	bool Start();

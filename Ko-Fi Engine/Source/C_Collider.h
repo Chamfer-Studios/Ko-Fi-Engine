@@ -2,7 +2,7 @@
 #define __C_COLLIDER_H__
 
 #include "Component.h"
-#include "M_Physics.h"
+#include "Physics.h"
 #include "MathGeoLib/Math/float3.h"
 
 enum class ColliderShape

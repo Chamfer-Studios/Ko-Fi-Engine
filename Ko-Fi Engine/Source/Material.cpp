@@ -1,10 +1,10 @@
-#include "R_Material.h"
+#include "Material.h"
 #include "FSDefs.h"
 #include "Color.h"
-#include "R_Texture.h"
+#include "Texture.h"
 #include <glew.h>
 
-R_Material::R_Material() :
+Material::Material() :
 	shaderProgramID(0),
 	//materialPath(MATERIALS_DIR + std::string("default") + MATERIAL_EXTENSION),
 	shaderPath(ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION),
@@ -12,7 +12,7 @@ R_Material::R_Material() :
 {
 }
 
-R_Material::~R_Material()
+Material::~Material()
 {
 	glDeleteProgram(shaderProgramID);
 
@@ -23,7 +23,7 @@ R_Material::~R_Material()
 	shaderPath.shrink_to_fit();
 }
 
-Uniform* R_Material::FindUniform(std::string name)
+Uniform* Material::FindUniform(std::string name)
 {
 	for (Uniform* uniform : uniforms)
 	{
@@ -35,7 +35,7 @@ Uniform* R_Material::FindUniform(std::string name)
 	return nullptr;
 }
 
-void R_Material::AddUniform(Uniform* uniform)
+void Material::AddUniform(Uniform* uniform)
 {
 	uniforms.push_back(uniform);
 }

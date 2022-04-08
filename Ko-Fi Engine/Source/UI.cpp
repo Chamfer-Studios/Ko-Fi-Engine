@@ -1,4 +1,4 @@
-#include "M_UI.h"
+#include "UI.h"
 #include "glew.h"
 #include "MathGeoLib/Math/float2.h"
 
@@ -7,11 +7,11 @@
 #include "M_Editor.h"
 #include "ImGuiAppLog.h"
 #include "M_Camera3D.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "Scene.h"
-#include "M_Window.h"
+#include "Window.h"
 #include "M_FileSystem.h"
-#include "R_Texture.h"
+#include "Texture.h"
 
 #include <string>
 
@@ -67,7 +67,7 @@ MyPlane::~MyPlane()
 {
 }
 
-void MyPlane::DrawPlane2D(R_Texture* texture, SDL_Color color)
+void MyPlane::DrawPlane2D(Texture* texture, SDL_Color color)
 {
 	if (texture->width != -1 && texture->height != -1)
 		DrawPlane2D(texture->GetTextureId(), color);
@@ -124,9 +124,9 @@ void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-M_UI::M_UI(KoFiEngine* engine) : Module()
+UI::UI(KoFiEngine* engine) : Module()
 {
-	name = "M_UI";
+	name = "UI";
 	this->engine = engine;
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 	renderer = SDL_CreateRenderer(engine->GetWindow()->window, -1, flags);
@@ -134,11 +134,11 @@ M_UI::M_UI(KoFiEngine* engine) : Module()
 	rubik = TTF_OpenFont("Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf", 60);
 }
 
-M_UI::~M_UI()
+UI::~UI()
 {
 }
 
-bool M_UI::Awake(Json configModule)
+bool UI::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -147,53 +147,53 @@ bool M_UI::Awake(Json configModule)
 	return ret;
 }
 
-bool M_UI::Start()
+bool UI::Start()
 {
 	return true;
 }
 
-bool M_UI::PreUpdate(float dt)
+bool UI::PreUpdate(float dt)
 {
 	return true;
 }
 
-bool M_UI::Update(float dt) {
+bool UI::Update(float dt) {
 
 	return true;
 }
 
-bool M_UI::PostUpdate(float dt)
+bool UI::PostUpdate(float dt)
 {
 
 	return true;
 }
 
-bool M_UI::CleanUp()
+bool UI::CleanUp()
 {
 	TTF_CloseFont(rubik);
 	return true;
 }
 
-void M_UI::OnNotify(const Event& event)
+void UI::OnNotify(const Event& event)
 {
 }
 
-bool M_UI::SaveConfiguration(Json& configModule) const
-{
-	return true;
-}
-
-bool M_UI::LoadConfiguration(Json& configModule)
+bool UI::SaveConfiguration(Json& configModule) const
 {
 	return true;
 }
 
-bool M_UI::InspectorDraw()
+bool UI::LoadConfiguration(Json& configModule)
 {
 	return true;
 }
 
-void M_UI::PrepareUIRender()
+bool UI::InspectorDraw()
+{
+	return true;
+}
+
+void UI::PrepareUIRender()
 {
 	right = engine->GetCamera3D()->currentCamera->right;
 	up = engine->GetCamera3D()->currentCamera->up;
@@ -221,7 +221,7 @@ void M_UI::PrepareUIRender()
 	glDisable(GL_LIGHTING);
 }
 
-void M_UI::EndUIRender()
+void UI::EndUIRender()
 {
 	glEnable(GL_LIGHTING);
 
@@ -245,7 +245,7 @@ void M_UI::EndUIRender()
 	glLoadMatrixf(engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 }
 
-float2 M_UI::GetUINormalizedMousePosition()
+float2 UI::GetUINormalizedMousePosition()
 {
 	float mouseX = engine->GetEditor()->mouseScenePosition.x;
 	float mouseY = engine->GetEditor()->mouseScenePosition.y;
@@ -253,7 +253,7 @@ float2 M_UI::GetUINormalizedMousePosition()
 	return { mouseX, mouseY };
 }
 
-void M_UI::OnGui()
+void UI::OnGui()
 {
 }
 

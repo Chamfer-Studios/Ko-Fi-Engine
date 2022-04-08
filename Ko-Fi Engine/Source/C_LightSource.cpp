@@ -2,7 +2,7 @@
 #include "C_Transform.h"
 #include "Globals.h"
 #include "Engine.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 #include "SceneIntro.h"
 
 C_LightSource::C_LightSource(GameObject* parent) : Component(parent)

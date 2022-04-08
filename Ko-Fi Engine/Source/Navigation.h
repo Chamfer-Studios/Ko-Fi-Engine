@@ -14,9 +14,9 @@ class rcPolyMesh;
 class rcPolyMeshDetail;
 class dtNavMesh;
 typedef unsigned int dtPolyRef;
-class R_Mesh;
+class Mesh;
 
-class M_Navigation : public Module
+class Navigation : public Module
 {
 public:
 	struct NavMeshConfig {
@@ -45,8 +45,8 @@ public:
 		SAMPLE_POLYFLAGS_WALK = 0x01,
 	};
 
-	M_Navigation(KoFiEngine* engine);
-	~M_Navigation();
+	Navigation(KoFiEngine* engine);
+	~Navigation();
 
 	bool Awake(Json configModule);
 	bool Start() override;
@@ -76,7 +76,7 @@ public:
 	bool InspectorDraw() override;
 	// ------------------------------------------------------------------
 private:
-	rcPolyMeshDetail* ComputeNavmesh(R_Mesh* mesh);
+	rcPolyMeshDetail* ComputeNavmesh(Mesh* mesh);
 	KoFiEngine* engine = nullptr;
 	rcPolyMesh* navMesh = nullptr;
 	rcPolyMeshDetail* navMeshDetail = nullptr;

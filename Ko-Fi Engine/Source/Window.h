@@ -7,14 +7,14 @@
 struct SDL_Window;
 struct SDL_Surface;
 
-class M_Window : public Module
+class Window : public Module
 {
 public:
 
-	M_Window(KoFiEngine* engine);
+	Window(KoFiEngine* engine);
 
 	// Destructor
-	virtual ~M_Window();
+	virtual ~Window();
 
 	// Called before render is available
 	bool Awake(Json configModule);

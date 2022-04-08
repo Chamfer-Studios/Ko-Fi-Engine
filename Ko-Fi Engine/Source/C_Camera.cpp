@@ -1,6 +1,6 @@
 #include "C_Camera.h"
 #include "Engine.h"
-#include "M_SceneManager.h"
+#include "SceneManager.h"
 
 #include "GameObject.h"
 #include "C_Transform.h"

@@ -1,13 +1,13 @@
 #include "PanelNavigation.h"
 #include "M_Editor.h"
 #include "Engine.h"
-#include "M_Navigation.h"
+#include "Navigation.h"
 #include <imgui.h>
 
 PanelNavigation::PanelNavigation(M_Editor* editor)
 {
 	this->editor = editor;
-	panelName = "M_Navigation";
+	panelName = "Navigation";
 }
 
 PanelNavigation::~PanelNavigation()

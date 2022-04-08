@@ -3,10 +3,10 @@
 #include <imgui_impl_opengl3.h>
 #include "Engine.h"
 #include "M_Editor.h"
-#include "M_Window.h"
-#include "M_Renderer3D.h"
+#include "Window.h"
+#include "Renderer3D.h"
 #include "M_FileSystem.h"
-#include "M_Input.h"
+#include "Input.h"
 #include "SceneIntro.h"
 #include "EngineConfig.h"
 #include "ImGuiAppLog.h"

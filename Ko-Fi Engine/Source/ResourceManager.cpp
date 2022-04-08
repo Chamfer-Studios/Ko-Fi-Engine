@@ -1,11 +1,11 @@
-#include "M_ResourceManager.h"
+#include "ResourceManager.h"
 #include "Engine.h"
 #include "Log.h"
 #include "RNG.h"
 #include "FSDefs.h"
 #include "Importer.h"
 #include "M_FileSystem.h"
-#include "R_ResourceBase.h"
+#include "ResourceBase.h"
 
 #include "json.hpp"
 #include "JsonHandler.h"
@@ -13,20 +13,20 @@ using Json = nlohmann::json;
 
 #include <filesystem>
 
-M_ResourceManager::M_ResourceManager(KoFiEngine* engine) : Module(),
+ResourceManager::ResourceManager(KoFiEngine* engine) : Module(),
 fileRefreshRate(0.0f),
 fileRefreshTime(0.0f)
 {
-	name = "M_ResourceManager";
+	name = "ResourceManager";
 	this->engine = engine;
 }
 
-M_ResourceManager::~M_ResourceManager()
+ResourceManager::~ResourceManager()
 {
 
 }
 
-bool M_ResourceManager::Awake(Json configModule)
+bool ResourceManager::Awake(Json configModule)
 {
 	bool ret = true;
 
@@ -35,10 +35,10 @@ bool M_ResourceManager::Awake(Json configModule)
 	return ret;
 }
 
-bool M_ResourceManager::Start()
+bool ResourceManager::Start()
 {
-	CONSOLE_LOG("Starting M_ResourceManager...");
-	appLog->AddLog("Starting M_ResourceManager...\n");
+	CONSOLE_LOG("Starting ResourceManager...");
+	appLog->AddLog("Starting ResourceManager...\n");
 
 	fileRefreshRate = 5.0f;
 
@@ -52,7 +52,7 @@ bool M_ResourceManager::Start()
 	return true;
 }
 
-bool M_ResourceManager::PreUpdate(float dt)
+bool ResourceManager::PreUpdate(float dt)
 {
 	//fileRefreshTime += dt;
 	//if (fileRefreshTime > fileRefreshRate)
@@ -75,10 +75,10 @@ bool M_ResourceManager::PreUpdate(float dt)
 	return true;
 }
 
-bool M_ResourceManager::CleanUp()
+bool ResourceManager::CleanUp()
 {
-	CONSOLE_LOG("Cleaning M_ResourceManager up...");
-	//appLog->AddLog("Cleaning M_ResourceManager up...\n");
+	CONSOLE_LOG("Cleaning ResourceManager up...");
+	//appLog->AddLog("Cleaning ResourceManager up...\n");
 
 	bool ret = true;
 
@@ -96,12 +96,12 @@ bool M_ResourceManager::CleanUp()
 }
 
 // Method to receive and manage events
-void M_ResourceManager::OnNotify(const Event& event)
+void ResourceManager::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
-bool M_ResourceManager::TrimLibrary()
+bool ResourceManager::TrimLibrary()
 {
 	std::vector<std::string> files;
 	engine->GetFileSystem()->DiscoverAllFiles(LIBRARY_DIR, files);
@@ -132,7 +132,7 @@ bool M_ResourceManager::TrimLibrary()
 	return true;
 }
 
-UID M_ResourceManager::ImportFile(const char* assetPath)
+UID ResourceManager::ImportFile(const char* assetPath)
 {
 	UID uid = 0;
 	if (assetPath == nullptr)
@@ -168,7 +168,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 	{
 		LOG_BOTH("File to import was already in the library.");
 
-		std::map<UID, R_ResourceBase> libraryItems;
+		std::map<UID, ResourceBase> libraryItems;
 		GetLibraryPairs(assetPath, libraryItems);
 
 		for (auto& item : libraryItems)
@@ -193,7 +193,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 	return uid;
 }
 
-void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
+void ResourceManager::RefreshDirectoryFiles(const char* directory)
 {
 	if (directory == nullptr)
 	{
@@ -249,7 +249,7 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 	toImport.shrink_to_fit();
 }
 
-void M_ResourceManager::FindFilesToImport(std::vector<std::string>& assetFiles, std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toImport)
+void ResourceManager::FindFilesToImport(std::vector<std::string>& assetFiles, std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toImport)
 {
 	if (assetFiles.empty())
 		return;
@@ -283,7 +283,7 @@ void M_ResourceManager::FindFilesToImport(std::vector<std::string>& assetFiles, 
 	metaFile.shrink_to_fit();
 }
 
-void M_ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& filePairs, std::vector<std::string>& toUpdate)
+void ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& filePairs, std::vector<std::string>& toUpdate)
 {
 	if (filePairs.empty())
 		return;
@@ -300,7 +300,7 @@ void M_ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& fi
 	}
 }
 
-void M_ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toDelete)
+void ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toDelete)
 {
 	if (metaFiles.empty())
 		return;
@@ -316,7 +316,7 @@ void M_ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, s
 	}
 }
 
-void M_ResourceManager::LoadFilesIntoLibrary(std::map<std::string, std::string>& filePairs)
+void ResourceManager::LoadFilesIntoLibrary(std::map<std::string, std::string>& filePairs)
 {
 	if (filePairs.empty())
 		return;
@@ -327,7 +327,7 @@ void M_ResourceManager::LoadFilesIntoLibrary(std::map<std::string, std::string>&
 	}
 }
 
-bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
+bool ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
 {
 	if (assetsPath == nullptr)
 	{
@@ -335,7 +335,7 @@ bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
 		return false;
 	}
 
-	std::map<UID, R_ResourceBase> libraryPairs;
+	std::map<UID, ResourceBase> libraryPairs;
 	GetLibraryPairs(assetsPath, libraryPairs);
 
 	if (libraryPairs.empty())
@@ -349,7 +349,7 @@ bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
 	return true;
 }
 
-bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, R_ResourceBase>& pairs)
+bool ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, ResourceBase>& pairs)
 {
 	if (assetsPath == nullptr)
 	{
@@ -358,7 +358,7 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, R_
 	}
 
 	std::vector<UID> resourceUIDs;
-	std::vector<R_ResourceBase> bases;
+	std::vector<ResourceBase> bases;
 	GetResourceUIDsFromMeta(assetsPath, resourceUIDs);
 	GetResourceBasesFromMeta(assetsPath, bases);
 
@@ -376,7 +376,7 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, R_
 	return true;
 }
 
-bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetsPath, std::vector<UID>& uids)
+bool ResourceManager::GetResourceUIDsFromMeta(const char* assetsPath, std::vector<UID>& uids)
 {
 	if (assetsPath == nullptr)
 	{
@@ -442,7 +442,7 @@ bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetsPath, std::vec
 	return true;
 }
 
-bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::vector<R_ResourceBase>& bases)
+bool ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::vector<ResourceBase>& bases)
 {
 	if (assetsPath == nullptr)
 	{
@@ -482,7 +482,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::ve
 		//	return false;
 		//}
 
-		//resourceBases.push_back(R_ResourceBase(UID, rAssetsPath, rAssetsFile, rLibraryPath, rLibraryFile, type));
+		//resourceBases.push_back(ResourceBase(UID, rAssetsPath, rAssetsFile, rLibraryPath, rLibraryFile, type));
 	}
 
 	// Gets Resource Base from contained resources
@@ -516,14 +516,14 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::ve
 
 		//	containedAssetsPath = directory + containedAssetsFile;
 		//	containedLibraryFile = App->fileSystem->GetFileAndExtension(containedLibraryPath.c_str());
-		//	resourceBases.push_back(R_ResourceBase(containedUID, containedAssetsPath, containedAssetsFile, containedLibraryPath, containedLibraryFile, containedType));	// WIP until revision.
+		//	resourceBases.push_back(ResourceBase(containedUID, containedAssetsPath, containedAssetsFile, containedLibraryPath, containedLibraryFile, containedType));	// WIP until revision.
 		//}
 	}
 
 	return true;
 }
 
-bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetsPath, std::vector<std::string>& paths)
+bool ResourceManager::GetLibraryFilePathsFromMeta(const char* assetsPath, std::vector<std::string>& paths)
 {
 	if (assetsPath == nullptr)
 	{
@@ -621,7 +621,7 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetsPath, std:
 	return true;
 }
 
-void M_ResourceManager::DeleteFromLibrary(const char* libraryPath)
+void ResourceManager::DeleteFromLibrary(const char* libraryPath)
 {
 	if (libraryPath == nullptr)
 	{
@@ -658,7 +658,7 @@ void M_ResourceManager::DeleteFromLibrary(const char* libraryPath)
 
 }
 
-bool M_ResourceManager::HasMetaFile(const char* assetsPath)
+bool ResourceManager::HasMetaFile(const char* assetsPath)
 {
 	if (assetsPath == nullptr)
 	{
@@ -669,7 +669,7 @@ bool M_ResourceManager::HasMetaFile(const char* assetsPath)
 	return std::filesystem::exists(path);
 }
 
-bool M_ResourceManager::ValidateMetaFile(const char* assetsPath, bool libraryCheck)
+bool ResourceManager::ValidateMetaFile(const char* assetsPath, bool libraryCheck)
 {
 	bool ret = true;
 
@@ -734,7 +734,7 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetsPath, bool libraryChe
 	return ret;
 }
 
-bool M_ResourceManager::ValidateMetaFile(Json& json, bool libraryCheck)
+bool ResourceManager::ValidateMetaFile(Json& json, bool libraryCheck)
 {
 	bool ret = true;
 
@@ -783,7 +783,7 @@ bool M_ResourceManager::ValidateMetaFile(Json& json, bool libraryCheck)
 	return ret;
 }
 
-bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
+bool ResourceManager::ResourceHasMetaType(Resource* resource) const
 {
 	if (resource == nullptr)
 	{
@@ -801,7 +801,7 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 	return false;
 }
 
-Resource* M_ResourceManager::CreateNewResource(const char* assetPath, ResourceType type)
+Resource* ResourceManager::CreateNewResource(const char* assetPath, ResourceType type)
 {
 	Resource* ret = new Resource(type);
 
@@ -811,7 +811,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetPath, ResourceTy
 	return ret;
 }
 
-bool M_ResourceManager::SaveMetaFile(Resource* resource) const
+bool ResourceManager::SaveMetaFile(Resource* resource) const
 {
 	if (resource == nullptr)
 	{
@@ -837,7 +837,7 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 	return true;
 }
 
-bool M_ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
+bool ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
@@ -875,7 +875,7 @@ bool M_ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
 	return true;
 }
 
-Resource* M_ResourceManager::RequestResource(UID uid)
+Resource* ResourceManager::RequestResource(UID uid)
 {
 	// Find if the resource is already loaded
 	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
@@ -894,7 +894,7 @@ Resource* M_ResourceManager::RequestResource(UID uid)
 	return nullptr;
 }
 
-UID M_ResourceManager::Find(const char* assetPath) const
+UID ResourceManager::Find(const char* assetPath) const
 {
 	for (auto r : resourcesMap)
 	{
@@ -904,7 +904,7 @@ UID M_ResourceManager::Find(const char* assetPath) const
 	return -1;
 }
 
-void M_ResourceManager::SaveResource(Resource* resource)
+void ResourceManager::SaveResource(Resource* resource)
 {
 	if (resource == nullptr)
 	{
@@ -915,7 +915,7 @@ void M_ResourceManager::SaveResource(Resource* resource)
 	switch (resource->GetType())
 	{
 	case ResourceType::MESH:
-		Importer::GetInstance()->meshImporter->Save((R_Mesh*)resource, resource->GetLibraryPath());
+		Importer::GetInstance()->meshImporter->Save((Mesh*)resource, resource->GetLibraryPath());
 		break;
 	case ResourceType::SCENE:
 		Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
@@ -930,10 +930,10 @@ void M_ResourceManager::SaveResource(Resource* resource)
 	if (ResourceHasMetaType(resource))
 		SaveMetaFile(resource);
 
-	library.emplace(resource->GetUID(), R_ResourceBase(resource));
+	library.emplace(resource->GetUID(), ResourceBase(resource));
 }
 
-bool M_ResourceManager::UnloadResource(Resource* resource)
+bool ResourceManager::UnloadResource(Resource* resource)
 {
 	if (resource == nullptr)
 	{
@@ -953,7 +953,7 @@ bool M_ResourceManager::UnloadResource(Resource* resource)
 	return true;
 }
 
-bool M_ResourceManager::UnloadResource(UID uid)
+bool ResourceManager::UnloadResource(UID uid)
 {
 	if (library.find(uid) != library.end())
 		library.erase(uid);
@@ -973,7 +973,7 @@ bool M_ResourceManager::UnloadResource(UID uid)
 	return true;
 }
 
-Resource* M_ResourceManager::GetResourceFromLibrary(const char* libraryPath)
+Resource* ResourceManager::GetResourceFromLibrary(const char* libraryPath)
 {
 	if (libraryPath == nullptr)
 	{
@@ -997,7 +997,7 @@ Resource* M_ResourceManager::GetResourceFromLibrary(const char* libraryPath)
 	return resource;
 }
 
-UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
+UID ResourceManager::LoadFromLibrary(const char* libraryPath)
 {
 	std::string cleanPath = GetValidPath(libraryPath);
 	if (cleanPath.c_str() == nullptr)
@@ -1054,7 +1054,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 	return uid;
 }
 
-UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
+UID ResourceManager::ImportFromAssets(const char* assetsPath)
 {
 	UID uid;
 
@@ -1105,7 +1105,7 @@ UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
 	return uid;
 }
 
-ResourceType M_ResourceManager::GetTypeFromExtension(const char* extension)
+ResourceType ResourceManager::GetTypeFromExtension(const char* extension)
 {
 	ResourceType ret = ResourceType::UNKNOWN;
 
@@ -1125,7 +1125,7 @@ ResourceType M_ResourceManager::GetTypeFromExtension(const char* extension)
 	return ret;
 }
 
-const char* M_ResourceManager::GetAssetsDirectoryFromType(const ResourceType type)
+const char* ResourceManager::GetAssetsDirectoryFromType(const ResourceType type)
 {
 	const char* ret = nullptr;
 
@@ -1153,7 +1153,7 @@ const char* M_ResourceManager::GetAssetsDirectoryFromType(const ResourceType typ
 	return ret;
 }
 
-const char* M_ResourceManager::GetLibraryDirectoryFromType(const ResourceType type)
+const char* ResourceManager::GetLibraryDirectoryFromType(const ResourceType type)
 {
 	const char* ret = nullptr;
 
@@ -1175,7 +1175,7 @@ const char* M_ResourceManager::GetLibraryDirectoryFromType(const ResourceType ty
 	return ret;
 }
 
-void M_ResourceManager::DeleteFromAssets(const char* assetsPath)
+void ResourceManager::DeleteFromAssets(const char* assetsPath)
 {
 	if (assetsPath == nullptr)
 	{
@@ -1209,7 +1209,7 @@ void M_ResourceManager::DeleteFromAssets(const char* assetsPath)
 	resourceUIDs.shrink_to_fit();
 }
 
-std::string M_ResourceManager::GetValidPath(const char* path) const
+std::string ResourceManager::GetValidPath(const char* path) const
 {
 	std::string normalizedPath = path;
 
@@ -1234,24 +1234,24 @@ std::string M_ResourceManager::GetValidPath(const char* path) const
 	return resultPath;
 }
 
-bool M_ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
+bool ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
 {
 	std::filesystem::path filePath = assetsPath;
 	return (engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ini") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
 }
-bool M_ResourceManager::SaveConfiguration(Json& configModule) const
+bool ResourceManager::SaveConfiguration(Json& configModule) const
 {
 	return true;
 }
 
-bool M_ResourceManager::LoadConfiguration(Json& configModule)
+bool ResourceManager::LoadConfiguration(Json& configModule)
 {
 	return true;
 }
 
-bool M_ResourceManager::InspectorDraw()
+bool ResourceManager::InspectorDraw()
 {
 	return true;
 }

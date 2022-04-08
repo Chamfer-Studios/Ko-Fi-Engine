@@ -3,12 +3,12 @@
 
 #include "PxPhysicsAPI.h"
 
-class M_Physics;
+class Physics;
 
 class SimulationEventCallback : public physx::PxSimulationEventCallback
 {
 public:
-	SimulationEventCallback(M_Physics* callback) { this->callback = callback; }
+	SimulationEventCallback(Physics* callback) { this->callback = callback; }
 	~SimulationEventCallback() {}
 
 	void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs);
@@ -22,7 +22,7 @@ public:
 	void onSleep(physx::PxActor** actors, physx::PxU32 count) {}
 
 private:
-	M_Physics* callback = nullptr;
+	Physics* callback = nullptr;
 
 };
 

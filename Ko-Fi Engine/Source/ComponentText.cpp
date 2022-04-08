@@ -8,7 +8,7 @@
 #include "ImGuiAppLog.h"
 #include "imgui_stdlib.h"
 #include "M_Editor.h"
-#include "M_UI.h"
+#include "UI.h"
 
 ComponentText::ComponentText(GameObject* parent) : ComponentRenderedUI(parent)
 {

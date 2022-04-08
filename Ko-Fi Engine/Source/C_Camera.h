@@ -26,7 +26,7 @@ public:
 	void CalculateViewMatrix(bool ortho = false);
 	void RecalculateProjection(bool ortho = false);
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
-	// At the moment, all components are serialized (saved and loaded) in the same place (M_SceneManager),
+	// At the moment, all components are serialized (saved and loaded) in the same place (SceneManager),
 	// but we will consider to have functions in each of them in the future for better code organization.
 	//void OnSave(JSONWriter& writer) const override;
 	//void OnLoad(const JSONReader& reader) override;

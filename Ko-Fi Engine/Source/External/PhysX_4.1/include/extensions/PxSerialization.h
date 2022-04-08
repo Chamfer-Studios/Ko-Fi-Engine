@@ -273,7 +273,7 @@ public:
 	/**
 	\brief Creates an application managed registry for serialization.
 	
-	\param[in] physics M_Physics SDK to generate create serialization registry
+	\param[in] physics Physics SDK to generate create serialization registry
 	
 	\return PxSerializationRegistry instance.
 
