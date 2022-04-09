@@ -4,9 +4,6 @@
 #include "Globals.h"
 #include "Resource.h"
 
-#include <string>
-#include <vector>
-
 struct Channel;
 
 class R_Animation

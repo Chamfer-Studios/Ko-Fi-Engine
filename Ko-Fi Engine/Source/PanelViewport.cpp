@@ -1,17 +1,23 @@
 // Modules
 #include "PanelViewport.h"
-#include "Editor.h"
-#include "Engine.h"
-#include "Camera3D.h"
-#include "SceneManager.h"
 //#include "ViewportFrameBuffer.h"
-#include "Input.h"
-#include "Window.h"
-#include "FileSystem.h"
+// Modules
+#include "Engine.h"
+#include "M_Camera3D.h"
+#include "M_SceneManager.h"
+#include "M_Editor.h"
+#include "M_Input.h"
+#include "M_Window.h"
+#include "M_FileSystem.h"
+#include "M_Renderer3D.h"
+
+// GameObject
+#include "GameObject.h"
+#include "C_Material.h"
+#include "C_Camera.h"
+
 #include "Importer.h"
-#include "Renderer3D.h"
-#include "Texture.h"
-#include "ComponentMaterial.h"
+#include "R_Texture.h"
 
 #include "Log.h"
 // Tools
@@ -20,7 +26,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_internal.h"
 
-PanelViewport::PanelViewport(Editor* editor, KoFiEngine* engine)
+PanelViewport::PanelViewport(M_Editor* editor, KoFiEngine* engine)
 {
 	this->editor = editor;
 	this->engine = engine;
@@ -96,12 +102,12 @@ bool PanelViewport::Update()
 						{
 							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 
-							if (go->GetComponent<ComponentMaterial>())
+							if (go->GetComponent<C_Material>())
 							{
-								Texture texture = Texture();
-								Importer::GetInstance()->textureImporter->Import(path.c_str(), &texture);
+								R_Texture *texture = new R_Texture();
+								Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
 
-								go->GetComponent<ComponentMaterial>()->texture = texture;
+								go->GetComponent<C_Material>()->texture = texture;
 								//cMaterial->textures.push_back(texture);
 							}
 						}

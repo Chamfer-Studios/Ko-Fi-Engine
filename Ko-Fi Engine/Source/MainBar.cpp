@@ -1,26 +1,31 @@
 #include "MainBar.h"
-#include "Editor.h"
+
+// Modules
 #include "Engine.h"
-#include "FileSystem.h"
-#include "SceneManager.h"
+#include "M_Editor.h"
+#include "M_FileSystem.h"
+#include "M_SceneManager.h"
+
+// GameObject
+#include "GameObject.h"
+#include "C_Camera.h"
+#include "C_Canvas.h"
+#include "C_Transform2D.h"
+#include "C_Material.h"
+#include "C_Image.h"
+#include "C_Button.h"
+#include "C_Text.h"
+#include "C_Mesh.h"
+
 #include "PanelChooser.h"
 #include "SDL.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include "Primitive.h"
 #include "Importer.h"
-#include "ComponentCamera.h"
-#include "ComponentCanvas.h"
-#include "ComponentTransform2D.h"
-#include "ComponentMaterial.h"
-#include "ComponentImage.h"
-#include "ComponentButton.h"
-#include "ComponentText.h"
-#include "ComponentCamera.h"
-#include "Material.h"
-#include "ComponentMesh.h"
+#include "R_Material.h"
 
-MainBar::MainBar(Editor* editor)
+MainBar::MainBar(M_Editor* editor)
 {
 
 	this->editor = editor;
@@ -49,7 +54,7 @@ bool MainBar::Update()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Import Model"))
+			if (ImGui::MenuItem("Import R_Model"))
 			{
 				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
 			}
@@ -91,7 +96,7 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Create Camera"))
 			{
 				GameObject* camera = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("camera");
-				camera->CreateComponent<ComponentCamera>();
+				camera->CreateComponent<C_Camera>();
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
@@ -126,7 +131,7 @@ bool MainBar::Update()
 				if (ImGui::MenuItem("Canvas")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr,nullptr, false);
 					go->SetName("Canvas");
-					go->CreateComponent<ComponentCanvas>();
+					go->CreateComponent<C_Canvas>();
 				}
 				if (ImGui::MenuItem("Image")) {
 					//create canvas first 
@@ -134,7 +139,7 @@ bool MainBar::Update()
 					GameObject* lastCanvas = nullptr;
 					for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 					{
-						if (goit->GetComponent<ComponentCanvas>() != nullptr)
+						if (goit->GetComponent<C_Canvas>() != nullptr)
 						{
 							lastCanvas = goit;
 							canvasExists = true;
@@ -147,13 +152,13 @@ bool MainBar::Update()
 					{
 						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 						newCanvas->SetName("Canvas");
-						newCanvas->CreateComponent<ComponentCanvas>();
+						newCanvas->CreateComponent<C_Canvas>();
 					}
 
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Image");
-					go->CreateComponent<ComponentTransform2D>();
-					go->CreateComponent<ComponentImage>();
+					go->CreateComponent<C_Transform2D>();
+					go->CreateComponent<C_Image>();
 
 					if (canvasExists == true && lastCanvas != nullptr)
 					{
@@ -164,7 +169,7 @@ bool MainBar::Update()
 						newCanvas->AttachChild(go);
 					}
 					
-					//go->CreateComponent<ComponentMaterial>();
+					//go->CreateComponent<C_Material>();
 				}
 				if (ImGui::MenuItem("Button")) {
 
@@ -172,7 +177,7 @@ bool MainBar::Update()
 					GameObject* lastCanvas = nullptr;
 					for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 					{
-						if (goit->GetComponent<ComponentCanvas>() != nullptr)
+						if (goit->GetComponent<C_Canvas>() != nullptr)
 						{
 							lastCanvas = goit;
 							canvasExists = true;
@@ -185,14 +190,14 @@ bool MainBar::Update()
 					{
 						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 						newCanvas->SetName("Canvas");
-						newCanvas->CreateComponent<ComponentCanvas>();
+						newCanvas->CreateComponent<C_Canvas>();
 					}
 
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Button");
-					go->CreateComponent<ComponentTransform2D>();
-					go->CreateComponent<ComponentButton>();
-					//go->CreateComponent<ComponentMaterial>();
+					go->CreateComponent<C_Transform2D>();
+					go->CreateComponent<C_Button>();
+					//go->CreateComponent<C_Material>();
 
 					if (canvasExists == true && lastCanvas != nullptr)
 					{
@@ -210,7 +215,7 @@ bool MainBar::Update()
 					GameObject* lastCanvas = nullptr;
 					for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 					{
-						if (goit->GetComponent<ComponentCanvas>() != nullptr)
+						if (goit->GetComponent<C_Canvas>() != nullptr)
 						{
 							lastCanvas = goit;
 							canvasExists = true;
@@ -223,13 +228,13 @@ bool MainBar::Update()
 					{
 						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 						newCanvas->SetName("Canvas");
-						newCanvas->CreateComponent<ComponentCanvas>();
+						newCanvas->CreateComponent<C_Canvas>();
 					}
 
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Text");
-					go->CreateComponent<ComponentTransform2D>();
-					go->CreateComponent<ComponentText>();
+					go->CreateComponent<C_Transform2D>();
+					go->CreateComponent<C_Text>();
 
 					if (canvasExists == true && lastCanvas != nullptr)
 					{
@@ -239,7 +244,7 @@ bool MainBar::Update()
 					{
 						newCanvas->AttachChild(go);
 					}
-					//go->CreateComponent<ComponentMaterial>();
+					//go->CreateComponent<C_Material>();
 				}
 				ImGui::EndMenu();
 			}
@@ -314,7 +319,7 @@ void MainBar::SafeUIPlacing(GameObject* go)
 	bool canvasExists = false;
 	for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
-		if (goit->GetComponent<ComponentCanvas>() != nullptr)
+		if (goit->GetComponent<C_Canvas>() != nullptr)
 		{
 			goit->AttachChild(go);
 			canvasExists = true;
@@ -326,7 +331,7 @@ void MainBar::SafeUIPlacing(GameObject* go)
 	{
 		/*GameObject* newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 		newCanvas->SetName("Canvas");
-		newCanvas->CreateComponent<ComponentCanvas>();
+		newCanvas->CreateComponent<C_Canvas>();
 		newCanvas->AttachChild(go);*/
 	}
 }

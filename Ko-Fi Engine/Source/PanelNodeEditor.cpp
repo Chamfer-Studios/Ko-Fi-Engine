@@ -1,5 +1,5 @@
 #include "PanelNodeEditor.h"
-#include "Editor.h"
+#include "M_Editor.h"
 #include <fstream>
 #include <ios> // for std::streamsize
 #include "PanelChooser.h"
@@ -10,10 +10,10 @@
 #include "AdditionNode.h"
 
 #include <ImNodes.h>
-PanelNodeEditor::PanelNodeEditor(Editor* editor)
+PanelNodeEditor::PanelNodeEditor(M_Editor* editor)
 {
 	this->editor = editor;
-	panelName = "Node Editor";
+	panelName = "Node M_Editor";
 }
 
 PanelNodeEditor::~PanelNodeEditor()
@@ -118,7 +118,7 @@ int PanelNodeEditor::CreateNode(NodeType type)
     switch (type) {
     case NodeType::MATERIAL:
         ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
-        nodes.push_back((Node*) new MaterialNode("Material",NodeType::MATERIAL,nodeId));
+        nodes.push_back((Node*) new MaterialNode("R_Material",NodeType::MATERIAL,nodeId));
         return nodeId;
     case NodeType::VEC1:
         ImNodes::SetNodeScreenSpacePos(nodeId, ImGui::GetMousePos());
@@ -158,7 +158,7 @@ void PanelNodeEditor::RightClickListener()
     if (ImGui::BeginPopup("Create Node"))
     {
         const ImVec2 click_pos = ImGui::GetMousePosOnOpeningCurrentPopup();
-        if (ImGui::MenuItem("Material")) {
+        if (ImGui::MenuItem("R_Material")) {
             CreateNode(NodeType::MATERIAL);
         }
         if (ImGui::MenuItem("Vec1")) {

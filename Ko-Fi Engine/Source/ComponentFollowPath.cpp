@@ -1,9 +1,9 @@
 #include "ComponentFollowPath.h"
 
 #include "Engine.h"
-#include "Navigation.h"
+#include "M_Navigation.h"
 #include "GameObject.h"
-#include "ComponentTransform.h"
+#include "C_Transform.h"
 
 ComponentFollowPath::ComponentFollowPath(GameObject* parent) : Component(parent)
 {
@@ -52,7 +52,7 @@ bool ComponentFollowPath::Update(float dt)
 {
 	if (finalPath.size() == 0) return true;
 
-	ComponentTransform* cTrans = owner->GetComponent<ComponentTransform>();
+	C_Transform* cTrans = owner->GetComponent<C_Transform>();
 	float3 position = cTrans->GetPosition();
 	float3 wp = finalPath[currentPathWaypoint];
 
@@ -87,7 +87,7 @@ void ComponentFollowPath::CalculatePath()
 	appLog->AddLog("Found path with %d directions\n", finalPath.size());
 
 	// Find closest waypoint to current position to resume patrol
-	ComponentTransform* cTrans = owner->GetComponent<ComponentTransform>();
+	C_Transform* cTrans = owner->GetComponent<C_Transform>();
 	int closestIndex = 0;
 	float minDist = INT_MAX;
 	for (int i = 0; i < finalPath.size(); i++) {

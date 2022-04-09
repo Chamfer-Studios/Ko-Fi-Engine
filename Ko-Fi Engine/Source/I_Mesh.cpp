@@ -1,7 +1,7 @@
 #include "I_Mesh.h"
 #include "Globals.h"
 #include "Log.h"
-#include "Mesh.h"
+#include "R_Mesh.h"
 
 #include <fstream>
 
@@ -13,16 +13,16 @@ I_Mesh::~I_Mesh()
 {
 }
 
-bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene)
+bool I_Mesh::Import(const aiMesh* aiMesh, R_Mesh* mesh, const aiScene* assimpScene)
 {
 	if (mesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Mesh! Error: R_Mesh* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import R_Mesh! Error: R_Mesh* was nullptr.");
 		return false;
 	}
 	if (aiMesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Mesh! Error: aiMesh* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import R_Mesh! Error: aiMesh* was nullptr.");
 		return false;
 	}
 
@@ -106,7 +106,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, Mesh* mesh, const aiScene* assimpScene
 	return true;
 }
 
-bool I_Mesh::Save(const Mesh* mesh, const char* path)
+bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 {
 	std::ofstream file;
 	file.open(path, std::ios::in | std::ios::trunc | std::ios::binary);
@@ -121,7 +121,7 @@ bool I_Mesh::Save(const Mesh* mesh, const char* path)
 		file.write((char*)mesh->normals, mesh->normalsSizeBytes);			// Normals
 
 		if (mesh->texCoordSizeBytes != 0)
-			file.write((char*)mesh->texCoords, mesh->texCoordSizeBytes);	// Texture coordinates
+			file.write((char*)mesh->texCoords, mesh->texCoordSizeBytes);	// R_Texture coordinates
 
 		uint boneInfoSize = mesh->boneInfo.size();
 		uint bonesSize = mesh->bones.size();
@@ -194,7 +194,7 @@ bool I_Mesh::Save(const Mesh* mesh, const char* path)
 	return false;
 }
 
-bool I_Mesh::Load(const char* path, Mesh* mesh)
+bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 {
 	std::ifstream file;
 	file.open(path, std::ios::binary);

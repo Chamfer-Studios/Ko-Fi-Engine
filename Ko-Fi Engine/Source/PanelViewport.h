@@ -3,13 +3,13 @@
 
 #include "Panel.h"
 
-class Editor;
+class M_Editor;
 class KoFiEngine;
 
 class PanelViewport : public Panel
 {
 public:
-	PanelViewport(Editor* editor, KoFiEngine* engine);
+	PanelViewport(M_Editor* editor, KoFiEngine* engine);
 	~PanelViewport();
 
 	bool Awake();
@@ -22,7 +22,7 @@ public:
 	
 private:
 	bool isFocused = false;
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 	KoFiEngine* engine = nullptr;
 };
 

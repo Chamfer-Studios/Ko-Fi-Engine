@@ -15,7 +15,7 @@ public:
 	void Render(){
 		ImNodes::BeginNode(this->id);
 		ImNodes::BeginNodeTitleBar();
-		ImGui::TextUnformatted("Material");
+		ImGui::TextUnformatted("R_Material");
 		ImNodes::EndNodeTitleBar();
 
 		ImNodes::BeginInputAttribute(this->id << 8,ImNodesPinShape_TriangleFilled);

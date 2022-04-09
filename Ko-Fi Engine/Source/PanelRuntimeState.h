@@ -3,13 +3,13 @@
 
 #include "Panel.h"
 
-class Editor;
+class M_Editor;
 class KoFiEngine;
 
 class PanelRuntimeState : public Panel
 {
 public:
-	PanelRuntimeState(Editor* editor, KoFiEngine* engine);
+	PanelRuntimeState(M_Editor* editor, KoFiEngine* engine);
 	~PanelRuntimeState();
 
 	bool Awake();
@@ -20,7 +20,7 @@ public:
 	void DrawRuntimePanel();
 
 private:
-	Editor* editor = nullptr;
+	M_Editor* editor = nullptr;
 	KoFiEngine* engine = nullptr;
 };
 
