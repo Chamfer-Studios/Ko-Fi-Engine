@@ -35,17 +35,17 @@ bool R_Model::SaveMeta(Json& json) const
 			jsonResource["library_path"] = materialPath.c_str();
 			jsonResources[node.name].push_back(jsonResource);
 		}
-		if (node.shader != 0)
-		{
-			std::string shaderNode = node.name + SHADER_EXTENSION;
-			//TODO: Should we put shader dir?
-			//std::string shaderPath = SHADER_DIR + std::to_string(node.shader) + SHADER_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::SHADER;
-			jsonResource["name"] = shaderNode.c_str();
-			//jsonResource["library_path"] = shaderPath.c_str();
-			jsonResources[node.name].push_back(jsonResource);
-		}
+		//if (node.shader != 0)
+		//{
+		//	std::string shaderNode = node.name + SHADER_EXTENSION;
+		//	//TODO: Should we put shader dir?
+		//	//std::string shaderPath = SHADER_DIR + std::to_string(node.shader) + SHADER_EXTENSION;
+		//	jsonResource["uid"] = node.uid;
+		//	jsonResource["type"] = ResourceType::SHADER;
+		//	jsonResource["name"] = shaderNode.c_str();
+		//	//jsonResource["library_path"] = shaderPath.c_str();
+		//	jsonResources[node.name].push_back(jsonResource);
+		//}
 		if (node.texture != 0)
 		{
 			std::string textureNode = node.textureName;

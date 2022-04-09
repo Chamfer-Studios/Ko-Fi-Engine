@@ -1080,7 +1080,7 @@ UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
 	switch (type)
 	{
 	case ResourceType::TEXTURE:
-		Importer::GetInstance()->textureImporter->Import(assetsPath,(Texture*)resource);
+		Importer::GetInstance()->textureImporter->Import(assetsPath,(R_Texture*)resource);
 		break;
 	case ResourceType::FONT:
 		//TODO: FONT IMPORT
