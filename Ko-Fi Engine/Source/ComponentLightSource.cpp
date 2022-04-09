@@ -137,7 +137,6 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Component LightSource"))
 	{	
-
 		ImGui::Combo("###combo", &sType, "Directional Light Source\0Point Light Source\0Focal Light Source");
 
 		ImGui::SameLine();
@@ -157,6 +156,13 @@ bool ComponentLightSource::InspectorDraw(PanelChooser* chooser)
 		case SourceType::DIRECTIONAL:
 		{
 			DirectionalLight* currentLight = (DirectionalLight*)lightSource;
+
+			float color[3] = { currentLight->color.x, currentLight->color.y, currentLight->color.z };
+			if (ImGui::DragFloat3("light Color", color, 0.01f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->color = { color[0], color[1], color[2] };
+			}
+
 			float direction[3] = { currentLight->direction.x, currentLight->direction.y, currentLight->direction.z };
 			if (ImGui::DragFloat3("light Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 			{

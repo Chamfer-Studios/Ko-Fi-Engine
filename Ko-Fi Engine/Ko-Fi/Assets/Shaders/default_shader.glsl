@@ -47,6 +47,7 @@ void main() {
     fragPos = vec3(model_matrix * totalPosition);
     ourColor = albedoTint;
     TexCoord = texCoord;
+    //normals affected by model movement
     normal = model_matrix * vec4(normals, 1.0);
 }
 
@@ -70,10 +71,9 @@ uniform int numOfDirectionalLights;
 uniform int numOfPointLights;
 
 //light definitions
-float ambientStrength = 0.1;
-vec3 lightColor = vec3(1.0, 1.0, 1.0);
 
 struct DirLight {
+    vec3 color;
     vec3 direction;
   
     float ambient;
@@ -82,7 +82,8 @@ struct DirLight {
 
 }; uniform DirLight dirLights[MAX_DIR_LIGHTS];
 
-struct PointLight {    
+struct PointLight {   
+    vec3 color;
     vec3 position;
     
     float ambient;
@@ -109,8 +110,8 @@ vec3 CalcDirLight(DirLight light, vec3 normal)
     //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
    
     // combine results
-    vec3 ambient  = light.ambient * lightColor;
-    vec3 diffuse  = light.diffuse * diff * lightColor;
+    vec3 ambient  = light.ambient * light.color;
+    vec3 diffuse  = light.diffuse * diff * light.color;
     //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
     ret = ambient + diffuse; //+ specular
 
@@ -133,8 +134,8 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos)
   			     light.quadratic * (distance * distance));    
 
     // --- combine results ---
-    vec3 ambient  = light.ambient  * lightColor;
-    vec3 diffuse  = light.diffuse  * diff * lightColor;
+    vec3 ambient  = light.ambient  * light.color;
+    vec3 diffuse  = light.diffuse  * diff * light.color;
     //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
     ambient  *= attenuation;
     diffuse  *= attenuation;

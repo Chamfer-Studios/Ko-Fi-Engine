@@ -508,13 +508,16 @@ void Renderer3D::RenderMeshes(GameObject* go)
 						std::string number = std::to_string(i);
 						//get corresponding directional light
 						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<ComponentLightSource>()->GetLightSource();
-						//fill the first variable of the DirLight struct: vec3 direction
+						//fill the first variable of the DirLight struct: vec3 color
+						GLint lightColor = glGetUniformLocation(shader, ("dirLights[" + number + "].color").c_str());
+						glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
+						//second variable: vec3 direction
 						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
 						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
-						//second variable: float ambient
+						//third variable: float ambient
 						GLint ambientValue = glGetUniformLocation(shader, ("dirLights[" + number + "].ambient").c_str());
 						glUniform1f(ambientValue, lightSource->ambient);
-						//third variable: float diffuse
+						//forth variable: float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("dirLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
 						i++;
@@ -545,13 +548,16 @@ void Renderer3D::RenderMeshes(GameObject* go)
 						
 						// --- basic light parameters ---
 						
-						//fill in the first variable of the DirLight struct: vec3 position
+						//fill the first variable of the PointLight struct: vec3 color
+						GLint lightColor = glGetUniformLocation(shader, ("pointLights[" + number + "].color").c_str());
+						glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
+						//second variable: vec3 position
 						GLint lightPos = glGetUniformLocation(shader, ("pointLights[" + number + "].position").c_str());
 						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
-						//second variable: float ambient
+						//third variable: float ambient
 						GLint ambientValue = glGetUniformLocation(shader, ("pointLights[" + number + "].ambient").c_str());
 						glUniform1f(ambientValue, lightSource->ambient);
-						//third variable: float diffuse
+						//forth variable: float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("pointLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
 
