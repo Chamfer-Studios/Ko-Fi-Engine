@@ -791,13 +791,15 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 		return false;
 	}
 
-	//TODO: META SHIT
-	//switch (resource->GetType())
-	//{
-	//case ResourceType::TEXTURE: { return true; } break;
-	//case ResourceType::SHADER: { return true; } break;
-	//default: break;
-	//}
+	switch (resource->GetType())
+	{
+	case ResourceType::TEXTURE: { return true; } break;
+	case ResourceType::MATERIAL: { return true; } break;
+	case ResourceType::PARTICLE: { return true; } break;
+	case ResourceType::TRACK: { return true; } break;
+	// TODO: REMAINING TYPES (?)
+	default: break;
+	}
 
 	return false;
 }
@@ -814,6 +816,8 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetPath, ResourceTy
 
 bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 {
+	bool ret = true;
+
 	if (resource == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: saving meta file, resource was nullptr.");
@@ -830,16 +834,21 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 	metaFile["library_path"] = resource->GetLibraryPath();
 	//TODO: ADD MODIFICATION TIME
 
-	resource->SaveMeta(metaFile); // This json doesn't go anywhere :/
+	//TODO: Make SaveMeta / LoadMeta inherit for all resources with meta (to custom its save / load)
+	resource->SaveMeta(metaFile);
 
-	//TODO: Serialize to file & save file i think?
-	//JsonHandler jsonHandler;
+	std::string path = resource->GetAssetPath() + std::string(META_EXTENSION);
 
-	return true;
+	JsonHandler jsonHandler;
+	ret = jsonHandler.SaveJson(metaFile, path.c_str());
+
+	return ret;
 }
 
 bool M_ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
 {
+	bool ret = true;
+
 	if (assetPath == nullptr)
 	{
 		LOG_BOTH("[ERROR] Resource Manager: loading meta file, assetPath was nullptr.");
@@ -1010,6 +1019,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 	Json jsonRoot;
 	LoadMetaFile(jsonRoot, libraryPath);
 	bool metaIsValid = ValidateMetaFile(jsonRoot);
+
 	if (jsonRoot.empty())
 	{
 		LOG_BOTH("[ERROR] Resource Manager: loading from library, could not get the meta root node.");
