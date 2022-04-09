@@ -192,6 +192,11 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 		{
 			PointLight* currentLight = (PointLight*)lightSource;
 
+			float color[3] = { currentLight->color.x, currentLight->color.y, currentLight->color.z };
+			if (ImGui::DragFloat3("light Color", color, 0.01f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->color = { color[0], color[1], color[2] };
+			}
 			float ambientValue = currentLight->ambient;
 			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
