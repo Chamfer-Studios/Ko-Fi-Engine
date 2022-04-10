@@ -548,22 +548,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			Tag tag = Tag::TAG_UNTAGGED;
 			if (jsonGo.contains("tag"))
 				tag = jsonGo.at("tag");
-			GameObject* go = nullptr;
-
-			if (scene->GetGameObject(UID) != nullptr)
-			{
-				go = scene->GetGameObject(UID);
-				std::string tmp = jsonGo.at("name");
-				go->SetName(tmp.c_str());
-				go->SetUID(UID);
-				go->SetEngine(engine);
-				go->is3D = is3D;
-			}
-			else
-			{
-				std::string name = jsonGo.at("name");
-				go = new GameObject(UID, engine, name.c_str(), is3D);
-			}
+			
+			std::string name = jsonGo.at("name");
+			GameObject* go = new GameObject(UID, engine, name.c_str(), is3D);
 
 			go->active = jsonGo.at("active");
 			go->tag = tag;
