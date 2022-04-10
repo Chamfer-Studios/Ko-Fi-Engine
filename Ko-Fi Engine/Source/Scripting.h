@@ -219,14 +219,14 @@ public:
 			"right", &C_Camera::right,
 			"up", &C_Camera::up
 			);
-		// Component R_Mesh
+		// Component Mesh
 		lua.new_usertype<C_Mesh>("C_Mesh",
 			sol::constructors<void(GameObject *)>(),
 			"Disable", &C_Mesh::Disable,
 			"Enable", &C_Mesh::Enable
 			);
 
-		// Component R_Mesh
+		// Component Mesh
 		lua.new_usertype<C_Mesh>("C_Mesh",
 			sol::constructors<void(GameObject*)>(),
 			"Disable",	&C_Mesh::Disable,

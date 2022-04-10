@@ -298,15 +298,19 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
-	if (mesh != nullptr && ImGui::CollapsingHeader("R_Mesh"))
+	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh"))
 	{
 		DrawDeleteButton(owner, this);
 
-		ImGui::Text("R_Mesh Path: ");
+		if (mesh->path.empty())
+			ImGui::BeginDisabled();
+		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
 		if (ImGui::Selectable(mesh->path.c_str())) {}
 		ImGui::PopStyleColor();
+		if (mesh->path.empty())
+			ImGui::EndDisabled();
 
 		ImGui::Text("Num. vertices: ");
 		ImGui::SameLine();

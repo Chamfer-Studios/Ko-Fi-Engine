@@ -170,7 +170,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 	
 	if (!assimpScene->HasMeshes())
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any R_Mesh.");
+		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any Mesh.");
 		return;
 	}
 
@@ -204,7 +204,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		return;
 	}
 
-	// Import R_Mesh to GameObject
+	// Import Mesh to GameObject
 	R_Mesh* mesh = new R_Mesh(Shape::NONE);
 	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh, assimpScene);
 
@@ -222,7 +222,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Component R_Mesh is nullptr.");
+		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
 		return;
 	}
 
@@ -259,12 +259,12 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
-	// Import R_Material to GameObject
+	// Import Material to GameObject
 	C_Material* cMaterial = (C_Material*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<C_Material>();
 
 	if (cMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Component R_Material is nullptr.");
+		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
 		return;
 	}
 
