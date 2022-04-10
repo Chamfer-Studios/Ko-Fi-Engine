@@ -520,16 +520,13 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 	if (!jsonFile.is_null())
 	{
+	
 		scene->DeleteCurrentScene();
 		ret = true;
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
 
-		char result[100] = "Ko-Fi Engine  - ";
-
-		strcat(result, scene->name.c_str());
-
-		engine->GetWindow()->SetTitle(result);
+		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + scene->name);
 
 		scene->active = jsonScene.at("active");
 		//Create Root
@@ -552,11 +549,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			if (jsonGo.contains("tag"))
 				tag = jsonGo.at("tag");
 			GameObject* go = nullptr;
-			bool exists = false;
 
 			if (scene->GetGameObject(UID) != nullptr)
 			{
-				exists = true;
 				go = scene->GetGameObject(UID);
 				std::string tmp = jsonGo.at("name");
 				go->SetName(tmp.c_str());
@@ -781,7 +776,6 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				}
 					
 			}
-			if (!exists)
 				scene->gameObjectList.push_back(go);
 		}
 
