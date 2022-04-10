@@ -123,10 +123,10 @@ public:
 	float4x4 GetMatrixFromQuat(Quat quat);
 
 	// Size in Bytes
+	unsigned indicesSizeBytes = 0;
 	unsigned verticesSizeBytes = 0;
 	unsigned normalsSizeBytes = 0;
 	unsigned texCoordSizeBytes = 0;
-	unsigned indicesSizeBytes = 0;
 
 	// Indices
 	uint idIndex = 0; // index in VRAM
