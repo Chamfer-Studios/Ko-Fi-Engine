@@ -598,7 +598,7 @@
     <ClCompile Include="Source\Resource.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\R_ResourceBase.cpp">
+    <ClCompile Include="Source\ResourceBase.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\R_Model.cpp">
@@ -1728,7 +1728,7 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\R_ResourceBase.h">
+    <ClInclude Include="Source\ResourceBase.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\R_Model.h">

@@ -248,7 +248,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 	case ComponentType::MESH:
 	{
-		//// Set Default R_Material
+		//// Set Default Material
 		//c = this->CreateComponent<C_Material>();
 		//R_Material* material = new R_Material();
 		//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);

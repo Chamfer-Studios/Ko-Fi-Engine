@@ -321,7 +321,7 @@ bool C_Material::LoadDefaultMaterial()
 
 bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("R_Material"))
+	if (ImGui::CollapsingHeader("R_Material", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 		//if (panelChooser->IsReadyToClose("AddTexture"))
@@ -386,10 +386,10 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			}
 		}
 
-		//ImGui::Text("R_Material Name:");
+		//ImGui::Text("Material Name:");
 		//ImGui::SameLine();
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
-		ImGui::Text("R_Material R_Texture:");
+		ImGui::Text("Material Texture:");
 		//for (R_Texture& tex : textures)
 		if (texture->textureID != -1)
 		{
@@ -399,7 +399,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			ImGui::Text(texture->GetTexturePath());
 			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
-			if (ImGui::Button("Change R_Texture"))
+			if (ImGui::Button("Change Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
 				currentTextureId = texture->textureID;
@@ -410,7 +410,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 
-			if (ImGui::Button("Delete R_Texture"))
+			if (ImGui::Button("Delete Texture"))
 			{
 				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
 				texture->textureID = -1;
@@ -421,14 +421,14 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 		}
 		else
 		{
-			if (ImGui::Button("Add R_Texture"))
+			if (ImGui::Button("Add Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
 				currentTextureId = texture->textureID;
 			}
 		}
 
-		//if (ImGui::Button("Add R_Texture"))
+		//if (ImGui::Button("Add Texture"))
 		//	panelChooser->OpenPanel("AddTexture", "png");
 
 		ImGui::Separator();

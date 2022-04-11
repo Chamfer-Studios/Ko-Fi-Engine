@@ -5,7 +5,7 @@
 #include "Globals.h"
 #include "Resource.h"
 
-class R_ResourceBase;
+class ResourceBase;
 
 class M_ResourceManager : public Module
 {
@@ -56,9 +56,9 @@ public:
 	bool ResourceHasMetaType(Resource* resource) const;
 
 	bool LoadMetaFileIntoLibrary(const char* assetsPath);
-	bool GetLibraryPairs(const char* assetsPath, std::map<UID, R_ResourceBase>& pairs);
+	bool GetLibraryPairs(const char* assetsPath, std::map<UID, ResourceBase>& pairs);
 	bool GetResourceUIDsFromMeta(const char* assetsPath, std::vector<UID>& uids);
-	bool GetResourceBasesFromMeta(const char* assetsPath, std::vector<R_ResourceBase>& bases);
+	bool GetResourceBasesFromMeta(const char* assetsPath, std::vector<ResourceBase>& bases);
 	bool GetLibraryFilePathsFromMeta(const char* assetsPath, std::vector<std::string>& paths);
 	// Engine config serialization --------------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
@@ -81,7 +81,7 @@ private:
 	KoFiEngine* engine = nullptr;
 
 	std::map<UID, Resource*> resourcesMap;
-	std::map<UID, R_ResourceBase> library;
+	std::map<UID, ResourceBase> library;
 
 	float fileRefreshRate;
 	float fileRefreshTime;

@@ -156,7 +156,7 @@ bool M_SceneManager::LoadConfiguration(Json& configModule)
 
 bool M_SceneManager::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("M_SceneManager##"))
+	if (ImGui::CollapsingHeader("Scene Manager##"))
 	{
 		ImGui::InputText("Default Scene: ", &defaultScene);
 	}

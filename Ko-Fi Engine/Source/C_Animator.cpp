@@ -23,6 +23,8 @@ C_Animator::C_Animator(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::ANIMATOR;
 	playing = true;
+	animation = new R_Animation();
+
 }
 
 C_Animator::~C_Animator()
@@ -47,7 +49,7 @@ bool C_Animator::CleanUp()
 bool C_Animator::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
-	if (ImGui::CollapsingHeader("Animator"))
+	if (ImGui::CollapsingHeader("Animator", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 

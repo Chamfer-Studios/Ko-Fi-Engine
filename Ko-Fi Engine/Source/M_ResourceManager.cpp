@@ -168,7 +168,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 	{
 		LOG_BOTH("File to import was already in the library.");
 
-		std::map<UID, R_ResourceBase> libraryItems;
+		std::map<UID, ResourceBase> libraryItems;
 		GetLibraryPairs(assetPath, libraryItems);
 
 		for (auto& item : libraryItems)
@@ -335,7 +335,7 @@ bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
 		return false;
 	}
 
-	std::map<UID, R_ResourceBase> libraryPairs;
+	std::map<UID, ResourceBase> libraryPairs;
 	GetLibraryPairs(assetsPath, libraryPairs);
 
 	if (libraryPairs.empty())
@@ -349,7 +349,7 @@ bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
 	return true;
 }
 
-bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, R_ResourceBase>& pairs)
+bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, ResourceBase>& pairs)
 {
 	if (assetsPath == nullptr)
 	{
@@ -358,7 +358,7 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, R_
 	}
 
 	std::vector<UID> resourceUIDs;
-	std::vector<R_ResourceBase> bases;
+	std::vector<ResourceBase> bases;
 	GetResourceUIDsFromMeta(assetsPath, resourceUIDs);
 	GetResourceBasesFromMeta(assetsPath, bases);
 
@@ -442,7 +442,7 @@ bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetsPath, std::vec
 	return true;
 }
 
-bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::vector<R_ResourceBase>& bases)
+bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::vector<ResourceBase>& bases)
 {
 	if (assetsPath == nullptr)
 	{
@@ -482,7 +482,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::ve
 		//	return false;
 		//}
 
-		//resourceBases.push_back(R_ResourceBase(UID, rAssetsPath, rAssetsFile, rLibraryPath, rLibraryFile, type));
+		//resourceBases.push_back(ResourceBase(UID, rAssetsPath, rAssetsFile, rLibraryPath, rLibraryFile, type));
 	}
 
 	// Gets Resource Base from contained resources
@@ -516,7 +516,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::ve
 
 		//	containedAssetsPath = directory + containedAssetsFile;
 		//	containedLibraryFile = App->fileSystem->GetFileAndExtension(containedLibraryPath.c_str());
-		//	resourceBases.push_back(R_ResourceBase(containedUID, containedAssetsPath, containedAssetsFile, containedLibraryPath, containedLibraryFile, containedType));	// WIP until revision.
+		//	resourceBases.push_back(ResourceBase(containedUID, containedAssetsPath, containedAssetsFile, containedLibraryPath, containedLibraryFile, containedType));	// WIP until revision.
 		//}
 	}
 
@@ -940,7 +940,7 @@ void M_ResourceManager::SaveResource(Resource* resource)
 	if (ResourceHasMetaType(resource))
 		SaveMetaFile(resource);
 
-	library.emplace(resource->GetUID(), R_ResourceBase(resource));
+	library.emplace(resource->GetUID(), ResourceBase(resource));
 }
 
 bool M_ResourceManager::UnloadResource(Resource* resource)
