@@ -42,10 +42,10 @@ bool M_ResourceManager::Start()
 
 	fileRefreshRate = 5.0f;
 
-	RefreshDirectoryFiles(ASSETS_DIR);
-	RefreshDirectoryFiles(LIBRARY_DIR);
+	//RefreshDirectoryFiles(ASSETS_DIR);
+	//RefreshDirectoryFiles(LIBRARY_DIR);
 
-	TrimLibrary();
+	//TrimLibrary();
 
 	//Find prefabs
 
@@ -288,7 +288,7 @@ void M_ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& fi
 	if (filePairs.empty())
 		return;
 
-	for (auto item : filePairs)
+	for (const auto& item : filePairs)
 	{
 		auto assetModification = std::filesystem::last_write_time(item.first);
 		auto metaModification = std::filesystem::last_write_time(item.second);
@@ -305,10 +305,10 @@ void M_ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, s
 	if (metaFiles.empty())
 		return;
 
+	std::string assetPath = "";
 	for (uint i = 0; i < metaFiles.size(); ++i)
 	{
-		std::string assetPath = metaFiles[i];
-		assetPath = assetPath.substr(0,assetPath.find_last_of(META_EXTENSION) - 5);
+		assetPath = metaFiles[i].substr(0,assetPath.find_last_of(META_EXTENSION) - 5);
 		if (filePairs.find(assetPath) == filePairs.end())
 		{
 			toDelete.push_back(assetPath);
@@ -321,7 +321,7 @@ void M_ResourceManager::LoadFilesIntoLibrary(std::map<std::string, std::string>&
 	if (filePairs.empty())
 		return;
 
-	for (auto item : filePairs)
+	for (const auto& item : filePairs)
 	{
 		LoadMetaFileIntoLibrary(item.first.c_str());
 	}
@@ -365,7 +365,7 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, Re
 	if (resourceUIDs.size() != bases.size())
 		CONSOLE_LOG("[ERROR] Resource Manager: missmatching resource bases and UIDs");
 
-	for (uint i = 0; i < bases.size(); ++i)
+	for (uint i = 0; i < resourceUIDs.size(); ++i)
 		pairs.emplace(resourceUIDs[i], bases[i]);
 
 	resourceUIDs.clear();
@@ -378,148 +378,111 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, Re
 
 bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetsPath, std::vector<UID>& uids)
 {
+	bool ret = true;
+
 	if (assetsPath == nullptr)
 	{
 		LOG_BOTH("[ERROR] Resource Manager: getting UIDs from meta, assets path was nullptr.");
 		return false;
 	}
 
-	//Load Meta File & get contained resources
+	JsonHandler jsonHandler;
+	Json jsonMeta;
+
+	std::string metaPath = assetsPath + std::string(META_EXTENSION);
+	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+
+	if (!jsonMeta.is_null() && !jsonMeta.empty())
 	{
-		//char* buffer = nullptr;
-		//ParsonNode metaRoot = LoadMetaFile(assetsPath, &buffer);
-		//ParsonArray containedArray = metaRoot.GetArray("ContainedResources");
-		//RELEASE_ARRAY(buffer);
+		UID uid = jsonMeta.at("uid");
+		if (uid == 0)
+		{
+			LOG_BOTH("[ERROR] Resource Manager: main resource UID was 0.");
+			return false;
+		}
 
-		//if (!metaRoot.NodeIsValid())
-		//{
-		//	LOG("%s! Error: Given Assets Path had no correspondent Meta File.", errorString.c_str());
-		//	return false;
-		//}
-		//if (!containedArray.ArrayIsValid())
-		//{
-		//	LOG("%s! Error: Contained Array in Meta File was not valid.", errorString.c_str());
-		//	return false;
-		//}
+		uids.push_back(uid);
+
+		if (jsonMeta.contains("contained_resources"))
+		{
+			if (!jsonMeta.at("contained_resources").is_null() && !jsonMeta.at("contained_resources").empty())
+			{
+				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
+				{
+					UID containedUid = containedIt.value().at("uid");
+					if (containedUid == 0)
+					{
+						LOG_BOTH("[ERROR] Resource Manager: contained resource UID was 0.");
+						continue;
+					}
+					uids.push_back(containedUid);
+				}
+			}
+		}
 	}
-
-	// UID of main resource
-	{
-		//uint32 resourceUid = (uint32)metaRoot.GetNumber("UID");
-		//if (resourceUid == 0)
-		//{
-		//	LOG("%s! Error: Main Resource UID was 0.", errorString.c_str());
-		//	return false;
-		//}
-
-		//resourceUids.push_back(resourceUid);
-	}
-
-	// UIDs of contained resources
-	{
-		//uint32 containedUid = 0;
-		//ParsonNode containedNode = ParsonNode();
-		//for (uint i = 0; i < containedArray.size; ++i)
-		//{
-		//	containedNode = containedArray.GetNode(i);
-		//	if (!containedNode.NodeIsValid())
-		//	{
-		//		continue;
-		//	}
-
-		//	containedUid = 0;																									// Resetting the contained uid
-		//	containedUid = (uint32)containedNode.GetNumber("UID");
-		//	if (containedUid == 0)
-		//	{
-		//		LOG("[WARNING] Resource Manager: Contained UID was not valid!");
-		//		continue;
-		//	}
-
-		//	resourceUids.push_back(containedUid);
-		//}
-	}
-
 	return true;
 }
 
 bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::vector<ResourceBase>& bases)
 {
+	bool ret = true;
+
 	if (assetsPath == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: getting resource bases from meta, assets path was nullptr.");
 		return false;
 	}
-	//Load Meta File & get contained resources
-	{
-		//char* buffer = nullptr;
-		//ParsonNode metaRoot = LoadMetaFile(assetsPath, &buffer);
-		//ParsonArray containedArray = metaRoot.GetArray("ContainedResources");
-		//RELEASE_ARRAY(buffer);
 
-		//if (!metaRoot.NodeIsValid())
+	JsonHandler jsonHandler;
+	Json jsonMeta;
+
+	std::string metaPath = assetsPath + std::string(META_EXTENSION);
+	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+
+	if (!jsonMeta.is_null() && !jsonMeta.empty())
+	{
+		UID uid = jsonMeta.at("uid");
+		ResourceType type = (ResourceType)(int)jsonMeta.at("type");
+		std::string assetsPath = jsonMeta.at("assets_path");
+		std::string assetsFile = jsonMeta.at("assets_file");
+		std::string libraryPath = jsonMeta.at("library_path");
+		std::string libraryFile = jsonMeta.at("library_file");
+
+		if (uid == 0)
+		{
+			LOG_BOTH("[ERROR] Resource Manager: main resource UID was 0.");
+			return false;
+		}
+		bases.push_back(ResourceBase(uid, type, assetsPath, assetsFile, libraryPath, libraryFile));
+
+		//if (jsonMeta.contains("contained_resources"))
 		//{
-		//	LOG("%s! Error: Given Assets Path had no associated .meta file.", errorString.c_str());
-		//	return false;
-		//}
-		//if (!containedArray.ArrayIsValid())
-		//{
-		//	LOG("%s! Error: ContainedResources array in Meta File was not valid.", errorString.c_str());
-		//	return false;
+		//	if (!jsonMeta.at("contained_resources").is_null() && !jsonMeta.at("contained_resources").empty())
+		//	{
+		//		for (const auto& containedIt : jsonMeta.at("contained_resources").items())
+		//		{
+		//			UID containedUid = containedIt.value().at("uid");
+		//			ResourceType containedType = (ResourceType)(int)jsonMeta.at("type");
+
+		//			std::string containedAssetsPath = "";
+		//			//std::string containedAssetsPath = jsonMeta.at("assets_path");
+
+		//			std::string containedAssetsFile = jsonMeta.at("assets_file");
+		//			std::string containedLibraryPath = jsonMeta.at("library_path");
+
+		//			std::string containedLibraryFile = "";
+		//			//std::string containedLibraryFile = jsonMeta.at("library_file");
+
+		//			if (containedUid == 0)
+		//			{
+		//				LOG_BOTH("[ERROR] Resource Manager: contained resource UID was 0.");
+		//				continue;
+		//			}
+		//			//bases.push_back(containedUid);
+		//		}
+		//	}
 		//}
 	}
-
-	// Gets Resource Base from main resource
-	{
-		//uint32 UID = (uint32)metaRoot.GetNumber("UID");
-		//ResourceType type = (ResourceType)((int)metaRoot.GetNumber("Type"));
-		//std::string rAssetsPath = metaRoot.GetString("AssetsPath");
-		//std::string rAssetsFile = metaRoot.GetString("Name");
-		//std::string rLibraryPath = metaRoot.GetString("LibraryPath");
-		//std::string rLibraryFile = metaRoot.GetString("LibraryFile");
-		//if (UID == 0)
-		//{
-		//	LOG("%s! Error: Main Resource UID was 0.", errorString.c_str());
-		//	return false;
-		//}
-
-		//resourceBases.push_back(ResourceBase(UID, rAssetsPath, rAssetsFile, rLibraryPath, rLibraryFile, type));
-	}
-
-	// Gets Resource Base from contained resources
-	{
-		//for (uint i = 0; i < containedArray.size; ++i)
-		//{
-		//	ParsonNode containedNode = containedArray.GetNode(i);
-		//	if (!containedNode.NodeIsValid())
-		//	{
-		//		continue;
-		//	}
-
-		//	std::string directory = "[NONE]";
-		//	std::string extension = "[NONE]";
-
-		//	uint32 containedUID = (uint32)containedNode.GetNumber("UID");
-		//	ResourceType containedType = (ResourceType)((int)containedNode.GetNumber("Type"));
-		//	std::string containedAssetsPath = "[NONE]";
-		//	std::string containedAssetsFile = containedNode.GetString("Name");
-		//	std::string containedLibraryPath = containedNode.GetString("LibraryPath");
-		//	std::string containedLibraryFile = "[NONE]";
-		//	bool success = GetAssetsDirectoryAndExtensionFromType(containedType, directory, extension);
-		//	if (!success)
-		//	{
-		//		continue;
-		//	}
-		//	if (containedUID == 0)
-		//	{
-		//		continue;
-		//	}
-
-		//	containedAssetsPath = directory + containedAssetsFile;
-		//	containedLibraryFile = App->fileSystem->GetFileAndExtension(containedLibraryPath.c_str());
-		//	resourceBases.push_back(ResourceBase(containedUID, containedAssetsPath, containedAssetsFile, containedLibraryPath, containedLibraryFile, containedType));	// WIP until revision.
-		//}
-	}
-
 	return true;
 }
 
@@ -824,23 +787,24 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 		return false;
 	}
 
-	Json metaFile;
+	Json jsonMeta;
 
-	metaFile["uid"] = resource->GetUID();
-	metaFile["type"] = (uint)resource->GetType();
-	metaFile["name"] = resource->GetAssetFile();
-	metaFile["assets_path"] = resource->GetAssetPath();
-	metaFile["library_file"] = resource->GetLibraryFile();
-	metaFile["library_path"] = resource->GetLibraryPath();
+	jsonMeta["uid"] = resource->GetUID();
+	jsonMeta["type"] = (int)resource->GetType();
+	jsonMeta["name"] = resource->GetAssetFile();
+	jsonMeta["assets_path"] = resource->GetAssetPath();
+	jsonMeta["assets_file"] = resource->GetAssetFile();
+	jsonMeta["library_file"] = resource->GetLibraryFile();
+	jsonMeta["library_path"] = resource->GetLibraryPath();
 	//TODO: ADD MODIFICATION TIME
 
 	//TODO: Make SaveMeta / LoadMeta inherit for all resources with meta (to custom its save / load)
-	resource->SaveMeta(metaFile);
+	resource->SaveMeta(jsonMeta);
 
 	std::string path = resource->GetAssetPath() + std::string(META_EXTENSION);
 
 	JsonHandler jsonHandler;
-	ret = jsonHandler.SaveJson(metaFile, path.c_str());
+	ret = jsonHandler.SaveJson(jsonMeta, path.c_str());
 
 	return ret;
 }
@@ -1263,6 +1227,7 @@ bool M_ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
 }
+
 bool M_ResourceManager::SaveConfiguration(Json& configModule) const
 {
 	return true;

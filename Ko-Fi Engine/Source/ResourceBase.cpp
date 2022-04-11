@@ -2,6 +2,15 @@
 #include "Resource.h"
 #include <string>
 
+ResourceBase::ResourceBase(UID uid, const ResourceType& type, const std::string& assetsPath, const std::string& assetsFile, const std::string& libraryPath, const std::string& libraryFile) :
+uid(uid),
+type(type),
+assetsPath(assetsPath),
+assetsFile(assetsFile),
+libraryPath(libraryPath),
+libraryFile(libraryFile)
+{}
+
 ResourceBase::ResourceBase(const Resource* r)
 {
 	if (r != nullptr)
