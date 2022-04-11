@@ -121,7 +121,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             ImGui::Spacing();
             if (ImGui::Button("Change Track"))
             {
-                chooser->OpenPanel("Load Track", "wav", { "wav" });
+                chooser->OpenPanel("Load Track", "wav", { "wav", "mp3", "flac" });
             }
             ImGui::SameLine();
             if (ImGui::Button("Delete Track"))

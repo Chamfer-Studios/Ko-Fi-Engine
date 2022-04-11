@@ -149,7 +149,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
         ImGui::Spacing();
         if (ImGui::Button("Add Track") && totalTracks < 9)
         {
-            chooser->OpenPanel("Add Track", "wav", { "wav" });
+            chooser->OpenPanel("Add Track", "wav", { "wav", "mp3", "flac" });
         }
         // STOP TRACK
         if (IsAnyTrackPlaying())
