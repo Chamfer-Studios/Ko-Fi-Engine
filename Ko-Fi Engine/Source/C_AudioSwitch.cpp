@@ -119,7 +119,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
     if (openEditor && trackIdInEdit != -1)
         DrawEditor(tracks[trackIdInEdit]);
 
-    if (ImGui::CollapsingHeader("Audio Switch"))
+    if (ImGui::CollapsingHeader("Audio Switch", ImGuiTreeNodeFlags_AllowItemOverlap))
     {
         DrawDeleteButton(owner, this);
 

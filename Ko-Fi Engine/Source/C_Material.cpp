@@ -321,7 +321,7 @@ bool C_Material::LoadDefaultMaterial()
 
 bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Material"))
+	if (ImGui::CollapsingHeader("R_Material", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 		//if (panelChooser->IsReadyToClose("AddTexture"))

@@ -112,7 +112,11 @@ bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 	file.open(path, std::ios::in | std::ios::trunc | std::ios::binary);
 	if (file.is_open())
 	{
-		file.write((char*)mesh, 4 * sizeof(unsigned));						// HEADER
+		// HEADER
+		file.write((char*)&mesh->indicesSizeBytes, sizeof(unsigned));
+		file.write((char*)&mesh->verticesSizeBytes, sizeof(unsigned));
+		file.write((char*)&mesh->normalsSizeBytes, sizeof(unsigned));
+		file.write((char*)&mesh->texCoordSizeBytes, sizeof(unsigned));
 
 		file.write((char*)mesh->indices, mesh->indicesSizeBytes);			// Indices
 
@@ -200,7 +204,10 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 	file.open(path, std::ios::binary);
 	if (file.is_open())
 	{
-		file.read((char*)mesh, 4 * sizeof(unsigned));
+		file.read((char*)&mesh->indicesSizeBytes, sizeof(unsigned));
+		file.read((char*)&mesh->verticesSizeBytes, sizeof(unsigned));
+		file.read((char*)&mesh->normalsSizeBytes, sizeof(unsigned));
+		file.read((char*)&mesh->texCoordSizeBytes, sizeof(unsigned));
 
 		mesh->indices = (uint*)malloc(mesh->indicesSizeBytes);
 		file.read((char*)mesh->indices, mesh->indicesSizeBytes);

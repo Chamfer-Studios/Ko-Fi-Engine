@@ -387,7 +387,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	{
 		startFrame = 0.0f;
 		endFrame = 0.0f;
-		float animDur = animation->GetDuration();
+		animDur = animation->GetDuration();
 	}
 	
 

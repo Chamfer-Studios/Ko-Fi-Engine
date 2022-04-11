@@ -221,11 +221,11 @@ void M_Window::OnNotify(const Event& event)
 }
 
 // Set new window title
-void M_Window::SetTitle(const char* new_title)
+void M_Window::SetTitle(std::string newTitle)
 {
 	//title.create(new_title);
-	SDL_SetWindowTitle(window, new_title);
-	title = new_title;
+	SDL_SetWindowTitle(window, newTitle.c_str());
+	title = newTitle;
 }
 
 void M_Window::AdjustBrightness(float brightness)
