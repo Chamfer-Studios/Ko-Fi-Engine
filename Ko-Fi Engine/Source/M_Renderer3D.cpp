@@ -350,6 +350,8 @@ void M_Renderer3D::RenderScene()
 
 void M_Renderer3D::RenderPreviewScene()
 {
+	OPTICK_EVENT();
+
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)
@@ -394,6 +396,8 @@ void M_Renderer3D::RenderPreviewScene()
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	OPTICK_EVENT();
+
+	return;
 
 	cMesh->GenerateGlobalBoundingBox();
 	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
@@ -503,7 +507,7 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 
 			//lights rendering 
 
-			/*if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
+			if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
 			{
 				// ---- directional lights ----
 				std::vector<GameObject*> directionalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::DIRECTIONAL);
@@ -600,7 +604,7 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 				GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
 				glUniform1i(numPointLights, 0);
 
-			}*/
+			}
 			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);
@@ -611,6 +615,8 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 
 void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 {
+	OPTICK_EVENT();
+
 	//Get needed variables
 	C_Material* cMat = go->GetComponent<C_Material>();
 	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
@@ -633,8 +639,11 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 		uint shader = cMat->GetMaterial()->shaderProgramID;
 		if (shader != 0)
 		{
+			OPTICK_GPU_EVENT("GL Use Program");
 			glUseProgram(shader);
 			// Passing Shader Uniforms
+
+			OPTICK_GPU_EVENT("GL Load Matrices");
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 			GLint view_location = glGetUniformLocation(shader, "view");
@@ -642,18 +651,22 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->gameCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+
+			OPTICK_GPU_EVENT("GL Load Anims");
 			if (mesh->IsAnimated())
 			{
 				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
 				std::vector<float4x4> transformsAnim;
 				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
 
+				OPTICK_GPU_EVENT("GL Load Animation Uniforms");
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
 				glUniform1i(isAnimated, mesh->IsAnimated());
 			}
 
+			OPTICK_GPU_EVENT("GL Load Others");
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
 			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 
@@ -664,6 +677,7 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 			glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
 
 			//Pass all varibale uniforms from the material to the shader
+			OPTICK_GPU_EVENT("GL Load Uniforms");
 			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 			{
 				switch (uniform->type)
@@ -707,7 +721,7 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 			}
 
 			//lights rendering 
-
+			OPTICK_GPU_EVENT("GL Load Lights");
 			if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
 			{
 				// ---- directional lights ----
@@ -796,7 +810,6 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<C_LightSource>()->GetLightSource();
 				//}
 			}
-
 			else
 			{
 				GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
@@ -806,6 +819,7 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 				glUniform1i(numPointLights, 0);
 
 			}
+
 			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);

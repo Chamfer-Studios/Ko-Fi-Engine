@@ -372,6 +372,8 @@ void R_Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 
 void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject)
 {
+	OPTICK_EVENT("Get Bone Transform");
+
 	transforms.resize(boneInfo.size());
 
 	float4x4 identity = float4x4::identity;
@@ -408,26 +410,32 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 
 void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode, const float4x4& parentTransform)
 {
+	OPTICK_EVENT("Read Node Heirarchy");
+
 	std::string nodeName(pNode->GetName());
 
 	float4x4 nodeTransformation(pNode->GetTransform()->GetGlobalTransform());
 
 	const Channel* pNodeAnim = FindNodeAnim(nodeName);
 
+	OPTICK_EVENT("Read Channel");
 	if (pNodeAnim)
 	{
 		// Interpolate scaling and generate scaling transformation matrix
 		float3 scaling;
+		OPTICK_EVENT("Calc Interpolated Scaling");
 		CalcInterpolatedScaling(scaling, animationTimeTicks, pNodeAnim);
 		float4x4 scalingM = InitScaleTransform(scaling.x, scaling.y, scaling.z);
 
 		// Interpolate rotation and generate rotation transformation matrix
 		Quat rotationQ;
+		OPTICK_EVENT("Calc Interpolated Rotation");
 		CalcInterpolatedRotation(rotationQ, animationTimeTicks, pNodeAnim);
 		float4x4 rotationM = GetMatrixFromQuat(rotationQ).Transposed();
 
 		// Interpolate translation and generate translation transformation matrix
 		float3 translation;
+		OPTICK_EVENT("Calc Interpolated Position");
 		CalcInterpolatedPosition(translation, animationTimeTicks, pNodeAnim);
 		float4x4 translationM = InitTranslationTransform(translation.x, translation.y, translation.z);
 
@@ -436,14 +444,18 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 	}
 
 	float4x4 globalTransformation = parentTransform * nodeTransformation;
+	float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
+	float4x4 partial = rootTransform * globalTransformation;
 
+	OPTICK_EVENT("Apply Transforms");
 	if (boneNameToIndexMap.find(nodeName) != boneNameToIndexMap.end())
 	{
 		uint boneIndex = boneNameToIndexMap[nodeName];
-		float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
-		float4x4 delta = rootTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
+		float4x4 delta = partial * boneInfo[boneIndex].offsetMatrix;
 		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
+
+	OPTICK_EVENT("End");
 
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
@@ -453,17 +465,11 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 
 const Channel* R_Mesh::FindNodeAnim(const std::string nodeName)
 {
-	for (uint i = 0; i < animation->channels.size(); i++)
-	{
-		const Channel* pNodeAnim = &animation->channels.at(i);
+	OPTICK_EVENT("Find Channel");
 
-		if (std::string(pNodeAnim->name) == nodeName)
-		{
-			return pNodeAnim;
-		}
-	}
+	if (animation->channels.find(nodeName) == animation->channels.end()) return nullptr;
 
-	return nullptr;
+	return &animation->channels.at(nodeName);
 }
 
 uint R_Mesh::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
