@@ -5,7 +5,7 @@
 #include "FSDefs.h"
 #include "Importer.h"
 #include "M_FileSystem.h"
-#include "R_ResourceBase.h"
+#include "ResourceBase.h"
 
 #include "json.hpp"
 #include "JsonHandler.h"
