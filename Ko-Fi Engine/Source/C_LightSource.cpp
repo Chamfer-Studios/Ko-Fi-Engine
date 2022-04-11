@@ -140,7 +140,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
-	if (ImGui::CollapsingHeader("Component LightSource"))
+	if (ImGui::CollapsingHeader("Component LightSource", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{	
 		DrawDeleteButton(owner, this);
 

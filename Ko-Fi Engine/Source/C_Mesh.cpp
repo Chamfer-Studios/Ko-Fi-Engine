@@ -297,7 +297,7 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
-	if (mesh != nullptr && ImGui::CollapsingHeader("R_Mesh"))
+	if (mesh != nullptr && ImGui::CollapsingHeader("R_Mesh", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 

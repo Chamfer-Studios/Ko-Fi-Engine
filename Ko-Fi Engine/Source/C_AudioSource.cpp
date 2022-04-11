@@ -83,7 +83,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
     if (openEditor && track != nullptr)
         DrawEditor();
 
-    if (ImGui::CollapsingHeader("Audio Source"))
+    if (ImGui::CollapsingHeader("Audio Source", ImGuiTreeNodeFlags_AllowItemOverlap))
     {
         DrawDeleteButton(owner, this);
 
