@@ -30,6 +30,8 @@
 #include "GameObject.h"
 #include "Globals.h"
 
+#include "optick.h"
+
 R_Mesh::R_Mesh(Shape shape) : Resource(ResourceType::MESH)
 {
 	verticesSizeBytes = 0;
@@ -157,6 +159,8 @@ void R_Mesh::SetUpMeshBuffers()
 void R_Mesh::Draw()
 {
 	glBindVertexArray(VAO);
+
+	OPTICK_EVENT();
 
 	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
 

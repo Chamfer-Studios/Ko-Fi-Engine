@@ -22,6 +22,8 @@
 
 #include "MathGeoLib/Math/MathFunc.h"
 
+#include "optick.h"
+
 C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 {
 	this->isEngineCamera = isEngineCamera;
@@ -231,6 +233,8 @@ void C_Camera::Load(Json& json)
 
 void C_Camera::DrawFrustum() const
 {
+	OPTICK_EVENT();
+
 	glPushMatrix();
 	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 	float3 cornerPoints[8];

@@ -22,6 +22,7 @@
 #include <sstream>
 
 #include "glew.h"
+#include "optick.h"
 
 // Constructor
 KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
@@ -157,6 +158,9 @@ bool KoFiEngine::Start()
 bool KoFiEngine::Update()
 {
 	bool ret = true;
+
+	OPTICK_FRAME("MainThread");
+
 	PrepareUpdate();
 
 	/*if (input->GetWindowEvent(WE_QUIT) == true)
@@ -241,6 +245,7 @@ bool KoFiEngine::PreUpdate()
 		if (pModule->active == false) {
 			continue;
 		}
+
 
 		ret = (*item)->PreUpdate(engineConfig->dt);
 	}

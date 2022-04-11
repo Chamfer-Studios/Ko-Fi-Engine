@@ -40,6 +40,8 @@
 
 #include <iostream>
 
+#include "optick.h"
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
@@ -302,6 +304,8 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 
 void M_Renderer3D::RenderScene()
 {
+	OPTICK_EVENT();
+
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)
@@ -389,6 +393,8 @@ void M_Renderer3D::RenderPreviewScene()
 
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
+	OPTICK_EVENT();
+
 	cMesh->GenerateGlobalBoundingBox();
 	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 	if (selectedId == -1) return;
@@ -398,6 +404,8 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 
 void M_Renderer3D::RenderMeshes(GameObject* go)
 {
+	OPTICK_EVENT();
+
 	//Get needed variables
 	C_Material* cMat = go->GetComponent<C_Material>();
 	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
@@ -495,7 +503,7 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 
 			//lights rendering 
 
-			if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
+			/*if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
 			{
 				// ---- directional lights ----
 				std::vector<GameObject*> directionalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::DIRECTIONAL);
@@ -592,7 +600,7 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 				GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
 				glUniform1i(numPointLights, 0);
 
-			}
+			}*/
 			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);
@@ -808,6 +816,8 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 
 void M_Renderer3D::RenderUI(GameObject* go)
 {
+	OPTICK_EVENT();
+
 	C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 	cRenderedUI->Draw();
 }
@@ -1034,6 +1044,8 @@ void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 trans
 
 void M_Renderer3D::RenderAllParticles()
 {
+	OPTICK_EVENT();
+
 	for (auto particle : particles)
 	{
 		RenderParticle(&particle.second);
