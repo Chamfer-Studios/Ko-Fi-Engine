@@ -103,7 +103,7 @@ void ComponentFollowPath::CalculatePath()
 
 bool ComponentFollowPath::InspectorDraw(PanelChooser* chooser)
 {
-	if (ImGui::CollapsingHeader("Path Follower")) {
+	if (ImGui::CollapsingHeader("Path Follower", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 		DrawDeleteButton(owner, this);
 
 		ImGui::DragFloat("Speed", &speed, 0.5f);

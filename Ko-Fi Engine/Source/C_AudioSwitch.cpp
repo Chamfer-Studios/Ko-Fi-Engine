@@ -119,7 +119,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
     if (openEditor && trackIdInEdit != -1)
         DrawEditor(tracks[trackIdInEdit]);
 
-    if (ImGui::CollapsingHeader("Audio Switch"))
+    if (ImGui::CollapsingHeader("Audio Switch", ImGuiTreeNodeFlags_AllowItemOverlap))
     {
         DrawDeleteButton(owner, this);
 
@@ -527,7 +527,7 @@ void C_AudioSwitch::DisablePlayOnStart(R_Track* trackToChange)
 
 void C_AudioSwitch::DrawEditor(R_Track* track)
 {
-    if (ImGui::Begin("Audio M_Editor", &openEditor))
+    if (ImGui::Begin("Edit Track", &openEditor))
     {
         bool mono = track->channels == 1;
 

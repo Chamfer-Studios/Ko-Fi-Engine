@@ -81,7 +81,7 @@ public:
 	R_Mesh(Shape shape = Shape::NONE);
 	~R_Mesh();
 
-	// R_Mesh Functions
+	// Mesh Functions
 	void SetUpMeshBuffers();
 
 	void Draw();
@@ -123,10 +123,10 @@ public:
 	float4x4 GetMatrixFromQuat(Quat quat);
 
 	// Size in Bytes
+	unsigned indicesSizeBytes = 0;
 	unsigned verticesSizeBytes = 0;
 	unsigned normalsSizeBytes = 0;
 	unsigned texCoordSizeBytes = 0;
-	unsigned indicesSizeBytes = 0;
 
 	// Indices
 	uint idIndex = 0; // index in VRAM
@@ -140,7 +140,7 @@ public:
 	uint idNormal = 0;
 	float* normals = nullptr;
 
-	// R_Texture coordinates
+	// Texture coordinates
 	uint idTexCoord = 0;
 	float* texCoords = nullptr;
 

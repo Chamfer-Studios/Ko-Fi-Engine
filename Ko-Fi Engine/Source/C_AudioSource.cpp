@@ -83,11 +83,11 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
     if (openEditor && track != nullptr)
         DrawEditor();
 
-    if (ImGui::CollapsingHeader("Audio Source"))
+    if (ImGui::CollapsingHeader("Audio Source", ImGuiTreeNodeFlags_AllowItemOverlap))
     {
         DrawDeleteButton(owner, this);
 
-        if (chooser->IsReadyToClose("Add Track"))
+        if (chooser->IsReadyToClose("Load Track"))
         {
             if (chooser->OnChooserClosed() != nullptr)
             {
@@ -121,7 +121,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             ImGui::Spacing();
             if (ImGui::Button("Change Track"))
             {
-                chooser->OpenPanel("Add Track", "wav", { "wav" });
+                chooser->OpenPanel("Load Track", "wav", { "wav" });
             }
             ImGui::SameLine();
             if (ImGui::Button("Delete Track"))
@@ -188,9 +188,9 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
         else
         {
             ImGui::Spacing();
-            if (ImGui::Button("Add Track"))
+            if (ImGui::Button("Load Track"))
             {
-                chooser->OpenPanel("Add Track", "wav", { "wav" });
+                chooser->OpenPanel("Load Track", "wav", { "wav" });
             }
             ImGui::Spacing();
         }
@@ -260,7 +260,7 @@ void C_AudioSource::UpdatePlayState()
 
 void C_AudioSource::DrawEditor()
 {
-    if (ImGui::Begin("Audio M_Editor", &openEditor))
+    if (ImGui::Begin("Edit Track", &openEditor))
     {
         bool mono = track->channels == 1;
 

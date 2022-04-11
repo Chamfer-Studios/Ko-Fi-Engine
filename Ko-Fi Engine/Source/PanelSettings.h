@@ -22,7 +22,4 @@ private:
 	M_Editor* editor = nullptr;
 };
 
-
-
 #endif // !__PANEL_SETTINGS_H__
-

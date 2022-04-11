@@ -35,7 +35,7 @@ public:
 	void OnNotify(const Event& event);
 
 	// Change title
-	void SetTitle(const char* title);
+	void SetTitle(std::string title);
 
 	void AdjustBrightness(float brightness);
 	float GetBrightness();
