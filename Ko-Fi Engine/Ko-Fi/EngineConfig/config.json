@@ -1,7 +1,6 @@
 {
     "Audio": null,
     "Camera": null,
-    "CollisionDetector": null,
     "Editor": null,
     "Engine": {
         "Authors": "Alejandro Avila & Bosco Barber",
@@ -10,8 +9,8 @@
         "Organization": "Ko-Fi Studios",
         "Title": "Ko-Fi Engine"
     },
+    "FileSystem": null,
     "Input": null,
-    "ModelLoader": null,
     "Navigation": null,
     "Physics": {
         "Filter_matrix": [
@@ -54,6 +53,7 @@
     "Renderer3D": {
         "Vsync": true
     },
+    "ResourceManager": null,
     "SceneManager": {
         "DefaultScene": "IntroMenu"
     },
@@ -62,11 +62,11 @@
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 1009,
+        "Height": 768,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine",
-        "Width": 1920
+        "Title": "Ko-Fi Engine  - IntroMenu",
+        "Width": 1024
     }
 }

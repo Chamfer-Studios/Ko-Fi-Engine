@@ -138,7 +138,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 				ImGui::SameLine();
 				ImGui::InputText(emitterName.c_str(), &(emitter->name));
 
-				std::string changeTexture = "Change R_Texture to " + emitter->name;
+				std::string changeTexture = "Change Texture to " + emitter->name;
 				if (chooser->IsReadyToClose(changeTexture.c_str()))
 				{
 					if (chooser->OnChooserClosed() != nullptr)
@@ -156,7 +156,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					}
 				}
 
-				ImGui::Text("R_Material R_Texture:");
+				ImGui::Text("Material Texture:");
 				if (emitter->texture.textureID != -1)
 				{
 					ImGui::Image((ImTextureID)emitter->texture.textureID, ImVec2(85, 85));
@@ -166,7 +166,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 
-					std::string changeTexture = "Change R_Texture to " + emitter->name;
+					std::string changeTexture = "Change Texture to " + emitter->name;
 					if (ImGui::Button(changeTexture.c_str()))
 					{
 						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg"});
@@ -177,7 +177,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 					ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 
-					std::string deleteTexture = "Delete R_Texture to " + emitter->name;
+					std::string deleteTexture = "Delete Texture to " + emitter->name;
 					if (ImGui::Button(deleteTexture.c_str()))
 					{
 						emitter->texture.textureID = -1;
@@ -188,10 +188,10 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 				}
 				else
 				{
-					std::string addTexture = "Add R_Texture to " + emitter->name;
+					std::string addTexture = "Add Texture to " + emitter->name;
 					if (ImGui::Button(addTexture.c_str()))
 					{
-						std::string changeTexture = "Change R_Texture to " + emitter->name;
+						std::string changeTexture = "Change Texture to " + emitter->name;
 						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg" });
 						currentTextureId = emitter->texture.textureID;
 					}

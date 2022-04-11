@@ -170,7 +170,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 	
 	if (!assimpScene->HasMeshes())
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any R_Mesh.");
+		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any Mesh.");
 		return;
 	}
 
@@ -204,7 +204,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		return;
 	}
 
-	// Import R_Mesh to GameObject
+	// Import Mesh to GameObject
 	R_Mesh* mesh = new R_Mesh(Shape::NONE);
 	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh, assimpScene);
 
@@ -222,7 +222,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Component R_Mesh is nullptr.");
+		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
 		return;
 	}
 
@@ -259,12 +259,12 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
-	// Import R_Material to GameObject
+	// Import Material to GameObject
 	C_Material* cMaterial = (C_Material*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<C_Material>();
 
 	if (cMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Component R_Material is nullptr.");
+		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
 		return;
 	}
 
@@ -520,16 +520,13 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 	if (!jsonFile.is_null())
 	{
+	
 		scene->DeleteCurrentScene();
 		ret = true;
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
 
-		char result[100] = "Ko-Fi Engine  - ";
-
-		strcat(result, scene->name.c_str());
-
-		engine->GetWindow()->SetTitle(result);
+		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + scene->name);
 
 		scene->active = jsonScene.at("active");
 		//Create Root
@@ -551,24 +548,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			Tag tag = Tag::TAG_UNTAGGED;
 			if (jsonGo.contains("tag"))
 				tag = jsonGo.at("tag");
-			GameObject* go = nullptr;
-			bool exists = false;
-
-			if (scene->GetGameObject(UID) != nullptr)
-			{
-				exists = true;
-				go = scene->GetGameObject(UID);
-				std::string tmp = jsonGo.at("name");
-				go->SetName(tmp.c_str());
-				go->SetUID(UID);
-				go->SetEngine(engine);
-				go->is3D = is3D;
-			}
-			else
-			{
-				std::string name = jsonGo.at("name");
-				go = new GameObject(UID, engine, name.c_str(), is3D);
-			}
+			
+			std::string name = jsonGo.at("name");
+			GameObject* go = new GameObject(UID, engine, name.c_str(), is3D);
 
 			go->active = jsonGo.at("active");
 			go->tag = tag;
@@ -781,7 +763,6 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				}
 					
 			}
-			if (!exists)
 				scene->gameObjectList.push_back(go);
 		}
 

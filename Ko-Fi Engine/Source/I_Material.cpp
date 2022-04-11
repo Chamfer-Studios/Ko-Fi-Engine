@@ -20,12 +20,12 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 
 	if (material == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import R_Material! Error: R_Material* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: R_Material* was nullptr.");
 		return false;
 	}
 	if (aiMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import R_Material! Error: aiMaterial* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: aiMaterial* was nullptr.");
 		return false;
 	}
 

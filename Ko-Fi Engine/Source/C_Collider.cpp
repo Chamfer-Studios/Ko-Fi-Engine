@@ -109,8 +109,8 @@ void C_Collider::CreateBoxCollider()
 	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
 	physx::PxTransform localPose;
-	float3 center = owner->GetComponent<C_Mesh>()->GetLocalAABB().CenterPoint();
-	localPose.p = physx::PxVec3(offset.x, offset.y, offset.z - boxCollSize.z / 2);
+	float3 center = owner->GetComponent<C_Mesh>()->GetGlobalAABB().CenterPoint();
+	localPose.p = physx::PxVec3(center.x, center.y, center.z);
 	localPose.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
 	shape->setLocalPose(localPose);
 
@@ -155,8 +155,8 @@ void C_Collider::DrawBoxCollider()
 		center = localPose.p;
 	}
 
-	float3 min = float3(center.x, center.y, center.z) - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
-	float3 max = float3(center.x, center.y, center.z) + float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2) + transformOffset;
+	float3 min = float3(center.x, center.y, center.z) - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
+	float3 max = float3(center.x, center.y, center.z) + float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
 
 	glLineWidth(2.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
