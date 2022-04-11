@@ -1,4 +1,4 @@
-#include "R_ResourceBase.h"
+#include "ResourceBase.h"
 #include "Resource.h"
 #include <string>
 
