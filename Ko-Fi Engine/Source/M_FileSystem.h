@@ -44,6 +44,8 @@ public:
 	void DiscoverAllFiles(const char* directory, std::vector<std::string>& files);
 	void DiscoverAllFilesFiltered(const char* directory, std::vector<std::string>& files, std::vector<std::string>& filteredFiles, const char* filter);
 	
+	// Checks if a directory already exists, if not, it creates it accordingly. Return true either the directory already exists or it was created, and return false if any error occurred.
+	bool CheckDirectory(const char* path);
 	void GetLastModTime(const char* path);
 
 	const char* GetFileName(const char* path) const;
