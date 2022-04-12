@@ -451,7 +451,7 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
 				glUniform1i(isAnimated, mesh->IsAnimated());
-			}			
+			}
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
 			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());

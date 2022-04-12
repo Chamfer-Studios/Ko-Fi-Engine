@@ -97,7 +97,8 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 		uint numChannels = animation->channels.size();
 		file.write((char*)&numChannels, numChannelsSizeBytes);									// Number of channels
 
-		for (auto channel = animation->channels.begin(); channel != animation->channels.end(); channel++)												// Channels
+		for (auto channel = animation->channels.begin();
+			channel != animation->channels.end(); channel++)									// Channels
 		{
 			// Writing each channel variable size bytes.
 			uint channelNameSizeBytes = channel->second.name.length();
@@ -112,7 +113,7 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 			file.write((char*)&scaleKeyframesSizeBytes, sizeof(unsigned));						// Scale keyframes size bytes
 
 			// Writing each channel variable into the file.
-			file.write((char*)channel->second.name.data(), channelNameSizeBytes);						// Channel name
+			file.write((char*)channel->second.name.data(), channelNameSizeBytes);				// Channel name
 			std::vector<PositionKeyframe> positionKeyframes = channel->second.positionKeyframes;
 			for (std::vector<PositionKeyframe>::iterator it = positionKeyframes.begin();
 				it != positionKeyframes.end(); it++)											// Position keyframes

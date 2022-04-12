@@ -111,7 +111,6 @@ public:
 		return newComponent;
 	}
 
-
 public:
 	bool active = true;
 	int numScripts = 0;
