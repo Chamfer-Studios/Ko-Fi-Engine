@@ -419,28 +419,31 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 	const Channel* pNodeAnim = FindNodeAnim(nodeName);
 
 	OPTICK_EVENT("Read Channel");
-	if (pNodeAnim)
+#pragma omp parallel
 	{
-		// Interpolate scaling and generate scaling transformation matrix
-		float3 scaling;
-		OPTICK_EVENT("Calc Interpolated Scaling");
-		CalcInterpolatedScaling(scaling, animationTimeTicks, pNodeAnim);
-		float4x4 scalingM = InitScaleTransform(scaling.x, scaling.y, scaling.z);
+		if (pNodeAnim)
+		{
+			// Interpolate scaling and generate scaling transformation matrix
+			float3 scaling;
+			OPTICK_EVENT("Calc Interpolated Scaling");
+			CalcInterpolatedScaling(scaling, animationTimeTicks, pNodeAnim);
+			float4x4 scalingM = InitScaleTransform(scaling.x, scaling.y, scaling.z);
 
-		// Interpolate rotation and generate rotation transformation matrix
-		Quat rotationQ;
-		OPTICK_EVENT("Calc Interpolated Rotation");
-		CalcInterpolatedRotation(rotationQ, animationTimeTicks, pNodeAnim);
-		float4x4 rotationM = GetMatrixFromQuat(rotationQ).Transposed();
+			// Interpolate rotation and generate rotation transformation matrix
+			Quat rotationQ;
+			OPTICK_EVENT("Calc Interpolated Rotation");
+			CalcInterpolatedRotation(rotationQ, animationTimeTicks, pNodeAnim);
+			float4x4 rotationM = GetMatrixFromQuat(rotationQ).Transposed();
 
-		// Interpolate translation and generate translation transformation matrix
-		float3 translation;
-		OPTICK_EVENT("Calc Interpolated Position");
-		CalcInterpolatedPosition(translation, animationTimeTicks, pNodeAnim);
-		float4x4 translationM = InitTranslationTransform(translation.x, translation.y, translation.z);
+			// Interpolate translation and generate translation transformation matrix
+			float3 translation;
+			OPTICK_EVENT("Calc Interpolated Position");
+			CalcInterpolatedPosition(translation, animationTimeTicks, pNodeAnim);
+			float4x4 translationM = InitTranslationTransform(translation.x, translation.y, translation.z);
 
-		// Combine the above transformations
-		nodeTransformation = translationM * rotationM * scalingM;
+			// Combine the above transformations
+			nodeTransformation = translationM * rotationM * scalingM;
+		}
 	}
 
 	float4x4 globalTransformation = parentTransform * nodeTransformation;
@@ -448,15 +451,19 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 	float4x4 partial = rootTransform * globalTransformation;
 
 	OPTICK_EVENT("Apply Transforms");
-	if (boneNameToIndexMap.find(nodeName) != boneNameToIndexMap.end())
+#pragma omp parallel
 	{
-		uint boneIndex = boneNameToIndexMap[nodeName];
-		float4x4 delta = partial * boneInfo[boneIndex].offsetMatrix;
-		boneInfo[boneIndex].finalTransformation = delta.Transposed();
+		if (boneNameToIndexMap.find(nodeName) != boneNameToIndexMap.end())
+		{
+			uint boneIndex = boneNameToIndexMap[nodeName];
+			float4x4 delta = partial * boneInfo[boneIndex].offsetMatrix;
+			boneInfo[boneIndex].finalTransformation = delta.Transposed();
+		}
 	}
 
 	OPTICK_EVENT("End");
 
+#pragma omp parallel for
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
 		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);

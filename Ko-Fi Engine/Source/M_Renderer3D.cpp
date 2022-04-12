@@ -653,17 +653,20 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->gameCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
 			OPTICK_GPU_EVENT("GL Load Anims");
-			if (mesh->IsAnimated())
+#pragma omp parallel
 			{
-				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
-				std::vector<float4x4> transformsAnim;
-				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+				if (mesh->IsAnimated())
+				{
+					float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
+					std::vector<float4x4> transformsAnim;
+					mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
 
-				OPTICK_GPU_EVENT("GL Load Animation Uniforms");
-				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
-				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
-				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->IsAnimated());
+					OPTICK_GPU_EVENT("GL Load Animation Uniforms");
+					GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+					glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+					GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+					glUniform1i(isAnimated, mesh->IsAnimated());
+				}
 			}
 
 			OPTICK_GPU_EVENT("GL Load Others");
