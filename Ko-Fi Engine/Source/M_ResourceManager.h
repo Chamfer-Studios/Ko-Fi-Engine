@@ -22,10 +22,11 @@ public:
 	UID ImportFile(const char* assetPath);
 	UID LoadFromLibrary(const char* libraryPath);
 	UID ImportFromAssets(const char* assetsPath);
-	void DeleteFromLibrary(const char* libraryPath);
+	void DeleteFromLibrary(const char* assetsPath);
 	void DeleteFromAssets(const char* assetsPath);
 
 	bool TrimLibrary();
+
 	bool HasImportIgnoredExtension(const char* assetsPath) const;
 
 	//const Resource* RequestResource(uint uid) const;			Can't do it because of the maps
@@ -38,9 +39,9 @@ public:
 	Resource* RequestResource(UID uid);
 
 	ResourceType GetTypeFromExtension(const char* extension);
-
-	const char* GetAssetsDirectoryFromType(const ResourceType);
-	const char* GetLibraryDirectoryFromType(const ResourceType type);
+	
+	bool GetAssetDirectoryFromType(const ResourceType& type, std::string& directory);
+	bool GetLibraryDirectoryAndExtensionFromType(const ResourceType& type, std::string& directory, std::string& extension);
 
 	std::string GetValidPath(const char* path) const;
 

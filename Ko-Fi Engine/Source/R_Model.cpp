@@ -27,13 +27,13 @@ bool R_Model::SaveMeta(Json& json) const
 		}
 		if (node.material != 0)
 		{
-			std::string materialNode = node.name + MATERIAL_EXTENSION;
-			std::string materialPath = MATERIALS_DIR + std::to_string(node.material) + MATERIAL_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::MATERIAL;
-			jsonResource["name"] = materialNode.c_str();
-			jsonResource["library_path"] = materialPath.c_str();
-			jsonResources[node.name].push_back(jsonResource);
+			//std::string materialNode = node.name + MATERIAL_EXTENSION;
+			//std::string materialPath = MATERIALS_DIR + std::to_string(node.material) + MATERIAL_EXTENSION;
+			//jsonResource["uid"] = node.uid;
+			//jsonResource["type"] = ResourceType::MATERIAL;
+			//jsonResource["name"] = materialNode.c_str();
+			//jsonResource["library_path"] = materialPath.c_str();
+			//jsonResources[node.name].push_back(jsonResource);
 		}
 		//if (node.shader != 0)
 		//{

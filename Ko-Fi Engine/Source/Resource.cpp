@@ -60,7 +60,7 @@ void Resource::SetLibraryPathAndFile()
 		extension = SCENE_EXTENSION;
 		break;
 	case ResourceType::FONT:
-		dir = FONT_DIR;
+		dir = FONTS_DIR;
 		extension = FONT_EXTENSION;
 		break;
 	case ResourceType::UNKNOWN:
