@@ -407,7 +407,6 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 		endFrame = 0.0f;
 		animDur = animation->GetDuration();
 	}
-	
 
 	float animationTimeTicks = fmod(timeInTicks, (float)animDur); // This divides the whole animation into segments of animDur.
 
