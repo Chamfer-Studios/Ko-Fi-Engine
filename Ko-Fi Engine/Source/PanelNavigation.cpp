@@ -19,19 +19,11 @@ bool PanelNavigation::Awake()
 	return true;
 }
 
-bool PanelNavigation::PreUpdate()
-{
-	return true;
-}
-
 bool PanelNavigation::Update()
 {
+	OPTICK_EVENT();
+
 	editor->engine->GetNavigation()->OnGui();
 
-	return true;
-}
-
-bool PanelNavigation::PostUpdate()
-{
 	return true;
 }

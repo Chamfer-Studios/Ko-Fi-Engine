@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+#include "optick.h"
+
 class Panel
 {
 public:
@@ -18,9 +20,17 @@ public:
 	}
 	// Called before the first frame
 	virtual bool Start() { return true; }
-	virtual bool PreUpdate() { return true; }
-	virtual bool Update() { return true; }
-	virtual bool PostUpdate(){ return true; }
+	virtual bool PreUpdate() {
+		OPTICK_EVENT();
+		return true; }
+	virtual bool Update() {
+		OPTICK_EVENT();
+		return true;
+	}
+	virtual bool PostUpdate(){
+		OPTICK_EVENT();
+		return true;
+	}
 	virtual bool CleanUp(){ return true; }
 	virtual void Focus(){
 	}

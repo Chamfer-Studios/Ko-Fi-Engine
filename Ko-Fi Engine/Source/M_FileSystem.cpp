@@ -12,6 +12,8 @@
 #include <iomanip>
 #include "JsonHandler.h"
 
+#include "optick.h"
+
 M_FileSystem::M_FileSystem(KoFiEngine* engine)
 {
 	name = "FileSystem";
@@ -232,6 +234,39 @@ void M_FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<s
 
 	directories.clear();
 	directories.shrink_to_fit();
+}
+
+bool M_FileSystem::CheckDirectory(const char* path)
+{
+	if (path == nullptr)
+	{
+		LOG_BOTH("[ERROR] Filesystem: directory path was nullptr.");
+		return false;
+	}
+
+	std::filesystem::path directoryPath = path;
+
+	if (!std::filesystem::exists(path))
+	{
+		if (directoryPath.extension() != "")
+		{
+			LOG_BOTH("[WARNING] Filesystem: directory path isn't a directory.");
+			return false;
+		}
+
+		bool ret = std::filesystem::create_directory(directoryPath);
+		if (ret)
+			return true;
+		else
+		{
+			LOG_BOTH("[WARNING] Filesystem: directory path couldn't be created.");
+			return false;
+		}
+	}
+	else
+		return true;
+
+	return true;
 }
 
 void M_FileSystem::GetLastModTime(const char* path)

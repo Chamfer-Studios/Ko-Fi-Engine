@@ -2,7 +2,7 @@
 #include "Log.h"
 #include "ImGuiAppLog.h"
 
-
+#include "optick.h"
 
 #define OpenAL_ErrorCheck(message)\
 {\

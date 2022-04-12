@@ -785,6 +785,8 @@ CODE
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include "optick.h"
+
 #include "imgui.h"
 #ifndef IMGUI_DISABLE
 
@@ -4788,6 +4790,8 @@ void ImGui::EndFrame()
 // it is the role of the ImGui_ImplXXXX_RenderDrawData() function provided by the renderer backend)
 void ImGui::Render()
 {
+    OPTICK_EVENT();
+
     ImGuiContext& g = *GImGui;
     IM_ASSERT(g.Initialized);
 

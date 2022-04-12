@@ -127,68 +127,77 @@ bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 		if (mesh->texCoordSizeBytes != 0)
 			file.write((char*)mesh->texCoords, mesh->texCoordSizeBytes);	// Texture coordinates
 
-		uint boneInfoSize = mesh->boneInfo.size();
-		uint bonesSize = mesh->bones.size();
-		uint boneNameToIndexMapSize = mesh->boneNameToIndexMap.size();
-		uint boneInfoSizeBytes = mesh->boneInfo.size() * sizeof(BoneInfo);
-		uint bonesSizeBytes = mesh->bones.size() * sizeof(VertexBoneData);
-		uint boneNameToIndexMapSizeBytes = sizeof(mesh->boneNameToIndexMap);
-		file.write((char*)&boneInfoSize, sizeof(uint));						// Bone info size
-		file.write((char*)&bonesSize, sizeof(uint));						// Bones size
-		file.write((char*)&boneNameToIndexMapSize, sizeof(uint));			// Bone name to index map size
-		file.write((char*)&boneInfoSizeBytes, sizeof(uint));				// Bone info size bytes
-		file.write((char*)&bonesSizeBytes, sizeof(uint));					// Bones size bytes
-		file.write((char*)&boneNameToIndexMapSizeBytes, sizeof(uint));		// Bone name to index map size bytes
-		for (BoneInfo boneInfo : mesh->boneInfo)							// Bone info
+		/*bool isAnimated = false;*/
+		if (mesh->IsAnimated())
 		{
-			float4x4 offsetMatrix = boneInfo.offsetMatrix;
-			file.write((char*)&offsetMatrix[0][0], sizeof(float));
-			file.write((char*)&offsetMatrix[0][1], sizeof(float));
-			file.write((char*)&offsetMatrix[0][2], sizeof(float));
-			file.write((char*)&offsetMatrix[0][3], sizeof(float));
-			file.write((char*)&offsetMatrix[1][0], sizeof(float));
-			file.write((char*)&offsetMatrix[1][1], sizeof(float));
-			file.write((char*)&offsetMatrix[1][2], sizeof(float));
-			file.write((char*)&offsetMatrix[1][3], sizeof(float));
-			file.write((char*)&offsetMatrix[2][0], sizeof(float));
-			file.write((char*)&offsetMatrix[2][1], sizeof(float));
-			file.write((char*)&offsetMatrix[2][2], sizeof(float));
-			file.write((char*)&offsetMatrix[2][3], sizeof(float));
-			file.write((char*)&offsetMatrix[3][0], sizeof(float));
-			file.write((char*)&offsetMatrix[3][1], sizeof(float));
-			file.write((char*)&offsetMatrix[3][2], sizeof(float));
-			file.write((char*)&offsetMatrix[3][3], sizeof(float));
+			/*isAnimated = true;
+			file.write((char*)&isAnimated, sizeof(bool));*/
 
-			float4x4 finalTransformation = boneInfo.finalTransformation;
-			file.write((char*)&finalTransformation[0][0], sizeof(float));
-			file.write((char*)&finalTransformation[0][1], sizeof(float));
-			file.write((char*)&finalTransformation[0][2], sizeof(float));
-			file.write((char*)&finalTransformation[0][3], sizeof(float));
-			file.write((char*)&finalTransformation[1][0], sizeof(float));
-			file.write((char*)&finalTransformation[1][1], sizeof(float));
-			file.write((char*)&finalTransformation[1][2], sizeof(float));
-			file.write((char*)&finalTransformation[1][3], sizeof(float));
-			file.write((char*)&finalTransformation[2][0], sizeof(float));
-			file.write((char*)&finalTransformation[2][1], sizeof(float));
-			file.write((char*)&finalTransformation[2][2], sizeof(float));
-			file.write((char*)&finalTransformation[2][3], sizeof(float));
-			file.write((char*)&finalTransformation[3][0], sizeof(float));
-			file.write((char*)&finalTransformation[3][1], sizeof(float));
-			file.write((char*)&finalTransformation[3][2], sizeof(float));
-			file.write((char*)&finalTransformation[3][3], sizeof(float));
+			uint boneInfoSize = mesh->boneInfo.size();
+			uint bonesSize = mesh->bones.size();
+			uint boneNameToIndexMapSize = mesh->boneNameToIndexMap.size();
+			uint boneInfoSizeBytes = mesh->boneInfo.size() * sizeof(BoneInfo);
+			uint bonesSizeBytes = mesh->bones.size() * sizeof(VertexBoneData);
+			uint boneNameToIndexMapSizeBytes = sizeof(mesh->boneNameToIndexMap);
+			file.write((char*)&boneInfoSize, sizeof(uint));					// Bone info size
+			file.write((char*)&bonesSize, sizeof(uint));					// Bones size
+			file.write((char*)&boneNameToIndexMapSize, sizeof(uint));		// Bone name to index map size
+			file.write((char*)&boneInfoSizeBytes, sizeof(uint));			// Bone info size bytes
+			file.write((char*)&bonesSizeBytes, sizeof(uint));				// Bones size bytes
+			file.write((char*)&boneNameToIndexMapSizeBytes, sizeof(uint));	// Bone name to index map size bytes
+			for (BoneInfo boneInfo : mesh->boneInfo)						// Bone info
+			{
+				float4x4 offsetMatrix = boneInfo.offsetMatrix;
+				file.write((char*)&offsetMatrix[0][0], sizeof(float));
+				file.write((char*)&offsetMatrix[0][1], sizeof(float));
+				file.write((char*)&offsetMatrix[0][2], sizeof(float));
+				file.write((char*)&offsetMatrix[0][3], sizeof(float));
+				file.write((char*)&offsetMatrix[1][0], sizeof(float));
+				file.write((char*)&offsetMatrix[1][1], sizeof(float));
+				file.write((char*)&offsetMatrix[1][2], sizeof(float));
+				file.write((char*)&offsetMatrix[1][3], sizeof(float));
+				file.write((char*)&offsetMatrix[2][0], sizeof(float));
+				file.write((char*)&offsetMatrix[2][1], sizeof(float));
+				file.write((char*)&offsetMatrix[2][2], sizeof(float));
+				file.write((char*)&offsetMatrix[2][3], sizeof(float));
+				file.write((char*)&offsetMatrix[3][0], sizeof(float));
+				file.write((char*)&offsetMatrix[3][1], sizeof(float));
+				file.write((char*)&offsetMatrix[3][2], sizeof(float));
+				file.write((char*)&offsetMatrix[3][3], sizeof(float));
+
+				float4x4 finalTransformation = boneInfo.finalTransformation;
+				file.write((char*)&finalTransformation[0][0], sizeof(float));
+				file.write((char*)&finalTransformation[0][1], sizeof(float));
+				file.write((char*)&finalTransformation[0][2], sizeof(float));
+				file.write((char*)&finalTransformation[0][3], sizeof(float));
+				file.write((char*)&finalTransformation[1][0], sizeof(float));
+				file.write((char*)&finalTransformation[1][1], sizeof(float));
+				file.write((char*)&finalTransformation[1][2], sizeof(float));
+				file.write((char*)&finalTransformation[1][3], sizeof(float));
+				file.write((char*)&finalTransformation[2][0], sizeof(float));
+				file.write((char*)&finalTransformation[2][1], sizeof(float));
+				file.write((char*)&finalTransformation[2][2], sizeof(float));
+				file.write((char*)&finalTransformation[2][3], sizeof(float));
+				file.write((char*)&finalTransformation[3][0], sizeof(float));
+				file.write((char*)&finalTransformation[3][1], sizeof(float));
+				file.write((char*)&finalTransformation[3][2], sizeof(float));
+				file.write((char*)&finalTransformation[3][3], sizeof(float));
+			}
+			for (VertexBoneData vertexBoneData : mesh->bones)
+			{
+				file.write((char*)&vertexBoneData.boneIDs[0], MAX_NUM_BONES_PER_VERTEX * sizeof(uint));
+				file.write((char*)&vertexBoneData.weights[0], MAX_NUM_BONES_PER_VERTEX * sizeof(float));
+			}
+			for (const auto& it : mesh->boneNameToIndexMap)
+			{
+				uint nameSizeBytes = it.first.length() * 4;
+				file.write((char*)&nameSizeBytes, sizeof(uint));
+				file.write((char*)it.first.data(), nameSizeBytes);
+				file.write((char*)&it.second, sizeof(uint));
+			}
 		}
-		for (VertexBoneData vertexBoneData : mesh->bones)
-		{
-			file.write((char*)&vertexBoneData.boneIDs[0], MAX_NUM_BONES_PER_VERTEX * sizeof(uint));
-			file.write((char*)&vertexBoneData.weights[0], MAX_NUM_BONES_PER_VERTEX * sizeof(float));
-		}
-		for (const auto& it : mesh->boneNameToIndexMap)
-		{
-			uint nameSizeBytes = it.first.length() * 4;
-			file.write((char*)&nameSizeBytes, sizeof(uint));
-			file.write((char*)it.first.data(), nameSizeBytes);
-			file.write((char*)&it.second, sizeof(uint));
-		}
+		/*else
+			file.write((char*)&isAnimated, sizeof(bool));*/
 
 		file.close();
 
@@ -223,6 +232,11 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 			mesh->texCoords = (float*)malloc(mesh->texCoordSizeBytes);
 			file.read((char*)mesh->texCoords, mesh->texCoordSizeBytes);
 		}
+
+		/*bool isAnimated = false;
+		file.read((char*)&isAnimated, sizeof(bool));
+		mesh->SetIsAnimated(isAnimated);*/
+
 		if (mesh->IsAnimated())
 		{
 			uint boneInfoSize;
@@ -296,10 +310,9 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 				name.resize(nameSizeBytes);
 				file.read((char*)(name.data()), nameSizeBytes);
 				file.read((char*)&index, sizeof(uint));
-				mesh->boneNameToIndexMap.emplace(name.c_str(), index);
+				mesh->boneNameToIndexMap.emplace(name.c_str(), index + 1);
 			}
 		}
-
 
 		file.close();
 

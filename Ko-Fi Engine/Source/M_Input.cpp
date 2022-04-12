@@ -23,6 +23,8 @@
 
 #include <imgui_impl_sdl.h>
 
+#include "optick.h"
+
 #define MAX_KEYS 300
 
 M_Input::M_Input(KoFiEngine* engine) : Module()
@@ -73,6 +75,8 @@ bool M_Input::Init()
 // Called every draw update
 bool M_Input::PreUpdate(float dt)
 {
+	OPTICK_EVENT();
+
 	SDL_PumpEvents();
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
