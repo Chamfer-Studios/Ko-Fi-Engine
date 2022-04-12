@@ -651,7 +651,7 @@ void M_Renderer3D::RenderMeshes(GameObject* go)
 				GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
 				glUniform1i(numFocalLights, 0);
 			}
-			//Draw R_Mesh
+			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);
 
@@ -856,7 +856,7 @@ void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
 				glUniform1i(numPointLights, 0);
 
 			}
-			//Draw R_Mesh
+			//Draw Mesh
 			mesh->Draw();
 			glUseProgram(0);
 

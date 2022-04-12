@@ -54,7 +54,7 @@ bool MainBar::Update()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Import R_Model"))
+			if (ImGui::MenuItem("Import Model"))
 			{
 				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
 			}
@@ -307,31 +307,5 @@ void MainBar::ChoosersListener()
 			}
 			
 		}
-	}
-}
-
-void MainBar::ThreadLoadScene()
-{
-}
-
-void MainBar::SafeUIPlacing(GameObject* go)
-{
-	bool canvasExists = false;
-	for (GameObject* goit : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
-	{
-		if (goit->GetComponent<C_Canvas>() != nullptr)
-		{
-			goit->AttachChild(go);
-			canvasExists = true;
-			break;
-		}
-	}
-
-	if (!canvasExists)
-	{
-		/*GameObject* newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
-		newCanvas->SetName("Canvas");
-		newCanvas->CreateComponent<C_Canvas>();
-		newCanvas->AttachChild(go);*/
 	}
 }

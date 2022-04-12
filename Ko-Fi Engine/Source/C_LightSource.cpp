@@ -188,7 +188,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
-	if (ImGui::CollapsingHeader("Component LightSource"))
+	if (ImGui::CollapsingHeader("Component LightSource", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{	
 		ImGui::Combo("###combo", &sType, "Directional Light Source\0Point Light Source\0Focal Light Source");
 

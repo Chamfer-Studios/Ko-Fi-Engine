@@ -265,14 +265,14 @@ function IsSelected()
 
 	if (id == characterID) then	
 		return true
-	else 
-		return false
 	end
+
+	return false
 end
 
 function Fire()
 
-	CreateGameObject("Knife")
+	CreateGameObject("Knife") -- This should instance the prefab
 	knifeCount = knifeCount - 1
 	if (componentSwitch ~= nil) then
 		componentSwitch:PlayTrack(0)
