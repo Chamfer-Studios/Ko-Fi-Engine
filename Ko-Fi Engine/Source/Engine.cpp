@@ -182,6 +182,8 @@ bool KoFiEngine::Update()
 // ---------------------------------------------
 void KoFiEngine::PrepareUpdate()
 {
+	OPTICK_EVENT();
+
 	engineConfig->frameCount++;
 	engineConfig->lastSecFrameCount++;
 
@@ -193,6 +195,8 @@ void KoFiEngine::PrepareUpdate()
 // ---------------------------------------------
 void KoFiEngine::FinishUpdate()
 {
+	OPTICK_EVENT();
+
 	if (engineConfig->lastSecFrameTime.Read() > 1000)
 	{
 		engineConfig->lastSecFrameTime.Start();

@@ -12,6 +12,8 @@ PanelLog::~PanelLog()
 
 bool PanelLog::Update()
 {
+	OPTICK_EVENT();
+
 	appLog->Draw("Log");
 
 	return true;

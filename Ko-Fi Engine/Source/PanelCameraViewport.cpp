@@ -33,20 +33,12 @@ bool PanelCameraViewport::Awake()
 	return true;
 }
 
-bool PanelCameraViewport::PreUpdate()
-{
-	return true;
-}
-
 bool PanelCameraViewport::Update()
 {
+	OPTICK_EVENT();
+
 	if (editor->panelsState.showCameraViewportWindow) RenderPanel(&editor->panelsState.showCameraViewportWindow);
 
-	return true;
-}
-
-bool PanelCameraViewport::PostUpdate()
-{
 	return true;
 }
 

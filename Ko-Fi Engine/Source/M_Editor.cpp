@@ -27,6 +27,7 @@
 #include "PanelNodeEditor.h"
 #include "ImGuizmo.h"
 #include "PanelNavigation.h"
+#include "optick.h"
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
 
@@ -184,6 +185,9 @@ bool M_Editor::Start()
 bool M_Editor::PreUpdate(float dt)
 {
 	bool ret = true;
+
+	OPTICK_EVENT();
+
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
@@ -207,6 +211,8 @@ bool M_Editor::PreUpdate(float dt)
 bool M_Editor::Update(float dt)
 {
 	bool ret = true;
+
+	OPTICK_EVENT();
 
 	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking;
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -254,13 +260,12 @@ bool M_Editor::PostUpdate(float dt)
 {
 	bool ret = true;
 
+	OPTICK_EVENT();
+
 	idTracker = 0;
 
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	SDL_GL_MakeCurrent(engine->GetWindow()->window, engine->GetRenderer()->context);
+	PrepareRender();
 
 	// Panels PostUpdate
 	if (ret == true)
@@ -274,9 +279,28 @@ bool M_Editor::PostUpdate(float dt)
 		}
 	}
 
+	EndRender();
+
+	return ret;
+}
+
+void M_Editor::PrepareRender()
+{
+	OPTICK_EVENT();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	MakeCurrent();
+}
+
+void M_Editor::EndRender()
+{
+	OPTICK_EVENT();
+
 	// Update and Render additional Platform Windows
 	// (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
 	// For this specific demo app we could also call SDL_GL_MakeCurrent(window, gl_context) directly)
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
 		SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
@@ -287,8 +311,13 @@ bool M_Editor::PostUpdate(float dt)
 	}
 
 	ImGui::EndFrame();
+}
 
-	return ret;
+void M_Editor::MakeCurrent()
+{
+	OPTICK_EVENT();
+
+	SDL_GL_MakeCurrent(engine->GetWindow()->window, engine->GetRenderer()->context);
 }
 
 bool M_Editor::CleanUp()

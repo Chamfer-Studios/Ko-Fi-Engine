@@ -16,6 +16,7 @@
 class GameObject;
 typedef unsigned int GLenum;
 class C_Mesh;
+class C_Camera;
 class R_Texture;
 class PieShape;
 
@@ -41,7 +42,9 @@ public:
 	bool PreUpdate(float dt);
 	bool Update(float dt);
 	bool PostUpdate(float dt);
+	void SwapWindow();
 	bool CleanUp();
+
 
 	// Engine config serialization --------------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
@@ -62,11 +65,9 @@ public:
 	void RecalculateProjectionMatrix();
 	
 	//Render Functions
-	void RenderScene();
-	void RenderPreviewScene();
+	void RenderScene(C_Camera* camera);
 	void RenderBoundingBox(C_Mesh* cMesh);
-	void RenderMeshes(GameObject* go);
-	void RenderPreviewMeshes(GameObject* go);
+	void RenderMeshes(C_Camera* camera, GameObject* go);
 
 	void RenderUI(GameObject* go);
 
@@ -103,6 +104,8 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	bool isFirstPass = true;
 
 private:
 	bool vsync = false;

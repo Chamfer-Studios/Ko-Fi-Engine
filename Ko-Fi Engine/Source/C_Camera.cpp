@@ -233,8 +233,6 @@ void C_Camera::Load(Json& json)
 
 void C_Camera::DrawFrustum() const
 {
-	OPTICK_EVENT();
-
 	glPushMatrix();
 	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 	float3 cornerPoints[8];

@@ -137,8 +137,6 @@ void C_Collider::CreateBoxCollider()
 
 void C_Collider::DrawCollider()
 {
-	OPTICK_EVENT();
-
 	if (drawCollider)
 	{
 		if (colliderShape == ColliderShape::BOX)
