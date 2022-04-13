@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Log.h"
 #include "R_Mesh.h"
+#include "optick.h"
 
 #include <fstream>
 
@@ -233,9 +234,9 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 			file.read((char*)mesh->texCoords, mesh->texCoordSizeBytes);
 		}
 
-		/*bool isAnimated = false;
+		bool isAnimated = false;
 		file.read((char*)&isAnimated, sizeof(bool));
-		mesh->SetIsAnimated(isAnimated);*/
+		mesh->SetIsAnimated(isAnimated);
 
 		if (mesh->IsAnimated())
 		{
@@ -310,7 +311,7 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 				name.resize(nameSizeBytes);
 				file.read((char*)(name.data()), nameSizeBytes);
 				file.read((char*)&index, sizeof(uint));
-				mesh->boneNameToIndexMap.emplace(name.c_str(), index + 1);
+				mesh->boneNameToIndexMap.emplace(name.c_str(), index);
 			}
 		}
 
@@ -325,9 +326,10 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 
 int I_Mesh::GetBoneId(const aiBone* pBone, std::map<std::string, uint>& boneNameToIndexMap)
 {
+	OPTICK_EVENT();
 	int boneIndex = 0;
 	std::string boneName(pBone->mName.C_Str());
-	if (boneNameToIndexMap.find(boneName) == boneNameToIndexMap.end())
+	if (!boneNameToIndexMap.contains(boneName))
 	{
 		boneIndex = (int)boneNameToIndexMap.size();
 		boneNameToIndexMap[boneName] = boneIndex;

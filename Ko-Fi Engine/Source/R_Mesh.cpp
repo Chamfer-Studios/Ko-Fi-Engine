@@ -453,13 +453,13 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 	}
 
 	float4x4 globalTransformation = parentTransform * nodeTransformation;
-	float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
-	float4x4 partial = rootTransform * globalTransformation;
 
-	uint boneIndex = boneNameToIndexMap[nodeName];
-	if (boneIndex != 0) {
-		float4x4 delta = partial * boneInfo[boneIndex - 1].offsetMatrix;
-		boneInfo[boneIndex - 1].finalTransformation = delta.Transposed();
+	if (boneNameToIndexMap.contains(nodeName))
+	{
+		uint boneIndex = boneNameToIndexMap[nodeName];
+		float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
+		float4x4 delta = rootTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
+		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
 #pragma omp parallel for
