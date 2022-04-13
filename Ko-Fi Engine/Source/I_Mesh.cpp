@@ -127,11 +127,11 @@ bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 		if (mesh->texCoordSizeBytes != 0)
 			file.write((char*)mesh->texCoords, mesh->texCoordSizeBytes);	// Texture coordinates
 
-		/*bool isAnimated = false;*/
+		bool isAnimated = false;
 		if (mesh->IsAnimated())
 		{
-			/*isAnimated = true;
-			file.write((char*)&isAnimated, sizeof(bool));*/
+			isAnimated = true;
+			file.write((char*)&isAnimated, sizeof(bool));
 
 			uint boneInfoSize = mesh->boneInfo.size();
 			uint bonesSize = mesh->bones.size();
@@ -196,8 +196,8 @@ bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 				file.write((char*)&it.second, sizeof(uint));
 			}
 		}
-		/*else
-			file.write((char*)&isAnimated, sizeof(bool));*/
+		else
+			file.write((char*)&isAnimated, sizeof(bool));
 
 		file.close();
 
