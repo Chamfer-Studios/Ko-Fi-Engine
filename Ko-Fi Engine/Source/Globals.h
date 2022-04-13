@@ -123,7 +123,7 @@ enum update_status
 // Lights
 #define MAX_DIR_LIGHTS 5
 #define MAX_POINT_LIGHTS 5
-#define MAX_POINT_LIGHTS 5
+#define MAX_FOCAL_LIGHTS 5
 
 
 #endif // !__GLOBALS_H__

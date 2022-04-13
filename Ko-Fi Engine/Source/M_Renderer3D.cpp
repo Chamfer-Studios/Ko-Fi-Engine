@@ -472,7 +472,8 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				}
 			}
 
-			//lights rendering
+			//lights rendering 
+
 			if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
 			{
 				// ---- directional lights ----
@@ -486,14 +487,17 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 						//current iteration to string
 						std::string number = std::to_string(i);
 						//get corresponding directional light
-						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
-						//fill the first variable of the DirLight struct: vec3 direction
+						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();						
+						//fill the first variable of the DirLight struct: vec3 color
+						GLint lightColor = glGetUniformLocation(shader, ("dirLights[" + number + "].color").c_str());
+						glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
+						//second variable: vec3 direction
 						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
 						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
-						//fill the second variable of the DirLight struct: float ambient
+						//third variable: float ambient
 						GLint ambientValue = glGetUniformLocation(shader, ("dirLights[" + number + "].ambient").c_str());
 						glUniform1f(ambientValue, lightSource->ambient);
-						//fill the third variable of the DirLight struct: float diffuse
+						//forth variable: float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("dirLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
 						i++;
@@ -512,7 +516,6 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				std::vector<GameObject*> pointLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::POINT);
 				if (pointLights.size() > 0)
 				{
-					float3 positionsList[MAX_POINT_LIGHTS];
 					int i = 0;
 					for (auto light : pointLights)
 					{
@@ -524,13 +527,16 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 						
 						// --- basic light parameters ---
 						
-						//fill in the first variable of the DirLight struct: vec3 position
+						//fill the first variable of the PointLight struct: vec3 color
+						GLint lightColor = glGetUniformLocation(shader, ("pointLights[" + number + "].color").c_str());
+						glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
+						//second variable: vec3 position
 						GLint lightPos = glGetUniformLocation(shader, ("pointLights[" + number + "].position").c_str());
 						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
-						//second variable: float ambient
+						//third variable: float ambient
 						GLint ambientValue = glGetUniformLocation(shader, ("pointLights[" + number + "].ambient").c_str());
 						glUniform1f(ambientValue, lightSource->ambient);
-						//third variable: float diffuse
+						//forth variable: float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("pointLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
 
@@ -556,12 +562,63 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 					GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
 					glUniform1i(numPointLights, 0);
 				}
-				//for (int i = 0; i < engine->GetSceneManager()->GetCurrentScene()->lights.size(), i++)
-				//{
-				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<C_LightSource>()->GetLightSource();
-				//}
-			}
+				// ---- focal lights ----
+				std::vector<GameObject*> focalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::FOCAL);
+				if (focalLights.size() > 0)
+				{
+					int i = 0;
+					for (auto light : focalLights)
+					{
+						//current iteration to string
+						std::string number = std::to_string(i);
 
+						//get corresponding point light
+						FocalLight* lightSource = (FocalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+
+						// -- basic light parameters --
+						//fill the first variable of the focalLights struct: vec3 color
+						GLint lightColor = glGetUniformLocation(shader, ("focalLights[" + number + "].color").c_str());
+						glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
+						//vec3 position
+						GLint lightPos = glGetUniformLocation(shader, ("focalLights[" + number + "].position").c_str());
+						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
+						//float ambient
+						GLint ambientValue = glGetUniformLocation(shader, ("focalLights[" + number + "].ambient").c_str());
+						glUniform1f(ambientValue, lightSource->ambient);
+						//float diffuse
+						GLint diffuseValue = glGetUniformLocation(shader, ("focalLights[" + number + "].diffuse").c_str());
+						glUniform1f(diffuseValue, lightSource->diffuse);
+
+						// -- light cone parameters -- 
+						//float cutOffAngle
+						GLint cutOffValue = glGetUniformLocation(shader, ("focalLights[" + number + "].cutOffAngle").c_str());
+						glUniform1f(cutOffValue, lightSource->cutOffAngle);
+						//float3 lightDirection
+						GLint lightDirection = glGetUniformLocation(shader, ("focalLights[" + number + "].direction").c_str());
+						glUniform3f(lightDirection, lightSource->lightDirection.x, lightSource->lightDirection.y, lightSource->lightDirection.z);
+
+						// -- light attenuation paramenters --
+						//fifth variable: float constant
+						GLint constantValue = glGetUniformLocation(shader, ("focalLights[" + number + "].constant").c_str());
+						glUniform1f(constantValue, lightSource->constant);
+						//sixth variable: float linear
+						GLint linearValue = glGetUniformLocation(shader, ("focalLights[" + number + "].linear").c_str());
+						glUniform1f(linearValue, lightSource->linear);
+						//seventh variable: float quadratic
+						GLint quadraticValue = glGetUniformLocation(shader, ("focalLights[" + number + "].quadratic").c_str());
+						glUniform1f(quadraticValue, lightSource->quadratic);
+						i++;
+					}
+
+					GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
+					glUniform1i(numFocalLights, i);
+				}
+				else
+				{
+					GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
+					glUniform1i(numFocalLights, 0);
+				}
+			}
 			else
 			{
 				GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
@@ -570,6 +627,8 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
 				glUniform1i(numPointLights, 0);
 
+				GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
+				glUniform1i(numFocalLights, 0);
 			}
 			//Draw Mesh
 			mesh->Draw();
