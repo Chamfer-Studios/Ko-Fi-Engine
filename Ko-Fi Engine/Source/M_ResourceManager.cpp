@@ -123,9 +123,7 @@ bool M_ResourceManager::TrimLibrary()
 	for ( std::map<std::string,UID>::const_iterator UID = fileUIDs.cbegin(); UID != fileUIDs.cend(); ++UID)
 	{
 		if (library.find(UID->second) == library.end())
-		{
 			std::filesystem::remove(UID->first.c_str());
-		}
 	}
 
 	fileUIDs.clear();
@@ -192,10 +190,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 		uid = ImportFromAssets(assetPath);
 
 		if (uid == 0)
-		{
 			LOG_BOTH("[ERROR] Resource Manager: loading file, error loading file from assets.");
-			return uid;
-		}
 	}
 
 	return uid;
@@ -319,9 +314,7 @@ void M_ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, s
 	{
 		assetPath = metaFiles[i].substr(0,assetPath.find_last_of(META_EXTENSION) - 5);
 		if (filePairs.find(assetPath) == filePairs.end())
-		{
 			toDelete.push_back(assetPath);
-		}
 	}
 }
 
@@ -331,9 +324,7 @@ void M_ResourceManager::LoadFilesIntoLibrary(std::map<std::string, std::string>&
 		return;
 
 	for (const auto& item : filePairs)
-	{
 		LoadMetaFileIntoLibrary(item.first.c_str());
-	}
 }
 
 bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
@@ -530,7 +521,7 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetsPath, std:
 	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
 	{
 		UID uid = jsonMeta.at("uid");
-		ResourceType type = (ResourceType)(int)jsonMeta.at("type");
+		ResourceType type = (ResourceType)jsonMeta.at("type").get<int>();
 
 		std::string directory = "";
 		std::string extension = "";
@@ -562,11 +553,7 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetsPath, std:
 					directory = "";
 					extension = "";
 					success = GetLibraryDirectoryAndExtensionFromType(containedType, directory, extension);
-					if (!success)
-						continue;
-					if (containedUid == 0)
-						continue;
-					if (directory == "" || extension == "")
+					if (!success || containedUid == 0 || directory == "" || extension == "")
 						continue;
 
 					containedPath = directory + std::to_string(containedUid) + extension;
@@ -600,14 +587,10 @@ void M_ResourceManager::DeleteFromLibrary(const char* assetsPath)
 	GetLibraryFilePathsFromMeta(assetsPath, toDelete);
 
 	for (uint i = 0; i < resourceUids.size(); ++i)
-	{
 		UnloadResource(resourceUids[i]);
-	}
 
 	for (uint i = 0; i < toDelete.size(); ++i)
-	{
 		std::filesystem::remove(toDelete[i].c_str());
-	}
 
 	toDelete.clear();
 	toDelete.shrink_to_fit();
@@ -972,10 +955,9 @@ Resource* M_ResourceManager::GetResourceFromLibrary(const char* libraryPath)
 	}
 
 	Resource* resource = RequestResource(uid);
+
 	if (resource == nullptr)
-	{
 		LOG_BOTH("[ERROR] Resource Manager: getting resource from library, could not request resource.");
-	}
 
 	return resource;
 }
@@ -1024,9 +1006,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 		//containedPath += containedName;
 
 		if (resourcesMap.find(containedUid) != resourcesMap.end())
-		{
 			continue;
-		}
 
 		//TODO: Allocate resource function
 		containedPath.clear();
@@ -1189,14 +1169,10 @@ void M_ResourceManager::DeleteFromAssets(const char* assetsPath)
 	toDelete.push_back(metaPath);
 
 	for (uint i = 0; i < resourceUIDs.size(); ++i)
-	{
 		UnloadResource(resourceUIDs[i]);
-	}
 
 	for (uint i = 0; i < toDelete.size(); ++i)
-	{
 		std::filesystem::remove(toDelete[i].c_str());
-	}
 
 	toDelete.clear();
 	toDelete.shrink_to_fit();
@@ -1211,9 +1187,7 @@ std::string M_ResourceManager::GetValidPath(const char* path) const
 	for (uint i = 0; i < normalizedPath.size(); ++i)
 	{
 		if (normalizedPath[i] == '\\')
-		{
 			normalizedPath[i] = '/';
-		}
 	}
 
 	size_t assetStart = normalizedPath.find("Assets");

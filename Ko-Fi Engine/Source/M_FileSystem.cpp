@@ -113,12 +113,12 @@ std::string M_FileSystem::OpenFile(const char* path) const
 
 	SDL_assert(path != nullptr);
 	std::ifstream stream(path);
-	if (stream.is_open()) {
+	if (stream.is_open())
+	{
 		std::string line;
 
-		while (std::getline(stream, line)) {
+		while (std::getline(stream, line))
 			fileText.append(line + "\n");
-		}
 	}
 	stream.close();
 	return fileText;
@@ -130,12 +130,12 @@ std::string M_FileSystem::OpenFileBinary(const char* path) const
 
 	SDL_assert(path != nullptr);
 	std::ifstream stream(path, std::ios::binary);
-	if (stream.is_open()) {
+	if (stream.is_open())
+	{
 		std::string line;
 
-		while (std::getline(stream, line)) {
+		while (std::getline(stream, line))
 			fileText.append(line + "\n");
-		}
 	}
 	stream.close();
 	return fileText;
@@ -146,9 +146,10 @@ bool M_FileSystem::SaveFile(const char* path, std::string text) const
 	bool ret = true;
 	SDL_assert(path != nullptr);
 	std::ofstream stream(path);
-	if (stream.is_open()) {
+
+	if (stream.is_open())
 		stream.write(text.c_str(), text.size());
-	}
+
 	stream.close();
 	return ret;
 }
@@ -159,13 +160,9 @@ void M_FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& fi
 	for (const auto& file : std::filesystem::directory_iterator(p))
 	{
 		if (std::filesystem::is_directory(file.path()))
-		{
 			dirs.push_back(file.path().filename().string());
-		}
 		else
-		{
 			files.push_back(file.path().filename().string());
-		}
 	}
 }
 
