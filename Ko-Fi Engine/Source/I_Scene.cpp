@@ -39,6 +39,7 @@
 #include "R_Animation.h"
 #include "R_Texture.h"
 #include "R_Material.h"
+#include "R_Model.h"
 
 #include "Importer.h"
 #include "I_Mesh.h"
@@ -59,12 +60,15 @@ I_Scene::~I_Scene()
 
 bool I_Scene::Import(const char* path, bool isPrefab)
 {
+	if (path == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
+		return false;
+	}
+
 	CONSOLE_LOG("[STATUS] Importer: Importing Scene: %s", path);
 
 	std::string errorString = "[ERROR] Importer: Could not Import R_Model { " + std::string(path) + " }";
-
-	if (path == nullptr)
-		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
 
 	const aiScene* assimpScene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	this->assimpScene = (aiScene*)assimpScene;
@@ -81,6 +85,42 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 
 	return true;
 }
+
+bool I_Scene::Import(R_Model* model, bool isPrefab)
+{
+	if (model == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: model is nullptr.");
+		return false;
+	}
+
+	if (model->GetAssetPath() == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
+		return false;
+	}
+
+	CONSOLE_LOG("[STATUS] Importer: Importing Scene: %s", model->GetAssetPath());
+
+	std::string errorString = "[ERROR] Importer: Could not Import R_Model { " + std::string(model->GetAssetPath()) + " }";
+
+
+	const aiScene* assimpScene = aiImportFile(model->GetAssetPath(), aiProcessPreset_TargetRealtime_MaxQuality);
+	this->assimpScene = (aiScene*)assimpScene;
+
+	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
+	{
+		CONSOLE_LOG("[ERROR] Importer: %s! Error: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
+		return false;
+	}
+
+	nodeName = engine->GetFileSystem()->GetNameFromPath(model->GetAssetPath());
+
+	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo, isPrefab);
+
+	return true;
+}
+
 
 GameObject* I_Scene::ImportModel(const char* path)
 {

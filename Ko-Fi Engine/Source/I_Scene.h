@@ -12,6 +12,7 @@ class aiMesh;
 class aiMaterial;
 class Scene;
 class GameObject;
+class R_Model;
 
 class I_Scene
 {
@@ -20,6 +21,7 @@ public:
 	~I_Scene();
 
 	bool Import(const char* path, bool isPrefab = false);
+	bool Import(R_Model* model, bool isPrefab = false);
 	bool Save(Scene* scene, const char* name = nullptr);
 	bool Load(Scene* scene, const char* name);
 

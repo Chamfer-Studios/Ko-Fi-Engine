@@ -1091,6 +1091,7 @@ UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
 		success = Importer::GetInstance()->textureImporter->Import(assetsPath, (R_Texture*)resource);
 		break;
 	case ResourceType::MODEL:
+		success = Importer::GetInstance()->sceneImporter->Import((R_Model*)resource);
 		//TODO: MODEL IMPORT
 		break;
 	case ResourceType::SCENE:
