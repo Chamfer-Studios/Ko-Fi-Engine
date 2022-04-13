@@ -11,7 +11,7 @@ enum class ResourceType
 	MESH,
 	TEXTURE,
 	SCENE,
-	FONT,
+	FONT, // TODO to delete?
 	TRACK, // TODO
 	PARTICLE, // TODO
 	MODEL,
@@ -23,15 +23,6 @@ enum class ResourceType
 class Resource
 {
 public:
-	enum class Type
-	{
-		MESH,
-		TEXTURE,
-		SCENE,
-		SHADER,
-		UNKNOWN,
-	};
-
 	Resource();
 	Resource(ResourceType type);
 	virtual ~Resource();

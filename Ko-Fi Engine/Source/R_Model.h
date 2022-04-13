@@ -10,7 +10,7 @@ class ModelNode
 {
 public:
 	ModelNode();
-	ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID shader, UID texture, std::string textureName);
+	ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID texture, std::string textureName);
 	~ModelNode();
 	void Save(Json& json) const;
 	void Load(Json& json);
@@ -21,7 +21,6 @@ public:
 	UID parentUid;
 	UID mesh;
 	UID material;
-	UID shader;
 	UID texture;
 	std::string textureName;
 };
