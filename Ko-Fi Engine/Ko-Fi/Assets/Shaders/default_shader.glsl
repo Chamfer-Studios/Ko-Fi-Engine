@@ -48,7 +48,7 @@ void main() {
     ourColor = albedoTint;
     TexCoord = texCoord;
     //normals affected by model movement
-    normal = model_matrix * vec4(normals, 1.0);
+    normal = normalize(model_matrix * vec4(normals, 0.0));
 }
 
 #shader fragment
