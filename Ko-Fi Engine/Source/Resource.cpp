@@ -2,6 +2,17 @@
 #include "RNG.h"
 #include "FSDefs.h"
 
+Resource::Resource() :
+type(ResourceType::UNKNOWN),
+uid(0),
+referenceCount(0),
+assetPath(""),
+assetFile(""),
+libraryPath(""),
+libraryFile("")
+{
+}
+
 Resource::Resource(ResourceType type) :
 type(type),
 uid(RNG::GetRandomUint()),
@@ -30,6 +41,7 @@ bool Resource::CleanUp()
 	assetFile.shrink_to_fit();
 	libraryPath.shrink_to_fit();
 	libraryFile.shrink_to_fit();
+
 	return true;
 }
 
@@ -73,7 +85,7 @@ void Resource::SetLibraryPathAndFile()
 	libraryFile = file + extension;
 }
 
-void Resource::SetAssetsPathAndFile(const char* path,const char* file)
+void Resource::SetAssetsPathAndFile(const char* path, const char* file)
 {
 	assetPath = path;
 	assetFile = file;

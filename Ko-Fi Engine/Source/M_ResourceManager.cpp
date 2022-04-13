@@ -135,15 +135,16 @@ bool M_ResourceManager::TrimLibrary()
 UID M_ResourceManager::ImportFile(const char* assetPath)
 {
 	UID uid = 0;
+
 	if (assetPath == nullptr)
 	{
-		LOG_BOTH("[ERROR] Resource Manager: loading file, file path was nullptr.");
+		LOG_BOTH("[ERROR] Resource Manager: loading file, assets file path was nullptr.");
 		return uid;
 	}
 
 	if (HasImportIgnoredExtension(assetPath))
 	{
-		LOG_BOTH("[ERROR] Resource Manager: loading file, the file extension has an import ignored extension.");
+		LOG_BOTH("[ERROR] Resource Manager: loading file, the file extension has an import ignored extension: %s", assetPath);
 		return uid;
 	}
 
@@ -152,7 +153,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 
 	if (type == ResourceType::UNKNOWN)
 	{
-		LOG_BOTH("[ERROR] Resource Manager: loading file, unknown file type.");
+		LOG_BOTH("[ERROR] Resource Manager: loading file, unknown file type %s", assetPath);
 		return uid;
 	}
 
@@ -171,7 +172,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 		std::map<UID, ResourceBase> libraryItems;
 		GetLibraryPairs(assetPath, libraryItems);
 
-		for (auto& item : libraryItems)
+		for (const auto& item : libraryItems)
 		{
 			if (library.find(item.first) == library.end())
 				library.emplace(std::make_pair(item.first, item.second));
@@ -187,7 +188,10 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 		uid = ImportFromAssets(assetPath);
 
 		if (uid == 0)
+		{
 			LOG_BOTH("[ERROR] Resource Manager: loading file, error loading file from assets.");
+			return uid;
+		}
 	}
 
 	return uid;
@@ -290,6 +294,7 @@ void M_ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& fi
 
 	for (const auto& item : filePairs)
 	{
+		// TODO
 		auto assetModification = std::filesystem::last_write_time(item.first);
 		auto metaModification = std::filesystem::last_write_time(item.second);
 		if (assetModification != metaModification)
@@ -466,13 +471,13 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::ve
 				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 				{
 					UID containedUid = containedIt.value().at("uid");
-					ResourceType containedType = (ResourceType)(int)jsonMeta.at("type");
+					ResourceType containedType = (ResourceType)(int)containedIt.value().at("type");
 
 					std::string containedAssetsPath = "";
 					//std::string containedAssetsPath = jsonMeta.at("assets_path");
-					std::string containedAssetsFile = jsonMeta.at("assets_file");
+					std::string containedAssetsFile = containedIt.value().at("assets_file");
 
-					std::string containedLibraryPath = jsonMeta.at("library_path");
+					std::string containedLibraryPath = containedIt.value().at("library_path");
 					std::string containedLibraryFile = "";
 					//std::string containedLibraryFile = jsonMeta.at("library_file");
 
@@ -544,33 +549,24 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetsPath, std:
 		{
 			if (!jsonMeta.at("contained_resources").is_null() && !jsonMeta.at("contained_resources").empty())
 			{
+				std::string containedPath = "";
 				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 				{
 					UID containedUid = containedIt.value().at("uid");
-					ResourceType containedType = (ResourceType)(int)jsonMeta.at("type");
+					ResourceType containedType = (ResourceType)(int)containedIt.value().at("type");
 
-					//std::string containedAssetsPath = "";
-					////std::string containedAssetsPath = jsonMeta.at("assets_path");
-					//std::string containedAssetsFile = jsonMeta.at("assets_file");
+					directory = "";
+					extension = "";
+					success = GetLibraryDirectoryAndExtensionFromType(containedType, directory, extension);
+					if (!success)
+						continue;
+					if (containedUid == 0)
+						continue;
+					if (directory == "" || extension == "")
+						continue;
 
-					//std::string containedLibraryPath = jsonMeta.at("library_path");
-					//std::string containedLibraryFile = "";
-					////std::string containedLibraryFile = jsonMeta.at("library_file");
-
-					//std::string directory = "";
-					//bool success = GetAssetDirectoryFromType(containedType, directory);
-					//if (!success)
-					//	continue;
-
-					//if (containedUid == 0)
-					//{
-					//	LOG_BOTH("[ERROR] Resource Manager: contained resource UID was 0.");
-					//	continue;
-					//}
-
-					//containedAssetsPath = directory + containedAssetsFile;
-					//containedLibraryFile = engine->GetFileSystem()->GetFileName(containedLibraryPath.c_str());
-					//bases.push_back(ResourceBase(containedUid, containedType, containedAssetsPath, containedAssetsFile, containedLibraryPath, containedLibraryFile));
+					containedPath = directory + std::to_string(containedUid) + extension;
+					paths.push_back(containedPath);
 				}
 			}
 		}
@@ -613,7 +609,6 @@ void M_ResourceManager::DeleteFromLibrary(const char* assetsPath)
 	toDelete.shrink_to_fit();
 	resourceUids.clear();
 	resourceUids.shrink_to_fit();
-
 }
 
 bool M_ResourceManager::HasMetaFile(const char* assetsPath)
@@ -673,11 +668,11 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetsPath, bool libraryChe
 
 		if (!jsonMeta.at("contained_resources").empty())
 		{
-			for (const auto& resource : jsonMeta.at("contained_resources").items())
+			for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 			{
-				UID containedUid = resource.value().at("uid");
+				UID containedUid = containedIt.value().at("uid");
 
-				std::string containedLibraryPath = jsonMeta.at("library_path");
+				std::string containedLibraryPath = containedIt.value().at("library_path");
 
 				if (!std::filesystem::exists(containedLibraryPath))
 				{
@@ -728,11 +723,11 @@ bool M_ResourceManager::ValidateMetaFile(Json& json, bool libraryCheck)
 
 	if (!json.at("contained_resources").empty())
 	{
-		for (const auto& resource : json.at("contained_resources").items())
+		for (const auto& containedIt : json.at("contained_resources").items())
 		{
-			UID containedUid = resource.value().at("uid");
+			UID containedUid = containedIt.value().at("uid");
 
-			std::string containedLibraryPath = json.at("library_path");
+			std::string containedLibraryPath = containedIt.value().at("library_path");
 
 			if (!std::filesystem::exists(containedLibraryPath))
 			{
@@ -874,12 +869,12 @@ Resource* M_ResourceManager::RequestResource(UID uid)
 
 UID M_ResourceManager::Find(const char* assetPath) const
 {
-	for (auto r : resourcesMap)
+	for (const auto& r : resourcesMap)
 	{
 		if (r.second->GetAssetPath() == assetPath)
 			return r.first;
 	}
-	return -1;
+	return 0;
 }
 
 void M_ResourceManager::SaveResource(Resource* resource)
@@ -918,9 +913,12 @@ bool M_ResourceManager::UnloadResource(Resource* resource)
 		CONSOLE_LOG("[ERROR] Resource Manager: trying to unload resource, resource was nullptr.");
 		return false;
 	}
+
 	UID uid = resource->GetUID();
+
 	resource->CleanUp();
 	RELEASE(resource);
+
 	if (resourcesMap.find(uid) != resourcesMap.end())
 		resourcesMap.erase(uid);
 	else
@@ -928,6 +926,7 @@ bool M_ResourceManager::UnloadResource(Resource* resource)
 		CONSOLE_LOG("[ERROR] Resource Manager: trying to unload resource, unloaded resource was not inside map!");
 		return false;
 	}
+
 	return true;
 }
 
@@ -936,18 +935,20 @@ bool M_ResourceManager::UnloadResource(UID uid)
 	if (library.find(uid) != library.end())
 		library.erase(uid);
 
-	if (resourcesMap.find(uid) != resourcesMap.end())
+	auto item = resourcesMap.find(uid);
+	if (item == resourcesMap.end())
 	{
-		Resource* r = resourcesMap[uid];
-		r->CleanUp();
-		RELEASE(r);
-		resourcesMap.erase(uid);
-	}
-	else
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: trying to unload resource, resource was not inside map!");
+		CONSOLE_LOG("[ERROR] Resource Manager: trying to delete resource, resource was not inside map!");
 		return false;
 	}
+
+	if (item->second != nullptr)
+	{
+		item->second->CleanUp();
+		RELEASE(item->second);
+		resourcesMap.erase(uid);
+	}
+
 	return true;
 }
 
@@ -1213,11 +1214,13 @@ std::string M_ResourceManager::GetValidPath(const char* path) const
 
 	size_t assetStart = normalizedPath.find("Assets");
 	size_t libraryStart = normalizedPath.find("Library");
+
 	std::string resultPath;
+
 	if (assetStart != std::string::npos)
-		resultPath = normalizedPath.substr(assetStart, normalizedPath.size()).c_str();
+		resultPath = normalizedPath.substr(assetStart, normalizedPath.size());
 	else if (libraryStart != std::string::npos)
-		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size()).c_str();
+		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size());
 	else
 		LOG_BOTH("[ERROR] Resource Manager: Couldn't validate path.");
 

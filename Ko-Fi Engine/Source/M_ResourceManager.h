@@ -31,7 +31,9 @@ public:
 
 	//const Resource* RequestResource(uint uid) const;			Can't do it because of the maps
 	void SaveResource(Resource* resource);
+	// Deletes from Library map
 	bool UnloadResource(UID uid);
+	// Doesnt deletes from Library map
 	bool UnloadResource(Resource* resource);
 
 	UID Find(const char* assetPath) const;

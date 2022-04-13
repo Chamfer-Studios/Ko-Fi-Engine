@@ -32,7 +32,7 @@ public:
 		UNKNOWN,
 	};
 
-	Resource() {}
+	Resource();
 	Resource(ResourceType type);
 	virtual ~Resource();
 
