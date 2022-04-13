@@ -13,9 +13,7 @@ public:
 	~PanelRuntimeState();
 
 	bool Awake();
-	bool PreUpdate();
 	bool Update();
-	bool PostUpdate();
 
 	void DrawRuntimePanel();
 

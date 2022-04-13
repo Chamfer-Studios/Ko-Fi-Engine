@@ -13,9 +13,7 @@ public:
 	~PanelViewport();
 
 	bool Awake();
-	bool PreUpdate();
 	bool Update();
-	bool PostUpdate();
 	bool IsWindowFocused();
 
 	void SetIsFocused(bool isFocused);

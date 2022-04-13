@@ -16,12 +16,14 @@ public:
 	const float inline GetStartFrame() const { return start; }
 	const float inline GetEndFrame() const { return end; }
 	const float inline GetDuration() const { return duration; }
+	const float inline GetDurationInSeconds() const { return durationInSeconds; }
 
 	inline void SetName(const char* name) { this->name = name; }
 	inline void SetAnimation(const R_Animation* clipAnim) { this->clipAnim = clipAnim; }
 	inline void SetStartFrame(uint start) { this->start = start; }
 	inline void SetEndFrame(uint end) { this->end = end; }
 	inline void SetDuration(float duration) { this->duration = duration; }
+	inline void SetDurationInSeconds(float durationInSeconds) { this->durationInSeconds = durationInSeconds; }
 
 private:
 	//const R_Animation* animation;

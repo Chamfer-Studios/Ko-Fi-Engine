@@ -13,6 +13,8 @@ using Json = nlohmann::json;
 
 #include <filesystem>
 
+#include "optick.h"
+
 M_ResourceManager::M_ResourceManager(KoFiEngine* engine) : Module(),
 fileRefreshRate(0.0f),
 fileRefreshTime(0.0f)
@@ -54,6 +56,8 @@ bool M_ResourceManager::Start()
 
 bool M_ResourceManager::PreUpdate(float dt)
 {
+	OPTICK_EVENT();
+
 	//fileRefreshTime += dt;
 	//if (fileRefreshTime > fileRefreshRate)
 	//{

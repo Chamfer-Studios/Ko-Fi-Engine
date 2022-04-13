@@ -12,6 +12,8 @@
 #include <iomanip>
 #include "JsonHandler.h"
 
+#include "optick.h"
+
 M_FileSystem::M_FileSystem(KoFiEngine* engine)
 {
 	name = "FileSystem";
