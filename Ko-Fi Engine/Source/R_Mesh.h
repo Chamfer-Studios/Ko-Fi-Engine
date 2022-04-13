@@ -81,7 +81,7 @@ public:
 	R_Mesh(Shape shape = Shape::NONE);
 	~R_Mesh();
 
-	// R_Mesh Functions
+	// Mesh Functions
 	void SetUpMeshBuffers();
 
 	void Draw();
@@ -140,7 +140,7 @@ public:
 	uint idNormal = 0;
 	float* normals = nullptr;
 
-	// R_Texture coordinates
+	// Texture coordinates
 	uint idTexCoord = 0;
 	float* texCoords = nullptr;
 

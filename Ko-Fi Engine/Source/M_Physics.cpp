@@ -180,7 +180,7 @@ bool M_Physics::LoadConfiguration(Json& configModule)
 
 bool M_Physics::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("M_Physics##"))
+	if (ImGui::CollapsingHeader("Physics##"))
 	{
 		// NUMBER OF THREADS ----------------------------------------------------
 		int newNbThreads = GetNbThreads();

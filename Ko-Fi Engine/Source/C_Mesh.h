@@ -48,7 +48,7 @@ public:
 	const AABB GetLocalAABB();
 	const AABB GetGlobalAABB() const;
 
-	// R_Mesh Functions
+	// Mesh Functions
 	void GenerateLocalBoundingBox();
 	void GenerateGlobalBoundingBox();
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);

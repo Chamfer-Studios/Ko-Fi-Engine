@@ -67,7 +67,7 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
-		appLog->AddLog("%s", "R_Texture Image not loaded correctly: %s\n", path);
+		appLog->AddLog("%s", "Texture Image not loaded correctly: %s\n", path);
 
 	stbi_image_free(pixels);
 

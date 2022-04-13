@@ -221,11 +221,11 @@ bool PanelConfiguration::Update()
 				enabled ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
 
 			enabled = glIsEnabled(GL_COLOR_MATERIAL);
-			if (ImGui::Checkbox("Color R_Material", &enabled))
+			if (ImGui::Checkbox("Color Material", &enabled))
 				enabled ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
 
 			enabled = glIsEnabled(GL_TEXTURE_2D);
-			if (ImGui::Checkbox("R_Texture 2D", &enabled))
+			if (ImGui::Checkbox("Texture 2D", &enabled))
 				enabled ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
 		}
 

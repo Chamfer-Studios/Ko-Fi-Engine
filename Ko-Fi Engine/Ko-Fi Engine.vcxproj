@@ -241,7 +241,7 @@
     <ClCompile Include="Source\PieShape.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
-    <ClCompile Include="Source\R_ResourceBase.cpp" />
+    <ClCompile Include="Source\ResourceBase.cpp" />
     <ClCompile Include="Source\M_ResourceManager.cpp" />
     <ClCompile Include="Source\RNG.cpp" />
     <ClCompile Include="Source\R_Track.cpp" />
@@ -621,7 +621,7 @@
     <ClInclude Include="Source\PanelSettings.h" />
     <ClInclude Include="Source\SimulationEventCallback.h" />
     <ClInclude Include="Source\R_ParticleResource.h" />
-    <ClInclude Include="Source\R_ResourceBase.h" />
+    <ClInclude Include="Source\ResourceBase.h" />
     <ClInclude Include="Source\M_UI.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\node_editor.h" />

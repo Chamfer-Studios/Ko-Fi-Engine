@@ -99,7 +99,7 @@ void M_Camera3D::OnNotify(const Event& event)
 
 void M_Camera3D::OnGui()
 {
-	if (ImGui::CollapsingHeader("M_Editor Camera"))
+	if (ImGui::CollapsingHeader("Module Camera"))
 	{
 		if (ImGui::DragFloat("Vertical fov", &currentCamera->verticalFOV))
 		{

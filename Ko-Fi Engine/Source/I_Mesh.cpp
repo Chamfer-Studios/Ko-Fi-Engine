@@ -17,12 +17,12 @@ bool I_Mesh::Import(const aiMesh* aiMesh, R_Mesh* mesh, const aiScene* assimpSce
 {
 	if (mesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import R_Mesh! Error: R_Mesh* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Mesh! Error: R_Mesh* was nullptr.");
 		return false;
 	}
 	if (aiMesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import R_Mesh! Error: aiMesh* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Mesh! Error: aiMesh* was nullptr.");
 		return false;
 	}
 
@@ -125,7 +125,7 @@ bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 		file.write((char*)mesh->normals, mesh->normalsSizeBytes);			// Normals
 
 		if (mesh->texCoordSizeBytes != 0)
-			file.write((char*)mesh->texCoords, mesh->texCoordSizeBytes);	// R_Texture coordinates
+			file.write((char*)mesh->texCoords, mesh->texCoordSizeBytes);	// Texture coordinates
 
 		uint boneInfoSize = mesh->boneInfo.size();
 		uint bonesSize = mesh->bones.size();

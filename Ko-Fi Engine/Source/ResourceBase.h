@@ -7,11 +7,11 @@
 class Resource;
 enum class ResourceType;
 
-class R_ResourceBase
+class ResourceBase
 {
 public:
-	R_ResourceBase(const Resource* r);
-	~R_ResourceBase();
+	ResourceBase(const Resource* r);
+	~ResourceBase();
 
 	bool CleanUp();
 

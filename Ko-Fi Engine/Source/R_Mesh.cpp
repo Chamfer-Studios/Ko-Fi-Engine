@@ -84,7 +84,7 @@ R_Mesh::~R_Mesh()
 	glDeleteBuffers(1, &idNormal);
 	RELEASE_MALLOC(normals);
 
-	// R_Texture coords
+	// Texture coords
 	glBindBuffer(GL_ARRAY_BUFFER, idTexCoord);
 	glDeleteBuffers(1, &idTexCoord);
 	RELEASE_MALLOC(texCoords);
@@ -128,7 +128,7 @@ void R_Mesh::SetUpMeshBuffers()
 	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(NORMAL_LOCATION);
 
-	// R_Texture coords
+	// Texture coords
 	if (texCoords)
 	{
 		glGenBuffers(1, &idTexCoord);
@@ -164,7 +164,7 @@ void R_Mesh::Draw()
 
 	glBindVertexArray(0);
 
-	// Unbind R_Texture
+	// Unbind Texture
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

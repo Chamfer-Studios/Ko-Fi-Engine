@@ -23,6 +23,8 @@ C_Animator::C_Animator(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::ANIMATOR;
 	playing = true;
+	animation = new R_Animation();
+
 }
 
 C_Animator::~C_Animator()
