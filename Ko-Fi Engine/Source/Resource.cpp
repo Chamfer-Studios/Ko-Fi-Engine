@@ -68,12 +68,32 @@ void Resource::SetLibraryPathAndFile()
 		extension = TEXTURE_EXTENSION;
 		break;
 	case ResourceType::SCENE:
-		dir = ASSETS_SCENES_DIR;
+		dir = SCENES_DIR;
 		extension = SCENE_EXTENSION;
 		break;
 	case ResourceType::FONT:
 		dir = FONTS_DIR;
 		extension = FONT_EXTENSION;
+		break;
+	//case ResourceType::TRACK:
+	//	dir = AUDIOS_DIR;
+	//	extension = AUDIO_EXTENSION;
+	//	break;
+	//case ResourceType::PARTICLE:
+	//	dir = FONTS_DIR;
+	//	extension = FONT_EXTENSION;
+	//	break;
+	case ResourceType::MODEL:
+		dir = MODELS_DIR;
+		extension = MODEL_EXTENSION;
+		break;
+	case ResourceType::MATERIAL:
+		dir = SHADERS_DIR;
+		extension = SHADER_EXTENSION;
+		break;
+	case ResourceType::ANIMATION:
+		dir = ANIMATIONS_DIR;
+		extension = ANIMATION_EXTENSION;
 		break;
 	case ResourceType::UNKNOWN:
 		break;

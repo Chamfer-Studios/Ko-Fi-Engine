@@ -33,6 +33,7 @@ public:
 	I_Material();
 	~I_Material();
 
+	bool Import(const char* assetsPath, R_Material* material);
 	bool Import(const aiMaterial* aiMaterial, R_Material* material);
 	//bool Save(const R_Material* material);
 	//bool Load(R_Material* material);

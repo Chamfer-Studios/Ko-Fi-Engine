@@ -3,9 +3,10 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "Resource.h"
 
+class Resource;
 class ResourceBase;
+enum class ResourceType;
 
 class M_ResourceManager : public Module
 {
@@ -30,7 +31,7 @@ public:
 	bool HasImportIgnoredExtension(const char* assetsPath) const;
 
 	//const Resource* RequestResource(uint uid) const;			Can't do it because of the maps
-	void SaveResource(Resource* resource);
+	bool SaveResource(Resource* resource);
 	// Deletes from Library map
 	bool UnloadResource(UID uid);
 	// Doesnt deletes from Library map
@@ -40,7 +41,7 @@ public:
 	Resource* GetResourceFromLibrary(const char* libraryPath);
 	Resource* RequestResource(UID uid);
 
-	ResourceType GetTypeFromExtension(const char* extension);
+	ResourceType GetTypeFromAssetsExtension(const char* assetsPath);
 	
 	bool GetAssetDirectoryFromType(const ResourceType& type, std::string& directory);
 	bool GetLibraryDirectoryAndExtensionFromType(const ResourceType& type, std::string& directory, std::string& extension);
@@ -74,7 +75,7 @@ public:
 	//void ReleaseResource(uint uid);
 
 private:
-	Resource* CreateNewResource(const char* assetPath, ResourceType type);
+	Resource* CreateNewResource(const ResourceType& type, const char* assetPath = nullptr, UID forcedUid = 0);
 
 	bool SaveMetaFile(Resource* resource) const;
 	bool LoadMetaFile(Json& json, const char* assetPath);

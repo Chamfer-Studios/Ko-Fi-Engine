@@ -5,7 +5,16 @@
 #include "FSDefs.h"
 #include "Importer.h"
 #include "M_FileSystem.h"
+#include "Resource.h"
 #include "ResourceBase.h"
+
+#include "R_Mesh.h"
+#include "R_Texture.h"
+#include "R_Material.h"
+#include "R_Animation.h"
+#include "R_Model.h"
+#include "R_ParticleResource.h"
+#include "R_Track.h"
 
 #include "json.hpp"
 #include "JsonHandler.h"
@@ -146,15 +155,6 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 	if (HasImportIgnoredExtension(assetPath))
 	{
 		LOG_BOTH("[ERROR] Resource Manager: loading file, the file extension has an import ignored extension: %s", assetPath);
-		return uid;
-	}
-
-	std::filesystem::path path = assetPath;
-	ResourceType type = GetTypeFromExtension(path.extension().string().c_str());
-
-	if (type == ResourceType::UNKNOWN)
-	{
-		LOG_BOTH("[ERROR] Resource Manager: loading file, unknown file type %s", assetPath);
 		return uid;
 	}
 
@@ -752,14 +752,42 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 	return false;
 }
 
-Resource* M_ResourceManager::CreateNewResource(const char* assetPath, ResourceType type)
+Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const char* assetPath, UID forcedUid)
 {
-	Resource* ret = new Resource(type);
+	// TODO
+	Resource* resource = nullptr;
 
-	resourcesMap[ret->GetUID()] = ret;
-	ret->SetAssetsPathAndFile(assetPath, engine->GetFileSystem()->GetFileName(assetPath));
-	ret->SetLibraryPathAndFile();
-	return ret;
+	switch (type)
+	{
+	case ResourceType::MESH: { resource = new R_Mesh(); } break;
+	case ResourceType::TEXTURE: { resource = new R_Texture(); } break;
+	//case ResourceType::SCENE: { resource = new R_SCENE(); } break;
+	//case ResourceType::FONT: { resource = new R_Font(); } break;
+	case ResourceType::TRACK: { resource = new R_Track(); } break;
+	//case ResourceType::PARTICLE: { resource = new R_Particle(); } break;
+	//case ResourceType::MODEL: { resource = new R_Model(); } break;
+	case ResourceType::MATERIAL: { resource = new R_Material(); } break;
+	//case ResourceType::ANIMATION: { resource = new R_Animation(); } break;
+	case ResourceType::UNKNOWN: { resource = nullptr; } break;
+	default:
+		break;
+	}
+
+	if (resource != nullptr)
+	{
+		if (assetPath != nullptr)
+			resource->SetAssetsPathAndFile(assetPath, engine->GetFileSystem()->GetFileName(assetPath));
+
+		// TODO
+		if (forcedUid != 0)
+		{
+			//resource->ForceUID(forcedUid);
+		}
+		else
+			resource->SetLibraryPathAndFile();
+	}
+	
+	return resource;
 }
 
 bool M_ResourceManager::SaveMetaFile(Resource* resource) const
@@ -863,24 +891,47 @@ UID M_ResourceManager::Find(const char* assetPath) const
 	return 0;
 }
 
-void M_ResourceManager::SaveResource(Resource* resource)
+bool M_ResourceManager::SaveResource(Resource* resource)
 {
+	bool ret = true;
+
 	if (resource == nullptr)
 	{
 		LOG_BOTH("[ERROR] Resource Manager: saving resource, resource was nullptr.");
-		return;
+		return false;
 	}
 
 	switch (resource->GetType())
 	{
 	case ResourceType::MESH:
-		Importer::GetInstance()->meshImporter->Save((R_Mesh*)resource, resource->GetLibraryPath());
+		ret = Importer::GetInstance()->meshImporter->Save((R_Mesh*)resource, resource->GetLibraryPath());
+		break;
+	case ResourceType::TEXTURE:
+		// TODO
 		break;
 	case ResourceType::SCENE:
-		Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
+		// TODO ret = Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
 		break;
 	case ResourceType::FONT:
-		//TODO: Save Font
+		// TODO
+		break;
+	case ResourceType::TRACK:
+		// TODO
+		break;
+	case ResourceType::PARTICLE:
+		// TODO
+		break;
+	case ResourceType::MODEL:
+		// TODO
+		break;
+	case ResourceType::MATERIAL:
+		// TODO
+		break;
+	case ResourceType::ANIMATION:
+		ret = Importer::GetInstance()->animationImporter->Save((R_Animation*)resource, resource->GetLibraryPath());
+		break;
+	case ResourceType::UNKNOWN:
+		// TODO
 		break;
 	default:
 		break;
@@ -890,6 +941,8 @@ void M_ResourceManager::SaveResource(Resource* resource)
 		SaveMetaFile(resource);
 
 	library.emplace(resource->GetUID(), ResourceBase(resource));
+
+	return ret;
 }
 
 bool M_ResourceManager::UnloadResource(Resource* resource)
@@ -909,7 +962,7 @@ bool M_ResourceManager::UnloadResource(Resource* resource)
 		resourcesMap.erase(uid);
 	else
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: trying to unload resource, unloaded resource was not inside map!");
+		CONSOLE_LOG("[WARNING] Resource Manager: trying to unload resource, unloaded resource was not inside map!");
 		return false;
 	}
 
@@ -1019,82 +1072,77 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 
 UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
 {
-	UID uid;
+	// TODO
+	UID uid = 0;
 
 	if (assetsPath == nullptr)
 	{
 		LOG_BOTH("[ERROR] Resource Manager: loading from assets, path was nullptr.");
-		return -1;
+		return uid;
 	}
 
-	//TODO: META SHIT
-	//char* buffer = nullptr;
-	//uint read = App->fileSystem->Load(assetsPath, &buffer);
-	//if (read == 0)
-	//{
-	//	LOG("[ERROR] Resource Manager: Could not Import File %s! Error: File System could not Read the File.", assetsPath);
-	//	return 0;
-	//}
+	ResourceType type = GetTypeFromAssetsExtension(assetsPath);
+	Resource* resource = CreateNewResource(type, assetsPath);
 
-	ResourceType type = GetTypeFromExtension(assetsPath);
-	Resource* resource = CreateNewResource(assetsPath, type);
-
+	bool success = false;
 	switch (type)
 	{
 	case ResourceType::TEXTURE:
-		Importer::GetInstance()->textureImporter->Import(assetsPath,(R_Texture*)resource);
-		break;
-	case ResourceType::FONT:
-		//TODO: FONT IMPORT
-		break;
-	case ResourceType::TRACK:
-		//TODO: TRACK IMPORT
-		break;
-	case ResourceType::PARTICLE:
-		//TODO: PARTICLE IMPORT
+		success = Importer::GetInstance()->textureImporter->Import(assetsPath, (R_Texture*)resource);
 		break;
 	case ResourceType::MODEL:
 		//TODO: MODEL IMPORT
 		break;
-	case ResourceType::MATERIAL:
-		//TODO: MATERIAL IMPORT
+	case ResourceType::SCENE:
+		//TODO: SCENE IMPORT
 		break;
-	case ResourceType::ANIMATION:
-		//TODO: ANIMATION IMPORT
+	case ResourceType::MATERIAL:
+		success = Importer::GetInstance()->materialImporter->Import(assetsPath, (R_Material*)resource);
+		break;
+	case ResourceType::FONT:
+		//TODO: FONT IMPORT
 		break;
 	default:
 		break;
 	}
 
-	//RELEASE_ARRAY(buffer);
+	if (!success)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: could not import assets file: %s", assetsPath);
+		UnloadResource(resource);
+		return 0;
+	}
 
 	uid = resource->GetUID();
+
 	SaveResource(resource);
+
 	UnloadResource(resource);
 
 	return uid;
 }
 
-ResourceType M_ResourceManager::GetTypeFromExtension(const char* extension)
+ResourceType M_ResourceManager::GetTypeFromAssetsExtension(const char* assetsPath)
 {
 	ResourceType ret = ResourceType::UNKNOWN;
 
-	// TODO
-	//LUA?
-	if (engine->GetFileSystem()->StringCompare(extension, TEXTURE_EXTENSION) == 0)
+	std::filesystem::path path = assetsPath;
+	std::string extension = path.extension().string();
+
+	if (engine->GetFileSystem()->StringCompare(extension.c_str(), TEXTURE_EXTENSION) == 0)
 		ret = ResourceType::TEXTURE;
-	else if (engine->GetFileSystem()->StringCompare(extension, MODEL_EXTENSION) == 0)
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0)
 		ret = ResourceType::MODEL;
-	else if (engine->GetFileSystem()->StringCompare(extension, SCENE_EXTENSION) == 0)
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SCENE_EXTENSION) == 0)
 		ret = ResourceType::SCENE;
-	else if (engine->GetFileSystem()->StringCompare(extension, SHADER_EXTENSION) == 0)
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SHADER_EXTENSION) == 0)
 		ret = ResourceType::MATERIAL;
-	else if (engine->GetFileSystem()->StringCompare(extension, FONT_EXTENSION) == 0)
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FONT_EXTENSION) == 0)
 		ret = ResourceType::FONT;
-	else if (engine->GetFileSystem()->StringCompare(extension, MESH_EXTENSION) == 0)
-		ret = ResourceType::MESH;
-	else if (engine->GetFileSystem()->StringCompare(extension, ANIMATION_EXTENSION) == 0)
-		ret = ResourceType::ANIMATION;
+	else
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given assets path. File extension: %s is not supported.", extension.c_str());
+	}
 
 	return ret;
 }
@@ -1132,9 +1180,9 @@ bool M_ResourceManager::GetLibraryDirectoryAndExtensionFromType(const ResourceTy
 	case ResourceType::MESH: { directory = MESHES_DIR; extension = MESH_EXTENSION; } break;
 	case ResourceType::TEXTURE: { directory = TEXTURES_DIR; extension = TEXTURE_EXTENSION; } break;
 	case ResourceType::SCENE: { directory = SCENES_DIR; extension = SCENE_EXTENSION; } break;
-	//case ResourceType::TRACK: { directory = AUDIOS_DIR; extension = MODEL_EXTENSION; } break;
+		//case ResourceType::TRACK: { directory = AUDIOS_DIR; extension = MODEL_EXTENSION; } break;
 	case ResourceType::FONT: { directory = FONTS_DIR; extension = FONT_EXTENSION; } break;
-	//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
+		//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::ANIMATION: { directory = ANIMATIONS_DIR; extension = ANIMATION_EXTENSION; } break;
 	case ResourceType::MATERIAL: { directory = SHADERS_DIR;  extension = SHADER_EXTENSION; } break;
 	case ResourceType::UNKNOWN:
@@ -1143,7 +1191,8 @@ bool M_ResourceManager::GetLibraryDirectoryAndExtensionFromType(const ResourceTy
 		return false;
 	}
 	break;
-	default: break;
+	default:
+		break;
 	}
 
 	return true;

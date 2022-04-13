@@ -28,6 +28,7 @@
 #define CONFIG_DIR "EngineConfig/"
 
 // EXTENSIONS
+#define MODEL_EXTENSION ".tea"
 #define MESH_EXTENSION ".sugar"
 #define MATERIAL_EXTENSION ".milk"
 #define SHADER_EXTENSION ".glsl"
@@ -36,7 +37,7 @@
 #define SCENE_EXTENSION ".json"
 #define META_EXTENSION ".meta"
 
-#define MODEL_EXTENSION ".fbx"
+#define FBX_EXTENSION ".fbx"
 #define FONT_EXTENSION ".ttf"
 
 #endif // !__FSDIRECTORIES_H__
