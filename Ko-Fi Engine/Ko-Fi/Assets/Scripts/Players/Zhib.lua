@@ -60,7 +60,6 @@ rigidBodyFlag = true
 
 -- Called each loop iteration
 function Update(dt)
-
 	if (rigidBodyFlag == true) then
 		if (componentRigidBody ~= nil) then
 			rigidBodyFlag = false
