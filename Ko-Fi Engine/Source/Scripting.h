@@ -70,7 +70,7 @@ class Scripting
 public:
 	Scripting()
 	{
-		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug, sol::lib::string);
+		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug, sol::lib::string, sol::lib::os);
 	}
 
 	~Scripting() {}
@@ -219,12 +219,6 @@ public:
 			"right", &C_Camera::right,
 			"up", &C_Camera::up
 			);
-		// Component Mesh
-		lua.new_usertype<C_Mesh>("C_Mesh",
-			sol::constructors<void(GameObject *)>(),
-			"Disable", &C_Mesh::Disable,
-			"Enable", &C_Mesh::Enable
-			);
 
 		// Component Mesh
 		lua.new_usertype<C_Mesh>("C_Mesh",
@@ -241,8 +235,9 @@ public:
 
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
-										 sol::constructors<void(GameObject *)>(),
-										 "SetTexture", &C_Image::SetTexture);
+			sol::constructors<void(GameObject *)>(),
+			"SetTexture", &C_Image::SetTexture
+			);
 
 		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),

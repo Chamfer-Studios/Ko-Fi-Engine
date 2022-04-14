@@ -586,9 +586,6 @@
     <ClCompile Include="Source\I_Track.cpp">
       <Filter>Source\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\C_Animator.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\External\stb_image\stb_image.cpp">
       <Filter>Libs\stb_image</Filter>
     </ClCompile>
@@ -621,6 +618,9 @@
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Source\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_Animator.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1846,22 +1846,58 @@
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
       <Filter>Scripts\Enemies</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_Lives.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_1.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_2.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_Lives_3.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_SFX.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterAssetsChange.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes&amp;SFX.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX2.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer2.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer3.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ChangeScenes&amp;SFX.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ChangeScenes.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_CharacterAssetsChange.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_CharacterSelected&amp;SFX.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_CharacterSelected&amp;SFX2.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_CharacterSelected&amp;SFX3.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_CharacterSelected.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Disable.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_1.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_2.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_3.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_SFX.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
   </ItemGroup>
 </Project>
