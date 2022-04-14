@@ -22,6 +22,8 @@
 
 #include "MathGeoLib/Math/MathFunc.h"
 
+#include "optick.h"
+
 C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 {
 	this->isEngineCamera = isEngineCamera;

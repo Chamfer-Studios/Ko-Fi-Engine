@@ -12,9 +12,7 @@ public:
 	~PanelAbout();
 
 	bool Awake();
-	bool PreUpdate();
 	bool Update();
-	bool PostUpdate();
 
 	void ShowAboutWindow(bool* toggleAboutPanel);
 

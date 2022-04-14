@@ -18,7 +18,7 @@ class LightSource
 public:
 	LightSource();
 
-	float3 position;
+	float3 position; //global
 	float3 color;
 
 	float ambient;
@@ -46,13 +46,22 @@ public:
 
 	float constant;
 	float linear;
-
 	float quadratic;
+
 };
 
 //same as point light but acting only in a defined area. (can have blurred borders or not)
 struct FocalLight : public LightSource
 {
+public:
+	FocalLight();
+
+	float cutOffAngle;
+	float3 lightDirection;
+
+	float constant;
+	float linear;
+	float quadratic;
 
 };
 

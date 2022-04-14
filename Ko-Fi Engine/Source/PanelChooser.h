@@ -15,9 +15,7 @@ public:
 	~PanelChooser();
 
 	bool Awake();
-	bool PreUpdate();
 	bool Update();
-	bool PostUpdate();
 
 	//Handles ChooserStateHandler State
 	bool IsReadyToClose(std::string id);

@@ -8,6 +8,8 @@
 #include "M_Physics.h"
 #include "PxPhysicsAPI.h"
 
+#include "optick.h"
+
 C_Collider::C_Collider(GameObject *parent, ColliderShape collType) : Component(parent)
 {
 	type = ComponentType::COLLIDER;

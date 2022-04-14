@@ -20,20 +20,12 @@ bool PanelChooser::Awake()
 	return true;
 }
 
-bool PanelChooser::PreUpdate()
-{
-	return true;
-}
-
 bool PanelChooser::Update()
 {
+	OPTICK_EVENT();
+
 	if (chooserState == OPENED)
 		ShowPanel("/Assets", currentExtension);
-	return true;
-}
-
-bool PanelChooser::PostUpdate()
-{
 	return true;
 }
 
