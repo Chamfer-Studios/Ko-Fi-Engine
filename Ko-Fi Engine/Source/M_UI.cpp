@@ -24,6 +24,8 @@
 #include <string>
 #include <vector>
 
+#include "optick.h"
+
 MyPlane::MyPlane(GameObject* _owner) {
 	vertices.push_back({ 0, 0, 0 });
 	vertices.push_back({ 0, 1, 0 });
@@ -78,6 +80,9 @@ void MyPlane::DrawPlane2D(R_Texture* texture, SDL_Color color)
 
 void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 	if (texture == 0) return;
+
+	OPTICK_EVENT();
+
 	C_Transform2D* cTransform = owner->GetComponent<C_Transform2D>();
 
 	float2 normalizedPosition = cTransform->GetNormalizedPosition();

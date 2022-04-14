@@ -13,9 +13,7 @@ public:
 	~PanelCameraViewport();
 
 	bool Awake();
-	bool PreUpdate();
 	bool Update();
-	bool PostUpdate();
 	bool RenderPanel(bool* showPanel);
 
 private:

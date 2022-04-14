@@ -7,6 +7,8 @@
 
 #include "SDL.h"
 
+#include "optick.h"
+
 M_Window::M_Window(KoFiEngine* engine) : Module()
 {
 	window = NULL;

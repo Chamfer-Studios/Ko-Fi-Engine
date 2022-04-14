@@ -13,9 +13,7 @@ public:
 	~PanelConfiguration();
 
 	bool Awake();
-	bool PreUpdate();
 	bool Update();
-	bool PostUpdate();
 
 private:
 	EngineConfig* engineConfig = nullptr;

@@ -31,7 +31,7 @@ bool C_LightSource::Start()
 
 bool C_LightSource::Update(float dt)
 {
-	lightSource->position = owner->GetTransform()->GetPosition();
+	lightSource->position = owner->GetTransform()->GetGlobalTransform().TranslatePart();
 
 	return true;
 }
@@ -39,7 +39,7 @@ bool C_LightSource::Update(float dt)
 bool C_LightSource::CleanUp()
 {
 	RELEASE(lightSource);
-
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->RemoveLight(owner);
 	return true;
 }
 
@@ -76,6 +76,26 @@ void C_LightSource::Save(Json& json) const
 		json["diffuseValue"] = currentLight->diffuse;
 		json["specularValue"] = currentLight->specular;
 		
+		json["constantAttenuationValue"] = currentLight->constant;
+		json["linearAttenuationValue"] = currentLight->linear;
+		json["quadraticAttenuationValue"] = currentLight->quadratic;
+
+		break;
+	}
+	case SourceType::FOCAL:
+	{
+		FocalLight* currentLight = (FocalLight*)lightSource;
+
+		json["lightPosition"] = { currentLight->position.x, currentLight->position.y, currentLight->position.z };
+		json["lightColor"] = { currentLight->color.x, currentLight->color.y, currentLight->color.z };
+
+		json["ambientValue"] = currentLight->ambient;
+		json["diffuseValue"] = currentLight->diffuse;
+		json["specularValue"] = currentLight->specular;
+
+		json["cutOffAngle"] = currentLight->cutOffAngle;
+		json["lightDirection"] = { currentLight->lightDirection.x, currentLight->lightDirection.y, currentLight->lightDirection.z };
+
 		json["constantAttenuationValue"] = currentLight->constant;
 		json["linearAttenuationValue"] = currentLight->linear;
 		json["quadraticAttenuationValue"] = currentLight->quadratic;
@@ -130,6 +150,34 @@ void C_LightSource::Load(Json& json)
 		currentLight->constant = json.at("constantAttenuationValue");
 		currentLight->linear = json.at("linearAttenuationValue");
 		currentLight->quadratic = json.at("quadraticAttenuationValue");
+
+		break;
+	}
+	case SourceType::FOCAL:
+	{
+		FocalLight* currentLight = (FocalLight*)ChangeSourceType(type);
+		std::vector<float> values = json.at("lightPosition").get<std::vector<float>>();
+		currentLight->position = (float3(values[0], values[1], values[2]));
+		values.clear();
+
+		values = json.at("lightColor").get<std::vector<float>>();
+		currentLight->color = (float3(values[0], values[1], values[2]));
+		values.clear();
+
+		currentLight->ambient = json.at("ambientValue");
+		currentLight->diffuse = json.at("diffuseValue");
+		currentLight->specular = json.at("specularValue");
+
+		currentLight->cutOffAngle = json.at("cutOffAngle");
+
+		values = json.at("lightDirection").get<std::vector<float>>();
+		currentLight->lightDirection = (float3(values[0], values[1], values[2]));
+		values.clear();
+
+		currentLight->constant = json.at("constantAttenuationValue");
+		currentLight->linear = json.at("linearAttenuationValue");
+		currentLight->quadratic = json.at("quadraticAttenuationValue");
+
 		break;
 	}
 	}
@@ -142,8 +190,6 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Component LightSource", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{	
-		DrawDeleteButton(owner, this);
-
 		ImGui::Combo("###combo", &sType, "Directional Light Source\0Point Light Source\0Focal Light Source");
 
 		ImGui::SameLine();
@@ -154,7 +200,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			{
 			case (int)SourceType::DIRECTIONAL: ChangeSourceType((SourceType)sType); break;
 			case (int)SourceType::POINT: ChangeSourceType((SourceType)sType); break;
-			//case (int)SourceType::SPOT: ChangeSourceType((SourceType)sType); break;
+			case (int)SourceType::FOCAL: ChangeSourceType((SourceType)sType); break;
 			}
 		}
 
@@ -163,6 +209,13 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 		case SourceType::DIRECTIONAL:
 		{
 			DirectionalLight* currentLight = (DirectionalLight*)lightSource;
+
+			float color[3] = { currentLight->color.x, currentLight->color.y, currentLight->color.z };
+			if (ImGui::DragFloat3("light Color", color, 0.01f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->color = { color[0], color[1], color[2] };
+			}
+
 			float direction[3] = { currentLight->direction.x, currentLight->direction.y, currentLight->direction.z };
 			if (ImGui::DragFloat3("light Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 			{
@@ -186,6 +239,11 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 		{
 			PointLight* currentLight = (PointLight*)lightSource;
 
+			float color[3] = { currentLight->color.x, currentLight->color.y, currentLight->color.z };
+			if (ImGui::DragFloat3("light Color", color, 0.01f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->color = { color[0], color[1], color[2] };
+			}
 			float ambientValue = currentLight->ambient;
 			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
@@ -214,8 +272,60 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			}
 			break;
 		} 
+		case SourceType::FOCAL:
+		{
+			FocalLight* currentLight = (FocalLight*)lightSource;
+
+			float color[3] = { currentLight->color.x, currentLight->color.y, currentLight->color.z };
+			if (ImGui::DragFloat3("light Color", color, 0.01f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->color = { color[0], color[1], color[2] };
+			}
+			float ambientValue = currentLight->ambient;
+			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->ambient = ambientValue;
+			}
+			float diffuseValue = currentLight->diffuse;
+			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->diffuse = diffuseValue;
+			}
+
+			float cutOffValue = (acos(currentLight->cutOffAngle)) * RADTODEG;
+			if (ImGui::DragFloat("Light Cone Angle", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->cutOffAngle = (cutOffValue);
+			}
+			float direction[3] = { currentLight->lightDirection.x, currentLight->lightDirection.y, currentLight->lightDirection.z };
+			if (ImGui::DragFloat3("Light Cone Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+			{
+				currentLight->lightDirection = { direction[0], direction[1], direction[2] };
+			}
+
+			float constantValue = currentLight->constant;
+			if (ImGui::DragFloat("Constant Light Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->constant = constantValue;
+			}
+			float linearValue = currentLight->linear;
+			if (ImGui::DragFloat("Linear Light Attenuation", &linearValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->linear = linearValue;
+			}
+			float quadraticValue = currentLight->quadratic;
+			if (ImGui::DragFloat("Quadratic Light Attenuation", &quadraticValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			{
+				currentLight->quadratic = quadraticValue;
+			}
+			break;
+		}
 		} 
+		ImGui::NewLine();
+
+		DrawDeleteButton(owner, this);
 	}
+
 	else
 		DrawDeleteButton(owner, this);
 
@@ -266,14 +376,15 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 	}
 	case SourceType::FOCAL:
 	{
-		/*if (numOfFocal < MAX_FOCAL_LIGHTS)
+		if (numOfFocal < MAX_FOCAL_LIGHTS)
 		{
 			FocalLight* fLight = new FocalLight();
 			lightSource = (LightSource*)fLight;
+			sourceType = type;
 			numOfFocal++;
 		}
 		else
-			CONSOLE_LOG("[C_LightSource]: MAX of focal lights reached");*/
+			CONSOLE_LOG("[C_LightSource]: MAX of focal lights reached");
 		break;
 	}
 	}
@@ -298,6 +409,16 @@ DirectionalLight::DirectionalLight() : LightSource()
 
 PointLight::PointLight() : LightSource()
 {
+	constant = 1.00f;
+	linear = 0.220f;
+	quadratic = 0.20f;
+}
+
+FocalLight::FocalLight() : LightSource()
+{
+	cutOffAngle = 0.965f; //cosinus of 15º
+	lightDirection = float3(0.0f, 1.0f, 0.0f);
+
 	constant = 1.00f;
 	linear = 0.220f;
 	quadratic = 0.20f;
