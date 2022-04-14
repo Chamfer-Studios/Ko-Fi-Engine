@@ -28,7 +28,6 @@ bool PanelAssets::Start()
 
 bool PanelAssets::Update()
 {
-	OPTICK_EVENT();
 
 	ImGui::Begin("Assets");
 	float padding = 16.0f;
@@ -146,6 +145,11 @@ bool PanelAssets::Update()
 
 	}
 	ImGui::End();
+	return true;
+}
+
+bool PanelAssets::PostUpdate()
+{
 	return true;
 }
 

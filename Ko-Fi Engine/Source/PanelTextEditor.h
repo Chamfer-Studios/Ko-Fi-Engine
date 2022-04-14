@@ -13,7 +13,9 @@ public:
 	~PanelTextEditor();
 
 	bool Awake();
+	bool PreUpdate();
 	bool Update();
+	bool PostUpdate();
 	void RenderWindow(bool* toggleEditText);
 	void LoadFile(std::string path = "",std::string ext = nullptr);
 	void SaveFile(std::string path);

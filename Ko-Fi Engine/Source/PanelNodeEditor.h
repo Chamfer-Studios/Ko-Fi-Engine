@@ -21,7 +21,10 @@ public:
 	~PanelNodeEditor();
 
 	bool Awake();
+	bool PreUpdate();
 	bool Update();
+	bool PostUpdate();
+
 
 private:
 	//Node editor functions

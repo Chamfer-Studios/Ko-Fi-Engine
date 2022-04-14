@@ -40,8 +40,6 @@
 
 #include <iostream>
 
-#include "optick.h"
-
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
@@ -76,12 +74,8 @@ bool M_Renderer3D::Awake(Json configModule)
 // PreUpdate: clear buffer
 bool M_Renderer3D::PreUpdate(float dt)
 {
-	OPTICK_EVENT();
-
 	bool ret = true;
 	PrepareFrameBuffers();
-
-	isFirstPass = true;
 
 	return ret;
 }
@@ -94,27 +88,18 @@ bool M_Renderer3D::Update(float dt)
 // PostUpdate present buffer to screen
 bool M_Renderer3D::PostUpdate(float dt)
 {
-	OPTICK_EVENT();
-
 	PassProjectionAndViewToRenderer();
-	RenderScene(engine->GetCamera3D()->engineCamera);
-	isFirstPass = false;
+	RenderScene();
 	UnbindFrameBuffers();
 	glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	PassPreviewProjectionAndViewToRenderer();
-	RenderScene(engine->GetCamera3D()->gameCamera);
+	RenderPreviewScene();
 	UnbindFrameBuffers();
-	SwapWindow();
-	return true;
-}
-
-void M_Renderer3D::SwapWindow()
-{
-	OPTICK_EVENT();
-
 	SDL_GL_SwapWindow(engine->GetWindow()->GetWindow());
+
+	return true;
 }
 
 // Called before quitting
@@ -315,10 +300,8 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 	glLoadIdentity();
 }
 
-void M_Renderer3D::RenderScene(C_Camera* camera)
+void M_Renderer3D::RenderScene()
 {
-	OPTICK_EVENT();
-
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)
@@ -326,7 +309,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
-				RenderMeshes(camera, go);
+				RenderMeshes(go);
 				RenderBoundingBox(cMesh);
 			}
 
@@ -361,21 +344,60 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 
 }
 
+void M_Renderer3D::RenderPreviewScene()
+{
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->active)
+		{
+			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+			if (cMesh)
+			{
+				RenderPreviewMeshes(go);
+				RenderBoundingBox(cMesh);
+			}
+
+			C_Camera* cCamera = go->GetComponent<C_Camera>();
+			if (cCamera) {
+				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
+				{
+					cCamera->DrawFrustum();
+				}
+
+			}
+			C_Collider* cCol = go->GetComponent<C_Collider>();
+			if (cCol)
+			{
+				cCol->DrawCollider();
+			}
+		}
+	}
+	RenderAllParticles();
+
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->active)
+		{
+			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
+			if (cRenderedUI)
+			{
+				RenderUI(go);
+			}
+		}
+	}
+}
+
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
-	OPTICK_EVENT();
-
-	// cMesh->GenerateGlobalBoundingBox();
+	cMesh->GenerateGlobalBoundingBox();
 	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 	if (selectedId == -1) return;
 	if (selectedId == cMesh->owner->GetUID())
 		cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
 }
 
-void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
+void M_Renderer3D::RenderMeshes(GameObject* go)
 {
-	OPTICK_EVENT();
-
 	//Get needed variables
 	C_Material* cMat = go->GetComponent<C_Material>();
 	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
@@ -398,16 +420,15 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 		uint shader = cMat->GetMaterial()->shaderProgramID;
 		if (shader != 0)
 		{
-			glUseProgram(shader);
+			glUseProgram(shader);   
 			// Passing Shader Uniforms
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 			GLint view_location = glGetUniformLocation(shader, "view");
-			glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
-			glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 			if (mesh->IsAnimated())
 			{
 				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
@@ -418,10 +439,10 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
 				glUniform1i(isAnimated, mesh->IsAnimated());
-			}
+			}			
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
 
 			float2 resolution = float2(1080.0f, 720.0f);
 			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
@@ -487,17 +508,14 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 						//current iteration to string
 						std::string number = std::to_string(i);
 						//get corresponding directional light
-						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();						
-						//fill the first variable of the DirLight struct: vec3 color
-						GLint lightColor = glGetUniformLocation(shader, ("dirLights[" + number + "].color").c_str());
-						glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
-						//second variable: vec3 direction
+						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+						//fill the first variable of the DirLight struct: vec3 direction
 						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
 						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
-						//third variable: float ambient
+						//fill the second variable of the DirLight struct: float ambient
 						GLint ambientValue = glGetUniformLocation(shader, ("dirLights[" + number + "].ambient").c_str());
 						glUniform1f(ambientValue, lightSource->ambient);
-						//forth variable: float diffuse
+						//fill the third variable of the DirLight struct: float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("dirLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
 						i++;
@@ -516,6 +534,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				std::vector<GameObject*> pointLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::POINT);
 				if (pointLights.size() > 0)
 				{
+					float3 positionsList[MAX_POINT_LIGHTS];
 					int i = 0;
 					for (auto light : pointLights)
 					{
@@ -527,16 +546,13 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 						
 						// --- basic light parameters ---
 						
-						//fill the first variable of the PointLight struct: vec3 color
-						GLint lightColor = glGetUniformLocation(shader, ("pointLights[" + number + "].color").c_str());
-						glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
-						//second variable: vec3 position
+						//fill in the first variable of the DirLight struct: vec3 position
 						GLint lightPos = glGetUniformLocation(shader, ("pointLights[" + number + "].position").c_str());
 						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
-						//third variable: float ambient
+						//second variable: float ambient
 						GLint ambientValue = glGetUniformLocation(shader, ("pointLights[" + number + "].ambient").c_str());
 						glUniform1f(ambientValue, lightSource->ambient);
-						//forth variable: float diffuse
+						//third variable: float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("pointLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
 
@@ -562,63 +578,12 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 					GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
 					glUniform1i(numPointLights, 0);
 				}
-				// ---- focal lights ----
-				std::vector<GameObject*> focalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::FOCAL);
-				if (focalLights.size() > 0)
-				{
-					int i = 0;
-					for (auto light : focalLights)
-					{
-						//current iteration to string
-						std::string number = std::to_string(i);
-
-						//get corresponding point light
-						FocalLight* lightSource = (FocalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
-
-						// -- basic light parameters --
-						//fill the first variable of the focalLights struct: vec3 color
-						GLint lightColor = glGetUniformLocation(shader, ("focalLights[" + number + "].color").c_str());
-						glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
-						//vec3 position
-						GLint lightPos = glGetUniformLocation(shader, ("focalLights[" + number + "].position").c_str());
-						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
-						//float ambient
-						GLint ambientValue = glGetUniformLocation(shader, ("focalLights[" + number + "].ambient").c_str());
-						glUniform1f(ambientValue, lightSource->ambient);
-						//float diffuse
-						GLint diffuseValue = glGetUniformLocation(shader, ("focalLights[" + number + "].diffuse").c_str());
-						glUniform1f(diffuseValue, lightSource->diffuse);
-
-						// -- light cone parameters -- 
-						//float cutOffAngle
-						GLint cutOffValue = glGetUniformLocation(shader, ("focalLights[" + number + "].cutOffAngle").c_str());
-						glUniform1f(cutOffValue, lightSource->cutOffAngle);
-						//float3 lightDirection
-						GLint lightDirection = glGetUniformLocation(shader, ("focalLights[" + number + "].direction").c_str());
-						glUniform3f(lightDirection, lightSource->lightDirection.x, lightSource->lightDirection.y, lightSource->lightDirection.z);
-
-						// -- light attenuation paramenters --
-						//fifth variable: float constant
-						GLint constantValue = glGetUniformLocation(shader, ("focalLights[" + number + "].constant").c_str());
-						glUniform1f(constantValue, lightSource->constant);
-						//sixth variable: float linear
-						GLint linearValue = glGetUniformLocation(shader, ("focalLights[" + number + "].linear").c_str());
-						glUniform1f(linearValue, lightSource->linear);
-						//seventh variable: float quadratic
-						GLint quadraticValue = glGetUniformLocation(shader, ("focalLights[" + number + "].quadratic").c_str());
-						glUniform1f(quadraticValue, lightSource->quadratic);
-						i++;
-					}
-
-					GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
-					glUniform1i(numFocalLights, i);
-				}
-				else
-				{
-					GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
-					glUniform1i(numFocalLights, 0);
-				}
+				//for (int i = 0; i < engine->GetSceneManager()->GetCurrentScene()->lights.size(), i++)
+				//{
+				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<C_LightSource>()->GetLightSource();
+				//}
 			}
+
 			else
 			{
 				GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
@@ -627,8 +592,211 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
 				glUniform1i(numPointLights, 0);
 
-				GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
-				glUniform1i(numFocalLights, 0);
+			}
+			//Draw Mesh
+			mesh->Draw();
+			glUseProgram(0);
+
+		}
+	}
+}
+
+void M_Renderer3D::RenderPreviewMeshes(GameObject* go)
+{
+	//Get needed variables
+	C_Material* cMat = go->GetComponent<C_Material>();
+	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+	R_Mesh* mesh = cMesh->GetMesh();
+	//Check textures
+	if (cMat && mesh)
+	{
+		if (!cMat->active)
+		{
+			glDisable(GL_TEXTURE_2D);
+		}
+		else
+		{
+			glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
+		}
+	}
+	//Set Shaders
+	if (cMesh->GetRenderMesh())
+	{
+		uint shader = cMat->GetMaterial()->shaderProgramID;
+		if (shader != 0)
+		{
+			glUseProgram(shader);
+			// Passing Shader Uniforms
+			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+			GLint view_location = glGetUniformLocation(shader, "view");
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, engine->GetCamera3D()->gameCamera->viewMatrix.Transposed().ptr());
+
+			GLint projection_location = glGetUniformLocation(shader, "projection");
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, engine->GetCamera3D()->gameCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+			if (mesh->IsAnimated())
+			{
+				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
+				std::vector<float4x4> transformsAnim;
+				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+
+				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+				glUniform1i(isAnimated, mesh->IsAnimated());
+			}
+
+			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
+
+			float2 resolution = float2(1080.0f, 720.0f);
+			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+
+			this->timeWaterShader += 0.02f;
+			glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
+
+			//Pass all varibale uniforms from the material to the shader
+			for (Uniform* uniform : cMat->GetMaterial()->uniforms)
+			{
+				switch (uniform->type)
+				{
+				case GL_INT:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+				}
+				break;
+				case GL_FLOAT:
+				{
+					glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+				}
+				break;
+				case GL_BOOL:
+				{
+					glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<bool>*)uniform)->value);
+				}
+				break;
+				case GL_FLOAT_VEC2:
+				{
+					UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+					glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
+				}
+				break;
+				case GL_FLOAT_VEC3:
+				{
+					UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+					glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
+				}
+				break;
+				case GL_FLOAT_VEC4:
+				{
+					UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+					glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
+				}
+				break;
+				default:
+					break;
+				}
+			}
+
+			//lights rendering 
+
+			if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
+			{
+				// ---- directional lights ----
+				std::vector<GameObject*> directionalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::DIRECTIONAL);
+				if (directionalLights.size() > 0)
+				{
+					//TODO: is it worth it to allocate this array and update only whan dirty?
+					int i = 0;
+					for (auto light : directionalLights)
+					{
+						//current iteration to string
+						std::string number = std::to_string(i);
+						//get corresponding directional light
+						DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+						//fill the first variable of the DirLight struct: vec3 direction
+						GLint lightDir = glGetUniformLocation(shader, ("dirLights[" + number + "].direction").c_str());
+						glUniform3f(lightDir, lightSource->direction.x, lightSource->direction.y, lightSource->direction.z);
+						//fill the second variable of the DirLight struct: float ambient
+						GLint ambientValue = glGetUniformLocation(shader, ("dirLights[" + number + "].ambient").c_str());
+						glUniform1f(ambientValue, lightSource->ambient);
+						//fill the third variable of the DirLight struct: float diffuse
+						GLint diffuseValue = glGetUniformLocation(shader, ("dirLights[" + number + "].diffuse").c_str());
+						glUniform1f(diffuseValue, lightSource->diffuse);
+						i++;
+					}
+
+					GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
+					glUniform1i(numDirLights, i);
+				}
+				else
+				{
+					GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
+					glUniform1i(numDirLights, 0);
+				}
+
+				// ---- point lights ----
+				std::vector<GameObject*> pointLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::POINT);
+				if (pointLights.size() > 0)
+				{
+					float3 positionsList[MAX_POINT_LIGHTS];
+					int i = 0;
+					for (auto light : pointLights)
+					{
+						//current iteration to string
+						std::string number = std::to_string(i);
+
+						//get corresponding point light
+						PointLight* lightSource = (PointLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+
+						// --- basic light parameters ---
+
+						//fill in the first variable of the DirLight struct: vec3 position
+						GLint lightPos = glGetUniformLocation(shader, ("pointLights[" + number + "].position").c_str());
+						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
+						//second variable: float ambient
+						GLint ambientValue = glGetUniformLocation(shader, ("pointLights[" + number + "].ambient").c_str());
+						glUniform1f(ambientValue, lightSource->ambient);
+						//third variable: float diffuse
+						GLint diffuseValue = glGetUniformLocation(shader, ("pointLights[" + number + "].diffuse").c_str());
+						glUniform1f(diffuseValue, lightSource->diffuse);
+
+						// --- light attenuation paramenters ---
+
+						//fifth variable: float constant
+						GLint constantValue = glGetUniformLocation(shader, ("pointLights[" + number + "].constant").c_str());
+						glUniform1f(constantValue, lightSource->constant);
+						//sixth variable: float linear
+						GLint linearValue = glGetUniformLocation(shader, ("pointLights[" + number + "].linear").c_str());
+						glUniform1f(linearValue, lightSource->linear);
+						//seventh variable: float quadratic
+						GLint quadraticValue = glGetUniformLocation(shader, ("pointLights[" + number + "].quadratic").c_str());
+						glUniform1f(quadraticValue, lightSource->quadratic);
+						i++;
+					}
+
+					GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
+					glUniform1i(numPointLights, i);
+				}
+				else
+				{
+					GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
+					glUniform1i(numPointLights, 0);
+				}
+				//for (int i = 0; i < engine->GetSceneManager()->GetCurrentScene()->lights.size(), i++)
+				//{
+				//	DirectionalLight* currentDirLight = (DirectionalLight*)directionalLights[i]->GetComponent<C_LightSource>()->GetLightSource();
+				//}
+			}
+
+			else
+			{
+				GLint numDirLights = glGetUniformLocation(shader, "numOfDirectionalLights");
+				glUniform1i(numDirLights, 0);
+
+				GLint numPointLights = glGetUniformLocation(shader, "numOfPointLights");
+				glUniform1i(numPointLights, 0);
+
 			}
 			//Draw Mesh
 			mesh->Draw();
@@ -799,8 +967,6 @@ void M_Renderer3D::InitFrameBuffers()
 
 void M_Renderer3D::PrepareFrameBuffers()
 {
-	OPTICK_EVENT();
-
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

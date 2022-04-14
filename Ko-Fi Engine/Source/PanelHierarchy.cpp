@@ -50,10 +50,13 @@ bool PanelHierarchy::Awake()
 	return true;
 }
 
+bool PanelHierarchy::PreUpdate()
+{
+	return true;
+}
+
 bool PanelHierarchy::Update()
 {
-	OPTICK_EVENT();
-
 	ImGui::Begin("Scene Hierarchy");
 
 	if (!editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.empty())
@@ -102,6 +105,11 @@ bool PanelHierarchy::Update()
 
 	ImGui::End();
 
+	return true;
+}
+
+bool PanelHierarchy::PostUpdate()
+{
 	return true;
 }
 

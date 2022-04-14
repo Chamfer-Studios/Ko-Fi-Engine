@@ -11,7 +11,7 @@ const int MAX_BONE_INFLUENCE = 4;
 
 out vec4 ourColor;
 out vec2 TexCoord;
-out vec4 normal;
+out vec3 normal;
 out vec3 fragPos;
 
 uniform mat4 model_matrix;
@@ -47,8 +47,7 @@ void main() {
     fragPos = vec3(model_matrix * totalPosition);
     ourColor = albedoTint;
     TexCoord = texCoord;
-    //normals affected by model movement
-    normal = normalize(model_matrix * vec4(normals, 0.0));
+    normal = normals;
 }
 
 #shader fragment
@@ -60,7 +59,7 @@ const int MAX_FOCAL_LIGHTS = 5;
 
 in vec4 ourColor;
 in vec2 TexCoord;
-in vec4 normal;
+in vec3 normal;
 in vec3 fragPos;
 
 out vec4 color;
@@ -69,12 +68,12 @@ uniform sampler2D ourTexture;
 
 uniform int numOfDirectionalLights;
 uniform int numOfPointLights;
-uniform int numOfFocalLights;
 
 //light definitions
+float ambientStrength = 0.1;
+vec3 lightColor = vec3(1.0, 1.0, 1.0);
 
 struct DirLight {
-    vec3 color;
     vec3 direction;
   
     float ambient;
@@ -83,8 +82,7 @@ struct DirLight {
 
 }; uniform DirLight dirLights[MAX_DIR_LIGHTS];
 
-struct PointLight {   
-    vec3 color;
+struct PointLight {    
     vec3 position;
     
     float ambient;
@@ -96,22 +94,6 @@ struct PointLight {
     float quadratic;  
       
 }; uniform PointLight pointLights[MAX_POINT_LIGHTS];
-
-struct FocalLight {   
-    vec3 color;
-    vec3 position;
-    vec3 direction;
-    float cutOffAngle; //cosine of the actual angle
-    
-    float ambient;
-    float diffuse;
-    //vec3 specular;
-
-    float constant;
-    float linear;
-    float quadratic;  
-      
-}; uniform FocalLight focalLights[MAX_FOCAL_LIGHTS];
 
 vec3 CalcDirLight(DirLight light, vec3 normal)
 {
@@ -127,8 +109,8 @@ vec3 CalcDirLight(DirLight light, vec3 normal)
     //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
    
     // combine results
-    vec3 ambient  = light.ambient * light.color;
-    vec3 diffuse  = light.diffuse * diff * light.color;
+    vec3 ambient  = light.ambient * lightColor;
+    vec3 diffuse  = light.diffuse * diff * lightColor;
     //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
     ret = ambient + diffuse; //+ specular
 
@@ -142,7 +124,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos)
     float diff = max(dot(normal, lightDir), 0.0);
 
     // --- specular shading ---
-    //vec3 reflectDir = reflect(-lightDir, vec3(normal));
+    //vec3 reflectDir = reflect(-lightDir, normal);
     //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
     // --- attenuation --- 
@@ -151,55 +133,13 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos)
   			     light.quadratic * (distance * distance));    
 
     // --- combine results ---
-    vec3 ambient  = light.ambient  * light.color;
-    vec3 diffuse  = light.diffuse  * diff * light.color;
+    vec3 ambient  = light.ambient  * lightColor;
+    vec3 diffuse  = light.diffuse  * diff * lightColor;
     //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
+    ambient  *= attenuation;
     diffuse  *= attenuation;
     //specular *= attenuation;
     return (ambient + diffuse);
-} 
-
-vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
-{
-    //calculate vector between position of light source and fragment
-    vec3 lightDir = normalize(light.position - fragPos);
-
-    //cosinus of the angle between the previous vector and 
-        //the direction of the focal light cone
-    float theta = dot(lightDir, normalize(light.direction));
-
-    if (theta > light.cutOffAngle)
-    {
-        // -- diffuse shading -- 
-        float diff = max(dot(normal, lightDir), 0.0);
-
-        // -- specular shading --
-        //vec3 reflectDir = reflect(lightDir, vec3(normal));
-        //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-
-        // -- attenuation -- 
-        float distance    = length(light.position - fragPos);
-        float attenuation = 1.0 / (light.constant + light.linear * distance + 
-  			     light.quadratic * (distance * distance));    
-
-        // -- combine results --
-        vec3 ambient  = light.ambient  * light.color;
-        vec3 diffuse  = light.diffuse  * diff * light.color;
-        //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
-        diffuse  *= attenuation;
-        //specular *= attenuation;
-
-        // -- border diffumination --
-        //float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
-        //diffuse *= intensity;
-
-        return (ambient + diffuse);
-    }
-    else //in case the fragment is outside the light cone, apply just the ambient 
-    {
-        vec3 ambient  = light.ambient  * light.color;
-        return ambient;
-    }
 } 
 
 void main() {
@@ -211,21 +151,21 @@ void main() {
     //loop dirLights
     for(int i = 0; i < numOfDirectionalLights; i++)
     {
-        outputColor += CalcDirLight(dirLights[i], vec3(normal)); 
+        outputColor += CalcDirLight(dirLights[i], normal); 
     }
 
     // --- Add the point light's contribution to the output color ---
     //loop dirLights
     for(int i = 0; i < numOfPointLights; i++)
     {
-        outputColor += CalcPointLight(pointLights[i], vec3(normal), fragPos); 
+        outputColor += CalcPointLight(pointLights[i], normal, fragPos); 
     }
 
     // --- Add the focal light's contribution to the output color ---
-    for(int i = 0; i < numOfFocalLights; i++)
-    {
-        outputColor += CalcFocalLight(focalLights[i], vec3(normal), fragPos); 
-    }
+    //for(int i = 0; i < numOfFocalLights; i++)
+    //{
+    //    outputColor += CalcFocalLight(currentPLight, normal, fragPos); 
+    //}
 
     //---- Apply output to the texture ----//
     //texture

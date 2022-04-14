@@ -31,10 +31,13 @@ bool PanelInspector::Awake()
 	return true;
 }
 
+bool PanelInspector::PreUpdate()
+{
+	return true;
+}
+
 bool PanelInspector::Update()
 {
-	OPTICK_EVENT();
-
 	// Panel game object info. to manage the options of the current game object
 	PanelGameObjectInfo panelGameObjectInfo = editor->panelGameObjectInfo;
 
@@ -98,5 +101,10 @@ bool PanelInspector::Update()
 
 	}
 	ImGui::End();
+	return true;
+}
+
+bool PanelInspector::PostUpdate()
+{
 	return true;
 }

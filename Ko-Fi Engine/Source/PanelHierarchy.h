@@ -14,7 +14,9 @@ public:
 	~PanelHierarchy();
 
 	bool Awake();
+	bool PreUpdate();
 	bool Update();
+	bool PostUpdate();
 	bool CleanUp();
 	void DisplayTree(GameObject* go, int flags, int& id);
 	void DragNDrop(GameObject* go);

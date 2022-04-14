@@ -22,7 +22,6 @@
 #include <sstream>
 
 #include "glew.h"
-#include "optick.h"
 
 // Constructor
 KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
@@ -158,9 +157,6 @@ bool KoFiEngine::Start()
 bool KoFiEngine::Update()
 {
 	bool ret = true;
-
-	OPTICK_FRAME("MainThread");
-
 	PrepareUpdate();
 
 	/*if (input->GetWindowEvent(WE_QUIT) == true)
@@ -182,8 +178,6 @@ bool KoFiEngine::Update()
 // ---------------------------------------------
 void KoFiEngine::PrepareUpdate()
 {
-	OPTICK_EVENT();
-
 	engineConfig->frameCount++;
 	engineConfig->lastSecFrameCount++;
 
@@ -195,8 +189,6 @@ void KoFiEngine::PrepareUpdate()
 // ---------------------------------------------
 void KoFiEngine::FinishUpdate()
 {
-	OPTICK_EVENT();
-
 	if (engineConfig->lastSecFrameTime.Read() > 1000)
 	{
 		engineConfig->lastSecFrameTime.Start();
@@ -249,7 +241,6 @@ bool KoFiEngine::PreUpdate()
 		if (pModule->active == false) {
 			continue;
 		}
-
 
 		ret = (*item)->PreUpdate(engineConfig->dt);
 	}

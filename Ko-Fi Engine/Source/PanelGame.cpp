@@ -17,12 +17,20 @@ bool PanelGame::Awake()
 	return true;
 }
 
+bool PanelGame::PreUpdate()
+{
+	return true;
+}
+
 bool PanelGame::Update()
 {
-	OPTICK_EVENT();
-
 	ImGui::Begin("Game", &editor->panelsState.showGameWindow, ImGuiWindowFlags_::ImGuiWindowFlags_NoScrollbar);
 	ImGui::End();
 
+	return true;
+}
+
+bool PanelGame::PostUpdate()
+{
 	return true;
 }

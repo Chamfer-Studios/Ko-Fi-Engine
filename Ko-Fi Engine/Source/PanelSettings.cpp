@@ -23,14 +23,22 @@ bool PanelSettings::Awake()
 	return true;
 }
 
+bool PanelSettings::PreUpdate()
+{
+	return true;
+}
+
 bool PanelSettings::Update()
 {
-    OPTICK_EVENT();
-
     if (editor->toggleSettingsPanel)
     {
         ShowPanel(&editor->toggleSettingsPanel);
     }
+	return true;
+}
+
+bool PanelSettings::PostUpdate()
+{
 	return true;
 }
 

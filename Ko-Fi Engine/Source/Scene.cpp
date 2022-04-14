@@ -159,14 +159,11 @@ void Scene::AddLight(GameObject* newLight)
 
 void Scene::RemoveLight(GameObject* lightToDelete)
 {
-	for (std::vector<GameObject*>::iterator light = lights.begin(); light != lights.end();)
+	for (std::vector<GameObject*>::iterator light = lights.begin(); light != lights.end(); light++)
 	{
 		if (lightToDelete == *light)
 		{
-			light = lights.erase(light);
-		}
-		else {
-			++light;
+			lights.erase(light);
 		}
 	}
 }

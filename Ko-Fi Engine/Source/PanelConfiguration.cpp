@@ -27,10 +27,13 @@ bool PanelConfiguration::Awake()
 	return true;
 }
 
+bool PanelConfiguration::PreUpdate()
+{
+	return true;
+}
+
 bool PanelConfiguration::Update()
 {
-	OPTICK_EVENT();
-
 	ImGui::Begin(panelName.c_str(),0);
 
 	if (ImGui::BeginMenu("Options"))
@@ -237,5 +240,10 @@ bool PanelConfiguration::Update()
 
 	ImGui::End();
 
+	return true;
+}
+
+bool PanelConfiguration::PostUpdate()
+{
 	return true;
 }

@@ -13,7 +13,9 @@ public:
 	~PanelNavigation();
 
 	bool Awake();
+	bool PreUpdate();
 	bool Update();
+	bool PostUpdate();
 
 private:
 	M_Editor* editor = nullptr;

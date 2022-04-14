@@ -12,7 +12,9 @@ public:
 	~PanelSettings();
 
 	bool Awake();
+	bool PreUpdate();
 	bool Update();
+	bool PostUpdate();
 
 	bool ShowPanel(bool* toggleSettingsPanel);
 

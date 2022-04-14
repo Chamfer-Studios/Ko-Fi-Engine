@@ -19,8 +19,6 @@
 #include "MathGeoLib/Geometry/LineSegment.h"
 #include "MathGeoLib/Geometry/Triangle.h"
 
-#include "optick.h"
-
 M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 {
 	name = "Camera";
@@ -70,8 +68,6 @@ bool M_Camera3D::Start()
 // -----------------------------------------------------------------
 bool M_Camera3D::Update(float dt)
 {
-	OPTICK_EVENT();
-
 	if (engine->GetEditor()->GetPanel<PanelViewport>())
 		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
 			return true;

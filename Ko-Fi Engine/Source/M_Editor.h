@@ -51,9 +51,6 @@ public:
 	bool PreUpdate(float dt);
 	bool Update(float dt);
 	bool PostUpdate(float dt);
-	void PrepareRender();
-	void EndRender();
-	void MakeCurrent();
 	bool CleanUp();
 	// Method to receive and manage events
 	void OnNotify(const Event& event);

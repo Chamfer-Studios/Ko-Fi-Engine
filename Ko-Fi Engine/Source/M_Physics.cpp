@@ -9,8 +9,6 @@
 #include <vector>
 #include <string>
 
-#include "optick.h"
-
 physx::PxFilterFlags customFilterShader(
 	physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
 	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
@@ -68,8 +66,6 @@ bool M_Physics::Start()
 
 bool M_Physics::Update(float dt)
 {
-	OPTICK_EVENT();
-
 	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING || engine->GetSceneManager()->GetGameState() == GameState::PAUSED)
 	{
 		isSimulating = true;

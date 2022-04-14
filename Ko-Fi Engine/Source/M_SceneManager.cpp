@@ -30,7 +30,6 @@
 #include "Log.h"
 #include "Globals.h"
 
-#include "optick.h"
 
 M_SceneManager::M_SceneManager(KoFiEngine* engine)
 {
@@ -84,8 +83,6 @@ bool M_SceneManager::PreUpdate(float dt)
 {
 	bool ret = true;
 
-	OPTICK_EVENT();
-
 	PrepareUpdate();
 	UpdateGuizmo();
 
@@ -100,8 +97,6 @@ bool M_SceneManager::PreUpdate(float dt)
 bool M_SceneManager::Update(float dt)
 {
 	bool ret = true;
-
-	OPTICK_EVENT();
 	
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
@@ -114,8 +109,6 @@ bool M_SceneManager::Update(float dt)
 bool M_SceneManager::PostUpdate(float dt)
 {
 	bool ret = true;
-
-	OPTICK_EVENT();
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{

@@ -24,8 +24,6 @@
 #include <vector>
 #include <tuple>
 
-#include "optick.h"
-
 M_Navigation::M_Navigation(KoFiEngine* engine) : Module()
 {
 	name = "Navigation";
@@ -63,8 +61,6 @@ bool M_Navigation::Update(float dt)
 bool M_Navigation::PostUpdate(float dt)
 {
 	return true;
-
-	OPTICK_EVENT();
 
 	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
 

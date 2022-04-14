@@ -22,12 +22,20 @@ bool PanelRuntimeState::Awake()
 	return true;
 }
 
+bool PanelRuntimeState::PreUpdate()
+{
+	return true;
+}
+
 bool PanelRuntimeState::Update()
 {
-    OPTICK_EVENT();
-
 	DrawRuntimePanel();
 
+	return true;
+}
+
+bool PanelRuntimeState::PostUpdate()
+{
 	return true;
 }
 

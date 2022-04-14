@@ -2,8 +2,6 @@
 #include <imgui.h>
 #include "M_Editor.h"
 
-#include "optick.h"
-
 PanelAbout::PanelAbout(M_Editor* editor)
 {
 	panelName = "About";
@@ -19,12 +17,20 @@ bool PanelAbout::Awake()
 	return true;
 }
 
+bool PanelAbout::PreUpdate()
+{
+	return true;
+}
+
 bool PanelAbout::Update()
 {
-	OPTICK_EVENT();
-
 	if(editor->toggleAboutPanel) ShowAboutWindow(&editor->toggleAboutPanel);
 
+	return true;
+}
+
+bool PanelAbout::PostUpdate()
+{
 	return true;
 }
 

@@ -29,10 +29,6 @@
 #include "C_Transform.h"
 #include "GameObject.h"
 #include "Globals.h"
-#include "Engine.h"
-#include "M_Renderer3D.h"
-
-#include "optick.h"
 
 R_Mesh::R_Mesh(Shape shape) : Resource(ResourceType::MESH)
 {
@@ -372,21 +368,7 @@ void R_Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 
 void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject)
 {
-	OPTICK_EVENT();
-
-	if (!gameObject->GetEngine()->GetRenderer()->isFirstPass) {
-		transforms.resize(transformsAnim.size());
-
-		for (uint i = 0; i < transformsAnim.size(); i++)
-		{
-			transforms[i] = transformsAnim[i];
-		}
-
-		return;
-	}
-
 	transforms.resize(boneInfo.size());
-	transformsAnim.resize(boneInfo.size());
 
 	float4x4 identity = float4x4::identity;
 
@@ -407,31 +389,28 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 		endFrame = 0.0f;
 		animDur = animation->GetDuration();
 	}
+	
 
 	float animationTimeTicks = fmod(timeInTicks, (float)animDur); // This divides the whole animation into segments of animDur.
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, rootNode, identity); // We add startFrame as an offset to the duration.
 	transforms.resize(boneInfo.size());
-	transformsAnim.resize(boneInfo.size());
 
 	for (uint i = 0; i < boneInfo.size(); i++)
 	{
 		transforms[i] = boneInfo[i].finalTransformation;
-		transformsAnim[i] = boneInfo[i].finalTransformation;
 	}
 }
 
 void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode, const float4x4& parentTransform)
 {
-	OPTICK_EVENT();
-
 	std::string nodeName(pNode->GetName());
 
 	float4x4 nodeTransformation(pNode->GetTransform()->GetGlobalTransform());
 
 	const Channel* pNodeAnim = FindNodeAnim(nodeName);
 
-	if (pNodeAnim && pNodeAnim->rotationKeyframes.size() && pNodeAnim->scaleKeyframes.size() && pNodeAnim->positionKeyframes.size())
+	if (pNodeAnim)
 	{
 		// Interpolate scaling and generate scaling transformation matrix
 		float3 scaling;
@@ -454,7 +433,7 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 
 	float4x4 globalTransformation = parentTransform * nodeTransformation;
 
-	if (boneNameToIndexMap.contains(nodeName))
+	if (boneNameToIndexMap.find(nodeName) != boneNameToIndexMap.end())
 	{
 		uint boneIndex = boneNameToIndexMap[nodeName];
 		float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
@@ -462,18 +441,25 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
-#pragma omp parallel for
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
 		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);
 	}
 }
 
-const Channel* R_Mesh::FindNodeAnim(std::string nodeName)
+const Channel* R_Mesh::FindNodeAnim(const std::string nodeName)
 {
-	OPTICK_EVENT();
-	
-	return &animation->channels[nodeName];
+	for (uint i = 0; i < animation->channels.size(); i++)
+	{
+		const Channel* pNodeAnim = &animation->channels.at(i);
+
+		if (std::string(pNodeAnim->name) == nodeName)
+		{
+			return pNodeAnim;
+		}
+	}
+
+	return nullptr;
 }
 
 uint R_Mesh::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
@@ -490,8 +476,6 @@ uint R_Mesh::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
 
 void R_Mesh::CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
-	OPTICK_EVENT();
-
 	// we need at least two values to interpolate...
 	if (pNodeAnim->positionKeyframes.size() == 1) {
 		Out = pNodeAnim->positionKeyframes.at(0).value;
@@ -529,8 +513,6 @@ uint R_Mesh::FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim)
 
 void R_Mesh::CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
-	OPTICK_EVENT();
-
 	// we need at least two values to interpolate...
 	if (pNodeAnim->rotationKeyframes.size() == 1) {
 		Out = pNodeAnim->rotationKeyframes.at(0).value;
@@ -569,8 +551,6 @@ uint R_Mesh::FindScaling(float AnimationTimeTicks, const Channel* pNodeAnim)
 
 void R_Mesh::CalcInterpolatedScaling(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
-	OPTICK_EVENT();
-
 	// we need at least two values to interpolate...
 	if (pNodeAnim->scaleKeyframes.size() == 1) {
 		Out = pNodeAnim->scaleKeyframes.at(0).value;

@@ -12,7 +12,9 @@ public:
 	~PanelInspector();
 
 	bool Awake();
+	bool PreUpdate();
 	bool Update();
+	bool PostUpdate();
 private:
 	// Needed modules
 	M_Editor* editor = nullptr;

@@ -62,7 +62,7 @@ bool I_Animations::Import(const aiAnimation* assimpAnimation, R_Animation* rAnim
 
 	for (auto channel = tmp.begin(); channel != tmp.end(); ++channel)
 	{
-		rAnimation->channels.emplace(std::make_pair(channel->second.name, channel->second));
+		rAnimation->channels.push_back(channel->second);
 	}
 
 	tmp.clear();
@@ -97,24 +97,23 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 		uint numChannels = animation->channels.size();
 		file.write((char*)&numChannels, numChannelsSizeBytes);									// Number of channels
 
-		for (auto channel = animation->channels.begin();
-			channel != animation->channels.end(); channel++)									// Channels
+		for (Channel channel : animation->channels)												// Channels
 		{
 			// Writing each channel variable size bytes.
-			uint channelNameSizeBytes = channel->second.name.length();
+			uint channelNameSizeBytes = channel.name.length();
 			uint vecKeySize = sizeof(double) + (sizeof(float) * 3);								// float3 is composed by 3 floats.
 			uint quatKeySize = sizeof(double) + (sizeof(float) * 4);							// Quat is composed by 4 floats.
-			uint positionKeyframesSizeBytes = channel->second.positionKeyframes.size() * vecKeySize;
-			uint rotationKeyframesSizeBytes = channel->second.rotationKeyframes.size() * quatKeySize;
-			uint scaleKeyframesSizeBytes = channel->second.scaleKeyframes.size() * vecKeySize;
+			uint positionKeyframesSizeBytes = channel.positionKeyframes.size() * vecKeySize;
+			uint rotationKeyframesSizeBytes = channel.rotationKeyframes.size() * quatKeySize;
+			uint scaleKeyframesSizeBytes = channel.scaleKeyframes.size() * vecKeySize;
 			file.write((char*)&channelNameSizeBytes, sizeof(unsigned));							// Channel name size bytes
 			file.write((char*)&positionKeyframesSizeBytes, sizeof(unsigned));					// Position keyframes size bytes
 			file.write((char*)&rotationKeyframesSizeBytes, sizeof(unsigned));					// Rotation keyframes size bytes
 			file.write((char*)&scaleKeyframesSizeBytes, sizeof(unsigned));						// Scale keyframes size bytes
 
 			// Writing each channel variable into the file.
-			file.write((char*)channel->second.name.data(), channelNameSizeBytes);				// Channel name
-			std::vector<PositionKeyframe> positionKeyframes = channel->second.positionKeyframes;
+			file.write((char*)channel.name.data(), channelNameSizeBytes);						// Channel name
+			std::vector<PositionKeyframe> positionKeyframes = channel.positionKeyframes;
 			for (std::vector<PositionKeyframe>::iterator it = positionKeyframes.begin();
 				it != positionKeyframes.end(); it++)											// Position keyframes
 			{
@@ -124,7 +123,7 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 				file.write((char*)&posKF.value.y, sizeof(float));
 				file.write((char*)&posKF.value.z, sizeof(float));
 			}
-			std::vector<RotationKeyframe> rotationKeyframes = channel->second.rotationKeyframes;
+			std::vector<RotationKeyframe> rotationKeyframes = channel.rotationKeyframes;
 			for (std::vector<RotationKeyframe>::iterator it = rotationKeyframes.begin();
 				it != rotationKeyframes.end(); it++)											// Rotation keyframes
 			{
@@ -135,7 +134,7 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 				file.write((char*)&rotKF.value.z, sizeof(float));
 				file.write((char*)&rotKF.value.w, sizeof(float));
 			}
-			std::vector<ScaleKeyframe> scaleKeyframes = channel->second.scaleKeyframes;
+			std::vector<ScaleKeyframe> scaleKeyframes = channel.scaleKeyframes;
 			for (std::vector<ScaleKeyframe>::iterator it = scaleKeyframes.begin();
 				it != scaleKeyframes.end(); it++)												// Scale keyframes
 			{
@@ -253,7 +252,7 @@ bool I_Animations::Load(const char* path, R_Animation* animation)
 
 				channel.scaleKeyframes.push_back(ScaleKeyframe(time, value));
 			}
-			animation->channels.emplace(std::make_pair(channel.name, channel));
+			animation->channels.push_back(channel);
 
 		}
 
@@ -315,9 +314,9 @@ uint I_Animations::GetChannelsDataSize(const R_Animation* rAnimation)
 
 	uint vecKeySize = sizeof(double) + (sizeof(float) * 3);																	// float3 is composed by 3 floats.
 	uint quatKeySize = sizeof(double) + (sizeof(float) * 4);																// Quat is composed by 4 floats.
-	for (auto c = rAnimation->channels.begin(); c != rAnimation->channels.end(); ++c)
+	for (uint i = 0; i < rAnimation->channels.size(); ++i)
 	{
-		const Channel& rChannel = c->second;
+		const Channel& rChannel = rAnimation->channels[i];
 		uint channelSize = 0;
 
 		/*channelSize += sizeof(uint);*/ // Channel Type

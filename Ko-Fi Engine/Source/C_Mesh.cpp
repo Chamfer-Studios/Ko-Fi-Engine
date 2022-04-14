@@ -133,9 +133,14 @@ void C_Mesh::Load(Json& json)
 
 	std::string path = json.at("path");
 	if (json.contains("isAnimated"))
+	{
 		mesh->SetIsAnimated(json.at("isAnimated"));
+
+	}
 	else
+	{
 		mesh->SetIsAnimated(false);
+	}
 	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
 	mesh->path = path;
 

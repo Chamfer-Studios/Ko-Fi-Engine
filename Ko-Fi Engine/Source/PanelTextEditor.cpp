@@ -47,12 +47,21 @@ bool PanelTextEditor::Awake()
 	return true;
 }
 
+bool PanelTextEditor::PreUpdate()
+{
+	return true;
+}
+
 bool PanelTextEditor::Update()
 {
-	OPTICK_EVENT();
-
 	if (editor->toggleTextEditor) RenderWindow(&editor->toggleTextEditor);
 	
+	
+	return true;
+}
+
+bool PanelTextEditor::PostUpdate()
+{
 	return true;
 }
 

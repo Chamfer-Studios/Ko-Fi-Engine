@@ -20,6 +20,7 @@ public:
 	~PanelAssets();
 	bool Start();
 	bool Update();
+	bool PostUpdate();
 
 	//Temp Function to load file and directory icons
 	void LoadIcons(TextureIcon& texture,const char* path);

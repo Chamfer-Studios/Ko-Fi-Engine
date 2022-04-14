@@ -26,10 +26,13 @@ bool PanelNodeEditor::Awake()
 	return true;
 }
 
+bool PanelNodeEditor::PreUpdate()
+{
+	return true;
+}
+
 bool PanelNodeEditor::Update()
 {
-    OPTICK_EVENT();
-
 	//Begin window
 	ImGui::Begin(panelName.c_str(), 0);
     if (ImGui::Button("Save")) {
@@ -101,6 +104,11 @@ bool PanelNodeEditor::Update()
         links.erase(iter);
     }
 	ImGui::End();
+	return true;
+}
+
+bool PanelNodeEditor::PostUpdate()
+{
 	return true;
 }
 

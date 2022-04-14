@@ -100,8 +100,8 @@ public:
 	bool inline IsAnimated() const { return isAnimated; }
 	void inline SetRootNode(const GameObject* rootNode) { this->rootNode = rootNode; }
 	inline const GameObject* GetRootNode() { return rootNode; }
-	void inline SetAnimation(R_Animation* animation) { this->animation = animation; }
-	const Channel* FindNodeAnim(std::string nodeName);
+	void inline SetAnimation(const R_Animation* animation) { this->animation = animation; }
+	const Channel* FindNodeAnim(const std::string nodeName);
 
 	uint FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim);
 	void CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
@@ -173,9 +173,7 @@ private:
 	bool isAnimated = false;
 
 	const GameObject* rootNode = nullptr;
-	R_Animation* animation = nullptr;
-
-	std::vector<float4x4> transformsAnim;
+	const R_Animation* animation = nullptr;
 };
 
 #endif // !__MESH_H__
