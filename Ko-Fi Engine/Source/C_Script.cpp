@@ -103,7 +103,7 @@ bool C_Script::OnPlay()
 {
 	bool ret = true;
 
-	//ReloadScript();
+	ReloadScript(scripts[0]); // Quick fix
 
 	return ret;
 }
@@ -309,11 +309,12 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 
 void C_Script::Save(Json &json) const
 {
-	/*json["type"] = "script";
-	json["file_name"] = path;
-	json["script_number"] = numScript;
+	// Quick fix
+	json["type"] = "script";
+	json["file_name"] = scripts[0]->path;
+	json["n_scripts"] = nScripts;
 	Json jsonIV;
-	for (InspectorVariable *variable : inspectorVariables)
+	for (InspectorVariable *variable : scripts[0]->inspectorVariables)
 	{
 		switch (variable->type)
 		{
@@ -395,19 +396,34 @@ void C_Script::Save(Json &json) const
 		break;
 		}
 		json["inspector_variables"].push_back(jsonIV);
-	}*/
+	}
 }
 
 void C_Script::Load(Json &json)
 {
-	/*path = json.at("file_name");
-	numScript = json.at("script_number");
-	LoadInspectorVariables(json);*/
+	// Quick fix
+	nScripts = json.at("n_scripts");
+	if (nScripts <= 0)
+		return;
+
+	if (scripts.empty())
+	{
+		ScriptHandler* script = new ScriptHandler(owner);
+		script->path = json.at("file_name");
+		scripts.push_back(script);
+		LoadInspectorVariables(json);
+	}
+	else
+	{
+		scripts[0]->path = json.at("file_name");
+		LoadInspectorVariables(json);
+	}
 }
 
 void C_Script::LoadInspectorVariables(Json &json)
 {
-	/*if (!json.contains("inspector_variables"))
+	// Quick fix
+	if (!json.contains("inspector_variables"))
 		return;
 	for (const auto &var : json.at("inspector_variables").items())
 	{
@@ -469,8 +485,8 @@ void C_Script::LoadInspectorVariables(Json &json)
 		}
 
 		InspectorVariable *variable = new InspectorVariable(name, type, value);
-		inspectorVariables.push_back(variable);
-	}*/
+		scripts[0]->inspectorVariables.push_back(variable);
+	}
 }
 
 ScriptHandler::ScriptHandler(GameObject* owner)

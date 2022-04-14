@@ -15,14 +15,9 @@ function Update(dt)
 end
 
 function OnTriggerEnter(go)
-
-	if (go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
-		DeleteGameObject()
+	if (destination ~= nil) then
+		return
 	end
-end
-
-function OnCollisionEnter(go)
-
 	if (go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
 		DeleteGameObject()
 	end

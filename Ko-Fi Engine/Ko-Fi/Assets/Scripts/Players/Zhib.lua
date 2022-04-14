@@ -240,16 +240,7 @@ function MoveToDestination(dt)
 		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
 	else
 		
-		destination = nil
-		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(0,0))
-		end
-		if (componentSwitch ~= nil) then
-			componentSwitch:StopTrack(1)
-		end
-		if (componentAnimator ~= nil) then
-			componentAnimator:PlayAnimation("Idle")
-		end
+		StopMovement()
 	end
 	-- Add ChangeAnimation() to check the speed of the rigid body
 end
@@ -276,6 +267,7 @@ function Fire()
 	if (componentSwitch ~= nil) then
 		componentSwitch:PlayTrack(0)
 	end
+	StopMovement()
 end
 
 function Ultimate(mousePos)
@@ -347,7 +339,8 @@ function Ultimate(mousePos)
 
 	-- Set timer equal to the longest dath mark timer to reappear
 	Disapear(deathMarkDuration)
-
+	
+	StopMovement()
 end
 
 function Disapear(duration)
@@ -357,6 +350,19 @@ function Disapear(duration)
 	invisibilityDuration = duration
 
 	gameObject:GetRigidBody():SetRigidBodyPos(reappearPosition)
+end
+
+function StopMovement()-- AAAAAAAAAAAAAAAAAAAAA
+	destination = nil
+	if (componentRigidBody ~= nil) then
+		componentRigidBody:Set2DVelocity(float2.new(0,0))
+	end
+	if (componentSwitch ~= nil) then
+		componentSwitch:StopTrack(1)
+	end
+	if (componentAnimator ~= nil) then
+		componentAnimator:PlayAnimation("Idle")
+	end
 end
 
 function OnTriggerEnter(go)
