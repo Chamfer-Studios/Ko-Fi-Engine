@@ -24,6 +24,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float2.h"
 #include "ImGuiAppLog.h"
+#include "RNG.h"
 
 #include <fstream>
 #include <vector>
@@ -31,6 +32,8 @@
 C_Script::C_Script(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
+	SetId(RNG::GetRandomUint());
+	s = nullptr;
 }
 
 C_Script::~C_Script()
@@ -46,19 +49,20 @@ bool C_Script::Start()
 
 bool C_Script::CleanUp()
 {
-	for (auto s : scripts) {
+	if(s != nullptr)
+	{
 		s->handler->CleanUp();
 		s->inspectorVariables.clear();
+		s->inspectorVariables.shrink_to_fit();
 	}
-
-	scripts.clear();
-
+	
 	return true;
 }
 
 bool C_Script::Update(float dt)
 {
-	for (auto s : scripts) {
+	if (s != nullptr)
+	{
 		s->lua_update = sol::protected_function(s->handler->lua["Update"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
@@ -81,12 +85,14 @@ bool C_Script::Update(float dt)
 			}
 		}
 	}
+	
 	return true;
 }
 
 bool C_Script::PostUpdate(float dt)
 {
-	for (auto s : scripts) {
+	if(s != nullptr)
+	{
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
 			auto f = s->handler->lua["PostUpdate"];
@@ -96,6 +102,7 @@ bool C_Script::PostUpdate(float dt)
 			}
 		}
 	}
+	
 	return true;
 }
 
@@ -112,13 +119,41 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
-	std::string headerName = "Script";
+	ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+	std::string headerTypename = "Script";
+	std::string number = std::to_string(id);
+	std::string headerName = headerTypename.append(number);
 
 	if (ImGui::CollapsingHeader(headerName.c_str(), ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 
-		int n = nScripts;
+		ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+		if (chooser->IsReadyToClose("Add Script"))
+		{
+			if (chooser->OnChooserClosed() != nullptr)
+			{
+				std::string path = chooser->OnChooserClosed();
+
+				if (!path.empty())
+				{
+					ScriptHandler* handler = new ScriptHandler(owner);
+					s = handler;
+					handler->path = path;
+					ReloadScript(handler);
+					
+				}
+			}
+		}
+
+		ImGui::Spacing();
+
+		if (ImGui::Button("Add Script"))
+		{
+			chooser->OpenPanel("Add Script", "lua", { "lua" });
+		}
+		ImGui::PopID();
+		/*int n = nScripts;
 		if (ImGui::DragInt("Num Scripts", &n, 0.1f, 0)) {
 			if (n < 0) n = 0;
 			if (n < nScripts) {
@@ -130,38 +165,47 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 			}
 			nScripts = n;
+		}*/
+
+		
+		ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+		/*ImGui::Separator();
+		if (chooser->IsReadyToClose("LoadScript"))
+		{
+			if (chooser->OnChooserClosed() != nullptr)
+			{
+				s->path = chooser->OnChooserClosed();
+				ReloadScript(s);
+			}
+		}
+		if (ImGui::Button("Select Script"))
+		{
+			chooser->OpenPanel("LoadScript", "lua", { "lua" });
+		}
+		ImGui::SameLine();*/
+
+		if (s != nullptr)
+		{
+			ImGui::Text(s->path.substr(s->path.find_last_of('/') + 1).c_str());
 		}
 
-		for (auto s : scripts) {
-			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
-			ImGui::Separator();
-			if (chooser->IsReadyToClose("LoadScript"))
-			{
-				if (chooser->OnChooserClosed() != nullptr)
-				{
-					s->path = chooser->OnChooserClosed();
-					ReloadScript(s);
-				}
-			}
-			if (ImGui::Button("Select Script"))
-			{
-				chooser->OpenPanel("LoadScript", "lua", { "lua" });
-			}
-			ImGui::SameLine();
-			ImGui::Text(s->path.substr(s->path.find_last_of('/') + 1).c_str());
+		bool isSeparatorNeeded = true;
 
-			bool isSeparatorNeeded = true;
-			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+		if(s != nullptr)
+		{
 			for (std::vector<InspectorVariable*>::iterator variable = s->inspectorVariables.begin(); variable != s->inspectorVariables.end(); ++variable)
 			{
-				ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
-
 				if ((*variable)->type == INSPECTOR_NO_TYPE)
+				{
+					ImGui::PopID();
 					continue;
+				}
+
 
 				if ((*variable)->name == "")
 				{
 					// inspectorVariables.erase(variable);
+					ImGui::PopID();
 					continue;
 				}
 				if (isSeparatorNeeded)
@@ -271,25 +315,25 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 					break;
 				}
 				}
-				ImGui::PopID();
 			}
-			ImGui::PopID();
-
-			if (!isSeparatorNeeded)
-			{
-				ImGui::Separator();
-			}
-
-			if (ImGui::Button("Reload Script"))
-			{
-				ReloadScript(s);
-			}
-			ImGui::PopID();
 		}
+		
+		if (!isSeparatorNeeded)
+		{
+			ImGui::Separator();
+		}
+
+		if (ImGui::Button("Reload Script"))
+		{
+			ReloadScript(s);
+		}
+		ImGui::PopID();
 	}
+	
 	else
 		DrawDeleteButton(owner, this);
 
+		ImGui::PopID();
 	return ret;
 }
 
@@ -404,6 +448,12 @@ void C_Script::Load(Json &json)
 	numScript = json.at("script_number");
 	LoadInspectorVariables(json);*/
 }
+
+void C_Script::SetId(int id)
+{
+	this->id = id;
+}
+
 
 void C_Script::LoadInspectorVariables(Json &json)
 {

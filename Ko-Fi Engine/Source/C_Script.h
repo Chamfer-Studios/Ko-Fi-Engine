@@ -42,8 +42,11 @@ public:
 	void LoadInspectorVariables(Json& json);
 	void ReloadScript(ScriptHandler* script);
 
+	void SetId(int id);
+
 	int nScripts = 0;
-	std::vector<ScriptHandler*> scripts;
+	ScriptHandler* s;
+	int id = -1;
 };
 
 #endif // __C_SCRIPT_H__
