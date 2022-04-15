@@ -668,6 +668,7 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer3.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_AbilitySlot_1.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ChangeScenes&amp;SFX.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ChangeScenes.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_CharacterAssetsChange.lua" />
