@@ -19,8 +19,8 @@ public:
 public:
 	UID uid;
 	ResourceType type;
-	std::string assetsPath = "";
-	std::string assetsFile = "";
+	std::string assetPath = "";
+	std::string assetFile = "";
 	std::string libraryPath = "";
 	std::string libraryFile = "";
 };

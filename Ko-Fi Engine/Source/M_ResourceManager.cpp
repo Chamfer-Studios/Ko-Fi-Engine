@@ -206,13 +206,13 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 	std::vector<std::string> toUpdate;
 	std::vector<std::string> toDelete;
 
-	std::vector<std::string> assetFiles;
+	std::vector<std::string> assetsFiles;
 	std::vector<std::string> metaFiles;
 	std::map<std::string, std::string> filePairs;
 
-	engine->GetFileSystem()->DiscoverAllFilesFiltered(directory, assetFiles, metaFiles, META_EXTENSION);
+	engine->GetFileSystem()->DiscoverAllFilesFiltered(directory, assetsFiles, metaFiles, META_EXTENSION);
 
-	FindFilesToImport(assetFiles, metaFiles, filePairs, toImport);
+	FindFilesToImport(assetsFiles, metaFiles, filePairs, toImport);
 	FindFilesToUpdate(filePairs, toUpdate);
 	FindFilesToDelete(metaFiles, filePairs, toDelete);
 
@@ -221,8 +221,8 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 	filePairs.clear();
 	metaFiles.clear();
 	metaFiles.shrink_to_fit();
-	assetFiles.clear();
-	assetFiles.shrink_to_fit();
+	assetsFiles.clear();
+	assetsFiles.shrink_to_fit();
 
 	for (uint i = 0; i < toDelete.size(); ++i)
 		DeleteFromLibrary(toDelete[i].c_str());
@@ -250,18 +250,18 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 	toImport.shrink_to_fit();
 }
 
-void M_ResourceManager::FindFilesToImport(std::vector<std::string>& assetFiles, std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toImport)
+void M_ResourceManager::FindFilesToImport(std::vector<std::string>& assetsFiles, std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toImport)
 {
-	if (assetFiles.empty())
+	if (assetsFiles.empty())
 		return;
 
 	std::string metaFile = "";
-	for (uint i = 0; i < assetFiles.size(); ++i)
+	for (uint i = 0; i < assetsFiles.size(); ++i)
 	{
-		if (HasImportIgnoredExtension(assetFiles[i].c_str()))
+		if (HasImportIgnoredExtension(assetsFiles[i].c_str()))
 			continue;
 
-		metaFile = assetFiles[i] + META_EXTENSION;
+		metaFile = assetsFiles[i] + META_EXTENSION;
 		bool find = false;
 		for (uint j = 0; j < metaFiles.size(); ++j)
 		{
@@ -271,13 +271,13 @@ void M_ResourceManager::FindFilesToImport(std::vector<std::string>& assetFiles, 
 
 		if (find)
 		{
-			filePairs.emplace(assetFiles[i], metaFile);
+			filePairs.emplace(assetsFiles[i], metaFile);
 
-			if (!ValidateMetaFile(assetFiles[i].c_str(), false))
-				toImport.push_back(assetFiles[i]);
+			if (!ValidateMetaFile(assetsFiles[i].c_str(), false))
+				toImport.push_back(assetsFiles[i]);
 		}
 		else
-			toImport.push_back(assetFiles[i]);
+			toImport.push_back(assetsFiles[i]);
 	}
 
 	metaFile.clear();
@@ -291,10 +291,10 @@ void M_ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& fi
 
 	for (const auto& item : filePairs)
 	{
-		// TODO
-		auto assetModification = std::filesystem::last_write_time(item.first);
-		auto metaModification = std::filesystem::last_write_time(item.second);
-		if (assetModification != metaModification)
+		int assetTime = engine->GetFileSystem()->GetLastModTime(item.first.c_str());
+		int metaTime = GetModTimeFromMeta(item.second.c_str());
+
+		if (assetTime != metaTime)
 		{
 			CONSOLE_LOG("[STATUS] Resource Manager: modification time discrepancy with file %s\n", item.first.c_str());
 			toUpdate.push_back(item.first);
@@ -310,7 +310,7 @@ void M_ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, s
 	std::string assetPath = "";
 	for (uint i = 0; i < metaFiles.size(); ++i)
 	{
-		assetPath = metaFiles[i].substr(0,assetPath.find_last_of(META_EXTENSION) - 5);
+		assetPath = metaFiles[i].substr(0, assetPath.find_last_of(META_EXTENSION) - 5);
 		if (filePairs.find(assetPath) == filePairs.end())
 			toDelete.push_back(assetPath);
 	}
@@ -325,16 +325,16 @@ void M_ResourceManager::LoadFilesIntoLibrary(std::map<std::string, std::string>&
 		LoadMetaFileIntoLibrary(item.first.c_str());
 }
 
-bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
+bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetPath)
 {
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file into library, assets path was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file into library, asset path was nullptr.");
 		return false;
 	}
 
 	std::map<UID, ResourceBase> libraryPairs;
-	GetLibraryPairs(assetsPath, libraryPairs);
+	GetLibraryPairs(assetPath, libraryPairs);
 
 	if (libraryPairs.empty())
 		return true;
@@ -347,20 +347,20 @@ bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetsPath)
 	return true;
 }
 
-bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, ResourceBase>& pairs)
+bool M_ResourceManager::GetLibraryPairs(const char* assetPath, std::map<UID, ResourceBase>& pairs)
 {
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting library pairs, assets path was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: getting library pairs, asset path was nullptr.");
 		return false;
 	}
 
-	std::string errorString = "[ERROR] Resource Manager: could not get library file pairs from { " + std::string(assetsPath) + " }'s meta file.";
+	std::string errorString = "[ERROR] Resource Manager: could not get library file pairs from { " + std::string(assetPath) + " }'s meta file.";
 
 	std::vector<UID> resourceUIDs;
 	std::vector<ResourceBase> bases;
-	GetResourceUIDsFromMeta(assetsPath, resourceUIDs);
-	GetResourceBasesFromMeta(assetsPath, bases);
+	GetResourceUIDsFromMeta(assetPath, resourceUIDs);
+	GetResourceBasesFromMeta(assetPath, bases);
 
 	if (resourceUIDs.size() != bases.size())
 		CONSOLE_LOG("%s Missmatching resource bases and UIDs.", errorString.c_str());
@@ -376,20 +376,20 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetsPath, std::map<UID, Re
 	return true;
 }
 
-bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetsPath, std::vector<UID>& uids)
+bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetPath, std::vector<UID>& uids)
 {
 	bool ret = true;
 
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting UIDs from meta, assets path was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: getting UIDs from meta, asset path was nullptr.");
 		return false;
 	}
 
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	std::string metaPath = assetsPath + std::string(META_EXTENSION);
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
 	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
 
 	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
@@ -420,33 +420,39 @@ bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetsPath, std::vec
 			}
 		}
 	}
-	return true;
+	else
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting UIDs from meta. Asset path had no associated meta file.");
+		ret = false;
+	}
+
+	return ret;
 }
 
-bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::vector<ResourceBase>& bases)
+bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vector<ResourceBase>& bases)
 {
 	bool ret = true;
 
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting resource bases from meta, assets path was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: getting resource bases from meta, asset path was nullptr.");
 		return false;
 	}
 
-	std::string errorString = "[ERROR] Resource Manager: could not get library file paths from { " + std::string(assetsPath) + " }'s meta file";
+	std::string errorString = "[ERROR] Resource Manager: could not get resource base file paths from { " + std::string(assetPath) + " }'s meta file";
 
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	std::string metaPath = assetsPath + std::string(META_EXTENSION);
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
 	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
 
 	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
 	{
 		UID uid = jsonMeta.at("uid");
 		ResourceType type = (ResourceType)(int)jsonMeta.at("type");
-		std::string assetsPath = jsonMeta.at("assets_path");
-		std::string assetsFile = jsonMeta.at("assets_file");
+		std::string assetPath = jsonMeta.at("asset_path");
+		std::string assetFile = jsonMeta.at("asset_file");
 		std::string libraryPath = jsonMeta.at("library_path");
 		std::string libraryFile = jsonMeta.at("library_file");
 
@@ -455,7 +461,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::ve
 			CONSOLE_LOG("[ERROR] Resource Manager: main resource UID was 0.");
 			return false;
 		}
-		bases.push_back(ResourceBase(uid, type, assetsPath, assetsFile, libraryPath, libraryFile));
+		bases.push_back(ResourceBase(uid, type, assetPath, assetFile, libraryPath, libraryFile));
 
 		if (jsonMeta.contains("contained_resources"))
 		{
@@ -466,9 +472,9 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::ve
 					UID containedUid = containedIt.value().at("uid");
 					ResourceType containedType = (ResourceType)(int)containedIt.value().at("type");
 
-					std::string containedAssetsPath = "";
-					//std::string containedAssetsPath = jsonMeta.at("assets_path");
-					std::string containedAssetsFile = containedIt.value().at("assets_file");
+					std::string containedAssetPath = "";
+					//std::string containedAssetPath = jsonMeta.at("asset_path");
+					std::string containedAssetFile = containedIt.value().at("asset_file");
 
 					std::string containedLibraryPath = containedIt.value().at("library_path");
 					std::string containedLibraryFile = "";
@@ -485,35 +491,38 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetsPath, std::ve
 						continue;
 					}
 
-					containedAssetsPath = directory + containedAssetsFile;
+					containedAssetPath = directory + containedAssetFile;
 					containedLibraryFile = engine->GetFileSystem()->GetFileName(containedLibraryPath.c_str());
-					bases.push_back(ResourceBase(containedUid, containedType, containedAssetsPath, containedAssetsFile, containedLibraryPath, containedLibraryFile));
+					bases.push_back(ResourceBase(containedUid, containedType, containedAssetPath, containedAssetFile, containedLibraryPath, containedLibraryFile));
 				}
 			}
 		}
 	}
 	else
+	{
 		CONSOLE_LOG("%s Asset path had no associated meta file.", errorString.c_str());
+		ret = false;
+	}
 
 	return ret;
 }
 
-bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetsPath, std::vector<std::string>& paths)
+bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetPath, std::vector<std::string>& paths)
 {
 	bool ret = true;
 
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting library file paths from meta, assets path was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: getting library file paths from meta, asset path was nullptr.");
 		return false;
 	}
 
-	std::string errorString = "[ERROR] Resource Manager: could not get library file paths from { " + std::string(assetsPath) + " }'s meta file";
+	std::string errorString = "[ERROR] Resource Manager: could not get library file paths from { " + std::string(assetPath) + " }'s meta file";
 
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	std::string metaPath = assetsPath + std::string(META_EXTENSION);
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
 	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
 
 	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
@@ -560,29 +569,64 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetsPath, std:
 			}
 		}
 	}
+	else
+	{
+		CONSOLE_LOG("%s Asset path had no associated meta file.", errorString.c_str());
+		ret = false;
+	}
 
-	return true;
+	return ret;
 }
 
-void M_ResourceManager::DeleteFromLibrary(const char* assetsPath)
+int M_ResourceManager::GetModTimeFromMeta(const char* assetPath)
 {
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, assets path was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: getting modification time from meta, asset path was nullptr.");
+		return 0;
+	}
+
+	std::string errorString = "[ERROR] Resource Manager: could not get modification time from { " + std::string(assetPath) + " }'s meta file";
+
+	JsonHandler jsonHandler;
+	Json jsonMeta;
+
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+	bool loaded = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+
+	if (loaded && !jsonMeta.is_null() && !jsonMeta.empty())
+	{
+		int modTime = jsonMeta.at("mod_time");
+		return modTime;
+	}
+	else
+	{
+		CONSOLE_LOG("%s Asset path had no associated meta file.", errorString.c_str());
+		return 0;
+	}
+
+	return 0;
+}
+
+void M_ResourceManager::DeleteFromLibrary(const char* assetPath)
+{
+	if (assetPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, asset path was nullptr.");
 		return;
 	}
 
-	if (!HasMetaFile(assetsPath))
+	if (!HasMetaFile(assetPath))
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, %s file couldn't be found or doesn't exist.", assetsPath);
+		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, %s file couldn't be found or doesn't exist.", assetPath);
 		return;
 	}
 
 	std::vector<UID> resourceUids;
 	std::vector<std::string> toDelete;
 
-	GetResourceUIDsFromMeta(assetsPath, resourceUids);
-	GetLibraryFilePathsFromMeta(assetsPath, toDelete);
+	GetResourceUIDsFromMeta(assetPath, resourceUids);
+	GetLibraryFilePathsFromMeta(assetPath, toDelete);
 
 	for (uint i = 0; i < resourceUids.size(); ++i)
 		UnloadResource(resourceUids[i]);
@@ -596,29 +640,29 @@ void M_ResourceManager::DeleteFromLibrary(const char* assetsPath)
 	resourceUids.shrink_to_fit();
 }
 
-bool M_ResourceManager::HasMetaFile(const char* assetsPath)
+bool M_ResourceManager::HasMetaFile(const char* assetPath)
 {
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: checking for meta file, assets path was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: checking for meta file, asset path was nullptr.");
 		return false;
 	}
 
-	std::string path = assetsPath + std::string(META_EXTENSION);
+	std::string path = assetPath + std::string(META_EXTENSION);
 	return std::filesystem::exists(path);
 }
 
-bool M_ResourceManager::ValidateMetaFile(const char* assetsPath, bool libraryCheck)
+bool M_ResourceManager::ValidateMetaFile(const char* assetPath, bool libraryCheck)
 {
 	bool ret = true;
 
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: validating meta file, assetsPath was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: validating meta file, assetPath was nullptr.");
 		return false;
 	}
 
-	std::string metaPath = assetsPath + std::string(META_EXTENSION);
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
 
 	std::string errorString = "[ERROR] Resource Manager: validating meta file: " + metaPath;
 
@@ -631,7 +675,7 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetsPath, bool libraryChe
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	ret = jsonHandler.LoadJson(jsonMeta, assetsPath);
+	ret = jsonHandler.LoadJson(jsonMeta, assetPath);
 
 	if (ret && !jsonMeta.is_null())
 	{
@@ -673,7 +717,10 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetsPath, bool libraryChe
 		}
 	}
 	else
-		CONSOLE_LOG("%s, Loading meta file.", errorString.c_str());
+	{
+		CONSOLE_LOG("%s Loading meta file.", errorString.c_str());
+		ret = false;
+	}
 
 	return ret;
 }
@@ -803,15 +850,14 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 	}
 
 	Json jsonMeta;
-
 	jsonMeta["uid"] = resource->GetUID();
 	jsonMeta["type"] = (int)resource->GetType();
-	jsonMeta["name"] = resource->GetAssetFile();
-	jsonMeta["assets_path"] = resource->GetAssetPath();
+	jsonMeta["asset_file"] = resource->GetAssetFile();
+	jsonMeta["asset_path"] = resource->GetAssetPath();
+	jsonMeta["asset_path"] = resource->GetAssetPath();
 	jsonMeta["library_file"] = resource->GetLibraryFile();
 	jsonMeta["library_path"] = resource->GetLibraryPath();
-
-	//TODO: ADD MODIFICATION TIME
+	jsonMeta["mod_time"] = engine->GetFileSystem()->GetLastModTime(resource->GetAssetPath());
 
 	//TODO: Make SaveMeta / LoadMeta inherit for all resources with meta (to custom its save / load)
 	resource->SaveMeta(jsonMeta);
@@ -860,7 +906,7 @@ bool M_ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
 
 	r->SetUID(uid);
 	r->SetAssetFile(json.at("name").get<std::string>().c_str());
-	r->SetAssetPath(json.at("assets_path").get<std::string>().c_str());
+	r->SetAssetPath(json.at("asset_path").get<std::string>().c_str());
 	r->SetLibraryFile(json.at("library_file").get<std::string>().c_str());
 	r->SetLibraryPath(json.at("library_path").get<std::string>().c_str());
 
@@ -883,7 +929,7 @@ Resource* M_ResourceManager::RequestResource(UID uid)
 	auto libIt = library.find(uid);
 	if (libIt != library.end())
 	{
-		return GetResourceFromLibrary(libIt->second.assetsPath.c_str());
+		return GetResourceFromLibrary(libIt->second.assetPath.c_str());
 	}
 	return nullptr;
 }
@@ -1062,7 +1108,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 
 		//TODO: I don't know how to do this
 		//
-		//App->fileSystem->SplitFilePath(assetsPath, &containedPath, nullptr, nullptr);
+		//App->fileSystem->SplitFilePath(assetPath, &containedPath, nullptr, nullptr);
 		//containedName = containedNode.GetString("Name");
 		//containedPath += containedName;
 
@@ -1079,25 +1125,25 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 	return uid;
 }
 
-UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
+UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 {
 	// TODO
 	UID uid = 0;
 
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: loading from assets, path was nullptr.");
 		return uid;
 	}
 
-	ResourceType type = GetTypeFromAssetsExtension(assetsPath);
-	Resource* resource = CreateNewResource(type, assetsPath);
+	ResourceType type = GetTypeFromAssetsExtension(assetPath);
+	Resource* resource = CreateNewResource(type, assetPath);
 
 	bool success = false;
 	switch (type)
 	{
 	case ResourceType::TEXTURE:
-		success = Importer::GetInstance()->textureImporter->Import(assetsPath, (R_Texture*)resource);
+		success = Importer::GetInstance()->textureImporter->Import(assetPath, (R_Texture*)resource);
 		break;
 	case ResourceType::MODEL:
 		success = Importer::GetInstance()->sceneImporter->Import((R_Model*)resource);
@@ -1107,7 +1153,7 @@ UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
 		//TODO: SCENE IMPORT
 		break;
 	case ResourceType::MATERIAL:
-		success = Importer::GetInstance()->materialImporter->Import(assetsPath, (R_Material*)resource);
+		success = Importer::GetInstance()->materialImporter->Import(assetPath, (R_Material*)resource);
 		break;
 	case ResourceType::FONT:
 		//TODO: FONT IMPORT
@@ -1118,7 +1164,7 @@ UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
 
 	if (!success)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not import assets file: %s", assetsPath);
+		CONSOLE_LOG("[ERROR] Resource Manager: could not import asset file: %s", assetPath);
 		UnloadResource(resource);
 		return 0;
 	}
@@ -1132,11 +1178,12 @@ UID M_ResourceManager::ImportFromAssets(const char* assetsPath)
 	return uid;
 }
 
-ResourceType M_ResourceManager::GetTypeFromAssetsExtension(const char* assetsPath)
+ResourceType M_ResourceManager::GetTypeFromAssetsExtension(const char* assetPath)
 {
+	// TODO
 	ResourceType ret = ResourceType::UNKNOWN;
 
-	std::filesystem::path path = assetsPath;
+	std::filesystem::path path = assetPath;
 	std::string extension = path.extension().string();
 
 	if (engine->GetFileSystem()->StringCompare(extension.c_str(), TEXTURE_EXTENSION) == 0)
@@ -1151,7 +1198,7 @@ ResourceType M_ResourceManager::GetTypeFromAssetsExtension(const char* assetsPat
 		ret = ResourceType::FONT;
 	else
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given assets path. File extension: %s is not supported.", extension.c_str());
+		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given asset path. File extension: %s is not supported.", extension.c_str());
 	}
 
 	return ret;
@@ -1208,22 +1255,22 @@ bool M_ResourceManager::GetLibraryDirectoryAndExtensionFromType(const ResourceTy
 	return true;
 }
 
-void M_ResourceManager::DeleteFromAssets(const char* assetsPath)
+void M_ResourceManager::DeleteFromAssets(const char* assetPath)
 {
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting from assets, assets path was nullptr.");
+		CONSOLE_LOG("[ERROR] Resource Manager: deleting from assets, asset path was nullptr.");
 		return;
 	}
 
 	std::vector<UID> resourceUIDs;
 	std::vector<std::string> toDelete;
 
-	GetResourceUIDsFromMeta(assetsPath, resourceUIDs);
-	GetLibraryFilePathsFromMeta(assetsPath, toDelete);
+	GetResourceUIDsFromMeta(assetPath, resourceUIDs);
+	GetLibraryFilePathsFromMeta(assetPath, toDelete);
 
-	std::string metaPath = assetsPath + std::string(META_EXTENSION);
-	toDelete.push_back(assetsPath);
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+	toDelete.push_back(assetPath);
 	toDelete.push_back(metaPath);
 
 	for (uint i = 0; i < resourceUIDs.size(); ++i)
@@ -1263,9 +1310,9 @@ std::string M_ResourceManager::GetValidPath(const char* path) const
 	return resultPath;
 }
 
-bool M_ResourceManager::HasImportIgnoredExtension(const char* assetsPath) const
+bool M_ResourceManager::HasImportIgnoredExtension(const char* assetPath) const
 {
-	std::filesystem::path filePath = assetsPath;
+	std::filesystem::path filePath = assetPath;
 	return (engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ini") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
