@@ -9,7 +9,6 @@
 #include "SDL.h"
 #include <fstream>
 #include <filesystem>
-#include <iomanip>
 #include "JsonHandler.h"
 
 #include "optick.h"
@@ -269,9 +268,12 @@ bool M_FileSystem::CheckDirectory(const char* path)
 	return true;
 }
 
-void M_FileSystem::GetLastModTime(const char* path)
+int M_FileSystem::GetLastModTime(const char* path)
 {
 	auto fTime = std::filesystem::last_write_time(path);
+
+	int ret = std::chrono::time_point_cast<std::chrono::seconds>(fTime).time_since_epoch().count();
+	return ret;
 }
 
 const char* M_FileSystem::GetFileName(const char* path) const

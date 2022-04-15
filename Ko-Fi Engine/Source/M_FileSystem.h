@@ -46,7 +46,9 @@ public:
 	
 	// Checks if a directory already exists, if not, it creates it accordingly. Return true either the directory already exists or it was created, and return false if any error occurred.
 	bool CheckDirectory(const char* path);
-	void GetLastModTime(const char* path);
+	
+	// Returns the last modification time in seconds from the epoch time. The Greater the number returned, the more recent the modification is.
+	int GetLastModTime(const char* path);
 
 	const char* GetFileName(const char* path) const;
 	std::string GetNameFromPath(std::string path);
