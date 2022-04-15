@@ -49,10 +49,13 @@ bool C_Script::Start()
 
 bool C_Script::CleanUp()
 {
-	s->handler->CleanUp();
-	s->inspectorVariables.clear();
-	s->inspectorVariables.shrink_to_fit();
-
+	if(s != nullptr)
+	{
+		s->handler->CleanUp();
+		s->inspectorVariables.clear();
+		s->inspectorVariables.shrink_to_fit();
+	}
+	
 	return true;
 }
 
@@ -88,13 +91,15 @@ bool C_Script::Update(float dt)
 
 bool C_Script::PostUpdate(float dt)
 {
-	
-	if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
+	if(s != nullptr)
 	{
-		auto f = s->handler->lua["PostUpdate"];
+		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
+		{
+			auto f = s->handler->lua["PostUpdate"];
 
-		if (f.valid()) {
-			f(dt);
+			if (f.valid()) {
+				f(dt);
+			}
 		}
 	}
 	
