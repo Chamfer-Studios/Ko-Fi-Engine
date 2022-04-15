@@ -63,7 +63,7 @@ private:
 
 	// Bounding sphere
 	float radius;
-
+public:
 	// Bounding boxes
 	AABB aabb;
 	OBB obb;

@@ -17,6 +17,7 @@
 #include "C_Script.h"
 #include "C_Collider.h"
 #include "C_Transform.h"
+#include "C_LightSource.h"
 #include "C_Transform2D.h"
 #include "ComponentParticle.h"
 
@@ -65,12 +66,16 @@ bool SceneIntro::Start()
 	}
 	if (!engine->GetCamera3D()->gameCamera)
 	{
-		GameObject *camera = CreateEmptyGameObject("camera");
+		GameObject *camera = CreateEmptyGameObject("Main Camera");
 		C_Camera *cCamera = camera->CreateComponent<C_Camera>();
 		cCamera->isMainCamera = true;
 		engine->GetCamera3D()->SetGameCamera(cCamera);
 	}
-
+	if (this->GetLights(SourceType::DIRECTIONAL).size() == 0)
+	{
+		GameObject* go = CreateEmptyGameObject("Direct Light");
+		go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+	}
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 

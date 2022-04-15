@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "C_Camera.h"
 #include "C_Collider.h"
+#include "C_Mesh.h"
 
 #include "PanelChooser.h"
 
@@ -29,8 +30,13 @@ C_Transform::~C_Transform()
 
 bool C_Transform::Update(float dt)
 {
+	
 	if (isDirty) // When Object is Modified
 	{
+		if (owner->GetComponent<C_Mesh>())
+		{
+			owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
+		}
 		RecomputeGlobalMatrix();
 		owner->PropagateTransform();
 		if (owner->GetComponent<C_Collider>())
@@ -54,7 +60,7 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 
 		// Position ImGui
 		float3 newPosition = GetPosition();
-		if (ImGui::DragFloat3("Location", &newPosition[0]), 0.005f)
+		if (ImGui::DragFloat3("Location", &(newPosition[0]), 0.5f))
 		{
 			SetPosition(newPosition);
 		}

@@ -350,3 +350,13 @@ void C_Camera::SetAspectRatio(const float& aspectRatio)
 	this->projectionIsDirty = true;
 	RecalculateProjection();
 }
+
+float C_Camera::GetFarPlaneHeight() const
+{
+	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
+}
+
+float C_Camera::GetFarPlaneWidth() const
+{
+	return GetFarPlaneHeight()*aspectRatio;
+}
