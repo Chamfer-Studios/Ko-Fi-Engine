@@ -97,7 +97,7 @@ bool M_Renderer3D::PostUpdate(float dt)
 	OPTICK_EVENT();
 
 	PassProjectionAndViewToRenderer();
-	RenderScene(engine->GetCamera3D()->engineCamera);
+	RenderScene(engine->GetCamera3D()->currentCamera);
 	isFirstPass = false;
 	UnbindFrameBuffers();
 	glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
@@ -365,7 +365,6 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	OPTICK_EVENT();
 
-	// cMesh->GenerateGlobalBoundingBox();
 	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 	if (selectedId == -1) return;
 	if (selectedId == cMesh->owner->GetUID())
@@ -828,17 +827,30 @@ void M_Renderer3D::ResizeFrameBuffers(int width, int height)
 
 void M_Renderer3D::ResizePreviewFrameBuffers(int width, int height)
 {
-	glViewport(0, 0, width, height);
-
+	float lwidth, lheight = 0.0f;
+	float aspectRatio = 0.0f;
+	aspectRatio = engine->GetEditor()->viewportSize.x / engine->GetEditor()->viewportSize.y;
+	if (width < height)
+	{
+		lwidth = width;
+		lheight = width * aspectRatio;
+	}
+	else
+	{
+		
+		lheight = height;
+		lwidth = height * aspectRatio;
+	}
 	glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
 	glBindTexture(GL_TEXTURE_2D, previewTextureBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lwidth, lheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	glBindRenderbuffer(GL_RENDERBUFFER, renderPreviewBufferoutput);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, lwidth, lheight);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
 
 }
 
