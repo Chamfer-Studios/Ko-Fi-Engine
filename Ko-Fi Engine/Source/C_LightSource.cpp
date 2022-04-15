@@ -397,29 +397,30 @@ LightSource::LightSource()
 	position = float3::zero;
 	color = float3(1.0f, 1.0f, 1.0f);
 
-	ambient = 0.2;
+	ambient = 0.5;
 	diffuse = 0.8;
 	specular = 0;
 }
 
 DirectionalLight::DirectionalLight() : LightSource()
 {
-	direction = float3(0.0f, 0.0f, 0.0f);
+	direction = float3(1.0f, 1.0f, 0.0f);
 }
 
 PointLight::PointLight() : LightSource()
 {
+	ambient = 0.0f;
 	constant = 1.00f;
-	linear = 0.220f;
-	quadratic = 0.20f;
+	linear = 0.020f;
+	quadratic = 0.020f;
 }
 
 FocalLight::FocalLight() : LightSource()
 {
 	cutOffAngle = 0.965f; //cosinus of 15º
 	lightDirection = float3(0.0f, 1.0f, 0.0f);
-
+	ambient = 0.0f;
 	constant = 1.00f;
-	linear = 0.220f;
-	quadratic = 0.20f;
+	linear = 0.020f;
+	quadratic = 0.02f;
 }

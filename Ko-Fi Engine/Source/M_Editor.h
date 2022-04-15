@@ -106,6 +106,7 @@ public:
 	bool toggleChooserPanel = false;
 	bool toggleTextEditor = false;
 	bool toggleSettingsPanel = false;
+	bool toggleCameraViewportPanel = false;
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
 	PanelInspector* panelGameObject = nullptr;

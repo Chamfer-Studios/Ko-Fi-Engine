@@ -100,12 +100,15 @@ bool M_Renderer3D::PostUpdate(float dt)
 	RenderScene(engine->GetCamera3D()->currentCamera);
 	isFirstPass = false;
 	UnbindFrameBuffers();
-	glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	PassPreviewProjectionAndViewToRenderer();
-	RenderScene(engine->GetCamera3D()->gameCamera);
-	UnbindFrameBuffers();
+	if (engine->GetEditor()->toggleCameraViewportPanel)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		PassPreviewProjectionAndViewToRenderer();
+		RenderScene(engine->GetCamera3D()->gameCamera);
+		UnbindFrameBuffers();
+	}
 	SwapWindow();
 	return true;
 }
@@ -318,7 +321,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 void M_Renderer3D::RenderScene(C_Camera* camera)
 {
 	OPTICK_EVENT();
-
+#pragma omp parallel for
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)

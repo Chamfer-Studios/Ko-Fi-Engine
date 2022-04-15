@@ -68,11 +68,11 @@ M_Editor::M_Editor(KoFiEngine* engine)
 		//panelGame = new PanelGame(this);
 		//AddPanel(panelGame);
 	/*}*/
-	if (panelsState.showCameraViewportWindow)
+	/*if (panelsState.showCameraViewportWindow)
 	{
 		panelCameraViewport = new PanelCameraViewport(this, engine);
 		AddPanel(panelCameraViewport);
-	}
+	}*/
 	if (panelsState.showViewportWindow)
 	{
 		panelViewport = new PanelViewport(this, engine);
