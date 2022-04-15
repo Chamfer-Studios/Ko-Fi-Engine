@@ -244,11 +244,11 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			{
 				currentLight->color = { color[0], color[1], color[2] };
 			}
-			float ambientValue = currentLight->ambient;
+			/*float ambientValue = currentLight->ambient;
 			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->ambient = ambientValue;
-			}
+			}*/
 			float diffuseValue = currentLight->diffuse;
 			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
@@ -256,17 +256,22 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			}
 
 			float constantValue = currentLight->constant;
-			if (ImGui::DragFloat("Constant Light Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("General Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->constant = constantValue;
 			}
+			
+			ImGui::Spacing();
+			ImGui::Text("    Advanced attenuation parameters");
+			ImGui::Spacing();
+
 			float linearValue = currentLight->linear;
-			if (ImGui::DragFloat("Linear Light Attenuation", &linearValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("(0.0 - 0.3) Mid-rage Attenuation", &linearValue, 0.01f, 0.0f, .3f, "%.2f"))
 			{
 				currentLight->linear = linearValue;
 			}
 			float quadraticValue = currentLight->quadratic;
-			if (ImGui::DragFloat("Quadratic Light Attenuation", &quadraticValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("(0.0 - 0.2) Long range Attenuation", &quadraticValue, 0.01f, 0.0f, .2f, "%.2f"))
 			{
 				currentLight->quadratic = quadraticValue;
 			}
@@ -281,11 +286,11 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			{
 				currentLight->color = { color[0], color[1], color[2] };
 			}
-			float ambientValue = currentLight->ambient;
+			/*float ambientValue = currentLight->ambient;
 			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->ambient = ambientValue;
-			}
+			}*/
 			float diffuseValue = currentLight->diffuse;
 			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
@@ -293,9 +298,9 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			}
 
 			float cutOffValue = (acos(currentLight->cutOffAngle)) * RADTODEG;
-			if (ImGui::DragFloat("Light Cone Angle", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("Light Cone Angle", &cutOffValue, 0.1f, 0.0f, 180.0f, "%.1f"))
 			{
-				currentLight->cutOffAngle = (cutOffValue);
+				currentLight->cutOffAngle = cos((cutOffValue) * DEGTORAD);
 			}
 			float direction[3] = { currentLight->lightDirection.x, currentLight->lightDirection.y, currentLight->lightDirection.z };
 			if (ImGui::DragFloat3("Light Cone Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))
@@ -304,17 +309,22 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			}
 
 			float constantValue = currentLight->constant;
-			if (ImGui::DragFloat("Constant Light Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("General Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->constant = constantValue;
 			}
+
+			ImGui::Spacing();
+			ImGui::Text("    Advanced attenuation parameters");
+			ImGui::Spacing();
+
 			float linearValue = currentLight->linear;
-			if (ImGui::DragFloat("Linear Light Attenuation", &linearValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("(0.0 - 0.3) Mid-rage Attenuation", &linearValue, 0.01f, 0.0f, .3f, "%.2f"))
 			{
 				currentLight->linear = linearValue;
 			}
 			float quadraticValue = currentLight->quadratic;
-			if (ImGui::DragFloat("Quadratic Light Attenuation", &quadraticValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("(0.0 - 0.2) Long range Attenuation", &quadraticValue, 0.01f, 0.0f, .2f, "%.2f"))
 			{
 				currentLight->quadratic = quadraticValue;
 			}

@@ -99,6 +99,8 @@ public:
 	void RenderParticle(ParticleRenderer* particle);
 	void RenderAllParticles();
 
+	void CreateShadowMap();
+
 public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

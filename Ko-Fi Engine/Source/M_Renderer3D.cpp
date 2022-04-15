@@ -532,9 +532,9 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 						//second variable: vec3 position
 						GLint lightPos = glGetUniformLocation(shader, ("pointLights[" + number + "].position").c_str());
 						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
-						//third variable: float ambient
+						//float ambient always 0
 						GLint ambientValue = glGetUniformLocation(shader, ("pointLights[" + number + "].ambient").c_str());
-						glUniform1f(ambientValue, lightSource->ambient);
+						glUniform1f(ambientValue, 0.0f);
 						//forth variable: float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("pointLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
@@ -581,9 +581,9 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 						//vec3 position
 						GLint lightPos = glGetUniformLocation(shader, ("focalLights[" + number + "].position").c_str());
 						glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
-						//float ambient
+						//float ambient always 0
 						GLint ambientValue = glGetUniformLocation(shader, ("focalLights[" + number + "].ambient").c_str());
-						glUniform1f(ambientValue, lightSource->ambient);
+						glUniform1f(ambientValue, 0.0f);
 						//float diffuse
 						GLint diffuseValue = glGetUniformLocation(shader, ("focalLights[" + number + "].diffuse").c_str());
 						glUniform1f(diffuseValue, lightSource->diffuse);
@@ -886,6 +886,37 @@ void M_Renderer3D::RenderAllParticles()
 	}
 
 	particles.clear();
+}
+
+void M_Renderer3D::CreateShadowMap()
+{
+	//First we'll create a framebuffer object for rendering the depth map:
+	unsigned int depthMapFBO;
+	glGenFramebuffers(1, &depthMapFBO);
+
+	//Next, create a 2D texture that we'll use as the framebuffer's depth object
+	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+
+	unsigned int depthMap;
+	glGenTextures(1, &depthMap);
+	glBindTexture(GL_TEXTURE_2D, depthMap);
+	//we are only interested in storing the depth component inside the texture
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	//once the texture is created, attach it to the framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+	//configure it to explicitly not have color data
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 ParticleRenderer::ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform):
