@@ -22,6 +22,8 @@
 
 #include "MathGeoLib/Math/MathFunc.h"
 
+#include "optick.h"
+
 C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 {
 	this->isEngineCamera = isEngineCamera;
@@ -347,4 +349,14 @@ void C_Camera::SetAspectRatio(const float& aspectRatio)
 	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
 	this->projectionIsDirty = true;
 	RecalculateProjection();
+}
+
+float C_Camera::GetFarPlaneHeight() const
+{
+	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
+}
+
+float C_Camera::GetFarPlaneWidth() const
+{
+	return GetFarPlaneHeight()*aspectRatio;
 }

@@ -15,6 +15,7 @@
 #include "C_Image.h"
 #include "C_Button.h"
 #include "C_Text.h"
+#include "C_LightSource.h"
 #include "C_Mesh.h"
 
 #include "PanelChooser.h"
@@ -97,6 +98,28 @@ bool MainBar::Update()
 			{
 				GameObject* camera = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("camera");
 				camera->CreateComponent<C_Camera>();
+			}
+			if (ImGui::BeginMenu("Lights"))
+			{
+				if (ImGui::MenuItem("Directional Light"))
+				{
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Directional Light");
+					go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+				}
+				if (ImGui::MenuItem("Point Light"))
+				{
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Point Light");
+					C_LightSource* cLightSource =  (C_LightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+					cLightSource->ChangeSourceType(SourceType::POINT);
+				}
+				if (ImGui::MenuItem("Focal Light"))
+				{
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Focal Light");
+					C_LightSource* cLightSource = (C_LightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+					cLightSource->ChangeSourceType(SourceType::FOCAL);
+				}
+				ImGui::EndMenu();
+
 			}
 			if (ImGui::BeginMenu("Primitive"))
 			{
