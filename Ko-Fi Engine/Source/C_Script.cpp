@@ -180,8 +180,6 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 		if(s != nullptr)
 		{
-			int variableId = RNG::GetRandomUint();
-			ImGui::PushID(variableId);
 			for (std::vector<InspectorVariable*>::iterator variable = s->inspectorVariables.begin(); variable != s->inspectorVariables.end(); ++variable)
 			{
 				if ((*variable)->type == INSPECTOR_NO_TYPE)
@@ -306,7 +304,6 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				}
 			}
-			ImGui::PopID();
 		}
 		
 		if (!isSeparatorNeeded)
@@ -414,16 +411,19 @@ void C_Script::Save(Json &json) const
 				array.push_back(std::get<std::vector<float3>>(variable->value)[i].y);
 				array.push_back(std::get<std::vector<float3>>(variable->value)[i].z);
 			}
-			json["value"] = array;
+			jsonIV["value"] = array;
 		}
 		break;
 		case INSPECTOR_GAMEOBJECT:
 		{
-			if (std::get<GameObject *>(variable->value) != nullptr)
+			jsonIV["name"] = variable->name;
+			jsonIV["type"] = "gameObject";
+			if (std::get<GameObject*>(variable->value) != nullptr)
 			{
-				jsonIV["name"] = variable->name;
-				jsonIV["type"] = "gameObject";
 				jsonIV["value"] = std::get<GameObject *>(variable->value)->GetUID();
+			}
+			else {
+				jsonIV["value"] = 0;
 			}
 		}
 		break;
@@ -500,18 +500,22 @@ void C_Script::LoadInspectorVariables(Json &json)
 		else if (type_s == "float3_array")
 		{
 			type = INSPECTOR_FLOAT3_ARRAY;
-			std::vector<float> array = json.at("value").get<std::vector<float>>();
+			std::vector<float> array = var.value().at("value");
 			std::vector<float3> value;
 			for (int i = 0; i < array.size(); i += 3)
 			{
 				float3 f3 = float3(array[i], array[i + 1], array[i + 2]);
 				value.push_back(f3);
 			}
+			InspectorVariable* variable = new InspectorVariable(name, type, value);
+			s->inspectorVariables.push_back(variable);
+			continue;
 		}
 		else if (type_s == "gameObject")
 		{
 			type = INSPECTOR_GAMEOBJECT;
-			value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject((uint)var.value().at("value"));
+			uint uid = (uint)var.value().at("value");
+			value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
 		}
 
 		InspectorVariable *variable = new InspectorVariable(name, type, value);
