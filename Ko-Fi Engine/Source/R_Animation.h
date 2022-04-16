@@ -4,6 +4,9 @@
 #include "Globals.h"
 #include "Resource.h"
 
+#include <map>
+#include <string>
+
 struct Channel;
 
 class R_Animation
@@ -25,7 +28,7 @@ public:
 	inline float GetEndFrame() const { return endFrame; }
 
 public:
-	std::vector<Channel> channels;
+	std::map<std::string, Channel> channels;
 
 public:
 	std::string name;

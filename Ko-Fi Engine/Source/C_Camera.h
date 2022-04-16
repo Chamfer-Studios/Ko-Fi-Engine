@@ -32,7 +32,8 @@ public:
 	void FrustumCulling();
 	void ResetFrustumCulling();
 	void SetAspectRatio(const float& aspectRatio);
-
+	float GetFarPlaneHeight() const;
+	float GetFarPlaneWidth() const;
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 

@@ -10,6 +10,7 @@
 #include "M_Renderer3D.h"
 #include "R_Texture.h"
 #include "C_Material.h"
+#include "C_Camera.h"
 
 #include "Log.h"
 // Tools
@@ -33,37 +34,35 @@ bool PanelCameraViewport::Awake()
 	return true;
 }
 
-bool PanelCameraViewport::PreUpdate()
-{
-	return true;
-}
-
 bool PanelCameraViewport::Update()
 {
+	OPTICK_EVENT();
+
 	if (editor->panelsState.showCameraViewportWindow) RenderPanel(&editor->panelsState.showCameraViewportWindow);
 
 	return true;
 }
 
-bool PanelCameraViewport::PostUpdate()
-{
-	return true;
-}
-
 bool PanelCameraViewport::RenderPanel(bool* showPanel )
 {
-	if (ImGui::Begin("Camera Preview", showPanel, ImGuiWindowFlags_NoScrollbar))
+	
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	float width = editor->engine->GetCamera3D()->gameCamera->GetFarPlaneWidth();
+	float height = editor->engine->GetCamera3D()->gameCamera->GetFarPlaneHeight();
+	ImGui::SetNextWindowSize(ImVec2(width*250, height*250));
+	if (ImGui::Begin("Camera Preview", showPanel, ImGuiWindowFlags_NoScrollbar ))
 	{
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
-		viewportSize.y -= 26; // Make the viewport substract 26 pixels from the imgui window (corresponds to the imgui viewport header)
-
+		
 		if (viewportSize.x != editor->lastCameraViewportSize.x || viewportSize.y != editor->lastCameraViewportSize.y)
 		{
 			editor->lastCameraViewportSize = viewportSize;
-			
+			engine->GetCamera3D()->gameCamera->aspectRatio = viewportSize.x / viewportSize.y;
+			engine->GetCamera3D()->gameCamera->RecalculateProjection();
+
 			engine->GetRenderer()->ResizePreviewFrameBuffers(viewportSize.x, viewportSize.y);
-			engine->GetRenderer()->ResizeFrameBuffers(editor->cameraViewportSize.x, editor->cameraViewportSize.y);
-	
+
 
 		}
 		editor->cameraViewportSize = viewportSize;
@@ -71,5 +70,6 @@ bool PanelCameraViewport::RenderPanel(bool* showPanel )
 
 	}
 	ImGui::End();
+	ImGui::PopStyleVar();
 	return true;
 }

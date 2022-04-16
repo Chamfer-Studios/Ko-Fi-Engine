@@ -31,6 +31,22 @@ C_Animator::~C_Animator()
 
 bool C_Animator::Start()
 {
+	// Setting default animation values for a GameObject without animation.
+	if (animation == nullptr)
+	{
+		animation = new R_Animation();
+		animation->SetName("Default animation");
+		animation->SetDuration(10);
+		animation->SetTicksPerSecond(24);
+		animation->SetStartFrame(0);
+		animation->SetEndFrame(10);
+	}
+	if (selectedClip == nullptr)
+	{
+		AnimatorClip* animClip = new AnimatorClip(animation, "Default clip", 0, 10, 1.0f, true);
+		CreateDefaultClip(animClip);
+	}
+	
 	return true;
 }
 
@@ -152,7 +168,6 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 void C_Animator::Save(Json& json) const
 {
-	CONSOLE_LOG("hey");
 	json["type"] = "animator";
 
 	std::string name = owner->GetName();
@@ -181,20 +196,24 @@ void C_Animator::Save(Json& json) const
 void C_Animator::Load(Json& json)
 {
 	if (animation)
-	{
 		RELEASE(animation);
-	}
+	animation = new R_Animation();
 
-	/*if (animation == nullptr)
-	{*/
-		animation = new R_Animation();
-	/*}*/
 	if (json.contains("path"))
 	{
 		std::string path = json.at("path");
 		Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
-		owner->GetComponent<C_Mesh>()->GetMesh()->SetIsAnimated(true);
-		owner->GetComponent<C_Mesh>()->GetMesh()->SetAnimation(animation);
+		C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
+		if (cMesh != nullptr && cMesh->GetMesh()->IsAnimated())
+			owner->GetComponent<C_Mesh>()->GetMesh()->SetAnimation(animation);
+
+		// TEMPORAL --> REVISE DEPENDING ON .SUGAR
+		/*if (cMesh != nullptr)
+		{
+			cMesh->GetMesh()->SetIsAnimated(true);
+			cMesh->GetMesh()->SetAnimation(animation);
+		}*/
+		// --------------------------------------------------
 
 		if (!json.empty())
 		{
@@ -211,7 +230,7 @@ void C_Animator::Load(Json& json)
 
 				animatorClip.SetAnimation(animation);
 
-				clips.emplace(clip.value().at("mapString"), animatorClip);
+				clips[clip.value().at("mapString")] = animatorClip;
 			}
 			SetSelectedClip(json.at("selectedClip"));
 		}
@@ -287,6 +306,7 @@ void C_Animator::SetSelectedClip(std::string name)
 		if ((*clip).first == name)
 		{
 			selectedClip = &clip->second;
+			break;
 		}
 	}
 }

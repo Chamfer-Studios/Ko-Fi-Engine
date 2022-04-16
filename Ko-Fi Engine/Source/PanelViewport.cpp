@@ -26,6 +26,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_internal.h"
 
+#include "optick.h"
+
 PanelViewport::PanelViewport(M_Editor* editor, KoFiEngine* engine)
 {
 	this->editor = editor;
@@ -42,13 +44,10 @@ bool PanelViewport::Awake()
 	return true;
 }
 
-bool PanelViewport::PreUpdate()
-{
-	return true;
-}
-
 bool PanelViewport::Update()
 {
+	OPTICK_EVENT();
+
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
 	{
@@ -72,7 +71,6 @@ bool PanelViewport::Update()
 			engine->GetCamera3D()->currentCamera->aspectRatio = viewportSize.x / viewportSize.y;
 			engine->GetCamera3D()->currentCamera->RecalculateProjection();
 			engine->GetRenderer()->ResizeFrameBuffers(viewportSize.x, viewportSize.y);
-			engine->GetRenderer()->ResizeFrameBuffers(editor->cameraViewportSize.x, editor->cameraViewportSize.y);
 
 		}
 		editor->viewportSize = viewportSize;
@@ -125,11 +123,6 @@ bool PanelViewport::Update()
 
 	ImGui::PopStyleVar();
 
-	return true;
-}
-
-bool PanelViewport::PostUpdate()
-{
 	return true;
 }
 
