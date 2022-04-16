@@ -376,11 +376,11 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	float timeInTicks = timeInSeconds * ticksPerSecond;
 
 	float startFrame, endFrame, animDur;
-	C_Animator* cAnimator = gameObject->GetComponent<C_Animator>();
-	if (cAnimator != nullptr && cAnimator->GetSelectedClip() != nullptr)
+	AnimatorClip* selectedClip = gameObject->GetComponent<C_Animator>()->GetSelectedClip();
+	if (selectedClip != nullptr)
 	{
-		startFrame = cAnimator->GetSelectedClip()->GetStartFrame();
-		endFrame = cAnimator->GetSelectedClip()->GetEndFrame();
+		startFrame = selectedClip->GetStartFrame();
+		endFrame = selectedClip->GetEndFrame();
 		animDur = endFrame - startFrame;
 	}
 	else
@@ -389,9 +389,16 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 		endFrame = 0.0f;
 		animDur = animation->GetDuration();
 	}
-	
 
 	float animationTimeTicks = fmod(timeInTicks, (float)animDur); // This divides the whole animation into segments of animDur.
+
+	// Checking if the animation has finished (the animation time ticks is equal to the duration time ticks).
+	float animationSeconds = fmod(timeInSeconds, (float)selectedClip->GetDurationInSeconds());
+	if (animationSeconds < 0.1f)
+	{
+		if (!selectedClip->GetLoopBool())
+			selectedClip->SetFinishedBool(true);
+	}
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, rootNode, identity); // We add startFrame as an offset to the duration.
 	transforms.resize(boneInfo.size());

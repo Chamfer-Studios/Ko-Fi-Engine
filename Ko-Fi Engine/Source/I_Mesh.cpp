@@ -223,6 +223,7 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 			mesh->texCoords = (float*)malloc(mesh->texCoordSizeBytes);
 			file.read((char*)mesh->texCoords, mesh->texCoordSizeBytes);
 		}
+
 		if (mesh->IsAnimated())
 		{
 			uint boneInfoSize;
@@ -299,7 +300,6 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 				mesh->boneNameToIndexMap.emplace(name.c_str(), index);
 			}
 		}
-
 
 		file.close();
 
