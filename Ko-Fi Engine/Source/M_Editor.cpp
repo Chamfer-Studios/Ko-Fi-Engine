@@ -68,11 +68,11 @@ M_Editor::M_Editor(KoFiEngine* engine)
 		//panelGame = new PanelGame(this);
 		//AddPanel(panelGame);
 	/*}*/
-	if (panelsState.showCameraViewportWindow)
+	/*if (panelsState.showCameraViewportWindow)
 	{
 		panelCameraViewport = new PanelCameraViewport(this, engine);
 		AddPanel(panelCameraViewport);
-	}
+	}*/
 	if (panelsState.showViewportWindow)
 	{
 		panelViewport = new PanelViewport(this, engine);
@@ -495,7 +495,7 @@ void M_Editor::Markdown(const std::string& markdown_)
 
 void M_Editor::MarkdownExample()
 {
-	const std::string markdownText = u8R"(
+	const std::string markdownText = R"(
 # H1 Header: Text and Links
 You can add [links like this one to enkisoftware](https://www.enkisoftware.com/) and lines will wrap well.
 You can also insert images ![image alt text](image identifier e.g. filename)
