@@ -622,7 +622,7 @@ public:
 		return tmp;
 	}
 
-	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
+	void DispatchGlobalEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
 		for (auto go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 			for (auto c : go->GetComponents()) {
 				if (c->type == ComponentType::SCRIPT) {
@@ -630,6 +630,14 @@ public:
 				}
 			}
 		}
+	}
+
+	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
+			for (auto c : gameObject->GetComponents()) {
+				if (c->type == ComponentType::SCRIPT) {
+					((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));
+				}
+			}
 	}
 
 public:
