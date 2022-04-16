@@ -769,7 +769,6 @@ void M_Renderer3D::InitFrameBuffers()
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBuffer, 0);
 
-
 	//Render Buffers
 	glGenRenderbuffers(1, &renderBufferoutput);
 	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
@@ -860,8 +859,6 @@ void M_Renderer3D::ResizePreviewFrameBuffers(int width, int height)
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, lwidth, lheight);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-
 }
 
 void M_Renderer3D::ReleaseFrameBuffers()
@@ -878,10 +875,12 @@ uint M_Renderer3D::GetTextureBuffer()
 {
 	return textureBuffer;
 }
+
 uint M_Renderer3D::GetPreviewTextureBuffer()
 {
 	return previewTextureBuffer;
 }
+
 void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 transform, float distanceToCamera)
 {
 	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
@@ -905,7 +904,6 @@ transform(transform)
 {
 
 }
-
 
 void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 {
@@ -946,5 +944,4 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glDisable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_BLEND);
-
 }
