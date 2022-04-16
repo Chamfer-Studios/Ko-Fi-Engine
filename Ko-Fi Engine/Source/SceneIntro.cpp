@@ -155,12 +155,12 @@ bool SceneIntro::PostUpdate(float dt)
 			knife->GetTransform()->SetRotationEuler(rot);
 
 			C_Mesh *componentMesh = knife->CreateComponent<C_Mesh>();
-			R_Mesh *mesh = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
+			R_Mesh *mesh = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			C_Material *cMaterial = knife->CreateComponent<C_Material>();
 			//Importer::GetInstance()->textureImporter->Import(nullptr, &C_Material->texture);
-			R_Material *material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
+			R_Material *material = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
 			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
 			cMaterial->SetMaterial(material);
 
@@ -171,12 +171,11 @@ bool SceneIntro::PostUpdate(float dt)
 			collider->SetIsTrigger(true);
 
 			C_Script *knifeScript = (C_Script *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			knifeScript->scripts.push_back(new ScriptHandler(knife));
-			knifeScript->scripts[0]->path = "Assets/Scripts/Knife.lua";
-			knifeScript->ReloadScript(knifeScript->scripts[0]);
-			GameObject *target = parent->GetComponent<C_Script>()->scripts[0]->handler->lua["target"];
-			knifeScript->scripts[0]->handler->lua["target"] = target;
-			knifeScript->scripts[0]->handler->lua["SetDestination"]();
+			knifeScript->s->path = "Assets/Scripts/Knife.lua";
+			knifeScript->ReloadScript(knifeScript->s);
+			GameObject *target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
+			knifeScript->s->handler->lua["target"] = target;
+			knifeScript->s->handler->lua["SetDestination"]();
 		}
 	}
 	gameObjectListToCreate.clear();

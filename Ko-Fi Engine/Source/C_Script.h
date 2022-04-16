@@ -5,6 +5,11 @@
 #include <lua.hpp>
 #include <sol.hpp>
 
+#include <queue>
+
+#include "MathGeoLib/Math/float2.h"
+#include "MathGeoLib/Math/float3.h"
+
 class Scripting;
 class GameObject;
 class C_Transform;
@@ -25,6 +30,17 @@ struct ScriptHandler
 	bool isScriptLoaded = false;
 };
 
+struct ScriptingEvent
+{
+	ScriptingEvent(std::string _key, std::vector<std::variant<int, float, float2, float3, bool, std::string>> _fields) {
+		this->key = _key;
+		this->fields = _fields;
+	}
+
+	std::string key;
+	std::vector<std::variant<int, float, float2, float3, bool, std::string>> fields;
+};
+
 class C_Script : public Component 
 {
 public:
@@ -42,8 +58,14 @@ public:
 	void LoadInspectorVariables(Json& json);
 	void ReloadScript(ScriptHandler* script);
 
+	void SetId(int id);
+
 	int nScripts = 0;
-	std::vector<ScriptHandler*> scripts;
+
+	ScriptHandler* s;
+	int id = -1;
+
+	std::queue<ScriptingEvent> eventQueue;
 };
 
 #endif // __C_SCRIPT_H__
