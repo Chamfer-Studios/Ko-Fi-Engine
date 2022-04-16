@@ -36,7 +36,7 @@ public:
 	float GetFarPlaneWidth() const;
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
-
+	void ChangeSpeed(int multiplier);
 	float3 right, up, front, position, reference;
 	Frustum cameraFrustum;
 	float4x4 viewMatrix;
@@ -44,8 +44,10 @@ public:
 	float verticalFOV = 60.f;
 	float nearPlaneDistance = 0.1f;
 	float farPlaneDistance = 100.f;
-	float cameraSensitivity = .5f;
+	float cameraSensitivity = .1f;
 	float cameraSpeed = 60.f;
+	float baseCameraSpeed = 60.f;
+	int speedMultiplier = 1.0f;
 	bool projectionIsDirty = true;
 
 	// Debug bools

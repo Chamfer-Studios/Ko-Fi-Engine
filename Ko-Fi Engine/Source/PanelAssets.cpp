@@ -97,7 +97,6 @@ bool PanelAssets::Update()
 			}
 			ImGui::EndDragDropSource();
 		}
-
 		ImGui::TextWrapped(filenameString.c_str());
 		ImGui::NextColumn();
 		
