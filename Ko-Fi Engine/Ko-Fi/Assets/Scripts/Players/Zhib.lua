@@ -1,7 +1,6 @@
 ------------------- Variables --------------------
 
 characterID = 1
-target = nil
 
 Action = {
 	IDLE = 1,
@@ -16,8 +15,8 @@ currentAction = Action.IDLE
 speed = 500  -- consider Start()
 maxKnives = 2
 knifeCount = maxKnives
-ultimateRange = 150.0
-ultimateRangeExtension = ultimateRange * 0.66
+ultimateRange = 50.0
+ultimateRangeExtension = ultimateRange * 0.5
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
@@ -63,7 +62,7 @@ function Update(dt)
 	if (rigidBodyFlag == true) then
 		if (componentRigidBody ~= nil) then
 			rigidBodyFlag = false
-			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 0, componentTransform:GetPosition().z))
+			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
 		end
 	end
 	-- Timers & Helpers
@@ -86,94 +85,95 @@ function Update(dt)
 	if (mouseParticles ~= nil) then
 		mouseParticles:GetComponentParticle():StopParticleSpawn()
 	end
-	if (invisibilityDuration ~= nil) then
+	if (invisibilityDuration ~= nil) then -- While invis he shouldn't be able to do anything
 		invisibilityTimer = invisibilityTimer + dt
 		if (invisibilityTimer >= invisibilityDuration) then
 			-- Reappear
 			invisibilityDuration = nil
 			gameObject.active = true
 		end
-		return -- This is to not receive input while invis
-	end
+	else
 
-	-- Actions
-	if (destination ~= nil)	then
-		MoveToDestination(dt)
-	end
-	
-	--Gather Inputs
-	if (IsSelected() == true) then 
+		-- Actions
+		if (destination ~= nil)	then
+			MoveToDestination(dt)
+		end
 		
-		-- Left Click
-		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
+		--Gather Inputs
+		if (IsSelected() == true) then 
+			
+			-- Left Click
+			if (GetInput(1) == KEY_STATE.KEY_DOWN) then
 
-			-- Knife
-			if (currentAction == Action.AIMING_KNIFE) then -- Fire Knife (infinite range for now)
-				if (knifeCount > 0) then
-					target = GetGameObjectHovered()
-					if (target.tag == Tag.ENEMY) then
-						Fire()
-						if (componentSwitch ~= nil) then
-							componentSwitch:PlayAudio(0)
+				-- Knife
+				if (currentAction == Action.AIMING_KNIFE) then -- Fire Knife (infinite range for now)
+					if (knifeCount > 0) then
+						local target = GetGameObjectHovered()
+						if (target.tag == Tag.ENEMY) then
+							Fire()
+							if (componentSwitch ~= nil) then
+								componentSwitch:PlayAudio(0)
+							end
 						end
+					else
+						print("Out of ammo")
+					end
+
+				-- Ultimate
+				elseif (currentAction == Action.AIMING_ULTIMATE) then -- Cast Ultimate (infinite range for now)
+					local target = GetGameObjectHovered()
+					if (target.tag == Tag.ENEMY and Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= ultimateRange) then
+						mousePos = GetLastMouseClick()
+						Ultimate(mousePos)
+					end
+				end
+			end
+		
+			-- Right Click
+			if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
+				goHit = GetGameObjectHovered()
+				if (goHit ~= hit and goHit ~= gameObject) then
+					destination = GetLastMouseClick()
+					if (currentAction == Action.WALKING and isDoubleClicking == true) then
+						currentAction = Action.RUNNING
+					else
+						currentAction = Action.WALKING
+						isDoubleClicking = true
+					end
+					if (mouseParticles ~= nil) then
+						mouseParticles:GetComponentParticle():ResumeParticleSpawn()
+						mouseParticles:GetTransform():SetPosition(destination)
+					end
+				end
+			end
+		
+			if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
+				currentAction = Action.IDLE
+			end
+			if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
+				currentAction = Action.AIMING_KNIFE
+			end	
+			if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- SPACE
+				currentAction = Action.AIMING_ULTIMATE
+			end
+			if (GetInput(9) == KEY_STATE.KEY_DOWN) then -- C -> Toggle crouch
+				if (currentAction == Action.CROUCHING) then
+					currentAction = Action.WALKING
+					if (componentSwitch ~= nil) then
+						componentSwitch:StopTrack(2)
+						componentSwitch:PlayAudio(1)
 					end
 				else
-					print("Out of ammo")
-				end
-
-			-- Ultimate
-			elseif (currentAction == Action.AIMING_ULTIMATE) then -- Cast Ultimate (infinite range for now)
-
-				GetGameObjectHovered()
-				mousePos = GetLastMouseClick()
-				Ultimate(mousePos)
-			end
-		end
-	
-		-- Right Click
-		if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
-			goHit = GetGameObjectHovered()
-			if (goHit ~= hit and goHit ~= gameObject) then
-				destination = GetLastMouseClick()
-				if (currentAction == Action.WALKING and isDoubleClicking == true) then
-					currentAction = Action.RUNNING
-				else
-					currentAction = Action.WALKING
-					isDoubleClicking = true
-				end
-				if (mouseParticles ~= nil) then
-					mouseParticles:GetComponentParticle():ResumeParticleSpawn()
-					mouseParticles:GetTransform():SetPosition(destination)
+					currentAction = Action.CROUCHING
+					if (componentSwitch ~= nil) then
+						componentSwitch:StopTrack(1)
+						componentSwitch:PlayAudio(2)
+					end
 				end
 			end
-		end
-	
-		if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
-			currentAction = Action.IDLE
-		end
-		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
-			currentAction = Action.AIMING_KNIFE
-		end	
-		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- SPACE
-			currentAction = Action.AIMING_ULTIMATE
-		end
-		if (GetInput(9) == KEY_STATE.KEY_DOWN) then -- C -> Toggle crouch
-			if (currentAction == Action.CROUCHING) then
-				currentAction = Action.WALKING
-				if (componentSwitch ~= nil) then
-					componentSwitch:StopTrack(2)
-					componentSwitch:PlayAudio(1)
-				end
-			else
-				currentAction = Action.CROUCHING
-				if (componentSwitch ~= nil) then
-					componentSwitch:StopTrack(1)
-					componentSwitch:PlayAudio(2)
-				end
+			if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R -> For debugging purposes only
+				Reload()
 			end
-		end
-		if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R -> For debugging purposes only
-			Reload()
 		end
 	end
 end
@@ -237,7 +237,7 @@ function MoveToDestination(dt)
 		if(vec2[1] < 0)	then
 			rad = rad * (-1)
 		end
-		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
+		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
 	else
 		
 		StopMovement()
@@ -335,11 +335,11 @@ function Ultimate(mousePos)
 	end
 
 	-- This 5 is the constant to modify
-	reappearPosition = float3.new(furtherstEnemy:GetTransform():GetPosition().x + vec2[1] * 5, componentTransform:GetPosition().y, furtherstEnemy:GetTransform():GetPosition().z + vec2[2] * 5)
+	reappearPosition = float3.new(furtherstEnemy:GetTransform():GetPosition().x + vec2[1] * 25, componentTransform:GetPosition().y, furtherstEnemy:GetTransform():GetPosition().z + vec2[2] * 25)
 
 	-- Set timer equal to the longest dath mark timer to reappear
 	Disapear(deathMarkDuration)
-	
+
 	StopMovement()
 end
 
@@ -352,7 +352,8 @@ function Disapear(duration)
 	gameObject:GetRigidBody():SetRigidBodyPos(reappearPosition)
 end
 
-function StopMovement()-- AAAAAAAAAAAAAAAAAAAAA
+function StopMovement()
+	currentAction = Action.IDLE -- Stops aimings and all actions
 	destination = nil
 	if (componentRigidBody ~= nil) then
 		componentRigidBody:Set2DVelocity(float2.new(0,0))

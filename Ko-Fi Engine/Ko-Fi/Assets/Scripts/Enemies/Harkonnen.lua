@@ -161,7 +161,7 @@ function Update(dt)
     if (rigidBodyFlag == true) then
 		if (componentRigidBody ~= nil) then
 			rigidBodyFlag = false
-			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 15, componentTransform:GetPosition().z))
+			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
 		end
 	end
 
