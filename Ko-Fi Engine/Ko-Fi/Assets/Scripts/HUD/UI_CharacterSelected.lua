@@ -2,7 +2,7 @@
 characterID = 1
 
 local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-characterIDIV = InspectorVariable.new("lives", characterIDIVT, characterID)
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
 
 -- Called each loop iteration
