@@ -344,7 +344,7 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 void C_Script::Save(Json &json) const
 {
 	json["type"] = "script";
-	json["id"] = std::to_string(id).c_str();
+	json["id"] = id;
 	json["file_name"] = s->path;
 	Json jsonIV;
 	for (InspectorVariable *variable : s->inspectorVariables)

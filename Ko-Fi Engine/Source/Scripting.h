@@ -633,11 +633,11 @@ public:
 	}
 
 	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
-			for (auto c : gameObject->GetComponents()) {
-				if (c->type == ComponentType::SCRIPT) {
-					((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));
-				}
+		for (auto c : gameObject->GetComponents()) {
+			if (c->type == ComponentType::SCRIPT) {
+				((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));
 			}
+		}
 	}
 
 public:
