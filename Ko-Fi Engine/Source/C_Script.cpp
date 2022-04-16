@@ -33,7 +33,7 @@ C_Script::C_Script(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
 	SetId(RNG::GetRandomUint());
-	s = nullptr;
+	s = new ScriptHandler(owner);
 }
 
 C_Script::~C_Script()
@@ -61,6 +61,26 @@ bool C_Script::CleanUp()
 
 bool C_Script::Update(float dt)
 {
+	while (eventQueue.size() != 0) {
+		auto e = eventQueue.front();
+		eventQueue.pop();
+
+		auto receiver = sol::protected_function(s->handler->lua["EventHandler"]);
+
+		if (receiver.valid()) {
+			sol::protected_function_result result = receiver(e.key, e.fields);
+			if (result.valid()) {
+				// Call succeeded
+			}
+			else {
+				// Call failed
+				sol::error err = result;
+				std::string what = err.what();
+				appLog->AddLog("%s\n", what.c_str());
+			}
+		}
+	}
+
 	if (s != nullptr)
 	{
 		s->lua_update = sol::protected_function(s->handler->lua["Update"]);
@@ -77,11 +97,6 @@ bool C_Script::Update(float dt)
 					std::string what = err.what();
 					appLog->AddLog("%s\n", what.c_str());
 				}
-				/*if (owner->changeScene)
-				{
-					owner->changeScene = false;
-					owner->LoadSceneFromName("HUD_Scene");
-				}*/
 			}
 		}
 	}
@@ -353,11 +368,10 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 
 void C_Script::Save(Json &json) const
 {
-	/*json["type"] = "script";
-	json["file_name"] = path;
-	json["script_number"] = numScript;
+	json["type"] = "script";
+	json["file_name"] = s->path;
 	Json jsonIV;
-	for (InspectorVariable *variable : inspectorVariables)
+	for (InspectorVariable *variable : s->inspectorVariables)
 	{
 		switch (variable->type)
 		{
@@ -439,14 +453,14 @@ void C_Script::Save(Json &json) const
 		break;
 		}
 		json["inspector_variables"].push_back(jsonIV);
-	}*/
+	}
 }
 
 void C_Script::Load(Json &json)
 {
-	/*path = json.at("file_name");
-	numScript = json.at("script_number");
-	LoadInspectorVariables(json);*/
+	s->path = json.at("file_name");
+	LoadInspectorVariables(json);
+	ReloadScript(s);
 }
 
 void C_Script::SetId(int id)
@@ -457,7 +471,7 @@ void C_Script::SetId(int id)
 
 void C_Script::LoadInspectorVariables(Json &json)
 {
-	/*if (!json.contains("inspector_variables"))
+	if (!json.contains("inspector_variables"))
 		return;
 	for (const auto &var : json.at("inspector_variables").items())
 	{
@@ -519,8 +533,8 @@ void C_Script::LoadInspectorVariables(Json &json)
 		}
 
 		InspectorVariable *variable = new InspectorVariable(name, type, value);
-		inspectorVariables.push_back(variable);
-	}*/
+		s->inspectorVariables.push_back(variable);
+	}
 }
 
 ScriptHandler::ScriptHandler(GameObject* owner)

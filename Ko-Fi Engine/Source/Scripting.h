@@ -30,6 +30,7 @@
 #include "C_Camera.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
+#include "C_Script.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -311,6 +312,8 @@ public:
 		lua.set_function("GetNavigation", &Scripting::GetNavigation, this);
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
+		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
+
 	}
 
 	bool CleanUp()
@@ -612,10 +615,21 @@ public:
 	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length) {
 		gameObject->GetEngine()->GetRenderer()->DrawCone(position, forward, up, angle, length);
 	}
+
 	float3 LuaMulQuat(Quat quat, float3 vector)
 	{
 		float3 tmp = quat.Mul(vector);
 		return tmp;
+	}
+
+	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string>> fields) {
+		for (auto go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList) {
+			for (auto c : go->GetComponents()) {
+				if (c->type == ComponentType::SCRIPT) {
+					((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));
+				}
+			}
+		}
 	}
 
 public:

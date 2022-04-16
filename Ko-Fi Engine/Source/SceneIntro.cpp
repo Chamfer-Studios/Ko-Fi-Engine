@@ -166,7 +166,6 @@ bool SceneIntro::PostUpdate(float dt)
 			collider->SetIsTrigger(true);
 
 			C_Script *knifeScript = (C_Script *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			knifeScript->s = new ScriptHandler(knife);
 			knifeScript->s->path = "Assets/Scripts/Knife.lua";
 			knifeScript->ReloadScript(knifeScript->s);
 			GameObject *target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
