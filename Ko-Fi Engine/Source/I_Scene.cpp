@@ -557,9 +557,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			uint parentUid = jsonGo.at("parent_UID");
 			go->SetParentUID(parentUid);
 
-			Json jsonCmp = jsonGo.at("components");
+			Json jsonCmps = jsonGo.at("components");
 #pragma omp parallel for
-			for (const auto& cmpIt : jsonCmp.items())
+			for (const auto& cmpIt : jsonCmps.items())
 			{
 				Json jsonCmp = cmpIt.value();
 				bool active = jsonCmp.at("active");
