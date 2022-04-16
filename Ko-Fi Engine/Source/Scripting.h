@@ -69,8 +69,9 @@ public:
 class Scripting
 {
 public:
-	Scripting()
+	Scripting(C_Script* _script)
 	{
+		script = _script;
 		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug, sol::lib::string);
 	}
 
@@ -169,6 +170,7 @@ public:
 									 sol::constructors<void()>(),
 									 "active", &GameObject::active,
 									 "GetName", &GameObject::GetName,
+									 "GetUID", &GameObject::GetUID,
 									 "tag", &GameObject::tag,
 									 "GetParent", &GameObject::GetParent,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
@@ -514,10 +516,7 @@ public:
 	}
 
 	void LuaNewVariable(InspectorVariable *inspectorVariable)
-	{
-		C_Script *script = gameObject->GetComponent<C_Script>();
-
-		
+	{		
 		for (std::vector<InspectorVariable*>::iterator var = script->s->inspectorVariables.begin(); var != script->s->inspectorVariables.end(); ++var)
 		{
 			if (inspectorVariable->name == (*var)->name)
@@ -616,13 +615,14 @@ public:
 		gameObject->GetEngine()->GetRenderer()->DrawCone(position, forward, up, angle, length);
 	}
 
+
 	float3 LuaMulQuat(Quat quat, float3 vector)
 	{
 		float3 tmp = quat.Mul(vector);
 		return tmp;
 	}
 
-	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string>> fields) {
+	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
 		for (auto go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 			for (auto c : go->GetComponents()) {
 				if (c->type == ComponentType::SCRIPT) {
@@ -636,6 +636,7 @@ public:
 	sol::state lua;
 	GameObject *gameObject = nullptr;
 	C_Transform *componentTransform = nullptr;
+	C_Script* script = nullptr;
 };
 
 #endif // !__SCRIPTING_H__

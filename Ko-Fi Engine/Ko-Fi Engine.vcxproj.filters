@@ -1819,7 +1819,7 @@
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\EnemyPathfinder.lua">
+    <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua">
@@ -1863,5 +1863,8 @@
     <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua">
+      <Filter>Scripts\Enemies</Filter>
+    </None>
   </ItemGroup>
 </Project>
