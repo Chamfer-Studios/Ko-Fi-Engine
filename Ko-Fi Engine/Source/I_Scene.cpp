@@ -611,7 +611,17 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "script")
 					{
-						C_Script* scriptCmp = go->GetComponent<C_Script>();
+						C_Script* scriptCmp = nullptr;
+						for (auto c : go->GetComponents()) {
+							if (c->type == ComponentType::SCRIPT) {
+								int cID = ((C_Script*)c)->id;
+								if (jsonCmp.find("id") != jsonCmp.end()) {
+									if (cID == jsonCmp.at("id")) {
+										scriptCmp = (C_Script*)c;
+									}
+								}
+							}
+						}
 						if (scriptCmp == nullptr)
 						{
 							scriptCmp = (C_Script*)go->AddComponentByType(ComponentType::SCRIPT);

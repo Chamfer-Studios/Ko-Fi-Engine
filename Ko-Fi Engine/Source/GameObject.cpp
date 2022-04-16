@@ -707,7 +707,17 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "script")
 		{
-			C_Script* scriptCmp = this->GetComponent<C_Script>();
+			C_Script* scriptCmp = nullptr;
+			for (auto c : this->GetComponents()) {
+				if (c->type == ComponentType::SCRIPT) {
+					int cID = ((C_Script*)c)->id;
+					if (jsonCmp.find("id") != jsonCmp.end()) {
+						if (cID == jsonCmp.at("id")) {
+							scriptCmp = (C_Script*)c;
+						}
+					}
+				}
+			}
 			if (scriptCmp == nullptr)
 			{
 				scriptCmp = this->CreateComponent<C_Script>();
@@ -846,7 +856,17 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "script")
 		{
-			C_Script* scriptCmp = this->GetComponent<C_Script>();
+			C_Script* scriptCmp = nullptr;
+			for (auto c : this->GetComponents()) {
+				if (c->type == ComponentType::SCRIPT) {
+					int cID = ((C_Script*)c)->id;
+					if (jsonCmp.find("id") != jsonCmp.end()) {
+						if (cID == jsonCmp.at("id")) {
+							scriptCmp = (C_Script*)c;
+						}
+					}
+				}
+			}
 			if (scriptCmp == nullptr)
 			{
 				scriptCmp = this->CreateComponent<C_Script>();
