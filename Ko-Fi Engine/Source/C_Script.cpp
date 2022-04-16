@@ -435,7 +435,12 @@ void C_Script::Save(Json &json) const
 void C_Script::Load(Json &json)
 {
 	s->path = json.at("file_name");
-	id = json.at("id");
+	if (json.find("id") != json.end()) {
+		id = json.at("id");
+	}
+	else {
+		SetId(RNG::GetRandomUint());
+	}
 	LoadInspectorVariables(json);
 	ReloadScript(s);
 }
