@@ -48,6 +48,8 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 
 C_Mesh::~C_Mesh()
 {
+	if (strcmp(owner->GetName(), "Knife") == 0)  // Dirty Fix before resource manager works
+		return;
 	RELEASE(mesh);
 }
 
@@ -71,6 +73,8 @@ bool C_Mesh::PostUpdate(float dt) //AKA the real render
 
 bool C_Mesh::CleanUp()
 {
+	if (strcmp(owner->GetName(), "Knife") == 0)  // Dirty Fix before resource manager works
+		return true;
 	RELEASE(mesh);
 
 	return true;

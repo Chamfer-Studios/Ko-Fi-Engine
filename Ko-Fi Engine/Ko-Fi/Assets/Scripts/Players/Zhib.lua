@@ -1,6 +1,7 @@
 ------------------- Variables --------------------
 
 characterID = 1
+target = nil
 
 Action = {
 	IDLE = 1,
@@ -108,7 +109,7 @@ function Update(dt)
 				-- Knife
 				if (currentAction == Action.AIMING_KNIFE) then -- Fire Knife (infinite range for now)
 					if (knifeCount > 0) then
-						local target = GetGameObjectHovered()
+						target = GetGameObjectHovered()
 						if (target.tag == Tag.ENEMY) then
 							Fire()
 							if (componentSwitch ~= nil) then
@@ -121,7 +122,7 @@ function Update(dt)
 
 				-- Ultimate
 				elseif (currentAction == Action.AIMING_ULTIMATE) then -- Cast Ultimate (infinite range for now)
-					local target = GetGameObjectHovered()
+					target = GetGameObjectHovered()
 					if (target.tag == Tag.ENEMY and Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= ultimateRange) then
 						mousePos = GetLastMouseClick()
 						Ultimate(mousePos)
@@ -367,8 +368,8 @@ function StopMovement()
 end
 
 function OnTriggerEnter(go)
-
-	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
+	print("flag p")
+	if (go.tag == Tag.PROJECTILE) then
 		knifeCount = knifeCount + 1
 	end
 end

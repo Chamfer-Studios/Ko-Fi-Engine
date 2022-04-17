@@ -42,12 +42,17 @@ C_Material::C_Material(GameObject* parent) : Component(parent)
 
 C_Material::~C_Material()
 {
+	if (strcmp(owner->GetName(), "Knife") == 0)  // Dirty Fix before resource manager works
+		return;
 	if(material != nullptr)
 		RELEASE(material);
 }
 
 bool C_Material::CleanUp()
 {
+	if (strcmp(owner->GetName(), "Knife") == 0)  // Dirty Fix before resource manager works
+		return true;
+
 	if(material != nullptr)
 		RELEASE(material);// peta por el karambit
 

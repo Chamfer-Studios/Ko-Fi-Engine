@@ -202,8 +202,8 @@ function Update(dt)
 end
 
 function OnTriggerEnter(go)
-
-	if (go.tag == Tag.PROJECTILE) then -- Using direct name instead of tags so other players can't pick it up
+    print("flag e")
+	if (go.tag == Tag.PROJECTILE) then
 		DeleteGameObject()
 	end
 end

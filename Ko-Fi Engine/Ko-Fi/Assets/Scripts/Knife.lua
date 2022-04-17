@@ -14,16 +14,12 @@ function Update(dt)
 	end
 end
 
+-- Collision Handler
 function OnTriggerEnter(go)
-	if (destination ~= nil) then
-		return
-	end
-	if (go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
+	if (destination == nil and go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
 		DeleteGameObject()
 	end
 end
-
---------------------------------------------------
 
 -- Move to destination
 function MoveToDestination(dt)
@@ -59,6 +55,15 @@ end
 function SetDestination()
 	if (target ~= nil) then
 		destination = target:GetTransform():GetPosition()
+
+		local targetPos2D = { destination.x, destination.z }
+		local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
+		local d = Distance(pos2D, targetPos2D)
+		local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
+		vec2 = Normalize(vec2, d)
+		if (componentRigidBody ~= nil) then
+			componentRigidBody:SetRigidBodyPos(float3.new(vec2[1] * 15, componentTransform:GetPosition().y, vec2[2] * 15))
+		end
 	end
 end
 

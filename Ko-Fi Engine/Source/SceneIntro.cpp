@@ -145,12 +145,12 @@ bool SceneIntro::PostUpdate(float dt)
 			knife->tag = Tag::TAG_PROJECTILE;
 			C_RigidBody *rigidBody = knife->CreateComponent<C_RigidBody>();
 
-			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
+			//knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 			float3 pos = parent->GetTransform()->GetPosition();
 
-			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y + 15, pos.z - 15));
+			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y /*+ 15*/, pos.z));
 			float3 parentRot = parent->GetTransform()->GetRotationEuler();
-			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
+			knife->GetTransform()->SetPosition(float3(pos.x, pos.y/* + 15*/, pos.z - 15));
 			float3 rot = {parentRot.x - 55, parentRot.y, parentRot.z};
 			knife->GetTransform()->SetRotationEuler(rot);
 
