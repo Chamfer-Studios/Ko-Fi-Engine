@@ -63,7 +63,6 @@ function CheckAndRecalculatePath(force)
     end
 
     if eq == false or force then
-        Log("update dispatch\n")
         DispatchEvent(pathfinderUpdateKey, { patrolWaypoints, pingpong })
         currentPathIndex = 1
     end

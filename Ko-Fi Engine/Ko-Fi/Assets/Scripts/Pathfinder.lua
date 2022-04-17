@@ -49,7 +49,6 @@ function FollowPath(speed, dt)
 
     currentTarget = finalPath[currentPathIndex]
 
-    -- Log(tostring(currentPathIndex) .. " " .. tostring(#finalPath) .. " " .. tostring(currentTarget.x) .. " " .. tostring(currentTarget.y) .. " " .. tostring(currentTarget.z) .. "\n")
     currentPosition = componentTransform:GetPosition()
     if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
         currentPathIndex = currentPathIndex + 1
@@ -93,13 +92,10 @@ function UpdatePath(wp, pingpong)
     _G.finalPath = {}
     
     for i=1,#_finalPath do
-        Log(tostring(_finalPath[i]) .. "\n")
         _G.finalPath[i] = float3.new(_finalPath[i].x, _finalPath[i].y, _finalPath[i].z)
     end
     
     currentPathIndex = 1
-
-    Log("done\n")
 end
 
 function EventHandler(key, fields)
