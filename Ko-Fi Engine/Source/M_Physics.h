@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "PxScene.h"
 #include "foundation/PxVec3.h"
+#include "MathGeoLib/Math/float3.h"
 
 class string;
 class vector;
@@ -88,6 +89,8 @@ public:
 
 
 	void setupFiltering(physx::PxRigidActor* actor, physx::PxU32 LayerMask, physx::PxU32 filterMask);
+
+	bool Raycast(float3 origin, float3 direction, float maxDistance);
 
 private:
 	// Filter matrix private methods

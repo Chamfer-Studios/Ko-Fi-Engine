@@ -111,12 +111,20 @@ bool C_Script::PostUpdate(float dt)
 {
 	if(s != nullptr)
 	{
+		auto post_update = sol::protected_function(s->handler->lua["PostUpdate"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			auto f = s->handler->lua["PostUpdate"];
-
-			if (f.valid()) {
-				f(dt);
+			if (post_update.valid()) {
+				sol::protected_function_result result = post_update(dt);
+				if (result.valid()) {
+					// Call succeeded
+				}
+				else {
+					// Call failed
+					sol::error err = result;
+					std::string what = err.what();
+					appLog->AddLog("%s\n", what.c_str());
+				}
 			}
 		}
 	}
@@ -130,12 +138,20 @@ bool C_Script::OnPlay()
 
 	if (s != nullptr)
 	{
+		auto start = sol::protected_function(s->handler->lua["Start"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			auto f = s->handler->lua["Start"];
-
-			if (f.valid()) {
-				f();
+			if (s->lua_update.valid()) {
+				sol::protected_function_result result = start();
+				if (result.valid()) {
+					// Call succeeded
+				}
+				else {
+					// Call failed
+					sol::error err = result;
+					std::string what = err.what();
+					appLog->AddLog("%s\n", what.c_str());
+				}
 			}
 		}
 	}

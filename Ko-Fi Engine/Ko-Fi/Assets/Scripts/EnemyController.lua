@@ -82,8 +82,49 @@ STATE = {
 
 state = STATE.UNAWARE
 
+sleep = function(time, callback)
+    local t = 0
+    repeat
+        local T = os.time()
+        coroutine.yield(coroutine.resume(coroutine.create(function() end)))
+        t = t + (os.time()-T)
+        Log("heyyyy\n")
+    until t >= time
+end
+
+function WaitForSeconds(seconds, callback)
+    current = os.clock()
+    target = current + seconds
+
+    waiter = coroutine.wrap(function()
+        while(current < target)
+        do
+            current = os.clock()
+            Log(tostring(current) .. "\n")
+            coroutine.yield(coroutine.resume(coroutine.create(function()
+                Log("waiter\n")
+                waiter()
+            end)))
+        end
+        callback()
+    end)
+
+    waiter()
+
+end
+
 function Start()
     CheckAndRecalculatePath(true)
+
+    coroutine.resume(coroutine.create(function()
+        sleep(5, function()
+            Log("finished 2\n")
+        end)
+    end))
+
+    WaitForSeconds(10, function()
+        Log("finished\n")
+    end)
 end
 
 function Update(dt)
