@@ -82,15 +82,13 @@ STATE = {
 
 state = STATE.UNAWARE
 
-lastPlayerPosition = nil
-
-init = true
+function Start()
+    CheckAndRecalculatePath(true)
+end
 
 function Update(dt)
-    if init == true then
-        CheckAndRecalculatePath(true)
-        init = false
+    if state == STATE.UNAWARE then
+        CheckAndRecalculatePath(false)
     end
-    CheckAndRecalculatePath(false)
 	DispatchEvent(pathfinderFollowKey, { speed, dt })
 end

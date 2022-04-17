@@ -294,6 +294,10 @@ public:
 									 sol::constructors<void(KoFiEngine *)>(),
 									 "FindPath", &M_Navigation::FindPath);
 
+		lua.new_usertype<M_Camera3D>("M_Camera3D",
+			sol::constructors<void(KoFiEngine*)>(),
+			"WorldToScreen", &M_Camera3D::WorldToScreen);
+
 		/// Variables
 		lua["gameObject"] = gameObject;
 		lua["componentTransform"] = componentTransform;
@@ -311,6 +315,7 @@ public:
 		lua.set_function("GetGameObjectHovered", &Scripting::LuaGetGameObjectHovered, this);
 		lua.set_function("GetLastMouseClick", &Scripting::LuaGetLastMouseClick, this);
 		lua.set_function("Log", &Scripting::LuaLog, this);
+		lua.set_function("GetCamera", &Scripting::GetCamera, this);
 		lua.set_function("GetNavigation", &Scripting::GetNavigation, this);
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
@@ -387,6 +392,11 @@ public:
 	M_Navigation *GetNavigation()
 	{
 		return gameObject->GetEngine()->GetNavigation();
+	}
+
+	M_Camera3D* GetCamera()
+	{
+		return gameObject->GetEngine()->GetCamera3D();
 	}
 
 	void LuaCreateGameObject(std::string name)

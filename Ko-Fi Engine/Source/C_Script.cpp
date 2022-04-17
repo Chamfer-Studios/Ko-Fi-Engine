@@ -128,7 +128,17 @@ bool C_Script::OnPlay()
 {
 	bool ret = true;
 
-	//ReloadScript();
+	if (s != nullptr)
+	{
+		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
+		{
+			auto f = s->handler->lua["Start"];
+
+			if (f.valid()) {
+				f();
+			}
+		}
+	}
 
 	return ret;
 }
