@@ -5,7 +5,7 @@ NewVariable(minRetargetingDistanceIV)
 
 navigation = GetNavigation()
 
-finalPath = {}
+_G.finalPath = {}
 currentPathIndex = 1
 
 function Float3Length(v)
@@ -43,48 +43,68 @@ function Float3Angle(a, b)
 end
 
 function FollowPath(speed, dt)
-    Log(tostring(speed) .. " " .. tostring(dt) .. " " .. tostring(#finalPath) .. "\n")
     if #finalPath == 0 then
-        return
+        do return end
     end
+
     currentTarget = finalPath[currentPathIndex]
+
+    -- Log(tostring(currentPathIndex) .. " " .. tostring(#finalPath) .. " " .. tostring(currentTarget.x) .. " " .. tostring(currentTarget.y) .. " " .. tostring(currentTarget.z) .. "\n")
     currentPosition = componentTransform:GetPosition()
     if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
         currentPathIndex = currentPathIndex + 1
         if currentPathIndex > #finalPath then
-            if currentState == State.PATROL then
-                currentPathIndex = 1
-            else
-                currentPathIndex = #finalPath
-            end
+            currentPathIndex = 1
         end
         currentTarget = finalPath[currentPathIndex]
     end
     direction = Float3NormalizedDifference(currentPosition, currentTarget)
-    componentTransform:SetFront(float3.new(direction.x, direction.y, direction.z))
+    -- componentTransform:SetFront(float3.new(direction.x, direction.y, direction.z))
     delta = { x = direction.x * speed * dt, y = direction.y * speed * dt, z = direction.z * speed * dt }
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
 end
 
-function UpdatePath(wp)
-    finalPath = {}
+function UpdatePath(wp, pingpong)
+    _finalPath = {}
     n = 1
     for i=1,#wp - 1 do
         current = wp[i]
         next = wp[i + 1]
         result = navigation:FindPath(current, next, 1000, 1000)
         for j=1,#result do
-            finalPath[n] = result[j]
+            _finalPath[n] = result[j]
             n = n + 1
         end
     end
+
+    if pingpong == true then
+        for i=#wp,2,-1 do
+            current = wp[i]
+            next = wp[i - 1]
+            result = navigation:FindPath(current, next, 1000, 1000)
+            for j=1,#result do
+                _finalPath[n] = result[j]
+                n = n + 1
+            end
+        end
+    end
+
+    _G.finalPath = {}
+    
+    for i=1,#_finalPath do
+        Log(tostring(_finalPath[i]) .. "\n")
+        _G.finalPath[i] = float3.new(_finalPath[i].x, _finalPath[i].y, _finalPath[i].z)
+    end
+    
+    currentPathIndex = 1
+
+    Log("done\n")
 end
 
 function EventHandler(key, fields)
-    if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints;
-        UpdatePath(fields[1])
-        currentPathIndex = 1
+    if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints; fields[2] -> pingpong
+        UpdatePath(fields[1], fields[2])
     elseif key == "Pathfinder_FollowPath" then -- fields[1] -> speed; fields[2] -> dt;
         FollowPath(fields[1], fields[2])
     end

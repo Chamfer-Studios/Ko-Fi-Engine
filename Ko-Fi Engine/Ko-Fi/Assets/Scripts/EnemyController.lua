@@ -18,6 +18,11 @@ local visionConeRadiusIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 visionConeRadiusIV = InspectorVariable.new("visionConeRadius", visionConeRadiusIVT, visionConeRadius)
 NewVariable(visionConeRadiusIV)
 
+pingpong = false
+local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+pingpongIV = InspectorVariable.new("pingpong", pingpongIVT, pingpong)
+NewVariable(pingpongIV)
+
 patrolOldWaypoints = {}
 patrolWaypoints = {}
 local patrolWaypointsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3_ARRAY
@@ -58,7 +63,8 @@ function CheckAndRecalculatePath(force)
     end
 
     if eq == false or force then
-        DispatchEvent(pathfinderUpdateKey, { patrolWaypoints })
+        Log("update dispatch\n")
+        DispatchEvent(pathfinderUpdateKey, { patrolWaypoints, pingpong })
         currentPathIndex = 1
     end
 end
