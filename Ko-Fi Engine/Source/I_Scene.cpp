@@ -11,6 +11,7 @@
 #include "M_SceneManager.h"
 #include "M_FileSystem.h"
 #include "M_Navigation.h"
+#include "M_ResourceManager.h"
 
 #include "GameObject.h"
 #include "C_Transform.h"
@@ -35,6 +36,7 @@
 #include "ComponentWalkable.h"
 #include "ComponentFollowPath.h"
 
+#include "Resource.h"
 #include "R_Mesh.h"
 #include "R_Animation.h"
 #include "R_Texture.h"
@@ -47,6 +49,7 @@
 #include "I_Material.h"
 
 #include "AnimatorClip.h"
+#include "RNG.h"
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 {
@@ -116,7 +119,12 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 
 	nodeName = engine->GetFileSystem()->GetNameFromPath(model->GetAssetPath());
 
-	ImportNode(assimpScene, assimpScene->mRootNode, engine->GetSceneManager()->GetCurrentScene()->rootGo, isPrefab);
+	engine->GetResourceManager()->GetForcedUIDsFromMeta(model->GetAssetPath(), forcedUIDs);
+
+	ImportNode(assimpScene, assimpScene->mRootNode, model,ModelNode(), isPrefab);
+
+	loadedNodes.clear();
+	forcedUIDs.clear();
 
 	return true;
 }
@@ -144,13 +152,32 @@ void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, G
 	gameObj->isPrefab = isPrefab;
 
 	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
-	std::string chainName = nodeName.c_str() ;
+	std::string chainName = nodeName.c_str();
 	gameObj->SetName(chainName.c_str());
 	parent->AttachChild(gameObj);
 
 	for (unsigned int i = 0; i < assimpNode->mNumChildren; ++i)
 	{
 		ImportNode(assimpScene, assimpNode->mChildren[i], gameObj);
+	}
+}
+
+void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, R_Model* model, const ModelNode& parent, bool isPrefab)
+{
+	ModelNode modelNode = ModelNode();
+	modelNode.uid = RNG::GetRandomUint();
+	modelNode.parentUid = parent.uid;
+	//GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+
+	assimpNode = ImportTransform(assimpNode, modelNode); // THIS IS CAUSING BUGS WITH THE SCALE 
+	ImportMeshesAndMaterials(assimpScene, assimpNode, model, modelNode);
+
+	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
+	model->nodes.push_back(modelNode);
+
+	for (unsigned int i = 0; i < assimpNode->mNumChildren; ++i)
+	{
+		ImportNode(assimpScene, assimpNode->mChildren[i], model, modelNode);
 	}
 }
 
@@ -194,6 +221,45 @@ const aiNode* I_Scene::ImportTransform(const aiNode* assimpNode, GameObject* chi
 	return assimpNode;
 }
 
+const aiNode* I_Scene::ImportTransform(const aiNode* assimpNode, ModelNode& node)
+{
+	// Assimp generates dummy nodes to store multiple FBX transformations.
+	// All those transformations will be collapsed to the first non-dummy node.
+
+	aiTransform aiT;
+
+	assimpNode->mTransformation.Decompose(aiT.scale, aiT.rotation, aiT.position);
+
+	float3 position = { aiT.position.x, aiT.position.y, aiT.position.z };
+	Quat rotation = { aiT.rotation.x, aiT.rotation.y, aiT.rotation.z, aiT.rotation.w };
+	float3 scale = { aiT.scale.x, aiT.scale.y, aiT.scale.z };
+
+	while (IsDummyNode(*assimpNode))
+	{
+		// As dummies will only have one child, selecting the next one to process is easy.
+		assimpNode = assimpNode->mChildren[0];
+
+		// Getting the Transform stored in the dummy node.
+		assimpNode->mTransformation.Decompose(aiT.scale, aiT.rotation, aiT.position);
+
+		float3 dummyPosition = { aiT.position.x, aiT.position.y, aiT.position.z };
+		Quat dummyRotation = { aiT.rotation.x, aiT.rotation.y, aiT.rotation.z, aiT.rotation.w };
+		float3 dummyScale = { aiT.scale.x, aiT.scale.y, aiT.scale.z };
+
+		// Adding the dummy's Transform to the current one.
+		position += dummyPosition;
+		rotation = rotation * dummyRotation;
+		scale = { scale.x * dummyScale.x, scale.y * dummyScale.y, scale.z * dummyScale.z };
+	}
+	node.pos = position;
+	node.rot = rotation;
+	node.scale = scale;
+
+	CONSOLE_LOG("[STATUS] Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());
+
+	return assimpNode;
+}
+
 bool I_Scene::IsDummyNode(const aiNode & assimpNode)
 {
 	// All dummy nodes contain the "_$AssimpFbx$_" string and only one child node.
@@ -207,7 +273,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 		CONSOLE_LOG("[ERROR] Importer: Assimp Scene / Node or GameObject is nullptr.");
 		return;
 	}
-	
+
 	if (!assimpScene->HasMeshes())
 	{
 		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any Mesh.");
@@ -232,6 +298,52 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 		}
 		else
 			CONSOLE_LOG("[ERROR] Importer: aiMesh is missing or does not have faces.");
+	}
+}
+
+void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode* assimpNode, R_Model* model, ModelNode& node)
+{
+	if (assimpScene == nullptr || assimpNode == nullptr || model == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: Assimp Scene / Node or GameObject is nullptr.");
+		return;
+	}
+
+	if (!assimpScene->HasMeshes())
+	{
+		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any Mesh.");
+		return;
+	}
+
+	const char* nodeName = assimpNode->mName.C_Str();
+
+	for (unsigned int i = 0; i < assimpNode->mNumMeshes; ++i)
+	{
+		std::map<uint, ModelNode>::iterator item = loadedNodes.find(assimpNode->mMeshes[i]);
+		if (item != loadedNodes.end())
+		{
+			node.mesh = item->second.mesh;
+			node.material = item->second.material;
+			node.texture = item->second.texture;
+			continue;
+		}
+
+		aiMesh* assimpMesh = assimpScene->mMeshes[assimpNode->mMeshes[i]];
+
+		if (assimpMesh != nullptr && assimpMesh->HasFaces())
+		{
+			ImportMesh(nodeName, assimpMesh, node, assimpScene);
+
+			if (assimpScene->HasMaterials() && assimpMesh->mMaterialIndex >= 0)
+			{
+				aiMaterial* assimpMaterial = assimpScene->mMaterials[assimpMesh->mMaterialIndex];
+				ImportMaterial(nodeName, assimpMaterial, assimpMesh->mMaterialIndex, model, node);
+			}
+		}
+		else
+			CONSOLE_LOG("[ERROR] Importer: aiMesh is missing or does not have faces.");
+
+		loadedNodes.emplace(assimpNode->mMeshes[i], node);
 	}
 }
 
@@ -285,10 +397,49 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		CONSOLE_LOG("[ERROR] Component Animator is nullptr.");
 		return;
 	}
-	
+
 	// Creating a default clip with all the keyframes of the animation.
 	AnimatorClip* animClip = new AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
 	cAnim->CreateDefaultClip(animClip);
+}
+
+void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, ModelNode& node, const aiScene* assimpScene)
+{
+	if (assimpMesh == nullptr)
+	{
+		return;
+	}
+
+	// Import Mesh to GameObject
+	//R_Mesh* mesh = new R_Mesh(Shape::NONE);
+	std::string assetPath = ASSETS_MODELS_DIR + std::string(nodeName) + MESH_EXTENSION;
+	R_Mesh* mesh = (R_Mesh*)engine->GetResourceManager()->CreateNewResource(ResourceType::MESH,assetPath.c_str());
+	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh, assimpScene);
+
+	if (mesh == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: R_Mesh (name: %s) was not imported correctly.", nodeName);
+		return;
+	}
+
+	CheckAndApplyForcedUID(mesh);
+
+	if (!assimpScene->HasAnimations())
+	{
+		CONSOLE_LOG("[WARNING] Scene Importer: R_Model had no animations to import.");
+		return;
+	}
+
+	std::string animAssetPath = ASSETS_MODELS_DIR + std::string(nodeName) + ANIMATION_EXTENSION;
+	R_Animation* anim = (R_Animation*)engine->GetResourceManager()->CreateNewResource(ResourceType::ANIMATION, animAssetPath.c_str());;
+	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim);
+	mesh->SetIsAnimated(true);
+	mesh->SetAnimation(anim);
+
+	// TODO: I THINK WE SHOULD DO THIS?
+	// Creating a default clip with all the keyframes of the animation.
+	//AnimatorClip* animClip = new AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
+	//cAnim->CreateDefaultClip(animClip);
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)
@@ -310,9 +461,9 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 
 	aiString aiTexturePath;
 	std::string texturePath;
-	R_Texture *texture;
+	R_Texture* texture;
 	//if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
-	if(assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
+	if (assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
 		std::string textureFilename = aiTexturePath.C_Str();
 
@@ -354,6 +505,105 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	//		cMaterial->LoadMaterial(materialPath.c_str());
 	//	}
 	//}
+}
+
+void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, R_Model* model, ModelNode& node)
+{
+	if (assimpMaterial == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: aiMaterial is nullptr.");
+		return;
+	}
+
+	// Import Material to GameObject
+	//C_Material* cMaterial = (C_Material*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<C_Material>();
+
+	//if (cMaterial == nullptr)
+	//{
+	//	CONSOLE_LOG("[ERROR] Component Material is nullptr.");
+	//	return;
+	//}
+
+
+		//TODO: CHECK IF THIS WORKS BECAUSE IM NOT SURE
+	std::string assetPath = model->GetAssetPath() + std::string(nodeName) + MATERIAL_EXTENSION;
+	R_Material* material = (R_Material*)engine->GetResourceManager()->CreateNewResource(ResourceType::MATERIAL, assetPath.c_str());
+
+	if (material == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Material is nullptr.");
+		return;
+	}
+
+	//R_Material* material = new R_Material();
+
+	if (!Importer::GetInstance()->materialImporter->Import(assimpMaterial, material))
+	{
+		CONSOLE_LOG("[ERROR] Importer: error while importing the material.");
+		return;
+	}
+	//else
+	//	cMaterial->SetMaterial(material);
+
+	CheckAndApplyForcedUID(material);
+	node.material = material->GetUID();
+
+	aiString aiTexturePath;
+	std::string texturePath;
+	R_Texture* texture;
+	//if (aiGetMaterialTexture(assimpMaterial, aiTextureType_DIFFUSE, materialIndex, &aiTexturePath) == AI_SUCCESS)
+	if (assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
+	{
+		std::string textureFilename = aiTexturePath.C_Str();
+
+		textureFilename = textureFilename.substr(textureFilename.find_last_of("/\\") + 1);
+
+		texturePath = ASSETS_TEXTURES_DIR + textureFilename;
+
+		//TODO: CHECK IF THIS IS CORRECT
+		texture = (R_Texture*)engine->GetResourceManager()->CreateNewResource(ResourceType::TEXTURE,texturePath.c_str());
+		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
+
+		node.texture = texture->GetUID();
+		node.textureName = texture->GetAssetPath();
+
+		//if (ret)
+		//{
+		//	//cMaterial->textures.push_back(texture);
+		//	cMaterial->texture = texture;
+		//}
+	}
+
+	//if (textureFilename.size() > 0)
+	//{
+	//	std::string baseFilename = textureFilename.substr(textureFilename.find_last_of("/\\") + 1);
+	//	std::string::size_type const p(baseFilename.find_last_of('.'));
+	//	std::string filenameWithoutExtension = baseFilename.substr(0, p);
+	//	std::string materialPath = ASSETS_MATERIALS_DIR + filenameWithoutExtension + MATERIAL_EXTENSION;
+	//	std::string texturePath = ASSETS_TEXTURES_DIR + textureFilename.substr(textureFilename.find_last_of('\\') + 1);
+	//	
+	//	if (textureFilename.c_str() != nullptr)
+	//	{
+	//		engine->GetFileSystem()->CreateMaterial(materialPath.c_str(), filenameWithoutExtension.c_str(), texturePath.c_str());
+	//		cMaterial->LoadMaterial(materialPath.c_str());
+	//	}
+	//}
+}
+
+void I_Scene::CheckAndApplyForcedUID(Resource* resource)
+{
+	if (resource == nullptr)
+	{
+		return;
+	}
+
+	auto item = forcedUIDs.find(resource->GetAssetFile());
+	if (item != forcedUIDs.end())
+	{
+		resource->SetUID(item->second);
+		resource->SetLibraryPathAndFile();
+		//resource->ForceUID(item->second);
+	}
 }
 
 bool I_Scene::Save(Scene* scene,const char* customName)

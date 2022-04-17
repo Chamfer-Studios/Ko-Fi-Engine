@@ -61,6 +61,7 @@ public:
 
 	bool LoadMetaFileIntoLibrary(const char* assetPath);
 	bool GetLibraryPairs(const char* assetPath, std::map<UID, ResourceBase>& pairs);
+	bool GetForcedUIDsFromMeta(const char* assetPath, std::map<std::string, UID>& uids);
 	bool GetResourceUIDsFromMeta(const char* assetPath, std::vector<UID>& uids);
 	bool GetResourceBasesFromMeta(const char* assetPath, std::vector<ResourceBase>& bases);
 	bool GetLibraryFilePathsFromMeta(const char* assetPath, std::vector<std::string>& paths);
@@ -75,9 +76,9 @@ public:
 
 	//void ReleaseResource(uint uid);
 
-private:
 	Resource* CreateNewResource(const ResourceType& type, const char* assetPath = nullptr, UID forcedUid = 0);
 
+private:
 	bool SaveMetaFile(Resource* resource) const;
 	bool LoadMetaFile(Json& json, const char* assetPath);
 

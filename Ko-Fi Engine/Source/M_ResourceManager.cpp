@@ -376,6 +376,61 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetPath, std::map<UID, Res
 	return true;
 }
 
+bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<std::string,UID>& uids)
+{
+	bool ret = true;
+
+	if (assetPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta, asset path was nullptr.");
+		return false;
+	}
+
+	JsonHandler jsonHandler;
+	Json jsonMeta;
+
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+
+	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
+	{
+		std::string name = jsonMeta.at("name");
+		UID uid = jsonMeta.at("uid");
+		if (uid == 0)
+		{
+			CONSOLE_LOG("[ERROR] Resource Manager: main resource UID was 0.");
+			return false;
+		}
+
+		uids.emplace(name, uid);
+
+		if (jsonMeta.contains("contained_resources"))
+		{
+			if (!jsonMeta.at("contained_resources").is_null() && !jsonMeta.at("contained_resources").empty())
+			{
+				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
+				{
+					std::string containedName = containedIt.value().at("name");
+					UID containedUid = containedIt.value().at("uid");
+					if (containedUid == 0)
+					{
+						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
+						continue;
+					}
+					uids.emplace(containedName, containedUid);
+				}
+			}
+		}
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
+		ret = false;
+	}
+
+	return ret;
+}
+
 bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetPath, std::vector<UID>& uids)
 {
 	bool ret = true;
@@ -1147,13 +1202,16 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 		break;
 	case ResourceType::MODEL:
 		success = Importer::GetInstance()->sceneImporter->Import((R_Model*)resource);
-		//TODO: MODEL IMPORT
 		break;
 	case ResourceType::SCENE:
 		//TODO: SCENE IMPORT
 		break;
 	case ResourceType::MATERIAL:
 		success = Importer::GetInstance()->materialImporter->Import(assetPath, (R_Material*)resource);
+		break;
+	case ResourceType::MESH:
+		//TODO: MESH IMPORT
+		//success = Importer::GetInstance()->meshImporter->Import((R_Mesh*)resource);
 		break;
 	case ResourceType::FONT:
 		//TODO: FONT IMPORT

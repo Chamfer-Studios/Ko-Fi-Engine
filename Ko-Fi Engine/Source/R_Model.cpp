@@ -67,17 +67,23 @@ ModelNode::ModelNode() :
 	mesh(0),
 	material(0),
 	texture(0),
-	textureName("")
+	textureName(""),
+	pos(float3::zero),
+	rot(Quat::identity),
+	scale(float3::zero)
 {}
 
-ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID texture, std::string textureName) :
+ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID texture, std::string textureName, float3 pos, Quat rot, float3 scale) :
 name(name),
 uid(uid),
 parentUid(parentUid),
 mesh(mesh),
 material(material),
 texture(texture),
-textureName(textureName)
+textureName(textureName),
+pos(pos),
+rot(rot),
+scale(scale)
 {}
 
 ModelNode::~ModelNode()
