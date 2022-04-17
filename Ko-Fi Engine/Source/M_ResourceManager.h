@@ -42,7 +42,7 @@ public:
 	Resource* RequestResource(UID uid);
 
 	ResourceType GetTypeFromAssetsExtension(const char* assetPath);
-	
+
 	bool GetAssetDirectoryFromType(const ResourceType& type, std::string& directory);
 	bool GetLibraryDirectoryAndExtensionFromType(const ResourceType& type, std::string& directory, std::string& extension);
 

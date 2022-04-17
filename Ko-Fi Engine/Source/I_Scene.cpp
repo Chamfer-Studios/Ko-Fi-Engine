@@ -103,7 +103,7 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 		return false;
 	}
 
-	CONSOLE_LOG("[STATUS] Importer: Importing Scene: %s", model->GetAssetPath());
+	CONSOLE_LOG("[STATUS] Importer: Importing Model: %s", model->GetAssetPath());
 
 	std::string errorString = "[ERROR] Importer: Could not Import R_Model { " + std::string(model->GetAssetPath()) + " }";
 
@@ -135,11 +135,6 @@ GameObject* I_Scene::ImportModel(const char* path)
 	// TODO: WE SHOULD CHANGE THIS
 	GameObject* tmp = nullptr;
 	return tmp;
-}
-
-aiScene* I_Scene::GetAssimpScene()
-{
-	return assimpScene;
 }
 
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab)
@@ -251,8 +246,8 @@ const aiNode* I_Scene::ImportTransform(const aiNode* assimpNode, ModelNode& node
 		rotation = rotation * dummyRotation;
 		scale = { scale.x * dummyScale.x, scale.y * dummyScale.y, scale.z * dummyScale.z };
 	}
-	node.pos = position;
-	node.rot = rotation;
+	node.position = position;
+	node.rotation = rotation;
 	node.scale = scale;
 
 	CONSOLE_LOG("[STATUS] Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());
@@ -797,6 +792,62 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	return ret;
 }
 
+bool I_Scene::Save(const R_Model* model, const char* path)
+{
+	bool ret = true;
+
+	if (model == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: couldn't save model in library, model was nullptr.");
+		return false;
+	}
+
+	Json jsonModel;
+
+	jsonModel["model_nodes"].array();
+	Json jsonNode;
+	for (const auto& node : model->nodes)
+	{
+		jsonNode["name"] = node.name.c_str();
+		jsonNode["uid"] = node.uid;
+		jsonNode["parent_uid"] = node.parentUid;
+		jsonNode["mesh_uid"] = node.mesh;
+		jsonNode["material_uid"] = node.material;
+		jsonNode["texture_uid"] = node.texture;
+		jsonNode["texture_name"] = node.textureName.c_str();
+
+		jsonNode["position"]["x"] = node.position.x;
+		jsonNode["position"]["y"] = node.position.y;
+		jsonNode["position"]["z"] = node.position.z;
+
+		jsonNode["rotation"]["x"] = node.rotation.x;
+		jsonNode["rotation"]["y"] = node.rotation.y;
+		jsonNode["rotation"]["z"] = node.rotation.z;
+		jsonNode["rotation"]["w"] = node.rotation.w;
+
+		jsonNode["scale"]["x"] = node.scale.x;
+		jsonNode["scale"]["y"] = node.scale.y;
+		jsonNode["scale"]["z"] = node.scale.z;
+
+		jsonModel["model_nodes"].push_back(jsonNode);
+	}
+
+	jsonModel["model_animations"].array();
+	Json jsonAnim;
+	for (const auto& anim : model->animations)
+	{
+		jsonAnim["name"] = anim.second;
+		jsonAnim["uid"] = anim.first;
+
+		jsonModel["model_animations"].push_back(jsonAnim);
+	}
+	
+	JsonHandler jsonHandler;
+	ret = jsonHandler.SaveJson(jsonModel, path);
+
+	return ret;
+}
+
 bool I_Scene::Load(Scene* scene, const char* name)
 {
 	bool ret = false;
@@ -1074,6 +1125,70 @@ bool I_Scene::Load(Scene* scene, const char* name)
 	}
 	else
 		ret = false;
+
+	return ret;
+}
+
+bool I_Scene::Load(const char* path, R_Model* model)
+{
+	bool ret = true;
+
+	if (model == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: couldn't load model from library, model was nullptr.");
+		return false;
+	}
+
+	JsonHandler jsonHandler;
+	Json jsonModel;
+
+	ret = jsonHandler.LoadJson(jsonModel, path);
+
+	if (ret && !jsonModel.is_null() && !jsonModel.empty())
+	{
+		for (const auto& node : jsonModel.at("model_nodes").items())
+		{
+			ModelNode modelNode = ModelNode();
+
+			modelNode.name = node.value().at("name").get<std::string>();
+			modelNode.uid = node.value().at("uid");
+			modelNode.parentUid = node.value().at("parent_uid");
+			modelNode.mesh = node.value().at("mesh_uid");
+			modelNode.material = node.value().at("material_uid");
+			modelNode.texture = node.value().at("texture_uid");
+			modelNode.textureName = node.value().at("texture_name").get<std::string>();
+
+			modelNode.position.x = node.value().at("position").at("x");
+			modelNode.position.y = node.value().at("position").at("y");
+			modelNode.position.z = node.value().at("position").at("z");
+
+			modelNode.rotation.x = node.value().at("rotation").at("x");
+			modelNode.rotation.y = node.value().at("rotation").at("y");
+			modelNode.rotation.z = node.value().at("rotation").at("z");
+			modelNode.rotation.w = node.value().at("rotation").at("w");
+
+			modelNode.scale.x = node.value().at("scale").at("x");
+			modelNode.scale.y = node.value().at("scale").at("y");
+			modelNode.scale.z = node.value().at("scale").at("z");
+
+			model->nodes.push_back(modelNode);
+		}
+
+		for (const auto& anim : jsonModel.at("model_animations").items())
+		{
+			UID animationUid = anim.value().at("uid");
+			std::string animationName = anim.value().at("name");
+
+			model->animations.emplace(animationUid, animationName);
+		}
+
+		CONSOLE_LOG("[STATUS] Importer: successfully loaded model: { %s }", model->GetAssetFile());
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Importer:couldn't load model from library.");
+		ret = false;
+	}
 
 	return ret;
 }

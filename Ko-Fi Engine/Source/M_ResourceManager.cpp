@@ -505,7 +505,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
 	{
 		UID uid = jsonMeta.at("uid");
-		ResourceType type = (ResourceType)(int)jsonMeta.at("type");
+		ResourceType type = (ResourceType)jsonMeta.at("type").get<int>();
 		std::string assetPath = jsonMeta.at("asset_path");
 		std::string assetFile = jsonMeta.at("asset_file");
 		std::string libraryPath = jsonMeta.at("library_path");
@@ -525,11 +525,11 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 				{
 					UID containedUid = containedIt.value().at("uid");
-					ResourceType containedType = (ResourceType)(int)containedIt.value().at("type");
+					ResourceType containedType = (ResourceType)containedIt.value().at("type").get<int>();
 
 					std::string containedAssetPath = "";
 					//std::string containedAssetPath = jsonMeta.at("asset_path");
-					std::string containedAssetFile = containedIt.value().at("asset_file");
+					std::string containedAssetFile = containedIt.value().at("name");
 
 					std::string containedLibraryPath = containedIt.value().at("library_path");
 					std::string containedLibraryFile = "";
@@ -610,7 +610,7 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetPath, std::
 				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 				{
 					UID containedUid = containedIt.value().at("uid");
-					ResourceType containedType = (ResourceType)(int)containedIt.value().at("type");
+					ResourceType containedType = (ResourceType)containedIt.value().at("type").get<int>();
 
 					directory = "";
 					extension = "";
@@ -845,11 +845,11 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 	switch (resource->GetType())
 	{
 	case ResourceType::TEXTURE: { return true; } break;
-	case ResourceType::FONT: { return true; } break;
+	//case ResourceType::FONT: { return true; } break;
 	case ResourceType::MODEL: { return true; } break;
 	case ResourceType::MATERIAL: { return true; } break;
 	case ResourceType::PARTICLE: { return true; } break;
-	case ResourceType::TRACK: { return true; } break;
+	//case ResourceType::TRACK: { return true; } break;
 	default:
 		break;
 	}
@@ -868,9 +868,9 @@ Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const c
 	case ResourceType::TEXTURE: { resource = new R_Texture(); } break;
 	//case ResourceType::SCENE: { resource = new R_Scene(); } break;
 	//case ResourceType::FONT: { resource = new R_Font(); } break;
-	case ResourceType::TRACK: { resource = new R_Track(); } break;
+	//case ResourceType::TRACK: { resource = new R_Track(); } break;
 	//case ResourceType::PARTICLE: { resource = new R_Particle(); } break;
-	//case ResourceType::MODEL: { resource = new R_Model(); } break;
+	case ResourceType::MODEL: { resource = new R_Model(); } break;
 	case ResourceType::MATERIAL: { resource = new R_Material(); } break;
 	//case ResourceType::ANIMATION: { resource = new R_Animation(); } break;
 	case ResourceType::UNKNOWN: { resource = nullptr; } break;
@@ -951,7 +951,7 @@ bool M_ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
 		return false;
 	}
 
-	ResourceType type = (ResourceType)json.at("type");
+	ResourceType type = (ResourceType)json.at("type").get<int>();
 	if (r->GetType() != type)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file, resource type missmatch.");
@@ -1017,20 +1017,20 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 	case ResourceType::TEXTURE:
 		// TODO
 		break;
-	case ResourceType::SCENE:
+	//case ResourceType::SCENE:
 		// TODO ret = Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
-		break;
-	case ResourceType::FONT:
+		//break;
+	//case ResourceType::FONT:
 		// TODO
-		break;
-	case ResourceType::TRACK:
+		//break;
+	//case ResourceType::TRACK:
 		// TODO
-		break;
+		//break;
 	case ResourceType::PARTICLE:
 		// TODO
 		break;
 	case ResourceType::MODEL:
-		// TODO
+		ret = Importer::GetInstance()->sceneImporter->Save((R_Model*)resource, resource->GetLibraryPath());
 		break;
 	case ResourceType::MATERIAL:
 		// TODO
@@ -1203,19 +1203,15 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 	case ResourceType::MODEL:
 		success = Importer::GetInstance()->sceneImporter->Import((R_Model*)resource);
 		break;
-	case ResourceType::SCENE:
-		//TODO: SCENE IMPORT
-		break;
 	case ResourceType::MATERIAL:
 		success = Importer::GetInstance()->materialImporter->Import(assetPath, (R_Material*)resource);
 		break;
-	case ResourceType::MESH:
-		//TODO: MESH IMPORT
-		//success = Importer::GetInstance()->meshImporter->Import((R_Mesh*)resource);
-		break;
-	case ResourceType::FONT:
+	//case ResourceType::SCENE:
+		//TODO: SCENE IMPORT
+		//break;
+	//case ResourceType::FONT:
 		//TODO: FONT IMPORT
-		break;
+		//break;
 	default:
 		break;
 	}
@@ -1248,12 +1244,12 @@ ResourceType M_ResourceManager::GetTypeFromAssetsExtension(const char* assetPath
 		ret = ResourceType::TEXTURE;
 	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0)
 		ret = ResourceType::MODEL;
-	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SCENE_EXTENSION) == 0)
-		ret = ResourceType::SCENE;
 	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SHADER_EXTENSION) == 0)
 		ret = ResourceType::MATERIAL;
-	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FONT_EXTENSION) == 0)
-		ret = ResourceType::FONT;
+	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SCENE_EXTENSION) == 0)
+		//ret = ResourceType::SCENE;
+	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FONT_EXTENSION) == 0)
+		//ret = ResourceType::FONT;
 	else
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given asset path. File extension: %s is not supported.", extension.c_str());
@@ -1269,12 +1265,12 @@ bool M_ResourceManager::GetAssetDirectoryFromType(const ResourceType& type, std:
 	case ResourceType::MODEL: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::MESH: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::TEXTURE: { directory = ASSETS_TEXTURES_DIR; } break;
-	case ResourceType::SCENE: { directory = ASSETS_SCENES_DIR; } break;
-	//case ResourceType::TRACK: { directory = ASSETS_AUDIO_DIR; } break;
-	case ResourceType::FONT: { directory = ASSETS_FONTS_DIR; } break;
-	//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::ANIMATION: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::MATERIAL: { directory = ASSETS_SHADERS_DIR; } break;
+	//case ResourceType::SCENE: { directory = ASSETS_SCENES_DIR; } break;
+	//case ResourceType::TRACK: { directory = ASSETS_AUDIO_DIR; } break;
+	//case ResourceType::FONT: { directory = ASSETS_FONTS_DIR; } break;
+	//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::UNKNOWN:
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: couldn't return asset directory from type because it is UNKNOWN.");
@@ -1294,12 +1290,12 @@ bool M_ResourceManager::GetLibraryDirectoryAndExtensionFromType(const ResourceTy
 	case ResourceType::MODEL: { directory = MODELS_DIR; extension = MODEL_EXTENSION; } break;
 	case ResourceType::MESH: { directory = MESHES_DIR; extension = MESH_EXTENSION; } break;
 	case ResourceType::TEXTURE: { directory = TEXTURES_DIR; extension = TEXTURE_EXTENSION; } break;
-	case ResourceType::SCENE: { directory = SCENES_DIR; extension = SCENE_EXTENSION; } break;
-		//case ResourceType::TRACK: { directory = AUDIOS_DIR; extension = MODEL_EXTENSION; } break;
-	case ResourceType::FONT: { directory = FONTS_DIR; extension = FONT_EXTENSION; } break;
-		//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::ANIMATION: { directory = ANIMATIONS_DIR; extension = ANIMATION_EXTENSION; } break;
 	case ResourceType::MATERIAL: { directory = SHADERS_DIR;  extension = SHADER_EXTENSION; } break;
+	//case ResourceType::SCENE: { directory = SCENES_DIR; extension = SCENE_EXTENSION; } break;
+	//case ResourceType::TRACK: { directory = AUDIOS_DIR; extension = MODEL_EXTENSION; } break;
+	//case ResourceType::FONT: { directory = FONTS_DIR; extension = FONT_EXTENSION; } break;
+	//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::UNKNOWN:
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: couldn't return library directory from type because it is UNKNOWN.");

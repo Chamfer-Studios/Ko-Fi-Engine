@@ -25,12 +25,14 @@ public:
 
 	bool Import(const char* path, bool isPrefab = false);
 	bool Import(R_Model* model, bool isPrefab = false);
+
 	bool Save(Scene* scene, const char* name = nullptr);
+	bool Save(const R_Model* model, const char* path);
+
 	bool Load(Scene* scene, const char* name);
+	bool Load(const char* path, R_Model* model);
 
 	GameObject* ImportModel(const char* path);
-
-	aiScene* GetAssimpScene();
 
 private:
 	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab = false);
@@ -56,7 +58,7 @@ private:
 	std::map<uint, ModelNode> loadedNodes;
 	std::map<std::string, UID> forcedUIDs;
 
-	// Instance of some generic Assimp variables in case we need them from the outside of the importer
+	// Instance of some generic Assimp variables in case we need them from the outside of the import method
 	aiScene* assimpScene = nullptr;
 };
 

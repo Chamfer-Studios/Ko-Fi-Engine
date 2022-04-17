@@ -10,9 +10,9 @@ enum class ResourceType
 {
 	MESH,
 	TEXTURE,
-	SCENE,
-	FONT, // TODO to delete?
-	TRACK, // TODO
+	//SCENE,
+	//FONT, // TODO to delete?
+	//TRACK, // TODO
 	PARTICLE, // TODO
 	MODEL,
 	MATERIAL, // TODO
