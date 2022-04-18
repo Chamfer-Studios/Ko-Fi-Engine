@@ -330,9 +330,9 @@ void M_Camera3D::OnClick(SDL_Event event)
 			CONSOLE_LOG("%s", hit->GetName());
 			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
 		}
-		else {
+		/*else {
 			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
-		}
+		}*/
 	}
 	else if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
 	{
