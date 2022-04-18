@@ -195,16 +195,9 @@ void C_Animator::Load(Json& json)
 		std::string path = json.at("path");
 		Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
 		C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
+
 		if (cMesh != nullptr && cMesh->GetMesh()->IsAnimated())
 			owner->GetComponent<C_Mesh>()->GetMesh()->SetAnimation(animation);
-
-		// TEMPORAL --> REVISE DEPENDING ON .SUGAR
-		/*if (cMesh != nullptr)
-		{
-			cMesh->GetMesh()->SetIsAnimated(true);
-			cMesh->GetMesh()->SetAnimation(animation);
-		}*/
-		// --------------------------------------------------
 
 		if (!json.empty())
 		{

@@ -193,11 +193,6 @@ const float3 &C_Transform::Front() const
 	return transformMatrixLocal.Col3(2).Normalized();
 }
 
-float4x4 C_Transform::GetGlobalTransform() const
-{
-	return transformMatrix;
-}
-
 void C_Transform::RecomputeGlobalMatrix()
 {
 
