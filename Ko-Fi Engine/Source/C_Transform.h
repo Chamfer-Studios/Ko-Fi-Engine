@@ -38,7 +38,8 @@ public:
 	const float3 &Right() const;
 	const float3 &Up() const;
 	const float3 &Front() const;
-	float4x4 GetGlobalTransform() const;
+	inline float4x4 GetGlobalTransform() const { return transformMatrix; }
+	inline float4x4 GetLocalTransform() const { return transformMatrixLocal; }
 	inline bool GetDirty() const { return isDirty; }
 
 	// Transform Functions

@@ -10,6 +10,10 @@
 #include "M_Window.h"
 #include "M_FileSystem.h"
 #include "M_Renderer3D.h"
+//Importer
+#include "I_Texture.h"
+//Resources
+#include "R_Texture.h"
 
 // GameObject
 #include "GameObject.h"
@@ -39,8 +43,18 @@ PanelViewport::~PanelViewport()
 {
 }
 
-bool PanelViewport::Awake()
+bool PanelViewport::Start()
 {
+	speedCameraIcon = new R_Texture();
+	litIcon = new R_Texture();
+	gizmoMoveIcon = new R_Texture();
+	gizmoRotateIcon = new R_Texture();
+	gizmoScaleIcon = new R_Texture();
+	Importer::GetInstance()->textureImporter->Import("Assets/Icons/video.png", speedCameraIcon);
+	Importer::GetInstance()->textureImporter->Import("Assets/Icons/lit_mode.png", litIcon);
+	Importer::GetInstance()->textureImporter->Import("Assets/Icons/translate.png", gizmoMoveIcon);
+	Importer::GetInstance()->textureImporter->Import("Assets/Icons/3d-rotate.png", gizmoRotateIcon);
+	Importer::GetInstance()->textureImporter->Import("Assets/Icons/maximize.png", gizmoScaleIcon);
 	return true;
 }
 
@@ -74,12 +88,7 @@ bool PanelViewport::Update()
 
 		}
 		editor->viewportSize = viewportSize;
-
 		ImGui::Image((ImTextureID)engine->GetRenderer()->GetTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
-
-		if (ImGui::IsMouseClicked(1)) ImGui::SetWindowFocus();
-		isFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
-
 		if (ImGui::BeginDragDropTarget())
 		{
 			const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSETS_ITEM");
@@ -93,7 +102,7 @@ bool PanelViewport::Update()
 					{
 						Importer::GetInstance()->sceneImporter->Import(path.c_str());
 					}
-					else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos )
+					else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos)
 					{
 						// Apply texture
 						if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
@@ -102,7 +111,7 @@ bool PanelViewport::Update()
 
 							if (go->GetComponent<C_Material>())
 							{
-								R_Texture *texture = new R_Texture();
+								R_Texture* texture = new R_Texture();
 								Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
 
 								go->GetComponent<C_Material>()->texture = texture;
@@ -111,13 +120,19 @@ bool PanelViewport::Update()
 						}
 					}
 					else if (path.find(".json") != std::string::npos) {
-						
+
 						Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
 					}
 				}
 			}
 			ImGui::EndDragDropTarget();
 		}
+		DrawViewportBar();
+		if (ImGui::IsMouseClicked(1)) ImGui::SetWindowFocus();
+		isFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
+
+		
+
 	}
 	ImGui::End();
 
@@ -134,4 +149,64 @@ bool PanelViewport::IsWindowFocused()
 void PanelViewport::SetIsFocused(bool isFocused)
 {
 	this->isFocused = isFocused;
+}
+
+void PanelViewport::DrawViewportBar()
+{
+	ImGui::SetItemAllowOverlap();
+	ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth()/2 - (5*24),ImGui::GetWindowContentRegionMin().y+8));
+	ImGui::BeginGroup();
+	//Overlay Items
+	if (ImGui::ImageButton((ImTextureID)litIcon->GetTextureId(), ImVec2(24, 24)))
+	{
+		ImGui::OpenPopup("Lit Popup");
+	}
+	ImGui::SameLine();
+	if (ImGui::ImageButton((ImTextureID)gizmoMoveIcon->GetTextureId(), ImVec2(24, 24)))
+	{
+		editor->engine->GetSceneManager()->SetGizmoOperation(ImGuizmo::OPERATION::TRANSLATE);
+	}
+	ImGui::SameLine();
+	if (ImGui::ImageButton((ImTextureID)gizmoRotateIcon->GetTextureId(), ImVec2(24, 24)))
+	{
+		editor->engine->GetSceneManager()->SetGizmoOperation(ImGuizmo::OPERATION::ROTATE);
+	}
+	ImGui::SameLine();
+	if (ImGui::ImageButton((ImTextureID)gizmoScaleIcon->GetTextureId(), ImVec2(24, 24)))
+	{
+		editor->engine->GetSceneManager()->SetGizmoOperation(ImGuizmo::OPERATION::SCALE);
+	}
+	ImGui::SameLine();
+	if (ImGui::ImageButton((ImTextureID)speedCameraIcon->GetTextureId(),ImVec2(24,24)))
+	{
+		ImGui::OpenPopup("Camera Speed Popup");
+	}
+//Popups
+	if (ImGui::BeginPopup("Lit Popup"))
+	{
+		if (ImGui::Selectable("Wireframe"))
+		{
+
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		}
+		if (ImGui::Selectable("Lit"))
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+		ImGui::EndPopup();
+	}
+	if (ImGui::BeginPopup("Camera Speed Popup"))
+	{
+		if (ImGui::SliderInt("##Camera Speed", &editor->engine->GetCamera3D()->engineCamera->speedMultiplier, 1.0f, 5.0f))
+		{
+			editor->engine->GetCamera3D()->engineCamera->ChangeSpeed(editor->engine->GetCamera3D()->engineCamera->speedMultiplier);
+		}
+		ImGui::EndPopup();
+	}
+	
+
+	
+	
+	ImGui::EndGroup();
 }

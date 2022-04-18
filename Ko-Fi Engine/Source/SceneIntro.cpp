@@ -194,6 +194,11 @@ bool SceneIntro::PostUpdate(float dt)
 		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
 	}
 
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+	{
+		DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID));
+	}
+
 	return true;
 }
 

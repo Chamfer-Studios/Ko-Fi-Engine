@@ -4,9 +4,11 @@
 #include "Engine.h"
 #include "M_Editor.h"
 #include "M_SceneManager.h"
+#include "M_Input.h"
+
 #include "GameObject.h"
-#include "Log.h"
 #include "PanelChooser.h"
+#include "Log.h"
 
 // Helper to display a little (?) mark which shows a tooltip when hovered.
 // In your own code you may want to display an actual icon if you are using a merged icon fonts (see docs/FONTS.md)
@@ -126,6 +128,16 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 		if (ImGui::IsItemClicked(1)) {
 			ImGui::OpenPopup("Test");
 		}
+			// Delete with SUPR
+			if (editor->engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+			{
+				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
+					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetUID() != -1) {
+						editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
+						editor->panelGameObjectInfo.selectedGameObjectID = -1;
+					}
+				}
+			}
 		if (ImGui::BeginPopup("Test"))
 		{
 			if (ImGui::MenuItem("Create Empty Child")) {
@@ -143,6 +155,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 					}
 				}
 			}
+
 			if (ImGui::MenuItem("Set as Prefab")) {
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetUID() != -1) {
