@@ -453,6 +453,8 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 	}
 
 	float4x4 globalTransformation = parentTransform * nodeTransformation;
+	float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
+	float4x4 partial = rootTransform * globalTransformation;
 
 	if (boneNameToIndexMap.contains(nodeName))
 	{

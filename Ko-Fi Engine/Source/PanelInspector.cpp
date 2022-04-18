@@ -95,7 +95,6 @@ bool PanelInspector::Update()
 			}
 			ImGui::EndCombo();
 		}
-
 	}
 	ImGui::End();
 	return true;

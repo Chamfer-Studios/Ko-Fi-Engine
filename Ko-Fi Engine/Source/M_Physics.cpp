@@ -489,6 +489,14 @@ std::string const M_Physics::GetFilterByID(const uint ID)
 		return filters[ID];
 }
 
+bool M_Physics::Raycast(float3 origin, float3 direction, float maxDistance)
+{
+	return false;
+	physx::PxRaycastBuffer hit;
+	bool status = scene->raycast(physx::PxVec3(origin.x, origin.y, origin.z), physx::PxVec3(direction.x, direction.y, direction.z), maxDistance, hit);
+	return hit.hasAnyHits();
+}
+
 uint const M_Physics::GetFilterID(const std::string* newFilter)
 {
 	for (int i = 0; i < filters.size(); ++i)

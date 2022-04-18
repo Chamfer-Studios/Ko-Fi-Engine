@@ -339,7 +339,6 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 				{
 					cCamera->DrawFrustum();
 				}
-
 			}
 			C_Collider* cCol = go->GetComponent<C_Collider>();
 			if (cCol)
@@ -367,7 +366,6 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	OPTICK_EVENT();
-
 	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
 	if (selectedId == -1) return;
 	if (selectedId == cMesh->owner->GetUID())
@@ -377,7 +375,6 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 {
 	OPTICK_EVENT();
-
 	//Get needed variables
 	C_Material* cMat = go->GetComponent<C_Material>();
 	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
