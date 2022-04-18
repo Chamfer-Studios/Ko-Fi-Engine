@@ -125,7 +125,7 @@ void M_Camera3D::CheckInput(float dt)
 	float3 newPos(0, 0, 0);
 	float speed = currentCamera->cameraSpeed * dt;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 5.0f;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
@@ -294,6 +294,13 @@ bool M_Camera3D::LoadConfiguration(Json& configModule)
 
 bool M_Camera3D::InspectorDraw()
 {
+	if (ImGui::CollapsingHeader("Engine Camera##"))
+	{
+		if (ImGui::SliderInt("Camera Speed", &engineCamera->speedMultiplier,1.0f,5.0f))
+		{
+			engineCamera->ChangeSpeed(engineCamera->speedMultiplier);
+		}
+	}
 	return true;
 }
 

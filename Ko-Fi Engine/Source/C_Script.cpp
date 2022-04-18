@@ -33,7 +33,7 @@ C_Script::C_Script(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
 	SetId(RNG::GetRandomUint());
-	s = nullptr;
+	s = new ScriptHandler(owner, this);
 }
 
 C_Script::~C_Script()
@@ -54,7 +54,10 @@ bool C_Script::CleanUp()
 		s->handler->CleanUp();
 		s->inspectorVariables.clear();
 		s->inspectorVariables.shrink_to_fit();
+		delete s;
 	}
+
+	s = nullptr;
 	
 	return true;
 }
@@ -63,6 +66,26 @@ bool C_Script::Update(float dt)
 {
 	if (s != nullptr)
 	{
+		while (eventQueue.size() != 0) {
+			auto e = eventQueue.front();
+			eventQueue.pop();
+
+			auto receiver = sol::protected_function(s->handler->lua["EventHandler"]);
+
+			if (receiver.valid()) {
+				sol::protected_function_result result = receiver(e.key, e.fields);
+				if (result.valid()) {
+					// Call succeeded
+				}
+				else {
+					// Call failed
+					sol::error err = result;
+					std::string what = err.what();
+					appLog->AddLog("%s\n", what.c_str());
+				}
+			}
+		}
+
 		s->lua_update = sol::protected_function(s->handler->lua["Update"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
@@ -77,11 +100,6 @@ bool C_Script::Update(float dt)
 					std::string what = err.what();
 					appLog->AddLog("%s\n", what.c_str());
 				}
-				/*if (owner->changeScene)
-				{
-					owner->changeScene = false;
-					owner->LoadSceneFromName("HUD_Scene");
-				}*/
 			}
 		}
 	}
@@ -119,7 +137,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
-	ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+	ImGui::PushID(std::to_string(id).c_str());
 	std::string headerTypename = "Script";
 	std::string number = std::to_string(id);
 	std::string headerName = headerTypename.append(number);
@@ -128,8 +146,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 	{
 		DrawDeleteButton(owner, this);
 
-		ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
-		if (chooser->IsReadyToClose("Add Script"))
+		if (chooser->IsReadyToClose("Add Script_" + std::to_string(id)))
 		{
 			if (chooser->OnChooserClosed() != nullptr)
 			{
@@ -137,7 +154,8 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 				if (!path.empty())
 				{
-					ScriptHandler* handler = new ScriptHandler(owner);
+					this->CleanUp();
+					ScriptHandler* handler = new ScriptHandler(owner, this);
 					s = handler;
 					handler->path = path;
 					ReloadScript(handler);
@@ -150,39 +168,8 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 		if (ImGui::Button("Add Script"))
 		{
-			chooser->OpenPanel("Add Script", "lua", { "lua" });
+			chooser->OpenPanel("Add Script_" + std::to_string(id), "lua", {"lua"});
 		}
-		ImGui::PopID();
-		/*int n = nScripts;
-		if (ImGui::DragInt("Num Scripts", &n, 0.1f, 0)) {
-			if (n < 0) n = 0;
-			if (n < nScripts) {
-				scripts.resize(scripts.size() - (nScripts - n));
-			}
-			else if (n > nScripts) {
-				for (int i = nScripts; i < n; i++) {
-					scripts.push_back(new ScriptHandler(owner));
-				}
-			}
-			nScripts = n;
-		}*/
-
-		
-		ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
-		/*ImGui::Separator();
-		if (chooser->IsReadyToClose("LoadScript"))
-		{
-			if (chooser->OnChooserClosed() != nullptr)
-			{
-				s->path = chooser->OnChooserClosed();
-				ReloadScript(s);
-			}
-		}
-		if (ImGui::Button("Select Script"))
-		{
-			chooser->OpenPanel("LoadScript", "lua", { "lua" });
-		}
-		ImGui::SameLine();*/
 
 		if (s != nullptr)
 		{
@@ -193,11 +180,12 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 		if(s != nullptr)
 		{
+			int variableId = RNG::GetRandomUint();
+			ImGui::PushID(variableId);
 			for (std::vector<InspectorVariable*>::iterator variable = s->inspectorVariables.begin(); variable != s->inspectorVariables.end(); ++variable)
 			{
 				if ((*variable)->type == INSPECTOR_NO_TYPE)
 				{
-					ImGui::PopID();
 					continue;
 				}
 
@@ -205,7 +193,6 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				if ((*variable)->name == "")
 				{
 					// inspectorVariables.erase(variable);
-					ImGui::PopID();
 					continue;
 				}
 				if (isSeparatorNeeded)
@@ -214,11 +201,14 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 					isSeparatorNeeded = false;
 				}
 
+				std::string sLabel = ((*variable)->name);
+				const char* label = sLabel.c_str();
+
 				switch ((*variable)->type)
 				{
 				case INSPECTOR_INT:
 				{
-					if (ImGui::DragInt((*variable)->name.c_str(), &std::get<int>((*variable)->value)))
+					if (ImGui::DragInt(label, &std::get<int>((*variable)->value)))
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<int>((*variable)->value);
 					}
@@ -226,7 +216,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				case INSPECTOR_FLOAT:
 				{
-					if (ImGui::DragFloat((*variable)->name.c_str(), &std::get<float>((*variable)->value)))
+					if (ImGui::DragFloat(label, &std::get<float>((*variable)->value)))
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<float>((*variable)->value);
 					}
@@ -234,7 +224,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				case INSPECTOR_FLOAT2:
 				{
-					if (ImGui::DragFloat2((*variable)->name.c_str(), std::get<float2>((*variable)->value).ptr()))
+					if (ImGui::DragFloat2(label, std::get<float2>((*variable)->value).ptr()))
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<float2>((*variable)->value);
 					}
@@ -242,7 +232,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				case INSPECTOR_FLOAT3:
 				{
-					if (ImGui::DragFloat3((*variable)->name.c_str(), std::get<float3>((*variable)->value).ptr()))
+					if (ImGui::DragFloat3(label, std::get<float3>((*variable)->value).ptr()))
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<float3>((*variable)->value);
 					}
@@ -250,7 +240,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				case INSPECTOR_BOOL:
 				{
-					if (ImGui::Checkbox((*variable)->name.c_str(), &std::get<bool>((*variable)->value)))
+					if (ImGui::Checkbox(label, &std::get<bool>((*variable)->value)))
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<bool>((*variable)->value);
 					}
@@ -258,7 +248,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				case INSPECTOR_STRING:
 				{
-					if (ImGui::InputText((*variable)->name.c_str(), &std::get<std::string>((*variable)->value)))
+					if (ImGui::InputText(label, &std::get<std::string>((*variable)->value)))
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<std::string>((*variable)->value);
 					}
@@ -287,8 +277,8 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 					ImGui::Text("Waypoints: ");
 					for (int i = 0; i < nWaypoints; i++)
 					{
-						std::string label = std::to_string(i);
-						if (ImGui::DragFloat3(label.c_str(), &(waypoints[i][0]), 0.5f))
+						std::string _label = std::to_string(i);
+						if (ImGui::DragFloat3(_label.c_str(), &(waypoints[i][0]), 0.5f))
 						{
 							std::get<std::vector<float3>>((*variable)->value)[i] = waypoints[i];
 							s->handler->lua[(*variable)->name.c_str()] = waypoints;
@@ -316,6 +306,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				}
 			}
+			ImGui::PopID();
 		}
 		
 		if (!isSeparatorNeeded)
@@ -327,13 +318,12 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 		{
 			ReloadScript(s);
 		}
-		ImGui::PopID();
 	}
 	
 	else
 		DrawDeleteButton(owner, this);
 
-		ImGui::PopID();
+	ImGui::PopID();
 	return ret;
 }
 
@@ -353,11 +343,11 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 
 void C_Script::Save(Json &json) const
 {
-	/*json["type"] = "script";
-	json["file_name"] = path;
-	json["script_number"] = numScript;
+	json["type"] = "script";
+	json["id"] = id;
+	json["file_name"] = s->path;
 	Json jsonIV;
-	for (InspectorVariable *variable : inspectorVariables)
+	for (InspectorVariable *variable : s->inspectorVariables)
 	{
 		switch (variable->type)
 		{
@@ -439,14 +429,20 @@ void C_Script::Save(Json &json) const
 		break;
 		}
 		json["inspector_variables"].push_back(jsonIV);
-	}*/
+	}
 }
 
 void C_Script::Load(Json &json)
 {
-	/*path = json.at("file_name");
-	numScript = json.at("script_number");
-	LoadInspectorVariables(json);*/
+	s->path = json.at("file_name");
+	if (json.find("id") != json.end()) {
+		id = json.at("id");
+	}
+	else {
+		SetId(RNG::GetRandomUint());
+	}
+	LoadInspectorVariables(json);
+	ReloadScript(s);
 }
 
 void C_Script::SetId(int id)
@@ -457,7 +453,7 @@ void C_Script::SetId(int id)
 
 void C_Script::LoadInspectorVariables(Json &json)
 {
-	/*if (!json.contains("inspector_variables"))
+	if (!json.contains("inspector_variables"))
 		return;
 	for (const auto &var : json.at("inspector_variables").items())
 	{
@@ -519,13 +515,13 @@ void C_Script::LoadInspectorVariables(Json &json)
 		}
 
 		InspectorVariable *variable = new InspectorVariable(name, type, value);
-		inspectorVariables.push_back(variable);
-	}*/
+		s->inspectorVariables.push_back(variable);
+	}
 }
 
-ScriptHandler::ScriptHandler(GameObject* owner)
+ScriptHandler::ScriptHandler(GameObject* owner, C_Script* script)
 {
-	handler = new Scripting();
+	handler = new Scripting(script);
 	handler->gameObject = owner;
 	handler->componentTransform = owner->GetTransform();
 	handler->SetUpVariableTypes();

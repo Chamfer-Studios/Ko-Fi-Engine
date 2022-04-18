@@ -3,7 +3,6 @@
 #include "ImGuiAppLog.h"
 #include "glew.h"
 #include "stb_image.h"
-#include <string>
 
 #define CHECKERS_SIZE 32
 
@@ -13,11 +12,11 @@ I_Texture::I_Texture()
 I_Texture::~I_Texture()
 {}
 
-bool I_Texture::Import(const char* path, R_Texture* texture)
+bool I_Texture::Import(std::string path, R_Texture* texture)
 {
-	texture->SetTexturePath(path);
+	texture->SetTexturePath(path.c_str());
 
-	if (path == nullptr)
+	if (path.empty())
 	{
 		GLubyte checkerImage[CHECKERS_SIZE][CHECKERS_SIZE][4];
 		for (int i = 0; i < CHECKERS_SIZE; i++)
@@ -47,7 +46,7 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 		return true;
 	}
 
-	unsigned char* pixels = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb_alpha);
+	unsigned char* pixels = stbi_load(path.c_str(), &texture->width, &texture->height, &texture->nrChannels, STBI_rgb_alpha);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	if (texture->textureID == -1)

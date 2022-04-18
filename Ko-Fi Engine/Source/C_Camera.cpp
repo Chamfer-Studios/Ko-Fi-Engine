@@ -36,7 +36,9 @@ C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 		nearPlaneDistance = 0.1f;
 		farPlaneDistance = 5000.f;
 		cameraSensitivity = .1f;
-		cameraSpeed = 30.f;
+		cameraSpeed = 120.f;
+		baseCameraSpeed = 120.f;
+		speedMultiplier = 1;
 	}
 	if (!isEngineCamera)
 		componentTransform = owner->GetTransform();
@@ -203,6 +205,11 @@ void C_Camera::Load(Json& json)
 	isMainCamera = json.at("isMainCamera");
 	if(isMainCamera)
 		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
+}
+
+void C_Camera::ChangeSpeed(int multiplier)
+{
+	cameraSpeed = baseCameraSpeed * multiplier;
 }
 
 //void ModuleCamera3D::OnSave(JSONWriter& writer) const

@@ -30,6 +30,7 @@
 #include "C_Camera.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
+#include "C_Script.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -68,8 +69,9 @@ public:
 class Scripting
 {
 public:
-	Scripting()
+	Scripting(C_Script* _script)
 	{
+		script = _script;
 		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug, sol::lib::string, sol::lib::os);
 	}
 
@@ -168,6 +170,7 @@ public:
 									 sol::constructors<void()>(),
 									 "active", &GameObject::active,
 									 "GetName", &GameObject::GetName,
+									 "GetUID", &GameObject::GetUID,
 									 "tag", &GameObject::tag,
 									 "GetParent", &GameObject::GetParent,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
@@ -306,6 +309,8 @@ public:
 		lua.set_function("GetNavigation", &Scripting::GetNavigation, this);
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
+		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
+
 	}
 
 	bool CleanUp()
@@ -506,10 +511,7 @@ public:
 	}
 
 	void LuaNewVariable(InspectorVariable *inspectorVariable)
-	{
-		C_Script *script = gameObject->GetComponent<C_Script>();
-
-		
+	{		
 		for (std::vector<InspectorVariable*>::iterator var = script->s->inspectorVariables.begin(); var != script->s->inspectorVariables.end(); ++var)
 		{
 			if (inspectorVariable->name == (*var)->name)
@@ -607,16 +609,37 @@ public:
 	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length) {
 		gameObject->GetEngine()->GetRenderer()->DrawCone(position, forward, up, angle, length);
 	}
+
+
 	float3 LuaMulQuat(Quat quat, float3 vector)
 	{
 		float3 tmp = quat.Mul(vector);
 		return tmp;
 	}
 
+	void DispatchGlobalEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
+		for (auto go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList) {
+			for (auto c : go->GetComponents()) {
+				if (c->type == ComponentType::SCRIPT) {
+					((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));
+				}
+			}
+		}
+	}
+
+	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
+		for (auto c : gameObject->GetComponents()) {
+			if (c->type == ComponentType::SCRIPT) {
+				((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));
+			}
+		}
+	}
+
 public:
 	sol::state lua;
 	GameObject *gameObject = nullptr;
 	C_Transform *componentTransform = nullptr;
+	C_Script* script = nullptr;
 };
 
 #endif // !__SCRIPTING_H__

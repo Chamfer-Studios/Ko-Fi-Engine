@@ -557,9 +557,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			uint parentUid = jsonGo.at("parent_UID");
 			go->SetParentUID(parentUid);
 
-			Json jsonCmp = jsonGo.at("components");
+			Json jsonCmps = jsonGo.at("components");
 #pragma omp parallel for
-			for (const auto& cmpIt : jsonCmp.items())
+			for (const auto& cmpIt : jsonCmps.items())
 			{
 				Json jsonCmp = cmpIt.value();
 				bool active = jsonCmp.at("active");
@@ -611,7 +611,17 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "script")
 					{
-						C_Script* scriptCmp = go->GetComponent<C_Script>();
+						C_Script* scriptCmp = nullptr;
+						for (auto c : go->GetComponents()) {
+							if (c->type == ComponentType::SCRIPT) {
+								int cID = ((C_Script*)c)->id;
+								if (jsonCmp.find("id") != jsonCmp.end()) {
+									if (cID == jsonCmp.at("id")) {
+										scriptCmp = (C_Script*)c;
+									}
+								}
+							}
+						}
 						if (scriptCmp == nullptr)
 						{
 							scriptCmp = (C_Script*)go->AddComponentByType(ComponentType::SCRIPT);
