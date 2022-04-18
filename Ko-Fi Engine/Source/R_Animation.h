@@ -9,7 +9,7 @@
 
 struct Channel;
 
-class R_Animation
+class R_Animation : public Resource
 {
 public:
 	R_Animation();
@@ -38,7 +38,7 @@ public:
 	int endFrame; // Not necessary, remove when possible.
 
 public:
-	std::string path;
+	//std::string path;
 };
 
 #endif // !__ANIMATION_H__

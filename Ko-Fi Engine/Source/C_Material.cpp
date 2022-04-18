@@ -67,7 +67,7 @@ void C_Material::Save(Json& json) const
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
 	json["shader_path"] = material->GetShaderPath();
-	json["texture_path"] = texture->path;
+	json["texture_path"] = texture->GetTexturePath();
 
 	//json["material_path"] = material->GetMaterialPath();
 	//json["material_name"] = material->materialName;
@@ -350,9 +350,9 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				//		textures.push_back(texture);
 				//	}
 				//}
-				if (!path.empty() && texture->textureID == currentTextureId)
+				if (!path.empty() && texture->GetTextureId() == currentTextureId)
 				{
-					texture->textureID = 0;
+					texture->SetTextureId(0);
 					texture->SetTexturePath(nullptr);
 
 					R_Texture* tex = new R_Texture();
@@ -391,9 +391,9 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
 		ImGui::Text("Material Texture:");
 		//for (R_Texture& tex : textures)
-		if (texture->textureID != -1)
+		if (texture->GetTextureId() != TEXTUREID_DEFAULT)
 		{
-			ImGui::Image((ImTextureID)texture->textureID, ImVec2(85, 85));
+			ImGui::Image((ImTextureID)texture->GetTextureId(), ImVec2(85, 85));
 			ImGui::SameLine();
 			ImGui::BeginGroup();
 			ImGui::Text(texture->GetTexturePath());
@@ -402,7 +402,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			if (ImGui::Button("Change Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
-				currentTextureId = texture->textureID;
+				currentTextureId = texture->GetTextureId();
 			}
 
 			ImGui::PopID();
@@ -413,7 +413,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			if (ImGui::Button("Delete Texture"))
 			{
 				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
-				texture->textureID = -1;
+				texture->SetTextureId(TEXTUREID_DEFAULT);
 				texture->SetTexturePath(nullptr);
 			}
 			ImGui::PopID();
@@ -424,7 +424,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			if (ImGui::Button("Add Texture"))
 			{
 				panelChooser->OpenPanel("ChangeTexture", "png", { "png","jpg","jpeg" });
-				currentTextureId = texture->textureID;
+				currentTextureId = texture->GetTextureId();
 			}
 		}
 

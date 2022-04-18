@@ -7,6 +7,8 @@
 class Resource;
 class ResourceBase;
 enum class ResourceType;
+class R_Material;
+class R_Texture;
 
 class M_ResourceManager : public Module
 {
@@ -38,6 +40,7 @@ public:
 	bool UnloadResource(Resource* resource);
 
 	UID Find(const char* assetPath) const;
+	void FindAndForceUID(Resource* resource);
 	Resource* GetResourceFromLibrary(const char* libraryPath);
 	Resource* RequestResource(UID uid);
 
@@ -61,6 +64,7 @@ public:
 
 	bool LoadMetaFileIntoLibrary(const char* assetPath);
 	bool GetLibraryPairs(const char* assetPath, std::map<UID, ResourceBase>& pairs);
+	UID GetForcedUIDFromMeta(const char* assetPath);
 	bool GetForcedUIDsFromMeta(const char* assetPath, std::map<std::string, UID>& uids);
 	bool GetResourceUIDsFromMeta(const char* assetPath, std::vector<UID>& uids);
 	bool GetResourceBasesFromMeta(const char* assetPath, std::vector<ResourceBase>& bases);
@@ -77,6 +81,10 @@ public:
 	//void ReleaseResource(uint uid);
 
 	Resource* CreateNewResource(const ResourceType& type, const char* assetPath = nullptr, UID forcedUid = 0);
+
+	// Functions to import resources
+	bool ImportMaterial(const char* assetsPath, R_Material* material);
+	bool ImportTexture(const char* assetsPath, R_Texture* texture);
 
 private:
 	bool SaveMetaFile(Resource* resource) const;

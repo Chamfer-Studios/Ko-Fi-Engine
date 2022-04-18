@@ -72,7 +72,7 @@ MyPlane::~MyPlane()
 
 void MyPlane::DrawPlane2D(R_Texture* texture, SDL_Color color)
 {
-	if (texture->width != -1 && texture->height != -1)
+	if (texture->GetTextureWidth() != -1 && texture->GetTextureHeight() != -1)
 		DrawPlane2D(texture->GetTextureId(), color);
 	else
 		DrawPlane2D((unsigned int)0, color);

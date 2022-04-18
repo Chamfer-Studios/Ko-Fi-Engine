@@ -44,6 +44,7 @@ private:
 	unsigned int CreateShaderStage(unsigned int type, const std::string& source);
 	bool LoadUniforms(R_Material* material);
 	bool CheckUniformName(std::string name);
+
 };
 
 #endif // !__I_MATERIAL_H__

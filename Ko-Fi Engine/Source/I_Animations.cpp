@@ -157,7 +157,7 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 
 bool I_Animations::Load(const char* path, R_Animation* animation)
 {
-	animation->path = path;
+	animation->SetAssetPath(path);
 
 	std::ifstream file;
 	file.open(path, std::ios::binary);

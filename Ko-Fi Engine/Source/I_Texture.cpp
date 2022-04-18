@@ -33,10 +33,14 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 		}
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		if (texture->textureID == -1)
-			glGenTextures(1, &texture->textureID);
+		if (texture->GetTextureId() == TEXTUREID_DEFAULT)
+		{
+			uint id = texture->GetTextureId();
+			glGenTextures(1, &id);
+			texture->SetTextureId(id);
+		}
 
-		glBindTexture(GL_TEXTURE_2D, texture->textureID);
+		glBindTexture(GL_TEXTURE_2D, texture->GetTextureId());
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -46,14 +50,23 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 
 		return true;
 	}
-
-	unsigned char* pixels = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb_alpha);
+	int width = texture->GetTextureWidth();
+	int height = texture->GetTextureHeight();
+	int channels = texture->GetNrChannels();
+	unsigned char* pixels = stbi_load(path, &width, &height, &channels, STBI_rgb_alpha);
+	texture->SetTextureWidth(width);
+	texture->SetTextureHeight(height);
+	texture->SetNrChannels(channels);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	if (texture->textureID == -1)
-		glGenTextures(1, &texture->textureID);
+	if (texture->GetTextureId() == TEXTUREID_DEFAULT)
+	{
+		uint id = texture->GetTextureId();
+		glGenTextures(1, &id);
+		texture->SetTextureId(id);
+	}
 
-	glBindTexture(GL_TEXTURE_2D, texture->textureID);
+	glBindTexture(GL_TEXTURE_2D, texture->GetTextureId());
 
 	// Set the texture wrapping/filtering options (on the currently bound texture object)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -63,7 +76,7 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 
 	if (pixels)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->GetTextureWidth(), texture->GetTextureHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else

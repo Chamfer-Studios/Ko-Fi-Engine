@@ -47,7 +47,7 @@ void C_Image::Save(Json& json) const
 {
 	json["type"] = "image";
 
-	json["texture"] = openGLTexture.path;
+	json["texture"] = openGLTexture.GetTexturePath();
 }
 
 void C_Image::Load(Json& json)

@@ -34,6 +34,7 @@ public:
 
 	virtual inline ResourceType GetType() const { return type; }
 
+	void ForceUID(const UID& uid);
 	inline UID GetUID() const { return uid; }
 	inline void SetUID(const UID& uid) { this->uid = uid; }
 

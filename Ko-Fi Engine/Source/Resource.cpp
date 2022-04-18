@@ -45,6 +45,12 @@ bool Resource::CleanUp()
 	return true;
 }
 
+void Resource::ForceUID(const UID& uid)
+{
+	this->uid = uid;
+	SetLibraryPathAndFile();
+}
+
 void Resource::ModifyReferenceCount(int modification)
 {
 	int modifiedReferences = referenceCount + modification;

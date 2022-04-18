@@ -117,9 +117,12 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 		return false;
 	}
 
-	nodeName = engine->GetFileSystem()->GetNameFromPath(model->GetAssetPath());
-
 	engine->GetResourceManager()->GetForcedUIDsFromMeta(model->GetAssetPath(), forcedUIDs);
+	auto force = forcedUIDs.find(model->GetAssetFile());
+	if (force != forcedUIDs.end())
+		model->ForceUID(force->second);
+
+	nodeName = engine->GetFileSystem()->GetNameFromPath(model->GetAssetPath());
 
 	ImportNode(assimpScene, assimpScene->mRootNode, model,ModelNode(), isPrefab);
 
@@ -381,6 +384,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 
 	R_Animation* anim = new R_Animation();
 	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim);
+	CheckAndApplyForcedUID(anim);
 	mesh->SetIsAnimated(true);
 	mesh->SetAnimation(anim);
 
@@ -559,6 +563,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		texture = (R_Texture*)engine->GetResourceManager()->CreateNewResource(ResourceType::TEXTURE,texturePath.c_str());
 		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
 
+		CheckAndApplyForcedUID(texture);
 		node.texture = texture->GetUID();
 		node.textureName = texture->GetAssetPath();
 
@@ -588,17 +593,11 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 void I_Scene::CheckAndApplyForcedUID(Resource* resource)
 {
 	if (resource == nullptr)
-	{
 		return;
-	}
 
 	auto item = forcedUIDs.find(resource->GetAssetFile());
 	if (item != forcedUIDs.end())
-	{
-		resource->SetUID(item->second);
-		resource->SetLibraryPathAndFile();
-		//resource->ForceUID(item->second);
-	}
+		resource->ForceUID(item->second);
 }
 
 bool I_Scene::Save(Scene* scene,const char* customName)

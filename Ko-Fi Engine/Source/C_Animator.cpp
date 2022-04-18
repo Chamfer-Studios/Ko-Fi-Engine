@@ -165,10 +165,11 @@ void C_Animator::Save(Json& json) const
 	json["type"] = "animator";
 
 	std::string name = owner->GetName();
-	animation->path = ANIMATIONS_DIR + name + ANIMATION_EXTENSION;
-	Importer::GetInstance()->animationImporter->Save(animation, animation->path.c_str());
+	std::string path = ANIMATIONS_DIR + name + ANIMATION_EXTENSION;
+	animation->SetAssetPath(path.c_str());
+	Importer::GetInstance()->animationImporter->Save(animation, animation->GetAssetPath());
 
-	json["path"] = animation->path;
+	json["path"] = animation->GetAssetPath();
 	Json jsonClips;
 	for (auto clip : clips)
 	{

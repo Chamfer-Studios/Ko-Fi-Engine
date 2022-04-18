@@ -82,10 +82,11 @@ void C_Mesh::Save(Json& json) const
 	json["type"] = "mesh";
 
 	std::string name = owner->GetName();
-	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
-	Importer::GetInstance()->meshImporter->Save(mesh, mesh->path.c_str());
+	std::string path = MESHES_DIR + name + MESH_EXTENSION;
+	mesh->SetAssetPath(path.c_str());
+	Importer::GetInstance()->meshImporter->Save(mesh, mesh->GetAssetPath());
 
-	json["path"] = mesh->path;
+	json["path"] = mesh->GetAssetPath();
 	json["shape_type"] = (int)mesh->meshType;
 	json["draw_vertex_normals"] = mesh->GetVertexNormals();
 	json["draw_face_normals"] = mesh->GetFaceNormals();
@@ -137,7 +138,7 @@ void C_Mesh::Load(Json& json)
 	else
 		mesh->SetIsAnimated(false);
 	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
-	mesh->path = path;
+	mesh->SetAssetPath(path.c_str());
 
 	SetVertexNormals(json.at("draw_vertex_normals"));
 	SetFaceNormals(json.at("draw_face_normals"));
@@ -296,14 +297,14 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 	{
 		DrawDeleteButton(owner, this);
 
-		if (mesh->path.empty())
+		if (mesh->GetAssetPath() == NULL)
 			ImGui::BeginDisabled();
 		ImGui::Text("Mesh Path: ");
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-		if (ImGui::Selectable(mesh->path.c_str())) {}
+		if (ImGui::Selectable(mesh->GetAssetPath())) {}
 		ImGui::PopStyleColor();
-		if (mesh->path.empty())
+		if (mesh->GetAssetPath() == NULL)
 			ImGui::EndDisabled();
 
 		ImGui::Text("Num. vertices: ");

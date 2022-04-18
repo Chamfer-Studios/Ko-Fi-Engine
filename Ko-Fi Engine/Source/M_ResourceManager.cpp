@@ -376,6 +376,32 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetPath, std::map<UID, Res
 	return true;
 }
 
+UID M_ResourceManager::GetForcedUIDFromMeta(const char* assetPath)
+{
+	if (assetPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: Could not get forced UID from meta, asset path was nullptr.");
+		return 0;
+	}
+
+	JsonHandler jsonHandler;
+	Json jsonMeta;
+
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+	bool success = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+	UID uid = 0;
+	if (success && !jsonMeta.is_null() && !jsonMeta.empty())
+	{
+		uid = jsonMeta.at("uid");
+		if (uid == 0)
+			CONSOLE_LOG("[ERROR] Resource Manager: Resource UID was 0.");
+	}
+	else
+		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UID from meta. Asset path had no associated meta file.");
+
+	return uid;
+}
+
 bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<std::string,UID>& uids)
 {
 	bool ret = true;
@@ -884,9 +910,7 @@ Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const c
 			resource->SetAssetsPathAndFile(assetPath, engine->GetFileSystem()->GetFileName(assetPath));
 
 		if (forcedUid != 0)
-		{
-			// TODO: resource->ForceUID(forcedUid);
-		}
+			resource->ForceUID(forcedUid);
 		else
 			resource->SetLibraryPathAndFile();
 	}
@@ -997,6 +1021,19 @@ UID M_ResourceManager::Find(const char* assetPath) const
 			return r.first;
 	}
 	return 0;
+}
+
+void M_ResourceManager::FindAndForceUID(Resource* resource)
+{
+	if (resource == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: Resource pointer is nullptr.");
+		return;
+	}
+
+	UID forcedUID = GetForcedUIDFromMeta(resource->GetAssetPath());
+	if (forcedUID != 0)
+		resource->ForceUID(forcedUID);
 }
 
 bool M_ResourceManager::SaveResource(Resource* resource)
@@ -1198,13 +1235,13 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 	switch (type)
 	{
 	case ResourceType::TEXTURE:
-		success = Importer::GetInstance()->textureImporter->Import(assetPath, (R_Texture*)resource);
+		success = ImportTexture(assetPath, (R_Texture*)resource);
 		break;
 	case ResourceType::MODEL:
 		success = Importer::GetInstance()->sceneImporter->Import((R_Model*)resource);
 		break;
 	case ResourceType::MATERIAL:
-		success = Importer::GetInstance()->materialImporter->Import(assetPath, (R_Material*)resource);
+		success = ImportMaterial(assetPath, (R_Material*)resource);
 		break;
 	//case ResourceType::SCENE:
 		//TODO: SCENE IMPORT
@@ -1385,4 +1422,18 @@ bool M_ResourceManager::LoadConfiguration(Json& configModule)
 bool M_ResourceManager::InspectorDraw()
 {
 	return true;
+}
+
+bool M_ResourceManager::ImportMaterial(const char* assetsPath, R_Material* material)
+{
+	FindAndForceUID(material);
+	bool ret = Importer::GetInstance()->materialImporter->Import(assetsPath, material);
+	return (ret && material != nullptr);
+}
+
+bool M_ResourceManager::ImportTexture(const char* assetsPath, R_Texture* texture)
+{
+	FindAndForceUID(texture);
+	bool ret = Importer::GetInstance()->textureImporter->Import(assetsPath, (R_Texture*)texture);
+	return (ret && texture != nullptr);
 }
