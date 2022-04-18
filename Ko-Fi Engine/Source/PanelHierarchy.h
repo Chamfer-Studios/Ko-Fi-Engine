@@ -19,6 +19,7 @@ public:
 	void DisplayTree(GameObject* go, int flags, int& id);
 	void DragNDrop(GameObject* go);
 	GameObject* GetSelectedGameObject() { return selectedGameObject; };
+	void ReorderElement(std::vector<GameObject*>& list, int insertIndex, int moveIndex);
 private:
 	EditorStyleHandler styleHandler;
 
@@ -27,6 +28,7 @@ private:
 	GameObject* selectedGameObject = nullptr;
 	GameObject* destinationGameObject = nullptr;
 	bool is_selected = false;
+	bool dragging = false;
 };
 
 #endif // !__PANEL_HIERARCHY_H__

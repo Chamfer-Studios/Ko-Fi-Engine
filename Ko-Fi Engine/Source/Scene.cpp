@@ -66,25 +66,21 @@ void Scene::DeleteCurrentScene()
 
 void Scene::DeleteGameObject(GameObject* gameObject)
 {
-	for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
-	{
-		if ((*it)->GetUID() == gameObject->GetUID())
+
+		for (int i = gameObject->children.size()-1;i>=0;--i)
 		{
-			if ((*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID == (*it)->GetUID())
-				(*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
-			std::vector<GameObject*> childs = (*it)->GetChildren();
-			for (GameObject* child : childs)
-			{
-				DeleteGameObject(child);
-			}
-
-			gameObjectList.erase(it);
-			break;
+			DeleteGameObject(gameObject->children.at(i));
 		}
-	}
 
+	
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == gameObject->GetUID())
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	auto position = std::find(gameObjectList.begin(), gameObjectList.end(), gameObject);
+
+	gameObjectList.erase(position);
 	if (gameObject != nullptr)
 	{
+		//Re organize children into the top parent so that they are not hanging, plus it deletes the parent's children
 		GameObject* parent = gameObject->GetParent();
 		std::vector<GameObject*> children = gameObject->GetChildren();
 		if (children.size() > 0)
@@ -96,13 +92,10 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 			}
 		}
 		parent->RemoveChild(gameObject);
-
 		if (gameObject->GetComponent<C_LightSource>() != nullptr)
+		{
 			RemoveLight(gameObject);
-
-		gameObject->CleanUp();
-
-
+		}
 		RELEASE(gameObject);
 	}
 }
