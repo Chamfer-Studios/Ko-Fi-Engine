@@ -77,7 +77,6 @@ bool M_SceneManager::Start()
 
 	currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 	currentGizmoMode = ImGuizmo::MODE::WORLD;
-	//window = ImGui::FindWindowByName("CameraViewport");
 	return ret;
 }
 
@@ -298,7 +297,8 @@ void M_SceneManager::GuizmoTransformation()
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
 	float4x4 modelProjection = selectedGameObject->GetComponent<C_Transform>()->GetGlobalTransform().Transposed();
 
-	//ImGuizmo::SetDrawlist(window->DrawList);
+	window = ImGui::FindWindowByName("Scene");
+	ImGuizmo::SetDrawlist(window->DrawList);
 
 	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
 

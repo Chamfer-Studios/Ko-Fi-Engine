@@ -113,7 +113,7 @@ private:
 	ImGuizmo::OPERATION currentGizmoOperation;
 	ImGuizmo::MODE currentGizmoMode;
 
-	//ImGuiWindow* window = nullptr;
+	ImGuiWindow* window = nullptr;
 	float2 cornerPos;
 	// TIME MANAGEMENT
 	// --------------------------------------------------
