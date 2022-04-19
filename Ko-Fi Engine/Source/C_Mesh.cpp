@@ -83,14 +83,16 @@ void C_Mesh::Save(Json& json) const
 
 	std::string name = owner->GetName();
 	std::string path = MESHES_DIR + name + MESH_EXTENSION;
-	mesh->SetAssetPath(path.c_str());
-	Importer::GetInstance()->meshImporter->Save(mesh, mesh->GetAssetPath());
 
-	json["path"] = mesh->GetAssetPath();
+	mesh->SetLibraryPath(path.c_str());
+	Importer::GetInstance()->meshImporter->Save(mesh, mesh->GetLibraryPath());
+
+	json["path"] = mesh->GetLibraryPath();
 	json["shape_type"] = (int)mesh->meshType;
 	json["draw_vertex_normals"] = mesh->GetVertexNormals();
 	json["draw_face_normals"] = mesh->GetFaceNormals();
 	json["isAnimated"] = mesh->IsAnimated();
+
 	if (mesh->IsAnimated())
 	{
 		json["rootNodeUID"] = mesh->GetRootNode()->GetUID();
@@ -133,15 +135,18 @@ void C_Mesh::Load(Json& json)
 	}
 
 	std::string path = json.at("path");
+
 	if (json.contains("isAnimated"))
 		mesh->SetIsAnimated(json.at("isAnimated"));
 	else
 		mesh->SetIsAnimated(false);
+
 	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh);
-	mesh->SetAssetPath(path.c_str());
+	mesh->SetLibraryPath(path.c_str());
 
 	SetVertexNormals(json.at("draw_vertex_normals"));
 	SetFaceNormals(json.at("draw_face_normals"));
+
 	if (mesh->IsAnimated())
 	{
 		uint uid = (uint)json.at("rootNodeUID");
@@ -297,15 +302,14 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 	{
 		DrawDeleteButton(owner, this);
 
-		if (mesh->GetAssetPath() == NULL)
-			ImGui::BeginDisabled();
-		ImGui::Text("Mesh Path: ");
-		ImGui::SameLine();
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-		if (ImGui::Selectable(mesh->GetAssetPath())) {}
-		ImGui::PopStyleColor();
-		if (mesh->GetAssetPath() == NULL)
-			ImGui::EndDisabled();
+		if (mesh->GetLibraryPath() != nullptr) // We shouldn't display this path (?)
+		{
+			ImGui::Text("Mesh Path: ");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+			if (ImGui::Selectable(mesh->GetLibraryPath())) {}
+			ImGui::PopStyleColor();
+		}
 
 		ImGui::Text("Num. vertices: ");
 		ImGui::SameLine();

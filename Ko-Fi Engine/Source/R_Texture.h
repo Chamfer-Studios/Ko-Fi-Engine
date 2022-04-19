@@ -14,9 +14,11 @@ public:
 	R_Texture();
 	~R_Texture();
 
+	void SetUpTexture(bool checkers);
+
 	inline const char* GetTexturePath() const { return GetAssetPath(); }
 	inline void SetTexturePath(const char* path)
-	{ 
+	{
 		path != nullptr ? SetAssetPath(path) : SetAssetPath("");
 	}
 
@@ -29,14 +31,16 @@ public:
 	inline int GetNrChannels() const { return nrChannels; }
 	inline void SetNrChannels(const int channels) { nrChannels = channels; }
 
-private:
+public:
+	unsigned char* data = nullptr;
+	int imageSizeBytes = 0;
+	// Total bytes to save: width x height x bytes_per_pixel
+
 	uint textureID = TEXTUREID_DEFAULT;
+
 	int width = -1;
 	int height = -1;
-	int bytePerPixel = 3; //rgb o 4 rgba
 	int nrChannels = 1;
-
-	// Total bytes to save: header + 256x128xbytes_per_pixel
 };
 
 #endif // !__TEXTURE_H__

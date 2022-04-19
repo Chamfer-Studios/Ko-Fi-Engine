@@ -9,7 +9,7 @@ Importer::Importer(KoFiEngine* e)
 	sceneImporter = new I_Scene(e);
 	meshImporter = new I_Mesh();
 	materialImporter = new I_Material();
-	textureImporter = new I_Texture();
+	textureImporter = new I_Texture(e);
 	trackImporter = new I_Track(e);
 	animationImporter = new I_Animations();
 }

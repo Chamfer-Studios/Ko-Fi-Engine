@@ -1277,7 +1277,7 @@ ResourceType M_ResourceManager::GetTypeFromAssetsExtension(const char* assetPath
 	std::filesystem::path path = assetPath;
 	std::string extension = path.extension().string();
 
-	if (engine->GetFileSystem()->StringCompare(extension.c_str(), TEXTURE_EXTENSION) == 0)
+	if (engine->GetFileSystem()->StringCompare(extension.c_str(), PNG_EXTENSION) == 0)
 		ret = ResourceType::TEXTURE;
 	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0)
 		ret = ResourceType::MODEL;

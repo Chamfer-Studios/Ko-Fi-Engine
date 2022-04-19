@@ -67,7 +67,22 @@ void C_Material::Save(Json& json) const
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
 	json["shader_path"] = material->GetShaderPath();
-	json["texture_path"] = texture->GetTexturePath();
+
+	if (texture->GetAssetPath() != nullptr)
+	{
+		std::string name = texture->GetAssetPath();
+		name = name.substr(name.find_last_of("/\\") + 1);
+		std::string::size_type const p(name.find_last_of('.'));
+		name = name.substr(0, p);
+
+		std::string path = TEXTURES_DIR + name + TEXTURE_EXTENSION;
+		texture->SetLibraryPath(path.c_str());
+
+		Importer::GetInstance()->textureImporter->Save(texture, texture->GetLibraryPath());
+		json["texture_path"] = texture->GetLibraryPath();
+	}
+	else
+		json["texture_path"] = nullptr;
 
 	//json["material_path"] = material->GetMaterialPath();
 	//json["material_name"] = material->materialName;
@@ -79,6 +94,7 @@ void C_Material::Save(Json& json) const
 	//	jsonTex["path"] = tex.GetTexturePath();
 	//	json["textures"].push_back(jsonTex);
 	//}
+
 	json["uniforms"].array();
 	Json jsonUniform;
 	for (Uniform* uniform : material->uniforms)
@@ -167,7 +183,18 @@ void C_Material::Load(Json& json)
 		values.clear();
 		values.shrink_to_fit();
 
-		Importer::GetInstance()->textureImporter->Import(json.at("texture_path").get<std::string>().c_str(), texture);
+		if (!json.at("texture_path").get<std::string>().empty())
+		{
+			std::string texturePath = json.at("texture_path").get<std::string>();
+			texture->SetLibraryPath(texturePath.c_str());
+
+			Importer::GetInstance()->textureImporter->Load(texturePath.c_str(), texture);
+		}
+		else
+		{
+			Importer::GetInstance()->textureImporter->Import(nullptr, texture);
+		}
+
 		//for (const auto& tex : json.at("textures").items())
 		//{
 		//	R_Texture t = R_Texture();
@@ -389,14 +416,23 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 		//ImGui::Text("Material Name:");
 		//ImGui::SameLine();
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
-		ImGui::Text("Material Texture:");
+		//ImGui::Text("Material Texture:");
 		//for (R_Texture& tex : textures)
 		if (texture->GetTextureId() != TEXTUREID_DEFAULT)
 		{
 			ImGui::Image((ImTextureID)texture->GetTextureId(), ImVec2(85, 85));
 			ImGui::SameLine();
 			ImGui::BeginGroup();
-			ImGui::Text(texture->GetTexturePath());
+
+			if (texture->GetAssetPath() != nullptr) // We always should display assets path
+			{
+				ImGui::Text("Texture Path: ");
+				ImGui::SameLine();
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+				if (ImGui::Selectable(texture->GetAssetPath())) {}
+				ImGui::PopStyleColor();
+			}
+
 			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 			if (ImGui::Button("Change Texture"))
@@ -408,7 +444,6 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			ImGui::PopID();
 
 			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
-
 
 			if (ImGui::Button("Delete Texture"))
 			{
@@ -432,6 +467,12 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 		//	panelChooser->OpenPanel("AddTexture", "png");
 
 		ImGui::Separator();
+
+		ImGui::Text("Shader Path: ");
+		ImGui::SameLine();
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+		if (ImGui::Selectable(material->GetShaderPath())) {}
+		ImGui::PopStyleColor();
 
 		if (ImGui::Button("Change Shader"))
 			panelChooser->OpenPanel("ChangeShader", "glsl", { "glsl" });

@@ -33,10 +33,11 @@
 #define MATERIAL_EXTENSION ".milk"
 #define SHADER_EXTENSION ".glsl"
 #define ANIMATION_EXTENSION ".cake"
-#define TEXTURE_EXTENSION ".png"
+#define TEXTURE_EXTENSION ".cacao"
 #define SCENE_EXTENSION ".json"
 #define META_EXTENSION ".meta"
 
+#define PNG_EXTENSION ".png"
 #define FBX_EXTENSION ".fbx"
 #define FONT_EXTENSION ".ttf"
 

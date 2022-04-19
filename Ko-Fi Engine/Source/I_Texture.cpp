@@ -1,13 +1,20 @@
 #include "I_Texture.h"
 #include "R_Texture.h"
+#include "Engine.h"
+#include "M_FileSystem.h"
+#include "FSDefs.h"
+#include "Log.h"
 #include "ImGuiAppLog.h"
+
 #include "glew.h"
 #include "stb_image.h"
+
 #include <string>
+#include <fstream>
 
 #define CHECKERS_SIZE 32
 
-I_Texture::I_Texture()
+I_Texture::I_Texture(KoFiEngine* engine) : engine(engine)
 {}
 
 I_Texture::~I_Texture()
@@ -15,7 +22,11 @@ I_Texture::~I_Texture()
 
 bool I_Texture::Import(const char* path, R_Texture* texture)
 {
-	texture->SetTexturePath(path);
+	if (texture == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Texture! Error: R_Texture* was nullptr.");
+		return false;
+	}
 
 	if (path == nullptr)
 	{
@@ -31,63 +42,74 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 				checkerImage[i][j][3] = (GLubyte)255;
 			}
 		}
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		if (texture->GetTextureId() == TEXTUREID_DEFAULT)
-		{
-			uint id = texture->GetTextureId();
-			glGenTextures(1, &id);
-			texture->SetTextureId(id);
-		}
+		texture->SetUpTexture(true);
 
-		glBindTexture(GL_TEXTURE_2D, texture->GetTextureId());
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_SIZE, CHECKERS_SIZE,
 			0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 
 		return true;
 	}
-	int width = texture->GetTextureWidth();
-	int height = texture->GetTextureHeight();
-	int channels = texture->GetNrChannels();
-	unsigned char* pixels = stbi_load(path, &width, &height, &channels, STBI_rgb_alpha);
-	texture->SetTextureWidth(width);
-	texture->SetTextureHeight(height);
-	texture->SetNrChannels(channels);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	if (texture->GetTextureId() == TEXTUREID_DEFAULT)
-	{
-		uint id = texture->GetTextureId();
-		glGenTextures(1, &id);
-		texture->SetTextureId(id);
-	}
-
-	glBindTexture(GL_TEXTURE_2D, texture->GetTextureId());
-
-	// Set the texture wrapping/filtering options (on the currently bound texture object)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	if (pixels)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->GetTextureWidth(), texture->GetTextureHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
 	else
-		appLog->AddLog("%s", "Texture Image not loaded correctly: %s\n", path);
+	{
+		texture->SetTexturePath(path);
+		texture->SetAssetFile(engine->GetFileSystem()->GetFileName(path));
 
-	stbi_image_free(pixels);
+		texture->data = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb_alpha);
+
+		texture->imageSizeBytes = texture->GetTextureWidth() * texture->GetTextureHeight() * texture->GetNrChannels() * sizeof(unsigned char);
+		
+		texture->SetUpTexture(false);
+	}
 
 	return true;
 }
 
 bool I_Texture::Save(const R_Texture* texture, const char* path)
 {
+	engine->GetFileSystem()->CheckDirectory(TEXTURES_DIR);
+	std::ofstream file;
+	file.open(path, std::ios::in | std::ios::trunc | std::ios::binary);
+	if (file.is_open())
+	{
+		// HEADER
+		file.write((char*)&texture->width, sizeof(int));
+		file.write((char*)&texture->height, sizeof(int));
+		file.write((char*)&texture->nrChannels, sizeof(int));
 
+		// BODY
+		file.write((char*)texture->data, texture->imageSizeBytes);
+
+		file.close();
+
+		return true;
+	}
+
+	return false;
+}
+
+bool I_Texture::Load(const char* path, R_Texture* texture)
+{
+	std::ifstream file;
+	file.open(path, std::ios::binary);
+	if (file.is_open())
+	{
+		// HEADER
+		file.read((char*)&texture->width, sizeof(int));
+		file.read((char*)&texture->height, sizeof(int));
+		file.read((char*)&texture->nrChannels, sizeof(int));
+
+		// BODY
+		texture->imageSizeBytes = texture->width * texture->height * texture->nrChannels * sizeof(unsigned char);
+		texture->data = (unsigned char*)malloc(texture->imageSizeBytes);
+		file.read((char*)texture->data, texture->imageSizeBytes);
+
+		file.close();
+
+		texture->SetUpTexture(false);
+
+		return true;
+	}
+
+	return false;
 }

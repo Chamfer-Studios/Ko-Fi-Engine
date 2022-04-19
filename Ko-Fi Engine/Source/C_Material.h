@@ -37,7 +37,7 @@ public:
 	bool LoadDefaultMaterial();
 
 public:
-	R_Texture *texture = nullptr;
+	R_Texture* texture = nullptr;
 	//std::vector<R_Texture> textures;
 
 private:
