@@ -140,7 +140,13 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 			{
 				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == clipToDelete), ImGuiSelectableFlags_None))
 				{
-					clipToDelete = &clip->second;
+					if (clip->second.GetName().c_str() != "Default clip")
+					{
+						clipToDelete = &clip->second;
+						SetSelectedClip(std::string("Default clip"));
+					}
+					else
+						clipToDelete = nullptr;
 				}
 			}
 

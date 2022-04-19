@@ -418,7 +418,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 
 				if (!animatorClip->GetFinishedBool())
 				{
-					float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
+					float currentTimeMillis = engine->GetSceneManager()->GetGameTime();
 					std::vector<float4x4> transformsAnim;
 					mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
 
