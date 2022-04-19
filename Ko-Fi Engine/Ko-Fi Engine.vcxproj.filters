@@ -1908,5 +1908,8 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua">
       <Filter>Scripts\UI</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenPopUp.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -174,6 +174,7 @@ public:
 									 "GetUID", &GameObject::GetUID,
 									 "tag", &GameObject::tag,
 									 "GetParent", &GameObject::GetParent,
+									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,

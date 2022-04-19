@@ -113,6 +113,11 @@ bool SceneIntro::Update(float dt)
 			sceneNameGO = go->sceneName;
 			go->changeScene = false;
 		}
+		if (go->isQuitting)
+		{
+			quitPlease = true;
+			go->isQuitting = false;
+		}
 	}
 
 	// example::NodeEditorShow();
@@ -192,6 +197,13 @@ bool SceneIntro::PostUpdate(float dt)
 	{
 		switchScene = false;
 		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+	}
+
+	if (quitPlease)
+	{
+		quitPlease = false;
+		engine->GetSceneManager()->OnStop();
+		engine->GetCamera3D()->OnStop();
 	}
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)

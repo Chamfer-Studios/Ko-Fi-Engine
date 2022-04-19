@@ -1013,7 +1013,17 @@ void GameObject::SetChangeScene(bool changeSceneLua, std::string sceneNameLua)
 	sceneName = sceneNameLua;
 }
 
-void GameObject::OnStop()
+void GameObject::OnStoped()
 {
+	isQuitting = true;
+}
 
+GameObject* GameObject::GetChildWithName(std::string childName)
+{
+	for (std::vector<GameObject*>::iterator child = children.begin(); child != children.end(); child++)
+	{
+		if ((*child)->name == childName)
+			return (*child);
+	}
+	return nullptr;
 }
