@@ -140,7 +140,7 @@ bool SceneIntro::PostUpdate(float dt)
 		GameObject* parent = (*mapIt).first;
 		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
 		{
-			GameObject* karambit = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")
+			GameObject* karambit = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit");
 			if (!karambit)
 				continue;
 
@@ -161,7 +161,7 @@ bool SceneIntro::PostUpdate(float dt)
 			componentMesh->SetMesh(mesh);
 
 			C_Material *cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material *material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
+			R_Material *material = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
 
 			cMaterial->SetMaterial(material);
 
@@ -180,7 +180,7 @@ bool SceneIntro::PostUpdate(float dt)
 		}
 		else if ((*mapIt).second == "Decoy")
 		{
-			GameObject* decoy = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Decoy");
+			GameObject* decoy = parent->GetComponent<C_Script>()->s->handler->LuaFind("Decoy");
 			if (!decoy)
 				continue;
 
@@ -198,7 +198,7 @@ bool SceneIntro::PostUpdate(float dt)
 			componentMesh->SetMesh(mesh);
 
 			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material* material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
+			R_Material* material = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
 			cMaterial->SetMaterial(material);
 
 			rigidBody->FreezePositionY(true);
@@ -207,12 +207,11 @@ bool SceneIntro::PostUpdate(float dt)
 			collider->SetFilter("terrain");
 
 			C_Script* decoyScript = (C_Script*)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			decoyScript->scripts.push_back(new ScriptHandler(goIt));
-			decoyScript->scripts[0]->path = "Assets/Scripts/Players/Zhib/Decoy.lua";
-			decoyScript->ReloadScript(decoyScript->scripts[0]);
-			GameObject* target = parent->GetComponent<C_Script>()->scripts[0]->handler->lua["target"];
-			decoyScript->scripts[0]->handler->lua["target"] = target;
-			decoyScript->scripts[0]->handler->lua["SetDestination"]();
+			decoyScript->s->path = "Assets/Scripts/Players/Zhib/Decoy.lua";
+			decoyScript->ReloadScript(decoyScript->s);
+			GameObject* target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
+			decoyScript->s->handler->lua["target"] = target;
+			decoyScript->s->handler->lua["SetDestination"]();
 		}
 	}
 	gameObjectListToCreate.clear();

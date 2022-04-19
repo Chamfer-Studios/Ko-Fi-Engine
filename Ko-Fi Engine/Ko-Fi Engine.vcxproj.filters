@@ -1861,8 +1861,6 @@
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX3.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Decoy.lua">
       <Filter>Scripts\Players\Zhib</Filter>
     </None>
@@ -1871,6 +1869,7 @@
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Knife.lua">
       <Filter>Scripts\Players\Zhib</Filter>
+    </None>
     <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua">
       <Filter>Scripts\Enemies</Filter>
     </None>
