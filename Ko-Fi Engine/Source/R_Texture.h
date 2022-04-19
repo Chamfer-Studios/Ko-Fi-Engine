@@ -33,7 +33,10 @@ private:
 	uint textureID = TEXTUREID_DEFAULT;
 	int width = -1;
 	int height = -1;
+	int bytePerPixel = 3; //rgb o 4 rgba
 	int nrChannels = 1;
+
+	// Total bytes to save: header + 256x128xbytes_per_pixel
 };
 
 #endif // !__TEXTURE_H__

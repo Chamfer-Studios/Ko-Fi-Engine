@@ -10,6 +10,7 @@ public:
 	~I_Texture();
 
 	bool Import(const char* path, R_Texture* texture);
+	bool Save(const R_Texture* texture, const char* path);
 };
 
 #endif // !__I_TEXTURE_H__

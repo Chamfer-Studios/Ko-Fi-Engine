@@ -86,3 +86,8 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 
 	return true;
 }
+
+bool I_Texture::Save(const R_Texture* texture, const char* path)
+{
+
+}
