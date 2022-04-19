@@ -277,6 +277,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 			AddComponentByType(ComponentType::RIGID_BODY);
 
 		c = this->CreateComponent<C_Collider>();
+		((C_Collider*)c)->SetColliderShape(ColliderShape::BOX);
 		break;
 	}
 	case ComponentType::SCRIPT:

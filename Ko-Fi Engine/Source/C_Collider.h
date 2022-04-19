@@ -88,9 +88,9 @@ private:
 
 	std::string filter = "default";
 
-	float3 boxCollSize = float3(5, 5, 5); // Box collider size
+	float3 boxCollSize = float3(50, 50, 50); // Box collider size
 	float3 offset = float3::zero;
-	bool setFromAABB = false;
+	bool setFromAABB = true;
 
 	bool drawCollider = false;
 

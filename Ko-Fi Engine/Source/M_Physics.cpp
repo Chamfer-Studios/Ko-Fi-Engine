@@ -70,7 +70,7 @@ bool M_Physics::Update(float dt)
 {
 	OPTICK_EVENT();
 
-	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING || engine->GetSceneManager()->GetGameState() == GameState::PAUSED)
+		if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING || engine->GetSceneManager()->GetGameState() == GameState::PAUSED)
 	{
 		isSimulating = true;
 	}
@@ -82,6 +82,7 @@ bool M_Physics::Update(float dt)
 		scene->simulate(/*engine->GetSceneManager()->GetGameDt()*/dt);
 		scene->fetchResults(true);
 	}
+
 
 	return true;
 }

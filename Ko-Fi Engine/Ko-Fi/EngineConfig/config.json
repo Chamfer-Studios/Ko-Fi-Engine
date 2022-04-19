@@ -22,15 +22,6 @@
             true,
             true,
             true,
-            false,
-            true,
-            true,
-            false,
-            true,
-            true,
-            true,
-            true,
-            false,
             true,
             true,
             true,
@@ -38,7 +29,16 @@
             true,
             true,
             true,
-            false
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
         ],
         "Filters": [
             "default",
@@ -55,7 +55,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "IntroMenu"
+        "DefaultScene": "CollisonPlayground"
     },
     "UI": null,
     "Window": {
@@ -66,7 +66,7 @@
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine  - IntroMenu",
+        "Title": "Ko-Fi Engine",
         "Width": 1024
     }
 }

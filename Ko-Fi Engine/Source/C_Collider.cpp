@@ -14,7 +14,7 @@ C_Collider::C_Collider(GameObject *parent, ColliderShape collType) : Component(p
 {
 	type = ComponentType::COLLIDER;
 	colliderShape = collType;
-
+	setFromAABB = true;
 	CreateCollider(colliderShape);
 }
 
@@ -102,18 +102,18 @@ void C_Collider::CreateBoxCollider()
 
 	if (setFromAABB)
 	{
-		boxCollSize = owner->GetComponent<C_Mesh>()->GetGlobalAABB().Size();
+		boxCollSize = owner->GetComponent<C_Mesh>()->GetGlobalAABB().maxPoint - owner->GetComponent<C_Mesh>()->GetGlobalAABB().minPoint;
 		setFromAABB = false;
 	}
 	
-	physx::PxBoxGeometry boxGeometry(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
+	physx::PxBoxGeometry boxGeometry(boxCollSize.x, boxCollSize.y, boxCollSize.z);
 	
 	shape = owner->GetEngine()->GetPhysics()->GetPxPhysics()->createShape(boxGeometry, *owner->GetEngine()->GetPhysics()->GetPxMaterial());
 
 	physx::PxTransform localPose;
 	float3 center = owner->GetComponent<C_Mesh>()->GetGlobalAABB().CenterPoint();
 	localPose.p = physx::PxVec3(center.x, center.y, center.z);
-	localPose.q = physx::PxQuat(quat.x, quat.y, quat.z, quat.w);
+	localPose.q = physx::PxQuat(quat.y, quat.x, quat.z, quat.w);
 	shape->setLocalPose(localPose);
 
 	// STATE CREATION
@@ -148,65 +148,70 @@ void C_Collider::DrawCollider()
 
 void C_Collider::DrawBoxCollider()
 {
-	float3 transformOffset = owner->GetComponent<C_Transform>()->GetPosition();
-	physx::PxTransform localPose;
-	physx::PxVec3 center;
 	if (shape)
 	{
+		float3 transformOffset = owner->GetComponent<C_Transform>()->GetPosition();
+		physx::PxTransform localPose;
+		physx::PxVec3 center;
+
 		localPose = shape->getLocalPose();
 		center = localPose.p;
+
+		physx::PxBoxGeometry boxGeometry;
+		this->shape->getBoxGeometry(boxGeometry);
+
+		float3 min = float3(center.x, center.y, center.z) - float3(boxGeometry.halfExtents.x/2, boxGeometry.halfExtents.y/2, boxGeometry.halfExtents.z/2);
+		float3 max = float3(center.x, center.y, center.z) + float3(boxGeometry.halfExtents.x/2, boxGeometry.halfExtents.y/2, boxGeometry.halfExtents.z/2);
+
+		glLineWidth(4.0f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glBegin(GL_LINES);
+
+		// Bottom 1
+		glVertex3f(min.x, min.y, min.z);
+		glVertex3f(max.x, min.y, min.z);
+
+		glVertex3f(min.x, min.y, min.z);
+		glVertex3f(min.x, max.y, min.z);
+
+		glVertex3f(min.x, min.y, min.z);
+		glVertex3f(min.x, min.y, max.z);
+
+		// Bottom 2
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(min.x, min.y, max.z);
+
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(max.x, max.y, max.z);
+
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(max.x, min.y, min.z);
+
+		// Top 1
+		glVertex3f(max.x, max.y, min.z);
+		glVertex3f(min.x, max.y, min.z);
+
+		glVertex3f(max.x, max.y, min.z);
+		glVertex3f(max.x, min.y, min.z);
+
+		glVertex3f(max.x, max.y, min.z);
+		glVertex3f(max.x, max.y, max.z);
+
+		// Top 2
+		glVertex3f(min.x, max.y, max.z);
+		glVertex3f(max.x, max.y, max.z);
+
+		glVertex3f(min.x, max.y, max.z);
+		glVertex3f(min.x, min.y, max.z);
+
+		glVertex3f(min.x, max.y, max.z);
+		glVertex3f(min.x, max.y, min.z);
+
+		glEnd();
+		glColor3f(1.f, 1.f, 1.f);
+		glLineWidth(1.0f);
 	}
-
-	float3 min = float3(center.x, center.y, center.z) - float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
-	float3 max = float3(center.x, center.y, center.z) + float3(boxCollSize.x / 2, boxCollSize.y / 2, boxCollSize.z / 2);
-
-	glLineWidth(2.0f);
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glBegin(GL_LINES);
-
-	// Bottom 1
-	glVertex3f(min.x, min.y, min.z);
-	glVertex3f(max.x, min.y, min.z);
-
-	glVertex3f(min.x, min.y, min.z);
-	glVertex3f(min.x, max.y, min.z);
-
-	glVertex3f(min.x, min.y, min.z);
-	glVertex3f(min.x, min.y, max.z);
-
-	// Bottom 2
-	glVertex3f(max.x, min.y, max.z);
-	glVertex3f(min.x, min.y, max.z);
-
-	glVertex3f(max.x, min.y, max.z);
-	glVertex3f(max.x, max.y, max.z);
-
-	glVertex3f(max.x, min.y, max.z);
-	glVertex3f(max.x, min.y, min.z);
-
-	// Top 1
-	glVertex3f(max.x, max.y, min.z);
-	glVertex3f(min.x, max.y, min.z);
-
-	glVertex3f(max.x, max.y, min.z);
-	glVertex3f(max.x, min.y, min.z);
-
-	glVertex3f(max.x, max.y, min.z);
-	glVertex3f(max.x, max.y, max.z);
-
-	// Top 2
-	glVertex3f(min.x, max.y, max.z);
-	glVertex3f(max.x, max.y, max.z);
-
-	glVertex3f(min.x, max.y, max.z);
-	glVertex3f(min.x, min.y, max.z);
-
-	glVertex3f(min.x, max.y, max.z);
-	glVertex3f(min.x, max.y, min.z);
-
-	glEnd();
-	glColor3f(1.f, 1.f, 1.f);
-	glLineWidth(1.0f);
+	
 }
 
 // Serialization
