@@ -186,6 +186,7 @@ public:
 									 "IsSelected", &GameObject::IsSelected,
 									 "GetButton", &GameObject::GetComponent<C_Button>,
 									 "GetImage", &GameObject::GetComponent<C_Image>,
+									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "ChangeScene", &GameObject::SetChangeScene
 

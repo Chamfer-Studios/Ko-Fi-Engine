@@ -42,6 +42,7 @@ public:
 
 	bool IsPressed();
 	bool IsHovered();
+	void OnStoped();
 
 private:
 	enum class BUTTON_STATE {

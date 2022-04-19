@@ -1905,5 +1905,8 @@
     <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua">
       <Filter>Scripts\Enemies</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
   </ItemGroup>
 </Project>

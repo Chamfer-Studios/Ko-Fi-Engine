@@ -14,4 +14,3 @@ function Update(dt)
 end
 
 print("UI_ChangeScenes.lua compiled succesfully")
-

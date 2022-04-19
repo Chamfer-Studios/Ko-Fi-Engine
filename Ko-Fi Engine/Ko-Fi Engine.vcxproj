@@ -682,6 +682,7 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_1.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_3.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_SFX.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua" />

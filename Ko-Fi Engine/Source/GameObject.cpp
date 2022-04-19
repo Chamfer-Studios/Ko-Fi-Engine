@@ -1012,3 +1012,8 @@ void GameObject::SetChangeScene(bool changeSceneLua, std::string sceneNameLua)
 	changeScene = changeSceneLua;
 	sceneName = sceneNameLua;
 }
+
+void GameObject::OnStop()
+{
+
+}
