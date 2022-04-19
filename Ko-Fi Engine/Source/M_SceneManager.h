@@ -9,6 +9,9 @@
 #include "ImGuizmo.h"
 #include "Scene.h"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 class KoFiEngine;
 class SceneIntro;
 class GameObject;
@@ -109,6 +112,8 @@ private:
 	// Guizmo
 	ImGuizmo::OPERATION currentGizmoOperation;
 	ImGuizmo::MODE currentGizmoMode;
+
+	//ImGuiWindow* window = nullptr;
 	float2 cornerPos;
 	// TIME MANAGEMENT
 	// --------------------------------------------------

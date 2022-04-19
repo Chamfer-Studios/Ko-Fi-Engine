@@ -28,6 +28,7 @@
 #include "ImGuizmo.h"
 #include "PanelNavigation.h"
 #include "optick.h"
+#include "M_SceneManager.h"
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
 
@@ -264,6 +265,7 @@ bool M_Editor::PostUpdate(float dt)
 
 	idTracker = 0;
 
+	
 
 	PrepareRender();
 
