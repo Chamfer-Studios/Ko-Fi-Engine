@@ -48,9 +48,7 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 
 C_Mesh::~C_Mesh()
 {
-	if (strcmp(owner->GetName(), "Knife") == 0)  // Dirty Fix before resource manager works
-		return;
-	RELEASE(mesh);
+	CleanUp();
 }
 
 bool C_Mesh::Start()

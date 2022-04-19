@@ -140,7 +140,7 @@ bool SceneIntro::PostUpdate(float dt)
 		GameObject* parent = (*mapIt).first;
 		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
 		{
-			GameObject* karambit = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit");
+			GameObject* karambit = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")
 			if (!karambit)
 				continue;
 
@@ -162,6 +162,7 @@ bool SceneIntro::PostUpdate(float dt)
 
 			C_Material *cMaterial = goIt->CreateComponent<C_Material>();
 			R_Material *material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
+
 			cMaterial->SetMaterial(material);
 
 			rigidBody->FreezePositionY(true);
@@ -171,12 +172,11 @@ bool SceneIntro::PostUpdate(float dt)
 			collider->SetIsTrigger(true);
 
 			C_Script *knifeScript = (C_Script *)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			knifeScript->scripts.push_back(new ScriptHandler(goIt));
-			knifeScript->scripts[0]->path = "Assets/Scripts/Players/Zhib/Knife.lua";
-			knifeScript->ReloadScript(knifeScript->scripts[0]);
-			GameObject *target = parent->GetComponent<C_Script>()->scripts[0]->handler->lua["target"];
-			knifeScript->scripts[0]->handler->lua["target"] = target;
-			knifeScript->scripts[0]->handler->lua["SetDestination"]();
+			knifeScript->s->path = "Assets/Scripts/Players/Zhib/Knife.lua";
+			knifeScript->ReloadScript(knifeScript->s);
+			GameObject *target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
+			knifeScript->s->handler->lua["target"] = target;
+			knifeScript->s->handler->lua["SetDestination"]();
 		}
 		else if ((*mapIt).second == "Decoy")
 		{
@@ -229,6 +229,11 @@ bool SceneIntro::PostUpdate(float dt)
 	{
 		switchScene = false;
 		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+	}
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+	{
+		DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID));
 	}
 
 	return true;

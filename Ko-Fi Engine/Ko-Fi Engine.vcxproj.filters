@@ -1822,7 +1822,7 @@
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\EnemyPathfinder.lua">
+    <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua">
@@ -1871,6 +1871,8 @@
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Knife.lua">
       <Filter>Scripts\Players\Zhib</Filter>
+    <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua">
+      <Filter>Scripts\Enemies</Filter>
     </None>
   </ItemGroup>
 </Project>

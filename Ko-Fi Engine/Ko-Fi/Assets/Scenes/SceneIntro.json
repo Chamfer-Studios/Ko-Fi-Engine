@@ -1,10 +1,10 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 5,
+        "game_objects_amount": 4,
         "game_objects_list": [
             {
-                "UID": 389349942,
+                "UID": 2048098366,
                 "active": true,
                 "components": [
                     {
@@ -15,8 +15,8 @@
                         "active": true,
                         "position": [
                             0.0,
-                            0.0,
-                            0.0
+                            -0.21098089218139648,
+                            -87.13827514648438
                         ],
                         "rotation": [
                             0.0,
@@ -34,7 +34,7 @@
                     {
                         "active": true,
                         "draw_frustum": true,
-                        "far_plane_distance": 100.0,
+                        "far_plane_distance": 607.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.10000000149011612,
@@ -48,7 +48,7 @@
                 "tag": 0
             },
             {
-                "UID": 1393719548,
+                "UID": 2037145780,
                 "active": true,
                 "components": [
                     {
@@ -77,7 +77,7 @@
                     },
                     {
                         "active": true,
-                        "ambientValue": 0.6000000238418579,
+                        "ambientValue": 0.5,
                         "diffuseValue": 0.800000011920929,
                         "lightColor": [
                             1.0,
@@ -105,7 +105,7 @@
                 "tag": 0
             },
             {
-                "UID": 497683899,
+                "UID": 1863850559,
                 "active": true,
                 "components": [
                     {
@@ -134,12 +134,12 @@
                     }
                 ],
                 "is3D": true,
-                "name": "baker_house",
+                "name": "ball",
                 "parent_UID": 4294967295,
                 "tag": 0
             },
             {
-                "UID": 1749571581,
+                "UID": 1440398164,
                 "active": true,
                 "components": [
                     {
@@ -154,15 +154,15 @@
                             0.0
                         ],
                         "rotation": [
-                            -0.7071068286895752,
                             0.0,
                             0.0,
-                            0.7071067094802856
+                            0.0,
+                            1.0
                         ],
                         "scale": [
-                            100.0,
-                            99.99999237060547,
-                            99.99999237060547
+                            1.0,
+                            1.0,
+                            1.0
                         ],
                         "type": "transform"
                     },
@@ -171,83 +171,33 @@
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
                         "isAnimated": false,
-                        "path": "Library/Meshes/Chimney.sugar",
+                        "path": "Library/Meshes/Sphere.sugar",
                         "shape_type": 0,
                         "type": "mesh"
                     },
                     {
                         "active": true,
                         "color": [
-                            0.47040000557899475,
-                            0.47040000557899475,
-                            0.47040000557899475,
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
                             1.0
                         ],
                         "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/Baker_house.png",
+                        "texture_path": "",
                         "type": "material",
                         "uniforms": null
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/camera_tester.lua",
+                        "id": 1525128758,
+                        "type": "script"
                     }
                 ],
                 "is3D": true,
-                "name": "Chimney",
-                "parent_UID": 497683899,
-                "tag": 0
-            },
-            {
-                "UID": 608343667,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            -0.7071068286895752,
-                            0.0,
-                            0.0,
-                            0.7071067094802856
-                        ],
-                        "scale": [
-                            5.0,
-                            4.999999046325684,
-                            4.999988555908203
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "isAnimated": false,
-                        "path": "Library/Meshes/Baker_house.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.47040000557899475,
-                            0.47040000557899475,
-                            0.47040000557899475,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/Baker_house.png",
-                        "type": "material",
-                        "uniforms": null
-                    }
-                ],
-                "is3D": true,
-                "name": "Baker_house",
-                "parent_UID": 497683899,
+                "name": "Sphere",
+                "parent_UID": 1863850559,
                 "tag": 0
             }
         ],

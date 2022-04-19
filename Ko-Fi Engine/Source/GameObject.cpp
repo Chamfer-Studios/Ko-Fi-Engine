@@ -39,13 +39,7 @@ GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D
 	this->uid = uid;
 	this->engine = engine;
 
-	if (name == nullptr)
-	{
-		std::string tmp = std::string("GameObject ") + std::to_string(uid);
-		SetName(tmp.c_str());
-	}
-	else
-		SetName(name);
+	SetName(name);
 
 	CreateComponent<C_Info>();
 
@@ -64,7 +58,7 @@ GameObject::GameObject()
 	children.clear();
 	children.shrink_to_fit();
 
-	this->name = "GameObject " + std::to_string(uid);
+	SetName(nullptr);
 
 	this->uid = uid;
 	this->engine = engine;
@@ -397,9 +391,6 @@ void GameObject::PropagateTransform()
 
 void GameObject::SetName(const char* name)
 {
-	if (engine->GetSceneManager() == nullptr)
-		this->name = name;
-	else
 		this->name = SetObjectNumberedName(name).c_str();
 }
 
@@ -705,7 +696,17 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "script")
 		{
-			C_Script* scriptCmp = this->GetComponent<C_Script>();
+			C_Script* scriptCmp = nullptr;
+			for (auto c : this->GetComponents()) {
+				if (c->type == ComponentType::SCRIPT) {
+					int cID = ((C_Script*)c)->id;
+					if (jsonCmp.find("id") != jsonCmp.end()) {
+						if (cID == jsonCmp.at("id")) {
+							scriptCmp = (C_Script*)c;
+						}
+					}
+				}
+			}
 			if (scriptCmp == nullptr)
 			{
 				scriptCmp = this->CreateComponent<C_Script>();
@@ -844,7 +845,17 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "script")
 		{
-			C_Script* scriptCmp = this->GetComponent<C_Script>();
+			C_Script* scriptCmp = nullptr;
+			for (auto c : this->GetComponents()) {
+				if (c->type == ComponentType::SCRIPT) {
+					int cID = ((C_Script*)c)->id;
+					if (jsonCmp.find("id") != jsonCmp.end()) {
+						if (cID == jsonCmp.at("id")) {
+							scriptCmp = (C_Script*)c;
+						}
+					}
+				}
+			}
 			if (scriptCmp == nullptr)
 			{
 				scriptCmp = this->CreateComponent<C_Script>();
@@ -959,7 +970,14 @@ void GameObject::LoadSceneFromName(std::string name)
 
 std::string GameObject::SetObjectNumberedName(const char* _name)
 {
-	return _name;
+	if (engine->GetSceneManager() == nullptr)
+		return _name;
+
+	if (_name == nullptr)
+	{
+		std::string tmp = std::string("GameObject ") + std::to_string(uid);
+		return tmp;
+	}
 
 	int count = 0;
 	std::string name = std::string(_name);
