@@ -6,10 +6,10 @@
 
 R_Material::R_Material() :
 	shaderProgramID(0),
-	//materialPath(MATERIALS_DIR + std::string("default") + MATERIAL_EXTENSION),
-	shaderPath(ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION),
 	Resource(ResourceType::MATERIAL)
 {
+	std::string path = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+	SetAssetPath(path.c_str());
 }
 
 R_Material::~R_Material()
@@ -18,9 +18,6 @@ R_Material::~R_Material()
 
 	uniforms.clear();
 	uniforms.shrink_to_fit();
-
-	shaderPath.clear();
-	shaderPath.shrink_to_fit();
 }
 
 Uniform* R_Material::FindUniform(std::string name)

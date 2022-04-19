@@ -90,7 +90,7 @@ bool ComponentParticle::CleanUp()
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
 
-	//TODO: refs -1
+	resource->ModifyReferenceCount(-1);
 	resource->CleanUp();
 	RELEASE(resource);
 

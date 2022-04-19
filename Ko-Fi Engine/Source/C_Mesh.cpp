@@ -137,7 +137,7 @@ void C_Mesh::Load(Json& json)
 		mesh->SetIsAnimated(json.at("isAnimated"));
 	else
 		mesh->SetIsAnimated(false);
-	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
+	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh);
 	mesh->SetAssetPath(path.c_str());
 
 	SetVertexNormals(json.at("draw_vertex_normals"));
