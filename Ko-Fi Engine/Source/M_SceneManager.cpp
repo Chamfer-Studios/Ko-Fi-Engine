@@ -77,6 +77,7 @@ bool M_SceneManager::Start()
 
 	currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 	currentGizmoMode = ImGuizmo::MODE::WORLD;
+
 	return ret;
 }
 
@@ -158,6 +159,7 @@ bool M_SceneManager::SaveConfiguration(Json& configModule) const
 bool M_SceneManager::LoadConfiguration(Json& configModule)
 {
 	defaultScene = configModule["DefaultScene"];
+	
 	return true;
 }
 
@@ -298,6 +300,7 @@ void M_SceneManager::GuizmoTransformation()
 	float4x4 modelProjection = selectedGameObject->GetComponent<C_Transform>()->GetGlobalTransform().Transposed();
 
 	window = ImGui::FindWindowByName("Scene");
+	window->DrawList->PushClipRect(engine->GetEditor()->scenePanelOrigin, ImVec2((engine->GetEditor()->scenePanelOrigin.x + engine->GetEditor()->viewportSize.x),(engine->GetEditor()->scenePanelOrigin.y + engine->GetEditor()->viewportSize.y)), true);
 	ImGuizmo::SetDrawlist(window->DrawList);
 
 	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
