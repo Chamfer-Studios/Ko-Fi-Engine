@@ -667,6 +667,9 @@
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Decoy.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Knife.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
@@ -675,7 +678,6 @@
     <None Include="Ko-Fi\Assets\Scripts\EnemyPathfinder.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes&amp;SFX.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_ChangeScenes.lua" />
