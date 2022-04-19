@@ -3,8 +3,6 @@
 
 #include <string>
 
-class R_Animation;
-
 typedef unsigned int uint;
 
 AnimatorClip::AnimatorClip() :

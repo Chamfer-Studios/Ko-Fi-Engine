@@ -31,8 +31,10 @@
 #include "C_Collider.h"
 #include "C_RenderedUI.h"
 #include "C_LightSource.h"
+#include "C_Animator.h"
 #include "R_Material.h"
 #include "PieShape.h"
+#include "AnimatorClip.h"
 
 #include "PanelViewport.h"
 
@@ -409,14 +411,22 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 
 			if (mesh->IsAnimated())
 			{
-				float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
-				std::vector<float4x4> transformsAnim;
-				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+				// ...
+				AnimatorClip* animatorClip = go->GetComponent<C_Animator>()->GetSelectedClip();
+				if (animatorClip->GetFinishedBool() && animatorClip->GetLoopBool())
+					animatorClip->SetFinishedBool(false);
 
-				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
-				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
-				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->IsAnimated());
+				if (!animatorClip->GetFinishedBool())
+				{
+					float currentTimeMillis = engine->GetEngineConfig()->startupTime.ReadSec();
+					std::vector<float4x4> transformsAnim;
+					mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+
+					GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+					glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+					GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+					glUniform1i(isAnimated, mesh->IsAnimated());
+				}
 			}
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
@@ -759,7 +769,6 @@ void M_Renderer3D::InitFrameBuffers()
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBuffer, 0);
 
-
 	//Render Buffers
 	glGenRenderbuffers(1, &renderBufferoutput);
 	glBindRenderbuffer(GL_RENDERBUFFER, renderBufferoutput);
@@ -850,8 +859,6 @@ void M_Renderer3D::ResizePreviewFrameBuffers(int width, int height)
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, lwidth, lheight);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-
 }
 
 void M_Renderer3D::ReleaseFrameBuffers()
@@ -868,10 +875,12 @@ uint M_Renderer3D::GetTextureBuffer()
 {
 	return textureBuffer;
 }
+
 uint M_Renderer3D::GetPreviewTextureBuffer()
 {
 	return previewTextureBuffer;
 }
+
 void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 transform, float distanceToCamera)
 {
 	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
@@ -895,7 +904,6 @@ transform(transform)
 {
 
 }
-
 
 void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 {
@@ -936,5 +944,4 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glDisable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_BLEND);
-
 }
