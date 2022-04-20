@@ -114,6 +114,8 @@ void C_Collider::CreateBoxCollider()
 	float3 center = owner->GetComponent<C_Mesh>()->GetGlobalAABB().CenterPoint();
 	localPose.p = physx::PxVec3(center.x, center.y, center.z);
 	localPose.q = physx::PxQuat(quat.y, quat.x, quat.z, quat.w);
+
+	if(shape != nullptr)
 	shape->setLocalPose(localPose);
 
 	// STATE CREATION
