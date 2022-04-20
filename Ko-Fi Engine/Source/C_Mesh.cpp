@@ -48,7 +48,7 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 
 C_Mesh::~C_Mesh()
 {
-	CleanUp();
+	//CleanUp(); // Already called
 }
 
 bool C_Mesh::Start()
@@ -71,7 +71,8 @@ bool C_Mesh::PostUpdate(float dt) //AKA the real render
 
 bool C_Mesh::CleanUp()
 {
-	if (strcmp(owner->GetName(), "Knife") == 0)  // Dirty Fix before resource manager works
+	std::string temp(owner->GetName());
+	if (temp.find("Knife") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
 	RELEASE(mesh);
 

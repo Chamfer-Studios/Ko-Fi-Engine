@@ -27,12 +27,6 @@ function Update(dt)
 			else
 				characterSelected = 3
 			end
-		elseif (GetInput(24) == KEY_STATE.KEY_DOWN) then
-			if (characterSelected == 4) then
-				characterSelected = -1
-			else
-				characterSelected = 4
-			end
 		end
 	else
 		characterSelected = -1
