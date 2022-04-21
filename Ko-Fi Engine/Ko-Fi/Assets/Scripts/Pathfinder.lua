@@ -42,7 +42,7 @@ function Float3Angle(a, b)
     return math.acos(Float3Dot(a, b) / (lenA * lenB))
 end
 
-function FollowPath(speed, dt)
+function FollowPath(speed, dt, loop)
     if #finalPath == 0 then
         do return end
     end
@@ -52,7 +52,7 @@ function FollowPath(speed, dt)
     currentPosition = componentTransform:GetPosition()
     if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
         currentPathIndex = currentPathIndex + 1
-        if currentPathIndex > #finalPath then
+        if currentPathIndex > #finalPath and loop then
             currentPathIndex = 1
         end
         currentTarget = finalPath[currentPathIndex]
@@ -99,9 +99,9 @@ function UpdatePath(wp, pingpong)
 end
 
 function EventHandler(key, fields)
-    if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints; fields[2] -> pingpong
+    if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints; fields[2] -> pingpong;
         UpdatePath(fields[1], fields[2])
-    elseif key == "Pathfinder_FollowPath" then -- fields[1] -> speed; fields[2] -> dt;
-        FollowPath(fields[1], fields[2])
+    elseif key == "Pathfinder_FollowPath" then -- fields[1] -> speed; fields[2] -> dt; fields[3] -> loop;
+        FollowPath(fields[1], fields[2], fields[3])
     end
 end
