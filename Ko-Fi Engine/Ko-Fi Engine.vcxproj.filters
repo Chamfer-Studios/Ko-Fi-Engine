@@ -149,6 +149,12 @@
     <Filter Include="Scripts\Players\Zhib">
       <UniqueIdentifier>{d445d04a-4f59-4f92-b5b2-17fbe248b2da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Players\Nerala">
+      <UniqueIdentifier>{5a50019e-6459-4d3b-a988-7fd48a5de20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Players\Omozra">
+      <UniqueIdentifier>{6dcabfe7-3963-40c4-9df6-560195d54bff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -1834,12 +1840,6 @@
     <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua">
-      <Filter>Scripts\Players</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua">
-      <Filter>Scripts\Players</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
       <Filter>Scripts\Enemies</Filter>
     </None>
@@ -1874,6 +1874,12 @@
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
       <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra\Omozra.lua">
+      <Filter>Scripts\Players\Omozra</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua">
+      <Filter>Scripts\Players\Nerala</Filter>
     </None>
   </ItemGroup>
 </Project>

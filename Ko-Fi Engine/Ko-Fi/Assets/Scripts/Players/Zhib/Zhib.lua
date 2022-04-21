@@ -23,7 +23,7 @@ currentAction = Action.IDLE
 speed = 500.0  -- consider Start()
 maxKnives = 2
 knifeCount = maxKnives
-decoyRange = 25.0
+decoyCastRange = 50.0
 decoyCooldown = 10.0
 ultimateRange = 50.0
 ultimateRangeExtension = ultimateRange * 0.5
@@ -38,9 +38,9 @@ local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
 NewVariable(maxKnivesIV)
 
-local decoyRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-decoyRangeIV = InspectorVariable.new("decoyRange", decoyRangeIVT, decoyRange)
-NewVariable(decoyRangeIV)
+local decoyCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+decoyCastRangeIV = InspectorVariable.new("decoyCastRange", decoyCastRangeIVT, decoyCastRange)
+NewVariable(decoyCastRangeIV)
 
 local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
@@ -149,9 +149,9 @@ function Update(dt)
 			
 			-- Decoy
 			elseif (decoyTimer == nil and currentAction == Action.AIM_DECOY) then
-				target = GetGameObjectHovered()
+				target = GetGameObjectHovered() -- This is for the decoy to go to the mouse Pos (it uses the target var)
 				local mousePos = GetLastMouseClick()
-				if (Distance3D(mousePos, componentTransform:GetPosition()) <= decoyRange) then
+				if (Distance3D(mousePos, componentTransform:GetPosition()) <= decoyCastRange) then
 					PlaceDecoy()
 				end
 
@@ -365,7 +365,7 @@ function Ultimate(mousePos)
 	deathMarkDuration = 0.3
 	-- Set IN ORDER the death mark
 	for i = 1, #enemiesInRange do
-		SetLuaVariableFromGameObject(enemiesInRange[i]:GetName(), "deathMarkDuration", deathMarkDuration)
+		SetLuaVariableFromGameObject(enemiesInRange[i], "deathMarkDuration", deathMarkDuration)
 		deathMarkDuration = deathMarkDuration + 0.3
 	end
 
@@ -376,20 +376,9 @@ function Ultimate(mousePos)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }	
 	vec2 = Normalize(vec2, d)
 
-	-- Find the furthest enemy
-	local furtherstEnemy = enemiesInRange[1] -- Just in case
-	local longestDistance = -1
-	for i = 1, #enemiesInRange do
-		local enemyPos2D = { enemiesInRange[i]:GetTransform():GetPosition().x, enemiesInRange[i]:GetTransform():GetPosition().z }
-		local d = Distance(pos2D, enemyPos2D)
-		if (d > longestDistance) then
-			longestDistance = d
-			furtherstEnemy = enemiesInRange[i]
-		end
-	end
-
-	-- This 5 is the constant to modify
-	reappearPosition = float3.new(furtherstEnemy:GetTransform():GetPosition().x + vec2[1] * 25, componentTransform:GetPosition().y, furtherstEnemy:GetTransform():GetPosition().z + vec2[2] * 25)
+	-- Add as reappear position the position from the last enemy who's gonna die
+	local dist = 25
+	reappearPosition = float3.new(enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().x + vec2[1] * dist, componentTransform:GetPosition().y, enemiesInRange[#enemiesInRange]:GetTransform():GetPosition().z + vec2[2] * dist)
 
 	-- Set timer equal to the longest dath mark timer to reappear
 	gameObject.active = false

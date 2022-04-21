@@ -107,11 +107,11 @@ bool SceneIntro::PreUpdate(float dt)
 			goIt->tag = Tag::TAG_PROJECTILE;
 			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
 
-			//goIt->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
+			goIt->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
 			float3 pos = parent->GetTransform()->GetPosition();
 
 			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y, pos.z));
-			goIt->GetTransform()->SetPosition(float3(pos.x, pos.y, pos.z - 15));
+			goIt->GetTransform()->SetPosition(float3(pos.x, pos.y, pos.z));
 
 			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
 
@@ -119,7 +119,7 @@ bool SceneIntro::PreUpdate(float dt)
 			componentMesh->SetMesh(mesh);
 
 			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material* material = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
+			R_Material* material = karambit->GetComponent<C_Material>()->GetMaterial();
 
 			cMaterial->SetMaterial(material);
 
@@ -147,16 +147,19 @@ bool SceneIntro::PreUpdate(float dt)
 			goIt->tag = Tag::TAG_PROJECTILE;
 			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
 
+			goIt->GetTransform()->SetScale(float3(0.01, 0.01, 0.05));
 			float3 pos = parent->GetTransform()->GetPosition();
+
 			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y, pos.z));
-			goIt->GetTransform()->SetPosition(float3(pos.x, pos.y, pos.z - 15));
-			goIt->GetTransform()->SetScale(float3(0.01, 0.01, 0.005));
+			goIt->GetTransform()->SetPosition(float3(pos.x, pos.y, pos.z));
+
 			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
+
 			R_Mesh* mesh = decoy->GetComponent<C_Mesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material* material = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
+			R_Material* material = decoy->GetComponent<C_Material>()->GetMaterial();
 			cMaterial->SetMaterial(material);
 
 			rigidBody->FreezePositionY(true);

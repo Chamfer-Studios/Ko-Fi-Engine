@@ -620,9 +620,8 @@ public:
 		appLog->AddLog(log);
 	}
 
-	void LuaSetLuaVariableFromGameObject(std::string goName, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
+	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
 	{
-		GameObject *go = LuaFind(goName);
 		if (go == nullptr)
 			return;
 

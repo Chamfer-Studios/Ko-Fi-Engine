@@ -121,12 +121,11 @@ bool GameObject::PostUpdate(float dt)
 
 bool GameObject::CleanUp()
 {
-	for (Component* component : components)
+	for (std::vector<Component*>::iterator component = components.begin(); component != components.end();)
 	{
-
-		component->CleanUp();
-		RELEASE(component);
-
+		(*component)->CleanUp();
+		RELEASE(*component);
+		component = components.erase(component);
 	}
 
 	components.clear();

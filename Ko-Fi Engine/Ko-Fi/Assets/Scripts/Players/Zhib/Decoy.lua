@@ -11,10 +11,29 @@ componentRigidBody = gameObject:GetRigidBody()
 function Update(dt)
 	
 	if (lifeTimer <= lifeTime) then
-	
+
 		lifeTimer = lifeTimer + dt
+
+		-- Get all enemies in range
+		enemiesInRange = {}
+		enemies = GetObjectsByTag(Tag.ENEMY)
+		for i = 1, #enemies do
+			if (Distance3D(enemies[i]:GetTransform():GetPosition(), componentTransform:GetPosition()) <= effectRadius) then
+				enemiesInRange[#enemiesInRange + 1] = enemies[i]
+			end
+		end
+
+		-- If there are none, return
+		if (#enemiesInRange <= 0) then
+			return
+		end
+
+		for i = 1, #enemiesInRange do
+			--SetLuaVariableFromGameObject(enemiesInRange[i], "target", componentTransform:GetPosition())
+		end
+
 	else
-		DeleteGameObject()
+		DeleteGameObject() --  It crashes with this
 	end
 end
 
@@ -59,7 +78,7 @@ function SetDestination()
 		local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 		vec2 = Normalize(vec2, d)
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:SetRigidBodyPos(float3.new(vec2[1] * 15, componentTransform:GetPosition().y, vec2[2] * 15))
+			componentRigidBody:SetRigidBodyPos(float3.new(vec2[1] * 35, componentTransform:GetPosition().y, vec2[2] * 35))
 		end
 	end
 end
