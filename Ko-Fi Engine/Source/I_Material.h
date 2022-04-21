@@ -2,9 +2,6 @@
 #define __I_MATERIAL_H__
 
 #include <string>
-#include <glew.h>
-#include <gl/GL.h>
-#include <gl/GLU.h>
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -16,9 +13,9 @@
 
 #include "Assimp.h"
 
-
 class R_Material;
 class aiMaterial;
+class KoFiEngine;
 
 enum class ShaderType
 {
@@ -30,13 +27,14 @@ enum class ShaderType
 class I_Material
 {
 public:
-	I_Material();
+	I_Material(KoFiEngine* engine);
 	~I_Material();
 
 	bool Import(const char* assetsPath, R_Material* material);
 	bool Import(const aiMaterial* aiMaterial, R_Material* material);
 	//bool Save(const R_Material* material);
 	//bool Load(R_Material* material);
+	bool Save(const R_Material* material, const char* path);
 
 	bool LoadAndCreateShader(const char* shaderPath, R_Material* material);
 
@@ -45,6 +43,8 @@ private:
 	bool LoadUniforms(R_Material* material);
 	bool CheckUniformName(std::string name);
 
+private:
+	KoFiEngine* engine = nullptr;
 };
 
 #endif // !__I_MATERIAL_H__
