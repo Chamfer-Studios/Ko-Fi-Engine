@@ -205,7 +205,7 @@ const AABB C_Mesh::GetGlobalAABB() const
 void C_Mesh::GenerateLocalBoundingBox()
 {
 	// Generate AABB
-	if (mesh != nullptr)
+	if (mesh != nullptr && mesh->vertices != 0) // to avoid float3 isfinite warning.
 	{
 		mesh->localAABB.SetNegativeInfinity();
 		mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
