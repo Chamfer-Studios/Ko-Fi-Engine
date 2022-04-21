@@ -454,9 +454,15 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 				float distance;
 				if (rayLocal.Intersects(triangle, &distance, &lastMouseClick))
 				{
+					float tmp = lastMouseClick.y;
+					lastMouseClick.y = lastMouseClick.z;
+					lastMouseClick.z = tmp;
 					lastMouseClick.x *= gameObject->GetTransform()->GetScale().x;
 					lastMouseClick.y *= gameObject->GetTransform()->GetScale().y;
 					lastMouseClick.z *= gameObject->GetTransform()->GetScale().z;
+					lastMouseClick.x += gameObject->GetTransform()->GetPosition().x;
+					lastMouseClick.y += gameObject->GetTransform()->GetPosition().y;
+					lastMouseClick.z += gameObject->GetTransform()->GetPosition().z;
 					return gameObject;
 				}
 			}

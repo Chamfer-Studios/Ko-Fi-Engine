@@ -115,8 +115,6 @@ function CheckAuditoryTriggerInRange(position, range)
 
     distance = Float3Distance(mypos, position)
 
-    Log(tostring(position) .. "\n")
-
     if distance < hearingRange + range then
         do return(true) end
     end
@@ -177,7 +175,7 @@ function SetTargetStateToSUS()
         do return end
     end
 
-    targetAwareness = 0
+    targetAwareness = 1
 end
 
 function SetTargetStateToAGGRO()
@@ -243,14 +241,13 @@ function Update(dt)
 
     if hadRepeatedAuditoryTriggerLastFrame == true then
         auditoryTriggerIsRepeating = true
+        hadRepeatedAuditoryTriggerLastFrame = false
     else
         if auditoryTriggerIsRepeating == true then
             auditoryTriggerIsRepeating = false
             SetTargetStateToUNAWARE()
         end
     end
-
-    Log(tostring(awareness) .. "\n")
 
 	DispatchEvent(pathfinderFollowKey, { speed, dt, loop })
 end
