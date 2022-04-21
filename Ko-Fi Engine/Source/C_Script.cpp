@@ -232,7 +232,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				{
 				case INSPECTOR_INT:
 				{
-					if (ImGui::DragInt(label, &std::get<int>((*variable)->value)))
+					if (ImGui::DragInt((*variable)->name.c_str(), &std::get<int>((*variable)->value)))
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<int>((*variable)->value);
 					}
@@ -469,6 +469,7 @@ void C_Script::Load(Json &json)
 	}
 	LoadInspectorVariables(json);
 	ReloadScript(s);
+	RemoveOldVariables();
 }
 
 void C_Script::SetId(int id)
@@ -484,6 +485,10 @@ void C_Script::LoadInspectorVariables(Json &json)
 	for (const auto &var : json.at("inspector_variables").items())
 	{
 		std::string name = var.value().at("name").get<std::string>();
+		//auto v = s->handler->lua[name.c_str()]; // Old Inspector Variables should not be loaded if they are not in lua
+		//if (!v.valid())
+		//	continue;
+
 		std::string type_s = var.value().at("type").get<std::string>();
 		INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
 		std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
@@ -555,4 +560,19 @@ ScriptHandler::ScriptHandler(GameObject* owner, C_Script* script)
 	handler->gameObject = owner;
 	handler->componentTransform = owner->GetTransform();
 	handler->SetUpVariableTypes();
+}
+
+void C_Script::RemoveOldVariables()
+{
+	for (std::vector<InspectorVariable*>::iterator var = s->inspectorVariables.begin(); var != s->inspectorVariables.end();)
+	{
+		std::string name = (*var)->name;
+		auto v = s->handler->lua[name.c_str()]; // Old Inspector Variables should not be loaded if they are not in lua
+		if (!v.valid() && (*var)->type != INSPECTOR_GAMEOBJECT)
+		{
+			var = s->inspectorVariables.erase(var);
+		}
+		else
+			++var;
+	}
 }

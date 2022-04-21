@@ -373,6 +373,10 @@ public:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_B);
 			}
+			case 12:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
+			}
 
 			case 21:
 			{
@@ -614,9 +618,8 @@ public:
 		appLog->AddLog(log);
 	}
 
-	void LuaSetLuaVariableFromGameObject(std::string goName, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
+	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
 	{
-		GameObject *go = LuaFind(goName);
 		if (go == nullptr)
 			return;
 

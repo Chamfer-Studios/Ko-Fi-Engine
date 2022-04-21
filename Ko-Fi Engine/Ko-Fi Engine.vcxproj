@@ -688,12 +688,17 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra\Omozra.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Decoy.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Knife.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Zhib.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
