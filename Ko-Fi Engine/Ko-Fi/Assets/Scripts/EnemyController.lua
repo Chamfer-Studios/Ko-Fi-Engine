@@ -1,7 +1,7 @@
 static = false
 local staticIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 staticIV = InspectorVariable.new("static", staticIVT, static)
-NewVariable(static)
+NewVariable(staticIV)
 
 speed = 20
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
@@ -108,12 +108,14 @@ state = STATE.UNAWARE
 awareness = 0
 targetAwareness = 0
 awarenessSpeed = 1
-hearingRange = 0
+hearingRange = 30
 
 function CheckAuditoryTriggerInRange(position, range)
     mypos = componentTransform:GetPosition()
 
     distance = Float3Distance(mypos, position)
+
+    Log(tostring(position) .. "\n")
 
     if distance < hearingRange + range then
         do return(true) end
@@ -247,6 +249,8 @@ function Update(dt)
             SetTargetStateToUNAWARE()
         end
     end
+
+    Log(tostring(awareness) .. "\n")
 
 	DispatchEvent(pathfinderFollowKey, { speed, dt, loop })
 end

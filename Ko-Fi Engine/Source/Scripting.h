@@ -326,6 +326,7 @@ public:
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
+		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 
 	}
 

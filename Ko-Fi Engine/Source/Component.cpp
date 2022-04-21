@@ -117,7 +117,6 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 			{ ComponentType::BUTTON, "BUTTON" },
 			{ ComponentType::TEXT, "TEXT" },
 			{ ComponentType::WALKABLE, "WALKABLE" },
-			{ ComponentType::FOLLOW_PATH, "FOLLOW_PATH" },
 			{ ComponentType::LIGHT_SOURCE, "LIGHT_SOURCE" },
 
 		};

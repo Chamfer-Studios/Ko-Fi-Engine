@@ -361,6 +361,15 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 	//script();
 
 	handler->script = handler->handler->lua.script_file(handler->path);
+	if (handler->script.valid()) {
+		// Call succeeded
+	}
+	else {
+		// Call failed
+		sol::error err = handler->script;
+		std::string what = err.what();
+		appLog->AddLog("%s\n", what.c_str());
+	}
 	handler->isScriptLoaded = true;
 }
 

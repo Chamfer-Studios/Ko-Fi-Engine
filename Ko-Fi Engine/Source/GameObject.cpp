@@ -26,7 +26,6 @@
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 #include "ComponentWalkable.h"
-#include "ComponentFollowPath.h"
 #include "C_LightSource.h"
 
 // Resources
@@ -327,11 +326,6 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::WALKABLE:
 	{
 		c = this->CreateComponent<ComponentWalkable>();
-		break;
-	}
-	case ComponentType::FOLLOW_PATH:
-	{
-		c = this->CreateComponent<ComponentFollowPath>();
 		break;
 	}
 	case ComponentType::AUDIO_SOURCE:
