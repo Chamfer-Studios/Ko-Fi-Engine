@@ -1,6 +1,7 @@
 #include "I_Material.h"
 #include "R_Material.h"
 #include "Engine.h"
+#include "M_FileSystem.h"
 
 #include <glew.h>
 #include <gl/GL.h>
@@ -65,27 +66,9 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 	return ret;
 }
 
-bool Save(const R_Material* material, const char* path)
+bool I_Material::Save(const R_Material* material, const char* path)
 {
-	//engine->GetFileSystem()->CheckDirectory(TEXTURES_DIR);
-	//std::ofstream file;
-	//file.open(path, std::ios::in | std::ios::trunc | std::ios::binary);
-	//if (file.is_open())
-	//{
-	//	// HEADER
-	//	file.write((char*)&texture->width, sizeof(int));
-	//	file.write((char*)&texture->height, sizeof(int));
-	//	file.write((char*)&texture->nrChannels, sizeof(int));
-
-	//	// BODY
-	//	file.write((char*)texture->data, texture->imageSizeBytes);
-
-	//	file.close();
-
-	//	return true;
-	//}
-
-	return false;
+	return engine->GetFileSystem()->CopyFileTo(material->GetAssetPath(), path);
 }
 
 bool I_Material::LoadAndCreateShader(const char* shaderPath, R_Material* material)

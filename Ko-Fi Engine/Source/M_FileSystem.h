@@ -50,6 +50,9 @@ public:
 	// Returns the last modification time in seconds from the epoch time. The Greater the number returned, the more recent the modification is.
 	int GetLastModTime(const char* path);
 
+	// Copies a file from one path into another one.
+	bool CopyFileTo(const char* sourcePath, const char* destinationPath);
+
 	const char* GetFileName(const char* path) const;
 	std::string GetNameFromPath(std::string path);
 	

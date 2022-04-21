@@ -276,6 +276,34 @@ int M_FileSystem::GetLastModTime(const char* path)
 	return ret;
 }
 
+bool M_FileSystem::CopyFileTo(const char* sourcePath, const char* destinationPath)
+{
+	if (!std::filesystem::exists(sourcePath))
+		return false;
+
+	std::filesystem::path source = sourcePath;
+	std::filesystem::path dest = destinationPath;
+
+	if (std::filesystem::is_directory(source) || std::filesystem::is_directory(dest))
+		return false;
+
+	if (source.extension() != dest.extension())
+		return false;
+	else if (CheckDirectory(dest.parent_path().string().c_str()))
+	{
+		try
+		{
+			std::filesystem::copy_file(source, dest, std::filesystem::copy_options::update_existing);
+		}
+		catch (std::filesystem::filesystem_error& e)
+		{
+			CONSOLE_LOG("[ERROR] Filesystem: couldn't copy &s: &s", sourcePath, e.what());
+			return false;
+		}
+	}
+	return true;
+}
+
 const char* M_FileSystem::GetFileName(const char* path) const
 {
 	std::string p = path;
