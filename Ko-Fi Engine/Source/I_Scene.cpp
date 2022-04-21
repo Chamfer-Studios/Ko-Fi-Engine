@@ -524,7 +524,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	//}
 
 
-		//TODO: CHECK IF THIS WORKS BECAUSE IM NOT SURE
+	// TODO: CHECK IF THIS WORKS BECAUSE IM NOT SURE
 	std::string assetPath = model->GetAssetPath() + std::string(nodeName) + MATERIAL_EXTENSION;
 	R_Material* material = (R_Material*)engine->GetResourceManager()->CreateNewResource(ResourceType::MATERIAL, assetPath.c_str());
 

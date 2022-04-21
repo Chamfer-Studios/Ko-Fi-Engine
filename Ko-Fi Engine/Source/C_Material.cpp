@@ -66,26 +66,33 @@ void C_Material::Save(Json& json) const
 {
 	json["type"] = "material";
 	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
-	json["shader_path"] = material->GetShaderPath();
+
+	std::string shaderPath = material->GetShaderPath();
+	shaderPath = shaderPath.substr(shaderPath.find_last_of("/\\") + 1);
+	std::string::size_type const p(shaderPath.find_last_of('.'));
+	shaderPath = shaderPath.substr(0, p);
+
+	shaderPath = SHADERS_DIR + shaderPath + SHADER_EXTENSION;
+	material->SetLibraryPath(shaderPath.c_str());
+	json["shader_path"] = material->GetLibraryPath();
+
+	Importer::GetInstance()->materialImporter->Save(material, material->GetLibraryPath());
 
 	if (texture->GetAssetPath() != nullptr)
 	{
-		std::string name = texture->GetAssetPath();
-		name = name.substr(name.find_last_of("/\\") + 1);
-		std::string::size_type const p(name.find_last_of('.'));
-		name = name.substr(0, p);
+		std::string texturePath = texture->GetAssetPath();
+		texturePath = texturePath.substr(texturePath.find_last_of("/\\") + 1);
+		std::string::size_type const p(texturePath.find_last_of('.'));
+		texturePath = texturePath.substr(0, p);
 
-		std::string path = TEXTURES_DIR + name + TEXTURE_EXTENSION;
-		texture->SetLibraryPath(path.c_str());
+		texturePath = TEXTURES_DIR + texturePath + TEXTURE_EXTENSION;
+		texture->SetLibraryPath(texturePath.c_str());
+		json["texture_path"] = texture->GetLibraryPath();
 
 		Importer::GetInstance()->textureImporter->Save(texture, texture->GetLibraryPath());
-		json["texture_path"] = texture->GetLibraryPath();
 	}
 	else
 		json["texture_path"] = nullptr;
-
-	//json["material_path"] = material->GetMaterialPath();
-	//json["material_name"] = material->materialName;
 
 	//Json jsonTex;
 	//json["textures"] = json::array();
@@ -166,14 +173,14 @@ void C_Material::Load(Json& json)
 
 		std::string shaderPath = json.at("shader_path").get<std::string>();
 		if (!shaderPath.empty())
-			material->SetShaderPath(shaderPath.c_str());
+			material->SetLibraryPath(shaderPath.c_str());
 		else
 		{
-			shaderPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
-			material->SetShaderPath(shaderPath.c_str());
+			shaderPath = ASSETS_SHADERS_DIR + std::string(DEFAULT_SHADER) + SHADER_EXTENSION;
+			material->SetLibraryPath(shaderPath.c_str());
 		}
 
-		if (!Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material))
+		if (!Importer::GetInstance()->materialImporter->Import(material->GetLibraryPath(), material))
 		{
 			CONSOLE_LOG("[ERROR] Something went wrong loading the shader.");
 		}
@@ -406,7 +413,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 					material->SetShaderPath(path.c_str());
 				else
 				{
-					path = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+					path = ASSETS_SHADERS_DIR + std::string(DEFAULT_SHADER) + SHADER_EXTENSION;
 					material->SetShaderPath(path.c_str());
 				}
 				Importer::GetInstance()->materialImporter->LoadAndCreateShader(path.c_str(), material);

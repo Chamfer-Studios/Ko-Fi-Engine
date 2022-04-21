@@ -1,6 +1,8 @@
 #ifndef __MATERIAL_H__
 #define __MATERIAL_H__
 
+#define DEFAULT_SHADER "default_shader"
+
 #include "Globals.h"
 #include "Color.h"
 #include "Resource.h"

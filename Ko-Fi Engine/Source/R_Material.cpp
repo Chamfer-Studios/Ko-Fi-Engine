@@ -8,7 +8,7 @@ R_Material::R_Material() :
 	shaderProgramID(0),
 	Resource(ResourceType::MATERIAL)
 {
-	std::string path = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+	std::string path = ASSETS_SHADERS_DIR + std::string(DEFAULT_SHADER) + SHADER_EXTENSION;
 	SetAssetPath(path.c_str());
 }
 

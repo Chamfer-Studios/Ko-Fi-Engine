@@ -30,8 +30,6 @@ bool I_Material::Import(const char* assetsPath, R_Material* material)
 		return false;
 	}
 
-	material->SetShaderPath(assetsPath);
-
 	ret = LoadAndCreateShader(assetsPath, material);
 
 	return ret;
@@ -58,7 +56,7 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 		material->diffuseColor = Color(color.r, color.g, color.b, color.a);
 	}
 
-	std::string defaultPath = ASSETS_SHADERS_DIR + std::string("normals_shader") + SHADER_EXTENSION;
+	std::string defaultPath = ASSETS_SHADERS_DIR + std::string(DEFAULT_SHADER) + SHADER_EXTENSION;
 	material->SetShaderPath(defaultPath.c_str());
 
 	ret = LoadAndCreateShader(defaultPath.c_str(), material);
