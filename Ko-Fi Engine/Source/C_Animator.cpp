@@ -14,6 +14,8 @@
 #include "AnimatorClip.h"
 
 #include "FSDefs.h"
+#include "Color.h"
+
 #include <vector>
 #include <string>
 #include <map>
@@ -21,7 +23,6 @@
 C_Animator::C_Animator(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::ANIMATOR;
-	playing = true;
 }
 
 C_Animator::~C_Animator()
@@ -76,10 +77,10 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", 22);
 
-		ImGui::Text("Animation State: ");
+		/*ImGui::Text("Animation State: ");
 		if (ImGui::Checkbox("Playing", &playing))
 			if(playing == true){}
-			else{}
+			else{}*/
 
 		// -- CLIP CREATOR
 		ImGui::Text("Select Animation");
@@ -96,8 +97,17 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 		if (ImGui::Button("Create Clip", ImVec2(80, 35)))
 		{
-			CreateClip(AnimatorClip(animation, clipName, animation->startFrame, animation->endFrame, 1.0f, true));
+			if (animation->endFrame > animation->startFrame)
+			{
+				CreateClip(AnimatorClip(animation, clipName, animation->startFrame, animation->endFrame, 1.0f, true));
+				createClipErrorMessage = false;
+			}
+			else
+				createClipErrorMessage = true;
 		}
+
+		if (createClipErrorMessage)
+			ImGui::TextColored(Red.ToImVec4(), "Please, select a valid clip interval.");
 
 		ImGui::Text("Select Clip");
 
@@ -124,39 +134,41 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 		ImGui::Text("Delete Clip");
 
-		if (ImGui::BeginCombo(" ", "[DELETE CLIP]", ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Delete Clip", ((clipToDelete != nullptr) ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
 		{
-			//for (uint i = 0; i < animations->size(); ++i)
+			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
-				//R_Animation* rAnimation = animations->at(i);
-				//if (rAnimation == nullptr)
-					//continue;
-
-				/*if (ImGui::Selectable(rAnimation->GetName(), (rAnimation == selectedAnimation), ImGuiSelectableFlags_None))
+				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == clipToDelete), ImGuiSelectableFlags_None))
 				{
-					selectedAnimation = rAnimation;
-
-					newClipEnd = selectedAnimation->GetDuration();
-					newClipMax = selectedAnimation->GetDuration();
-				}*/
+					if (clip->second.GetName().c_str() != "Default clip")
+					{
+						clipToDelete = &clip->second;
+						SetSelectedClip(std::string("Default clip"));
+					}
+					else
+						clipToDelete = nullptr;
+				}
 			}
 
 			ImGui::EndCombo();
 		}
-		ImGui::SameLine();
-		ImGui::Button("Delete", ImVec2(50, 30));
+
+		if (ImGui::Button("Delete"))
+		{
+			clips.erase(clipToDelete->GetName().c_str());
+			clipToDelete = nullptr;
+		}
 
 		ImGui::Text("Clip Options: ");
-		if (ImGui::Checkbox("Loop", &playing))
-			if (playing == true) {}
-			else {}
-		ImGui::SameLine();
-		if (ImGui::Button("Restart", ImVec2(70, 18)))
-			Reset();
+		if (ImGui::Checkbox("Loop", &selectedClip->GetLoopBool())) {}
 
+		/*ImGui::SameLine();
+		if (ImGui::Button("Restart", ImVec2(70, 18)))
+			Reset();*/
 	}
 	else
 		DrawDeleteButton(owner, this);
+
 	return ret;
 }
 
@@ -173,11 +185,14 @@ void C_Animator::Save(Json& json) const
 	for (auto clip : clips)
 	{
 		jsonClips["mapString"] = clip.first.c_str();
+
 		jsonClips["clipName"] = clip.second.GetName().c_str();
 		jsonClips["clipStartFrame"] = clip.second.GetStartFrame();
 		jsonClips["clipEndFrame"] = clip.second.GetEndFrame();
 		jsonClips["clipDuration"] = clip.second.GetDuration();
 		jsonClips["clipDurationInSeconds"] = clip.second.GetDurationInSeconds();
+		jsonClips["clipLoop"] = clip.second.GetLoopBool();
+		jsonClips["clipFinished"] = clip.second.GetFinishedBool();
 
 		json["clips"].push_back(jsonClips);
 	}
@@ -209,6 +224,8 @@ void C_Animator::Load(Json& json)
 				animatorClip.SetEndFrame(clip.value().at("clipEndFrame"));
 				animatorClip.SetDuration(clip.value().at("clipDuration"));
 				animatorClip.SetDurationInSeconds(clip.value().at("clipDurationInSeconds"));
+				animatorClip.SetLoopBool(clip.value().at("clipLoop"));
+				animatorClip.SetFinishedBool(clip.value().at("clipFinished"));
 
 				animatorClip.SetAnimation(animation);
 

@@ -311,7 +311,7 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 				name.resize(nameSizeBytes);
 				file.read((char*)(name.data()), nameSizeBytes);
 				file.read((char*)&index, sizeof(uint));
-				mesh->boneNameToIndexMap.emplace(name.c_str(), index + 1);
+				mesh->boneNameToIndexMap.emplace(name.c_str(), index);
 			}
 		}
 

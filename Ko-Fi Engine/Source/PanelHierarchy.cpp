@@ -117,6 +117,45 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 	}
 	if (go->GetChildren().size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf;
+	if (dragging)
+	{
+		//Drawing inter-GO buttons
+		ImVec2 cursorPos = ImVec2(ImGui::GetCursorScreenPos().x, ImGui::GetCursorScreenPos().y - 4.0f);
+		ImGui::SetCursorScreenPos(cursorPos);
+		ImGui::PushID(go->GetUID()); //TODO: should be done in tree header, we need a new id here
+		ImVec2 buttonSize = ImVec2(ImGui::GetWindowSize().x, 4);
+		ImGui::InvisibleButton("Button", buttonSize);
+		if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
+		{
+			ImDrawList* drawList = ImGui::GetWindowDrawList();
+			drawList->AddRectFilled(ImVec2(cursorPos), ImVec2(cursorPos.x + ImGui::GetWindowSize().x, cursorPos.y + 4), ImGui::GetColorU32(ImGuiCol_HeaderActive));
+			if (editor->engine->GetInput()->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
+			{
+				//1 attach child
+				if (go->GetParent() == selectedGameObject->GetParent())
+				{
+					auto insertIndex = std::find(go->GetParent()->children.begin(), go->GetParent()->children.end(), go);
+					auto moveIndex = std::find(go->GetParent()->children.begin(), go->GetParent()->children.end(), selectedGameObject);
+					ReorderElement(go->GetParent()->children, insertIndex - go->GetParent()->children.begin(), moveIndex - go->GetParent()->children.begin());
+				}
+				else {
+					go->GetParent()->AttachChild(selectedGameObject);
+					auto insertIndex = std::find(go->GetParent()->children.begin(), go->GetParent()->children.end(), go);
+					auto moveIndex = std::find(go->GetParent()->children.begin(), go->GetParent()->children.end(), selectedGameObject);
+					ReorderElement(go->GetParent()->children, insertIndex - go->GetParent()->children.begin(), moveIndex - go->GetParent()->children.begin());
+				}
+
+				/*auto insertIndex = std::find(go->GetParent()->children.begin(), go->GetParent()->children.end(), go);
+				auto moveIndex = std::find(selectedGameObject->GetParent()->children.begin(), selectedGameObject->GetParent()->children.end(), selectedGameObject);
+				ReorderElement(insertIndex- editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->children.begin(),moveIndex- editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->children.begin());*/
+			}
+		}
+		ImGui::PopID();
+		ImGui::SetCursorScreenPos(ImVec2(ImGui::GetCursorScreenPos().x - 0.0f, ImGui::GetCursorScreenPos().y - 4.0f));
+
+	}
+	
+
 	if (ImGui::TreeNodeEx(go->GetName(), flags))
 	{
 		DragNDrop(go);
@@ -128,16 +167,13 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 		if (ImGui::IsItemClicked(1)) {
 			ImGui::OpenPopup("Test");
 		}
-			// Delete with SUPR
-			if (editor->engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
-			{
-				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetUID() != -1) {
-						editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
-						editor->panelGameObjectInfo.selectedGameObjectID = -1;
-					}
-				}
-			}
+		
+		for (int i = 0; i < go->GetChildren().size(); i++)
+		{
+
+			DisplayTree(go->GetChildren().at(i), flags, ++id);
+
+		}
 		if (ImGui::BeginPopup("Test"))
 		{
 			if (ImGui::MenuItem("Create Empty Child")) {
@@ -155,7 +191,6 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 					}
 				}
 			}
-
 			if (ImGui::MenuItem("Set as Prefab")) {
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetUID() != -1) {
@@ -165,12 +200,6 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 				}
 			}
 			ImGui::EndPopup();
-		}
-		for (int i = 0; i < go->GetChildren().size(); i++)
-		{
-
-			DisplayTree(go->GetChildren().at(i), flags, ++id);
-
 		}
 		ImGui::TreePop();
 
@@ -191,6 +220,7 @@ void PanelHierarchy::DragNDrop(GameObject* go)
 {
 	if (ImGui::BeginDragDropSource())
 	{
+		dragging = true;
 		ImGui::SetDragDropPayload("Hierarchy", go, sizeof(GameObject));
 		selectedGameObject = go;
 		ImGui::Text(go->GetName());
@@ -213,5 +243,16 @@ void PanelHierarchy::DragNDrop(GameObject* go)
 			}
 		}
 		ImGui::EndDragDropTarget();
+		dragging = false;
+	}
+}
+
+void PanelHierarchy::ReorderElement(std::vector<GameObject*>& list, int insertIndex, int moveIndex)
+{
+	
+	while (moveIndex > insertIndex)
+	{
+		std::swap(list[moveIndex], list[moveIndex - 1]);
+		--moveIndex;
 	}
 }

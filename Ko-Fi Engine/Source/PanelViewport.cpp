@@ -85,7 +85,6 @@ bool PanelViewport::Update()
 			engine->GetCamera3D()->currentCamera->aspectRatio = viewportSize.x / viewportSize.y;
 			engine->GetCamera3D()->currentCamera->RecalculateProjection();
 			engine->GetRenderer()->ResizeFrameBuffers(viewportSize.x, viewportSize.y);
-
 		}
 		editor->viewportSize = viewportSize;
 		ImGui::Image((ImTextureID)engine->GetRenderer()->GetTextureBuffer(), viewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
@@ -130,9 +129,6 @@ bool PanelViewport::Update()
 		DrawViewportBar();
 		if (ImGui::IsMouseClicked(1)) ImGui::SetWindowFocus();
 		isFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
-
-		
-
 	}
 	ImGui::End();
 

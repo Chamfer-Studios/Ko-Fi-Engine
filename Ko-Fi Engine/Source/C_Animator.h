@@ -34,12 +34,13 @@ public:
 	void SetSelectedClip(std::string name);
 
 private:
-	bool playing;
-
 	R_Animation* animation = nullptr;
 
 	std::map<std::string, AnimatorClip> clips;
 	AnimatorClip* selectedClip = nullptr;
+	AnimatorClip* clipToDelete = nullptr;
+
+	bool createClipErrorMessage = false;
 };
 
-#endif // __C_ANIMATOR_H__
+#endif // !__C_ANIMATOR_H__

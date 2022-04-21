@@ -600,6 +600,12 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			textCmp->Save(jsonComponent);
 			break;
 		}
+		case ComponentType::ANIMATOR:
+		{
+			C_Animator* animatorCmp = (C_Animator*)component;
+			animatorCmp->Save(jsonComponent);
+			break;
+		}
 		default:
 			break;
 		}
@@ -786,6 +792,16 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);
 		}
+		else if (type == "animator")
+		{
+			C_Animator* animCmp = this->GetComponent<C_Animator>();
+			if (animCmp == nullptr)
+			{
+				animCmp = this->CreateComponent<C_Animator>();
+			}
+			animCmp->active = true;
+			animCmp->Load(jsonCmp);
+		}
 	}
 	Json jsonChd = jsonFile.at("children");
 	for (const auto& chdIt : jsonChd.items())
@@ -934,6 +950,16 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			}
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);
+		}
+		else if (type == "animator")
+		{
+			C_Animator* animCmp = this->GetComponent<C_Animator>();
+			if (animCmp == nullptr)
+			{
+				animCmp = this->CreateComponent<C_Animator>();
+			}
+			animCmp->active = true;
+			animCmp->Load(jsonCmp);
 		}
 	}
 	Json jsonChd = jsonFile.at("children");

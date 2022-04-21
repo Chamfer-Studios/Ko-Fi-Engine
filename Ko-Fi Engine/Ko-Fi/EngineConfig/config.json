@@ -55,7 +55,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "IntroMenu"
+        "DefaultScene": "cuatrecasas"
     },
     "UI": null,
     "Window": {
