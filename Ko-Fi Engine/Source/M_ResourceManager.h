@@ -23,7 +23,7 @@ public:
 	void OnNotify(const Event& event);
 
 	UID ImportFile(const char* assetPath);
-	UID LoadFromLibrary(const char* libraryPath);
+	UID LoadFromLibrary(const char* assetsPath);
 	UID ImportFromAssets(const char* assetPath);
 	void DeleteFromLibrary(const char* assetPath);
 	void DeleteFromAssets(const char* assetPath);
@@ -34,6 +34,7 @@ public:
 
 	//const Resource* RequestResource(uint uid) const;			Can't do it because of the maps
 	bool SaveResource(Resource* resource);
+	bool LoadResource(UID uid, const char* assetsPath);
 	// Deletes from Library map
 	bool UnloadResource(UID uid);
 	// Doesnt deletes from Library map
@@ -41,10 +42,10 @@ public:
 
 	UID Find(const char* assetPath) const;
 	void FindAndForceUID(Resource* resource);
-	Resource* GetResourceFromLibrary(const char* libraryPath);
+	Resource* GetResourceFromLibrary(const char* assetsPath);
 	Resource* RequestResource(UID uid);
 
-	ResourceType GetTypeFromAssetsExtension(const char* assetPath);
+	ResourceType GetTypeFromPathExtension(const char* path);
 
 	bool GetAssetDirectoryFromType(const ResourceType& type, std::string& directory);
 	bool GetLibraryDirectoryAndExtensionFromType(const ResourceType& type, std::string& directory, std::string& extension);

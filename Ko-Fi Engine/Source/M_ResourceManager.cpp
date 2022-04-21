@@ -1052,13 +1052,10 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 		ret = Importer::GetInstance()->meshImporter->Save((R_Mesh*)resource, resource->GetLibraryPath());
 		break;
 	case ResourceType::TEXTURE:
-		// TODO
+		ret = Importer::GetInstance()->textureImporter->Save((R_Texture*)resource, resource->GetLibraryPath());
 		break;
 	//case ResourceType::SCENE:
 		// TODO ret = Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
-		//break;
-	//case ResourceType::FONT:
-		// TODO
 		//break;
 	//case ResourceType::TRACK:
 		// TODO
@@ -1070,7 +1067,7 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 		ret = Importer::GetInstance()->sceneImporter->Save((R_Model*)resource, resource->GetLibraryPath());
 		break;
 	case ResourceType::MATERIAL:
-		// TODO
+		ret = Importer::GetInstance()->materialImporter->Save((R_Material*)resource, resource->GetLibraryPath());
 		break;
 	case ResourceType::ANIMATION:
 		ret = Importer::GetInstance()->animationImporter->Save((R_Animation*)resource, resource->GetLibraryPath());
@@ -1088,6 +1085,70 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 	}
 
 	library.emplace(resource->GetUID(), ResourceBase(resource));
+
+	return ret;
+}
+
+bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
+{
+	if (assetsPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, assets path was nullptr.");
+		return false;
+	}
+	if (uid == 0)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, invalid uid.");
+		return false;
+	}
+	if (library.find(uid) == library.end())
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, resource could not be found in the library.");
+		return false;
+	}
+
+	auto item = resourcesMap.find(uid);
+	if (item != resourcesMap.end())
+	{
+		return true;
+	}
+	std::string libraryPath = library.find(uid)->second.libraryPath;
+	ResourceType type = GetTypeFromPathExtension(libraryPath.c_str());
+	Resource* resource = CreateNewResource(type, assetsPath, uid);
+	bool ret = false;
+	switch (type)
+	{
+	case ResourceType::MESH:
+		ret = Importer::GetInstance()->meshImporter->Load(libraryPath.c_str(), (R_Mesh*)resource);
+		break;
+	case ResourceType::TEXTURE:
+		ret = Importer::GetInstance()->textureImporter->Load(libraryPath.c_str(), (R_Texture*)resource);
+		break;
+	//case ResourceType::PARTICLE:
+	//	break;
+	case ResourceType::MODEL:
+		ret = Importer::GetInstance()->sceneImporter->Load(libraryPath.c_str(), (R_Model*)resource);
+		break;
+	case ResourceType::MATERIAL:
+		ret = Importer::GetInstance()->materialImporter->Import(libraryPath.c_str(), (R_Material*)resource);
+		break;
+	case ResourceType::ANIMATION:
+		ret = Importer::GetInstance()->animationImporter->Load(libraryPath.c_str(), (R_Animation*)resource);
+		break;
+	default:
+		break;
+	}
+
+	if (ret)
+	{
+		resourcesMap.emplace(resource->GetUID(), resource);
+		CONSOLE_LOG("Successfully loaded resource in memory!");
+	}
+	else
+	{
+		UnloadResource(resource);
+		CONSOLE_LOG("Could not load the resource data from file %s.", libraryPath.c_str());
+	}
 
 	return ret;
 }
@@ -1138,15 +1199,15 @@ bool M_ResourceManager::UnloadResource(UID uid)
 	return true;
 }
 
-Resource* M_ResourceManager::GetResourceFromLibrary(const char* libraryPath)
+Resource* M_ResourceManager::GetResourceFromLibrary(const char* assetsPath)
 {
-	if (libraryPath == nullptr)
+	if (assetsPath == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: getting resource, library path was nullptr.");
 		return nullptr;
 	}
 
-	UID uid = LoadFromLibrary(libraryPath);
+	UID uid = LoadFromLibrary(assetsPath);
 	if (uid == 0)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: getting resource from library, could not get resource uid from assests path.");
@@ -1161,9 +1222,9 @@ Resource* M_ResourceManager::GetResourceFromLibrary(const char* libraryPath)
 	return resource;
 }
 
-UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
+UID M_ResourceManager::LoadFromLibrary(const char* assetsPath)
 {
-	std::string cleanPath = GetValidPath(libraryPath);
+	std::string cleanPath = GetValidPath(assetsPath);
 	if (cleanPath.c_str() == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, couldn't validate path.");
@@ -1171,7 +1232,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 	}
 
 	Json jsonRoot;
-	LoadMetaFile(jsonRoot, libraryPath);
+	LoadMetaFile(jsonRoot, assetsPath);
 	bool metaIsValid = ValidateMetaFile(jsonRoot);
 
 	if (jsonRoot.empty())
@@ -1190,7 +1251,12 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 	if (resourcesMap.find(uid) != resourcesMap.end())
 		return uid;
 
-	//TODO: Allocate resource function
+	bool ret = LoadResource(uid, assetsPath);
+	if (!ret)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
+		return 0;
+	}
 
 	for (const auto& resource : jsonRoot.at("resources").items())
 	{
@@ -1207,7 +1273,10 @@ UID M_ResourceManager::LoadFromLibrary(const char* libraryPath)
 		if (resourcesMap.find(containedUid) != resourcesMap.end())
 			continue;
 
-		//TODO: Allocate resource function
+		ret = LoadResource(uid, assetsPath);
+		if (!ret)
+			CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
+
 		containedPath.clear();
 		containedPath.shrink_to_fit();
 		containedName.clear();
@@ -1228,7 +1297,7 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 		return uid;
 	}
 
-	ResourceType type = GetTypeFromAssetsExtension(assetPath);
+	ResourceType type = GetTypeFromPathExtension(assetPath);
 	Resource* resource = CreateNewResource(type, assetPath);
 
 	bool success = false;
@@ -1269,13 +1338,13 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 	return uid;
 }
 
-ResourceType M_ResourceManager::GetTypeFromAssetsExtension(const char* assetPath)
+ResourceType M_ResourceManager::GetTypeFromPathExtension(const char* path)
 {
 	// TODO
 	ResourceType ret = ResourceType::UNKNOWN;
 
-	std::filesystem::path path = assetPath;
-	std::string extension = path.extension().string();
+	std::filesystem::path newPath = path;
+	std::string extension = newPath.extension().string();
 
 	if (engine->GetFileSystem()->StringCompare(extension.c_str(), PNG_EXTENSION) == 0)
 		ret = ResourceType::TEXTURE;
@@ -1288,9 +1357,7 @@ ResourceType M_ResourceManager::GetTypeFromAssetsExtension(const char* assetPath
 	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FONT_EXTENSION) == 0)
 		//ret = ResourceType::FONT;
 	else
-	{
 		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given asset path. File extension: %s is not supported.", extension.c_str());
-	}
 
 	return ret;
 }
