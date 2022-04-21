@@ -6,10 +6,10 @@
 
 class KoFiEngine;
 
-class ComponentFollowPath : public Component
+class C_FollowPath : public Component
 {
 public:
-	ComponentFollowPath(GameObject* parent);
+	C_FollowPath(GameObject* parent);
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

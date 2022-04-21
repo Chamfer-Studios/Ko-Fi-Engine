@@ -26,7 +26,7 @@
 #include "C_Image.h"
 #include "C_Button.h"
 #include "C_Animator.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 #include "C_Camera.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
@@ -179,7 +179,7 @@ public:
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
-									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
+									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
 									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
@@ -258,10 +258,10 @@ public:
 											"SetSelectedClip", &C_Animator::SetSelectedClip);
 
 		// Component Particle
-		lua.new_usertype<ComponentParticle>("ComponentParticle",
+		lua.new_usertype<C_Particle>("C_Particle",
 											sol::constructors<void(GameObject *)>(),
-											"StopParticleSpawn", &ComponentParticle::StopParticleSpawn,
-											"ResumeParticleSpawn", &ComponentParticle::ResumeParticleSpawn);
+											"StopParticleSpawn", &C_Particle::StopParticleSpawn,
+											"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn);
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",

@@ -1,13 +1,15 @@
-#include "ComponentParticle.h"
-#include "ParticleModule.h"
+#include "C_Particle.h"
 
 // Modules
 #include "Engine.h"
 #include "M_Renderer3D.h"
 #include "M_Editor.h"
+#include "ParticleModule.h"
 
+// GameObject
 #include "GameObject.h"
 
+// Resources
 #include "R_Texture.h"
 #include "R_ParticleResource.h"
 
@@ -18,7 +20,7 @@
 
 #include "MathGeoLib/Math/float4x4.h"
 
-ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
+C_Particle::C_Particle(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::PARTICLE;
 	//resource = new R_ParticleResource();
@@ -27,12 +29,12 @@ ComponentParticle::ComponentParticle(GameObject* parent) : Component(parent)
 	emitterInstances.shrink_to_fit();
 }
 
-ComponentParticle::~ComponentParticle()
+C_Particle::~C_Particle()
 {
 
 }
 
-bool ComponentParticle::Start()
+bool C_Particle::Start()
 {
 	if (resource != nullptr)
 	{
@@ -46,7 +48,7 @@ bool ComponentParticle::Start()
 	return true;
 }
 
-bool ComponentParticle::Update(float dt)
+bool C_Particle::Update(float dt)
 {
 	// SHOULD I DO THIS?????
 	//for (std::vector<Emitter*>::iterator it = emitters.begin(); it < emitters.end(); ++it)
@@ -72,12 +74,12 @@ bool ComponentParticle::Update(float dt)
 	return true;
 }
 
-bool ComponentParticle::PostUpdate(float dt)
+bool C_Particle::PostUpdate(float dt)
 {
 	return true;
 }
 
-bool ComponentParticle::CleanUp()
+bool C_Particle::CleanUp()
 {
 	//DELETE TEXTURES
 
@@ -97,7 +99,7 @@ bool ComponentParticle::CleanUp()
 	return true;
 }
 
-bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
+bool C_Particle::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
 
@@ -574,7 +576,7 @@ bool ComponentParticle::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-void ComponentParticle::InspectorDrawColor(std::string emitterName, FadeColor& color, int index)
+void C_Particle::InspectorDrawColor(std::string emitterName, FadeColor& color, int index)
 {
 	float c[4] = { color.color.r,color.color.g,color.color.b,color.color.a };
 	std::string colorName = emitterName + " - Color " + std::to_string(index + 1);
@@ -593,7 +595,7 @@ void ComponentParticle::InspectorDrawColor(std::string emitterName, FadeColor& c
 	}
 }
 
-void ComponentParticle::ClearParticles()
+void C_Particle::ClearParticles()
 {
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
 	{
@@ -601,7 +603,7 @@ void ComponentParticle::ClearParticles()
 	}
 }
 
-void ComponentParticle::StopParticleSpawn()
+void C_Particle::StopParticleSpawn()
 {
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
 	{
@@ -609,7 +611,7 @@ void ComponentParticle::StopParticleSpawn()
 	}
 }
 
-void ComponentParticle::ResumeParticleSpawn()
+void C_Particle::ResumeParticleSpawn()
 {
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
 	{
@@ -617,7 +619,7 @@ void ComponentParticle::ResumeParticleSpawn()
 	}
 }
 
-void ComponentParticle::NewEmitterName(std::string& name, int n)
+void C_Particle::NewEmitterName(std::string& name, int n)
 {
 	for (auto emitter : resource->emitters)
 	{
@@ -630,7 +632,7 @@ void ComponentParticle::NewEmitterName(std::string& name, int n)
 	}
 }
 
-void ComponentParticle::Save(Json& json) const
+void C_Particle::Save(Json& json) const
 {
 	json["type"] = "particle";
 	Json jsonResource;
@@ -717,7 +719,7 @@ void ComponentParticle::Save(Json& json) const
 	}
 }
 
-void ComponentParticle::Load(Json& json)
+void C_Particle::Load(Json& json)
 {
 	if (!json.empty())
 	{

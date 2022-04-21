@@ -1,18 +1,18 @@
-#include "ComponentFollowPath.h"
+#include "C_FollowPath.h"
 
 #include "Engine.h"
 #include "M_Navigation.h"
 #include "GameObject.h"
 #include "C_Transform.h"
 
-ComponentFollowPath::ComponentFollowPath(GameObject* parent) : Component(parent)
+C_FollowPath::C_FollowPath(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::FOLLOW_PATH;
 	waypoints = (float3*)malloc(sizeof(float3) * nWaypoints);
 	memset(waypoints, 0, sizeof(float3) * nWaypoints);
 }
 
-void ComponentFollowPath::Save(Json& json) const
+void C_FollowPath::Save(Json& json) const
 {
 	json["type"] = "followPath";
 
@@ -29,7 +29,7 @@ void ComponentFollowPath::Save(Json& json) const
 	json["speed"] = speed;
 }
 
-void ComponentFollowPath::Load(Json& json)
+void C_FollowPath::Load(Json& json)
 {
 	std::vector<float> wpVector = json.at("waypoints").get<std::vector<float>>();
 
@@ -48,7 +48,7 @@ void ComponentFollowPath::Load(Json& json)
 	speed = json.at("speed").get<float>();
 }
 
-bool ComponentFollowPath::Update(float dt)
+bool C_FollowPath::Update(float dt)
 {
 	if (finalPath.size() == 0) return true;
 
@@ -69,7 +69,7 @@ bool ComponentFollowPath::Update(float dt)
 	return true;
 }
 
-void ComponentFollowPath::CalculatePath()
+void C_FollowPath::CalculatePath()
 {
 	/*finalPath.clear();
 
@@ -101,7 +101,7 @@ void ComponentFollowPath::CalculatePath()
 	currentPathWaypoint = closestIndex;*/
 }
 
-bool ComponentFollowPath::InspectorDraw(PanelChooser* chooser)
+bool C_FollowPath::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Path Follower", ImGuiTreeNodeFlags_AllowItemOverlap)) {
 		DrawDeleteButton(owner, this);

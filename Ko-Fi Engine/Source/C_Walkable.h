@@ -4,10 +4,10 @@
 
 class KoFiEngine;
 
-class ComponentWalkable : public Component
+class C_Walkable : public Component
 {
 public:
-	ComponentWalkable(GameObject* parent);
+	C_Walkable(GameObject* parent);
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

@@ -11,7 +11,7 @@
 #include "GameObject.h"
 #include "C_Mesh.h"
 #include "C_Transform.h"
-#include "ComponentWalkable.h"
+#include "C_Walkable.h"
 
 #include "DetourNavMeshBuilder.h"
 #include "DetourNavMeshQuery.h"
@@ -322,7 +322,7 @@ std::vector<GameObject*> M_Navigation::CollectWalkableObjects()
 	std::vector<GameObject*> res;
 
 	for (auto o : list) {
-		if (o->GetComponent<ComponentWalkable>() != nullptr) {
+		if (o->GetComponent<C_Walkable>() != nullptr) {
 			res.push_back(o);
 		}
 	}

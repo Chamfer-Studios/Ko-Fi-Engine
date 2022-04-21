@@ -1,5 +1,5 @@
-#ifndef __COMPONENT_PARTICLE_H__
-#define __COMPONENT_PARTICLE_H__
+#ifndef __C_PARTICLE_H__
+#define __C_PARTICLE_H__
 
 #include "Component.h"
 #include "EmitterInstance.h"
@@ -10,11 +10,11 @@ class EmitterInstance;
 class R_ParticleResource;
 class GameObject;
 
-class ComponentParticle : public Component
+class C_Particle : public Component
 {
 public:
-	ComponentParticle(GameObject* parent);
-	~ComponentParticle();
+	C_Particle(GameObject* parent);
+	~C_Particle();
 
 	bool Start() override;
 	bool Update(float dt) override;
@@ -43,4 +43,4 @@ public:
 	
 };
 
-#endif // __COMPONENT_PARTICLE_H__
+#endif // __C_PARTICLE_H__

@@ -10,7 +10,7 @@
 // Components
 #include "C_Mesh.h"
 #include "C_Material.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 #include "C_Camera.h"
 #include "C_Script.h"
 #include "C_Animator.h"
@@ -25,8 +25,8 @@
 #include "C_Info.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
-#include "ComponentWalkable.h"
-#include "ComponentFollowPath.h"
+#include "C_Walkable.h"
+#include "C_FollowPath.h"
 #include "C_LightSource.h"
 
 // Resources
@@ -263,7 +263,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::PARTICLE:
 	{
-		c = this->CreateComponent<ComponentParticle>();
+		c = this->CreateComponent<C_Particle>();
 		break;
 	}
 	case ComponentType::CAMERA:
@@ -327,12 +327,12 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::WALKABLE:
 	{
-		c = this->CreateComponent<ComponentWalkable>();
+		c = this->CreateComponent<C_Walkable>();
 		break;
 	}
 	case ComponentType::FOLLOW_PATH:
 	{
-		c = this->CreateComponent<ComponentFollowPath>();
+		c = this->CreateComponent<C_FollowPath>();
 		break;
 	}
 	case ComponentType::AUDIO_SOURCE:

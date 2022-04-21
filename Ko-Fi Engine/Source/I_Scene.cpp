@@ -26,14 +26,14 @@
 #include "C_Image.h"
 #include "C_Text.h"
 #include "C_Transform2D.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 #include "C_Animator.h"
 #include "C_LightSource.h"
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
-#include "ComponentWalkable.h"
-#include "ComponentFollowPath.h"
+#include "C_Walkable.h"
+#include "C_FollowPath.h"
 
 #include "R_Mesh.h"
 #include "R_Animation.h"
@@ -387,7 +387,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::PARTICLE:
 			{
-				ComponentParticle* particleCmp = (ComponentParticle*)component;
+				C_Particle* particleCmp = (C_Particle*)component;
 				particleCmp->Save(jsonComponent);
 				break;
 			}
@@ -477,13 +477,13 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::WALKABLE:
 			{
-				ComponentWalkable* walkableCmp = (ComponentWalkable*)component;
+				C_Walkable* walkableCmp = (C_Walkable*)component;
 				walkableCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::FOLLOW_PATH:
 			{
-				ComponentFollowPath* followCmp = (ComponentFollowPath*)component;
+				C_FollowPath* followCmp = (C_FollowPath*)component;
 				followCmp->Save(jsonComponent);
 				break;
 			}
@@ -701,10 +701,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "particle")
 					{
-						ComponentParticle* partCmp = go->GetComponent<ComponentParticle>();
+						C_Particle* partCmp = go->GetComponent<C_Particle>();
 						if (partCmp == nullptr)
 						{
-							partCmp = (ComponentParticle*)go->AddComponentByType(ComponentType::PARTICLE);
+							partCmp = (C_Particle*)go->AddComponentByType(ComponentType::PARTICLE);
 						}
 						partCmp->active = true;
 						partCmp->Load(jsonCmp);
@@ -741,20 +741,20 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "walkable")
 					{
-						ComponentWalkable* walCmp = go->GetComponent<ComponentWalkable>();
+						C_Walkable* walCmp = go->GetComponent<C_Walkable>();
 						if (walCmp == nullptr)
 						{
-							walCmp = go->CreateComponent<ComponentWalkable>();
+							walCmp = go->CreateComponent<C_Walkable>();
 						}
 						walCmp->active = true;
 						walCmp->Load(jsonCmp);
 					}
 					else if (type == "followPath")
 					{
-						ComponentFollowPath* follCmp = go->GetComponent<ComponentFollowPath>();
+						C_FollowPath* follCmp = go->GetComponent<C_FollowPath>();
 						if (follCmp == nullptr)
 						{
-							follCmp = go->CreateComponent<ComponentFollowPath>();
+							follCmp = go->CreateComponent<C_FollowPath>();
 						}
 						follCmp->active = true;
 					}

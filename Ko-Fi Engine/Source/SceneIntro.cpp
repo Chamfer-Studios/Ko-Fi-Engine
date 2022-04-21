@@ -19,7 +19,7 @@
 #include "C_Transform.h"
 #include "C_LightSource.h"
 #include "C_Transform2D.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 
 #include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "Primitive.h"
@@ -47,7 +47,7 @@ SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 	// LCG random;
 	// uint uid = random.Int();
 	// GameObject * g = this->CreateEmptyGameObject("Particle Test");
-	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
+	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<C_Particle>();
 }
 
 SceneIntro::~SceneIntro()

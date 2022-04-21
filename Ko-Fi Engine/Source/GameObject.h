@@ -7,7 +7,6 @@
 #include "Component.h"
 
 class KoFiEngine;
-//class C_Mesh;
 class C_Transform;
 class C_Mesh;
 class C_Info;

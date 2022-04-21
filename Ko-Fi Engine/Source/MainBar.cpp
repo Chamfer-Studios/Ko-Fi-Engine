@@ -126,10 +126,16 @@ bool MainBar::Update()
 				if (ImGui::MenuItem("Cube"))
 				{
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, editor->engine->GetSceneIntro()->gameObjectList);
+					//GameObject* obj = nullptr;
+					//obj = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Cube");
+					//obj->AddComponentByType(ComponentType::MATERIAL);
+					//obj->AddComponentByType(ComponentType::MESH);
+					//R_Mesh* cube = new R_Mesh(Shape::CUBE);
+					//obj->GetComponent<C_Mesh>()->SetMesh(cube);
 				}
 				if (ImGui::MenuItem("Sphere"))
 				{
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE, editor->engine->GetSceneIntro()->gameObjectList);
+					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE. editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{

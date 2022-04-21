@@ -120,7 +120,7 @@
     <ClCompile Include="Source\C_Button.cpp" />
     <ClCompile Include="Source\C_Camera.cpp" />
     <ClCompile Include="Source\C_Canvas.cpp" />
-    <ClCompile Include="Source\ComponentFollowPath.cpp" />
+    <ClCompile Include="Source\C_FollowPath.cpp" />
     <ClCompile Include="Source\C_Image.cpp" />
     <ClCompile Include="Source\C_LightSource.cpp" />
     <ClCompile Include="Source\C_Material.cpp" />
@@ -232,7 +232,7 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelSettings.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
-    <ClCompile Include="Source\ComponentParticle.cpp" />
+    <ClCompile Include="Source\C_Particle.cpp" />
     <ClCompile Include="Source\ParticleModule.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\R_ParticleResource.cpp" />
@@ -262,7 +262,7 @@
     <ClCompile Include="Source\M_Renderer3D.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\C_Mesh.cpp" />
-    <ClCompile Include="Source\ComponentWalkable.cpp" />
+    <ClCompile Include="Source\C_Walkable.cpp" />
     <ClCompile Include="Source\M_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -291,7 +291,7 @@
     <ClInclude Include="Source\C_Button.h" />
     <ClInclude Include="Source\C_Camera.h" />
     <ClInclude Include="Source\C_Canvas.h" />
-    <ClInclude Include="Source\ComponentFollowPath.h" />
+    <ClInclude Include="Source\C_FollowPath.h" />
     <ClInclude Include="Source\C_Image.h" />
     <ClInclude Include="Source\C_Info.h" />
     <ClInclude Include="Source\C_Material.h" />
@@ -630,7 +630,7 @@
     <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\PanelTextEditor.h" />
-    <ClInclude Include="Source\ComponentParticle.h" />
+    <ClInclude Include="Source\C_Particle.h" />
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleModule.h" />
     <ClInclude Include="Source\M_Physics.h" />
@@ -656,7 +656,7 @@
     <ClInclude Include="Source\RNG.h" />
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\Timer.h" />
-    <ClInclude Include="Source\ComponentWalkable.h" />
+    <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\M_Window.h" />
   </ItemGroup>
   <ItemGroup>
