@@ -1,11 +1,21 @@
 name = "SkillsMenu"
-child = gameObject:GetParent():GetChild(name)
-child.active = false
+estoesnboom = true
 
 -- Called each loop iteration
 function Update(dt)
-	if (gameObject:GetButton():IsPressed()) then -- SPACE
-		child.active = true
+	if (estoesnboom == true) then
+		child = gameObject:GetParent():GetChild(name)
+		child:Active(false)
+		print(child:GetName())
+		estoesnboom = false
+	end
+	if (gameObject:GetButton():IsPressed()) then
+		if (child.active == false) then
+			child:Active(true)
+		end
+		if (child.active == true) then
+			child:Active(false)
+		end
 	end
 end
 

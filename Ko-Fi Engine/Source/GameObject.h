@@ -103,6 +103,7 @@ public:
 	void LoadSceneFromName(std::string name);
 	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
 	void OnStoped();
+	void Active(bool isActive);
 
 private:
 	std::string SetObjectNumberedName(const char* _name);

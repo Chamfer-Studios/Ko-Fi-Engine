@@ -1053,3 +1053,13 @@ GameObject* GameObject::GetChildWithName(std::string childName)
 	}
 	return nullptr;
 }
+
+void GameObject::Active(bool isActive)
+{
+	std::vector<GameObject*> childrenList = this->GetChildren();
+	for (std::vector<GameObject*>::iterator chdIt = childrenList.begin(); chdIt != childrenList.end(); ++chdIt)
+	{
+		(*chdIt)->Active(isActive);
+	}
+	this->active = isActive;
+}

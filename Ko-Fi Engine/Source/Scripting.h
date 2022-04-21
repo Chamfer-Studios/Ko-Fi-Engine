@@ -189,6 +189,7 @@ public:
 									 "GetImage", &GameObject::GetComponent<C_Image>,
 									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
+									 "Active", &GameObject::Active,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
