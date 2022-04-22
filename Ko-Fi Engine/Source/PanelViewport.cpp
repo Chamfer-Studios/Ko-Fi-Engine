@@ -104,20 +104,24 @@ bool PanelViewport::Update()
 					}
 					else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos)
 					{
-						// Apply texture
-						if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+						for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 						{
-							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-
-							if (go->GetComponent<C_Material>())
+							if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != -1)
 							{
-								R_Texture* texture = new R_Texture();
-								Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
+								GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
 
-								go->GetComponent<C_Material>()->texture = texture;
-								//cMaterial->textures.push_back(texture);
+								if (go->GetComponent<C_Material>())
+								{
+									R_Texture* texture = new R_Texture();
+									Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
+
+									go->GetComponent<C_Material>()->texture = texture;
+									//cMaterial->textures.push_back(texture);
+								}
 							}
 						}
+						// Apply texture
+						
 					}
 					else if (path.find(".json") != std::string::npos) {
 

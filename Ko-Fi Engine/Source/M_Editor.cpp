@@ -364,7 +364,11 @@ void M_Editor::OnNotify(const Event& event)
 
 void M_Editor::OnPlay()
 {
-	panelGameObjectInfo.selectedGameObjectID = -1;
+	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+	{
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+	}
 }
 
 bool M_Editor::SaveConfiguration(Json& configModule) const

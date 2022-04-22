@@ -963,7 +963,20 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 
 bool GameObject::IsSelected()
 {
-	return engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == uid;
+	bool contains = false;
+
+	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+	{
+		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] == uid)
+		{
+			contains = true;
+		}
+		else
+		{
+			contains = false;
+		}
+	}
+	return contains;
 }
 
 void GameObject::LoadSceneFromName(std::string name)

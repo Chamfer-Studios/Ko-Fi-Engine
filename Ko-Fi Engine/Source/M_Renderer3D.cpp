@@ -368,10 +368,14 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	OPTICK_EVENT();
 
-	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
-	if (selectedId == -1) return;
-	if (selectedId == cMesh->owner->GetUID())
-		cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+	std::vector<int> selectedIds = engine->GetEditor()->panelGameObjectInfo.selectedGameObjects;
+	for (int i = 0; i < selectedIds.size(); ++i)
+	{
+		if (selectedIds[i] == -1) return;
+		if (selectedIds[i] == cMesh->owner->GetUID())
+			cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+	}
+	
 }
 
 void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)

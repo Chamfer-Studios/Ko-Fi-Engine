@@ -196,7 +196,10 @@ bool SceneIntro::PostUpdate(float dt)
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
 	{
-		DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID));
+		for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+		{
+			DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
+		}
 	}
 
 	return true;
