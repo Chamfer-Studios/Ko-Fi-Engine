@@ -1,5 +1,4 @@
-#ifndef __C_SCRIPT_H__
-#define __C_SCRIPT_H__
+#pragma once
 
 #include "Component.h"
 #include <lua.hpp>
@@ -68,5 +67,3 @@ public:
 
 	std::queue<ScriptingEvent> eventQueue;
 };
-
-#endif // __C_SCRIPT_H__
