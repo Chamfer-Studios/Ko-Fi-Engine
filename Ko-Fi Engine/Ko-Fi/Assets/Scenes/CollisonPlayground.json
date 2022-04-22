@@ -1,7 +1,7 @@
 {
     "CollisonPlayground": {
         "active": true,
-        "game_objects_amount": 4,
+        "game_objects_amount": 6,
         "game_objects_list": [
             {
                 "UID": 1751370396,
@@ -153,52 +153,6 @@
                         "texture_path": "",
                         "type": "material",
                         "uniforms": null
-                    },
-                    {
-                        "active": true,
-                        "angular_damping": 0.0,
-                        "angular_velocity": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "density": 1.0,
-                        "freeze_position_x": true,
-                        "freeze_position_y": true,
-                        "freeze_position_z": true,
-                        "freeze_rotation_x": true,
-                        "freeze_rotation_y": true,
-                        "freeze_rotation_z": true,
-                        "is_kinematic": false,
-                        "is_static": true,
-                        "linear_damping": 0.0,
-                        "linear_velocity": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "mass": 5.0,
-                        "type": "rigidBody",
-                        "use_gravity": false
-                    },
-                    {
-                        "active": true,
-                        "box_collider_size": [
-                            19.99998664855957,
-                            28.28392791748047,
-                            28.2839298248291
-                        ],
-                        "collider_type": 1,
-                        "draw_collider": true,
-                        "enabled": true,
-                        "filter": "default",
-                        "is_trigger": false,
-                        "offset": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "type": "collider"
                     }
                 ],
                 "is3D": true,
@@ -255,57 +209,105 @@
                         "texture_path": "",
                         "type": "material",
                         "uniforms": null
-                    },
-                    {
-                        "active": true,
-                        "angular_damping": 0.0,
-                        "angular_velocity": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "density": 1.0,
-                        "freeze_position_x": false,
-                        "freeze_position_y": false,
-                        "freeze_position_z": false,
-                        "freeze_rotation_x": false,
-                        "freeze_rotation_y": false,
-                        "freeze_rotation_z": false,
-                        "is_kinematic": false,
-                        "is_static": false,
-                        "linear_damping": 0.0,
-                        "linear_velocity": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "mass": 5.0,
-                        "type": "rigidBody",
-                        "use_gravity": true
-                    },
-                    {
-                        "active": true,
-                        "box_collider_size": [
-                            27.851526260375977,
-                            20.0,
-                            27.851531982421875
-                        ],
-                        "collider_type": 1,
-                        "draw_collider": true,
-                        "enabled": true,
-                        "filter": "default",
-                        "is_trigger": false,
-                        "offset": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "type": "collider"
                     }
                 ],
                 "is3D": true,
                 "name": "Sphere1",
                 "parent_UID": 4294967295,
+                "tag": 0
+            },
+            {
+                "UID": 916253742,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "ball",
+                "parent_UID": 4294967295,
+                "tag": 0
+            },
+            {
+                "UID": 1647521294,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.5367431640625e-07,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "isAnimated": false,
+                        "path": "Library/Meshes/Sphere2.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "",
+                        "type": "material",
+                        "uniforms": null
+                    },
+                    {
+                        "active": true,
+                        "type": "NONE"
+                    }
+                ],
+                "is3D": true,
+                "name": "Sphere2",
+                "parent_UID": 916253742,
                 "tag": 0
             }
         ],

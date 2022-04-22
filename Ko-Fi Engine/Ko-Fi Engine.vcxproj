@@ -109,7 +109,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\C_RigidBody2.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
+    <ClCompile Include="Source\P_Actor.cpp" />
+    <ClCompile Include="Source\P_World.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
     <ClCompile Include="Source\M_Camera3D.cpp" />
@@ -247,7 +250,6 @@
     <ClCompile Include="Source\R_Track.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\M_SceneManager.cpp" />
-    <ClCompile Include="Source\SimulationEventCallback.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\R_Texture.cpp" />
     <ClCompile Include="Source\M_UI.cpp" />
@@ -267,6 +269,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\C_RigidBody2.h" />
+    <ClInclude Include="Source\P_Actor.h" />
+    <ClInclude Include="Source\P_Collision.h" />
+    <ClInclude Include="Source\P_World.h" />
     <ClInclude Include="Source\R_Animation.h" />
     <ClInclude Include="Source\AnimatorClip.h" />
     <ClInclude Include="Source\Assimp.h" />
@@ -619,7 +625,6 @@
     <ClInclude Include="Source\M_Navigation.h" />
     <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
-    <ClInclude Include="Source\SimulationEventCallback.h" />
     <ClInclude Include="Source\R_ParticleResource.h" />
     <ClInclude Include="Source\ResourceBase.h" />
     <ClInclude Include="Source\M_UI.h" />
@@ -639,6 +644,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\M_SceneManager.h" />
     <ClInclude Include="Source\Scripting.h" />
+    <ClInclude Include="Source\P_Solver.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\R_Texture.h" />
     <ClInclude Include="Source\Vec1Node.h" />

@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "M_Physics.h"
 #include "MathGeoLib/Math/float3.h"
+#include "PxPhysicsAPI.h"
 
 enum class ColliderShape
 {

@@ -613,14 +613,20 @@
     <ClCompile Include="Source\C_Collider.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SimulationEventCallback.cpp">
-      <Filter>Source\Helpers\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Channel.cpp">
       <Filter>Source\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Source\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\P_World.cpp">
+      <Filter>Source\Helpers\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\P_Actor.cpp">
+      <Filter>Source\Helpers\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_RigidBody2.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1734,11 +1740,23 @@
     <ClInclude Include="Source\R_Model.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SimulationEventCallback.h">
-      <Filter>Source\Helpers\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Channel.h">
       <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P_World.h">
+      <Filter>Source\Helpers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P_Actor.h">
+      <Filter>Source\Helpers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P_Collision.h">
+      <Filter>Source\Helpers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P_Solver.h">
+      <Filter>Source\Helpers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_RigidBody2.h">
+      <Filter>Source\GameObject\Components\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

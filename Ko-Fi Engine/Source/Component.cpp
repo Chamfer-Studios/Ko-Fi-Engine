@@ -109,6 +109,7 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 			{ ComponentType::COLLIDER, "COLLIDER" },
 			{ ComponentType::SCRIPT, "SCRIPT" },
 			{ ComponentType::RIGID_BODY, "RIGID BODY" },
+			{ ComponentType::RIGID_BODY2, "RIGID BODY2" },
 			{ ComponentType::AUDIO_SOURCE, "AUDIO_SOURCE" },
 			{ ComponentType::AUDIO_SWITCH, "AUDIO_SWITCH" },
 			{ ComponentType::ANIMATOR, "ANIMATOR" },

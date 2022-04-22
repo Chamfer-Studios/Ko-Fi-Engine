@@ -21,6 +21,7 @@
 #include "C_Image.h"
 #include "C_Text.h"
 #include "C_RigidBody.h"
+#include "C_RigidBody2.h"
 #include "C_Transform.h"
 #include "C_Info.h"
 #include "C_AudioSource.h"
@@ -288,6 +289,11 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::RIGID_BODY:
 	{
 		c = this->CreateComponent<C_RigidBody>();
+		break;
+	}
+	case ComponentType::RIGID_BODY2:
+	{
+		c = this->CreateComponent<C_RigidBody2>();
 		break;
 	}
 	case ComponentType::TRANSFORM2D:
