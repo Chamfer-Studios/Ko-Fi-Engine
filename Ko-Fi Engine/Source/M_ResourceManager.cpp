@@ -420,7 +420,7 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 
 	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
 	{
-		std::string name = jsonMeta.at("name");
+		std::string name = jsonMeta.at("asset_file");
 		UID uid = jsonMeta.at("uid");
 		if (uid == 0)
 		{
@@ -436,7 +436,7 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 			{
 				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 				{
-					std::string containedName = containedIt.value().at("name");
+					std::string containedName = containedIt.value().at("asset_file");
 					UID containedUid = containedIt.value().at("uid");
 					if (containedUid == 0)
 					{
@@ -554,12 +554,10 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 					ResourceType containedType = (ResourceType)containedIt.value().at("type").get<int>();
 
 					std::string containedAssetPath = "";
-					//std::string containedAssetPath = jsonMeta.at("asset_path");
-					std::string containedAssetFile = containedIt.value().at("name");
+					std::string containedAssetFile = containedIt.value().at("asset_file");
 
 					std::string containedLibraryPath = containedIt.value().at("library_path");
 					std::string containedLibraryFile = "";
-					//std::string containedLibraryFile = jsonMeta.at("library_file");
 
 					std::string directory = "";
 					bool success = GetAssetDirectoryFromType(containedType, directory);
@@ -806,62 +804,8 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetPath, bool libraryChec
 	return ret;
 }
 
-bool M_ResourceManager::ValidateMetaFile(Json& json, bool libraryCheck)
-{
-	bool ret = true;
-
-	std::string errorString = "[ERROR] Resource Manager: could not validate meta file";
-
-	if (json.empty() || json.is_null())
-	{
-		CONSOLE_LOG("%s Json is null or empty.", errorString.c_str());
-		return false;
-	}
-
-	std::string libraryPath = json.at("library_path");
-
-	if (!std::filesystem::exists(libraryPath))
-	{
-		CONSOLE_LOG("%s Library path, file doesn't exist.", errorString.c_str());
-		return false;
-	}
-
-	UID uid = (UID)json.at("uid");
-
-	if (libraryCheck && (library.find(uid) == library.end()))
-	{
-		CONSOLE_LOG("%s Resource UID not found in library", errorString.c_str());
-		return false;
-	}
-
-	if (!json.at("contained_resources").empty())
-	{
-		for (const auto& containedIt : json.at("contained_resources").items())
-		{
-			UID containedUid = containedIt.value().at("uid");
-
-			std::string containedLibraryPath = containedIt.value().at("library_path");
-
-			if (!std::filesystem::exists(containedLibraryPath))
-			{
-				CONSOLE_LOG("%s Contained Library path, file doesn't exist.", errorString.c_str());
-				return false;
-			}
-			if (libraryCheck && (library.find(containedUid) == library.end()))
-			{
-				CONSOLE_LOG("%s Contained resource UID not found in library", errorString.c_str());
-				return false;
-			}
-		}
-	}
-
-	return ret;
-}
-
 bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 {
-	// TODO: Remaining types
-
 	if (resource == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: checking meta type, resource was nullptr.");
@@ -885,7 +829,6 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 
 Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const char* assetPath, UID forcedUid)
 {
-	// TODO
 	Resource* resource = nullptr;
 
 	switch (type)
@@ -933,12 +876,10 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 	jsonMeta["type"] = (int)resource->GetType();
 	jsonMeta["asset_file"] = resource->GetAssetFile();
 	jsonMeta["asset_path"] = resource->GetAssetPath();
-	jsonMeta["asset_path"] = resource->GetAssetPath();
 	jsonMeta["library_file"] = resource->GetLibraryFile();
 	jsonMeta["library_path"] = resource->GetLibraryPath();
 	jsonMeta["mod_time"] = engine->GetFileSystem()->GetLastModTime(resource->GetAssetPath());
 
-	//TODO: Make SaveMeta / LoadMeta inherit for all resources with meta (to custom its save / load)
 	resource->SaveMeta(jsonMeta);
 
 	std::string path = resource->GetAssetPath() + std::string(META_EXTENSION);
@@ -952,46 +893,6 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't save meta file for resource: %s", resource->GetAssetPath());
 
 	return ret;
-}
-
-bool M_ResourceManager::LoadMetaFile(Json& json, const char* assetPath)
-{
-	bool ret = true;
-
-	if (assetPath == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file, assetPath was nullptr.");
-		return false;
-	}
-
-	//TODO: I don't know what to do here, I think it's this:
-	// engine->GetFileSystem()->OpenFile(assetPath);
-	UID uid = (UID)json.at("uid");
-	Resource* r = RequestResource(uid);
-
-	if (r == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file, resource was not found.");
-		return false;
-	}
-
-	ResourceType type = (ResourceType)json.at("type").get<int>();
-	if (r->GetType() != type)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file, resource type missmatch.");
-		return false;
-	}
-
-
-	r->SetUID(uid);
-	r->SetAssetFile(json.at("name").get<std::string>().c_str());
-	r->SetAssetPath(json.at("asset_path").get<std::string>().c_str());
-	r->SetLibraryFile(json.at("library_file").get<std::string>().c_str());
-	r->SetLibraryPath(json.at("library_path").get<std::string>().c_str());
-
-	//r->LoadMeta(json); // I'm not sure about this since the function is empty
-
-	return true;
 }
 
 Resource* M_ResourceManager::RequestResource(UID uid)
@@ -1232,8 +1133,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetsPath)
 	}
 
 	Json jsonRoot;
-	LoadMetaFile(jsonRoot, assetsPath);
-	bool metaIsValid = ValidateMetaFile(jsonRoot);
+	bool metaIsValid = ValidateMetaFile(assetsPath);
 
 	if (jsonRoot.empty())
 	{
@@ -1258,22 +1158,18 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetsPath)
 		return 0;
 	}
 
-	for (const auto& resource : jsonRoot.at("resources").items())
+	for (const auto& resource : jsonRoot.at("contained_resources").items())
 	{
-		std::string containedPath;
-		std::string containedName = resource.value().at("name").get<std::string>();
+		std::string containedName = resource.value().at("asset_file").get<std::string>();
 		UID containedUid = (UID)resource.value().at("uid");
 
-		//TODO: I don't know how to do this
-		//
-		//App->fileSystem->SplitFilePath(assetPath, &containedPath, nullptr, nullptr);
-		//containedName = containedNode.GetString("Name");
-		//containedPath += containedName;
+		std::filesystem::path path = assetsPath;
+		std::string containedPath = path.parent_path().string() + "/" + containedName;
 
 		if (resourcesMap.find(containedUid) != resourcesMap.end())
 			continue;
 
-		ret = LoadResource(uid, assetsPath);
+		ret = LoadResource(containedUid, containedPath.c_str());
 		if (!ret)
 			CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
 
@@ -1281,6 +1177,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetsPath)
 		containedPath.shrink_to_fit();
 		containedName.clear();
 		containedName.shrink_to_fit();
+		path.clear();
 	}
 
 	return uid;
@@ -1288,7 +1185,6 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetsPath)
 
 UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 {
-	// TODO
 	UID uid = 0;
 
 	if (assetPath == nullptr)
@@ -1340,7 +1236,6 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 
 ResourceType M_ResourceManager::GetTypeFromPathExtension(const char* path)
 {
-	// TODO
 	ResourceType ret = ResourceType::UNKNOWN;
 
 	std::filesystem::path newPath = path;

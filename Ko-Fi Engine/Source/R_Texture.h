@@ -14,6 +14,8 @@ public:
 	R_Texture();
 	~R_Texture();
 
+	bool SaveMeta(Json& json) const override;
+
 	void SetUpTexture(bool checkers);
 
 	inline const char* GetTexturePath() const { return GetAssetPath(); }

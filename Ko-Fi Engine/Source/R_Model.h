@@ -17,7 +17,7 @@ public:
 	~ModelNode();
 
 public:
-	std::string name;
+	std::string filename;
 	UID uid;
 	UID parentUid;
 	UID mesh;
@@ -36,7 +36,6 @@ public:
 	~R_Model();
 
 	bool SaveMeta(Json& json) const override;
-	bool LoadMeta(Json& json) override;
 
 public:
 	std::vector<ModelNode> nodes;

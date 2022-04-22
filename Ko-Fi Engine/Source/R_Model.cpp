@@ -19,32 +19,34 @@ bool R_Model::SaveMeta(Json& json) const
 	{
 		if (node.mesh != 0)
 		{
-			std::string meshName = node.name + MESH_EXTENSION;
+			std::string meshName = node.filename + MESH_EXTENSION;
 			std::string meshPath = MESHES_DIR + std::to_string(node.mesh) + MESH_EXTENSION;
 			jsonResource["uid"] = node.uid;
 			jsonResource["type"] = ResourceType::MESH;
-			jsonResource["name"] = meshName;
+			jsonResource["asset_file"] = meshName;
 			jsonResource["library_path"] = meshPath;
 			json["contained_resources"].push_back(jsonResource);
 		}
 		if (node.material != 0)
 		{
-			std::string materialName = node.name + MATERIAL_EXTENSION;
+			std::string materialName = node.filename + MATERIAL_EXTENSION;
 			std::string shaderPath = SHADERS_DIR + std::to_string(node.material) + MATERIAL_EXTENSION;
 			jsonResource["uid"] = node.uid;
 			jsonResource["type"] = ResourceType::MATERIAL;
-			jsonResource["name"] = materialName;
+			jsonResource["asset_file"] = materialName;
 			jsonResource["library_path"] = shaderPath;
 			json["contained_resources"].push_back(jsonResource);
 		}
 		if (node.texture != 0)
 		{
 			std::string textureName = node.textureName;
+			std::string fileName = node.filename + TEXTURE_EXTENSION;
 			std::string texturePath = TEXTURES_DIR + std::to_string(node.texture) + TEXTURE_EXTENSION;
 			jsonResource["uid"] = node.uid;
 			jsonResource["type"] = ResourceType::TEXTURE;
-			jsonResource["name"] = textureName;
+			jsonResource["asset_file"] = fileName;
 			jsonResource["library_path"] = texturePath;
+			jsonResource["texture_name"] = textureName;
 			json["contained_resources"].push_back(jsonResource);
 		}
 	}
@@ -55,7 +57,7 @@ bool R_Model::SaveMeta(Json& json) const
 		std::string animationPath = ANIMATIONS_DIR + std::to_string(anim.first) + ANIMATION_EXTENSION;
 		jsonResource["uid"] = anim.first;
 		jsonResource["type"] = ResourceType::ANIMATION;
-		jsonResource["name"] = animationName;
+		jsonResource["asset_file"] = animationName;
 		jsonResource["library_path"] = animationPath;
 		json["contained_resources"].push_back(jsonResource);
 	}
@@ -63,15 +65,10 @@ bool R_Model::SaveMeta(Json& json) const
 	return ret;
 }
 
-bool R_Model::LoadMeta(Json& json)
-{
-	return true;
-}
-
 // MODEL NODE ------------------------------------------------------------------------------------------------
 
 ModelNode::ModelNode() :
-	name(""),
+	filename(""),
 	uid(0),
 	parentUid(0),
 	mesh(0),
@@ -84,7 +81,7 @@ ModelNode::ModelNode() :
 {}
 
 ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID texture, std::string textureName, float3 position, Quat rotation, float3 scale) :
-name(name),
+filename(name),
 uid(uid),
 parentUid(parentUid),
 mesh(mesh),

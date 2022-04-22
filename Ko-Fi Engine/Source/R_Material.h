@@ -27,6 +27,8 @@ public:
 	R_Material();
 	~R_Material();
 
+	bool SaveMeta(Json& json) const override;
+
 	Uniform* FindUniform(std::string name);
 	void AddUniform(Uniform* uniform);
 

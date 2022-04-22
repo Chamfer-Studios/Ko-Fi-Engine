@@ -20,6 +20,12 @@ R_Material::~R_Material()
 	uniforms.shrink_to_fit();
 }
 
+bool R_Material::SaveMeta(Json& json) const
+{
+	json["contained_resources"].array();
+	return true;
+}
+
 Uniform* R_Material::FindUniform(std::string name)
 {
 	for (Uniform* uniform : uniforms)

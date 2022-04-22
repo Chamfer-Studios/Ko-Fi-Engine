@@ -60,7 +60,6 @@ public:
 
 	bool HasMetaFile(const char* assestsPath);
 	bool ValidateMetaFile(const char* assetPath, bool libraryCheck = true);
-	bool ValidateMetaFile(Json& json, bool libraryCheck = true);
 	bool ResourceHasMetaType(Resource* resource) const;
 
 	bool LoadMetaFileIntoLibrary(const char* assetPath);
@@ -89,7 +88,6 @@ public:
 
 private:
 	bool SaveMetaFile(Resource* resource) const;
-	bool LoadMetaFile(Json& json, const char* assetPath);
 
 private:
 	KoFiEngine* engine = nullptr;

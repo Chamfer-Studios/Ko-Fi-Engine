@@ -807,13 +807,12 @@ bool I_Scene::Save(const R_Model* model, const char* path)
 	Json jsonNode;
 	for (const auto& node : model->nodes)
 	{
-		jsonNode["name"] = node.name.c_str();
+		jsonNode["asset_file"] = node.filename.c_str();
 		jsonNode["uid"] = node.uid;
 		jsonNode["parent_uid"] = node.parentUid;
 		jsonNode["mesh_uid"] = node.mesh;
 		jsonNode["material_uid"] = node.material;
 		jsonNode["texture_uid"] = node.texture;
-		jsonNode["texture_name"] = node.textureName.c_str();
 
 		jsonNode["position"]["x"] = node.position.x;
 		jsonNode["position"]["y"] = node.position.y;
@@ -1148,14 +1147,12 @@ bool I_Scene::Load(const char* path, R_Model* model)
 		for (const auto& node : jsonModel.at("model_nodes").items())
 		{
 			ModelNode modelNode = ModelNode();
-
-			modelNode.name = node.value().at("name").get<std::string>();
+			modelNode.filename = node.value().at("asset_file").get<std::string>();
 			modelNode.uid = node.value().at("uid");
 			modelNode.parentUid = node.value().at("parent_uid");
 			modelNode.mesh = node.value().at("mesh_uid");
 			modelNode.material = node.value().at("material_uid");
 			modelNode.texture = node.value().at("texture_uid");
-			modelNode.textureName = node.value().at("texture_name").get<std::string>();
 
 			modelNode.position.x = node.value().at("position").at("x");
 			modelNode.position.y = node.value().at("position").at("y");

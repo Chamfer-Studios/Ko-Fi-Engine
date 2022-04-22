@@ -21,6 +21,12 @@ R_Texture::~R_Texture()
 	}
 }
 
+bool R_Texture::SaveMeta(Json& json) const
+{
+	json["contained_resources"].array();
+	return true;
+}
+
 void R_Texture::SetUpTexture(bool checkers)
 {
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
