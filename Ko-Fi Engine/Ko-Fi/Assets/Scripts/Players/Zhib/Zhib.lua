@@ -25,9 +25,11 @@ maxKnives = 2
 knifeCount = maxKnives
 decoyCastRange = 50.0
 decoyCooldown = 10.0
+drawDecoy = false
 ultimateRange = 50.0
 ultimateRangeExtension = ultimateRange * 0.5
 ultimateCooldown = 30.0
+drawUltimate = false
 
 
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
@@ -49,6 +51,14 @@ NewVariable(ultimateRangeIV)
 local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
+
+local drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawDecoyIVT = InspectorVariable.new("drawDecoy", drawDecoyIVT, drawDecoy)
+NewVariable(drawDecoyIVT)
+
+local drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawUltimateIVT = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
+NewVariable(drawUltimateIVT)
 
 
 componentAnimator = gameObject:GetComponentAnimator()
@@ -213,6 +223,14 @@ function Update(dt)
 		if (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R -> For debugging purposes only
 			Reload()
 		end
+	end
+
+	-- Draw ability range
+	if (drawDecoy == true) then
+
+	end
+	if (drawUltimate == true) then
+
 	end
 end
 

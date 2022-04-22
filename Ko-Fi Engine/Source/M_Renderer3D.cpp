@@ -726,6 +726,48 @@ void M_Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float an
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
+void M_Renderer3D::DrawCircle(float3 position, float radius)
+{
+	GLfloat x = 0.0;
+	GLfloat y = 0.0;
+	GLfloat height = 1.0;
+	GLfloat angle = 0.0;
+	GLfloat angle_stepsize = 0.1;
+
+	/** Draw the circle on top of cylinder */
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glLineWidth(3.0f);
+	glBegin(GL_POLYGON);
+	angle = 0.0;
+	while (angle < 2 * M_PI) {
+		x = radius * cos(angle);
+		y = radius * sin(angle);
+		glVertex3f(x, y, height);
+		angle = angle + angle_stepsize;
+	}
+	glVertex3f(radius, 0.0, height);
+	glEnd();
+	 
+	// Actually, this does not render a circle, instead, renders a cylinder xd didnt know how to do the circle one
+	//float halfLength = 5;
+	//int slices = 10;
+	//for (int i = 0; i < slices; i++) {
+	//	float theta = ((float)i) * 2.0 * M_PI;
+	//	float nextTheta = ((float)i + 1) * 2.0 * M_PI;
+	//	glBegin(GL_TRIANGLE_STRIP);
+	//	/*vertex at middle of end */
+	//	glVertex3f(0.0, halfLength, 0.0);
+	//	/*vertices at edges of circle*/
+	//	glVertex3f(radius * cos(theta), halfLength, radius * sin(theta));
+	//	glVertex3f(radius * cos(nextTheta), halfLength, radius * sin(nextTheta));
+	//	/* the same vertices at the bottom of the cylinder*/
+	//	glVertex3f(radius * cos(nextTheta), -halfLength, radius * sin(nextTheta));
+	//	glVertex3f(radius * cos(theta), -halfLength, radius * sin(theta));
+	//	glVertex3f(0.0, -halfLength, 0.0);
+	//	glEnd();
+	//}
+}
+
 // Debug ray for mouse picking
 void M_Renderer3D::DrawRay()
 {

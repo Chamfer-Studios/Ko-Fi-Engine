@@ -664,6 +664,11 @@ public:
 		}
 	}
 
+	void DrawCircle(float range, float3 position)
+	{
+		gameObject->GetEngine()->GetRenderer()->DrawCircle(position, range);
+	}
+
 public:
 	sol::state lua;
 	GameObject *gameObject = nullptr;
