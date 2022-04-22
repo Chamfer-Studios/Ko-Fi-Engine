@@ -123,7 +123,7 @@ function LookAtDirection(direction)
         a = -a
     end
 
-    componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, math.deg(a), componentTransform:GetRotation().z))
+    componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, a, componentTransform:GetRotation().z))
 end
 
 awareness = 0
