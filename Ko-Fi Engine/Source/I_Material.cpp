@@ -2,6 +2,7 @@
 #include "R_Material.h"
 #include "Engine.h"
 #include "M_FileSystem.h"
+#include "M_ResourceManager.h"
 
 #include <glew.h>
 #include <gl/GL.h>
@@ -49,6 +50,10 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: aiMaterial* was nullptr.");
 		return false;
 	}
+
+	UID forcedUid = engine->GetResourceManager()->GetForcedUIDFromMeta(material->GetAssetPath());
+	if (forcedUid != 0)
+		material->ForceUID(forcedUid);
 
 	aiColor4D color;
 	if (aiMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
