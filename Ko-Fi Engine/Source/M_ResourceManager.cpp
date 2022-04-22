@@ -871,10 +871,10 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 	switch (resource->GetType())
 	{
 	case ResourceType::TEXTURE: { return true; } break;
-	//case ResourceType::FONT: { return true; } break;
 	case ResourceType::MODEL: { return true; } break;
 	case ResourceType::MATERIAL: { return true; } break;
-	case ResourceType::PARTICLE: { return true; } break;
+	//case ResourceType::FONT: { return true; } break;
+	//case ResourceType::PARTICLE: { return true; } break;
 	//case ResourceType::TRACK: { return true; } break;
 	default:
 		break;
@@ -892,13 +892,13 @@ Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const c
 	{
 	case ResourceType::MESH: { resource = new R_Mesh(); } break;
 	case ResourceType::TEXTURE: { resource = new R_Texture(); } break;
+	case ResourceType::MODEL: { resource = new R_Model(); } break;
+	case ResourceType::MATERIAL: { resource = new R_Material(); } break;
+	case ResourceType::ANIMATION: { resource = new R_Animation(); } break;
 	//case ResourceType::SCENE: { resource = new R_Scene(); } break;
 	//case ResourceType::FONT: { resource = new R_Font(); } break;
 	//case ResourceType::TRACK: { resource = new R_Track(); } break;
 	//case ResourceType::PARTICLE: { resource = new R_Particle(); } break;
-	case ResourceType::MODEL: { resource = new R_Model(); } break;
-	case ResourceType::MATERIAL: { resource = new R_Material(); } break;
-	//case ResourceType::ANIMATION: { resource = new R_Animation(); } break;
 	case ResourceType::UNKNOWN: { resource = nullptr; } break;
 	default:
 		break;
@@ -1054,15 +1054,6 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 	case ResourceType::TEXTURE:
 		ret = Importer::GetInstance()->textureImporter->Save((R_Texture*)resource, resource->GetLibraryPath());
 		break;
-	//case ResourceType::SCENE:
-		// TODO ret = Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
-		//break;
-	//case ResourceType::TRACK:
-		// TODO
-		//break;
-	case ResourceType::PARTICLE:
-		// TODO
-		break;
 	case ResourceType::MODEL:
 		ret = Importer::GetInstance()->sceneImporter->Save((R_Model*)resource, resource->GetLibraryPath());
 		break;
@@ -1072,6 +1063,15 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 	case ResourceType::ANIMATION:
 		ret = Importer::GetInstance()->animationImporter->Save((R_Animation*)resource, resource->GetLibraryPath());
 		break;
+	//case ResourceType::SCENE:
+		// TODO ret = Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
+		//break;
+	//case ResourceType::TRACK:
+		// TODO
+		//break;
+	//case ResourceType::PARTICLE:
+		// TODO
+		//break;
 	case ResourceType::UNKNOWN:
 		// TODO
 		break;
@@ -1348,8 +1348,16 @@ ResourceType M_ResourceManager::GetTypeFromPathExtension(const char* path)
 
 	if (engine->GetFileSystem()->StringCompare(extension.c_str(), PNG_EXTENSION) == 0)
 		ret = ResourceType::TEXTURE;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), TEXTURE_EXTENSION) == 0)
+		ret = ResourceType::TEXTURE;
 	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0)
 		ret = ResourceType::MODEL;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), MODEL_EXTENSION) == 0)
+		ret = ResourceType::MODEL;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), MESH_EXTENSION) == 0)
+		ret = ResourceType::MESH;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), ANIMATION_EXTENSION) == 0)
+		ret = ResourceType::ANIMATION;
 	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SHADER_EXTENSION) == 0)
 		ret = ResourceType::MATERIAL;
 	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SCENE_EXTENSION) == 0)
@@ -1368,8 +1376,8 @@ bool M_ResourceManager::GetAssetDirectoryFromType(const ResourceType& type, std:
 	{
 	case ResourceType::MODEL: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::MESH: { directory = ASSETS_MODELS_DIR; } break;
-	case ResourceType::TEXTURE: { directory = ASSETS_TEXTURES_DIR; } break;
 	case ResourceType::ANIMATION: { directory = ASSETS_MODELS_DIR; } break;
+	case ResourceType::TEXTURE: { directory = ASSETS_TEXTURES_DIR; } break;
 	case ResourceType::MATERIAL: { directory = ASSETS_SHADERS_DIR; } break;
 	//case ResourceType::SCENE: { directory = ASSETS_SCENES_DIR; } break;
 	//case ResourceType::TRACK: { directory = ASSETS_AUDIO_DIR; } break;
@@ -1393,8 +1401,8 @@ bool M_ResourceManager::GetLibraryDirectoryAndExtensionFromType(const ResourceTy
 	{
 	case ResourceType::MODEL: { directory = MODELS_DIR; extension = MODEL_EXTENSION; } break;
 	case ResourceType::MESH: { directory = MESHES_DIR; extension = MESH_EXTENSION; } break;
-	case ResourceType::TEXTURE: { directory = TEXTURES_DIR; extension = TEXTURE_EXTENSION; } break;
 	case ResourceType::ANIMATION: { directory = ANIMATIONS_DIR; extension = ANIMATION_EXTENSION; } break;
+	case ResourceType::TEXTURE: { directory = TEXTURES_DIR; extension = TEXTURE_EXTENSION; } break;
 	case ResourceType::MATERIAL: { directory = SHADERS_DIR;  extension = SHADER_EXTENSION; } break;
 	//case ResourceType::SCENE: { directory = SCENES_DIR; extension = SCENE_EXTENSION; } break;
 	//case ResourceType::TRACK: { directory = AUDIOS_DIR; extension = MODEL_EXTENSION; } break;
