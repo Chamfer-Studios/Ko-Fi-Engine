@@ -52,6 +52,17 @@ function Float3Distance(a, b)
     return Float3Length(diff)
 end
 
+function Float3Dot(a, b)
+    return a.x * b.x + a.y * b.y + a.z * b.z
+end
+
+function Float3Angle(a, b)
+    lenA = Float3Length(a)
+    lenB = Float3Length(b)
+
+    return math.acos(Float3Dot(a, b) / (lenA * lenB))
+end
+
 function CheckAndRecalculatePath(force)
     -- We check whether the waypoint list has been updated, if it has, we recalculate the path.
 
@@ -106,13 +117,13 @@ STATE = {
 state = STATE.UNAWARE
 
 function LookAtDirection(direction)
-    local rad = math.atan(direction.x, direction.z)
+    local a = Float3Angle(direction, float3.new(0, 0, 1))
 
-    if direction.z > 0 then
-        rad = -rad
+    if direction.x < 0 then
+        a = -a
     end
 
-    componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
+    componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, math.deg(a), componentTransform:GetRotation().z))
 end
 
 awareness = 0
