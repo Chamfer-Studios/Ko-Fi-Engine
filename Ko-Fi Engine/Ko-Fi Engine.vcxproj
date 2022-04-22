@@ -109,6 +109,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ComponentWalkable.cpp" />
+    <ClCompile Include="Source\C_SoundTriggerCreator.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
@@ -120,7 +122,6 @@
     <ClCompile Include="Source\C_Button.cpp" />
     <ClCompile Include="Source\C_Camera.cpp" />
     <ClCompile Include="Source\C_Canvas.cpp" />
-    <ClCompile Include="Source\ComponentFollowPath.cpp" />
     <ClCompile Include="Source\C_Image.cpp" />
     <ClCompile Include="Source\C_LightSource.cpp" />
     <ClCompile Include="Source\C_Material.cpp" />
@@ -262,11 +263,11 @@
     <ClCompile Include="Source\M_Renderer3D.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\C_Mesh.cpp" />
-    <ClCompile Include="Source\ComponentWalkable.cpp" />
     <ClCompile Include="Source\M_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\ComponentWalkable.h" />
     <ClInclude Include="Source\R_Animation.h" />
     <ClInclude Include="Source\AnimatorClip.h" />
     <ClInclude Include="Source\Assimp.h" />
@@ -291,7 +292,6 @@
     <ClInclude Include="Source\C_Button.h" />
     <ClInclude Include="Source\C_Camera.h" />
     <ClInclude Include="Source\C_Canvas.h" />
-    <ClInclude Include="Source\ComponentFollowPath.h" />
     <ClInclude Include="Source\C_Image.h" />
     <ClInclude Include="Source\C_Info.h" />
     <ClInclude Include="Source\C_Material.h" />
@@ -639,6 +639,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\M_SceneManager.h" />
     <ClInclude Include="Source\Scripting.h" />
+    <ClInclude Include="Source\C_SoundTriggerCreator.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\R_Texture.h" />
     <ClInclude Include="Source\Vec1Node.h" />
@@ -656,7 +657,6 @@
     <ClInclude Include="Source\RNG.h" />
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\Timer.h" />
-    <ClInclude Include="Source\ComponentWalkable.h" />
     <ClInclude Include="Source\M_Window.h" />
   </ItemGroup>
   <ItemGroup>

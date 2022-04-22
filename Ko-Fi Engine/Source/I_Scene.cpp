@@ -32,8 +32,6 @@
 
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
-#include "ComponentWalkable.h"
-#include "ComponentFollowPath.h"
 
 #include "R_Mesh.h"
 #include "R_Animation.h"
@@ -475,18 +473,6 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				cAnimator->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::WALKABLE:
-			{
-				ComponentWalkable* walkableCmp = (ComponentWalkable*)component;
-				walkableCmp->Save(jsonComponent);
-				break;
-			}
-			case ComponentType::FOLLOW_PATH:
-			{
-				ComponentFollowPath* followCmp = (ComponentFollowPath*)component;
-				followCmp->Save(jsonComponent);
-				break;
-			}
 			case ComponentType::LIGHT_SOURCE:
 			{
 				C_LightSource* componentLightSource = (C_LightSource*)component;
@@ -738,25 +724,6 @@ bool I_Scene::Load(Scene* scene, const char* name)
 						}
 						cAnimator->active = true;
 						cAnimator->Load(jsonCmp);
-					}
-					else if (type == "walkable")
-					{
-						ComponentWalkable* walCmp = go->GetComponent<ComponentWalkable>();
-						if (walCmp == nullptr)
-						{
-							walCmp = go->CreateComponent<ComponentWalkable>();
-						}
-						walCmp->active = true;
-						walCmp->Load(jsonCmp);
-					}
-					else if (type == "followPath")
-					{
-						ComponentFollowPath* follCmp = go->GetComponent<ComponentFollowPath>();
-						if (follCmp == nullptr)
-						{
-							follCmp = go->CreateComponent<ComponentFollowPath>();
-						}
-						follCmp->active = true;
 					}
 					else if (type == "lightSource")
 					{

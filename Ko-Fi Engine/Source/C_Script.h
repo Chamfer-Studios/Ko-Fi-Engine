@@ -1,5 +1,4 @@
-#ifndef __C_SCRIPT_H__
-#define __C_SCRIPT_H__
+#pragma once
 
 #include "Component.h"
 #include <lua.hpp>
@@ -33,13 +32,13 @@ struct ScriptHandler
 
 struct ScriptingEvent
 {
-	ScriptingEvent(std::string _key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> _fields) {
+	ScriptingEvent(std::string _key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> _fields) {
 		this->key = _key;
 		this->fields = _fields;
 	}
 
 	std::string key;
-	std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields;
+	std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields;
 };
 
 class C_Script : public Component 
@@ -67,5 +66,3 @@ public:
 
 	std::queue<ScriptingEvent> eventQueue;
 };
-
-#endif // __C_SCRIPT_H__

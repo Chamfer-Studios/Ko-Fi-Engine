@@ -124,9 +124,13 @@ void C_Transform::SetRotationQuat(const Quat &newRotation)
 	isDirty = true;
 }
 
-void C_Transform::SetFront(const float3 &front)
+void C_Transform::LookAt(const float3 &_front, float3 &_up)
 {
-	transformMatrixLocal.SetCol3(2, front);
+	float angle = _front.AngleBetween(float3(0, 0, 1));
+
+	if (_front.x < 0) angle = -angle;
+	
+	SetRotationEuler(float3(GetRotationEuler().x, angle * RADTODEG, GetRotationEuler().z));
 }
 
 void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
