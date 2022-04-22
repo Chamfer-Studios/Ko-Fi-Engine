@@ -107,14 +107,20 @@ state = STATE.UNAWARE
 
 function LookAtDirection(direction)
     local rad = math.atan(direction.x, direction.z)
+
+    if direction.z > 0 then
+        rad = -rad
+    end
+
     componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
 end
 
 awareness = 0
 targetAwareness = 0
-awarenessSpeed = 1
+awarenessSpeed = 0.1
 hearingRange = 30
 awarenessSource = nil
+awarenessPosition = nil
 
 function CheckAuditoryTriggerInRange(position, range)
     mypos = componentTransform:GetPosition()
@@ -129,8 +135,6 @@ function CheckAuditoryTriggerInRange(position, range)
 end
 
 function ProcessSingleAuditoryTrigger(position, source)
-    awarenessSource = source
-
     if state == STATE.UNAWARE then
         DispatchEvent("State_Suspicious", { position })
         do return end
@@ -160,8 +164,14 @@ end
 
 function ProcessAuditoryTrigger(position, range, type, source)
     if not CheckAuditoryTriggerInRange(position, range) then
+        if auditoryTriggerIsRepeating == true then
+            SetTargetStateToUNAWARE()
+        end
         do return end
     end
+
+    awarenessSource = source
+    awarenessPosition = position
 
     if type == "single" then
         ProcessSingleAuditoryTrigger(position, source)
@@ -207,9 +217,12 @@ function SetStateToSUS(position)
         do return end
     end
 
-    DispatchEvent(pathfinderUpdateKey, { {}, false })
-
-    Log(tostring(position) .. "\n")
+    if static == true then
+        DispatchEvent(pathfinderUpdateKey, { {}, false, componentTransform:GetPosition() })
+        LookAtDirection(Float3Difference(componentTransform:GetPosition(), position))
+    else
+        DispatchEvent(pathfinderUpdateKey, { { position }, false, componentTransform:GetPosition() })
+    end
 
     state = STATE.SUS
     awareness = 1
@@ -246,6 +259,9 @@ function Update(dt)
     end
 
     Log(tostring(awareness) .. "\n")
+    if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
+        DispatchEvent("State_Suspicious", { awarenessPosition })
+    end
 
     if awareness < 0 then
         SetStateToUNAWARE()
@@ -267,5 +283,9 @@ function Update(dt)
         end
     end
 
-	DispatchEvent(pathfinderFollowKey, { speed, dt, loop })
+    _loop = loop
+    if state == STATE.SUS or state == STATE.AGGRO then
+        _loop = false
+    end
+	DispatchEvent(pathfinderFollowKey, { speed, dt, _loop })
 end

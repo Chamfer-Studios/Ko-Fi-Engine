@@ -43,7 +43,7 @@ function Float3Angle(a, b)
 end
 
 function FollowPath(speed, dt, loop)
-    if #finalPath == 0 then
+    if #finalPath == 0 or currentPathIndex > #finalPath then
         do return end
     end
 
@@ -54,6 +54,9 @@ function FollowPath(speed, dt, loop)
         currentPathIndex = currentPathIndex + 1
         if currentPathIndex > #finalPath and loop then
             currentPathIndex = 1
+        end
+        if currentPathIndex > #finalPath then
+            currentPathIndex = currentPathIndex - 1
         end
         currentTarget = finalPath[currentPathIndex]
     end
