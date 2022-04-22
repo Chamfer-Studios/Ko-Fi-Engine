@@ -143,6 +143,15 @@
     <Filter Include="Scripts\UI">
       <UniqueIdentifier>{116bf457-0b8c-4108-82e6-e2cef9c3e313}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Players\Zhib">
+      <UniqueIdentifier>{d445d04a-4f59-4f92-b5b2-17fbe248b2da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Players\Nerala">
+      <UniqueIdentifier>{5a50019e-6459-4d3b-a988-7fd48a5de20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Players\Omozra">
+      <UniqueIdentifier>{6dcabfe7-3963-40c4-9df6-560195d54bff}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\GameObject\Components\Testing">
       <UniqueIdentifier>{bf57a971-4322-4b16-9ae8-20a8bc4d2623}</UniqueIdentifier>
     </Filter>
@@ -1816,9 +1825,6 @@
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua">
       <Filter>Scripts</Filter>
     </None>
@@ -1836,15 +1842,6 @@
     </None>
     <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua">
       <Filter>Scripts</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib.lua">
-      <Filter>Scripts\Players</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala.lua">
-      <Filter>Scripts\Players</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra.lua">
-      <Filter>Scripts\Players</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
       <Filter>Scripts\Enemies</Filter>
@@ -1864,10 +1861,31 @@
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\UI_CharacterSelected&amp;SFX3.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Decoy.lua">
+      <Filter>Scripts\Players\Zhib</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Zhib.lua">
+      <Filter>Scripts\Players\Zhib</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Knife.lua">
+      <Filter>Scripts\Players\Zhib</Filter>
+    </None>
     <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua">
       <Filter>Scripts\Enemies</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra\Omozra.lua">
+      <Filter>Scripts\Players\Omozra</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\HunterSeeker.lua">
+      <Filter>Scripts\Players\Nerala</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua">
+      <Filter>Scripts\Players\Nerala</Filter>
     </None>
   </ItemGroup>
 </Project>

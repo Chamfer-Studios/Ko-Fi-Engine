@@ -42,12 +42,20 @@ C_Material::C_Material(GameObject* parent) : Component(parent)
 
 C_Material::~C_Material()
 {
+	// Already done in CleanUp()
+	/*std::string temp(owner->GetName());
+	if (temp.find("Knife") != std::string::npos)  // Dirty Fix before resource manager works
+		return;
 	if(material != nullptr)
-		RELEASE(material);
+		RELEASE(material);*/
 }
 
 bool C_Material::CleanUp()
 {
+	std::string temp(owner->GetName());
+	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
+		return true;
+
 	if(material != nullptr)
 		RELEASE(material);// peta por el karambit
 

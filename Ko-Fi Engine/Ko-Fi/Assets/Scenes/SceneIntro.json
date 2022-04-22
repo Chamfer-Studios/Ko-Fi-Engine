@@ -4,7 +4,7 @@
         "game_objects_amount": 4,
         "game_objects_list": [
             {
-                "UID": 2048098366,
+                "UID": 843244093,
                 "active": true,
                 "components": [
                     {
@@ -15,8 +15,8 @@
                         "active": true,
                         "position": [
                             0.0,
-                            -0.21098089218139648,
-                            -87.13827514648438
+                            0.0,
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -34,7 +34,7 @@
                     {
                         "active": true,
                         "draw_frustum": true,
-                        "far_plane_distance": 607.0,
+                        "far_plane_distance": 100.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.10000000149011612,
@@ -48,7 +48,7 @@
                 "tag": 0
             },
             {
-                "UID": 2037145780,
+                "UID": 1736540714,
                 "active": true,
                 "components": [
                     {
@@ -105,7 +105,7 @@
                 "tag": 0
             },
             {
-                "UID": 1863850559,
+                "UID": 1679879307,
                 "active": true,
                 "components": [
                     {
@@ -134,12 +134,12 @@
                     }
                 ],
                 "is3D": true,
-                "name": "ball",
+                "name": "zhib_animation_reel_v8",
                 "parent_UID": 4294967295,
                 "tag": 0
             },
             {
-                "UID": 1440398164,
+                "UID": 406208614,
                 "active": true,
                 "components": [
                     {
@@ -149,20 +149,20 @@
                     {
                         "active": true,
                         "position": [
-                            0.0,
-                            0.0,
-                            0.0
+                            0.31763458251953125,
+                            4.365575401177324e-10,
+                            -2.407432653228625e-08
                         ],
                         "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
+                            0.7071068286895752,
+                            -5.964846394590495e-09,
+                            1.2685354988661857e-08,
+                            0.7071067690849304
                         ],
                         "scale": [
-                            1.0,
-                            1.0,
-                            1.0
+                            0.00010000000474974513,
+                            9.999997564591467e-05,
+                            9.999997564591467e-05
                         ],
                         "type": "transform"
                     },
@@ -171,33 +171,27 @@
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
                         "isAnimated": false,
-                        "path": "Library/Meshes/Sphere.sugar",
+                        "path": "Library/Meshes/character_low.sugar",
                         "shape_type": 0,
                         "type": "mesh"
                     },
                     {
                         "active": true,
                         "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
+                            1.0,
+                            1.0,
+                            1.0,
                             1.0
                         ],
                         "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "",
+                        "texture_path": "Assets/Textures/Character_Base_color.png",
                         "type": "material",
                         "uniforms": null
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/camera_tester.lua",
-                        "id": 1525128758,
-                        "type": "script"
                     }
                 ],
                 "is3D": true,
-                "name": "Sphere",
-                "parent_UID": 1863850559,
+                "name": "character_low",
+                "parent_UID": 1679879307,
                 "tag": 0
             }
         ],

@@ -55,18 +55,18 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "cuatrecasas"
+        "DefaultScene": "testing"
     },
     "UI": null,
     "Window": {
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 1129,
+        "Height": 768,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
         "Title": "Ko-Fi Engine - cuatrecasas",
-        "Width": 2048
+        "Width": 1024
     }
 }

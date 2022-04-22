@@ -27,6 +27,7 @@ C_Animator::C_Animator(GameObject* parent) : Component(parent)
 
 C_Animator::~C_Animator()
 {
+	CleanUp();
 }
 
 bool C_Animator::Start()
@@ -57,6 +58,16 @@ bool C_Animator::Update(float dt)
 
 bool C_Animator::CleanUp()
 {
+	if (animation != nullptr)
+		RELEASE(animation);
+
+	if (selectedClip != nullptr)
+		RELEASE(selectedClip);
+
+	C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
+	if (cMesh != nullptr)
+		cMesh->GetMesh()->SetIsAnimated(false);
+
 	return true;
 }
 
@@ -140,7 +151,13 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 			{
 				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == clipToDelete), ImGuiSelectableFlags_None))
 				{
-					clipToDelete = &clip->second;
+					if (clip->second.GetName().c_str() != "Default clip")
+					{
+						clipToDelete = &clip->second;
+						SetSelectedClip(std::string("Default clip"));
+					}
+					else
+						clipToDelete = nullptr;
 				}
 			}
 

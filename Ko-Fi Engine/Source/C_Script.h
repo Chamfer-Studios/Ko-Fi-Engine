@@ -56,11 +56,10 @@ public:
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 	void LoadInspectorVariables(Json& json);
+	void RemoveOldVariables();
 	void ReloadScript(ScriptHandler* script);
 
 	void SetId(int id);
-
-	int nScripts = 0;
 
 	ScriptHandler* s;
 	int id = -1;
