@@ -147,11 +147,11 @@ bool SceneIntro::PreUpdate(float dt)
 			goIt->tag = Tag::TAG_PROJECTILE;
 			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
 
-			goIt->GetTransform()->SetScale(float3(0.01, 0.01, 0.05));
+			goIt->GetTransform()->SetScale(float3(0.001, 0.001, 0.005));
 			float3 pos = parent->GetTransform()->GetPosition();
 
-			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y, pos.z));
-			goIt->GetTransform()->SetPosition(float3(pos.x, pos.y, pos.z));
+			rigidBody->SetRigidBodyPos(float3(pos.x, 0.5, pos.z));
+			goIt->GetTransform()->SetPosition(float3(pos.x, 0.5, pos.z));
 
 			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
 
@@ -166,6 +166,7 @@ bool SceneIntro::PreUpdate(float dt)
 			C_Collider* collider = goIt->CreateComponent<C_Collider>();
 			collider->SetColliderShape(ColliderShape::BOX);
 			collider->SetFilter("terrain");
+			collider->SetIsTrigger(true);
 
 			C_Script* decoyScript = (C_Script*)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
 			decoyScript->s->path = "Assets/Scripts/Players/Zhib/Decoy.lua";
