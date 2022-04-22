@@ -86,7 +86,7 @@ function CheckAndRecalculatePath(force)
     end
 
     if eq == false or force then
-        DispatchEvent(pathfinderUpdateKey, { patrolWaypoints, pingpong })
+        DispatchEvent(pathfinderUpdateKey, { patrolWaypoints, pingpong, componentTransform:GetPosition() })
         currentPathIndex = 1
     end
 end
@@ -107,19 +107,14 @@ state = STATE.UNAWARE
 
 function LookAtDirection(direction)
     local rad = math.atan(direction.x, direction.z)
-    
-    --if(direction.x < 0) then
-    --    rad = rad * (-1)
-    --end
     componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
-
-    --componentTransform:LookAt(direction, componentTransform:GetUp())
 end
 
 awareness = 0
 targetAwareness = 0
 awarenessSpeed = 1
 hearingRange = 30
+awarenessSource = nil
 
 function CheckAuditoryTriggerInRange(position, range)
     mypos = componentTransform:GetPosition()
@@ -134,6 +129,8 @@ function CheckAuditoryTriggerInRange(position, range)
 end
 
 function ProcessSingleAuditoryTrigger(position, source)
+    awarenessSource = source
+
     if state == STATE.UNAWARE then
         DispatchEvent("State_Suspicious", { position })
         do return end
@@ -197,23 +194,29 @@ function SetStateToUNAWARE()
     if state == STATE.AGGRO then
         do return end
     end
+    
+    CheckAndRecalculatePath(true)
 
     state = STATE.UNAWARE
     awareness = 0
     targetAwareness = 0
 end
 
-function SetStateToSUS()
+function SetStateToSUS(position)
     if state == STATE.AGGRO then
         do return end
     end
+
+    DispatchEvent(pathfinderUpdateKey, { {}, false })
+
+    Log(tostring(position) .. "\n")
 
     state = STATE.SUS
     awareness = 1
     targetAwareness = 0
 end
 
-function SetStateToAGGRO()
+function SetStateToAGGRO(source)
     state = STATE.AGGRO
     awareness = 2
     targetAwareness = 2
@@ -223,9 +226,9 @@ function EventHandler(key, fields)
     if key == "Auditory_Trigger" then -- fields[1] -> position; fields[2] -> range; fields[3] -> type ("single", "repeated"); fields[4] -> source ("GameObject");
         ProcessAuditoryTrigger(fields[1], fields[2], fields[3], fields[4])
     elseif key == "State_Suspicious" then
-        SetStateToSUS()
+        SetStateToSUS(fields[1])
     elseif key == "State_Aggressive" then
-        SetStateToAGGRO()
+        SetStateToAGGRO(fields[1])
     elseif key == "Walking_Direction" then
         LookAtDirection(fields[1])
     end
@@ -242,10 +245,12 @@ function Update(dt)
         awareness = awareness - awarenessSpeed * dt
     end
 
+    Log(tostring(awareness) .. "\n")
+
     if awareness < 0 then
         SetStateToUNAWARE()
     elseif awareness > 2 then
-        SetStateToAGGRO()
+        DispatchEvent("State_Aggressive", { awarenessSource })
     end
 
     if state == STATE.UNAWARE then

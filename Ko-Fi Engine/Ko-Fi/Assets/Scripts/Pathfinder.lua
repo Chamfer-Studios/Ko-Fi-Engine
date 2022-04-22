@@ -64,9 +64,18 @@ function FollowPath(speed, dt, loop)
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
 end
 
-function UpdatePath(wp, pingpong)
+function UpdatePath(wp, pingpong, currentPos)
     _finalPath = {}
     n = 1
+
+    if #wp > 0 then
+        result = navigation:FindPath(currentPos, wp[1], 1000, 1000)
+        for j=1,#result do
+            _finalPath[n] = result[j]
+            n = n + 1
+        end
+    end
+
     for i=1,#wp - 1 do
         current = wp[i]
         next = wp[i + 1]
@@ -99,8 +108,8 @@ function UpdatePath(wp, pingpong)
 end
 
 function EventHandler(key, fields)
-    if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints; fields[2] -> pingpong;
-        UpdatePath(fields[1], fields[2])
+    if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints; fields[2] -> pingpong; fields[3] -> currentPos
+        UpdatePath(fields[1], fields[2], fields[3])
     elseif key == "Pathfinder_FollowPath" then -- fields[1] -> speed; fields[2] -> dt; fields[3] -> loop;
         FollowPath(fields[1], fields[2], fields[3])
     end
