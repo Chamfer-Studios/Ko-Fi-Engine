@@ -98,8 +98,8 @@ bool SceneIntro::PreUpdate(float dt)
 		GameObject* parent = (*mapIt).first;
 		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
 		{
-			GameObject* karambit = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit");
-			if (!karambit)
+			GameObject* karambitOriginal = parent->GetComponent<C_Script>()->s->handler->LuaFind("KarambitMesh");
+			if (!karambitOriginal)
 				continue;
 
 			GameObject* goIt = CreateEmptyGameObject((*mapIt).second.c_str());
@@ -115,11 +115,11 @@ bool SceneIntro::PreUpdate(float dt)
 
 			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
 
-			R_Mesh* mesh = karambit->GetComponent<C_Mesh>()->GetMesh();
+			R_Mesh* mesh = karambitOriginal->GetComponent<C_Mesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material* material = karambit->GetComponent<C_Material>()->GetMaterial();
+			R_Material* material = karambitOriginal->GetComponent<C_Material>()->GetMaterial();
 
 			cMaterial->SetMaterial(material);
 
@@ -138,8 +138,8 @@ bool SceneIntro::PreUpdate(float dt)
 		}
 		else if ((*mapIt).second == "Decoy")
 		{
-			GameObject* decoy = parent->GetComponent<C_Script>()->s->handler->LuaFind("Decoy");
-			if (!decoy)
+			GameObject* decoyOriginal = parent->GetComponent<C_Script>()->s->handler->LuaFind("DecoyMesh");
+			if (!decoyOriginal)
 				continue;
 
 			GameObject* goIt = CreateEmptyGameObject((*mapIt).second.c_str());
@@ -155,11 +155,11 @@ bool SceneIntro::PreUpdate(float dt)
 
 			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
 
-			R_Mesh* mesh = decoy->GetComponent<C_Mesh>()->GetMesh();
+			R_Mesh* mesh = decoyOriginal->GetComponent<C_Mesh>()->GetMesh();
 			componentMesh->SetMesh(mesh);
 
 			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material* material = decoy->GetComponent<C_Material>()->GetMaterial();
+			R_Material* material = decoyOriginal->GetComponent<C_Material>()->GetMaterial();
 			cMaterial->SetMaterial(material);
 
 			rigidBody->FreezePositionY(true);
@@ -174,6 +174,42 @@ bool SceneIntro::PreUpdate(float dt)
 			GameObject* target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
 			decoyScript->s->handler->lua["target"] = target;
 			decoyScript->s->handler->lua["SetDestination"]();
+		}
+		else if ((*mapIt).second == "Mosquito")
+		{
+			GameObject* mosquitoOriginal = parent->GetComponent<C_Script>()->s->handler->LuaFind("MosquitoMesh");
+			if (!mosquitoOriginal)
+				continue;
+
+			GameObject* goIt = CreateEmptyGameObject((*mapIt).second.c_str());
+
+			goIt->tag = Tag::TAG_PLAYER;
+			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
+
+			goIt->GetTransform()->SetScale(float3(0.1, 0.1, 0.3));
+			float3 pos = parent->GetTransform()->GetPosition();
+
+			rigidBody->SetRigidBodyPos(float3(pos.x + 25, 10, pos.z));
+			goIt->GetTransform()->SetPosition(float3(pos.x + 25, 10, pos.z));
+
+			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
+
+			R_Mesh* mesh = mosquitoOriginal->GetComponent<C_Mesh>()->GetMesh();
+			componentMesh->SetMesh(mesh);
+
+			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
+			R_Material* material = mosquitoOriginal->GetComponent<C_Material>()->GetMaterial();
+			cMaterial->SetMaterial(material);
+
+			rigidBody->SetUseGravity(false);
+			rigidBody->FreezePositionY(true);
+			C_Collider* collider = goIt->CreateComponent<C_Collider>();
+			collider->SetColliderShape(ColliderShape::BOX);
+			collider->SetFilter("player");
+
+			C_Script* decoyScript = (C_Script*)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
+			decoyScript->s->path = "Assets/Scripts/Players/Nerala/HunterSeeker.lua";
+			decoyScript->ReloadScript(decoyScript->s);
 		}
 	}
 	gameObjectListToCreate.clear();

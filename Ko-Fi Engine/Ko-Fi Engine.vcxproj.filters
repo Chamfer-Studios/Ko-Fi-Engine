@@ -1878,6 +1878,9 @@
     <None Include="Ko-Fi\Assets\Scripts\Players\Omozra\Omozra.lua">
       <Filter>Scripts\Players\Omozra</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\HunterSeeker.lua">
+      <Filter>Scripts\Players\Nerala</Filter>
+    </None>
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua">
       <Filter>Scripts\Players\Nerala</Filter>
     </None>

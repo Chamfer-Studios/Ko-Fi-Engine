@@ -37,7 +37,7 @@ function Update(dt)
 
 	else
 		componentRigidBody:SetStatic()
-		DeleteGameObject() --  It crashes with this
+		DeleteGameObject()
 	end
 end
 

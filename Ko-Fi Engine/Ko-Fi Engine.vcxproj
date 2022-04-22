@@ -668,6 +668,7 @@
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\HunterSeeker.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Omozra\Omozra.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Decoy.lua" />

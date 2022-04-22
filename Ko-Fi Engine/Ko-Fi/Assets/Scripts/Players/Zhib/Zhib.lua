@@ -13,8 +13,8 @@ Movement = {
 Action = {
 	IDLE = 1,
 	ATTACK = 2,
-	AIM_KNIFE = 3,
-	AIM_DECOY = 4,
+	AIM_PRIMARY = 3,
+	AIM_SECONDARY = 4,
 	AIM_ULTIMATE = 5,
 }
 
@@ -147,7 +147,7 @@ function Update(dt)
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
 	
 			-- Knife
-			if (currentAction == Action.AIM_KNIFE) then -- Fire Knife (infinite range for now)
+			if (currentAction == Action.AIM_PRIMARY) then -- Fire Knife (infinite range for now)
 				if (knifeCount > 0) then
 					target = GetGameObjectHovered()
 					if (target.tag == Tag.ENEMY) then
@@ -158,7 +158,7 @@ function Update(dt)
 				end
 			
 			-- Decoy
-			elseif (decoyTimer == nil and currentAction == Action.AIM_DECOY) then
+			elseif (decoyTimer == nil and currentAction == Action.AIM_SECONDARY) then
 				target = GetGameObjectHovered() -- This is for the decoy to go to the mouse Pos (it uses the target var)
 				local mousePos = GetLastMouseClick()
 				if (Distance3D(mousePos, componentTransform:GetPosition()) <= decoyCastRange) then
@@ -178,7 +178,7 @@ function Update(dt)
 		-- Right Click
 		if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
 			goHit = GetGameObjectHovered()
-			if (goHit ~= hit and goHit ~= gameObject) then
+			if (goHit ~= gameObject) then
 				destination = GetLastMouseClick()
 				if (currentMovement == Movement.WALK and isDoubleClicking == true) then
 					currentMovement = Movement.RUN
@@ -197,10 +197,10 @@ function Update(dt)
 			currentAction = Action.IDLE
 		end
 		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
-			currentAction = Action.AIM_KNIFE
+			currentAction = Action.AIM_PRIMARY
 		end	
 		if (GetInput(12) == KEY_STATE.KEY_DOWN) then -- D
-			currentAction = Action.AIM_DECOY
+			currentAction = Action.AIM_SECONDARY
 		end	
 		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- SPACE
 			currentAction = Action.AIM_ULTIMATE
@@ -418,7 +418,7 @@ function StopMovement()
 		componentRigidBody:Set2DVelocity(float2.new(0,0))
 	end
 	if (componentSwitch ~= nil) then
-		componentSwitch:StopTrack(1)
+		componentSwitch:StopTrack(1) -- Sprint & crouch should stop here too
 	end
 	--if (componentAnimator ~= nil) then
 	--	componentAnimator:SetSelectedClip("Idle")

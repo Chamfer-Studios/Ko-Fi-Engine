@@ -72,7 +72,7 @@ bool C_Mesh::PostUpdate(float dt) //AKA the real render
 bool C_Mesh::CleanUp()
 {
 	std::string temp(owner->GetName());
-	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos)  // Dirty Fix before resource manager works
+	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
 	RELEASE(mesh);
 
