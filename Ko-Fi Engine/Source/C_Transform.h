@@ -26,7 +26,7 @@ public:
 	void SetScale(const float3 &newScale);
 	void SetRotationEuler(const float3 &newRotation);
 	void SetRotationQuat(const Quat &newRotation);
-	void SetFront(const float3 &front);
+	void LookAt(const float3 &front, float3& up);
 	void SetGlobalTransform(const float4x4 &globalTransform);
 	void SetDirty(bool isDirty);
 

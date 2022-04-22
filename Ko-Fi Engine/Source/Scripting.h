@@ -213,7 +213,9 @@ public:
 			"GetScale", &C_Transform::GetScale,
 			"SetScale", &C_Transform::SetScale,
 			"GetFront", &C_Transform::Front,
-			"SetFront", &C_Transform::SetFront
+			"GetRight", &C_Transform::Right,
+			"GetUp", &C_Transform::Up,
+			"LookAt", &C_Transform::LookAt
 			);
 
 		// Component Camera
@@ -644,7 +646,7 @@ public:
 		return tmp;
 	}
 
-	void DispatchGlobalEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
+	void DispatchGlobalEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields) {
 		for (auto go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 			for (auto c : go->GetComponents()) {
 				if (c->type == ComponentType::SCRIPT) {
@@ -654,7 +656,7 @@ public:
 		}
 	}
 
-	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
+	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields) {
 		for (auto c : gameObject->GetComponents()) {
 			if (c->type == ComponentType::SCRIPT) {
 				((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));

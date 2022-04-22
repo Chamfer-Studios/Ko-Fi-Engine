@@ -105,6 +105,17 @@ STATE = {
 
 state = STATE.UNAWARE
 
+function LookAtDirection(direction)
+    local rad = math.atan(direction.x, direction.z)
+    
+    --if(direction.x < 0) then
+    --    rad = rad * (-1)
+    --end
+    componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
+
+    --componentTransform:LookAt(direction, componentTransform:GetUp())
+end
+
 awareness = 0
 targetAwareness = 0
 awarenessSpeed = 1
@@ -215,6 +226,8 @@ function EventHandler(key, fields)
         SetStateToSUS()
     elseif key == "State_Aggressive" then
         SetStateToAGGRO()
+    elseif key == "Walking_Direction" then
+        LookAtDirection(fields[1])
     end
 end
 
