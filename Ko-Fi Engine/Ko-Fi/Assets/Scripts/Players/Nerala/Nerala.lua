@@ -49,13 +49,13 @@ local dartCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 dartCastRangeIV = InspectorVariable.new("dartCastRange", dartCastRangeIVT, dartCastRange)
 NewVariable(dartCastRangeIV)
 
-local drawDartIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-drawDartIVT = InspectorVariable.new("drawDart", drawDartIVT, drawDart)
-NewVariable(drawDartIVT)
-
 local dartCooldownIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 dartCooldownIV = InspectorVariable.new("dartCooldown", dartCooldownIVT, dartCooldown)
 NewVariable(dartCooldownIV)
+
+local drawDartIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawDartIV = InspectorVariable.new("drawDart", drawDartIVT, drawDart)
+NewVariable(drawDartIV)
 
 -- Secondary ability --
 
@@ -168,8 +168,15 @@ function Update(dt)
 			-- Primary ability (Dart)
 			if (currentAction == Action.AIM_PRIMARY and dartTimer == nil) then
 				target = GetGameObjectHovered()
-				if (target.tag == Tag.ENEMY) then
-					FireDart()
+				local mousePos = GetLastMouseClick()
+				if (Distance3D(mousePos, componentTransform:GetPosition()) <= dartCastRange) then
+					if (target.tag == Tag.ENEMY) then
+						FireDart()
+					else
+						print("You have to select an enemy first!")
+					end
+				else
+					print("Out of range")
 				end
 
 			-- Secondary ability (Smoke bomb)

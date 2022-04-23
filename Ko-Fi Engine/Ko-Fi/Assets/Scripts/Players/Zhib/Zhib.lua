@@ -24,6 +24,7 @@ characterID = 1
 speed = 500.0
 
 -- Primary ability --
+knifeCastRange = 30.0
 maxKnives = 2
 knifeCount = maxKnives
 
@@ -50,6 +51,10 @@ speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
 -- Primary ability --
+local knifeCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+knifeCastRangeIV = InspectorVariable.new("knifeCastRange", knifeCastRangeIVT, knifeCastRange)
+NewVariable(knifeCastRangeIV)
+
 local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
 NewVariable(maxKnivesIV)
@@ -60,8 +65,8 @@ decoyCastRangeIV = InspectorVariable.new("decoyCastRange", decoyCastRangeIVT, de
 NewVariable(decoyCastRangeIV)
 
 local drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-drawDecoyIVT = InspectorVariable.new("drawDecoy", drawDecoyIVT, drawDecoy)
-NewVariable(drawDecoyIVT)
+drawDecoyIV = InspectorVariable.new("drawDecoy", drawDecoyIVT, drawDecoy)
+NewVariable(drawDecoyIV)
 
 -- Ultimate ability --
 local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
@@ -69,8 +74,8 @@ ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultim
 NewVariable(ultimateRangeIV)
 
 local drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-drawUltimateIVT = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
-NewVariable(drawUltimateIVT)
+drawUltimateIV = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
+NewVariable(drawUltimateIV)
 ------------------------------------------------------
 
 ------------------- Animation setter --------------------
@@ -182,9 +187,16 @@ function Update(dt)
 			-- Primary ability (Knife)
 			if (currentAction == Action.AIM_PRIMARY) then
 				if (knifeCount > 0) then
-					target = GetGameObjectHovered()
-					if (target.tag == Tag.ENEMY) then
-						FireKnife()
+					local mousePos = GetLastMouseClick()
+					if (Distance3D(mousePos, componentTransform:GetPosition()) <= knifeCastRange) then
+						target = GetGameObjectHovered()
+						if (target.tag == Tag.ENEMY) then
+							FireKnife()
+						else
+							print("You have to select an enemy first!")
+						end
+					else
+						print("Out of range")
 					end
 				else
 					print("Out of ammo")
@@ -193,17 +205,23 @@ function Update(dt)
 			-- Secondary ability (Decoy)
 			elseif (decoyTimer == nil and currentAction == Action.AIM_SECONDARY) then
 				target = GetGameObjectHovered() -- This is for the decoy to go to the mouse Pos (it uses the target var)
-				local mousePos = GetLastMouseClick()
+				mousePos = GetLastMouseClick()
 				if (Distance3D(mousePos, componentTransform:GetPosition()) <= decoyCastRange) then
 					PlaceDecoy()
+				else
+					print("Out of range")
 				end
 
 			-- Ultimate ability (master yi)
 			elseif (ultimateTimer == nil and currentAction == Action.AIM_ULTIMATE) then
 				target = GetGameObjectHovered()
-				if (target.tag == Tag.ENEMY and Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= ultimateRange) then
-					mousePos = GetLastMouseClick()
-					Ultimate(mousePos)
+				if (target.tag == Tag.ENEMY) then
+					if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= ultimateRange) then
+						mousePos = GetLastMouseClick()
+						Ultimate(mousePos)
+					end
+				else
+					print("Out of range")
 				end
 			end
 		end
@@ -265,7 +283,7 @@ function Update(dt)
 
 		-- R -> For debugging purposes only (reload knifes)
 		if (GetInput(10) == KEY_STATE.KEY_DOWN) then 
-			Reload()
+			ReloadKnifes()
 		end
 	end
 
@@ -348,7 +366,7 @@ function MoveToDestination(dt)
 	-- Add ChangeAnimation() to check the speed of the rigid body
 end
 
-function Reload() -- For debugging purposes only
+function ReloadKnifes() -- For debugging purposes only
 	knifeCount = maxKnives
 end
 
@@ -379,7 +397,7 @@ function FireKnife()
 end
 
 -- Secondary ability
-function PlaceDecoy(mousePos) 
+function PlaceDecoy() 
 	CreateGameObject("Decoy") -- This should instance the prefab
 	if (componentSwitch ~= nil) then
 		--componentSwitch:PlayTrack(0)
