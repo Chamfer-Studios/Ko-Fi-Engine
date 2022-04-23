@@ -296,7 +296,7 @@ end
 
 function EventHandler(key, fields)
     if key == "Auditory_Trigger" then -- fields[1] -> position; fields[2] -> range; fields[3] -> type ("single", "repeated"); fields[4] -> source ("GameObject");
-        --ProcessAuditoryTrigger(fields[1], fields[2], fields[3], fields[4])
+        ProcessAuditoryTrigger(fields[1], fields[2], fields[3], fields[4])
     elseif key == "State_Suspicious" then
         SetStateToSUS(fields[1])
     elseif key == "State_Aggressive" then
@@ -304,7 +304,7 @@ function EventHandler(key, fields)
     elseif key == "Walking_Direction" then
         LookAtDirection(fields[1])
     elseif key == "Player_Position" then
-        ProcessVisualTrigger(fields[1], fields[2])
+        --ProcessVisualTrigger(fields[1], fields[2])
     end
 end
 
@@ -319,7 +319,7 @@ function Update(dt)
         awareness = awareness - awarenessSpeed * dt
     end
 
-    Log(tostring(awareness) .. "\n")
+    --Log(tostring(awareness) .. "\n")
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
         if seeingSource ~= nil then
             DispatchEvent("State_Suspicious", { seeingSource })

@@ -49,6 +49,8 @@ bool C_Transform::Update(float dt)
 
 bool C_Transform::PostUpdate(float dt)
 {
+	return true;
+
 	glBegin(GL_LINES);
 	glColor3f(0, 0, 1.0f);
 	glLineWidth(4.f);

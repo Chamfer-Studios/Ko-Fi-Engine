@@ -106,8 +106,20 @@ function UpdatePath(wp, pingpong, currentPos)
     for i=1,#_finalPath do
         _G.finalPath[i] = float3.new(_finalPath[i].x, _finalPath[i].y, _finalPath[i].z)
     end
+
+    closestIndex = 1
+
+    for i=1,#_finalPath do
+        p = _finalPath[i]
+
+        if (Float3Distance(currentPos, p) < Float3Distance(currentPos, _finalPath[closestIndex])) then
+            closestIndex = i
+        end
+    end
+
+    Log(tostring(closestIndex) .. "\n")
     
-    currentPathIndex = 1
+    currentPathIndex = closestIndex
 end
 
 function EventHandler(key, fields)
