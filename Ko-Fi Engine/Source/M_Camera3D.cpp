@@ -328,16 +328,16 @@ void M_Camera3D::OnClick(SDL_Event event)
 		if (hit != nullptr)
 		{
 			CONSOLE_LOG("%s", hit->GetName());
-			//if (event.button.button == SDL_SCANCODE_LCTRL && engine->GetSceneManager()->GetGameState() != GameState::PLAYING && !ImGuizmo::IsOver())
+			if (event.button.button == SDL_SCANCODE_LCTRL && engine->GetSceneManager()->GetGameState() != GameState::PLAYING && !ImGuizmo::IsOver())
 			{
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.push_back(hit->GetUID());
 			}
-			/*else
+			else
 			{
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.push_back(hit->GetUID());
-			}*/
+			}
 			//engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
 		}
 		else {
