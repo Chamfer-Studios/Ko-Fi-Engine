@@ -680,11 +680,13 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_CharacterSelected.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ClosePopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Disable.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_HoverSkill.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_1.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_3.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenPopUp.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenQuestsPopUp.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenSkillsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_SFX.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />

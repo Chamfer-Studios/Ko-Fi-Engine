@@ -249,6 +249,7 @@ public:
 		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),
 										  "IsPressed", &C_Button::IsPressed,
+										  "IsIdle", &C_Button::IsIdle,
 										  "IsHovered", &C_Button::IsHovered);
 
 		// Component Animator

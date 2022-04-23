@@ -7,10 +7,11 @@ NewVariable(nameIV)
 
 -- Called each loop iteration
 function Update(dt)
-	if (gameObject:GetParent():GetChild("SkillsMenu").active == false) then
-		if (gameObject:GetButton():IsPressed() == true) then
-			-- gameObject:LoadScene("HUD_Scene")
-			gameObject:ChangeScene(true, name);
+	if (GetVariable("UI_OpenSkillsPopUp.lua", "popUp", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
+		if (GetVariable("UI_OpenQuestsPopUp.lua", "popUp", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
+			if (gameObject:GetButton():IsPressed() == true) then
+				gameObject:ChangeScene(true, name);
+			end
 		end
 	end
 end

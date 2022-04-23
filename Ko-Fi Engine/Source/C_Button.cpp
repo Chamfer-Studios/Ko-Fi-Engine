@@ -272,6 +272,15 @@ bool C_Button::IsHovered()
 	return false;
 }
 
+bool C_Button::IsIdle()
+{
+	if (state == BUTTON_STATE::IDLE)
+	{
+		return true;
+	}
+	return false;
+}
+
 void C_Button::OnStoped()
 {
 	M_SceneManager* sceneManager = owner->GetEngine()->GetSceneManager();

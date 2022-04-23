@@ -1917,9 +1917,6 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua">
       <Filter>Scripts\UI</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenPopUp.lua">
-      <Filter>Scripts\UI</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
       <Filter>Scripts</Filter>
     </None>
@@ -1933,6 +1930,15 @@
       <Filter>Scripts\UI</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ChangeScenesTS.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenQuestsPopUp.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenSkillsPopUp.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_HoverSkill.lua">
       <Filter>Scripts\UI</Filter>
     </None>
   </ItemGroup>

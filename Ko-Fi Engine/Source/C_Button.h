@@ -42,6 +42,7 @@ public:
 
 	bool IsPressed();
 	bool IsHovered();
+	bool IsIdle();
 	void OnStoped();
 
 private:
