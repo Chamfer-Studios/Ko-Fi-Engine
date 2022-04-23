@@ -63,22 +63,58 @@ void CollisionWorld::RemoveSolver(P_Solver* solver)
 
 void CollisionWorld::SetCollisionCallback(std::function<void(Collision&, float)>& callback)
 {
+	this->onCollision = callback;
 }
 
 void CollisionWorld::SolveCollisions(std::vector<Collision>& collisions, float dt)
 {
+	for (P_Solver* solver : solvers) {
+		solver->Solve(collisions, dt);
+	}
 }
 
 void CollisionWorld::SendCollisionCallbacks(std::vector<Collision>& collisions, float dt)
 {
-}
-
-void CollisionWorld::Step(float dt)
-{
+	for (Collision& collision : collisions)
+	{
+		this->onCollision(collision, dt);
+		const auto& a = collision.objA->OnCollision();
+		const auto& b = collision.objB->OnCollision();
+		if (a) a(collision, dt);
+		if (b) b(collision, dt);
+	}
 }
 
 void CollisionWorld::ResolveCollisions(float dt)
 {
+	std::vector<Collision> collisions;
+	std::vector<Collision> triggers;
+	for (CollisionActor* a : actors)
+	{
+		for (CollisionActor* b : actors)
+		{
+			if (a == b)break;
+			if(!a->GetCollider() || !b->GetCollider())
+			{
+				continue;
+			}
+			CollisionPoints points = a->GetCollider()->TestCollision(a->GetTransform(), b->GetCollider(), b->GetTransform());
+			if (points.hasCollision)
+			{
+				if (a->GetIsTrigger() || b->GetIsTrigger())
+				{
+					triggers.emplace_back(a, b, points);
+				}
+				else {
+					collisions.emplace_back(a, b, points);
+				}
+			}
+		}
+	}
+	SolveCollisions(collisions, dt);//don't solve triggers
+	SendCollisionCallbacks(collisions, dt);
+	SendCollisionCallbacks(triggers, dt);
+
 }
 
 void DynamicsWorld::AddRigidBody(RigidBody* rigidBody)

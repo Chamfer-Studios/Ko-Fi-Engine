@@ -14,13 +14,15 @@ public:
 	//inline Collider* GetCollider() { return this->collider; }
 	inline bool GetIsTrigger() { return this->isTrigger; }
 	inline bool GetIsDynamic() { return this->isDynamic; }
+	inline std::function<void(Collision&, float)> OnCollision() { return this->onCollision; }
+	inline Collider* GetCollider() { return this->collider; }
 protected:
 	Transform* transform = nullptr;
-	//Collider* collider;
+	Collider* collider;
 	bool isTrigger = false;
 	bool isStatic = false;
 	bool isDynamic = true;
-	//std::function<void(Collision&, float)> onCollision;
+	std::function<void(Collision&, float)> onCollision;
 };
 
 struct RigidBody : CollisionActor

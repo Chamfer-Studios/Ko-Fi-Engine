@@ -25,7 +25,6 @@ public:
 
 	void SendCollisionCallbacks(std::vector<Collision>& collisions, float dt);
 
-	void Step(float dt);
 	void ResolveCollisions(float dt);
 protected:
 	std::vector <CollisionActor*> actors;
