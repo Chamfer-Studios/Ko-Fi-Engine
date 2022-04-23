@@ -2,7 +2,8 @@
 M_Physics::M_Physics(KoFiEngine* engine)
 {
 	this->engine = engine;
-	reactphysics3d::PhysicsCommon physicsCommon;
+	
+	// Create the physics world 
 	world = physicsCommon.createPhysicsWorld();
 
 	//this->world = new DynamicsWorld();
@@ -15,7 +16,6 @@ M_Physics::~M_Physics()
 bool M_Physics::Awake(Json configModule)
 {
 	
-
 
 	return true;
 }
@@ -46,6 +46,12 @@ bool M_Physics::Update(float dt)
 
 bool M_Physics::CleanUp()
 {
+	// Destroy a rigid body 
+	world->destroyRigidBody(body);
+
+	// Destroy a physics world 
+	physicsCommon.destroyPhysicsWorld(world);
+
 	return true;
 }
 

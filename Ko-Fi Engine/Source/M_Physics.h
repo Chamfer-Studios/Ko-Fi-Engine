@@ -38,6 +38,8 @@ private:
 	KoFiEngine* engine = nullptr;
 public:
 	//DynamicsWorld* world = nullptr;
+
+	reactphysics3d::PhysicsCommon physicsCommon;
 	reactphysics3d::PhysicsWorld* world = nullptr;
 	reactphysics3d::RigidBody* body = nullptr;
 };
