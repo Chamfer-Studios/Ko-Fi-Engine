@@ -53,7 +53,7 @@ public:
 	// Copies a file from one path into another one.
 	bool CopyFileTo(const char* sourcePath, const char* destinationPath);
 
-	const char* GetFileName(const char* path) const;
+	std::string GetFileName(const char* path) const;
 	std::string GetNameFromPath(std::string path);
 	
 	int StringCompare(const char* a, const char* b);

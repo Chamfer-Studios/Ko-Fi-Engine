@@ -53,7 +53,7 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 	else
 	{
 		texture->SetTexturePath(path);
-		texture->SetAssetFile(engine->GetFileSystem()->GetFileName(path));
+		texture->SetAssetFile(engine->GetFileSystem()->GetFileName(path).c_str());
 
 		texture->data = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb_alpha);
 

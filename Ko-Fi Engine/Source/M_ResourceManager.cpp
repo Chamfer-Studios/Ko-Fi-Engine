@@ -53,7 +53,7 @@ bool M_ResourceManager::Start()
 
 	fileRefreshRate = 5.0f;
 
-	//RefreshDirectoryFiles(ASSETS_DIR);
+	RefreshDirectoryFiles(ASSETS_DIR);
 
 	//TrimLibrary();
 
@@ -121,7 +121,7 @@ bool M_ResourceManager::TrimLibrary()
 	for (auto file = files.cbegin(); file != files.cend(); ++file)
 	{
 		UID uid = 0;
-		sscanf(engine->GetFileSystem()->GetFileName((*file).c_str()), "%u", &uid);
+		sscanf(engine->GetFileSystem()->GetFileName((*file).c_str()).c_str(), "%u", &uid);
 
 		if (uid != 0)
 			fileUIDs.emplace((*file), uid);
@@ -167,7 +167,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 	bool metaIsValid = ValidateMetaFile(assetPath);
 	if (metaIsValid)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: file to import was already in the library.");
+		CONSOLE_LOG("[STATUS] Resource Manager: file to import was already in the library.");
 
 		std::map<UID, ResourceBase> libraryItems;
 		GetLibraryPairs(assetPath, libraryItems);
@@ -384,11 +384,16 @@ UID M_ResourceManager::GetForcedUIDFromMeta(const char* assetPath)
 		return 0;
 	}
 
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+
+	if (!std::filesystem::exists(metaPath))
+		return 0;
+
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	std::string metaPath = assetPath + std::string(META_EXTENSION);
 	bool success = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+
 	UID uid = 0;
 	if (success && !jsonMeta.is_null() && !jsonMeta.empty())
 	{
@@ -412,10 +417,14 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 		return false;
 	}
 
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+
+	if (!std::filesystem::exists(metaPath))
+		return 0;
+
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	std::string metaPath = assetPath + std::string(META_EXTENSION);
 	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
 
 	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
@@ -850,7 +859,7 @@ Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const c
 	if (resource != nullptr)
 	{
 		if (assetPath != nullptr)
-			resource->SetAssetsPathAndFile(assetPath, engine->GetFileSystem()->GetFileName(assetPath));
+			resource->SetAssetsPathAndFile(assetPath, engine->GetFileSystem()->GetFileName(assetPath).c_str());
 
 		if (forcedUid != 0)
 			resource->ForceUID(forcedUid);
@@ -888,7 +897,7 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 	ret = jsonHandler.SaveJson(jsonMeta, path.c_str());
 
 	if (ret)
-		CONSOLE_LOG("[STATUS] Resource Manager: meta file saved for resource: &s", resource->GetAssetPath());
+		CONSOLE_LOG("[STATUS] Resource Manager: meta file saved for resource: %s", resource->GetAssetPath());
 	else
 		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't save meta file for resource: %s", resource->GetAssetPath());
 

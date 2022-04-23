@@ -304,12 +304,11 @@ bool M_FileSystem::CopyFileTo(const char* sourcePath, const char* destinationPat
 	return true;
 }
 
-const char* M_FileSystem::GetFileName(const char* path) const
+std::string M_FileSystem::GetFileName(const char* path) const
 {
-	std::string p = path;
-	std::string name = p.substr(p.find_last_of("/") + 1, p.size());
-	const char* n = name.c_str();
-	return n;
+	std::string fileName = path;
+	fileName = fileName.substr(fileName.find_last_of("/") + 1, fileName.size());
+	return fileName.c_str();
 }
 
 std::string M_FileSystem::GetNameFromPath(std::string path)
