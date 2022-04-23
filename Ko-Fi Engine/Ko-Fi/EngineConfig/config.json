@@ -55,7 +55,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "CollisonPlayground"
+        "DefaultScene": ""
     },
     "UI": null,
     "Window": {

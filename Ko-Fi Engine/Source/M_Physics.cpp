@@ -14,13 +14,19 @@ M_Physics::~M_Physics()
 
 bool M_Physics::Awake(Json configModule)
 {
+	
+
+
+	return true;
+}
+
+bool M_Physics::Start()
+{
 	reactphysics3d::Vector3 position(0, 20, 0);
 	reactphysics3d::Quaternion orientation = reactphysics3d::Quaternion::identity();
 	reactphysics3d::Transform transform(position, orientation);
 	body = world->createRigidBody(transform);
 	world->setIsDebugRenderingEnabled(false);
-
-
 	return true;
 }
 

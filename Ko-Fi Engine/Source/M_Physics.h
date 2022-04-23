@@ -15,6 +15,7 @@ public:
 
 	//Called before render is avilable
 	bool Awake(Json configModule);
+	bool Start();
 
 	bool Update(float dt);
 
