@@ -2,8 +2,8 @@
 #define __M_PHYSICS_H__
 #include "Module.h"
 #include "Globals.h"
+#include "reactphysics3d/reactphysics3d.h"
 
-class DynamicsWorld;
 class M_Physics : public Module
 {
 public:
@@ -36,7 +36,9 @@ public:
 private:
 	KoFiEngine* engine = nullptr;
 public:
-	DynamicsWorld* world = nullptr;
+	//DynamicsWorld* world = nullptr;
+	reactphysics3d::PhysicsWorld* world = nullptr;
+	reactphysics3d::RigidBody* body = nullptr;
 };
 
 #endif // !__M_PHYSICS_H__

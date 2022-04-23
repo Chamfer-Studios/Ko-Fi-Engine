@@ -1,7 +1,7 @@
 #ifndef __C_RIGIDBODY2_H__
 #define __C_RIGIDBODY2_H__
 #include "Component.h"
-struct RigidBody;
+//struct RigidBody;
 class C_RigidBody2 : public Component
 {
 public:
@@ -20,7 +20,7 @@ public:
 	void Load(Json& json) override;
 
 private:
-	RigidBody* rigidBody = nullptr;
+	//RigidBody* rigidBody = nullptr;
 
 };
 

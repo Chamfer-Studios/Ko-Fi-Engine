@@ -93,6 +93,90 @@ bool SceneIntro::Start()
 
 bool SceneIntro::PreUpdate(float dt)
 {
+	for (std::map<GameObject*, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
+	{
+		GameObject* parent = (*mapIt).first;
+		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
+		{
+			GameObject* karambit = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit");
+			if (!karambit)
+				continue;
+
+			GameObject* goIt = CreateEmptyGameObject((*mapIt).second.c_str());
+
+			goIt->tag = Tag::TAG_PROJECTILE;
+			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
+
+			goIt->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
+			float3 pos = parent->GetTransform()->GetPosition();
+
+			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y, pos.z));
+			goIt->GetTransform()->SetPosition(float3(pos.x, pos.y, pos.z));
+
+			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
+
+			R_Mesh* mesh = karambit->GetComponent<C_Mesh>()->GetMesh();
+			componentMesh->SetMesh(mesh);
+
+			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
+			R_Material* material = karambit->GetComponent<C_Material>()->GetMaterial();
+
+			cMaterial->SetMaterial(material);
+
+			rigidBody->FreezePositionY(true);
+			C_Collider* collider = goIt->CreateComponent<C_Collider>();
+			collider->SetColliderShape(ColliderShape::BOX);
+			collider->SetFilter("projectile");
+			collider->SetIsTrigger(true);
+
+			C_Script* knifeScript = (C_Script*)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
+			knifeScript->s->path = "Assets/Scripts/Players/Zhib/Knife.lua";
+			knifeScript->ReloadScript(knifeScript->s);
+			GameObject* target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
+			knifeScript->s->handler->lua["target"] = target;
+			knifeScript->s->handler->lua["SetDestination"]();
+		}
+		else if ((*mapIt).second == "Decoy")
+		{
+			GameObject* decoy = parent->GetComponent<C_Script>()->s->handler->LuaFind("Decoy");
+			if (!decoy)
+				continue;
+
+			GameObject* goIt = CreateEmptyGameObject((*mapIt).second.c_str());
+
+			goIt->tag = Tag::TAG_PROJECTILE;
+			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
+
+			goIt->GetTransform()->SetScale(float3(0.01, 0.01, 0.05));
+			float3 pos = parent->GetTransform()->GetPosition();
+
+			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y, pos.z));
+			goIt->GetTransform()->SetPosition(float3(pos.x, pos.y, pos.z));
+
+			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
+
+			R_Mesh* mesh = decoy->GetComponent<C_Mesh>()->GetMesh();
+			componentMesh->SetMesh(mesh);
+
+			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
+			R_Material* material = decoy->GetComponent<C_Material>()->GetMaterial();
+			cMaterial->SetMaterial(material);
+
+			rigidBody->FreezePositionY(true);
+			C_Collider* collider = goIt->CreateComponent<C_Collider>();
+			collider->SetColliderShape(ColliderShape::BOX);
+			collider->SetFilter("terrain");
+
+			C_Script* decoyScript = (C_Script*)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
+			decoyScript->s->path = "Assets/Scripts/Players/Zhib/Decoy.lua";
+			decoyScript->ReloadScript(decoyScript->s);
+			GameObject* target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
+			decoyScript->s->handler->lua["target"] = target;
+			decoyScript->s->handler->lua["SetDestination"]();
+		}
+	}
+	gameObjectListToCreate.clear();
+
 	for (GameObject *go : this->gameObjectList)
 	{
 		go->PreUpdate();
@@ -135,50 +219,6 @@ bool SceneIntro::PostUpdate(float dt)
 		go->PostUpdate(dt);
 	}
 
-	for (std::map<GameObject *, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
-	{
-		GameObject *knife = CreateEmptyGameObject((*mapIt).second.c_str());
-		GameObject *parent = (*mapIt).first;
-
-		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
-		{
-			knife->tag = Tag::TAG_PROJECTILE;
-			C_RigidBody *rigidBody = knife->CreateComponent<C_RigidBody>();
-
-			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
-			float3 pos = parent->GetTransform()->GetPosition();
-
-			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y + 15, pos.z - 15));
-			float3 parentRot = parent->GetTransform()->GetRotationEuler();
-			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
-			float3 rot = {parentRot.x - 55, parentRot.y, parentRot.z};
-			knife->GetTransform()->SetRotationEuler(rot);
-
-			C_Mesh *componentMesh = knife->CreateComponent<C_Mesh>();
-			R_Mesh *mesh = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
-			componentMesh->SetMesh(mesh);
-
-			C_Material *cMaterial = knife->CreateComponent<C_Material>();
-			//Importer::GetInstance()->textureImporter->Import(nullptr, &C_Material->texture);
-			R_Material *material = parent->GetComponent<C_Script>()->s->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
-			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-			cMaterial->SetMaterial(material);
-
-			rigidBody->FreezePositionY(true);
-			C_Collider *collider = knife->CreateComponent<C_Collider>();
-			collider->SetColliderShape(ColliderShape::BOX);
-			collider->SetFilter("projectile");
-			collider->SetIsTrigger(true);
-
-			C_Script *knifeScript = (C_Script *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			knifeScript->s->path = "Assets/Scripts/Knife.lua";
-			knifeScript->ReloadScript(knifeScript->s);
-			GameObject *target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
-			knifeScript->s->handler->lua["target"] = target;
-			knifeScript->s->handler->lua["SetDestination"]();
-		}
-	}
-	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)
 	{
 		DeleteGameObject(gameObject);

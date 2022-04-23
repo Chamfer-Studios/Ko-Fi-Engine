@@ -1,1078 +1,1078 @@
 {
-    "Level_1": {
+  "Level_1": {
+    "active": true,
+    "game_objects_amount": 25,
+    "game_objects_list": [
+      {
+        "UID": 1855757815,
         "active": true,
-        "game_objects_amount": 25,
-        "game_objects_list": [
-            {
-                "UID": 1855757815,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "logicalSize": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": "canvas"
-                    }
-                ],
-                "is3D": false,
-                "name": "Canvas",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 656183654,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 8,
-                        "pivot": [
-                            1.0,
-                            0.0
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            477.0,
-                            360.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/radar_menu_extended_v1.3.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "Radar",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 738051600,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.0,
-                            0.0
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            409.8999938964844,
-                            1000.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/character_abilities_v1.3.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "CharacterInfo",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 1400160254,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            100.0,
-                            45.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            90.0,
-                            100.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/HUD/character_main_focus_v1.3.png",
-                        "idleTexture": "Assets/HUD/character_main_normal_v1.3.png",
-                        "pressedTexture": "Assets/HUD/character_main_select_v1.3.png",
-                        "type": "button"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/UI_CharacterSelected.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "is3D": false,
-                "name": "Unit_1",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 1101703704,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            180.0,
-                            45.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            90.0,
-                            100.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/HUD/character_nebala_focus_v1.3.png",
-                        "idleTexture": "Assets/HUD/character_nebala_normal_v1.3.png",
-                        "pressedTexture": "Assets/HUD/character_nebala_select_v1.3.png",
-                        "type": "button"
-                    }
-                ],
-                "is3D": false,
-                "name": "Unit_2",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 40156285,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            260.0,
-                            45.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            90.0,
-                            100.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/HUD/character_none_focus_v1.3.png",
-                        "idleTexture": "Assets/HUD/character_none_normal_v1.3.png",
-                        "pressedTexture": "Assets/HUD/character_none_select_v1.3.png",
-                        "type": "button"
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/click_fx.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/hover_fx.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": "audio_switch"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/UI_SFX.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "is3D": false,
-                "name": "Unit_3",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 1025753550,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 0,
-                        "pivot": [
-                            0.0,
-                            1.0
-                        ],
-                        "position": [
-                            7.5,
-                            -100.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            140.0,
-                            140.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/ability_slot_v1.0.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "Skill_Slot_1",
-                "parent_UID": 738051600
-            },
-            {
-                "UID": 1566707212,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 0,
-                        "pivot": [
-                            0.0,
-                            1.0
-                        ],
-                        "position": [
-                            7.5,
-                            -275.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            140.0,
-                            140.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/ability_slot_v1.0.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "Skill_Slot_2",
-                "parent_UID": 738051600
-            },
-            {
-                "UID": 733408228,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 0,
-                        "pivot": [
-                            0.0,
-                            1.0
-                        ],
-                        "position": [
-                            7.5,
-                            -450.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            140.0,
-                            140.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/ability_slot_v1.0.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "Skill_Slot_3",
-                "parent_UID": 738051600
-            },
-            {
-                "UID": 2043050516,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 2,
-                        "pivot": [
-                            1.0,
-                            1.0
-                        ],
-                        "position": [
-                            -27.5,
-                            -5.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            153.0,
-                            75.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "type": "text",
-                        "value": "Q 1"
-                    }
-                ],
-                "is3D": false,
-                "name": "Counter",
-                "parent_UID": 1025753550
-            },
-            {
-                "UID": 337521856,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.0,
-                            0.0
-                        ],
-                        "position": [
-                            7.5,
-                            175.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            60.0,
-                            127.33000183105469
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/slider_segments_hp1_v1.0.png",
-                        "type": "image"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/UI_Lives_1.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "is3D": false,
-                "name": "HealthBarBase",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 1299219865,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.0,
-                            0.0
-                        ],
-                        "position": [
-                            60.0,
-                            57.5
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            60.0,
-                            127.33000183105469
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/slider_segments_hp2_v1.0.png",
-                        "type": "image"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/UI_Lives_2.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "is3D": false,
-                "name": "HealthBar_1",
-                "parent_UID": 337521856
-            },
-            {
-                "UID": 975009525,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.0,
-                            0.0
-                        ],
-                        "position": [
-                            60.0,
-                            57.5
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            60.0,
-                            127.33000183105469
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/slider_segments_hp2_v1.0.png",
-                        "type": "image"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/UI_Lives_3.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "is3D": false,
-                "name": "HealthBar_2",
-                "parent_UID": 1299219865
-            },
-            {
-                "UID": 1327542002,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 2,
-                        "pivot": [
-                            0.9700000286102295,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -350.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            362.0,
-                            110.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/principal_mission_banner_normal_extended_v1.0.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "Mission_Banner",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 930782199,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -321.0,
-                            -360.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            192.60000610351563,
-                            276.6000061035156
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/zhib_v1.0.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "Zhibb",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 1668428354,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.0
-                        ],
-                        "position": [
-                            0.0,
-                            10.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1000.0,
-                            200.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/dialog_window_v1.0.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "DialogWindow",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 1498331491,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.0
-                        ],
-                        "position": [
-                            -310.0,
-                            45.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            204.0,
-                            75.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "type": "text",
-                        "value": "Zhib"
-                    }
-                ],
-                "is3D": false,
-                "name": "Text",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 1318581886,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.0
-                        ],
-                        "position": [
-                            133.0,
-                            125.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            561.0,
-                            75.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "type": "text",
-                        "value": "sample text"
-                    }
-                ],
-                "is3D": false,
-                "name": "Text1",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 1721936553,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 2,
-                        "pivot": [
-                            1.0,
-                            1.0
-                        ],
-                        "position": [
-                            -27.0,
-                            -7.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            255.0,
-                            75.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "type": "text",
-                        "value": "E 100"
-                    }
-                ],
-                "is3D": false,
-                "name": "Counter1",
-                "parent_UID": 733408228
-            },
-            {
-                "UID": 1817646285,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            1.0,
-                            1.0
-                        ],
-                        "position": [
-                            -13.0,
-                            -6.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            51.0,
-                            75.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "type": "text",
-                        "value": "W"
-                    }
-                ],
-                "is3D": false,
-                "name": "Counter2",
-                "parent_UID": 1566707212
-            },
-            {
-                "UID": 1583141216,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 2,
-                        "pivot": [
-                            1.0,
-                            1.0
-                        ],
-                        "position": [
-                            0.0,
-                            -50.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            400.0,
-                            120.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/warning_banner_extended_v1.0.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "Worm_Timer",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 276416861,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.0,
-                            0.5
-                        ],
-                        "position": [
-                            75.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            204.0,
-                            75.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "type": "text",
-                        "value": "2:59"
-                    }
-                ],
-                "is3D": false,
-                "name": "Timer",
-                "parent_UID": 1583141216
-            },
-            {
-                "UID": 1247261016,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.0,
-                            0.0
-                        ],
-                        "position": [
-                            0.0,
-                            5.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            350.0,
-                            350.0
-                        ],
-                        "type": "transform2D"
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/HUD/hud_portrait_main_v1.0.png",
-                        "type": "image"
-                    }
-                ],
-                "is3D": false,
-                "name": "Character_Portrait",
-                "parent_UID": 1855757815
-            },
-            {
-                "UID": 127643080,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/GameState.lua",
-                        "script_number": 1,
-                        "type": "script"
-                    }
-                ],
-                "is3D": true,
-                "name": "GameState",
-                "parent_UID": 4294967295
-            },
-            {
-                "UID": 1797772735,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_frustum": true,
-                        "far_plane_distance": 100.0,
-                        "frustum_culling": false,
-                        "isMainCamera": true,
-                        "near_plane_distance": 0.10000000149011612,
-                        "type": "camera",
-                        "vertical_fov": 60.0
-                    }
-                ],
-                "is3D": true,
-                "name": "camera",
-                "parent_UID": 4294967295
-            }
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 4,
+            "logicalSize": [
+              1920.0,
+              1080.0
+            ],
+            "pivot": [
+              0.5,
+              0.5
+            ],
+            "position": [
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              200.0,
+              200.0
+            ],
+            "type": "canvas"
+          }
         ],
-        "name": "Level_1",
-        "navmesh": {}
-    }
+        "is3D": false,
+        "name": "Canvas",
+        "parent_UID": 4294967295
+      },
+      {
+        "UID": 656183654,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 8,
+            "pivot": [
+              1.0,
+              0.0
+            ],
+            "position": [
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              477.0,
+              360.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/radar_menu_extended_v1.3.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "Radar",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 738051600,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 6,
+            "pivot": [
+              0.0,
+              0.0
+            ],
+            "position": [
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              409.8999938964844,
+              1000.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/character_abilities_v1.3.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "CharacterInfo",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 1400160254,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 6,
+            "pivot": [
+              0.5,
+              0.5
+            ],
+            "position": [
+              100.0,
+              45.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              90.0,
+              100.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "hoverTexture": "Assets/HUD/character_main_focus_v1.3.png",
+            "idleTexture": "Assets/HUD/character_main_normal_v1.3.png",
+            "pressedTexture": "Assets/HUD/character_main_select_v1.3.png",
+            "type": "button"
+          },
+          {
+            "active": true,
+            "file_name": "Assets/Scripts/UI_CharacterSelected.lua",
+            "script_number": 1,
+            "type": "script"
+          }
+        ],
+        "is3D": false,
+        "name": "Unit_1",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 1101703704,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 6,
+            "pivot": [
+              0.5,
+              0.5
+            ],
+            "position": [
+              180.0,
+              45.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              90.0,
+              100.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "hoverTexture": "Assets/HUD/character_nebala_focus_v1.3.png",
+            "idleTexture": "Assets/HUD/character_nebala_normal_v1.3.png",
+            "pressedTexture": "Assets/HUD/character_nebala_select_v1.3.png",
+            "type": "button"
+          }
+        ],
+        "is3D": false,
+        "name": "Unit_2",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 40156285,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 6,
+            "pivot": [
+              0.5,
+              0.5
+            ],
+            "position": [
+              260.0,
+              45.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              90.0,
+              100.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "hoverTexture": "Assets/HUD/character_none_focus_v1.3.png",
+            "idleTexture": "Assets/HUD/character_none_normal_v1.3.png",
+            "pressedTexture": "Assets/HUD/character_none_select_v1.3.png",
+            "type": "button"
+          },
+          {
+            "active": true,
+            "fade_time": 2.0,
+            "offset_sync": false,
+            "total_tracks": 2,
+            "tracks": [
+              {
+                "bypass": false,
+                "loop": false,
+                "mute": false,
+                "offset": 0.0,
+                "pan": 0.0,
+                "play_on_start": false,
+                "track_path": "Assets/Audio/SFX/click_fx.wav",
+                "transpose": 0.0,
+                "volume": 100.0
+              },
+              {
+                "bypass": false,
+                "loop": false,
+                "mute": false,
+                "offset": 0.0,
+                "pan": 0.0,
+                "play_on_start": false,
+                "track_path": "Assets/Audio/SFX/hover_fx.wav",
+                "transpose": 0.0,
+                "volume": 100.0
+              }
+            ],
+            "type": "audio_switch"
+          },
+          {
+            "active": true,
+            "file_name": "Assets/Scripts/UI_SFX.lua",
+            "script_number": 1,
+            "type": "script"
+          }
+        ],
+        "is3D": false,
+        "name": "Unit_3",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 1025753550,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 0,
+            "pivot": [
+              0.0,
+              1.0
+            ],
+            "position": [
+              7.5,
+              -100.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              140.0,
+              140.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/ability_slot_v1.0.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "Skill_Slot_1",
+        "parent_UID": 738051600
+      },
+      {
+        "UID": 1566707212,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 0,
+            "pivot": [
+              0.0,
+              1.0
+            ],
+            "position": [
+              7.5,
+              -275.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              140.0,
+              140.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/ability_slot_v1.0.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "Skill_Slot_2",
+        "parent_UID": 738051600
+      },
+      {
+        "UID": 733408228,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 0,
+            "pivot": [
+              0.0,
+              1.0
+            ],
+            "position": [
+              7.5,
+              -450.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              140.0,
+              140.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/ability_slot_v1.0.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "Skill_Slot_3",
+        "parent_UID": 738051600
+      },
+      {
+        "UID": 2043050516,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 2,
+            "pivot": [
+              1.0,
+              1.0
+            ],
+            "position": [
+              -27.5,
+              -5.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              153.0,
+              75.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "type": "text",
+            "value": "Q 1"
+          }
+        ],
+        "is3D": false,
+        "name": "Counter",
+        "parent_UID": 1025753550
+      },
+      {
+        "UID": 337521856,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 6,
+            "pivot": [
+              0.0,
+              0.0
+            ],
+            "position": [
+              7.5,
+              175.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              60.0,
+              127.33000183105469
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/slider_segments_hp1_v1.0.png",
+            "type": "image"
+          },
+          {
+            "active": true,
+            "file_name": "Assets/Scripts/UI_Lives_1.lua",
+            "script_number": 1,
+            "type": "script"
+          }
+        ],
+        "is3D": false,
+        "name": "HealthBarBase",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 1299219865,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 6,
+            "pivot": [
+              0.0,
+              0.0
+            ],
+            "position": [
+              60.0,
+              57.5
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              60.0,
+              127.33000183105469
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/slider_segments_hp2_v1.0.png",
+            "type": "image"
+          },
+          {
+            "active": true,
+            "file_name": "Assets/Scripts/UI_Lives_2.lua",
+            "script_number": 1,
+            "type": "script"
+          }
+        ],
+        "is3D": false,
+        "name": "HealthBar_1",
+        "parent_UID": 337521856
+      },
+      {
+        "UID": 975009525,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 6,
+            "pivot": [
+              0.0,
+              0.0
+            ],
+            "position": [
+              60.0,
+              57.5
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              60.0,
+              127.33000183105469
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/slider_segments_hp2_v1.0.png",
+            "type": "image"
+          },
+          {
+            "active": true,
+            "file_name": "Assets/Scripts/UI_Lives_3.lua",
+            "script_number": 1,
+            "type": "script"
+          }
+        ],
+        "is3D": false,
+        "name": "HealthBar_2",
+        "parent_UID": 1299219865
+      },
+      {
+        "UID": 1327542002,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 2,
+            "pivot": [
+              0.9700000286102295,
+              0.5
+            ],
+            "position": [
+              0.0,
+              -350.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              362.0,
+              110.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/principal_mission_banner_normal_extended_v1.0.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "Mission_Banner",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 930782199,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 4,
+            "pivot": [
+              0.5,
+              0.5
+            ],
+            "position": [
+              -321.0,
+              -360.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              192.60000610351563,
+              276.6000061035156
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/zhib_v1.0.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "Zhibb",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 1668428354,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 7,
+            "pivot": [
+              0.5,
+              0.0
+            ],
+            "position": [
+              0.0,
+              10.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              1000.0,
+              200.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/dialog_window_v1.0.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "DialogWindow",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 1498331491,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 7,
+            "pivot": [
+              0.5,
+              0.0
+            ],
+            "position": [
+              -310.0,
+              45.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              204.0,
+              75.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "type": "text",
+            "value": "Zhib"
+          }
+        ],
+        "is3D": false,
+        "name": "Text",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 1318581886,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 7,
+            "pivot": [
+              0.5,
+              0.0
+            ],
+            "position": [
+              133.0,
+              125.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              561.0,
+              75.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "type": "text",
+            "value": "sample text"
+          }
+        ],
+        "is3D": false,
+        "name": "Text1",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 1721936553,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 2,
+            "pivot": [
+              1.0,
+              1.0
+            ],
+            "position": [
+              -27.0,
+              -7.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              255.0,
+              75.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "type": "text",
+            "value": "E 100"
+          }
+        ],
+        "is3D": false,
+        "name": "Counter1",
+        "parent_UID": 733408228
+      },
+      {
+        "UID": 1817646285,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 1,
+            "pivot": [
+              1.0,
+              1.0
+            ],
+            "position": [
+              -13.0,
+              -6.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              51.0,
+              75.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "type": "text",
+            "value": "W"
+          }
+        ],
+        "is3D": false,
+        "name": "Counter2",
+        "parent_UID": 1566707212
+      },
+      {
+        "UID": 1583141216,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 2,
+            "pivot": [
+              1.0,
+              1.0
+            ],
+            "position": [
+              0.0,
+              -50.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              400.0,
+              120.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/warning_banner_extended_v1.0.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "Worm_Timer",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 276416861,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 3,
+            "pivot": [
+              0.0,
+              0.5
+            ],
+            "position": [
+              75.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              204.0,
+              75.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "type": "text",
+            "value": "2:59"
+          }
+        ],
+        "is3D": false,
+        "name": "Timer",
+        "parent_UID": 1583141216
+      },
+      {
+        "UID": 1247261016,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "anchor": 6,
+            "pivot": [
+              0.0,
+              0.0
+            ],
+            "position": [
+              0.0,
+              5.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "size": [
+              350.0,
+              350.0
+            ],
+            "type": "transform2D"
+          },
+          {
+            "active": true,
+            "texture": "Assets/HUD/hud_portrait_main_v1.0.png",
+            "type": "image"
+          }
+        ],
+        "is3D": false,
+        "name": "Character_Portrait",
+        "parent_UID": 1855757815
+      },
+      {
+        "UID": 127643080,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "type": "transform"
+          },
+          {
+            "active": true,
+            "file_name": "Assets/Scripts/GameState.lua",
+            "script_number": 1,
+            "type": "script"
+          }
+        ],
+        "is3D": true,
+        "name": "GameState",
+        "parent_UID": 4294967295
+      },
+      {
+        "UID": 1797772735,
+        "active": true,
+        "components": [
+          {
+            "active": true,
+            "type": "info"
+          },
+          {
+            "active": true,
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "type": "transform"
+          },
+          {
+            "active": true,
+            "draw_frustum": true,
+            "far_plane_distance": 100.0,
+            "frustum_culling": false,
+            "isMainCamera": true,
+            "near_plane_distance": 0.10000000149011612,
+            "type": "camera",
+            "vertical_fov": 60.0
+          }
+        ],
+        "is3D": true,
+        "name": "camera",
+        "parent_UID": 4294967295
+      }
+    ],
+    "name": "Level_1",
+    "navmesh": {}
+  }
 }

@@ -1,6 +1,8 @@
 #ifndef __COLOR_H__
 #define __COLOR_H__
 
+#include "imgui.h"
+
 struct Color
 {
 	float r, g, b, a;
@@ -22,6 +24,11 @@ struct Color
 	float* operator & ()
 	{
 		return (float*)this;
+	}
+
+	ImVec4 ToImVec4()
+	{
+		return ImVec4(r, g, b, a);
 	}
 };
 

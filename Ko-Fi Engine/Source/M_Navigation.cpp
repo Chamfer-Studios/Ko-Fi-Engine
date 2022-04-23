@@ -22,6 +22,7 @@
 #include <lua.hpp>
 #include <sol.hpp>
 #include <vector>
+#include <queue>
 #include <tuple>
 
 #include "optick.h"
@@ -124,7 +125,8 @@ void M_Navigation::OnNotify(const Event& event)
 
 void M_Navigation::ComputeNavmesh()
 {
-	std::vector<GameObject*> walkableObjects = CollectWalkableObjects();
+	std::vector<GameObject*> walkableObjects;
+	CollectWalkableObjects(engine->GetSceneManager()->GetCurrentScene()->rootGo, walkableObjects, false);
 	std::vector<R_Mesh*> meshes;
 	std::vector<float4x4> transforms;
 
@@ -316,18 +318,19 @@ rcPolyMeshDetail* M_Navigation::ComputeNavmesh(R_Mesh* mesh)
 	return polyMeshDetail;
 }
 
-std::vector<GameObject*> M_Navigation::CollectWalkableObjects()
+void M_Navigation::CollectWalkableObjects(GameObject* go, std::vector<GameObject*>& res, bool force)
 {
-	std::vector<GameObject*> list = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
-	std::vector<GameObject*> res;
-
-	for (auto o : list) {
-		if (o->GetComponent<C_Walkable>() != nullptr) {
-			res.push_back(o);
+	if (force || go->GetComponent<C_Walkable>() != nullptr) {
+		res.push_back(go);
+		for (auto c : go->children) {
+			CollectWalkableObjects(c, res, true);
 		}
 	}
-
-	return res;
+	else {
+		for (auto c : go->children) {
+			CollectWalkableObjects(c, res, false);
+		}
+	}
 }
 
 std::tuple<std::vector<float3>> M_Navigation::FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength)

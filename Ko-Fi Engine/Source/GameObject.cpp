@@ -122,14 +122,11 @@ bool GameObject::PostUpdate(float dt)
 
 bool GameObject::CleanUp()
 {
-	for (Component* component : components)
+	for (std::vector<Component*>::iterator component = components.begin(); component != components.end();)
 	{
-		if (component->GetType() != ComponentType::MESH)
-		{
-			// This is the dirty patch
-			component->CleanUp();
-			RELEASE(component);
-		}
+		(*component)->CleanUp();
+		RELEASE(*component);
+		component = components.erase(component);
 	}
 
 	components.clear();
@@ -607,6 +604,12 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			textCmp->Save(jsonComponent);
 			break;
 		}
+		case ComponentType::ANIMATOR:
+		{
+			C_Animator* animatorCmp = (C_Animator*)component;
+			animatorCmp->Save(jsonComponent);
+			break;
+		}
 		default:
 			break;
 		}
@@ -793,6 +796,16 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);
 		}
+		else if (type == "animator")
+		{
+			C_Animator* animCmp = this->GetComponent<C_Animator>();
+			if (animCmp == nullptr)
+			{
+				animCmp = this->CreateComponent<C_Animator>();
+			}
+			animCmp->active = true;
+			animCmp->Load(jsonCmp);
+		}
 	}
 	Json jsonChd = jsonFile.at("children");
 	for (const auto& chdIt : jsonChd.items())
@@ -941,6 +954,16 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			}
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);
+		}
+		else if (type == "animator")
+		{
+			C_Animator* animCmp = this->GetComponent<C_Animator>();
+			if (animCmp == nullptr)
+			{
+				animCmp = this->CreateComponent<C_Animator>();
+			}
+			animCmp->active = true;
+			animCmp->Load(jsonCmp);
 		}
 	}
 	Json jsonChd = jsonFile.at("children");

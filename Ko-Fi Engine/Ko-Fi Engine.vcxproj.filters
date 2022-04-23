@@ -622,9 +622,6 @@
     <ClCompile Include="Source\P_World.cpp">
       <Filter>Source\Helpers\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\P_Actor.cpp">
-      <Filter>Source\Helpers\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\C_RigidBody2.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>

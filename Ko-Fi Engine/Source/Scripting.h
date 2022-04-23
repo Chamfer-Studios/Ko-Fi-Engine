@@ -7,6 +7,7 @@
 #include "M_Renderer3D.h"
 #include "M_Input.h" 
 #include "M_SceneManager.h"
+#include "M_Physics.h"
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
 #include "ImGuiAppLog.h"
@@ -72,7 +73,7 @@ public:
 	Scripting(C_Script* _script)
 	{
 		script = _script;
-		lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug, sol::lib::string);
+		lua.open_libraries(sol::lib::base, sol::lib::os, sol::lib::coroutine, sol::lib::math, sol::lib::table, sol::lib::package, sol::lib::debug, sol::lib::string);
 	}
 
 	~Scripting() {}
@@ -294,6 +295,14 @@ public:
 									 sol::constructors<void(KoFiEngine *)>(),
 									 "FindPath", &M_Navigation::FindPath);
 
+		lua.new_usertype<M_Camera3D>("M_Camera3D",
+			sol::constructors<void(KoFiEngine*)>(),
+			"WorldToScreen", &M_Camera3D::WorldToScreen);
+
+	/*	lua.new_usertype<M_Physics>("M_Physics",
+			sol::constructors<void(KoFiEngine*)>(),
+			"Raycast", &M_Physics::Raycast);*/
+
 		/// Variables
 		lua["gameObject"] = gameObject;
 		lua["componentTransform"] = componentTransform;
@@ -311,7 +320,9 @@ public:
 		lua.set_function("GetGameObjectHovered", &Scripting::LuaGetGameObjectHovered, this);
 		lua.set_function("GetLastMouseClick", &Scripting::LuaGetLastMouseClick, this);
 		lua.set_function("Log", &Scripting::LuaLog, this);
+		lua.set_function("GetCamera", &Scripting::GetCamera, this);
 		lua.set_function("GetNavigation", &Scripting::GetNavigation, this);
+		lua.set_function("GetPhysics", &Scripting::GetPhysics, this);
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
@@ -364,6 +375,10 @@ public:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_B);
 			}
+			case 12:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
+			}
 
 			case 21:
 			{
@@ -387,6 +402,16 @@ public:
 	M_Navigation *GetNavigation()
 	{
 		return gameObject->GetEngine()->GetNavigation();
+	}
+
+	M_Camera3D* GetCamera()
+	{
+		return gameObject->GetEngine()->GetCamera3D();
+	}
+
+	M_Physics* GetPhysics()
+	{
+		return gameObject->GetEngine()->GetPhysics();
 	}
 
 	void LuaCreateGameObject(std::string name)
@@ -595,9 +620,8 @@ public:
 		appLog->AddLog(log);
 	}
 
-	void LuaSetLuaVariableFromGameObject(std::string goName, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
+	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
 	{
-		GameObject *go = LuaFind(goName);
 		if (go == nullptr)
 			return;
 
