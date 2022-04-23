@@ -1,8 +1,4 @@
-------------------- Variables --------------------
-
-characterID = 1
-target = nil
-
+------------------- Player events --------------------
 Movement = {
 	IDLE = 1,
 	WALK = 2,
@@ -18,49 +14,64 @@ Action = {
 	AIM_ULTIMATE = 5,
 }
 
+------------------- Variables setter --------------------
+target = nil
 currentMovement = Movement.IDLE
 currentAction = Action.IDLE
-speed = 500.0  -- consider Start()
+
+-- Globals --
+characterID = 1
+speed = 500.0
+
+-- Primary ability --
 maxKnives = 2
 knifeCount = maxKnives
+
+-- Secondary ability --
 decoyCastRange = 50.0
 decoyCooldown = 10.0
 drawDecoy = false
+
+-- Ultimate ability --
 ultimateRange = 50.0
-ultimateRangeExtension = ultimateRange * 0.5
 ultimateCooldown = 30.0
 drawUltimate = false
+ultimateRangeExtension = ultimateRange * 0.5
 
+------------------- Inspector setter --------------------
+-- Globals --
+local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
+NewVariable(characterIDIV)
 
-local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
+local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
+-- Primary ability --
 local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
 NewVariable(maxKnivesIV)
 
+-- Secondary ability --
 local decoyCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 decoyCastRangeIV = InspectorVariable.new("decoyCastRange", decoyCastRangeIVT, decoyCastRange)
 NewVariable(decoyCastRangeIV)
-
-local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
-NewVariable(ultimateRangeIV)
-
-local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
-NewVariable(characterIDIV)
 
 local drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 drawDecoyIVT = InspectorVariable.new("drawDecoy", drawDecoyIVT, drawDecoy)
 NewVariable(drawDecoyIVT)
 
+-- Ultimate ability --
+local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
+NewVariable(ultimateRangeIV)
+
 local drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 drawUltimateIVT = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
 NewVariable(drawUltimateIVT)
 
-
+------------------- Animation setter --------------------
 componentAnimator = gameObject:GetComponentAnimator()
 if (componentAnimator ~= nil) then
 	componentAnimator:SetSelectedClip("Idle")
@@ -69,22 +80,25 @@ animationDuration = 0.8
 animationTimer = 0.0
 isAttacking = false -- This should go, just here for animations
 
+------------------- Audio setter --------------------
 componentSwitch = gameObject:GetAudioSwitch()
-componentRigidBody = gameObject:GetRigidBody()
 
+------------------- Physics setter --------------------
+componentRigidBody = gameObject:GetRigidBody()
+rigidBodyFlag = true
+
+------------------- Particles setter --------------------
 mouseParticles = Find("Mouse Particles")
 if (mouseParticles ~= nil) then
 	mouseParticles:GetComponentParticle():StopParticleSpawn()
 end
 
+------------------- Movement logic --------------------
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
 
-rigidBodyFlag = true
-
 -------------------- Methods ---------------------
-
 -- Called each loop iteration
 function Update(dt)
 	if (rigidBodyFlag == true) then -- Set Starting Position

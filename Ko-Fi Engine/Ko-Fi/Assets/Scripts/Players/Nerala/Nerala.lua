@@ -1,8 +1,4 @@
-------------------- Variables --------------------
-
-characterID = 2
-target = nil
-
+------------------- Player events --------------------
 Movement = {
 	IDLE = 1,
 	WALK = 2,
@@ -13,39 +9,61 @@ Movement = {
 Action = {
 	IDLE = 1,
 	ATTACK = 2,
-	AIM_DART = 3,
-	--
+	AIM_PRIMARY = 3,
+	AIM_SECONDARY = 4,
 	AIM_ULTIMATE = 5,
 }
 
+------------------- Variables setter --------------------
+target = nil
 currentMovement = Movement.IDLE
 currentAction = Action.IDLE
-speed = 500.0  -- consider Start()
+
+-- Globals --
+characterID = 2
+speed = 500.0
+
+-- Primary ability --
 dartCastRange = 50.0
 dartCooldown = 10.0
+drawDart = false
+
+-- Secondary ability --
+
+-- Ultimate ability --
 ultimateCooldown = 10.0
 
-local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT			-- IVT == Inspector Variable Type
+------------------- Inspector setter --------------------
+-- Globals --
+local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
+NewVariable(characterIDIV)
+
+local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
+-- Primary ability --
 local dartCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 dartCastRangeIV = InspectorVariable.new("dartCastRange", dartCastRangeIVT, dartCastRange)
 NewVariable(dartCastRangeIV)
+
+local drawDartIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawDartIVT = InspectorVariable.new("drawDart", drawDartIVT, drawDart)
+NewVariable(drawDartIVT)
 
 local dartCooldownIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 dartCooldownIV = InspectorVariable.new("dartCooldown", dartCooldownIVT, dartCooldown)
 NewVariable(dartCooldownIV)
 
+-- Secondary ability --
+
+-- Ultimate ability --
 local ultimateCooldownIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 ultimateCooldownIV = InspectorVariable.new("ultimateCooldown", ultimateCooldownIVT, ultimateCooldown)
 NewVariable(ultimateCooldownIV)
 
-local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
-NewVariable(characterIDIV)
-
-
+------------------- Animation setter --------------------
 componentAnimator = gameObject:GetComponentAnimator()
 if (componentAnimator ~= nil) then
 	componentAnimator:SetSelectedClip("Idle")
@@ -54,22 +72,25 @@ animationDuration = 0.8
 animationTimer = 0.0
 isAttacking = false -- This should go, just here for animations
 
+------------------- Audio setter --------------------
 componentSwitch = gameObject:GetAudioSwitch()
-componentRigidBody = gameObject:GetRigidBody()
 
+------------------- Physics setter --------------------
+componentRigidBody = gameObject:GetRigidBody()
+rigidBodyFlag = true
+
+------------------- Particles setter --------------------
 mouseParticles = Find("Mouse Particles")
 if (mouseParticles ~= nil) then
 	mouseParticles:GetComponentParticle():StopParticleSpawn()
 end
 
+------------------- Movement logic --------------------
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
 
-rigidBodyFlag = true
-
 -------------------- Methods ---------------------
-
 -- Called each loop iteration
 function Update(dt)
 	if (rigidBodyFlag == true) then -- Set Starting Position
