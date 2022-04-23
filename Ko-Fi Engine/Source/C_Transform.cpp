@@ -47,6 +47,18 @@ bool C_Transform::Update(float dt)
 	return true;
 }
 
+bool C_Transform::PostUpdate(float dt)
+{
+	glBegin(GL_LINES);
+	glColor3f(0, 0, 1.0f);
+	glLineWidth(4.f);
+	glVertex3f(GetPosition().x, GetPosition().y, GetPosition().z);
+	glVertex3f(GetPosition().x + Front().x * 50, GetPosition().y + Front().y * 50, GetPosition().z + Front().z * 50);
+	glEnd();
+
+	return true;
+}
+
 bool C_Transform::CleanUp()
 {
 	return true;
@@ -124,13 +136,17 @@ void C_Transform::SetRotationQuat(const Quat &newRotation)
 	isDirty = true;
 }
 
-void C_Transform::LookAt(const float3 &_front, float3 &_up)
+void C_Transform::LookAt(float3 &_front, float3 &_up)
 {
-	float angle = _front.AngleBetween(float3(0, 0, 1));
+	_front = _front.Normalized();
+	_up = _up.Normalized();
 
-	if (_front.x < 0) angle = -angle;
-	
-	SetRotationEuler(float3(GetRotationEuler().x, angle * RADTODEG, GetRotationEuler().z));
+	float3::Orthonormalize(_front, _up);
+	float3 right = _up.Cross(_up);
+
+	transformMatrixLocal = float4x4::LookAt(GetPosition(), GetPosition() + _front, Front(), Up(), float3(0, 1, 0));
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
+	isDirty = true;
 }
 
 void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
