@@ -625,6 +625,9 @@
     <ClCompile Include="Source\C_RigidBody2.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\C_Collider2.cpp">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1753,6 +1756,9 @@
       <Filter>Source\Helpers\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Source\C_RigidBody2.h">
+      <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_Collider2.h">
       <Filter>Source\GameObject\Components\Physics</Filter>
     </ClInclude>
   </ItemGroup>

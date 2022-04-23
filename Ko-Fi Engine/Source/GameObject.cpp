@@ -15,6 +15,7 @@
 #include "C_Script.h"
 #include "C_Animator.h"
 #include "C_Collider.h"
+#include "C_Collider2.h"
 #include "C_Canvas.h"
 #include "C_Transform2D.h"
 #include "C_Button.h"
@@ -276,6 +277,14 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 
 		c = this->CreateComponent<C_Collider>();
 		((C_Collider*)c)->SetColliderShape(ColliderShape::BOX);
+		break;
+	}
+	case ComponentType::COLLIDER2:
+	{
+		if (!this->GetComponent<C_RigidBody2>())
+			AddComponentByType(ComponentType::RIGID_BODY2);
+
+		c = this->CreateComponent<C_Collider2>();
 		break;
 	}
 	case ComponentType::SCRIPT:

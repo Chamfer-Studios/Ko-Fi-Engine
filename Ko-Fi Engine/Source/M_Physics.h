@@ -34,6 +34,10 @@ public:
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
+	//Getters and Setters
+	inline reactphysics3d::PhysicsWorld* GetWorld() { return this->world; }
+	inline reactphysics3d::PhysicsCommon& GetPhysicsCommon() { return this->physicsCommon; }
+
 private:
 	KoFiEngine* engine = nullptr;
 public:
@@ -41,7 +45,7 @@ public:
 
 	reactphysics3d::PhysicsCommon physicsCommon;
 	reactphysics3d::PhysicsWorld* world = nullptr;
-	reactphysics3d::RigidBody* body = nullptr;
+
 };
 
 #endif // !__M_PHYSICS_H__

@@ -107,6 +107,7 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 			{ ComponentType::PARTICLE, "PARTICLE" },
 			{ ComponentType::CAMERA, "CAMERA" },
 			{ ComponentType::COLLIDER, "COLLIDER" },
+			{ ComponentType::COLLIDER2, "COLLIDER2" },
 			{ ComponentType::SCRIPT, "SCRIPT" },
 			{ ComponentType::RIGID_BODY, "RIGID BODY" },
 			{ ComponentType::RIGID_BODY2, "RIGID BODY2" },

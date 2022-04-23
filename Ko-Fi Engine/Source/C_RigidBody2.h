@@ -1,7 +1,8 @@
 #ifndef __C_RIGIDBODY2_H__
 #define __C_RIGIDBODY2_H__
 #include "Component.h"
-//struct RigidBody;
+#include "reactphysics3d/reactphysics3d.h"
+
 class C_RigidBody2 : public Component
 {
 public:
@@ -19,8 +20,12 @@ public:
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
 
+	//Getter & Setters
+	inline reactphysics3d::RigidBody* GetBody() { return this->body; }
+
 private:
 	//RigidBody* rigidBody = nullptr;
+	reactphysics3d::RigidBody* body = nullptr;
 
 };
 
