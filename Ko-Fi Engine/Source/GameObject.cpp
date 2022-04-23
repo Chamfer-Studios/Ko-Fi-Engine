@@ -634,8 +634,7 @@ bool GameObject::LoadPrefabJson(const char* path, bool exists)
 		else
 			this->LoadPrefab(jsonFile);
 	}
-	else
-		ret = false;
+
 	return ret;
 }
 

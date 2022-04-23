@@ -1,4 +1,15 @@
+----------------------------------------------------------------------------------------------------------------------------------
+--																																--
+--		This script has several dependencies to work:																			--
+--		1. The game object has to have a rigidBody																				--
+--		2. There has to be a GameState.lua script somewhere in the scene in order to receive inputs								--
+--		3. The game object has to have a Pathfinder.lua script in order to move													--
+--		4. The animator, particles and audioSwitch components will be accessed if they exist but they are not a requirement		--
+--																																--
+----------------------------------------------------------------------------------------------------------------------------------
+
 ------------------- Player events --------------------
+
 Movement = {
 	IDLE = 1,
 	WALK = 2,
@@ -174,12 +185,14 @@ function Update(dt)
 		end
 		return
 	end
-		
+	
 	-- Actions
 	if (destination ~= nil)	then
-		MoveToDestination(dt)
+		--MoveToDestination(dt)
+		DispatchEvent("Pathfinder_FollowPath", { speed, dt, false })
 	end
-	
+	DispatchGlobalEvent("Player_Position", { componentTransform:GetPosition(), gameObject })
+
 	--Gather Inputs
 	if (IsSelected() == true) then 
 		-- Left Click
@@ -198,8 +211,6 @@ function Update(dt)
 					else
 						print("Out of range")
 					end
-				else
-					print("Out of ammo")
 				end
 			
 			-- Secondary ability (Decoy)
@@ -231,6 +242,7 @@ function Update(dt)
 			goHit = GetGameObjectHovered()
 			if (goHit ~= gameObject) then
 				destination = GetLastMouseClick()
+				DispatchEvent("Pathfinder_UpdatePath", { { destination }, true, componentTransform:GetPosition() })
 				if (currentMovement == Movement.WALK and isDoubleClicking == true) then
 					currentMovement = Movement.RUN
 				else
@@ -384,7 +396,7 @@ end
 -- Primary ability
 function FireKnife()
 
-	CreateGameObject("Knife") -- This should instance the prefab
+	InstantiatePrefab("Knife") -- This should instance the prefab
 	knifeCount = knifeCount - 1
 	if (componentSwitch ~= nil) then
 		componentSwitch:PlayTrack(0)
@@ -397,8 +409,8 @@ function FireKnife()
 end
 
 -- Secondary ability
-function PlaceDecoy() 
-	CreateGameObject("Decoy") -- This should instance the prefab
+function PlaceDecoy(mousePos) 
+	InstantiatePrefab("Decoy")
 	if (componentSwitch ~= nil) then
 		--componentSwitch:PlayTrack(0)
 	end

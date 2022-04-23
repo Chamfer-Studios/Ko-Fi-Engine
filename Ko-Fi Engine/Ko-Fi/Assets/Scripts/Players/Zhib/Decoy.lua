@@ -5,6 +5,7 @@ lifeTime = 10.0	-- secs --iv required
 lifeTimer = 0
 effectRadius = 250.0
 componentRigidBody = gameObject:GetRigidBody()
+effectFlag = true
 
 -------------------- Methods ---------------------
 
@@ -17,24 +18,10 @@ function Update(dt)
 
 		lifeTimer = lifeTimer + dt
 
-		-- Get all enemies in range
-		enemiesInRange = {}
-		enemies = GetObjectsByTag(Tag.ENEMY)
-		for i = 1, #enemies do
-			if (Distance3D(enemies[i]:GetTransform():GetPosition(), componentTransform:GetPosition()) <= effectRadius) then
-				enemiesInRange[#enemiesInRange + 1] = enemies[i]
-			end
+		if (effectFlag) then
+			DispatchGlobalEvent("Auditory_Trigger", { componentTransform:GetPosition(), effectRadius, "single", gameObject })
+			effectFlag = false
 		end
-
-		-- If there are none, return
-		if (#enemiesInRange <= 0) then
-			return
-		end
-
-		for i = 1, #enemiesInRange do
-			--SetLuaVariableFromGameObject(enemiesInRange[i], "target", componentTransform:GetPosition())
-		end
-
 	else
 		componentRigidBody:SetStatic()
 		DeleteGameObject()

@@ -160,7 +160,8 @@ function Update(dt)
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
 	end
-	
+	DispatchGlobalEvent("Player_Position", { componentTransform:GetPosition(), gameObject })
+
 	--Gather Inputs
 	if (IsSelected() == true) then 
 		-- Left Click
@@ -336,7 +337,7 @@ end
 -- Primary ability
 function FireDart()
 
-	CreateGameObject("Dart") -- This should instance the prefab
+	InstantiatePrefab("Dart") -- This should instance the prefab
 	dartTimer = 0.0
 	if (componentSwitch ~= nil) then
 		componentSwitch:PlayTrack(0)
@@ -351,7 +352,7 @@ end
 -- Ultimate ability
 function Ultimate()
 	
-	CreateGameObject("Mosquito") -- This should instance the prefab
+	InstantiatePrefab("Mosquito") -- This should instance the prefab
 	--if (componentSwitch ~= nil) then
 	--	componentSwitch:PlayTrack(0)
 	--end

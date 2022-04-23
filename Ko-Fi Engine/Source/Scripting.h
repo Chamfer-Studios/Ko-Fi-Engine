@@ -311,7 +311,7 @@ public:
 
 		/// Functions
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
-		lua.set_function("CreateGameObject", &Scripting::LuaCreateGameObject, this);
+		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
 		lua.set_function("Find", &Scripting::LuaFind, this);
 		lua.set_function("GetObjectsByTag", &Scripting::LuaGetObjectsByTag, this);
@@ -417,7 +417,7 @@ public:
 		return gameObject->GetEngine()->GetPhysics();
 	}
 
-	void LuaCreateGameObject(std::string name)
+	void LuaInstantiatePrefab(std::string name)
 	{
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.emplace(gameObject, name);
 	}
