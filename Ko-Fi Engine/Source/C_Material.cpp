@@ -87,12 +87,20 @@ void C_Material::Save(Json& json) const
 
 		texturePath = TEXTURES_DIR + texturePath + TEXTURE_EXTENSION;
 		texture->SetLibraryPath(texturePath.c_str());
-		json["texture_path"] = texture->GetLibraryPath();
+		json["library_path"] = texture->GetLibraryPath();
+		json["library_file"] = texture->GetLibraryFile();
+		json["asset_path"] = texture->GetAssetPath();
+		json["assset_file"] = texture->GetAssetFile();
 
 		Importer::GetInstance()->textureImporter->Save(texture, texture->GetLibraryPath());
 	}
 	else
-		json["texture_path"] = nullptr;
+	{
+		json["library_path"] = nullptr;
+		json["library_file"] = nullptr;
+		json["asset_path"] = nullptr;
+		json["assset_file"] = nullptr;
+	}
 
 	//Json jsonTex;
 	//json["textures"] = json::array();
@@ -190,10 +198,13 @@ void C_Material::Load(Json& json)
 		values.clear();
 		values.shrink_to_fit();
 
-		if (!json.at("texture_path").get<std::string>().empty())
+		if (!json.at("library_path").get<std::string>().empty())
 		{
-			std::string texturePath = json.at("texture_path").get<std::string>();
+			std::string texturePath = json.at("library_path").get<std::string>();
 			texture->SetLibraryPath(texturePath.c_str());
+			texture->SetLibraryFile(json.at("library_file").get<std::string>().c_str());
+			texture->SetAssetPath(json.at("asset_path").get<std::string>().c_str());
+			texture->SetAssetFile(json.at("asset_file").get<std::string>().c_str());
 
 			Importer::GetInstance()->textureImporter->Load(texturePath.c_str(), texture);
 		}

@@ -1,0 +1,24 @@
+{
+    "asset_file": "rock_cliff.fbx",
+    "asset_path": "Assets/Models/rock_cliff.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1302718802.milk",
+            "type": 4,
+            "uid": 1508210893
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1908850291.cacao",
+            "texture_name": "Assets/Textures/cliff_rock.png",
+            "type": 1,
+            "uid": 1508210893
+        }
+    ],
+    "library_file": "774201818.tea",
+    "library_path": "Library/Models/774201818.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 774201818
+}

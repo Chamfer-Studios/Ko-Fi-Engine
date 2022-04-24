@@ -1,0 +1,24 @@
+{
+    "asset_file": "proppis.fbx",
+    "asset_path": "Assets/Models/level1/proppis.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/5508388.milk",
+            "type": 4,
+            "uid": 1411242681
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1247391782.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 1411242681
+        }
+    ],
+    "library_file": "1301097962.tea",
+    "library_path": "Library/Models/1301097962.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 1301097962
+}

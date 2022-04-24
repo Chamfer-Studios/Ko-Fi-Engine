@@ -1,0 +1,3426 @@
+{
+    "asset_file": "Blockout Level 1 (GreyScale).fbx",
+    "asset_path": "Assets/Models/blockout/Blockout Level 1 (GreyScale).fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/819364742.milk",
+            "type": 4,
+            "uid": 1500676536
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1384587521.cacao",
+            "texture_name": "Assets/Textures/Grey (Light).png",
+            "type": 1,
+            "uid": 1500676536
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "Assets/Textures/Grey (Light).png",
+            "type": 4,
+            "uid": 121853005
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "Assets/Textures/Grey (Dark).png",
+            "type": 1,
+            "uid": 121853005
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "Assets/Textures/Grey (Dark).png",
+            "type": 4,
+            "uid": 1085449686
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1085449686
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 143051076
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 143051076
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1477291057
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1477291057
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1046373626
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1046373626
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 490458565
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 490458565
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1225766565
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1225766565
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 241373732
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 241373732
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 621057797
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 621057797
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1229136239
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1229136239
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 765729763
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 765729763
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1737776695
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1737776695
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 817577909
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 817577909
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1537538754
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1537538754
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1515723872
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1515723872
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1012762579
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1012762579
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1212930608
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1212930608
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2089892234
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2089892234
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1927688123
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1927688123
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 584292118
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 584292118
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1366305804
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1366305804
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 788236419
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 788236419
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1010611761
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1010611761
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1794685920
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1794685920
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 787402919
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 787402919
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 963566730
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 963566730
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1385144344
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1385144344
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 233721442
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 233721442
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 436920163
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 436920163
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1860292115
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1860292115
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 658587845
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 658587845
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 621009648
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 621009648
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 24438357
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 24438357
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 615804273
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 615804273
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 545761825
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 545761825
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1055851954
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1055851954
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1103652624
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1103652624
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 434445844
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 434445844
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1394420776
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1394420776
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1823099614
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1823099614
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1144754006
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1144754006
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1505544262
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1505544262
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 967738279
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 967738279
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1902264928
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1902264928
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 122558151
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 122558151
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 668501240
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 668501240
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1459232256
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1459232256
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 52522700
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 52522700
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1665729506
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1665729506
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1342031932
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1342031932
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 886624096
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 886624096
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 386238248
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 386238248
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1650319921
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1650319921
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 105654500
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 105654500
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 640453525
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 640453525
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 811901364
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 811901364
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1467790357
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1467790357
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1023102202
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1023102202
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1660801746
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1660801746
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1863836492
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1863836492
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 461039557
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 461039557
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1744409835
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1744409835
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 914433744
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 914433744
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1638975709
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1638975709
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 584252944
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 584252944
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 786456397
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 786456397
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1637751625
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1637751625
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1261646660
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1261646660
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 725986266
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 725986266
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 714709394
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 714709394
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1586618684
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1586618684
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1863048025
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1863048025
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1401753372
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1401753372
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1224657744
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1224657744
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 353558183
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 353558183
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 616696729
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 616696729
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 402415238
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 402415238
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 479626036
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 479626036
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 821025153
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 821025153
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1019944814
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1019944814
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 883623792
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 883623792
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1955470870
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1955470870
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2111638705
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2111638705
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1962774479
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1962774479
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1642576555
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1642576555
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 23165611
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 23165611
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 52784534
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 52784534
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 567521597
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 567521597
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2016967231
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2016967231
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1467395768
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1467395768
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1468708844
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1468708844
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 544576219
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 544576219
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 117155214
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 117155214
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 320262588
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 320262588
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1826415994
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1826415994
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 106212110
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 106212110
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 807113689
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 807113689
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1005034467
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1005034467
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 44956806
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 44956806
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1054116847
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1054116847
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 562852409
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 562852409
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1213460180
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1213460180
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 304518800
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 304518800
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 944811616
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 944811616
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1305409926
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1305409926
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 289033359
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 289033359
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 869714549
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 869714549
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2095188764
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2095188764
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1310215969
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1310215969
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2030587777
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2030587777
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 555656860
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 555656860
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 615833002
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 615833002
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 398419887
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 398419887
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/430942518.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1492168175
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/155013441.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1492168175
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1719088050
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "Assets/Textures/Grey.png",
+            "type": 1,
+            "uid": 1719088050
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "Assets/Textures/Grey.png",
+            "type": 4,
+            "uid": 2018001124
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2018001124
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 433616323
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 433616323
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1624397704
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1624397704
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1408731870
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1408731870
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1743362780
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1743362780
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1031861587
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1031861587
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1612589083
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1612589083
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1766966030
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1766966030
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1488739882
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1488739882
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1408585914
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1408585914
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 171694692
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 171694692
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 662172530
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 662172530
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1082260981
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1082260981
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1480519559
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1480519559
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 332128433
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 332128433
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1157206644
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1157206644
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 887261072
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 887261072
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1783471404
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1783471404
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1705631991
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1705631991
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 549100899
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 549100899
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1597289032
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1597289032
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1714004271
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1714004271
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1467538442
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1467538442
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 664397163
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 664397163
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1344612490
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1344612490
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 159026266
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 159026266
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1289464901
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1289464901
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 429493333
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 429493333
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 193035965
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 193035965
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 404256339
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 404256339
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1957383584
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1957383584
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2132713985
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2132713985
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 366028811
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 366028811
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1250895329
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1250895329
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1866275831.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1679363518
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/639051963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1679363518
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1367809410
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 1367809410
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 2018893221
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2018893221
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 265275797
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 265275797
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 406898737
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 406898737
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1240181100
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1240181100
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 920851818
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 920851818
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1795107087
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1795107087
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 44699568
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 44699568
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 324819225
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 324819225
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1236460815
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1236460815
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1756411120
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1756411120
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1084758046
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1084758046
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1382506517
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1382506517
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1269161517
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1269161517
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/841901170.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2079319242
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/582695352.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 2079319242
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 1867009762
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 1867009762
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 1229934316
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1229934316
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 494073758
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 494073758
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1663531719
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1663531719
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 801242142
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 801242142
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 243953710
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 243953710
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2000563434
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2000563434
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1879945035
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1879945035
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 967448026
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 967448026
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1021913638
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1021913638
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 516166088
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 516166088
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 7863750
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 7863750
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2021292412
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2021292412
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1943111589
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1943111589
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 639595004
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 639595004
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1170352939
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1170352939
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1317431645
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1317431645
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1881993175
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1881993175
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1827082264
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1827082264
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1395439193
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1395439193
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1859349220
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1859349220
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1585288107
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1585288107
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1568743529
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1568743529
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 769913383
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 769913383
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 947808723
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 947808723
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1661082614
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1661082614
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2090794697
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2090794697
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 333555236
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 333555236
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/841901170.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1708410545
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/582695352.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1708410545
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 721280703
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 721280703
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1673705762
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1673705762
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 458686335
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 458686335
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1119498145
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1119498145
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1956352474
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1956352474
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1212765026
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1212765026
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1299326047
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1299326047
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1925055606
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1925055606
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1989419703
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1989419703
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1283845651
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1283845651
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 53712837
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 53712837
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 772395350
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 772395350
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1946141470
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1946141470
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1129542699
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1129542699
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1188577586
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1188577586
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 972745055
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 972745055
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 439182363
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 439182363
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 443128437
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 443128437
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 294839575
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 294839575
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1377353049
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1377353049
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1109334938
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1109334938
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/824336371.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 905837790
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1769502963.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 905837790
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/137795548.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 180516141
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/654396159.cacao",
+            "texture_name": "Assets/Textures/Blue.png",
+            "type": 1,
+            "uid": 180516141
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1118193988.milk",
+            "texture_name": "Assets/Textures/Blue.png",
+            "type": 4,
+            "uid": 849414634
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1353951151.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 849414634
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/722740311.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 1785882353
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/213859274.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 1785882353
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1599421078.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 592390503
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1972807194.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 592390503
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1599421078.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 50558648
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1972807194.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 50558648
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1476491202.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 217934975
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1194243493.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 217934975
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1476491202.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 301865254
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1194243493.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 301865254
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1476491202.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 885879192
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1194243493.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 885879192
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1476491202.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 64884392
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1194243493.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 64884392
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1158145791
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1158145791
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1847104949
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1847104949
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/41384163.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1677904675
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1431241596.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1677904675
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/841901170.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 733432316
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/582695352.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 733432316
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/841901170.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1572597517
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/582695352.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1572597517
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/841901170.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 652956056
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/582695352.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 652956056
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/2080436918.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1519735080
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/769128869.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 1519735080
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/2080436918.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 16250704
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/769128869.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 16250704
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/572292127.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1813864862
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1286071076.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 1813864862
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/572292127.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 371204178
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1286071076.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 371204178
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/572292127.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 787868540
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1286071076.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 787868540
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/435301867.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1168311666
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/862055943.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 1168311666
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/435301867.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 1471324894
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/862055943.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1471324894
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1340390792.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 140483274
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/445449447.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 140483274
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1340390792.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 824603260
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/445449447.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 824603260
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/573710783.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 1023229209
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1270072690.cacao",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 1,
+            "uid": 1023229209
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/573710783.milk",
+            "texture_name": "Assets/Textures/Grey 2.png",
+            "type": 4,
+            "uid": 1091585265
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1270072690.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 1091585265
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/573710783.milk",
+            "texture_name": "",
+            "type": 4,
+            "uid": 2106434529
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1270072690.cacao",
+            "texture_name": "",
+            "type": 1,
+            "uid": 2106434529
+        }
+    ],
+    "library_file": "342358550.tea",
+    "library_path": "Library/Models/342358550.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 342358550
+}

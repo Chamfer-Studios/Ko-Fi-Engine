@@ -1,0 +1,24 @@
+{
+    "asset_file": "dinning_table_l_v2_texturized.fbx",
+    "asset_path": "Assets/Models/dinning_table_l_v2_texturized.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/369876191.milk",
+            "type": 4,
+            "uid": 1359478769
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/673882434.cacao",
+            "texture_name": "Assets/Textures/dinning_table_texture_v2.png",
+            "type": 1,
+            "uid": 1359478769
+        }
+    ],
+    "library_file": "1719067457.tea",
+    "library_path": "Library/Models/1719067457.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 1719067457
+}

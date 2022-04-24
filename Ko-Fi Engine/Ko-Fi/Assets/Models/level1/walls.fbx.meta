@@ -1,0 +1,24 @@
+{
+    "asset_file": "walls.fbx",
+    "asset_path": "Assets/Models/level1/walls.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/735457056.milk",
+            "type": 4,
+            "uid": 565590524
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/803100355.cacao",
+            "texture_name": "Assets/Textures/Grey (Dark).png",
+            "type": 1,
+            "uid": 565590524
+        }
+    ],
+    "library_file": "1811515331.tea",
+    "library_path": "Library/Models/1811515331.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 1811515331
+}

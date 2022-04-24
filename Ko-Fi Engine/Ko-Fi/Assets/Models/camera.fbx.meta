@@ -1,0 +1,17 @@
+{
+    "asset_file": "camera.fbx",
+    "asset_path": "Assets/Models/camera.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/90185266.milk",
+            "type": 4,
+            "uid": 464343533
+        }
+    ],
+    "library_file": "1997622998.tea",
+    "library_path": "Library/Models/1997622998.tea",
+    "mod_time": 406071628,
+    "type": 3,
+    "uid": 1997622998
+}

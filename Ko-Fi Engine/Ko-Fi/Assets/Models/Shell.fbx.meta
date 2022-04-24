@@ -1,0 +1,17 @@
+{
+    "asset_file": "Shell.fbx",
+    "asset_path": "Assets/Models/Shell.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/587724307.milk",
+            "type": 4,
+            "uid": 407926717
+        }
+    ],
+    "library_file": "1969254865.tea",
+    "library_path": "Library/Models/1969254865.tea",
+    "mod_time": 406509993,
+    "type": 3,
+    "uid": 1969254865
+}

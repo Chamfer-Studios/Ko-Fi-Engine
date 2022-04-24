@@ -1,0 +1,24 @@
+{
+    "asset_file": "main_character_final_v2.fbx",
+    "asset_path": "Assets/Models/Characters/main_character_final_v2.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/905372718.milk",
+            "type": 4,
+            "uid": 160896576
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/13993134.cacao",
+            "texture_name": "Assets/Textures/mc_base_color_ao.png",
+            "type": 1,
+            "uid": 160896576
+        }
+    ],
+    "library_file": "1934752098.tea",
+    "library_path": "Library/Models/1934752098.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 1934752098
+}

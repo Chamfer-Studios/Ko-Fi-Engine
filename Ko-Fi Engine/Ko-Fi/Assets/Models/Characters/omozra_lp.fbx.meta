@@ -1,0 +1,17 @@
+{
+    "asset_file": "omozra_lp.fbx",
+    "asset_path": "Assets/Models/Characters/omozra_lp.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/893203674.milk",
+            "type": 4,
+            "uid": 943547712
+        }
+    ],
+    "library_file": "592478344.tea",
+    "library_path": "Library/Models/592478344.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 592478344
+}

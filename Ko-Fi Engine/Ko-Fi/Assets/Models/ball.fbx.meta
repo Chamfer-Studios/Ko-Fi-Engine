@@ -1,0 +1,17 @@
+{
+    "asset_file": "ball.fbx",
+    "asset_path": "Assets/Models/ball.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1416335786.milk",
+            "type": 4,
+            "uid": 945483631
+        }
+    ],
+    "library_file": "1205074228.tea",
+    "library_path": "Library/Models/1205074228.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 1205074228
+}

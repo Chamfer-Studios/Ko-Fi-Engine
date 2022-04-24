@@ -1,0 +1,17 @@
+{
+    "asset_file": "karambit_low.fbx",
+    "asset_path": "Assets/Models/karambit_low.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1023972853.milk",
+            "type": 4,
+            "uid": 2020461570
+        }
+    ],
+    "library_file": "1106740667.tea",
+    "library_path": "Library/Models/1106740667.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 1106740667
+}

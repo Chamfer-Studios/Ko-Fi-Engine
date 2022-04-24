@@ -794,7 +794,11 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 bool I_Scene::Save(const R_Model* model, const char* path)
 {
 	bool ret = true;
-
+	if (path == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: couldn't save model in library, path was nullptr.");
+		return false;
+	}
 	if (model == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Importer: couldn't save model in library, model was nullptr.");
@@ -803,10 +807,10 @@ bool I_Scene::Save(const R_Model* model, const char* path)
 
 	Json jsonModel;
 
-	jsonModel["model_nodes"].array();
-	Json jsonNode;
+	jsonModel["model_nodes"] = Json::array();
 	for (const auto& node : model->nodes)
 	{
+		Json jsonNode;
 		jsonNode["asset_file"] = node.filename.c_str();
 		jsonNode["uid"] = node.uid;
 		jsonNode["parent_uid"] = node.parentUid;
@@ -831,15 +835,15 @@ bool I_Scene::Save(const R_Model* model, const char* path)
 	}
 
 	jsonModel["model_animations"].array();
-	Json jsonAnim;
 	for (const auto& anim : model->animations)
 	{
+		Json jsonAnim;
 		jsonAnim["name"] = anim.second;
 		jsonAnim["uid"] = anim.first;
 
 		jsonModel["model_animations"].push_back(jsonAnim);
 	}
-	
+
 	JsonHandler jsonHandler;
 	ret = jsonHandler.SaveJson(jsonModel, path);
 

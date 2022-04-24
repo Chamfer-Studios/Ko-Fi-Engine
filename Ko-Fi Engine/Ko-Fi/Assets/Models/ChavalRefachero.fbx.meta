@@ -1,0 +1,24 @@
+{
+    "asset_file": "ChavalRefachero.fbx",
+    "asset_path": "Assets/Models/ChavalRefachero.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/326128272.milk",
+            "type": 4,
+            "uid": 586410704
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/31825181.cacao",
+            "texture_name": "Assets/Textures/Vampire_diffuse.png",
+            "type": 1,
+            "uid": 586410704
+        }
+    ],
+    "library_file": "26534778.tea",
+    "library_path": "Library/Models/26534778.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 26534778
+}

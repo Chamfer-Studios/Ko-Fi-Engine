@@ -1,0 +1,31 @@
+{
+    "asset_file": "nerala_test.fbx",
+    "asset_path": "Assets/Models/Characters/nerala_test.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1582999293.milk",
+            "type": 4,
+            "uid": 324172381
+        },
+        {
+            "asset_file": ".cacao",
+            "library_path": "Library/Textures/1133013913.cacao",
+            "texture_name": "Assets/Textures/assassin_Base_color.png",
+            "type": 1,
+            "uid": 324172381
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/536578580.milk",
+            "texture_name": "Assets/Textures/assassin_Base_color.png",
+            "type": 4,
+            "uid": 192315369
+        }
+    ],
+    "library_file": "1221841613.tea",
+    "library_path": "Library/Models/1221841613.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 1221841613
+}

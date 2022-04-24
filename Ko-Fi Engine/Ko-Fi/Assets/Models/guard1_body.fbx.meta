@@ -1,0 +1,17 @@
+{
+    "asset_file": "guard1_body.fbx",
+    "asset_path": "Assets/Models/guard1_body.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/1944546922.milk",
+            "type": 4,
+            "uid": 1330965907
+        }
+    ],
+    "library_file": "1783409910.tea",
+    "library_path": "Library/Models/1783409910.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 1783409910
+}

@@ -1,0 +1,23 @@
+{
+    "asset_file": "navmesh_test3.fbx",
+    "asset_path": "Assets/Models/navmesh/navmesh_test3.fbx",
+    "contained_resources": [
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/130843298.milk",
+            "type": 4,
+            "uid": 1797027746
+        },
+        {
+            "asset_file": ".milk",
+            "library_path": "Library/Shaders/386602943.milk",
+            "type": 4,
+            "uid": 1963103131
+        }
+    ],
+    "library_file": "675437220.tea",
+    "library_path": "Library/Models/675437220.tea",
+    "mod_time": 408833323,
+    "type": 3,
+    "uid": 675437220
+}
