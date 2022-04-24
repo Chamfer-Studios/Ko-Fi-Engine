@@ -26,6 +26,9 @@ speed = 500.0
 -- Primary ability --
 
 -- Secondary ability --
+ñamCastRange = 30.0
+ñamCooldown = 10.0
+drawÑam = false;
 
 -- Ultimate ability --
 
@@ -37,13 +40,24 @@ local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
 
+-- Primary ability --
+
+-- Secondary ability --
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
--- Primary ability --
+local ñamCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+ñamCastRangeIV = InspectorVariable.new("ñamCastRange", ñamCastRangeIVT, ñamCastRange)
+NewVariable(ñamCastRangeIV)
 
--- Secondary ability --
+local ñamCooldownIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+ñamCooldownIV = InspectorVariable.new("ñamCooldown", ñamCooldownIVT, ñamCooldown)
+NewVariable(ñamCooldownIV)
+
+local drawÑamIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawÑamIV = InspectorVariable.new("drawÑam", drawÑamIVT, drawÑam)
+NewVariable(drawÑamIV)
 
 -- Ultimate ability --
 
@@ -73,11 +87,13 @@ mouseParticles = Find("Mouse Particles")
 if (mouseParticles ~= nil) then
 	mouseParticles:GetComponentParticle():StopParticleSpawn()
 end
+-------------------------------------------------------
 
 ------------------- Movement logic --------------------
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
+-------------------------------------------------------
 
 -------------------- Methods ---------------------
 function Update(dt)
@@ -116,12 +132,20 @@ function Update(dt)
 
 	-- Actions
 	if (destination ~= nil)	then
-		MoveToDestination(dt)
+		--MoveToDestination(dt)
+		DispatchEvent("Pathfinder_FollowPath", { speed, dt, false })
+		DispatchGlobalEvent("Player_Position", { componentTransform:GetPosition(), gameObject })
 	end
 
 	-- Primary ability cooldown
 
 	-- Secondary ability cooldown
+	if (ñamTimer ~= nil) then
+		ñamTimer = ñamTimer + dt
+		if (ñamTimer >= ñamCooldown) then
+			ñamTimer = nil
+		end
+	end
 
 	-- Ultimate ability cooldown
 
@@ -134,7 +158,20 @@ function Update(dt)
 
 			-- Secondary ability (Ñam Ñam)
 			elseif (currentAction == Action.AIM_SECONDARY) then
-
+				if (ñamTimer == nil) then
+					target = GetGameObjectHovered()
+					if (target.tag == Tag.ENEMY) then
+						if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= ñamCastRange) then
+							ÑamÑam()
+						else
+							print("Out of range (Ñam Ñam - Omozra)")
+						end
+					else
+						print("You have to select an enemy first!!! (Ñam Ñam - Omozra)")
+					end
+				else
+					print("Ability in cooldown!!! (Ñam Ñam - Omozra")
+				end
 			-- Ultimate ability (Let's go Sadiq)
 			elseif (currentAction == Action.AIM_ULTIMATE) then
 				
@@ -198,11 +235,11 @@ function Update(dt)
 	end
 
 	-- Draw primary ability range
-	if (drawDart == true) then
-
-	end
 
 	-- Draw secondary ability range
+	if (drawÑam == true) then
+
+	end
 
 	-- Draw ultimate ability range
 
@@ -300,6 +337,14 @@ function StopMovement()
 	--	componentAnimator:SetSelectedClip("Idle")
 	--end
 end
+
+-- Secondary ability
+function ÑamÑam()
+	-- InstantiatePrefab("Dart") -- This should instance the prefab
+	ñamTimer = 0.0
+	print("Ñam Ñam done")
+end
+
 --------------------------------------------------
 
 ----------------- Collisions -----------------

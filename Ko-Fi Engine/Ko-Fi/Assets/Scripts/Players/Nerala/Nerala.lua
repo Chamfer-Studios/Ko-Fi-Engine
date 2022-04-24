@@ -169,15 +169,14 @@ function Update(dt)
 			-- Primary ability (Dart)
 			if (currentAction == Action.AIM_PRIMARY and dartTimer == nil) then
 				target = GetGameObjectHovered()
-				local mousePos = GetLastMouseClick()
-				if (Distance3D(mousePos, componentTransform:GetPosition()) <= dartCastRange) then
+				if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= dartCastRange) then
 					if (target.tag == Tag.ENEMY) then
 						FireDart()
 					else
-						print("You have to select an enemy first!")
+						print("You have to select an enemy first! (Dart - Nerala)")
 					end
 				else
-					print("Out of range")
+					print("Out of range (Dart - Nerala)")
 				end
 
 			-- Secondary ability (Smoke bomb)

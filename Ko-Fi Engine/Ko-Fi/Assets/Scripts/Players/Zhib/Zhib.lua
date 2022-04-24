@@ -228,9 +228,9 @@ function Update(dt)
 					if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= ultimateRange) then
 						mousePos = GetLastMouseClick()
 						Ultimate(mousePos)
+					else
+						print("Out of range")
 					end
-				else
-					print("Out of range")
 				end
 			end
 		end
