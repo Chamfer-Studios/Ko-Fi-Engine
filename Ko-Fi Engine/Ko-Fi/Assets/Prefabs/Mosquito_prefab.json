@@ -9,9 +9,9 @@
         {
             "active": true,
             "position": [
-                0.0,
-                10.0,
-                -23.5
+                -29.895999908447266,
+                10.000000953674316,
+                0.0
             ],
             "rotation": [
                 0.0,
@@ -78,9 +78,9 @@
         {
             "active": true,
             "box_collider_size": [
-                5.0,
-                5.0,
-                5.0
+                4.999990463256836,
+                4.999998092651367,
+                4.999993324279785
             ],
             "collider_type": 1,
             "draw_collider": false,
@@ -102,5 +102,6 @@
         }
     ],
     "isPrefab": true,
-    "name": "Mosquito"
+    "name": "Mosquito",
+    "tag": 1
 }

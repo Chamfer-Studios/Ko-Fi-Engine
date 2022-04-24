@@ -8,13 +8,20 @@ destination = nil
 target = nil
 attackRange = 20.0 -- Maybe too big
 
-componentRigidBody = gameObject:GetRigidBody()
 componentAnimator = gameObject:GetComponentAnimator()
 if (componentAnimator ~= nil) then
 	componentAnimator:SetSelectedClip("Idle")
 end
 
 -------------------- Methods ---------------------
+
+function Start()
+	componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
+	local nerala = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+	if (componentRigidBody ~= nil) then		
+		componentRigidBody:SetRigidBodyPos(float3.new(nerala:GetTransform():GetPosition().x + 10, nerala:GetTransform():GetPosition().y, nerala:GetTransform():GetPosition().z))
+	end
+end
 
 -- Called each loop iteration
 function Update(dt)

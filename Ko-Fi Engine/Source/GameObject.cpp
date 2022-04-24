@@ -497,6 +497,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 	jsonFile["name"] = this->name;
 	jsonFile["active"] = this->active;
 	jsonFile["isPrefab"] = this->isPrefab;
+	jsonFile["tag"] = (uint)this->tag;
 
 	std::vector<Component*> componentsList = this->GetComponents();
 	jsonFile["components"] = Json::array();
@@ -643,6 +644,8 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 	this->name = jsonFile.at("name");
 	this->isPrefab = jsonFile.at("isPrefab");
 	this->active = jsonFile.at("active");
+	if (jsonFile.contains("tag"))
+		this->tag = (Tag)jsonFile["tag"];
 	Json jsonCmp = jsonFile.at("components");
 	for (const auto& cmpIt : jsonCmp.items())
 	{
