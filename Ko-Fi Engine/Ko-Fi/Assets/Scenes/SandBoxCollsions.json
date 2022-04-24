@@ -153,14 +153,6 @@
                         "texture_path": "",
                         "type": "material",
                         "uniforms": null
-                    },
-                    {
-                        "active": true,
-                        "type": "NONE"
-                    },
-                    {
-                        "active": true,
-                        "type": "NONE"
                     }
                 ],
                 "is3D": true,
@@ -220,11 +212,16 @@
                     },
                     {
                         "active": true,
-                        "type": "NONE"
-                    },
-                    {
-                        "active": true,
-                        "type": "NONE"
+                        "body_type": "Kinematic",
+                        "freeze_position_x": true,
+                        "freeze_position_y": false,
+                        "freeze_position_z": true,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": true,
+                        "freeze_rotation_z": false,
+                        "mass": 1.0299999713897705,
+                        "type": "rigidBody",
+                        "use_gravity": false
                     }
                 ],
                 "is3D": true,

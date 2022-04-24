@@ -8,7 +8,7 @@
 
 C_RigidBody2::C_RigidBody2(GameObject* parent) : Component(parent)
 {
-
+	type = ComponentType::RIGID_BODY2;
 }
 
 C_RigidBody2::~C_RigidBody2()
@@ -29,6 +29,8 @@ bool C_RigidBody2::Start()
 
 bool C_RigidBody2::Update(float dt)
 {
+	if (hasUpdated)
+		UpdateRB();
 
 	if (owner->GetEngine()->GetSceneManager()->GetGameState() != GameState::PLAYING || body->getType() == reactphysics3d::BodyType::STATIC)
 	{
@@ -64,103 +66,130 @@ bool C_RigidBody2::CleanUp()
 
 bool C_RigidBody2::InspectorDraw(PanelChooser* chooser)
 {
-	if (ImGui::CollapsingHeader("RigidBody2"))
+	if (ImGui::CollapsingHeader("Rigid Body", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		if (ImGui::BeginCombo("Set Type##", bodyType.c_str()))
+		DrawDeleteButton(owner, this);
+
+		std::string newBodyType = GetBodyType();
+		if (ImGui::BeginCombo("Set Type##", newBodyType.c_str()))
 		{
 			if (ImGui::Selectable("Static"))
 			{
-				body->setType(reactphysics3d::BodyType::STATIC);
-				bodyType = "Static";
+				newBodyType = "Static";
+				SetBodyType(newBodyType);
 			}
 			if (ImGui::Selectable("Dynamic"))
 			{
-				body->setType(reactphysics3d::BodyType::DYNAMIC);
-				bodyType = "Dynamic";
-
+				newBodyType = "Dynamic";
+				SetBodyType(newBodyType);
 			}
 			if (ImGui::Selectable("Kinematic"))
 			{
-				body->setType(reactphysics3d::BodyType::KINEMATIC);
-				bodyType = "Kinematic";
-
+				newBodyType = "Kinematic";
+				SetBodyType(newBodyType);
 			}
 			ImGui::EndCombo();
 		}
 
-		bool useGravity = body->isGravityEnabled();
-		if (ImGui::Checkbox("Use Gravity##", &useGravity))
+		bool newUseGravity = GetUseGravity();
+		if (ImGui::Checkbox("Use Gravity##", &newUseGravity))
 		{
-			body->enableGravity(useGravity);
+			SetUseGravity(newUseGravity);
 		}
+
 		ImGui::Text("Mass");
 		ImGui::SameLine();
-		float newMass = body->getMass();
-		if (ImGui::DragFloat("##mass", &newMass, 0.1f, 0.01f, 20.0f))
-		{
-			body->setMass(newMass);
-		}
+		float newMass = GetMass();
+		if (ImGui::DragFloat("##mass", &newMass, 0.01f, 0.01f, 20.0f))
+			SetMass(newMass);
 
 		if (ImGui::TreeNodeEx("Constraints"))
 		{
+			bool newFreezePositionX = GetFreezePositionX();
+			bool newFreezePositionY = GetFreezePositionY();
+			bool newFreezePositionZ = GetFreezePositionZ();
 			ImGui::Text("Freeze position: ");
-
-			bool freezePositionX = !body->getLinearLockAxisFactor().x;
-			bool freezePositionY = !body->getLinearLockAxisFactor().y;
-			bool freezePositionZ = !body->getLinearLockAxisFactor().z;
+			if (ImGui::Checkbox("X##FreezePosX", &newFreezePositionX))
+				FreezePositionX(newFreezePositionX);
 			ImGui::SameLine();
-			if (ImGui::Checkbox("X##FreezePosX", &freezePositionX))
-			{
-				body->setLinearLockAxisFactor(reactphysics3d::Vector3(!freezePositionX, !freezePositionY, !freezePositionZ));
-
-			}
+			if (ImGui::Checkbox("Y##FreezePosY", &newFreezePositionY))
+				FreezePositionY(newFreezePositionY);
 			ImGui::SameLine();
+			if (ImGui::Checkbox("Z##FreezePosZ", &newFreezePositionZ))
+				FreezePositionZ(newFreezePositionZ);
 
-			if (ImGui::Checkbox("Y##FreezePosY", &freezePositionY))
-			{
-
-				body->setLinearLockAxisFactor(reactphysics3d::Vector3(!freezePositionX, !freezePositionY, !freezePositionZ));
-			}
-			ImGui::SameLine();
-
-			if (ImGui::Checkbox("Z##FreezePosZ", &freezePositionZ))
-			{
-				body->setLinearLockAxisFactor(reactphysics3d::Vector3(!freezePositionX, !freezePositionY, !freezePositionZ));
-			}
+			bool newFreezeRotationX = GetFreezeRotationX();
+			bool newFreezeRotationY = GetFreezeRotationY();
+			bool newFreezeRotationZ = GetFreezeRotationZ();			
 			ImGui::Text("Freeze rotation: ");
-
-			bool freezeRotationX = !body->getAngularLockAxisFactor().x;
-			bool freezeRotationY = !body->getAngularLockAxisFactor().y;
-			bool freezeRotationZ = !body->getAngularLockAxisFactor().z;
+			if (ImGui::Checkbox("X##FreezeRotX", &newFreezeRotationX))
+				FreezeRotationX(newFreezeRotationX);
 			ImGui::SameLine();
-			if (ImGui::Checkbox("X##FreezeRotX", &freezeRotationX))
-			{
-				body->setAngularLockAxisFactor(reactphysics3d::Vector3(!freezeRotationX, !freezeRotationY, !freezeRotationZ));
-
-			}
+			if (ImGui::Checkbox("Y##FreezeRotY", &newFreezeRotationY))
+				FreezeRotationY(newFreezeRotationY);
 			ImGui::SameLine();
+			if (ImGui::Checkbox("Z##FreezeRotZ", &newFreezeRotationZ))
+				FreezeRotationZ(newFreezeRotationZ);
 
-			if (ImGui::Checkbox("Y##FreezeRotY", &freezeRotationY))
-			{
-
-				body->setAngularLockAxisFactor(reactphysics3d::Vector3(!freezeRotationX, !freezeRotationY, !freezeRotationZ));
-			}
-			ImGui::SameLine();
-
-			if (ImGui::Checkbox("Z##FreezeRotZ", &freezeRotationZ))
-			{
-				body->setAngularLockAxisFactor(reactphysics3d::Vector3(!freezeRotationX, !freezeRotationY, !freezeRotationZ));
-			}
 			ImGui::TreePop();
 		}
 	}
+	else
+		DrawDeleteButton(owner, this);
+	
 	return true;
+}
+
+void C_RigidBody2::UpdateRB()
+{
+	// Body type
+	if (bodyType == "Static")
+		body->setType(reactphysics3d::BodyType::STATIC);
+
+	else if (bodyType == "Dynamic")
+		body->setType(reactphysics3d::BodyType::DYNAMIC);
+
+	else
+		body->setType(reactphysics3d::BodyType::KINEMATIC);
+
+	// Use gravity
+	body->enableGravity(useGravity);
+
+	// Mass
+	body->setMass(mass);
+
+	// Constraints
+	body->setLinearLockAxisFactor(reactphysics3d::Vector3(!freezePositionX, !freezePositionY, !freezePositionZ));
+	body->setAngularLockAxisFactor(reactphysics3d::Vector3(!freezeRotationX, !freezeRotationY, !freezeRotationZ));
 }
 
 void C_RigidBody2::Save(Json& json) const
 {
+	json["type"] = "rigidBody";
+
+	json["body_type"] = bodyType;
+	json["use_gravity"] = useGravity;
+	json["mass"] = mass;
+	json["freeze_position_x"] = freezePositionX;
+	json["freeze_position_y"] = freezePositionY;
+	json["freeze_position_z"] = freezePositionZ;
+	json["freeze_rotation_x"] = freezeRotationX;
+	json["freeze_rotation_y"] = freezeRotationY;
+	json["freeze_rotation_z"] = freezeRotationZ;
 }
 
 void C_RigidBody2::Load(Json& json)
 {
+	bodyType = json.at("body_type");
+	useGravity = json.at("use_gravity");
+	mass = json.at("mass");
+	freezePositionX = json.at("freeze_position_x");
+	freezePositionY = json.at("freeze_position_y");
+	freezePositionZ = json.at("freeze_position_z");
+	freezeRotationX = json.at("freeze_rotation_x");
+	freezeRotationY = json.at("freeze_rotation_y");
+	freezeRotationZ = json.at("freeze_rotation_z");
+
+	hasUpdated = true;
 }
+
