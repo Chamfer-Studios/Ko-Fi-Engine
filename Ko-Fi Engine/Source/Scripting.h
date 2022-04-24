@@ -450,7 +450,7 @@ public:
 		return ret;
 	}
 
-	std::variant<int, float, float2, float3, bool, std::string> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
+	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
@@ -487,16 +487,19 @@ public:
 							std::string a = script->s->handler->lua[variable.c_str()];
 							return a;
 						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_GAMEOBJECT:
+						{
+							return (GameObject*)script->s->handler->lua[variable.c_str()];
+						}
 					}
 				}
-				
 			}
 		}
 
 		return -999;
 	}
 
-	void LuaSetVariable(std::variant<int, float, float2, float3, bool, std::string> value, std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
+	void LuaSetVariable(std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value, std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
@@ -535,6 +538,11 @@ public:
 						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
 						{
 							script->s->handler->lua[variable.c_str()] = std::get<std::string>(value);
+							return;
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_GAMEOBJECT:
+						{
+							script->s->handler->lua[variable.c_str()] = std::get<GameObject*>(value);
 							return;
 						}
 					}
@@ -623,7 +631,7 @@ public:
 		appLog->AddLog(log);
 	}
 
-	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
+	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value)
 	{
 		if (go == nullptr)
 			return;

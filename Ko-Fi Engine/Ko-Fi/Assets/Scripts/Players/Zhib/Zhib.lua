@@ -1,5 +1,7 @@
 ----------------------------------------------------------------------------------------------------------------------------------
 --																																--
+--		*** Disclamer! ***																										--
+--																																--
 --		This script has several dependencies to work:																			--
 --		1. The game object has to have a rigidBody																				--
 --		2. There has to be a GameState.lua script somewhere in the scene in order to receive inputs								--
@@ -8,7 +10,7 @@
 --																																--
 ----------------------------------------------------------------------------------------------------------------------------------
 
-------------------- Player events --------------------
+--------------------- Player events ---------------------
 
 Movement = {
 	IDLE = 1,
@@ -23,7 +25,7 @@ Action = {
 	AIM_SECONDARY = 4,
 	AIM_ULTIMATE = 5,
 }
-------------------------------------------------------
+---------------------------------------------------------
 
 ------------------- Variables setter --------------------
 target = nil
@@ -36,11 +38,11 @@ speed = 500.0
 
 -- Primary ability --
 knifeCastRange = 30.0
-maxKnives = 2
+maxKnives = 2 -- Move to a Start() func!!!
 knifeCount = maxKnives
 
 -- Secondary ability --
-decoyCastRange = 50.0
+decoyCastRange = 100.0
 decoyCooldown = 10.0
 drawDecoy = false
 
@@ -190,34 +192,30 @@ function Update(dt)
 	if (destination ~= nil)	then
 		--MoveToDestination(dt)
 		DispatchEvent("Pathfinder_FollowPath", { speed, dt, false })
+		DispatchGlobalEvent("Player_Position", { componentTransform:GetPosition(), gameObject })
 	end
-	DispatchGlobalEvent("Player_Position", { componentTransform:GetPosition(), gameObject })
+	
 
 	--Gather Inputs
 	if (IsSelected() == true) then 
 		-- Left Click
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
+
 			-- Primary ability (Knife)
 			if (currentAction == Action.AIM_PRIMARY) then
 				if (knifeCount > 0) then
-					local mousePos = GetLastMouseClick()
-					if (Distance3D(mousePos, componentTransform:GetPosition()) <= knifeCastRange) then
-						target = GetGameObjectHovered()
-						if (target.tag == Tag.ENEMY) then
-							FireKnife()
-						else
-							print("You have to select an enemy first!")
-						end
-					else
-						print("Out of range")
+					target = GetGameObjectHovered()
+					if (target.tag == Tag.ENEMY and Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= knifeCastRange) then
+						FireKnife()
 					end
 				end
 			
 			-- Secondary ability (Decoy)
 			elseif (decoyTimer == nil and currentAction == Action.AIM_SECONDARY) then
-				target = GetGameObjectHovered() -- This is for the decoy to go to the mouse Pos (it uses the target var)
+				GetGameObjectHovered() -- This is for the decoy to go to the mouse Pos (it uses the target var)
 				mousePos = GetLastMouseClick()
 				if (Distance3D(mousePos, componentTransform:GetPosition()) <= decoyCastRange) then
+					target = mousePos
 					PlaceDecoy()
 				else
 					print("Out of range")
@@ -293,9 +291,9 @@ function Update(dt)
 			end
 		end
 
-		-- R -> For debugging purposes only (reload knifes)
+		-- R -> For debugging purposes only (reload knives)
 		if (GetInput(10) == KEY_STATE.KEY_DOWN) then 
-			ReloadKnifes()
+			ReloadKnives()
 		end
 	end
 
@@ -378,7 +376,7 @@ function MoveToDestination(dt)
 	-- Add ChangeAnimation() to check the speed of the rigid body
 end
 
-function ReloadKnifes() -- For debugging purposes only
+function ReloadKnives() -- For debugging purposes only
 	knifeCount = maxKnives
 end
 
@@ -506,7 +504,7 @@ function StopMovement()
 end
 --------------------------------------------------
 
------------------ Collisions -----------------
+----------------- Collisions ---------------------
 function OnTriggerEnter(go)
 	if (go.tag == Tag.PROJECTILE) then
 		knifeCount = knifeCount + 1
