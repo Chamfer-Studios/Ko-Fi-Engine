@@ -20,6 +20,8 @@ M_Physics::M_Physics(KoFiEngine* engine)
 	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::COLLISION_SHAPE, true);
 	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::CONTACT_POINT, true);
 	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::CONTACT_NORMAL, true);
+	//Set Event Listener
+	world->setEventListener(&listener);
 }
 
 M_Physics::~M_Physics()

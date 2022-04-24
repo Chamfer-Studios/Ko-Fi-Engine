@@ -6,6 +6,39 @@
 #include <map>
 #include <string>
 
+class PhysicsEventListener : public reactphysics3d::EventListener
+{
+	// Override the onContact() method
+	virtual void onContact(const reactphysics3d::CollisionCallback::CallbackData& callbackData) override
+	{
+		//For each contact pair
+		for (uint p = 0; p < callbackData.getNbContactPairs(); p++)
+		{
+			//Get the contact pair
+			reactphysics3d::CollisionCallback::ContactPair contactPair = callbackData.getContactPair(p);
+			//For each contact point of the contact pair
+			for (uint c = 0; c < contactPair.getNbContactPoints(); c++)
+			{
+				//Get the contact point 
+				reactphysics3d::CollisionCallback::ContactPoint contactPoint = contactPair.getContactPoint(c);
+				//Get the contact point on the first collider and convert it in world-space
+				reactphysics3d::Vector3 worldPoint = contactPair.getCollider1()->getLocalToWorldTransform() * contactPoint.getLocalPointOnCollider1();
+			}
+
+		}
+	}
+	virtual void onTrigger(const reactphysics3d::OverlapCallback::CallbackData& callbackData) override
+	{
+		//For each contact pair
+		for (uint p = 0; p < callbackData.getNbOverlappingPairs(); p++)
+		{
+			//Get the Overlapped pair
+			reactphysics3d::OverlapCallback::OverlapPair overlapPair = callbackData.getOverlappingPair(p);		
+
+		}
+	}
+};
+
 
 class M_Physics : public Module
 {
@@ -29,7 +62,7 @@ public:
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	//---------------------------------------------------------------
-	
+
 	//Engine Config Inspector draw ----------------------------------
 	bool InspectorDraw() override;
 	// --------------------------------------------------------------
@@ -69,7 +102,8 @@ public:
 
 	reactphysics3d::PhysicsCommon physicsCommon;
 	reactphysics3d::PhysicsWorld* world = nullptr;
-	std::map<unsigned int,std::string> filters;
+	PhysicsEventListener listener;
+	std::map<unsigned int, std::string> filters;
 	std::string imguiNewFilterText;
 	bool** filterMatrix = nullptr;
 };
