@@ -110,13 +110,13 @@ bool M_Physics::InspectorDraw()
 			auto iter = filters.begin();
 			while (iter != filters.end())
 			{
-				ImGui::Text(iter->first.c_str());
+				ImGui::Text(iter->second.c_str());
 				ImGui::SameLine();
 				std::string label = "delete##";
 				label += iter->first;
 				if (ImGui::Button(label.c_str()))
 				{
-					RemoveFilter(iter->first);
+					RemoveFilter(iter->second);
 					engine->SaveConfiguration();
 					break;
 				}
@@ -147,7 +147,7 @@ bool M_Physics::InspectorDraw()
 				{
 					int j = std::distance(filters.begin(), iterJ);
 					if (j != 0) ImGui::SameLine();
-					std::string label("##" + iterI->first + std::to_string(i) + std::to_string(j));
+					std::string label("##" + iterI->second + std::to_string(i) + std::to_string(j));
 					bool filterMat = filterMatrix[i][j];
 					if (ImGui::Checkbox(label.c_str(), &filterMat))
 					{
@@ -157,7 +157,7 @@ bool M_Physics::InspectorDraw()
 
 				}
 				ImGui::SameLine();
-				ImGui::Text(std::string(iterI->first + " (" + std::to_string(i) + ")").c_str());
+				ImGui::Text(std::string(iterI->second + " (" + std::to_string(i) + ")").c_str());
 
 			}
 			int count = filSize - 1;
@@ -186,7 +186,7 @@ void M_Physics::OnNotify(const Event& event)
 
 void M_Physics::AddFilter(std::string newFilter)
 {
-	filters.emplace(newFilter, filters.size()+1);
+	filters.emplace(filters.size() + 1,newFilter);
 	// TEST: Traverse the 2D array and assign values from old filter matrix and add the new filter
 	// First, we want to declare a new filter matrix
 	size_t filSize = filters.size();
@@ -215,7 +215,13 @@ void M_Physics::AddFilter(std::string newFilter)
 
 void M_Physics::RemoveFilter(std::string filterToRemove)
 {
-	filters.erase(filterToRemove);
+	for (auto it = filters.begin(); it != filters.end(); ++it)
+	{
+		if (it->second == filterToRemove)
+		{
+			filters.erase(it);
+		}
+	}
 
 	// TEST: Traverse the 2D array and assign values from old filter matrix and add the new filter
 // First, we want to declare a new filter matrix
@@ -250,5 +256,11 @@ void M_Physics::RemoveFilter(std::string filterToRemove)
 
 unsigned int M_Physics::GetFilter(std::string filter)
 {
-	return filters.at(filter);
+	for (auto it = filters.begin(); it != filters.end(); ++it)
+	{
+		if (it->second == filter)
+		{
+			return it->first;
+		}
+	}
 }

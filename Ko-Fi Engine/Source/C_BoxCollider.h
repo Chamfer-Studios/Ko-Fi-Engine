@@ -23,6 +23,8 @@ private:
 	reactphysics3d::BoxShape* boxShape = nullptr;
 	reactphysics3d::Collider* collider = nullptr;
 	float3 scaleFactor = float3(1, 1, 1);
+	std::string currentFilter = "Set Filter";
+
 };
 #endif // !__C_BOX_COLLIDER_H__
 

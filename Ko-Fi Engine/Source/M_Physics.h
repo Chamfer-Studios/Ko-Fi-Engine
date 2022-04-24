@@ -45,7 +45,7 @@ public:
 	void AddFilter(std::string newFilter);
 	void RemoveFilter(std::string filterToRemove);
 	unsigned int GetFilter(std::string filter);
-	inline std::map<std::string, unsigned int> GetFiltersMap() { return filters; }
+	inline std::map<unsigned int, std::string> GetFiltersMap() { return filters; }
 private:
 	// Filter matrix private methods
 	inline void DeleteFilterMatrix()
@@ -69,7 +69,7 @@ public:
 
 	reactphysics3d::PhysicsCommon physicsCommon;
 	reactphysics3d::PhysicsWorld* world = nullptr;
-	std::map<std::string,unsigned int> filters;
+	std::map<unsigned int,std::string> filters;
 	std::string imguiNewFilterText;
 	bool** filterMatrix = nullptr;
 };
