@@ -32,7 +32,9 @@
 #include "C_Walkable.h"
 #include "C_FollowPath.h"
 #include "C_RigidBody2.h"
-#include "C_Collider2.h"
+#include "C_BoxCollider.h"
+#include "C_SphereCollider.h"
+#include "C_CapsuleCollider.h"
 
 #include "R_Mesh.h"
 #include "R_Animation.h"
@@ -396,10 +398,22 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::COLLIDER2:
+			case ComponentType::BOX_COLLIDER:
 			{
-				C_Collider2* collCmp = (C_Collider2*)component;
-				collCmp->Save(jsonComponent);
+				C_BoxCollider* boxColCmp = (C_BoxCollider*)component;
+				boxColCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::SPHERE_COLLIDER:
+			{
+				C_SphereCollider* sphereColCmp = (C_SphereCollider*)component;
+				sphereColCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::CAPSULE_COLLIDER:
+			{
+				C_CapsuleCollider* capsuleColCmp = (C_CapsuleCollider*)component;
+				capsuleColCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::SCRIPT:
@@ -688,15 +702,35 @@ bool I_Scene::Load(Scene* scene, const char* name)
 						rbCmp->active = true;
 						rbCmp->Load(jsonCmp);
 					}
-					else if (type == "collider")
+					else if (type == "boxCollider")
 					{
-						C_Collider2* collCmp = go->GetComponent<C_Collider2>();
-						if (collCmp == nullptr)
+						C_BoxCollider* boxColCmp = go->GetComponent<C_BoxCollider>();
+						if (boxColCmp == nullptr)
 						{
-							collCmp = new C_Collider2(go/*, ColliderShape::NONE*/);
+							boxColCmp = (C_BoxCollider*)go->AddComponentByType(ComponentType::BOX_COLLIDER);
 						}
-						collCmp->active = true;
-						collCmp->Load(jsonCmp);
+						boxColCmp->active = true;
+						boxColCmp->Load(jsonCmp);
+					}
+					else if (type == "sphereCollider")
+					{
+						C_SphereCollider* sphereColCmp = go->GetComponent<C_SphereCollider>();
+						if (sphereColCmp == nullptr)
+						{
+							sphereColCmp = (C_SphereCollider*)go->AddComponentByType(ComponentType::SPHERE_COLLIDER);
+						}
+						sphereColCmp->active = true;
+						sphereColCmp->Load(jsonCmp);
+					}
+					else if (type == "capsuleCollider")
+					{
+						C_CapsuleCollider* capsuleColCmp = go->GetComponent<C_CapsuleCollider>();
+						if (capsuleColCmp == nullptr)
+						{
+							capsuleColCmp = (C_CapsuleCollider*)go->AddComponentByType(ComponentType::CAPSULE_COLLIDER);
+						}
+						capsuleColCmp->active = true;
+						capsuleColCmp->Load(jsonCmp);
 					}
 					else if (type == "particle")
 					{

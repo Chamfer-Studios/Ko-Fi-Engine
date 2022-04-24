@@ -24,8 +24,12 @@ const char* Component::GetNameByComponentType(ComponentType type)
 		return "MATERIAL";
 	case ComponentType::CAMERA:
 		return "CAMERA";
-	case ComponentType::COLLIDER2:
-		return "COLLIDER";
+	case ComponentType::BOX_COLLIDER:
+		return "BOX_COLLIDER";
+	case ComponentType::SPHERE_COLLIDER:
+		return "SPHERE_COLLIDER";
+	case ComponentType::CAPSULE_COLLIDER:
+		return "CAPSULE_COLLIDER";
 	case ComponentType::SCRIPT:
 		return "SCRIPT";
 	case ComponentType::RIGID_BODY2:

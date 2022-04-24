@@ -1176,6 +1176,15 @@
     <ClInclude Include="Source\C_CapsuleCollider.h">
       <Filter>Source\GameObject\Components\Physics\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="Source\P_Actor.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P_Collision.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\P_World.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\M_ResourceManager.h">

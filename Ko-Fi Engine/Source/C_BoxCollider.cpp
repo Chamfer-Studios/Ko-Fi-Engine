@@ -47,7 +47,7 @@ bool C_BoxCollider::InspectorDraw(PanelChooser* chooser)
 			{
 				if (ImGui::Selectable(iter->second.c_str()))
 				{
-					
+					currentFilter = iter->second;
 					collider->setCollisionCategoryBits(iter->first);
 					unsigned int mask = 0;
 					for (int i = 0; i < filterMap.size(); ++i)

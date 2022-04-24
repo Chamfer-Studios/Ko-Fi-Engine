@@ -32,7 +32,6 @@
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
 #include "C_RigidBody2.h"
-#include "C_Collider2.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -96,7 +95,10 @@ public:
 					 "MESH", ComponentType::MESH,
 					 "MATERIAL", ComponentType::MATERIAL,
 					 "CAMERA", ComponentType::CAMERA,
-					 "COLLIDER", ComponentType::COLLIDER2,
+					 "BOX_COLLIDER", ComponentType::BOX_COLLIDER,
+					 "SPHERE_COLLIDER", ComponentType::SPHERE_COLLIDER,
+					 "CAPSULE_COLLIDER", ComponentType::CAPSULE_COLLIDER,
+					 "RIGID_BODY", ComponentType::RIGID_BODY2,
 					 "SCRIPT", ComponentType::SCRIPT,
 					 "TRANSFORM", ComponentType::TRANSFORM,
 					 "INFO", ComponentType::INFO,

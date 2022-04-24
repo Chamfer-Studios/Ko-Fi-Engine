@@ -14,6 +14,7 @@
 #include "M_SceneManager.h"
 #include "M_Editor.h"
 #include "M_Input.h"
+#include "M_Physics.h"
 #include "ImGuiAppLog.h"
 #include "M_FileSystem.h"
 #include "R_Texture.h"
@@ -31,7 +32,6 @@
 #include "C_RenderedUI.h"
 #include "C_LightSource.h"
 #include "C_Animator.h"
-#include "C_Collider2.h"
 
 #include "R_Material.h"
 #include "PieShape.h"
@@ -342,11 +342,6 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 				{
 					cCamera->DrawFrustum();
 				}
-			}
-			C_Collider2* cCol = go->GetComponent<C_Collider2>();
-			if (cCol)
-			{
-				/*cCol->DrawCollider();*/
 			}
 		}
 	}

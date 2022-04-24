@@ -15,7 +15,6 @@
 #include "C_Camera.h"
 #include "C_Script.h"
 #include "C_Animator.h"
-#include "C_Collider.h"
 #include "C_BoxCollider.h"
 #include "C_CapsuleCollider.h"
 #include "C_SphereCollider.h"
@@ -271,15 +270,6 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::CAMERA:
 	{
 		c = this->CreateComponent<C_Camera>();
-		break;
-	}
-	case ComponentType::COLLIDER:
-	{
-		if (!this->GetComponent<C_RigidBody>())
-			AddComponentByType(ComponentType::RIGID_BODY);
-
-		c = this->CreateComponent<C_Collider>();
-		((C_Collider*)c)->SetColliderShape(ColliderShape::BOX);
 		break;
 	}
 	case ComponentType::BOX_COLLIDER:
@@ -544,8 +534,10 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		switch (component->GetType())
 		{
 		case ComponentType::NONE:
+		{
 			jsonComponent["type"] = "NONE";
 			break;
+		}
 		case ComponentType::TRANSFORM:
 		{
 			C_Transform* transformCmp = (C_Transform*)component;
@@ -582,10 +574,22 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			rigidBodyCmp->Save(jsonComponent);
 			break;
 		}
-		case ComponentType::COLLIDER2:
+		case ComponentType::BOX_COLLIDER:
 		{
-			C_Collider2* collisionCmp = (C_Collider2*)component;
-			collisionCmp->Save(jsonComponent);
+			C_BoxCollider* boxCollCmp = (C_BoxCollider*)component;
+			boxCollCmp->Save(jsonComponent);
+			break;
+		}
+		case ComponentType::SPHERE_COLLIDER:
+		{
+			C_SphereCollider* sphereCollCmp = (C_SphereCollider*)component;
+			sphereCollCmp->Save(jsonComponent);
+			break;
+		}
+		case ComponentType::CAPSULE_COLLIDER:
+		{
+			C_CapsuleCollider* capsuleCollCmp = (C_CapsuleCollider*)component;
+			capsuleCollCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::SCRIPT:
@@ -806,15 +810,29 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
-		else if (type == "collider")
+		else if (type == "boxCollider")
 		{
-			C_Collider2* colCmp = this->GetComponent<C_Collider2>();
-			if (colCmp == nullptr)
-			{
-				colCmp = this->CreateComponent<C_Collider2>();
-			}
-			colCmp->active = true;
-			colCmp->Load(jsonCmp);
+			C_BoxCollider* boxColCmp = this->GetComponent<C_BoxCollider>();
+			if (!boxColCmp)
+				boxColCmp = this->CreateComponent<C_BoxCollider>();
+			boxColCmp->active = true;
+			boxColCmp->Load(jsonCmp);
+		}
+		else if (type == "sphereCollider")
+		{
+			C_SphereCollider* sphereColCmp = this->GetComponent<C_SphereCollider>();
+			if (!sphereColCmp)
+				sphereColCmp = this->CreateComponent<C_SphereCollider>();
+			sphereColCmp->active = true;
+			sphereColCmp->Load(jsonCmp);
+		}
+		else if (type == "capsuleCollider")
+		{
+			C_CapsuleCollider* capsuleColCmp = this->GetComponent<C_CapsuleCollider>();
+			if (!capsuleColCmp)
+				capsuleColCmp = this->CreateComponent<C_CapsuleCollider>();
+			capsuleColCmp->active = true;
+			capsuleColCmp->Load(jsonCmp);
 		}
 		else if (type == "animator")
 		{
@@ -965,15 +983,29 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
-		else if (type == "collider")
+		else if (type == "boxCollider")
 		{
-			C_Collider2* colCmp = this->GetComponent<C_Collider2>();
-			if (colCmp == nullptr)
-			{
-				colCmp = this->CreateComponent<C_Collider2>();
-			}
-			colCmp->active = true;
-			colCmp->Load(jsonCmp);
+			C_BoxCollider* boxColCmp = this->GetComponent<C_BoxCollider>();
+			if (!boxColCmp)
+				boxColCmp = this->CreateComponent<C_BoxCollider>();
+			boxColCmp->active = true;
+			boxColCmp->Load(jsonCmp);
+		}
+		else if (type == "sphereCollider")
+		{
+			C_SphereCollider* sphereColCmp = this->GetComponent<C_SphereCollider>();
+			if (!sphereColCmp)
+				sphereColCmp = this->CreateComponent<C_SphereCollider>();
+			sphereColCmp->active = true;
+			sphereColCmp->Load(jsonCmp);
+		}
+		else if (type == "capsuleCollider")
+		{
+			C_CapsuleCollider* capsuleColCmp = this->GetComponent<C_CapsuleCollider>();
+			if (!capsuleColCmp)
+				capsuleColCmp = this->CreateComponent<C_CapsuleCollider>();
+			capsuleColCmp->active = true;
+			capsuleColCmp->Load(jsonCmp);
 		}
 		else if (type == "animator")
 		{

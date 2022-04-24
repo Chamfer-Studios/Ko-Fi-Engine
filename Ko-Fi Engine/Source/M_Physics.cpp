@@ -220,6 +220,7 @@ void M_Physics::RemoveFilter(std::string filterToRemove)
 		if (it->second == filterToRemove)
 		{
 			filters.erase(it);
+			break;
 		}
 	}
 
