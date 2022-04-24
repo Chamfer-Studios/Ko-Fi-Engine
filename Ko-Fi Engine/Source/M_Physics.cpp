@@ -1,12 +1,16 @@
 #include "M_Physics.h"
 #include "Engine.h"
+#include "GameObject.h"
+#include "C_Script.h"
+#include "Scripting.h"
 #include "M_SceneManager.h"
 #include "glew.h"
 #include <imgui_stdlib.h>
+
+
 M_Physics::M_Physics(KoFiEngine* engine)
 {
 	this->engine = engine;
-	
 	//World Settings
 	reactphysics3d::PhysicsWorld::WorldSettings worldSettings;
 	worldSettings.gravity = reactphysics3d::Vector3(0, -9.81f, 0);
@@ -266,4 +270,170 @@ unsigned int M_Physics::GetFilter(std::string filter)
 			return it->first;
 		}
 	}
+}
+
+reactphysics3d::RigidBody* M_Physics::AddBody(reactphysics3d::Transform rbTransform,GameObject* owner)
+{
+	
+	reactphysics3d::RigidBody* body = world->createRigidBody(rbTransform);
+	collisionBodyToObjectMap.emplace(body,owner);
+
+	return body;
+}
+
+PhysicsEventListener::PhysicsEventListener(M_Physics* mPhysics)
+{
+	this->mPhysics = mPhysics;
+}
+
+void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::CallbackData& callbackData)
+{
+	//For each contact pair
+	for (uint p = 0; p < callbackData.getNbContactPairs(); p++)
+	{
+		//Get the contact pair
+		reactphysics3d::CollisionCallback::ContactPair contactPair = callbackData.getContactPair(p);
+		GameObject* go1 = nullptr;
+		GameObject* go2 = nullptr;
+
+		go1 = mPhysics->GetGameObjectFromBody(contactPair.getBody1());
+		go2 = mPhysics->GetGameObjectFromBody(contactPair.getBody2());
+		if (go1 && go2)
+		{
+
+			if (contactPair.getEventType() == reactphysics3d::CollisionCallback::ContactPair::EventType::ContactStart)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionEnter"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionEnter"](go1);
+				}
+			}
+			else if (contactPair.getEventType() == reactphysics3d::CollisionCallback::ContactPair::EventType::ContactStay)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionRepeat"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionRepeat"](go1);
+				}
+			}
+			else if (contactPair.getEventType() == reactphysics3d::CollisionCallback::ContactPair::EventType::ContactExit)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionExit"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionExit"](go1);
+				}
+			}
+
+
+		}
+		//For each contact point of the contact pair
+		for (uint c = 0; c < contactPair.getNbContactPoints(); c++)
+		{
+			//Get the contact point 
+			reactphysics3d::CollisionCallback::ContactPoint contactPoint = contactPair.getContactPoint(c);
+			//Get the contact point on the first collider and convert it in world-space
+			reactphysics3d::Vector3 worldPoint = contactPair.getCollider1()->getLocalToWorldTransform() * contactPoint.getLocalPointOnCollider1();
+		}
+
+	}
+}
+
+void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::CallbackData& callbackData)
+{
+	//For each contact pair
+	for (uint p = 0; p < callbackData.getNbOverlappingPairs(); p++)
+	{
+		//Get the overlapped pair
+		reactphysics3d::OverlapCallback::OverlapPair overlapPair = callbackData.getOverlappingPair(p);
+		GameObject* go1 = nullptr;
+		GameObject* go2 = nullptr;
+
+		go1 = mPhysics->GetGameObjectFromBody(overlapPair.getBody1());
+		go2 = mPhysics->GetGameObjectFromBody(overlapPair.getBody2());
+		if (go1 && go2)
+		{
+
+			if (overlapPair.getEventType() == reactphysics3d::OverlapCallback::OverlapPair::EventType::OverlapStart)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerEnter"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerEnter"](go1);
+				}
+			}
+			else if (overlapPair.getEventType() == reactphysics3d::OverlapCallback::OverlapPair::EventType::OverlapStay)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerRepeat"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerRepeat"](go1);
+				}
+			}
+			else if (overlapPair.getEventType() == reactphysics3d::OverlapCallback::OverlapPair::EventType::OverlapExit)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerExit"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerExit"](go1);
+				}
+			}
+		}
+	}
+	
 }

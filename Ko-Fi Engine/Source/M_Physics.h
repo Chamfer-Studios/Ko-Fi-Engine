@@ -6,37 +6,17 @@
 #include <map>
 #include <string>
 
+class GameObject;
+class M_Physics;
 class PhysicsEventListener : public reactphysics3d::EventListener
 {
+public:
+	PhysicsEventListener(M_Physics* mPhysics);
 	// Override the onContact() method
-	virtual void onContact(const reactphysics3d::CollisionCallback::CallbackData& callbackData) override
-	{
-		//For each contact pair
-		for (uint p = 0; p < callbackData.getNbContactPairs(); p++)
-		{
-			//Get the contact pair
-			reactphysics3d::CollisionCallback::ContactPair contactPair = callbackData.getContactPair(p);
-			//For each contact point of the contact pair
-			for (uint c = 0; c < contactPair.getNbContactPoints(); c++)
-			{
-				//Get the contact point 
-				reactphysics3d::CollisionCallback::ContactPoint contactPoint = contactPair.getContactPoint(c);
-				//Get the contact point on the first collider and convert it in world-space
-				reactphysics3d::Vector3 worldPoint = contactPair.getCollider1()->getLocalToWorldTransform() * contactPoint.getLocalPointOnCollider1();
-			}
-
-		}
-	}
-	virtual void onTrigger(const reactphysics3d::OverlapCallback::CallbackData& callbackData) override
-	{
-		//For each contact pair
-		for (uint p = 0; p < callbackData.getNbOverlappingPairs(); p++)
-		{
-			//Get the Overlapped pair
-			reactphysics3d::OverlapCallback::OverlapPair overlapPair = callbackData.getOverlappingPair(p);		
-
-		}
-	}
+	virtual void onContact(const reactphysics3d::CollisionCallback::CallbackData& callbackData) override;
+	virtual void onTrigger(const reactphysics3d::OverlapCallback::CallbackData& callbackData) override;
+private:
+	M_Physics* mPhysics = nullptr;
 };
 
 
@@ -79,6 +59,9 @@ public:
 	void RemoveFilter(std::string filterToRemove);
 	unsigned int GetFilter(std::string filter);
 	inline std::map<unsigned int, std::string> GetFiltersMap() { return filters; }
+	//Utils
+	reactphysics3d::RigidBody* AddBody(reactphysics3d::Transform rbTransform, GameObject* owner);
+	GameObject* GetGameObjectFromBody(reactphysics3d::CollisionBody* collisionBody) { return collisionBodyToObjectMap[collisionBody]; }
 private:
 	// Filter matrix private methods
 	inline void DeleteFilterMatrix()
@@ -102,8 +85,9 @@ public:
 
 	reactphysics3d::PhysicsCommon physicsCommon;
 	reactphysics3d::PhysicsWorld* world = nullptr;
-	PhysicsEventListener listener;
+	PhysicsEventListener listener = PhysicsEventListener(this);
 	std::map<unsigned int, std::string> filters;
+	std::map<reactphysics3d::CollisionBody*, GameObject*> collisionBodyToObjectMap;
 	std::string imguiNewFilterText;
 	bool** filterMatrix = nullptr;
 };

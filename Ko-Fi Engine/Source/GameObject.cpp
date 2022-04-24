@@ -275,7 +275,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::BOX_COLLIDER:
 	{
 		if (!this->GetComponent<C_RigidBody>())
-			AddComponentByType(ComponentType::RIGID_BODY2);
+			AddComponentByType(ComponentType::RIGID_BODY);
 
 		c = this->CreateComponent<C_BoxCollider>();
 		break;
@@ -283,7 +283,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::CAPSULE_COLLIDER:
 	{
 		if (!this->GetComponent<C_RigidBody>())
-			AddComponentByType(ComponentType::RIGID_BODY2);
+			AddComponentByType(ComponentType::RIGID_BODY);
 
 		c = this->CreateComponent<C_CapsuleCollider>();
 		break;
@@ -291,7 +291,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::SPHERE_COLLIDER:
 	{
 		if (!this->GetComponent<C_RigidBody>())
-			AddComponentByType(ComponentType::RIGID_BODY2);
+			AddComponentByType(ComponentType::RIGID_BODY);
 
 		c = this->CreateComponent<C_SphereCollider>();
 		break;
@@ -301,7 +301,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 		c = this->CreateComponent<C_Script>();
 		break;
 	}
-	case ComponentType::RIGID_BODY2:
+	case ComponentType::RIGID_BODY:
 	{
 		c = this->CreateComponent<C_RigidBody>();
 		break;
@@ -568,7 +568,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			cameraCmp->Save(jsonComponent);
 			break;
 		}
-		case ComponentType::RIGID_BODY2:
+		case ComponentType::RIGID_BODY:
 		{
 			C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
 			rigidBodyCmp->Save(jsonComponent);

@@ -32,7 +32,7 @@ const char* Component::GetNameByComponentType(ComponentType type)
 		return "CAPSULE_COLLIDER";
 	case ComponentType::SCRIPT:
 		return "SCRIPT";
-	case ComponentType::RIGID_BODY2:
+	case ComponentType::RIGID_BODY:
 		return "RIGID_BODY";
 	case ComponentType::TRANSFORM2D:
 		return "TRANSFORM2D";
@@ -110,12 +110,11 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 			{ ComponentType::MATERIAL, "MATERIAL" },
 			{ ComponentType::PARTICLE, "PARTICLE" },
 			{ ComponentType::CAMERA, "CAMERA" },
-			{ ComponentType::COLLIDER, "COLLIDER" },
 			{ ComponentType::BOX_COLLIDER, "BOX_COLLIDER" },
 			{ ComponentType::CAPSULE_COLLIDER, "CAPSULE_COLLIDER" },
 			{ ComponentType::SPHERE_COLLIDER, "SPHERE_COLLIDER" },
 			{ ComponentType::SCRIPT, "SCRIPT" },
-			{ ComponentType::RIGID_BODY2, "RIGID BODY" },
+			{ ComponentType::RIGID_BODY, "RIGID BODY" },
 			{ ComponentType::AUDIO_SOURCE, "AUDIO_SOURCE" },
 			{ ComponentType::AUDIO_SWITCH, "AUDIO_SWITCH" },
 			{ ComponentType::ANIMATOR, "ANIMATOR" },

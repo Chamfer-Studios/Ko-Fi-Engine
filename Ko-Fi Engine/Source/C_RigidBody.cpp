@@ -8,7 +8,7 @@
 
 C_RigidBody::C_RigidBody(GameObject* parent) : Component(parent)
 {
-	type = ComponentType::RIGID_BODY2;
+	type = ComponentType::RIGID_BODY;
 }
 
 C_RigidBody::~C_RigidBody()
@@ -23,7 +23,7 @@ bool C_RigidBody::Start()
 	reactphysics3d::Vector3 rbPosition(gameObjectPosition.x, gameObjectPosition.y, gameObjectPosition.z);
 	reactphysics3d::Quaternion rbOrientation(gameObjectOrientation.x, gameObjectOrientation.y, gameObjectOrientation.z, gameObjectOrientation.w);
 	reactphysics3d::Transform rbTransform(rbPosition, rbOrientation);
-	body = owner->GetEngine()->GetPhysics()->GetWorld()->createRigidBody(rbTransform);
+	body = owner->GetEngine()->GetPhysics()->AddBody(rbTransform,owner);
 	return true;
 }
 

@@ -422,7 +422,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				scriptCmp->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::RIGID_BODY2:
+			case ComponentType::RIGID_BODY:
 			{
 				C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
 				rigidBodyCmp->Save(jsonComponent);
@@ -697,7 +697,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 						C_RigidBody* rbCmp = go->GetComponent<C_RigidBody>();
 						if (rbCmp == nullptr)
 						{
-							rbCmp = (C_RigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY2);
+							rbCmp = (C_RigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
 						}
 						rbCmp->active = true;
 						rbCmp->Load(jsonCmp);

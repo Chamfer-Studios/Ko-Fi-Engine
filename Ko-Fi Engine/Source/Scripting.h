@@ -98,7 +98,7 @@ public:
 					 "BOX_COLLIDER", ComponentType::BOX_COLLIDER,
 					 "SPHERE_COLLIDER", ComponentType::SPHERE_COLLIDER,
 					 "CAPSULE_COLLIDER", ComponentType::CAPSULE_COLLIDER,
-					 "RIGID_BODY", ComponentType::RIGID_BODY2,
+					 "RIGID_BODY", ComponentType::RIGID_BODY,
 					 "SCRIPT", ComponentType::SCRIPT,
 					 "TRANSFORM", ComponentType::TRANSFORM,
 					 "INFO", ComponentType::INFO,

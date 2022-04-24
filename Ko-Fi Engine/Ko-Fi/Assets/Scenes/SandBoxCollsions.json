@@ -153,6 +153,23 @@
                         "texture_path": "",
                         "type": "material",
                         "uniforms": null
+                    },
+                    {
+                        "active": true,
+                        "body_type": "Dynamic",
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "mass": 1.0,
+                        "type": "rigidBody",
+                        "use_gravity": true
+                    },
+                    {
+                        "active": true,
+                        "type": "NONE"
                     }
                 ],
                 "is3D": true,
@@ -172,7 +189,7 @@
                         "active": true,
                         "position": [
                             0.0,
-                            74.60871887207031,
+                            73.35455322265625,
                             2.384185791015625e-07
                         ],
                         "rotation": [
@@ -222,6 +239,10 @@
                         "mass": 1.0299999713897705,
                         "type": "rigidBody",
                         "use_gravity": false
+                    },
+                    {
+                        "active": true,
+                        "type": "NONE"
                     }
                 ],
                 "is3D": true,
