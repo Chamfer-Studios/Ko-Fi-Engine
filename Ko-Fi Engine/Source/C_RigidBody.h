@@ -3,12 +3,12 @@
 #include "Component.h"
 #include "reactphysics3d/reactphysics3d.h"
 
-class C_RigidBody2 : public Component
+class C_RigidBody : public Component
 {
 public:
 	//constructors
-	C_RigidBody2(GameObject* parent);
-	~C_RigidBody2();
+	C_RigidBody(GameObject* parent);
+	~C_RigidBody();
 
 	//Game Loop
 	bool Start() override;

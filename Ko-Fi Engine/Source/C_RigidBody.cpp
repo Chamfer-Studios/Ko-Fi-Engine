@@ -1,4 +1,4 @@
-#include "C_RigidBody2.h"
+#include "C_RigidBody.h"
 #include "Engine.h"
 #include "GameObject.h"
 #include "M_Physics.h"
@@ -6,17 +6,17 @@
 #include "C_Transform.h"
 
 
-C_RigidBody2::C_RigidBody2(GameObject* parent) : Component(parent)
+C_RigidBody::C_RigidBody(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY2;
 }
 
-C_RigidBody2::~C_RigidBody2()
+C_RigidBody::~C_RigidBody()
 {
 	CleanUp();
 }
 
-bool C_RigidBody2::Start()
+bool C_RigidBody::Start()
 {
 	float3 gameObjectPosition = owner->GetTransform()->GetPosition();
 	Quat gameObjectOrientation = owner->GetTransform()->GetRotationQuat();
@@ -27,7 +27,7 @@ bool C_RigidBody2::Start()
 	return true;
 }
 
-bool C_RigidBody2::Update(float dt)
+bool C_RigidBody::Update(float dt)
 {
 	if (hasUpdated)
 		UpdateRB();
@@ -57,14 +57,14 @@ bool C_RigidBody2::Update(float dt)
 	return true;
 }
 
-bool C_RigidBody2::CleanUp()
+bool C_RigidBody::CleanUp()
 {
 	// Destroy a rigid body 
 	owner->GetEngine()->GetPhysics()->GetWorld()->destroyRigidBody(body);
 	return true;
 }
 
-bool C_RigidBody2::InspectorDraw(PanelChooser* chooser)
+bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Rigid Body", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
@@ -140,7 +140,7 @@ bool C_RigidBody2::InspectorDraw(PanelChooser* chooser)
 	return true;
 }
 
-void C_RigidBody2::UpdateRB()
+void C_RigidBody::UpdateRB()
 {
 	// Body type
 	if (bodyType == "Static")
@@ -163,7 +163,7 @@ void C_RigidBody2::UpdateRB()
 	body->setAngularLockAxisFactor(reactphysics3d::Vector3(!freezeRotationX, !freezeRotationY, !freezeRotationZ));
 }
 
-void C_RigidBody2::Save(Json& json) const
+void C_RigidBody::Save(Json& json) const
 {
 	json["type"] = "rigidBody";
 
@@ -178,7 +178,7 @@ void C_RigidBody2::Save(Json& json) const
 	json["freeze_rotation_z"] = freezeRotationZ;
 }
 
-void C_RigidBody2::Load(Json& json)
+void C_RigidBody::Load(Json& json)
 {
 	bodyType = json.at("body_type");
 	useGravity = json.at("use_gravity");

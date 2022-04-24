@@ -31,7 +31,7 @@
 #include "C_AudioSwitch.h"
 #include "C_Walkable.h"
 #include "C_FollowPath.h"
-#include "C_RigidBody2.h"
+#include "C_RigidBody.h"
 #include "C_BoxCollider.h"
 #include "C_SphereCollider.h"
 #include "C_CapsuleCollider.h"
@@ -424,7 +424,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::RIGID_BODY2:
 			{
-				C_RigidBody2* rigidBodyCmp = (C_RigidBody2*)component;
+				C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
 				rigidBodyCmp->Save(jsonComponent);
 				break;
 			}
@@ -694,10 +694,10 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "rigidBody")
 					{
-						C_RigidBody2* rbCmp = go->GetComponent<C_RigidBody2>();
+						C_RigidBody* rbCmp = go->GetComponent<C_RigidBody>();
 						if (rbCmp == nullptr)
 						{
-							rbCmp = (C_RigidBody2*)go->AddComponentByType(ComponentType::RIGID_BODY2);
+							rbCmp = (C_RigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY2);
 						}
 						rbCmp->active = true;
 						rbCmp->Load(jsonCmp);

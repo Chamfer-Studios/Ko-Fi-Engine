@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "GameObject.h"
 #include "M_Physics.h"
-#include "C_RigidBody2.h"
+#include "C_RigidBody.h"
 
 C_SphereCollider::C_SphereCollider(GameObject* parent) : Component(parent)
 {
@@ -19,7 +19,7 @@ bool C_SphereCollider::Start()
 	sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.x/2);
 	reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 
-	collider = owner->GetComponent<C_RigidBody2>()->GetBody()->addCollider(sphereShape, transform);
+	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, transform);
 	return true;
 }
 

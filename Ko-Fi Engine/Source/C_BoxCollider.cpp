@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "GameObject.h"
 #include "M_Physics.h"
-#include "C_RigidBody2.h"
+#include "C_RigidBody.h"
 
 C_BoxCollider::C_BoxCollider(GameObject* parent) : Component(parent)
 {
@@ -20,7 +20,7 @@ bool C_BoxCollider::Start()
 	boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(boundingBoxSize.x/2, boundingBoxSize.y/2, boundingBoxSize.z/2));
 	reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 	
-	collider = owner->GetComponent<C_RigidBody2>()->GetBody()->addCollider(boxShape,transform);
+	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape,transform);
 	return true;
 }
 
@@ -84,11 +84,11 @@ bool C_BoxCollider::InspectorDraw(PanelChooser* chooser)
 		{
 			float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
 			reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
-			owner->GetComponent<C_RigidBody2>()->GetBody()->removeCollider(collider);
+			owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
 			owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyBoxShape(boxShape);
 			boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3((boundingBoxSize.x / 2)* scaleFactor.x, (boundingBoxSize.y / 2)* scaleFactor.y, (boundingBoxSize.z / 2)* scaleFactor.z));
 
-			collider = owner->GetComponent<C_RigidBody2>()->GetBody()->addCollider(boxShape,oldTransform);
+			collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape,oldTransform);
 
 		}
 	}

@@ -111,7 +111,7 @@
   <ItemGroup>
     <ClCompile Include="Source\C_BoxCollider.cpp" />
     <ClCompile Include="Source\C_CapsuleCollider.cpp" />
-    <ClCompile Include="Source\C_RigidBody2.cpp" />
+    <ClCompile Include="Source\C_RigidBody.cpp" />
     <ClCompile Include="Source\C_SphereCollider.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
@@ -270,7 +270,7 @@
     <ClInclude Include="Source\AdditionNode.h" />
     <ClInclude Include="Source\C_BoxCollider.h" />
     <ClInclude Include="Source\C_CapsuleCollider.h" />
-    <ClInclude Include="Source\C_RigidBody2.h" />
+    <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\C_SphereCollider.h" />
     <ClInclude Include="Source\P_Actor.h" />
     <ClInclude Include="Source\P_Collision.h" />

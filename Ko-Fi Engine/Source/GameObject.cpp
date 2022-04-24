@@ -23,7 +23,7 @@
 #include "C_Button.h"
 #include "C_Image.h"
 #include "C_Text.h"
-#include "C_RigidBody2.h"
+#include "C_RigidBody.h"
 #include "C_Transform.h"
 #include "C_Info.h"
 #include "C_AudioSource.h"
@@ -274,7 +274,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::BOX_COLLIDER:
 	{
-		if (!this->GetComponent<C_RigidBody2>())
+		if (!this->GetComponent<C_RigidBody>())
 			AddComponentByType(ComponentType::RIGID_BODY2);
 
 		c = this->CreateComponent<C_BoxCollider>();
@@ -282,7 +282,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::CAPSULE_COLLIDER:
 	{
-		if (!this->GetComponent<C_RigidBody2>())
+		if (!this->GetComponent<C_RigidBody>())
 			AddComponentByType(ComponentType::RIGID_BODY2);
 
 		c = this->CreateComponent<C_CapsuleCollider>();
@@ -290,7 +290,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::SPHERE_COLLIDER:
 	{
-		if (!this->GetComponent<C_RigidBody2>())
+		if (!this->GetComponent<C_RigidBody>())
 			AddComponentByType(ComponentType::RIGID_BODY2);
 
 		c = this->CreateComponent<C_SphereCollider>();
@@ -303,7 +303,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::RIGID_BODY2:
 	{
-		c = this->CreateComponent<C_RigidBody2>();
+		c = this->CreateComponent<C_RigidBody>();
 		break;
 	}
 	case ComponentType::TRANSFORM2D:
@@ -570,7 +570,7 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		}
 		case ComponentType::RIGID_BODY2:
 		{
-			C_RigidBody2* rigidBodyCmp = (C_RigidBody2*)component;
+			C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
 			rigidBodyCmp->Save(jsonComponent);
 			break;
 		}
@@ -802,10 +802,10 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "rigidBody")
 		{
-			C_RigidBody2* rbCmp = this->GetComponent<C_RigidBody2>();
+			C_RigidBody* rbCmp = this->GetComponent<C_RigidBody>();
 			if (rbCmp == nullptr)
 			{
-				rbCmp = this->CreateComponent<C_RigidBody2>();
+				rbCmp = this->CreateComponent<C_RigidBody>();
 			}
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
@@ -975,10 +975,10 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "rigidBody")
 		{
-			C_RigidBody2* rbCmp = this->GetComponent<C_RigidBody2>();
+			C_RigidBody* rbCmp = this->GetComponent<C_RigidBody>();
 			if (rbCmp == nullptr)
 			{
-				rbCmp = this->CreateComponent<C_RigidBody2>();
+				rbCmp = this->CreateComponent<C_RigidBody>();
 			}
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);

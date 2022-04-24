@@ -31,7 +31,7 @@
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
-#include "C_RigidBody2.h"
+#include "C_RigidBody.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -180,7 +180,7 @@ public:
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
-									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody2>,
+									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,

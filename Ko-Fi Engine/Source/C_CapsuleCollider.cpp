@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "GameObject.h"
 #include "M_Physics.h"
-#include "C_RigidBody2.h"
+#include "C_RigidBody.h"
 
 C_CapsuleCollider::C_CapsuleCollider(GameObject* parent) : Component(parent)
 {
@@ -19,7 +19,7 @@ bool C_CapsuleCollider::Start()
 	capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape(boundingBoxSize.x/2, boundingBoxSize.y/2);
 	reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 
-	collider = owner->GetComponent<C_RigidBody2>()->GetBody()->addCollider(capsuleShape, transform);
+	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, transform);
 	return true;
 }
 
