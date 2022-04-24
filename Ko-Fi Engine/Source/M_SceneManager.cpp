@@ -304,10 +304,10 @@ void M_SceneManager::GuizmoTransformation()
 
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
 
-	float4x4 modelProjection;
+	std::vector<float4x4> modelProjection;
 	for (int i = 0; i < selectedGameObjects.size(); i++)
 	{
-		modelProjection = selectedGameObjects[i]->GetComponent<C_Transform>()->GetGlobalTransform().Transposed();
+		modelProjection.push_back(selectedGameObjects[i]->GetComponent<C_Transform>()->GetLocalTransform().Transposed());
 	}
 
 	window = ImGui::FindWindowByName("Scene");
@@ -316,19 +316,35 @@ void M_SceneManager::GuizmoTransformation()
 
 	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
 
-	float tempTransform[16];
-	memcpy(tempTransform, modelProjection.ptr(), 16 * sizeof(float));
+	std::vector<float*> tempTransform;
+
+	for (int i = 0; i < selectedGameObjects.size(); i++)
+	{
+		tempTransform.push_back((float*)malloc(16 * sizeof(float)));
+		memcpy(tempTransform[i], modelProjection[i].ptr(), 16 * sizeof(float));
+	}
 	
 	ImGuizmo::MODE finalMode = (currentGizmoOperation == ImGuizmo::OPERATION::SCALE ? ImGuizmo::MODE::LOCAL : currentGizmoMode);
-	ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform);
+
+	for (int i = 0; i < selectedGameObjects.size(); i++)
+	{
+		if (selectedGameObjects.size() > 0) {
+			ImGuizmo::SetID(selectedGameObjects[0]->GetUID());
+			ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform[i]);
+		}
+	}
 
 	if (ImGuizmo::IsUsing())
 	{
-		float4x4 newTransform;
-		newTransform.Set(tempTransform);
-		modelProjection = newTransform.Transposed();
 		for (int i = 0; i < selectedGameObjects.size(); i++)
-		selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection);
+		{
+			float4x4 newTransform;
+			newTransform.Set(tempTransform[i]);
+			modelProjection[i] = newTransform.Transposed();
+
+			selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection[i]);
+		}
+		
 	}
 }
 

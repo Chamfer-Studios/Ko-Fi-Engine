@@ -133,7 +133,7 @@ void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
 {
 	if (owner->GetParent() == nullptr) return;
 	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
-	transformMatrix = globalTransform;
+	//transformMatrix = globalTransform;
 	isDirty = true;
 }
 
