@@ -6,6 +6,7 @@
 // Modules
 #include "Engine.h"
 #include "M_Editor.h"
+#include "M_SceneManager.h"
 
 // Components
 #include "C_Mesh.h"
@@ -14,14 +15,12 @@
 #include "C_Camera.h"
 #include "C_Script.h"
 #include "C_Animator.h"
-#include "C_Collider.h"
 #include "C_Collider2.h"
 #include "C_Canvas.h"
 #include "C_Transform2D.h"
 #include "C_Button.h"
 #include "C_Image.h"
 #include "C_Text.h"
-#include "C_RigidBody.h"
 #include "C_RigidBody2.h"
 #include "C_Transform.h"
 #include "C_Info.h"
@@ -270,15 +269,6 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 		c = this->CreateComponent<C_Camera>();
 		break;
 	}
-	case ComponentType::COLLIDER:
-	{
-		if (!this->GetComponent<C_RigidBody>())
-			AddComponentByType(ComponentType::RIGID_BODY);
-
-		c = this->CreateComponent<C_Collider>();
-		((C_Collider*)c)->SetColliderShape(ColliderShape::BOX);
-		break;
-	}
 	case ComponentType::COLLIDER2:
 	{
 		if (!this->GetComponent<C_RigidBody2>())
@@ -290,11 +280,6 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	case ComponentType::SCRIPT:
 	{
 		c = this->CreateComponent<C_Script>();
-		break;
-	}
-	case ComponentType::RIGID_BODY:
-	{
-		c = this->CreateComponent<C_RigidBody>();
 		break;
 	}
 	case ComponentType::RIGID_BODY2:
@@ -372,9 +357,6 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	c->Start();
 	return c;
 }
-
-
-
 
 void GameObject::AttachChild(GameObject* child)
 {
@@ -565,15 +547,15 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			cameraCmp->Save(jsonComponent);
 			break;
 		}
-		case ComponentType::RIGID_BODY:
+		case ComponentType::RIGID_BODY2:
 		{
-			C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
+			C_RigidBody2* rigidBodyCmp = (C_RigidBody2*)component;
 			rigidBodyCmp->Save(jsonComponent);
 			break;
 		}
-		case ComponentType::COLLIDER:
+		case ComponentType::COLLIDER2:
 		{
-			C_Collider* collisionCmp = (C_Collider*)component;
+			C_Collider2* collisionCmp = (C_Collider2*)component;
 			collisionCmp->Save(jsonComponent);
 			break;
 		}
@@ -787,20 +769,20 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		}
 		else if (type == "rigidBody")
 		{
-			C_RigidBody* rbCmp = this->GetComponent<C_RigidBody>();
+			C_RigidBody2* rbCmp = this->GetComponent<C_RigidBody2>();
 			if (rbCmp == nullptr)
 			{
-				rbCmp = this->CreateComponent<C_RigidBody>();
+				rbCmp = this->CreateComponent<C_RigidBody2>();
 			}
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
 		else if (type == "collider")
 		{
-			C_Collider* colCmp = this->GetComponent<C_Collider>();
+			C_Collider2* colCmp = this->GetComponent<C_Collider2>();
 			if (colCmp == nullptr)
 			{
-				colCmp = this->CreateComponent<C_Collider>();
+				colCmp = this->CreateComponent<C_Collider2>();
 			}
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);
@@ -946,20 +928,20 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		}
 		else if (type == "rigidBody")
 		{
-			C_RigidBody* rbCmp = this->GetComponent<C_RigidBody>();
+			C_RigidBody2* rbCmp = this->GetComponent<C_RigidBody2>();
 			if (rbCmp == nullptr)
 			{
-				rbCmp = this->CreateComponent<C_RigidBody>();
+				rbCmp = this->CreateComponent<C_RigidBody2>();
 			}
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
 		else if (type == "collider")
 		{
-			C_Collider* colCmp = this->GetComponent<C_Collider>();
+			C_Collider2* colCmp = this->GetComponent<C_Collider2>();
 			if (colCmp == nullptr)
 			{
-				colCmp = this->CreateComponent<C_Collider>();
+				colCmp = this->CreateComponent<C_Collider2>();
 			}
 			colCmp->active = true;
 			colCmp->Load(jsonCmp);

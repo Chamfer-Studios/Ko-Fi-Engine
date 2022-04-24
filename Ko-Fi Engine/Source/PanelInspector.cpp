@@ -10,7 +10,6 @@
 #include "C_Camera.h"
 #include "C_Info.h"
 #include "C_Transform.h"
-#include "C_RigidBody.h"
 #include "C_Animator.h"
 #include "C_LightSource.h"
 

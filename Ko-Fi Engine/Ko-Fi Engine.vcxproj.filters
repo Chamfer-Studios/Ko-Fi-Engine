@@ -134,9 +134,6 @@
     <Filter Include="Scripts\Dialogue">
       <UniqueIdentifier>{d8aab11d-2215-4e32-83a2-dcd4ccc3d9ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Helpers\Physics">
-      <UniqueIdentifier>{5e576769-6fa5-4e63-9e84-299ec3eb37f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\Players">
       <UniqueIdentifier>{b60b2e15-ad68-4868-b194-05cbcd60c8cf}</UniqueIdentifier>
     </Filter>
@@ -577,12 +574,6 @@
     <ClCompile Include="Source\M_Physics.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\C_Collider.cpp">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\C_RigidBody.cpp">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\I_Track.cpp">
       <Filter>Source\Importers</Filter>
     </ClCompile>
@@ -618,9 +609,6 @@
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Source\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\P_World.cpp">
-      <Filter>Source\Helpers\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_RigidBody2.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
@@ -1698,12 +1686,6 @@
     <ClInclude Include="Source\M_Physics.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\C_Collider.h">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\C_RigidBody.h">
-      <Filter>Source\GameObject\Components\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\I_Track.h">
       <Filter>Source\Importers</Filter>
     </ClInclude>
@@ -1742,18 +1724,6 @@
     </ClInclude>
     <ClInclude Include="Source\Channel.h">
       <Filter>Source\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\P_World.h">
-      <Filter>Source\Helpers\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\P_Actor.h">
-      <Filter>Source\Helpers\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\P_Collision.h">
-      <Filter>Source\Helpers\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\P_Solver.h">
-      <Filter>Source\Helpers\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Source\C_RigidBody2.h">
       <Filter>Source\GameObject\Components\Physics</Filter>

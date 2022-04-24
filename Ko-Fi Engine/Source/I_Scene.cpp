@@ -18,8 +18,6 @@
 #include "C_Material.h"
 #include "C_Info.h"
 #include "C_Camera.h"
-#include "C_Collider.h"
-#include "C_RigidBody.h"
 #include "C_Script.h"
 #include "C_Button.h"
 #include "C_Canvas.h"
@@ -29,11 +27,12 @@
 #include "C_Particle.h"
 #include "C_Animator.h"
 #include "C_LightSource.h"
-
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 #include "C_Walkable.h"
 #include "C_FollowPath.h"
+#include "C_RigidBody2.h"
+#include "C_Collider2.h"
 
 #include "R_Mesh.h"
 #include "R_Animation.h"
@@ -397,9 +396,9 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::COLLIDER:
+			case ComponentType::COLLIDER2:
 			{
-				C_Collider* collCmp = (C_Collider*)component;
+				C_Collider2* collCmp = (C_Collider2*)component;
 				collCmp->Save(jsonComponent);
 				break;
 			}
@@ -409,9 +408,9 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				scriptCmp->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::RIGID_BODY:
+			case ComponentType::RIGID_BODY2:
 			{
-				C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
+				C_RigidBody2* rigidBodyCmp = (C_RigidBody2*)component;
 				rigidBodyCmp->Save(jsonComponent);
 				break;
 			}
@@ -681,20 +680,20 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "rigidBody")
 					{
-						C_RigidBody* rbCmp = go->GetComponent<C_RigidBody>();
+						C_RigidBody2* rbCmp = go->GetComponent<C_RigidBody2>();
 						if (rbCmp == nullptr)
 						{
-							rbCmp = (C_RigidBody*)go->AddComponentByType(ComponentType::RIGID_BODY);
+							rbCmp = (C_RigidBody2*)go->AddComponentByType(ComponentType::RIGID_BODY2);
 						}
 						rbCmp->active = true;
 						rbCmp->Load(jsonCmp);
 					}
 					else if (type == "collider")
 					{
-						C_Collider* collCmp = go->GetComponent<C_Collider>();
+						C_Collider2* collCmp = go->GetComponent<C_Collider2>();
 						if (collCmp == nullptr)
 						{
-							collCmp = new C_Collider(go, ColliderShape::NONE);
+							collCmp = new C_Collider2(go/*, ColliderShape::NONE*/);
 						}
 						collCmp->active = true;
 						collCmp->Load(jsonCmp);
