@@ -97,6 +97,7 @@ bool C_BoxCollider::InspectorDraw(PanelChooser* chooser)
 
 void C_BoxCollider::Save(Json& json) const
 {
+
 }
 
 void C_BoxCollider::Load(Json& json)

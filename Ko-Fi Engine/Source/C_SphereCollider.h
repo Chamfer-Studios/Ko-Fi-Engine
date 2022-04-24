@@ -22,6 +22,8 @@ public:
 private:
 	reactphysics3d::SphereShape* sphereShape = nullptr;
 	reactphysics3d::Collider* collider = nullptr;
+	float scaleFactor = 1.0f;
+	std::string currentFilter = "Set Filter";
 
 };
 #endif // !__C_SPHERE_COLLIDER_H__
