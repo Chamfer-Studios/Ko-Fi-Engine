@@ -41,12 +41,15 @@ bool PanelInspector::Update()
 	ImGui::Begin("Inspector");
 	for (int i = 0; i < editor->engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 	{
+		
 		if (panelGameObjectInfo.selectedGameObjects[i] != -1)
 		{
 			// Current game object (the one we have selected at the moment)
 			GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->GetGameObject(editor->panelGameObjectInfo.selectedGameObjects[i]);
 			/*if (currentGameObject->GetComponent<C_Mesh>() != nullptr && (currentGameObject->GetComponent<C_Mesh>()->GetMesh() != nullptr))
 				currentGameObject->GetComponent<C_Mesh>()->DrawBoundingBox(currentGameObject->GetComponent<C_Mesh>()->GetMesh()->localAABB, float3(1.0f, 0.0f, 0.0f));*/
+
+			ImGui::PushID(currentGameObject->GetUID());
 
 			if (currentGameObject->isPrefab)
 			{
@@ -97,6 +100,8 @@ bool PanelInspector::Update()
 				}
 				ImGui::EndCombo();
 			}
+
+			ImGui::PopID();
 
 		}
 	}
