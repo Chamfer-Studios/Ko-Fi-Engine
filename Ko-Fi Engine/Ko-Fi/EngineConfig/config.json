@@ -1,4 +1,5 @@
 {
+    "": null,
     "Audio": null,
     "Camera": null,
     "Editor": null,
@@ -12,61 +13,23 @@
     "FileSystem": null,
     "Input": null,
     "Navigation": null,
-    "Physics": {
-        "Filter_matrix": [
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true
-        ],
-        "Filters": [
-            "default",
-            "enemy",
-            "player",
-            "terrain",
-            "projectile"
-        ],
-        "Gravity": 9.8100004196167,
-        "Number_threads": 4
-    },
     "Renderer3D": {
         "Vsync": true
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": ""
+        "DefaultScene": "SandBoxCollsions"
     },
     "UI": null,
     "Window": {
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 1129,
+        "Height": 768,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine",
+        "Title": "Ko-Fi Engine - SandBoxCollsions",
         "Width": 1024
     }
 }

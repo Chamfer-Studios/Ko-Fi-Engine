@@ -109,8 +109,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\C_Collider2.cpp" />
+    <ClCompile Include="Source\C_BoxCollider.cpp" />
+    <ClCompile Include="Source\C_CapsuleCollider.cpp" />
     <ClCompile Include="Source\C_RigidBody2.cpp" />
+    <ClCompile Include="Source\C_SphereCollider.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\P_World.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
@@ -269,8 +271,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
-    <ClInclude Include="Source\C_Collider2.h" />
+    <ClInclude Include="Source\C_BoxCollider.h" />
+    <ClInclude Include="Source\C_CapsuleCollider.h" />
     <ClInclude Include="Source\C_RigidBody2.h" />
+    <ClInclude Include="Source\C_SphereCollider.h" />
     <ClInclude Include="Source\P_Actor.h" />
     <ClInclude Include="Source\P_Collision.h" />
     <ClInclude Include="Source\P_World.h" />

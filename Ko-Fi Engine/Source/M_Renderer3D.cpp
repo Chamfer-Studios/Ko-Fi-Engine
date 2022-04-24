@@ -350,7 +350,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 		}
 	}
 	RenderAllParticles();
-
+	engine->GetPhysics()->RenderPhysics();
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)

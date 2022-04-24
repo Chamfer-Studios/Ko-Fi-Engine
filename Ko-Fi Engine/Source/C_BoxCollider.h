@@ -1,14 +1,14 @@
-#ifndef __C_Collider2_H__
-#define __C_Collider2_H__
+#ifndef __C_BOX_COLLIDER_H__
+#define __C_BOX_COLLIDER_H__
 #include "Component.h"
 #include "reactphysics3d/reactphysics3d.h"
-
-class C_Collider2 : public Component
+#include "MathGeoLib/Math/float3.h"
+class C_BoxCollider : public Component
 {
 public:
 	//constructors
-	C_Collider2(GameObject* parent);
-	~C_Collider2();
+	C_BoxCollider(GameObject* parent);
+	~C_BoxCollider();
 
 	//Game Loop
 	bool Start() override;
@@ -22,7 +22,7 @@ public:
 private:
 	reactphysics3d::BoxShape* boxShape = nullptr;
 	reactphysics3d::Collider* collider = nullptr;
-
+	float3 scaleFactor = float3(1, 1, 1);
 };
-#endif // !__C_Collider2_H__
+#endif // !__C_BOX_COLLIDER_H__
 

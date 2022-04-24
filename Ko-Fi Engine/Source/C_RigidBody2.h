@@ -26,7 +26,7 @@ public:
 private:
 	//RigidBody* rigidBody = nullptr;
 	reactphysics3d::RigidBody* body = nullptr;
-
+	std::string bodyType = "Set Type";
 };
 
 #endif // !__C_RIGIDBODY_H__

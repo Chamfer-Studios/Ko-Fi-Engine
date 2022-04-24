@@ -1,10 +1,10 @@
 {
-    "SceneIntro": {
+    "SandBoxCollsions": {
         "active": true,
         "game_objects_amount": 4,
         "game_objects_list": [
             {
-                "UID": 890021525,
+                "UID": 91885941,
                 "active": true,
                 "components": [
                     {
@@ -15,8 +15,8 @@
                         "active": true,
                         "position": [
                             0.0,
-                            0.0,
-                            -68.5
+                            17.5,
+                            -125.0
                         ],
                         "rotation": [
                             0.0,
@@ -34,12 +34,12 @@
                     {
                         "active": true,
                         "draw_frustum": true,
-                        "far_plane_distance": 673.0,
+                        "far_plane_distance": 573.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.10000000149011612,
                         "type": "camera",
-                        "vertical_fov": 83.0
+                        "vertical_fov": 105.0
                     }
                 ],
                 "is3D": true,
@@ -48,7 +48,7 @@
                 "tag": 0
             },
             {
-                "UID": 695441487,
+                "UID": 1984797595,
                 "active": true,
                 "components": [
                     {
@@ -105,7 +105,7 @@
                 "tag": 0
             },
             {
-                "UID": 266956221,
+                "UID": 625392644,
                 "active": true,
                 "components": [
                     {
@@ -116,7 +116,7 @@
                         "active": true,
                         "position": [
                             0.0,
-                            -5.960464477539063e-08,
+                            45.76380920410156,
                             0.0
                         ],
                         "rotation": [
@@ -169,7 +169,7 @@
                 "tag": 0
             },
             {
-                "UID": 195260311,
+                "UID": 1624142141,
                 "active": true,
                 "components": [
                     {
@@ -179,9 +179,9 @@
                     {
                         "active": true,
                         "position": [
-                            4.76837158203125e-07,
-                            76.5,
-                            0.0
+                            3.725290298461914e-09,
+                            0.0,
+                            1.1920928955078125e-07
                         ],
                         "rotation": [
                             0.0,
@@ -233,7 +233,7 @@
                 "tag": 0
             }
         ],
-        "name": "SceneIntro",
+        "name": "SandBoxCollsions",
         "navmesh": {}
     }
 }

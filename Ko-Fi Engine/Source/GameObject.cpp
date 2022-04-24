@@ -15,7 +15,9 @@
 #include "C_Script.h"
 #include "C_Animator.h"
 #include "C_Collider.h"
-#include "C_Collider2.h"
+#include "C_BoxCollider.h"
+#include "C_CapsuleCollider.h"
+#include "C_SphereCollider.h"
 #include "C_Canvas.h"
 #include "C_Transform2D.h"
 #include "C_Button.h"
@@ -125,7 +127,7 @@ bool GameObject::CleanUp()
 {
 	for (std::vector<Component*>::iterator component = components.begin(); component != components.end();)
 	{
-		(*component)->CleanUp();
+		//(*component)->CleanUp();
 		RELEASE(*component);
 		component = components.erase(component);
 	}
@@ -214,9 +216,10 @@ void GameObject::DeleteComponent(Component* component)
 	auto componentIt = std::find(components.begin(), components.end(), component);
 	if (componentIt != components.end())
 	{
-		(*componentIt)->CleanUp();
+		//(*componentIt)->CleanUp();
 		components.erase(componentIt);
 		components.shrink_to_fit();
+		RELEASE(*componentIt);
 	}
 }
 
@@ -279,12 +282,28 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 		((C_Collider*)c)->SetColliderShape(ColliderShape::BOX);
 		break;
 	}
-	case ComponentType::COLLIDER2:
+	case ComponentType::BOX_COLLIDER:
 	{
 		if (!this->GetComponent<C_RigidBody2>())
 			AddComponentByType(ComponentType::RIGID_BODY2);
 
-		c = this->CreateComponent<C_Collider2>();
+		c = this->CreateComponent<C_BoxCollider>();
+		break;
+	}
+	case ComponentType::CAPSULE_COLLIDER:
+	{
+		if (!this->GetComponent<C_RigidBody2>())
+			AddComponentByType(ComponentType::RIGID_BODY2);
+
+		c = this->CreateComponent<C_CapsuleCollider>();
+		break;
+	}
+	case ComponentType::SPHERE_COLLIDER:
+	{
+		if (!this->GetComponent<C_RigidBody2>())
+			AddComponentByType(ComponentType::RIGID_BODY2);
+
+		c = this->CreateComponent<C_SphereCollider>();
 		break;
 	}
 	case ComponentType::SCRIPT:
