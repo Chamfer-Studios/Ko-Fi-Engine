@@ -3,10 +3,16 @@
     "asset_path": "Assets/Models/guard1_body.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1944546922.milk",
+            "asset_file": "RootNode001.sugar",
+            "library_path": "Library/Meshes/970294315.sugar",
+            "type": 0,
+            "uid": 451998584
+        },
+        {
+            "asset_file": "RootNode001.glsl",
+            "library_path": "Library/Shaders/899493382.glsl",
             "type": 4,
-            "uid": 1330965907
+            "uid": 451998584
         }
     ],
     "library_file": "1783409910.tea",

@@ -30,7 +30,7 @@
 // EXTENSIONS
 #define MODEL_EXTENSION ".tea"
 #define MESH_EXTENSION ".sugar"
-#define MATERIAL_EXTENSION ".milk"
+//#define MATERIAL_EXTENSION ".milk"
 #define SHADER_EXTENSION ".glsl"
 #define ANIMATION_EXTENSION ".cake"
 #define TEXTURE_EXTENSION ".cacao"

@@ -3,16 +3,28 @@
     "asset_path": "Assets/Models/navmesh/navmesh_test3.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/130843298.milk",
-            "type": 4,
-            "uid": 1797027746
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/536181842.sugar",
+            "type": 0,
+            "uid": 1378775504
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/386602943.milk",
+            "asset_file": "Cube.glsl",
+            "library_path": "Library/Shaders/1024698011.glsl",
             "type": 4,
-            "uid": 1963103131
+            "uid": 1378775504
+        },
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/998343516.sugar",
+            "type": 0,
+            "uid": 1093470491
+        },
+        {
+            "asset_file": "Plane.glsl",
+            "library_path": "Library/Shaders/663614871.glsl",
+            "type": 4,
+            "uid": 1093470491
         }
     ],
     "library_file": "675437220.tea",

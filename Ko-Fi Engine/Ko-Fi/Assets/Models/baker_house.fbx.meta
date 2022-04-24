@@ -3,31 +3,44 @@
     "asset_path": "Assets/Models/baker_house.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1732760467.milk",
+            "asset_file": "Chimney.sugar",
+            "library_path": "Library/Meshes/518829076.sugar",
+            "type": 0,
+            "uid": 1144249367
+        },
+        {
+            "asset_file": "Chimney.glsl",
+            "library_path": "Library/Shaders/349833620.glsl",
             "type": 4,
-            "uid": 1478003084
+            "uid": 1144249367
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1622602782.cacao",
-            "texture_name": "Assets/Textures/Baker_house.png",
+            "asset_file": "Chimney.cacao",
+            "library_path": "Library/Textures/1154417393.cacao",
+            "texture_name": "Baker_house.png",
             "type": 1,
-            "uid": 1478003084
+            "uid": 1144249367
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/859807304.milk",
-            "texture_name": "Assets/Textures/Baker_house.png",
+            "asset_file": "Baker_house.sugar",
+            "library_path": "Library/Meshes/31292363.sugar",
+            "texture_name": "Baker_house.png",
+            "type": 0,
+            "uid": 2117829078
+        },
+        {
+            "asset_file": "Baker_house.glsl",
+            "library_path": "Library/Shaders/1646357606.glsl",
+            "texture_name": "Baker_house.png",
             "type": 4,
-            "uid": 998518834
+            "uid": 2117829078
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1685135306.cacao",
-            "texture_name": "Assets/Textures/Baker_house.png",
+            "asset_file": "Baker_house.cacao",
+            "library_path": "Library/Textures/1270712348.cacao",
+            "texture_name": "Baker_house.png",
             "type": 1,
-            "uid": 998518834
+            "uid": 2117829078
         }
     ],
     "library_file": "2055484068.tea",

@@ -3,10 +3,16 @@
     "asset_path": "Assets/Models/Characters/omozra_lp.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/893203674.milk",
+            "asset_file": "omozra.sugar",
+            "library_path": "Library/Meshes/292500084.sugar",
+            "type": 0,
+            "uid": 1768113965
+        },
+        {
+            "asset_file": "omozra.glsl",
+            "library_path": "Library/Shaders/1796189308.glsl",
             "type": 4,
-            "uid": 943547712
+            "uid": 1768113965
         }
     ],
     "library_file": "592478344.tea",

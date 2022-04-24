@@ -19,7 +19,7 @@ bool R_Model::SaveMeta(Json& json) const
 	{
 		if (node.mesh != 0)
 		{
-			std::string meshName = node.filename + MESH_EXTENSION;
+			std::string meshName = node.name + MESH_EXTENSION;
 			std::string meshPath = MESHES_DIR + std::to_string(node.mesh) + MESH_EXTENSION;
 			jsonResource["uid"] = node.uid;
 			jsonResource["type"] = ResourceType::MESH;
@@ -29,8 +29,8 @@ bool R_Model::SaveMeta(Json& json) const
 		}
 		if (node.material != 0)
 		{
-			std::string materialName = node.filename + MATERIAL_EXTENSION;
-			std::string shaderPath = SHADERS_DIR + std::to_string(node.material) + MATERIAL_EXTENSION;
+			std::string materialName = node.name + SHADER_EXTENSION;
+			std::string shaderPath = SHADERS_DIR + std::to_string(node.material) + SHADER_EXTENSION;
 			jsonResource["uid"] = node.uid;
 			jsonResource["type"] = ResourceType::MATERIAL;
 			jsonResource["asset_file"] = materialName;
@@ -40,7 +40,7 @@ bool R_Model::SaveMeta(Json& json) const
 		if (node.texture != 0)
 		{
 			std::string textureName = node.textureName;
-			std::string fileName = node.filename + TEXTURE_EXTENSION;
+			std::string fileName = node.name + TEXTURE_EXTENSION;
 			std::string texturePath = TEXTURES_DIR + std::to_string(node.texture) + TEXTURE_EXTENSION;
 			jsonResource["uid"] = node.uid;
 			jsonResource["type"] = ResourceType::TEXTURE;
@@ -68,7 +68,7 @@ bool R_Model::SaveMeta(Json& json) const
 // MODEL NODE ------------------------------------------------------------------------------------------------
 
 ModelNode::ModelNode() :
-	filename(""),
+	name(""),
 	uid(0),
 	parentUid(0),
 	mesh(0),
@@ -81,7 +81,7 @@ ModelNode::ModelNode() :
 {}
 
 ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID texture, std::string textureName, float3 position, Quat rotation, float3 scale) :
-filename(name),
+name(name),
 uid(uid),
 parentUid(parentUid),
 mesh(mesh),

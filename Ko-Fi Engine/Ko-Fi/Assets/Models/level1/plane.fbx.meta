@@ -3,17 +3,23 @@
     "asset_path": "Assets/Models/level1/plane.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/655588223.milk",
-            "type": 4,
-            "uid": 1994570105
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/724942484.sugar",
+            "type": 0,
+            "uid": 1398311543
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/90240145.cacao",
-            "texture_name": "Assets/Textures/Grey (Light).png",
+            "asset_file": "Plane.glsl",
+            "library_path": "Library/Shaders/1398440644.glsl",
+            "type": 4,
+            "uid": 1398311543
+        },
+        {
+            "asset_file": "Plane.cacao",
+            "library_path": "Library/Textures/369971885.cacao",
+            "texture_name": "Grey (Light).png",
             "type": 1,
-            "uid": 1994570105
+            "uid": 1398311543
         }
     ],
     "library_file": "710108514.tea",

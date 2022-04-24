@@ -3,10 +3,16 @@
     "asset_path": "Assets/Models/karambit_low.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1023972853.milk",
+            "asset_file": "Karambit_low.sugar",
+            "library_path": "Library/Meshes/798679314.sugar",
+            "type": 0,
+            "uid": 376793054
+        },
+        {
+            "asset_file": "Karambit_low.glsl",
+            "library_path": "Library/Shaders/306827926.glsl",
             "type": 4,
-            "uid": 2020461570
+            "uid": 376793054
         }
     ],
     "library_file": "1106740667.tea",

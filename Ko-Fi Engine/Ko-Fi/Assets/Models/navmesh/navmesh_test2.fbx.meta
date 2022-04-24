@@ -3,10 +3,16 @@
     "asset_path": "Assets/Models/navmesh/navmesh_test2.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/685184987.milk",
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/772345172.sugar",
+            "type": 0,
+            "uid": 817692765
+        },
+        {
+            "asset_file": "Plane.glsl",
+            "library_path": "Library/Shaders/198778994.glsl",
             "type": 4,
-            "uid": 339577806
+            "uid": 817692765
         }
     ],
     "library_file": "2015051754.tea",

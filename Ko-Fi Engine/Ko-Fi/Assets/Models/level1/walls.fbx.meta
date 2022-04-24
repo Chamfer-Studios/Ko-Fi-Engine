@@ -3,17 +3,23 @@
     "asset_path": "Assets/Models/level1/walls.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/735457056.milk",
-            "type": 4,
-            "uid": 565590524
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/683406800.sugar",
+            "type": 0,
+            "uid": 1243099909
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/803100355.cacao",
-            "texture_name": "Assets/Textures/Grey (Dark).png",
+            "asset_file": "Cube.glsl",
+            "library_path": "Library/Shaders/689461482.glsl",
+            "type": 4,
+            "uid": 1243099909
+        },
+        {
+            "asset_file": "Cube.cacao",
+            "library_path": "Library/Textures/443360578.cacao",
+            "texture_name": "Grey (Dark).png",
             "type": 1,
-            "uid": 565590524
+            "uid": 1243099909
         }
     ],
     "library_file": "1811515331.tea",

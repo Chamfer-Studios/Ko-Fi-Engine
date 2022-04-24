@@ -3,59 +3,59 @@
     "asset_path": "Assets/Models/Characters/zhib_animation_reel_v8.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/551570206.milk",
+            "asset_file": "khopesh1.sugar",
+            "library_path": "Library/Meshes/656051124.sugar",
+            "type": 0,
+            "uid": 676724077
+        },
+        {
+            "asset_file": "khopesh1.glsl",
+            "library_path": "Library/Shaders/2108279482.glsl",
             "type": 4,
-            "uid": 1950552185
+            "uid": 676724077
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1714219919.cacao",
-            "texture_name": "Assets/Textures/Khopesh_Base_color.png",
-            "type": 1,
-            "uid": 1950552185
+            "asset_file": "character_low.sugar",
+            "library_path": "Library/Meshes/1092995870.sugar",
+            "type": 0,
+            "uid": 18543872
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1617027551.milk",
-            "texture_name": "Assets/Textures/Khopesh_Base_color.png",
+            "asset_file": "character_low.glsl",
+            "library_path": "Library/Shaders/1767667326.glsl",
             "type": 4,
-            "uid": 1448782321
+            "uid": 18543872
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1539901490.cacao",
-            "texture_name": "Assets/Textures/Character_Base_color.png",
-            "type": 1,
-            "uid": 1448782321
+            "asset_file": "khopesh.sugar",
+            "library_path": "Library/Meshes/1927972347.sugar",
+            "type": 0,
+            "uid": 921544817
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1875645392.milk",
-            "texture_name": "Assets/Textures/Character_Base_color.png",
+            "asset_file": "khopesh.glsl",
+            "library_path": "Library/Shaders/182200482.glsl",
             "type": 4,
-            "uid": 655526109
+            "uid": 921544817
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/122229656.cacao",
-            "texture_name": "Assets/Textures/Khopesh_Base_color.png",
-            "type": 1,
-            "uid": 655526109
+            "asset_file": "karambit.sugar",
+            "library_path": "Library/Meshes/429533498.sugar",
+            "type": 0,
+            "uid": 1941338140
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1266938954.milk",
-            "texture_name": "Assets/Textures/Khopesh_Base_color.png",
+            "asset_file": "karambit.glsl",
+            "library_path": "Library/Shaders/450699080.glsl",
             "type": 4,
-            "uid": 1420670962
+            "uid": 1941338140
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1961083203.cacao",
-            "texture_name": "Assets/Textures/karambit_Base_color.png",
+            "asset_file": "karambit.cacao",
+            "library_path": "Library/Textures/1237082363.cacao",
+            "texture_name": "karambit_Base_color.png",
             "type": 1,
-            "uid": 1420670962
+            "uid": 1941338140
         }
     ],
     "library_file": "1792879429.tea",

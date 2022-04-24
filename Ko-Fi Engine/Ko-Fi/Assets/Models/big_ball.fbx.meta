@@ -3,10 +3,16 @@
     "asset_path": "Assets/Models/big_ball.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/146724990.milk",
+            "asset_file": "Sphere.sugar",
+            "library_path": "Library/Meshes/1661873829.sugar",
+            "type": 0,
+            "uid": 306466325
+        },
+        {
+            "asset_file": "Sphere.glsl",
+            "library_path": "Library/Shaders/1599662672.glsl",
             "type": 4,
-            "uid": 2077619500
+            "uid": 306466325
         }
     ],
     "library_file": "1721674575.tea",

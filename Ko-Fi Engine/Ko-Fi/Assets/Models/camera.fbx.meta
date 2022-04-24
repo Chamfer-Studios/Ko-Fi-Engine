@@ -3,10 +3,16 @@
     "asset_path": "Assets/Models/camera.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/90185266.milk",
+            "asset_file": "camera.sugar",
+            "library_path": "Library/Meshes/609451546.sugar",
+            "type": 0,
+            "uid": 1714953181
+        },
+        {
+            "asset_file": "camera.glsl",
+            "library_path": "Library/Shaders/686772225.glsl",
             "type": 4,
-            "uid": 464343533
+            "uid": 1714953181
         }
     ],
     "library_file": "1997622998.tea",

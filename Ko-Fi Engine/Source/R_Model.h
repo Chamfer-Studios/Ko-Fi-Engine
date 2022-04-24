@@ -17,7 +17,7 @@ public:
 	~ModelNode();
 
 public:
-	std::string filename;
+	std::string name;
 	UID uid;
 	UID parentUid;
 	UID mesh;

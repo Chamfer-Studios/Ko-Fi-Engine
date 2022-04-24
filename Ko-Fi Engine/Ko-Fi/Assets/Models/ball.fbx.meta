@@ -3,10 +3,16 @@
     "asset_path": "Assets/Models/ball.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1416335786.milk",
+            "asset_file": "Sphere.sugar",
+            "library_path": "Library/Meshes/360926324.sugar",
+            "type": 0,
+            "uid": 453954322
+        },
+        {
+            "asset_file": "Sphere.glsl",
+            "library_path": "Library/Shaders/239841575.glsl",
             "type": 4,
-            "uid": 945483631
+            "uid": 453954322
         }
     ],
     "library_file": "1205074228.tea",

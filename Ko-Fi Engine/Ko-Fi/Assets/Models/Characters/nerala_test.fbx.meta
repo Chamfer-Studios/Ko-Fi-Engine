@@ -3,24 +3,28 @@
     "asset_path": "Assets/Models/Characters/nerala_test.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1582999293.milk",
-            "type": 4,
-            "uid": 324172381
+            "asset_file": "low_poly.sugar",
+            "library_path": "Library/Meshes/604320205.sugar",
+            "type": 0,
+            "uid": 562244767
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1133013913.cacao",
-            "texture_name": "Assets/Textures/assassin_Base_color.png",
-            "type": 1,
-            "uid": 324172381
+            "asset_file": "low_poly.glsl",
+            "library_path": "Library/Shaders/1855947601.glsl",
+            "type": 4,
+            "uid": 562244767
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/536578580.milk",
-            "texture_name": "Assets/Textures/assassin_Base_color.png",
+            "asset_file": "low.sugar",
+            "library_path": "Library/Meshes/507647658.sugar",
+            "type": 0,
+            "uid": 984372878
+        },
+        {
+            "asset_file": "low.glsl",
+            "library_path": "Library/Shaders/648809930.glsl",
             "type": 4,
-            "uid": 192315369
+            "uid": 984372878
         }
     ],
     "library_file": "1221841613.tea",

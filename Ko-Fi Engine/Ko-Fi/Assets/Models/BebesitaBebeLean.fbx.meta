@@ -3,73 +3,64 @@
     "asset_path": "Assets/Models/BebesitaBebeLean.fbx",
     "contained_resources": [
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/1452208255.milk",
+            "asset_file": "Ch47_Body1.sugar",
+            "library_path": "Library/Meshes/595773200.sugar",
+            "type": 0,
+            "uid": 1250566401
+        },
+        {
+            "asset_file": "Ch47_Body1.glsl",
+            "library_path": "Library/Shaders/1091599243.glsl",
             "type": 4,
-            "uid": 1740164878
+            "uid": 1250566401
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/660820595.cacao",
-            "texture_name": "Assets/Textures/Ch47_1001_Diffuse.png",
-            "type": 1,
-            "uid": 1740164878
+            "asset_file": "Ch47_Eye.sugar",
+            "library_path": "Library/Meshes/1532559138.sugar",
+            "type": 0,
+            "uid": 932113220
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/2032642442.milk",
-            "texture_name": "Assets/Textures/Ch47_1001_Diffuse.png",
+            "asset_file": "Ch47_Eye.glsl",
+            "library_path": "Library/Shaders/1218329903.glsl",
             "type": 4,
-            "uid": 1448474814
+            "uid": 932113220
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1869568123.cacao",
-            "texture_name": "Assets/Textures/Ch47_1001_Diffuse.png",
-            "type": 1,
-            "uid": 1448474814
+            "asset_file": "Ch47_Face.sugar",
+            "library_path": "Library/Meshes/433476283.sugar",
+            "type": 0,
+            "uid": 37087557
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/294933346.milk",
-            "texture_name": "Assets/Textures/Ch47_1001_Diffuse.png",
+            "asset_file": "Ch47_Face.glsl",
+            "library_path": "Library/Shaders/1221309172.glsl",
             "type": 4,
-            "uid": 70963066
+            "uid": 37087557
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1463332899.cacao",
-            "texture_name": "Assets/Textures/Ch47_1001_Diffuse.png",
-            "type": 1,
-            "uid": 70963066
+            "asset_file": "Ch47_eyelashes.sugar",
+            "library_path": "Library/Meshes/876469268.sugar",
+            "type": 0,
+            "uid": 1298344494
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/2061761538.milk",
-            "texture_name": "Assets/Textures/Ch47_1001_Diffuse.png",
+            "asset_file": "Ch47_eyelashes.glsl",
+            "library_path": "Library/Shaders/915895144.glsl",
             "type": 4,
-            "uid": 2075547599
+            "uid": 1298344494
         },
         {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1945587971.cacao",
-            "texture_name": "Assets/Textures/Ch47_1002_Diffuse.png",
-            "type": 1,
-            "uid": 2075547599
+            "asset_file": "Ch47_hair1.sugar",
+            "library_path": "Library/Meshes/25909575.sugar",
+            "type": 0,
+            "uid": 303890053
         },
         {
-            "asset_file": ".milk",
-            "library_path": "Library/Shaders/395362949.milk",
-            "texture_name": "Assets/Textures/Ch47_1002_Diffuse.png",
+            "asset_file": "Ch47_hair1.glsl",
+            "library_path": "Library/Shaders/540120267.glsl",
             "type": 4,
-            "uid": 1249094466
-        },
-        {
-            "asset_file": ".cacao",
-            "library_path": "Library/Textures/1265968730.cacao",
-            "texture_name": "Assets/Textures/Ch47_1002_Diffuse.png",
-            "type": 1,
-            "uid": 1249094466
+            "uid": 303890053
         }
     ],
     "library_file": "114352494.tea",
