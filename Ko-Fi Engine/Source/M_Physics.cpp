@@ -15,11 +15,11 @@ M_Physics::M_Physics(KoFiEngine* engine)
 	world = physicsCommon.createPhysicsWorld(worldSettings);
 	world->setIsDebugRenderingEnabled(true);
 	reactphysics3d::DebugRenderer& debugRenderer = world->getDebugRenderer();
+
 	// Select the contact points and contact normals to be displayed 
 	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::COLLISION_SHAPE, true);
 	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::CONTACT_POINT, true);
 	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::CONTACT_NORMAL, true);
-
 }
 
 M_Physics::~M_Physics()

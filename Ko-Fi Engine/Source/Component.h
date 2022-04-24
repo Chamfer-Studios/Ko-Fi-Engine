@@ -16,7 +16,6 @@ enum class ComponentType
 	PARTICLE,
 	CAMERA,
 	SCRIPT,
-	RIGID_BODY,
 	RIGID_BODY2,
 	COLLIDER,
 	BOX_COLLIDER,

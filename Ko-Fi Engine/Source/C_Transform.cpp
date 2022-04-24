@@ -8,7 +8,6 @@
 // GameObject
 #include "GameObject.h"
 #include "C_Camera.h"
-#include "C_Collider.h"
 #include "C_Mesh.h"
 
 #include "PanelChooser.h"
@@ -39,8 +38,7 @@ bool C_Transform::Update(float dt)
 		}
 		RecomputeGlobalMatrix();
 		owner->PropagateTransform();
-		if (owner->GetComponent<C_Collider>())
-			owner->GetComponent<C_Collider>()->UpdateCollSizeFromAABB();
+
 		isDirty = false;
 	}
 
