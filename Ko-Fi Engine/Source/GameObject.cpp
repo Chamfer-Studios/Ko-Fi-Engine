@@ -380,7 +380,7 @@ void GameObject::AttachChild(GameObject* child)
 {
 	if (child->parent != nullptr)
 		child->parent->RemoveChild(child);
-
+	
 	child->parent = this;
 	children.push_back(child);
 	//child->PropagateTransform();

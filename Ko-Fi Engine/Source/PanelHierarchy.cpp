@@ -191,14 +191,10 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 			}
 			if (ImGui::MenuItem("Delete")) {
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-					for (int i = 0; i < editor->panelGameObjectInfo.selectedGameObjects.size(); i++)
-					{
-						if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjects[i] && go->GetUID() != -1) {
-							editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
-							editor->panelGameObjectInfo.selectedGameObjects.erase(editor->panelGameObjectInfo.selectedGameObjects.begin() + i);
-						}
-					}
-					
+					auto it = std::find(editor->panelGameObjectInfo.selectedGameObjects.begin(), editor->panelGameObjectInfo.selectedGameObjects.end(), go->GetUID());
+					if (it == editor->panelGameObjectInfo.selectedGameObjects.end()) continue;
+
+					editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
 				}
 			}
 			if (ImGui::MenuItem("Set as Prefab")) {

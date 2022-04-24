@@ -66,6 +66,7 @@ void Scene::DeleteCurrentScene()
 
 void Scene::DeleteGameObject(GameObject* gameObject)
 {
+	if (gameObject->GetParent() == nullptr) return;
 
 	for (int i = gameObject->children.size()-1;i>=0;--i)
 	{
@@ -94,7 +95,9 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 				parent->AttachChild(child);
 			}
 		}
+		
 		parent->RemoveChild(gameObject);
+
 		if (gameObject->GetComponent<C_LightSource>() != nullptr)
 		{
 			RemoveLight(gameObject);
