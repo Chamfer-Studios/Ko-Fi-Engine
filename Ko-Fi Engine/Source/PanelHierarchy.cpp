@@ -161,7 +161,10 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 		DragNDrop(go);
 		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(1)))
 		{
+			editor->panelGameObjectInfo.selectedGameObjects.clear();
+			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
+
 			CONSOLE_LOG("%s || %d", go->GetName(), go->GetUID());
 		}
 		if (ImGui::IsItemClicked(1)) {

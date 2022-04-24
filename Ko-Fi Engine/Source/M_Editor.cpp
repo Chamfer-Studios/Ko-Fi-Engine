@@ -215,6 +215,15 @@ bool M_Editor::Update(float dt)
 
 	OPTICK_EVENT();
 
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
+	{
+		contr = true;
+	}
+	else if(engine->GetInput()->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
+	{
+		contr = false;
+	}
+
 	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking;
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -523,6 +532,8 @@ ___
 // Refactor this function (it's not done the right way right now...).
 void M_Editor::UpdatePanelsState()
 {
+	
+
 	if (panelsState.showViewportWindow == true)
 	{
 		if (panelViewport == nullptr)

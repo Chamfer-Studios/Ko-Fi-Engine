@@ -115,6 +115,8 @@ public:
 
 	int idTracker = 0;
 
+	bool contr = false;
+
 private:
 	// Style
 	EditorStyleHandler styleHandler;
