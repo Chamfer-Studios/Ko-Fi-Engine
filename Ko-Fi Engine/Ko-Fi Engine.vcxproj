@@ -480,6 +480,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua" />
     <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua" />

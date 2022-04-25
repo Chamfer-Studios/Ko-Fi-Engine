@@ -1,8 +1,8 @@
 -- Variables Publicas
--- Radio, Angulo de Rotacion, Altura de la Camara
+-- Angulo de Rotacion, Velocidad de Rotacion
 
 rotationAngle = 90
-rotationSpeed = 2
+rotationSpeed = 40
 
 local rotationAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspector Variable Type
 rotationAngleIV = InspectorVariable.new("rotationAngle", rotationAngleIVT, rotationAngle)
@@ -12,50 +12,99 @@ local rotationSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT			-- IVT == Inspe
 rotationSpeedIV = InspectorVariable.new("rotationSpeed", rotationSpeedIVT, rotationSpeed)
 NewVariable(rotationSpeedIV)
 
+target = nil
+local targetIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT			-- IVT == Inspector Variable Type
+targetIV = InspectorVariable.new("target", targetIVT, target)
+NewVariable(targetIV)
+
+viewOffset = float3.new(0, 0, 0)
+--local viewOffsetIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3			-- IVT == Inspector Variable Type
+--viewOffsetIV = InspectorVariable.new("viewOffset", viewOffsetIVT, viewOffset)
+--NewVariable(viewOffsetIV)
+
+function Float3Length(v)
+    return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
+end
+
+function Float3Normalized(v)
+    len = Float3Length(v)
+    return { x = v.x / len, y = v.y / len, z = v.z / len }
+end
+
+function Float3Difference(a, b)
+    return { x = b.x - a.x, y = b.y - a.y, z = b.z - a.z }
+end
+
+function Float3Distance(a, b)
+    diff = Float3Difference(a, b)
+    return Float3Length(diff)
+end
+
+function Float3NormalizedDifference(a, b)
+    v = Float3Difference(a, b)
+    return Float3Normalized(v)
+end
+
+function Float3Dot(a, b)
+    return a.x * b.x + a.y * b.y + a.z * b.z
+end
+
+function Float3Angle(a, b)
+    lenA = Float3Length(a)
+    lenB = Float3Length(b)
+
+    return math.acos(Float3Dot(a, b) / (lenA * lenB))
+end
+
 transform = gameObject:GetTransform()
 
-
-degToRad = 0.0174532925199432957
-targetTime = 5
-speed = 2
-start = false
-counter = targetTime
 -------------------- Methods ---------------------
+function GetCameraTargetAngle()
+	diff = Float3Difference(target:GetTransform():GetPosition(), transform:GetPosition())
+	diff.y = 0
+	return Float3Angle(diff, viewOffset)
+end
+
+direction = 0
+
+function Start()
+	viewOffset = Float3Difference(target:GetTransform():GetPosition(), transform:GetPosition())
+	viewOffset = Float3Normalized(viewOffset)
+	direction = 1
+end
+
+changedDirection = false
+
 function Update(dt)
-	--print(rotationAngle)
-
-	buttonLeft = Find("ButtonL"):GetButton():GetButtonState()
-	buttonRigth = Find("ButtonR"):GetButton():GetButtonState()
-	target = Find("Nerala"):GetTransform():GetPosition()
-
-	if(start) then
+	if direction ~= 0 then
+		targetTransform = target:GetTransform()
 		
-		restAngle = (dt * rotationAngle / targetTime) -- Angle to Sum in each frame
+		deltaA = direction * dt * rotationSpeed
 
-		if(counter <= 0.00) then
-			start = false
-			print("set false")
+		if changedDirection == false then
+			deltaA = 0
 		end
-		
-		RotateAround(target, restAngle)
 
-		counter = counter - dt 
+		RotateAround(targetTransform:GetPosition(), deltaA)
+
+		if GetCameraTargetAngle() > math.rad(rotationAngle / 2) then
+			changedDirection = false
+		end
+
+		--Log(tostring(math.deg(GetCameraTargetAngle())) .. "\n")
+		--if math.deg(GetCameraTargetAngle()) < rotationAngle / 2 then
+		--end
+		--end
 	end
-		gameObject:GetCamera():LookAt(target)
+	gameObject:GetCamera():LookAt(targetTransform:GetPosition())
 	
-	if (buttonLeft == 2) then -- H
-		if(rotationAngle > 0) then
-		rotationAngle = -rotationAngle
-		end
-		start = true
-		counter = targetTime
+	if (GetInput(13) == KEY_STATE.KEY_DOWN) then -- Q
+		direction = -1
+		changedDirection = true
 	end
-		if (buttonRigth == 2) then -- H
-		if(rotationAngle < 0) then
-		rotationAngle = rotationAngle * -1
-		end
-		start = true
-		counter = targetTime
+	if (GetInput(14) == KEY_STATE.KEY_DOWN) then -- E
+		direction = 1
+		changedDirection = true
 	end
 	
 end
@@ -64,19 +113,21 @@ function RotateAround(center, angle)
 
 	local position = float3.new(0,0,0)
 	position = transform:GetPosition();
-	a = angle * degToRad
-	print(a)
-	local rotation = Quat.new(0,0,0,0) -- get the desired rotation
-	rotation = Quat.RotateY(a)
-	
-	local direction = float3.new(0,0,0) -- find current direction relative to center
+
+    -- Get the desired rotation
+	radAngle = math.rad(angle)
+	local rotation = Quat.new(0,0,0,0)
+	rotation = Quat.RotateY(radAngle)
+
+    -- Find current direction relative to center
+	local direction = float3.new(0,0,0)
 	direction.x = position.x - center.x
 	direction.y = position.y - center.y
 	direction.z = position.z - center.z
 
 	direction = MulQuat(rotation, direction) -- rotate the direction
 
-	-- define new position
+	-- Define new position
 	position.x = center.x + direction.x
 	position.y = center.y + direction.y 
 	position.z = center.z + direction.z 

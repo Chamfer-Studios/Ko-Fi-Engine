@@ -316,7 +316,6 @@ function Update(dt)
         awareness = awareness - awarenessSpeed * dt
     end
 
-    --Log(tostring(awareness) .. "\n")
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
         if seeingSource ~= nil then
             DispatchEvent("State_Suspicious", { seeingPosition })
@@ -353,6 +352,5 @@ function Update(dt)
     if state == STATE.SUS or state == STATE.AGGRO then
         _loop = false
     end
-    Log("DT: " .. tostring(dt) .. "\n")
 	DispatchEvent(pathfinderFollowKey, { speed, dt, _loop })
 end
