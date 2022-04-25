@@ -21,17 +21,17 @@
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
-#include "C_RigidBody.h"
 #include "C_Script.h"
 #include "C_Text.h"
 #include "C_Image.h"
 #include "C_Button.h"
 #include "C_Animator.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 #include "C_Camera.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
+#include "C_RigidBody.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -95,7 +95,10 @@ public:
 					 "MESH", ComponentType::MESH,
 					 "MATERIAL", ComponentType::MATERIAL,
 					 "CAMERA", ComponentType::CAMERA,
-					 "COLLIDER", ComponentType::COLLIDER,
+					 "BOX_COLLIDER", ComponentType::BOX_COLLIDER,
+					 "SPHERE_COLLIDER", ComponentType::SPHERE_COLLIDER,
+					 "CAPSULE_COLLIDER", ComponentType::CAPSULE_COLLIDER,
+					 "RIGID_BODY", ComponentType::RIGID_BODY,
 					 "SCRIPT", ComponentType::SCRIPT,
 					 "TRANSFORM", ComponentType::TRANSFORM,
 					 "INFO", ComponentType::INFO,
@@ -180,7 +183,7 @@ public:
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
-									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
+									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
 									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
@@ -261,10 +264,10 @@ public:
 											"SetSelectedClip", &C_Animator::SetSelectedClip);
 
 		// Component Particle
-		lua.new_usertype<ComponentParticle>("ComponentParticle",
+		lua.new_usertype<C_Particle>("C_Particle",
 											sol::constructors<void(GameObject *)>(),
-											"StopParticleSpawn", &ComponentParticle::StopParticleSpawn,
-											"ResumeParticleSpawn", &ComponentParticle::ResumeParticleSpawn);
+											"StopParticleSpawn", &C_Particle::StopParticleSpawn,
+											"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn);
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
@@ -282,16 +285,16 @@ public:
 											"value", &InspectorVariable::value);
 
 		// Rigid Body structure
-		lua.new_usertype<C_RigidBody>("C_RigidBody",
-											 sol::constructors<void(GameObject *)>(),
-											 "IsStatic", &C_RigidBody::IsStatic,
-											 "IsKinematic", &C_RigidBody::IsKinematic,
-											 "SetStatic", &C_RigidBody::SetStatic,
-											 "SetDynamic", &C_RigidBody::SetDynamic,
-											 "SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
-											 "FreezePositionY", &C_RigidBody::FreezePositionY,
-											 "Set2DVelocity", &C_RigidBody::Set2DVelocity,
-											 "SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
+		//lua.new_usertype<C_RigidBody2>("C_RigidBody",
+		//									 sol::constructors<void(GameObject *)>(),
+		//									 "IsStatic", &C_RigidBody2::IsStatic,
+		//									 "IsKinematic", &C_RigidBody2::IsKinematic,
+		//									 "SetStatic", &C_RigidBody2::SetStatic,
+		//									 "SetDynamic", &C_RigidBody2::SetDynamic,
+		//									 "SetLinearVelocity", &C_RigidBody2::SetLinearVelocity,
+		//									 "FreezePositionY", &C_RigidBody2::FreezePositionY,
+		//									 "Set2DVelocity", &C_RigidBody2::Set2DVelocity,
+		//									 "SetRigidBodyPos", &C_RigidBody2::SetRigidBodyPos);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
@@ -301,9 +304,9 @@ public:
 			sol::constructors<void(KoFiEngine*)>(),
 			"WorldToScreen", &M_Camera3D::WorldToScreen);
 
-		lua.new_usertype<M_Physics>("M_Physics",
+	/*	lua.new_usertype<M_Physics>("M_Physics",
 			sol::constructors<void(KoFiEngine*)>(),
-			"Raycast", &M_Physics::Raycast);
+			"Raycast", &M_Physics::Raycast);*/
 
 		/// Variables
 		lua["gameObject"] = gameObject;

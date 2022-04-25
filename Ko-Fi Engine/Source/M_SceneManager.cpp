@@ -77,6 +77,7 @@ bool M_SceneManager::Start()
 
 	currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 	currentGizmoMode = ImGuizmo::MODE::WORLD;
+
 	return ret;
 }
 
@@ -158,6 +159,7 @@ bool M_SceneManager::SaveConfiguration(Json& configModule) const
 bool M_SceneManager::LoadConfiguration(Json& configModule)
 {
 	defaultScene = configModule["DefaultScene"];
+	
 	return true;
 }
 
@@ -285,64 +287,103 @@ void M_SceneManager::OnClick(SDL_Event event)
 
 void M_SceneManager::GuizmoTransformation()
 {
-	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-	if (!selectedGameObject->GetComponent<C_Transform>()) return;
+	std::vector<GameObject*> selectedGameObjects;
+	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+	selectedGameObjects.push_back(currentScene->GetGameObject(engine->GetEditor()->engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
 
-	if (selectedGameObject == nullptr || selectedGameObject->GetUID() == -1)
-		return;
+	for (int i = 0; i < selectedGameObjects.size(); i++)
+	{
+		if (!selectedGameObjects[i]->GetComponent<C_Transform>()) return;
+
+		if (selectedGameObjects[i] == nullptr || selectedGameObjects[i]->GetUID() == -1) return;
+	}
+	
 
 	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ViewMatrix();
 	viewMatrix.Transpose();
 
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
-	float4x4 modelProjection = selectedGameObject->GetComponent<C_Transform>()->GetGlobalTransform().Transposed();
 
-	//ImGuizmo::SetDrawlist();
+	std::vector<float4x4> modelProjection;
+	for (int i = 0; i < selectedGameObjects.size(); i++)
+	{
+		modelProjection.push_back(selectedGameObjects[i]->GetComponent<C_Transform>()->GetLocalTransform().Transposed());
+	}
+
+	window = ImGui::FindWindowByName("Scene");
+	window->DrawList->PushClipRect(engine->GetEditor()->scenePanelOrigin, ImVec2((engine->GetEditor()->scenePanelOrigin.x + engine->GetEditor()->viewportSize.x),(engine->GetEditor()->scenePanelOrigin.y + engine->GetEditor()->viewportSize.y)), true);
+	ImGuizmo::SetDrawlist(window->DrawList);
 
 	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
 
-	float tempTransform[16];
-	memcpy(tempTransform, modelProjection.ptr(), 16 * sizeof(float));
+	std::vector<float*> tempTransform;
+
+	for (int i = 0; i < selectedGameObjects.size(); i++)
+	{
+		tempTransform.push_back((float*)malloc(16 * sizeof(float)));
+		memcpy(tempTransform[i], modelProjection[i].ptr(), 16 * sizeof(float));
+	}
 	
 	ImGuizmo::MODE finalMode = (currentGizmoOperation == ImGuizmo::OPERATION::SCALE ? ImGuizmo::MODE::LOCAL : currentGizmoMode);
-	ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform);
+
+	for (int i = 0; i < selectedGameObjects.size(); i++)
+	{
+		if (selectedGameObjects.size() > 0) {
+			ImGuizmo::SetID(selectedGameObjects[0]->GetUID());
+			ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform[i]);
+		}
+	}
 
 	if (ImGuizmo::IsUsing())
 	{
-		float4x4 newTransform;
-		newTransform.Set(tempTransform);
-		modelProjection = newTransform.Transposed();
-		selectedGameObject->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection);
+		for (int i = 0; i < selectedGameObjects.size(); i++)
+		{
+			float4x4 newTransform;
+			newTransform.Set(tempTransform[i]);
+			modelProjection[i] = newTransform.Transposed();
+
+			selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection[i]);
+		}
+		
 	}
 }
 
 void M_SceneManager::UpdateGuizmo()
 {
-	GameObject* selectedGameObject = currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-	if (selectedGameObject != nullptr && selectedGameObject->GetComponent<C_Camera>() != nullptr && currentGizmoOperation == ImGuizmo::OPERATION::SCALE)
-		currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
-
+	std::vector<GameObject*> selectedGameObjects;
+	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+	{
+		selectedGameObjects.push_back(currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
+	}
+	
+	for (int i = 0; i < selectedGameObjects.size(); i++)
+	{
+		if (selectedGameObjects[i] != nullptr && selectedGameObjects[i]->GetComponent<C_Camera>() != nullptr && currentGizmoOperation == ImGuizmo::OPERATION::SCALE)
+			currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+	}
+	
 	if (engine->GetEditor()->MouseOnScene() && (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT))
 	{
-
-		if ((engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
+		for (int i = 0; i < selectedGameObjects.size(); i++)
 		{
-			currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
-			CONSOLE_LOG("Set Guizmo to Translate");
-		}
-		if ((engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_DOWN))
-		{
-			currentGizmoOperation = ImGuizmo::OPERATION::ROTATE;
-			CONSOLE_LOG("Set Guizmo to Rotate");
-		}
-		if (selectedGameObject != nullptr && selectedGameObject->GetComponent<C_Camera>() == nullptr)
-		{
-			if ((engine->GetInput()->GetKey(SDL_SCANCODE_R) == KEY_DOWN))
+			if ((engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
 			{
-				currentGizmoOperation = ImGuizmo::OPERATION::SCALE;
-				CONSOLE_LOG("Set Guizmo to Scale");
+				currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+				CONSOLE_LOG("Set Guizmo to Translate");
+			}
+			if ((engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_DOWN))
+			{
+				currentGizmoOperation = ImGuizmo::OPERATION::ROTATE;
+				CONSOLE_LOG("Set Guizmo to Rotate");
+			}
+			if (selectedGameObjects[i] != nullptr && selectedGameObjects[i]->GetComponent<C_Camera>() == nullptr)
+			{
+				if ((engine->GetInput()->GetKey(SDL_SCANCODE_R) == KEY_DOWN))
+				{
+					currentGizmoOperation = ImGuizmo::OPERATION::SCALE;
+					CONSOLE_LOG("Set Guizmo to Scale");
+				}
 			}
 		}
-	
 	}
 }

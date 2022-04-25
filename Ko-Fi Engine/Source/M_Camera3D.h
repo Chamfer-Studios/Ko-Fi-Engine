@@ -62,6 +62,7 @@ public:
 private:
 	float3 lastMouseClick;
 	KoFiEngine* engine = nullptr;
+
 };
 
 #endif // !__CAMERA_H__

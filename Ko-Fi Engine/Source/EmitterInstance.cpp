@@ -2,7 +2,7 @@
 #include "ParticleModule.h"
 #include "R_Texture.h"
 
-EmitterInstance::EmitterInstance(Emitter* e, ComponentParticle* cp) : emitter(e),component(cp)
+EmitterInstance::EmitterInstance(Emitter* e, C_Particle* cp) : emitter(e),component(cp)
 {
 	emitterLife = 0.0f;
 	activeParticles = 0;

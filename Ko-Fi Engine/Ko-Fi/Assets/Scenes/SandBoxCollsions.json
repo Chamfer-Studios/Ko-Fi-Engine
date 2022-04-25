@@ -1,0 +1,395 @@
+{
+    "SandBoxCollsions": {
+        "active": true,
+        "game_objects_amount": 6,
+        "game_objects_list": [
+            {
+                "UID": 91885941,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            17.5,
+                            -125.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_frustum": true,
+                        "far_plane_distance": 573.0,
+                        "frustum_culling": false,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.10000000149011612,
+                        "type": "camera",
+                        "vertical_fov": 105.0
+                    }
+                ],
+                "is3D": true,
+                "name": "Main Camera",
+                "parent_UID": 4294967295,
+                "tag": 0
+            },
+            {
+                "UID": 1984797595,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "ambientValue": 0.5,
+                        "diffuseValue": 0.800000011920929,
+                        "lightColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "lightDirection": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "lightPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "sourceType": 0,
+                        "specularValue": 0.0,
+                        "type": "lightSource"
+                    }
+                ],
+                "is3D": true,
+                "name": "Direct Light",
+                "parent_UID": 4294967295,
+                "tag": 0
+            },
+            {
+                "UID": 625392644,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0014951229095458984,
+                            15.493755340576172,
+                            -0.627197265625
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "isAnimated": false,
+                        "path": "Library/Meshes/Sphere.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "",
+                        "type": "material",
+                        "uniforms": null
+                    },
+                    {
+                        "active": true,
+                        "body_type": "Dynamic",
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "mass": 1.0,
+                        "type": "rigidBody",
+                        "use_gravity": true
+                    },
+                    {
+                        "active": true,
+                        "center": [
+                            14.800000190734863,
+                            -43.400001525878906,
+                            -31.399999618530273
+                        ],
+                        "filter": "cositas",
+                        "is_trigger": true,
+                        "scale_factor": [
+                            3.700000047683716,
+                            4.900000095367432,
+                            2.5999999046325684
+                        ],
+                        "type": "boxCollider"
+                    }
+                ],
+                "is3D": true,
+                "name": "Sphere",
+                "parent_UID": 4294967295,
+                "tag": 0
+            },
+            {
+                "UID": 1624142141,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            73.35455322265625,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "isAnimated": false,
+                        "path": "Library/Meshes/Sphere1.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "",
+                        "type": "material",
+                        "uniforms": null
+                    },
+                    {
+                        "active": true,
+                        "body_type": "Kinematic",
+                        "freeze_position_x": true,
+                        "freeze_position_y": false,
+                        "freeze_position_z": true,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": true,
+                        "freeze_rotation_z": false,
+                        "mass": 1.0299999713897705,
+                        "type": "rigidBody",
+                        "use_gravity": false
+                    },
+                    {
+                        "active": true,
+                        "center": [
+                            52.099998474121094,
+                            47.29999923706055,
+                            -4.199999809265137
+                        ],
+                        "filter": "patata",
+                        "is_trigger": true,
+                        "scale_factor": [
+                            1.7999999523162842,
+                            4.199999809265137
+                        ],
+                        "type": "capsuleCollider"
+                    }
+                ],
+                "is3D": true,
+                "name": "Sphere1",
+                "parent_UID": 4294967295,
+                "tag": 0
+            },
+            {
+                "UID": 1599839595,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    }
+                ],
+                "is3D": true,
+                "name": "ball",
+                "parent_UID": 4294967295,
+                "tag": 0
+            },
+            {
+                "UID": 1045608193,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": "info"
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            48.708953857421875,
+                            53.103511810302734,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "isAnimated": false,
+                        "path": "Library/Meshes/Sphere2.sugar",
+                        "shape_type": 0,
+                        "type": "mesh"
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.800000011920929,
+                            0.800000011920929,
+                            0.800000011920929,
+                            1.0
+                        ],
+                        "shader_path": "Assets/Shaders/default_shader.glsl",
+                        "texture_path": "",
+                        "type": "material",
+                        "uniforms": null
+                    },
+                    {
+                        "active": true,
+                        "body_type": "Dynamic",
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "mass": 1.0,
+                        "type": "rigidBody",
+                        "use_gravity": true
+                    },
+                    {
+                        "active": true,
+                        "center": [
+                            -20.899999618530273,
+                            11.899999618530273,
+                            -16.600000381469727
+                        ],
+                        "filter": "enemy",
+                        "is_trigger": true,
+                        "scale_factor": 1.899999976158142,
+                        "type": "sphereCollider"
+                    }
+                ],
+                "is3D": true,
+                "name": "Sphere2",
+                "parent_UID": 1599839595,
+                "tag": 0
+            }
+        ],
+        "name": "SandBoxCollsions",
+        "navmesh": {}
+    }
+}

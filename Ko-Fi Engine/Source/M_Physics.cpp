@@ -1,180 +1,153 @@
 #include "M_Physics.h"
-
-#include "PxPhysicsAPI.h"
-#include "Globals.h"
 #include "Engine.h"
+#include "GameObject.h"
+#include "C_Script.h"
+#include "Scripting.h"
 #include "M_SceneManager.h"
-#include "SimulationEventCallback.h"
+#include "glew.h"
+#include <imgui_stdlib.h>
 
-#include <vector>
-#include <string>
 
-#include "optick.h"
-
-physx::PxFilterFlags customFilterShader(
-	physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
-	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
-	physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+M_Physics::M_Physics(KoFiEngine* engine)
 {
-	if ((physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))) 
-	{
-		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
-	}
-	else
-	{
-		pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
-		pairFlags |= physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
-		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
-		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
-		pairFlags |= physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
-	}
-
-	return physx::PxFilterFlag::eDEFAULT;
-}
-
-// Module constructor
-M_Physics::M_Physics(KoFiEngine* engine) : Module()
-{
-	name = "Physics";
+	this->name = "Physics";
 	this->engine = engine;
+	//World Settings
+	reactphysics3d::PhysicsWorld::WorldSettings worldSettings;
+	worldSettings.gravity = reactphysics3d::Vector3(0, -9.81f, 0);
+
+	// Create the physics world 
+	world = physicsCommon.createPhysicsWorld(worldSettings);
+	world->setIsDebugRenderingEnabled(true);
+	reactphysics3d::DebugRenderer& debugRenderer = world->getDebugRenderer();
+
+	// Select the contact points and contact normals to be displayed 
+	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::COLLISION_SHAPE, true);
+	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::CONTACT_POINT, true);
+	debugRenderer.setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::CONTACT_NORMAL, true);
+	//Set Event Listener
+	world->setEventListener(&listener);
 }
 
-// Module destructor
 M_Physics::~M_Physics()
 {
 }
 
 bool M_Physics::Awake(Json configModule)
 {
-	bool ret = true;
+	LoadConfiguration(configModule);
 
-	ret = LoadConfiguration(configModule);
-
-	return ret;
+	return true;
 }
 
 bool M_Physics::Start()
 {
-	bool ret = true;
 
-	LOG_BOTH("Initializing Module M_Physics ------------------------------------------------");
-
-	ret = InitializePhysX();
-
-	LOG_BOTH("Finished initializing Module M_Physics ---------------------------------------");
-
-	return ret;
+	return true;
 }
 
 bool M_Physics::Update(float dt)
 {
-	OPTICK_EVENT();
-
-	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING || engine->GetSceneManager()->GetGameState() == GameState::PAUSED)
+	if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
 	{
-		isSimulating = true;
+		world->update(dt);
 	}
-	else isSimulating = false;
+	else {
+		world->update(0.000000001f);
+	}
+	return true;
+}
 
-	if (scene && isSimulating)
+bool M_Physics::RenderPhysics()
+{
+	reactphysics3d::DebugRenderer& debugRenderer = world->getDebugRenderer();
+	int numLines = debugRenderer.getNbLines();
+	int numTriangles = debugRenderer.getNbTriangles();
+
+	const reactphysics3d::Array<reactphysics3d::DebugRenderer::DebugLine>& lines = debugRenderer.getLines();
+	const reactphysics3d::Array<reactphysics3d::DebugRenderer::DebugTriangle>& triangles = debugRenderer.getTriangles();
+
+	for (int i = 0; i < numLines; ++i)
 	{
-		// Maybe we have to refactor physx timing simulation, not sure if this will work as intended
-		scene->simulate(/*engine->GetSceneManager()->GetGameDt()*/dt);
-		scene->fetchResults(true);
+		glBegin(GL_LINES);
+		glVertex2f(lines[i].point1.x, lines[i].point1.y);
+		glVertex2f(lines[i].point2.x, lines[i].point2.y);
+		glEnd();
 	}
+	for (int i = 0; i < numTriangles; ++i)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+		glBegin(GL_TRIANGLES);
+		glColor3f(triangles[i].color1, triangles[i].color2, triangles[i].color3);
+		glVertex3f(triangles[i].point1.x, triangles[i].point1.y, triangles[i].point1.z);
+		glVertex3f(triangles[i].point2.x, triangles[i].point2.y, triangles[i].point2.z);
+		glVertex3f(triangles[i].point3.x, triangles[i].point3.y, triangles[i].point3.z);
+		glEnd();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	}
 	return true;
 }
 
 bool M_Physics::CleanUp()
 {
-	RELEASE(simulationEventCallback);
-
-	if (foundation)
-		foundation->release();
-	if (material)
-		material->release();
-	if (physics)
-		physics->release();
-	if (cooking)
-		cooking->release();
-	/*if (scene)
-		scene->release();*/
-
-	foundation = nullptr;
-	physics = nullptr;
-	cooking = nullptr;
-	material = nullptr;
-	scene = nullptr;
-
-	simulationEventCallback = nullptr;
-
-	// TEST: Delete the filter matrix
-	DeleteFilterMatrix();
+	// Destroy a physics world 
+	physicsCommon.destroyPhysicsWorld(world);
 
 	return true;
 }
 
 bool M_Physics::SaveConfiguration(Json& configModule) const
 {
-	configModule["Gravity"] =  gravity;
-	configModule["Number_threads"] = nbThreads;
-
-	configModule["Filters"];
-	for (std::string filter : filters)
-	{
-		configModule["Filters"].push_back(filter);
-	}
-
-	// TEST: Save filter matrix
-	configModule["Filter_matrix"];
+	configModule["Gravity"] = { world->getGravity().x, world->getGravity().y,world->getGravity().z };
+	configModule["Filters"] = filters;
+	//Save filter matrix
+	configModule["Filter_Matrix"];
 	for (int i = 0; i < filters.size(); ++i)
 	{
 		for (int j = 0; j < filters.size(); ++j)
 		{
-			configModule["Filter_matrix"].push_back(filterMatrix[i][j]);
+			configModule["Filter_Matrix"].push_back(filterMatrix[i][j]);
 		}
 	}
-
 	return true;
 }
 
 bool M_Physics::LoadConfiguration(Json& configModule)
 {
-	gravity = configModule["Gravity"];
-	nbThreads = configModule["Number_threads"];
-
-	// Delete current filters
-	if (filters.size() > 0)
-		filters.clear();
-
-	// Load new filters
-	for (auto filter : configModule.at("Filters").items())
+	if (configModule.contains("Gravity"))
 	{
-		filters.push_back(filter.value().get<std::string>());
+		world->setGravity(reactphysics3d::Vector3(configModule.at("Gravity")[0], configModule.at("Gravity")[1], configModule.at("Gravity")[2]));
 	}
-
-	//TEST: Delete current filter matrix
-	if (filterMatrix)
-		DeleteFilterMatrix();
-
-	if (filters.size())
+	if (configModule.contains("Filters"))
 	{
-		// TEST: Declare new filter matrix
-		DeclareFilterMatrix();
+		filters = configModule.at("Filters").get<std::map<unsigned int, std::string>>();
+	}
+	if (configModule.contains("Filter_Matrix"))
+	{
+		//TEST: Delete current filter matrix
+		if (filterMatrix)
+			DeleteFilterMatrix();
 
-		// TEST: Traverse the 2D array and assign values from json
-		int iteratorX = 0;
-		int iteratorY = 0;
-		for (auto filterMat : configModule.at("Filter_matrix").items())
+		if (filters.size())
 		{
-			filterMatrix[iteratorX][iteratorY] = filterMat.value().get<bool>();
+			// TEST: Declare new filter matrix
+			DeclareFilterMatrix();
 
-			++iteratorY;
-			if (iteratorY >= filters.size())
+			// TEST: Traverse the 2D array and assign values from json
+			int iteratorX = 0;
+			int iteratorY = 0;
+			for (auto filterMat : configModule.at("Filter_Matrix").items())
 			{
-				++iteratorX;
-				iteratorY = 0;
+				filterMatrix[iteratorX][iteratorY] = filterMat.value().get<bool>();
+
+				++iteratorY;
+				if (iteratorY >= filters.size())
+				{
+					++iteratorX;
+					iteratorY = 0;
+				}
 			}
 		}
 	}
@@ -186,96 +159,60 @@ bool M_Physics::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Physics##"))
 	{
-		// NUMBER OF THREADS ----------------------------------------------------
-		int newNbThreads = GetNbThreads();
-		if (ImGui::DragInt("##drag_threads", &newNbThreads, 0.1f, 0.0f, 16.0f))
-		{
-			SetNbThreads(newNbThreads);
-			engine->SaveConfiguration();
-		}
-		ImGui::SameLine();
-		ImGui::Text("Number of threads");
-		// ------------------------------------------------------------------------
-
-		// GRAVITY ----------------------------------------------------------------
-		ImGui::Text("");
-		float grav = GetGravity();
-		if (ImGui::DragFloat("##gravfloatdyn", &grav, 0.1f, -10.0f, 10.0f, "%.2f"))
-		{
-			SetGravity(grav);
-			engine->SaveConfiguration();
-		}
-		ImGui::SameLine();
-		ImGui::Text("Scene gravity");
-		if (ImGui::Button("Default gravity##"))
-		{
-			SetGravity(9.81f);
-			engine->SaveConfiguration();
-		}
-		ImGui::Separator();
-		// ------------------------------------------------------------------------
-
-		// COLLISION FILTERS ------------------------------------------------------
 		if (ImGui::TreeNodeEx("Filters"))
 		{
-			for (int i = 0; i < filters.size(); ++i)
+			auto iter = filters.begin();
+			while (iter != filters.end())
 			{
-				ImGui::Text(filters[i].c_str());
-				if (filters[i] != defaultFilter)
+				ImGui::Text(iter->second.c_str());
+				ImGui::SameLine();
+				std::string label = "delete##";
+				label += iter->first;
+				if (ImGui::Button(label.c_str()))
 				{
-					ImGui::SameLine();
-					std::string label = "delete##";
-					label += filters[i];
-					if (ImGui::Button(label.c_str()))
-					{
-						DeleteFilter(filters[i]);
-						engine->SaveConfiguration();
-					}
-				}
-			}
-			char filterBuff[64];
-			strcpy_s(filterBuff, "");
-			ImGui::Text("Create filter: ");
-			if (ImGui::InputText("##createfilter", filterBuff, IM_ARRAYSIZE(filterBuff), ImGuiInputTextFlags_EnterReturnsTrue))
-			{
-				std::string str = filterBuff;
-				if (str == "")
-				{
-					LOG_BOTH("ERROR, cannot add an empty filter\n");
-				}
-				else
-				{
-					AddFilter(str);
+					RemoveFilter(iter->second);
 					engine->SaveConfiguration();
+					break;
 				}
-			}
-			ImGui::Text("(For the input text to work, you will have to write the desired filter name and press enter)");
 
+				++iter;
+			}
+
+
+			ImGui::Text("Create Filter: ");
+			ImGui::InputText("##addFilter", &imguiNewFilterText);
+			ImGui::SameLine();
+			if (ImGui::Button("Add Filter"))
+			{
+				AddFilter(imguiNewFilterText);
+				engine->SaveConfiguration();
+			}
 			ImGui::TreePop();
 		}
 		ImGui::Separator();
-		// -------------------------------------------------------------------------------------------------------------
-
-		// FILTER MATRIX ---------------------------------------------------------------------
 		if (ImGui::TreeNodeEx("Filter Matrix"))
 		{
 			size_t filSize = filters.size();
-			for (int i = 0; i < filSize; ++i)
-			{
-				for (int j = 0; j < filSize; ++j)
-				{
-					if (j != 0) ImGui::SameLine();
 
-					std::string label( "##" + filters[i] + std::to_string(i) + std::to_string(j));
+			for (auto iterI = filters.begin(); iterI != filters.end(); ++iterI)
+			{
+				int i = std::distance(filters.begin(), iterI);
+				for (auto iterJ = filters.begin(); iterJ != filters.end(); ++iterJ)
+				{
+					int j = std::distance(filters.begin(), iterJ);
+					if (j != 0) ImGui::SameLine();
+					std::string label("##" + iterI->second + std::to_string(i) + std::to_string(j));
 					bool filterMat = filterMatrix[i][j];
 					if (ImGui::Checkbox(label.c_str(), &filterMat))
 					{
 						filterMatrix[i][j] = filterMat;
 						engine->SaveConfiguration();
 					}
+
 				}
 				ImGui::SameLine();
-				ImGui::Text(std::string(filters[i] + " (" + std::to_string(i) + ")").c_str());
+				ImGui::Text(std::string(iterI->second + " (" + std::to_string(i) + ")").c_str());
+
 			}
 			int count = filSize - 1;
 			for (int i = 0; i < filSize; ++i)
@@ -290,7 +227,8 @@ bool M_Physics::InspectorDraw()
 			ImGui::TreePop();
 		}
 		ImGui::Separator();
-		// -----------------------------------------------------------------------------------
+
+
 	}
 
 	return true;
@@ -300,103 +238,13 @@ void M_Physics::OnNotify(const Event& event)
 {
 }
 
-bool M_Physics::InitializePhysX()
+void M_Physics::AddFilter(std::string newFilter)
 {
-	// PxFoundation object creation
-	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
-	static physx::PxDefaultAllocator gDefaultAllocatorCallback;
-
-	foundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback, gDefaultErrorCallback);
-	if (!foundation)
-	{
-		LOG_BOTH("PxCreateFoundation failed!\n");
-		return false;
-	}
-
-	// Top-level PxPhysics object creation
-	bool recordMemoryAllocations = true;
-	physics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *foundation, physx::PxTolerancesScale(), recordMemoryAllocations);
-	if (!physics)
-	{
-		LOG_BOTH("PxCreatePhysics failed!\n");
-		return false;
-	}
-
-	// Cooking creation
-	cooking = PxCreateCooking(PX_PHYSICS_VERSION, *foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
-	if (!cooking)
-	{
-		LOG_BOTH("PxCreateCooking failed!\n");
-		return false;
-	}
-
-	// Scene description creation
-	physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
-	sceneDesc.gravity = physx::PxVec3(0.0f, -gravity, 0.0f);
-	sceneDesc.bounceThresholdVelocity = gravity * 0.02f;
-	if (!sceneDesc.cpuDispatcher)
-	{
-		physx::PxCpuDispatcher* _cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(/*nbThreads*/4);
-		if (!_cpuDispatcher)
-		{
-			LOG_BOTH("PxDefaultCpuDispatcherCreate failed!\n");
-			return false;
-		}
-		sceneDesc.cpuDispatcher = _cpuDispatcher;
-	}
-
-	/*sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;*/
-	sceneDesc.filterShader = customFilterShader;
-	simulationEventCallback = new SimulationEventCallback(this);
-	sceneDesc.simulationEventCallback = simulationEventCallback;
-	scene = physics->createScene(sceneDesc);
-	if (!scene)
-	{
-		LOG_BOTH("createScene failed!\n");
-		return false;
-	}
-
-	material = physics->createMaterial(0, 0, 0);
-
-	return true;
-}
-
-void M_Physics::AddActor(physx::PxActor* actor, GameObject* owner)
-{
-	if (actor)
-	{
-		scene->addActor(*actor);
-		actors.insert(std::make_pair<physx::PxRigidActor*, GameObject*>((physx::PxRigidActor*)actor, (GameObject*)(void*)owner));
-	}
-}
-
-void M_Physics::DeleteActor(physx::PxActor* actor)
-{
-	if (actor)
-	{
-		scene->removeActor(*actor);
-		actors.erase((physx::PxRigidActor*)actor);
-	}
-}
-
-void M_Physics::AddFilter(const std::string newFilter)
-{
-	// Filter repeated filters
-	for (int i = 0; i < filters.size(); ++i)
-	{
-		if (filters[i] == newFilter)
-		{
-			LOG_BOTH("ERROR, the filter %s already exists in filters array\n", newFilter.c_str());
-			return;
-		}
-	}
-
-	filters.push_back(newFilter);
-
+	filters.emplace(filters.size() + 1, newFilter);
 	// TEST: Traverse the 2D array and assign values from old filter matrix and add the new filter
 	// First, we want to declare a new filter matrix
-	size_t filSize = filters.size();													
-	bool** newFilterMatrix = new bool* [filSize];												
+	size_t filSize = filters.size();
+	bool** newFilterMatrix = new bool* [filSize];
 	for (int i = 0; i < filSize; ++i) { newFilterMatrix[i] = new bool[filSize]; }
 	// Then we want to copy the old filter matrix to the new one, and set to true the incoming filter change
 	for (int i = 0; i < filSize; ++i)
@@ -419,38 +267,19 @@ void M_Physics::AddFilter(const std::string newFilter)
 	SetFilterMatrix(newFilterMatrix);
 }
 
-void M_Physics::DeleteFilter(const std::string deletedFilter)
+void M_Physics::RemoveFilter(std::string filterToRemove)
 {
-	// Check if it is contained in the filter list
-	bool contains = false;
-	for (int i = 0; i < filters.size(); ++i)
+	for (auto it = filters.begin(); it != filters.end(); ++it)
 	{
-		if (filters[i] == deletedFilter)
+		if (it->second == filterToRemove)
 		{
-			contains = true;
+			filters.erase(it);
 			break;
 		}
 	}
 
-	if (contains)
-	{
-		for (std::vector<std::string>::iterator i = filters.begin(); i != filters.end(); ++i)
-		{
-			if (*i == deletedFilter)
-			{
-				filters.erase(i);
-				break;
-			}	
-		}
-	}
-	else
-	{
-		LOG_BOTH("ERROR, the filter to delete %s is not contained in filters array\n", deletedFilter.c_str());
-		return;
-	}
-
 	// TEST: Traverse the 2D array and assign values from old filter matrix and add the new filter
-	// First, we want to declare a new filter matrix
+// First, we want to declare a new filter matrix
 	size_t filSize = filters.size();
 	bool** newFilterMatrix = new bool* [filSize];
 	for (int i = 0; i < filSize; ++i) { newFilterMatrix[i] = new bool[filSize]; }
@@ -470,7 +299,7 @@ void M_Physics::DeleteFilter(const std::string deletedFilter)
 			for (int j = 0; j < filSize; ++j)
 				newFilterMatrix[0][j] = true;
 		}
-			
+
 	}
 
 	// TEST: Delete current filter matrix
@@ -478,32 +307,181 @@ void M_Physics::DeleteFilter(const std::string deletedFilter)
 
 	// TEST: Set the new filter matrix
 	SetFilterMatrix(newFilterMatrix);
-
 }
 
-std::string const M_Physics::GetFilterByID(const uint ID)
+unsigned int M_Physics::GetFilter(std::string filter)
 {
-	if (ID < 0 || ID >= filters.size())
-		return defaultFilter;
-	else
-		return filters[ID];
-}
-
-bool M_Physics::Raycast(float3 origin, float3 direction, float maxDistance)
-{
-	return false;
-	physx::PxRaycastBuffer hit;
-	bool status = scene->raycast(physx::PxVec3(origin.x, origin.y, origin.z), physx::PxVec3(direction.x, direction.y, direction.z), maxDistance, hit);
-	return hit.hasAnyHits();
-}
-
-uint const M_Physics::GetFilterID(const std::string* newFilter)
-{
-	for (int i = 0; i < filters.size(); ++i)
+	for (auto it = filters.begin(); it != filters.end(); ++it)
 	{
-		if (filters[i] == *newFilter)
-			return i;
+		if (it->second == filter)
+		{
+			return it->first;
+		}
+	}
+}
+
+reactphysics3d::RigidBody* M_Physics::AddBody(reactphysics3d::Transform rbTransform, GameObject* owner)
+{
+
+	reactphysics3d::RigidBody* body = world->createRigidBody(rbTransform);
+	collisionBodyToObjectMap.emplace(body, owner);
+
+	return body;
+}
+
+PhysicsEventListener::PhysicsEventListener(M_Physics* mPhysics)
+{
+	this->mPhysics = mPhysics;
+}
+
+void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::CallbackData& callbackData)
+{
+	//For each contact pair
+	for (uint p = 0; p < callbackData.getNbContactPairs(); p++)
+	{
+		//Get the contact pair
+		reactphysics3d::CollisionCallback::ContactPair contactPair = callbackData.getContactPair(p);
+		GameObject* go1 = nullptr;
+		GameObject* go2 = nullptr;
+
+		go1 = mPhysics->GetGameObjectFromBody(contactPair.getBody1());
+		go2 = mPhysics->GetGameObjectFromBody(contactPair.getBody2());
+		if (go1 && go2)
+		{
+
+			if (contactPair.getEventType() == reactphysics3d::CollisionCallback::ContactPair::EventType::ContactStart)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionEnter"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionEnter"](go1);
+				}
+			}
+			else if (contactPair.getEventType() == reactphysics3d::CollisionCallback::ContactPair::EventType::ContactStay)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionRepeat"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionRepeat"](go1);
+				}
+			}
+			else if (contactPair.getEventType() == reactphysics3d::CollisionCallback::ContactPair::EventType::ContactExit)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionExit"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnCollisionExit"](go1);
+				}
+			}
+
+
+		}
+		//For each contact point of the contact pair
+		for (uint c = 0; c < contactPair.getNbContactPoints(); c++)
+		{
+			//Get the contact point 
+			reactphysics3d::CollisionCallback::ContactPoint contactPoint = contactPair.getContactPoint(c);
+			//Get the contact point on the first collider and convert it in world-space
+			reactphysics3d::Vector3 worldPoint = contactPair.getCollider1()->getLocalToWorldTransform() * contactPoint.getLocalPointOnCollider1();
+		}
+
+	}
+}
+
+void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::CallbackData& callbackData)
+{
+	//For each contact pair
+	for (uint p = 0; p < callbackData.getNbOverlappingPairs(); p++)
+	{
+		//Get the overlapped pair
+		reactphysics3d::OverlapCallback::OverlapPair overlapPair = callbackData.getOverlappingPair(p);
+		GameObject* go1 = nullptr;
+		GameObject* go2 = nullptr;
+
+		go1 = mPhysics->GetGameObjectFromBody(overlapPair.getBody1());
+		go2 = mPhysics->GetGameObjectFromBody(overlapPair.getBody2());
+		if (go1 && go2)
+		{
+
+			if (overlapPair.getEventType() == reactphysics3d::OverlapCallback::OverlapPair::EventType::OverlapStart)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerEnter"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerEnter"](go1);
+				}
+			}
+			else if (overlapPair.getEventType() == reactphysics3d::OverlapCallback::OverlapPair::EventType::OverlapStay)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerRepeat"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerRepeat"](go1);
+				}
+			}
+			else if (overlapPair.getEventType() == reactphysics3d::OverlapCallback::OverlapPair::EventType::OverlapExit)
+			{
+				for (Component* component : go1->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerExit"](go2);
+				}
+				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
+				{
+					if (component->GetType() != ComponentType::SCRIPT)
+						continue;
+					C_Script* script = (C_Script*)component;
+					script->s->handler->lua["OnTriggerExit"](go1);
+				}
+			}
+		}
 	}
 
-	return -1;
 }

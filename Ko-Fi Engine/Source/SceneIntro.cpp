@@ -15,11 +15,10 @@
 #include "C_Material.h"
 #include "C_Camera.h"
 #include "C_Script.h"
-#include "C_Collider.h"
 #include "C_Transform.h"
 #include "C_LightSource.h"
 #include "C_Transform2D.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 
 #include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "Primitive.h"
@@ -47,7 +46,7 @@ SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 	// LCG random;
 	// uint uid = random.Int();
 	// GameObject * g = this->CreateEmptyGameObject("Particle Test");
-	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
+	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<C_Particle>();
 }
 
 SceneIntro::~SceneIntro()
@@ -80,11 +79,6 @@ bool SceneIntro::Start()
 	appLog->AddLog("Loading Intro assets\n");
 
 	example::NodeEditorInitialize();
-
-	for (GameObject *go : this->gameObjectList)
-	{
-		go->Start();
-	}
 
 	ComputeQuadTree();
 
@@ -169,7 +163,10 @@ bool SceneIntro::PostUpdate(float dt)
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
 	{
-		DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID));
+		for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+		{
+			DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
+		}
 	}
 
 	return true;
