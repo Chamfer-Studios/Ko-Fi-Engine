@@ -8,11 +8,6 @@ local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
-player = nil
-local playerIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT
-playerIV = InspectorVariable.new("player", playerIVT, playerName)
-NewVariable(playerIV)
-
 visionConeAngle = 90
 local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 visionConeAngleIV = InspectorVariable.new("visionConeAngle", visionConeAngleIVT, visionConeAngle)
@@ -22,6 +17,16 @@ visionConeRadius = 50
 local visionConeRadiusIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 visionConeRadiusIV = InspectorVariable.new("visionConeRadius", visionConeRadiusIVT, visionConeRadius)
 NewVariable(visionConeRadiusIV)
+
+hearingRange = 30
+local hearingRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+hearingRangeIV = InspectorVariable.new("hearingRange", hearingRangeIVT, hearingRange)
+NewVariable(hearingRangeIV)
+
+awarenessSpeed = 0.4
+local awarenessSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+awarenessSpeedIV = InspectorVariable.new("awarenessSpeed", awarenessSpeedIVT, awarenessSpeed)
+NewVariable(awarenessSpeedIV)
 
 pingpong = false
 local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
@@ -117,22 +122,14 @@ STATE = {
 state = STATE.UNAWARE
 
 function LookAtDirection(direction)
-    local a = math.atan(direction.z, direction.x)
-
-    a = a + math.rad(90)
-
-    if direction.z > 0 then
-        a = -a
-    end
-
-    componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, a, componentTransform:GetRotation().z))
-    --componentTransform:LookAt(direction, componentTransform:GetUp())
+    position = componentTransform:GetPosition()
+    target = float3.new(position.x + direction.x, position.y + direction.y, position.z + direction.z)
+    
+    componentTransform:LookAt(direction, float3.new(0, 1, 0))
 end
 
 awareness = 0
 targetAwareness = 0
-awarenessSpeed = 0.4
-hearingRange = 30
 awarenessSource = nil
 awarenessPosition = nil
 
@@ -147,7 +144,7 @@ function CheckIfPointInCone(position)
 
     angle = Float3Angle(Float3Difference(position, componentTransform:GetPosition()), componentTransform:GetFront())
 
-    angle = math.deg(angle)
+    angle = math.abs(math.deg(angle))
 
     if angle < visionConeAngle / 2 then
         do return(true) end

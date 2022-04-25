@@ -141,10 +141,31 @@ void C_Transform::LookAt(float3 &_front, float3 &_up)
 	_front = _front.Normalized();
 	_up = _up.Normalized();
 
-	float3::Orthonormalize(_front, _up);
-	float3 right = _up.Cross(_up);
+	//float3::Orthonormalize(_front, _up);
+	//float3 right = _up.Cross(_up);
 
-	transformMatrixLocal = float4x4::LookAt(GetPosition(), GetPosition() + _front, Front(), Up(), float3(0, 1, 0));
+	float angle = atan2(_front.z, _front.x);
+
+	Quat r = GetRotationQuat();
+
+	float3 cross = _up.Cross(Up());
+	float angleBetween = _up.AngleBetween(Up());
+
+	r = r.RotateAxisAngle(cross, angleBetween);
+
+	float3 currentEuler = r.ToEulerXYZ();
+
+	float diff = currentEuler.y - angle;
+
+	diff += 90.0f * DEGTORAD;
+
+	appLog->AddLog("%f, %f\n", angle, currentEuler.y);
+
+	r = r.RotateAxisAngle(_up, diff);
+
+	SetRotationQuat(r);
+
+	//transformMatrixLocal = float4x4::LookAt(GetPosition(), GetPosition() + _front, Front(), Up(), float3(0, 1, 0));
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
