@@ -109,7 +109,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\ComponentWalkable.cpp" />
+    <ClCompile Include="Source\C_Image.cpp" />
+    <ClCompile Include="Source\C_Material.cpp" />
     <ClCompile Include="Source\C_SoundTriggerCreator.cpp" />
     <ClCompile Include="Source\C_BoxCollider.cpp" />
     <ClCompile Include="Source\C_CapsuleCollider.cpp" />
@@ -268,7 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
-    <ClInclude Include="Source\ComponentWalkable.h" />
+    <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\C_BoxCollider.h" />
     <ClInclude Include="Source\C_CapsuleCollider.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
@@ -475,7 +476,6 @@
     <ClInclude Include="Source\RNG.h" />
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\Timer.h" />
-    <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\M_Window.h" />
   </ItemGroup>
   <ItemGroup>

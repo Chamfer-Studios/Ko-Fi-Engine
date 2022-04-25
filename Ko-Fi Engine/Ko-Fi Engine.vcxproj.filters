@@ -349,9 +349,6 @@
     <ClCompile Include="Source\C_Transform.cpp">
       <Filter>Source\GameObject\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\C_Material.cpp">
-      <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PanelHierarchy.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
@@ -455,9 +452,6 @@
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_Canvas.cpp">
-      <Filter>Source\GameObject\Components\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\C_Image.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\par_shapes.cpp">
@@ -622,7 +616,7 @@
     <ClCompile Include="Source\C_SoundTriggerCreator.cpp">
       <Filter>Source\GameObject\Components\Testing</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ComponentWalkable.cpp">
+    <ClCompile Include="Source\C_Walkable.cpp">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_BoxCollider.cpp">
@@ -636,6 +630,12 @@
     </ClCompile>
     <ClCompile Include="Source\C_RigidBody.cpp">
       <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_Material.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_Image.cpp">
+      <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1185,7 +1185,7 @@
     <ClInclude Include="Source\C_SoundTriggerCreator.h">
       <Filter>Source\GameObject\Components\Testing</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ComponentWalkable.h">
+    <ClInclude Include="Source\C_Walkable.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
     </ClInclude>
     <ClInclude Include="Source\C_BoxCollider.h">
