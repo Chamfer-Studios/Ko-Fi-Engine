@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -58,12 +58,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\ReactPhysics3D\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>false</TreatWarningAsError>
@@ -71,12 +71,12 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysDebug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXFoundation_32.lib;SceneQuery_static_32.lib;LowLevel_static_32.lib;LowLevelAABB_static_32.lib;LowLevelDynamics_static_32.lib;PhysXExtensions_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\optick\lib\x64\debug;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysDebug;$(ProjectDir)Source\External\OpenAL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;PhysX_32.lib;OpenAL32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;LowLevel_static_32.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\optick\lib\x64\debug;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\OpenAL\libx86;$(ProjectDir)Source\External\ReactPhysics3D\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;OpenAL32.lib;OptickCore.lib;reactphysics3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -87,10 +87,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\PhysX_4.1\include;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\Detour\include;$(ProjectDir)Source\External\Recast\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\Detour\include;$(ProjectDir)Source\External\Recast\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;NDEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -100,17 +100,22 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysRelease;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXFoundation_32.lib;SceneQuery_static_32.lib;LowLevel_static_32.lib;LowLevelAABB_static_32.lib;LowLevelDynamics_static_32.lib;PhysXExtensions_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\optick\lib\x64\release;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\PhysX_4.1\libx86\PhysRelease;$(ProjectDir)Source\External\OpenAL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;LowLevel_static_32.lib;OpenAL32.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\optick\lib\x64\release;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\OpenAL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;OpenAL32.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\ComponentWalkable.cpp" />
+    <ClCompile Include="Source\C_Image.cpp" />
+    <ClCompile Include="Source\C_Material.cpp" />
     <ClCompile Include="Source\C_SoundTriggerCreator.cpp" />
+    <ClCompile Include="Source\C_BoxCollider.cpp" />
+    <ClCompile Include="Source\C_CapsuleCollider.cpp" />
+    <ClCompile Include="Source\C_RigidBody.cpp" />
+    <ClCompile Include="Source\C_SphereCollider.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
@@ -122,17 +127,14 @@
     <ClCompile Include="Source\C_Button.cpp" />
     <ClCompile Include="Source\C_Camera.cpp" />
     <ClCompile Include="Source\C_Canvas.cpp" />
-    <ClCompile Include="Source\C_Image.cpp" />
+    <ClCompile Include="Source\C_FollowPath.cpp" />
     <ClCompile Include="Source\C_LightSource.cpp" />
-    <ClCompile Include="Source\C_Material.cpp" />
     <ClCompile Include="Source\C_Script.cpp" />
     <ClCompile Include="Source\C_Text.cpp" />
     <ClCompile Include="Source\C_Info.cpp" />
-    <ClCompile Include="Source\C_RigidBody.cpp" />
     <ClCompile Include="Source\C_Transform.cpp" />
     <ClCompile Include="Source\C_Transform2D.cpp" />
     <ClCompile Include="Source\C_Animator.cpp" />
-    <ClCompile Include="Source\C_Collider.cpp" />
     <ClCompile Include="Source\C_AudioSource.cpp" />
     <ClCompile Include="Source\C_AudioSwitch.cpp" />
     <ClCompile Include="Source\dr_wav_impl.c" />
@@ -233,7 +235,7 @@
     <ClCompile Include="Source\PanelRuntimeState.cpp" />
     <ClCompile Include="Source\PanelSettings.cpp" />
     <ClCompile Include="Source\PanelTextEditor.cpp" />
-    <ClCompile Include="Source\ComponentParticle.cpp" />
+    <ClCompile Include="Source\C_Particle.cpp" />
     <ClCompile Include="Source\ParticleModule.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\R_ParticleResource.cpp" />
@@ -248,7 +250,6 @@
     <ClCompile Include="Source\R_Track.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\M_SceneManager.cpp" />
-    <ClCompile Include="Source\SimulationEventCallback.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\R_Texture.cpp" />
     <ClCompile Include="Source\M_UI.cpp" />
@@ -263,11 +264,19 @@
     <ClCompile Include="Source\M_Renderer3D.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\C_Mesh.cpp" />
+    <ClCompile Include="Source\C_Walkable.cpp" />
     <ClCompile Include="Source\M_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
-    <ClInclude Include="Source\ComponentWalkable.h" />
+    <ClInclude Include="Source\C_Walkable.h" />
+    <ClInclude Include="Source\C_BoxCollider.h" />
+    <ClInclude Include="Source\C_CapsuleCollider.h" />
+    <ClInclude Include="Source\C_RigidBody.h" />
+    <ClInclude Include="Source\C_SphereCollider.h" />
+    <ClInclude Include="Source\P_Actor.h" />
+    <ClInclude Include="Source\P_Collision.h" />
+    <ClInclude Include="Source\P_World.h" />
     <ClInclude Include="Source\R_Animation.h" />
     <ClInclude Include="Source\AnimatorClip.h" />
     <ClInclude Include="Source\Assimp.h" />
@@ -292,18 +301,17 @@
     <ClInclude Include="Source\C_Button.h" />
     <ClInclude Include="Source\C_Camera.h" />
     <ClInclude Include="Source\C_Canvas.h" />
+    <ClInclude Include="Source\C_FollowPath.h" />
     <ClInclude Include="Source\C_Image.h" />
     <ClInclude Include="Source\C_Info.h" />
     <ClInclude Include="Source\C_Material.h" />
     <ClInclude Include="Source\C_Mesh.h" />
     <ClInclude Include="Source\C_RenderedUI.h" />
-    <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\C_Script.h" />
     <ClInclude Include="Source\C_Text.h" />
     <ClInclude Include="Source\C_Transform.h" />
     <ClInclude Include="Source\C_Transform2D.h" />
     <ClInclude Include="Source\C_Animator.h" />
-    <ClInclude Include="Source\C_Collider.h" />
     <ClInclude Include="Source\M_Editor.h" />
     <ClInclude Include="Source\EditorStyleHandler.h" />
     <ClInclude Include="Source\Emitter.h" />
@@ -396,194 +404,6 @@
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.h" />
     <ClInclude Include="Source\External\mmgr\mmgr.h" />
     <ClInclude Include="Source\External\mmgr\nommgr.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxBoxController.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxCapsuleController.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxController.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxControllerBehavior.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxControllerManager.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxControllerObstacles.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\characterkinematic\PxExtended.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\collision\PxCollisionDefs.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxBase.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxCollection.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxCoreUtilityTypes.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxMetaData.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxMetaDataFlags.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxPhysicsInsertionCallback.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxPhysXCommonConfig.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxProfileZone.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxRenderBuffer.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxSerialFramework.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxSerializer.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxStringTable.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxTolerancesScale.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\PxTypeInfo.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\common\windows\PxWindowsDelayLoadHook.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxBVH33MidphaseDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxBVH34MidphaseDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxBVHStructureDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\Pxc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxConvexMeshDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxCooking.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxMidphaseDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cooking\PxTriangleMeshDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cudamanager\PxCudaContextManager.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\cudamanager\PxCudaMemoryManager.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxBinaryConverter.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxBroadPhaseExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxCollectionExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxConstraintExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxContactJoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxConvexMeshExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxD6Joint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxD6JointCreate.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultAllocator.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultCpuDispatcher.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultErrorCallback.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultSimulationFilterShader.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDefaultStreams.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxDistanceJoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxExtensionsAPI.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxFixedJoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxJoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxJointLimit.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxMassProperties.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxPrismaticJoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRaycastCCD.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRepXSerializer.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRepXSimpleType.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRevoluteJoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRigidActorExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxRigidBodyExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSceneQueryExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSerialization.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxShapeExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSimpleFactory.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSmoothNormals.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxSphericalJoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxStringTableExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\extensions\PxTriangleMeshExt.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\filebuf\PxFileBuf.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\Px.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxAllocatorCallback.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxAssert.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxBitAndData.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxBounds3.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxErrorCallback.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxErrors.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxFlags.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxFoundationConfig.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxIntrinsics.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxIO.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMat33.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMat44.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMath.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMathUtils.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxMemory.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxPlane.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxPreprocessor.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxProfiler.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxQuat.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxSharedAssert.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxSimpleTypes.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxStrideIterator.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxTransform.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxUnionCast.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxVec2.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxVec3.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\PxVec4.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\unix\PxUnixIntrinsics.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\foundation\windows\PxWindowsIntrinsics.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxBoxGeometry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxBVHStructure.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxCapsuleGeometry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxConvexMesh.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxConvexMeshGeometry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxGeometry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxGeometryHelpers.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxGeometryQuery.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightField.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightFieldDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightFieldFlag.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightFieldGeometry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxHeightFieldSample.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxMeshQuery.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxMeshScale.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxPlaneGeometry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxSimpleTriangleMesh.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxSphereGeometry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxTriangle.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxTriangleMesh.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geometry\PxTriangleMeshGeometry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geomutils\GuContactBuffer.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\geomutils\GuContactPoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\gpu\PxGpu.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\pvd\PxPvd.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\pvd\PxPvdSceneClient.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\pvd\PxPvdTransport.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxActor.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxAggregate.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulation.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationBase.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationJoint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationJointReducedCoordinate.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationLink.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxArticulationReducedCoordinate.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxBatchQuery.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxBatchQueryDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxBroadPhase.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxClient.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxConfig.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxConstraint.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxConstraintDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxContact.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxContactModifyCallback.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxDeletionListener.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxFiltering.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxForceMode.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxFoundation.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxImmediateMode.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxLockedData.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxMaterial.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysics.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysicsAPI.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysicsSerialization.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysicsVersion.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxPhysXConfig.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxPruningStructure.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxQueryFiltering.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxQueryReport.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxRigidActor.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxRigidBody.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxRigidDynamic.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxRigidStatic.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxScene.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxSceneDesc.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxSceneLock.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxShape.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxSimulationEventCallback.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxSimulationStatistics.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\PxVisualizationParameter.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\solver\PxSolverDefs.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\task\PxCpuDispatcher.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\task\PxTask.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\task\PxTaskDefine.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\task\PxTaskManager.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleComponents.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleDrive.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleDrive4W.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleDriveNW.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleDriveTank.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleNoDrive.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleSDK.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleShaders.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleTireFriction.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUpdate.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUtil.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUtilControl.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUtilSetup.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleUtilTelemetry.h" />
-    <ClInclude Include="Source\External\PhysX_4.1\include\vehicle\PxVehicleWheels.h" />
     <ClInclude Include="Source\External\sol\config.hpp" />
     <ClInclude Include="Source\External\sol\forward.hpp" />
     <ClInclude Include="Source\External\sol\sol.hpp" />
@@ -620,7 +440,6 @@
     <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
     <ClInclude Include="Source\Scripting.h" />
-    <ClInclude Include="Source\SimulationEventCallback.h" />
     <ClInclude Include="Source\R_ParticleResource.h" />
     <ClInclude Include="Source\ResourceBase.h" />
     <ClInclude Include="Source\M_UI.h" />
@@ -631,7 +450,7 @@
     <ClInclude Include="Source\PanelNodeEditor.h" />
     <ClInclude Include="Source\PanelRuntimeState.h" />
     <ClInclude Include="Source\PanelTextEditor.h" />
-    <ClInclude Include="Source\ComponentParticle.h" />
+    <ClInclude Include="Source\C_Particle.h" />
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleModule.h" />
     <ClInclude Include="Source\M_Physics.h" />

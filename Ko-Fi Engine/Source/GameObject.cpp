@@ -6,15 +6,18 @@
 // Modules
 #include "Engine.h"
 #include "M_Editor.h"
+#include "M_SceneManager.h"
 
 // Components
 #include "C_Mesh.h"
 #include "C_Material.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 #include "C_Camera.h"
 #include "C_Script.h"
 #include "C_Animator.h"
-#include "C_Collider.h"
+#include "C_BoxCollider.h"
+#include "C_CapsuleCollider.h"
+#include "C_SphereCollider.h"
 #include "C_Canvas.h"
 #include "C_Transform2D.h"
 #include "C_Button.h"
@@ -25,7 +28,8 @@
 #include "C_Info.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
-#include "ComponentWalkable.h"
+#include "C_Walkable.h"
+#include "C_FollowPath.h"
 #include "C_LightSource.h"
 
 // Resources
@@ -122,7 +126,7 @@ bool GameObject::CleanUp()
 {
 	for (std::vector<Component*>::iterator component = components.begin(); component != components.end();)
 	{
-		(*component)->CleanUp();
+		//(*component)->CleanUp();
 		RELEASE(*component);
 		component = components.erase(component);
 	}
@@ -211,7 +215,8 @@ void GameObject::DeleteComponent(Component* component)
 	auto componentIt = std::find(components.begin(), components.end(), component);
 	if (componentIt != components.end())
 	{
-		(*componentIt)->CleanUp();
+		//(*componentIt)->CleanUp();
+		RELEASE(*componentIt);
 		components.erase(componentIt);
 		components.shrink_to_fit();
 	}
@@ -259,7 +264,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::PARTICLE:
 	{
-		c = this->CreateComponent<ComponentParticle>();
+		c = this->CreateComponent<C_Particle>();
 		break;
 	}
 	case ComponentType::CAMERA:
@@ -267,12 +272,28 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 		c = this->CreateComponent<C_Camera>();
 		break;
 	}
-	case ComponentType::COLLIDER:
+	case ComponentType::BOX_COLLIDER:
 	{
 		if (!this->GetComponent<C_RigidBody>())
 			AddComponentByType(ComponentType::RIGID_BODY);
 
-		c = this->CreateComponent<C_Collider>();
+		c = this->CreateComponent<C_BoxCollider>();
+		break;
+	}
+	case ComponentType::CAPSULE_COLLIDER:
+	{
+		if (!this->GetComponent<C_RigidBody>())
+			AddComponentByType(ComponentType::RIGID_BODY);
+
+		c = this->CreateComponent<C_CapsuleCollider>();
+		break;
+	}
+	case ComponentType::SPHERE_COLLIDER:
+	{
+		if (!this->GetComponent<C_RigidBody>())
+			AddComponentByType(ComponentType::RIGID_BODY);
+
+		c = this->CreateComponent<C_SphereCollider>();
 		break;
 	}
 	case ComponentType::SCRIPT:
@@ -322,7 +343,12 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	}
 	case ComponentType::WALKABLE:
 	{
-		c = this->CreateComponent<ComponentWalkable>();
+		c = this->CreateComponent<C_Walkable>();
+		break;
+	}
+	case ComponentType::FOLLOW_PATH:
+	{
+		c = this->CreateComponent<C_FollowPath>();
 		break;
 	}
 	case ComponentType::AUDIO_SOURCE:
@@ -351,14 +377,11 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	return c;
 }
 
-
-
-
 void GameObject::AttachChild(GameObject* child)
 {
 	if (child->parent != nullptr)
 		child->parent->RemoveChild(child);
-
+	
 	child->parent = this;
 	children.push_back(child);
 	//child->PropagateTransform();
@@ -512,8 +535,10 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		switch (component->GetType())
 		{
 		case ComponentType::NONE:
+		{
 			jsonComponent["type"] = "NONE";
 			break;
+		}
 		case ComponentType::TRANSFORM:
 		{
 			C_Transform* transformCmp = (C_Transform*)component;
@@ -550,10 +575,22 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			rigidBodyCmp->Save(jsonComponent);
 			break;
 		}
-		case ComponentType::COLLIDER:
+		case ComponentType::BOX_COLLIDER:
 		{
-			C_Collider* collisionCmp = (C_Collider*)component;
-			collisionCmp->Save(jsonComponent);
+			C_BoxCollider* boxCollCmp = (C_BoxCollider*)component;
+			boxCollCmp->Save(jsonComponent);
+			break;
+		}
+		case ComponentType::SPHERE_COLLIDER:
+		{
+			C_SphereCollider* sphereCollCmp = (C_SphereCollider*)component;
+			sphereCollCmp->Save(jsonComponent);
+			break;
+		}
+		case ComponentType::CAPSULE_COLLIDER:
+		{
+			C_CapsuleCollider* capsuleCollCmp = (C_CapsuleCollider*)component;
+			capsuleCollCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::SCRIPT:
@@ -775,15 +812,39 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
-		else if (type == "collider")
+		else if (type == "boxCollider")
 		{
-			C_Collider* colCmp = this->GetComponent<C_Collider>();
-			if (colCmp == nullptr)
+			C_BoxCollider* boxColCmp = this->GetComponent<C_BoxCollider>();
+			if (!boxColCmp)
+				boxColCmp = this->CreateComponent<C_BoxCollider>();
+			boxColCmp->active = true;
+			boxColCmp->Load(jsonCmp);
+		}
+		else if (type == "sphereCollider")
+		{
+			C_SphereCollider* sphereColCmp = this->GetComponent<C_SphereCollider>();
+			if (!sphereColCmp)
+				sphereColCmp = this->CreateComponent<C_SphereCollider>();
+			sphereColCmp->active = true;
+			sphereColCmp->Load(jsonCmp);
+		}
+		else if (type == "capsuleCollider")
+		{
+			C_CapsuleCollider* capsuleColCmp = this->GetComponent<C_CapsuleCollider>();
+			if (!capsuleColCmp)
+				capsuleColCmp = this->CreateComponent<C_CapsuleCollider>();
+			capsuleColCmp->active = true;
+			capsuleColCmp->Load(jsonCmp);
+		}
+		else if (type == "animator")
+		{
+			C_Animator* animCmp = this->GetComponent<C_Animator>();
+			if (animCmp == nullptr)
 			{
-				colCmp = this->CreateComponent<C_Collider>();
+				animCmp = this->CreateComponent<C_Animator>();
 			}
-			colCmp->active = true;
-			colCmp->Load(jsonCmp);
+			animCmp->active = true;
+			animCmp->Load(jsonCmp);
 		}
 		else if (type == "animator")
 		{
@@ -934,15 +995,39 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
-		else if (type == "collider")
+		else if (type == "boxCollider")
 		{
-			C_Collider* colCmp = this->GetComponent<C_Collider>();
-			if (colCmp == nullptr)
+			C_BoxCollider* boxColCmp = this->GetComponent<C_BoxCollider>();
+			if (!boxColCmp)
+				boxColCmp = this->CreateComponent<C_BoxCollider>();
+			boxColCmp->active = true;
+			boxColCmp->Load(jsonCmp);
+		}
+		else if (type == "sphereCollider")
+		{
+			C_SphereCollider* sphereColCmp = this->GetComponent<C_SphereCollider>();
+			if (!sphereColCmp)
+				sphereColCmp = this->CreateComponent<C_SphereCollider>();
+			sphereColCmp->active = true;
+			sphereColCmp->Load(jsonCmp);
+		}
+		else if (type == "capsuleCollider")
+		{
+			C_CapsuleCollider* capsuleColCmp = this->GetComponent<C_CapsuleCollider>();
+			if (!capsuleColCmp)
+				capsuleColCmp = this->CreateComponent<C_CapsuleCollider>();
+			capsuleColCmp->active = true;
+			capsuleColCmp->Load(jsonCmp);
+		}
+		else if (type == "animator")
+		{
+			C_Animator* animCmp = this->GetComponent<C_Animator>();
+			if (animCmp == nullptr)
 			{
-				colCmp = this->CreateComponent<C_Collider>();
+				animCmp = this->CreateComponent<C_Animator>();
 			}
-			colCmp->active = true;
-			colCmp->Load(jsonCmp);
+			animCmp->active = true;
+			animCmp->Load(jsonCmp);
 		}
 		else if (type == "animator")
 		{
@@ -981,7 +1066,20 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 
 bool GameObject::IsSelected()
 {
-	return engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == uid;
+	bool contains = false;
+
+	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+	{
+		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] == uid)
+		{
+			contains = true;
+		}
+		else
+		{
+			contains = false;
+		}
+	}
+	return contains;
 }
 
 void GameObject::LoadSceneFromName(std::string name)

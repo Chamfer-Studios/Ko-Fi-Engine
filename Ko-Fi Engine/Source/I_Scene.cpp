@@ -18,20 +18,23 @@
 #include "C_Material.h"
 #include "C_Info.h"
 #include "C_Camera.h"
-#include "C_Collider.h"
-#include "C_RigidBody.h"
 #include "C_Script.h"
 #include "C_Button.h"
 #include "C_Canvas.h"
 #include "C_Image.h"
 #include "C_Text.h"
 #include "C_Transform2D.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 #include "C_Animator.h"
 #include "C_LightSource.h"
-
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
+#include "C_Walkable.h"
+#include "C_FollowPath.h"
+#include "C_RigidBody.h"
+#include "C_BoxCollider.h"
+#include "C_SphereCollider.h"
+#include "C_CapsuleCollider.h"
 
 #include "R_Mesh.h"
 #include "R_Animation.h"
@@ -385,7 +388,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			}
 			case ComponentType::PARTICLE:
 			{
-				ComponentParticle* particleCmp = (ComponentParticle*)component;
+				C_Particle* particleCmp = (C_Particle*)component;
 				particleCmp->Save(jsonComponent);
 				break;
 			}
@@ -395,10 +398,22 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 				cameraCmp->Save(jsonComponent);
 				break;
 			}
-			case ComponentType::COLLIDER:
+			case ComponentType::BOX_COLLIDER:
 			{
-				C_Collider* collCmp = (C_Collider*)component;
-				collCmp->Save(jsonComponent);
+				C_BoxCollider* boxColCmp = (C_BoxCollider*)component;
+				boxColCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::SPHERE_COLLIDER:
+			{
+				C_SphereCollider* sphereColCmp = (C_SphereCollider*)component;
+				sphereColCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::CAPSULE_COLLIDER:
+			{
+				C_CapsuleCollider* capsuleColCmp = (C_CapsuleCollider*)component;
+				capsuleColCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::SCRIPT:
@@ -471,6 +486,18 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 			{
 				C_Animator* cAnimator = (C_Animator*)component;
 				cAnimator->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::WALKABLE:
+			{
+				C_Walkable* walkableCmp = (C_Walkable*)component;
+				walkableCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::FOLLOW_PATH:
+			{
+				C_FollowPath* followCmp = (C_FollowPath*)component;
+				followCmp->Save(jsonComponent);
 				break;
 			}
 			case ComponentType::LIGHT_SOURCE:
@@ -675,22 +702,42 @@ bool I_Scene::Load(Scene* scene, const char* name)
 						rbCmp->active = true;
 						rbCmp->Load(jsonCmp);
 					}
-					else if (type == "collider")
+					else if (type == "boxCollider")
 					{
-						C_Collider* collCmp = go->GetComponent<C_Collider>();
-						if (collCmp == nullptr)
+						C_BoxCollider* boxColCmp = go->GetComponent<C_BoxCollider>();
+						if (boxColCmp == nullptr)
 						{
-							collCmp = new C_Collider(go, ColliderShape::NONE);
+							boxColCmp = (C_BoxCollider*)go->AddComponentByType(ComponentType::BOX_COLLIDER);
 						}
-						collCmp->active = true;
-						collCmp->Load(jsonCmp);
+						boxColCmp->active = true;
+						boxColCmp->Load(jsonCmp);
+					}
+					else if (type == "sphereCollider")
+					{
+						C_SphereCollider* sphereColCmp = go->GetComponent<C_SphereCollider>();
+						if (sphereColCmp == nullptr)
+						{
+							sphereColCmp = (C_SphereCollider*)go->AddComponentByType(ComponentType::SPHERE_COLLIDER);
+						}
+						sphereColCmp->active = true;
+						sphereColCmp->Load(jsonCmp);
+					}
+					else if (type == "capsuleCollider")
+					{
+						C_CapsuleCollider* capsuleColCmp = go->GetComponent<C_CapsuleCollider>();
+						if (capsuleColCmp == nullptr)
+						{
+							capsuleColCmp = (C_CapsuleCollider*)go->AddComponentByType(ComponentType::CAPSULE_COLLIDER);
+						}
+						capsuleColCmp->active = true;
+						capsuleColCmp->Load(jsonCmp);
 					}
 					else if (type == "particle")
 					{
-						ComponentParticle* partCmp = go->GetComponent<ComponentParticle>();
+						C_Particle* partCmp = go->GetComponent<C_Particle>();
 						if (partCmp == nullptr)
 						{
-							partCmp = (ComponentParticle*)go->AddComponentByType(ComponentType::PARTICLE);
+							partCmp = (C_Particle*)go->AddComponentByType(ComponentType::PARTICLE);
 						}
 						partCmp->active = true;
 						partCmp->Load(jsonCmp);
@@ -724,6 +771,25 @@ bool I_Scene::Load(Scene* scene, const char* name)
 						}
 						cAnimator->active = true;
 						cAnimator->Load(jsonCmp);
+					}
+					else if (type == "walkable")
+					{
+						C_Walkable* walCmp = go->GetComponent<C_Walkable>();
+						if (walCmp == nullptr)
+						{
+							walCmp = go->CreateComponent<C_Walkable>();
+						}
+						walCmp->active = true;
+						walCmp->Load(jsonCmp);
+					}
+					else if (type == "followPath")
+					{
+						C_FollowPath* follCmp = go->GetComponent<C_FollowPath>();
+						if (follCmp == nullptr)
+						{
+							follCmp = go->CreateComponent<C_FollowPath>();
+						}
+						follCmp->active = true;
 					}
 					else if (type == "lightSource")
 					{

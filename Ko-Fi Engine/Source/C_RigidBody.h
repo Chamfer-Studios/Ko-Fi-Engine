@@ -1,177 +1,64 @@
-#ifndef __COMPONENT_RIGID_BODY_H__
-#define __COMPONENT_RIGID_BODY_H__
-
-#include "Globals.h"
-#include "Engine.h"
-
-#include "GameObject.h"
+#ifndef __C_RIGIDBODY2_H__
+#define __C_RIGIDBODY2_H__
 #include "Component.h"
-#include "C_Transform.h"
-
-#include "M_SceneManager.h"
-
-#include "PxPhysicsAPI.h"
-#include "M_Physics.h"
-
-#include "MathGeoLib/Math/Quat.h"
-#include "MathGeoLib/Math/float3.h"
+#include "reactphysics3d/reactphysics3d.h"
 
 class C_RigidBody : public Component
 {
 public:
-	C_RigidBody(GameObject *parent);
+	//constructors
+	C_RigidBody(GameObject* parent);
 	~C_RigidBody();
 
+	//Game Loop
+	bool Start() override;
 	bool Update(float dt) override;
 	bool CleanUp() override;
+	bool InspectorDraw(PanelChooser* chooser) override;//OnGUi
 
-	// Called whenever a rigid body attribute is changed
-	void UpdatePhysicsValues();
+	void UpdateBodyType();
+	void UpdateEnableGravity();
+	void UpdateMass();
+	void UpdateConstrains();
 
-	bool TransformUpdatesRigidBody();
-	bool RigidBodyUpdatesTransform();
+	//Serialization
+	void Save(Json& json) const override;
+	void Load(Json& json) override;
 
-	inline void AddForce(physx::PxVec3 force, physx::PxForceMode::Enum forceMode)
-	{
-		if (dynamicBody)
-			dynamicBody->addForce(force, forceMode);
-	}
-	inline void AddTorque(physx::PxVec3 force, physx::PxForceMode::Enum forceMode)
-	{
-		if (dynamicBody)
-			dynamicBody->addTorque(force, forceMode);
-	}
+	//Getter & Setters
+	inline reactphysics3d::RigidBody* GetBody() { return this->body; }
 
-	void Set2DVelocity(float2 vel);
-	void SetRigidBodyPos(float3 pos);
-	void StopMovement();
+	inline std::string GetBodyType() const { return bodyType; };
+	inline void SetBodyType(const std::string newBodyType) { bodyType = newBodyType; };
 
-	inline const bool IsSleeping() { return dynamicBody->isSleeping(); }
+	inline bool GetUseGravity() const { return useGravity; };
+	inline void SetUseGravity(const bool newUseGravity) { useGravity = newUseGravity; };
 
-	// Serialization
-	void Save(Json &json) const override;
-	void Load(Json &json) override;
+	inline float GetMass() const { return mass; };
+	inline void SetMass(const float newMass) { mass = newMass; };
 
-	// On inspector draw
-	bool InspectorDraw(PanelChooser *chooser) override; // (OnGui)
-
-	// Getters & setters
-	inline physx::PxRigidActor *GetRigidBody()
-	{
-		if (isStatic)
-			return staticBody;
-		else
-			return dynamicBody;
-	}
-
-	inline const float GetSpeed() { return linearVel.Length(); }
-	inline const float3 GetLinearVelocity() { return linearVel; }
-	inline void SetLinearVelocity(const float3 newLinearVel)
-	{
-		linearVel = newLinearVel;
-		hasUpdated = true;
-	}
-	inline const float3 GetAngularVelocity() { return angularVel; }
-	inline void SetAngularVelocity(const float3 newAngularVel)
-	{
-		angularVel = newAngularVel;
-		hasUpdated = true;
-	}
-	inline const float GetLinearDamping() { return linearDamping; }
-	inline void SetLinearDamping(const float newLinearDamping)
-	{
-		linearDamping = newLinearDamping;
-		hasUpdated = true;
-	}
-	inline const float GetAngularDamping() { return angularDamping; }
-	inline void SetAngularDamping(const float newAngularDamping)
-	{
-		angularDamping = newAngularDamping;
-		hasUpdated = true;
-	}
-
-	inline const float GetMass() { return mass; }
-	inline void SetMass(const float newMass)
-	{
-		mass = newMass;
-		hasUpdated = true;
-	}
-	inline const float GetDensity() { return density; }
-	inline void SetDensity(const float newDensity)
-	{
-		density = newDensity;
-		hasUpdated = true;
-	}
-
-	inline const bool GetUseGravity() { return useGravity; }
-	inline void SetUseGravity(const bool newGravity)
-	{
-		useGravity = newGravity;
-		hasUpdated = true;
-	}
-	inline bool IsKinematic() const { return isKinematic; }
-	inline void SetKinematic(const bool newIsKinematic)
-	{
-		isKinematic = newIsKinematic;
-		hasUpdated = true;
-	}
-	inline bool IsStatic() const { return isStatic; }
-	inline bool IsDynamic() const { return !isStatic; }
-	void SetStatic();
-	void SetDynamic();
-	void CreateDynamic();
-	void CreateStatic();
-
-	inline void FreezePositionX(bool freeze)
-	{
-		freezePositionX = freeze;
-		hasUpdated = true;
-	}
-	inline void FreezePositionY(bool freeze)
-	{
-		freezePositionY = freeze;
-		hasUpdated = true;
-	}
-	inline void FreezePositionZ(bool freeze)
-	{
-		freezePositionZ = freeze;
-		hasUpdated = true;
-	}
-	inline void FreezeRotationX(bool freeze)
-	{
-		freezeRotationX = freeze;
-		hasUpdated = true;
-	}
-	inline void FreezeRotationY(bool freeze)
-	{
-		freezeRotationY = freeze;
-		hasUpdated = true;
-	}
-	inline void FreezeRotationZ(bool freeze)
-	{
-		freezeRotationZ = freeze;
-		hasUpdated = true;
-	}
+	inline void FreezePositionX(const bool freeze) { freezePositionX = freeze; }
+	inline void FreezePositionY(const bool freeze) { freezePositionY = freeze; }
+	inline void FreezePositionZ(const bool freeze) { freezePositionZ = freeze; }
+	inline void FreezeRotationX(const bool freeze) { freezeRotationX = freeze; }
+	inline void FreezeRotationY(const bool freeze) { freezeRotationY = freeze; }
+	inline void FreezeRotationZ(const bool freeze) { freezeRotationZ = freeze; }
+	inline void FreezePositions(const bool freezeX, const bool freezeY, const bool freezeZ) { freezePositionX = freezeX; freezePositionY = freezeY; freezePositionZ = freezeZ; }
+	inline void FreezeRotations(const bool freezeX, const bool freezeY, const bool freezeZ) { freezeRotationX = freezeX; freezeRotationY = freezeY; freezeRotationZ = freezeZ; }
+	inline bool GetFreezePositionX() const { return freezePositionX; }
+	inline bool GetFreezePositionY() const { return freezePositionY; }
+	inline bool GetFreezePositionZ() const { return freezePositionZ; }
+	inline bool GetFreezeRotationX() const { return freezeRotationX; }
+	inline bool GetFreezeRotationY() const { return freezeRotationY; }
+	inline bool GetFreezeRotationZ() const { return freezeRotationZ; }
 
 private:
-	physx::PxRigidDynamic *dynamicBody = nullptr;
-	physx::PxRigidStatic *staticBody = nullptr;
+	reactphysics3d::RigidBody* body = nullptr;
 
-	bool hasUpdated = false; // This bool serves as a: has the object moved? then update it
-
-	float3 linearVel = float3::zero;
-	float3 angularVel = float3::zero;
-	float linearDamping = 0.0f;
-	float angularDamping = 0.0f;
-
-	// Rigid body modificable attributes
-	float mass = 5.0f;
-	float density = 1.0f;
-
+	// Variables serialized
+	std::string bodyType = "Dynamic";
 	bool useGravity = true;
-	bool isStatic = false;
-	bool isKinematic = false;
-
+	float mass = 1.0f;
 	bool freezePositionX = false;
 	bool freezePositionY = false;
 	bool freezePositionZ = false;
@@ -180,4 +67,4 @@ private:
 	bool freezeRotationZ = false;
 };
 
-#endif // !__COMPONENT_RIGID_BODY_H__
+#endif // !__C_RIGIDBODY_H__
