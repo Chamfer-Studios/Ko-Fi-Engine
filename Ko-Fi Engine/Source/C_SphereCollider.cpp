@@ -11,15 +11,19 @@ C_SphereCollider::C_SphereCollider(GameObject* parent) : Component(parent)
 
 C_SphereCollider::~C_SphereCollider()
 {
+	CleanUp();
 }
 
 bool C_SphereCollider::Start()
 {
-	float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-	sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.x/2);
-	reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
-
-	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, transform);
+	if (collider == nullptr)
+	{
+		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
+		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.x/2);
+		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, transform);
+	}
+	
 	return true;
 }
 
@@ -30,18 +34,27 @@ bool C_SphereCollider::Update(float dt)
 
 bool C_SphereCollider::CleanUp()
 {
+	if (collider)
+	{
+		if (owner->GetComponent<C_RigidBody>() && owner->GetComponent<C_RigidBody>()->GetBody())
+			owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+	}
+	if (sphereShape)
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroySphereShape(sphereShape);
+
 	return true;
 }
 
 bool C_SphereCollider::InspectorDraw(PanelChooser* chooser)
 {
-	if (ImGui::CollapsingHeader("Sphere Collider"))
+	if (ImGui::CollapsingHeader("Sphere Collider", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		std::string newFilter = GetFilter() == "" ? "Set Filter" : GetFilter();
-		if (ImGui::BeginCombo("Set Filter##", newFilter.c_str()))
+		DrawDeleteButton(owner, this);
+
+		std::string newFilter = GetFilter();
+		if (ImGui::BeginCombo("Set Filter##", newFilter == "" ? "Set Filter" : newFilter.c_str()))
 		{
 			std::map<unsigned int, std::string> filterMap = owner->GetEngine()->GetPhysics()->GetFiltersMap();
-			bool** filterMatrix = owner->GetEngine()->GetPhysics()->filterMatrix;
 			for (auto iter = filterMap.begin(); iter != filterMap.end(); ++iter)
 			{
 				if (ImGui::Selectable(iter->second.c_str()))
@@ -50,9 +63,11 @@ bool C_SphereCollider::InspectorDraw(PanelChooser* chooser)
 					UpdateFilter();
 				}
 			}
-
 			ImGui::EndCombo();
 		}
+		ImGui::Text("Current filter:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", filter.c_str());
 
 		bool newIsTrigger = GetIsTrigger();
 		if (ImGui::Checkbox("Is Trigger##", &newIsTrigger))
@@ -69,6 +84,7 @@ bool C_SphereCollider::InspectorDraw(PanelChooser* chooser)
 			SetCenter(newCenter);
 			UpdateCenter();
 		}
+
 		ImGui::Text("Scale");
 		ImGui::SameLine();
 		float newScaleFactor = GetScaleFactor();
@@ -78,13 +94,16 @@ bool C_SphereCollider::InspectorDraw(PanelChooser* chooser)
 			UpdateScaleFactor();
 		}
 	}
+	else
+	{
+		DrawDeleteButton(owner, this);
+	}
 	return true;
 }
 
 void C_SphereCollider::Save(Json& json) const
 {
 	json["type"] = "sphereCollider";
-
 	json["filter"] = filter;
 	json["is_trigger"] = isTrigger;
 	json["scale_factor"] = scaleFactor;

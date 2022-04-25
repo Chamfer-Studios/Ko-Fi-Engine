@@ -19,11 +19,13 @@ public:
 	//Serialization
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
+
 	//Updates
 	void UpdateFilter();
 	void UpdateScaleFactor();
 	void UpdateIsTrigger();
 	void UpdateCenter();
+
 	// Getters & Setters
 	inline std::string GetFilter() const { return filter; };
 	inline void SetFilter(const std::string newFilter) { filter = newFilter; };
@@ -37,10 +39,12 @@ public:
 	inline float3 GetCenter() const { return center; }
 	inline void SetCenter(const float3 newCenter) { center = newCenter; }
 	inline void SetCenter(const float centerX, const float centerY, const float centerZ) { center = float3(centerX, centerY, centerZ); }
+
 private:
 	reactphysics3d::SphereShape* sphereShape = nullptr;
 	reactphysics3d::Collider* collider = nullptr;
-	// Varbiales serialized
+
+	// Variables serialized
 	std::string filter = "";
 	bool isTrigger = false;
 	float scaleFactor = 1.0f;

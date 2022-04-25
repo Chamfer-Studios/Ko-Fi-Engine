@@ -21,34 +21,30 @@ public:
 	void Load(Json& json) override;
 
 	void UpdateFilter();
-
 	void UpdateScaleFactor();
 	void UpdateIsTrigger();
 	void UpdateCenter();
 
 	// Getters & Setters
 	inline std::string GetFilter() const { return filter; };
-	inline void SetFilter(const std::string newFilter) { filter = newFilter; hasUpdated = true; };
+	inline void SetFilter(const std::string newFilter) { filter = newFilter; };
 
 	inline bool GetIsTrigger() const { return isTrigger; }
-	inline void SetIsTrigger(const bool newIsTrigger) { isTrigger = newIsTrigger; hasUpdated = true; }
+	inline void SetIsTrigger(const bool newIsTrigger) { isTrigger = newIsTrigger; }
 
 	inline float3 GetScaleFactor() const { return scaleFactor; }
-	inline void SetScaleFactor(const float3 newScaleFactor) { scaleFactor = newScaleFactor; hasUpdated = true; }
-	inline void SetScaleFactor(const float scaleX, const float scaleY, const float scaleZ) { scaleFactor = float3(scaleX, scaleY, scaleZ); hasUpdated = true; }
+	inline void SetScaleFactor(const float3 newScaleFactor) { scaleFactor = newScaleFactor; }
+	inline void SetScaleFactor(const float scaleX, const float scaleY, const float scaleZ) { scaleFactor = float3(scaleX, scaleY, scaleZ); }
 
 	inline float3 GetCenter() const { return center; }
-	inline void SetCenter(const float3 newCenter) { center = newCenter; hasUpdated = true; }
-	inline void SetCenter(const float centerX, const float centerY, const float centerZ) { center = float3(centerX, centerY, centerZ); hasUpdated = true; }
-
+	inline void SetCenter(const float3 newCenter) { center = newCenter; }
+	inline void SetCenter(const float centerX, const float centerY, const float centerZ) { center = float3(centerX, centerY, centerZ); }
 
 private:
 	reactphysics3d::BoxShape* boxShape = nullptr;
 	reactphysics3d::Collider* collider = nullptr;
 
-	bool hasUpdated = false;
-
-	// Varbiales serialized
+	// Variables serialized
 	std::string filter = "";
 	bool isTrigger = false;
 	float3 scaleFactor = float3(1, 1, 1);

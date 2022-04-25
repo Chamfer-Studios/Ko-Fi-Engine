@@ -115,7 +115,7 @@
                     {
                         "active": true,
                         "position": [
-                            0.0014951229095458984,
+                            -3.5578160285949707,
                             15.493755340576172,
                             -0.627197265625
                         ],
@@ -156,7 +156,7 @@
                     },
                     {
                         "active": true,
-                        "body_type": "Dynamic",
+                        "body_type": "Static",
                         "freeze_position_x": false,
                         "freeze_position_y": false,
                         "freeze_position_z": false,
@@ -170,16 +170,16 @@
                     {
                         "active": true,
                         "center": [
-                            14.800000190734863,
-                            -43.400001525878906,
-                            -31.399999618530273
+                            0.0,
+                            0.0,
+                            0.0
                         ],
-                        "filter": "cositas",
-                        "is_trigger": true,
+                        "filter": "",
+                        "is_trigger": false,
                         "scale_factor": [
-                            3.700000047683716,
-                            4.900000095367432,
-                            2.5999999046325684
+                            8.699999809265137,
+                            1.0,
+                            4.400000095367432
                         ],
                         "type": "boxCollider"
                     }
@@ -202,7 +202,7 @@
                         "position": [
                             0.0,
                             73.35455322265625,
-                            0.0
+                            -5.960464477539063e-08
                         ],
                         "rotation": [
                             0.0,
@@ -242,28 +242,28 @@
                     {
                         "active": true,
                         "body_type": "Kinematic",
-                        "freeze_position_x": true,
+                        "freeze_position_x": false,
                         "freeze_position_y": false,
-                        "freeze_position_z": true,
+                        "freeze_position_z": false,
                         "freeze_rotation_x": false,
-                        "freeze_rotation_y": true,
+                        "freeze_rotation_y": false,
                         "freeze_rotation_z": false,
                         "mass": 1.0299999713897705,
                         "type": "rigidBody",
-                        "use_gravity": false
+                        "use_gravity": true
                     },
                     {
                         "active": true,
                         "center": [
-                            52.099998474121094,
-                            47.29999923706055,
-                            -4.199999809265137
+                            0.0,
+                            0.0,
+                            0.0
                         ],
                         "filter": "patata",
                         "is_trigger": true,
                         "scale_factor": [
-                            1.7999999523162842,
-                            4.199999809265137
+                            1.0,
+                            1.0
                         ],
                         "type": "capsuleCollider"
                     }
@@ -318,8 +318,8 @@
                     {
                         "active": true,
                         "position": [
-                            48.708953857421875,
-                            53.103511810302734,
+                            53.72492980957031,
+                            58.40876007080078,
                             0.0
                         ],
                         "rotation": [
@@ -330,7 +330,7 @@
                         ],
                         "scale": [
                             1.0,
-                            1.0,
+                            2.440000057220459,
                             1.0
                         ],
                         "type": "transform"
@@ -373,13 +373,13 @@
                     {
                         "active": true,
                         "center": [
-                            -20.899999618530273,
-                            11.899999618530273,
-                            -16.600000381469727
+                            0.0,
+                            0.0,
+                            0.0
                         ],
                         "filter": "enemy",
                         "is_trigger": true,
-                        "scale_factor": 1.899999976158142,
+                        "scale_factor": 1.0,
                         "type": "sphereCollider"
                     }
                 ],

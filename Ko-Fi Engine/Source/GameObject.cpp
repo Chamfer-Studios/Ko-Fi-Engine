@@ -216,9 +216,9 @@ void GameObject::DeleteComponent(Component* component)
 	if (componentIt != components.end())
 	{
 		//(*componentIt)->CleanUp();
+		RELEASE(*componentIt);
 		components.erase(componentIt);
 		components.shrink_to_fit();
-		RELEASE(*componentIt);
 	}
 }
 

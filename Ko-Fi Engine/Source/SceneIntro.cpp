@@ -63,6 +63,10 @@ bool SceneIntro::Start()
 	{
 		Importer::GetInstance()->sceneImporter->Load(this, engine->GetSceneManager()->GetDefaultScene().c_str());
 	}
+	else
+	{
+		// TODO: Load a default scene, or create a new empty one
+	}
 	if (!engine->GetCamera3D()->gameCamera)
 	{
 		GameObject *camera = CreateEmptyGameObject("Main Camera");

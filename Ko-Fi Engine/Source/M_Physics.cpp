@@ -93,7 +93,11 @@ bool M_Physics::RenderPhysics()
 bool M_Physics::CleanUp()
 {
 	// Destroy a physics world 
-	physicsCommon.destroyPhysicsWorld(world);
+	if (world)
+		physicsCommon.destroyPhysicsWorld(world);
+
+	if (filterMatrix)
+		DeleteFilterMatrix();
 
 	return true;
 }

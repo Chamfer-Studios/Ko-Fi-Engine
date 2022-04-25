@@ -62,13 +62,16 @@ bool C_RigidBody::Update(float dt)
 bool C_RigidBody::CleanUp()
 {
 	// Destroy a rigid body 
-	owner->GetEngine()->GetPhysics()->GetWorld()->destroyRigidBody(body);
+	if (body)
+		owner->GetEngine()->GetPhysics()->GetWorld()->destroyRigidBody(body);
+
 	return true;
 }
 
 bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 {
-	if (ImGui::CollapsingHeader("Rigid Body", ImGuiTreeNodeFlags_AllowItemOverlap))
+	std::string colHeader = bodyType + " Body";
+	if (ImGui::CollapsingHeader(colHeader.c_str(), ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 
@@ -98,11 +101,17 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 			}
 			ImGui::EndCombo();
 		}
+		ImGui::Text("Current type:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", bodyType.c_str());
 
-		bool newUseGravity = GetUseGravity();
-		if (ImGui::Checkbox("Use Gravity##", &newUseGravity))
+		if (bodyType != "Static")
 		{
-			SetUseGravity(newUseGravity);
+			bool newUseGravity = GetUseGravity();
+			if (ImGui::Checkbox("Use Gravity##", &newUseGravity))
+			{
+				SetUseGravity(newUseGravity);
+			}
 		}
 
 		ImGui::Text("Mass");
@@ -111,35 +120,38 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::DragFloat("##mass", &newMass, 0.01f, 0.01f, 20.0f))
 			SetMass(newMass);
 
-		if (ImGui::TreeNodeEx("Constraints"))
+		if (bodyType != "Static")
 		{
-			bool newFreezePositionX = GetFreezePositionX();
-			bool newFreezePositionY = GetFreezePositionY();
-			bool newFreezePositionZ = GetFreezePositionZ();
-			ImGui::Text("Freeze position: ");
-			if (ImGui::Checkbox("X##FreezePosX", &newFreezePositionX))
-				FreezePositionX(newFreezePositionX);
-			ImGui::SameLine();
-			if (ImGui::Checkbox("Y##FreezePosY", &newFreezePositionY))
-				FreezePositionY(newFreezePositionY);
-			ImGui::SameLine();
-			if (ImGui::Checkbox("Z##FreezePosZ", &newFreezePositionZ))
-				FreezePositionZ(newFreezePositionZ);
+			if (ImGui::TreeNodeEx("Constraints"))
+			{
+				bool newFreezePositionX = GetFreezePositionX();
+				bool newFreezePositionY = GetFreezePositionY();
+				bool newFreezePositionZ = GetFreezePositionZ();
+				ImGui::Text("Freeze position: ");
+				if (ImGui::Checkbox("X##FreezePosX", &newFreezePositionX))
+					FreezePositionX(newFreezePositionX);
+				ImGui::SameLine();
+				if (ImGui::Checkbox("Y##FreezePosY", &newFreezePositionY))
+					FreezePositionY(newFreezePositionY);
+				ImGui::SameLine();
+				if (ImGui::Checkbox("Z##FreezePosZ", &newFreezePositionZ))
+					FreezePositionZ(newFreezePositionZ);
 
-			bool newFreezeRotationX = GetFreezeRotationX();
-			bool newFreezeRotationY = GetFreezeRotationY();
-			bool newFreezeRotationZ = GetFreezeRotationZ();			
-			ImGui::Text("Freeze rotation: ");
-			if (ImGui::Checkbox("X##FreezeRotX", &newFreezeRotationX))
-				FreezeRotationX(newFreezeRotationX);
-			ImGui::SameLine();
-			if (ImGui::Checkbox("Y##FreezeRotY", &newFreezeRotationY))
-				FreezeRotationY(newFreezeRotationY);
-			ImGui::SameLine();
-			if (ImGui::Checkbox("Z##FreezeRotZ", &newFreezeRotationZ))
-				FreezeRotationZ(newFreezeRotationZ);
+				bool newFreezeRotationX = GetFreezeRotationX();
+				bool newFreezeRotationY = GetFreezeRotationY();
+				bool newFreezeRotationZ = GetFreezeRotationZ();
+				ImGui::Text("Freeze rotation: ");
+				if (ImGui::Checkbox("X##FreezeRotX", &newFreezeRotationX))
+					FreezeRotationX(newFreezeRotationX);
+				ImGui::SameLine();
+				if (ImGui::Checkbox("Y##FreezeRotY", &newFreezeRotationY))
+					FreezeRotationY(newFreezeRotationY);
+				ImGui::SameLine();
+				if (ImGui::Checkbox("Z##FreezeRotZ", &newFreezeRotationZ))
+					FreezeRotationZ(newFreezeRotationZ);
 
-			ImGui::TreePop();
+				ImGui::TreePop();
+			}
 		}
 	}
 	else
@@ -151,7 +163,6 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 
 void C_RigidBody::UpdateBodyType()
 {
-	// Body type
 	if (bodyType == "Static")
 		body->setType(reactphysics3d::BodyType::STATIC);
 
@@ -164,19 +175,16 @@ void C_RigidBody::UpdateBodyType()
 
 void C_RigidBody::UpdateEnableGravity()
 {
-	// Use gravity
 	body->enableGravity(useGravity);
 }
 
 void C_RigidBody::UpdateMass()
 {
-	// Mass
 	body->setMass(mass);
 }
 
 void C_RigidBody::UpdateConstrains()
 {
-	// Constraints
 	body->setLinearLockAxisFactor(reactphysics3d::Vector3(!freezePositionX, !freezePositionY, !freezePositionZ));
 	body->setAngularLockAxisFactor(reactphysics3d::Vector3(!freezeRotationX, !freezeRotationY, !freezeRotationZ));
 }
@@ -200,10 +208,13 @@ void C_RigidBody::Load(Json& json)
 {
 	bodyType = json.at("body_type");
 	UpdateBodyType();
+
 	useGravity = json.at("use_gravity");
 	UpdateEnableGravity();
+
 	mass = json.at("mass");
 	UpdateMass();
+
 	freezePositionX = json.at("freeze_position_x");
 	freezePositionY = json.at("freeze_position_y");
 	freezePositionZ = json.at("freeze_position_z");
@@ -211,6 +222,5 @@ void C_RigidBody::Load(Json& json)
 	freezeRotationY = json.at("freeze_rotation_y");
 	freezeRotationZ = json.at("freeze_rotation_z");
 	UpdateConstrains();
-	hasUpdated = true;
 }
 

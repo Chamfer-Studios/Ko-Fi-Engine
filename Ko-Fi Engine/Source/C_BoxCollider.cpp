@@ -12,6 +12,7 @@ C_BoxCollider::C_BoxCollider(GameObject *parent) : Component(parent)
 
 C_BoxCollider::~C_BoxCollider()
 {
+	CleanUp();
 }
 
 bool C_BoxCollider::Start()
@@ -19,11 +20,7 @@ bool C_BoxCollider::Start()
 	if (!collider)
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-
-
 		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(boundingBoxSize.x / 2, boundingBoxSize.y / 2, boundingBoxSize.z / 2));
-
-
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, transform);
 	}
@@ -38,15 +35,25 @@ bool C_BoxCollider::Update(float dt)
 
 bool C_BoxCollider::CleanUp()
 {
+	if (collider)
+	{
+		if (owner->GetComponent<C_RigidBody>() && owner->GetComponent<C_RigidBody>()->GetBody())
+			owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+	}
+	if (boxShape)
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyBoxShape(boxShape);
+
 	return true;
 }
 
 bool C_BoxCollider::InspectorDraw(PanelChooser *chooser)
 {
-	if (ImGui::CollapsingHeader("Box Collider"))
+	if (ImGui::CollapsingHeader("Box Collider", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		std::string newFilter = GetFilter() == "" ? "Set Filter" : GetFilter();
-		if (ImGui::BeginCombo("Set Filter##", newFilter.c_str()))
+		DrawDeleteButton(owner, this);
+
+		std::string newFilter = GetFilter();
+		if (ImGui::BeginCombo("Set Filter##", newFilter == "" ? "Set Filter" : newFilter.c_str()))
 		{
 			std::map<unsigned int, std::string> filterMap = owner->GetEngine()->GetPhysics()->GetFiltersMap();
 			for (auto iter = filterMap.begin(); iter != filterMap.end(); ++iter)
@@ -57,9 +64,11 @@ bool C_BoxCollider::InspectorDraw(PanelChooser *chooser)
 					UpdateFilter();
 				}
 			}
-
 			ImGui::EndCombo();
 		}
+		ImGui::Text("Current filter:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", filter.c_str());
 
 		bool newIsTrigger = GetIsTrigger();
 		if (ImGui::Checkbox("Is Trigger##", &newIsTrigger))
@@ -86,13 +95,16 @@ bool C_BoxCollider::InspectorDraw(PanelChooser *chooser)
 			UpdateScaleFactor();
 		}
 	}
+	else
+	{
+		DrawDeleteButton(owner, this);
+	}
 	return true;
 }
 
 void C_BoxCollider::Save(Json &json) const
 {
 	json["type"] = "boxCollider";
-
 	json["filter"] = filter;
 	json["is_trigger"] = isTrigger;
 	json["scale_factor"] = {scaleFactor.x, scaleFactor.y, scaleFactor.z};

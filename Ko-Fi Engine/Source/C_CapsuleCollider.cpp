@@ -7,11 +7,11 @@
 C_CapsuleCollider::C_CapsuleCollider(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAPSULE_COLLIDER;
-
 }
 
 C_CapsuleCollider::~C_CapsuleCollider()
 {
+	CleanUp();
 }
 
 bool C_CapsuleCollider::Start()
@@ -21,7 +21,6 @@ bool C_CapsuleCollider::Start()
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
 		capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape(boundingBoxSize.x / 2, boundingBoxSize.y / 2);
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
-
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, transform);
 	}
 	
@@ -35,18 +34,27 @@ bool C_CapsuleCollider::Update(float dt)
 
 bool C_CapsuleCollider::CleanUp()
 {
+	if (collider)
+	{
+		if (owner->GetComponent<C_RigidBody>() && owner->GetComponent<C_RigidBody>()->GetBody())
+			owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+	}
+	if (capsuleShape)
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyCapsuleShape(capsuleShape);
+
 	return true;
 }
 
 bool C_CapsuleCollider::InspectorDraw(PanelChooser* chooser)
 {
-	if (ImGui::CollapsingHeader("Capsule Collider"))
+	if (ImGui::CollapsingHeader("Capsule Collider", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		std::string newFilter = GetFilter() == "" ? "Set Filter" : GetFilter();
-		if (ImGui::BeginCombo("Set Filter##", newFilter.c_str()))
+		DrawDeleteButton(owner, this);
+
+		std::string newFilter = GetFilter();
+		if (ImGui::BeginCombo("Set Filter##", newFilter == "" ? "Set Filter" : newFilter.c_str()))
 		{
 			std::map<unsigned int, std::string> filterMap = owner->GetEngine()->GetPhysics()->GetFiltersMap();
-			bool** filterMatrix = owner->GetEngine()->GetPhysics()->filterMatrix;
 			for (auto iter = filterMap.begin(); iter != filterMap.end(); ++iter)
 			{
 				if (ImGui::Selectable(iter->second.c_str()))
@@ -58,6 +66,9 @@ bool C_CapsuleCollider::InspectorDraw(PanelChooser* chooser)
 
 			ImGui::EndCombo();
 		}
+		ImGui::Text("Current filter:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", filter.c_str());
 
 		bool newIsTrigger = GetIsTrigger();
 		if (ImGui::Checkbox("Is Trigger##", &newIsTrigger))
@@ -74,6 +85,7 @@ bool C_CapsuleCollider::InspectorDraw(PanelChooser* chooser)
 			SetCenter(newCenter);
 			UpdateCenter();
 		}
+
 		ImGui::Text("Scale");
 		ImGui::SameLine();
 		float2 newScaleFactor = GetScaleFactor();
@@ -83,13 +95,16 @@ bool C_CapsuleCollider::InspectorDraw(PanelChooser* chooser)
 			UpdateScaleFactor();
 		}
 	}
+	else
+	{
+		DrawDeleteButton(owner, this);
+	}
 	return true;
 }
 
 void C_CapsuleCollider::Save(Json& json) const
 {
 	json["type"] = "capsuleCollider";
-
 	json["filter"] = filter;
 	json["is_trigger"] = isTrigger;
 	json["scale_factor"] = { scaleFactor.x, scaleFactor.y};
