@@ -371,6 +371,9 @@ function MoveToDestination(dt)
 		end
 		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
 	else
+		if (componentAnimator ~= nil) then
+			componentAnimator:SetSelectedClip("Idle")
+		end
 		StopMovement()
 	end
 	-- Add ChangeAnimation() to check the speed of the rigid body
