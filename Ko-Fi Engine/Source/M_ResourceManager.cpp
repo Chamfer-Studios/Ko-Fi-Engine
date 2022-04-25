@@ -493,7 +493,7 @@ bool M_ResourceManager::FreeResource(UID uid)
 	it->second->ModifyReferenceCount(-1);
 
 	if (it->second->GetReferenceCount() == 0)
-		DeleteAndUnloadResource(uid);
+		UnloadResource(uid);
 }
 
 bool M_ResourceManager::UnloadResource(Resource* resource)
