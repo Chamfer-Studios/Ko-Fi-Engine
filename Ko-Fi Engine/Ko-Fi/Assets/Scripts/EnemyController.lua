@@ -301,7 +301,7 @@ function EventHandler(key, fields)
     elseif key == "Walking_Direction" then
         LookAtDirection(fields[1])
     elseif key == "Player_Position" then
-        --ProcessVisualTrigger(fields[1], fields[2])
+        ProcessVisualTrigger(fields[1], fields[2])
     end
 end
 
@@ -316,10 +316,10 @@ function Update(dt)
         awareness = awareness - awarenessSpeed * dt
     end
 
-    --Log(tostring(awareness) .. "\n")
+    Log(tostring(awareness) .. "\n")
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
         if seeingSource ~= nil then
-            DispatchEvent("State_Suspicious", { seeingSource })
+            DispatchEvent("State_Suspicious", { seeingPosition })
         else
             DispatchEvent("State_Suspicious", { awarenessPosition })
         end

@@ -141,9 +141,6 @@ void C_Transform::LookAt(float3 &_front, float3 &_up)
 	_front = _front.Normalized();
 	_up = _up.Normalized();
 
-	//float3::Orthonormalize(_front, _up);
-	//float3 right = _up.Cross(_up);
-
 	float angle = atan2(_front.z, _front.x);
 
 	Quat r = GetRotationQuat();
@@ -158,8 +155,6 @@ void C_Transform::LookAt(float3 &_front, float3 &_up)
 	float diff = currentEuler.y - angle;
 
 	diff += 90.0f * DEGTORAD;
-
-	appLog->AddLog("%f, %f\n", angle, currentEuler.y);
 
 	r = r.RotateAxisAngle(_up, diff);
 
