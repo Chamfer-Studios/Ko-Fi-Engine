@@ -115,9 +115,9 @@
                     {
                         "active": true,
                         "position": [
-                            -3.5578160285949707,
-                            15.493755340576172,
-                            -0.627197265625
+                            34.5,
+                            0.0,
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -177,9 +177,9 @@
                         "filter": "",
                         "is_trigger": false,
                         "scale_factor": [
-                            8.699999809265137,
                             1.0,
-                            4.400000095367432
+                            1.0,
+                            1.0
                         ],
                         "type": "boxCollider"
                     }
@@ -201,7 +201,7 @@
                         "active": true,
                         "position": [
                             0.0,
-                            73.35455322265625,
+                            0.0,
                             -5.960464477539063e-08
                         ],
                         "rotation": [
@@ -308,7 +308,7 @@
                 "tag": 0
             },
             {
-                "UID": 1045608193,
+                "UID": 112222763,
                 "active": true,
                 "components": [
                     {
@@ -318,8 +318,8 @@
                     {
                         "active": true,
                         "position": [
-                            53.72492980957031,
-                            58.40876007080078,
+                            -36.1115837097168,
+                            0.0,
                             0.0
                         ],
                         "rotation": [
@@ -330,7 +330,7 @@
                         ],
                         "scale": [
                             1.0,
-                            2.440000057220459,
+                            1.0,
                             1.0
                         ],
                         "type": "transform"
@@ -377,15 +377,15 @@
                             0.0,
                             0.0
                         ],
-                        "filter": "enemy",
-                        "is_trigger": true,
+                        "filter": "",
+                        "is_trigger": false,
                         "scale_factor": 1.0,
                         "type": "sphereCollider"
                     }
                 ],
                 "is3D": true,
                 "name": "Sphere2",
-                "parent_UID": 1599839595,
+                "parent_UID": 4294967295,
                 "tag": 0
             }
         ],

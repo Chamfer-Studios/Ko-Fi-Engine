@@ -19,6 +19,16 @@ private:
 	M_Physics* mPhysics = nullptr;
 };
 
+// Class WorldRaycastCallback 
+class CustomRayCastCallback : public reactphysics3d::RaycastCallback {
+
+public:
+	CustomRayCastCallback(GameObject* raycastSender);
+	virtual reactphysics3d::decimal notifyRaycastHit(const reactphysics3d::RaycastInfo& info);
+public:
+	GameObject* raycastSender = nullptr;
+};
+
 
 class M_Physics : public Module
 {
@@ -62,8 +72,33 @@ public:
 	//Utils
 	reactphysics3d::RigidBody* AddBody(reactphysics3d::Transform rbTransform, GameObject* owner);
 	GameObject* GetGameObjectFromBody(reactphysics3d::CollisionBody* collisionBody) { return collisionBodyToObjectMap[collisionBody]; }
+
 	inline void ResetCollisionBodyToObjectMap() { collisionBodyToObjectMap.clear(); }
 
+	//RayCast
+	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName)
+	{
+		// Create the ray 
+		reactphysics3d::Vector3 sPoint(startPoint.x, startPoint.y, startPoint.z);
+		reactphysics3d::Vector3 ePoint(endPoint.x, endPoint.y, endPoint.z);
+		reactphysics3d::Ray ray(sPoint, ePoint);
+
+		// Create an instance of your callback class 
+		CustomRayCastCallback callbackObject;
+		unsigned int mask = 0;
+		for (auto filter : filters)
+		{
+			if (filter.second == filterName)
+
+			{
+				mask += filter.first;
+			}
+		}
+
+		// Raycast test 
+		world->raycast(ray, &callbackObject,mask);
+		
+	}
 private:
 	// Filter matrix private methods
 	inline void DeleteFilterMatrix()

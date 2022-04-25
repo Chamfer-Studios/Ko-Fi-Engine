@@ -79,7 +79,7 @@ bool M_Physics::RenderPhysics()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		glBegin(GL_TRIANGLES);
-		glColor3f(triangles[i].color1, triangles[i].color2, triangles[i].color3);
+		glColor3f(0.49f, 1.0f, 212.0f);
 		glVertex3f(triangles[i].point1.x, triangles[i].point1.y, triangles[i].point1.z);
 		glVertex3f(triangles[i].point2.x, triangles[i].point2.y, triangles[i].point2.z);
 		glVertex3f(triangles[i].point3.x, triangles[i].point3.y, triangles[i].point3.z);
@@ -488,4 +488,25 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 		}
 	}
 
+}
+
+CustomRayCastCallback::CustomRayCastCallback(GameObject* raycastSender)
+{
+	this->raycastSender = raycastSender;
+}
+
+reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysics3d::RaycastInfo& info)
+{
+
+
+	for (Component* component : raycastSender->GetComponents()) // This method used because there could be multiple scripts in one go
+	{
+		if (component->GetType() != ComponentType::SCRIPT)
+			continue;
+		C_Script* script = (C_Script*)component;
+		script->s->handler->lua["OnRayCastHit"]();
+	}
+
+	// Return a fraction of 1.0 to gather all hits 
+	return reactphysics3d::decimal(1.0);
 }
