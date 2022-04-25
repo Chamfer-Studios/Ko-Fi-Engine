@@ -110,6 +110,7 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 			if (ImGui::Checkbox("Use Gravity##", &newUseGravity))
 			{
 				SetUseGravity(newUseGravity);
+				UpdateEnableGravity();
 			}
 		}
 
@@ -117,7 +118,10 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		float newMass = GetMass();
 		if (ImGui::DragFloat("##mass", &newMass, 0.01f, 0.01f, 20.0f))
+		{
 			SetMass(newMass);
+			UpdateMass();
+		}
 
 		if (bodyType != "Static")
 		{
@@ -128,26 +132,44 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 				bool newFreezePositionZ = GetFreezePositionZ();
 				ImGui::Text("Freeze position: ");
 				if (ImGui::Checkbox("X##FreezePosX", &newFreezePositionX))
+				{
 					FreezePositionX(newFreezePositionX);
+					UpdateConstrains();
+				}
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Y##FreezePosY", &newFreezePositionY))
+				{
 					FreezePositionY(newFreezePositionY);
+					UpdateConstrains();
+				}
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Z##FreezePosZ", &newFreezePositionZ))
+				{
 					FreezePositionZ(newFreezePositionZ);
+					UpdateConstrains();
+				}
 
 				bool newFreezeRotationX = GetFreezeRotationX();
 				bool newFreezeRotationY = GetFreezeRotationY();
 				bool newFreezeRotationZ = GetFreezeRotationZ();
 				ImGui::Text("Freeze rotation: ");
 				if (ImGui::Checkbox("X##FreezeRotX", &newFreezeRotationX))
+				{
 					FreezeRotationX(newFreezeRotationX);
+					
+				}
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Y##FreezeRotY", &newFreezeRotationY))
+				{
 					FreezeRotationY(newFreezeRotationY);
+					UpdateConstrains();
+				}
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Z##FreezeRotZ", &newFreezeRotationZ))
+				{
 					FreezeRotationZ(newFreezeRotationZ);
+					UpdateConstrains();
+				}
 
 				ImGui::TreePop();
 			}
