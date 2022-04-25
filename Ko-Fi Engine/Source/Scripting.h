@@ -301,7 +301,7 @@ public:
 			sol::constructors<void(KoFiEngine*)>(),
 			"WorldToScreen", &M_Camera3D::WorldToScreen);
 
-	/*	lua.new_usertype<M_Physics>("M_Physics",
+		/*lua.new_usertype<M_Physics>("M_Physics",
 			sol::constructors<void(KoFiEngine*)>(),
 			"Raycast", &M_Physics::Raycast);*/
 
@@ -329,6 +329,7 @@ public:
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
+		lua.set_function("RayCast", &Scripting::RayCast, this);
 
 	}
 
@@ -400,6 +401,11 @@ public:
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4);
 			}
 		}
+	}
+
+	void RayCast(float3 startPoint, float3 endPoint, std::string filterName,GameObject* senderGo)
+	{
+		return  gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint,endPoint,filterName,senderGo);
 	}
 
 	M_Navigation *GetNavigation()

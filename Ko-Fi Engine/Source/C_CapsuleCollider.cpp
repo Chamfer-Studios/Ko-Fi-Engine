@@ -30,6 +30,10 @@ bool C_CapsuleCollider::Start()
 
 bool C_CapsuleCollider::Update(float dt)
 {
+	if (!owner->GetComponent<C_RigidBody>())
+	{
+		owner->DeleteComponent(this);
+	}
 	return true;
 }
 
@@ -134,7 +138,7 @@ void C_CapsuleCollider::Load(Json& json)
 void C_CapsuleCollider::UpdateFilter()
 {
 	std::map<unsigned int, std::string> filterMap = owner->GetEngine()->GetPhysics()->GetFiltersMap();
-	bool** filterMatrix = owner->GetEngine()->GetPhysics()->filterMatrix;
+	bool** filterMatrix = owner->GetEngine()->GetPhysics()->GetFilterMatrix();
 	for (auto iter : filterMap)
 	{
 		if (iter.second == filter)

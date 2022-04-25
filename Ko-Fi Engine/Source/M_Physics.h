@@ -5,7 +5,7 @@
 #include "reactphysics3d/reactphysics3d.h"
 #include <map>
 #include <string>
-
+#include "MathGeoLib/Math/float3.h"
 class GameObject;
 class M_Physics;
 class PhysicsEventListener : public reactphysics3d::EventListener
@@ -17,6 +17,16 @@ public:
 	virtual void onTrigger(const reactphysics3d::OverlapCallback::CallbackData& callbackData) override;
 private:
 	M_Physics* mPhysics = nullptr;
+};
+
+// Class WorldRaycastCallback 
+class CustomRayCastCallback : public reactphysics3d::RaycastCallback {
+
+public:
+	CustomRayCastCallback(GameObject* raycastSender);
+	virtual reactphysics3d::decimal notifyRaycastHit(const reactphysics3d::RaycastInfo& info);
+public:
+	GameObject* raycastSender = nullptr;
 };
 
 
@@ -59,11 +69,15 @@ public:
 	void RemoveFilter(std::string filterToRemove);
 	unsigned int GetFilter(std::string filter);
 	inline std::map<unsigned int, std::string> GetFiltersMap() { return filters; }
+	inline bool** GetFilterMatrix() { return filterMatrix; }
 	//Utils
 	reactphysics3d::RigidBody* AddBody(reactphysics3d::Transform rbTransform, GameObject* owner);
 	GameObject* GetGameObjectFromBody(reactphysics3d::CollisionBody* collisionBody) { return collisionBodyToObjectMap[collisionBody]; }
+
 	inline void ResetCollisionBodyToObjectMap() { collisionBodyToObjectMap.clear(); }
 
+	//RayCast
+	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo);
 private:
 	// Filter matrix private methods
 	inline void DeleteFilterMatrix()
@@ -82,7 +96,6 @@ private:
 
 private:
 	KoFiEngine* engine = nullptr;
-public:
 	//DynamicsWorld* world = nullptr;
 
 	reactphysics3d::PhysicsCommon physicsCommon;

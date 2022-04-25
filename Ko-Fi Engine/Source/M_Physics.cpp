@@ -79,7 +79,7 @@ bool M_Physics::RenderPhysics()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		glBegin(GL_TRIANGLES);
-		glColor3f(triangles[i].color1, triangles[i].color2, triangles[i].color3);
+		glColor3f(0.49f, 1.0f, 212.0f);
 		glVertex3f(triangles[i].point1.x, triangles[i].point1.y, triangles[i].point1.z);
 		glVertex3f(triangles[i].point2.x, triangles[i].point2.y, triangles[i].point2.z);
 		glVertex3f(triangles[i].point3.x, triangles[i].point3.y, triangles[i].point3.z);
@@ -333,6 +333,29 @@ reactphysics3d::RigidBody* M_Physics::AddBody(reactphysics3d::Transform rbTransf
 	return body;
 }
 
+void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
+{
+	// Create the ray 
+	reactphysics3d::Vector3 sPoint(startPoint.x, startPoint.y, startPoint.z);
+	reactphysics3d::Vector3 ePoint(endPoint.x, endPoint.y, endPoint.z);
+	reactphysics3d::Ray ray(sPoint, ePoint);
+
+	// Create an instance of your callback class 
+	CustomRayCastCallback callbackObject(senderGo);
+	unsigned int mask = 0;
+	for (auto filter : filters)
+	{
+		if (filter.second == filterName)
+
+		{
+			mask += filter.first;
+		}
+	}
+
+	// Raycast test 
+	world->raycast(ray, &callbackObject, mask);
+}
+
 PhysicsEventListener::PhysicsEventListener(M_Physics* mPhysics)
 {
 	this->mPhysics = mPhysics;
@@ -488,4 +511,25 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 		}
 	}
 
+}
+
+CustomRayCastCallback::CustomRayCastCallback(GameObject* raycastSender)
+{
+	this->raycastSender = raycastSender;
+}
+
+reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysics3d::RaycastInfo& info)
+{
+
+
+	for (Component* component : raycastSender->GetComponents()) // This method used because there could be multiple scripts in one go
+	{
+		if (component->GetType() != ComponentType::SCRIPT)
+			continue;
+		C_Script* script = (C_Script*)component;
+		script->s->handler->lua["OnRayCastHit"]();
+	}
+
+	// Return a fraction of 1.0 to gather all hits 
+	return reactphysics3d::decimal(1.0);
 }
