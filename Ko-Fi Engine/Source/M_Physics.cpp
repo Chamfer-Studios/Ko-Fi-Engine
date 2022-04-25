@@ -333,6 +333,29 @@ reactphysics3d::RigidBody* M_Physics::AddBody(reactphysics3d::Transform rbTransf
 	return body;
 }
 
+void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
+{
+	// Create the ray 
+	reactphysics3d::Vector3 sPoint(startPoint.x, startPoint.y, startPoint.z);
+	reactphysics3d::Vector3 ePoint(endPoint.x, endPoint.y, endPoint.z);
+	reactphysics3d::Ray ray(sPoint, ePoint);
+
+	// Create an instance of your callback class 
+	CustomRayCastCallback callbackObject(senderGo);
+	unsigned int mask = 0;
+	for (auto filter : filters)
+	{
+		if (filter.second == filterName)
+
+		{
+			mask += filter.first;
+		}
+	}
+
+	// Raycast test 
+	world->raycast(ray, &callbackObject, mask);
+}
+
 PhysicsEventListener::PhysicsEventListener(M_Physics* mPhysics)
 {
 	this->mPhysics = mPhysics;

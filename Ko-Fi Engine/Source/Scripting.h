@@ -398,9 +398,9 @@ public:
 		}
 	}
 
-	void RayCast(float3 startPoint, float3 endPoint, std::string filterName)
+	void RayCast(float3 startPoint, float3 endPoint, std::string filterName,GameObject* senderGo)
 	{
-		return  gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint,endPoint,filterName);
+		return  gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint,endPoint,filterName,senderGo);
 	}
 
 	M_Navigation *GetNavigation()

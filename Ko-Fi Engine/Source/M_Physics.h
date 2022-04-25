@@ -5,7 +5,7 @@
 #include "reactphysics3d/reactphysics3d.h"
 #include <map>
 #include <string>
-
+#include "MathGeoLib/Math/float3.h"
 class GameObject;
 class M_Physics;
 class PhysicsEventListener : public reactphysics3d::EventListener
@@ -76,29 +76,7 @@ public:
 	inline void ResetCollisionBodyToObjectMap() { collisionBodyToObjectMap.clear(); }
 
 	//RayCast
-	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName)
-	{
-		// Create the ray 
-		reactphysics3d::Vector3 sPoint(startPoint.x, startPoint.y, startPoint.z);
-		reactphysics3d::Vector3 ePoint(endPoint.x, endPoint.y, endPoint.z);
-		reactphysics3d::Ray ray(sPoint, ePoint);
-
-		// Create an instance of your callback class 
-		CustomRayCastCallback callbackObject;
-		unsigned int mask = 0;
-		for (auto filter : filters)
-		{
-			if (filter.second == filterName)
-
-			{
-				mask += filter.first;
-			}
-		}
-
-		// Raycast test 
-		world->raycast(ray, &callbackObject,mask);
-		
-	}
+	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo);
 private:
 	// Filter matrix private methods
 	inline void DeleteFilterMatrix()
