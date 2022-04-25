@@ -30,6 +30,10 @@ bool C_CapsuleCollider::Start()
 
 bool C_CapsuleCollider::Update(float dt)
 {
+	if (!owner->GetComponent<C_RigidBody>())
+	{
+		owner->DeleteComponent(this);
+	}
 	return true;
 }
 

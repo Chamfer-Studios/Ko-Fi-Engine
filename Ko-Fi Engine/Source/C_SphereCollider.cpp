@@ -30,6 +30,10 @@ bool C_SphereCollider::Start()
 
 bool C_SphereCollider::Update(float dt)
 {
+	if (!owner->GetComponent<C_RigidBody>())
+	{
+		owner->DeleteComponent(this);
+	}
 	return true;
 }
 
