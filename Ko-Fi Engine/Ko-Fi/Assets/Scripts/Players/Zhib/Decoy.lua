@@ -20,7 +20,7 @@ function Start()
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 	vec2 = Normalize(vec2, d)
 	if (componentRigidBody ~= nil) then		
-		componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, 2, playerPos.z + vec2[2] * 3))
+		componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, 0, playerPos.z + vec2[2] * 3))
 	end
 end
 

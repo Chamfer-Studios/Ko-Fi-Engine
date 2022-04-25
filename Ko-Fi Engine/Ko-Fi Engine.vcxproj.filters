@@ -1626,9 +1626,6 @@
     <ClInclude Include="Source\C_Script.h">
       <Filter>Source\GameObject\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scripting.h">
-      <Filter>Source\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\ImGuizmo\include\GraphEditor.h">
       <Filter>Libs\ImGuizmo</Filter>
     </ClInclude>
@@ -1751,6 +1748,9 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentWalkable.h">
       <Filter>Source\GameObject\Components\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scripting.h">
+      <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1885,6 +1885,9 @@
       <Filter>Scripts\Players\Nerala</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua">
+      <Filter>Scripts\Players\Nerala</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Smokebomb.lua">
       <Filter>Scripts\Players\Nerala</Filter>
     </None>
   </ItemGroup>

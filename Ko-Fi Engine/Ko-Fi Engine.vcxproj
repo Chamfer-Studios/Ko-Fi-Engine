@@ -619,6 +619,7 @@
     <ClInclude Include="Source\M_Navigation.h" />
     <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
+    <ClInclude Include="Source\Scripting.h" />
     <ClInclude Include="Source\SimulationEventCallback.h" />
     <ClInclude Include="Source\R_ParticleResource.h" />
     <ClInclude Include="Source\ResourceBase.h" />
@@ -638,7 +639,6 @@
     <ClInclude Include="Source\M_ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\M_SceneManager.h" />
-    <ClInclude Include="Source\Scripting.h" />
     <ClInclude Include="Source\C_SoundTriggerCreator.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\R_Texture.h" />
@@ -670,6 +670,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\HunterSeeker.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Smokebomb.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Omozra\Omozra.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Decoy.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Knife.lua" />
