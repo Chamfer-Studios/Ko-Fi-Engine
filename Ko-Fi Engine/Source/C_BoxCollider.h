@@ -19,12 +19,40 @@ public:
 	//Serialization
 	void Save(Json& json) const override;
 	void Load(Json& json) override;
+
+	void UpdateFilter();
+
+	void UpdateScaleFactor();
+	void UpdateIsTrigger();
+	void UpdateCenter();
+
+	// Getters & Setters
+	inline std::string GetFilter() const { return filter; };
+	inline void SetFilter(const std::string newFilter) { filter = newFilter; hasUpdated = true; };
+
+	inline bool GetIsTrigger() const { return isTrigger; }
+	inline void SetIsTrigger(const bool newIsTrigger) { isTrigger = newIsTrigger; hasUpdated = true; }
+
+	inline float3 GetScaleFactor() const { return scaleFactor; }
+	inline void SetScaleFactor(const float3 newScaleFactor) { scaleFactor = newScaleFactor; hasUpdated = true; }
+	inline void SetScaleFactor(const float scaleX, const float scaleY, const float scaleZ) { scaleFactor = float3(scaleX, scaleY, scaleZ); hasUpdated = true; }
+
+	inline float3 GetCenter() const { return center; }
+	inline void SetCenter(const float3 newCenter) { center = newCenter; hasUpdated = true; }
+	inline void SetCenter(const float centerX, const float centerY, const float centerZ) { center = float3(centerX, centerY, centerZ); hasUpdated = true; }
+
+
 private:
 	reactphysics3d::BoxShape* boxShape = nullptr;
 	reactphysics3d::Collider* collider = nullptr;
-	float3 scaleFactor = float3(1, 1, 1);
-	std::string currentFilter = "Set Filter";
 
+	bool hasUpdated = false;
+
+	// Varbiales serialized
+	std::string filter = "";
+	bool isTrigger = false;
+	float3 scaleFactor = float3(1, 1, 1);
+	float3 center = { 0,0,0 };
 };
 #endif // !__C_BOX_COLLIDER_H__
 

@@ -53,7 +53,8 @@ C_Mesh::~C_Mesh()
 
 bool C_Mesh::Start()
 {
-	GenerateLocalBoundingBox();
+	if (mesh)
+		GenerateGlobalBoundingBox();
 	return true;
 }
 
@@ -150,7 +151,7 @@ void C_Mesh::Load(Json& json)
 		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
 		this->GetMesh()->SetRootNode(object);
 	}
-
+	GenerateGlobalBoundingBox();
 }
 
 void C_Mesh::SetMesh(R_Mesh* mesh)

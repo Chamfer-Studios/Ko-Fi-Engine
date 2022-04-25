@@ -26,22 +26,22 @@ public:
 	inline reactphysics3d::RigidBody* GetBody() { return this->body; }
 
 	inline std::string GetBodyType() const { return bodyType; };
-	inline void SetBodyType(const std::string newBodyType) { bodyType = newBodyType; };
+	inline void SetBodyType(const std::string newBodyType) { bodyType = newBodyType; hasUpdated = true; };
 
 	inline bool GetUseGravity() const { return useGravity; };
-	inline void SetUseGravity(const bool newUseGravity) { useGravity = newUseGravity; };
+	inline void SetUseGravity(const bool newUseGravity) { useGravity = newUseGravity; hasUpdated = true; };
 
 	inline float GetMass() const { return mass; };
-	inline void SetMass(const float newMass) { mass = newMass; };
+	inline void SetMass(const float newMass) { mass = newMass; hasUpdated = true; };
 
-	inline void FreezePositionX(const bool freeze) { freezePositionX = freeze; }
-	inline void FreezePositionY(const bool freeze) { freezePositionY = freeze; }
-	inline void FreezePositionZ(const bool freeze) { freezePositionZ = freeze; }
-	inline void FreezeRotationX(const bool freeze) { freezeRotationX = freeze; }
-	inline void FreezeRotationY(const bool freeze) { freezeRotationY = freeze; }
-	inline void FreezeRotationZ(const bool freeze) { freezeRotationZ = freeze; }
-	inline void FreezePositions(const bool freezeX, const bool freezeY, const bool freezeZ) { freezePositionX = freezeX; freezePositionY = freezeY; freezePositionZ = freezeZ; }
-	inline void FreezeRotations(const bool freezeX, const bool freezeY, const bool freezeZ) { freezeRotationX = freezeX; freezeRotationY = freezeY; freezeRotationZ = freezeZ; }
+	inline void FreezePositionX(const bool freeze) { freezePositionX = freeze; hasUpdated = true; }
+	inline void FreezePositionY(const bool freeze) { freezePositionY = freeze; hasUpdated = true; }
+	inline void FreezePositionZ(const bool freeze) { freezePositionZ = freeze; hasUpdated = true; }
+	inline void FreezeRotationX(const bool freeze) { freezeRotationX = freeze; hasUpdated = true; }
+	inline void FreezeRotationY(const bool freeze) { freezeRotationY = freeze; hasUpdated = true; }
+	inline void FreezeRotationZ(const bool freeze) { freezeRotationZ = freeze; hasUpdated = true; }
+	inline void FreezePositions(const bool freezeX, const bool freezeY, const bool freezeZ) { freezePositionX = freezeX; freezePositionY = freezeY; freezePositionZ = freezeZ; hasUpdated = true; }
+	inline void FreezeRotations(const bool freezeX, const bool freezeY, const bool freezeZ) { freezeRotationX = freezeX; freezeRotationY = freezeY; freezeRotationZ = freezeZ; hasUpdated = true; }
 	inline bool GetFreezePositionX() const { return freezePositionX; }
 	inline bool GetFreezePositionY() const { return freezePositionY; }
 	inline bool GetFreezePositionZ() const { return freezePositionZ; }
