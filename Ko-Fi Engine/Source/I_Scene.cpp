@@ -130,14 +130,6 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 	return true;
 }
 
-
-GameObject* I_Scene::ImportModel(const char* path)
-{
-	// TODO: WE SHOULD CHANGE THIS
-	GameObject* tmp = nullptr;
-	return tmp;
-}
-
 void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab)
 {
 	GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
@@ -784,6 +776,11 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	return ret;
 }
 
+bool I_Scene::SaveScene(Scene* scene, const char* name)
+{
+	return false;
+}
+
 bool I_Scene::SaveModel(const R_Model* model, const char* path)
 {
 	bool ret = true;
@@ -1119,6 +1116,11 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		ret = false;
 
 	return ret;
+}
+
+bool I_Scene::LoadScene(Scene* scene, const char* name)
+{
+	return false;
 }
 
 bool I_Scene::LoadModel(const char* path, R_Model* model)

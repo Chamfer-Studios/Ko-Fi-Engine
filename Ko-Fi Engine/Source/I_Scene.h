@@ -27,12 +27,12 @@ public:
 	bool Import(R_Model* model, bool isPrefab = false);
 
 	bool Save(Scene* scene, const char* name = nullptr);
+	bool SaveScene(Scene* scene, const char* name = nullptr);
 	bool SaveModel(const R_Model* model, const char* path);
 
 	bool Load(Scene* scene, const char* name);
+	bool LoadScene(Scene* scene, const char* name);
 	bool LoadModel(const char* path, R_Model* model);
-
-	GameObject* ImportModel(const char* path);
 
 private:
 	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* parent, bool isPrefab = false);

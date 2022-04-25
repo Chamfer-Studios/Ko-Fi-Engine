@@ -35,15 +35,18 @@ public:
 
 	// Saving & Loading resource methods
 	bool SaveResource(Resource* resource);
-	UID LoadFromLibrary(const char* assetsPath);
-	Resource* GetResourceFromLibrary(const char* assetsPath);
+	Resource* GetResourceFromLibrary(const char* assetPath);
+	UID LoadFromLibrary(const char* assetPath);
 
 	// Resource methods
 	Resource* CreateNewResource(const ResourceType& type, const char* assetPath = nullptr, UID forcedUid = 0);
-	Resource* RequestResource(UID uid);						//
-	bool LoadResource(UID uid, const char* assetsPath);		//
-	bool UnloadResource(UID uid);							// Deletes from Library map
+	Resource* RequestResource(UID uid);						// Returns the pointer and adds one reference to the resource count
+	bool LoadResource(UID uid, const char* assetPath);
+	
+	bool FreeResource(UID uid);								// Subtracts one reference and unloads
 	bool UnloadResource(Resource* resource);				// Doesnt deletes from Library map
+	bool UnloadResource(UID uid);							// Doesnt deletes from Library map
+	bool DeleteAndUnloadResource(UID uid);					// Deletes from Library map
 
 	UID Find(const char* assetPath) const;					//
 	void FindAndForceUID(Resource* resource);				//
@@ -53,8 +56,8 @@ public:
 	bool GetForcedUIDsFromMeta(const char* assetPath, std::map<std::string, UID>& uids);
 
 	// Methods to import resources
-	bool ImportMaterial(const char* assetsPath, R_Material* material);
-	bool ImportTexture(const char* assetsPath, R_Texture* texture);
+	bool ImportMaterial(const char* assetPath, R_Material* material);
+	bool ImportTexture(const char* assetPath, R_Texture* texture);
 
 private:
 	void RefreshDirectoryFiles(const char* directory);
@@ -86,8 +89,9 @@ private:
 	ResourceType GetTypeFromPathExtension(const char* path);
 
 	bool SaveMetaFile(Resource* resource) const;
-	bool HasMetaFile(const char* assestsPath);
+	bool HasMetaFile(const char* assestPath);
 	bool ValidateMetaFile(const char* assetPath, bool libraryCheck = true);
+	bool ValidateMetaFile(Json jsonMeta, bool libraryCheck = true);
 	bool ResourceHasMetaType(Resource* resource) const;
 
 	bool HasImportIgnoredExtension(const char* assetPath) const;

@@ -216,7 +216,7 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 			// TODO
 			//break;
 	case ResourceType::UNKNOWN:
-		// TODO
+		return false;
 		break;
 	default:
 		break;
@@ -232,87 +232,125 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 	return ret;
 }
 
-UID M_ResourceManager::LoadFromLibrary(const char* assetsPath)
+Resource* M_ResourceManager::GetResourceFromLibrary(const char* assetPath)
 {
-	std::string cleanPath = GetValidPath(assetsPath);
-	if (cleanPath.c_str() == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, couldn't validate path.");
-		return 0;
-	}
-
-	Json jsonRoot;
-	bool metaIsValid = ValidateMetaFile(assetsPath);
-
-	if (jsonRoot.empty())
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, could not get the meta root node.");
-		return 0;
-	}
-	if (!metaIsValid)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, could not validate meta root node.");
-		return 0;
-	}
-
-	UID uid = (UID)jsonRoot.at("uid");
-
-	if (resourcesMap.find(uid) != resourcesMap.end())
-		return uid;
-
-	bool ret = LoadResource(uid, assetsPath);
-	if (!ret)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
-		return 0;
-	}
-
-	for (const auto& resource : jsonRoot.at("contained_resources").items())
-	{
-		std::string containedName = resource.value().at("asset_file").get<std::string>();
-		UID containedUid = (UID)resource.value().at("uid");
-
-		std::filesystem::path path = assetsPath;
-		std::string containedPath = path.parent_path().string() + "/" + containedName;
-
-		if (resourcesMap.find(containedUid) != resourcesMap.end())
-			continue;
-
-		ret = LoadResource(containedUid, containedPath.c_str());
-		if (!ret)
-			CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
-
-		containedPath.clear();
-		containedPath.shrink_to_fit();
-		containedName.clear();
-		containedName.shrink_to_fit();
-		path.clear();
-	}
-
-	return uid;
-}
-
-Resource* M_ResourceManager::GetResourceFromLibrary(const char* assetsPath)
-{
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: getting resource, library path was nullptr.");
 		return nullptr;
 	}
 
-	UID uid = LoadFromLibrary(assetsPath);
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+	
+	std::string errorString = "[ERROR] Resource Manager: couldn't get resource from { " + metaPath + " }";
+
+	if (!std::filesystem::exists(metaPath))
+	{
+		CONSOLE_LOG("%s Couldn't find meta file.", errorString.c_str());
+		return nullptr;
+	}
+
+	UID uid = LoadFromLibrary(assetPath);
 	if (uid == 0)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting resource from library, could not get resource uid from assests path.");
+		CONSOLE_LOG("%s Couldn't get resource uid from assets path.", errorString.c_str());
 		return nullptr;
 	}
 
 	Resource* resource = RequestResource(uid);
-
 	if (resource == nullptr)
-		CONSOLE_LOG("[ERROR] Resource Manager: getting resource from library, could not request resource.");
+		CONSOLE_LOG("%s Couldn't request resource.", errorString.c_str());
 
 	return resource;
+}
+
+UID M_ResourceManager::LoadFromLibrary(const char* assetPath)
+{
+	std::string errorString = "[ERROR] Resource Manager: couldn't load file from library path.";
+
+	std::string cleanPath = GetValidPath(assetPath);
+	if (cleanPath.c_str() == nullptr)
+	{
+		CONSOLE_LOG("%s Path was nullptr.", errorString.c_str());
+		return 0;
+	}
+
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+
+	if (!std::filesystem::exists(metaPath))
+	{
+		CONSOLE_LOG("%s Couldn't find meta file.", errorString.c_str());
+		return 0;
+	}
+
+	JsonHandler jsonHandler;
+	Json jsonMeta;
+
+	bool jsonLoaded = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+
+	bool metaIsValid = ValidateMetaFile(jsonMeta);
+	
+	if (jsonMeta.empty())
+	{
+		CONSOLE_LOG("%s Couldn't get the json meta node.");
+		return 0;
+	}
+
+	if (!metaIsValid)
+	{
+		CONSOLE_LOG("%s Couldn't validate json meta node.");
+		return 0;
+	}
+
+	UID uid = 0;
+	if (jsonLoaded && !jsonMeta.is_null() && !jsonMeta.empty())
+	{
+		uid = jsonMeta.at("uid");
+		if (resourcesMap.find(uid) != resourcesMap.end())
+			return uid;
+
+		bool loadedResource = LoadResource(uid, assetPath);
+		if (!loadedResource)
+		{
+			CONSOLE_LOG("%s Couldn't load resource in memory.", errorString.c_str());
+			return 0;
+		}
+
+		std::string containedPath = "";
+		if (jsonMeta.contains("contained_resources"))
+		{
+			if (!jsonMeta.at("contained_resources").is_null() && !jsonMeta.at("contained_resources").empty())
+			{
+				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
+				{
+					UID containedUid = containedIt.value().at("uid");
+					if (resourcesMap.find(containedUid) != resourcesMap.end())
+						continue;
+
+					std::filesystem::path tmpPath = assetPath;
+					containedPath = containedIt.value().at("asset_file");
+					containedPath = tmpPath.parent_path().string() + "/" + containedPath;
+
+					bool loadedResource = LoadResource(containedUid, containedPath.c_str());
+					if (!loadedResource)
+					{
+						CONSOLE_LOG("%s Couldn't load resource in memory.", errorString.c_str());
+						return 0;
+					}
+
+					containedPath.clear();
+					containedPath.shrink_to_fit();
+					tmpPath.clear();
+				}
+			}
+		}
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
+	}
+
+	return uid;
 }
 
 Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const char* assetPath, UID forcedUid)
@@ -357,7 +395,6 @@ Resource* M_ResourceManager::RequestResource(UID uid)
 		return nullptr;
 	}
 
-	// Find if the resource is already loaded
 	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
 	if (it != resourcesMap.end())
 	{
@@ -367,9 +404,9 @@ Resource* M_ResourceManager::RequestResource(UID uid)
 	return nullptr;
 }
 
-bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
+bool M_ResourceManager::LoadResource(UID uid, const char* assetPath)
 {
-	if (assetsPath == nullptr)
+	if (assetPath == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, assets path was nullptr.");
 		return false;
@@ -381,18 +418,21 @@ bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
 	}
 	if (library.find(uid) == library.end())
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, resource could not be found in the library.");
+		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, resource could not be found in library.");
 		return false;
 	}
 
-	auto item = resourcesMap.find(uid);
+	std::map<UID, Resource*>::iterator item = resourcesMap.find(uid);
 	if (item != resourcesMap.end())
 	{
 		return true;
 	}
+
 	std::string libraryPath = library.find(uid)->second.libraryPath;
+
 	ResourceType type = GetTypeFromPathExtension(libraryPath.c_str());
-	Resource* resource = CreateNewResource(type, assetsPath, uid);
+	Resource* resource = CreateNewResource(type, assetPath, uid);
+
 	bool ret = false;
 	switch (type)
 	{
@@ -402,8 +442,6 @@ bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
 	case ResourceType::TEXTURE:
 		ret = Importer::GetInstance()->textureImporter->Load(libraryPath.c_str(), (R_Texture*)resource);
 		break;
-		//case ResourceType::PARTICLE:
-		//	break;
 	case ResourceType::MODEL:
 		ret = Importer::GetInstance()->sceneImporter->LoadModel(libraryPath.c_str(), (R_Model*)resource);
 		break;
@@ -413,6 +451,12 @@ bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
 	case ResourceType::ANIMATION:
 		ret = Importer::GetInstance()->animationImporter->Load(libraryPath.c_str(), (R_Animation*)resource);
 		break;
+		//case ResourceType::PARTICLE:
+		// TODO
+		//	break;
+	case ResourceType::UNKNOWN:
+		return ret;
+		break;
 	default:
 		break;
 	}
@@ -420,15 +464,36 @@ bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
 	if (ret)
 	{
 		resourcesMap.emplace(resource->GetUID(), resource);
-		CONSOLE_LOG("Successfully loaded resource in memory!");
+		CONSOLE_LOG("[STATUS] Resource Manager: successfully loaded resource: %s in memory.", resource->GetAssetFile());
 	}
 	else
 	{
 		UnloadResource(resource);
-		CONSOLE_LOG("Could not load the resource data from file %s.", libraryPath.c_str());
+		CONSOLE_LOG("[ERROR] Resource Manager: couldn't load the resource data from file: %s.", libraryPath.c_str());
 	}
 
 	return ret;
+}
+
+bool M_ResourceManager::FreeResource(UID uid)
+{
+	if (uid == 0)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: resource free failed! Requested UID was 0.");
+		return false;
+	}
+
+	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
+	if (it == resourcesMap.end())
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: resource free failed! Requested UID wasn't in the resources map.");
+		return false;
+	}
+
+	it->second->ModifyReferenceCount(-1);
+
+	if (it->second->GetReferenceCount() == 0)
+		DeleteAndUnloadResource(uid);
 }
 
 bool M_ResourceManager::UnloadResource(Resource* resource)
@@ -457,22 +522,45 @@ bool M_ResourceManager::UnloadResource(Resource* resource)
 
 bool M_ResourceManager::UnloadResource(UID uid)
 {
+	if (uid == 0)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: Could not Deallocate Resource! Error: Given UID was 0");
+		return false;
+	}
+
+	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
+	if (it == resourcesMap.end())
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: couldn't unload resource. Resource was not allocated in memory.");
+		return false;
+	}
+
+	it->second->CleanUp();
+	RELEASE(it->second);
+	resourcesMap.erase(uid);
+
+	return true;
+}
+
+bool M_ResourceManager::DeleteAndUnloadResource(UID uid)
+{
 	if (library.find(uid) != library.end())
 		library.erase(uid);
 
-	auto item = resourcesMap.find(uid);
-	if (item == resourcesMap.end())
+	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
+	if (it == resourcesMap.end())
 	{
 		CONSOLE_LOG("[ERROR] Resource Manager: trying to delete resource, resource was not inside map!");
 		return false;
 	}
 
-	if (item->second != nullptr)
+	if (it->second != nullptr)
 	{
-		item->second->CleanUp();
-		RELEASE(item->second);
-		resourcesMap.erase(uid);
+		it->second->CleanUp();
+		RELEASE(it->second);
 	}
+
+	resourcesMap.erase(uid);
 
 	return true;
 }
@@ -544,7 +632,7 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 	std::string metaPath = assetPath + std::string(META_EXTENSION);
 
 	if (!std::filesystem::exists(metaPath))
-		return 0;
+		return false;
 
 	JsonHandler jsonHandler;
 	Json jsonMeta;
@@ -582,25 +670,22 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 		}
 	}
 	else
-	{
 		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
-		ret = false;
-	}
 
 	return ret;
 }
 
-bool M_ResourceManager::ImportMaterial(const char* assetsPath, R_Material* material)
+bool M_ResourceManager::ImportMaterial(const char* assetPath, R_Material* material)
 {
 	FindAndForceUID(material);
-	bool ret = Importer::GetInstance()->materialImporter->Import(assetsPath, material);
+	bool ret = Importer::GetInstance()->materialImporter->Import(assetPath, material);
 	return (ret && material != nullptr);
 }
 
-bool M_ResourceManager::ImportTexture(const char* assetsPath, R_Texture* texture)
+bool M_ResourceManager::ImportTexture(const char* assetPath, R_Texture* texture)
 {
 	FindAndForceUID(texture);
-	bool ret = Importer::GetInstance()->textureImporter->Import(assetsPath, (R_Texture*)texture);
+	bool ret = Importer::GetInstance()->textureImporter->Import(assetPath, (R_Texture*)texture);
 	return (ret && texture != nullptr);
 }
 
@@ -756,7 +841,7 @@ void M_ResourceManager::DeleteFromLibrary(const char* assetPath)
 	GetLibraryFilePathsFromMeta(assetPath, toDelete);
 
 	for (uint i = 0; i < resourceUids.size(); ++i)
-		UnloadResource(resourceUids[i]);
+		DeleteAndUnloadResource(resourceUids[i]);
 
 	for (uint i = 0; i < toDelete.size(); ++i)
 	{
@@ -789,7 +874,7 @@ void M_ResourceManager::DeleteFromAssets(const char* assetPath)
 	toDelete.push_back(metaPath);
 
 	for (uint i = 0; i < resourceUIDs.size(); ++i)
-		UnloadResource(resourceUIDs[i]);
+		DeleteAndUnloadResource(resourceUIDs[i]);
 
 	for (uint i = 0; i < toDelete.size(); ++i)
 		std::filesystem::remove(toDelete[i].c_str());
@@ -874,10 +959,7 @@ bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetPath, std::vect
 		}
 	}
 	else
-	{
 		CONSOLE_LOG("[ERROR] Resource Manager: getting UIDs from meta. Asset path had no associated meta file.");
-		ret = false;
-	}
 
 	return ret;
 }
@@ -950,10 +1032,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 		}
 	}
 	else
-	{
 		CONSOLE_LOG("%s Asset path had no associated meta file.", errorString.c_str());
-		ret = false;
-	}
 
 	return ret;
 }
@@ -1021,10 +1100,7 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetPath, std::
 		}
 	}
 	else
-	{
 		CONSOLE_LOG("%s Asset path had no associated meta file.", errorString.c_str());
-		ret = false;
-	}
 
 	return ret;
 }
@@ -1339,21 +1415,19 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetPath, bool libraryChec
 
 	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
 
-	if (ret && !jsonMeta.is_null())
+	if (ret && !jsonMeta.empty() && !jsonMeta.is_null())
 	{
 		std::string libraryPath = jsonMeta.at("library_path");
-
 		if (!std::filesystem::exists(libraryPath))
 		{
-			CONSOLE_LOG("%s Validating library path, file doesn't exist.", errorString.c_str());
+			CONSOLE_LOG("%s Library file doesn't exist.", errorString.c_str());
 			return false;
 		}
 
 		UID uid = (UID)jsonMeta.at("uid");
-
 		if (libraryCheck && (library.find(uid) == library.end()))
 		{
-			CONSOLE_LOG("%s Resource UID not found in library", errorString.c_str());
+			CONSOLE_LOG("%s Resource UID not found in library.", errorString.c_str());
 			return false;
 		}
 
@@ -1361,28 +1435,72 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetPath, bool libraryChec
 		{
 			for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 			{
-				UID containedUid = containedIt.value().at("uid");
-
 				std::string containedLibraryPath = containedIt.value().at("library_path");
-
 				if (!std::filesystem::exists(containedLibraryPath))
 				{
-					CONSOLE_LOG("%s Validating contained library path, file doesn't exist.", errorString.c_str());
+					CONSOLE_LOG("%s Contained library file doesn't exist.", errorString.c_str());
 					return false;
 				}
+
+				UID containedUid = containedIt.value().at("uid");
 				if (libraryCheck && (library.find(containedUid) == library.end()))
 				{
-					CONSOLE_LOG("%s Contained resource UID not found in library", errorString.c_str());
+					CONSOLE_LOG("%s Contained resource UID not found in library.", errorString.c_str());
 					return false;
 				}
 			}
 		}
 	}
 	else
+		CONSOLE_LOG("%s Couldn't load meta file.", errorString.c_str());
+
+	return ret;
+}
+
+bool M_ResourceManager::ValidateMetaFile(Json jsonMeta, bool libraryCheck)
+{
+	bool ret = true;
+
+	std::string errorString = "[ERROR] Resource Manager: validating meta file.";
+
+	if (!jsonMeta.empty() && !jsonMeta.is_null())
 	{
-		CONSOLE_LOG("%s Loading meta file.", errorString.c_str());
-		ret = false;
+		std::string libraryPath = jsonMeta.at("library_path");
+		if (!std::filesystem::exists(libraryPath))
+		{
+			CONSOLE_LOG("%s Library file doesn't exist.", errorString.c_str());
+			return false;
+		}
+
+		UID uid = (UID)jsonMeta.at("uid");
+		if (libraryCheck && (library.find(uid) == library.end()))
+		{
+			CONSOLE_LOG("%s Resource UID not found in library.", errorString.c_str());
+			return false;
+		}
+
+		if (!jsonMeta.at("contained_resources").empty())
+		{
+			for (const auto& containedIt : jsonMeta.at("contained_resources").items())
+			{
+				std::string containedLibraryPath = containedIt.value().at("library_path");
+				if (!std::filesystem::exists(containedLibraryPath))
+				{
+					CONSOLE_LOG("%s Contained library file doesn't exist.", errorString.c_str());
+					return false;
+				}
+
+				UID containedUid = containedIt.value().at("uid");
+				if (libraryCheck && (library.find(containedUid) == library.end()))
+				{
+					CONSOLE_LOG("%s Contained resource UID not found in library.", errorString.c_str());
+					return false;
+				}
+			}
+		}
 	}
+	else
+		CONSOLE_LOG("%s Couldn't load meta file.", errorString.c_str());
 
 	return ret;
 }
