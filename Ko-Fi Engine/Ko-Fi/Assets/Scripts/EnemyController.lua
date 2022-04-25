@@ -8,11 +8,6 @@ local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
-player = nil
-local playerIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT
-playerIV = InspectorVariable.new("player", playerIVT, playerName)
-NewVariable(playerIV)
-
 visionConeAngle = 90
 local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 visionConeAngleIV = InspectorVariable.new("visionConeAngle", visionConeAngleIVT, visionConeAngle)
@@ -22,6 +17,16 @@ visionConeRadius = 50
 local visionConeRadiusIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 visionConeRadiusIV = InspectorVariable.new("visionConeRadius", visionConeRadiusIVT, visionConeRadius)
 NewVariable(visionConeRadiusIV)
+
+hearingRange = 30
+local hearingRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+hearingRangeIV = InspectorVariable.new("hearingRange", hearingRangeIVT, hearingRange)
+NewVariable(hearingRangeIV)
+
+awarenessSpeed = 0.4
+local awarenessSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+awarenessSpeedIV = InspectorVariable.new("awarenessSpeed", awarenessSpeedIVT, awarenessSpeed)
+NewVariable(awarenessSpeedIV)
 
 pingpong = false
 local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
@@ -117,21 +122,61 @@ STATE = {
 state = STATE.UNAWARE
 
 function LookAtDirection(direction)
-    local a = Float3Angle(direction, float3.new(0, 0, 1))
-
-    if direction.x < 0 then
-        a = -a
-    end
-
-    componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, a, componentTransform:GetRotation().z))
+    position = componentTransform:GetPosition()
+    target = float3.new(position.x + direction.x, position.y + direction.y, position.z + direction.z)
+    
+    componentTransform:LookAt(direction, float3.new(0, 1, 0))
 end
 
 awareness = 0
 targetAwareness = 0
-awarenessSpeed = 0.1
-hearingRange = 30
 awarenessSource = nil
 awarenessPosition = nil
+
+isSeeingPlayer = false
+seeingPosition = nil
+seeingSource = nil
+
+function CheckIfPointInCone(position)
+    if Float3Distance(position, componentTransform:GetPosition()) > visionConeRadius then
+        do return(false) end
+    end
+
+    angle = Float3Angle(Float3Difference(componentTransform:GetPosition(), position), componentTransform:GetFront())
+
+    angle = math.abs(math.deg(angle))
+
+    if angle < visionConeAngle / 2 then
+        do return(true) end
+    end
+
+    do return(false) end
+end
+
+function ProcessVisualTrigger(position, gameObject)
+    if state == STATE.AGGRO then
+        do return end
+    end
+
+    if not CheckIfPointInCone(position) then
+        if isSeeingPlayer then
+            seeingPosition = nil
+            seeingSource = nil
+            SetTargetStateToUNAWARE()
+        end
+        do return end
+    end
+
+    isSeeingPlayer = true
+
+    seeingPosition = position
+    seeingSource = gameObject
+    if state == STATE.UNAWARE then
+        SetTargetStateToSUS()
+    elseif state == STATE.SUS then
+        SetTargetStateToAGGRO()
+    end
+end
 
 function CheckAuditoryTriggerInRange(position, range)
     mypos = componentTransform:GetPosition()
@@ -255,6 +300,8 @@ function EventHandler(key, fields)
         SetStateToAGGRO(fields[1])
     elseif key == "Walking_Direction" then
         LookAtDirection(fields[1])
+    elseif key == "Player_Position" then
+        ProcessVisualTrigger(fields[1], fields[2])
     end
 end
 
@@ -269,15 +316,23 @@ function Update(dt)
         awareness = awareness - awarenessSpeed * dt
     end
 
-    Log(tostring(awareness) .. "\n")
+    --Log(tostring(awareness) .. "\n")
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
-        DispatchEvent("State_Suspicious", { awarenessPosition })
+        if seeingSource ~= nil then
+            DispatchEvent("State_Suspicious", { seeingPosition })
+        else
+            DispatchEvent("State_Suspicious", { awarenessPosition })
+        end
     end
 
     if awareness < 0 then
         SetStateToUNAWARE()
     elseif awareness > 2 then
-        DispatchEvent("State_Aggressive", { awarenessSource })
+        if seeingSource ~= nil then
+            DispatchEvent("State_Aggressive", { seeingSource })
+        else
+            DispatchEvent("State_Aggressive", { awarenessSource })
+        end
     end
 
     if state == STATE.UNAWARE then
