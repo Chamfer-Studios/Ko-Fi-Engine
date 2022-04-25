@@ -47,6 +47,10 @@ function FollowPath(speed, dt, loop)
         do return end
     end
 
+    if currentPathIndex == #finalPath and loop == false then
+        do return end
+    end
+
     currentTarget = finalPath[currentPathIndex]
 
     currentPosition = componentTransform:GetPosition()
@@ -64,6 +68,7 @@ function FollowPath(speed, dt, loop)
     DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
     delta = { x = direction.x * speed * dt, y = direction.y * speed * dt, z = direction.z * speed * dt }
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
+
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
 end
 
@@ -109,15 +114,13 @@ function UpdatePath(wp, pingpong, currentPos)
 
     closestIndex = 1
 
-    for i=1,#_finalPath do
-        p = _finalPath[i]
+    --for i=1,#_finalPath do
+    --    p = _finalPath[i]
 
-        if (Float3Distance(currentPos, p) < Float3Distance(currentPos, _finalPath[closestIndex])) then
-            closestIndex = i
-        end
-    end
-
-    Log(tostring(closestIndex) .. "\n")
+    --    if (Float3Distance(currentPos, p) < Float3Distance(currentPos, _finalPath[closestIndex])) then
+    --        closestIndex = i
+    --    end
+    --end
     
     currentPathIndex = closestIndex
 end
@@ -129,5 +132,3 @@ function EventHandler(key, fields)
         FollowPath(fields[1], fields[2], fields[3])
     end
 end
-
-print("Pathfinder.lua compiled succesfully")

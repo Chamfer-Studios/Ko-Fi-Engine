@@ -316,7 +316,7 @@ function Update(dt)
         awareness = awareness - awarenessSpeed * dt
     end
 
-    Log(tostring(awareness) .. "\n")
+    --Log(tostring(awareness) .. "\n")
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
         if seeingSource ~= nil then
             DispatchEvent("State_Suspicious", { seeingPosition })
