@@ -20,17 +20,14 @@ bool C_BoxCollider::Start()
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
 
-		if (boundingBoxSize.x != 0 && boundingBoxSize.y != 0 && boundingBoxSize.z != 0)
-		{
-			boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(boundingBoxSize.x / 2, boundingBoxSize.y / 2, boundingBoxSize.z / 2));
-		}
-		else
-		{
-			boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(1, 1, 1));
-		}
+
+		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(boundingBoxSize.x / 2, boundingBoxSize.y / 2, boundingBoxSize.z / 2));
+
+
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, transform);
 	}
+		
 	return true;
 }
 
@@ -120,7 +117,6 @@ void C_BoxCollider::Load(Json &json)
 	values.clear();
 	UpdateCenter();
 
-	hasUpdated = true;
 }
 
 void C_BoxCollider::UpdateFilter()

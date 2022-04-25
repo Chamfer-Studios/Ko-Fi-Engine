@@ -16,8 +16,10 @@ public:
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser) override;//OnGUi
 
-	void UpdateRB();
-
+	void UpdateBodyType();
+	void UpdateEnableGravity();
+	void UpdateMass();
+	void UpdateConstrains();
 	//Serialization
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

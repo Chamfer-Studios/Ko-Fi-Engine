@@ -18,19 +18,21 @@ C_RigidBody::~C_RigidBody()
 
 bool C_RigidBody::Start()
 {
-	float3 gameObjectPosition = owner->GetTransform()->GetPosition();
-	Quat gameObjectOrientation = owner->GetTransform()->GetRotationQuat();
-	reactphysics3d::Vector3 rbPosition(gameObjectPosition.x, gameObjectPosition.y, gameObjectPosition.z);
-	reactphysics3d::Quaternion rbOrientation(gameObjectOrientation.x, gameObjectOrientation.y, gameObjectOrientation.z, gameObjectOrientation.w);
-	reactphysics3d::Transform rbTransform(rbPosition, rbOrientation);
-	body = owner->GetEngine()->GetPhysics()->AddBody(rbTransform,owner);
+	if (!body)
+	{
+		float3 gameObjectPosition = owner->GetTransform()->GetPosition();
+		Quat gameObjectOrientation = owner->GetTransform()->GetRotationQuat();
+		reactphysics3d::Vector3 rbPosition(gameObjectPosition.x, gameObjectPosition.y, gameObjectPosition.z);
+		reactphysics3d::Quaternion rbOrientation(gameObjectOrientation.x, gameObjectOrientation.y, gameObjectOrientation.z, gameObjectOrientation.w);
+		reactphysics3d::Transform rbTransform(rbPosition, rbOrientation);
+		body = owner->GetEngine()->GetPhysics()->AddBody(rbTransform, owner);
+	}
+
 	return true;
 }
 
 bool C_RigidBody::Update(float dt)
 {
-	if (hasUpdated)
-		UpdateRB();
 
 	if (owner->GetEngine()->GetSceneManager()->GetGameState() != GameState::PLAYING || body->getType() == reactphysics3d::BodyType::STATIC)
 	{
@@ -77,16 +79,22 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 			{
 				newBodyType = "Static";
 				SetBodyType(newBodyType);
+				UpdateBodyType();
+
 			}
 			if (ImGui::Selectable("Dynamic"))
 			{
 				newBodyType = "Dynamic";
 				SetBodyType(newBodyType);
+				UpdateBodyType();
+
 			}
 			if (ImGui::Selectable("Kinematic"))
 			{
 				newBodyType = "Kinematic";
 				SetBodyType(newBodyType);
+				UpdateBodyType();
+
 			}
 			ImGui::EndCombo();
 		}
@@ -140,7 +148,8 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 	return true;
 }
 
-void C_RigidBody::UpdateRB()
+
+void C_RigidBody::UpdateBodyType()
 {
 	// Body type
 	if (bodyType == "Static")
@@ -151,13 +160,22 @@ void C_RigidBody::UpdateRB()
 
 	else
 		body->setType(reactphysics3d::BodyType::KINEMATIC);
+}
 
+void C_RigidBody::UpdateEnableGravity()
+{
 	// Use gravity
 	body->enableGravity(useGravity);
+}
 
+void C_RigidBody::UpdateMass()
+{
 	// Mass
 	body->setMass(mass);
+}
 
+void C_RigidBody::UpdateConstrains()
+{
 	// Constraints
 	body->setLinearLockAxisFactor(reactphysics3d::Vector3(!freezePositionX, !freezePositionY, !freezePositionZ));
 	body->setAngularLockAxisFactor(reactphysics3d::Vector3(!freezeRotationX, !freezeRotationY, !freezeRotationZ));
@@ -181,15 +199,18 @@ void C_RigidBody::Save(Json& json) const
 void C_RigidBody::Load(Json& json)
 {
 	bodyType = json.at("body_type");
+	UpdateBodyType();
 	useGravity = json.at("use_gravity");
+	UpdateEnableGravity();
 	mass = json.at("mass");
+	UpdateMass();
 	freezePositionX = json.at("freeze_position_x");
 	freezePositionY = json.at("freeze_position_y");
 	freezePositionZ = json.at("freeze_position_z");
 	freezeRotationX = json.at("freeze_rotation_x");
 	freezeRotationY = json.at("freeze_rotation_y");
 	freezeRotationZ = json.at("freeze_rotation_z");
-
+	UpdateConstrains();
 	hasUpdated = true;
 }
 
