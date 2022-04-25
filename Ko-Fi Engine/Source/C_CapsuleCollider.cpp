@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "M_Physics.h"
 #include "C_RigidBody.h"
+#include <minmax.h>
 
 C_CapsuleCollider::C_CapsuleCollider(GameObject* parent) : Component(parent)
 {
@@ -19,7 +20,7 @@ bool C_CapsuleCollider::Start()
 	if (!collider)
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-		capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape(boundingBoxSize.x / 2, boundingBoxSize.y / 2);
+		capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape(boundingBoxSize.x < boundingBoxSize.z ? boundingBoxSize.z / 2 : boundingBoxSize.x / 2, boundingBoxSize.y / 2);
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, transform);
 	}
@@ -158,7 +159,7 @@ void C_CapsuleCollider::UpdateScaleFactor()
 	reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
 	owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
 	owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyCapsuleShape(capsuleShape);
-	capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape((boundingBoxSize.x / 2) * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y);
+	capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape((boundingBoxSize.x < boundingBoxSize.z ? boundingBoxSize.z : boundingBoxSize.x) / 2 * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y);
 	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, oldTransform);
 }
 
