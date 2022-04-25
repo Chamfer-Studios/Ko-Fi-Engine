@@ -99,12 +99,16 @@ function Update(dt)
 	gameObject:GetCamera():LookAt(targetTransform:GetPosition())
 	
 	if (GetInput(13) == KEY_STATE.KEY_DOWN) then -- Q
-		direction = -1
-		changedDirection = true
+		if direction ~= -1 then
+			direction = -1
+			changedDirection = true
+		end
 	end
 	if (GetInput(14) == KEY_STATE.KEY_DOWN) then -- E
-		direction = 1
-		changedDirection = true
+		if direction ~= 1 then
+			direction = 1
+			changedDirection = true
+		end
 	end
 	
 end
