@@ -4,20 +4,20 @@
     "contained_resources": [
         {
             "asset_file": "Sphere.sugar",
-            "library_path": "Library/Meshes/1500214439.sugar",
+            "library_path": "Library/Meshes/1955457880.sugar",
             "type": 0,
-            "uid": 26401324
+            "uid": 1006519742
         },
         {
             "asset_file": "Sphere.glsl",
-            "library_path": "Library/Shaders/1639113386.glsl",
+            "library_path": "Library/Shaders/1207261915.glsl",
             "type": 4,
-            "uid": 26401324
+            "uid": 1006519742
         }
     ],
-    "library_file": "185331179.tea",
-    "library_path": "Library/Models/185331179.tea",
+    "library_file": "979936210.tea",
+    "library_path": "Library/Models/979936210.tea",
     "mod_time": 409411499,
     "type": 3,
-    "uid": 185331179
+    "uid": 979936210
 }

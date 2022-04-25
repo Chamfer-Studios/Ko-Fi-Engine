@@ -4,63 +4,63 @@
     "contained_resources": [
         {
             "asset_file": "khopesh1.sugar",
-            "library_path": "Library/Meshes/656051124.sugar",
+            "library_path": "Library/Meshes/1082491340.sugar",
             "type": 0,
-            "uid": 676724077
+            "uid": 12760579
         },
         {
             "asset_file": "khopesh1.glsl",
-            "library_path": "Library/Shaders/2108279482.glsl",
+            "library_path": "Library/Shaders/338474322.glsl",
             "type": 4,
-            "uid": 676724077
+            "uid": 12760579
         },
         {
             "asset_file": "character_low.sugar",
-            "library_path": "Library/Meshes/1092995870.sugar",
+            "library_path": "Library/Meshes/978204174.sugar",
             "type": 0,
-            "uid": 18543872
+            "uid": 582713431
         },
         {
             "asset_file": "character_low.glsl",
-            "library_path": "Library/Shaders/1767667326.glsl",
+            "library_path": "Library/Shaders/403900743.glsl",
             "type": 4,
-            "uid": 18543872
+            "uid": 582713431
         },
         {
             "asset_file": "khopesh.sugar",
-            "library_path": "Library/Meshes/1927972347.sugar",
+            "library_path": "Library/Meshes/99086669.sugar",
             "type": 0,
-            "uid": 921544817
+            "uid": 822754585
         },
         {
             "asset_file": "khopesh.glsl",
-            "library_path": "Library/Shaders/182200482.glsl",
+            "library_path": "Library/Shaders/795508285.glsl",
             "type": 4,
-            "uid": 921544817
+            "uid": 822754585
         },
         {
             "asset_file": "karambit.sugar",
-            "library_path": "Library/Meshes/429533498.sugar",
+            "library_path": "Library/Meshes/1787401045.sugar",
             "type": 0,
-            "uid": 1941338140
+            "uid": 479053855
         },
         {
             "asset_file": "karambit.glsl",
-            "library_path": "Library/Shaders/450699080.glsl",
+            "library_path": "Library/Shaders/413261236.glsl",
             "type": 4,
-            "uid": 1941338140
+            "uid": 479053855
         },
         {
             "asset_file": "karambit.cacao",
-            "library_path": "Library/Textures/1237082363.cacao",
+            "library_path": "Library/Textures/1822092697.cacao",
             "texture_name": "karambit_Base_color.png",
             "type": 1,
-            "uid": 1941338140
+            "uid": 479053855
         }
     ],
-    "library_file": "1792879429.tea",
-    "library_path": "Library/Models/1792879429.tea",
+    "library_file": "686372353.tea",
+    "library_path": "Library/Models/686372353.tea",
     "mod_time": 409411499,
     "type": 3,
-    "uid": 1792879429
+    "uid": 686372353
 }

@@ -1,10 +1,10 @@
 {
-    "asset_file": "baker_house.png",
-    "asset_path": "Assets/Textures/baker_house.png",
+    "asset_file": "Baker_house.png",
+    "asset_path": "Assets/Textures/Baker_house.png",
     "contained_resources": null,
-    "library_file": "1270712348.cacao",
-    "library_path": "Library/Textures/1270712348.cacao",
+    "library_file": "1477197477.cacao",
+    "library_path": "Library/Textures/1477197477.cacao",
     "mod_time": 406509994,
     "type": 1,
-    "uid": 1270712348
+    "uid": 1477197477
 }

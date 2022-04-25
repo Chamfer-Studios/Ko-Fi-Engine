@@ -4,20 +4,20 @@
     "contained_resources": [
         {
             "asset_file": "character_low.sugar",
-            "library_path": "Library/Meshes/1160431715.sugar",
+            "library_path": "Library/Meshes/896988205.sugar",
             "type": 0,
-            "uid": 1363998858
+            "uid": 1527844429
         },
         {
             "asset_file": "character_low.glsl",
-            "library_path": "Library/Shaders/1028172257.glsl",
+            "library_path": "Library/Shaders/391365545.glsl",
             "type": 4,
-            "uid": 1363998858
+            "uid": 1527844429
         }
     ],
-    "library_file": "1934752098.tea",
-    "library_path": "Library/Models/1934752098.tea",
+    "library_file": "417886466.tea",
+    "library_path": "Library/Models/417886466.tea",
     "mod_time": 408833323,
     "type": 3,
-    "uid": 1934752098
+    "uid": 417886466
 }

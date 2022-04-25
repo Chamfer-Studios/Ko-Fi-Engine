@@ -310,7 +310,7 @@ void M_ResourceManager::FindFilesToDelete(std::vector<std::string>& metaFiles, s
 	std::string assetPath = "";
 	for (uint i = 0; i < metaFiles.size(); ++i)
 	{
-		assetPath = metaFiles[i].substr(0, assetPath.find_last_of(META_EXTENSION) - 5);
+		assetPath = metaFiles[i].substr(0, metaFiles[i].find_last_of("."));
 		if (filePairs.find(assetPath) == filePairs.end())
 			toDelete.push_back(assetPath);
 	}
@@ -679,7 +679,7 @@ int M_ResourceManager::GetModTimeFromMeta(const char* assetPath)
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	std::string metaPath = assetPath + std::string(META_EXTENSION);
+	std::string metaPath = assetPath/* + std::string(META_EXTENSION)*/;
 	bool loaded = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
 
 	if (loaded && !jsonMeta.is_null() && !jsonMeta.empty())
@@ -720,7 +720,10 @@ void M_ResourceManager::DeleteFromLibrary(const char* assetPath)
 		UnloadResource(resourceUids[i]);
 
 	for (uint i = 0; i < toDelete.size(); ++i)
+	{
 		std::filesystem::remove(toDelete[i].c_str());
+		std::filesystem::remove(std::string(assetPath) + META_EXTENSION);
+	}
 
 	toDelete.clear();
 	toDelete.shrink_to_fit();
@@ -763,7 +766,7 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetPath, bool libraryChec
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	ret = jsonHandler.LoadJson(jsonMeta, assetPath);
+	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
 
 	if (ret && !jsonMeta.is_null())
 	{

@@ -4,32 +4,32 @@
     "contained_resources": [
         {
             "asset_file": "Cube.sugar",
-            "library_path": "Library/Meshes/536181842.sugar",
+            "library_path": "Library/Meshes/927332604.sugar",
             "type": 0,
-            "uid": 1378775504
+            "uid": 275863225
         },
         {
             "asset_file": "Cube.glsl",
-            "library_path": "Library/Shaders/1024698011.glsl",
+            "library_path": "Library/Shaders/2022343323.glsl",
             "type": 4,
-            "uid": 1378775504
+            "uid": 275863225
         },
         {
             "asset_file": "Plane.sugar",
-            "library_path": "Library/Meshes/998343516.sugar",
+            "library_path": "Library/Meshes/1470321485.sugar",
             "type": 0,
-            "uid": 1093470491
+            "uid": 2094142322
         },
         {
             "asset_file": "Plane.glsl",
-            "library_path": "Library/Shaders/663614871.glsl",
+            "library_path": "Library/Shaders/1149105636.glsl",
             "type": 4,
-            "uid": 1093470491
+            "uid": 2094142322
         }
     ],
-    "library_file": "675437220.tea",
-    "library_path": "Library/Models/675437220.tea",
+    "library_file": "1334621240.tea",
+    "library_path": "Library/Models/1334621240.tea",
     "mod_time": 408833323,
     "type": 3,
-    "uid": 675437220
+    "uid": 1334621240
 }

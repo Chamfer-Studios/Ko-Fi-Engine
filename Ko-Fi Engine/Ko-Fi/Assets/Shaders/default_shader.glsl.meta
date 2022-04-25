@@ -1,10 +1,10 @@
 {
-    "asset_file": "default_shader.glsl",
+    "asset_file": "Level 1.fbxSpice.glsl",
     "asset_path": "Assets/Shaders/default_shader.glsl",
     "contained_resources": null,
-    "library_file": "1577648360.glsl",
-    "library_path": "Library/Shaders/1577648360.glsl",
+    "library_file": "1703072604.glsl",
+    "library_path": "Library/Shaders/1703072604.glsl",
     "mod_time": 409793068,
     "type": 4,
-    "uid": 1577648360
+    "uid": 1703072604
 }

@@ -4,20 +4,20 @@
     "contained_resources": [
         {
             "asset_file": "Karambit_low.sugar",
-            "library_path": "Library/Meshes/798679314.sugar",
+            "library_path": "Library/Meshes/316895449.sugar",
             "type": 0,
-            "uid": 376793054
+            "uid": 2056679508
         },
         {
             "asset_file": "Karambit_low.glsl",
-            "library_path": "Library/Shaders/306827926.glsl",
+            "library_path": "Library/Shaders/1478549198.glsl",
             "type": 4,
-            "uid": 376793054
+            "uid": 2056679508
         }
     ],
-    "library_file": "1106740667.tea",
-    "library_path": "Library/Models/1106740667.tea",
+    "library_file": "1563648844.tea",
+    "library_path": "Library/Models/1563648844.tea",
     "mod_time": 408833323,
     "type": 3,
-    "uid": 1106740667
+    "uid": 1563648844
 }

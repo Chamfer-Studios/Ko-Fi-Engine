@@ -4,68 +4,68 @@
     "contained_resources": [
         {
             "asset_file": "Ch47_Body1.sugar",
-            "library_path": "Library/Meshes/595773200.sugar",
+            "library_path": "Library/Meshes/109621697.sugar",
             "type": 0,
-            "uid": 1250566401
+            "uid": 1140538989
         },
         {
             "asset_file": "Ch47_Body1.glsl",
-            "library_path": "Library/Shaders/1091599243.glsl",
+            "library_path": "Library/Shaders/1962769046.glsl",
             "type": 4,
-            "uid": 1250566401
+            "uid": 1140538989
         },
         {
             "asset_file": "Ch47_Eye.sugar",
-            "library_path": "Library/Meshes/1532559138.sugar",
+            "library_path": "Library/Meshes/409707219.sugar",
             "type": 0,
-            "uid": 932113220
+            "uid": 1264325662
         },
         {
             "asset_file": "Ch47_Eye.glsl",
-            "library_path": "Library/Shaders/1218329903.glsl",
+            "library_path": "Library/Shaders/1348494545.glsl",
             "type": 4,
-            "uid": 932113220
+            "uid": 1264325662
         },
         {
             "asset_file": "Ch47_Face.sugar",
-            "library_path": "Library/Meshes/433476283.sugar",
+            "library_path": "Library/Meshes/1868905755.sugar",
             "type": 0,
-            "uid": 37087557
+            "uid": 1996121546
         },
         {
             "asset_file": "Ch47_Face.glsl",
-            "library_path": "Library/Shaders/1221309172.glsl",
+            "library_path": "Library/Shaders/1200880772.glsl",
             "type": 4,
-            "uid": 37087557
+            "uid": 1996121546
         },
         {
             "asset_file": "Ch47_eyelashes.sugar",
-            "library_path": "Library/Meshes/876469268.sugar",
+            "library_path": "Library/Meshes/1274275972.sugar",
             "type": 0,
-            "uid": 1298344494
+            "uid": 686882408
         },
         {
             "asset_file": "Ch47_eyelashes.glsl",
-            "library_path": "Library/Shaders/915895144.glsl",
+            "library_path": "Library/Shaders/1670505395.glsl",
             "type": 4,
-            "uid": 1298344494
+            "uid": 686882408
         },
         {
             "asset_file": "Ch47_hair1.sugar",
-            "library_path": "Library/Meshes/25909575.sugar",
+            "library_path": "Library/Meshes/1496954160.sugar",
             "type": 0,
-            "uid": 303890053
+            "uid": 984234716
         },
         {
             "asset_file": "Ch47_hair1.glsl",
-            "library_path": "Library/Shaders/540120267.glsl",
+            "library_path": "Library/Shaders/2064184450.glsl",
             "type": 4,
-            "uid": 303890053
+            "uid": 984234716
         }
     ],
-    "library_file": "114352494.tea",
-    "library_path": "Library/Models/114352494.tea",
+    "library_file": "1028414733.tea",
+    "library_path": "Library/Models/1028414733.tea",
     "mod_time": 408833323,
     "type": 3,
-    "uid": 114352494
+    "uid": 1028414733
 }

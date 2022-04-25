@@ -1,10 +1,10 @@
 {
-    "asset_file": "karambit_base_color.png",
-    "asset_path": "Assets/Textures/karambit_base_color.png",
+    "asset_file": "karambit_Base_color.png",
+    "asset_path": "Assets/Textures/karambit_Base_color.png",
     "contained_resources": null,
-    "library_file": "1237082363.cacao",
-    "library_path": "Library/Textures/1237082363.cacao",
+    "library_file": "1822092697.cacao",
+    "library_path": "Library/Textures/1822092697.cacao",
     "mod_time": 408833323,
     "type": 1,
-    "uid": 1237082363
+    "uid": 1822092697
 }

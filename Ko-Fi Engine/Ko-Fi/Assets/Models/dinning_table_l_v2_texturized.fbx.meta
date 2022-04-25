@@ -4,27 +4,27 @@
     "contained_resources": [
         {
             "asset_file": "Cube.sugar",
-            "library_path": "Library/Meshes/607901071.sugar",
+            "library_path": "Library/Meshes/1772545080.sugar",
             "type": 0,
-            "uid": 256995701
+            "uid": 958143514
         },
         {
             "asset_file": "Cube.glsl",
-            "library_path": "Library/Shaders/956487270.glsl",
+            "library_path": "Library/Shaders/1213239825.glsl",
             "type": 4,
-            "uid": 256995701
+            "uid": 958143514
         },
         {
             "asset_file": "Cube.cacao",
-            "library_path": "Library/Textures/279814847.cacao",
+            "library_path": "Library/Textures/2143052521.cacao",
             "texture_name": "dinning_table_texture_v2.png",
             "type": 1,
-            "uid": 256995701
+            "uid": 958143514
         }
     ],
-    "library_file": "1719067457.tea",
-    "library_path": "Library/Models/1719067457.tea",
+    "library_file": "2041294450.tea",
+    "library_path": "Library/Models/2041294450.tea",
     "mod_time": 408833323,
     "type": 3,
-    "uid": 1719067457
+    "uid": 2041294450
 }

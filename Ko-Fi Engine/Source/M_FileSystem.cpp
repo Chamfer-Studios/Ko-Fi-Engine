@@ -218,7 +218,7 @@ void M_FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<s
 		std::filesystem::path fileTmp = file;
 		if (!fileTmp.extension().empty())
 		{
-			if (StringCompare((const char*)fileTmp.extension().c_str(), filter) == 0)
+			if (StringCompare(fileTmp.extension().string().c_str(), filter) == 0)
 				filteredFiles.push_back(directory + file);
 			else
 				files.push_back(directory + file);

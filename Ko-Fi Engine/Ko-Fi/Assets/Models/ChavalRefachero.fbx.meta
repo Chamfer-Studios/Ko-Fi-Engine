@@ -4,20 +4,20 @@
     "contained_resources": [
         {
             "asset_file": "Vampire.sugar",
-            "library_path": "Library/Meshes/204561819.sugar",
+            "library_path": "Library/Meshes/899560422.sugar",
             "type": 0,
-            "uid": 1577703452
+            "uid": 1934848771
         },
         {
             "asset_file": "Vampire.glsl",
-            "library_path": "Library/Shaders/1197060921.glsl",
+            "library_path": "Library/Shaders/1230542601.glsl",
             "type": 4,
-            "uid": 1577703452
+            "uid": 1934848771
         }
     ],
-    "library_file": "1282319955.tea",
-    "library_path": "Library/Models/1282319955.tea",
+    "library_file": "190874999.tea",
+    "library_path": "Library/Models/190874999.tea",
     "mod_time": 408833323,
     "type": 3,
-    "uid": 1282319955
+    "uid": 190874999
 }

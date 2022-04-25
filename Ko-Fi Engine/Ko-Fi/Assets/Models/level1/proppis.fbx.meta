@@ -4,27 +4,27 @@
     "contained_resources": [
         {
             "asset_file": "ArtilleryGun.sugar",
-            "library_path": "Library/Meshes/1341601200.sugar",
+            "library_path": "Library/Meshes/937612896.sugar",
             "type": 0,
-            "uid": 904563563
+            "uid": 1324389128
         },
         {
             "asset_file": "ArtilleryGun.glsl",
-            "library_path": "Library/Shaders/1168669689.glsl",
+            "library_path": "Library/Shaders/487014557.glsl",
             "type": 4,
-            "uid": 904563563
+            "uid": 1324389128
         },
         {
             "asset_file": "ArtilleryGun.cacao",
-            "library_path": "Library/Textures/92000333.cacao",
+            "library_path": "Library/Textures/1968654061.cacao",
             "texture_name": "Grey 2.png",
             "type": 1,
-            "uid": 904563563
+            "uid": 1324389128
         }
     ],
-    "library_file": "1301097962.tea",
-    "library_path": "Library/Models/1301097962.tea",
+    "library_file": "865354205.tea",
+    "library_path": "Library/Models/865354205.tea",
     "mod_time": 408833323,
     "type": 3,
-    "uid": 1301097962
+    "uid": 865354205
 }

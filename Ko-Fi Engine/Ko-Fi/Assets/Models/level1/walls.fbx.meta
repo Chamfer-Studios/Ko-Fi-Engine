@@ -4,27 +4,27 @@
     "contained_resources": [
         {
             "asset_file": "Cube.sugar",
-            "library_path": "Library/Meshes/683406800.sugar",
+            "library_path": "Library/Meshes/2051086852.sugar",
             "type": 0,
-            "uid": 1243099909
+            "uid": 153238281
         },
         {
             "asset_file": "Cube.glsl",
-            "library_path": "Library/Shaders/689461482.glsl",
+            "library_path": "Library/Shaders/1792615827.glsl",
             "type": 4,
-            "uid": 1243099909
+            "uid": 153238281
         },
         {
             "asset_file": "Cube.cacao",
-            "library_path": "Library/Textures/443360578.cacao",
+            "library_path": "Library/Textures/546862515.cacao",
             "texture_name": "Grey (Dark).png",
             "type": 1,
-            "uid": 1243099909
+            "uid": 153238281
         }
     ],
-    "library_file": "1811515331.tea",
-    "library_path": "Library/Models/1811515331.tea",
+    "library_file": "1206920808.tea",
+    "library_path": "Library/Models/1206920808.tea",
     "mod_time": 408833323,
     "type": 3,
-    "uid": 1811515331
+    "uid": 1206920808
 }
