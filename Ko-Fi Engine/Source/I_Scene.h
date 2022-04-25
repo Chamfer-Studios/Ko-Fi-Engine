@@ -27,10 +27,10 @@ public:
 	bool Import(R_Model* model, bool isPrefab = false);
 
 	bool Save(Scene* scene, const char* name = nullptr);
-	bool Save(const R_Model* model, const char* path);
+	bool SaveModel(const R_Model* model, const char* path);
 
 	bool Load(Scene* scene, const char* name);
-	bool Load(const char* path, R_Model* model);
+	bool LoadModel(const char* path, R_Model* model);
 
 	GameObject* ImportModel(const char* path);
 
@@ -45,9 +45,10 @@ private:
 	void ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode* assimpNode, GameObject* gameObj);
 	void ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode* assimpNode, R_Model* model, ModelNode& node);
 	void ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObject* gameObj, const aiScene* assimpScene = nullptr);
-	void ImportMesh(const char* nodeName, const aiMesh* assimpMesh, ModelNode& node, const aiScene* assimpScene = nullptr);
+	void ImportMesh(const char* nodeName, const aiMesh* assimpMesh, R_Model* model, ModelNode& node, const aiScene* assimpScene = nullptr);
 	void ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj);
 	void ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, R_Model* model, ModelNode& node);
+	
 	void CheckAndApplyForcedUID(Resource* resource);
 
 private:

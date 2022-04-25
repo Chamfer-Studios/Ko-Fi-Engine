@@ -1,12 +1,19 @@
 #include "R_Model.h"
 #include "FSDefs.h"
 
-R_Model::R_Model() : Resource(ResourceType::MODEL)
+R_Model::R_Model() : Resource(ResourceType::MODEL),
+animation(0),
+animationName("")
 {
 }
 
 R_Model::~R_Model()
 {
+	nodes.clear();
+	nodes.shrink_to_fit();
+
+	animationName.clear();
+	animationName.shrink_to_fit();
 }
 
 bool R_Model::SaveMeta(Json& json) const
@@ -51,16 +58,13 @@ bool R_Model::SaveMeta(Json& json) const
 		}
 	}
 
-	for (const auto& anim : animations)
-	{
-		std::string animationName = anim.second + ANIMATION_EXTENSION;
-		std::string animationPath = ANIMATIONS_DIR + std::to_string(anim.first) + ANIMATION_EXTENSION;
-		jsonResource["uid"] = anim.first;
-		jsonResource["type"] = ResourceType::ANIMATION;
-		jsonResource["asset_file"] = animationName;
-		jsonResource["library_path"] = animationPath;
-		json["contained_resources"].push_back(jsonResource);
-	}
+	std::string animationName = animationName + ANIMATION_EXTENSION;
+	std::string animationPath = ANIMATIONS_DIR + std::to_string(animation) + ANIMATION_EXTENSION;
+	jsonResource["uid"] = animation;
+	jsonResource["type"] = ResourceType::ANIMATION;
+	jsonResource["asset_file"] = animationName;
+	jsonResource["library_path"] = animationPath;
+	json["contained_resources"].push_back(jsonResource);
 
 	return ret;
 }

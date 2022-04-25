@@ -116,8 +116,3 @@ void Resource::SetAssetsPathAndFile(const char* path, const char* file)
 	assetPath = path;
 	assetFile = file;
 }
-
-//bool Resource::HasResource(UID uid) const
-//{
-//	return false;
-//}

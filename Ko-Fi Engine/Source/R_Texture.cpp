@@ -19,6 +19,7 @@ R_Texture::~R_Texture()
 	{
 		stbi_image_free(data);
 	}
+	glDeleteTextures(1, (GLuint*)&textureID);
 }
 
 bool R_Texture::SaveMeta(Json& json) const

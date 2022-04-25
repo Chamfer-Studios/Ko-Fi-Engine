@@ -71,7 +71,15 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 
 bool I_Material::Save(const R_Material* material, const char* path)
 {
-	return engine->GetFileSystem()->CopyFileTo(material->GetAssetPath(), path);
+	if (engine->GetFileSystem()->CheckDirectory(SHADERS_DIR))
+	{
+		return engine->GetFileSystem()->CopyFileTo(material->GetAssetPath(), path);
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Shader Save: directory %s couldn't be accessed.", SHADERS_DIR);
+		return false;
+	}
 }
 
 bool I_Material::LoadAndCreateShader(const char* shaderPath, R_Material* material)

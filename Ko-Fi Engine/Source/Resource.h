@@ -52,13 +52,6 @@ public:
 
 	void SetLibraryPathAndFile();
 	void SetAssetsPathAndFile(const char* path, const char* file);
-	//bool HasResource(UID uid) const;
-
-	//bool LoadToMemory();
-	//bool IsLoadedToMemory();
-
-	//virtual void Save() const;
-	//virtual void Load();
 
 private:
 	UID uid = 0;

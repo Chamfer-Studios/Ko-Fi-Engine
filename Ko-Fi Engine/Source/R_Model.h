@@ -39,7 +39,8 @@ public:
 
 public:
 	std::vector<ModelNode> nodes;
-	std::map<UID, std::string> animations;
+	UID animation;
+	std::string animationName;
 };
 
 #endif // !__MODEL_H__

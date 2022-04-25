@@ -6,12 +6,13 @@
 #include <map>
 
 class R_Mesh;
+class KoFiEngine;
 typedef unsigned int uint;
 
 class I_Mesh
 {
 public:
-	I_Mesh();
+	I_Mesh(KoFiEngine* engine);
 	~I_Mesh();
 
 	bool Import(const aiMesh* aiMesh, R_Mesh* mesh, const aiScene* assimpScene = nullptr);
@@ -26,6 +27,9 @@ public:
 						aiOffsetMat.c1, aiOffsetMat.c2, aiOffsetMat.c3, aiOffsetMat.c4,
 						aiOffsetMat.d1, aiOffsetMat.d2, aiOffsetMat.d3, aiOffsetMat.d4);
 	}
+
+private:
+	KoFiEngine* engine = nullptr;
 };
 
 #endif // !__I_MESH_H__

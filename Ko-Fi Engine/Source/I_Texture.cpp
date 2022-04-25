@@ -67,49 +67,58 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 
 bool I_Texture::Save(const R_Texture* texture, const char* path)
 {
-	engine->GetFileSystem()->CheckDirectory(TEXTURES_DIR);
-	std::ofstream file;
-	file.open(path, std::ios::in | std::ios::trunc | std::ios::binary);
-	if (file.is_open())
+	if (engine->GetFileSystem()->CheckDirectory(TEXTURES_DIR))
 	{
-		// HEADER
-		file.write((char*)&texture->width, sizeof(int));
-		file.write((char*)&texture->height, sizeof(int));
-		file.write((char*)&texture->nrChannels, sizeof(int));
+		std::ofstream file;
+		file.open(path, std::ios::in | std::ios::trunc | std::ios::binary);
+		if (file.is_open())
+		{
+			// HEADER
+			file.write((char*)&texture->width, sizeof(int));
+			file.write((char*)&texture->height, sizeof(int));
+			file.write((char*)&texture->nrChannels, sizeof(int));
 
-		// BODY
-		file.write((char*)texture->data, texture->imageSizeBytes);
+			// BODY
+			file.write((char*)texture->data, texture->imageSizeBytes);
 
-		file.close();
+			file.close();
 
-		return true;
+			return true;
+		}
 	}
+	else
+		CONSOLE_LOG("[ERROR] Texture Save: directory %s couldn't be accessed.", TEXTURES_DIR);
 
 	return false;
 }
 
 bool I_Texture::Load(const char* path, R_Texture* texture)
 {
-	std::ifstream file;
-	file.open(path, std::ios::binary);
-	if (file.is_open())
+	if (engine->GetFileSystem()->CheckDirectory(TEXTURES_DIR))
 	{
-		// HEADER
-		file.read((char*)&texture->width, sizeof(int));
-		file.read((char*)&texture->height, sizeof(int));
-		file.read((char*)&texture->nrChannels, sizeof(int));
+		std::ifstream file;
+		file.open(path, std::ios::binary);
+		if (file.is_open())
+		{
+			// HEADER
+			file.read((char*)&texture->width, sizeof(int));
+			file.read((char*)&texture->height, sizeof(int));
+			file.read((char*)&texture->nrChannels, sizeof(int));
 
-		// BODY
-		texture->imageSizeBytes = texture->width * texture->height * texture->nrChannels * sizeof(unsigned char);
-		texture->data = (unsigned char*)malloc(texture->imageSizeBytes);
-		file.read((char*)texture->data, texture->imageSizeBytes);
+			// BODY
+			texture->imageSizeBytes = texture->width * texture->height * texture->nrChannels * sizeof(unsigned char);
+			texture->data = (unsigned char*)malloc(texture->imageSizeBytes);
+			file.read((char*)texture->data, texture->imageSizeBytes);
 
-		file.close();
+			file.close();
 
-		texture->SetUpTexture(false);
+			texture->SetUpTexture(false);
 
-		return true;
+			return true;
+		}
 	}
+	else
+		CONSOLE_LOG("[ERROR] Texture Load: directory %s couldn't be accessed.", TEXTURES_DIR);
 
 	return false;
 }

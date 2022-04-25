@@ -53,7 +53,7 @@ bool M_ResourceManager::Start()
 
 	fileRefreshRate = 5.0f;
 
-	RefreshDirectoryFiles(ASSETS_DIR);
+	//RefreshDirectoryFiles(ASSETS_DIR);
 
 	//TrimLibrary();
 
@@ -968,7 +968,7 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 		ret = Importer::GetInstance()->textureImporter->Save((R_Texture*)resource, resource->GetLibraryPath());
 		break;
 	case ResourceType::MODEL:
-		ret = Importer::GetInstance()->sceneImporter->Save((R_Model*)resource, resource->GetLibraryPath());
+		ret = Importer::GetInstance()->sceneImporter->SaveModel((R_Model*)resource, resource->GetLibraryPath());
 		break;
 	case ResourceType::MATERIAL:
 		ret = Importer::GetInstance()->materialImporter->Save((R_Material*)resource, resource->GetLibraryPath());
@@ -1040,7 +1040,7 @@ bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
 	//case ResourceType::PARTICLE:
 	//	break;
 	case ResourceType::MODEL:
-		ret = Importer::GetInstance()->sceneImporter->Load(libraryPath.c_str(), (R_Model*)resource);
+		ret = Importer::GetInstance()->sceneImporter->LoadModel(libraryPath.c_str(), (R_Model*)resource);
 		break;
 	case ResourceType::MATERIAL:
 		ret = Importer::GetInstance()->materialImporter->Import(libraryPath.c_str(), (R_Material*)resource);

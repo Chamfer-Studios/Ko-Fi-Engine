@@ -107,24 +107,22 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 
 	std::string errorString = "[ERROR] Importer: Could not Import R_Model { " + std::string(model->GetAssetPath()) + " }";
 
-
 	const aiScene* assimpScene = aiImportFile(model->GetAssetPath(), aiProcessPreset_TargetRealtime_MaxQuality);
 	this->assimpScene = (aiScene*)assimpScene;
 
 	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
 	{
-		CONSOLE_LOG("[ERROR] Importer: %s! Error: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
+		CONSOLE_LOG(" Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
 		return false;
 	}
 
 	engine->GetResourceManager()->GetForcedUIDsFromMeta(model->GetAssetPath(), forcedUIDs);
-	auto force = forcedUIDs.find(model->GetAssetFile());
-	if (force != forcedUIDs.end())
-		model->ForceUID(force->second);
+
+	CheckAndApplyForcedUID(model);
 
 	nodeName = engine->GetFileSystem()->GetNameFromPath(model->GetAssetPath());
 
-	ImportNode(assimpScene, assimpScene->mRootNode, model,ModelNode(), isPrefab);
+	ImportNode(assimpScene, assimpScene->mRootNode, model, ModelNode(), isPrefab);
 
 	loadedNodes.clear();
 	forcedUIDs.clear();
@@ -165,9 +163,8 @@ void I_Scene::ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, R
 	ModelNode modelNode = ModelNode();
 	modelNode.uid = RNG::GetRandomUint();
 	modelNode.parentUid = parent.uid;
-	//GameObject* gameObj = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 
-	assimpNode = ImportTransform(assimpNode, modelNode); // THIS IS CAUSING BUGS WITH THE SCALE 
+	assimpNode = ImportTransform(assimpNode, modelNode);
 	ImportMeshesAndMaterials(assimpScene, assimpNode, model, modelNode);
 
 	nodeName = (assimpNode == assimpScene->mRootNode) ? nodeName : assimpNode->mName.C_Str();
@@ -331,7 +328,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 
 		if (assimpMesh != nullptr && assimpMesh->HasFaces())
 		{
-			ImportMesh(nodeName, assimpMesh, node, assimpScene);
+			ImportMesh(nodeName, assimpMesh, model, node, assimpScene);
 
 			if (assimpScene->HasMaterials() && assimpMesh->mMaterialIndex >= 0)
 			{
@@ -385,7 +382,6 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 
 	R_Animation* anim = new R_Animation();
 	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim);
-	CheckAndApplyForcedUID(anim);
 	mesh->SetIsAnimated(true);
 	mesh->SetAnimation(anim);
 
@@ -403,17 +399,16 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	cAnim->CreateDefaultClip(animClip);
 }
 
-void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, ModelNode& node, const aiScene* assimpScene)
+void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, R_Model* model, ModelNode& node, const aiScene* assimpScene)
 {
 	if (assimpMesh == nullptr)
 	{
 		return;
 	}
 
-	// Import Mesh to GameObject
-	//R_Mesh* mesh = new R_Mesh(Shape::NONE);
 	std::string assetPath = ASSETS_MODELS_DIR + std::string(nodeName) + MESH_EXTENSION;
-	R_Mesh* mesh = (R_Mesh*)engine->GetResourceManager()->CreateNewResource(ResourceType::MESH,assetPath.c_str());
+	R_Mesh* mesh = (R_Mesh*)engine->GetResourceManager()->CreateNewResource(ResourceType::MESH, assetPath.c_str());
+	
 	Importer::GetInstance()->meshImporter->Import(assimpMesh, mesh, assimpScene);
 
 	if (mesh == nullptr)
@@ -434,20 +429,27 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, ModelNo
 		return;
 	}
 
-	std::string animAssetPath = ASSETS_MODELS_DIR + std::string(nodeName) + ANIMATION_EXTENSION;
+	std::string animAssetPath = ASSETS_MODELS_DIR + std::string(assimpScene->mAnimations[0]->mName.C_Str()) + ANIMATION_EXTENSION;
+
 	R_Animation* anim = (R_Animation*)engine->GetResourceManager()->CreateNewResource(ResourceType::ANIMATION, animAssetPath.c_str());;
+	if (anim == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: R_Animation (name: %s) was not imported correctly.", assimpScene->mAnimations[0]->mName.C_Str());
+		return;
+	}
+
 	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim);
+
 	mesh->SetIsAnimated(true);
 	mesh->SetAnimation(anim);
 
-	// TODO: SAVE THE UID OF ANIM
+	CheckAndApplyForcedUID(anim);
+
+	model->animation = anim->GetUID();
+	model->animationName = anim->GetName();
+
 	engine->GetResourceManager()->SaveResource(anim);
 	engine->GetResourceManager()->UnloadResource(anim);
-
-	// TODO: I THINK WE SHOULD DO THIS?
-	// Creating a default clip with all the keyframes of the animation.
-	//AnimatorClip* animClip = new AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
-	//cAnim->CreateDefaultClip(animClip);
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)
@@ -523,26 +525,26 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
-	std::string assetPath = model->GetAssetPath() + std::string(nodeName) + SHADER_EXTENSION;
-	R_Material* material = (R_Material*)engine->GetResourceManager()->CreateNewResource(ResourceType::MATERIAL, assetPath.c_str());
+	//std::string assetPath = model->GetAssetPath() + std::string(nodeName) + SHADER_EXTENSION;
+	//R_Material* material = (R_Material*)engine->GetResourceManager()->CreateNewResource(ResourceType::MATERIAL, assetPath.c_str());
 
-	if (material == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Material is nullptr.");
-		return;
-	}
+	//if (material == nullptr)
+	//{
+	//	CONSOLE_LOG("[ERROR] Resource Material is nullptr.");
+	//	return;
+	//}
 
-	if (!Importer::GetInstance()->materialImporter->Import(assimpMaterial, material))
-	{
-		CONSOLE_LOG("[ERROR] Importer: error while importing the material.");
-		return;
-	}
+	//if (!Importer::GetInstance()->materialImporter->Import(assimpMaterial, material))
+	//{
+	//	CONSOLE_LOG("[ERROR] Importer: error while importing the material.");
+	//	return;
+	//}
 
-	CheckAndApplyForcedUID(material);
-	node.material = material->GetUID();
+	//CheckAndApplyForcedUID(material);
+	//node.material = material->GetUID();
 
-	engine->GetResourceManager()->SaveResource(material);
-	engine->GetResourceManager()->UnloadResource(material);
+	//engine->GetResourceManager()->SaveResource(material);
+	//engine->GetResourceManager()->UnloadResource(material);
 
 	aiString aiTexturePath;
 	R_Texture* texture;
@@ -557,6 +559,13 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		{
 			texture = (R_Texture*)engine->GetResourceManager()->CreateNewResource(ResourceType::TEXTURE, texturePath.c_str());
 			bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
+
+			if (!ret)
+			{
+				CONSOLE_LOG("[ERROR] Importer: Texture couldn't import texture: %s", texturePath.c_str());
+				engine->GetResourceManager()->UnloadResource(texture);
+				return;
+			}
 
 			CheckAndApplyForcedUID(texture);
 			node.texture = texture->GetUID();
@@ -587,7 +596,8 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	JsonHandler jsonHandler;
 	Json jsonFile;
 
-	const char* name = customName == nullptr? scene->name.c_str(): customName;
+	const char* name = customName == nullptr ? scene->name.c_str() : customName;
+
 	std::vector<GameObject*> gameObjectList = scene->gameObjectList;
 
 	jsonFile[name];
@@ -766,12 +776,15 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	}
 	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
 
-	ret = jsonHandler.SaveJson(jsonFile, path.c_str());
+	if (engine->GetFileSystem()->CheckDirectory(ASSETS_SCENES_DIR))
+		ret = jsonHandler.SaveJson(jsonFile, path.c_str());
+	else
+		ret = false;
 
 	return ret;
 }
 
-bool I_Scene::Save(const R_Model* model, const char* path)
+bool I_Scene::SaveModel(const R_Model* model, const char* path)
 {
 	bool ret = true;
 	if (path == nullptr)
@@ -797,6 +810,7 @@ bool I_Scene::Save(const R_Model* model, const char* path)
 		jsonNode["mesh_uid"] = node.mesh;
 		jsonNode["material_uid"] = node.material;
 		jsonNode["texture_uid"] = node.texture;
+		jsonNode["texture_name"] = node.textureName;
 
 		jsonNode["position"]["x"] = node.position.x;
 		jsonNode["position"]["y"] = node.position.y;
@@ -814,14 +828,10 @@ bool I_Scene::Save(const R_Model* model, const char* path)
 		jsonModel["model_nodes"].push_back(jsonNode);
 	}
 
-	jsonModel["model_animations"].array();
-	for (const auto& anim : model->animations)
+	if (model->animation != 0 && model->animationName != "")
 	{
-		Json jsonAnim;
-		jsonAnim["name"] = anim.second;
-		jsonAnim["uid"] = anim.first;
-
-		jsonModel["model_animations"].push_back(jsonAnim);
+		jsonModel["model_animation"]["animation_name"] = model->animationName;
+		jsonModel["model_animation"]["animation_uid"] = model->animation;
 	}
 
 	JsonHandler jsonHandler;
@@ -1111,7 +1121,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 	return ret;
 }
 
-bool I_Scene::Load(const char* path, R_Model* model)
+bool I_Scene::LoadModel(const char* path, R_Model* model)
 {
 	bool ret = true;
 
@@ -1137,6 +1147,7 @@ bool I_Scene::Load(const char* path, R_Model* model)
 			modelNode.mesh = node.value().at("mesh_uid");
 			modelNode.material = node.value().at("material_uid");
 			modelNode.texture = node.value().at("texture_uid");
+			modelNode.textureName = node.value().at("texture_name").get<std::string>();
 
 			modelNode.position.x = node.value().at("position").at("x");
 			modelNode.position.y = node.value().at("position").at("y");
@@ -1154,19 +1165,20 @@ bool I_Scene::Load(const char* path, R_Model* model)
 			model->nodes.push_back(modelNode);
 		}
 
-		for (const auto& anim : jsonModel.at("model_animations").items())
+		if (jsonModel.contains("model_animation"))
 		{
-			UID animationUid = anim.value().at("uid");
-			std::string animationName = anim.value().at("name");
-
-			model->animations.emplace(animationUid, animationName);
+			if (!jsonModel.at("model_animation").is_null() && !jsonModel.at("model_animation").empty())
+			{
+				model->animationName = jsonModel.at("model_animation").at("animation_name");
+				model->animation = jsonModel.at("model_animation").at("animation_uid");
+			}
 		}
 
 		CONSOLE_LOG("[STATUS] Importer: successfully loaded model: { %s }", model->GetAssetFile());
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Importer:couldn't load model from library.");
+		CONSOLE_LOG("[ERROR] Importer: couldn't load model from library.");
 		ret = false;
 	}
 
