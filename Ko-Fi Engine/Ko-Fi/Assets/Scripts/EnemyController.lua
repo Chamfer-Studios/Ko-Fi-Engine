@@ -142,7 +142,7 @@ function CheckIfPointInCone(position)
         do return(false) end
     end
 
-    angle = Float3Angle(Float3Difference(position, componentTransform:GetPosition()), componentTransform:GetFront())
+    angle = Float3Angle(Float3Difference(componentTransform:GetPosition(), position), componentTransform:GetFront())
 
     angle = math.abs(math.deg(angle))
 
