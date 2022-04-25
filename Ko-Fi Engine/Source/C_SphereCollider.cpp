@@ -20,7 +20,7 @@ bool C_SphereCollider::Start()
 	if (collider == nullptr)
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.MaxElement());
+		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.MaxElement()/2);
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, transform);
 	}
@@ -30,6 +30,10 @@ bool C_SphereCollider::Start()
 
 bool C_SphereCollider::Update(float dt)
 {
+	if (!owner->GetComponent<C_RigidBody>())
+	{
+		owner->DeleteComponent(this);
+	}
 	return true;
 }
 
@@ -131,7 +135,7 @@ void C_SphereCollider::Load(Json& json)
 void C_SphereCollider::UpdateFilter()
 {
 	std::map<unsigned int, std::string> filterMap = owner->GetEngine()->GetPhysics()->GetFiltersMap();
-	bool** filterMatrix = owner->GetEngine()->GetPhysics()->filterMatrix;
+	bool** filterMatrix = owner->GetEngine()->GetPhysics()->GetFilterMatrix();
 	for (auto iter : filterMap)
 	{
 		if (iter.second == filter)
