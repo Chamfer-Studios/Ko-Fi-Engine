@@ -228,12 +228,6 @@ public:
 			"right", &C_Camera::right,
 			"up", &C_Camera::up
 			);
-		// Component Mesh
-		lua.new_usertype<C_Mesh>("C_Mesh",
-			sol::constructors<void(GameObject *)>(),
-			"Disable", &C_Mesh::Disable,
-			"Enable", &C_Mesh::Enable
-			);
 
 		// Component Mesh
 		lua.new_usertype<C_Mesh>("C_Mesh",
@@ -285,16 +279,14 @@ public:
 											"value", &InspectorVariable::value);
 
 		// Rigid Body structure
-		//lua.new_usertype<C_RigidBody2>("C_RigidBody",
-		//									 sol::constructors<void(GameObject *)>(),
-		//									 "IsStatic", &C_RigidBody2::IsStatic,
-		//									 "IsKinematic", &C_RigidBody2::IsKinematic,
-		//									 "SetStatic", &C_RigidBody2::SetStatic,
-		//									 "SetDynamic", &C_RigidBody2::SetDynamic,
-		//									 "SetLinearVelocity", &C_RigidBody2::SetLinearVelocity,
-		//									 "FreezePositionY", &C_RigidBody2::FreezePositionY,
-		//									 "Set2DVelocity", &C_RigidBody2::Set2DVelocity,
-		//									 "SetRigidBodyPos", &C_RigidBody2::SetRigidBodyPos);
+		lua.new_usertype<C_RigidBody>("C_RigidBody",
+											 sol::constructors<void(GameObject *)>(),
+											 "IsStatic", &C_RigidBody::IsStatic,
+											 "IsKinematic", &C_RigidBody::IsKinematic,
+											 "SetStatic", &C_RigidBody::SetBodyStatic,
+											 "SetDynamic", &C_RigidBody::SetBodyDynamic,
+											 "FreezePositionY", &C_RigidBody::FreezePositionY,
+											 "SetLinearVelocity", &C_RigidBody::SetLinearVelocity);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),

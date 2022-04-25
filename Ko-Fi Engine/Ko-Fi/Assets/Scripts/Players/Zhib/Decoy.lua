@@ -53,12 +53,12 @@ function MoveToDestination(dt)
 		vec.y = vec.y / d
 		vec.z = vec.z / d
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(vec.x * speed * dt, vec.z * speed * dt))
+			componentRigidBody:SetLinearVelocity(float3.new(vec.x * speed * dt, 0, vec.z * speed * dt))
 		end
 	else
 		destination = nil
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(0,0))
+			componentRigidBody:SetLinearVelocity(float3.new(0,0,0))
 		end
 	end
 end

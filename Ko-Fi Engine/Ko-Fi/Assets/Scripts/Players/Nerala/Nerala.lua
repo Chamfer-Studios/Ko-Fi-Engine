@@ -330,7 +330,7 @@ function MoveToDestination(dt)
 		-- Movement
 		vec2 = Normalize(vec2, d)
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(vec2[1] * s * dt, vec2[2] * s * dt))
+			componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * s * dt, 0, vec2[2] * s * dt))
 		end
 	
 		-- Rotation
@@ -406,7 +406,7 @@ function StopMovement()
 
 	destination = nil
 	if (componentRigidBody ~= nil) then
-		componentRigidBody:Set2DVelocity(float2.new(0,0))
+		componentRigidBody:SetLinearVelocity(float3.new(0,0,0))
 	end
 	if (componentSwitch ~= nil) then
 		componentSwitch:StopTrack(1)

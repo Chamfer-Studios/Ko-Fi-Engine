@@ -5,7 +5,6 @@
 #include "M_SceneManager.h"
 #include "C_Transform.h"
 
-
 C_RigidBody::C_RigidBody(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
@@ -205,6 +204,8 @@ void C_RigidBody::Save(Json& json) const
 
 void C_RigidBody::Load(Json& json)
 {
+	if (!json.contains("rigidBody"))
+		return;
 	bodyType = json.at("body_type");
 	UpdateBodyType();
 
@@ -222,4 +223,3 @@ void C_RigidBody::Load(Json& json)
 	freezeRotationZ = json.at("freeze_rotation_z");
 	UpdateConstrains();
 }
-
