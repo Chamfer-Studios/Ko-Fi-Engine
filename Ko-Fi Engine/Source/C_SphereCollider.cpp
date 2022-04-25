@@ -135,7 +135,7 @@ void C_SphereCollider::Load(Json& json)
 void C_SphereCollider::UpdateFilter()
 {
 	std::map<unsigned int, std::string> filterMap = owner->GetEngine()->GetPhysics()->GetFiltersMap();
-	bool** filterMatrix = owner->GetEngine()->GetPhysics()->filterMatrix;
+	bool** filterMatrix = owner->GetEngine()->GetPhysics()->GetFilterMatrix();
 	for (auto iter : filterMap)
 	{
 		if (iter.second == filter)

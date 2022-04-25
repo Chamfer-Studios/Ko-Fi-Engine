@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "M_Physics.h"
 #include "C_RigidBody.h"
+#include "C_Mesh.h"
 
 C_BoxCollider::C_BoxCollider(GameObject *parent) : Component(parent)
 {
@@ -17,7 +18,7 @@ C_BoxCollider::~C_BoxCollider()
 
 bool C_BoxCollider::Start()
 {
-	if (!collider)
+	if (owner->GetComponent<C_Mesh>())
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
 		if (boundingBoxSize.y == 0)
@@ -26,7 +27,14 @@ bool C_BoxCollider::Start()
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, transform);
 	}
-		
+	else
+	{
+		float3 boundingBoxSize = float3::one;
+		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(boundingBoxSize.x / 2, boundingBoxSize.y / 2, boundingBoxSize.z / 2));
+		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, transform);
+	}
+
 	return true;
 }
 
@@ -140,7 +148,7 @@ void C_BoxCollider::Load(Json &json)
 void C_BoxCollider::UpdateFilter()
 {
 	std::map<unsigned int, std::string> filterMap = owner->GetEngine()->GetPhysics()->GetFiltersMap();
-	bool **filterMatrix = owner->GetEngine()->GetPhysics()->filterMatrix;
+	bool **filterMatrix = owner->GetEngine()->GetPhysics()->GetFilterMatrix();
 	for (auto iter : filterMap)
 	{
 		if (iter.second == filter)
@@ -161,14 +169,26 @@ void C_BoxCollider::UpdateFilter()
 
 void C_BoxCollider::UpdateScaleFactor()
 {
-	float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-	reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
-	owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
-	owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyBoxShape(boxShape);
-	if (boundingBoxSize.y == 0)
-		boundingBoxSize.y = 0.001;
-	boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3((boundingBoxSize.x / 2) * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y, (boundingBoxSize.z / 2) * scaleFactor.z));
-	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, oldTransform);
+	if (owner->GetComponent<C_Mesh>())
+	{
+		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
+		reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
+		owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyBoxShape(boxShape);
+		if (boundingBoxSize.y == 0)
+			boundingBoxSize.y = 0.001;
+		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3((boundingBoxSize.x / 2) * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y, (boundingBoxSize.z / 2) * scaleFactor.z));
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, oldTransform);
+	}
+	else
+	{
+		float3 boundingBoxSize = float3::one;
+		reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
+		owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyBoxShape(boxShape);
+		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3((boundingBoxSize.x / 2) * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y, (boundingBoxSize.z / 2) * scaleFactor.z));
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, oldTransform);
+	}
 }
 
 void C_BoxCollider::UpdateIsTrigger()
