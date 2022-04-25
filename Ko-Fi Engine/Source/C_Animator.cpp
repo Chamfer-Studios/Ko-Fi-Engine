@@ -62,7 +62,10 @@ bool C_Animator::CleanUp()
 		RELEASE(animation);
 
 	if (selectedClip != nullptr)
-		RELEASE(selectedClip);
+		selectedClip = nullptr;
+
+	if (clipToDelete != nullptr)
+		clipToDelete = nullptr;
 
 	C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
 	if (cMesh != nullptr)
