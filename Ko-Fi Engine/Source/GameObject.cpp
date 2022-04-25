@@ -1129,3 +1129,28 @@ void GameObject::SetChangeScene(bool changeSceneLua, std::string sceneNameLua)
 	changeScene = changeSceneLua;
 	sceneName = sceneNameLua;
 }
+
+void GameObject::OnStoped()
+{
+	isQuitting = true;
+}
+
+GameObject* GameObject::GetChildWithName(std::string childName)
+{
+	for (std::vector<GameObject*>::iterator child = children.begin(); child != children.end(); child++)
+	{
+		if ((*child)->name == childName)
+			return (*child);
+	}
+	return nullptr;
+}
+
+void GameObject::Active(bool isActive)
+{
+	std::vector<GameObject*> childrenList = this->GetChildren();
+	for (std::vector<GameObject*>::iterator chdIt = childrenList.begin(); chdIt != childrenList.end(); ++chdIt)
+	{
+		(*chdIt)->Active(isActive);
+	}
+	this->active = isActive;
+}

@@ -177,6 +177,7 @@ public:
 									 "GetUID", &GameObject::GetUID,
 									 "tag", &GameObject::tag,
 									 "GetParent", &GameObject::GetParent,
+									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
@@ -189,7 +190,9 @@ public:
 									 "IsSelected", &GameObject::IsSelected,
 									 "GetButton", &GameObject::GetComponent<C_Button>,
 									 "GetImage", &GameObject::GetComponent<C_Image>,
+									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
+									 "Active", &GameObject::Active,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
@@ -244,12 +247,14 @@ public:
 
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
-										 sol::constructors<void(GameObject *)>(),
-										 "SetTexture", &C_Image::SetTexture);
+			sol::constructors<void(GameObject *)>(),
+			"SetTexture", &C_Image::SetTexture
+			);
 
 		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),
 										  "IsPressed", &C_Button::IsPressed,
+										  "IsIdle", &C_Button::IsIdle,
 										  "IsHovered", &C_Button::IsHovered);
 
 		// Component Animator

@@ -73,6 +73,7 @@ public:
 	const char* GetName() const;
 
 	std::vector<GameObject*> GetChildren() const;
+	GameObject* GetChildWithName(std::string childName);
 	void SetChild(GameObject* child);
 	GameObject* GetParent() const;
 
@@ -100,6 +101,9 @@ public:
 	bool IsSelected();
 	void LoadSceneFromName(std::string name);
 	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
+	void OnStoped();
+	void Active(bool isActive);
+
 private:
 	std::string SetObjectNumberedName(const char* _name);
 
@@ -116,6 +120,7 @@ public:
 	bool is3D = true;
 	bool isPrefab = false;
 	bool changeScene = false;
+	bool isQuitting = false;
 	std::string sceneName;
 	std::string prefabPath;
 	Tag tag;

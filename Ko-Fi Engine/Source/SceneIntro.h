@@ -25,6 +25,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 	bool switchScene = false;
+	bool quitPlease = false;
 	std::string sceneNameGO;
 
 private:
