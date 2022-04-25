@@ -55,38 +55,38 @@ ultimateRangeExtension = ultimateRange * 0.5
 
 ------------------- Inspector setter --------------------
 -- Globals --
-local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
 
-local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
 -- Primary ability --
-local knifeCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+knifeCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 knifeCastRangeIV = InspectorVariable.new("knifeCastRange", knifeCastRangeIVT, knifeCastRange)
 NewVariable(knifeCastRangeIV)
 
-local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
 NewVariable(maxKnivesIV)
 
 -- Secondary ability --
-local decoyCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+decoyCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 decoyCastRangeIV = InspectorVariable.new("decoyCastRange", decoyCastRangeIVT, decoyCastRange)
 NewVariable(decoyCastRangeIV)
 
-local drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 drawDecoyIV = InspectorVariable.new("drawDecoy", drawDecoyIVT, drawDecoy)
 NewVariable(drawDecoyIV)
 
 -- Ultimate ability --
-local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
 NewVariable(ultimateRangeIV)
 
-local drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 drawUltimateIV = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
 NewVariable(drawUltimateIV)
 ---------------------------------------------------------
@@ -190,7 +190,7 @@ function Update(dt)
 	
 	-- Actions
 	if (destination ~= nil)	then
-		--MoveToDestination(dt)
+		MoveToDestination(dt)
 		DispatchEvent("Pathfinder_FollowPath", { speed, dt, false })
 		DispatchGlobalEvent("Player_Position", { componentTransform:GetPosition(), gameObject })
 	end
@@ -354,7 +354,7 @@ function MoveToDestination(dt)
 		end
 	
 		-- Adapt speed on arrive
-		if (d < 10) then
+		if (d < 2) then
 			s = s * 0.5
 		end
 	
