@@ -18,13 +18,13 @@
             true,
             true,
             true,
-            false,
-            false,
             true,
             true,
             true,
             true,
-            false,
+            true,
+            true,
+            true,
             true,
             true,
             true,
@@ -71,7 +71,7 @@
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine - SandBoxCollsions",
-        "Width": 1021
+        "Title": "Ko-Fi Engine - testing",
+        "Width": 1024
     }
 }
