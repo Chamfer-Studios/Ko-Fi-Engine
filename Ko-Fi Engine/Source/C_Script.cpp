@@ -141,7 +141,7 @@ bool C_Script::OnPlay()
 		auto start = sol::protected_function(s->handler->lua["Start"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			if (s->lua_update.valid()) {
+			if (start.valid()) {
 				sol::protected_function_result result = start();
 				if (result.valid()) {
 					// Call succeeded

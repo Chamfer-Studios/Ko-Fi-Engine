@@ -353,5 +353,6 @@ function Update(dt)
     if state == STATE.SUS or state == STATE.AGGRO then
         _loop = false
     end
+    Log("DT: " .. tostring(dt) .. "\n")
 	DispatchEvent(pathfinderFollowKey, { speed, dt, _loop })
 end
