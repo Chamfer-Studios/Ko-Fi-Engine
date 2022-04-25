@@ -699,20 +699,18 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		if (type == "mesh")
 		{
 			C_Mesh* meshCmp = this->GetComponent<C_Mesh>();
-			if (meshCmp == nullptr)
-			{
-				meshCmp = this->CreateComponent<C_Mesh>();
-			}
+			if (!meshCmp)
+				AddComponentByType(ComponentType::MESH);
+			meshCmp = this->GetComponent<C_Mesh>();
 			meshCmp->active = true;
 			meshCmp->Load(jsonCmp);
 		}
 		else if (type == "material")
 		{
 			C_Material* materialCmp = this->GetComponent<C_Material>();
-			if (materialCmp == nullptr)
-			{
-				materialCmp = this->CreateComponent<C_Material>();
-			}
+			if (!materialCmp)
+				AddComponentByType(ComponentType::MATERIAL);
+			materialCmp = this->GetComponent<C_Material>();
 			materialCmp->active = true;
 			materialCmp->Load(jsonCmp);
 		}
@@ -725,10 +723,9 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		else if (type == "camera")
 		{
 			C_Camera* cameraCmp = this->GetComponent<C_Camera>();
-			if (cameraCmp == nullptr)
-			{
-				cameraCmp = this->CreateComponent<C_Camera>();
-			}
+			if (!cameraCmp)
+				AddComponentByType(ComponentType::CAMERA);
+			cameraCmp = this->GetComponent<C_Camera>();
 			cameraCmp->active = true;
 			cameraCmp->Load(jsonCmp);
 		}
@@ -755,60 +752,54 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		else if (type == "transform2D")
 		{
 			C_Transform2D* transform2DCmp = this->GetComponent<C_Transform2D>();
-			if (transform2DCmp == nullptr)
-			{
-				transform2DCmp = this->CreateComponent<C_Transform2D>();
-			}
+			if (!transform2DCmp)
+				AddComponentByType(ComponentType::TRANSFORM2D);
+			transform2DCmp = this->GetComponent<C_Transform2D>();
 			transform2DCmp->active = true;
 			transform2DCmp->Load(jsonCmp);
 		}
 		else if (type == "canvas")
 		{
 			C_Canvas* canvasCmp = this->GetComponent<C_Canvas>();
-			if (canvasCmp == nullptr)
-			{
-				canvasCmp = this->CreateComponent<C_Canvas>();
-			}
+			if (!canvasCmp)
+				AddComponentByType(ComponentType::CANVAS);
+			canvasCmp = this->GetComponent<C_Canvas>();
 			canvasCmp->active = true;
 			canvasCmp->Load(jsonCmp);
 		}
 		else if (type == "image")
 		{
 			C_Image* imageCmp = this->GetComponent<C_Image>();
-			if (imageCmp == nullptr)
-			{
-				imageCmp = this->CreateComponent<C_Image>();
-			}
+			if (!imageCmp)
+				AddComponentByType(ComponentType::IMAGE);
+			imageCmp = this->GetComponent<C_Image>();
 			imageCmp->active = true;
 			imageCmp->Load(jsonCmp);
 		}
 		else if (type == "button")
 		{
 			C_Button* buttonCmp = this->GetComponent<C_Button>();
-			if (buttonCmp == nullptr)
-			{
-				buttonCmp = this->CreateComponent<C_Button>();
-			}
+			if (!buttonCmp)
+				AddComponentByType(ComponentType::BUTTON);
+			buttonCmp = this->GetComponent<C_Button>();
 			buttonCmp->active = true;
 			buttonCmp->Load(jsonCmp);
 		}
 		else if (type == "text")
 		{
 			C_Text* textCmp = this->GetComponent<C_Text>();
-			if (textCmp == nullptr)
-			{
-				textCmp = this->CreateComponent<C_Text>();
-			}
+			if (!textCmp)
+				AddComponentByType(ComponentType::TEXT);
+			textCmp = this->GetComponent<C_Text>();
 			textCmp->active = true;
 			textCmp->Load(jsonCmp);
 		}
 		else if (type == "rigidBody")
 		{
 			C_RigidBody* rbCmp = this->GetComponent<C_RigidBody>();
-			if (rbCmp == nullptr)
-			{
-				rbCmp = this->CreateComponent<C_RigidBody>();
-			}
+			if (!rbCmp)
+				AddComponentByType(ComponentType::RIGID_BODY);
+			rbCmp = this->GetComponent<C_RigidBody>();
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
@@ -816,7 +807,8 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		{
 			C_BoxCollider* boxColCmp = this->GetComponent<C_BoxCollider>();
 			if (!boxColCmp)
-				boxColCmp = this->CreateComponent<C_BoxCollider>();
+				AddComponentByType(ComponentType::BOX_COLLIDER);
+			boxColCmp = this->GetComponent<C_BoxCollider>();
 			boxColCmp->active = true;
 			boxColCmp->Load(jsonCmp);
 		}
@@ -824,7 +816,8 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		{
 			C_SphereCollider* sphereColCmp = this->GetComponent<C_SphereCollider>();
 			if (!sphereColCmp)
-				sphereColCmp = this->CreateComponent<C_SphereCollider>();
+				AddComponentByType(ComponentType::SPHERE_COLLIDER);
+			sphereColCmp = this->GetComponent<C_SphereCollider>();
 			sphereColCmp->active = true;
 			sphereColCmp->Load(jsonCmp);
 		}
@@ -832,27 +825,17 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		{
 			C_CapsuleCollider* capsuleColCmp = this->GetComponent<C_CapsuleCollider>();
 			if (!capsuleColCmp)
-				capsuleColCmp = this->CreateComponent<C_CapsuleCollider>();
+				AddComponentByType(ComponentType::CAPSULE_COLLIDER);
+			capsuleColCmp = this->GetComponent<C_CapsuleCollider>();
 			capsuleColCmp->active = true;
 			capsuleColCmp->Load(jsonCmp);
 		}
 		else if (type == "animator")
 		{
 			C_Animator* animCmp = this->GetComponent<C_Animator>();
-			if (animCmp == nullptr)
-			{
-				animCmp = this->CreateComponent<C_Animator>();
-			}
-			animCmp->active = true;
-			animCmp->Load(jsonCmp);
-		}
-		else if (type == "animator")
-		{
-			C_Animator* animCmp = this->GetComponent<C_Animator>();
-			if (animCmp == nullptr)
-			{
-				animCmp = this->CreateComponent<C_Animator>();
-			}
+			if (!animCmp)
+				AddComponentByType(ComponentType::ANIMATOR);
+			animCmp = this->GetComponent<C_Animator>();
 			animCmp->active = true;
 			animCmp->Load(jsonCmp);
 		}
@@ -882,20 +865,18 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		if (type == "mesh")
 		{
 			C_Mesh* meshCmp = this->GetComponent<C_Mesh>();
-			if (meshCmp == nullptr)
-			{
-				meshCmp = this->CreateComponent<C_Mesh>();
-			}
+			if (!meshCmp)
+				AddComponentByType(ComponentType::MESH);
+			meshCmp = this->GetComponent<C_Mesh>();
 			meshCmp->active = true;
 			meshCmp->Load(jsonCmp);
 		}
 		else if (type == "material")
 		{
 			C_Material* materialCmp = this->GetComponent<C_Material>();
-			if (materialCmp == nullptr)
-			{
-				materialCmp = this->CreateComponent<C_Material>();
-			}
+			if (!materialCmp)
+				AddComponentByType(ComponentType::MATERIAL);
+			materialCmp = this->GetComponent<C_Material>();
 			materialCmp->active = true;
 			materialCmp->Load(jsonCmp);
 		}
@@ -905,13 +886,18 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			infoCmp->active = true;
 			infoCmp->Load(jsonCmp); //does nothing as of now
 		}
+		else if (type == "transform")
+		{
+			C_Transform* transformCmp = this->GetComponent<C_Transform>();
+			transformCmp->active = true;
+			transformCmp->Load(jsonCmp);
+		}
 		else if (type == "camera")
 		{
 			C_Camera* cameraCmp = this->GetComponent<C_Camera>();
-			if (cameraCmp == nullptr)
-			{
-				cameraCmp = this->CreateComponent<C_Camera>();
-			}
+			if (!cameraCmp)
+				AddComponentByType(ComponentType::CAMERA);
+			cameraCmp = this->GetComponent<C_Camera>();
 			cameraCmp->active = true;
 			cameraCmp->Load(jsonCmp);
 		}
@@ -938,60 +924,54 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		else if (type == "transform2D")
 		{
 			C_Transform2D* transform2DCmp = this->GetComponent<C_Transform2D>();
-			if (transform2DCmp == nullptr)
-			{
-				transform2DCmp = this->CreateComponent<C_Transform2D>();
-			}
+			if (!transform2DCmp)
+				AddComponentByType(ComponentType::TRANSFORM2D);
+			transform2DCmp = this->GetComponent<C_Transform2D>();
 			transform2DCmp->active = true;
 			transform2DCmp->Load(jsonCmp);
 		}
 		else if (type == "canvas")
 		{
 			C_Canvas* canvasCmp = this->GetComponent<C_Canvas>();
-			if (canvasCmp == nullptr)
-			{
-				canvasCmp = this->CreateComponent<C_Canvas>();
-			}
+			if (!canvasCmp)
+				AddComponentByType(ComponentType::CANVAS);
+			canvasCmp = this->GetComponent<C_Canvas>();
 			canvasCmp->active = true;
 			canvasCmp->Load(jsonCmp);
 		}
 		else if (type == "image")
 		{
 			C_Image* imageCmp = this->GetComponent<C_Image>();
-			if (imageCmp == nullptr)
-			{
-				imageCmp = this->CreateComponent<C_Image>();
-			}
+			if (!imageCmp)
+				AddComponentByType(ComponentType::IMAGE);
+			imageCmp = this->GetComponent<C_Image>();
 			imageCmp->active = true;
 			imageCmp->Load(jsonCmp);
 		}
 		else if (type == "button")
 		{
 			C_Button* buttonCmp = this->GetComponent<C_Button>();
-			if (buttonCmp == nullptr)
-			{
-				buttonCmp = this->CreateComponent<C_Button>();
-			}
+			if (!buttonCmp)
+				AddComponentByType(ComponentType::BUTTON);
+			buttonCmp = this->GetComponent<C_Button>();
 			buttonCmp->active = true;
 			buttonCmp->Load(jsonCmp);
 		}
 		else if (type == "text")
 		{
 			C_Text* textCmp = this->GetComponent<C_Text>();
-			if (textCmp == nullptr)
-			{
-				textCmp = this->CreateComponent<C_Text>();
-			}
+			if (!textCmp)
+				AddComponentByType(ComponentType::TEXT);
+			textCmp = this->GetComponent<C_Text>();
 			textCmp->active = true;
 			textCmp->Load(jsonCmp);
 		}
 		else if (type == "rigidBody")
 		{
 			C_RigidBody* rbCmp = this->GetComponent<C_RigidBody>();
-			if (rbCmp == nullptr)
-			{
-				rbCmp = this->CreateComponent<C_RigidBody>();
-			}
+			if (!rbCmp)
+				AddComponentByType(ComponentType::RIGID_BODY);
+			rbCmp = this->GetComponent<C_RigidBody>();
 			rbCmp->active = true;
 			rbCmp->Load(jsonCmp);
 		}
@@ -999,7 +979,8 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		{
 			C_BoxCollider* boxColCmp = this->GetComponent<C_BoxCollider>();
 			if (!boxColCmp)
-				boxColCmp = this->CreateComponent<C_BoxCollider>();
+				AddComponentByType(ComponentType::BOX_COLLIDER);
+			boxColCmp = this->GetComponent<C_BoxCollider>();
 			boxColCmp->active = true;
 			boxColCmp->Load(jsonCmp);
 		}
@@ -1007,7 +988,8 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		{
 			C_SphereCollider* sphereColCmp = this->GetComponent<C_SphereCollider>();
 			if (!sphereColCmp)
-				sphereColCmp = this->CreateComponent<C_SphereCollider>();
+				AddComponentByType(ComponentType::SPHERE_COLLIDER);
+			sphereColCmp = this->GetComponent<C_SphereCollider>();
 			sphereColCmp->active = true;
 			sphereColCmp->Load(jsonCmp);
 		}
@@ -1015,27 +997,17 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		{
 			C_CapsuleCollider* capsuleColCmp = this->GetComponent<C_CapsuleCollider>();
 			if (!capsuleColCmp)
-				capsuleColCmp = this->CreateComponent<C_CapsuleCollider>();
+				AddComponentByType(ComponentType::CAPSULE_COLLIDER);
+			capsuleColCmp = this->GetComponent<C_CapsuleCollider>();
 			capsuleColCmp->active = true;
 			capsuleColCmp->Load(jsonCmp);
 		}
 		else if (type == "animator")
 		{
 			C_Animator* animCmp = this->GetComponent<C_Animator>();
-			if (animCmp == nullptr)
-			{
-				animCmp = this->CreateComponent<C_Animator>();
-			}
-			animCmp->active = true;
-			animCmp->Load(jsonCmp);
-		}
-		else if (type == "animator")
-		{
-			C_Animator* animCmp = this->GetComponent<C_Animator>();
-			if (animCmp == nullptr)
-			{
-				animCmp = this->CreateComponent<C_Animator>();
-			}
+			if (!animCmp)
+				AddComponentByType(ComponentType::ANIMATOR);
+			animCmp = this->GetComponent<C_Animator>();
 			animCmp->active = true;
 			animCmp->Load(jsonCmp);
 		}
@@ -1128,4 +1100,29 @@ void GameObject::SetChangeScene(bool changeSceneLua, std::string sceneNameLua)
 {
 	changeScene = changeSceneLua;
 	sceneName = sceneNameLua;
+}
+
+void GameObject::OnStoped()
+{
+	isQuitting = true;
+}
+
+GameObject* GameObject::GetChildWithName(std::string childName)
+{
+	for (std::vector<GameObject*>::iterator child = children.begin(); child != children.end(); child++)
+	{
+		if ((*child)->name == childName)
+			return (*child);
+	}
+	return nullptr;
+}
+
+void GameObject::Active(bool isActive)
+{
+	std::vector<GameObject*> childrenList = this->GetChildren();
+	for (std::vector<GameObject*>::iterator chdIt = childrenList.begin(); chdIt != childrenList.end(); ++chdIt)
+	{
+		(*chdIt)->Active(isActive);
+	}
+	this->active = isActive;
 }

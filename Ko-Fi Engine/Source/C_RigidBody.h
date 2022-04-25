@@ -29,6 +29,8 @@ public:
 	//Getter & Setters
 	inline reactphysics3d::RigidBody* GetBody() { return this->body; }
 
+	void SetRigidBodyPos(float3 newPos);
+
 	inline std::string GetBodyType() const { return bodyType; };
 	inline bool IsDynamic() { return bodyType == "Dynamic"; };
 	inline bool IsStatic() { return bodyType == "Static"; };
