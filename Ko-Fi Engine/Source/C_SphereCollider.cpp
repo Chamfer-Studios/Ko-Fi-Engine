@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "M_Physics.h"
 #include "C_RigidBody.h"
+#include <minmax.h>
 
 C_SphereCollider::C_SphereCollider(GameObject* parent) : Component(parent)
 {
@@ -19,7 +20,7 @@ bool C_SphereCollider::Start()
 	if (collider == nullptr)
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.x/2);
+		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.MaxElement());
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, transform);
 	}
@@ -155,7 +156,7 @@ void C_SphereCollider::UpdateScaleFactor()
 	reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
 	owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
 	owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroySphereShape(sphereShape);
-	sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape((boundingBoxSize.x / 2) * scaleFactor);
+	sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.MaxElement() / 2* scaleFactor);
 	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, oldTransform);
 }
 

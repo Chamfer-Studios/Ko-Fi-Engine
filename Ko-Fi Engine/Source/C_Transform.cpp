@@ -9,6 +9,10 @@
 #include "GameObject.h"
 #include "C_Camera.h"
 #include "C_Mesh.h"
+#include "C_BoxCollider.h"
+#include "C_SphereCollider.h"
+#include "C_CapsuleCollider.h"
+
 
 #include "PanelChooser.h"
 
@@ -39,6 +43,14 @@ bool C_Transform::Update(float dt)
 		RecomputeGlobalMatrix();
 		owner->PropagateTransform();
 
+		// Update colliders
+		if (owner->GetComponent<C_BoxCollider>())
+			owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
+		if (owner->GetComponent<C_SphereCollider>())
+			owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
+		if (owner->GetComponent<C_CapsuleCollider>())
+			owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
+
 		isDirty = false;
 	}
 
@@ -58,7 +70,7 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 
 		// Position ImGui
 		float3 newPosition = GetPosition();
-		if (ImGui::DragFloat3("Location", &(newPosition[0]), 0.5f))
+		if (ImGui::DragFloat3("Location##", &(newPosition[0]), 0.5f))
 		{
 			SetPosition(newPosition);
 		}
@@ -66,7 +78,7 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 		// Rotation ImGui
 		float3 newRotationEuler = GetRotationEuler();
 		newRotationEuler = RadToDeg(newRotationEuler);
-		if (ImGui::DragFloat3("Rotation", &(newRotationEuler[0]), 0.045f))
+		if (ImGui::DragFloat3("Rotation##", &(newRotationEuler[0]), 0.045f))
 		{
 			newRotationEuler = DegToRad(newRotationEuler);
 			SetRotationEuler(newRotationEuler);
@@ -74,7 +86,7 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 
 		// Scale ImGui
 		float3 newScale = GetScale();
-		if (ImGui::DragFloat3("Scale", &(newScale[0]), 0.02f, 0.00000001f, 5000.f))
+		if (ImGui::DragFloat3("Scale##", &(newScale[0]), 0.02f, 0.1f, 5000.f))
 		{
 			SetScale(newScale);
 		}
