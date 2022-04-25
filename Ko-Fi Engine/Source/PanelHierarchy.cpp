@@ -73,7 +73,7 @@ bool PanelHierarchy::Update()
 		if (alignLabelWithCurrentXPosition)
 			ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 
-		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth;
 		int id = 0;
 		DisplayTree(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo, flags, id);
 
