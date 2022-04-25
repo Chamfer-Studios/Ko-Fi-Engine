@@ -1212,6 +1212,31 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 	return uid;
 }
 
+std::string M_ResourceManager::GetValidPath(const char* path) const
+{
+	std::string normalizedPath = path;
+
+	for (uint i = 0; i < normalizedPath.size(); ++i)
+	{
+		if (normalizedPath[i] == '\\')
+			normalizedPath[i] = '/';
+	}
+
+	size_t assetStart = normalizedPath.find("Assets");
+	size_t libraryStart = normalizedPath.find("Library");
+
+	std::string resultPath;
+
+	if (assetStart != std::string::npos)
+		resultPath = normalizedPath.substr(assetStart, normalizedPath.size());
+	else if (libraryStart != std::string::npos)
+		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size());
+	else
+		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't validate path.");
+
+	return resultPath;
+}
+
 ResourceType M_ResourceManager::GetTypeFromPathExtension(const char* path)
 {
 	ResourceType ret = ResourceType::UNKNOWN;
@@ -1241,31 +1266,6 @@ ResourceType M_ResourceManager::GetTypeFromPathExtension(const char* path)
 		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given asset path. File extension: %s is not supported.", extension.c_str());
 
 	return ret;
-}
-
-std::string M_ResourceManager::GetValidPath(const char* path) const
-{
-	std::string normalizedPath = path;
-
-	for (uint i = 0; i < normalizedPath.size(); ++i)
-	{
-		if (normalizedPath[i] == '\\')
-			normalizedPath[i] = '/';
-	}
-
-	size_t assetStart = normalizedPath.find("Assets");
-	size_t libraryStart = normalizedPath.find("Library");
-
-	std::string resultPath;
-
-	if (assetStart != std::string::npos)
-		resultPath = normalizedPath.substr(assetStart, normalizedPath.size());
-	else if (libraryStart != std::string::npos)
-		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size());
-	else
-		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't validate path.");
-
-	return resultPath;
 }
 
 bool M_ResourceManager::SaveMetaFile(Resource* resource) const
