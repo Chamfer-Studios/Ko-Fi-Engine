@@ -38,7 +38,7 @@ public:
 	//Called before quitting
 	bool CleanUp();
 
-	//Engine Config Serialization ----------------------------------
+	//Engine Config Serialization -----------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	//---------------------------------------------------------------
@@ -62,6 +62,8 @@ public:
 	//Utils
 	reactphysics3d::RigidBody* AddBody(reactphysics3d::Transform rbTransform, GameObject* owner);
 	GameObject* GetGameObjectFromBody(reactphysics3d::CollisionBody* collisionBody) { return collisionBodyToObjectMap[collisionBody]; }
+	inline void ResetCollisionBodyToObjectMap() { collisionBodyToObjectMap.clear(); }
+
 private:
 	// Filter matrix private methods
 	inline void DeleteFilterMatrix()

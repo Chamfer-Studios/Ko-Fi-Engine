@@ -51,7 +51,7 @@ ultimateRange = 50.0
 ultimateCooldown = 30.0
 drawUltimate = false
 ultimateRangeExtension = ultimateRange * 0.5
-------------------------------------------------------
+---------------------------------------------------------
 
 ------------------- Inspector setter --------------------
 -- Globals --
@@ -89,7 +89,7 @@ NewVariable(ultimateRangeIV)
 local drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 drawUltimateIV = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
 NewVariable(drawUltimateIV)
-------------------------------------------------------
+---------------------------------------------------------
 
 ------------------- Animation setter --------------------
 componentAnimator = gameObject:GetComponentAnimator()
@@ -99,31 +99,31 @@ end
 animationDuration = 0.8
 animationTimer = 0.0
 isAttacking = false -- This should go, just here for animations
-------------------------------------------------------
+---------------------------------------------------------
 
-------------------- Audio setter --------------------
+--------------------- Audio setter ----------------------
 componentSwitch = gameObject:GetAudioSwitch()
-------------------------------------------------------
+---------------------------------------------------------
 
-------------------- Physics setter --------------------
+------------------- Physics setter ----------------------
 componentRigidBody = gameObject:GetRigidBody()
 rigidBodyFlag = true
-------------------------------------------------------
+---------------------------------------------------------
 
 ------------------- Particles setter --------------------
 mouseParticles = Find("Mouse Particles")
 if (mouseParticles ~= nil) then
 	mouseParticles:GetComponentParticle():StopParticleSpawn()
 end
-------------------------------------------------------
+---------------------------------------------------------
 
-------------------- Movement logic --------------------
+-------------------- Movement logic ---------------------
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
-------------------------------------------------------
+---------------------------------------------------------
 
--------------------- Methods ---------------------
+----------------------- Methods -------------------------
 -- Called each loop iteration
 function Update(dt)
 	-- Set Starting Position
@@ -311,7 +311,7 @@ function Update(dt)
 end
 --------------------------------------------------
 
------------------ Functions -----------------
+------------------- Functions --------------------
 function MoveToDestination(dt)
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
@@ -361,7 +361,7 @@ function MoveToDestination(dt)
 		-- Movement
 		vec2 = Normalize(vec2, d)
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(vec2[1] * s * dt, vec2[2] * s * dt))
+			componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * s * dt, 0, vec2[2] * s * dt))
 		end
 	
 		-- Rotation
@@ -493,7 +493,7 @@ function StopMovement()
 
 	destination = nil
 	if (componentRigidBody ~= nil) then
-		componentRigidBody:Set2DVelocity(float2.new(0,0))
+		componentRigidBody:SetLinearVelocity(float3.new(0,0,0))
 	end
 	if (componentSwitch ~= nil) then
 		componentSwitch:StopTrack(1) -- Sprint & crouch should stop here too
@@ -504,7 +504,7 @@ function StopMovement()
 end
 --------------------------------------------------
 
------------------ Collisions ---------------------
+------------------ Collisions --------------------
 function OnTriggerEnter(go)
 	if (go.tag == Tag.PROJECTILE) then
 		knifeCount = knifeCount + 1

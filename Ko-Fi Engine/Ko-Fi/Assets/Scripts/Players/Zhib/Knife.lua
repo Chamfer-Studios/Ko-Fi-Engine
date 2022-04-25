@@ -51,7 +51,7 @@ function MoveToDestination(dt)
 		-- Movement
 		vec2 = Normalize(vec2, d)
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(vec2[1] * speed * dt, vec2[2] * speed * dt))
+			componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * speed * dt, 0, vec2[2] * speed * dt))
 		end
 
 		-- Rotation
@@ -64,7 +64,7 @@ function MoveToDestination(dt)
 		
 		destination = nil
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(0,0))
+			componentRigidBody:SetLinearVelocity(float3.new(0,0,0))
 		end
 	end
 end

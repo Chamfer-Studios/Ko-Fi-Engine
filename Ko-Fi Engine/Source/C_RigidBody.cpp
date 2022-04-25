@@ -5,7 +5,6 @@
 #include "M_SceneManager.h"
 #include "C_Transform.h"
 
-
 C_RigidBody::C_RigidBody(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
@@ -227,21 +226,32 @@ void C_RigidBody::Save(Json& json) const
 
 void C_RigidBody::Load(Json& json)
 {
-	bodyType = json.at("body_type");
-	UpdateBodyType();
+	if (json.contains("body_type"))
+	{
+		bodyType = json.at("body_type");
+		UpdateBodyType();
+	}
 
-	useGravity = json.at("use_gravity");
-	UpdateEnableGravity();
+	if (json.contains("use_gravity"))
+	{
+		useGravity = json.at("use_gravity");
+		UpdateEnableGravity();
+	}
 
-	mass = json.at("mass");
-	UpdateMass();
+	if (json.contains("mass"))
+	{
+		useGravity = json.at("use_gravity");
+		UpdateEnableGravity();
+	}
 
-	freezePositionX = json.at("freeze_position_x");
-	freezePositionY = json.at("freeze_position_y");
-	freezePositionZ = json.at("freeze_position_z");
-	freezeRotationX = json.at("freeze_rotation_x");
-	freezeRotationY = json.at("freeze_rotation_y");
-	freezeRotationZ = json.at("freeze_rotation_z");
-	UpdateConstrains();
+	if (json.contains("freeze_position_x"))
+	{
+		freezePositionX = json.at("freeze_position_x");
+		freezePositionY = json.at("freeze_position_y");
+		freezePositionZ = json.at("freeze_position_z");
+		freezeRotationX = json.at("freeze_rotation_x");
+		freezeRotationY = json.at("freeze_rotation_y");
+		freezeRotationZ = json.at("freeze_rotation_z");
+		UpdateConstrains();
+	}
 }
-

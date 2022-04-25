@@ -29,6 +29,8 @@ dartCooldown = 10.0
 drawDart = false
 
 -- Secondary ability --
+smokebombCastRange = 50.0
+smokebombCooldown = 10.0
 
 -- Ultimate ability --
 ultimateCooldown = 10.0
@@ -58,6 +60,13 @@ drawDartIV = InspectorVariable.new("drawDart", drawDartIVT, drawDart)
 NewVariable(drawDartIV)
 
 -- Secondary ability --
+local smokebombCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+smokebombCastRangeIV = InspectorVariable.new("smokebombCastRange", smokebombCastRangeIVT, smokebombCastRange)
+NewVariable(smokebombCastRangeIV)
+
+local smokebombCooldownIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+smokebombCooldownIV = InspectorVariable.new("smokebombCooldown", smokebombCooldownIVT, smokebombCooldown)
+NewVariable(smokebombCooldownIV)
 
 -- Ultimate ability --
 local ultimateCooldownIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
@@ -147,6 +156,12 @@ function Update(dt)
 	end
 
 	-- Secondary ability cooldown
+	if (smokebombTimer ~= nil) then
+		smokebombTimer = smokebombTimer + dt
+		if (smokebombTimer >= smokebombCooldown) then
+			smokebombTimer = nil
+		end
+	end
 
 	-- Ultimate ability cooldown
 	if (ultimateTimer ~= nil) then
@@ -180,7 +195,15 @@ function Update(dt)
 				end
 
 			-- Secondary ability (Smoke bomb)
-			elseif (currentAction == Action.AIM_SECONDARY) then
+			elseif (smokebombTimer == nil and currentAction == Action.AIM_SECONDARY) then
+				GetGameObjectHovered() -- This is for the smokebomb to go to the mouse Pos (it uses the target var)
+				mousePos = GetLastMouseClick()
+				if (Distance3D(mousePos, componentTransform:GetPosition()) <= smokebombCastRange) then
+					target = mousePos
+					ThrowSmokebomb()
+				else
+					print("Out of range")
+				end
 
 			-- Ultimate ability (hunter-seeker)
 			elseif (ultimateTimer == nil and currentAction == Action.AIM_ULTIMATE) then
@@ -257,7 +280,7 @@ end
 --------------------------------------------------
 
 
------------------ Functions -----------------
+------------------- Functions --------------------
 function MoveToDestination(dt)
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
@@ -307,7 +330,7 @@ function MoveToDestination(dt)
 		-- Movement
 		vec2 = Normalize(vec2, d)
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(vec2[1] * s * dt, vec2[2] * s * dt))
+			componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * s * dt, 0, vec2[2] * s * dt))
 		end
 	
 		-- Rotation
@@ -336,7 +359,7 @@ end
 -- Primary ability
 function FireDart()
 
-	InstantiatePrefab("Dart") -- This should instance the prefab
+	InstantiatePrefab("Dart")
 	dartTimer = 0.0
 	if (componentSwitch ~= nil) then
 		componentSwitch:PlayTrack(0)
@@ -348,10 +371,25 @@ function FireDart()
 	StopMovement()
 end
 
+-- Secondary ability
+function ThrowSmokebomb()
+
+	InstantiatePrefab("Smokebomb")
+	smokebombTimer = 0.0
+	if (componentSwitch ~= nil) then
+		componentSwitch:PlayTrack(0)
+	end
+	if (componentAnimator ~= nil) then
+		componentAnimator:SetSelectedClip("Smokebomb")
+	end
+
+	StopMovement()
+end
+
 -- Ultimate ability
 function Ultimate()
 	
-	InstantiatePrefab("Mosquito") -- This should instance the prefab
+	InstantiatePrefab("Mosquito")
 	--if (componentSwitch ~= nil) then
 	--	componentSwitch:PlayTrack(0)
 	--end
@@ -368,7 +406,7 @@ function StopMovement()
 
 	destination = nil
 	if (componentRigidBody ~= nil) then
-		componentRigidBody:Set2DVelocity(float2.new(0,0))
+		componentRigidBody:SetLinearVelocity(float3.new(0,0,0))
 	end
 	if (componentSwitch ~= nil) then
 		componentSwitch:StopTrack(1)
