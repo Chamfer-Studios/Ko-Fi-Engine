@@ -10,6 +10,7 @@
 
 M_Physics::M_Physics(KoFiEngine* engine)
 {
+	this->name = "Physics";
 	this->engine = engine;
 	//World Settings
 	reactphysics3d::PhysicsWorld::WorldSettings worldSettings;
@@ -34,7 +35,7 @@ M_Physics::~M_Physics()
 
 bool M_Physics::Awake(Json configModule)
 {
-	
+	LoadConfiguration(configModule);
 
 	return true;
 }
@@ -99,11 +100,58 @@ bool M_Physics::CleanUp()
 
 bool M_Physics::SaveConfiguration(Json& configModule) const
 {
+	configModule["Gravity"] = { world->getGravity().x, world->getGravity().y,world->getGravity().z };
+	configModule["Filters"] = filters;
+	//Save filter matrix
+	configModule["Filter_Matrix"];
+	for (int i = 0; i < filters.size(); ++i)
+	{
+		for (int j = 0; j < filters.size(); ++j)
+		{
+			configModule["Filter_Matrix"].push_back(filterMatrix[i][j]);
+		}
+	}
 	return true;
 }
 
 bool M_Physics::LoadConfiguration(Json& configModule)
 {
+	if (configModule.contains("Gravity"))
+	{
+		world->setGravity(reactphysics3d::Vector3(configModule.at("Gravity")[0], configModule.at("Gravity")[1], configModule.at("Gravity")[2]));
+	}
+	if (configModule.contains("Filters"))
+	{
+		filters = configModule.at("Filters").get<std::map<unsigned int, std::string>>();
+	}
+	if (configModule.contains("Filter_Matrix"))
+	{
+		//TEST: Delete current filter matrix
+		if (filterMatrix)
+			DeleteFilterMatrix();
+
+		if (filters.size())
+		{
+			// TEST: Declare new filter matrix
+			DeclareFilterMatrix();
+
+			// TEST: Traverse the 2D array and assign values from json
+			int iteratorX = 0;
+			int iteratorY = 0;
+			for (auto filterMat : configModule.at("Filter_Matrix").items())
+			{
+				filterMatrix[iteratorX][iteratorY] = filterMat.value().get<bool>();
+
+				++iteratorY;
+				if (iteratorY >= filters.size())
+				{
+					++iteratorX;
+					iteratorY = 0;
+				}
+			}
+		}
+	}
+
 	return true;
 }
 
@@ -129,7 +177,7 @@ bool M_Physics::InspectorDraw()
 
 				++iter;
 			}
-		
+
 
 			ImGui::Text("Create Filter: ");
 			ImGui::InputText("##addFilter", &imguiNewFilterText);
@@ -145,7 +193,7 @@ bool M_Physics::InspectorDraw()
 		if (ImGui::TreeNodeEx("Filter Matrix"))
 		{
 			size_t filSize = filters.size();
-			
+
 			for (auto iterI = filters.begin(); iterI != filters.end(); ++iterI)
 			{
 				int i = std::distance(filters.begin(), iterI);
@@ -182,7 +230,7 @@ bool M_Physics::InspectorDraw()
 
 
 	}
-	
+
 	return true;
 }
 
@@ -192,7 +240,7 @@ void M_Physics::OnNotify(const Event& event)
 
 void M_Physics::AddFilter(std::string newFilter)
 {
-	filters.emplace(filters.size() + 1,newFilter);
+	filters.emplace(filters.size() + 1, newFilter);
 	// TEST: Traverse the 2D array and assign values from old filter matrix and add the new filter
 	// First, we want to declare a new filter matrix
 	size_t filSize = filters.size();
@@ -272,11 +320,11 @@ unsigned int M_Physics::GetFilter(std::string filter)
 	}
 }
 
-reactphysics3d::RigidBody* M_Physics::AddBody(reactphysics3d::Transform rbTransform,GameObject* owner)
+reactphysics3d::RigidBody* M_Physics::AddBody(reactphysics3d::Transform rbTransform, GameObject* owner)
 {
-	
+
 	reactphysics3d::RigidBody* body = world->createRigidBody(rbTransform);
-	collisionBodyToObjectMap.emplace(body,owner);
+	collisionBodyToObjectMap.emplace(body, owner);
 
 	return body;
 }
@@ -435,5 +483,5 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 			}
 		}
 	}
-	
+
 }

@@ -1,5 +1,4 @@
 {
-    "": null,
     "Audio": null,
     "Camera": null,
     "Editor": null,
@@ -13,6 +12,49 @@
     "FileSystem": null,
     "Input": null,
     "Navigation": null,
+    "Physics": {
+        "Filter_Matrix": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            false,
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "Filters": [
+            [
+                1,
+                "patata"
+            ],
+            [
+                2,
+                "enemy"
+            ],
+            [
+                3,
+                "cositas"
+            ],
+            [
+                4,
+                "mamahuevo"
+            ]
+        ],
+        "Gravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+        ]
+    },
     "Renderer3D": {
         "Vsync": true
     },
@@ -30,6 +72,6 @@
         "Resizable": true,
         "Scale": 0,
         "Title": "Ko-Fi Engine - SandBoxCollsions",
-        "Width": 1024
+        "Width": 1021
     }
 }
