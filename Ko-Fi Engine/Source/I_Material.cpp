@@ -51,10 +51,6 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 		return false;
 	}
 
-	UID forcedUid = engine->GetResourceManager()->GetForcedUIDFromMeta(material->GetAssetPath());
-	if (forcedUid != 0)
-		material->ForceUID(forcedUid);
-
 	aiColor4D color;
 	if (aiMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
 	{

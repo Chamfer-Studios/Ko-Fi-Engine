@@ -106,38 +106,23 @@ bool M_ResourceManager::CleanUp()
 	return ret;
 }
 
-// Method to receive and manage events
 void M_ResourceManager::OnNotify(const Event& event)
 {
 	// Manage events
 }
 
-bool M_ResourceManager::TrimLibrary()
+bool M_ResourceManager::SaveConfiguration(Json& configModule) const
 {
-	std::vector<std::string> files;
-	engine->GetFileSystem()->DiscoverAllFiles(LIBRARY_DIR, files);
+	return true;
+}
 
-	std::map<std::string, UID> fileUIDs;
-	for (auto file = files.cbegin(); file != files.cend(); ++file)
-	{
-		UID uid = 0;
-		sscanf(engine->GetFileSystem()->GetFileName((*file).c_str()).c_str(), "%u", &uid);
+bool M_ResourceManager::LoadConfiguration(Json& configModule)
+{
+	return true;
+}
 
-		if (uid != 0)
-			fileUIDs.emplace((*file), uid);
-	}
-
-	for (std::map<std::string, UID>::const_iterator UID = fileUIDs.cbegin(); UID != fileUIDs.cend(); ++UID)
-	{
-		if (library.find(UID->second) == library.end())
-			std::filesystem::remove(UID->first.c_str());
-	}
-
-	fileUIDs.clear();
-
-	files.clear();
-	files.shrink_to_fit();
-
+bool M_ResourceManager::InspectorDraw()
+{
 	return true;
 }
 
@@ -192,6 +177,431 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 	}
 
 	return uid;
+}
+
+bool M_ResourceManager::SaveResource(Resource* resource)
+{
+	bool ret = true;
+
+	if (resource == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: saving resource, resource was nullptr.");
+		return false;
+	}
+
+	switch (resource->GetType())
+	{
+	case ResourceType::MESH:
+		ret = Importer::GetInstance()->meshImporter->Save((R_Mesh*)resource, resource->GetLibraryPath());
+		break;
+	case ResourceType::TEXTURE:
+		ret = Importer::GetInstance()->textureImporter->Save((R_Texture*)resource, resource->GetLibraryPath());
+		break;
+	case ResourceType::MODEL:
+		ret = Importer::GetInstance()->sceneImporter->SaveModel((R_Model*)resource, resource->GetLibraryPath());
+		break;
+	case ResourceType::MATERIAL:
+		ret = Importer::GetInstance()->materialImporter->Save((R_Material*)resource, resource->GetLibraryPath());
+		break;
+	case ResourceType::ANIMATION:
+		ret = Importer::GetInstance()->animationImporter->Save((R_Animation*)resource, resource->GetLibraryPath());
+		break;
+		//case ResourceType::SCENE:
+			// TODO ret = Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
+			//break;
+		//case ResourceType::TRACK:
+			// TODO
+			//break;
+		//case ResourceType::PARTICLE:
+			// TODO
+			//break;
+	case ResourceType::UNKNOWN:
+		// TODO
+		break;
+	default:
+		break;
+	}
+
+	if (ResourceHasMetaType(resource))
+	{
+		SaveMetaFile(resource);
+	}
+
+	library.emplace(resource->GetUID(), ResourceBase(resource));
+
+	return ret;
+}
+
+UID M_ResourceManager::LoadFromLibrary(const char* assetsPath)
+{
+	std::string cleanPath = GetValidPath(assetsPath);
+	if (cleanPath.c_str() == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, couldn't validate path.");
+		return 0;
+	}
+
+	Json jsonRoot;
+	bool metaIsValid = ValidateMetaFile(assetsPath);
+
+	if (jsonRoot.empty())
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, could not get the meta root node.");
+		return 0;
+	}
+	if (!metaIsValid)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, could not validate meta root node.");
+		return 0;
+	}
+
+	UID uid = (UID)jsonRoot.at("uid");
+
+	if (resourcesMap.find(uid) != resourcesMap.end())
+		return uid;
+
+	bool ret = LoadResource(uid, assetsPath);
+	if (!ret)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
+		return 0;
+	}
+
+	for (const auto& resource : jsonRoot.at("contained_resources").items())
+	{
+		std::string containedName = resource.value().at("asset_file").get<std::string>();
+		UID containedUid = (UID)resource.value().at("uid");
+
+		std::filesystem::path path = assetsPath;
+		std::string containedPath = path.parent_path().string() + "/" + containedName;
+
+		if (resourcesMap.find(containedUid) != resourcesMap.end())
+			continue;
+
+		ret = LoadResource(containedUid, containedPath.c_str());
+		if (!ret)
+			CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
+
+		containedPath.clear();
+		containedPath.shrink_to_fit();
+		containedName.clear();
+		containedName.shrink_to_fit();
+		path.clear();
+	}
+
+	return uid;
+}
+
+Resource* M_ResourceManager::GetResourceFromLibrary(const char* assetsPath)
+{
+	if (assetsPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting resource, library path was nullptr.");
+		return nullptr;
+	}
+
+	UID uid = LoadFromLibrary(assetsPath);
+	if (uid == 0)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting resource from library, could not get resource uid from assests path.");
+		return nullptr;
+	}
+
+	Resource* resource = RequestResource(uid);
+
+	if (resource == nullptr)
+		CONSOLE_LOG("[ERROR] Resource Manager: getting resource from library, could not request resource.");
+
+	return resource;
+}
+
+Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const char* assetPath, UID forcedUid)
+{
+	Resource* resource = nullptr;
+
+	switch (type)
+	{
+	case ResourceType::MESH: { resource = new R_Mesh(); } break;
+	case ResourceType::TEXTURE: { resource = new R_Texture(); } break;
+	case ResourceType::MODEL: { resource = new R_Model(); } break;
+	case ResourceType::MATERIAL: { resource = new R_Material(); } break;
+	case ResourceType::ANIMATION: { resource = new R_Animation(); } break;
+		//case ResourceType::SCENE: { resource = new R_Scene(); } break;
+		//case ResourceType::FONT: { resource = new R_Font(); } break;
+		//case ResourceType::TRACK: { resource = new R_Track(); } break;
+		//case ResourceType::PARTICLE: { resource = new R_Particle(); } break;
+	case ResourceType::UNKNOWN: { resource = nullptr; } break;
+	default:
+		break;
+	}
+
+	if (resource != nullptr)
+	{
+		if (assetPath != nullptr)
+			resource->SetAssetsPathAndFile(assetPath, engine->GetFileSystem()->GetFileName(assetPath).c_str());
+
+		if (forcedUid != 0)
+			resource->ForceUID(forcedUid);
+		else
+			resource->SetLibraryPathAndFile();
+	}
+
+	return resource;
+}
+
+Resource* M_ResourceManager::RequestResource(UID uid)
+{
+	if (uid == 0)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: resource request failed! Requested UID was 0.");
+		return nullptr;
+	}
+
+	// Find if the resource is already loaded
+	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
+	if (it != resourcesMap.end())
+	{
+		it->second->ModifyReferenceCount(1);
+		return it->second;
+	}
+	return nullptr;
+}
+
+bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
+{
+	if (assetsPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, assets path was nullptr.");
+		return false;
+	}
+	if (uid == 0)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, invalid uid.");
+		return false;
+	}
+	if (library.find(uid) == library.end())
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, resource could not be found in the library.");
+		return false;
+	}
+
+	auto item = resourcesMap.find(uid);
+	if (item != resourcesMap.end())
+	{
+		return true;
+	}
+	std::string libraryPath = library.find(uid)->second.libraryPath;
+	ResourceType type = GetTypeFromPathExtension(libraryPath.c_str());
+	Resource* resource = CreateNewResource(type, assetsPath, uid);
+	bool ret = false;
+	switch (type)
+	{
+	case ResourceType::MESH:
+		ret = Importer::GetInstance()->meshImporter->Load(libraryPath.c_str(), (R_Mesh*)resource);
+		break;
+	case ResourceType::TEXTURE:
+		ret = Importer::GetInstance()->textureImporter->Load(libraryPath.c_str(), (R_Texture*)resource);
+		break;
+		//case ResourceType::PARTICLE:
+		//	break;
+	case ResourceType::MODEL:
+		ret = Importer::GetInstance()->sceneImporter->LoadModel(libraryPath.c_str(), (R_Model*)resource);
+		break;
+	case ResourceType::MATERIAL:
+		ret = Importer::GetInstance()->materialImporter->Import(libraryPath.c_str(), (R_Material*)resource);
+		break;
+	case ResourceType::ANIMATION:
+		ret = Importer::GetInstance()->animationImporter->Load(libraryPath.c_str(), (R_Animation*)resource);
+		break;
+	default:
+		break;
+	}
+
+	if (ret)
+	{
+		resourcesMap.emplace(resource->GetUID(), resource);
+		CONSOLE_LOG("Successfully loaded resource in memory!");
+	}
+	else
+	{
+		UnloadResource(resource);
+		CONSOLE_LOG("Could not load the resource data from file %s.", libraryPath.c_str());
+	}
+
+	return ret;
+}
+
+bool M_ResourceManager::UnloadResource(Resource* resource)
+{
+	if (resource == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: trying to unload resource, resource was nullptr.");
+		return false;
+	}
+
+	UID uid = resource->GetUID();
+
+	resource->CleanUp();
+	RELEASE(resource);
+
+	if (resourcesMap.find(uid) != resourcesMap.end())
+		resourcesMap.erase(uid);
+	else
+	{
+		CONSOLE_LOG("[WARNING] Resource Manager: trying to unload resource, unloaded resource was not inside map!");
+		return false;
+	}
+
+	return true;
+}
+
+bool M_ResourceManager::UnloadResource(UID uid)
+{
+	if (library.find(uid) != library.end())
+		library.erase(uid);
+
+	auto item = resourcesMap.find(uid);
+	if (item == resourcesMap.end())
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: trying to delete resource, resource was not inside map!");
+		return false;
+	}
+
+	if (item->second != nullptr)
+	{
+		item->second->CleanUp();
+		RELEASE(item->second);
+		resourcesMap.erase(uid);
+	}
+
+	return true;
+}
+
+UID M_ResourceManager::Find(const char* assetPath) const
+{
+	for (const auto& r : resourcesMap)
+	{
+		if (r.second->GetAssetPath() == assetPath)
+			return r.first;
+	}
+	return 0;
+}
+
+void M_ResourceManager::FindAndForceUID(Resource* resource)
+{
+	if (resource == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: Resource pointer is nullptr.");
+		return;
+	}
+
+	UID forcedUID = GetForcedUIDFromMeta(resource->GetAssetPath());
+	if (forcedUID != 0)
+		resource->ForceUID(forcedUID);
+}
+
+UID M_ResourceManager::GetForcedUIDFromMeta(const char* assetPath)
+{
+	if (assetPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: Could not get forced UID from meta, asset path was nullptr.");
+		return 0;
+	}
+
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+
+	if (!std::filesystem::exists(metaPath))
+		return 0;
+
+	JsonHandler jsonHandler;
+	Json jsonMeta;
+
+	bool success = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+
+	UID uid = 0;
+	if (success && !jsonMeta.is_null() && !jsonMeta.empty())
+	{
+		uid = jsonMeta.at("uid");
+		if (uid == 0)
+			CONSOLE_LOG("[ERROR] Resource Manager: Resource UID was 0.");
+	}
+	else
+		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UID from meta. Asset path had no associated meta file.");
+
+	return uid;
+}
+
+bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<std::string, UID>& uids)
+{
+	bool ret = true;
+
+	if (assetPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta, asset path was nullptr.");
+		return false;
+	}
+
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+
+	if (!std::filesystem::exists(metaPath))
+		return 0;
+
+	JsonHandler jsonHandler;
+	Json jsonMeta;
+
+	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
+
+	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
+	{
+		std::string name = jsonMeta.at("asset_file");
+		UID uid = jsonMeta.at("uid");
+		if (uid == 0)
+		{
+			CONSOLE_LOG("[ERROR] Resource Manager: main resource UID was 0.");
+			return false;
+		}
+
+		uids.emplace(name, uid);
+
+		if (jsonMeta.contains("contained_resources"))
+		{
+			if (!jsonMeta.at("contained_resources").is_null() && !jsonMeta.at("contained_resources").empty())
+			{
+				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
+				{
+					std::string containedName = containedIt.value().at("asset_file");
+					UID containedUid = containedIt.value().at("uid");
+					if (containedUid == 0)
+					{
+						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
+						continue;
+					}
+					uids.emplace(containedName, containedUid);
+				}
+			}
+		}
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
+		ret = false;
+	}
+
+	return ret;
+}
+
+bool M_ResourceManager::ImportMaterial(const char* assetsPath, R_Material* material)
+{
+	FindAndForceUID(material);
+	bool ret = Importer::GetInstance()->materialImporter->Import(assetsPath, material);
+	return (ret && material != nullptr);
+}
+
+bool M_ResourceManager::ImportTexture(const char* assetsPath, R_Texture* texture)
+{
+	FindAndForceUID(texture);
+	bool ret = Importer::GetInstance()->textureImporter->Import(assetsPath, (R_Texture*)texture);
+	return (ret && texture != nullptr);
 }
 
 void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
@@ -322,148 +732,101 @@ void M_ResourceManager::LoadFilesIntoLibrary(std::map<std::string, std::string>&
 		return;
 
 	for (const auto& item : filePairs)
-		LoadMetaFileIntoLibrary(item.first.c_str());
+		LoadMetaLibraryPairsIntoLibrary(item.first.c_str());
 }
 
-bool M_ResourceManager::LoadMetaFileIntoLibrary(const char* assetPath)
+void M_ResourceManager::DeleteFromLibrary(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file into library, asset path was nullptr.");
-		return false;
+		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, asset path was nullptr.");
+		return;
 	}
 
-	std::map<UID, ResourceBase> libraryPairs;
-	GetLibraryPairs(assetPath, libraryPairs);
+	if (!HasMetaFile(assetPath))
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, %s file couldn't be found or doesn't exist.", assetPath);
+		return;
+	}
 
-	if (libraryPairs.empty())
-		return true;
+	std::vector<UID> resourceUids;
+	std::vector<std::string> toDelete;
 
-	for (auto item : libraryPairs)
-		library.emplace(item.first, item.second);
+	GetResourceUIDsFromMeta(assetPath, resourceUids);
+	GetLibraryFilePathsFromMeta(assetPath, toDelete);
 
-	libraryPairs.clear();
+	for (uint i = 0; i < resourceUids.size(); ++i)
+		UnloadResource(resourceUids[i]);
 
-	return true;
+	for (uint i = 0; i < toDelete.size(); ++i)
+	{
+		std::filesystem::remove(toDelete[i].c_str());
+		std::filesystem::remove(std::string(assetPath) + META_EXTENSION);
+	}
+
+	toDelete.clear();
+	toDelete.shrink_to_fit();
+	resourceUids.clear();
+	resourceUids.shrink_to_fit();
 }
 
-bool M_ResourceManager::GetLibraryPairs(const char* assetPath, std::map<UID, ResourceBase>& pairs)
+void M_ResourceManager::DeleteFromAssets(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting library pairs, asset path was nullptr.");
-		return false;
+		CONSOLE_LOG("[ERROR] Resource Manager: deleting from assets, asset path was nullptr.");
+		return;
 	}
-
-	std::string errorString = "[ERROR] Resource Manager: could not get library file pairs from { " + std::string(assetPath) + " }'s meta file.";
 
 	std::vector<UID> resourceUIDs;
-	std::vector<ResourceBase> bases;
-	GetResourceUIDsFromMeta(assetPath, resourceUIDs);
-	GetResourceBasesFromMeta(assetPath, bases);
+	std::vector<std::string> toDelete;
 
-	if (resourceUIDs.size() != bases.size())
-		CONSOLE_LOG("%s Missmatching resource bases and UIDs.", errorString.c_str());
+	GetResourceUIDsFromMeta(assetPath, resourceUIDs);
+	GetLibraryFilePathsFromMeta(assetPath, toDelete);
+
+	std::string metaPath = assetPath + std::string(META_EXTENSION);
+	toDelete.push_back(assetPath);
+	toDelete.push_back(metaPath);
 
 	for (uint i = 0; i < resourceUIDs.size(); ++i)
-		pairs.emplace(resourceUIDs[i], bases[i]);
+		UnloadResource(resourceUIDs[i]);
 
+	for (uint i = 0; i < toDelete.size(); ++i)
+		std::filesystem::remove(toDelete[i].c_str());
+
+	toDelete.clear();
+	toDelete.shrink_to_fit();
 	resourceUIDs.clear();
 	resourceUIDs.shrink_to_fit();
-	bases.clear();
-	bases.shrink_to_fit();
+}
+
+bool M_ResourceManager::TrimLibrary()
+{
+	std::vector<std::string> files;
+	engine->GetFileSystem()->DiscoverAllFiles(LIBRARY_DIR, files);
+
+	std::map<std::string, UID> fileUIDs;
+	for (auto file = files.cbegin(); file != files.cend(); ++file)
+	{
+		UID uid = 0;
+		sscanf(engine->GetFileSystem()->GetFileName((*file).c_str()).c_str(), "%u", &uid);
+
+		if (uid != 0)
+			fileUIDs.emplace((*file), uid);
+	}
+
+	for (std::map<std::string, UID>::const_iterator UID = fileUIDs.cbegin(); UID != fileUIDs.cend(); ++UID)
+	{
+		if (library.find(UID->second) == library.end())
+			std::filesystem::remove(UID->first.c_str());
+	}
+
+	fileUIDs.clear();
+
+	files.clear();
+	files.shrink_to_fit();
 
 	return true;
-}
-
-UID M_ResourceManager::GetForcedUIDFromMeta(const char* assetPath)
-{
-	if (assetPath == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: Could not get forced UID from meta, asset path was nullptr.");
-		return 0;
-	}
-
-	std::string metaPath = assetPath + std::string(META_EXTENSION);
-
-	if (!std::filesystem::exists(metaPath))
-		return 0;
-
-	JsonHandler jsonHandler;
-	Json jsonMeta;
-
-	bool success = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
-
-	UID uid = 0;
-	if (success && !jsonMeta.is_null() && !jsonMeta.empty())
-	{
-		uid = jsonMeta.at("uid");
-		if (uid == 0)
-			CONSOLE_LOG("[ERROR] Resource Manager: Resource UID was 0.");
-	}
-	else
-		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UID from meta. Asset path had no associated meta file.");
-
-	return uid;
-}
-
-bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<std::string,UID>& uids)
-{
-	bool ret = true;
-
-	if (assetPath == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta, asset path was nullptr.");
-		return false;
-	}
-
-	std::string metaPath = assetPath + std::string(META_EXTENSION);
-
-	if (!std::filesystem::exists(metaPath))
-		return 0;
-
-	JsonHandler jsonHandler;
-	Json jsonMeta;
-
-	ret = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
-
-	if (ret && !jsonMeta.is_null() && !jsonMeta.empty())
-	{
-		std::string name = jsonMeta.at("asset_file");
-		UID uid = jsonMeta.at("uid");
-		if (uid == 0)
-		{
-			CONSOLE_LOG("[ERROR] Resource Manager: main resource UID was 0.");
-			return false;
-		}
-
-		uids.emplace(name, uid);
-
-		if (jsonMeta.contains("contained_resources"))
-		{
-			if (!jsonMeta.at("contained_resources").is_null() && !jsonMeta.at("contained_resources").empty())
-			{
-				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
-				{
-					std::string containedName = containedIt.value().at("asset_file");
-					UID containedUid = containedIt.value().at("uid");
-					if (containedUid == 0)
-					{
-						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
-						continue;
-					}
-					uids.emplace(containedName, containedUid);
-				}
-			}
-		}
-	}
-	else
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
-		ret = false;
-	}
-
-	return ret;
 }
 
 bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetPath, std::vector<UID>& uids)
@@ -666,6 +1029,108 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetPath, std::
 	return ret;
 }
 
+bool M_ResourceManager::GetAssetDirectoryFromType(const ResourceType& type, std::string& directory)
+{
+	switch (type)
+	{
+	case ResourceType::MODEL: { directory = ASSETS_MODELS_DIR; } break;
+	case ResourceType::MESH: { directory = ASSETS_MODELS_DIR; } break;
+	case ResourceType::ANIMATION: { directory = ASSETS_MODELS_DIR; } break;
+	case ResourceType::TEXTURE: { directory = ASSETS_TEXTURES_DIR; } break;
+	case ResourceType::MATERIAL: { directory = ASSETS_SHADERS_DIR; } break;
+		//case ResourceType::SCENE: { directory = ASSETS_SCENES_DIR; } break;
+		//case ResourceType::TRACK: { directory = ASSETS_AUDIO_DIR; } break;
+		//case ResourceType::FONT: { directory = ASSETS_FONTS_DIR; } break;
+		//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
+	case ResourceType::UNKNOWN:
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: couldn't return asset directory from type because it is UNKNOWN.");
+		return false;
+	}
+	break;
+	default: break;
+	}
+
+	return true;
+}
+
+bool M_ResourceManager::GetLibraryDirectoryAndExtensionFromType(const ResourceType& type, std::string& directory, std::string& extension)
+{
+	switch (type)
+	{
+	case ResourceType::MODEL: { directory = MODELS_DIR; extension = MODEL_EXTENSION; } break;
+	case ResourceType::MESH: { directory = MESHES_DIR; extension = MESH_EXTENSION; } break;
+	case ResourceType::ANIMATION: { directory = ANIMATIONS_DIR; extension = ANIMATION_EXTENSION; } break;
+	case ResourceType::TEXTURE: { directory = TEXTURES_DIR; extension = TEXTURE_EXTENSION; } break;
+	case ResourceType::MATERIAL: { directory = SHADERS_DIR;  extension = SHADER_EXTENSION; } break;
+		//case ResourceType::SCENE: { directory = SCENES_DIR; extension = SCENE_EXTENSION; } break;
+		//case ResourceType::TRACK: { directory = AUDIOS_DIR; extension = MODEL_EXTENSION; } break;
+		//case ResourceType::FONT: { directory = FONTS_DIR; extension = FONT_EXTENSION; } break;
+		//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
+	case ResourceType::UNKNOWN:
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: couldn't return library directory from type because it is UNKNOWN.");
+		return false;
+	}
+	break;
+	default:
+		break;
+	}
+
+	return true;
+}
+
+bool M_ResourceManager::LoadMetaLibraryPairsIntoLibrary(const char* assetPath)
+{
+	if (assetPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file into library, asset path was nullptr.");
+		return false;
+	}
+
+	std::map<UID, ResourceBase> libraryPairs;
+	GetLibraryPairs(assetPath, libraryPairs);
+
+	if (libraryPairs.empty())
+		return true;
+
+	for (auto item : libraryPairs)
+		library.emplace(item.first, item.second);
+
+	libraryPairs.clear();
+
+	return true;
+}
+
+bool M_ResourceManager::GetLibraryPairs(const char* assetPath, std::map<UID, ResourceBase>& pairs)
+{
+	if (assetPath == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: getting library pairs, asset path was nullptr.");
+		return false;
+	}
+
+	std::string errorString = "[ERROR] Resource Manager: could not get library file pairs from { " + std::string(assetPath) + " }'s meta file.";
+
+	std::vector<UID> resourceUIDs;
+	std::vector<ResourceBase> bases;
+	GetResourceUIDsFromMeta(assetPath, resourceUIDs);
+	GetResourceBasesFromMeta(assetPath, bases);
+
+	if (resourceUIDs.size() != bases.size())
+		CONSOLE_LOG("%s Missmatching resource bases and UIDs.", errorString.c_str());
+
+	for (uint i = 0; i < resourceUIDs.size(); ++i)
+		pairs.emplace(resourceUIDs[i], bases[i]);
+
+	resourceUIDs.clear();
+	resourceUIDs.shrink_to_fit();
+	bases.clear();
+	bases.shrink_to_fit();
+
+	return true;
+}
+
 int M_ResourceManager::GetModTimeFromMeta(const char* assetPath)
 {
 	if (assetPath == nullptr)
@@ -679,7 +1144,7 @@ int M_ResourceManager::GetModTimeFromMeta(const char* assetPath)
 	JsonHandler jsonHandler;
 	Json jsonMeta;
 
-	std::string metaPath = assetPath/* + std::string(META_EXTENSION)*/;
+	std::string metaPath = assetPath;
 	bool loaded = jsonHandler.LoadJson(jsonMeta, metaPath.c_str());
 
 	if (loaded && !jsonMeta.is_null() && !jsonMeta.empty())
@@ -696,39 +1161,145 @@ int M_ResourceManager::GetModTimeFromMeta(const char* assetPath)
 	return 0;
 }
 
-void M_ResourceManager::DeleteFromLibrary(const char* assetPath)
+UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 {
+	UID uid = 0;
+
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, asset path was nullptr.");
-		return;
+		CONSOLE_LOG("[ERROR] Resource Manager: loading from assets, path was nullptr.");
+		return uid;
 	}
 
-	if (!HasMetaFile(assetPath))
+	ResourceType type = GetTypeFromPathExtension(assetPath);
+	Resource* resource = CreateNewResource(type, assetPath);
+
+	bool success = false;
+	switch (type)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, %s file couldn't be found or doesn't exist.", assetPath);
-		return;
+	case ResourceType::TEXTURE:
+		success = ImportTexture(assetPath, (R_Texture*)resource);
+		break;
+	case ResourceType::MODEL:
+		success = Importer::GetInstance()->sceneImporter->Import((R_Model*)resource);
+		break;
+	case ResourceType::MATERIAL:
+		success = ImportMaterial(assetPath, (R_Material*)resource);
+		break;
+		//case ResourceType::SCENE:
+			//TODO: SCENE IMPORT
+			//break;
+		//case ResourceType::FONT:
+			//TODO: FONT IMPORT
+			//break;
+	default:
+		break;
 	}
 
-	std::vector<UID> resourceUids;
-	std::vector<std::string> toDelete;
-
-	GetResourceUIDsFromMeta(assetPath, resourceUids);
-	GetLibraryFilePathsFromMeta(assetPath, toDelete);
-
-	for (uint i = 0; i < resourceUids.size(); ++i)
-		UnloadResource(resourceUids[i]);
-
-	for (uint i = 0; i < toDelete.size(); ++i)
+	if (!success)
 	{
-		std::filesystem::remove(toDelete[i].c_str());
-		std::filesystem::remove(std::string(assetPath) + META_EXTENSION);
+		CONSOLE_LOG("[ERROR] Resource Manager: could not import asset file: %s", assetPath);
+		UnloadResource(resource);
+		return 0;
 	}
 
-	toDelete.clear();
-	toDelete.shrink_to_fit();
-	resourceUids.clear();
-	resourceUids.shrink_to_fit();
+	uid = resource->GetUID();
+
+	SaveResource(resource);
+
+	UnloadResource(resource);
+
+	return uid;
+}
+
+ResourceType M_ResourceManager::GetTypeFromPathExtension(const char* path)
+{
+	ResourceType ret = ResourceType::UNKNOWN;
+
+	std::filesystem::path newPath = path;
+	std::string extension = newPath.extension().string();
+
+	if (engine->GetFileSystem()->StringCompare(extension.c_str(), PNG_EXTENSION) == 0)
+		ret = ResourceType::TEXTURE;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), TEXTURE_EXTENSION) == 0)
+		ret = ResourceType::TEXTURE;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0)
+		ret = ResourceType::MODEL;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), MODEL_EXTENSION) == 0)
+		ret = ResourceType::MODEL;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), MESH_EXTENSION) == 0)
+		ret = ResourceType::MESH;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), ANIMATION_EXTENSION) == 0)
+		ret = ResourceType::ANIMATION;
+	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SHADER_EXTENSION) == 0)
+		ret = ResourceType::MATERIAL;
+	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SCENE_EXTENSION) == 0)
+		//ret = ResourceType::SCENE;
+	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FONT_EXTENSION) == 0)
+		//ret = ResourceType::FONT;
+	else
+		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given asset path. File extension: %s is not supported.", extension.c_str());
+
+	return ret;
+}
+
+std::string M_ResourceManager::GetValidPath(const char* path) const
+{
+	std::string normalizedPath = path;
+
+	for (uint i = 0; i < normalizedPath.size(); ++i)
+	{
+		if (normalizedPath[i] == '\\')
+			normalizedPath[i] = '/';
+	}
+
+	size_t assetStart = normalizedPath.find("Assets");
+	size_t libraryStart = normalizedPath.find("Library");
+
+	std::string resultPath;
+
+	if (assetStart != std::string::npos)
+		resultPath = normalizedPath.substr(assetStart, normalizedPath.size());
+	else if (libraryStart != std::string::npos)
+		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size());
+	else
+		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't validate path.");
+
+	return resultPath;
+}
+
+bool M_ResourceManager::SaveMetaFile(Resource* resource) const
+{
+	bool ret = true;
+
+	if (resource == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: saving meta file, resource was nullptr.");
+		return false;
+	}
+
+	Json jsonMeta;
+	jsonMeta["uid"] = resource->GetUID();
+	jsonMeta["type"] = (int)resource->GetType();
+	jsonMeta["asset_file"] = resource->GetAssetFile();
+	jsonMeta["asset_path"] = resource->GetAssetPath();
+	jsonMeta["library_file"] = resource->GetLibraryFile();
+	jsonMeta["library_path"] = resource->GetLibraryPath();
+	jsonMeta["mod_time"] = engine->GetFileSystem()->GetLastModTime(resource->GetAssetPath());
+
+	resource->SaveMeta(jsonMeta);
+
+	std::string path = resource->GetAssetPath() + std::string(META_EXTENSION);
+
+	JsonHandler jsonHandler;
+	ret = jsonHandler.SaveJson(jsonMeta, path.c_str());
+
+	if (ret)
+		CONSOLE_LOG("[STATUS] Resource Manager: meta file saved for resource: %s", resource->GetAssetPath());
+	else
+		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't save meta file for resource: %s", resource->GetAssetPath());
+
+	return ret;
 }
 
 bool M_ResourceManager::HasMetaFile(const char* assetPath)
@@ -829,558 +1400,14 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 	case ResourceType::TEXTURE: { return true; } break;
 	case ResourceType::MODEL: { return true; } break;
 	case ResourceType::MATERIAL: { return true; } break;
-	//case ResourceType::FONT: { return true; } break;
-	//case ResourceType::PARTICLE: { return true; } break;
-	//case ResourceType::TRACK: { return true; } break;
+		//case ResourceType::FONT: { return true; } break;
+		//case ResourceType::PARTICLE: { return true; } break;
+		//case ResourceType::TRACK: { return true; } break;
 	default:
 		break;
 	}
 
 	return false;
-}
-
-Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const char* assetPath, UID forcedUid)
-{
-	Resource* resource = nullptr;
-
-	switch (type)
-	{
-	case ResourceType::MESH: { resource = new R_Mesh(); } break;
-	case ResourceType::TEXTURE: { resource = new R_Texture(); } break;
-	case ResourceType::MODEL: { resource = new R_Model(); } break;
-	case ResourceType::MATERIAL: { resource = new R_Material(); } break;
-	case ResourceType::ANIMATION: { resource = new R_Animation(); } break;
-	//case ResourceType::SCENE: { resource = new R_Scene(); } break;
-	//case ResourceType::FONT: { resource = new R_Font(); } break;
-	//case ResourceType::TRACK: { resource = new R_Track(); } break;
-	//case ResourceType::PARTICLE: { resource = new R_Particle(); } break;
-	case ResourceType::UNKNOWN: { resource = nullptr; } break;
-	default:
-		break;
-	}
-
-	if (resource != nullptr)
-	{
-		if (assetPath != nullptr)
-			resource->SetAssetsPathAndFile(assetPath, engine->GetFileSystem()->GetFileName(assetPath).c_str());
-
-		if (forcedUid != 0)
-			resource->ForceUID(forcedUid);
-		else
-			resource->SetLibraryPathAndFile();
-	}
-	
-	return resource;
-}
-
-bool M_ResourceManager::SaveMetaFile(Resource* resource) const
-{
-	bool ret = true;
-
-	if (resource == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: saving meta file, resource was nullptr.");
-		return false;
-	}
-
-	Json jsonMeta;
-	jsonMeta["uid"] = resource->GetUID();
-	jsonMeta["type"] = (int)resource->GetType();
-	jsonMeta["asset_file"] = resource->GetAssetFile();
-	jsonMeta["asset_path"] = resource->GetAssetPath();
-	jsonMeta["library_file"] = resource->GetLibraryFile();
-	jsonMeta["library_path"] = resource->GetLibraryPath();
-	jsonMeta["mod_time"] = engine->GetFileSystem()->GetLastModTime(resource->GetAssetPath());
-
-	resource->SaveMeta(jsonMeta);
-
-	std::string path = resource->GetAssetPath() + std::string(META_EXTENSION);
-
-	JsonHandler jsonHandler;
-	ret = jsonHandler.SaveJson(jsonMeta, path.c_str());
-
-	if (ret)
-		CONSOLE_LOG("[STATUS] Resource Manager: meta file saved for resource: %s", resource->GetAssetPath());
-	else
-		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't save meta file for resource: %s", resource->GetAssetPath());
-
-	return ret;
-}
-
-Resource* M_ResourceManager::RequestResource(UID uid)
-{
-	// Find if the resource is already loaded
-	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
-
-	if (it != resourcesMap.end())
-	{
-		it->second->ModifyReferenceCount(1);
-		return it->second;
-	}
-
-	auto libIt = library.find(uid);
-	if (libIt != library.end())
-	{
-		return GetResourceFromLibrary(libIt->second.assetPath.c_str());
-	}
-	return nullptr;
-}
-
-UID M_ResourceManager::Find(const char* assetPath) const
-{
-	for (const auto& r : resourcesMap)
-	{
-		if (r.second->GetAssetPath() == assetPath)
-			return r.first;
-	}
-	return 0;
-}
-
-void M_ResourceManager::FindAndForceUID(Resource* resource)
-{
-	if (resource == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: Resource pointer is nullptr.");
-		return;
-	}
-
-	UID forcedUID = GetForcedUIDFromMeta(resource->GetAssetPath());
-	if (forcedUID != 0)
-		resource->ForceUID(forcedUID);
-}
-
-bool M_ResourceManager::SaveResource(Resource* resource)
-{
-	bool ret = true;
-
-	if (resource == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: saving resource, resource was nullptr.");
-		return false;
-	}
-
-	switch (resource->GetType())
-	{
-	case ResourceType::MESH:
-		ret = Importer::GetInstance()->meshImporter->Save((R_Mesh*)resource, resource->GetLibraryPath());
-		break;
-	case ResourceType::TEXTURE:
-		ret = Importer::GetInstance()->textureImporter->Save((R_Texture*)resource, resource->GetLibraryPath());
-		break;
-	case ResourceType::MODEL:
-		ret = Importer::GetInstance()->sceneImporter->SaveModel((R_Model*)resource, resource->GetLibraryPath());
-		break;
-	case ResourceType::MATERIAL:
-		ret = Importer::GetInstance()->materialImporter->Save((R_Material*)resource, resource->GetLibraryPath());
-		break;
-	case ResourceType::ANIMATION:
-		ret = Importer::GetInstance()->animationImporter->Save((R_Animation*)resource, resource->GetLibraryPath());
-		break;
-	//case ResourceType::SCENE:
-		// TODO ret = Importer::GetInstance()->sceneImporter->Save((Scene*)resource);
-		//break;
-	//case ResourceType::TRACK:
-		// TODO
-		//break;
-	//case ResourceType::PARTICLE:
-		// TODO
-		//break;
-	case ResourceType::UNKNOWN:
-		// TODO
-		break;
-	default:
-		break;
-	}
-
-	if (ResourceHasMetaType(resource))
-	{
-		SaveMetaFile(resource);
-	}
-
-	library.emplace(resource->GetUID(), ResourceBase(resource));
-
-	return ret;
-}
-
-bool M_ResourceManager::LoadResource(UID uid, const char* assetsPath)
-{
-	if (assetsPath == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, assets path was nullptr.");
-		return false;
-	}
-	if (uid == 0)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, invalid uid.");
-		return false;
-	}
-	if (library.find(uid) == library.end())
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, resource could not be found in the library.");
-		return false;
-	}
-
-	auto item = resourcesMap.find(uid);
-	if (item != resourcesMap.end())
-	{
-		return true;
-	}
-	std::string libraryPath = library.find(uid)->second.libraryPath;
-	ResourceType type = GetTypeFromPathExtension(libraryPath.c_str());
-	Resource* resource = CreateNewResource(type, assetsPath, uid);
-	bool ret = false;
-	switch (type)
-	{
-	case ResourceType::MESH:
-		ret = Importer::GetInstance()->meshImporter->Load(libraryPath.c_str(), (R_Mesh*)resource);
-		break;
-	case ResourceType::TEXTURE:
-		ret = Importer::GetInstance()->textureImporter->Load(libraryPath.c_str(), (R_Texture*)resource);
-		break;
-	//case ResourceType::PARTICLE:
-	//	break;
-	case ResourceType::MODEL:
-		ret = Importer::GetInstance()->sceneImporter->LoadModel(libraryPath.c_str(), (R_Model*)resource);
-		break;
-	case ResourceType::MATERIAL:
-		ret = Importer::GetInstance()->materialImporter->Import(libraryPath.c_str(), (R_Material*)resource);
-		break;
-	case ResourceType::ANIMATION:
-		ret = Importer::GetInstance()->animationImporter->Load(libraryPath.c_str(), (R_Animation*)resource);
-		break;
-	default:
-		break;
-	}
-
-	if (ret)
-	{
-		resourcesMap.emplace(resource->GetUID(), resource);
-		CONSOLE_LOG("Successfully loaded resource in memory!");
-	}
-	else
-	{
-		UnloadResource(resource);
-		CONSOLE_LOG("Could not load the resource data from file %s.", libraryPath.c_str());
-	}
-
-	return ret;
-}
-
-bool M_ResourceManager::UnloadResource(Resource* resource)
-{
-	if (resource == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: trying to unload resource, resource was nullptr.");
-		return false;
-	}
-
-	UID uid = resource->GetUID();
-
-	resource->CleanUp();
-	RELEASE(resource);
-
-	if (resourcesMap.find(uid) != resourcesMap.end())
-		resourcesMap.erase(uid);
-	else
-	{
-		CONSOLE_LOG("[WARNING] Resource Manager: trying to unload resource, unloaded resource was not inside map!");
-		return false;
-	}
-
-	return true;
-}
-
-bool M_ResourceManager::UnloadResource(UID uid)
-{
-	if (library.find(uid) != library.end())
-		library.erase(uid);
-
-	auto item = resourcesMap.find(uid);
-	if (item == resourcesMap.end())
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: trying to delete resource, resource was not inside map!");
-		return false;
-	}
-
-	if (item->second != nullptr)
-	{
-		item->second->CleanUp();
-		RELEASE(item->second);
-		resourcesMap.erase(uid);
-	}
-
-	return true;
-}
-
-Resource* M_ResourceManager::GetResourceFromLibrary(const char* assetsPath)
-{
-	if (assetsPath == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting resource, library path was nullptr.");
-		return nullptr;
-	}
-
-	UID uid = LoadFromLibrary(assetsPath);
-	if (uid == 0)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting resource from library, could not get resource uid from assests path.");
-		return nullptr;
-	}
-
-	Resource* resource = RequestResource(uid);
-
-	if (resource == nullptr)
-		CONSOLE_LOG("[ERROR] Resource Manager: getting resource from library, could not request resource.");
-
-	return resource;
-}
-
-UID M_ResourceManager::LoadFromLibrary(const char* assetsPath)
-{
-	std::string cleanPath = GetValidPath(assetsPath);
-	if (cleanPath.c_str() == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, couldn't validate path.");
-		return 0;
-	}
-
-	Json jsonRoot;
-	bool metaIsValid = ValidateMetaFile(assetsPath);
-
-	if (jsonRoot.empty())
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, could not get the meta root node.");
-		return 0;
-	}
-	if (!metaIsValid)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, could not validate meta root node.");
-		return 0;
-	}
-
-	UID uid = (UID)jsonRoot.at("uid");
-
-	if (resourcesMap.find(uid) != resourcesMap.end())
-		return uid;
-
-	bool ret = LoadResource(uid, assetsPath);
-	if (!ret)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
-		return 0;
-	}
-
-	for (const auto& resource : jsonRoot.at("contained_resources").items())
-	{
-		std::string containedName = resource.value().at("asset_file").get<std::string>();
-		UID containedUid = (UID)resource.value().at("uid");
-
-		std::filesystem::path path = assetsPath;
-		std::string containedPath = path.parent_path().string() + "/" + containedName;
-
-		if (resourcesMap.find(containedUid) != resourcesMap.end())
-			continue;
-
-		ret = LoadResource(containedUid, containedPath.c_str());
-		if (!ret)
-			CONSOLE_LOG("[ERROR] Resource Manager: loading from library, error loading resource.");
-
-		containedPath.clear();
-		containedPath.shrink_to_fit();
-		containedName.clear();
-		containedName.shrink_to_fit();
-		path.clear();
-	}
-
-	return uid;
-}
-
-UID M_ResourceManager::ImportFromAssets(const char* assetPath)
-{
-	UID uid = 0;
-
-	if (assetPath == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from assets, path was nullptr.");
-		return uid;
-	}
-
-	ResourceType type = GetTypeFromPathExtension(assetPath);
-	Resource* resource = CreateNewResource(type, assetPath);
-
-	bool success = false;
-	switch (type)
-	{
-	case ResourceType::TEXTURE:
-		success = ImportTexture(assetPath, (R_Texture*)resource);
-		break;
-	case ResourceType::MODEL:
-		success = Importer::GetInstance()->sceneImporter->Import((R_Model*)resource);
-		break;
-	case ResourceType::MATERIAL:
-		success = ImportMaterial(assetPath, (R_Material*)resource);
-		break;
-	//case ResourceType::SCENE:
-		//TODO: SCENE IMPORT
-		//break;
-	//case ResourceType::FONT:
-		//TODO: FONT IMPORT
-		//break;
-	default:
-		break;
-	}
-
-	if (!success)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not import asset file: %s", assetPath);
-		UnloadResource(resource);
-		return 0;
-	}
-
-	uid = resource->GetUID();
-
-	SaveResource(resource);
-
-	UnloadResource(resource);
-
-	return uid;
-}
-
-ResourceType M_ResourceManager::GetTypeFromPathExtension(const char* path)
-{
-	ResourceType ret = ResourceType::UNKNOWN;
-
-	std::filesystem::path newPath = path;
-	std::string extension = newPath.extension().string();
-
-	if (engine->GetFileSystem()->StringCompare(extension.c_str(), PNG_EXTENSION) == 0)
-		ret = ResourceType::TEXTURE;
-	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), TEXTURE_EXTENSION) == 0)
-		ret = ResourceType::TEXTURE;
-	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0)
-		ret = ResourceType::MODEL;
-	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), MODEL_EXTENSION) == 0)
-		ret = ResourceType::MODEL;
-	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), MESH_EXTENSION) == 0)
-		ret = ResourceType::MESH;
-	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), ANIMATION_EXTENSION) == 0)
-		ret = ResourceType::ANIMATION;
-	else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SHADER_EXTENSION) == 0)
-		ret = ResourceType::MATERIAL;
-	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), SCENE_EXTENSION) == 0)
-		//ret = ResourceType::SCENE;
-	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FONT_EXTENSION) == 0)
-		//ret = ResourceType::FONT;
-	else
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given asset path. File extension: %s is not supported.", extension.c_str());
-
-	return ret;
-}
-
-bool M_ResourceManager::GetAssetDirectoryFromType(const ResourceType& type, std::string& directory)
-{
-	switch (type)
-	{
-	case ResourceType::MODEL: { directory = ASSETS_MODELS_DIR; } break;
-	case ResourceType::MESH: { directory = ASSETS_MODELS_DIR; } break;
-	case ResourceType::ANIMATION: { directory = ASSETS_MODELS_DIR; } break;
-	case ResourceType::TEXTURE: { directory = ASSETS_TEXTURES_DIR; } break;
-	case ResourceType::MATERIAL: { directory = ASSETS_SHADERS_DIR; } break;
-	//case ResourceType::SCENE: { directory = ASSETS_SCENES_DIR; } break;
-	//case ResourceType::TRACK: { directory = ASSETS_AUDIO_DIR; } break;
-	//case ResourceType::FONT: { directory = ASSETS_FONTS_DIR; } break;
-	//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
-	case ResourceType::UNKNOWN:
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't return asset directory from type because it is UNKNOWN.");
-		return false; 
-	} 
-	break;
-	default: break;
-	}
-
-	return true;
-}
-
-bool M_ResourceManager::GetLibraryDirectoryAndExtensionFromType(const ResourceType& type, std::string& directory, std::string& extension)
-{
-	switch (type)
-	{
-	case ResourceType::MODEL: { directory = MODELS_DIR; extension = MODEL_EXTENSION; } break;
-	case ResourceType::MESH: { directory = MESHES_DIR; extension = MESH_EXTENSION; } break;
-	case ResourceType::ANIMATION: { directory = ANIMATIONS_DIR; extension = ANIMATION_EXTENSION; } break;
-	case ResourceType::TEXTURE: { directory = TEXTURES_DIR; extension = TEXTURE_EXTENSION; } break;
-	case ResourceType::MATERIAL: { directory = SHADERS_DIR;  extension = SHADER_EXTENSION; } break;
-	//case ResourceType::SCENE: { directory = SCENES_DIR; extension = SCENE_EXTENSION; } break;
-	//case ResourceType::TRACK: { directory = AUDIOS_DIR; extension = MODEL_EXTENSION; } break;
-	//case ResourceType::FONT: { directory = FONTS_DIR; extension = FONT_EXTENSION; } break;
-	//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
-	case ResourceType::UNKNOWN:
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't return library directory from type because it is UNKNOWN.");
-		return false;
-	}
-	break;
-	default:
-		break;
-	}
-
-	return true;
-}
-
-void M_ResourceManager::DeleteFromAssets(const char* assetPath)
-{
-	if (assetPath == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting from assets, asset path was nullptr.");
-		return;
-	}
-
-	std::vector<UID> resourceUIDs;
-	std::vector<std::string> toDelete;
-
-	GetResourceUIDsFromMeta(assetPath, resourceUIDs);
-	GetLibraryFilePathsFromMeta(assetPath, toDelete);
-
-	std::string metaPath = assetPath + std::string(META_EXTENSION);
-	toDelete.push_back(assetPath);
-	toDelete.push_back(metaPath);
-
-	for (uint i = 0; i < resourceUIDs.size(); ++i)
-		UnloadResource(resourceUIDs[i]);
-
-	for (uint i = 0; i < toDelete.size(); ++i)
-		std::filesystem::remove(toDelete[i].c_str());
-
-	toDelete.clear();
-	toDelete.shrink_to_fit();
-	resourceUIDs.clear();
-	resourceUIDs.shrink_to_fit();
-}
-
-std::string M_ResourceManager::GetValidPath(const char* path) const
-{
-	std::string normalizedPath = path;
-
-	for (uint i = 0; i < normalizedPath.size(); ++i)
-	{
-		if (normalizedPath[i] == '\\')
-			normalizedPath[i] = '/';
-	}
-
-	size_t assetStart = normalizedPath.find("Assets");
-	size_t libraryStart = normalizedPath.find("Library");
-
-	std::string resultPath;
-
-	if (assetStart != std::string::npos)
-		resultPath = normalizedPath.substr(assetStart, normalizedPath.size());
-	else if (libraryStart != std::string::npos)
-		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size());
-	else
-		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't validate path.");
-
-	return resultPath;
 }
 
 bool M_ResourceManager::HasImportIgnoredExtension(const char* assetPath) const
@@ -1389,33 +1416,4 @@ bool M_ResourceManager::HasImportIgnoredExtension(const char* assetPath) const
 	return (engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ini") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
-}
-
-bool M_ResourceManager::SaveConfiguration(Json& configModule) const
-{
-	return true;
-}
-
-bool M_ResourceManager::LoadConfiguration(Json& configModule)
-{
-	return true;
-}
-
-bool M_ResourceManager::InspectorDraw()
-{
-	return true;
-}
-
-bool M_ResourceManager::ImportMaterial(const char* assetsPath, R_Material* material)
-{
-	FindAndForceUID(material);
-	bool ret = Importer::GetInstance()->materialImporter->Import(assetsPath, material);
-	return (ret && material != nullptr);
-}
-
-bool M_ResourceManager::ImportTexture(const char* assetsPath, R_Texture* texture)
-{
-	FindAndForceUID(texture);
-	bool ret = Importer::GetInstance()->textureImporter->Import(assetsPath, (R_Texture*)texture);
-	return (ret && texture != nullptr);
 }
