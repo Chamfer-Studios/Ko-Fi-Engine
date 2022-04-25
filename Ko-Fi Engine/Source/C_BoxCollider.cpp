@@ -91,7 +91,7 @@ bool C_BoxCollider::InspectorDraw(PanelChooser *chooser)
 		ImGui::Text("Scale");
 		ImGui::SameLine();
 		float3 newScaleFactor = GetScaleFactor();
-		if (ImGui::DragFloat3("##scale", &(newScaleFactor[0]), 0.1f, 1.0f, 50000.0f))
+		if (ImGui::DragFloat3("##scale", &(newScaleFactor[0]), 0.1f, 0.33f, 50000.0f))
 		{
 			SetScaleFactor(newScaleFactor);
 			UpdateScaleFactor();
