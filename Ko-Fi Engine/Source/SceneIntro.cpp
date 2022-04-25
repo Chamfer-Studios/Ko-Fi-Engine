@@ -80,11 +80,6 @@ bool SceneIntro::Start()
 
 	example::NodeEditorInitialize();
 
-	for (GameObject *go : this->gameObjectList)
-	{
-		go->Start();
-	}
-
 	ComputeQuadTree();
 
 	return ret;
