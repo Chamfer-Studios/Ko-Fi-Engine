@@ -13,12 +13,12 @@ function Update(dt)
 		isStarting = false
 	end
 	if (gameObject:GetButton():IsHovered()) then
-		child:Active(true)
-		--print("hovered")
+		if (gameObject.active == true) then
+			child:Active(true)
+		end
 	end
 	if (gameObject:GetButton():IsIdle()) then
 		child:Active(false)
-		--print("not hovered")
 	end
 end
 

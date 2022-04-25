@@ -13,15 +13,15 @@ function Update(dt)
 		isStarting = false
 	end
 	if (gameObject:GetButton():IsPressed()) then
-		child:Active(false)
-		-- print("why is it not working wtf")
-		startTime = os.time()
-		endTime = startTime+1
-		stop = true
+		if (gameObject.active == true) then
+			child:Active(false)
+			startTime = os.time()
+			endTime = startTime+1
+			stop = true
+		end
 	end
 	if (stop == true) then
 		if (os.time() >= endTime) then
-		--print("why is it not working wtf")
 			SetVariable(false, name, "popUp", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
 			stop = false
 		end

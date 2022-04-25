@@ -1941,5 +1941,23 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_HoverSkill.lua">
       <Filter>Scripts\UI</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Mission.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OoSpicy.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_CharacterTS.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Skill.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_SkillSet.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_RestartButton.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
   </ItemGroup>
 </Project>

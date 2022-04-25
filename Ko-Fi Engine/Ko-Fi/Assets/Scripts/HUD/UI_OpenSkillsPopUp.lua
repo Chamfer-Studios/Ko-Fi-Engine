@@ -13,10 +13,12 @@ function Update(dt)
 		child:Active(false)
 		isStarting = false
 	end
-	if (popUp == false) then
-		if (gameObject:GetButton():IsPressed()) then
-			popUp = true
-			child:Active(true)
+	if (GetVariable("UI_OpenQuestsPopUp.lua", "popUp", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
+		if (popUp == false) then
+			if (gameObject:GetButton():IsPressed()) then
+				popUp = true
+				child:Active(true)
+			end
 		end
 	end
 end
