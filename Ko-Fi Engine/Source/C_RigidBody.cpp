@@ -255,3 +255,15 @@ void C_RigidBody::Load(Json& json)
 		UpdateConstrains();
 	}
 }
+
+void C_RigidBody::SetRigidBodyPos(float3 newPos)
+{
+	if (bodyType == "Dynamic" || bodyType == "Kinematic") {
+		reactphysics3d::Transform transform;
+		transform.setPosition(reactphysics3d::Vector3(newPos.x, newPos.y, newPos.z));
+		transform.setOrientation(reactphysics3d::Quaternion::identity());
+		body->setTransform(transform);
+	}
+	else
+		owner->GetTransform()->SetPosition(newPos);
+}
