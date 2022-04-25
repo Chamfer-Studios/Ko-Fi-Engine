@@ -48,7 +48,7 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 
 C_Mesh::~C_Mesh()
 {
-	//CleanUp(); // Already called
+	CleanUp(); // Already called
 }
 
 bool C_Mesh::Start()
