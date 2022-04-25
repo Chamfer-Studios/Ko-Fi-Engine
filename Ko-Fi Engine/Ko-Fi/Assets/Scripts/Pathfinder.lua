@@ -129,3 +129,5 @@ function EventHandler(key, fields)
         FollowPath(fields[1], fields[2], fields[3])
     end
 end
+
+print("Pathfinder.lua compiled succesfully")

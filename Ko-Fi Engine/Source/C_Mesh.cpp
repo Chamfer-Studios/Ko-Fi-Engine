@@ -48,12 +48,13 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 
 C_Mesh::~C_Mesh()
 {
-	//CleanUp(); // Already called
+	CleanUp(); // Already called
 }
 
 bool C_Mesh::Start()
 {
-	GenerateLocalBoundingBox();
+	if (mesh)
+		GenerateGlobalBoundingBox();
 	return true;
 }
 
@@ -150,7 +151,7 @@ void C_Mesh::Load(Json& json)
 		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
 		this->GetMesh()->SetRootNode(object);
 	}
-
+	GenerateGlobalBoundingBox();
 }
 
 void C_Mesh::SetMesh(R_Mesh* mesh)
@@ -208,7 +209,7 @@ const AABB C_Mesh::GetGlobalAABB() const
 void C_Mesh::GenerateLocalBoundingBox()
 {
 	// Generate AABB
-	if (mesh != nullptr)
+	if (mesh != nullptr && mesh->vertices != 0) // to avoid float3 isfinite warning.
 	{
 		mesh->localAABB.SetNegativeInfinity();
 		mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));

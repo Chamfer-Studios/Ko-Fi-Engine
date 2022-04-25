@@ -202,7 +202,6 @@ function Update(dt)
 end
 
 function OnTriggerEnter(go)
-    print("flag e")
 	if (go.tag == Tag.PROJECTILE) then
 		DeleteGameObject()
 	end

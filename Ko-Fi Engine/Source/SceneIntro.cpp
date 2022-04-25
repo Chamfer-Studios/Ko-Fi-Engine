@@ -15,11 +15,10 @@
 #include "C_Material.h"
 #include "C_Camera.h"
 #include "C_Script.h"
-#include "C_Collider.h"
 #include "C_Transform.h"
 #include "C_LightSource.h"
 #include "C_Transform2D.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 
 #include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "Primitive.h"
@@ -47,7 +46,7 @@ SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 	// LCG random;
 	// uint uid = random.Int();
 	// GameObject * g = this->CreateEmptyGameObject("Particle Test");
-	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
+	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<C_Particle>();
 }
 
 SceneIntro::~SceneIntro()
@@ -63,6 +62,10 @@ bool SceneIntro::Start()
 	if (!engine->GetSceneManager()->GetDefaultScene().empty())
 	{
 		Importer::GetInstance()->sceneImporter->Load(this, engine->GetSceneManager()->GetDefaultScene().c_str());
+	}
+	else
+	{
+		// TODO: Load a default scene, or create a new empty one
 	}
 	if (!engine->GetCamera3D()->gameCamera)
 	{
@@ -81,11 +84,6 @@ bool SceneIntro::Start()
 
 	example::NodeEditorInitialize();
 
-	for (GameObject *go : this->gameObjectList)
-	{
-		go->Start();
-	}
-
 	ComputeQuadTree();
 
 	return ret;
@@ -95,121 +93,17 @@ bool SceneIntro::PreUpdate(float dt)
 {
 	for (std::map<GameObject*, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
 	{
-		GameObject* parent = (*mapIt).first;
-		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
+		std::string path = "Assets/Prefabs/" + (*mapIt).second + "_prefab.json";
+		if (!std::filesystem::exists(path))
+			return true;
+		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+		go->LoadPrefabJson(path.c_str(), false);
+		for (Component* component : go->GetComponents()) // This method used because there could be multiple scripts in one go
 		{
-			GameObject* karambitOriginal = parent->GetComponent<C_Script>()->s->handler->LuaFind("KarambitMesh");
-			if (!karambitOriginal)
+			if (component->GetType() != ComponentType::SCRIPT)
 				continue;
-
-			GameObject* goIt = CreateEmptyGameObject((*mapIt).second.c_str());
-
-			goIt->tag = Tag::TAG_PROJECTILE;
-			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
-
-			goIt->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
-			float3 pos = parent->GetTransform()->GetPosition();
-
-			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y, pos.z));
-			goIt->GetTransform()->SetPosition(float3(pos.x, pos.y, pos.z));
-
-			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
-
-			R_Mesh* mesh = karambitOriginal->GetComponent<C_Mesh>()->GetMesh();
-			componentMesh->SetMesh(mesh);
-
-			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material* material = karambitOriginal->GetComponent<C_Material>()->GetMaterial();
-
-			cMaterial->SetMaterial(material);
-
-			rigidBody->FreezePositionY(true);
-			C_Collider* collider = goIt->CreateComponent<C_Collider>();
-			collider->SetColliderShape(ColliderShape::BOX);
-			collider->SetFilter("projectile");
-			collider->SetIsTrigger(true);
-
-			C_Script* knifeScript = (C_Script*)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			knifeScript->s->path = "Assets/Scripts/Players/Zhib/Knife.lua";
-			knifeScript->ReloadScript(knifeScript->s);
-			GameObject* target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
-			knifeScript->s->handler->lua["target"] = target;
-			knifeScript->s->handler->lua["SetDestination"]();
-		}
-		else if ((*mapIt).second == "Decoy")
-		{
-			GameObject* decoyOriginal = parent->GetComponent<C_Script>()->s->handler->LuaFind("DecoyMesh");
-			if (!decoyOriginal)
-				continue;
-
-			GameObject* goIt = CreateEmptyGameObject((*mapIt).second.c_str());
-
-			goIt->tag = Tag::TAG_PROJECTILE;
-			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
-
-			goIt->GetTransform()->SetScale(float3(0.001, 0.001, 0.005));
-			float3 pos = parent->GetTransform()->GetPosition();
-
-			rigidBody->SetRigidBodyPos(float3(pos.x, 0.5, pos.z));
-			goIt->GetTransform()->SetPosition(float3(pos.x, 0.5, pos.z));
-
-			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
-
-			R_Mesh* mesh = decoyOriginal->GetComponent<C_Mesh>()->GetMesh();
-			componentMesh->SetMesh(mesh);
-
-			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material* material = decoyOriginal->GetComponent<C_Material>()->GetMaterial();
-			cMaterial->SetMaterial(material);
-
-			rigidBody->FreezePositionY(true);
-			C_Collider* collider = goIt->CreateComponent<C_Collider>();
-			collider->SetColliderShape(ColliderShape::BOX);
-			collider->SetFilter("terrain");
-			collider->SetIsTrigger(true);
-
-			C_Script* decoyScript = (C_Script*)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			decoyScript->s->path = "Assets/Scripts/Players/Zhib/Decoy.lua";
-			decoyScript->ReloadScript(decoyScript->s);
-			GameObject* target = parent->GetComponent<C_Script>()->s->handler->lua["target"];
-			decoyScript->s->handler->lua["target"] = target;
-			decoyScript->s->handler->lua["SetDestination"]();
-		}
-		else if ((*mapIt).second == "Mosquito")
-		{
-			GameObject* mosquitoOriginal = parent->GetComponent<C_Script>()->s->handler->LuaFind("MosquitoMesh");
-			if (!mosquitoOriginal)
-				continue;
-
-			GameObject* goIt = CreateEmptyGameObject((*mapIt).second.c_str());
-
-			goIt->tag = Tag::TAG_PLAYER;
-			C_RigidBody* rigidBody = goIt->CreateComponent<C_RigidBody>();
-
-			goIt->GetTransform()->SetScale(float3(0.1, 0.1, 0.3));
-			float3 pos = parent->GetTransform()->GetPosition();
-
-			rigidBody->SetRigidBodyPos(float3(pos.x + 25, 10, pos.z));
-			goIt->GetTransform()->SetPosition(float3(pos.x + 25, 10, pos.z));
-
-			C_Mesh* componentMesh = goIt->CreateComponent<C_Mesh>();
-
-			R_Mesh* mesh = mosquitoOriginal->GetComponent<C_Mesh>()->GetMesh();
-			componentMesh->SetMesh(mesh);
-
-			C_Material* cMaterial = goIt->CreateComponent<C_Material>();
-			R_Material* material = mosquitoOriginal->GetComponent<C_Material>()->GetMaterial();
-			cMaterial->SetMaterial(material);
-
-			rigidBody->SetUseGravity(false);
-			rigidBody->FreezePositionY(true);
-			C_Collider* collider = goIt->CreateComponent<C_Collider>();
-			collider->SetColliderShape(ColliderShape::BOX);
-			collider->SetFilter("player");
-
-			C_Script* decoyScript = (C_Script*)goIt->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			decoyScript->s->path = "Assets/Scripts/Players/Nerala/HunterSeeker.lua";
-			decoyScript->ReloadScript(decoyScript->s);
+			C_Script* script = (C_Script*)component;
+			script->s->handler->lua["Start"]();
 		}
 	}
 	gameObjectListToCreate.clear();
@@ -273,7 +167,10 @@ bool SceneIntro::PostUpdate(float dt)
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
 	{
-		DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID));
+		for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+		{
+			DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
+		}
 	}
 
 	return true;

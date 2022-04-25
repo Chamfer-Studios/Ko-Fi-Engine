@@ -82,6 +82,7 @@ bool M_Camera3D::Update(float dt)
 		CheckMouseMotion(dt);
 	}
 
+
 	return true;
 }
 
@@ -178,6 +179,8 @@ void M_Camera3D::CheckInput(float dt)
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += currentCamera->front * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= currentCamera->front * speed;
+
+	
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += currentCamera->right * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= currentCamera->right * speed;
@@ -329,11 +332,25 @@ void M_Camera3D::OnClick(SDL_Event event)
 		if (hit != nullptr)
 		{
 			CONSOLE_LOG("%s", hit->GetName());
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+			if (engine->GetEditor()->contr == true && engine->GetSceneManager()->GetGameState() != GameState::PLAYING && !ImGuizmo::IsOver())
+			{
+				auto it = std::find (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.begin(), engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.end(), hit->GetUID());
+				if (it != engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.end()) return;
+
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.push_back(hit->GetUID());
+			}
+			else
+			{
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.push_back(hit->GetUID());
+			}
+			//engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
 		}
-		/*else {
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
-		}*/
+		else {
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+		}
 	}
 	else if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
 	{
@@ -454,9 +471,9 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 				float distance;
 				if (rayLocal.Intersects(triangle, &distance, &lastMouseClick))
 				{
-					float tmp = lastMouseClick.y;
-					lastMouseClick.y = lastMouseClick.z;
-					lastMouseClick.z = tmp;
+					//float tmp = lastMouseClick.y;
+					//lastMouseClick.y = lastMouseClick.z;
+					//lastMouseClick.z = tmp;
 					lastMouseClick.x *= gameObject->GetTransform()->GetScale().x;
 					lastMouseClick.y *= gameObject->GetTransform()->GetScale().y;
 					lastMouseClick.z *= gameObject->GetTransform()->GetScale().z;

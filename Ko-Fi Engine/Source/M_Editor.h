@@ -31,6 +31,7 @@ struct EngineConfig;
 struct PanelGameObjectInfo
 {
 	int selectedGameObjectID = -1;
+	std::vector<int> selectedGameObjects;
 };
 
 struct PanelsState
@@ -113,6 +114,8 @@ public:
 	KoFiEngine* engine = nullptr;
 
 	int idTracker = 0;
+
+	bool contr = false;
 
 private:
 	// Style

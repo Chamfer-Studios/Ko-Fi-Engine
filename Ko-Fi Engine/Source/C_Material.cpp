@@ -8,6 +8,7 @@
 
 // GameObject
 #include "GameObject.h"
+#include "C_Mesh.h"
 
 // Importers
 #include "Importer.h"
@@ -48,6 +49,7 @@ C_Material::~C_Material()
 		return;
 	if(material != nullptr)
 		RELEASE(material);*/
+	CleanUp();
 }
 
 bool C_Material::CleanUp()

@@ -6,6 +6,7 @@
 #include "PxSimulationEventCallback.h"
 #include "Globals.h"
 #include "Scripting.h"
+#include "Log.h"
 
 void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 {
@@ -17,9 +18,9 @@ void SimulationEventCallback::onContact(const physx::PxContactPairHeader& pairHe
 		GameObject* gameObject2 = nullptr;
 		gameObject1 = callback->GetActors()[(physx::PxRigidDynamic*)pairHeader.actors[0]];
 		gameObject2 = callback->GetActors()[(physx::PxRigidDynamic*)pairHeader.actors[1]];
-		
 		if (gameObject1 && gameObject2)
 		{
+			CONSOLE_LOG("Colliding: %s with %s", gameObject1->GetName(), gameObject2->GetName());
 			const std::string* fil1 = gameObject1->GetComponent<C_Collider>()->GetFilter();
 			const std::string* fil2 = gameObject2->GetComponent<C_Collider>()->GetFilter();
 			int fil1pos = callback->GetFilterID(fil1);

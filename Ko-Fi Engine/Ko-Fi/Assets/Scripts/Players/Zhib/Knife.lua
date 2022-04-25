@@ -1,16 +1,32 @@
 ------------------- Variables --------------------
 
-speed = 3000
+speed = 300
 destination = nil
-componentRigidBody = gameObject:GetRigidBody()
 
 -------------------- Methods ---------------------
+
+function Start()
+	componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
+	target = GetVariable("Zhib.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+	player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+	local playerPos = player:GetTransform():GetPosition()
+	destination = target:GetTransform():GetPosition()
+	local targetPos2D = { destination.x, destination.z }
+	local pos2D = { playerPos.x, playerPos.z }
+	local d = Distance(pos2D, targetPos2D)
+	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
+	vec2 = Normalize(vec2, d)
+	if (componentRigidBody ~= nil) then		
+		componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, playerPos.y, playerPos.z + vec2[2] * 3))
+	end
+end
 
 -- Called each loop iteration
 function Update(dt)
 
 	if (destination ~= nil) then
 		MoveToDestination(dt)
+		print(componentTransform:GetPosition())
 	end
 end
 
@@ -28,6 +44,7 @@ function MoveToDestination(dt)
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local d = Distance(pos2D, targetPos2D)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
+	print(pos2D[1], pos2D[2])
 
 	if (d > 5.0) then
 
@@ -48,21 +65,6 @@ function MoveToDestination(dt)
 		destination = nil
 		if (componentRigidBody ~= nil) then
 			componentRigidBody:Set2DVelocity(float2.new(0,0))
-		end
-	end
-end
-
-function SetDestination()
-	if (target ~= nil) then
-		destination = target:GetTransform():GetPosition()
-
-		local targetPos2D = { destination.x, destination.z }
-		local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
-		local d = Distance(pos2D, targetPos2D)
-		local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
-		vec2 = Normalize(vec2, d)
-		if (componentRigidBody ~= nil) then
-			componentRigidBody:SetRigidBodyPos(float3.new(vec2[1] * 15, componentTransform:GetPosition().y, vec2[2] * 15))
 		end
 	end
 end

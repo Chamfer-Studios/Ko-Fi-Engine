@@ -1,34 +1,50 @@
-------------------- Variables --------------------
-
-characterID = 2
-target = nil
-
+------------------- Player events --------------------
 Movement = {
 	IDLE = 1,
 	WALK = 2,
 	RUN = 3,
 	CROUCH = 4,
 }
-
 Action = {
 	IDLE = 1,
 	ATTACK = 2,
-	AIM_DART = 3,
-	--
+	AIM_PRIMARY = 3,
+	AIM_SECONDARY = 4,
 	AIM_ULTIMATE = 5,
 }
+------------------------------------------------------
 
+------------------- Variables setter --------------------
+target = nil
 currentMovement = Movement.IDLE
 currentAction = Action.IDLE
-speed = 500.0  -- consider Start()
+
+-- Globals --
+characterID = 2
+speed = 500.0
+
+-- Primary ability --
 dartCastRange = 50.0
 dartCooldown = 10.0
-ultimateCooldown = 10.0
+drawDart = false
 
-local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT			-- IVT == Inspector Variable Type
+-- Secondary ability --
+
+-- Ultimate ability --
+ultimateCooldown = 10.0
+------------------------------------------------------
+
+------------------- Inspector setter --------------------
+-- Globals --
+local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
+NewVariable(characterIDIV)
+
+local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
+-- Primary ability --
 local dartCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 dartCastRangeIV = InspectorVariable.new("dartCastRange", dartCastRangeIVT, dartCastRange)
 NewVariable(dartCastRangeIV)
@@ -37,15 +53,19 @@ local dartCooldownIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 dartCooldownIV = InspectorVariable.new("dartCooldown", dartCooldownIVT, dartCooldown)
 NewVariable(dartCooldownIV)
 
+local drawDartIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawDartIV = InspectorVariable.new("drawDart", drawDartIVT, drawDart)
+NewVariable(drawDartIV)
+
+-- Secondary ability --
+
+-- Ultimate ability --
 local ultimateCooldownIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 ultimateCooldownIV = InspectorVariable.new("ultimateCooldown", ultimateCooldownIVT, ultimateCooldown)
 NewVariable(ultimateCooldownIV)
+------------------------------------------------------
 
-local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
-NewVariable(characterIDIV)
-
-
+------------------- Animation setter --------------------
 componentAnimator = gameObject:GetComponentAnimator()
 if (componentAnimator ~= nil) then
 	componentAnimator:SetSelectedClip("Idle")
@@ -53,35 +73,47 @@ end
 animationDuration = 0.8
 animationTimer = 0.0
 isAttacking = false -- This should go, just here for animations
+------------------------------------------------------
 
+------------------- Audio setter --------------------
 componentSwitch = gameObject:GetAudioSwitch()
-componentRigidBody = gameObject:GetRigidBody()
+------------------------------------------------------
 
+------------------- Physics setter --------------------
+componentRigidBody = gameObject:GetRigidBody()
+rigidBodyFlag = true
+------------------------------------------------------
+
+------------------- Particles setter --------------------
 mouseParticles = Find("Mouse Particles")
 if (mouseParticles ~= nil) then
 	mouseParticles:GetComponentParticle():StopParticleSpawn()
 end
+------------------------------------------------------
 
+------------------- Movement logic --------------------
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
-
-rigidBodyFlag = true
+------------------------------------------------------
 
 -------------------- Methods ---------------------
-
 -- Called each loop iteration
 function Update(dt)
-	if (rigidBodyFlag == true) then -- Set Starting Position
+	-- Set Starting Position
+	if (rigidBodyFlag == true) then 
 		if (componentRigidBody ~= nil) then
 			rigidBodyFlag = false
 			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
 		end
 	end
-	-- Timers & Helpers
+
+	-- If in ultimate, dont update
 	if (Find("Mosquito") ~= nil) then
 		return
 	end
+
+	-- Animation timer
 	if (isAttacking == true and componentAnimator ~= nil) then
 		animationTimer = animationTimer + dt
 		if (animationTimer >= animationDuration) then
@@ -90,6 +122,8 @@ function Update(dt)
 			animationTimer = 0.0
 		end
 	end
+
+	-- Running state logic
 	if (isDoubleClicking == true) then
 		if (doubleClickTimer < doubleClickDuration) then
 			doubleClickTimer = doubleClickTimer + dt
@@ -98,48 +132,64 @@ function Update(dt)
 			doubleClickTimer = 0.0
 		end
 	end
+
+	-- Click particles logic
 	if (mouseParticles ~= nil) then
 		mouseParticles:GetComponentParticle():StopParticleSpawn()
 	end
+
+	-- Primary ability cooldown
 	if (dartTimer ~= nil) then
 		dartTimer = dartTimer + dt
 		if (dartTimer >= dartCooldown) then
 			dartTimer = nil
 		end
 	end
+
+	-- Secondary ability cooldown
+
+	-- Ultimate ability cooldown
 	if (ultimateTimer ~= nil) then
 		ultimateTimer = ultimateTimer + dt
 		if (ultimateTimer >= ultimateCooldown) then
 			ultimateTimer = nil
 		end
 	end
+
 	-- Actions
 	if (destination ~= nil)	then
 		MoveToDestination(dt)
 	end
-	
+	DispatchGlobalEvent("Player_Position", { componentTransform:GetPosition(), gameObject })
+
 	--Gather Inputs
 	if (IsSelected() == true) then 
-		
 		-- Left Click
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
-	
-			-- Knife
-			if (currentAction == Action.AIM_PRIMARY and dartTimer == nil) then -- Fire Knife (infinite range for now)
+			-- Primary ability (Dart)
+			if (currentAction == Action.AIM_PRIMARY and dartTimer == nil) then
 				target = GetGameObjectHovered()
-				if (target.tag == Tag.ENEMY) then
-					FireDart()
+				if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= dartCastRange) then
+					if (target.tag == Tag.ENEMY) then
+						FireDart()
+					else
+						print("You have to select an enemy first! (Dart - Nerala)")
+					end
+				else
+					print("Out of range (Dart - Nerala)")
 				end
-			-- SmokeBomb
 
-			-- Ultimate
+			-- Secondary ability (Smoke bomb)
+			elseif (currentAction == Action.AIM_SECONDARY) then
+
+			-- Ultimate ability (hunter-seeker)
 			elseif (ultimateTimer == nil and currentAction == Action.AIM_ULTIMATE) then
 				Ultimate()
 			end
 		end
 	
 		-- Right Click
-		if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
+		if (GetInput(3) == KEY_STATE.KEY_DOWN) then
 			goHit = GetGameObjectHovered()
 			if (goHit ~= gameObject) then
 				destination = GetLastMouseClick()
@@ -156,19 +206,28 @@ function Update(dt)
 			end
 		end
 	
-		if (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
+		-- H
+		if (GetInput(5) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.IDLE
 		end
-		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
+
+		-- K
+		if (GetInput(6) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.AIM_PRIMARY
 		end	
-		if (GetInput(12) == KEY_STATE.KEY_DOWN) then -- D
+
+		-- D
+		if (GetInput(12) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.AIM_SECONDARY
 		end	
-		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- SPACE
+
+		-- SPACE
+		if (GetInput(4) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.AIM_ULTIMATE
 		end
-		if (GetInput(9) == KEY_STATE.KEY_DOWN) then -- C -> Toggle crouch
+
+		-- C -> Toggle crouch
+		if (GetInput(9) == KEY_STATE.KEY_DOWN) then 
 			if (currentMovement == Movement.CROUCH) then
 				currentMovement = Movement.WALK
 				if (componentSwitch ~= nil) then
@@ -184,14 +243,25 @@ function Update(dt)
 			end
 		end
 	end
+
+	-- Draw primary ability range
+	if (drawDart == true) then
+
+	end
+
+	-- Draw secondary ability range
+
+	-- Draw ultimate ability range
+
 end
+--------------------------------------------------
 
--- Move to destination
+
+----------------- Functions -----------------
 function MoveToDestination(dt)
-
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
-	local d = Distance(pos2D, targetPos2D)
+	local d = Distance2D(pos2D, targetPos2D)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 
 	if (d > 5.0) then
@@ -242,12 +312,11 @@ function MoveToDestination(dt)
 	
 		-- Rotation
 		local rad = math.acos(vec2[2])
-		if (vec2[1] < 0)	then
+		if (vec2[1] < 0) then
 			rad = rad * (-1)
 		end
 		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
 	else
-		
 		StopMovement()
 	end
 	-- Add ChangeAnimation() to check the speed of the rigid body
@@ -264,9 +333,10 @@ function IsSelected()
 	return false
 end
 
+-- Primary ability
 function FireDart()
 
-	CreateGameObject("Dart") -- This should instance the prefab
+	InstantiatePrefab("Dart") -- This should instance the prefab
 	dartTimer = 0.0
 	if (componentSwitch ~= nil) then
 		componentSwitch:PlayTrack(0)
@@ -278,9 +348,10 @@ function FireDart()
 	StopMovement()
 end
 
+-- Ultimate ability
 function Ultimate()
 	
-	CreateGameObject("Mosquito") -- This should instance the prefab
+	InstantiatePrefab("Mosquito") -- This should instance the prefab
 	--if (componentSwitch ~= nil) then
 	--	componentSwitch:PlayTrack(0)
 	--end
@@ -307,36 +378,30 @@ function StopMovement()
 	--end
 end
 
+----------------- Collisions -----------------
 function OnTriggerEnter(go)
 
-	if (go.tag == Tag.PROJECTILE) then
-
-	end
 end
+--------------------------------------------------
 
 ----------------- Math Functions -----------------
-
 function Normalize(vec, distance)
-    
 	vec[1] = vec[1] / distance
 	vec[2] = vec[2] / distance
-
 	return vec
 end
 
-function Distance(a, b)
-
+function Distance2D(a, b)
     local dx, dy = a[1] - b[1], a[2] - b[2]
-    return math.sqrt(dx * dx + dy * dy)
-
+	local sqrt = math.sqrt(dx * dx + dy * dy)
+    return sqrt
 end
 
 function Distance3D(a, b)
-
     diff = { x = b.x - a.x, y = b.y - a.y, z = b.z - a.z }
-    return math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z)
+	local sqrt = math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z)
+    return sqrt
 end
-
 --------------------------------------------------
 
 print("Nerala.lua compiled succesfully")

@@ -7,12 +7,11 @@
 #include "Component.h"
 
 class KoFiEngine;
-//class C_Mesh;
 class C_Transform;
 class C_Mesh;
 class C_Info;
 class C_Script;
-class C_Collider;
+class C_Collider2;
 class C_Animator;
 class C_LightSource;
 

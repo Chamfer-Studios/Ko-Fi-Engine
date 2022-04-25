@@ -161,7 +161,10 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 		DragNDrop(go);
 		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(1)))
 		{
-			editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
+			editor->panelGameObjectInfo.selectedGameObjects.clear();
+			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
+
 			CONSOLE_LOG("%s || %d", go->GetName(), go->GetUID());
 		}
 		if (ImGui::IsItemClicked(1)) {
@@ -179,23 +182,29 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 			if (ImGui::MenuItem("Create Empty Child")) {
 				GameObject* child = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID)
-						go->AttachChild(child);
+					for (int i = 0; i < editor->panelGameObjectInfo.selectedGameObjects.size(); i++)
+					{
+						if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjects[i])
+							go->AttachChild(child);
+					}
 				}
 			}
 			if (ImGui::MenuItem("Delete")) {
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetUID() != -1) {
-						editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
-						editor->panelGameObjectInfo.selectedGameObjectID = -1;
-					}
+					auto it = std::find(editor->panelGameObjectInfo.selectedGameObjects.begin(), editor->panelGameObjectInfo.selectedGameObjects.end(), go->GetUID());
+					if (it == editor->panelGameObjectInfo.selectedGameObjects.end()) continue;
+
+					editor->engine->GetSceneManager()->GetCurrentScene()->DeleteGameObject(go);
 				}
 			}
 			if (ImGui::MenuItem("Set as Prefab")) {
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
-					if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjectID && go->GetUID() != -1) {
-						go->isPrefab = true;
-						editor->panelGameObjectInfo.selectedGameObjectID = -1;
+					for (int i = 0; i < editor->panelGameObjectInfo.selectedGameObjects.size(); i++)
+					{
+						if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjects[i] && go->GetUID() != -1) {
+							go->isPrefab = true;
+							editor->panelGameObjectInfo.selectedGameObjects.erase(editor->panelGameObjectInfo.selectedGameObjects.begin() + i);
+						}
 					}
 				}
 			}
