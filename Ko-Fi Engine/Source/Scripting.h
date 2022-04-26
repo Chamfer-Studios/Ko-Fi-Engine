@@ -378,6 +378,10 @@ public:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
 			}
+			case 13:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
+			}
 
 			case 21:
 			{

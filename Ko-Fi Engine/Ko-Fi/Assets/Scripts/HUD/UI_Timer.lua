@@ -6,7 +6,7 @@ stopTimer = false
 -- Called each loop iteration
 function Update(dt)
 	if (stopTimer == false) then
-		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- SPACE
+		if (GetInput(13) == KEY_STATE.KEY_DOWN) then -- SPACE
 			startTime = os.time()
 			endTime = startTime+1
 		end
