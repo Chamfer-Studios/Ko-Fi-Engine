@@ -5,6 +5,7 @@
 // Modules
 #include "Engine.h"
 #include "M_Editor.h"
+#include "M_ResourceManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -65,107 +66,81 @@ bool C_Material::Update(float dt)
 void C_Material::Save(Json& json) const
 {
 	json["type"] = "material";
-	json["color"] = { material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a };
 
-	std::string shaderPath = material->GetShaderPath();
-	shaderPath = shaderPath.substr(shaderPath.find_last_of("/\\") + 1);
-	std::string::size_type const p(shaderPath.find_last_of('.'));
-	shaderPath = shaderPath.substr(0, p);
-
-	shaderPath = SHADERS_DIR + shaderPath + SHADER_EXTENSION;
-	material->SetLibraryPath(shaderPath.c_str());
-	json["shader_path"] = material->GetLibraryPath();
-
-	Importer::GetInstance()->materialImporter->Save(material, material->GetLibraryPath());
-
-	if (texture->GetAssetPath() != nullptr)
+	if (material != nullptr)
 	{
-		std::string texturePath = texture->GetAssetPath();
-		texturePath = texturePath.substr(texturePath.find_last_of("/\\") + 1);
-		std::string::size_type const p(texturePath.find_last_of('.'));
-		texturePath = texturePath.substr(0, p);
+		json["color"] = {material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a};
 
-		texturePath = TEXTURES_DIR + texturePath + TEXTURE_EXTENSION;
-		texture->SetLibraryPath(texturePath.c_str());
-		json["library_path"] = texture->GetLibraryPath();
-		json["library_file"] = texture->GetLibraryFile();
-		json["asset_path"] = texture->GetAssetPath();
-		json["assset_file"] = texture->GetAssetFile();
+		json["shader"]["asset_file"] = material->GetAssetFile();
+		json["shader"]["asset_path"] = material->GetAssetPath();
+		json["shader"]["library_file"] = material->GetLibraryFile();
+		json["shader"]["library_path"] = material->GetLibraryPath();
 
-		Importer::GetInstance()->textureImporter->Save(texture, texture->GetLibraryPath());
+		json["shader"]["uniforms"].array();
+		Json jsonUniform;
+		for (Uniform* uniform : material->uniforms)
+		{
+			switch (uniform->type)
+			{
+			case GL_FLOAT:
+			{
+				UniformT<float>* uf = (UniformT<float>*)uniform;
+				jsonUniform["name"] = uf->name;
+				jsonUniform["type"] = uf->type;
+				jsonUniform["value"] = uf->value;
+				break;
+			}
+			case GL_FLOAT_VEC2:
+			{
+				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+				jsonUniform["name"] = uf2->name;
+				jsonUniform["type"] = uf2->type;
+				jsonUniform["value"]["x"] = uf2->value.x;
+				jsonUniform["value"]["y"] = uf2->value.y;
+				break;
+			}
+			case GL_FLOAT_VEC3:
+			{
+				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+				jsonUniform["name"] = uf3->name;
+				jsonUniform["type"] = uf3->type;
+				jsonUniform["value"]["x"] = uf3->value.x;
+				jsonUniform["value"]["y"] = uf3->value.y;
+				jsonUniform["value"]["z"] = uf3->value.z;
+				break;
+			}
+			case GL_FLOAT_VEC4:
+			{
+				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+				jsonUniform["name"] = uf4->name;
+				jsonUniform["type"] = uf4->type;
+				jsonUniform["value"]["x"] = uf4->value.x;
+				jsonUniform["value"]["y"] = uf4->value.y;
+				jsonUniform["value"]["z"] = uf4->value.z;
+				jsonUniform["value"]["w"] = uf4->value.w;
+				break;
+			}
+			case GL_INT:
+			{
+				UniformT<int>* ui = (UniformT<int>*)uniform;
+				jsonUniform["name"] = ui->name;
+				jsonUniform["type"] = ui->type;
+				jsonUniform["value"] = ui->value;
+				break;
+			}
+			default:
+				continue;
+			}
+			json["shader"]["uniforms"].push_back(jsonUniform);
+		}
 	}
-	else
-	{
-		json["library_path"] = nullptr;
-		json["library_file"] = nullptr;
-		json["asset_path"] = nullptr;
-		json["assset_file"] = nullptr;
-	}
 
-	//Json jsonTex;
-	//json["textures"] = json::array();
-	//for (auto tex : textures)
-	//{
-	//	jsonTex["path"] = tex.GetTexturePath();
-	//	json["textures"].push_back(jsonTex);
-	//}
-
-	json["uniforms"].array();
-	Json jsonUniform;
-	for (Uniform* uniform : material->uniforms)
+	if (texture != nullptr)
 	{
-		switch (uniform->type)
-		{
-		case GL_FLOAT:
-		{
-			UniformT<float>* uf = (UniformT<float>*)uniform;
-			jsonUniform["name"] = uf->name;
-			jsonUniform["type"] = uf->type;
-			jsonUniform["value"] = uf->value;
-		}
-		break;
-		case GL_FLOAT_VEC2:
-		{
-			UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-			jsonUniform["name"] = uf2->name;
-			jsonUniform["type"] = uf2->type;
-			jsonUniform["value"]["x"] = uf2->value.x;
-			jsonUniform["value"]["y"] = uf2->value.y;
-		}
-		break;
-		case GL_FLOAT_VEC3:
-		{
-			UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-			jsonUniform["name"] = uf3->name;
-			jsonUniform["type"] = uf3->type;
-			jsonUniform["value"]["x"] = uf3->value.x;
-			jsonUniform["value"]["y"] = uf3->value.y;
-			jsonUniform["value"]["z"] = uf3->value.z;
-		}
-		break;
-		case GL_FLOAT_VEC4:
-		{
-			UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-			jsonUniform["name"] = uf4->name;
-			jsonUniform["type"] = uf4->type;
-			jsonUniform["value"]["x"] = uf4->value.x;
-			jsonUniform["value"]["y"] = uf4->value.y;
-			jsonUniform["value"]["z"] = uf4->value.z;
-			jsonUniform["value"]["w"] = uf4->value.w;
-		}
-		break;
-		case GL_INT:
-		{
-			UniformT<int>* ui = (UniformT<int>*)uniform;
-			jsonUniform["name"] = ui->name;
-			jsonUniform["type"] = ui->type;
-			jsonUniform["value"] = ui->value;
-		}
-		break;
-		default:
-			continue;
-		}
-		json["uniforms"].push_back(jsonUniform);
+		json["texture"]["asset_path"] = texture->GetAssetPath();
+		json["texture"]["asset_file"] = texture->GetAssetFile();
+		json["texture"]["library_path"] = texture->GetLibraryPath();
+		json["texture"]["library_file"] = texture->GetLibraryFile();
 	}
 }
 
@@ -173,100 +148,86 @@ void C_Material::Load(Json& json)
 {
 	if (!json.empty())
 	{
+		material = nullptr;
+		texture = nullptr;
+
+		Json jsonShader = json.at("shader");
+		std::string materialAssetPath = jsonShader.at("asset_path").get<std::string>();
+		material = (R_Material*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(materialAssetPath.c_str());
+
 		if (material == nullptr)
-			material = new R_Material();
-
-		//material->materialName = json["material_name"];
-		//material->SetMaterialPath(json.at("material_path").get<std::string>().c_str());
-
-		std::string shaderPath = json.at("shader_path").get<std::string>();
-		if (!shaderPath.empty())
-			material->SetLibraryPath(shaderPath.c_str());
+			CONSOLE_LOG("[ERROR] Component Material: could not load resource from library.");
 		else
 		{
-			shaderPath = ASSETS_SHADERS_DIR + std::string(DEFAULT_SHADER) + SHADER_EXTENSION;
-			material->SetLibraryPath(shaderPath.c_str());
-		}
+			material->SetAssetsPathAndFile(jsonShader.at("asset_path").get<std::string>().c_str(),
+				jsonShader.at("asset_file").get<std::string>().c_str());
+			material->SetAssetsPathAndFile(jsonShader.at("library_path").get<std::string>().c_str(),
+				jsonShader.at("library_file").get<std::string>().c_str());
 
-		if (!Importer::GetInstance()->materialImporter->Import(material->GetLibraryPath(), material))
-		{
-			CONSOLE_LOG("[ERROR] Something went wrong loading the shader.");
-		}
+			std::vector<float> values = json.at("color").get<std::vector<float>>();
+			material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
 
-		std::vector<float> values = json.at("color").get<std::vector<float>>();
-		material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
-		values.clear();
-		values.shrink_to_fit();
-
-		if (!json.at("library_path").get<std::string>().empty())
-		{
-			std::string texturePath = json.at("library_path").get<std::string>();
-			texture->SetLibraryPath(texturePath.c_str());
-			texture->SetLibraryFile(json.at("library_file").get<std::string>().c_str());
-			texture->SetAssetPath(json.at("asset_path").get<std::string>().c_str());
-			texture->SetAssetFile(json.at("asset_file").get<std::string>().c_str());
-
-			Importer::GetInstance()->textureImporter->Load(texturePath.c_str(), texture);
-		}
-		else
-		{
-			Importer::GetInstance()->textureImporter->Import(nullptr, texture);
-		}
-
-		//for (const auto& tex : json.at("textures").items())
-		//{
-		//	R_Texture t = R_Texture();
-		//	Importer::GetInstance()->textureImporter->Import(tex.value().at("path").get<std::string>().c_str(), &t);
-		//	textures.push_back(t);
-		//}
-
-		for (const auto& uni : json.at("uniforms").items())
-		{
-			std::string uniformName = uni.value().at("name").get<std::string>();
-			uint uniformType = uni.value().at("type").get<uint>();
-			switch (uniformType)
+			for (const auto& uni : jsonShader.at("uniforms").items())
 			{
-			case GL_FLOAT:
-			{
-				UniformT<float>* uniform = (UniformT<float>*)material->FindUniform(uniformName);
-				uniform->value = uni.value().at("value");
-			}
-			break;
-			case GL_FLOAT_VEC2:
-			{
-				UniformT<float2>* uniform = (UniformT<float2>*)material->FindUniform(uniformName);
-				uniform->value.x = uni.value().at("value").at("x");
-				uniform->value.y = uni.value().at("value").at("y");
-			}
-			break;
-			case GL_FLOAT_VEC3:
-			{
-				UniformT<float3>* uniform = (UniformT<float3>*)material->FindUniform(uniformName);
-				uniform->value.x = uni.value().at("value").at("x");
-				uniform->value.y = uni.value().at("value").at("y");
-				uniform->value.z = uni.value().at("value").at("z");
-			}
-			break;
-			case GL_FLOAT_VEC4:
-			{
-				UniformT<float4>* uniform = (UniformT<float4>*)material->FindUniform(uniformName);
-				if (uniform)
+				std::string uniformName = uni.value().at("name").get<std::string>();
+				uint uniformType = uni.value().at("type").get<uint>();
+				switch (uniformType)
 				{
+				case GL_FLOAT:
+				{
+					UniformT<float>* uniform = (UniformT<float>*)material->FindUniform(uniformName);
+					uniform->value = uni.value().at("value");
+					break;
+				}
+				case GL_FLOAT_VEC2:
+				{
+					UniformT<float2>* uniform = (UniformT<float2>*)material->FindUniform(uniformName);
+					uniform->value.x = uni.value().at("value").at("x");
+					uniform->value.y = uni.value().at("value").at("y");
+					break;
+				}
+				case GL_FLOAT_VEC3:
+				{
+					UniformT<float3>* uniform = (UniformT<float3>*)material->FindUniform(uniformName);
 					uniform->value.x = uni.value().at("value").at("x");
 					uniform->value.y = uni.value().at("value").at("y");
 					uniform->value.z = uni.value().at("value").at("z");
-					uniform->value.w = uni.value().at("value").at("w");
+					break;
 				}
-			
+				case GL_FLOAT_VEC4:
+				{
+					UniformT<float4>* uniform = (UniformT<float4>*)material->FindUniform(uniformName);
+					if (uniform)
+					{
+						uniform->value.x = uni.value().at("value").at("x");
+						uniform->value.y = uni.value().at("value").at("y");
+						uniform->value.z = uni.value().at("value").at("z");
+						uniform->value.w = uni.value().at("value").at("w");
+					}
+
+					break;
+				}
+				case GL_INT:
+				{
+					UniformT<int>* uniform = (UniformT<int>*)material->FindUniform(uniformName);
+					uniform->value = uni.value().at("value");
+					break;
+				}
+				}
 			}
-			break;
-			case GL_INT:
-			{
-				UniformT<int>* uniform = (UniformT<int>*)material->FindUniform(uniformName);
-				uniform->value = uni.value().at("value");
-			}
-			break;
-			}
+		}
+
+		Json jsonTexture = json.at("texture");
+		std::string textureAssetPath = jsonTexture.at("asset_path").get<std::string>();
+		texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(textureAssetPath.c_str());
+		if (texture == nullptr)
+			CONSOLE_LOG("[ERROR] Component Texture: could not load resource from library.");
+		else
+		{
+			texture->SetAssetsPathAndFile(jsonTexture.at("asset_path").get<std::string>().c_str(),
+				jsonTexture.at("asset_file").get<std::string>().c_str());
+			texture->SetAssetsPathAndFile(jsonTexture.at("library_path").get<std::string>().c_str(),
+				jsonTexture.at("library_file").get<std::string>().c_str());
 		}
 	}
 }
