@@ -225,8 +225,8 @@ public:
 		lua.new_usertype<C_Camera>("C_Transform",
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
-			"right", &C_Camera::right,
-			"up", &C_Camera::up
+			"right", &C_Camera::GetRight,
+			"up", &C_Camera::GetUp
 			);
 
 		// Component Mesh

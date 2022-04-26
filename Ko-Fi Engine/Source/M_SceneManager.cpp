@@ -299,10 +299,10 @@ void M_SceneManager::GuizmoTransformation()
 	}
 	
 
-	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ViewMatrix();
+	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->GetCameraFrustum().ViewMatrix();
 	viewMatrix.Transpose();
 
-	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed();
+	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed();
 
 	std::vector<float4x4> modelProjection;
 	for (int i = 0; i < selectedGameObjects.size(); i++)

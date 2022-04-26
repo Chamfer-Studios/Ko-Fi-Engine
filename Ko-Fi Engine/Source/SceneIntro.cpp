@@ -71,7 +71,7 @@ bool SceneIntro::Start()
 	{
 		GameObject *camera = CreateEmptyGameObject("Main Camera");
 		C_Camera *cCamera = camera->CreateComponent<C_Camera>();
-		cCamera->isMainCamera = true;
+		cCamera->SetIsMainCamera(true);
 		engine->GetCamera3D()->SetGameCamera(cCamera);
 	}
 	if (this->GetLights(SourceType::DIRECTIONAL).size() == 0)
