@@ -565,14 +565,14 @@ bool M_ResourceManager::DeleteAndUnloadResource(UID uid)
 	return true;
 }
 
-UID M_ResourceManager::Find(const char* assetPath) const
+Resource* M_ResourceManager::Find(const char* assetPath) const
 {
 	for (const auto& r : resourcesMap)
 	{
 		if (r.second->GetAssetPath() == assetPath)
-			return r.first;
+			return r.second;
 	}
-	return 0;
+	return nullptr;
 }
 
 void M_ResourceManager::FindAndForceUID(Resource* resource)
@@ -724,10 +724,12 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 
 	for (uint i = 0; i < toUpdate.size(); ++i)
 	{
-		std::string extension = toUpdate[i].c_str();
-		extension = extension.substr(extension.find_last_of("."), extension.size());
+		std::filesystem::path pathUpdate = toUpdate[i].c_str();
+		std::string extension = pathUpdate.extension().string();
 
-		if (extension == "h" || extension == "particles" || extension == "navmesh" || extension == "shader" || extension == "png")
+		if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0 ||
+			engine->GetFileSystem()->StringCompare(extension.c_str(), SHADER_EXTENSION) == 0 ||
+			engine->GetFileSystem()->StringCompare(extension.c_str(), TEXTURE_EXTENSION) == 0)
 		{
 			DeleteFromLibrary(toUpdate[i].c_str());
 			ImportFile(toUpdate[i].c_str());
@@ -1518,9 +1520,9 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 	case ResourceType::TEXTURE: { return true; } break;
 	case ResourceType::MODEL: { return true; } break;
 	case ResourceType::MATERIAL: { return true; } break;
-		//case ResourceType::FONT: { return true; } break;
-		//case ResourceType::PARTICLE: { return true; } break;
-		//case ResourceType::TRACK: { return true; } break;
+	//case ResourceType::FONT: { return true; } break;
+	//case ResourceType::PARTICLE: { return true; } break;
+	//case ResourceType::TRACK: { return true; } break;
 	default:
 		break;
 	}

@@ -26,7 +26,7 @@ public:
 	bool Import(const char* path, bool isPrefab = false);
 	bool Import(R_Model* model, bool isPrefab = false);
 
-	bool Save(Scene* scene, const char* name = nullptr);
+	bool Save(Scene* scene, const char* customName = nullptr);
 	bool SaveScene(Scene* scene, const char* name = nullptr);
 	bool SaveModel(const R_Model* model, const char* path);
 

@@ -108,8 +108,12 @@ public:
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
+
+	// Models in scene map
+	// Pairs a GameObject UID with the model Resource UID and the Asset Path (.fbx)
+	std::multimap<UID, std::pair<UID, std::string>> sceneModels;
 	
-	//Space Partitioning
+	// Space Partitioning
 	bool sceneTreeIsDirty = true;
 	bool drawSceneTree = false;
 	QuadTree3D* sceneTree = nullptr;

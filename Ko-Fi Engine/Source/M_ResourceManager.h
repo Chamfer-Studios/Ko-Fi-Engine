@@ -48,7 +48,7 @@ public:
 	bool UnloadResource(UID uid);							// Doesnt deletes from Library map
 	bool DeleteAndUnloadResource(UID uid);					// Deletes from Library map
 
-	UID Find(const char* assetPath) const;					//
+	Resource* Find(const char* assetPath) const;			//
 	void FindAndForceUID(Resource* resource);				//
 
 	// Meta file methods to get uids

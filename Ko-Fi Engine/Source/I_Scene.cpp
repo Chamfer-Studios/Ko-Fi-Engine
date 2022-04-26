@@ -581,7 +581,7 @@ void I_Scene::CheckAndApplyForcedUID(Resource* resource)
 		resource->ForceUID(item->second);
 }
 
-bool I_Scene::Save(Scene* scene,const char* customName)
+bool I_Scene::Save(Scene* scene, const char* customName)
 {
 	bool ret = false;
 
@@ -597,7 +597,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	jsonFile[name]["active"] = scene->active;
 	jsonFile[name]["navmesh"] = Json::object();
 	engine->GetNavigation()->Save(jsonFile[name]["navmesh"]);
-	jsonFile[name]["game_objects_amount"] = gameObjectList.size()-1;
+	jsonFile[name]["game_objects_amount"] = gameObjectList.size() - 1;
 	jsonFile[name]["game_objects_list"] = Json::array();
 	for (std::vector<GameObject*>::iterator goIt = gameObjectList.begin(); goIt != gameObjectList.end(); ++goIt)
 	{
@@ -776,9 +776,206 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 	return ret;
 }
 
-bool I_Scene::SaveScene(Scene* scene, const char* name)
+bool I_Scene::SaveScene(Scene* scene, const char* customName)
 {
-	return false;
+	bool ret = false;
+
+	JsonHandler jsonHandler;
+	Json jsonFile;
+
+	const char* name = customName == nullptr ? scene->name.c_str() : customName;
+
+	std::vector<GameObject*> gameObjectList = scene->gameObjectList;
+
+	jsonFile[name];
+	jsonFile[name]["name"] = name;
+	jsonFile[name]["active"] = scene->active;
+	jsonFile[name]["navmesh"] = Json::object();
+	engine->GetNavigation()->Save(jsonFile[name]["navmesh"]);
+
+	jsonFile[name]["models_in_scene_list"] = Json::array();
+	for (std::vector<GameObject*>::iterator goIt = gameObjectList.begin(); goIt != gameObjectList.end(); ++goIt)
+	{
+
+	}
+
+	jsonFile[name]["game_objects_amount"] = gameObjectList.size() - 1;
+	jsonFile[name]["game_objects_list"] = Json::array();
+	for (std::vector<GameObject*>::iterator goIt = gameObjectList.begin(); goIt != gameObjectList.end(); ++goIt)
+	{
+		Json jsonGameObject;
+
+		GameObject* gameObject = (*goIt);
+		if (gameObject->GetUID() == scene->rootGo->GetUID())
+		{
+			continue;
+		}
+		jsonGameObject["name"] = gameObject->GetName();
+		jsonGameObject["active"] = gameObject->active;
+		jsonGameObject["UID"] = gameObject->GetUID();
+		jsonGameObject["is3D"] = gameObject->is3D;
+		jsonGameObject["tag"] = (int)gameObject->tag;
+
+		// We don't want to save also its children here.
+		// We will arrive and create them when they get here with the loop.
+		// So, in order to keep track of parents and childrens, we will record the UID of the parent.
+		if (gameObject->GetParent() != nullptr)
+			jsonGameObject["parent_UID"] = gameObject->GetParent()->GetUID();
+		else
+			jsonGameObject["parent_UID"] = gameObject->GetUID();
+
+		std::vector<Component*> componentsList = gameObject->GetComponents();
+		jsonGameObject["components"] = Json::array();
+		for (std::vector<Component*>::iterator cmpIt = componentsList.begin(); cmpIt != componentsList.end(); ++cmpIt)
+		{
+			Json jsonComponent;
+
+			Component* component = (*cmpIt);
+
+			jsonComponent["active"] = component->active;
+
+			switch (component->GetType())
+			{
+			case ComponentType::NONE:
+			{
+				jsonComponent["type"] = "NONE";
+				break;
+			}
+			case ComponentType::MESH:
+			{
+				C_Mesh* meshCmp = (C_Mesh*)component;
+				meshCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::MATERIAL:
+			{
+				C_Material* materialCmp = (C_Material*)component;
+				materialCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::PARTICLE:
+			{
+				ComponentParticle* particleCmp = (ComponentParticle*)component;
+				particleCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::CAMERA:
+			{
+				C_Camera* cameraCmp = (C_Camera*)component;
+				cameraCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::COLLIDER:
+			{
+				C_Collider* collCmp = (C_Collider*)component;
+				collCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::SCRIPT:
+			{
+				C_Script* scriptCmp = (C_Script*)component;
+				scriptCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::RIGID_BODY:
+			{
+				C_RigidBody* rigidBodyCmp = (C_RigidBody*)component;
+				rigidBodyCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::TRANSFORM2D:
+			{
+				C_Transform2D* transform2DCmp = (C_Transform2D*)component;
+				transform2DCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::CANVAS:
+			{
+				C_Canvas* canvasCmp = (C_Canvas*)component;
+				canvasCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::IMAGE:
+			{
+				C_Image* imageCmp = (C_Image*)component;
+				imageCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::BUTTON:
+			{
+				C_Button* buttonCmp = (C_Button*)component;
+				buttonCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::TEXT:
+			{
+				C_Text* textCmp = (C_Text*)component;
+				textCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::TRANSFORM:
+			{
+				C_Transform* transformCmp = (C_Transform*)component;
+				transformCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::INFO:
+			{
+				C_Info* infoCmp = (C_Info*)component;
+				infoCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::AUDIO_SOURCE:
+			{
+				C_AudioSource* audioSrcCmp = (C_AudioSource*)component;
+				audioSrcCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::AUDIO_SWITCH:
+			{
+				C_AudioSwitch* audioSwitchCmp = (C_AudioSwitch*)component;
+				audioSwitchCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::ANIMATOR:
+			{
+				C_Animator* cAnimator = (C_Animator*)component;
+				cAnimator->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::WALKABLE:
+			{
+				ComponentWalkable* walkableCmp = (ComponentWalkable*)component;
+				walkableCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::FOLLOW_PATH:
+			{
+				ComponentFollowPath* followCmp = (ComponentFollowPath*)component;
+				followCmp->Save(jsonComponent);
+				break;
+			}
+			case ComponentType::LIGHT_SOURCE:
+			{
+				C_LightSource* componentLightSource = (C_LightSource*)component;
+				componentLightSource->Save(jsonComponent);
+				break;
+			}
+			default:
+				break;
+			}
+			jsonGameObject["components"].push_back(jsonComponent);
+		}
+		jsonFile[name]["game_objects_list"].push_back(jsonGameObject);
+	}
+	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
+
+	if (engine->GetFileSystem()->CheckDirectory(ASSETS_SCENES_DIR))
+		ret = jsonHandler.SaveJson(jsonFile, path.c_str());
+	else
+		ret = false;
+
+	return ret;
 }
 
 bool I_Scene::SaveModel(const R_Model* model, const char* path)
