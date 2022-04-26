@@ -198,6 +198,7 @@ function Update(dt)
 
 	--Gather Inputs
 	if (IsSelected() == true) then 
+
 		-- Left Click
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
 
