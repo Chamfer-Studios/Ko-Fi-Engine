@@ -864,12 +864,12 @@ bool I_Scene::SaveModel(const R_Model* model, const char* path)
 	bool ret = true;
 	if (path == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: couldn't save model in library, path was nullptr.");
+		CONSOLE_LOG("[ERROR] Model Save: couldn't save model in library, path was nullptr.");
 		return false;
 	}
 	if (model == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: couldn't save model in library, model was nullptr.");
+		CONSOLE_LOG("[ERROR] Model Save: couldn't save model in library, model was nullptr.");
 		return false;
 	}
 
@@ -909,8 +909,16 @@ bool I_Scene::SaveModel(const R_Model* model, const char* path)
 		jsonModel["model_animation"]["animation_uid"] = model->animation;
 	}
 
-	JsonHandler jsonHandler;
-	ret = jsonHandler.SaveJson(jsonModel, path);
+	if (engine->GetFileSystem()->CheckDirectory(MODELS_DIR))
+	{
+		JsonHandler jsonHandler;
+		ret = jsonHandler.SaveJson(jsonModel, path);
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Model Save: directory %s couldn't be accessed.", MODELS_DIR);
+		ret = false;
+	}
 
 	return ret;
 }
@@ -1209,8 +1217,8 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 
 	if (ret && !jsonFile.is_null())
 	{
-
 		scene->DeleteCurrentScene();
+
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
 		scene->rootGo->SetName(scene->name.c_str());
@@ -1218,11 +1226,10 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + scene->name);
 
 		scene->active = jsonScene.at("active");
-		//Create Root
+
+		// Create Root
 		if (jsonScene.find("navmesh") != jsonScene.end())
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
-
-
 
 		Json jsonModels = jsonScene.at("models_in_scene_list");
 		for (const auto& modelIt : jsonModels.items())
@@ -1500,58 +1507,66 @@ bool I_Scene::LoadModel(const char* path, R_Model* model)
 
 	if (model == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: couldn't load model from library, model was nullptr.");
+		CONSOLE_LOG("[ERROR] Model Load: couldn't load model from library, model was nullptr.");
 		return false;
 	}
 
-	JsonHandler jsonHandler;
-	Json jsonModel;
-
-	ret = jsonHandler.LoadJson(jsonModel, path);
-
-	if (ret && !jsonModel.is_null() && !jsonModel.empty())
+	if (engine->GetFileSystem()->CheckDirectory(MODELS_DIR))
 	{
-		for (const auto& node : jsonModel.at("model_nodes").items())
+		JsonHandler jsonHandler;
+		Json jsonModel;
+
+		ret = jsonHandler.LoadJson(jsonModel, path);
+
+		if (ret && !jsonModel.is_null() && !jsonModel.empty())
 		{
-			ModelNode modelNode = ModelNode();
-			modelNode.name = node.value().at("node_name").get<std::string>();
-			modelNode.uid = node.value().at("uid");
-			modelNode.parentUid = node.value().at("parent_uid");
-			modelNode.mesh = node.value().at("mesh_uid");
-			modelNode.material = node.value().at("material_uid");
-			modelNode.texture = node.value().at("texture_uid");
-			modelNode.textureName = node.value().at("texture_name").get<std::string>();
-
-			modelNode.position.x = node.value().at("position").at("x");
-			modelNode.position.y = node.value().at("position").at("y");
-			modelNode.position.z = node.value().at("position").at("z");
-
-			modelNode.rotation.x = node.value().at("rotation").at("x");
-			modelNode.rotation.y = node.value().at("rotation").at("y");
-			modelNode.rotation.z = node.value().at("rotation").at("z");
-			modelNode.rotation.w = node.value().at("rotation").at("w");
-
-			modelNode.scale.x = node.value().at("scale").at("x");
-			modelNode.scale.y = node.value().at("scale").at("y");
-			modelNode.scale.z = node.value().at("scale").at("z");
-
-			model->nodes.push_back(modelNode);
-		}
-
-		if (jsonModel.contains("model_animation"))
-		{
-			if (!jsonModel.at("model_animation").is_null() && !jsonModel.at("model_animation").empty())
+			for (const auto& node : jsonModel.at("model_nodes").items())
 			{
-				model->animationName = jsonModel.at("model_animation").at("animation_name");
-				model->animation = jsonModel.at("model_animation").at("animation_uid");
-			}
-		}
+				ModelNode modelNode = ModelNode();
+				modelNode.name = node.value().at("node_name").get<std::string>();
+				modelNode.uid = node.value().at("uid");
+				modelNode.parentUid = node.value().at("parent_uid");
+				modelNode.mesh = node.value().at("mesh_uid");
+				modelNode.material = node.value().at("material_uid");
+				modelNode.texture = node.value().at("texture_uid");
+				modelNode.textureName = node.value().at("texture_name").get<std::string>();
 
-		CONSOLE_LOG("[STATUS] Importer: successfully loaded model: { %s }", model->GetAssetFile());
+				modelNode.position.x = node.value().at("position").at("x");
+				modelNode.position.y = node.value().at("position").at("y");
+				modelNode.position.z = node.value().at("position").at("z");
+
+				modelNode.rotation.x = node.value().at("rotation").at("x");
+				modelNode.rotation.y = node.value().at("rotation").at("y");
+				modelNode.rotation.z = node.value().at("rotation").at("z");
+				modelNode.rotation.w = node.value().at("rotation").at("w");
+
+				modelNode.scale.x = node.value().at("scale").at("x");
+				modelNode.scale.y = node.value().at("scale").at("y");
+				modelNode.scale.z = node.value().at("scale").at("z");
+
+				model->nodes.push_back(modelNode);
+			}
+
+			if (jsonModel.contains("model_animation"))
+			{
+				if (!jsonModel.at("model_animation").is_null() && !jsonModel.at("model_animation").empty())
+				{
+					model->animationName = jsonModel.at("model_animation").at("animation_name");
+					model->animation = jsonModel.at("model_animation").at("animation_uid");
+				}
+			}
+
+			CONSOLE_LOG("[STATUS] Model Load: successfully loaded model: { %s }", model->GetAssetFile());
+		}
+		else
+		{
+			CONSOLE_LOG("[ERROR] Model Load: couldn't load model from library.");
+			return false;
+		}
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Importer: couldn't load model from library.");
+		CONSOLE_LOG("[ERROR] Model Load: directory %s couldn't be accessed.", MODELS_DIR);
 		ret = false;
 	}
 

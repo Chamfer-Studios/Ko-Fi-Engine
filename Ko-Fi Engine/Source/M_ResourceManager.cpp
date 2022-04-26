@@ -1535,5 +1535,14 @@ bool M_ResourceManager::HasImportIgnoredExtension(const char* assetPath) const
 	std::filesystem::path filePath = assetPath;
 	return (engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ini") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0);
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".mp3") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".wav") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".txt") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".milk") == 0 // TODO Temporary (just delete from assets?)
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".bytes") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".lua") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".md5mesh") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".md5anim") == 0
+		);
 }
