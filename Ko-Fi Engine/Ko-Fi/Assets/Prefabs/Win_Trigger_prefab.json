@@ -1,0 +1,62 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "body_type": "Static",
+            "freeze_position_x": false,
+            "freeze_position_y": false,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": "rigidBody",
+            "use_gravity": true
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "filter": "win_trigger",
+            "is_trigger": true,
+            "scale_factor": [
+                60.0,
+                40.0,
+                12.0
+            ],
+            "type": "boxCollider"
+        }
+    ],
+    "isPrefab": true,
+    "name": "Win_Trigger",
+    "tag": 0
+}
