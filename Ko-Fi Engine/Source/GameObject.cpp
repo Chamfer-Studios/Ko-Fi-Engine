@@ -107,6 +107,7 @@ bool GameObject::Update(float dt)
 		if (component)
 			ret = component->Update(dt);
 	}
+
 	return ret;
 }
 
@@ -118,6 +119,10 @@ bool GameObject::PostUpdate(float dt)
 	{
 		ret = component->PostUpdate(dt);
 	}
+
+	// Propagate isActive to children if needed
+	if(isActiveWindow)
+	PropragateIsActive();
 
 	return ret;
 }
@@ -381,7 +386,7 @@ void GameObject::AttachChild(GameObject* child)
 {
 	if (child->parent != nullptr)
 		child->parent->RemoveChild(child);
-	
+
 	child->parent = this;
 	children.push_back(child);
 	//child->PropagateTransform();
@@ -407,10 +412,10 @@ void GameObject::PropagateTransform()
 
 void GameObject::SetName(const char* name)
 {
-		this->name = SetObjectNumberedName(name).c_str();
+	this->name = SetObjectNumberedName(name).c_str();
 }
 
-const char *GameObject::GetName() const
+const char* GameObject::GetName() const
 {
 	return name.c_str();
 }
@@ -430,7 +435,7 @@ GameObject* GameObject::GetParent() const
 	return parent;
 }
 
-C_Transform *GameObject::GetTransform() const
+C_Transform* GameObject::GetTransform() const
 {
 	return this->transform;
 }
@@ -507,7 +512,7 @@ bool GameObject::PrefabSaveJson()
 	this->PrefabSave(jsonFile);
 
 	std::string path = "Assets/Prefabs/" + std::string(name) + "_prefab.json";
-	
+
 	this->prefabPath = path;
 
 	ret = jsonHandler.SaveJson(jsonFile, path.c_str());
@@ -1128,4 +1133,34 @@ void GameObject::SetChangeScene(bool changeSceneLua, std::string sceneNameLua)
 {
 	changeScene = changeSceneLua;
 	sceneName = sceneNameLua;
+}
+
+void GameObject::PropragateIsActive()
+{
+	if (children.size() == 0)
+	{
+		isActiveWindow = false;
+		return;
+	}
+
+	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking || ImGuiWindowFlags_NoTitleBar || ImGuiWindowFlags_NoResize || ImGuiWindowFlags_NoMove || ImGuiWindowFlags_NoCollapse;
+	ImGui::Begin("Apply To Children", nullptr, windowFlags);
+	ImGui::SetWindowSize(ImVec2(250, 100));
+	ImGui::Text("Do you want to apply to all children?");
+	ImGui::Spacing();
+	if (ImGui::Button("YES", ImVec2(70, 30)))
+	{
+		for (GameObject* go : children)
+		{
+			go->active = active;
+		}
+		isActiveWindow = false;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("NO", ImVec2(70, 30)))
+	{
+		isActiveWindow = false;
+	}
+
+	ImGui::End();
 }

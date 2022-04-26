@@ -100,6 +100,8 @@ public:
 	bool IsSelected();
 	void LoadSceneFromName(std::string name);
 	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
+
+	void PropragateIsActive();
 private:
 	std::string SetObjectNumberedName(const char* _name);
 
@@ -112,6 +114,8 @@ public:
 
 public:
 	bool active = true;
+	bool isActiveWindow = false;
+
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
