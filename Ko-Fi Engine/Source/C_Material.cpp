@@ -71,10 +71,7 @@ void C_Material::Save(Json& json) const
 	{
 		json["color"] = {material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a};
 
-		json["shader"]["asset_file"] = material->GetAssetFile();
 		json["shader"]["asset_path"] = material->GetAssetPath();
-		json["shader"]["library_file"] = material->GetLibraryFile();
-		json["shader"]["library_path"] = material->GetLibraryPath();
 
 		json["shader"]["uniforms"].array();
 		Json jsonUniform;
@@ -138,9 +135,6 @@ void C_Material::Save(Json& json) const
 	if (texture != nullptr)
 	{
 		json["texture"]["asset_path"] = texture->GetAssetPath();
-		json["texture"]["asset_file"] = texture->GetAssetFile();
-		json["texture"]["library_path"] = texture->GetLibraryPath();
-		json["texture"]["library_file"] = texture->GetLibraryFile();
 	}
 }
 
@@ -151,23 +145,17 @@ void C_Material::Load(Json& json)
 		material = nullptr;
 		texture = nullptr;
 
-		Json jsonShader = json.at("shader");
-		std::string materialAssetPath = jsonShader.at("asset_path").get<std::string>();
+		std::string materialAssetPath = json.at("shader").at("asset_path").get<std::string>();
 		material = (R_Material*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(materialAssetPath.c_str());
 
 		if (material == nullptr)
 			CONSOLE_LOG("[ERROR] Component Material: could not load resource from library.");
 		else
 		{
-			material->SetAssetsPathAndFile(jsonShader.at("asset_path").get<std::string>().c_str(),
-				jsonShader.at("asset_file").get<std::string>().c_str());
-			material->SetAssetsPathAndFile(jsonShader.at("library_path").get<std::string>().c_str(),
-				jsonShader.at("library_file").get<std::string>().c_str());
-
 			std::vector<float> values = json.at("color").get<std::vector<float>>();
 			material->diffuseColor = Color(values[0], values[1], values[2], values[3]);
 
-			for (const auto& uni : jsonShader.at("uniforms").items())
+			for (const auto& uni : json.at("shader").at("uniforms").items())
 			{
 				std::string uniformName = uni.value().at("name").get<std::string>();
 				uint uniformType = uni.value().at("type").get<uint>();
@@ -217,18 +205,11 @@ void C_Material::Load(Json& json)
 			}
 		}
 
-		Json jsonTexture = json.at("texture");
-		std::string textureAssetPath = jsonTexture.at("asset_path").get<std::string>();
+		std::string textureAssetPath = json.at("texture").at("asset_path").get<std::string>();
 		texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(textureAssetPath.c_str());
+		
 		if (texture == nullptr)
 			CONSOLE_LOG("[ERROR] Component Texture: could not load resource from library.");
-		else
-		{
-			texture->SetAssetsPathAndFile(jsonTexture.at("asset_path").get<std::string>().c_str(),
-				jsonTexture.at("asset_file").get<std::string>().c_str());
-			texture->SetAssetsPathAndFile(jsonTexture.at("library_path").get<std::string>().c_str(),
-				jsonTexture.at("library_file").get<std::string>().c_str());
-		}
 	}
 }
 
