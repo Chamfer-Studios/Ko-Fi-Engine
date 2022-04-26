@@ -346,29 +346,3 @@ bool C_Camera::ClipsWithBBox(const AABB& refBox) const
 	}
 }
 
-//void ModuleCamera3D::OnSave(JSONWriter& writer) const
-//{
-//	writer.String("camera");
-//	writer.StartObject();
-//	SAVE_JSON_FLOAT(verticalFOV)
-//		SAVE_JSON_FLOAT(nearPlaneDistance)
-//		SAVE_JSON_FLOAT(farPlaneDistance)
-//		SAVE_JSON_FLOAT(cameraSpeed)
-//		SAVE_JSON_FLOAT(cameraSensitivity)
-//		writer.EndObject();
-//}
-
-//void ModuleCamera3D::OnLoad(const JSONReader& reader)
-//{
-//	if (reader.HasMember("camera"))
-//	{
-//		const auto& config = reader["camera"];
-//		LOAD_JSON_FLOAT(verticalFOV);
-//		LOAD_JSON_FLOAT(nearPlaneDistance);
-//		LOAD_JSON_FLOAT(farPlaneDistance);
-//		LOAD_JSON_FLOAT(cameraSpeed);
-//		LOAD_JSON_FLOAT(cameraSensitivity);
-//	}
-//	RecalculateProjection();
-//}
-
