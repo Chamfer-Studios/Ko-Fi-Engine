@@ -60,7 +60,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": ""
+        "DefaultScene": "HUD_Scene"
     },
     "UI": null,
     "Window": {

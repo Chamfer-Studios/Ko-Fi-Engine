@@ -68,8 +68,10 @@ bool M_Renderer3D::Awake(Json configModule)
 	ret = InitOpenGL();
 	OnResize();
 	SetVsync(configModule["Vsync"].get<bool>());
-
+#ifndef KOFI_GAME
 	InitFrameBuffers();
+#endif // KOFI_GAME
+
 
 	ret = LoadConfiguration(configModule);
 
@@ -82,8 +84,11 @@ bool M_Renderer3D::PreUpdate(float dt)
 	OPTICK_EVENT();
 
 	bool ret = true;
+	
+#ifndef KOFI_GAME
 	PrepareFrameBuffers();
-
+#endif //KOFI_GAME
+	PrepareFrameBuffers();
 	isFirstPass = true;
 
 	return ret;
@@ -98,10 +103,12 @@ bool M_Renderer3D::Update(float dt)
 bool M_Renderer3D::PostUpdate(float dt)
 {
 	OPTICK_EVENT();
-
+	OnResize();
 	PassProjectionAndViewToRenderer();
 	RenderScene(engine->GetCamera3D()->currentCamera);
 	isFirstPass = false;
+	UnbindFrameBuffers();
+#ifndef KOFI_GAME
 	UnbindFrameBuffers();
 	if (engine->GetEditor()->toggleCameraViewportPanel)
 	{
@@ -112,6 +119,8 @@ bool M_Renderer3D::PostUpdate(float dt)
 		RenderScene(engine->GetCamera3D()->gameCamera);
 		UnbindFrameBuffers();
 	}
+#endif // KOFI_GAME
+	
 	SwapWindow();
 	return true;
 }

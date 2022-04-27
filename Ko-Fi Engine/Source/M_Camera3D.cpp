@@ -50,8 +50,8 @@ bool M_Camera3D::Start()
 	engineCameraObject = new GameObject(0, engine, "");
 	engineCamera = new C_Camera(engineCameraObject, true);
 	engineCamera->isEngineCamera = true;
-	
 	currentCamera = engineCamera;
+
 	currentCamera->right = float3(1.0f, 0.0f, 0.0f);
 	currentCamera->up = float3(-0.000605105015f, 0.804563046f, 0.593866348f);
 	currentCamera->front = float3(-0.000820143265f, -0.593866587f, 0.804562271f);
