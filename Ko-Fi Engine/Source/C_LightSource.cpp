@@ -45,7 +45,6 @@ bool C_LightSource::CleanUp()
 
 void C_LightSource::Save(Json& json) const
 {
-	json["type"] = "lightSource";
 	json["sourceType"] = (int)sourceType;
 
 	switch (sourceType)

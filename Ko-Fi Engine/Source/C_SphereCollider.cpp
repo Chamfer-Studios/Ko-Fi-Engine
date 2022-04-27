@@ -108,7 +108,6 @@ bool C_SphereCollider::InspectorDraw(PanelChooser* chooser)
 
 void C_SphereCollider::Save(Json& json) const
 {
-	json["type"] = "sphereCollider";
 	json["filter"] = filter;
 	json["is_trigger"] = isTrigger;
 	json["scale_factor"] = scaleFactor;

@@ -634,7 +634,6 @@ void C_Particle::NewEmitterName(std::string& name, int n)
 
 void C_Particle::Save(Json& json) const
 {
-	json["type"] = "particle";
 	Json jsonResource;
 	if (resource != nullptr)
 	{

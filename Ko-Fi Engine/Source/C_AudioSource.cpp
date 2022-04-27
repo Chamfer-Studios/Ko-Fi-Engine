@@ -203,8 +203,6 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
 
 void C_AudioSource::Save(Json& json) const
 {
-    json["type"] = "audio_source";
-
     if (track != nullptr)
     {
         json["state"] = true;

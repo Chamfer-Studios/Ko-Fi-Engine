@@ -118,7 +118,6 @@ bool C_BoxCollider::InspectorDraw(PanelChooser *chooser)
 
 void C_BoxCollider::Save(Json &json) const
 {
-	json["type"] = "boxCollider";
 	json["filter"] = filter;
 	json["is_trigger"] = isTrigger;
 	json["scale_factor"] = {scaleFactor.x, scaleFactor.y, scaleFactor.z};

@@ -109,7 +109,6 @@ bool C_CapsuleCollider::InspectorDraw(PanelChooser* chooser)
 
 void C_CapsuleCollider::Save(Json& json) const
 {
-	json["type"] = "capsuleCollider";
 	json["filter"] = filter;
 	json["is_trigger"] = isTrigger;
 	json["scale_factor"] = { scaleFactor.x, scaleFactor.y};

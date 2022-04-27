@@ -60,8 +60,11 @@ void Scene::DeleteCurrentScene()
 	}
 	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
 	gameObjectList.clear();
+	gameObjectList.shrink_to_fit();
 	lights.clear();
+	lights.shrink_to_fit();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
+	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 	rootGo = new GameObject(-1, engine, "Root");
 	gameObjectList.push_back(rootGo);
 }

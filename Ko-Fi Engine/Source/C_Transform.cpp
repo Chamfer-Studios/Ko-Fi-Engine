@@ -260,7 +260,6 @@ void C_Transform::Save(Json &json) const
 	float3 scale = GetScale();
 	Quat rotation = GetRotationQuat();
 
-	json["type"] = "transform";
 	json["position"] = {position.x, position.y, position.z};
 	json["rotation"] = {rotation.x, rotation.y, rotation.z, rotation.w};
 	json["scale"] = {scale.x, scale.y, scale.z};

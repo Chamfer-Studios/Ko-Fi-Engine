@@ -14,8 +14,6 @@ C_FollowPath::C_FollowPath(GameObject* parent) : Component(parent)
 
 void C_FollowPath::Save(Json& json) const
 {
-	json["type"] = "followPath";
-
 	std::vector<float> wpVector;
 
 	for (int i = 0; i < nWaypoints; i++) {

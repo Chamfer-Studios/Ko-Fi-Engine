@@ -82,8 +82,6 @@ bool C_Mesh::CleanUp()
 
 void C_Mesh::Save(Json& json) const
 {
-	json["type"] = "mesh";
-
 	std::string name = owner->GetName();
 	std::string path = MESHES_DIR + name + MESH_EXTENSION;
 

@@ -7,7 +7,6 @@ C_Walkable::C_Walkable(GameObject* parent) : Component(parent)
 
 void C_Walkable::Save(Json& json) const
 {
-	json["type"] = "walkable";
 }
 
 void C_Walkable::Load(Json& json)

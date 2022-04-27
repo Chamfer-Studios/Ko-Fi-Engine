@@ -159,7 +159,6 @@ bool C_Button::InspectorDraw(PanelChooser* panelChooser)
 
 void C_Button::Save(Json& json) const
 {
-	json["type"] = "button";
 	json["idleTexture"] = idleOpenGLTexture.GetTexturePath();
 	json["hoverTexture"] = hoverOpenGLTexture.GetTexturePath();
 	json["pressedTexture"] = pressedOpenGLTexture.GetTexturePath();

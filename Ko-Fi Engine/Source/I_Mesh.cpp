@@ -6,6 +6,7 @@
 #include "M_FileSystem.h"
 #include "FSDefs.h"
 
+#include "optick.h"
 #include <fstream>
 
 I_Mesh::I_Mesh(KoFiEngine* engine) : engine(engine)
@@ -132,11 +133,11 @@ bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 			if (mesh->texCoordSizeBytes != 0)
 				file.write((char*)mesh->texCoords, mesh->texCoordSizeBytes);	// Texture coordinates
 
-			/*bool isAnimated = false;*/
+			bool isAnimated = false;
 			if (mesh->IsAnimated())
 			{
-				/*isAnimated = true;
-				file.write((char*)&isAnimated, sizeof(bool));*/
+				isAnimated = true;
+				file.write((char*)&isAnimated, sizeof(bool));
 
 				uint boneInfoSize = mesh->boneInfo.size();
 				uint bonesSize = mesh->bones.size();

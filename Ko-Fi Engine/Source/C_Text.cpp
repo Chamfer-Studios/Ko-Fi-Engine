@@ -29,7 +29,6 @@ bool C_Text::CleanUp()
 
 void C_Text::Save(Json& json) const
 {
-	json["type"] = "text";
 	json["value"] = textValue;
 }
 

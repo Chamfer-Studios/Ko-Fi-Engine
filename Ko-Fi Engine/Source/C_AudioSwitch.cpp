@@ -296,8 +296,6 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
 void C_AudioSwitch::Save(Json& json) const
 {
-    json["type"] = "audio_switch";
-
     json["total_tracks"] = totalTracks;
     json["fade_time"] = fadeTime;
     json["offset_sync"] = offsetSync;

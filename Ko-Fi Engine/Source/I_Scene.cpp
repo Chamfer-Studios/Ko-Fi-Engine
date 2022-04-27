@@ -852,10 +852,7 @@ bool I_Scene::SaveScene(Scene* scene, const char* customName)
 
 			jsonComponent["active"] = component->active;
 
-			if (component->GetType() == ComponentType::NONE)
-				jsonComponent["type"] = "NONE";
-			else
-				component->Save(jsonComponent);
+			component->Save(jsonComponent);
 
 			jsonGameObject["components"].push_back(jsonComponent);
 		}
@@ -1296,7 +1293,15 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
-			uint UID = jsonGo.at("UID");
+			uint uid = jsonGo.at("UID");
+
+			//TODO: 
+			Resource* r = engine->GetResourceManager()->RequestResource(uid);
+			if (r == nullptr)
+			{
+
+			}
+
 			bool is3D = true;
 			if (jsonGo.find("is3D") != jsonGo.end())
 				is3D = jsonGo.at("is3D");
@@ -1306,7 +1311,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 				tag = jsonGo.at("tag");
 
 			std::string name = jsonGo.at("name");
-			GameObject* go = new GameObject(UID, engine, name.c_str(), is3D);
+			GameObject* go = new GameObject(uid, engine, name.c_str(), is3D);
 
 			go->active = jsonGo.at("active");
 			go->tag = tag;
@@ -1322,7 +1327,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 				if (jsonCmp.contains("type"))
 				{
 					std::string type = jsonCmp.at("type");
-
+					
 					if (type == "transform")
 					{
 						C_Transform* transformCmp = go->GetComponent<C_Transform>();

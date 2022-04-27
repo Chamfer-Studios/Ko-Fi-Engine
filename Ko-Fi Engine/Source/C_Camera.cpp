@@ -186,7 +186,6 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 
 void C_Camera::Save(Json& json) const
 {
-	json["type"] = "camera";
 	json["vertical_fov"] = verticalFOV;
 	json["near_plane_distance"] = nearPlaneDistance;
 	json["far_plane_distance"] = farPlaneDistance;

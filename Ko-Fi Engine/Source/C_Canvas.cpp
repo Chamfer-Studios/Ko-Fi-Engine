@@ -23,8 +23,6 @@ bool C_Canvas::CleanUp()
 
 void C_Canvas::Save(Json& json) const
 {
-	json["type"] = "canvas";
-
 	json["position"] = {
 		GetPosition().x,
 		GetPosition().y,

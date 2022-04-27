@@ -211,8 +211,6 @@ void C_RigidBody::UpdateConstrains()
 
 void C_RigidBody::Save(Json& json) const
 {
-	json["type"] = "rigidBody";
-
 	json["body_type"] = bodyType;
 	json["use_gravity"] = useGravity;
 	json["mass"] = mass;
