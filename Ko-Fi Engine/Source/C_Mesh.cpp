@@ -48,12 +48,13 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 
 C_Mesh::~C_Mesh()
 {
-	RELEASE(mesh);
+	CleanUp(); // Already called
 }
 
 bool C_Mesh::Start()
 {
-	GenerateLocalBoundingBox();
+	if (mesh)
+		GenerateGlobalBoundingBox();
 	return true;
 }
 
@@ -66,12 +67,14 @@ bool C_Mesh::PostUpdate(float dt) //AKA the real render
 {
 	bool ret = true;
 
-
 	return ret;
 }
 
 bool C_Mesh::CleanUp()
 {
+	std::string temp(owner->GetName());
+	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
+		return true;
 	RELEASE(mesh);
 
 	return true;
@@ -154,7 +157,7 @@ void C_Mesh::Load(Json& json)
 		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
 		this->GetMesh()->SetRootNode(object);
 	}
-
+	GenerateGlobalBoundingBox();
 }
 
 void C_Mesh::SetMesh(R_Mesh* mesh)
@@ -212,7 +215,7 @@ const AABB C_Mesh::GetGlobalAABB() const
 void C_Mesh::GenerateLocalBoundingBox()
 {
 	// Generate AABB
-	if (mesh != nullptr)
+	if (mesh != nullptr && mesh->vertices != 0) // to avoid float3 isfinite warning.
 	{
 		mesh->localAABB.SetNegativeInfinity();
 		mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));

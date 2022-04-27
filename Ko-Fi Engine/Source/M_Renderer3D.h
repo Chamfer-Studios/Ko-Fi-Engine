@@ -79,6 +79,7 @@ public:
 
 	void DrawCylinder(float4x4 transform);
 	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length);
+	void DrawCircle(float3 position, float radius);
 
 	// Debug ray for mouse picking
 	void DrawRay();

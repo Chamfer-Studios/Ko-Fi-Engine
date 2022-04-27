@@ -8,7 +8,11 @@
 // GameObject
 #include "GameObject.h"
 #include "C_Camera.h"
-#include "C_Collider.h"
+#include "C_Mesh.h"
+#include "C_BoxCollider.h"
+#include "C_SphereCollider.h"
+#include "C_CapsuleCollider.h"
+
 
 #include "PanelChooser.h"
 
@@ -29,14 +33,40 @@ C_Transform::~C_Transform()
 
 bool C_Transform::Update(float dt)
 {
+	
 	if (isDirty) // When Object is Modified
 	{
+		if (owner->GetComponent<C_Mesh>())
+		{
+			owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
+		}
 		RecomputeGlobalMatrix();
 		owner->PropagateTransform();
-		if (owner->GetComponent<C_Collider>())
-			owner->GetComponent<C_Collider>()->UpdateCollSizeFromAABB();
+
+		// Update colliders
+		if (owner->GetComponent<C_BoxCollider>())
+			owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
+		if (owner->GetComponent<C_SphereCollider>())
+			owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
+		if (owner->GetComponent<C_CapsuleCollider>())
+			owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
+
 		isDirty = false;
 	}
+
+	return true;
+}
+
+bool C_Transform::PostUpdate(float dt)
+{
+	return true;
+
+	glBegin(GL_LINES);
+	glColor3f(0, 0, 1.0f);
+	glLineWidth(4.f);
+	glVertex3f(GetPosition().x, GetPosition().y, GetPosition().z);
+	glVertex3f(GetPosition().x + Front().x * 50, GetPosition().y + Front().y * 50, GetPosition().z + Front().z * 50);
+	glEnd();
 
 	return true;
 }
@@ -54,7 +84,7 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 
 		// Position ImGui
 		float3 newPosition = GetPosition();
-		if (ImGui::DragFloat3("Location", &newPosition[0]), 0.005f)
+		if (ImGui::DragFloat3("Location##", &(newPosition[0]), 0.5f))
 		{
 			SetPosition(newPosition);
 		}
@@ -62,7 +92,7 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 		// Rotation ImGui
 		float3 newRotationEuler = GetRotationEuler();
 		newRotationEuler = RadToDeg(newRotationEuler);
-		if (ImGui::DragFloat3("Rotation", &(newRotationEuler[0]), 0.045f))
+		if (ImGui::DragFloat3("Rotation##", &(newRotationEuler[0]), 0.045f))
 		{
 			newRotationEuler = DegToRad(newRotationEuler);
 			SetRotationEuler(newRotationEuler);
@@ -70,7 +100,7 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 
 		// Scale ImGui
 		float3 newScale = GetScale();
-		if (ImGui::DragFloat3("Scale", &(newScale[0]), 0.02f, 0.00000001f, 5000.f))
+		if (ImGui::DragFloat3("Scale##", &(newScale[0]), 0.02f, 0.1f, 5000.f))
 		{
 			SetScale(newScale);
 		}
@@ -118,16 +148,40 @@ void C_Transform::SetRotationQuat(const Quat &newRotation)
 	isDirty = true;
 }
 
-void C_Transform::SetFront(const float3 &front)
+void C_Transform::LookAt(float3 &_front, float3 &_up)
 {
-	transformMatrixLocal.SetCol3(2, front);
+	_front = _front.Normalized();
+	_up = _up.Normalized();
+
+	float angle = atan2(_front.z, _front.x);
+
+	Quat r = GetRotationQuat();
+
+	float3 cross = _up.Cross(Up());
+	float angleBetween = _up.AngleBetween(Up());
+
+	r = r.RotateAxisAngle(cross, angleBetween);
+
+	float3 currentEuler = r.ToEulerXYZ();
+
+	float diff = currentEuler.y - angle;
+
+	diff += 90.0f * DEGTORAD;
+
+	r = r.RotateAxisAngle(_up, diff);
+
+	SetRotationQuat(r);
+
+	//transformMatrixLocal = float4x4::LookAt(GetPosition(), GetPosition() + _front, Front(), Up(), float3(0, 1, 0));
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
+	isDirty = true;
 }
 
 void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
 {
 	if (owner->GetParent() == nullptr) return;
 	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
-	transformMatrix = globalTransform;
+	//transformMatrix = globalTransform;
 	isDirty = true;
 }
 
@@ -185,11 +239,6 @@ const float3 &C_Transform::Up() const
 const float3 &C_Transform::Front() const
 {
 	return transformMatrixLocal.Col3(2).Normalized();
-}
-
-float4x4 C_Transform::GetGlobalTransform() const
-{
-	return transformMatrix;
 }
 
 void C_Transform::RecomputeGlobalMatrix()

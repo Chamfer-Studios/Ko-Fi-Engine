@@ -15,10 +15,10 @@
 #include "C_Material.h"
 #include "C_Camera.h"
 #include "C_Script.h"
-#include "C_Collider.h"
 #include "C_Transform.h"
+#include "C_LightSource.h"
 #include "C_Transform2D.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 
 #include "Scripting.h" // Consider moving this to Globals.h or smth
 #include "Primitive.h"
@@ -46,7 +46,7 @@ SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 	// LCG random;
 	// uint uid = random.Int();
 	// GameObject * g = this->CreateEmptyGameObject("Particle Test");
-	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<ComponentParticle>();
+	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<C_Particle>();
 }
 
 SceneIntro::~SceneIntro()
@@ -63,23 +63,26 @@ bool SceneIntro::Start()
 	{
 		Importer::GetInstance()->sceneImporter->Load(this, engine->GetSceneManager()->GetDefaultScene().c_str());
 	}
+	else
+	{
+		// TODO: Load a default scene, or create a new empty one
+	}
 	if (!engine->GetCamera3D()->gameCamera)
 	{
-		GameObject *camera = CreateEmptyGameObject("camera");
+		GameObject *camera = CreateEmptyGameObject("Main Camera");
 		C_Camera *cCamera = camera->CreateComponent<C_Camera>();
 		cCamera->isMainCamera = true;
 		engine->GetCamera3D()->SetGameCamera(cCamera);
 	}
-
+	if (this->GetLights(SourceType::DIRECTIONAL).size() == 0)
+	{
+		GameObject* go = CreateEmptyGameObject("Direct Light");
+		go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+	}
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 
 	example::NodeEditorInitialize();
-
-	for (GameObject *go : this->gameObjectList)
-	{
-		go->Start();
-	}
 
 	ComputeQuadTree();
 
@@ -88,6 +91,23 @@ bool SceneIntro::Start()
 
 bool SceneIntro::PreUpdate(float dt)
 {
+	for (std::map<GameObject*, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
+	{
+		std::string path = "Assets/Prefabs/" + (*mapIt).second + "_prefab.json";
+		if (!std::filesystem::exists(path))
+			return true;
+		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+		go->LoadPrefabJson(path.c_str(), false);
+		for (Component* component : go->GetComponents()) // This method used because there could be multiple scripts in one go
+		{
+			if (component->GetType() != ComponentType::SCRIPT)
+				continue;
+			C_Script* script = (C_Script*)component;
+			script->s->handler->lua["Start"]();
+		}
+	}
+	gameObjectListToCreate.clear();
+
 	for (GameObject *go : this->gameObjectList)
 	{
 		go->PreUpdate();
@@ -107,6 +127,11 @@ bool SceneIntro::Update(float dt)
 			switchScene = true;
 			sceneNameGO = go->sceneName;
 			go->changeScene = false;
+		}
+		if (go->isQuitting)
+		{
+			quitPlease = true;
+			go->isQuitting = false;
 		}
 	}
 
@@ -130,51 +155,6 @@ bool SceneIntro::PostUpdate(float dt)
 		go->PostUpdate(dt);
 	}
 
-	for (std::map<GameObject *, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
-	{
-		GameObject *knife = CreateEmptyGameObject((*mapIt).second.c_str());
-		GameObject *parent = (*mapIt).first;
-
-		if ((*mapIt).second == "Knife" || (*mapIt).second == "Dart")
-		{
-			knife->tag = Tag::TAG_PROJECTILE;
-			C_RigidBody *rigidBody = knife->CreateComponent<C_RigidBody>();
-
-			knife->GetTransform()->SetScale(float3(0.1, 0.1, 0.1));
-			float3 pos = parent->GetTransform()->GetPosition();
-
-			rigidBody->SetRigidBodyPos(float3(pos.x, pos.y + 15, pos.z - 15));
-			float3 parentRot = parent->GetTransform()->GetRotationEuler();
-			knife->GetTransform()->SetPosition(float3(pos.x, pos.y + 15, pos.z - 15));
-			float3 rot = {parentRot.x - 55, parentRot.y, parentRot.z};
-			knife->GetTransform()->SetRotationEuler(rot);
-
-			C_Mesh *componentMesh = knife->CreateComponent<C_Mesh>();
-			R_Mesh *mesh = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Mesh>()->GetMesh();
-			componentMesh->SetMesh(mesh);
-
-			C_Material *cMaterial = knife->CreateComponent<C_Material>();
-			//Importer::GetInstance()->textureImporter->Import(nullptr, &C_Material->texture);
-			R_Material *material = parent->GetComponent<C_Script>()->scripts[0]->handler->LuaFind("Karambit")->GetComponent<C_Material>()->GetMaterial();
-			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-			cMaterial->SetMaterial(material);
-
-			rigidBody->FreezePositionY(true);
-			C_Collider *collider = knife->CreateComponent<C_Collider>();
-			collider->SetColliderShape(ColliderShape::BOX);
-			collider->SetFilter("projectile");
-			collider->SetIsTrigger(true);
-
-			C_Script *knifeScript = (C_Script *)knife->AddComponentByType(ComponentType::SCRIPT); // CreateComponent<C_Script>();
-			knifeScript->scripts.push_back(new ScriptHandler(knife));
-			knifeScript->scripts[0]->path = "Assets/Scripts/Knife.lua";
-			knifeScript->ReloadScript(knifeScript->scripts[0]);
-			GameObject *target = parent->GetComponent<C_Script>()->scripts[0]->handler->lua["target"];
-			knifeScript->scripts[0]->handler->lua["target"] = target;
-			knifeScript->scripts[0]->handler->lua["SetDestination"]();
-		}
-	}
-	gameObjectListToCreate.clear();
 	for (GameObject* gameObject : gameObjectListToDelete)
 	{
 		DeleteGameObject(gameObject);
@@ -188,6 +168,21 @@ bool SceneIntro::PostUpdate(float dt)
 	{
 		switchScene = false;
 		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+	}
+
+	if (quitPlease)
+	{
+		quitPlease = false;
+		engine->GetSceneManager()->OnStop();
+		engine->GetCamera3D()->OnStop();
+	}
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+	{
+		for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+		{
+			DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
+		}
 	}
 
 	return true;

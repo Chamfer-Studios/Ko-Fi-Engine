@@ -14,6 +14,7 @@ class R_Texture;
 class vector;
 class string;
 class GameObject;
+class Component;
 
 class C_Material : public Component
 {

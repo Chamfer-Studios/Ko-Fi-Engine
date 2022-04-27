@@ -36,7 +36,9 @@ C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 		nearPlaneDistance = 0.1f;
 		farPlaneDistance = 5000.f;
 		cameraSensitivity = .1f;
-		cameraSpeed = 30.f;
+		cameraSpeed = 120.f;
+		baseCameraSpeed = 120.f;
+		speedMultiplier = 1;
 	}
 	if (!isEngineCamera)
 		componentTransform = owner->GetTransform();
@@ -205,6 +207,11 @@ void C_Camera::Load(Json& json)
 		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 }
 
+void C_Camera::ChangeSpeed(int multiplier)
+{
+	cameraSpeed = baseCameraSpeed * multiplier;
+}
+
 //void ModuleCamera3D::OnSave(JSONWriter& writer) const
 //{
 //	writer.String("camera");
@@ -349,4 +356,14 @@ void C_Camera::SetAspectRatio(const float& aspectRatio)
 	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
 	this->projectionIsDirty = true;
 	RecalculateProjection();
+}
+
+float C_Camera::GetFarPlaneHeight() const
+{
+	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
+}
+
+float C_Camera::GetFarPlaneWidth() const
+{
+	return GetFarPlaneHeight()*aspectRatio;
 }

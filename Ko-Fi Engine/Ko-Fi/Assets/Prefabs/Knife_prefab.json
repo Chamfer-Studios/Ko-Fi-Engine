@@ -1,0 +1,107 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                18.021902084350586,
+                10.000000953674316,
+                -2.0650137599886875e-08
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.25000035762786865,
+                0.25000035762786865,
+                0.25
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "draw_face_normals": false,
+            "draw_vertex_normals": false,
+            "isAnimated": false,
+            "path": "Library/Meshes/Knife.sugar",
+            "shape_type": 0,
+            "type": "mesh"
+        },
+        {
+            "active": true,
+            "color": [
+                0.800000011920929,
+                0.800000011920929,
+                0.800000011920929,
+                1.0
+            ],
+            "shader_path": "Assets/Shaders/default_shader.glsl",
+            "texture_path": "Assets/Textures/karambit_base_color.png",
+            "type": "material",
+            "uniforms": null
+        },
+        {
+            "active": true,
+            "angular_damping": 0.0,
+            "angular_velocity": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "density": 1.0,
+            "freeze_position_x": false,
+            "freeze_position_y": true,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "is_kinematic": false,
+            "is_static": false,
+            "linear_damping": 0.0,
+            "linear_velocity": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "mass": 5.0,
+            "type": "rigidBody",
+            "use_gravity": false
+        },
+        {
+            "active": true,
+            "box_collider_size": [
+                3.4258546829223633,
+                3.438516616821289,
+                0.42077958583831787
+            ],
+            "collider_type": 1,
+            "draw_collider": false,
+            "enabled": true,
+            "filter": "projectile",
+            "is_trigger": true,
+            "offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "type": "collider"
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Players/Zhib/Knife.lua",
+            "id": 1637631948,
+            "type": "script"
+        }
+    ],
+    "isPrefab": true,
+    "name": "Knife",
+    "tag": 4
+}

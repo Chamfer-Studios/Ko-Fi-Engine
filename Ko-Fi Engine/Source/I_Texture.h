@@ -1,5 +1,6 @@
 #ifndef __I_TEXTURE_H__
 #define __I_TEXTURE_H__
+#include <string>
 
 class R_Texture;
 class KoFiEngine;

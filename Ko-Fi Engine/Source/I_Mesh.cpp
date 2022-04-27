@@ -201,8 +201,8 @@ bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 					file.write((char*)&it.second, sizeof(uint));
 				}
 			}
-			/*else
-				file.write((char*)&isAnimated, sizeof(bool));*/
+			else
+				file.write((char*)&isAnimated, sizeof(bool));
 
 			file.close();
 
@@ -243,9 +243,9 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 				file.read((char*)mesh->texCoords, mesh->texCoordSizeBytes);
 			}
 
-			/*bool isAnimated = false;
+			bool isAnimated = false;
 			file.read((char*)&isAnimated, sizeof(bool));
-			mesh->SetIsAnimated(isAnimated);*/
+			mesh->SetIsAnimated(isAnimated);
 
 			if (mesh->IsAnimated())
 			{
@@ -339,6 +339,7 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 
 int I_Mesh::GetBoneId(const aiBone* pBone, std::map<std::string, uint>& boneNameToIndexMap)
 {
+	OPTICK_EVENT();
 	int boneIndex = 0;
 	std::string boneName(pBone->mName.C_Str());
 	if (boneNameToIndexMap.find(boneName) == boneNameToIndexMap.end())

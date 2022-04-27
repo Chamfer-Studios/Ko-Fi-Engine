@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/Math/float2.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Geometry/Frustum.h"
 #include "glmath.h"
@@ -47,6 +48,8 @@ public:
 	
 	GameObject* MousePicking(const bool& isRightButton = false);
 
+	float2 WorldToScreen(float3 position);
+
 	float3 GetLastMouseClick() const;
 
 public:
@@ -59,6 +62,7 @@ public:
 private:
 	float3 lastMouseClick;
 	KoFiEngine* engine = nullptr;
+
 };
 
 #endif // !__CAMERA_H__

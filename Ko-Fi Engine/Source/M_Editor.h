@@ -31,6 +31,7 @@ struct EngineConfig;
 struct PanelGameObjectInfo
 {
 	int selectedGameObjectID = -1;
+	std::vector<int> selectedGameObjects;
 };
 
 struct PanelsState
@@ -106,12 +107,15 @@ public:
 	bool toggleChooserPanel = false;
 	bool toggleTextEditor = false;
 	bool toggleSettingsPanel = false;
+	bool toggleCameraViewportPanel = false;
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
 	PanelInspector* panelGameObject = nullptr;
 	KoFiEngine* engine = nullptr;
 
 	int idTracker = 0;
+
+	bool contr = false;
 
 private:
 	// Style

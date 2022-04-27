@@ -28,6 +28,7 @@
 #include "ImGuizmo.h"
 #include "PanelNavigation.h"
 #include "optick.h"
+#include "M_SceneManager.h"
 
 void LoadFontsEditor(float fontSize_ = 12.0f);
 
@@ -68,11 +69,11 @@ M_Editor::M_Editor(KoFiEngine* engine)
 		//panelGame = new PanelGame(this);
 		//AddPanel(panelGame);
 	/*}*/
-	if (panelsState.showCameraViewportWindow)
+	/*if (panelsState.showCameraViewportWindow)
 	{
 		panelCameraViewport = new PanelCameraViewport(this, engine);
 		AddPanel(panelCameraViewport);
-	}
+	}*/
 	if (panelsState.showViewportWindow)
 	{
 		panelViewport = new PanelViewport(this, engine);
@@ -214,6 +215,15 @@ bool M_Editor::Update(float dt)
 
 	OPTICK_EVENT();
 
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
+	{
+		contr = true;
+	}
+	else if(engine->GetInput()->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
+	{
+		contr = false;
+	}
+
 	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking;
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -264,6 +274,7 @@ bool M_Editor::PostUpdate(float dt)
 
 	idTracker = 0;
 
+	
 
 	PrepareRender();
 
@@ -362,7 +373,11 @@ void M_Editor::OnNotify(const Event& event)
 
 void M_Editor::OnPlay()
 {
-	panelGameObjectInfo.selectedGameObjectID = -1;
+	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+	{
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
+		engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+	}
 }
 
 bool M_Editor::SaveConfiguration(Json& configModule) const
@@ -495,7 +510,7 @@ void M_Editor::Markdown(const std::string& markdown_)
 
 void M_Editor::MarkdownExample()
 {
-	const std::string markdownText = u8R"(
+	const std::string markdownText = R"(
 # H1 Header: Text and Links
 You can add [links like this one to enkisoftware](https://www.enkisoftware.com/) and lines will wrap well.
 You can also insert images ![image alt text](image identifier e.g. filename)
@@ -517,6 +532,8 @@ ___
 // Refactor this function (it's not done the right way right now...).
 void M_Editor::UpdatePanelsState()
 {
+	
+
 	if (panelsState.showViewportWindow == true)
 	{
 		if (panelViewport == nullptr)

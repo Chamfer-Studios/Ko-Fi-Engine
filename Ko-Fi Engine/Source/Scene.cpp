@@ -10,6 +10,7 @@
 
 #include "QuadTree3D.h"
 #include <vector>
+#include "M_Physics.h"
 
 GameObject* Scene::GetGameObject(int uid)
 {
@@ -57,34 +58,35 @@ void Scene::DeleteCurrentScene()
 	{
 		RELEASE(gameObject);
 	}
+	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
 	gameObjectList.clear();
 	lights.clear();
-	engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
 	rootGo = new GameObject(-1, engine, "Root");
 	gameObjectList.push_back(rootGo);
 }
 
 void Scene::DeleteGameObject(GameObject* gameObject)
 {
-	for (std::vector<GameObject*>::iterator it = gameObjectList.begin(); it != gameObjectList.end(); ++it)
-	{
-		if ((*it)->GetUID() == gameObject->GetUID())
-		{
-			if ((*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID == (*it)->GetUID())
-				(*it)->GetEngine()->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
-			std::vector<GameObject*> childs = (*it)->GetChildren();
-			for (GameObject* child : childs)
-			{
-				DeleteGameObject(child);
-			}
+	if (gameObject->GetParent() == nullptr) return;
 
-			gameObjectList.erase(it);
-			break;
-		}
+	for (int i = gameObject->children.size()-1;i>=0;--i)
+	{
+		DeleteGameObject(gameObject->children.at(i));
 	}
 
+	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+	{
+		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] == gameObject->GetUID())
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.erase(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.begin() + i);
+	}
+	
+	auto position = std::find(gameObjectList.begin(), gameObjectList.end(), gameObject);
+
+	gameObjectList.erase(position);
 	if (gameObject != nullptr)
 	{
+		//Re organize children into the top parent so that they are not hanging, plus it deletes the parent's children
 		GameObject* parent = gameObject->GetParent();
 		std::vector<GameObject*> children = gameObject->GetChildren();
 		if (children.size() > 0)
@@ -95,14 +97,13 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 				parent->AttachChild(child);
 			}
 		}
+		
 		parent->RemoveChild(gameObject);
 
 		if (gameObject->GetComponent<C_LightSource>() != nullptr)
+		{
 			RemoveLight(gameObject);
-
-		gameObject->CleanUp();
-
-
+		}
 		RELEASE(gameObject);
 	}
 }

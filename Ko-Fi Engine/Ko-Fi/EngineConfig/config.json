@@ -13,18 +13,12 @@
     "Input": null,
     "Navigation": null,
     "Physics": {
-        "Filter_matrix": [
-            true,
-            true,
-            true,
-            true,
+        "Filter_Matrix": [
             true,
             true,
             true,
             true,
             false,
-            true,
-            true,
             false,
             true,
             true,
@@ -35,38 +29,49 @@
             true,
             true,
             true,
-            true,
-            true,
-            true,
-            false
+            true
         ],
         "Filters": [
-            "default",
-            "enemy",
-            "player",
-            "terrain",
-            "projectile"
+            [
+                1,
+                "patata"
+            ],
+            [
+                2,
+                "enemy"
+            ],
+            [
+                3,
+                "cositas"
+            ],
+            [
+                4,
+                "mamahuevo"
+            ]
         ],
-        "Gravity": 9.8100004196167,
-        "Number_threads": 4
+        "Gravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+        ]
     },
     "Renderer3D": {
         "Vsync": true
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "IntroMenu"
+        "DefaultScene": ""
     },
     "UI": null,
     "Window": {
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 768,
+        "Height": 1009,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine  - IntroMenu",
-        "Width": 1024
+        "Title": "Ko-Fi Engine - cuatrecasas",
+        "Width": 1920
     }
 }

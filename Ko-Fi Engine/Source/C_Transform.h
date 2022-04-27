@@ -13,11 +13,12 @@ class C_Transform : public Component
 {
 public:
 	// Constructors
-	C_Transform(GameObject *parent);
+	C_Transform(GameObject* parent);
 	~C_Transform();
 
 	// Game Loop
 	bool Update(float dt) override;
+	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser *chooser) override; // OngGui
 
@@ -26,7 +27,7 @@ public:
 	void SetScale(const float3 &newScale);
 	void SetRotationEuler(const float3 &newRotation);
 	void SetRotationQuat(const Quat &newRotation);
-	void SetFront(const float3 &front);
+	void LookAt(float3 &front, float3& up);
 	void SetGlobalTransform(const float4x4 &globalTransform);
 	void SetDirty(bool isDirty);
 
@@ -38,7 +39,8 @@ public:
 	const float3 &Right() const;
 	const float3 &Up() const;
 	const float3 &Front() const;
-	float4x4 GetGlobalTransform() const;
+	inline float4x4 GetGlobalTransform() const { return transformMatrix; }
+	inline float4x4 GetLocalTransform() const { return transformMatrixLocal; }
 	inline bool GetDirty() const { return isDirty; }
 
 	// Transform Functions

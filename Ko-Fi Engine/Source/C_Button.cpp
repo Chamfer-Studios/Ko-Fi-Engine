@@ -7,6 +7,8 @@
 #include "Engine.h"
 #include "M_UI.h"
 #include "M_Input.h"
+#include "M_SceneManager.h"
+#include "M_Camera3d.h"
 
 // GameObject
 #include "GameObject.h"
@@ -268,4 +270,21 @@ bool C_Button::IsHovered()
 		isHovered = false;
 	}
 	return false;
+}
+
+bool C_Button::IsIdle()
+{
+	if (state == BUTTON_STATE::IDLE)
+	{
+		return true;
+	}
+	return false;
+}
+
+void C_Button::OnStoped()
+{
+	M_SceneManager* sceneManager = owner->GetEngine()->GetSceneManager();
+	M_Camera3D* camera = owner->GetEngine()->GetCamera3D();
+	sceneManager->OnStop();
+	camera->OnStop();
 }

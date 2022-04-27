@@ -18,6 +18,7 @@
 #include "ImGuiAppLog.h"
 #include "MathGeoLib/Geometry/LineSegment.h"
 #include "MathGeoLib/Geometry/Triangle.h"
+#include "MathGeoLib/Math/float4.h"
 
 #include "optick.h"
 
@@ -81,6 +82,7 @@ bool M_Camera3D::Update(float dt)
 		CheckMouseMotion(dt);
 	}
 
+
 	return true;
 }
 
@@ -125,7 +127,7 @@ void M_Camera3D::CheckInput(float dt)
 	float3 newPos(0, 0, 0);
 	float speed = currentCamera->cameraSpeed * dt;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 4.f;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 5.0f;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
@@ -177,6 +179,8 @@ void M_Camera3D::CheckInput(float dt)
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += currentCamera->front * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= currentCamera->front * speed;
+
+	
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += currentCamera->right * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= currentCamera->right * speed;
@@ -294,6 +298,13 @@ bool M_Camera3D::LoadConfiguration(Json& configModule)
 
 bool M_Camera3D::InspectorDraw()
 {
+	if (ImGui::CollapsingHeader("Engine Camera##"))
+	{
+		if (ImGui::SliderInt("Camera Speed", &engineCamera->speedMultiplier,1.0f,5.0f))
+		{
+			engineCamera->ChangeSpeed(engineCamera->speedMultiplier);
+		}
+	}
 	return true;
 }
 
@@ -321,10 +332,24 @@ void M_Camera3D::OnClick(SDL_Event event)
 		if (hit != nullptr)
 		{
 			CONSOLE_LOG("%s", hit->GetName());
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
+			if (engine->GetEditor()->contr == true && engine->GetSceneManager()->GetGameState() != GameState::PLAYING && !ImGuizmo::IsOver())
+			{
+				auto it = std::find (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.begin(), engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.end(), hit->GetUID());
+				if (it != engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.end()) return;
+
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.push_back(hit->GetUID());
+			}
+			else
+			{
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.push_back(hit->GetUID());
+			}
+			//engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = hit->GetUID();
 		}
 		else {
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 		}
 	}
 	else if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
@@ -446,9 +471,15 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 				float distance;
 				if (rayLocal.Intersects(triangle, &distance, &lastMouseClick))
 				{
+					//float tmp = lastMouseClick.y;
+					//lastMouseClick.y = lastMouseClick.z;
+					//lastMouseClick.z = tmp;
 					lastMouseClick.x *= gameObject->GetTransform()->GetScale().x;
 					lastMouseClick.y *= gameObject->GetTransform()->GetScale().y;
 					lastMouseClick.z *= gameObject->GetTransform()->GetScale().z;
+					lastMouseClick.x += gameObject->GetTransform()->GetPosition().x;
+					lastMouseClick.y += gameObject->GetTransform()->GetPosition().y;
+					lastMouseClick.z += gameObject->GetTransform()->GetPosition().z;
 					return gameObject;
 				}
 			}
@@ -458,7 +489,17 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 	return nullptr;
 }
 
+float2 M_Camera3D::WorldToScreen(float3 position)
+{
+	float4 clipSpacePos = currentCamera->cameraFrustum.ProjectionMatrix() * (currentCamera->cameraFrustum.ViewMatrix() * float4(position, 1.0f));
+	float3 ndcSpacePos = clipSpacePos.xyz() / clipSpacePos.w;
+	float2 partial = ((ndcSpacePos.xy() + float2(1.0f)) / 2.0f);
+	float2 viewport = float2(engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
+	return float2(partial.x * viewport.x, partial.y * viewport.y) + float2(0, 0);
+}
+
 float3 M_Camera3D::GetLastMouseClick() const
 {
 	return lastMouseClick;
 }
+

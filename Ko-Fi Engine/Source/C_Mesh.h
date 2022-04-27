@@ -11,6 +11,7 @@ class C_Transform;
 class C_Material;
 using Json = nlohmann::json;
 typedef unsigned int uint;
+class Component;
 
 class C_Mesh : public Component
 {
@@ -63,7 +64,7 @@ private:
 
 	// Bounding sphere
 	float radius;
-
+public:
 	// Bounding boxes
 	AABB aabb;
 	OBB obb;

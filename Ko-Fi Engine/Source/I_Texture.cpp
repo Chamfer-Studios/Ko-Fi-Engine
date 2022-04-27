@@ -20,7 +20,7 @@ I_Texture::I_Texture(KoFiEngine* engine) : engine(engine)
 I_Texture::~I_Texture()
 {}
 
-bool I_Texture::Import(const char* path, R_Texture* texture)
+bool I_Texture::Import(std::string path, R_Texture* texture)
 {
 	if (texture == nullptr)
 	{
@@ -28,7 +28,7 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 		return false;
 	}
 
-	if (path == nullptr)
+	if (path.empty())
 	{
 		GLubyte checkerImage[CHECKERS_SIZE][CHECKERS_SIZE][4];
 		for (int i = 0; i < CHECKERS_SIZE; i++)
