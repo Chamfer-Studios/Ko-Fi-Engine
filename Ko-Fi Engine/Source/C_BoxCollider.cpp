@@ -189,6 +189,12 @@ void C_BoxCollider::UpdateScaleFactor()
 		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3((boundingBoxSize.x / 2) * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y, (boundingBoxSize.z / 2) * scaleFactor.z));
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, oldTransform);
 	}
+
+	UpdateFilter();
+
+	UpdateIsTrigger();
+
+	UpdateCenter();
 }
 
 void C_BoxCollider::UpdateIsTrigger()
