@@ -224,6 +224,7 @@ end
 
 function OnCollisionEnter(go)
 	if (go.tag == Tag.PROJECTILE) then
+        print("A la verga")
 		DeleteGameObject()
 	end
 end

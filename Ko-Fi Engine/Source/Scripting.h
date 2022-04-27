@@ -32,6 +32,7 @@
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
 #include "C_RigidBody.h"
+#include "C_BoxCollider.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -182,6 +183,7 @@ public:
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
+									 "GetBoxCollider", &GameObject::GetComponent<C_BoxCollider>,
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
@@ -293,6 +295,15 @@ public:
 											"FreezePositionY", &C_RigidBody::FreezePositionY,
 											"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
 											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
+
+		lua.new_usertype<C_BoxCollider>("C_BoxCollider",
+											sol::constructors<void(GameObject*)>(),
+											"IsTrigger", &C_BoxCollider::GetIsTrigger,
+											"SetTrigger", &C_BoxCollider::SetIsTrigger,
+											"GetFilter", &C_BoxCollider::GetFilter,
+											"SetFilter", &C_BoxCollider::SetFilter,
+											"UpdateFilter", &C_BoxCollider::UpdateFilter,
+											"UpdateIsTrigger", &C_BoxCollider::UpdateIsTrigger);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),

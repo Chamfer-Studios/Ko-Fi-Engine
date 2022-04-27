@@ -6,6 +6,7 @@ destination = nil
 -------------------- Methods ---------------------
 
 function Start()
+	boxCollider = gameObject:GetBoxCollider() -- This is here instead of at "awake" so the order of component creation does not affect
 	componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
 	target = GetVariable("Zhib.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
 	player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
@@ -31,7 +32,10 @@ end
 
 -- Collision Handler
 function OnTriggerEnter(go)
-	if (destination == nil and go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
+	if (go.tag == Tag.ENEMY) then
+		boxCollider:SetFilter("terrain")
+		boxCollider:UpdateFilter()
+	elseif (destination == nil and go.tag == Tag.PLAYER) then -- Using direct name instead of tags so other players can't pick it up
 		DeleteGameObject()
 	end
 end
@@ -63,6 +67,8 @@ function MoveToDestination(dt)
 		destination = nil
 		if (componentRigidBody ~= nil) then
 			componentRigidBody:SetLinearVelocity(float3.new(0,0,0))
+			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 0, componentTransform:GetPosition().z))
+			
 		end
 	end
 end

@@ -57,7 +57,7 @@
             "freeze_rotation_x": false,
             "freeze_rotation_y": false,
             "freeze_rotation_z": false,
-            "mass": 1.0,
+            "mass": 0.0010000000474974513,
             "type": "rigidBody",
             "use_gravity": false
         },
@@ -74,8 +74,8 @@
                 0.0,
                 0.0
             ],
-            "filter": "player",
-            "is_trigger": true,
+            "filter": "projectile",
+            "is_trigger": false,
             "scale_factor": [
                 1.0,
                 1.0,

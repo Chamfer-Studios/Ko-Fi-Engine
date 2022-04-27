@@ -510,8 +510,9 @@ end
 
 ------------------ Collisions --------------------
 function OnTriggerEnter(go)
-	print("+1 knives")
+	
 	if (go.tag == Tag.PROJECTILE) then
+		print("+1 knives")
 		knifeCount = knifeCount + 1
 	end
 end
