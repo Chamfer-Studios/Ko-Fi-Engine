@@ -262,7 +262,9 @@ public:
 		// Component Animator
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 											sol::constructors<void(GameObject *)>(),
-											"SetSelectedClip", &C_Animator::SetSelectedClip);
+											"SetSelectedClip", &C_Animator::SetSelectedClip,
+											"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
+											"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
 		// Component Particle
 		lua.new_usertype<C_Particle>("C_Particle",
@@ -272,11 +274,11 @@ public:
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
-			sol::constructors<void(GameObject *)>(),
-			"PlayTrack", &C_AudioSwitch::PlayTrack,
-			"PauseTrack", &C_AudioSwitch::PauseTrack,
-			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack);
+										sol::constructors<void(GameObject *)>(),
+										"PlayTrack", &C_AudioSwitch::PlayTrack,
+										"PauseTrack", &C_AudioSwitch::PauseTrack,
+										"ResumeTrack", &C_AudioSwitch::ResumeTrack,
+										"StopTrack", &C_AudioSwitch::StopTrack);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
