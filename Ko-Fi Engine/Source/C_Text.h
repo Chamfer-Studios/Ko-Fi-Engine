@@ -36,6 +36,7 @@ public:
 
 	void SetTextValue(std::string newValue);
 	void SetFont(std::string path);
+	void SetSize(int size);
 	std::string GetTextValue() { return textValue; };
 
 	void Draw() override;
@@ -49,5 +50,6 @@ private:
 	std::string textValue = "HELLO WORLD!";
 
 	TTF_Font* selectedFont = nullptr;
+	int size = 0;
 };
 

@@ -14,6 +14,7 @@
 C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::TEXT;
+	size = 1;
 	SetTextValue("Hello world!");
 }
 
@@ -72,6 +73,11 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 		if (ImGui::Button("Set Font")) {
 			panelChooser->OpenPanel("AddFont", "ttf", { "ttf" });
 		}
+
+		if (ImGui::InputInt("Size##", &(size), 0.5f))
+		{
+			//SetSize(size);
+		}
 	}
 	else
 		DrawDeleteButton(owner, this);
@@ -107,7 +113,7 @@ void C_Text::SetTextValue(std::string newValue)
 		SDL_BlitSurface(srcSurface, NULL, dstSurface, NULL);
 	}
 	else {
-		SDL_Rect rect = { 0, 0, dstSurface->w, dstSurface->h };
+		SDL_Rect rect = { 0, 0, dstSurface->w * size, dstSurface->h * size };
 		Uint32 black = (255 << 24) + (0 << 16) + (0 << 8) + (0);
 		SDL_FillRect(dstSurface, &rect, black);
 	}
@@ -128,6 +134,11 @@ void C_Text::SetTextValue(std::string newValue)
 void C_Text::SetFont(std::string path)
 {
 	selectedFont = TTF_OpenFont(path.c_str(), 60);
+}
+
+void C_Text::SetSize(int newSize)
+{
+	this->size = newSize;
 }
 
 void C_Text::Draw()
