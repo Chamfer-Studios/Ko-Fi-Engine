@@ -102,6 +102,7 @@ public:
 	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
 
 	void PropragateIsActive();
+	void SetIsActiveToChildren(std::vector<GameObject*>& list, bool value);
 private:
 	std::string SetObjectNumberedName(const char* _name);
 

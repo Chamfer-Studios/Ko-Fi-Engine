@@ -121,8 +121,8 @@ bool GameObject::PostUpdate(float dt)
 	}
 
 	// Propagate isActive to children if needed
-	if(isActiveWindow)
-	PropragateIsActive();
+	if (isActiveWindow)
+		PropragateIsActive();
 
 	return ret;
 }
@@ -1143,24 +1143,35 @@ void GameObject::PropragateIsActive()
 		return;
 	}
 
-	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking || ImGuiWindowFlags_NoTitleBar || ImGuiWindowFlags_NoResize || ImGuiWindowFlags_NoMove || ImGuiWindowFlags_NoCollapse;
-	ImGui::Begin("Apply To Children", nullptr, windowFlags);
-	ImGui::SetWindowSize(ImVec2(250, 100));
-	ImGui::Text("Do you want to apply to all children?");
-	ImGui::Spacing();
-	if (ImGui::Button("YES", ImVec2(70, 30)))
+	if (ImGui::BeginPopupModal("Apply To Children"), nullptr, ImGuiWindowFlags_AlwaysAutoResize)
 	{
-		for (GameObject* go : children)
-		{
-			go->active = active;
-		}
-		isActiveWindow = false;
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("NO", ImVec2(70, 30)))
-	{
-		isActiveWindow = false;
-	}
+		ImGui::SetWindowSize(ImVec2(250, 120));
+		ImGui::Text("Do you want to apply to all children?");
+		ImGui::Spacing();
 
-	ImGui::End();
+		if (ImGui::Button("YES", ImVec2(70, 30)))
+		{
+			SetIsActiveToChildren(children, active);
+			isActiveWindow = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("NO", ImVec2(70, 30)))
+		{
+			isActiveWindow = false;
+		}
+
+		ImGui::EndPopup();
+	}
+}
+
+void GameObject::SetIsActiveToChildren(std::vector<GameObject*>& list, bool value)
+{
+	for (GameObject* go : list)
+	{
+		go->active = value;
+		if (go->children.size() > 0)
+		{
+			SetIsActiveToChildren(go->children, value);
+		}
+	}
 }
