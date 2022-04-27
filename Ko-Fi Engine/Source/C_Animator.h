@@ -29,9 +29,11 @@ public:
 	bool CreateDefaultClip(AnimatorClip* clip);
 
 	void SetAnim(R_Animation* anim);
-	AnimatorClip* GetSelectedClip();
-
 	void SetSelectedClip(std::string name);
+
+	AnimatorClip* GetSelectedClip();
+	bool IsCurrentClipPlaying();
+	bool IsCurrentClipLooping();
 
 private:
 	R_Animation* animation = nullptr;
