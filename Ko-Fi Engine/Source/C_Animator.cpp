@@ -329,6 +329,7 @@ void C_Animator::SetSelectedClip(std::string name)
 		if ((*clip).first == name)
 		{
 			selectedClip = &clip->second;
+			selectedClip->SetFinishedBool(false);
 			break;
 		}
 	}
