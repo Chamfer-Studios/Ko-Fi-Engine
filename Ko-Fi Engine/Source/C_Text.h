@@ -47,9 +47,16 @@ private:
 	GLuint SurfaceToOpenGLTexture(SDL_Surface* surface);
 	void FreeTextures();
 
+	SDL_Color GetColor();
+
+	void SetColor(SDL_Color color);
+
+	bool ColorPicker(const char* label);
+
 	std::string textValue = "HELLO WORLD!";
 
 	TTF_Font* selectedFont = nullptr;
+	SDL_Color col = { 255, 255, 255, 255 };
 	int size = 0;
 };
 

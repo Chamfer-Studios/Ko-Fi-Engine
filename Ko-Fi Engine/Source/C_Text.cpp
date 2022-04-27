@@ -74,9 +74,17 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 			panelChooser->OpenPanel("AddFont", "ttf", { "ttf" });
 		}
 
-		if (ImGui::InputInt("Size##", &(size), 0.5f))
+		SDL_Color tmpcol = GetColor();
+		float c[4] = { tmpcol.r,tmpcol.g,tmpcol.b,tmpcol.a };
+
+		if (ImGui::ColorEdit4("Text Color", c))
 		{
-			//SetSize(size);
+			tmpcol.r = c[0];
+			tmpcol.g = c[1];
+			tmpcol.b = c[2];
+			tmpcol.a = c[3];
+			SetColor(tmpcol);
+			SetTextValue(textValue);
 		}
 	}
 	else
@@ -101,8 +109,8 @@ void C_Text::SetTextValue(std::string newValue)
 	}
 
 	textValue = newValue;
-	SDL_Color color = { 255, 255, 255, 255 };
-	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(selectedFont, textValue.c_str(), color);
+
+	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(selectedFont, textValue.c_str(), col);
 
 	if (srcSurface == nullptr)
 		appLog->AddLog("%s\n", SDL_GetError());
@@ -188,4 +196,18 @@ void C_Text::FreeTextures()
 {
 	if (openGLTexture != 0)
 		glDeleteTextures(1, &openGLTexture);
+}
+
+
+SDL_Color C_Text::GetColor()
+{
+	return col;
+}
+
+void C_Text::SetColor(SDL_Color color)
+{
+	col.r = color.a;
+	col.g = color.g;
+	col.b = color.b;
+	col.a = color.a;
 }
