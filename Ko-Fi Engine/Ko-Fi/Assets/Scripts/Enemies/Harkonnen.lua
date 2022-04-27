@@ -203,8 +203,29 @@ end
 
 function OnTriggerEnter(go)
 	if (go.tag == Tag.PROJECTILE) then
+        print("trigger enter")
 		DeleteGameObject()
 	end
 end
 
-print("Harkonnen.lua compiled succesfully")
+function OnTriggerRepeat(go)
+	if (go.tag == Tag.PROJECTILE) then
+		print("trigger repeat")
+        DeleteGameObject()
+	end
+end
+
+function OnTriggerExit(go)
+	if (go.tag == Tag.PROJECTILE) then
+		print("trigger repeat")
+        DeleteGameObject()
+	end
+end
+
+function OnCollisionEnter(go)
+	if (go.tag == Tag.PROJECTILE) then
+		DeleteGameObject()
+	end
+end
+
+print("Harkonnen_old.lua compiled succesfully")

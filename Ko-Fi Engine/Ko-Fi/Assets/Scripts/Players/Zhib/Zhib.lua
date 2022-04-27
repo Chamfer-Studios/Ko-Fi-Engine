@@ -37,7 +37,7 @@ characterID = 1
 speed = 500.0
 
 -- Primary ability --
-knifeCastRange = 30.0
+knifeCastRange = 100.0
 maxKnives = 2 -- Move to a Start() func!!!
 knifeCount = maxKnives
 
@@ -47,7 +47,7 @@ decoyCooldown = 10.0
 drawDecoy = false
 
 -- Ultimate ability --
-ultimateRange = 50.0
+ultimateRange = 100.0
 ultimateCooldown = 30.0
 drawUltimate = false
 ultimateRangeExtension = ultimateRange * 0.5
@@ -127,12 +127,12 @@ isDoubleClicking = false
 -- Called each loop iteration
 function Update(dt)
 	-- Set Starting Position
-	if (rigidBodyFlag == true) then 
-		if (componentRigidBody ~= nil) then
-			rigidBodyFlag = false
-			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
-		end
-	end
+	--if (rigidBodyFlag == true) then 
+	--	if (componentRigidBody ~= nil) then
+	--		rigidBodyFlag = false
+	--		componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
+	--	end
+	--end
 
 	-- Animation timer
 	if (isAttacking == true and componentAnimator ~= nil) then
@@ -510,6 +510,7 @@ end
 
 ------------------ Collisions --------------------
 function OnTriggerEnter(go)
+	print("+1 knives")
 	if (go.tag == Tag.PROJECTILE) then
 		knifeCount = knifeCount + 1
 	end

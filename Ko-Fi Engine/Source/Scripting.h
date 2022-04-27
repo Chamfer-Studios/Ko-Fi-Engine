@@ -285,13 +285,14 @@ public:
 
 		// Rigid Body structure
 		lua.new_usertype<C_RigidBody>("C_RigidBody",
-											 sol::constructors<void(GameObject *)>(),
-											 "IsStatic", &C_RigidBody::IsStatic,
-											 "IsKinematic", &C_RigidBody::IsKinematic,
-											 "SetStatic", &C_RigidBody::SetBodyStatic,
-											 "SetDynamic", &C_RigidBody::SetBodyDynamic,
-											 "FreezePositionY", &C_RigidBody::FreezePositionY,
-											 "SetLinearVelocity", &C_RigidBody::SetLinearVelocity);
+											sol::constructors<void(GameObject *)>(),
+											"IsStatic", &C_RigidBody::IsStatic,
+											"IsKinematic", &C_RigidBody::IsKinematic,
+											"SetStatic", &C_RigidBody::SetBodyStatic,
+											"SetDynamic", &C_RigidBody::SetBodyDynamic,
+											"FreezePositionY", &C_RigidBody::FreezePositionY,
+											"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),

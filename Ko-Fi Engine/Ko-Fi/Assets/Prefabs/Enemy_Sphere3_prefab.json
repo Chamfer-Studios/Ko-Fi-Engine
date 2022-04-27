@@ -1,0 +1,117 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                -2.8725578784942627,
+                10.5,
+                1.1920928955078125e-07
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.5,
+                1.0,
+                0.5
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "draw_face_normals": false,
+            "draw_vertex_normals": false,
+            "isAnimated": false,
+            "path": "Library/Meshes/Enemy_Sphere3.sugar",
+            "shape_type": 0,
+            "type": "mesh"
+        },
+        {
+            "active": true,
+            "color": [
+                0.800000011920929,
+                0.800000011920929,
+                0.800000011920929,
+                1.0
+            ],
+            "shader_path": "Assets/Shaders/default_shader.glsl",
+            "texture_path": "Assets/Textures/Characters/sardaukar_low_v2.7_basecolor.png",
+            "type": "material",
+            "uniforms": null
+        },
+        {
+            "active": true,
+            "body_type": "Dynamic",
+            "freeze_position_x": false,
+            "freeze_position_y": true,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": "rigidBody",
+            "use_gravity": false
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
+            "id": 1304836423,
+            "inspector_variables": [
+                {
+                    "name": "speed",
+                    "type": "int",
+                    "value": 20
+                },
+                {
+                    "name": "speed",
+                    "type": "int",
+                    "value": 20
+                },
+                {
+                    "name": "minSeekDistance",
+                    "type": "int",
+                    "value": 100
+                },
+                {
+                    "name": "minRetargetingDistance",
+                    "type": "int",
+                    "value": 3
+                },
+                {
+                    "name": "player",
+                    "type": "gameObject",
+                    "value": 0
+                }
+            ],
+            "type": "script"
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "filter": "enemy",
+            "is_trigger": false,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "boxCollider"
+        }
+    ],
+    "isPrefab": true,
+    "name": "Enemy_Sphere3",
+    "tag": 2
+}

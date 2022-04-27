@@ -14,18 +14,18 @@
     "Navigation": null,
     "Physics": {
         "Filter_Matrix": [
+            false,
             true,
             true,
             true,
             true,
             true,
             true,
+            false,
             true,
             true,
             true,
-            true,
-            true,
-            true,
+            false,
             true,
             false,
             false,
@@ -67,11 +67,11 @@
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 1017,
+        "Height": 768,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
         "Title": "Ko-Fi Engine - testing_anims",
-        "Width": 1920
+        "Width": 1024
     }
 }

@@ -17,7 +17,7 @@ function Start()
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
 	vec2 = Normalize(vec2, d)
 	if (componentRigidBody ~= nil) then		
-		componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, playerPos.y, playerPos.z + vec2[2] * 3))
+		componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, playerPos.y + 10, playerPos.z + vec2[2] * 3))
 	end
 end
 
@@ -26,7 +26,6 @@ function Update(dt)
 
 	if (destination ~= nil) then
 		MoveToDestination(dt)
-		print(componentTransform:GetPosition())
 	end
 end
 
@@ -44,9 +43,8 @@ function MoveToDestination(dt)
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
 	local d = Distance(pos2D, targetPos2D)
 	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
-	print(pos2D[1], pos2D[2])
 
-	if (d > 5.0) then
+	if (d > 2.0) then
 
 		-- Movement
 		vec2 = Normalize(vec2, d)

@@ -333,6 +333,18 @@ reactphysics3d::RigidBody* M_Physics::AddBody(reactphysics3d::Transform rbTransf
 	return body;
 }
 
+void M_Physics::DeleteBodyFromObjectMap(GameObject* go)
+{
+	for (std::map<reactphysics3d::CollisionBody*, GameObject*>::iterator mapIt = collisionBodyToObjectMap.begin(); mapIt != collisionBodyToObjectMap.end(); ++mapIt)
+	{
+		if ((*mapIt).second == go)
+		{
+			collisionBodyToObjectMap.erase(mapIt);
+			break;
+		}
+	}
+}
+
 void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
 {
 	// Create the ray 

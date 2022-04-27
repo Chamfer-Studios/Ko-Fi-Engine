@@ -50,55 +50,38 @@
         },
         {
             "active": true,
-            "angular_damping": 0.0,
-            "angular_velocity": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "density": 1.0,
+            "body_type": "Dynamic",
             "freeze_position_x": false,
             "freeze_position_y": true,
             "freeze_position_z": false,
             "freeze_rotation_x": false,
             "freeze_rotation_y": false,
             "freeze_rotation_z": false,
-            "is_kinematic": false,
-            "is_static": false,
-            "linear_damping": 0.0,
-            "linear_velocity": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "mass": 5.0,
+            "mass": 1.0,
             "type": "rigidBody",
             "use_gravity": false
-        },
-        {
-            "active": true,
-            "box_collider_size": [
-                3.4258546829223633,
-                3.438516616821289,
-                0.42077958583831787
-            ],
-            "collider_type": 1,
-            "draw_collider": false,
-            "enabled": true,
-            "filter": "projectile",
-            "is_trigger": true,
-            "offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "type": "collider"
         },
         {
             "active": true,
             "file_name": "Assets/Scripts/Players/Zhib/Knife.lua",
             "id": 1637631948,
             "type": "script"
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "filter": "player",
+            "is_trigger": true,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "boxCollider"
         }
     ],
     "isPrefab": true,
