@@ -4,6 +4,8 @@
 #include "C_Transform2D.h"
 #include "C_RenderedUI.h"
 
+#include "SDL_ttf.h"
+
 #include "R_Texture.h"
 
 #include "glew.h"
@@ -33,6 +35,7 @@ public:
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void SetTextValue(std::string newValue);
+	void SetFont(std::string path);
 	std::string GetTextValue() { return textValue; };
 
 	void Draw() override;
@@ -44,5 +47,7 @@ private:
 	void FreeTextures();
 
 	std::string textValue = "HELLO WORLD!";
+
+	TTF_Font* selectedFont = nullptr;
 };
 

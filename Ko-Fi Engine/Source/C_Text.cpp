@@ -9,6 +9,7 @@
 #include "imgui_stdlib.h"
 #include "M_Editor.h"
 #include "M_UI.h"
+#include "PanelChooser.h"
 
 C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
@@ -55,12 +56,28 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 	{
 		DrawDeleteButton(owner, this);
 
-		if (ImGui::InputText("Value", &(textValue))) {
+		if (ImGui::InputText("Value", &(textValue))) 
+		{
 			SetTextValue(textValue);
+		}
+
+		if (panelChooser->IsReadyToClose("AddFont")) {
+			if (panelChooser->OnChooserClosed() != nullptr) {
+				std::string path = panelChooser->OnChooserClosed();
+				SetFont(path.c_str());
+				SetTextValue(textValue);
+			}
+		}
+
+		if (ImGui::Button("Set Font")) {
+			panelChooser->OpenPanel("AddFont", "ttf", { "ttf" });
 		}
 	}
 	else
 		DrawDeleteButton(owner, this);
+
+	
+	
 
 	return true;
 }
@@ -72,9 +89,14 @@ void C_Text::SetTextValue(std::string newValue)
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 
+	if (selectedFont == nullptr)
+	{
+		selectedFont = owner->GetEngine()->GetUI()->rubik;
+	}
+
 	textValue = newValue;
 	SDL_Color color = { 255, 255, 255, 255 };
-	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(owner->GetEngine()->GetUI()->rubik, textValue.c_str(), color);
+	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(selectedFont, textValue.c_str(), color);
 
 	if (srcSurface == nullptr)
 		appLog->AddLog("%s\n", SDL_GetError());
@@ -93,7 +115,7 @@ void C_Text::SetTextValue(std::string newValue)
 	openGLTexture = SurfaceToOpenGLTexture(dstSurface);
 
 	int w, h;
-	TTF_SizeUTF8(owner->GetEngine()->GetUI()->rubik, newValue.c_str(), &w, &h);
+	TTF_SizeUTF8(selectedFont, newValue.c_str(), &w, &h);
 	owner->GetComponent<C_Transform2D>()->SetSize({ (float)w, (float)h });
 
 	glDisable(GL_BLEND);
@@ -101,6 +123,11 @@ void C_Text::SetTextValue(std::string newValue)
 
 	SDL_FreeSurface(srcSurface);
 	SDL_FreeSurface(dstSurface);
+}
+
+void C_Text::SetFont(std::string path)
+{
+	selectedFont = TTF_OpenFont(path.c_str(), 60);
 }
 
 void C_Text::Draw()
