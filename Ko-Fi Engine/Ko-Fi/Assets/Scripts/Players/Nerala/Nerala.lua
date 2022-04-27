@@ -323,7 +323,7 @@ function MoveToDestination(dt)
 		end
 	
 		-- Adapt speed on arrive
-		if (d < 10) then
+		if (d < 2) then
 			s = s * 0.5
 		end
 	

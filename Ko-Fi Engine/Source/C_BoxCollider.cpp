@@ -103,7 +103,7 @@ bool C_BoxCollider::InspectorDraw(PanelChooser *chooser)
 		ImGui::Text("Scale");
 		ImGui::SameLine();
 		float3 newScaleFactor = GetScaleFactor();
-		if (ImGui::DragFloat3("##scale", &(newScaleFactor[0]), 0.1f, 1.0f, 50000.0f))
+		if (ImGui::DragFloat3("##scale", &(newScaleFactor[0]), 0.1f, 0.33f, 50000.0f))
 		{
 			SetScaleFactor(newScaleFactor);
 			UpdateScaleFactor();
@@ -189,6 +189,12 @@ void C_BoxCollider::UpdateScaleFactor()
 		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3((boundingBoxSize.x / 2) * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y, (boundingBoxSize.z / 2) * scaleFactor.z));
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, oldTransform);
 	}
+
+	UpdateFilter();
+
+	UpdateIsTrigger();
+
+	UpdateCenter();
 }
 
 void C_BoxCollider::UpdateIsTrigger()

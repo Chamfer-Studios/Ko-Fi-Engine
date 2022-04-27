@@ -32,6 +32,7 @@
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
 #include "C_RigidBody.h"
+#include "C_BoxCollider.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -177,10 +178,12 @@ public:
 									 "GetUID", &GameObject::GetUID,
 									 "tag", &GameObject::tag,
 									 "GetParent", &GameObject::GetParent,
+									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
+									 "GetBoxCollider", &GameObject::GetComponent<C_BoxCollider>,
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
@@ -189,7 +192,9 @@ public:
 									 "IsSelected", &GameObject::IsSelected,
 									 "GetButton", &GameObject::GetComponent<C_Button>,
 									 "GetImage", &GameObject::GetComponent<C_Image>,
+									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
+									 "Active", &GameObject::Active,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
@@ -244,12 +249,14 @@ public:
 
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
-										 sol::constructors<void(GameObject *)>(),
-										 "SetTexture", &C_Image::SetTexture);
+			sol::constructors<void(GameObject *)>(),
+			"SetTexture", &C_Image::SetTexture
+			);
 
 		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),
 										  "IsPressed", &C_Button::IsPressed,
+										  "IsIdle", &C_Button::IsIdle,
 										  "IsHovered", &C_Button::IsHovered);
 
 		// Component Animator
@@ -280,13 +287,23 @@ public:
 
 		// Rigid Body structure
 		lua.new_usertype<C_RigidBody>("C_RigidBody",
-											 sol::constructors<void(GameObject *)>(),
-											 "IsStatic", &C_RigidBody::IsStatic,
-											 "IsKinematic", &C_RigidBody::IsKinematic,
-											 "SetStatic", &C_RigidBody::SetBodyStatic,
-											 "SetDynamic", &C_RigidBody::SetBodyDynamic,
-											 "FreezePositionY", &C_RigidBody::FreezePositionY,
-											 "SetLinearVelocity", &C_RigidBody::SetLinearVelocity);
+											sol::constructors<void(GameObject *)>(),
+											"IsStatic", &C_RigidBody::IsStatic,
+											"IsKinematic", &C_RigidBody::IsKinematic,
+											"SetStatic", &C_RigidBody::SetBodyStatic,
+											"SetDynamic", &C_RigidBody::SetBodyDynamic,
+											"FreezePositionY", &C_RigidBody::FreezePositionY,
+											"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
+
+		lua.new_usertype<C_BoxCollider>("C_BoxCollider",
+											sol::constructors<void(GameObject*)>(),
+											"IsTrigger", &C_BoxCollider::GetIsTrigger,
+											"SetTrigger", &C_BoxCollider::SetIsTrigger,
+											"GetFilter", &C_BoxCollider::GetFilter,
+											"SetFilter", &C_BoxCollider::SetFilter,
+											"UpdateFilter", &C_BoxCollider::UpdateFilter,
+											"UpdateIsTrigger", &C_BoxCollider::UpdateIsTrigger);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),

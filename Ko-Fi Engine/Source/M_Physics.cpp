@@ -154,6 +154,11 @@ bool M_Physics::LoadConfiguration(Json& configModule)
 				}
 			}
 		}
+		for (auto go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		{
+			if (go->GetComponent<C_BoxCollider>())
+				go->GetComponent<C_BoxCollider>()->UpdateFilter();
+		}
 	}
 
 	return true;
@@ -211,6 +216,11 @@ bool M_Physics::InspectorDraw()
 					{
 						filterMatrix[i][j] = filterMat;
 						engine->SaveConfiguration();
+						for (auto go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+						{
+							if (go->GetComponent<C_BoxCollider>())
+								go->GetComponent<C_BoxCollider>()->UpdateFilter();
+						}
 					}
 
 				}
@@ -333,6 +343,18 @@ reactphysics3d::RigidBody* M_Physics::AddBody(reactphysics3d::Transform rbTransf
 	return body;
 }
 
+void M_Physics::DeleteBodyFromObjectMap(GameObject* go)
+{
+	for (std::map<reactphysics3d::CollisionBody*, GameObject*>::iterator mapIt = collisionBodyToObjectMap.begin(); mapIt != collisionBodyToObjectMap.end(); ++mapIt)
+	{
+		if ((*mapIt).second == go)
+		{
+			collisionBodyToObjectMap.erase(mapIt);
+			break;
+		}
+	}
+}
+
 void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
 {
 	// Create the ray 
@@ -383,6 +405,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnCollisionEnter"](go2);
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -390,6 +413,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnCollisionEnter"](go1);
 				}
 			}
@@ -400,6 +424,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if(!script->s->path.empty())
 					script->s->handler->lua["OnCollisionRepeat"](go2);
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -407,6 +432,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnCollisionRepeat"](go1);
 				}
 			}
@@ -417,6 +443,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnCollisionExit"](go2);
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -424,6 +451,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnCollisionExit"](go1);
 				}
 			}
@@ -464,6 +492,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnTriggerEnter"](go2);
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -471,6 +500,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnTriggerEnter"](go1);
 				}
 			}
@@ -481,6 +511,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnTriggerRepeat"](go2);
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -488,6 +519,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnTriggerRepeat"](go1);
 				}
 			}
@@ -498,6 +530,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnTriggerExit"](go2);
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -505,6 +538,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					if (component->GetType() != ComponentType::SCRIPT)
 						continue;
 					C_Script* script = (C_Script*)component;
+					if (!script->s->path.empty())
 					script->s->handler->lua["OnTriggerExit"](go1);
 				}
 			}
@@ -527,6 +561,7 @@ reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysi
 		if (component->GetType() != ComponentType::SCRIPT)
 			continue;
 		C_Script* script = (C_Script*)component;
+		if (!script->s->path.empty())
 		script->s->handler->lua["OnRayCastHit"]();
 	}
 
