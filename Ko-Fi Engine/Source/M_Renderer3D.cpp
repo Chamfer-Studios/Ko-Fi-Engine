@@ -32,6 +32,7 @@
 #include "C_RenderedUI.h"
 #include "C_LightSource.h"
 #include "C_Animator.h"
+#include "C_RigidBody.h"
 
 #include "R_Material.h"
 #include "PieShape.h"
@@ -343,10 +344,11 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 					cCamera->DrawFrustum();
 				}
 			}
+			if (go->GetComponent<C_RigidBody>())
+				engine->GetPhysics()->RenderPhysics();
 		}
 	}
 	RenderAllParticles();
-	engine->GetPhysics()->RenderPhysics();
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)
