@@ -545,6 +545,12 @@ bool GameObject::PrefabSave(Json& jsonFile)
 			transformCmp->Save(jsonComponent);
 			break;
 		}
+		case ComponentType::PARTICLE:
+		{
+			C_Particle* particleCmp = (C_Particle*)component;
+			particleCmp->Save(jsonComponent);
+			break;
+		}
 		case ComponentType::MESH:
 		{
 			C_Mesh* meshCmp = (C_Mesh*)component;
@@ -839,6 +845,15 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			animCmp->active = true;
 			animCmp->Load(jsonCmp);
 		}
+		else if (type == "particle")
+		{
+			C_Particle* particleCmp = this->GetComponent<C_Particle>();
+			if (!particleCmp)
+				AddComponentByType(ComponentType::PARTICLE);
+			particleCmp = this->GetComponent<C_Particle>();
+			particleCmp->active = true;
+			particleCmp->Load(jsonCmp);
+		}
 	}
 	Json jsonChd = jsonFile.at("children");
 	for (const auto& chdIt : jsonChd.items())
@@ -1010,6 +1025,15 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			animCmp = this->GetComponent<C_Animator>();
 			animCmp->active = true;
 			animCmp->Load(jsonCmp);
+		}
+		else if (type == "particle")
+		{
+			C_Particle* particleCmp = this->GetComponent<C_Particle>();
+			if (!particleCmp)
+				AddComponentByType(ComponentType::PARTICLE);
+			particleCmp = this->GetComponent<C_Particle>();
+			particleCmp->active = true;
+			particleCmp->Load(jsonCmp);
 		}
 	}
 	Json jsonChd = jsonFile.at("children");

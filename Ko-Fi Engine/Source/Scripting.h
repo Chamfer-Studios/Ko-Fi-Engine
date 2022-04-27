@@ -294,7 +294,9 @@ public:
 											"SetDynamic", &C_RigidBody::SetBodyDynamic,
 											"FreezePositionY", &C_RigidBody::FreezePositionY,
 											"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
-											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
+											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos,
+											"SetUseGravity", &C_RigidBody::SetUseGravity, 
+											"UpdateEnableGravity", &C_RigidBody::UpdateEnableGravity);
 
 		lua.new_usertype<C_BoxCollider>("C_BoxCollider",
 											sol::constructors<void(GameObject*)>(),
