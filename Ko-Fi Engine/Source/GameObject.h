@@ -104,6 +104,7 @@ public:
 	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
 	void OnStoped();
 	void Active(bool isActive);
+	void Quit();
 
 private:
 	std::string SetObjectNumberedName(const char* _name);
