@@ -27,6 +27,7 @@ public:
 
 	bool CreateClip(const AnimatorClip& clip);
 	bool CreateDefaultClip(AnimatorClip* clip);
+	bool ResetClip();
 
 	void SetAnim(R_Animation* anim);
 	void SetSelectedClip(std::string name);
