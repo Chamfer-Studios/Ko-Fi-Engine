@@ -53,11 +53,19 @@ bool M_ResourceManager::Start()
 
 	fileRefreshRate = 5.0f;
 
-	//RefreshDirectoryFiles(ASSETS_DIR);
+	bool libCreated = engine->GetFileSystem()->CheckDirectory(LIBRARY_DIR);
+	if (!libCreated)
+	{
+		CONSOLE_LOG("[FATAL ERROR] Resource Manager: Unable to create the Library directory.");
+	}
+	else
+	{
+		//RefreshDirectoryFiles(ASSETS_DIR);
 
-	//TrimLibrary();
+		//TrimLibrary();
 
-	//Find prefabs
+		//Find prefabs
+	}
 
 	return true;
 }
@@ -1541,8 +1549,12 @@ bool M_ResourceManager::HasImportIgnoredExtension(const char* assetPath) const
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".txt") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".milk") == 0 // TODO Temporary (just delete from assets?)
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".bytes") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".bmp") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".svg") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".lua") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".md5mesh") == 0
 		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".md5anim") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".zip") == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".rar") == 0
 		);
 }

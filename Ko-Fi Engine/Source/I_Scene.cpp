@@ -1361,9 +1361,11 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 						break;
 					}
 					case ComponentType::NONE:
+					{
 						CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
 						return false;
 						break;
+					}
 					default:
 					{
 						Component* component = go->AddComponentByType(type);
