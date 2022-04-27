@@ -154,6 +154,11 @@ bool M_Physics::LoadConfiguration(Json& configModule)
 				}
 			}
 		}
+		for (auto go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		{
+			if (go->GetComponent<C_BoxCollider>())
+				go->GetComponent<C_BoxCollider>()->UpdateFilter();
+		}
 	}
 
 	return true;
@@ -211,6 +216,11 @@ bool M_Physics::InspectorDraw()
 					{
 						filterMatrix[i][j] = filterMat;
 						engine->SaveConfiguration();
+						for (auto go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+						{
+							if (go->GetComponent<C_BoxCollider>())
+								go->GetComponent<C_BoxCollider>()->UpdateFilter();
+						}
 					}
 
 				}

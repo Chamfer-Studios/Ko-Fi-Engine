@@ -20,25 +20,25 @@
             true,
             false,
             true,
-            true,
-            true,
-            false,
-            true,
-            true,
-            true,
-            false,
-            false,
-            true,
-            true,
-            false,
-            false,
             false,
             true,
             false,
             true,
             true,
             true,
-            true
+            false,
+            false,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            true,
+            false,
+            false
         ],
         "Filters": [
             [
@@ -80,11 +80,11 @@
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 768,
+        "Height": 1017,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
         "Title": "Ko-Fi Engine - testing_anims",
-        "Width": 1024
+        "Width": 1920
     }
 }

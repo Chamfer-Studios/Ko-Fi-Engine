@@ -107,6 +107,7 @@ componentSwitch = gameObject:GetAudioSwitch()
 
 ------------------- Physics setter ----------------------
 componentRigidBody = gameObject:GetRigidBody()
+componentBoxCollider = gameObject:GetBoxCollider()
 rigidBodyFlag = true
 ---------------------------------------------------------
 

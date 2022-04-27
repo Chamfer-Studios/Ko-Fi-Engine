@@ -10,8 +10,8 @@
             "active": true,
             "position": [
                 18.021902084350586,
-                10.000000953674316,
-                -2.0650137599886875e-08
+                19.515430450439453,
+                22.681644439697266
             ],
             "rotation": [
                 0.0,
@@ -57,7 +57,7 @@
             "freeze_rotation_x": false,
             "freeze_rotation_y": false,
             "freeze_rotation_z": false,
-            "mass": 0.0010000000474974513,
+            "mass": 1.0,
             "type": "rigidBody",
             "use_gravity": false
         },
@@ -70,12 +70,12 @@
         {
             "active": true,
             "center": [
-                0.0,
+                -2.299999952316284,
                 0.0,
                 0.0
             ],
             "filter": "projectile",
-            "is_trigger": false,
+            "is_trigger": true,
             "scale_factor": [
                 1.0,
                 1.0,
