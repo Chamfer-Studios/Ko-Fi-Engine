@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "Engine.h"
 #include "Importer.h"
+#include "M_ResourceManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -23,6 +24,7 @@
 C_Animator::C_Animator(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::ANIMATOR;
+	animation = nullptr;
 }
 
 C_Animator::~C_Animator()
@@ -188,77 +190,63 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 void C_Animator::Save(Json& json) const
 {
-	json["type"] = "animator";
-
-	std::string name = owner->GetName();
-	std::string path = ANIMATIONS_DIR + name + ANIMATION_EXTENSION;
-	animation->SetAssetPath(path.c_str());
-	Importer::GetInstance()->animationImporter->Save(animation, animation->GetAssetPath());
-
-	json["path"] = animation->GetAssetPath();
-	Json jsonClips;
-	for (auto clip : clips)
+	if (animation != nullptr)
 	{
-		jsonClips["mapString"] = clip.first.c_str();
+		json["animation"]["asset_path"] = animation->GetAssetPath();
 
-		jsonClips["clipName"] = clip.second.GetName().c_str();
-		jsonClips["clipStartFrame"] = clip.second.GetStartFrame();
-		jsonClips["clipEndFrame"] = clip.second.GetEndFrame();
-		jsonClips["clipDuration"] = clip.second.GetDuration();
-		jsonClips["clipDurationInSeconds"] = clip.second.GetDurationInSeconds();
-		jsonClips["clipLoop"] = clip.second.GetLoopBool();
-		jsonClips["clipFinished"] = clip.second.GetFinishedBool();
+		Json jsonClips;
+		for (auto clip : clips)
+		{
+			jsonClips["mapString"] = clip.first.c_str();
+			jsonClips["clipName"] = clip.second.GetName().c_str();
+			jsonClips["clipStartFrame"] = clip.second.GetStartFrame();
+			jsonClips["clipEndFrame"] = clip.second.GetEndFrame();
+			jsonClips["clipDuration"] = clip.second.GetDuration();
+			jsonClips["clipDurationInSeconds"] = clip.second.GetDurationInSeconds();
+			jsonClips["clipLoop"] = clip.second.GetLoopBool();
+			jsonClips["clipFinished"] = clip.second.GetFinishedBool();
 
-		json["clips"].push_back(jsonClips);
+			json["clips"].push_back(jsonClips);
+		}
+		json["selectedClip"] = selectedClip->GetName();
 	}
-	json["selectedClip"] = selectedClip->GetName();
 }
 
 void C_Animator::Load(Json& json)
 {
-	if (animation)
-		RELEASE(animation);
-	animation = new R_Animation();
-
-	if (json.contains("path"))
+	if (!json.empty())
 	{
-		std::string path = json.at("path");
-		Importer::GetInstance()->animationImporter->Load(path.c_str(), animation);
-		C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
+		animation = nullptr;
 
-		if (cMesh != nullptr && cMesh->GetMesh()->IsAnimated())
-			owner->GetComponent<C_Mesh>()->GetMesh()->SetAnimation(animation);
+		Json jsonAnimation = json.at("animation");
+		std::string animationAssetPath = jsonAnimation.at("asset_path").get<std::string>();
+		animation = (R_Animation*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(animationAssetPath.c_str());
 
-		if (!json.empty())
+		if (animation == nullptr)
+			CONSOLE_LOG("[ERROR] Component Animation: could not load resource from library.");
+		else
 		{
-			AnimatorClip animatorClip;
+			C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
+			if (cMesh != nullptr && cMesh->GetMesh()->IsAnimated())
+				owner->GetComponent<C_Mesh>()->GetMesh()->SetAnimation(animation);
+
 			for (const auto& clip : json.at("clips").items())
 			{
-				animatorClip.SetName(clip.value().at("clipName").get<std::string>().c_str());
-				animatorClip.SetStartFrame(clip.value().at("clipStartFrame"));
-				animatorClip.SetEndFrame(clip.value().at("clipEndFrame"));
-				animatorClip.SetDuration(clip.value().at("clipDuration"));
-				animatorClip.SetDurationInSeconds(clip.value().at("clipDurationInSeconds"));
-				animatorClip.SetLoopBool(clip.value().at("clipLoop"));
-				animatorClip.SetFinishedBool(clip.value().at("clipFinished"));
-
-				animatorClip.SetAnimation(animation);
-
-				clips[clip.value().at("mapString")] = animatorClip;
+				std::string key = clip.value().at("mapString");
+				AnimatorClip c;
+				c.SetName(clip.value().at("clipName").get<std::string>().c_str());
+				c.SetStartFrame(clip.value().at("clipStartFrame"));
+				c.SetEndFrame(clip.value().at("clipEndFrame"));
+				c.SetDuration(clip.value().at("clipDuration"));
+				c.SetDurationInSeconds(clip.value().at("clipDurationInSeconds"));
+				c.SetLoopBool(clip.value().at("clipLoop"));
+				c.SetFinishedBool(clip.value().at("clipFinished"));
+				c.SetAnimation(animation);
+				clips[key] = c;
 			}
 			SetSelectedClip(json.at("selectedClip"));
 		}
 	}
-
-	/*if (selectedClip)
-	{
-		selectedClip = nullptr;
-	}*/
-
-	/*if (!selectedClip)
-	{*/
-		/*selectedClip = new AnimatorClip();*/
-	/*}*/
 }
 
 void C_Animator::Reset()

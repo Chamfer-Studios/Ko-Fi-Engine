@@ -36,9 +36,8 @@
 C_Material::C_Material(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
-
-	material = new R_Material();
-	texture = new R_Texture();
+	material = nullptr;
+	texture = nullptr;
 	currentTextureId = 0;
 }
 

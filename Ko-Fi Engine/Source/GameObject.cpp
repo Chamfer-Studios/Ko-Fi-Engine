@@ -36,7 +36,7 @@
 #include "R_Material.h"
 
 // Used with a path for the .fbx load
-GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D)
+GameObject::GameObject(UID uid, KoFiEngine* engine, const char* name, bool _is3D)
 {
 	active = true;
 	this->uid = uid;
@@ -83,9 +83,8 @@ bool GameObject::Start()
 {
 	bool ret = true;
 	for (Component* component : components)
-	{
 		ret = component->Start();
-	}
+
 	return ret;
 }
 
@@ -93,9 +92,8 @@ bool GameObject::PreUpdate()
 {
 	bool ret = true;
 	for (Component* component : components)
-	{
 		ret = component->PreUpdate();
-	}
+
 	return ret;
 }
 
@@ -115,9 +113,7 @@ bool GameObject::PostUpdate(float dt)
 	bool ret = true;
 
 	for (Component* component : components)
-	{
 		ret = component->PostUpdate(dt);
-	}
 
 	return ret;
 }
@@ -146,9 +142,8 @@ bool GameObject::OnPlay()
 {
 	bool ret = true;
 	for (Component* component : components)
-	{
 		ret = component->OnPlay();
-	}
+
 	return ret;
 }
 
@@ -157,9 +152,7 @@ bool GameObject::OnPause()
 	bool ret = true;
 
 	for (Component* component : components)
-	{
 		ret = component->OnPause();
-	}
 
 	return ret;
 }
@@ -169,9 +162,7 @@ bool GameObject::OnStop()
 	bool ret = true;
 
 	for (Component* component : components)
-	{
 		ret = component->OnStop();
-	}
 
 	return ret;
 }
@@ -181,9 +172,7 @@ bool GameObject::OnResume()
 	bool ret = true;
 
 	for (Component* component : components)
-	{
 		ret = component->OnResume();
-	}
 
 	return ret;
 }
@@ -193,9 +182,7 @@ bool GameObject::OnTick()
 	bool ret = true;
 
 	for (Component* component : components)
-	{
 		ret = component->OnTick();
-	}
 
 	return ret;
 }
@@ -391,9 +378,7 @@ void GameObject::RemoveChild(GameObject* child)
 {
 	auto it = std::find(children.begin(), children.end(), child);
 	if (it != children.end())
-	{
 		children.erase(it);
-	}
 }
 
 void GameObject::PropagateTransform()
@@ -407,7 +392,7 @@ void GameObject::PropagateTransform()
 
 void GameObject::SetName(const char* name)
 {
-		this->name = SetObjectNumberedName(name).c_str();
+	this->name = SetObjectNumberedName(name).c_str();
 }
 
 const char *GameObject::GetName() const
@@ -440,27 +425,27 @@ std::vector<Component*> GameObject::GetComponents() const
 	return components;
 }
 
-void GameObject::SetUID(uint uid)
+void GameObject::SetUID(UID uid)
 {
 	this->uid = uid;
 }
 
-uint GameObject::GetUID() const
+UID GameObject::GetUID() const
 {
 	return uid;
 }
 
-void GameObject::SetParentUID(uint uid)
+void GameObject::SetParentUID(UID uid)
 {
 	this->parentUid = uid;
 }
 
-uint GameObject::GetParentUID() const
+UID GameObject::GetParentUID() const
 {
 	return parentUid;
 }
 
-bool GameObject::HasChildrenWithUID(uint uid)
+bool GameObject::HasChildrenWithUID(UID uid)
 {
 	for (std::vector<GameObject*>::iterator child = children.begin(); child != children.end(); child++)
 	{
@@ -470,7 +455,7 @@ bool GameObject::HasChildrenWithUID(uint uid)
 	return false;
 }
 
-bool GameObject::HasParentWithUID(uint uid)
+bool GameObject::HasParentWithUID(UID uid)
 {
 	while (parent != engine->GetSceneManager()->GetCurrentScene()->rootGo)
 	{
@@ -732,20 +717,22 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		else if (type == "script")
 		{
 			C_Script* scriptCmp = nullptr;
-			for (auto c : this->GetComponents()) {
-				if (c->type == ComponentType::SCRIPT) {
+			for (auto c : this->GetComponents())
+			{
+				if (c->type == ComponentType::SCRIPT)
+				{
 					int cID = ((C_Script*)c)->id;
-					if (jsonCmp.find("id") != jsonCmp.end()) {
-						if (cID == jsonCmp.at("id")) {
+					if (jsonCmp.find("id") != jsonCmp.end())
+					{
+						if (cID == jsonCmp.at("id"))
 							scriptCmp = (C_Script*)c;
-						}
 					}
 				}
 			}
+
 			if (scriptCmp == nullptr)
-			{
 				scriptCmp = this->CreateComponent<C_Script>();
-			}
+
 			scriptCmp->active = true;
 			scriptCmp->Load(jsonCmp);
 		}
@@ -904,20 +891,22 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		else if (type == "script")
 		{
 			C_Script* scriptCmp = nullptr;
-			for (auto c : this->GetComponents()) {
-				if (c->type == ComponentType::SCRIPT) {
+			for (auto c : this->GetComponents())
+			{
+				if (c->type == ComponentType::SCRIPT)
+				{
 					int cID = ((C_Script*)c)->id;
-					if (jsonCmp.find("id") != jsonCmp.end()) {
-						if (cID == jsonCmp.at("id")) {
+					if (jsonCmp.find("id") != jsonCmp.end())
+					{
+						if (cID == jsonCmp.at("id"))
 							scriptCmp = (C_Script*)c;
-						}
 					}
 				}
 			}
+
 			if (scriptCmp == nullptr)
-			{
 				scriptCmp = this->CreateComponent<C_Script>();
-			}
+
 			scriptCmp->active = true;
 			scriptCmp->Load(jsonCmp);
 		}
@@ -1043,13 +1032,9 @@ bool GameObject::IsSelected()
 	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 	{
 		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] == uid)
-		{
 			contains = true;
-		}
 		else
-		{
 			contains = false;
-		}
 	}
 	return contains;
 }
@@ -1121,8 +1106,7 @@ void GameObject::Active(bool isActive)
 {
 	std::vector<GameObject*> childrenList = this->GetChildren();
 	for (std::vector<GameObject*>::iterator chdIt = childrenList.begin(); chdIt != childrenList.end(); ++chdIt)
-	{
 		(*chdIt)->Active(isActive);
-	}
+
 	this->active = isActive;
 }

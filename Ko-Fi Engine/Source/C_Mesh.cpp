@@ -13,6 +13,7 @@
 #include "M_Renderer3D.h"
 #include "M_Camera3D.h"
 #include "M_Editor.h"
+#include "M_ResourceManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -43,7 +44,6 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 	mesh = nullptr;
 	renderMesh = true;
 	time = 0.0f;
-
 }
 
 C_Mesh::~C_Mesh()
@@ -82,80 +82,44 @@ bool C_Mesh::CleanUp()
 
 void C_Mesh::Save(Json& json) const
 {
-	std::string name = owner->GetName();
-	std::string path = MESHES_DIR + name + MESH_EXTENSION;
-
-	mesh->SetLibraryPath(path.c_str());
-	Importer::GetInstance()->meshImporter->Save(mesh, mesh->GetLibraryPath());
-
-	json["path"] = mesh->GetLibraryPath();
-	json["shape_type"] = (int)mesh->meshType;
-	json["draw_vertex_normals"] = mesh->GetVertexNormals();
-	json["draw_face_normals"] = mesh->GetFaceNormals();
-	json["isAnimated"] = mesh->IsAnimated();
-
-	if (mesh->IsAnimated())
+	if (mesh != nullptr)
 	{
-		json["rootNodeUID"] = mesh->GetRootNode()->GetUID();
+		json["mesh"]["asset_path"] = mesh->GetAssetPath();
+		json["mesh"]["shape_type"] = (int)mesh->meshType;
+		json["mesh"]["draw_vertex_normals"] = mesh->GetVertexNormals();
+		json["mesh"]["draw_face_normals"] = mesh->GetFaceNormals();
+		json["mesh"]["is_animated"] = mesh->IsAnimated();
+
+		if (mesh->IsAnimated())
+			json["mesh"]["root_node_UID"] = mesh->GetRootNode()->GetUID();
 	}
 }
 
 void C_Mesh::Load(Json& json)
 {
-	if (mesh == nullptr)
+	if (!json.empty())
 	{
-		int type = json.at("shape_type");
-		Shape meshType = Shape::NONE;
-		switch (type)
+		mesh = nullptr;
+
+		Json jsonMesh = json.at("mesh");
+		std::string meshAssetPath = jsonMesh.at("asset_path").get<std::string>();
+		mesh = (R_Mesh*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(meshAssetPath.c_str());
+
+		if (mesh == nullptr)
+			CONSOLE_LOG("[ERROR] Component Mesh: could not load resource from library.");
+		else
 		{
-		case 0:
-			meshType = Shape::NONE;
-			break;
-		case 1:
-			meshType = Shape::CUBE;
-			break;
-		case 2:
-			meshType = Shape::SPHERE;
-			break;
-		case 3:
-			meshType = Shape::CYLINDER;
-			break;
-		case 4:
-			meshType = Shape::TORUS;
-			break;
-		case 5:
-			meshType = Shape::PLANE;
-			break;
-		case 6:
-			meshType = Shape::CONE;
-			break;
+			GenerateLocalBoundingBox();
+			GenerateGlobalBoundingBox();
+			mesh->meshType = (Shape)jsonMesh.at("shape_type").get<int>();
+			mesh->SetVertexNormals(jsonMesh.at("draw_vertex_normals"));
+			mesh->SetFaceNormals(jsonMesh.at("draw_face_normals"));
+			mesh->SetIsAnimated(jsonMesh.at("is_animated"));
+
+			if (mesh->IsAnimated())
+				mesh->SetRootNode(owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(jsonMesh.at("root_node_UID")));
 		}
-		SetMesh(new R_Mesh(meshType));
-
-		mesh->meshType = meshType;
 	}
-
-	std::string path = json.at("path");
-
-	if (json.contains("isAnimated"))
-		mesh->SetIsAnimated(json.at("isAnimated"));
-	else
-		mesh->SetIsAnimated(false);
-
-	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh);
-	mesh->SetLibraryPath(path.c_str());
-
-	SetVertexNormals(json.at("draw_vertex_normals"));
-	SetFaceNormals(json.at("draw_face_normals"));
-
-	if (mesh->IsAnimated())
-	{
-		uint uid = (uint)json.at("rootNodeUID");
-
-		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
-		this->GetMesh()->SetRootNode(object);
-	}
-	GenerateGlobalBoundingBox();
 }
 
 void C_Mesh::SetMesh(R_Mesh* mesh)
