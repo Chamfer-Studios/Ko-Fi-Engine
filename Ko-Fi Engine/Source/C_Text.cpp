@@ -77,7 +77,7 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 		SDL_Color tmpcol = GetColor();
 		float c[4] = { tmpcol.r,tmpcol.g,tmpcol.b,tmpcol.a };
 
-		if (ImGui::ColorEdit4("Text Color", c))
+		if (ImGui::ColorEdit4("Text Color", c, ImGuiColorEditFlags_DisplayRGB) != false)
 		{
 			tmpcol.r = c[0];
 			tmpcol.g = c[1];
