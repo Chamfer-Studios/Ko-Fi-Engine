@@ -102,6 +102,14 @@ M_Editor::M_Editor(KoFiEngine* engine)
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
 #endif //KOFI_GAME
+#ifdef KOFI_GAME
+	if (panelsState.showViewportWindow)
+	{
+		panelViewport = new PanelViewport(this, engine);
+		AddPanel(panelViewport);
+	}
+#endif // !KOFI_GAME
+
 }
 
 M_Editor::~M_Editor()
@@ -169,10 +177,10 @@ bool M_Editor::Start()
 	styleHandler.SetKoFiStyle();
 	ImGui_ImplSDL2_InitForOpenGL(engine->GetWindow()->window, engine->GetRenderer()->context);
 	ImGui_ImplOpenGL3_Init();
-#ifdef KOFI_GAME
-	viewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-	lastViewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-#endif //KOFI_GAME
+//#ifdef KOFI_GAME
+//	viewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+//	lastViewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+//#endif //KOFI_GAME
 	// Panels Start
 	if (ret == true)
 	{
@@ -195,10 +203,10 @@ bool M_Editor::PreUpdate(float dt)
 	bool ret = true;
 
 	OPTICK_EVENT();
-#ifdef KOFI_GAME
-	viewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-	lastViewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-#endif //KOFI_GAME
+//#ifdef KOFI_GAME
+//	viewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+//	lastViewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+//#endif //KOFI_GAME
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();

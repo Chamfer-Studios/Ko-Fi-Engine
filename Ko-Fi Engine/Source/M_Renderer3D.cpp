@@ -68,9 +68,9 @@ bool M_Renderer3D::Awake(Json configModule)
 	ret = InitOpenGL();
 	OnResize();
 	SetVsync(configModule["Vsync"].get<bool>());
-#ifndef KOFI_GAME
+
 	InitFrameBuffers();
-#endif // KOFI_GAME
+
 
 
 	ret = LoadConfiguration(configModule);
@@ -85,9 +85,6 @@ bool M_Renderer3D::PreUpdate(float dt)
 
 	bool ret = true;
 	
-#ifndef KOFI_GAME
-	PrepareFrameBuffers();
-#endif //KOFI_GAME
 	PrepareFrameBuffers();
 	isFirstPass = true;
 
