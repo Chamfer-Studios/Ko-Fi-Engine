@@ -122,17 +122,17 @@ bool SceneIntro::Update(float dt)
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update(dt);
-		if (go->changeScene)
-		{
-			switchScene = true;
-			sceneNameGO = go->sceneName;
-			go->changeScene = false;
-		}
 		if (go->isQuitting)
 		{
 			quitPlease = true;
 			go->isQuitting = false;
 		}
+	}
+	if (engine->GetSceneManager()->GetChangeScene())
+	{
+		switchScene = true;
+		sceneNameGO = engine->GetSceneManager()->GetSceneName();
+		//engine->GetSceneManager()->SetChangeSceneAndName(false, sceneNameGO);
 	}
 
 	// example::NodeEditorShow();
@@ -167,6 +167,7 @@ bool SceneIntro::PostUpdate(float dt)
 	if (switchScene)
 	{
 		switchScene = false;
+		//engine->GetSceneManager()->LoadScene(this, sceneNameGO.c_str());
 		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
 	}
 

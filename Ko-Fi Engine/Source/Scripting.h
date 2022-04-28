@@ -193,11 +193,7 @@ public:
 									 "GetButton", &GameObject::GetComponent<C_Button>,
 									 "GetImage", &GameObject::GetComponent<C_Image>,
 									 "OnStoped", &GameObject::OnStoped,
-									 "LoadScene", &GameObject::LoadSceneFromName,
-									 "Active", &GameObject::Active,
-									 "Quit", &GameObject::Quit,
-									 "ChangeScene", &GameObject::SetChangeScene
-
+									 "Active", &GameObject::Active
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
 		);
 
@@ -347,7 +343,8 @@ public:
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
-
+		lua.set_function("SetChangeSceneAndName", &M_SceneManager::SetChangeSceneAndName, gameObject->GetEngine()->GetSceneManager());
+		lua.set_function("LoadSceneFromName", &M_SceneManager::LoadSceneFromName, gameObject->GetEngine()->GetSceneManager());
 	}
 
 	bool CleanUp()

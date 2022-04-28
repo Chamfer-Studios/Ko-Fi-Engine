@@ -53,16 +53,22 @@ GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, b
 	return go;
 }
 
-void Scene::DeleteCurrentScene()
+void Scene::DeleteCurrentScene(std::string rootName)
 {
 	for (GameObject* gameObject : gameObjectList)
 	{
 		RELEASE(gameObject);
 	}
-	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
 	gameObjectList.clear();
+	gameObjectList.shrink_to_fit();
+
+	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
 	lights.clear();
+	lights.shrink_to_fit();
+	
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
+	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+
 	rootGo = new GameObject(-1, engine, "Root");
 	gameObjectList.push_back(rootGo);
 }

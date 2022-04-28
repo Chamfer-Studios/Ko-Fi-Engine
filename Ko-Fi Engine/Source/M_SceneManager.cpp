@@ -4,6 +4,7 @@
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
 #include "M_Window.h"
+#include "M_FileSystem.h"
 #include <imgui_stdlib.h>
 
 #include "GameObject.h"
@@ -29,6 +30,7 @@
 
 #include "Log.h"
 #include "Globals.h"
+#include "FSDefs.h"
 
 #include "optick.h"
 
@@ -208,6 +210,41 @@ void M_SceneManager::AddScene(Scene* scene)
 Scene* M_SceneManager::GetCurrentScene()
 {
 	return currentScene;
+}
+
+bool M_SceneManager::UnloadScene(Scene* scene, std::string sceneName)
+{
+	bool ret = true;
+
+	if (!scene)
+		ret = false;
+
+	//scene->DeleteCurrentScene(sceneName);
+
+	return ret;
+}
+
+bool M_SceneManager::LoadScene(Scene* scene, std::string sceneName)
+{
+	bool ret = true;
+	std::string path = ASSETS_SCENES_DIR + std::string(sceneName) + SCENE_EXTENSION;
+	if (!std::filesystem::exists(path))
+	{
+		// LOG ERROR, SCENE NAME DOES NOT EXIST
+		ret = false;
+		return ret;
+	}
+	if (!UnloadScene(scene, sceneName))
+	{
+		// LOG: Error at unloading scene
+		ret = false;
+		return ret;
+	}
+	
+	// LOG: Has unloaded successfully
+	ret = Importer::GetInstance()->sceneImporter->Load(scene, sceneName.c_str());
+	
+	return ret;
 }
 
 GameState M_SceneManager::GetGameState()

@@ -79,7 +79,7 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
-				editor->engine->GetSceneManager()->GetCurrentScene()->DeleteCurrentScene();
+				editor->engine->GetSceneManager()->GetCurrentScene()->DeleteCurrentScene(editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
 			
 			}
 			if (ImGui::MenuItem("Quit"))

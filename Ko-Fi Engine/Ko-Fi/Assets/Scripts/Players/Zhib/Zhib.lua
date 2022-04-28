@@ -108,7 +108,6 @@ componentSwitch = gameObject:GetAudioSwitch()
 ------------------- Physics setter ----------------------
 componentRigidBody = gameObject:GetRigidBody()
 componentBoxCollider = gameObject:GetBoxCollider()
-rigidBodyFlag = true
 ---------------------------------------------------------
 
 ------------------- Particles setter --------------------
@@ -127,14 +126,6 @@ isDoubleClicking = false
 ----------------------- Methods -------------------------
 -- Called each loop iteration
 function Update(dt)
-	-- Set Starting Position
-	--if (rigidBodyFlag == true) then 
-	--	if (componentRigidBody ~= nil) then
-	--		rigidBodyFlag = false
-	--		componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
-	--	end
-	--end
-
 	-- Running state logic
 	if (isDoubleClicking == true) then
 		if (doubleClickTimer < doubleClickDuration) then

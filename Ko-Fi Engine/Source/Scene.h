@@ -76,7 +76,7 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr, bool is3D = true);
 
-	virtual void DeleteCurrentScene();
+	virtual void DeleteCurrentScene(std::string rootName);
 
 	virtual void DeleteGameObject(GameObject* gameObject);
 
