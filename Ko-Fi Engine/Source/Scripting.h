@@ -195,6 +195,7 @@ public:
 									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "Active", &GameObject::Active,
+									 "Quit", &GameObject::Quit,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
@@ -230,8 +231,8 @@ public:
 		lua.new_usertype<C_Camera>("C_Transform",
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
-			"right", &C_Camera::right,
-			"up", &C_Camera::up
+			"right", &C_Camera::GetRight,
+			"up", &C_Camera::GetUp
 			);
 
 		// Component Mesh
@@ -398,6 +399,10 @@ public:
 			case 12:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
+			}
+			case 13:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
 			}
 
 			case 21:

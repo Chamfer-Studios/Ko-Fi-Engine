@@ -1392,6 +1392,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Smokebomb.lua">
       <Filter>Scripts\Players\Nerala</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ClosePopUp.lua">
       <Filter>Scripts\UI</Filter>
     </None>
