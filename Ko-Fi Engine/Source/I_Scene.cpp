@@ -1278,6 +1278,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 			UID goUid = modelIt.value().at("game_object_uid");
 			UID modelUid = modelIt.value().at("model_uid");
 			std::string assetPath = modelIt.value().at("model_asset_path");
+
 			R_Model* rModel = (R_Model*)engine->GetResourceManager()->GetResourceFromLibrary(assetPath.c_str());
 			if (rModel != nullptr)
 				scene->sceneModels.emplace(goUid, std::pair<UID, std::string>(modelUid, assetPath));

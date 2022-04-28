@@ -44,7 +44,7 @@ bool R_Model::SaveMeta(Json& json) const
 			jsonResource["library_path"] = shaderPath;
 			json["contained_resources"].push_back(jsonResource);
 		}
-		if (node.texture != 0)
+		if (node.texture != 0 && node.textureName != "")
 		{
 			std::string textureName = node.textureName;
 			std::string fileName = node.name + TEXTURE_EXTENSION;
@@ -58,13 +58,17 @@ bool R_Model::SaveMeta(Json& json) const
 		}
 	}
 
-	std::string animationName = animationName + ANIMATION_EXTENSION;
-	std::string animationPath = ANIMATIONS_DIR + std::to_string(animation) + ANIMATION_EXTENSION;
-	jsonResource["uid"] = animation;
-	jsonResource["type"] = ResourceType::ANIMATION;
-	jsonResource["asset_file"] = animationName;
-	jsonResource["library_path"] = animationPath;
-	json["contained_resources"].push_back(jsonResource);
+	if (animation != 0 && animationName != "")
+	{
+		Json jsonAnim;
+		std::string animationFile = animationName + ANIMATION_EXTENSION;
+		std::string animationPath = ANIMATIONS_DIR + std::to_string(animation) + ANIMATION_EXTENSION;
+		jsonAnim["uid"] = animation;
+		jsonAnim["type"] = ResourceType::ANIMATION;
+		jsonAnim["asset_file"] = animationName;
+		jsonAnim["library_path"] = animationPath;
+		json["contained_resources"].push_back(jsonAnim);
+	}
 
 	return ret;
 }
