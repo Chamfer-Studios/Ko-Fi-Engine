@@ -258,7 +258,7 @@ bool M_Editor::Update(float dt)
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspaceId = ImGui::GetID("DefaultDockspace");
-			ImGui::DockSpace(dockspaceId,ImVec2(0.0f,0.0f),ImGuiDockNodeFlags_PassthruCentralNode);
+			ImGui::DockSpace(dockspaceId,ImVec2(0.0f,0.0f),ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_AutoHideTabBar);
 			//ImGui::DockSpaceOverViewport(viewport);
 		}
 
