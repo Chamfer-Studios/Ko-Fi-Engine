@@ -7,6 +7,7 @@
 #include "Engine.h"
 #include "M_Editor.h"
 #include "M_SceneManager.h"
+#include "M_Input.h"
 
 // Components
 #include "C_Mesh.h"
@@ -1149,4 +1150,9 @@ void GameObject::Active(bool isActive)
 		(*chdIt)->Active(isActive);
 	}
 	this->active = isActive;
+}
+
+void GameObject::Quit()
+{
+	this->GetEngine()->GetInput()->quitGame = true;
 }

@@ -195,6 +195,7 @@ public:
 									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "Active", &GameObject::Active,
+									 "Quit", &GameObject::Quit,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
@@ -398,6 +399,10 @@ public:
 			case 12:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
+			}
+			case 13:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
 			}
 
 			case 21:
