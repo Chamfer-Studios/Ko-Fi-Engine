@@ -135,16 +135,6 @@ function Update(dt)
 	--	end
 	--end
 
-	-- Animation timer
-	if (isAttacking == true and componentAnimator ~= nil) then
-		animationTimer = animationTimer + dt
-		if (animationTimer >= animationDuration) then
-			componentAnimator:SetSelectedClip("Idle")
-			isAttacking = false
-			animationTimer = 0.0
-		end
-	end
-
 	-- Running state logic
 	if (isDoubleClicking == true) then
 		if (doubleClickTimer < doubleClickDuration) then
@@ -185,8 +175,32 @@ function Update(dt)
 			-- Reappear
 			invisibilityDuration = nil
 			gameObject.active = true
+			if (componentRigidBody ~= nil) then
+				if (componentBoxCollider ~= nil) then
+					componentBoxCollider:SetTrigger(false)
+					componentBoxCollider:UpdateIsTrigger()
+				end
+				componentRigidBody:SetUseGravity(true)
+				componentRigidBody:UpdateEnableGravity()
+			end
 		end
 		return
+	end
+
+	-- Animation timer
+	if (componentAnimator ~= nil) then
+		
+		local loop = componentAnimator:IsCurrentClipLooping()
+		local playing = componentAnimator:IsCurrentClipPlaying()
+		print("Loop is: ", loop)
+		print("Playing is: ", playing)
+		if (loop == false) then
+			if (playing == true) then
+				return
+			else
+				--componentAnimator:SetSelectedClip("Idle")
+			end
+		end
 	end
 	
 	-- Actions
@@ -486,7 +500,15 @@ function Ultimate(mousePos)
 	invisibilityTimer = 0
 	invisibilityDuration = deathMarkDuration
 
-	gameObject:GetRigidBody():SetRigidBodyPos(reappearPosition)
+	if (componentRigidBody ~= nil) then
+		if (componentBoxCollider ~= nil) then
+			componentBoxCollider:SetTrigger(true)
+			componentBoxCollider:UpdateIsTrigger()
+		end
+		componentRigidBody:SetRigidBodyPos(reappearPosition)
+		componentRigidBody:SetUseGravity(false)
+		componentRigidBody:UpdateEnableGravity()
+	end
 
 	StopMovement()
 

@@ -107,6 +107,7 @@ public:
 	void SetIsActiveToChildren(std::vector<GameObject *> &list, bool value);
 	void OnStoped();
 	void Active(bool isActive);
+	void Quit();
 
 private:
 	std::string SetObjectNumberedName(const char *_name);

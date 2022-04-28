@@ -195,6 +195,7 @@ public:
 									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "Active", &GameObject::Active,
+									 "Quit", &GameObject::Quit,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
@@ -262,7 +263,9 @@ public:
 		// Component Animator
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 											sol::constructors<void(GameObject *)>(),
-											"SetSelectedClip", &C_Animator::SetSelectedClip);
+											"SetSelectedClip", &C_Animator::SetSelectedClip,
+											"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
+											"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
 		// Component Particle
 		lua.new_usertype<C_Particle>("C_Particle",
@@ -272,11 +275,11 @@ public:
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
-			sol::constructors<void(GameObject *)>(),
-			"PlayTrack", &C_AudioSwitch::PlayTrack,
-			"PauseTrack", &C_AudioSwitch::PauseTrack,
-			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack);
+										sol::constructors<void(GameObject *)>(),
+										"PlayTrack", &C_AudioSwitch::PlayTrack,
+										"PauseTrack", &C_AudioSwitch::PauseTrack,
+										"ResumeTrack", &C_AudioSwitch::ResumeTrack,
+										"StopTrack", &C_AudioSwitch::StopTrack);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
@@ -294,7 +297,9 @@ public:
 											"SetDynamic", &C_RigidBody::SetBodyDynamic,
 											"FreezePositionY", &C_RigidBody::FreezePositionY,
 											"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
-											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
+											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos,
+											"SetUseGravity", &C_RigidBody::SetUseGravity, 
+											"UpdateEnableGravity", &C_RigidBody::UpdateEnableGravity);
 
 		lua.new_usertype<C_BoxCollider>("C_BoxCollider",
 											sol::constructors<void(GameObject*)>(),
@@ -397,12 +402,9 @@ public:
 			}
 			case 13:
 			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Q);
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
 			}
-			case 14:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
-			}
+
 			case 21:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_1);

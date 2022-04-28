@@ -86,6 +86,9 @@ private:
 	//M_Renderer3D* renderer = nullptr;
 	char* dropped_filedir;
 	KoFiEngine* engine = nullptr;
+
+public:
+	bool quitGame = false;
 };
 
 #endif // !__INPUT_H__
