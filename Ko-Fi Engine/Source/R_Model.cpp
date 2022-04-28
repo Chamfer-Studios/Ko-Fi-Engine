@@ -34,16 +34,6 @@ bool R_Model::SaveMeta(Json& json) const
 			jsonResource["library_path"] = meshPath;
 			json["contained_resources"].push_back(jsonResource);
 		}
-		if (node.material != 0)
-		{
-			std::string materialName = node.name + SHADER_EXTENSION;
-			std::string shaderPath = SHADERS_DIR + std::to_string(node.material) + SHADER_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::MATERIAL;
-			jsonResource["asset_file"] = materialName;
-			jsonResource["library_path"] = shaderPath;
-			json["contained_resources"].push_back(jsonResource);
-		}
 		if (node.texture != 0 && node.textureName != "")
 		{
 			std::string textureName = node.textureName;
@@ -80,7 +70,6 @@ ModelNode::ModelNode() :
 	uid(0),
 	parentUid(0),
 	mesh(0),
-	material(0),
 	texture(0),
 	textureName(""),
 	position(float3::zero),
@@ -88,12 +77,11 @@ ModelNode::ModelNode() :
 	scale(float3::zero)
 {}
 
-ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID texture, std::string textureName, float3 position, Quat rotation, float3 scale) :
+ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID texture, std::string textureName, float3 position, Quat rotation, float3 scale) :
 name(name),
 uid(uid),
 parentUid(parentUid),
 mesh(mesh),
-material(material),
 texture(texture),
 textureName(textureName),
 position(position),

@@ -57,10 +57,7 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 		material->diffuseColor = Color(color.r, color.g, color.b, color.a);
 	}
 
-	std::string defaultPath = ASSETS_SHADERS_DIR + std::string(DEFAULT_SHADER) + SHADER_EXTENSION;
-	material->SetShaderPath(defaultPath.c_str());
-
-	ret = LoadAndCreateShader(defaultPath.c_str(), material);
+	ret = LoadAndCreateShader(material->GetAssetPath(), material);
 
 	return ret;
 }

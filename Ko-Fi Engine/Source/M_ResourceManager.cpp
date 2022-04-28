@@ -737,7 +737,7 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 
 		if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0 ||
 			engine->GetFileSystem()->StringCompare(extension.c_str(), SHADER_EXTENSION) == 0 ||
-			engine->GetFileSystem()->StringCompare(extension.c_str(), TEXTURE_EXTENSION) == 0)
+			engine->GetFileSystem()->StringCompare(extension.c_str(), PNG_EXTENSION) == 0)
 		{
 			DeleteFromLibrary(toUpdate[i].c_str());
 			ImportFile(toUpdate[i].c_str());

@@ -113,7 +113,7 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 
 	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
 	{
-		CONSOLE_LOG(" Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
+		CONSOLE_LOG("[ERROR] Importer: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
 		return false;
 	}
 
@@ -304,7 +304,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 		return;
 	}
 
-	const char* nodeName = assimpNode->mName.C_Str();
+	const char* assimpNodeName = assimpNode->mName.C_Str();
 
 	for (unsigned int i = 0; i < assimpNode->mNumMeshes; ++i)
 	{
@@ -312,7 +312,6 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 		if (item != loadedNodes.end())
 		{
 			node.mesh = item->second.mesh;
-			node.material = item->second.material;
 			node.texture = item->second.texture;
 			continue;
 		}
@@ -321,12 +320,12 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 
 		if (assimpMesh != nullptr && assimpMesh->HasFaces())
 		{
-			ImportMesh(nodeName, assimpMesh, model, node, assimpScene);
+			ImportMesh(assimpNodeName, assimpMesh, model, node, assimpScene);
 
 			if (assimpScene->HasMaterials() && assimpMesh->mMaterialIndex >= 0)
 			{
 				aiMaterial* assimpMaterial = assimpScene->mMaterials[assimpMesh->mMaterialIndex];
-				ImportMaterial(nodeName, assimpMaterial, assimpMesh->mMaterialIndex, model, node);
+				ImportMaterial(assimpNodeName, assimpMaterial, assimpMesh->mMaterialIndex, model, node);
 			}
 		}
 		else
@@ -424,7 +423,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, R_Model
 
 	std::string animAssetPath = ASSETS_MODELS_DIR + std::string(assimpScene->mAnimations[0]->mName.C_Str()) + ANIMATION_EXTENSION;
 
-	R_Animation* anim = (R_Animation*)engine->GetResourceManager()->CreateNewResource(ResourceType::ANIMATION, animAssetPath.c_str());;
+	R_Animation* anim = (R_Animation*)engine->GetResourceManager()->CreateNewResource(ResourceType::ANIMATION, animAssetPath.c_str());
 	if (anim == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Importer: R_Animation (name: %s) was not imported correctly.", assimpScene->mAnimations[0]->mName.C_Str());
@@ -518,36 +517,13 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		return;
 	}
 
-	//std::string assetPath = model->GetAssetPath() + std::string(nodeName) + SHADER_EXTENSION;
-	//R_Material* material = (R_Material*)engine->GetResourceManager()->CreateNewResource(ResourceType::MATERIAL, assetPath.c_str());
-
-	//if (material == nullptr)
-	//{
-	//	CONSOLE_LOG("[ERROR] Resource Material is nullptr.");
-	//	return;
-	//}
-
-	//if (!Importer::GetInstance()->materialImporter->Import(assimpMaterial, material))
-	//{
-	//	CONSOLE_LOG("[ERROR] Importer: error while importing the material.");
-	//	return;
-	//}
-
-	//CheckAndApplyForcedUID(material);
-	//node.material = material->GetUID();
-
-	//engine->GetResourceManager()->SaveResource(material);
-	//engine->GetResourceManager()->UnloadResource(material);
-
 	aiString aiTexturePath;
 	R_Texture* texture;
 	if (assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
-		std::string textureFilename = aiTexturePath.C_Str();
+		std::filesystem::path textureFilename = aiTexturePath.C_Str();
 
-		textureFilename = textureFilename.substr(textureFilename.find_last_of("/\\") + 1);
-
-		std::string texturePath = ASSETS_TEXTURES_DIR + textureFilename;
+		std::string texturePath = ASSETS_TEXTURES_DIR + textureFilename.filename().string();
 		if (std::filesystem::exists(texturePath))
 		{
 			texture = (R_Texture*)engine->GetResourceManager()->CreateNewResource(ResourceType::TEXTURE, texturePath.c_str());
@@ -893,7 +869,6 @@ bool I_Scene::SaveModel(const R_Model* model, const char* path)
 		jsonNode["uid"] = node.uid;
 		jsonNode["parent_uid"] = node.parentUid;
 		jsonNode["mesh_uid"] = node.mesh;
-		jsonNode["material_uid"] = node.material;
 		jsonNode["texture_uid"] = node.texture;
 		jsonNode["texture_name"] = node.textureName;
 
@@ -1430,7 +1405,6 @@ bool I_Scene::LoadModel(const char* path, R_Model* model)
 				modelNode.uid = node.value().at("uid");
 				modelNode.parentUid = node.value().at("parent_uid");
 				modelNode.mesh = node.value().at("mesh_uid");
-				modelNode.material = node.value().at("material_uid");
 				modelNode.texture = node.value().at("texture_uid");
 				modelNode.textureName = node.value().at("texture_name").get<std::string>();
 
