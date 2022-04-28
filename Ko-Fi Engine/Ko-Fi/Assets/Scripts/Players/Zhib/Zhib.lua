@@ -55,40 +55,40 @@ ultimateRangeExtension = ultimateRange * 0.5
 
 ------------------- Inspector setter --------------------
 -- Globals --
-	--characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-	--characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
-	--NewVariable(characterIDIV)
+characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
+NewVariable(characterIDIV)
 
-	--speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-	--speedIV = InspectorVariable.new("speed", speedIVT, speed)
-	--NewVariable(speedIV)
+speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+speedIV = InspectorVariable.new("speed", speedIVT, speed)
+NewVariable(speedIV)
 
-	-- Primary ability --
-	--knifeCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-	--knifeCastRangeIV = InspectorVariable.new("knifeCastRange", knifeCastRangeIVT, knifeCastRange)
-	--NewVariable(knifeCastRangeIV)
+-- Primary ability --
+knifeCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+knifeCastRangeIV = InspectorVariable.new("knifeCastRange", knifeCastRangeIVT, knifeCastRange)
+NewVariable(knifeCastRangeIV)
 
-	--maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-	--maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
-	--NewVariable(maxKnivesIV)
+maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
+NewVariable(maxKnivesIV)
 
-	-- Secondary ability --
-	--decoyCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-	--decoyCastRangeIV = InspectorVariable.new("decoyCastRange", decoyCastRangeIVT, decoyCastRange)
-	--NewVariable(decoyCastRangeIV)
+-- Secondary ability --
+decoyCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+decoyCastRangeIV = InspectorVariable.new("decoyCastRange", decoyCastRangeIVT, decoyCastRange)
+NewVariable(decoyCastRangeIV)
 
-	--drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-	--drawDecoyIV = InspectorVariable.new("drawDecoy", drawDecoyIVT, drawDecoy)
-	--NewVariable(drawDecoyIV)
+drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawDecoyIV = InspectorVariable.new("drawDecoy", drawDecoyIVT, drawDecoy)
+NewVariable(drawDecoyIV)
 
-	-- Ultimate ability --
-	--ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-	--ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
-	--NewVariable(ultimateRangeIV)
+-- Ultimate ability --
+ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
+NewVariable(ultimateRangeIV)
 
-	--drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-	--drawUltimateIV = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
-	--NewVariable(drawUltimateIV)
+drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawUltimateIV = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
+NewVariable(drawUltimateIV)
 ---------------------------------------------------------
 
 ------------------- Animation setter --------------------
@@ -134,16 +134,6 @@ function Update(dt)
 	--		componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
 	--	end
 	--end
-
-	-- Animation timer
-	if (isAttacking == true and componentAnimator ~= nil) then
-		animationTimer = animationTimer + dt
-		if (animationTimer >= animationDuration) then
-			componentAnimator:SetSelectedClip("Idle")
-			isAttacking = false
-			animationTimer = 0.0
-		end
-	end
 
 	-- Running state logic
 	if (isDoubleClicking == true) then
@@ -195,6 +185,22 @@ function Update(dt)
 			end
 		end
 		return
+	end
+
+	-- Animation timer
+	if (componentAnimator ~= nil) then
+		
+		local loop = componentAnimator:IsCurrentClipLooping()
+		local playing = componentAnimator:IsCurrentClipPlaying()
+		print("Loop is: ", loop)
+		print("Playing is: ", playing)
+		if (loop == false) then
+			if (playing == true) then
+				return
+			else
+				--componentAnimator:SetSelectedClip("Idle")
+			end
+		end
 	end
 	
 	-- Actions

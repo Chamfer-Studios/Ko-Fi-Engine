@@ -634,7 +634,9 @@
     <ClCompile Include="Source\C_Image.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\C_Animator.cpp" />
+    <ClCompile Include="Source\C_Animator.cpp">
+      <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">

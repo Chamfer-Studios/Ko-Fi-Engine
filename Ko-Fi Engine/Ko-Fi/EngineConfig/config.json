@@ -18,34 +18,47 @@
             true,
             true,
             true,
-            true,
             false,
             true,
             false,
             true,
+            false,
             true,
+            true,
+            true,
+            false,
             false,
             true,
             true,
             false,
+            false,
+            false,
+            false,
+            false,
             true,
+            true,
+            false,
             false
         ],
         "Filters": [
             [
                 1,
-                "terrain"
-            ],
-            [
-                2,
                 "player"
             ],
             [
-                3,
+                2,
                 "enemy"
             ],
             [
+                3,
+                "terrain"
+            ],
+            [
                 4,
+                "win_trigger"
+            ],
+            [
+                5,
                 "projectile"
             ]
         ],
@@ -60,18 +73,18 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "0_level"
+        "DefaultScene": "testing_anims"
     },
     "UI": null,
     "Window": {
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 768,
+        "Height": 1017,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine - TransitionScreen",
-        "Width": 1024
+        "Title": "Ko-Fi Engine - testing_anims",
+        "Width": 1920
     }
 }

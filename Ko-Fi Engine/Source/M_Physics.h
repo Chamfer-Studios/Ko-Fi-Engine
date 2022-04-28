@@ -75,6 +75,7 @@ public:
 	GameObject* GetGameObjectFromBody(reactphysics3d::CollisionBody* collisionBody) { return collisionBodyToObjectMap[collisionBody]; }
 
 	inline void ResetCollisionBodyToObjectMap() { collisionBodyToObjectMap.clear(); }
+	void DeleteBodyFromObjectMap(GameObject* go);
 
 	//RayCast
 	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo);
