@@ -238,7 +238,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				case INSPECTOR_FLOAT:
 				{
-					if (ImGui::DragFloat(label, &std::get<float>((*variable)->value)))
+					if (ImGui::DragFloat(label, &std::get<float>((*variable)->value))) // THIS CRASHES ON THE RELEASE
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<float>((*variable)->value);
 					}
