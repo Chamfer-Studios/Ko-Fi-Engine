@@ -454,7 +454,7 @@ bool M_ResourceManager::LoadResource(UID uid, const char* assetPath)
 		ret = Importer::GetInstance()->sceneImporter->LoadModel(libraryPath.c_str(), (R_Model*)resource);
 		break;
 	case ResourceType::MATERIAL:
-		ret = Importer::GetInstance()->materialImporter->Import(libraryPath.c_str(), (R_Material*)resource);
+		ret = Importer::GetInstance()->materialImporter->Load(libraryPath.c_str(), (R_Material*)resource);
 		break;
 	case ResourceType::ANIMATION:
 		ret = Importer::GetInstance()->animationImporter->Load(libraryPath.c_str(), (R_Animation*)resource);
@@ -686,7 +686,7 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 bool M_ResourceManager::ImportMaterial(const char* assetPath, R_Material* material)
 {
 	FindAndForceUID(material);
-	bool ret = Importer::GetInstance()->materialImporter->Import(assetPath, material);
+	bool ret = Importer::GetInstance()->materialImporter->Load(assetPath, material);
 	return (ret && material != nullptr);
 }
 

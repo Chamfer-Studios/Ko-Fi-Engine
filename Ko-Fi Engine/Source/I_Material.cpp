@@ -21,7 +21,7 @@ I_Material::~I_Material()
 {
 }
 
-bool I_Material::Import(const char* assetsPath, R_Material* material)
+bool I_Material::Load(const char* assetsPath, R_Material* material)
 {
 	bool ret = true;
 
