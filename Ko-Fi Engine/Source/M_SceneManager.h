@@ -61,7 +61,6 @@ public:
 
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
-	void test() { LOG_BOTH("A"); }
 
 		// Engine config serialization --------------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
@@ -77,10 +76,6 @@ public:
 
 	void AddScene(Scene* scene);
 	Scene* GetCurrentScene();
-	bool UnloadScene(Scene* currScene, std::string sceneName);
-	bool LoadScene(Scene* scene, std::string sceneName);
-	inline bool LoadSceneFromName(std::string name) {return LoadScene(currentScene, name.c_str()); }
-
 
 	GameState GetGameState();
 	inline float const GetGameTime() { return time; }
@@ -101,13 +96,6 @@ public:
 	void GuizmoTransformation();
 	void UpdateGuizmo();
 	//
-
-	// SCENE SWITCHING
-	inline bool GetChangeScene() const { return changeScene; }
-	inline void SetChangeScene(const bool newChangeScene) { changeScene = newChangeScene; }
-	inline std::string GetSceneName() const { return sceneName; }
-	inline void SetSceneName(const std::string newSceneName) { sceneName = newSceneName; }
-	inline void SetChangeSceneAndName(bool changeSceneLua, std::string sceneNameLua) { changeScene = changeSceneLua; sceneName = sceneNameLua; }
 
 public:
 	bool active;
@@ -147,10 +135,6 @@ private:
 	float gameTime = 0.0f;
 	
 	GameState runtimeState = GameState::STOPPED;
-
-	// SCENE SWITCHING
-	std::string sceneName;
-	bool changeScene = false;
 };
 
 #endif // !__M_SCENE_MANAGER_H__

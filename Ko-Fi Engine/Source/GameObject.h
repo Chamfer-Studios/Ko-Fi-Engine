@@ -127,8 +127,9 @@ public:
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
-	
+	bool changeScene = false;
 	bool isQuitting = false;
+	std::string sceneName;
 	std::string prefabPath;
 	Tag tag;
 
