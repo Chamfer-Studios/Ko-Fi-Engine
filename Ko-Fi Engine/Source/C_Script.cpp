@@ -54,10 +54,8 @@ bool C_Script::CleanUp()
 		s->handler->CleanUp();
 		s->inspectorVariables.clear();
 		s->inspectorVariables.shrink_to_fit();
-		delete s;
+		RELEASE(s);
 	}
-
-	s = nullptr;
 	
 	return true;
 }
