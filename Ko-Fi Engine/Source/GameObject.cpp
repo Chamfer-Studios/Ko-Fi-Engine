@@ -230,18 +230,7 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 	case ComponentType::MESH:
 	{
-		//// Set Default Material
-		//c = this->CreateComponent<C_Material>();
-		//R_Material* material = new R_Material();
-		//Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
-		//this->GetComponent<C_Material>()->SetMaterial(material);
-
-		//// Set a Default R_Model
 		c = this->CreateComponent<C_Mesh>();
-		//R_Mesh* mesh = new R_Mesh();
-		//Importer::GetInstance()->meshImporter->Load("Library/Meshes/Sphere.sugar", mesh);
-		//this->GetComponent<C_Mesh>()->SetMesh(mesh);
-
 		break;
 	}
 	case ComponentType::MATERIAL:
