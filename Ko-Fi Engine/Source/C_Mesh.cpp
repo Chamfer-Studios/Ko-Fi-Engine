@@ -53,7 +53,7 @@ C_Mesh::~C_Mesh()
 
 bool C_Mesh::Start()
 {
-	if (mesh)
+	if (mesh != nullptr)
 		GenerateGlobalBoundingBox();
 	return true;
 }
@@ -75,7 +75,10 @@ bool C_Mesh::CleanUp()
 	std::string temp(owner->GetName());
 	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
-	RELEASE(mesh);
+
+	if (mesh != nullptr)
+		owner->GetEngine()->GetResourceManager()->FreeResource(mesh->GetUID());
+	mesh = nullptr;
 
 	return true;
 }
@@ -99,7 +102,7 @@ void C_Mesh::Load(Json& json)
 {
 	if (!json.empty())
 	{
-		mesh = nullptr;
+		CleanUp();
 
 		Json jsonMesh = json.at("mesh");
 		std::string meshAssetPath = jsonMesh.at("asset_path").get<std::string>();

@@ -43,12 +43,6 @@ C_Material::C_Material(GameObject* parent) : Component(parent)
 
 C_Material::~C_Material()
 {
-	// Already done in CleanUp()
-	/*std::string temp(owner->GetName());
-	if (temp.find("Knife") != std::string::npos)  // Dirty Fix before resource manager works
-		return;
-	if(material != nullptr)
-		RELEASE(material);*/
 	CleanUp();
 }
 
@@ -58,11 +52,13 @@ bool C_Material::CleanUp()
 	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
 
-	if(material != nullptr)
-		RELEASE(material);// peta por el karambit
+	if (material != nullptr)
+		owner->GetEngine()->GetResourceManager()->FreeResource(material->GetUID());
+	material = nullptr;
 
 	if (texture != nullptr)
-		RELEASE(texture);// peta por el karambit
+		owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
+	texture = nullptr;
 
 	return true;
 }
@@ -149,8 +145,7 @@ void C_Material::Load(Json& json)
 {
 	if (!json.empty())
 	{
-		material = nullptr;
-		texture = nullptr;
+		CleanUp();
 
 		std::string materialAssetPath = json.at("shader").at("asset_path").get<std::string>();
 		material = (R_Material*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(materialAssetPath.c_str());

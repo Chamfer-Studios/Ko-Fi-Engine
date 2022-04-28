@@ -44,6 +44,7 @@ bool C_Animator::Start()
 		animation->SetStartFrame(0);
 		animation->SetEndFrame(10);
 	}
+
 	if (selectedClip == nullptr)
 	{
 		AnimatorClip* animClip = new AnimatorClip(animation, "Default clip", 0, 10, 1.0f, true);
@@ -61,13 +62,16 @@ bool C_Animator::Update(float dt)
 bool C_Animator::CleanUp()
 {
 	if (animation != nullptr)
-		RELEASE(animation);
+		owner->GetEngine()->GetResourceManager()->FreeResource(animation->GetUID());
+	animation = nullptr;
 
 	if (selectedClip != nullptr)
 		selectedClip = nullptr;
 
 	if (clipToDelete != nullptr)
 		clipToDelete = nullptr;
+
+	clips.clear();
 
 	C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
 	if (cMesh != nullptr)
@@ -216,7 +220,7 @@ void C_Animator::Load(Json& json)
 {
 	if (!json.empty())
 	{
-		animation = nullptr;
+		RELEASE(animation);
 
 		Json jsonAnimation = json.at("animation");
 		std::string animationAssetPath = jsonAnimation.at("asset_path").get<std::string>();

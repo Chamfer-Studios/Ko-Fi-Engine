@@ -946,7 +946,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 	if (!jsonFile.is_null())
 	{
-	
+		//TODO: Should be like this
+		//engine->GetSceneManager()->UnloadScene(scene);
 		scene->DeleteCurrentScene();
 		ret = true;
 		jsonScene = jsonFile.at(name);

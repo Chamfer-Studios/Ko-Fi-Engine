@@ -38,7 +38,6 @@ C_AudioSource::~C_AudioSource()
 
 bool C_AudioSource::Start()
 {
-
     return true;
 }
 
