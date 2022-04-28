@@ -7,7 +7,7 @@ NewVariable(sceneNameIV)
 ------------------ Collisions --------------------
 function OnTriggerEnter(go)
 	if (go.tag == Tag.PLAYER) then
-		SetChangeSceneAndName(true, name)
+		gameObject:ChangeScene(true, sceneName);
 	end
 end
 --------------------------------------------------
