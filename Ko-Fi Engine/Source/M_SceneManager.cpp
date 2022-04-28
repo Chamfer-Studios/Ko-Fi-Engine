@@ -307,7 +307,7 @@ void M_SceneManager::GuizmoTransformation()
 	std::vector<float4x4> modelProjection;
 	for (int i = 0; i < selectedGameObjects.size(); i++)
 	{
-		modelProjection.push_back(selectedGameObjects[i]->GetComponent<C_Transform>()->GetLocalTransform().Transposed());
+		modelProjection.push_back(selectedGameObjects[i]->GetComponent<C_Transform>()->GetGlobalTransform().Transposed());
 	}
 
 	window = ImGui::FindWindowByName("Scene");
@@ -328,10 +328,7 @@ void M_SceneManager::GuizmoTransformation()
 
 	for (int i = 0; i < selectedGameObjects.size(); i++)
 	{
-		if (selectedGameObjects.size() > 0) {
-			ImGuizmo::SetID(selectedGameObjects[0]->GetUID());
-			ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform[i]);
-		}
+		ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform[i]);
 	}
 
 	if (ImGuizmo::IsUsing())
