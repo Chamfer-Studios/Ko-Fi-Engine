@@ -37,7 +37,7 @@ characterID = 1
 speed = 500.0
 
 -- Primary ability --
-knifeCastRange = 30.0
+knifeCastRange = 100.0
 maxKnives = 2 -- Move to a Start() func!!!
 knifeCount = maxKnives
 
@@ -47,49 +47,49 @@ decoyCooldown = 10.0
 drawDecoy = false
 
 -- Ultimate ability --
-ultimateRange = 50.0
+ultimateRange = 100.0
 ultimateCooldown = 30.0
 drawUltimate = false
 ultimateRangeExtension = ultimateRange * 0.5
-------------------------------------------------------
+---------------------------------------------------------
 
 ------------------- Inspector setter --------------------
 -- Globals --
-local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 characterIDIV = InspectorVariable.new("characterID", characterIDIVT, characterID)
 NewVariable(characterIDIV)
 
-local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
 
 -- Primary ability --
-local knifeCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+knifeCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 knifeCastRangeIV = InspectorVariable.new("knifeCastRange", knifeCastRangeIVT, knifeCastRange)
 NewVariable(knifeCastRangeIV)
 
-local maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
 NewVariable(maxKnivesIV)
 
 -- Secondary ability --
-local decoyCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+decoyCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 decoyCastRangeIV = InspectorVariable.new("decoyCastRange", decoyCastRangeIVT, decoyCastRange)
 NewVariable(decoyCastRangeIV)
 
-local drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 drawDecoyIV = InspectorVariable.new("drawDecoy", drawDecoyIVT, drawDecoy)
 NewVariable(drawDecoyIV)
 
 -- Ultimate ability --
-local ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+ultimateRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 ultimateRangeIV = InspectorVariable.new("ultimateRange", ultimateRangeIVT, ultimateRange)
 NewVariable(ultimateRangeIV)
 
-local drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+drawUltimateIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 drawUltimateIV = InspectorVariable.new("drawUltimate", drawUltimateIVT, drawUltimate)
 NewVariable(drawUltimateIV)
-------------------------------------------------------
+---------------------------------------------------------
 
 ------------------- Animation setter --------------------
 componentAnimator = gameObject:GetComponentAnimator()
@@ -99,51 +99,44 @@ end
 animationDuration = 0.8
 animationTimer = 0.0
 isAttacking = false -- This should go, just here for animations
-------------------------------------------------------
+---------------------------------------------------------
 
-------------------- Audio setter --------------------
+--------------------- Audio setter ----------------------
 componentSwitch = gameObject:GetAudioSwitch()
-------------------------------------------------------
+---------------------------------------------------------
 
-------------------- Physics setter --------------------
+------------------- Physics setter ----------------------
 componentRigidBody = gameObject:GetRigidBody()
+componentBoxCollider = gameObject:GetBoxCollider()
 rigidBodyFlag = true
-------------------------------------------------------
+---------------------------------------------------------
 
 ------------------- Particles setter --------------------
 mouseParticles = Find("Mouse Particles")
 if (mouseParticles ~= nil) then
 	mouseParticles:GetComponentParticle():StopParticleSpawn()
 end
-------------------------------------------------------
+---------------------------------------------------------
 
-------------------- Movement logic --------------------
+-------------------- Movement logic ---------------------
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
-------------------------------------------------------
+---------------------------------------------------------
 
--------------------- Methods ---------------------
+----------------------- Methods -------------------------
 -- Called each loop iteration
 function Update(dt)
 	-- Set Starting Position
-	if (rigidBodyFlag == true) then 
-		if (componentRigidBody ~= nil) then
-			rigidBodyFlag = false
-			componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
-		end
-	end
+	--if (rigidBodyFlag == true) then 
+	--	if (componentRigidBody ~= nil) then
+	--		rigidBodyFlag = false
+	--		componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, 10, componentTransform:GetPosition().z))
+	--	end
+	--end
 
-	-- Animation timer
-	if (isAttacking == true and componentAnimator ~= nil) then
-		animationTimer = animationTimer + dt
-		if (animationTimer >= animationDuration) then
-			componentAnimator:SetSelectedClip("Idle")
-			isAttacking = false
-			animationTimer = 0.0
-		end
-	end
-
+	-- TODO: Move all timers & helpers to a bool function
+	
 	-- Running state logic
 	if (isDoubleClicking == true) then
 		if (doubleClickTimer < doubleClickDuration) then
@@ -166,6 +159,7 @@ function Update(dt)
 		decoyTimer = decoyTimer + dt
 		if (decoyTimer >= decoyCooldown) then
 			decoyTimer = nil
+			DispatchGlobalEvent("Player_Ability", { characterID, 2, 0 })
 		end
 	end
 
@@ -174,6 +168,7 @@ function Update(dt)
 		ultimateTimer = ultimateTimer + dt
 		if (ultimateTimer >= ultimateCooldown) then
 			ultimateTimer = nil
+			DispatchGlobalEvent("Player_Ability", { characterID, 3, 0 })
 		end
 	end
 	
@@ -184,13 +179,37 @@ function Update(dt)
 			-- Reappear
 			invisibilityDuration = nil
 			gameObject.active = true
+			if (componentRigidBody ~= nil) then
+				if (componentBoxCollider ~= nil) then
+					componentBoxCollider:SetTrigger(false)
+					componentBoxCollider:UpdateIsTrigger()
+				end
+				componentRigidBody:SetUseGravity(true)
+				componentRigidBody:UpdateEnableGravity()
+			end
 		end
 		return
+	end
+
+	-- Animation timer
+	if (componentAnimator ~= nil) then
+		
+		local loop = componentAnimator:IsCurrentClipLooping()
+		local playing = componentAnimator:IsCurrentClipPlaying()
+		print("Loop is: ", loop)
+		print("Playing is: ", playing)
+		if (loop == false) then
+			if (playing == true) then
+				return
+			else
+				componentAnimator:SetSelectedClip("Idle")
+			end
+		end
 	end
 	
 	-- Actions
 	if (destination ~= nil)	then
-		--MoveToDestination(dt)
+		MoveToDestination(dt)
 		DispatchEvent("Pathfinder_FollowPath", { speed, dt, false })
 		DispatchGlobalEvent("Player_Position", { componentTransform:GetPosition(), gameObject })
 	end
@@ -198,6 +217,7 @@ function Update(dt)
 
 	--Gather Inputs
 	if (IsSelected() == true) then 
+
 		-- Left Click
 		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
 
@@ -244,7 +264,9 @@ function Update(dt)
 				if (currentMovement == Movement.WALK and isDoubleClicking == true) then
 					currentMovement = Movement.RUN
 				else
-					currentMovement = Movement.WALK
+					if (currentMovement == Movement.IDLE) then
+						currentMovement = Movement.WALK
+					end
 					isDoubleClicking = true
 				end
 				if (mouseParticles ~= nil) then
@@ -257,21 +279,25 @@ function Update(dt)
 		-- H
 		if (GetInput(5) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.IDLE
+			DispatchGlobalEvent("Player_Ability", { characterID, 0, 0 })
 		end
 
 		-- K
 		if (GetInput(6) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.AIM_PRIMARY
+			DispatchGlobalEvent("Player_Ability", { characterID, 1, 1 })
 		end	
 
 		-- D
 		if (GetInput(12) == KEY_STATE.KEY_DOWN) then
 			currentAction = Action.AIM_SECONDARY
+			DispatchGlobalEvent("Player_Ability", { characterID, 2, 1 })
 		end	
 
 		-- SPACE
 		if (GetInput(4) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.AIM_ULTIMATE
+			DispatchGlobalEvent("Player_Ability", { characterID, 3, 1 })
 		end
 
 		-- C -> Toggle crouch
@@ -311,7 +337,7 @@ function Update(dt)
 end
 --------------------------------------------------
 
------------------ Functions -----------------
+------------------- Functions --------------------
 function MoveToDestination(dt)
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
@@ -354,14 +380,14 @@ function MoveToDestination(dt)
 		end
 	
 		-- Adapt speed on arrive
-		if (d < 10) then
+		if (d < 2) then
 			s = s * 0.5
 		end
 	
 		-- Movement
 		vec2 = Normalize(vec2, d)
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(vec2[1] * s * dt, vec2[2] * s * dt))
+			componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * s * dt, 0, vec2[2] * s * dt))
 		end
 	
 		-- Rotation
@@ -371,6 +397,9 @@ function MoveToDestination(dt)
 		end
 		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
 	else
+		if (componentAnimator ~= nil) then
+			componentAnimator:SetSelectedClip("Idle")
+		end
 		StopMovement()
 	end
 	-- Add ChangeAnimation() to check the speed of the rigid body
@@ -404,6 +433,7 @@ function FireKnife()
 	end
 
 	StopMovement()
+	DispatchGlobalEvent("Player_Ability", { characterID, 1, 2 })
 end
 
 -- Secondary ability
@@ -417,6 +447,7 @@ function PlaceDecoy(mousePos)
 	end
 	decoyTimer = 0.0
 	StopMovement()
+	DispatchGlobalEvent("Player_Ability", { characterID, 2, 2 })
 end
 
 -- Ultimate ability
@@ -481,9 +512,18 @@ function Ultimate(mousePos)
 	invisibilityTimer = 0
 	invisibilityDuration = deathMarkDuration
 
-	gameObject:GetRigidBody():SetRigidBodyPos(reappearPosition)
+	if (componentRigidBody ~= nil) then
+		if (componentBoxCollider ~= nil) then
+			componentBoxCollider:SetTrigger(true)
+			componentBoxCollider:UpdateIsTrigger()
+		end
+		componentRigidBody:SetRigidBodyPos(reappearPosition)
+		componentRigidBody:SetUseGravity(false)
+		componentRigidBody:UpdateEnableGravity()
+	end
 
 	StopMovement()
+	DispatchGlobalEvent("Player_Ability", { characterID, 3, 2 })
 
 	ultimateTimer = 0.0
 end
@@ -493,7 +533,7 @@ function StopMovement()
 
 	destination = nil
 	if (componentRigidBody ~= nil) then
-		componentRigidBody:Set2DVelocity(float2.new(0,0))
+		componentRigidBody:SetLinearVelocity(float3.new(0,0,0))
 	end
 	if (componentSwitch ~= nil) then
 		componentSwitch:StopTrack(1) -- Sprint & crouch should stop here too
@@ -504,9 +544,11 @@ function StopMovement()
 end
 --------------------------------------------------
 
------------------ Collisions ---------------------
+------------------ Collisions --------------------
 function OnTriggerEnter(go)
+	
 	if (go.tag == Tag.PROJECTILE) then
+		print("+1 knives")
 		knifeCount = knifeCount + 1
 	end
 end

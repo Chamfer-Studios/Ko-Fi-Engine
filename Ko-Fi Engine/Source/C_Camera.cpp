@@ -72,14 +72,6 @@ bool C_Camera::Start()
 	return ret;
 }
 
-bool C_Camera::CleanUp()
-{
-	CONSOLE_LOG("Cleaning up the camera");
-	appLog->AddLog("Cleaning up the camera\n");
-
-	return true;
-}
-
 bool C_Camera::Update(float dt)
 {
 	// Add update functionality when we are able to change the main camera.
@@ -93,12 +85,103 @@ bool C_Camera::Update(float dt)
 
 		CalculateViewMatrix();
 
-		if (frustumCulling)
+		if (isFrustumCullingActive)
 			FrustumCulling();
 
 	}
 
 	return true;
+}
+
+bool C_Camera::CleanUp()
+{
+	CONSOLE_LOG("Cleaning up the camera");
+	appLog->AddLog("Cleaning up the camera\n");
+
+	return true;
+}
+
+bool C_Camera::InspectorDraw(PanelChooser* chooser)
+{
+	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
+
+	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
+	{
+		DrawDeleteButton(owner, this);
+
+		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
+		{
+			isProjectionDirty = true;
+		}
+		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
+		{
+			isProjectionDirty = true;
+		}
+		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
+		{
+			isProjectionDirty = true;
+		}
+		if (ImGui::Checkbox("Draw frustum", &isDrawFrustumActive))
+		{
+		}
+		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
+		{
+			ResetFrustumCulling();
+		}
+		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
+		{
+			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
+		}
+	}
+	else
+		DrawDeleteButton(owner, this);
+	return ret;
+}
+
+void C_Camera::Save(Json& json) const
+{
+	json["type"] = "camera";
+	json["vertical_fov"] = verticalFOV;
+	json["near_plane_distance"] = nearPlaneDistance;
+	json["far_plane_distance"] = farPlaneDistance;
+	json["draw_frustum"] = isDrawFrustumActive;
+	json["frustum_culling"] = isFrustumCullingActive;
+	json["isMainCamera"] = isMainCamera;
+}
+
+void C_Camera::Load(Json& json)
+{
+	verticalFOV = json.at("vertical_fov");
+	nearPlaneDistance = json.at("near_plane_distance");
+	farPlaneDistance = json.at("far_plane_distance");
+	isDrawFrustumActive = json.at("draw_frustum");
+	isFrustumCullingActive = json.at("frustum_culling");
+	isMainCamera = json.at("isMainCamera");
+	if(isMainCamera)
+		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
+}
+
+float C_Camera::GetFarPlaneHeight() const
+{
+	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
+}
+
+float C_Camera::GetFarPlaneWidth() const
+{
+	return GetFarPlaneHeight()*aspectRatio;
+}
+
+float4x4 C_Camera::GetViewMatrix() const
+{
+	return cameraFrustum.ViewMatrix();
+}
+
+void C_Camera::SetAspectRatio(const float& aspectRatio)
+{
+	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
+	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
+	this->isProjectionDirty = true;
+	RecalculateProjection();
 }
 
 void C_Camera::LookAt(const float3& point)
@@ -112,9 +195,14 @@ void C_Camera::LookAt(const float3& point)
 	CalculateViewMatrix();
 }
 
+void C_Camera::ChangeSpeed(int multiplier)
+{
+	cameraSpeed = baseCameraSpeed * multiplier;
+}
+
 void C_Camera::CalculateViewMatrix(bool ortho)
 {
-	if (projectionIsDirty)
+	if (isProjectionDirty)
 		RecalculateProjection(ortho);
 
 	cameraFrustum.pos = position;
@@ -122,7 +210,6 @@ void C_Camera::CalculateViewMatrix(bool ortho)
 	cameraFrustum.up = up.Normalized();
 	float3::Orthonormalize(cameraFrustum.front, cameraFrustum.up);
 	right = up.Cross(front);
-	viewMatrix = cameraFrustum.ViewMatrix();
 }
 
 void C_Camera::RecalculateProjection(bool ortho)
@@ -147,96 +234,41 @@ void C_Camera::RecalculateProjection(bool ortho)
 	}
 }
 
-bool C_Camera::InspectorDraw(PanelChooser* chooser)
+void C_Camera::FrustumCulling()
 {
-	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
+	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
-	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
+	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 	{
-		DrawDeleteButton(owner, this);
+		GameObject* gameObject = (*go);
+		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
 
-		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
-		{
-			projectionIsDirty = true;
-		}
-		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
-		{
-			projectionIsDirty = true;
-		}
-		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
-		{
-			projectionIsDirty = true;
-		}
-		if (ImGui::Checkbox("Draw frustum", &drawFrustum))
-		{
-		}
-		if (ImGui::Checkbox("Frustum culling", &frustumCulling))
-		{
-			ResetFrustumCulling();
-		}
-		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
-		{
-			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
-		}
+		if (componentMesh == nullptr || gameObject == owner)
+			continue;
+
+		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
+			componentMesh->SetRenderMesh(false);
+		else
+			componentMesh->SetRenderMesh(true);
 	}
-	else
-		DrawDeleteButton(owner, this);
-	return ret;
 }
 
-void C_Camera::Save(Json& json) const
+void C_Camera::ResetFrustumCulling()
 {
-	json["type"] = "camera";
-	json["vertical_fov"] = verticalFOV;
-	json["near_plane_distance"] = nearPlaneDistance;
-	json["far_plane_distance"] = farPlaneDistance;
-	json["draw_frustum"] = drawFrustum;
-	json["frustum_culling"] = frustumCulling;
-	json["isMainCamera"] = isMainCamera;
+	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	{
+		GameObject* gameObject = (*go);
+		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
+
+		if (componentMesh == nullptr || gameObject == owner)
+			continue;
+
+		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
+			componentMesh->SetRenderMesh(true);
+	}
 }
-
-void C_Camera::Load(Json& json)
-{
-	verticalFOV = json.at("vertical_fov");
-	nearPlaneDistance = json.at("near_plane_distance");
-	farPlaneDistance = json.at("far_plane_distance");
-	drawFrustum = json.at("draw_frustum");
-	frustumCulling = json.at("frustum_culling");
-	isMainCamera = json.at("isMainCamera");
-	if(isMainCamera)
-		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
-}
-
-void C_Camera::ChangeSpeed(int multiplier)
-{
-	cameraSpeed = baseCameraSpeed * multiplier;
-}
-
-//void ModuleCamera3D::OnSave(JSONWriter& writer) const
-//{
-//	writer.String("camera");
-//	writer.StartObject();
-//	SAVE_JSON_FLOAT(verticalFOV)
-//		SAVE_JSON_FLOAT(nearPlaneDistance)
-//		SAVE_JSON_FLOAT(farPlaneDistance)
-//		SAVE_JSON_FLOAT(cameraSpeed)
-//		SAVE_JSON_FLOAT(cameraSensitivity)
-//		writer.EndObject();
-//}
-
-//void ModuleCamera3D::OnLoad(const JSONReader& reader)
-//{
-//	if (reader.HasMember("camera"))
-//	{
-//		const auto& config = reader["camera"];
-//		LOAD_JSON_FLOAT(verticalFOV);
-//		LOAD_JSON_FLOAT(nearPlaneDistance);
-//		LOAD_JSON_FLOAT(farPlaneDistance);
-//		LOAD_JSON_FLOAT(cameraSpeed);
-//		LOAD_JSON_FLOAT(cameraSensitivity);
-//	}
-//	RecalculateProjection();
-//}
 
 void C_Camera::DrawFrustum() const
 {
@@ -314,56 +346,3 @@ bool C_Camera::ClipsWithBBox(const AABB& refBox) const
 	}
 }
 
-void C_Camera::FrustumCulling()
-{
-	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
-
-	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
-	{
-		GameObject* gameObject = (*go);
-		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
-
-		if (componentMesh == nullptr || gameObject == owner)
-			continue;
-
-		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
-			componentMesh->SetRenderMesh(false);
-		else
-			componentMesh->SetRenderMesh(true);
-	}
-}
-
-void C_Camera::ResetFrustumCulling()
-{
-	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
-
-	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
-	{
-		GameObject* gameObject = (*go);
-		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
-
-		if (componentMesh == nullptr || gameObject == owner)
-			continue;
-
-		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
-			componentMesh->SetRenderMesh(true);
-	}
-}
-
-void C_Camera::SetAspectRatio(const float& aspectRatio)
-{
-	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
-	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
-	this->projectionIsDirty = true;
-	RecalculateProjection();
-}
-
-float C_Camera::GetFarPlaneHeight() const
-{
-	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
-}
-
-float C_Camera::GetFarPlaneWidth() const
-{
-	return GetFarPlaneHeight()*aspectRatio;
-}

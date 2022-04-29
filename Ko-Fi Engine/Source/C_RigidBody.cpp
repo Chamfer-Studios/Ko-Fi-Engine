@@ -5,7 +5,6 @@
 #include "M_SceneManager.h"
 #include "C_Transform.h"
 
-
 C_RigidBody::C_RigidBody(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
@@ -70,8 +69,7 @@ bool C_RigidBody::CleanUp()
 
 bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 {
-	std::string colHeader = bodyType + " Body";
-	if (ImGui::CollapsingHeader(colHeader.c_str(), ImGuiTreeNodeFlags_AllowItemOverlap))
+	if (ImGui::CollapsingHeader("Rigid Body##", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 
@@ -111,6 +109,7 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 			if (ImGui::Checkbox("Use Gravity##", &newUseGravity))
 			{
 				SetUseGravity(newUseGravity);
+				UpdateEnableGravity();
 			}
 		}
 
@@ -118,7 +117,10 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		float newMass = GetMass();
 		if (ImGui::DragFloat("##mass", &newMass, 0.01f, 0.01f, 20.0f))
+		{
 			SetMass(newMass);
+			UpdateMass();
+		}
 
 		if (bodyType != "Static")
 		{
@@ -129,26 +131,44 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 				bool newFreezePositionZ = GetFreezePositionZ();
 				ImGui::Text("Freeze position: ");
 				if (ImGui::Checkbox("X##FreezePosX", &newFreezePositionX))
+				{
 					FreezePositionX(newFreezePositionX);
+					UpdateConstrains();
+				}
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Y##FreezePosY", &newFreezePositionY))
+				{
 					FreezePositionY(newFreezePositionY);
+					UpdateConstrains();
+				}
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Z##FreezePosZ", &newFreezePositionZ))
+				{
 					FreezePositionZ(newFreezePositionZ);
+					UpdateConstrains();
+				}
 
 				bool newFreezeRotationX = GetFreezeRotationX();
 				bool newFreezeRotationY = GetFreezeRotationY();
 				bool newFreezeRotationZ = GetFreezeRotationZ();
 				ImGui::Text("Freeze rotation: ");
 				if (ImGui::Checkbox("X##FreezeRotX", &newFreezeRotationX))
+				{
 					FreezeRotationX(newFreezeRotationX);
+					
+				}
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Y##FreezeRotY", &newFreezeRotationY))
+				{
 					FreezeRotationY(newFreezeRotationY);
+					UpdateConstrains();
+				}
 				ImGui::SameLine();
 				if (ImGui::Checkbox("Z##FreezeRotZ", &newFreezeRotationZ))
+				{
 					FreezeRotationZ(newFreezeRotationZ);
+					UpdateConstrains();
+				}
 
 				ImGui::TreePop();
 			}
@@ -206,21 +226,44 @@ void C_RigidBody::Save(Json& json) const
 
 void C_RigidBody::Load(Json& json)
 {
-	bodyType = json.at("body_type");
-	UpdateBodyType();
+	if (json.contains("body_type"))
+	{
+		bodyType = json.at("body_type");
+		UpdateBodyType();
+	}
 
-	useGravity = json.at("use_gravity");
-	UpdateEnableGravity();
+	if (json.contains("use_gravity"))
+	{
+		useGravity = json.at("use_gravity");
+		UpdateEnableGravity();
+	}
 
-	mass = json.at("mass");
-	UpdateMass();
+	if (json.contains("mass"))
+	{
+		useGravity = json.at("use_gravity");
+		UpdateEnableGravity();
+	}
 
-	freezePositionX = json.at("freeze_position_x");
-	freezePositionY = json.at("freeze_position_y");
-	freezePositionZ = json.at("freeze_position_z");
-	freezeRotationX = json.at("freeze_rotation_x");
-	freezeRotationY = json.at("freeze_rotation_y");
-	freezeRotationZ = json.at("freeze_rotation_z");
-	UpdateConstrains();
+	if (json.contains("freeze_position_x"))
+	{
+		freezePositionX = json.at("freeze_position_x");
+		freezePositionY = json.at("freeze_position_y");
+		freezePositionZ = json.at("freeze_position_z");
+		freezeRotationX = json.at("freeze_rotation_x");
+		freezeRotationY = json.at("freeze_rotation_y");
+		freezeRotationZ = json.at("freeze_rotation_z");
+		UpdateConstrains();
+	}
 }
 
+void C_RigidBody::SetRigidBodyPos(float3 newPos)
+{
+	if (bodyType == "Dynamic" || bodyType == "Kinematic") {
+		reactphysics3d::Transform transform;
+		transform.setPosition(reactphysics3d::Vector3(newPos.x, newPos.y, newPos.z));
+		transform.setOrientation(reactphysics3d::Quaternion::identity());
+		body->setTransform(transform);
+	}
+	else
+		owner->GetTransform()->SetPosition(newPos);
+}

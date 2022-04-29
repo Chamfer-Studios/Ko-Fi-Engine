@@ -10,6 +10,8 @@
 
 #include "QuadTree3D.h"
 #include <vector>
+#include "M_Physics.h"
+#include "C_RigidBody.h"
 
 GameObject* Scene::GetGameObject(int uid)
 {
@@ -57,6 +59,7 @@ void Scene::DeleteCurrentScene()
 	{
 		RELEASE(gameObject);
 	}
+	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
 	gameObjectList.clear();
 	lights.clear();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
@@ -101,6 +104,10 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 		if (gameObject->GetComponent<C_LightSource>() != nullptr)
 		{
 			RemoveLight(gameObject);
+		}
+		if (gameObject->GetComponent<C_RigidBody>() != nullptr)
+		{
+			engine->GetPhysics()->DeleteBodyFromObjectMap(gameObject);
 		}
 		RELEASE(gameObject);
 	}

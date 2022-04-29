@@ -32,6 +32,7 @@
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
 #include "C_RigidBody.h"
+#include "C_BoxCollider.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -177,10 +178,12 @@ public:
 									 "GetUID", &GameObject::GetUID,
 									 "tag", &GameObject::tag,
 									 "GetParent", &GameObject::GetParent,
+									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
+									 "GetBoxCollider", &GameObject::GetComponent<C_BoxCollider>,
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
@@ -189,7 +192,10 @@ public:
 									 "IsSelected", &GameObject::IsSelected,
 									 "GetButton", &GameObject::GetComponent<C_Button>,
 									 "GetImage", &GameObject::GetComponent<C_Image>,
+									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
+									 "Active", &GameObject::Active,
+									 "Quit", &GameObject::Quit,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
@@ -225,14 +231,8 @@ public:
 		lua.new_usertype<C_Camera>("C_Transform",
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
-			"right", &C_Camera::right,
-			"up", &C_Camera::up
-			);
-		// Component Mesh
-		lua.new_usertype<C_Mesh>("C_Mesh",
-			sol::constructors<void(GameObject *)>(),
-			"Disable", &C_Mesh::Disable,
-			"Enable", &C_Mesh::Enable
+			"right", &C_Camera::GetRight,
+			"up", &C_Camera::GetUp
 			);
 
 		// Component Mesh
@@ -250,18 +250,22 @@ public:
 
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
-										 sol::constructors<void(GameObject *)>(),
-										 "SetTexture", &C_Image::SetTexture);
+			sol::constructors<void(GameObject *)>(),
+			"SetTexture", &C_Image::SetTexture
+			);
 
 		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),
 										  "IsPressed", &C_Button::IsPressed,
+										  "IsIdle", &C_Button::IsIdle,
 										  "IsHovered", &C_Button::IsHovered);
 
 		// Component Animator
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 											sol::constructors<void(GameObject *)>(),
-											"SetSelectedClip", &C_Animator::SetSelectedClip);
+											"SetSelectedClip", &C_Animator::SetSelectedClip,
+											"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
+											"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
 		// Component Particle
 		lua.new_usertype<C_Particle>("C_Particle",
@@ -271,11 +275,11 @@ public:
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
-			sol::constructors<void(GameObject *)>(),
-			"PlayTrack", &C_AudioSwitch::PlayTrack,
-			"PauseTrack", &C_AudioSwitch::PauseTrack,
-			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack);
+										sol::constructors<void(GameObject *)>(),
+										"PlayTrack", &C_AudioSwitch::PlayTrack,
+										"PauseTrack", &C_AudioSwitch::PauseTrack,
+										"ResumeTrack", &C_AudioSwitch::ResumeTrack,
+										"StopTrack", &C_AudioSwitch::StopTrack);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
@@ -285,16 +289,26 @@ public:
 											"value", &InspectorVariable::value);
 
 		// Rigid Body structure
-		//lua.new_usertype<C_RigidBody2>("C_RigidBody",
-		//									 sol::constructors<void(GameObject *)>(),
-		//									 "IsStatic", &C_RigidBody2::IsStatic,
-		//									 "IsKinematic", &C_RigidBody2::IsKinematic,
-		//									 "SetStatic", &C_RigidBody2::SetStatic,
-		//									 "SetDynamic", &C_RigidBody2::SetDynamic,
-		//									 "SetLinearVelocity", &C_RigidBody2::SetLinearVelocity,
-		//									 "FreezePositionY", &C_RigidBody2::FreezePositionY,
-		//									 "Set2DVelocity", &C_RigidBody2::Set2DVelocity,
-		//									 "SetRigidBodyPos", &C_RigidBody2::SetRigidBodyPos);
+		lua.new_usertype<C_RigidBody>("C_RigidBody",
+											sol::constructors<void(GameObject *)>(),
+											"IsStatic", &C_RigidBody::IsStatic,
+											"IsKinematic", &C_RigidBody::IsKinematic,
+											"SetStatic", &C_RigidBody::SetBodyStatic,
+											"SetDynamic", &C_RigidBody::SetBodyDynamic,
+											"FreezePositionY", &C_RigidBody::FreezePositionY,
+											"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos,
+											"SetUseGravity", &C_RigidBody::SetUseGravity, 
+											"UpdateEnableGravity", &C_RigidBody::UpdateEnableGravity);
+
+		lua.new_usertype<C_BoxCollider>("C_BoxCollider",
+											sol::constructors<void(GameObject*)>(),
+											"IsTrigger", &C_BoxCollider::GetIsTrigger,
+											"SetTrigger", &C_BoxCollider::SetIsTrigger,
+											"GetFilter", &C_BoxCollider::GetFilter,
+											"SetFilter", &C_BoxCollider::SetFilter,
+											"UpdateFilter", &C_BoxCollider::UpdateFilter,
+											"UpdateIsTrigger", &C_BoxCollider::UpdateIsTrigger);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
@@ -304,7 +318,7 @@ public:
 			sol::constructors<void(KoFiEngine*)>(),
 			"WorldToScreen", &M_Camera3D::WorldToScreen);
 
-	/*	lua.new_usertype<M_Physics>("M_Physics",
+		/*lua.new_usertype<M_Physics>("M_Physics",
 			sol::constructors<void(KoFiEngine*)>(),
 			"Raycast", &M_Physics::Raycast);*/
 
@@ -332,6 +346,7 @@ public:
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
+		lua.set_function("RayCast", &Scripting::RayCast, this);
 
 	}
 
@@ -385,6 +400,10 @@ public:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
 			}
+			case 13:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
+			}
 
 			case 21:
 			{
@@ -403,6 +422,11 @@ public:
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4);
 			}
 		}
+	}
+
+	void RayCast(float3 startPoint, float3 endPoint, std::string filterName,GameObject* senderGo)
+	{
+		return  gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint,endPoint,filterName,senderGo);
 	}
 
 	M_Navigation *GetNavigation()

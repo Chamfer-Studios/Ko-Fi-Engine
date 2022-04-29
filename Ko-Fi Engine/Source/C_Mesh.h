@@ -54,6 +54,9 @@ public:
 	void GenerateGlobalBoundingBox();
 	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
 	bool InspectorDraw(PanelChooser* chooser);
+
+	inline bool SetDrawAABB() const { return drawAABB; }
+	inline void GetDrawAABB(const bool newDrawAABB) { drawAABB = newDrawAABB; }
 	
 private:
 	R_Mesh* mesh = nullptr;
@@ -64,6 +67,8 @@ private:
 
 	// Bounding sphere
 	float radius;
+
+	bool drawAABB = true;
 public:
 	// Bounding boxes
 	AABB aabb;

@@ -32,6 +32,7 @@
 #include "C_RenderedUI.h"
 #include "C_LightSource.h"
 #include "C_Animator.h"
+#include "C_RigidBody.h"
 
 #include "R_Material.h"
 #include "PieShape.h"
@@ -262,18 +263,18 @@ void M_Renderer3D::PassProjectionAndViewToRenderer()
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->currentCamera)
 	{
-		if (currentCamera3D->currentCamera->projectionIsDirty) {
+		if (currentCamera3D->currentCamera->GetIsProjectionDirty()) {
 			RecalculateProjectionMatrix();
 			currentCamera3D->currentCamera->CalculateViewMatrix();
 		}
 
-		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->viewMatrix.Transposed().ptr());
+		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->GetViewMatrix().Transposed().ptr());
 	}
 	float3 cameraPos = float3::zero;
 	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
 	if (engine->GetCamera3D()->currentCamera)
 	{
-		cameraPos = engine->GetCamera3D()->currentCamera->position;
+		cameraPos = engine->GetCamera3D()->currentCamera->GetPosition();
 	}
 	else {
 		cameraPos = float3(0.0f, 20.0f, 0.0f);
@@ -287,18 +288,18 @@ void M_Renderer3D::PassPreviewProjectionAndViewToRenderer()
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->gameCamera)
 	{
-		if (currentCamera3D->gameCamera->projectionIsDirty) {
+		if (currentCamera3D->gameCamera->GetIsProjectionDirty()) {
 			RecalculateProjectionMatrix();
 			currentCamera3D->gameCamera->CalculateViewMatrix();
 		}
 
-		glLoadMatrixf((GLfloat*)currentCamera3D->gameCamera->viewMatrix.Transposed().ptr());
+		glLoadMatrixf((GLfloat*)currentCamera3D->gameCamera->GetViewMatrix().Transposed().ptr());
 	}
 	float3 cameraPos = float3::zero;
 	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
 	if (engine->GetCamera3D()->gameCamera)
 	{
-		cameraPos = engine->GetCamera3D()->gameCamera->position;
+		cameraPos = engine->GetCamera3D()->gameCamera->GetPosition();
 	}
 	else {
 		cameraPos = float3(0.0f, 20.0f, 0.0f);
@@ -311,7 +312,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 	glLoadIdentity();
 	if (engine->GetCamera3D()->currentCamera)
 	{
-		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	}
 	else
 	{
@@ -338,15 +339,16 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
-				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
+				if (!cCamera->GetIsEngineCamera() && cCamera->GetIsDrawFrustumActive())
 				{
 					cCamera->DrawFrustum();
 				}
 			}
+			if (go->GetComponent<C_RigidBody>())
+				engine->GetPhysics()->RenderPhysics();
 		}
 	}
 	RenderAllParticles();
-	engine->GetPhysics()->RenderPhysics();
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)
@@ -364,10 +366,12 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	OPTICK_EVENT();
-	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
-	if (selectedId == -1) return;
-	if (selectedId == cMesh->owner->GetUID())
-		cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+	for (int selectedId : engine->GetEditor()->panelGameObjectInfo.selectedGameObjects)
+	{
+		if (selectedId == cMesh->owner->GetUID())
+			cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+	}
+	
 }
 
 void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
@@ -400,10 +404,10 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 			GLint view_location = glGetUniformLocation(shader, "view");
-			glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
-			glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 
 			if (mesh->IsAnimated())
 			{
@@ -426,7 +430,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			}
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
 
 			float2 resolution = float2(1080.0f, 720.0f);
 			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());

@@ -54,10 +54,8 @@ bool C_Script::CleanUp()
 		s->handler->CleanUp();
 		s->inspectorVariables.clear();
 		s->inspectorVariables.shrink_to_fit();
-		delete s;
+		RELEASE(s);
 	}
-
-	s = nullptr;
 	
 	return true;
 }
@@ -141,7 +139,7 @@ bool C_Script::OnPlay()
 		auto start = sol::protected_function(s->handler->lua["Start"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			if (s->lua_update.valid()) {
+			if (start.valid()) {
 				sol::protected_function_result result = start();
 				if (result.valid()) {
 					// Call succeeded
@@ -240,7 +238,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 				case INSPECTOR_FLOAT:
 				{
-					if (ImGui::DragFloat(label, &std::get<float>((*variable)->value)))
+					if (ImGui::DragFloat(label, &std::get<float>((*variable)->value))) // THIS CRASHES ON THE RELEASE
 					{
 						s->handler->lua[(*variable)->name.c_str()] = std::get<float>((*variable)->value);
 					}
@@ -401,6 +399,7 @@ void C_Script::Save(Json &json) const
 		{
 			jsonIV["name"] = variable->name;
 			jsonIV["type"] = "float2";
+			jsonIV["value"] = {};
 			jsonIV["value"]["x"] = std::get<float2>(variable->value).x;
 			jsonIV["value"]["y"] = std::get<float2>(variable->value).y;
 		}
@@ -409,9 +408,11 @@ void C_Script::Save(Json &json) const
 		{
 			jsonIV["name"] = variable->name;
 			jsonIV["type"] = "float3";
-			jsonIV["value"]["x"] = std::get<float3>(variable->value).x;
-			jsonIV["value"]["y"] = std::get<float3>(variable->value).y;
-			jsonIV["value"]["z"] = std::get<float3>(variable->value).z;
+			float3 val = std::get<float3>(variable->value);
+			jsonIV["value"] = {};
+			jsonIV["value"]["x"] = val.x;
+			jsonIV["value"]["y"] = val.y;
+			jsonIV["value"]["z"] = val.z;
 		}
 		break;
 		case INSPECTOR_BOOL:

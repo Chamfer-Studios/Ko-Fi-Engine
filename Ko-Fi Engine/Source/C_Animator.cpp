@@ -312,6 +312,16 @@ AnimatorClip* C_Animator::GetSelectedClip()
 	return selectedClip;
 }
 
+bool C_Animator::IsCurrentClipPlaying()
+{
+	return !GetSelectedClip()->GetFinishedBool();
+}
+
+bool C_Animator::IsCurrentClipLooping()
+{
+	return GetSelectedClip()->GetLoopBool();
+}
+
 void C_Animator::SetSelectedClip(std::string name)
 {
 	for (std::map<std::string, AnimatorClip>::iterator clip = clips.begin(); clip != clips.end(); ++clip)
@@ -319,6 +329,7 @@ void C_Animator::SetSelectedClip(std::string name)
 		if ((*clip).first == name)
 		{
 			selectedClip = &clip->second;
+			selectedClip->SetFinishedBool(false);
 			break;
 		}
 	}

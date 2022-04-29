@@ -52,21 +52,22 @@ function FollowPath(speed, dt, loop)
     end
 
     currentTarget = finalPath[currentPathIndex]
-
     currentPosition = componentTransform:GetPosition()
-    if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
+    while Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance do
         currentPathIndex = currentPathIndex + 1
         if currentPathIndex > #finalPath and loop then
             currentPathIndex = 1
+            break
         end
         if currentPathIndex > #finalPath then
             currentPathIndex = currentPathIndex - 1
+            break
         end
         currentTarget = finalPath[currentPathIndex]
     end
     direction = Float3NormalizedDifference(currentPosition, currentTarget)
     DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
-    delta = { x = direction.x * speed * dt, y = direction.y * speed * dt, z = direction.z * speed * dt }
+    delta = { x = direction.x * speed * _dt, y = direction.y * speed * _dt, z = direction.z * speed * _dt }
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
 
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
@@ -131,4 +132,10 @@ function EventHandler(key, fields)
     elseif key == "Pathfinder_FollowPath" then -- fields[1] -> speed; fields[2] -> dt; fields[3] -> loop;
         FollowPath(fields[1], fields[2], fields[3])
     end
+end
+
+_dt = 0.016
+
+function Update(dt)
+    _dt = dt
 end

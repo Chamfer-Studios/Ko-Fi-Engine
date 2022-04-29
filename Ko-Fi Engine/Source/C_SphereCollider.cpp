@@ -1,8 +1,10 @@
 #include "C_SphereCollider.h"
 #include "Engine.h"
+#include "Globals.h"
 #include "GameObject.h"
 #include "M_Physics.h"
 #include "C_RigidBody.h"
+#include "C_Mesh.h"
 
 C_SphereCollider::C_SphereCollider(GameObject* parent) : Component(parent)
 {
@@ -16,10 +18,17 @@ C_SphereCollider::~C_SphereCollider()
 
 bool C_SphereCollider::Start()
 {
-	if (collider == nullptr)
+	if (owner->GetComponent<C_Mesh>())
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.x/2);
+		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.MaxElement()/2);
+		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, transform);
+	}
+	else
+	{
+		float3 boundingBoxSize = float3(5, 5, 5);
+		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.MaxElement() / 2);
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, transform);
 	}
@@ -29,6 +38,10 @@ bool C_SphereCollider::Start()
 
 bool C_SphereCollider::Update(float dt)
 {
+	if (!owner->GetComponent<C_RigidBody>())
+	{
+		owner->DeleteComponent(this);
+	}
 	return true;
 }
 
@@ -130,7 +143,7 @@ void C_SphereCollider::Load(Json& json)
 void C_SphereCollider::UpdateFilter()
 {
 	std::map<unsigned int, std::string> filterMap = owner->GetEngine()->GetPhysics()->GetFiltersMap();
-	bool** filterMatrix = owner->GetEngine()->GetPhysics()->filterMatrix;
+	bool** filterMatrix = owner->GetEngine()->GetPhysics()->GetFilterMatrix();
 	for (auto iter : filterMap)
 	{
 		if (iter.second == filter)
@@ -151,12 +164,30 @@ void C_SphereCollider::UpdateFilter()
 
 void C_SphereCollider::UpdateScaleFactor()
 {
-	float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-	reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
-	owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
-	owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroySphereShape(sphereShape);
-	sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape((boundingBoxSize.x / 2) * scaleFactor);
-	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, oldTransform);
+	if (owner->GetComponent<C_Mesh>())
+	{
+		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
+		reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
+		owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroySphereShape(sphereShape);
+		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.MaxElement() / 2 * scaleFactor);
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, oldTransform);
+	}
+	else
+	{
+		float3 boundingBoxSize = float3(5, 5, 5);
+		reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
+		owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroySphereShape(sphereShape);
+		sphereShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createSphereShape(boundingBoxSize.MaxElement() / 2 * scaleFactor);
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(sphereShape, oldTransform);
+	}
+
+	UpdateFilter();
+
+	UpdateIsTrigger();
+
+	UpdateCenter();
 }
 
 void C_SphereCollider::UpdateIsTrigger()

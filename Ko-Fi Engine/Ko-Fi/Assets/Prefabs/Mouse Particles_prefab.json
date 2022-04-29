@@ -1,0 +1,115 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                -5.905917644500732,
+                -1.0015189218393061e-05,
+                -36.811683654785156
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "resource": [
+                {
+                    "emitters": [
+                        {
+                            "maxParticles": 50,
+                            "modules": [
+                                {
+                                    "maxParticleLife": 3.0,
+                                    "minParticleLife": 1.0,
+                                    "randomParticleLife": false,
+                                    "spawnTime": 0.0,
+                                    "spawnTimer": 0.0,
+                                    "type": 1
+                                },
+                                {
+                                    "maxAcceleration": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ],
+                                    "maxDirection": [
+                                        -1.0,
+                                        -1.0,
+                                        -1.0
+                                    ],
+                                    "maxPosition": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "maxVelocity": 3.0,
+                                    "minAcceleration": [
+                                        0.0,
+                                        7.199999809265137,
+                                        0.0
+                                    ],
+                                    "minDirection": [
+                                        0.0,
+                                        1.0,
+                                        0.0
+                                    ],
+                                    "minPosition": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "minVelocity": 1.0,
+                                    "randAcceleration": false,
+                                    "randDirection": false,
+                                    "randPosition": false,
+                                    "randVelocity": false,
+                                    "type": 2
+                                },
+                                {
+                                    "maxSize": [
+                                        10.0,
+                                        10.0,
+                                        10.0
+                                    ],
+                                    "minSize": [
+                                        10.0,
+                                        10.0,
+                                        10.0
+                                    ],
+                                    "type": 4
+                                },
+                                {
+                                    "billboardingType": 1,
+                                    "type": 5
+                                }
+                            ],
+                            "name": "Emitter",
+                            "texture_path": "Assets/Textures/firework_projectile.png"
+                        }
+                    ],
+                    "name": "New Resource"
+                }
+            ],
+            "type": "particle"
+        }
+    ],
+    "isPrefab": true,
+    "name": "Mouse Particles",
+    "tag": 0
+}

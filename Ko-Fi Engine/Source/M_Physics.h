@@ -5,7 +5,7 @@
 #include "reactphysics3d/reactphysics3d.h"
 #include <map>
 #include <string>
-
+#include "MathGeoLib/Math/float3.h"
 class GameObject;
 class M_Physics;
 class PhysicsEventListener : public reactphysics3d::EventListener
@@ -17,6 +17,16 @@ public:
 	virtual void onTrigger(const reactphysics3d::OverlapCallback::CallbackData& callbackData) override;
 private:
 	M_Physics* mPhysics = nullptr;
+};
+
+// Class WorldRaycastCallback 
+class CustomRayCastCallback : public reactphysics3d::RaycastCallback {
+
+public:
+	CustomRayCastCallback(GameObject* raycastSender);
+	virtual reactphysics3d::decimal notifyRaycastHit(const reactphysics3d::RaycastInfo& info);
+public:
+	GameObject* raycastSender = nullptr;
 };
 
 
@@ -38,7 +48,7 @@ public:
 	//Called before quitting
 	bool CleanUp();
 
-	//Engine Config Serialization ----------------------------------
+	//Engine Config Serialization -----------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	//---------------------------------------------------------------
@@ -59,9 +69,19 @@ public:
 	void RemoveFilter(std::string filterToRemove);
 	unsigned int GetFilter(std::string filter);
 	inline std::map<unsigned int, std::string> GetFiltersMap() { return filters; }
+	inline bool** GetFilterMatrix() { return filterMatrix; }
 	//Utils
 	reactphysics3d::RigidBody* AddBody(reactphysics3d::Transform rbTransform, GameObject* owner);
 	GameObject* GetGameObjectFromBody(reactphysics3d::CollisionBody* collisionBody) { return collisionBodyToObjectMap[collisionBody]; }
+
+	inline void ResetCollisionBodyToObjectMap() { collisionBodyToObjectMap.clear(); }
+	void DeleteBodyFromObjectMap(GameObject* go);
+
+	//RayCast
+	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo);
+
+	inline bool IsDebugPhysics() const { return debugPhysics; };
+	inline void DebugPhysics(const bool newDebugPhysics) { debugPhysics = newDebugPhysics; }
 private:
 	// Filter matrix private methods
 	inline void DeleteFilterMatrix()
@@ -80,7 +100,6 @@ private:
 
 private:
 	KoFiEngine* engine = nullptr;
-public:
 	//DynamicsWorld* world = nullptr;
 
 	reactphysics3d::PhysicsCommon physicsCommon;
@@ -90,6 +109,7 @@ public:
 	std::map<reactphysics3d::CollisionBody*, GameObject*> collisionBodyToObjectMap;
 	std::string imguiNewFilterText;
 	bool** filterMatrix = nullptr;
+	bool debugPhysics = true;
 };
 
 #endif // !__M_PHYSICS_H__

@@ -2,6 +2,7 @@
 #define __C_RIGIDBODY2_H__
 #include "Component.h"
 #include "reactphysics3d/reactphysics3d.h"
+#include "MathGeoLib/Math/float3.h"
 
 class C_RigidBody : public Component
 {
@@ -28,8 +29,16 @@ public:
 	//Getter & Setters
 	inline reactphysics3d::RigidBody* GetBody() { return this->body; }
 
+	void SetRigidBodyPos(float3 newPos);
+
 	inline std::string GetBodyType() const { return bodyType; };
+	inline bool IsDynamic() { return bodyType == "Dynamic"; };
+	inline bool IsStatic() { return bodyType == "Static"; };
+	inline bool IsKinematic() { return bodyType == "Kinematic"; };
 	inline void SetBodyType(const std::string newBodyType) { bodyType = newBodyType; };
+	inline void SetBodyDynamic()	{ bodyType = "Dynamic"; };
+	inline void SetBodyStatic()		{ bodyType = "Static"; };
+	inline void SetBodyKinematic()	{ bodyType = "Kinematic"; };
 
 	inline bool GetUseGravity() const { return useGravity; };
 	inline void SetUseGravity(const bool newUseGravity) { useGravity = newUseGravity; };
@@ -52,9 +61,11 @@ public:
 	inline bool GetFreezeRotationY() const { return freezeRotationY; }
 	inline bool GetFreezeRotationZ() const { return freezeRotationZ; }
 
+	inline void SetLinearVelocity(float3 velocity) const { body->setLinearVelocity(reactphysics3d::Vector3(velocity.x, velocity.y, velocity.z)); }
+
 private:
 	reactphysics3d::RigidBody* body = nullptr;
-
+	
 	// Variables serialized
 	std::string bodyType = "Dynamic";
 	bool useGravity = true;

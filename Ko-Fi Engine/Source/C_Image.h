@@ -34,6 +34,7 @@ public:
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void SetTexture(const char* path);
+	//void Set();
 
 	void Draw() override;
 
