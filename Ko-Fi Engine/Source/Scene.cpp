@@ -42,7 +42,7 @@ GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, b
 {
 	GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
 	this->gameObjectList.push_back(go);
-	if (parent)
+ 	if (parent)
 		parent->AttachChild(go);
 	else
 		this->rootGo->AttachChild(go);

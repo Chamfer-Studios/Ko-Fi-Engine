@@ -6,6 +6,7 @@
 class M_Editor;
 class Importer;
 class GameObject;
+enum class Shape;
 
 class MainBar : public Panel
 {
@@ -19,6 +20,8 @@ public:
 	bool PostUpdate();
 
 	void ChoosersListener();
+
+	void CreatePrimitive(Shape shape);
 
 private:
 	M_Editor* editor;

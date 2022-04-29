@@ -18,13 +18,16 @@
 #include "C_LightSource.h"
 #include "C_Mesh.h"
 
+// Resources
+#include "R_Material.h"
+#include "R_Mesh.h"
+
 #include "PanelChooser.h"
+#include "Primitive.h"
+#include "Importer.h"
 #include "SDL.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
-#include "Primitive.h"
-#include "Importer.h"
-#include "R_Material.h"
 
 MainBar::MainBar(M_Editor* editor)
 {
@@ -125,32 +128,30 @@ bool MainBar::Update()
 			{
 				if (ImGui::MenuItem("Cube"))
 				{
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, editor->engine->GetSceneIntro()->gameObjectList);
-					//GameObject* obj = nullptr;
-					//obj = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Cube");
-					//obj->AddComponentByType(ComponentType::MATERIAL);
-					//obj->AddComponentByType(ComponentType::MESH);
-					//R_Mesh* cube = new R_Mesh(Shape::CUBE);
-					//obj->GetComponent<C_Mesh>()->SetMesh(cube);
+					CreatePrimitive(Shape::CUBE);
 				}
 				if (ImGui::MenuItem("Sphere"))
 				{
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE. editor->engine->GetSceneIntro()->gameObjectList);
+					CreatePrimitive(Shape::SPHERE);
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{
+					CreatePrimitive(Shape::CYLINDER);
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Line"))
 				{
+					
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				if (ImGui::MenuItem("Plane"))
 				{
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->engine->GetSceneIntro()->gameObjectList);
+					CreatePrimitive(Shape::PLANE);
 				}
 				if (ImGui::MenuItem("Pyramid"))
 				{
+					
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				ImGui::EndMenu();
@@ -291,6 +292,7 @@ bool MainBar::Update()
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
+	}
 		if (openSaveAsPopup)
 		{
 			ImGui::OpenPopup("SaveSceneAsPopup");
@@ -305,7 +307,6 @@ bool MainBar::Update()
 			}
 			ImGui::EndPopup();
 		}
-	}
 
 	return ret;
 }
@@ -337,4 +338,46 @@ void MainBar::ChoosersListener()
 			
 		}
 	}
+}
+
+void MainBar::CreatePrimitive(Shape shape)
+{
+	std::string name;
+	switch (shape)
+	{
+	case Shape::CUBE:
+		name = "Cube";
+		break;
+	case Shape::SPHERE:
+		name = "Sphere";
+		break;
+	case Shape::CYLINDER:
+		name = "Cylinder";
+		break;
+	case Shape::TORUS:
+		name = "Torus";
+		break;
+	case Shape::PLANE:
+		name = "Plane";
+		break;
+	case Shape::CONE:
+		name = "Cone";
+		break;
+	};
+
+	GameObject* c = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(name.c_str());
+	
+	// Mesh
+	R_Mesh* rMesh = new R_Mesh(shape);
+	rMesh->SetUpMeshBuffers();
+	C_Mesh* m = (C_Mesh*)c->AddComponentByType(ComponentType::MESH);
+	m->SetMesh(rMesh);
+
+
+	// Material
+	C_Material *mat = (C_Material*)c->AddComponentByType(ComponentType::MATERIAL);
+	R_Material *material = new R_Material();
+	Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
+	mat->SetMaterial(material);
+	
 }

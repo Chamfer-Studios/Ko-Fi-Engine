@@ -13,7 +13,6 @@
 #include "PanelChooser.h"
 #include "SceneIntro.h"
 
-#include "par_shapes.h"
 #include "Log.h"
 #include "M_UI.h"
 #include "R_Material.h"
