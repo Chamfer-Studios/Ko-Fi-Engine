@@ -532,6 +532,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Triggers\WinTrigger.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
