@@ -36,6 +36,7 @@ M_Editor::M_Editor(KoFiEngine* engine)
 {
 	this->engine = engine;
 	name = "Editor";
+#ifndef KOFI_GAME
 
 	// We need to check whether or not each panel is activated.
 	// We have to set a bool for each of them in order to be able to close and open again a panel.
@@ -74,15 +75,7 @@ M_Editor::M_Editor(KoFiEngine* engine)
 		panelCameraViewport = new PanelCameraViewport(this, engine);
 		AddPanel(panelCameraViewport);
 	}*/
-	#ifndef KOFI_GAME
 
-
-	if (panelsState.showViewportWindow)
-	{
-		panelViewport = new PanelViewport(this, engine);
-		AddPanel(panelViewport);
-	}
-	
 	//------------------------------------
 	
 	// We want to have it always displayed.
@@ -102,13 +95,13 @@ M_Editor::M_Editor(KoFiEngine* engine)
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
 #endif //KOFI_GAME
-#ifdef KOFI_GAME
+
 	if (panelsState.showViewportWindow)
 	{
 		panelViewport = new PanelViewport(this, engine);
 		AddPanel(panelViewport);
 	}
-#endif // !KOFI_GAME
+
 
 }
 
@@ -177,10 +170,7 @@ bool M_Editor::Start()
 	styleHandler.SetKoFiStyle();
 	ImGui_ImplSDL2_InitForOpenGL(engine->GetWindow()->window, engine->GetRenderer()->context);
 	ImGui_ImplOpenGL3_Init();
-//#ifdef KOFI_GAME
-//	viewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-//	lastViewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-//#endif //KOFI_GAME
+
 	// Panels Start
 	if (ret == true)
 	{
@@ -203,10 +193,7 @@ bool M_Editor::PreUpdate(float dt)
 	bool ret = true;
 
 	OPTICK_EVENT();
-//#ifdef KOFI_GAME
-//	viewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-//	lastViewportSize = ImVec2(engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
-//#endif //KOFI_GAME
+
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
@@ -215,7 +202,7 @@ bool M_Editor::PreUpdate(float dt)
 	// Panels PreUpdate
 	if (ret == true)
 	{
-		std::list<Panel*>::iterator item = panels.begin();;
+		std::list<Panel*>::iterator item = panels.begin();
 
 		while (item != panels.end() && ret)
 		{

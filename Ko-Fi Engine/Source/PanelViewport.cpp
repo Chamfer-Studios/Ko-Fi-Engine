@@ -61,7 +61,7 @@ bool PanelViewport::Start()
 bool PanelViewport::Update()
 {
 	OPTICK_EVENT();
-
+#ifdef KOFI_GAME
 #ifdef IMGUI_HAS_VIEWPORT
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -71,9 +71,16 @@ bool PanelViewport::Update()
 	ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
 	ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
 #endif
+
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+#endif
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+#ifdef KOFI_GAME
 	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoNav))
+#else
+	if (ImGui::Begin("Scene", &editor->panelsState.showViewportWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_AlwaysAutoResize))
+#endif KOFI_GAME
+
 	{
 		editor->scenePanelOrigin = ImGui::GetWindowPos();
 		editor->scenePanelOrigin.x += ImGui::GetWindowContentRegionMin().x;
@@ -87,10 +94,6 @@ bool PanelViewport::Update()
 
 
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
-#ifndef KOFI_GAME
-		viewportSize.y -= 26; // Make the viewport substract 26 pixels from the imgui window (corresponds to the imgui viewport header)
-
-#endif
 
 		if (viewportSize.x != editor->lastViewportSize.x || viewportSize.y != editor->lastViewportSize.y)
 		{
@@ -151,8 +154,12 @@ bool PanelViewport::Update()
 		isFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
 	}
 	ImGui::End();
-
+#ifdef KOFI_GAME
 	ImGui::PopStyleVar(2);
+#else
+	ImGui::PopStyleVar();
+#endif // KOFI_GAME
+
 
 	return true;
 }
