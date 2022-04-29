@@ -62,6 +62,17 @@ bool C_Script::CleanUp()
 
 bool C_Script::Update(float dt)
 {
+	for (auto v : s->inspectorVariables) {
+		if (v->type == INSPECTOR_GAMEOBJECT) {
+			try {
+				GameObject* go = std::get<GameObject*>(v->value);
+			}
+			catch (...) {
+				v->value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
+			}
+		}
+	}
+
 	if (s != nullptr)
 	{
 		while (eventQueue.size() != 0) {
@@ -501,7 +512,7 @@ void C_Script::LoadInspectorVariables(Json &json)
 
 		std::string type_s = var.value().at("type").get<std::string>();
 		INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
-		std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
+		std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
 
 		if (type_s == "int")
 		{
@@ -556,7 +567,7 @@ void C_Script::LoadInspectorVariables(Json &json)
 		{
 			type = INSPECTOR_GAMEOBJECT;
 			uint uid = (uint)var.value().at("value");
-			value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
+			value = uid;
 		}
 
 		InspectorVariable *variable = new InspectorVariable(name, type, value);

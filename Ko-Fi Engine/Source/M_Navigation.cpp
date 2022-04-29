@@ -63,6 +63,8 @@ bool M_Navigation::Update(float dt)
 
 bool M_Navigation::PostUpdate(float dt)
 {
+	if (!drawNavmesh) return true;
+
 	OPTICK_EVENT();
 
 	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
@@ -582,6 +584,8 @@ void M_Navigation::OnGui()
 		ComputeNavmesh();
 		PrepareDetour();
 	}
+
+	ImGui::Checkbox("Draw Navmesh", &drawNavmesh);
 
 	ImGui::End();
 }
