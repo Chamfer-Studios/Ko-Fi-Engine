@@ -63,8 +63,6 @@ bool M_Navigation::Update(float dt)
 
 bool M_Navigation::PostUpdate(float dt)
 {
-	return true;
-
 	OPTICK_EVENT();
 
 	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
@@ -260,6 +258,7 @@ rcPolyMeshDetail* M_Navigation::ComputeNavmesh(R_Mesh* mesh)
 	rcMarkWalkableTriangles(context, config->walkableSlopeAngle, vertices, nv, tris, nt, areas);
 	if (!rcRasterizeTriangles(context, vertices, nv, tris, areas, nt, *heightfield, config->walkableClimb)) {
 		appLog->AddLog("Could not rasterize triangles!");
+		return nullptr;
 	}
 
 	rcFilterLowHangingWalkableObstacles(context, config->walkableClimb, *heightfield);
@@ -312,6 +311,7 @@ rcPolyMeshDetail* M_Navigation::ComputeNavmesh(R_Mesh* mesh)
 	delete[] areas;
 	rcFreeCompactHeightfield(compactHeightfield);
 	rcFreeContourSet(contourSet);
+	delete mesh;
 
 	appLog->AddLog("Successfully created navmesh.\n");
 
