@@ -3,18 +3,18 @@
 
 #include <vector>
 #include "Globals.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 #include "Particle.h"
 #include "Emitter.h"
 
-class ComponentParticle;
+class C_Particle;
 class Emitter;
 class Particle;
 
 class EmitterInstance
 {
 public:
-	EmitterInstance(Emitter* e, ComponentParticle* cp);
+	EmitterInstance(Emitter* e, C_Particle* cp);
 	~EmitterInstance();
 	
 	void Init();
@@ -36,7 +36,7 @@ public:
 	float emitterLife = 0.0f;
 
 	Emitter* emitter = nullptr;
-	ComponentParticle* component = nullptr;
+	C_Particle* component = nullptr;
 
 private:
 	bool deactivateParticleEmission = false;

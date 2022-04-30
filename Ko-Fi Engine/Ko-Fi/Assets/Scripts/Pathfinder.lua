@@ -42,31 +42,49 @@ function Float3Angle(a, b)
     return math.acos(Float3Dot(a, b) / (lenA * lenB))
 end
 
-function FollowPath(speed, dt)
-    if #finalPath == 0 then
+function FollowPath(speed, dt, loop)
+    if #finalPath == 0 or currentPathIndex > #finalPath then
+        do return end
+    end
+
+    if currentPathIndex == #finalPath and loop == false then
         do return end
     end
 
     currentTarget = finalPath[currentPathIndex]
-
     currentPosition = componentTransform:GetPosition()
-    if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
+    while Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance do
         currentPathIndex = currentPathIndex + 1
-        if currentPathIndex > #finalPath then
+        if currentPathIndex > #finalPath and loop then
             currentPathIndex = 1
+            break
+        end
+        if currentPathIndex > #finalPath then
+            currentPathIndex = currentPathIndex - 1
+            break
         end
         currentTarget = finalPath[currentPathIndex]
     end
     direction = Float3NormalizedDifference(currentPosition, currentTarget)
-    -- componentTransform:SetFront(float3.new(direction.x, direction.y, direction.z))
-    delta = { x = direction.x * speed * dt, y = direction.y * speed * dt, z = direction.z * speed * dt }
+    DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
+    delta = { x = direction.x * speed * _dt, y = direction.y * speed * _dt, z = direction.z * speed * _dt }
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
+
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
 end
 
-function UpdatePath(wp, pingpong)
+function UpdatePath(wp, pingpong, currentPos)
     _finalPath = {}
     n = 1
+
+    if #wp > 0 then
+        result = navigation:FindPath(currentPos, wp[1], 1000, 1000)
+        for j=1,#result do
+            _finalPath[n] = result[j]
+            n = n + 1
+        end
+    end
+
     for i=1,#wp - 1 do
         current = wp[i]
         next = wp[i + 1]
@@ -94,14 +112,30 @@ function UpdatePath(wp, pingpong)
     for i=1,#_finalPath do
         _G.finalPath[i] = float3.new(_finalPath[i].x, _finalPath[i].y, _finalPath[i].z)
     end
+
+    closestIndex = 1
+
+    --for i=1,#_finalPath do
+    --    p = _finalPath[i]
+
+    --    if (Float3Distance(currentPos, p) < Float3Distance(currentPos, _finalPath[closestIndex])) then
+    --        closestIndex = i
+    --    end
+    --end
     
-    currentPathIndex = 1
+    currentPathIndex = closestIndex
 end
 
 function EventHandler(key, fields)
-    if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints; fields[2] -> pingpong
-        UpdatePath(fields[1], fields[2])
-    elseif key == "Pathfinder_FollowPath" then -- fields[1] -> speed; fields[2] -> dt;
-        FollowPath(fields[1], fields[2])
+    if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints; fields[2] -> pingpong; fields[3] -> currentPos
+        UpdatePath(fields[1], fields[2], fields[3])
+    elseif key == "Pathfinder_FollowPath" then -- fields[1] -> speed; fields[2] -> dt; fields[3] -> loop;
+        FollowPath(fields[1], fields[2], fields[3])
     end
+end
+
+_dt = 0.016
+
+function Update(dt)
+    _dt = dt
 end

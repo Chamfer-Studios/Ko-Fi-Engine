@@ -9,10 +9,12 @@
 #include "imgui_stdlib.h"
 #include "M_Editor.h"
 #include "M_UI.h"
+#include "PanelChooser.h"
 
 C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::TEXT;
+	size = 1;
 	SetTextValue("Hello world!");
 }
 
@@ -55,12 +57,41 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 	{
 		DrawDeleteButton(owner, this);
 
-		if (ImGui::InputText("Value", &(textValue))) {
+		if (ImGui::InputText("Value", &(textValue))) 
+		{
+			SetTextValue(textValue);
+		}
+
+		if (panelChooser->IsReadyToClose("AddFont")) {
+			if (panelChooser->OnChooserClosed() != nullptr) {
+				std::string path = panelChooser->OnChooserClosed();
+				SetFont(path.c_str());
+				SetTextValue(textValue);
+			}
+		}
+
+		if (ImGui::Button("Set Font")) {
+			panelChooser->OpenPanel("AddFont", "ttf", { "ttf" });
+		}
+
+		SDL_Color tmpcol = GetColor();
+		float c[4] = { tmpcol.r,tmpcol.g,tmpcol.b,tmpcol.a };
+
+		if (ImGui::ColorEdit4("Text Color", c, ImGuiColorEditFlags_DisplayRGB) != false)
+		{
+			tmpcol.r = c[0];
+			tmpcol.g = c[1];
+			tmpcol.b = c[2];
+			tmpcol.a = c[3];
+			SetColor(tmpcol);
 			SetTextValue(textValue);
 		}
 	}
 	else
 		DrawDeleteButton(owner, this);
+
+	
+	
 
 	return true;
 }
@@ -72,9 +103,14 @@ void C_Text::SetTextValue(std::string newValue)
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 
+	if (selectedFont == nullptr)
+	{
+		selectedFont = owner->GetEngine()->GetUI()->rubik;
+	}
+
 	textValue = newValue;
-	SDL_Color color = { 255, 255, 255, 255 };
-	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(owner->GetEngine()->GetUI()->rubik, textValue.c_str(), color);
+
+	SDL_Surface* srcSurface = TTF_RenderUTF8_Blended(selectedFont, textValue.c_str(), col);
 
 	if (srcSurface == nullptr)
 		appLog->AddLog("%s\n", SDL_GetError());
@@ -85,7 +121,7 @@ void C_Text::SetTextValue(std::string newValue)
 		SDL_BlitSurface(srcSurface, NULL, dstSurface, NULL);
 	}
 	else {
-		SDL_Rect rect = { 0, 0, dstSurface->w, dstSurface->h };
+		SDL_Rect rect = { 0, 0, dstSurface->w * size, dstSurface->h * size };
 		Uint32 black = (255 << 24) + (0 << 16) + (0 << 8) + (0);
 		SDL_FillRect(dstSurface, &rect, black);
 	}
@@ -93,7 +129,7 @@ void C_Text::SetTextValue(std::string newValue)
 	openGLTexture = SurfaceToOpenGLTexture(dstSurface);
 
 	int w, h;
-	TTF_SizeUTF8(owner->GetEngine()->GetUI()->rubik, newValue.c_str(), &w, &h);
+	TTF_SizeUTF8(selectedFont, newValue.c_str(), &w, &h);
 	owner->GetComponent<C_Transform2D>()->SetSize({ (float)w, (float)h });
 
 	glDisable(GL_BLEND);
@@ -101,6 +137,16 @@ void C_Text::SetTextValue(std::string newValue)
 
 	SDL_FreeSurface(srcSurface);
 	SDL_FreeSurface(dstSurface);
+}
+
+void C_Text::SetFont(std::string path)
+{
+	selectedFont = TTF_OpenFont(path.c_str(), 60);
+}
+
+void C_Text::SetSize(int newSize)
+{
+	this->size = newSize;
 }
 
 void C_Text::Draw()
@@ -150,4 +196,18 @@ void C_Text::FreeTextures()
 {
 	if (openGLTexture != 0)
 		glDeleteTextures(1, &openGLTexture);
+}
+
+
+SDL_Color C_Text::GetColor()
+{
+	return col;
+}
+
+void C_Text::SetColor(SDL_Color color)
+{
+	col.r = color.a;
+	col.g = color.g;
+	col.b = color.b;
+	col.a = color.a;
 }

@@ -1,0 +1,107 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                -29.895999908447266,
+                10.000000953674316,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.24999956786632538,
+                0.24999989569187164,
+                0.24999992549419403
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "draw_face_normals": false,
+            "draw_vertex_normals": false,
+            "isAnimated": false,
+            "path": "Library/Meshes/Mosquito.sugar",
+            "shape_type": 0,
+            "type": "mesh"
+        },
+        {
+            "active": true,
+            "color": [
+                0.800000011920929,
+                0.800000011920929,
+                0.800000011920929,
+                1.0
+            ],
+            "shader_path": "Assets/Shaders/default_shader.glsl",
+            "texture_path": "Assets/Textures/Characters/nerala_base_color.png",
+            "type": "material",
+            "uniforms": null
+        },
+        {
+            "active": true,
+            "angular_damping": 0.0,
+            "angular_velocity": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "density": 1.0,
+            "freeze_position_x": false,
+            "freeze_position_y": true,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "is_kinematic": false,
+            "is_static": false,
+            "linear_damping": 0.0,
+            "linear_velocity": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "mass": 5.0,
+            "type": "rigidBody",
+            "use_gravity": false
+        },
+        {
+            "active": true,
+            "box_collider_size": [
+                4.999990463256836,
+                4.999998092651367,
+                4.999993324279785
+            ],
+            "collider_type": 1,
+            "draw_collider": false,
+            "enabled": true,
+            "filter": "player",
+            "is_trigger": false,
+            "offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "type": "collider"
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Players/Nerala/HunterSeeker.lua",
+            "id": 1838369123,
+            "type": "script"
+        }
+    ],
+    "isPrefab": true,
+    "name": "Mosquito",
+    "tag": 1
+}

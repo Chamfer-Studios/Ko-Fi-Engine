@@ -21,17 +21,18 @@
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
-#include "C_RigidBody.h"
 #include "C_Script.h"
 #include "C_Text.h"
 #include "C_Image.h"
 #include "C_Button.h"
 #include "C_Animator.h"
-#include "ComponentParticle.h"
+#include "C_Particle.h"
 #include "C_Camera.h"
 #include "C_AudioSource.h"
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
+#include "C_RigidBody.h"
+#include "C_BoxCollider.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -62,9 +63,9 @@ public:
 	std::string name;
 	INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
 
-	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
+	std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
 
-	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value) : name(name), type(type), value(value) {}
+	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value) : name(name), type(type), value(value) {}
 };
 
 class Scripting
@@ -95,7 +96,10 @@ public:
 					 "MESH", ComponentType::MESH,
 					 "MATERIAL", ComponentType::MATERIAL,
 					 "CAMERA", ComponentType::CAMERA,
-					 "COLLIDER", ComponentType::COLLIDER,
+					 "BOX_COLLIDER", ComponentType::BOX_COLLIDER,
+					 "SPHERE_COLLIDER", ComponentType::SPHERE_COLLIDER,
+					 "CAPSULE_COLLIDER", ComponentType::CAPSULE_COLLIDER,
+					 "RIGID_BODY", ComponentType::RIGID_BODY,
 					 "SCRIPT", ComponentType::SCRIPT,
 					 "TRANSFORM", ComponentType::TRANSFORM,
 					 "INFO", ComponentType::INFO,
@@ -174,19 +178,24 @@ public:
 									 "GetUID", &GameObject::GetUID,
 									 "tag", &GameObject::tag,
 									 "GetParent", &GameObject::GetParent,
+									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
+									 "GetBoxCollider", &GameObject::GetComponent<C_BoxCollider>,
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
-									 "GetComponentParticle", &GameObject::GetComponent<ComponentParticle>,
+									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
 									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
 									 "GetButton", &GameObject::GetComponent<C_Button>,
 									 "GetImage", &GameObject::GetComponent<C_Image>,
+									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
+									 "Active", &GameObject::Active,
+									 "Quit", &GameObject::Quit,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
@@ -213,21 +222,17 @@ public:
 			"GetScale", &C_Transform::GetScale,
 			"SetScale", &C_Transform::SetScale,
 			"GetFront", &C_Transform::Front,
-			"SetFront", &C_Transform::SetFront
+			"GetRight", &C_Transform::Right,
+			"GetUp", &C_Transform::Up,
+			"LookAt", &C_Transform::LookAt
 			);
 
 		// Component Camera
 		lua.new_usertype<C_Camera>("C_Transform",
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
-			"right", &C_Camera::right,
-			"up", &C_Camera::up
-			);
-		// Component Mesh
-		lua.new_usertype<C_Mesh>("C_Mesh",
-			sol::constructors<void(GameObject *)>(),
-			"Disable", &C_Mesh::Disable,
-			"Enable", &C_Mesh::Enable
+			"right", &C_Camera::GetRight,
+			"up", &C_Camera::GetUp
 			);
 
 		// Component Mesh
@@ -245,51 +250,65 @@ public:
 
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
-										 sol::constructors<void(GameObject *)>(),
-										 "SetTexture", &C_Image::SetTexture);
+			sol::constructors<void(GameObject *)>(),
+			"SetTexture", &C_Image::SetTexture
+			);
 
 		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),
 										  "IsPressed", &C_Button::IsPressed,
+										  "IsIdle", &C_Button::IsIdle,
 										  "IsHovered", &C_Button::IsHovered);
 
 		// Component Animator
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 											sol::constructors<void(GameObject *)>(),
-											"SetSelectedClip", &C_Animator::SetSelectedClip);
+											"SetSelectedClip", &C_Animator::SetSelectedClip,
+											"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
+											"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
 		// Component Particle
-		lua.new_usertype<ComponentParticle>("ComponentParticle",
+		lua.new_usertype<C_Particle>("C_Particle",
 											sol::constructors<void(GameObject *)>(),
-											"StopParticleSpawn", &ComponentParticle::StopParticleSpawn,
-											"ResumeParticleSpawn", &ComponentParticle::ResumeParticleSpawn);
+											"StopParticleSpawn", &C_Particle::StopParticleSpawn,
+											"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn);
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
-			sol::constructors<void(GameObject *)>(),
-			"PlayTrack", &C_AudioSwitch::PlayTrack,
-			"PauseTrack", &C_AudioSwitch::PauseTrack,
-			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack);
+										sol::constructors<void(GameObject *)>(),
+										"PlayTrack", &C_AudioSwitch::PlayTrack,
+										"PauseTrack", &C_AudioSwitch::PauseTrack,
+										"ResumeTrack", &C_AudioSwitch::ResumeTrack,
+										"StopTrack", &C_AudioSwitch::StopTrack);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
-											sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *>)>(),
+											sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *>)>(),
 											"name", &InspectorVariable::name,
 											"type", &InspectorVariable::type,
 											"value", &InspectorVariable::value);
 
 		// Rigid Body structure
 		lua.new_usertype<C_RigidBody>("C_RigidBody",
-											 sol::constructors<void(GameObject *)>(),
-											 "IsStatic", &C_RigidBody::IsStatic,
-											 "IsKinematic", &C_RigidBody::IsKinematic,
-											 "SetStatic", &C_RigidBody::SetStatic,
-											 "SetDynamic", &C_RigidBody::SetDynamic,
-											 "SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
-											 "FreezePositionY", &C_RigidBody::FreezePositionY,
-											 "Set2DVelocity", &C_RigidBody::Set2DVelocity,
-											 "SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos);
+											sol::constructors<void(GameObject *)>(),
+											"IsStatic", &C_RigidBody::IsStatic,
+											"IsKinematic", &C_RigidBody::IsKinematic,
+											"SetStatic", &C_RigidBody::SetBodyStatic,
+											"SetDynamic", &C_RigidBody::SetBodyDynamic,
+											"FreezePositionY", &C_RigidBody::FreezePositionY,
+											"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos,
+											"SetUseGravity", &C_RigidBody::SetUseGravity, 
+											"UpdateEnableGravity", &C_RigidBody::UpdateEnableGravity);
+
+		lua.new_usertype<C_BoxCollider>("C_BoxCollider",
+											sol::constructors<void(GameObject*)>(),
+											"IsTrigger", &C_BoxCollider::GetIsTrigger,
+											"SetTrigger", &C_BoxCollider::SetIsTrigger,
+											"GetFilter", &C_BoxCollider::GetFilter,
+											"SetFilter", &C_BoxCollider::SetFilter,
+											"UpdateFilter", &C_BoxCollider::UpdateFilter,
+											"UpdateIsTrigger", &C_BoxCollider::UpdateIsTrigger);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
@@ -299,9 +318,9 @@ public:
 			sol::constructors<void(KoFiEngine*)>(),
 			"WorldToScreen", &M_Camera3D::WorldToScreen);
 
-		lua.new_usertype<M_Physics>("M_Physics",
+		/*lua.new_usertype<M_Physics>("M_Physics",
 			sol::constructors<void(KoFiEngine*)>(),
-			"Raycast", &M_Physics::Raycast);
+			"Raycast", &M_Physics::Raycast);*/
 
 		/// Variables
 		lua["gameObject"] = gameObject;
@@ -309,7 +328,7 @@ public:
 
 		/// Functions
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
-		lua.set_function("CreateGameObject", &Scripting::LuaCreateGameObject, this);
+		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
 		lua.set_function("Find", &Scripting::LuaFind, this);
 		lua.set_function("GetObjectsByTag", &Scripting::LuaGetObjectsByTag, this);
@@ -326,6 +345,8 @@ public:
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
+		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
+		lua.set_function("RayCast", &Scripting::RayCast, this);
 
 	}
 
@@ -379,6 +400,18 @@ public:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
 			}
+			case 13:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
+			}
+			case 14:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Q);
+			}
+			case 15:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
+			}
 
 			case 21:
 			{
@@ -399,6 +432,11 @@ public:
 		}
 	}
 
+	void RayCast(float3 startPoint, float3 endPoint, std::string filterName,GameObject* senderGo)
+	{
+		return  gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint,endPoint,filterName,senderGo);
+	}
+
 	M_Navigation *GetNavigation()
 	{
 		return gameObject->GetEngine()->GetNavigation();
@@ -414,7 +452,7 @@ public:
 		return gameObject->GetEngine()->GetPhysics();
 	}
 
-	void LuaCreateGameObject(std::string name)
+	void LuaInstantiatePrefab(std::string name)
 	{
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.emplace(gameObject, name);
 	}
@@ -447,7 +485,7 @@ public:
 		return ret;
 	}
 
-	std::variant<int, float, float2, float3, bool, std::string> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
+	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
@@ -484,16 +522,19 @@ public:
 							std::string a = script->s->handler->lua[variable.c_str()];
 							return a;
 						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_GAMEOBJECT:
+						{
+							return (GameObject*)script->s->handler->lua[variable.c_str()];
+						}
 					}
 				}
-				
 			}
 		}
 
 		return -999;
 	}
 
-	void LuaSetVariable(std::variant<int, float, float2, float3, bool, std::string> value, std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
+	void LuaSetVariable(std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value, std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
@@ -532,6 +573,11 @@ public:
 						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_STRING:
 						{
 							script->s->handler->lua[variable.c_str()] = std::get<std::string>(value);
+							return;
+						}
+						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_GAMEOBJECT:
+						{
+							script->s->handler->lua[variable.c_str()] = std::get<GameObject*>(value);
 							return;
 						}
 					}
@@ -620,7 +666,7 @@ public:
 		appLog->AddLog(log);
 	}
 
-	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<int, float, float2, float3, bool, std::string> value)
+	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value)
 	{
 		if (go == nullptr)
 			return;
@@ -646,7 +692,7 @@ public:
 		return tmp;
 	}
 
-	void DispatchGlobalEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
+	void DispatchGlobalEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields) {
 		for (auto go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 			for (auto c : go->GetComponents()) {
 				if (c->type == ComponentType::SCRIPT) {
@@ -656,12 +702,17 @@ public:
 		}
 	}
 
-	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>>> fields) {
+	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields) {
 		for (auto c : gameObject->GetComponents()) {
 			if (c->type == ComponentType::SCRIPT) {
 				((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));
 			}
 		}
+	}
+
+	void DrawCircle(float range, float3 position)
+	{
+		gameObject->GetEngine()->GetRenderer()->DrawCircle(position, range);
 	}
 
 public:

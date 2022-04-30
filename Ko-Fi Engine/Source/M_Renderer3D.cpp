@@ -14,6 +14,7 @@
 #include "M_SceneManager.h"
 #include "M_Editor.h"
 #include "M_Input.h"
+#include "M_Physics.h"
 #include "ImGuiAppLog.h"
 #include "M_FileSystem.h"
 #include "R_Texture.h"
@@ -28,10 +29,11 @@
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Camera.h"
-#include "C_Collider.h"
 #include "C_RenderedUI.h"
 #include "C_LightSource.h"
 #include "C_Animator.h"
+#include "C_RigidBody.h"
+
 #include "R_Material.h"
 #include "PieShape.h"
 #include "AnimatorClip.h"
@@ -261,18 +263,18 @@ void M_Renderer3D::PassProjectionAndViewToRenderer()
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->currentCamera)
 	{
-		if (currentCamera3D->currentCamera->projectionIsDirty) {
+		if (currentCamera3D->currentCamera->GetIsProjectionDirty()) {
 			RecalculateProjectionMatrix();
 			currentCamera3D->currentCamera->CalculateViewMatrix();
 		}
 
-		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->viewMatrix.Transposed().ptr());
+		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->GetViewMatrix().Transposed().ptr());
 	}
 	float3 cameraPos = float3::zero;
 	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
 	if (engine->GetCamera3D()->currentCamera)
 	{
-		cameraPos = engine->GetCamera3D()->currentCamera->position;
+		cameraPos = engine->GetCamera3D()->currentCamera->GetPosition();
 	}
 	else {
 		cameraPos = float3(0.0f, 20.0f, 0.0f);
@@ -286,18 +288,18 @@ void M_Renderer3D::PassPreviewProjectionAndViewToRenderer()
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->gameCamera)
 	{
-		if (currentCamera3D->gameCamera->projectionIsDirty) {
+		if (currentCamera3D->gameCamera->GetIsProjectionDirty()) {
 			RecalculateProjectionMatrix();
 			currentCamera3D->gameCamera->CalculateViewMatrix();
 		}
 
-		glLoadMatrixf((GLfloat*)currentCamera3D->gameCamera->viewMatrix.Transposed().ptr());
+		glLoadMatrixf((GLfloat*)currentCamera3D->gameCamera->GetViewMatrix().Transposed().ptr());
 	}
 	float3 cameraPos = float3::zero;
 	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
 	if (engine->GetCamera3D()->gameCamera)
 	{
-		cameraPos = engine->GetCamera3D()->gameCamera->position;
+		cameraPos = engine->GetCamera3D()->gameCamera->GetPosition();
 	}
 	else {
 		cameraPos = float3(0.0f, 20.0f, 0.0f);
@@ -310,7 +312,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 	glLoadIdentity();
 	if (engine->GetCamera3D()->currentCamera)
 	{
-		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	}
 	else
 	{
@@ -337,20 +339,16 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
-				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
+				if (!cCamera->GetIsEngineCamera() && cCamera->GetIsDrawFrustumActive())
 				{
 					cCamera->DrawFrustum();
 				}
 			}
-			C_Collider* cCol = go->GetComponent<C_Collider>();
-			if (cCol)
-			{
-				cCol->DrawCollider();
-			}
+			if (go->GetComponent<C_RigidBody>())
+				engine->GetPhysics()->RenderPhysics();
 		}
 	}
 	RenderAllParticles();
-
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)
@@ -368,10 +366,12 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	OPTICK_EVENT();
-	int selectedId = engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID;
-	if (selectedId == -1) return;
-	if (selectedId == cMesh->owner->GetUID())
-		cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+	for (int selectedId : engine->GetEditor()->panelGameObjectInfo.selectedGameObjects)
+	{
+		if (selectedId == cMesh->owner->GetUID())
+			cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+	}
+	
 }
 
 void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
@@ -404,10 +404,10 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 			GLint view_location = glGetUniformLocation(shader, "view");
-			glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
 
 			GLint projection_location = glGetUniformLocation(shader, "projection");
-			glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 
 			if (mesh->IsAnimated())
 			{
@@ -430,7 +430,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			}
 
 			GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
+			glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
 
 			float2 resolution = float2(1080.0f, 720.0f);
 			glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
@@ -724,6 +724,48 @@ void M_Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float an
 
 	glLineWidth(1.0f);
 	glColor3f(1.0f, 1.0f, 1.0f);
+}
+
+void M_Renderer3D::DrawCircle(float3 position, float radius)
+{
+	GLfloat x = 0.0;
+	GLfloat y = 0.0;
+	GLfloat height = 1.0;
+	GLfloat angle = 0.0;
+	GLfloat angle_stepsize = 0.1;
+
+	/** Draw the circle on top of cylinder */
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glLineWidth(3.0f);
+	glBegin(GL_POLYGON);
+	angle = 0.0;
+	while (angle < 2 * M_PI) {
+		x = radius * cos(angle);
+		y = radius * sin(angle);
+		glVertex3f(x, y, height);
+		angle = angle + angle_stepsize;
+	}
+	glVertex3f(radius, 0.0, height);
+	glEnd();
+	 
+	// Actually, this does not render a circle, instead, renders a cylinder xd didnt know how to do the circle one
+	//float halfLength = 5;
+	//int slices = 10;
+	//for (int i = 0; i < slices; i++) {
+	//	float theta = ((float)i) * 2.0 * M_PI;
+	//	float nextTheta = ((float)i + 1) * 2.0 * M_PI;
+	//	glBegin(GL_TRIANGLE_STRIP);
+	//	/*vertex at middle of end */
+	//	glVertex3f(0.0, halfLength, 0.0);
+	//	/*vertices at edges of circle*/
+	//	glVertex3f(radius * cos(theta), halfLength, radius * sin(theta));
+	//	glVertex3f(radius * cos(nextTheta), halfLength, radius * sin(nextTheta));
+	//	/* the same vertices at the bottom of the cylinder*/
+	//	glVertex3f(radius * cos(nextTheta), -halfLength, radius * sin(nextTheta));
+	//	glVertex3f(radius * cos(theta), -halfLength, radius * sin(theta));
+	//	glVertex3f(0.0, -halfLength, 0.0);
+	//	glEnd();
+	//}
 }
 
 // Debug ray for mouse picking

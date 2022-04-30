@@ -207,20 +207,24 @@ bool M_Input::PreUpdate(float dt)
 				}
 				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
 				{
-					// Apply texture
-					if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+					for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 					{
-						GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
-
-						if (go->GetComponent<C_Material>())
+						if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != -1)
 						{
-							R_Texture *texture = new R_Texture();
-							Importer::GetInstance()->textureImporter->Import(tmp.c_str(), texture);
+							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
 
-							go->GetComponent<C_Material>()->texture = texture;
-							//cMaterial->textures.push_back(texture);
+							if (go->GetComponent<C_Material>())
+							{
+								R_Texture* texture = new R_Texture();
+								Importer::GetInstance()->textureImporter->Import(tmp.c_str(), texture);
+
+								go->GetComponent<C_Material>()->texture = texture;
+								//cMaterial->textures.push_back(texture);
+							}
 						}
 					}
+					// Apply texture
+					
 				}
 			}
 			break;
@@ -229,7 +233,7 @@ bool M_Input::PreUpdate(float dt)
 	}
 	ImGui_ImplSDL2_ProcessEvent(&event);
 
-	if (quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
+	if (quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP || quitGame == true)
 		return false;
 
 	return true;

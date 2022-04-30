@@ -11,7 +11,7 @@
 #include "GameObject.h"
 #include "C_Mesh.h"
 #include "C_Transform.h"
-#include "ComponentWalkable.h"
+#include "C_Walkable.h"
 
 #include "DetourNavMeshBuilder.h"
 #include "DetourNavMeshQuery.h"
@@ -63,7 +63,7 @@ bool M_Navigation::Update(float dt)
 
 bool M_Navigation::PostUpdate(float dt)
 {
-	return true;
+	if (!drawNavmesh) return true;
 
 	OPTICK_EVENT();
 
@@ -260,6 +260,7 @@ rcPolyMeshDetail* M_Navigation::ComputeNavmesh(R_Mesh* mesh)
 	rcMarkWalkableTriangles(context, config->walkableSlopeAngle, vertices, nv, tris, nt, areas);
 	if (!rcRasterizeTriangles(context, vertices, nv, tris, areas, nt, *heightfield, config->walkableClimb)) {
 		appLog->AddLog("Could not rasterize triangles!");
+		return nullptr;
 	}
 
 	rcFilterLowHangingWalkableObstacles(context, config->walkableClimb, *heightfield);
@@ -312,6 +313,7 @@ rcPolyMeshDetail* M_Navigation::ComputeNavmesh(R_Mesh* mesh)
 	delete[] areas;
 	rcFreeCompactHeightfield(compactHeightfield);
 	rcFreeContourSet(contourSet);
+	delete mesh;
 
 	appLog->AddLog("Successfully created navmesh.\n");
 
@@ -320,7 +322,7 @@ rcPolyMeshDetail* M_Navigation::ComputeNavmesh(R_Mesh* mesh)
 
 void M_Navigation::CollectWalkableObjects(GameObject* go, std::vector<GameObject*>& res, bool force)
 {
-	if (force || go->GetComponent<ComponentWalkable>() != nullptr) {
+	if (force || go->GetComponent<C_Walkable>() != nullptr) {
 		res.push_back(go);
 		for (auto c : go->children) {
 			CollectWalkableObjects(c, res, true);
@@ -582,6 +584,8 @@ void M_Navigation::OnGui()
 		ComputeNavmesh();
 		PrepareDetour();
 	}
+
+	ImGui::Checkbox("Draw Navmesh", &drawNavmesh);
 
 	ImGui::End();
 }

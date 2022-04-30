@@ -48,12 +48,13 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 
 C_Mesh::~C_Mesh()
 {
-	//CleanUp(); // Already called
+	CleanUp(); // Already called
 }
 
 bool C_Mesh::Start()
 {
-	GenerateLocalBoundingBox();
+	if (mesh)
+		GenerateGlobalBoundingBox();
 	return true;
 }
 
@@ -72,7 +73,7 @@ bool C_Mesh::PostUpdate(float dt) //AKA the real render
 bool C_Mesh::CleanUp()
 {
 	std::string temp(owner->GetName());
-	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos)  // Dirty Fix before resource manager works
+	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
 	RELEASE(mesh);
 
@@ -150,7 +151,7 @@ void C_Mesh::Load(Json& json)
 		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
 		this->GetMesh()->SetRootNode(object);
 	}
-
+	GenerateGlobalBoundingBox();
 }
 
 void C_Mesh::SetMesh(R_Mesh* mesh)
@@ -208,7 +209,7 @@ const AABB C_Mesh::GetGlobalAABB() const
 void C_Mesh::GenerateLocalBoundingBox()
 {
 	// Generate AABB
-	if (mesh != nullptr)
+	if (mesh != nullptr && mesh->vertices != 0) // to avoid float3 isfinite warning.
 	{
 		mesh->localAABB.SetNegativeInfinity();
 		mesh->localAABB.Enclose((float3*)mesh->vertices, mesh->verticesSizeBytes / (sizeof(float) * 3));
@@ -236,59 +237,61 @@ void C_Mesh::GenerateGlobalBoundingBox()
 
 void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 {
-	glLineWidth(2.0f);
-	glColor3f(rgb.x, rgb.y, rgb.z);
-	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
-	glBegin(GL_LINES);
+	if (drawAABB)
+	{
+		glLineWidth(2.0f);
+		glColor3f(rgb.x, rgb.y, rgb.z);
+		glPushMatrix();
+		glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+		glBegin(GL_LINES);
 
-	// Bottom 1
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+		// Bottom 1
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
 
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
 
-	// Bottom 2
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+		// Bottom 2
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
 
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
 
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
 
-	// Top 1
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+		// Top 1
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
 
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
 
-	// Top 2
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+		// Top 2
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
 
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
 
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 
-	glEnd();
-	glColor3f(1.f, 1.f, 1.f);
-	glLineWidth(1.0f);
-	glPopMatrix();
+		glEnd();
+		glColor3f(1.f, 1.f, 1.f);
+		glLineWidth(1.0f);
+		glPopMatrix();
 
-	glPopMatrix();
-
+		glPopMatrix();
+	}
 }
 
 bool C_Mesh::InspectorDraw(PanelChooser* chooser)
@@ -318,6 +321,9 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 		bool faces = GetFaceNormals();
 		if (ImGui::Checkbox("Faces Normals", &faces))
 			mesh->SetFaceNormals(faces);
+		bool drawAABB = SetDrawAABB();
+		if (ImGui::Checkbox("Draw AABB##", &drawAABB))
+			GetDrawAABB(drawAABB);
 	}
 	else
 		DrawDeleteButton(owner, this);

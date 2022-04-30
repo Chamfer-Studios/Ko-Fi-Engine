@@ -1,86 +1,87 @@
 ------------------- Variables --------------------
 
+speed = 1000
+destination = nil
 lifeTime = 10.0	-- secs --iv required
 lifeTimer = 0
 effectRadius = 250.0
-componentRigidBody = gameObject:GetRigidBody()
+effectFlag = true
 
 -------------------- Methods ---------------------
+
+function Start()
+	componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
+	destination = GetVariable("Zhib.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
+	player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+	local playerPos = player:GetTransform():GetPosition()
+	local targetPos2D = { destination.x, destination.z }
+	local pos2D = { playerPos.x, playerPos.z }
+	local d = Distance(pos2D, targetPos2D)
+	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
+	vec2 = Normalize(vec2, d)
+	if (componentRigidBody ~= nil) then		
+		componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, 0, playerPos.z + vec2[2] * 3))
+	end
+end
 
 -- Called each loop iteration
 function Update(dt)
 	
-	if (lifeTimer <= lifeTime) then
+	if (destination ~= nil) then 
+		MoveToDestination(dt)
+	elseif (lifeTimer <= lifeTime) then
 
 		lifeTimer = lifeTimer + dt
 
-		-- Get all enemies in range
-		enemiesInRange = {}
-		enemies = GetObjectsByTag(Tag.ENEMY)
-		for i = 1, #enemies do
-			if (Distance3D(enemies[i]:GetTransform():GetPosition(), componentTransform:GetPosition()) <= effectRadius) then
-				enemiesInRange[#enemiesInRange + 1] = enemies[i]
-			end
+		if (effectFlag) then
+			DispatchGlobalEvent("Auditory_Trigger", { componentTransform:GetPosition(), effectRadius, "single", gameObject })
+			effectFlag = false
 		end
-
-		-- If there are none, return
-		if (#enemiesInRange <= 0) then
-			return
-		end
-
-		for i = 1, #enemiesInRange do
-			--SetLuaVariableFromGameObject(enemiesInRange[i], "target", componentTransform:GetPosition())
-		end
-
 	else
-		DeleteGameObject() --  It crashes with this
+		DeleteGameObject()
 	end
 end
 
 -- Move to destination
 function MoveToDestination(dt)
-
-	local targetPos2D = { destination.x, destination.z }
-	local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
-	local d = Distance(pos2D, targetPos2D)
-	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
-
+	local pos = componentTransform:GetPosition()
+	local d = Distance3D(destination, pos)
 	if (d > 5.0) then
-
 		-- Movement
-		vec2 = Normalize(vec2, d)
+		local vec = float3.new(destination.x - pos.x, destination.y - pos.y, destination.z - pos.z)
+		vec.x = vec.x / d
+		vec.y = vec.y / d
+		vec.z = vec.z / d
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(vec2[1] * speed * dt, vec2[2] * speed * dt))
+			componentRigidBody:SetLinearVelocity(float3.new(vec.x * speed * dt, 0, vec.z * speed * dt))
 		end
-
-		-- Rotation
-		local rad = math.acos(vec2[2])
-		if(vec2[1] < 0)	then
-			rad = rad * (-1)
-		end
-		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, componentTransform:GetRotation().y, rad))
 	else
-		
 		destination = nil
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:Set2DVelocity(float2.new(0,0))
+			componentRigidBody:SetLinearVelocity(float3.new(0,0,0))
 		end
 	end
 end
 
-function SetDestination()
-	if (target ~= nil) then
-		destination = target:GetTransform():GetPosition()
+function Distance3D(a, b)
 
-		local targetPos2D = { destination.x, destination.z }
-		local pos2D = { componentTransform:GetPosition().x, componentTransform:GetPosition().z }
-		local d = Distance(pos2D, targetPos2D)
-		local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
-		vec2 = Normalize(vec2, d)
-		if (componentRigidBody ~= nil) then
-			componentRigidBody:SetRigidBodyPos(float3.new(vec2[1] * 35, componentTransform:GetPosition().y, vec2[2] * 35))
-		end
-	end
+    diff = { x = b.x - a.x, y = b.y - a.y, z = b.z - a.z }
+    return math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z)
+end
+
+function Normalize(vec, distance)
+    
+	vec[1] = vec[1] / distance
+	vec[2] = vec[2] / distance
+
+	return vec
+end
+
+function Distance(a, b)
+
+    local dx, dy = a[1] - b[1], a[2] - b[2]
+    return math.sqrt(dx * dx + dy * dy)
+
 end
 
 --------------------------------------------------

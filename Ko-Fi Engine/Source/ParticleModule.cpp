@@ -81,7 +81,7 @@ bool EmitterDefault::Update(float dt, EmitterInstance* emitter)
 		if (emitter->particles[i].lifeTime >= emitter->particles[i].maxLifetime)
 			emitter->particles[i].lifeTime = emitter->particles[i].maxLifetime;
 		particle->distanceToCamera = float3(emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->
-			cameraFrustum.WorldMatrix().TranslatePart() - particle->position).LengthSq();
+			GetCameraFrustum().WorldMatrix().TranslatePart() - particle->position).LengthSq();
 	}
 }
 
@@ -258,7 +258,7 @@ ParticleBillboarding::ParticleBillboarding(BillboardingType typeB)
 
 void ParticleBillboarding::Spawn(EmitterInstance* emitter, Particle* particle)
 {
-	particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->cameraFrustum.WorldMatrix());
+	particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
 }
 
 bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
@@ -272,7 +272,7 @@ bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
 		unsigned int particleIndex = emitter->particleIndices[i];
 		Particle* particle = &emitter->particles[particleIndex];
 
-		particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->cameraFrustum.WorldMatrix());
+		particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
 	}
 
 }

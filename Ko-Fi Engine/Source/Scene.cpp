@@ -10,6 +10,8 @@
 
 #include "QuadTree3D.h"
 #include <vector>
+#include "M_Physics.h"
+#include "C_RigidBody.h"
 
 GameObject* Scene::GetGameObject(int uid)
 {
@@ -57,24 +59,29 @@ void Scene::DeleteCurrentScene()
 	{
 		RELEASE(gameObject);
 	}
+	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
 	gameObjectList.clear();
 	lights.clear();
-	engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
+	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
 	rootGo = new GameObject(-1, engine, "Root");
 	gameObjectList.push_back(rootGo);
 }
 
 void Scene::DeleteGameObject(GameObject* gameObject)
 {
+	if (gameObject->GetParent() == nullptr) return;
 
-		for (int i = gameObject->children.size()-1;i>=0;--i)
-		{
-			DeleteGameObject(gameObject->children.at(i));
-		}
+	for (int i = gameObject->children.size()-1;i>=0;--i)
+	{
+		DeleteGameObject(gameObject->children.at(i));
+	}
 
+	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+	{
+		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] == gameObject->GetUID())
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.erase(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.begin() + i);
+	}
 	
-	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID == gameObject->GetUID())
-		engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID = -1;
 	auto position = std::find(gameObjectList.begin(), gameObjectList.end(), gameObject);
 
 	gameObjectList.erase(position);
@@ -91,10 +98,16 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 				parent->AttachChild(child);
 			}
 		}
+		
 		parent->RemoveChild(gameObject);
+
 		if (gameObject->GetComponent<C_LightSource>() != nullptr)
 		{
 			RemoveLight(gameObject);
+		}
+		if (gameObject->GetComponent<C_RigidBody>() != nullptr)
+		{
+			engine->GetPhysics()->DeleteBodyFromObjectMap(gameObject);
 		}
 		RELEASE(gameObject);
 	}
