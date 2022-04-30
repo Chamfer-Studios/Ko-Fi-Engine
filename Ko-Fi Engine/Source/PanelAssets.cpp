@@ -48,7 +48,7 @@ bool PanelAssets::Update()
 	}
 	ImGui::Columns(columnCount, 0, false);
 
-	/*for (auto& directoryEntry : std::filesystem::directory_iterator(currentDir))
+	for (auto& directoryEntry : std::filesystem::directory_iterator(currentDir))
 	{
 		const auto& path = directoryEntry.path();
 		auto relativePath = std::filesystem::relative(path, assetsDir);
@@ -100,7 +100,7 @@ bool PanelAssets::Update()
 		ImGui::TextWrapped(filenameString.c_str());
 		ImGui::NextColumn();
 		
-	}*/
+	}
 	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
 	{
 		ImGui::OpenPopup("File Handle");
