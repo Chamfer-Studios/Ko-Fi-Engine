@@ -106,11 +106,14 @@ bool PanelAssets::Update()
 		ImGui::OpenPopup("File Handle");
 	}
 	ImGui::Columns(1);
-	
 	if (ImGui::BeginPopup("File Handle"))
 	{
-		if (ImGui::BeginMenu("Create"))
+		if (ImGui::BeginMenu("Create Smth"))
 		{
+			if (ImGui::MenuItem("New File"))
+			{
+				std::filesystem::create_directory(currentDir.string());
+			}
 			if (ImGui::MenuItem("Scene"))
 			{
 				std::string fileName = FileExistsScene("/scene.json", 1);

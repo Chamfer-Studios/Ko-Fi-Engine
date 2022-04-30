@@ -51,6 +51,7 @@ bool MainBar::Update()
 {
 	bool ret = true;
 	ChoosersListener();
+
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -85,6 +86,18 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Quit"))
 			{
 				ret = false;
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Window"))
+		{
+			if (ImGui::MenuItem("Save Window Layout"))
+			{
+				editor->GetPanelChooser()->SavePanel("SaveLayout", "ini", {"ini"});
+			}
+			if (ImGui::MenuItem("Load Window Layout"))
+			{
+				editor->iniToLoad = "layout1.ini";
 			}
 			ImGui::EndMenu();
 		}
@@ -336,5 +349,16 @@ void MainBar::ChoosersListener()
 			}
 			
 		}
+	}
+	if (editor->GetPanelChooser()->IsReadyToClose("SaveLayout"))
+	{
+		std::tuple<std::string, std::string> pathTuple = editor->GetPanelChooser()->OnSaveChooserClosed();
+		std::string fileName = std::get<1>(pathTuple);
+		std::string path = std::get<0>(pathTuple);
+		if (!fileName.empty() || !path.empty())
+		{
+			editor->iniToSave = path + "/" + fileName;
+		}
+
 	}
 }

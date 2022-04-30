@@ -2,21 +2,29 @@
 #include "Engine.h"
 #include "M_Editor.h"
 #include "M_FileSystem.h"
+#include "Importer.h"
+#include "R_Texture.h"
 #include <imgui.h>
+#include <imgui_stdlib.h>
 #include <string>
 #include <vector>
-PanelChooser::PanelChooser(M_Editor* editor)
+
+PanelChooser::PanelChooser(M_Editor* editor) : currentDir(assetsDir), fileIconPath("Assets/Icons/file_icon.png"), directoryIconPath("Assets/Icons/directory_icon.png")
 {
 	this->editor = editor;
 	panelName = "Chooser";
+	fileTexture = new R_Texture();
+	directoryTexture = new R_Texture();
 }
 
 PanelChooser::~PanelChooser()
 {
 }
 
-bool PanelChooser::Awake()
+bool PanelChooser::Start()
 {
+	Importer::GetInstance()->textureImporter->Import(fileIconPath,fileTexture);
+	Importer::GetInstance()->textureImporter->Import(directoryIconPath,directoryTexture);
 	return true;
 }
 
@@ -25,7 +33,19 @@ bool PanelChooser::Update()
 	OPTICK_EVENT();
 
 	if (chooserState == OPENED)
-		ShowPanel("/Assets", currentExtension);
+	{
+
+		if (isSavePanel)
+		{
+			DrawSavePanel(currentExtension);
+			OnChooserClosed();
+		}
+		else
+		{
+			DrawOpenPanel(currentExtension);
+		}
+	}
+
 	return true;
 }
 
@@ -41,27 +61,52 @@ const char* PanelChooser::OnChooserClosed()
 {
 	if (chooserState == READY_TO_CLOSE || chooserState == CLOSED)
 	{
-		chooserState = CLOSED;
-		
-		return selectedFile[0] ? &selectedFile[1] : nullptr;
-
+		if (!isSavePanel)
+		{
+			chooserState = CLOSED;
+			return selectedFile[0] ? &selectedFile[1] : nullptr;
+		}
 	}
 	return nullptr;
 }
-void PanelChooser::ShowPanel(const char* path,const char* extension)
+std::tuple<std::string, std::string> PanelChooser::OnSaveChooserClosed()
+{
+
+	if (chooserState == READY_TO_CLOSE || chooserState == CLOSED)
+	{
+		if (isSavePanel)
+		{
+			chooserState = CLOSED;
+			if (!selectedFile.empty())
+			{
+				std::string path = currentDir.string();
+				auto pos = path.find_first_of('\\');
+		
+				std::replace(path.begin(), path.end(), '\\', '/');
+				return {path,selectedFile + "." + currentExtension };
+			}
+			else
+				return { "","" };
+		}
+
+
+	}
+	return { "","" };
+}
+void PanelChooser::DrawOpenPanel(const char* extension)
 {
 	ImGui::PushID(editor->idTracker++);
 	ImGui::OpenPopup("Chooser");
 	if (ImGui::BeginPopupModal("Chooser", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
 		ImGui::BeginChild("ChooserPanel", ImVec2(0, 300), true);
-		GetPath(path, extension);
+		//GetPath(path, extension);
 		ImGui::EndChild();
 		ImGui::PushItemWidth(200.0f);
-		if (ImGui::InputText("##fileName", selectedFile, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+		if (ImGui::InputText("##fileName", &selectedFile, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
 			chooserState = READY_TO_CLOSE;
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
-		
+
 		ImGui::PushItemWidth(50.0f);
 		if (ImGui::BeginCombo("##combo", currentExtension)) // The second parameter is the label previewed before opening the combo.
 		{
@@ -70,8 +115,8 @@ void PanelChooser::ShowPanel(const char* path,const char* extension)
 				bool is_selected = (currentExtension == extensionList[n]); // You can store your selection however you want, outside or inside your objects
 				if (ImGui::Selectable(extensionList[n].c_str(), is_selected))
 					currentExtension = extensionList[n].c_str();
-					if (is_selected)
-						ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
 			}
 			ImGui::EndCombo();
 		}
@@ -92,49 +137,184 @@ void PanelChooser::ShowPanel(const char* path,const char* extension)
 	ImGui::PopID();
 }
 
+void PanelChooser::DrawSavePanel(const char* extension)
+{
+	ImGui::PushID(editor->idTracker++);
+	ImGui::OpenPopup("Save");
+	if (ImGui::BeginPopupModal("Save", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::TextColored(ImVec4(1,1,0,1),"Current Path: %s",currentDir.string().c_str());
+		ImGui::BeginChild("ChooserPanel", ImVec2(0, 300), true);
+		GetSavePath(extension);
+		ImGui::EndChild();
+		ImGui::PushItemWidth(200.0f);
+		if (ImGui::InputText("##fileName", &selectedFile, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+			chooserState = READY_TO_CLOSE;
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+
+		ImGui::PushItemWidth(50.0f);
+		if (ImGui::BeginCombo("##combo", currentExtension)) // The second parameter is the label previewed before opening the combo.
+		{
+			for (int n = 0; n < this->extensionList.size(); n++)
+			{
+				bool is_selected = (currentExtension == extensionList[n]); // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(extensionList[n].c_str(), is_selected))
+					currentExtension = extensionList[n].c_str();
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+			}
+			ImGui::EndCombo();
+		}
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+		if (ImGui::Button("Save", ImVec2(50, 0)))
+			chooserState = READY_TO_CLOSE;
+		ImGui::SameLine();
+
+		if (ImGui::Button("Cancel", ImVec2(50, 0)))
+		{
+			chooserState = READY_TO_CLOSE;
+			selectedFile = "";
+		}
+
+		ImGui::EndPopup();
+	}
+	ImGui::PopID();
+}
+
 void PanelChooser::GetPath(const char* path, const char* extension)
 {
-	std::vector<std::string> files;
-	std::vector<std::string> dirs;
-	std::string dir((path) ? path : "");
-	dir += "/";
-	editor->engine->GetFileSystem()->EnumerateFiles(dir.c_str(),files,dirs);
-	for (std::vector<std::string>::const_iterator it = dirs.begin(); it != dirs.end(); ++it) {
-		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str())) {
-			GetPath((dir + (*it)).c_str(), extension);
-			ImGui::TreePop();
+	float padding = 16.0f;
+	float iconSize = 48.0f;
+	float cellSize = iconSize + padding;
+	float panelWidth = ImGui::GetContentRegionAvail().x;
+	int columnCount = (int)(panelWidth / cellSize);
+	if (columnCount < 1)
+		columnCount = 1;
+	if (currentDir != std::filesystem::path(assetsDir))
+	{
+		if (ImGui::Button("<-"))
+		{
+			currentDir = currentDir.parent_path();
 		}
 	}
-
-	std::sort(files.begin(), files.end());
-	for (std::vector<std::string>::const_iterator it = files.begin(); it != files.end(); ++it)
+	ImGui::Columns(columnCount, 0, false);
+	for (auto& directoryEntry : std::filesystem::directory_iterator(currentDir))
 	{
-		const std::string& str = *it;
-		bool ret = true;
-		if (extension && str.substr(str.find_last_of(".") + 1) != extension)
-			ret = false;
+		const auto& path = directoryEntry.path();
+		auto relativePath = std::filesystem::relative(path, assetsDir);
+		std::string filenameString = relativePath.filename().string();
 
-		if(ret && ImGui::TreeNodeEx(str.c_str(), ImGuiTreeNodeFlags_Leaf))
+		uint id = directoryEntry.is_directory() ? directoryTexture->GetTextureId() : fileTexture->GetTextureId();
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+		ImGui::ImageButton((ImTextureID)id, { iconSize,iconSize });
+		ImGui::PopStyleColor();
+		if (ImGui::IsItemHovered)
+		{
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
 			{
-				if (ImGui::IsItemClicked()) {
-					sprintf_s(selectedFile, FILE_MAX, "%s%s", dir.c_str(), str.c_str());
-
-					if (ImGui::IsMouseDoubleClicked(0))
-						chooserState = READY_TO_CLOSE;
+				if (directoryEntry.is_directory())
+				{
+					currentDir /= path.filename();
 				}
-
-				ImGui::TreePop();
+				else
+				{
+					selectedFile = filenameString.substr(0,filenameString.find_last_of("."));
+				}
 			}
+			if (ImGui::IsItemHovered() && ImGui::IsItemClicked(0))
+			{
+				if (!directoryEntry.is_directory())
+				{
+					selectedFile = filenameString.substr(0, filenameString.find_last_of("."));
+				}
+			}
+
+		}
+		ImGui::TextWrapped(filenameString.c_str());
+
+		ImGui::NextColumn();
+
 	}
+	ImGui::Columns(1);
 
 }
 
-void PanelChooser::OpenPanel(std::string id ,const char* extension, std::vector<std::string> extensionList, const char* from_folder)
+void PanelChooser::GetSavePath(const char* extension)
+{
+	float padding = 16.0f;
+	float iconSize = 48.0f;
+	float cellSize = iconSize + padding;
+	float panelWidth = ImGui::GetContentRegionAvail().x;
+	int columnCount = (int)(panelWidth / cellSize);
+	if (columnCount < 1)
+		columnCount = 1;
+	if (currentDir != std::filesystem::path(assetsDir))
+	{
+		if (ImGui::Button("<-"))
+		{
+			currentDir = currentDir.parent_path();
+		}
+	}
+	ImGui::Columns(columnCount, 0, false);
+	for (auto& directoryEntry : std::filesystem::directory_iterator(currentDir))
+	{
+		const auto& path = directoryEntry.path();
+		auto relativePath = std::filesystem::relative(path, assetsDir);
+		std::string filenameString = relativePath.filename().string();
+
+		uint id = directoryEntry.is_directory() ? directoryTexture->GetTextureId() : fileTexture->GetTextureId();
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+		ImGui::ImageButton((ImTextureID)id, { iconSize,iconSize });
+		ImGui::PopStyleColor();
+		if (ImGui::IsItemHovered)
+		{
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
+			{
+				if (directoryEntry.is_directory())
+				{
+					currentDir /= path.filename();
+				}
+				else
+				{
+					selectedFile = filenameString.substr(0, filenameString.find_last_of("."));
+				}
+			}
+			if (ImGui::IsItemHovered() && ImGui::IsItemClicked(0))
+			{
+				if (!directoryEntry.is_directory())
+				{
+					selectedFile = filenameString.substr(0, filenameString.find_last_of("."));
+				}
+			}
+
+		}
+		ImGui::TextWrapped(filenameString.c_str());
+
+		ImGui::NextColumn();
+
+	}
+	ImGui::Columns(1);
+
+	
+}
+
+void PanelChooser::OpenPanel(std::string id, const char* extension, std::vector<std::string> extensionList)
 {
 	this->id = id;
 	selectedFile[0] = '\0';
 	currentExtension = (extension) ? extension : "";
-	fileDialogOrigin = (from_folder) ? from_folder : "";
 	this->extensionList = extensionList;
 	chooserState = OPENED;
+	isSavePanel = true;
+}
+
+void PanelChooser::SavePanel(std::string id, const char* extension, std::vector<std::string> extensionList)
+{
+	this->id = id;
+	selectedFile[0] = '\0';
+	currentExtension = (extension) ? extension : "";
+	this->extensionList = extensionList;
+	chooserState = OPENED;
+	isSavePanel = true;
 }

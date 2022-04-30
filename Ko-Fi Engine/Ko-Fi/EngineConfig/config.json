@@ -73,7 +73,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "0_level"
+        "DefaultScene": ""
     },
     "UI": null,
     "Window": {

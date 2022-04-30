@@ -193,7 +193,19 @@ bool M_Editor::PreUpdate(float dt)
 	bool ret = true;
 
 	OPTICK_EVENT();
+	if (!iniToLoad.empty())
+	{
+		ImGui::LoadIniSettingsFromDisk(iniToLoad.c_str());
+		iniToLoad.clear();
+	}
+	if (!iniToSave.empty())
+	{
 
+		ImGui::SaveIniSettingsToDisk(iniToSave.c_str());
+		iniToSave.clear();
+
+
+	}
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
