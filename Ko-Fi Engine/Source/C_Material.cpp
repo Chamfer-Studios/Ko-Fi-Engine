@@ -368,7 +368,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 					material->SetShaderPath(path.c_str());
 				else
 				{
-					path = ASSETS_SHADERS_DIR + std::string(DEFAULT_SHADER) + SHADER_EXTENSION;
+					path = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
 					material->SetShaderPath(path.c_str());
 				}
 				Importer::GetInstance()->materialImporter->LoadAndCreateShader(path.c_str(), material);

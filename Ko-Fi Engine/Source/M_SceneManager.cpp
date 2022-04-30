@@ -4,6 +4,7 @@
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
 #include "M_Window.h"
+#include "M_ResourceManager.h"
 #include <imgui_stdlib.h>
 
 #include "GameObject.h"
@@ -22,13 +23,16 @@
 
 #include "R_Material.h"
 #include "R_Texture.h"
+#include "R_Model.h"
 
 #include "PanelViewport.h"
 #include "Log.h"
 #include "Scripting.h"
+#include "Importer.h"
 
 #include "Log.h"
 #include "Globals.h"
+#include "FSDefs.h"
 
 #include "optick.h"
 
@@ -213,6 +217,147 @@ Scene* M_SceneManager::GetCurrentScene()
 GameState M_SceneManager::GetGameState()
 {
 	return runtimeState;
+}
+
+bool M_SceneManager::ApplyTextureToSelectedGameObject(UID uid)
+{
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
+	{
+		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), no GameObject was selected.");
+		return false;
+	}
+	if (uid == 0)
+	{
+		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), texture uid was 0.");
+		return false;
+	}
+
+	R_Texture* texture = (R_Texture*)engine->GetResourceManager()->RequestResource(uid);
+	if (texture == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), resource texture was nullptr.");
+		return false;
+	}
+
+	for (const auto& i : engine->GetEditor()->panelGameObjectInfo.selectedGameObjects)
+	{
+		GameObject* go = currentScene->GetGameObject(i);
+		C_Material* cMaterial = go->GetComponent<C_Material>();
+
+		if (cMaterial == nullptr)
+			cMaterial = (C_Material*)go->AddComponentByType(ComponentType::MATERIAL);
+
+		cMaterial->texture = texture;
+	}
+
+	return true;
+}
+
+bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
+{
+	if (model == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Scene Manager: Could not generate GameObjects from resource model, model was nullptr.");
+		return false;
+	}
+
+	std::map<UID, GameObject*> tmp;
+	GameObject* modelRoot = nullptr;
+
+	// nodes
+	for (const auto& node : model->nodes)
+	{
+		GameObject* go = new GameObject();
+
+		go->SetUID(node.uid);
+		go->SetParentUID(node.parentUid);
+		go->SetName(node.name.c_str());
+		go->GetComponent<C_Transform>()->SetPosition(node.position);
+		go->GetComponent<C_Transform>()->SetScale(node.scale);
+		go->GetComponent<C_Transform>()->SetRotationQuat(node.rotation);
+
+		CreateComponentsFromNode(node, go);
+
+		if (node.parentUid == 0)
+		{
+			modelRoot = go;
+			std::pair<UID, std::string> modelResource = { model->GetUID(),model->GetAssetPath() };
+			currentScene->sceneModels.emplace(modelRoot->GetUID(), modelResource);
+		}
+		tmp.emplace(go->GetUID(), go);
+	}
+
+	// reparenting
+	for (const auto& it : tmp)
+	{
+		UID parentUid = it.second->GetParentUID();
+		if (parentUid == 0 && modelRoot != nullptr)
+		{
+			it.second->SetParentUID(modelRoot->GetUID());
+		}
+		else
+		{
+			std::map<UID, GameObject*>::iterator parent = tmp.find(parentUid);
+			if (parent != tmp.end())
+			{
+				it.second->SetParentUID(parent->second->GetUID());
+			}
+		}
+		it.second->GetComponent<C_Transform>()->SetDirty(true);
+		currentScene->gameObjectList.push_back(it.second);
+	}
+
+	// animation
+	if (modelRoot != nullptr)
+	{
+		if (model->animation != 0)
+		{
+			C_Animator* animator = (C_Animator*)modelRoot->AddComponentByType(ComponentType::ANIMATOR);
+			R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
+			if (rAnimation != nullptr)
+			{
+				animator->SetAnim(rAnimation);
+			}
+		}
+	}
+
+	return true;
+}
+
+void M_SceneManager::CreateComponentsFromNode(ModelNode node, GameObject* gameobject)
+{
+	// Mesh
+	if (node.mesh != 0)
+	{
+		C_Mesh* mesh = (C_Mesh*)gameobject->AddComponentByType(ComponentType::MESH);
+		R_Mesh* rMesh = (R_Mesh*)engine->GetResourceManager()->RequestResource(node.mesh);
+		if (rMesh != nullptr)
+		{
+			CONSOLE_LOG("[ERROR] Scene: Could not get resource mesh from model node.");
+			gameobject->DeleteComponent(mesh);
+			return;
+		}
+		mesh->SetMesh(rMesh);
+	}
+
+	// Material & Shader
+	C_Material* material = (C_Material*)gameobject->AddComponentByType(ComponentType::MATERIAL);
+	std::string shaderPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+	R_Material* rMaterial = (R_Material*)engine->GetResourceManager()->GetResourceFromLibrary(shaderPath.c_str());
+	material->SetMaterial(rMaterial);
+
+	// Texture
+	R_Texture* rTexture = nullptr;
+	if (node.texture != 0)
+	{
+		rTexture = (R_Texture*)engine->GetResourceManager()->RequestResource(node.texture);
+		if (rTexture == nullptr)
+		{
+			CONSOLE_LOG("[ERROR] Scene: Could not get resource texture from model node.");
+			return;
+		}
+		material->texture = rTexture;
+	}
 }
 
 void M_SceneManager::OnPlay()
