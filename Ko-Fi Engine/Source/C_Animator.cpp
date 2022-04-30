@@ -301,12 +301,12 @@ AnimatorClip C_Animator::GetSelectedClip()
 
 bool C_Animator::IsCurrentClipPlaying()
 {
-	return !GetSelectedClip()->GetFinishedBool();
+	return !GetSelectedClip().GetFinishedBool();
 }
 
 bool C_Animator::IsCurrentClipLooping()
 {
-	return GetSelectedClip()->GetLoopBool();
+	return GetSelectedClip().GetLoopBool();
 }
 
 void C_Animator::SetSelectedClip(std::string name)
