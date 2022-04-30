@@ -25,13 +25,11 @@ public:
 
 	void Reset();
 
-	bool CreateClip(const AnimatorClip& clip);
-	bool CreateDefaultClip(AnimatorClip clip);
-
 	void SetAnim(R_Animation* anim);
-	AnimatorClip GetSelectedClip();
 
+	bool CreateClip(const AnimatorClip& clip);
 	void SetSelectedClip(std::string name);
+	AnimatorClip GetSelectedClip();
 
 private:
 	R_Animation* animation = nullptr;

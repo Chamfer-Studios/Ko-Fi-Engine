@@ -44,7 +44,8 @@ bool C_Animator::Start()
 	if (selectedClip.GetName().c_str() == "[NONE]")
 	{
 		AnimatorClip animClip(animation, "Default clip", 0, 10, 1.0f, true);
-		CreateDefaultClip(animClip);
+		CreateClip(animClip);
+		SetSelectedClip(animClip.GetName());
 	}
 	
 	return true;
@@ -283,24 +284,6 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 	}
 
 	clips.emplace(clip.GetName(), clip);
-}
-
-bool C_Animator::CreateDefaultClip(AnimatorClip clip)
-{
-	if (clip.GetAnimation() == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip.GetName());
-		return false;
-	}
-	if (clips.find(clip.GetName()) != clips.end())
-	{
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip.GetName().c_str());
-		return false;
-	}
-
-	clips.emplace(clip.GetName(), clip);
-
-	selectedClip = clip;
 }
 
 void C_Animator::SetAnim(R_Animation* anim)
