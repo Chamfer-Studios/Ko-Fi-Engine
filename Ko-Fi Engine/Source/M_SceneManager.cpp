@@ -11,9 +11,12 @@
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
+#include "C_Animator.h"
 #include "C_Info.h"
 #include "C_Camera.h"
 #include "C_Script.h"
+#include "AnimatorClip.h"
+
 // UI
 #include "C_Canvas.h"
 #include "C_Transform2D.h"
@@ -24,6 +27,7 @@
 #include "R_Material.h"
 #include "R_Texture.h"
 #include "R_Model.h"
+#include "R_Animation.h"
 
 #include "PanelViewport.h"
 #include "Log.h"
@@ -267,16 +271,15 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 	// nodes
 	for (const auto& node : model->nodes)
 	{
-		GameObject* go = new GameObject();
+		GameObject* go = currentScene->CreateEmptyGameObject(node.name.c_str());
 
 		go->SetUID(node.uid);
 		go->SetParentUID(node.parentUid);
-		go->SetName(node.name.c_str());
 		go->GetComponent<C_Transform>()->SetPosition(node.position);
-		go->GetComponent<C_Transform>()->SetScale(node.scale);
 		go->GetComponent<C_Transform>()->SetRotationQuat(node.rotation);
+		go->GetComponent<C_Transform>()->SetScale(node.scale);
 
-		CreateComponentsFromNode(node, go);
+		CreateComponentsFromNode(model, node, go);
 
 		if (node.parentUid == 0)
 		{
@@ -287,13 +290,13 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		tmp.emplace(go->GetUID(), go);
 	}
 
-	// reparenting
+	// Reparenting
 	for (const auto& it : tmp)
 	{
 		UID parentUid = it.second->GetParentUID();
 		if (parentUid == 0 && modelRoot != nullptr)
 		{
-			it.second->SetParentUID(modelRoot->GetUID());
+			it.second->SetParentUID(0);
 		}
 		else
 		{
@@ -301,43 +304,68 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 			if (parent != tmp.end())
 			{
 				it.second->SetParentUID(parent->second->GetUID());
+				parent->second->AttachChild(it.second);
 			}
 		}
 		it.second->GetComponent<C_Transform>()->SetDirty(true);
-		currentScene->gameObjectList.push_back(it.second);
 	}
 
 	// animation
-	if (modelRoot != nullptr)
-	{
-		if (model->animation != 0)
-		{
-			C_Animator* animator = (C_Animator*)modelRoot->AddComponentByType(ComponentType::ANIMATOR);
-			R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
-			if (rAnimation != nullptr)
-			{
-				animator->SetAnim(rAnimation);
-			}
-		}
-	}
+	//if (modelRoot != nullptr)
+	//{
+	//	if (model->animation != 0)
+	//	{
+	//		C_Animator* animator = (C_Animator*)modelRoot->AddComponentByType(ComponentType::ANIMATOR);
+	//		R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
+	//		if (rAnimation != nullptr)
+	//		{
+	//			animator->SetAnim(rAnimation);
+	//		}
+	//	}
+	//}
 
 	return true;
 }
 
-void M_SceneManager::CreateComponentsFromNode(ModelNode node, GameObject* gameobject)
+void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, GameObject* gameobject)
 {
 	// Mesh
 	if (node.mesh != 0)
 	{
 		C_Mesh* mesh = (C_Mesh*)gameobject->AddComponentByType(ComponentType::MESH);
 		R_Mesh* rMesh = (R_Mesh*)engine->GetResourceManager()->RequestResource(node.mesh);
-		if (rMesh != nullptr)
+		if (rMesh == nullptr)
 		{
 			CONSOLE_LOG("[ERROR] Scene: Could not get resource mesh from model node.");
 			gameobject->DeleteComponent(mesh);
 			return;
 		}
-		mesh->SetMesh(rMesh);
+		if (mesh != nullptr)
+		{
+			mesh->SetMesh(rMesh);
+			rMesh->SetRootNode(gameobject->GetParent());
+		}
+
+		if (rMesh->IsAnimated())
+		{
+			// Animation
+			if (model->animation != 0 && model->animationName != "")
+			{
+				C_Animator* animator = (C_Animator*)gameobject->AddComponentByType(ComponentType::ANIMATOR);
+				RELEASE(animator->animation);
+
+				R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
+				if (animator != nullptr && rAnimation != nullptr)
+				{
+					rMesh->SetAnimation(rAnimation);
+					animator->SetAnim(rAnimation);
+
+					// Creating a default clip with all the keyframes of the animation.
+					AnimatorClip* animClip = new AnimatorClip(rAnimation, "Default clip", 0, rAnimation->duration, 1.0f, true);
+					animator->CreateDefaultClip(animClip);
+				}
+			}
+		}
 	}
 
 	// Material & Shader

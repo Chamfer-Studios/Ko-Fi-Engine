@@ -85,7 +85,7 @@ public:
 
 	bool ApplyTextureToSelectedGameObject(UID uid);
 	bool CreateGameObjectsFromModel(R_Model* model);
-	void CreateComponentsFromNode(ModelNode node, GameObject* gameobject);
+	void CreateComponentsFromNode(R_Model* model, ModelNode node, GameObject* gameobject);
 
 	void OnPlay();
 	void OnStop();

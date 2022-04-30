@@ -33,9 +33,10 @@ public:
 
 	void SetSelectedClip(std::string name);
 
-private:
+public:
 	R_Animation* animation = nullptr;
 
+private:
 	std::map<std::string, AnimatorClip> clips;
 	AnimatorClip* selectedClip = nullptr;
 	AnimatorClip* clipToDelete = nullptr;

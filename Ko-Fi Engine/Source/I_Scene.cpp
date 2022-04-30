@@ -220,7 +220,7 @@ bool I_Scene::LoadModel(const char* path, R_Model* model)
 					model->animation = jsonModel.at("model_animation").at("animation_uid");
 				}
 			}
-			engine->GetSceneManager()->GetCurrentScene()->sceneModels.emplace(model->nodes.front().uid, std::pair<UID, std::string>(model->GetUID(), model->GetAssetPath()));
+			//engine->GetSceneManager()->GetCurrentScene()->sceneModels.emplace(model->nodes.front().uid, std::pair<UID, std::string>(model->GetUID(), model->GetAssetPath()));
 
 			CONSOLE_LOG("[STATUS] Model Load: successfully loaded model: { %s }", model->GetAssetFile());
 		}
