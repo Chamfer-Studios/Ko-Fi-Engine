@@ -245,7 +245,7 @@ bool M_SceneManager::ApplyTextureToSelectedGameObject(UID uid)
 		C_Material* cMaterial = go->GetComponent<C_Material>();
 
 		if (cMaterial == nullptr)
-			cMaterial = (C_Material*)go->AddComponentByType(ComponentType::MATERIAL);
+			continue;
 
 		cMaterial->texture = texture;
 	}
