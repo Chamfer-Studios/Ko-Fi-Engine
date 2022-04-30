@@ -146,7 +146,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 
 	if (HasImportIgnoredExtension(assetPath))
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading file, the file extension has an import ignored extension: %s", assetPath);
+		CONSOLE_LOG("[WARNING] Resource Manager: loading file, the file extension has an import ignored extension: %s", assetPath);
 		return uid;
 	}
 
@@ -1416,7 +1416,7 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetPath, bool libraryChec
 
 	if (!std::filesystem::exists(metaPath))
 	{
-		CONSOLE_LOG("%s Couldn't find meta file.", errorString.c_str());
+		CONSOLE_LOG("[STATUS] Resource Manager: couldn't find meta file.");
 		return false;
 	}
 

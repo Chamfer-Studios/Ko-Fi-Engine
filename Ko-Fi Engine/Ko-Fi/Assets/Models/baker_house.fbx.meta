@@ -1,0 +1,29 @@
+{
+    "asset_file": "baker_house.fbx",
+    "asset_path": "Assets/Models/baker_house.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Chimney.sugar",
+            "library_path": "Library/Meshes/1351827466.sugar",
+            "type": 0,
+            "uid": 1351827466
+        },
+        {
+            "asset_file": "Baker_house.png",
+            "library_path": "Library/Textures/2109180611.cacao",
+            "type": 1,
+            "uid": 2109180611
+        },
+        {
+            "asset_file": "Baker_house.sugar",
+            "library_path": "Library/Meshes/1593043115.sugar",
+            "type": 0,
+            "uid": 1593043115
+        }
+    ],
+    "library_file": "1653518626.tea",
+    "library_path": "Library/Models/1653518626.tea",
+    "mod_time": 404865333,
+    "type": 3,
+    "uid": 1653518626
+}

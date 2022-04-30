@@ -20,33 +20,66 @@ bool R_Model::SaveMeta(Json& json) const
 {
 	bool ret = true;
 
+	std::vector<UID> savedMeshesUid;
+	std::vector<UID> savedTexturesUid;
+
 	json["contained_resources"].array();
 	Json jsonResource;
 	for (const auto& node : nodes)
 	{
 		if (node.mesh != 0)
 		{
-			std::string meshName = node.name + MESH_EXTENSION;
-			std::string meshPath = MESHES_DIR + std::to_string(node.mesh) + MESH_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::MESH;
-			jsonResource["asset_file"] = meshName;
-			jsonResource["library_path"] = meshPath;
-			json["contained_resources"].push_back(jsonResource);
+			bool alreadySaved = false;
+			for (const auto& meshIt : savedMeshesUid)
+			{
+				if (meshIt == node.mesh)
+				{
+					alreadySaved = true;
+					break;
+				}
+			}
+
+			if (!alreadySaved)
+			{
+				std::string meshName = node.name + MESH_EXTENSION;
+				std::string meshPath = MESHES_DIR + std::to_string(node.mesh) + MESH_EXTENSION;
+				jsonResource["uid"] = node.mesh;
+				jsonResource["type"] = ResourceType::MESH;
+				jsonResource["asset_file"] = meshName;
+				jsonResource["library_path"] = meshPath;
+				json["contained_resources"].push_back(jsonResource);
+				savedMeshesUid.push_back(node.mesh);
+			}
 		}
 		if (node.texture != 0 && node.textureName != "")
 		{
-			std::string textureName = node.textureName;
-			std::string fileName = node.name + TEXTURE_EXTENSION;
-			std::string texturePath = TEXTURES_DIR + std::to_string(node.texture) + TEXTURE_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::TEXTURE;
-			jsonResource["asset_file"] = fileName;
-			jsonResource["library_path"] = texturePath;
-			jsonResource["texture_name"] = textureName;
-			json["contained_resources"].push_back(jsonResource);
+			bool alreadySaved = false;
+			for (const auto& textureIt : savedTexturesUid)
+			{
+				if (textureIt == node.texture)
+				{
+					alreadySaved = true;
+					break;
+				}
+			}
+
+			if (!alreadySaved)
+			{
+				std::string texturePath = TEXTURES_DIR + std::to_string(node.texture) + TEXTURE_EXTENSION;
+				jsonResource["uid"] = node.texture;
+				jsonResource["type"] = ResourceType::TEXTURE;
+				jsonResource["asset_file"] = node.textureName;
+				jsonResource["library_path"] = texturePath;
+				json["contained_resources"].push_back(jsonResource);
+				savedTexturesUid.push_back(node.texture);
+			}
 		}
 	}
+
+	savedMeshesUid.clear();
+	savedMeshesUid.shrink_to_fit();
+	savedTexturesUid.clear();
+	savedTexturesUid.shrink_to_fit();
 
 	if (animation != 0 && animationName != "")
 	{
@@ -55,9 +88,10 @@ bool R_Model::SaveMeta(Json& json) const
 		std::string animationPath = ANIMATIONS_DIR + std::to_string(animation) + ANIMATION_EXTENSION;
 		jsonAnim["uid"] = animation;
 		jsonAnim["type"] = ResourceType::ANIMATION;
-		jsonAnim["asset_file"] = animationName;
+		jsonAnim["asset_file"] = animationFile;
 		jsonAnim["library_path"] = animationPath;
-		json["contained_resources"].push_back(jsonAnim);
+		if (!json["contained_resources"].contains(jsonAnim))
+			json["contained_resources"].push_back(jsonAnim);
 	}
 
 	return ret;

@@ -1,0 +1,23 @@
+{
+    "asset_file": "rock_cliff.fbx",
+    "asset_path": "Assets/Models/rock_cliff.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "CliffRock_low.sugar",
+            "library_path": "Library/Meshes/1866889932.sugar",
+            "type": 0,
+            "uid": 1866889932
+        },
+        {
+            "asset_file": "cliff_rock.png",
+            "library_path": "Library/Textures/443704744.cacao",
+            "type": 1,
+            "uid": 443704744
+        }
+    ],
+    "library_file": "1728195819.tea",
+    "library_path": "Library/Models/1728195819.tea",
+    "mod_time": 408671322,
+    "type": 3,
+    "uid": 1728195819
+}

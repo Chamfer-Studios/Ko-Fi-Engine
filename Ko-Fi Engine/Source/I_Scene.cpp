@@ -98,6 +98,7 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 	ImportNode(assimpScene, assimpScene->mRootNode, model, ModelNode(), isPrefab);
 
 	loadedNodes.clear();
+	loadedTextures.clear();
 	forcedUIDs.clear();
 
 	return true;
@@ -1181,7 +1182,6 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, R_Model
 
 	engine->GetResourceManager()->SaveResource(anim);
 	engine->GetResourceManager()->UnloadResource(anim);
-
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, ModelNode& node)
@@ -1222,6 +1222,8 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 			CheckAndApplyForcedUID(texture);
 			node.texture = texture->GetUID();
 			node.textureName = texture->GetAssetFile();
+
+			loadedTextures.emplace(texturePath, texture->GetUID());
 
 			engine->GetResourceManager()->SaveResource(texture);
 			engine->GetResourceManager()->UnloadResource(texture);
