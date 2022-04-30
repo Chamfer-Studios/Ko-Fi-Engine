@@ -2,6 +2,7 @@
 #define __ANIMATOR_CLIP_H__
 
 #include <string>
+
 typedef unsigned int uint;
 class R_Animation;
 
