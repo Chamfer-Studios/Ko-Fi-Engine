@@ -21,6 +21,7 @@
 #include <gl/GLU.h>
 
 #include "MathGeoLib/Math/MathFunc.h"
+#include "MathGeoLib/Math/float3.h"
 
 #include "optick.h"
 
@@ -51,6 +52,7 @@ C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	LookAt(float3::zero);
+	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumRightHanded);
 
 	CalculateViewMatrix();
 
@@ -205,9 +207,8 @@ void C_Camera::CalculateViewMatrix(bool ortho)
 	if (isProjectionDirty)
 		RecalculateProjection(ortho);
 
-	cameraFrustum.SetPos(position);
-	cameraFrustum.SetFront(front.Normalized());
-	cameraFrustum.SetUp(up.Normalized());
+	cameraFrustum.SetFrame(position, front, up);
+	float3::Orthonormalize((float3&)cameraFrustum.Front(),(float3&)cameraFrustum.Up());
 	right = up.Cross(front);
 }
 

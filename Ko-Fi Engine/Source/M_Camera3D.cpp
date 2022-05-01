@@ -27,6 +27,21 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	name = "Camera";
 	this->engine = engine;
 
+	aspectRatio = 1.f;
+	verticalFOV = 60.f;
+	nearPlaneDistance = 0.1f;
+	farPlaneDistance = 5000.f;
+	cameraSensitivity = .1f;
+	cameraSpeed = 120.f;
+	baseCameraSpeed = 120.f;
+	speedMultiplier = 1;
+
+	reference = float3(0.0f, 0.0f, 0.0f);
+
+	cameraFrustum.SetFrame(float3(0.0f, 5.0f, -15.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
+	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumRightHanded);
+
+
 }
 
 M_Camera3D::~M_Camera3D()
@@ -46,6 +61,8 @@ bool M_Camera3D::Start()
 {
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
+
+	LookAt(float3::zero);
 
 	engineCameraObject = new GameObject(0, engine, "");
 	engineCamera = new C_Camera(engineCameraObject, true);
@@ -508,5 +525,14 @@ float2 M_Camera3D::WorldToScreen(float3 position)
 float3 M_Camera3D::GetLastMouseClick() const
 {
 	return lastMouseClick;
+}
+
+void M_Camera3D::LookAt(const float3& point)
+{
+	reference = point;
+
+	cameraFrustum.SetFront((reference - cameraFrustum.Pos()).Normalized());
+	cameraFrustum.SetUp(cameraFrustum.Front().Cross(cameraFrustum.WorldRight()));
+
 }
 
