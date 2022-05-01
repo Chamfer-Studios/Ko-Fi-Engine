@@ -41,7 +41,9 @@ jobs:
     #We are copying from our output folder to our build/release_name/output folder all subdirectories
       run: |
         robocopy .\Ko-Fi Engine\Ko-Fi .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine /S
+        dir
         robocopy .\build\${{ env.RELEASE_NAME }} .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine Ko-Fi_Engine.exe /MOVE
+        dir
         copy /Y .\README.md .\build\${{ env.RELEASE_NAME }}\README.md
         copy /Y .\LICENSE .\build\${{ env.RELEASE_NAME }}\LICENSE
         cd build
