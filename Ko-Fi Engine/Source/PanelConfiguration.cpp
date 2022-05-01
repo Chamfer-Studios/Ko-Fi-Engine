@@ -105,8 +105,8 @@ bool PanelConfiguration::Update()
 		ImGui::SameLine();
 		if (editor->GetPanelChooser()->IsReadyToClose("PanelConfig"))
 		{
-			const char* file = editor->GetPanelChooser()->OnChooserClosed();
-			if (file != nullptr)
+			std::string file = editor->GetPanelChooser()->OnChooserClosed();
+			if (!file.empty())
 			{
 				std::string newFile = file;
 				newFile.erase(newFile.begin());

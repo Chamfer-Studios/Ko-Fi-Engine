@@ -36,6 +36,7 @@ M_Editor::M_Editor(KoFiEngine* engine)
 {
 	this->engine = engine;
 	name = "Editor";
+#ifndef KOFI_GAME
 
 	// We need to check whether or not each panel is activated.
 	// We have to set a bool for each of them in order to be able to close and open again a panel.
@@ -74,12 +75,7 @@ M_Editor::M_Editor(KoFiEngine* engine)
 		panelCameraViewport = new PanelCameraViewport(this, engine);
 		AddPanel(panelCameraViewport);
 	}*/
-	if (panelsState.showViewportWindow)
-	{
-		panelViewport = new PanelViewport(this, engine);
-		AddPanel(panelViewport);
-	}
-	
+
 	//------------------------------------
 	
 	// We want to have it always displayed.
@@ -98,6 +94,15 @@ M_Editor::M_Editor(KoFiEngine* engine)
 	AddPanel(panelAssets);
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
+#endif //KOFI_GAME
+
+	if (panelsState.showViewportWindow)
+	{
+		panelViewport = new PanelViewport(this, engine);
+		AddPanel(panelViewport);
+	}
+
+
 }
 
 M_Editor::~M_Editor()
@@ -179,6 +184,9 @@ bool M_Editor::Start()
 	}
 
 	LoadFontsEditor(16);
+#ifndef KOFI_GAME
+	iniToLoad = "Library/Layouts/defaultEngineLayout.ini";
+#endif // KOFI_ENGINE
 
 	return ret;
 }
@@ -188,7 +196,19 @@ bool M_Editor::PreUpdate(float dt)
 	bool ret = true;
 
 	OPTICK_EVENT();
+	if (!iniToLoad.empty())
+	{
+		ImGui::LoadIniSettingsFromDisk(iniToLoad.c_str());
+		iniToLoad.clear();
+		iniToLoad = "";
+	}
+	if (!iniToSave.empty())
+	{
 
+		ImGui::SaveIniSettingsToDisk(iniToSave.c_str());
+		iniToSave.clear();
+		iniToSave = "";
+	}
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
@@ -197,7 +217,7 @@ bool M_Editor::PreUpdate(float dt)
 	// Panels PreUpdate
 	if (ret == true)
 	{
-		std::list<Panel*>::iterator item = panels.begin();;
+		std::list<Panel*>::iterator item = panels.begin();
 
 		while (item != panels.end() && ret)
 		{
@@ -240,7 +260,7 @@ bool M_Editor::Update(float dt)
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspaceId = ImGui::GetID("DefaultDockspace");
-			ImGui::DockSpace(dockspaceId,ImVec2(0.0f,0.0f),ImGuiDockNodeFlags_PassthruCentralNode);
+			ImGui::DockSpace(dockspaceId,ImVec2(0.0f,0.0f),ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_AutoHideTabBar);
 			//ImGui::DockSpaceOverViewport(viewport);
 		}
 
@@ -250,7 +270,11 @@ bool M_Editor::Update(float dt)
 
 	// Update panels state
 	UpdatePanelsState();
+#ifndef KOFI_GAME
 	mainMenuBar->Update();
+
+#endif // KOFI_GAME
+
 	// Panels Update
 	if (ret == true)
 	{
@@ -533,7 +557,7 @@ ___
 void M_Editor::UpdatePanelsState()
 {
 	
-
+#ifndef KOFI_GAME
 	if (panelsState.showViewportWindow == true)
 	{
 		if (panelViewport == nullptr)
@@ -567,6 +591,9 @@ void M_Editor::UpdatePanelsState()
 			panelGame = nullptr;
 		}
 	}
+#endif // KOFI_GAME
+
+	
 }
 
 std::list<Panel*> M_Editor::GetPanels()

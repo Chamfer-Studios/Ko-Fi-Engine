@@ -41,10 +41,10 @@ bool PanelNodeEditor::Update()
     }
     if (editor->GetPanelChooser()->IsReadyToClose("NodeEditor"))
     {
-        const char* path = editor->GetPanelChooser()->OnChooserClosed();
-        if (path != nullptr)
+        std::string path = editor->GetPanelChooser()->OnChooserClosed();
+        if (!path.empty())
         {
-            LoadNodeEditor(path);
+            LoadNodeEditor(path.c_str());
         }
     }
 	//Begin editor

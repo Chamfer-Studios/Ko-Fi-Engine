@@ -51,6 +51,7 @@ bool MainBar::Update()
 {
 	bool ret = true;
 	ChoosersListener();
+
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -61,13 +62,11 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Save Scene"))
 			{
-				saveAsSceneName = editor->engine->GetSceneManager()->GetCurrentScene()->name.c_str();
 				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
 			}
 			if (ImGui::MenuItem("Save Scene As"))
 			{
-				saveAsSceneName = editor->engine->GetSceneManager()->GetCurrentScene()->name.c_str();
-				openSaveAsPopup = true;
+				editor->GetPanelChooser()->OpenPanel("SaveSceneAs", "json", { "json" }, true);
 			}
 			if (ImGui::MenuItem("Load Scene"))
 			{
@@ -80,11 +79,23 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Clean Models"))
 			{
 				editor->engine->GetSceneManager()->GetCurrentScene()->DeleteCurrentScene();
-			
+
 			}
 			if (ImGui::MenuItem("Quit"))
 			{
 				ret = false;
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Window"))
+		{
+			if (ImGui::MenuItem("Save Window Layout"))
+			{
+				editor->GetPanelChooser()->OpenPanel("SaveLayout", "ini", { "ini" }, true);
+			}
+			if (ImGui::MenuItem("Load Window Layout"))
+			{
+				editor->GetPanelChooser()->OpenPanel("LoadLayout", "ini", { "ini" }, true);
 			}
 			ImGui::EndMenu();
 		}
@@ -109,7 +120,7 @@ bool MainBar::Update()
 				if (ImGui::MenuItem("Point Light"))
 				{
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Point Light");
-					C_LightSource* cLightSource =  (C_LightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+					C_LightSource* cLightSource = (C_LightSource*)go->AddComponentByType(ComponentType::LIGHT_SOURCE);
 					cLightSource->ChangeSourceType(SourceType::POINT);
 				}
 				if (ImGui::MenuItem("Focal Light"))
@@ -158,7 +169,7 @@ bool MainBar::Update()
 			if (ImGui::BeginMenu("UI"))
 			{
 				if (ImGui::MenuItem("Canvas")) {
-					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr,nullptr, false);
+					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Canvas");
 					go->CreateComponent<C_Canvas>();
 				}
@@ -193,11 +204,11 @@ bool MainBar::Update()
 					{
 						lastCanvas->AttachChild(go);
 					}
-					else if(newCanvas != nullptr)
+					else if (newCanvas != nullptr)
 					{
 						newCanvas->AttachChild(go);
 					}
-					
+
 					//go->CreateComponent<C_Material>();
 				}
 				if (ImGui::MenuItem("Button")) {
@@ -279,7 +290,7 @@ bool MainBar::Update()
 			}
 			ImGui::EndMenu();
 		}
-		
+
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("About"))
@@ -291,20 +302,7 @@ bool MainBar::Update()
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
-		if (openSaveAsPopup)
-		{
-			ImGui::OpenPopup("SaveSceneAsPopup");
-		}
-		if (ImGui::BeginPopupModal("SaveSceneAsPopup",&openSaveAsPopup))
-		{
-			
-			ImGui::InputText("Scene Name", &saveAsSceneName);
-			if (ImGui::Button("Save##") && !saveAsSceneName.empty()) {
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName.c_str());
-				openSaveAsPopup = false;
-			}
-			ImGui::EndPopup();
-		}
+
 	}
 
 	return ret;
@@ -319,22 +317,49 @@ void MainBar::ChoosersListener()
 {
 	if (editor->GetPanelChooser()->IsReadyToClose("MainBar"))
 	{
-		const char* file = editor->GetPanelChooser()->OnChooserClosed();
-		if (file != nullptr)
+		std::string file = editor->GetPanelChooser()->OnChooserClosed();
+		if (!file.empty())
 		{
-			Importer::GetInstance()->sceneImporter->Import(file);
+			Importer::GetInstance()->sceneImporter->Import(file.c_str());
 		}
 	}
 	if (editor->GetPanelChooser()->IsReadyToClose("LoadScene"))
 	{
-		const char* file = editor->GetPanelChooser()->OnChooserClosed();
-		if (file != nullptr)
+		std::string file = editor->GetPanelChooser()->OnChooserClosed();
+		if (!file.empty())
 		{
-	#pragma omp parallel private()
+#pragma omp parallel private()
 			{
 				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
 			}
-			
+
 		}
+	}
+	if (editor->GetPanelChooser()->IsReadyToClose("SaveLayout"))
+	{
+		editor->GetPanelChooser()->OnSave = [&](std::string path) {
+			editor->iniToSave = path;
+		};
+		editor->GetPanelChooser()->Save();
+
+	}	
+	if (editor->GetPanelChooser()->IsReadyToClose("LoadLayout"))
+	{
+		std::string file = editor->GetPanelChooser()->OnChooserClosed();
+		if (!file.empty())
+		{
+			editor->iniToLoad = file;
+		}
+
+	}
+	if (editor->GetPanelChooser()->IsReadyToClose("SaveSceneAs"))
+	{
+		editor->GetPanelChooser()->OnSave = [&](std::string path) {
+			auto pos1 = path.find_last_of("/");
+			auto pos2 = path.find_last_of(".");
+			std::string sceneName = path.substr(pos1+1, pos2-pos1-1);
+			Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), sceneName.c_str());
+		};
+		editor->GetPanelChooser()->Save();
 	}
 }

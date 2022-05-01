@@ -81,7 +81,7 @@ bool PanelHierarchy::Update()
 			ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
 		if (editor->GetPanelChooser()->IsReadyToClose("CreatePrefab")) {
-			if (editor->GetPanelChooser()->OnChooserClosed() != nullptr) {
+			if (!editor->GetPanelChooser()->OnChooserClosed().empty()) {
 				std::string path = editor->GetPanelChooser()->OnChooserClosed();
 				Importer::GetInstance()->sceneImporter->Import(path.c_str(), true);
 			}
@@ -90,7 +90,7 @@ bool PanelHierarchy::Update()
 			editor->GetPanelChooser()->OpenPanel("CreatePrefab", "fbx", {"fbx","dae","obj","stl","gltf"});
 		}
 		if (editor->GetPanelChooser()->IsReadyToClose("LoadPrefab")) {
-			if (editor->GetPanelChooser()->OnChooserClosed() != nullptr) {
+			if (!editor->GetPanelChooser()->OnChooserClosed().empty()) {
 				std::string path = editor->GetPanelChooser()->OnChooserClosed();
 				//Importer::GetInstance()->sceneImporter->Import(path.c_str(), true);
 				GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
