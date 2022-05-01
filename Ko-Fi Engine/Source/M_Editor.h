@@ -116,8 +116,8 @@ public:
 	int idTracker = 0;
 
 	bool contr = false;
-	std::string iniToLoad;
-	std::string iniToSave;	
+	std::string iniToLoad = "";
+	std::string iniToSave = "";
 
 private:
 	// Style

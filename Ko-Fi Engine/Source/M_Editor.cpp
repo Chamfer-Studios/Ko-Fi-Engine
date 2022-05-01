@@ -200,14 +200,14 @@ bool M_Editor::PreUpdate(float dt)
 	{
 		ImGui::LoadIniSettingsFromDisk(iniToLoad.c_str());
 		iniToLoad.clear();
+		iniToLoad = "";
 	}
 	if (!iniToSave.empty())
 	{
 
 		ImGui::SaveIniSettingsToDisk(iniToSave.c_str());
 		iniToSave.clear();
-
-
+		iniToSave = "";
 	}
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
