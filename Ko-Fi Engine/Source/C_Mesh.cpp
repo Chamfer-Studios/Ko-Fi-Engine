@@ -128,7 +128,9 @@ void C_Mesh::Load(Json& json)
 void C_Mesh::SetMesh(R_Mesh* mesh)
 {
 	if (this->mesh != nullptr)
-		RELEASE(this->mesh);
+		owner->GetEngine()->GetResourceManager()->FreeResource(this->mesh->GetUID());
+
+	this->mesh = nullptr;
 
 	this->mesh = mesh;
 	GenerateLocalBoundingBox();

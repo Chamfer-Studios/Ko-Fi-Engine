@@ -295,7 +295,9 @@ bool C_Animator::CreateDefaultClip(AnimatorClip* clip)
 void C_Animator::SetAnim(R_Animation* anim)
 {
 	if (this->animation != nullptr)
-		RELEASE(this->animation);
+		owner->GetEngine()->GetResourceManager()->FreeResource(this->animation->GetUID());
+
+	this->animation = nullptr;
 
 	this->animation = anim;
 }
