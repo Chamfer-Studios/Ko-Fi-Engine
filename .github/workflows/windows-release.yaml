@@ -42,7 +42,7 @@ jobs:
         dir
         msbuild.exe "Ko-Fi Engine.sln" /property:Configuration=Release
         dir
-        copy /Y "build\Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\Ko-Fi Engine.exe"
+        copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\Ko-Fi Engine.exe"
         dir
       shell: cmd
       
