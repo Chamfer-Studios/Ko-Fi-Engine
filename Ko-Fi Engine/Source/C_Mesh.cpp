@@ -270,7 +270,7 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 	{
 		DrawDeleteButton(owner, this);
 
-		if (mesh->GetLibraryPath() != nullptr) // We shouldn't display this path (?)
+		if (mesh->GetLibraryPath() != nullptr)
 		{
 			ImGui::Text("Mesh Path: ");
 			ImGui::SameLine();

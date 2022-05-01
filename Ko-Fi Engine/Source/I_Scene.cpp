@@ -1160,6 +1160,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, R_Model
 
 	if (model->animationName == assimpScene->mAnimations[0]->mName.C_Str())
 	{
+		// Set mesh's animation parameters and save in library
 		mesh->SetIsAnimated(true);
 		engine->GetResourceManager()->SaveResource(mesh);
 		engine->GetResourceManager()->UnloadResource(mesh);

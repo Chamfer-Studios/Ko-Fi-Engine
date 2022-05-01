@@ -5,7 +5,7 @@
 #include <glew.h>
 
 R_Material::R_Material() :
-	shaderProgramID(0),
+	shaderProgramID(SHADERID_DEFAULT),
 	Resource(ResourceType::MATERIAL)
 {
 }

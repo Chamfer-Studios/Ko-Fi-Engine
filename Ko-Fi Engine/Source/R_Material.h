@@ -1,6 +1,8 @@
 #ifndef __MATERIAL_H__
 #define __MATERIAL_H__
 
+#define SHADERID_DEFAULT 4294967295
+
 #include "Globals.h"
 #include "Color.h"
 #include "Resource.h"
@@ -34,7 +36,7 @@ public:
 	inline void SetShaderPath(const char* name) { SetAssetPath(name); }
 
 public:
-	uint shaderProgramID = 0;
+	uint shaderProgramID = SHADERID_DEFAULT;
 	std::vector<Uniform*> uniforms;
 
 	Color diffuseColor;
