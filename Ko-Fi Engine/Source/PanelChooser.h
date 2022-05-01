@@ -6,6 +6,7 @@
 #include <string>
 #include <tuple>
 #include <filesystem>
+#include <functional>
 
 #define FILE_MAX 250
 class M_Editor;
@@ -21,14 +22,12 @@ public:
 
 	//Handles ChooserStateHandler State
 	bool IsReadyToClose(std::string id);
-	const char* OnChooserClosed();
-	std::tuple<std::string,std::string> OnSaveChooserClosed();
+	std::string OnChooserClosed();
+	void Save();
 	void DrawOpenPanel(const char* extension = nullptr);
-	void DrawSavePanel( const char* extension = nullptr);
-	void GetPath(const char* path, const char* extension);
-	void GetSavePath( const char* extension);
-	void OpenPanel(std::string id,const char* extension, std::vector<std::string> extensionList);
-	void SavePanel(std::string id,const char* extension, std::vector<std::string> extensionList);
+	void GetPath(const char* extension);
+	void OpenPanel(std::string id,const char* extension, std::vector<std::string> extensionList,bool isSavePanel=false);
+	std::function<void(std::string path)>OnSave = nullptr;
 
 private:
 	enum

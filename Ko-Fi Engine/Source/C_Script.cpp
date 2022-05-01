@@ -174,7 +174,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 		if (chooser->IsReadyToClose("Add Script_" + std::to_string(id)))
 		{
-			if (chooser->OnChooserClosed() != nullptr)
+			if (!chooser->OnChooserClosed().empty())
 			{
 				std::string path = chooser->OnChooserClosed();
 

@@ -143,7 +143,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				std::string changeTexture = "Change Texture to " + emitter->name;
 				if (chooser->IsReadyToClose(changeTexture.c_str()))
 				{
-					if (chooser->OnChooserClosed() != nullptr)
+					if (!chooser->OnChooserClosed().empty())
 					{
 						std::string path = chooser->OnChooserClosed();
 						if (emitter->texture.textureID == currentTextureId)
