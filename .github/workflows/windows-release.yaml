@@ -39,8 +39,11 @@ jobs:
     #Step 5: Build our solution
     - name: Build Solution (MSVC16)
       run: |
+        dir
         msbuild.exe "Ko-Fi Engine.sln" /property:Configuration=Release
+        dir
         copy /Y "build\Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\Ko-Fi Engine.exe"
+        dir
       shell: cmd
       
     - name: Generate Artifacts
