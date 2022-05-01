@@ -94,7 +94,7 @@ private:
 	bool ValidateMetaFile(Json jsonMeta, bool libraryCheck = true);
 	bool ResourceHasMetaType(Resource* resource) const;
 
-	bool HasImportIgnoredExtension(const char* assetPath) const;
+	bool HasImportSupportedExtension(const char* assetPath) const;
 
 private:
 	KoFiEngine* engine = nullptr;

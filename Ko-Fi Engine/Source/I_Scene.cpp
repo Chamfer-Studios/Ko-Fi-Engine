@@ -1158,6 +1158,14 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, R_Model
 		return;
 	}
 
+	if (model->animationName == assimpScene->mAnimations[0]->mName.C_Str())
+	{
+		mesh->SetIsAnimated(true);
+		engine->GetResourceManager()->SaveResource(mesh);
+		engine->GetResourceManager()->UnloadResource(mesh);
+		return;
+	}
+
 	std::string animAssetPath = ASSETS_MODELS_DIR + std::string(assimpScene->mAnimations[0]->mName.C_Str()) + ANIMATION_EXTENSION;
 
 	R_Animation* anim = (R_Animation*)engine->GetResourceManager()->CreateNewResource(ResourceType::ANIMATION, animAssetPath.c_str());

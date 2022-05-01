@@ -60,9 +60,9 @@ bool M_ResourceManager::Start()
 	}
 	else
 	{
-		//RefreshDirectoryFiles(ASSETS_DIR);
+		RefreshDirectoryFiles(ASSETS_DIR);
 
-		//TrimLibrary();
+		TrimLibrary();
 
 		//Find prefabs
 	}
@@ -144,9 +144,9 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 		return uid;
 	}
 
-	if (HasImportIgnoredExtension(assetPath))
+	if (!HasImportSupportedExtension(assetPath))
 	{
-		CONSOLE_LOG("[WARNING] Resource Manager: loading file, the file extension has an import ignored extension: %s", assetPath);
+		CONSOLE_LOG("[WARNING] Resource Manager: loading file, the file extension is not supported: %s", assetPath);
 		return uid;
 	}
 
@@ -735,9 +735,7 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 		std::filesystem::path pathUpdate = toUpdate[i].c_str();
 		std::string extension = pathUpdate.extension().string();
 
-		if (engine->GetFileSystem()->StringCompare(extension.c_str(), FBX_EXTENSION) == 0 ||
-			engine->GetFileSystem()->StringCompare(extension.c_str(), SHADER_EXTENSION) == 0 ||
-			engine->GetFileSystem()->StringCompare(extension.c_str(), PNG_EXTENSION) == 0)
+		if (HasImportSupportedExtension(extension.c_str()))
 		{
 			DeleteFromLibrary(toUpdate[i].c_str());
 			ImportFile(toUpdate[i].c_str());
@@ -763,7 +761,7 @@ void M_ResourceManager::FindFilesToImport(std::vector<std::string>& assetsFiles,
 	std::string metaFile = "";
 	for (uint i = 0; i < assetsFiles.size(); ++i)
 	{
-		if (HasImportIgnoredExtension(assetsFiles[i].c_str()))
+		if (!HasImportSupportedExtension(assetsFiles[i].c_str()))
 			continue;
 
 		metaFile = assetsFiles[i] + META_EXTENSION;
@@ -771,7 +769,10 @@ void M_ResourceManager::FindFilesToImport(std::vector<std::string>& assetsFiles,
 		for (uint j = 0; j < metaFiles.size(); ++j)
 		{
 			if (metaFile == metaFiles[j])
+			{
 				find = true;
+				break;
+			}
 		}
 
 		if (find)
@@ -1538,23 +1539,11 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 	return false;
 }
 
-bool M_ResourceManager::HasImportIgnoredExtension(const char* assetPath) const
+bool M_ResourceManager::HasImportSupportedExtension(const char* assetPath) const
 {
 	std::filesystem::path filePath = assetPath;
-	return (engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ini") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".json") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".ttf") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".mp3") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".wav") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".txt") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".milk") == 0 // TODO Temporary (just delete from assets?)
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".bytes") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".bmp") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".svg") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".lua") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".md5mesh") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".md5anim") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".zip") == 0
-		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), ".rar") == 0
+	return (engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), FBX_EXTENSION) == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), PNG_EXTENSION) == 0
+		|| engine->GetFileSystem()->StringCompare(filePath.extension().string().c_str(), SHADER_EXTENSION) == 0
 		);
 }

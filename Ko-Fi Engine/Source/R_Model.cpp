@@ -90,8 +90,7 @@ bool R_Model::SaveMeta(Json& json) const
 		jsonAnim["type"] = ResourceType::ANIMATION;
 		jsonAnim["asset_file"] = animationFile;
 		jsonAnim["library_path"] = animationPath;
-		if (!json["contained_resources"].contains(jsonAnim))
-			json["contained_resources"].push_back(jsonAnim);
+		json["contained_resources"].push_back(jsonAnim);
 	}
 
 	return ret;
