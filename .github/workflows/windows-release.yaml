@@ -30,7 +30,6 @@ jobs:
         mkdir build
         cd build
         mkdir ${{env.RELEASE_NAME}}
-        cd ../../
         cd "../../Ko-Fi-Engine/Ko-Fi Engine"
         dir
         
