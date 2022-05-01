@@ -30,7 +30,7 @@ jobs:
         mkdir build
         cd build
         mkdir ${{env.RELEASE_NAME}}
-        cd ../../Ko-Fi_Engine
+        cd ../../Ko-Fi Engine
         dir
     #Step 4: Set up the microsoft msbuild tools in the path environment variables of the action so that we can use msbuild
     - name: Setup MSBuild
