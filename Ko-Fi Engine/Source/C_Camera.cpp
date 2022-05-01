@@ -163,7 +163,7 @@ void C_Camera::Load(Json& json)
 
 float C_Camera::GetFarPlaneHeight() const
 {
-	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
+	return 2.0f * cameraFrustum.FarPlaneDistance() * Tan(cameraFrustum.VerticalFov() * 0.5f * DEGTORAD);
 }
 
 float C_Camera::GetFarPlaneWidth() const
@@ -178,8 +178,8 @@ float4x4 C_Camera::GetViewMatrix() const
 
 void C_Camera::SetAspectRatio(const float& aspectRatio)
 {
-	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
-	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
+	cameraFrustum.SetHorizontalFovAndAspectRatio(cameraFrustum.HorizontalFov(), aspectRatio);
+	cameraFrustum.SetVerticalFovAndAspectRatio(2.f * Atan(Tan(cameraFrustum.HorizontalFov() * 0.5 / aspectRatio)),aspectRatio);
 	this->isProjectionDirty = true;
 	RecalculateProjection();
 }
@@ -205,30 +205,23 @@ void C_Camera::CalculateViewMatrix(bool ortho)
 	if (isProjectionDirty)
 		RecalculateProjection(ortho);
 
-	cameraFrustum.pos = position;
-	cameraFrustum.front = front.Normalized();
-	cameraFrustum.up = up.Normalized();
-	float3::Orthonormalize(cameraFrustum.front, cameraFrustum.up);
+	cameraFrustum.SetPos(position);
+	cameraFrustum.SetFront(front.Normalized());
+	cameraFrustum.SetUp(up.Normalized());
 	right = up.Cross(front);
 }
 
 void C_Camera::RecalculateProjection(bool ortho)
 {
 	if (!ortho ) {
-		cameraFrustum.type = FrustumType::PerspectiveFrustum;
-		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-		cameraFrustum.farPlaneDistance = farPlaneDistance;
-		cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
-		cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+		cameraFrustum.SetPerspective(cameraFrustum.HorizontalFov(),verticalFOV);
+		cameraFrustum.SetViewPlaneDistances(nearPlaneDistance, farPlaneDistance);
+		cameraFrustum.SetVerticalFovAndAspectRatio((verticalFOV * 3.141592 / 2) / 180.f,aspectRatio);
 	}
 	else {
 		if (owner)
 		{
-			cameraFrustum.type = FrustumType::OrthographicFrustum;
-			cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-			cameraFrustum.farPlaneDistance = farPlaneDistance;
-			cameraFrustum.orthographicWidth = owner->GetEngine()->GetEditor()->lastViewportSize.x;
-			cameraFrustum.orthographicHeight = owner->GetEngine()->GetEditor()->lastViewportSize.y;
+			cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->lastViewportSize.x, owner->GetEngine()->GetEditor()->lastViewportSize.y);
 		}
 		
 	}

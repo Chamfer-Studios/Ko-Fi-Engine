@@ -153,7 +153,7 @@ void M_Camera3D::CheckInput(float dt)
 				currentCamera->LookAt(meshCenter);
 				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
 				const float currentDistance = meshCenter.Distance(currentCamera->GetPosition());
-				const float desiredDistance = (meshRadius * 2) / atan(currentCamera->GetCameraFrustum().horizontalFov);
+				const float desiredDistance = (meshRadius * 2) / atan(currentCamera->GetCameraFrustum().HorizontalFov());
 				currentCamera->SetPosition(currentCamera->GetPosition() + currentCamera->GetFront() * (currentDistance - desiredDistance));
 			}
 			else
