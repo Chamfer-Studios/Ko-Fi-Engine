@@ -105,7 +105,6 @@ bool M_Renderer3D::PostUpdate(float dt)
 	PassProjectionAndViewToRenderer();
 	RenderScene(engine->GetCamera3D()->currentCamera);
 	isFirstPass = false;
-	UnbindFrameBuffers();
 #ifndef KOFI_GAME
 	UnbindFrameBuffers();
 	if (engine->GetEditor()->toggleCameraViewportPanel)
@@ -115,10 +114,9 @@ bool M_Renderer3D::PostUpdate(float dt)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		PassPreviewProjectionAndViewToRenderer();
 		RenderScene(engine->GetCamera3D()->gameCamera);
-		UnbindFrameBuffers();
 	}
 #endif // KOFI_GAME
-	
+	UnbindFrameBuffers();
 	SwapWindow();
 	return true;
 }
