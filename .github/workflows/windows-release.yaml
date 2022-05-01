@@ -42,14 +42,14 @@ jobs:
         dir
         msbuild.exe "Ko-Fi Engine.sln" /property:Configuration=Release
         dir
-        copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\Ko-Fi Engine.exe"
+        copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\Ko-Fi_Engine\Ko-Fi Engine.exe"
         dir
       shell: cmd
       
     - name: Generate Artifacts
     #We are copying from our output folder to our build/release_name/output folder all subdirectories
       run: |
-        robocopy .\Ko-Fi Engine\Ko-Fi .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine /S
+        robocopy ".\Ko-Fi Engine\Ko-Fi" .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine /S
         dir
         robocopy .\build\${{ env.RELEASE_NAME }} .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine Ko-Fi_Engine.exe /MOVE
         dir
