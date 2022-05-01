@@ -101,7 +101,14 @@ bool PanelViewport::Update()
 					Resource* resource = engine->GetResourceManager()->GetResourceFromLibrary(path.c_str());
 					if (resource != nullptr)
 						engine->GetSceneManager()->LoadResourceToScene(resource);
-
+					else
+					{
+						if (path.find(".json") != std::string::npos)
+							Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
+						else
+							dragDropPopup = true;
+					}
+					// OLD STUF
 					//if (path.find(".fbx") != std::string::npos || path.find(".md5mesh") != std::string::npos)
 					//{
 					//	Importer::GetInstance()->sceneImporter->Import(path.c_str());
@@ -126,10 +133,6 @@ bool PanelViewport::Update()
 					//	}
 					//	// Apply texture
 					//	
-					//}
-					//else if (path.find(".json") != std::string::npos) {
-
-					//	Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
 					//}
 				}
 			}
@@ -209,7 +212,25 @@ void PanelViewport::DrawViewportBar()
 		}
 		ImGui::EndPopup();
 	}
-	
+	if (dragDropPopup)
+	{
+		ImGui::OpenPopup("Unsupported Extension");
+		ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+		if (ImGui::BeginPopupModal("Unsupported Extension", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::Text("The current file extension is unsupported.\nYour asset is not imported yet, maybe you should try refreshing?\n\n");
+
+			if (ImGui::Button("OK", ImVec2(120, 0)))
+			{
+				dragDropPopup = false;
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SetItemDefaultFocus();
+			ImGui::EndPopup();
+		}
+	}
+
 
 	
 	
