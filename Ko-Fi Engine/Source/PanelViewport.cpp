@@ -10,6 +10,7 @@
 #include "M_Window.h"
 #include "M_FileSystem.h"
 #include "M_Renderer3D.h"
+#include "M_ResourceManager.h"
 //Importer
 #include "I_Texture.h"
 //Resources
@@ -97,35 +98,39 @@ bool PanelViewport::Update()
 				{
 					std::string path = (const char*)payload->Data;
 
-					if (path.find(".fbx") != std::string::npos || path.find(".md5mesh") != std::string::npos)
-					{
-						Importer::GetInstance()->sceneImporter->Import(path.c_str());
-					}
-					else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos)
-					{
-						for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
-						{
-							if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != -1)
-							{
-								GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
+					Resource* resource = engine->GetResourceManager()->GetResourceFromLibrary(path.c_str());
+					if (resource != nullptr)
+						engine->GetSceneManager()->LoadResourceToScene(resource);
 
-								if (go->GetComponent<C_Material>())
-								{
-									R_Texture* texture = new R_Texture();
-									Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
+					//if (path.find(".fbx") != std::string::npos || path.find(".md5mesh") != std::string::npos)
+					//{
+					//	Importer::GetInstance()->sceneImporter->Import(path.c_str());
+					//}
+					//else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos)
+					//{
+					//	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+					//	{
+					//		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != -1)
+					//		{
+					//			GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
 
-									go->GetComponent<C_Material>()->texture = texture;
-									//cMaterial->textures.push_back(texture);
-								}
-							}
-						}
-						// Apply texture
-						
-					}
-					else if (path.find(".json") != std::string::npos) {
+					//			if (go->GetComponent<C_Material>())
+					//			{
+					//				R_Texture* texture = new R_Texture();
+					//				Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
 
-						Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
-					}
+					//				go->GetComponent<C_Material>()->texture = texture;
+					//				//cMaterial->textures.push_back(texture);
+					//			}
+					//		}
+					//	}
+					//	// Apply texture
+					//	
+					//}
+					//else if (path.find(".json") != std::string::npos) {
+
+					//	Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
+					//}
 				}
 			}
 			ImGui::EndDragDropTarget();

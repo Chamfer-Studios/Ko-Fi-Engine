@@ -283,7 +283,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetPath)
 		return 0;
 	}
 
-	std::string metaPath = assetPath + std::string(META_EXTENSION);
+	std::string metaPath = cleanPath + META_EXTENSION;
 
 	if (!std::filesystem::exists(metaPath))
 	{
@@ -300,13 +300,13 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetPath)
 	
 	if (jsonMeta.empty())
 	{
-		CONSOLE_LOG("%s Couldn't get the json meta node.");
+		CONSOLE_LOG("%s Couldn't get the json meta node.", errorString.c_str());
 		return 0;
 	}
 
 	if (!metaIsValid)
 	{
-		CONSOLE_LOG("%s Couldn't validate json meta node.");
+		CONSOLE_LOG("%s Couldn't validate json meta node.", errorString.c_str());
 		return 0;
 	}
 

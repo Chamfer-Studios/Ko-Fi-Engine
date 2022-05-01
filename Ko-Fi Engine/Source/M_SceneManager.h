@@ -83,6 +83,7 @@ public:
 	inline float GetTotalGameTime() const { return gameTime; }
 	inline std::string GetDefaultScene() const { return defaultScene; }
 
+	bool LoadResourceToScene(Resource* resource);
 	bool ApplyTextureToSelectedGameObject(UID uid);
 	bool CreateGameObjectsFromModel(R_Model* model);
 	void CreateComponentsFromNode(R_Model* model, ModelNode node, GameObject* gameobject);

@@ -223,6 +223,31 @@ GameState M_SceneManager::GetGameState()
 	return runtimeState;
 }
 
+bool M_SceneManager::LoadResourceToScene(Resource* resource)
+{
+	if (resource == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Scene: Could not load resource into scene, resource pointer was nullptr.");
+		return false;
+	}
+
+	bool ret = false;
+	switch (resource->GetType())
+	{
+	case ResourceType::MODEL:
+		ret = CreateGameObjectsFromModel((R_Model*)resource);
+		break;
+	case ResourceType::TEXTURE:
+		ret = ApplyTextureToSelectedGameObject(resource->GetUID());
+		break;
+	default:
+		CONSOLE_LOG("[WARNING] Scene: Could not load resource into scene, resource type not accepted by drag and drop.");
+		break;
+	}
+
+	return ret;
+}
+
 bool M_SceneManager::ApplyTextureToSelectedGameObject(UID uid)
 {
 	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
