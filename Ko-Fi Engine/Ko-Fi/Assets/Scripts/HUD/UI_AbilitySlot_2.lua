@@ -3,12 +3,12 @@
 isActive1 = false
 isActive2 = false
 isActive3 = false
-path1 =  "Assets/HUD/throwable_knife_normal_v1.0.png"
-path12 =  "Assets/HUD/throwable_knife_active_v1.0.png"
-path2 =  "Assets/HUD/sleeping_dart_normal_v1.0.png"
-path22 =  "Assets/HUD/sleeping_dart_active_v1.0.png"
-path3 =  "Assets/HUD/radar_worm_normal_v1.0.png"
-path32 =  "Assets/HUD/radar_worm_active_v1.0.png"
+path1 =  "Assets/HUD/decoy_normal_v1.0.png"
+path12 =  "Assets/HUD/decoy_active_v1.0.png"
+path2 =  "Assets/HUD/smoke_bomb_normal_v1.0.png"
+path22 =  "Assets/HUD/smoke_bomb_active_v1.0.png"
+path3 =  "Assets/HUD/hunter_worm_normal_v1.0.png"
+path32 =  "Assets/HUD/hunter_worm_active_v1.0.png"
 
 -- Called each loop iteration
 function Update(dt)
@@ -17,7 +17,7 @@ function Update(dt)
 		if (isActive1 == false) then
 			gameObject:GetImage():SetTexture(path1)
 		end
-		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- 1
+		if (GetInput(12) == KEY_STATE.KEY_DOWN) then -- 1
 			startTime1 = os.time()
 			endTime1 = startTime1+3
 			gameObject:GetImage():SetTexture(path12)
@@ -31,7 +31,7 @@ function Update(dt)
 		if (isActive2 == false) then
 			gameObject:GetImage():SetTexture(path2)
 		end
-		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- 1
+		if (GetInput(12) == KEY_STATE.KEY_DOWN) then -- 1
 			startTime2 = os.time()
 			endTime2 = startTime2+3
 			gameObject:GetImage():SetTexture(path22)
@@ -45,7 +45,7 @@ function Update(dt)
 		if (isActive3 == false) then
 			gameObject:GetImage():SetTexture(path3)
 		end
-		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- 1
+		if (GetInput(12) == KEY_STATE.KEY_DOWN) then -- 1
 			startTime3 = os.time()
 			endTime3 = startTime3+3
 			gameObject:GetImage():SetTexture(path32)
