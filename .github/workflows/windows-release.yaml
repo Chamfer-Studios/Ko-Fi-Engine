@@ -1,0 +1,68 @@
+# Name of the workflow
+name: Windows-Release
+#when a push, pull request or release of type published is done
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+#do the following jobs
+jobs:
+  build:
+    runs-on: windows-latest #run on the latest version of windows
+    env:
+      RELEASE_NAME: Ko-Fi_Engine #setting up the release name variable to use later in the workflow
+      GNUTARGET: default
+    steps: #steps that we want to perform
+    #Step 1: perform a checkout
+    - name: Checkout 
+      uses: actions/checkout@master
+    #Step 2: Set up the release, we add the release name to the github env
+    - name: Setup Release Version
+      run: |
+        echo "RELEASE_NAME=Ko-Fi_Engine_${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      shell: bash
+      if: github.event_name == 'release' && github.event.action == 'published' #only perform this if a release commit is pushed or if the action published is performed
+    #Step 3: Set up the build directory to use later on the building process
+    - name: Setup Environment
+      run: |
+        dir
+        mkdir build
+        cd build
+        mkdir ${{env.RELEASE_NAME}}
+        cd "../../Ko-Fi-Engine/Ko-Fi Engine"
+        dir
+        
+    #Step 4: Set up the microsoft msbuild tools in the path environment variables of the action so that we can use msbuild
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+    #Step 5: Build our solution
+    - name: Build Solution (MSVC16)
+    #We are copying from our output folder to our build/release_name/output folder all subdirectories
+      run: |
+        robocopy .\Ko-Fi Engine\Ko-Fi .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine /S
+        dir
+        robocopy .\build\${{ env.RELEASE_NAME }} .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine Ko-Fi_Engine.exe /MOVE
+        dir
+        copy /Y .\README.md .\build\${{ env.RELEASE_NAME }}\README.md
+        copy /Y .\LICENSE .\build\${{ env.RELEASE_NAME }}\LICENSE
+        cd build
+        7z a ./${{ env.RELEASE_NAME }}.zip ./${{ env.RELEASE_NAME }}
+        dir
+      shell: cmd
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.RELEASE_NAME }}
+        path: ./build/${{ env.RELEASE_NAME }}.zip
+        
+    - name: Upload Artifact to Release
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/${{ env.RELEASE_NAME }}.zip
+          asset_name: ${{ env.RELEASE_NAME }}
+          asset_content_type: application/zip
+      if: github.event_name == 'release' && github.event.action == 'published'
