@@ -34,7 +34,7 @@ jobs:
         dir
     #Step 4: Set up the microsoft msbuild tools in the path environment variables of the action so that we can use msbuild
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.1.1
+      uses: microsoft/setup-msbuild@v1.1
     #Step 5: Build our solution
     - name: Build Solution (MSVC16)
     #We are copying from our output folder to our build/release_name/output folder all subdirectories
