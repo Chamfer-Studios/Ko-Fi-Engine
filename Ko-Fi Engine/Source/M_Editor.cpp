@@ -185,7 +185,7 @@ bool M_Editor::Start()
 
 	LoadFontsEditor(16);
 #ifndef KOFI_GAME
-	iniToLoad = "Library/Layouts/defaultEngineLayout.ini";
+	iniToLoad = "EngineConfig/Layouts/defaultEngineLayout.ini";
 #endif // KOFI_ENGINE
 
 	return ret;
