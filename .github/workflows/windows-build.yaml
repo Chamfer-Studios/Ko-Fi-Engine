@@ -42,9 +42,8 @@ jobs:
     #compile the exe
     - name: Build Solution (MSVC16)
       run: |
-        cd "Ko-Fi Engine"
         dir
-        msbuild.exe "DuneBuild.proj" -maxcpucount:2
+        msbuild.exe "./Ko-Fi Engine/DuneBuild.proj" -maxcpucount:2
         copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\"
       shell: cmd
     - name: Generate Artifacts
