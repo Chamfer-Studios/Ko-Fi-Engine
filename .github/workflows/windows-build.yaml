@@ -36,7 +36,7 @@ jobs:
         mkdir ${{env.RELEASE_NAME}}
         cd "../../../Ko-Fi-Engine"
         dir
-  set-up-windows:
+  build-engine:
     runs-on: windows-latest #run on the latest version of windows
     needs: [create-folders]
     env:
@@ -46,13 +46,6 @@ jobs:
     #set up msbuild in the action to be used
     - name: SetUp MSBuild
       uses: microsoft/setup-msbuild@v1.1
-  build-engine:
-    runs-on: windows-latest
-    needs: [set-up-windows]
-    env:
-      RELEASE_NAME: Ko-Fi_Engine #setting up the release name variable to use later in the workflow
-      GNUTARGET: default
-    steps:
     #compile the exe
     - name: Build Solution (MSVC16)
       run: |
