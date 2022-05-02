@@ -16,7 +16,9 @@ jobs:
     steps: #steps that we want to perform
     #Step 1: perform a checkout
     - name: Checkout 
-      uses: actions/checkout@compileGame
+      uses: actions/checkout@master
+      with:
+        ref: compileGame
     #Step 2: Set up the release, we add the release name to the github env
     - name: Setup Release Version
       run: |
