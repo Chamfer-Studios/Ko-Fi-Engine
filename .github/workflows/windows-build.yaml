@@ -44,7 +44,8 @@ jobs:
       run: |
         dir
         msbuild.exe "./Ko-Fi Engine/DuneBuild.proj" -maxcpucount:2
-        copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\"
+        copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\${{env.RELEASE_NAME}}"
+        copy /Y "ReleaseGame\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\${{env.RELEASE_NAME}}\Dune.exe"
       shell: cmd
     - name: Generate Artifacts
       run: |
