@@ -26,22 +26,19 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 {
 	name = "Camera";
 	this->engine = engine;
+	engineCameraObject = new GameObject(0, engine, "");
+	engineCamera = new C_Camera(engineCameraObject, true);
+	engineCamera->SetIsEngineCamera(true);
 
-	aspectRatio = 1.f;
-	verticalFOV = 60.f;
-	nearPlaneDistance = 0.1f;
-	farPlaneDistance = 5000.f;
-	cameraSensitivity = .1f;
-	cameraSpeed = 120.f;
-	baseCameraSpeed = 120.f;
-	speedMultiplier = 1;
+	currentCamera = engineCamera;
 
-	reference = float3(0.0f, 0.0f, 0.0f);
+	currentCamera->SetUp(float3(-0.000605105015f, 0.804563046f, 0.593866348f));
+	currentCamera->SetFront(float3(-0.000820143265f, -0.593866587f, 0.804562271f));
 
-	cameraFrustum.SetFrame(float3(0.0f, 5.0f, -15.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
-	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumRightHanded);
+	currentCamera->SetPosition(float3(-3.65002513f, 153.790665f, -131.349442f));
+	currentCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
 
-
+	currentCamera->LookAt(float3::zero);
 }
 
 M_Camera3D::~M_Camera3D()
@@ -61,24 +58,6 @@ bool M_Camera3D::Start()
 {
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
-
-	LookAt(float3::zero);
-
-	engineCameraObject = new GameObject(0, engine, "");
-	engineCamera = new C_Camera(engineCameraObject, true);
-	engineCamera->SetIsEngineCamera(true);
-	
-	currentCamera = engineCamera;
-	currentCamera->SetRight(float3(1.0f, 0.0f, 0.0f));
-	currentCamera->SetUp(float3(-0.000605105015f, 0.804563046f, 0.593866348f));
-	currentCamera->SetFront(float3(-0.000820143265f, -0.593866587f, 0.804562271f));
-
-	currentCamera->SetPosition(float3(-3.65002513f, 153.790665f, -131.349442f));
-	currentCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-
-	currentCamera->CalculateViewMatrix();
-
-	currentCamera->LookAt(float3::zero);
 
 	bool ret = true;
 
@@ -124,21 +103,17 @@ void M_Camera3D::OnGui()
 {
 	if (ImGui::CollapsingHeader("Module Camera"))
 	{
-		float newVerticalFloat = currentCamera->GetVerticalFloat();
-		if (ImGui::DragFloat("Vertical fov", &newVerticalFloat))
+		float newVerticalFov = currentCamera->GetVerticalFov();
+		if (ImGui::DragFloat("Vertical fov", &newVerticalFov))
 		{
-			currentCamera->SetIsProjectionDirty(true);
+			currentCamera->SetVerticalFov(newVerticalFov);
 		}
-		float newNearPlaneDistance = currentCamera->GetNearPlaneDistance();
-		if (ImGui::DragFloat("Near plane distance", &newNearPlaneDistance))
+		float2 planeDistances = {currentCamera->GetNearPlaneDistance(),currentCamera->GetFarPlaneDistance()};
+		if (ImGui::DragFloat("Near plane distance", &(planeDistances[0])))
 		{
-			currentCamera->SetIsProjectionDirty(true);
+			currentCamera->SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 		}
-		float newFarPlaneDistance = currentCamera->GetFarPlaneDistance();
-		if (ImGui::DragFloat("Far plane distance", &newFarPlaneDistance))
-		{
-			currentCamera->SetIsProjectionDirty(true);
-		}
+
 	}
 }
 
@@ -202,9 +177,10 @@ void M_Camera3D::CheckInput(float dt)
 
 	
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += currentCamera->GetRight() * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= currentCamera->GetRight() * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= currentCamera->GetRight() * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += currentCamera->GetRight() * speed;
 
+	//Ruedecita del raton
 	if (engine->GetInput()->GetMouseZ() > 0) newPos += currentCamera->GetFront() * speed * 2;
 	if (engine->GetInput()->GetMouseZ() < 0) newPos -= currentCamera->GetFront() * speed * 2;
 
@@ -250,7 +226,6 @@ void M_Camera3D::CheckMouseMotion(float dt)
 
 				currentCamera->SetPosition(orbitMat * (currentCamera->GetPosition() - currentCamera->GetReference()) + currentCamera->GetReference());
 
-				currentCamera->CalculateViewMatrix();
 				currentCamera->LookAt(currentCamera->GetReference());
 			}
 		}
@@ -264,7 +239,6 @@ void M_Camera3D::CheckMouseMotion(float dt)
 				Quat rotateY = Quat::RotateY(currentCamera->GetUp().y >= 0.f ? deltaX * .1f : -deltaX * .1f);
 				currentCamera->SetUp(rotateY * currentCamera->GetUp());
 				currentCamera->SetFront(rotateY * currentCamera->GetFront());
-				currentCamera->CalculateViewMatrix();
 				hasRotated = true;
 			}
 
@@ -276,7 +250,6 @@ void M_Camera3D::CheckMouseMotion(float dt)
 				Quat rotateX = Quat::RotateAxisAngle(currentCamera->GetRight(), -deltaY * .1f);
 				currentCamera->SetUp(rotateX * currentCamera->GetUp());
 				currentCamera->SetFront(rotateX * currentCamera->GetFront());
-				currentCamera->CalculateViewMatrix();
 				hasRotated = true;
 			}
 		}
@@ -287,7 +260,6 @@ void M_Camera3D::CheckMouseMotion(float dt)
 		currentCamera->SetLastDeltaY(0.0f);
 	}
 
-	currentCamera->CalculateViewMatrix();
 }
 
 void M_Camera3D::OnPlay()
@@ -527,12 +499,4 @@ float3 M_Camera3D::GetLastMouseClick() const
 	return lastMouseClick;
 }
 
-void M_Camera3D::LookAt(const float3& point)
-{
-	reference = point;
-
-	cameraFrustum.SetFront((reference - cameraFrustum.Pos()).Normalized());
-	cameraFrustum.SetUp(cameraFrustum.Front().Cross(cameraFrustum.WorldRight()));
-
-}
 

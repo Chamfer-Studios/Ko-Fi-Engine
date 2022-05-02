@@ -52,8 +52,6 @@ public:
 
 	float3 GetLastMouseClick() const;
 
-	// NEW CAMERA
-	void LookAt(const float3& point);
 
 public:
 	GameObject* engineCameraObject = nullptr; // The engine camera needs a game object as holder if we want to be able to access "engine" from component camera.
@@ -65,24 +63,6 @@ public:
 private:
 	float3 lastMouseClick;
 	KoFiEngine* engine = nullptr;
-
-
-	// NEW CAMERA
-	Frustum cameraFrustum;
-
-	float3 reference;
-
-	float aspectRatio = 1.f;
-	float verticalFOV = 60.f;
-	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 100.f;
-
-	float cameraSensitivity = .1f;
-	float cameraSpeed = 60.f;
-	float baseCameraSpeed = 60.f;
-	int speedMultiplier = 1.0f;
-
-	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
 };
 

@@ -267,10 +267,9 @@ void M_Renderer3D::PassProjectionAndViewToRenderer()
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->currentCamera)
 	{
-		if (currentCamera3D->currentCamera->GetIsProjectionDirty()) {
-			RecalculateProjectionMatrix();
-			currentCamera3D->currentCamera->CalculateViewMatrix();
-		}
+		
+		RecalculateProjectionMatrix();
+
 
 		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->GetViewMatrix().Transposed().ptr());
 	}
@@ -292,10 +291,7 @@ void M_Renderer3D::PassPreviewProjectionAndViewToRenderer()
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->gameCamera)
 	{
-		if (currentCamera3D->gameCamera->GetIsProjectionDirty()) {
-			RecalculateProjectionMatrix();
-			currentCamera3D->gameCamera->CalculateViewMatrix();
-		}
+		RecalculateProjectionMatrix();
 
 		glLoadMatrixf((GLfloat*)currentCamera3D->gameCamera->GetViewMatrix().Transposed().ptr());
 	}

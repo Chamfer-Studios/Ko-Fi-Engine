@@ -58,7 +58,6 @@ bool PanelCameraViewport::RenderPanel(bool* showPanel )
 		{
 			editor->lastCameraViewportSize = viewportSize;
 			engine->GetCamera3D()->gameCamera->SetAspectRatio(viewportSize.x / viewportSize.y);
-			engine->GetCamera3D()->gameCamera->RecalculateProjection();
 
 			engine->GetRenderer()->ResizePreviewFrameBuffers(viewportSize.x, viewportSize.y);
 

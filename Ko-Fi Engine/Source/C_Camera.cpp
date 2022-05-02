@@ -29,32 +29,28 @@ C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 {
 	this->isEngineCamera = isEngineCamera;
 	type = ComponentType::CAMERA;
-
-	if (isEngineCamera)
-	{
-		aspectRatio = 1.f;
-		verticalFOV = 60.f;
-		nearPlaneDistance = 0.1f;
-		farPlaneDistance = 5000.f;
-		cameraSensitivity = .1f;
-		cameraSpeed = 120.f;
-		baseCameraSpeed = 120.f;
-		speedMultiplier = 1;
-	}
+	//if its not engine camera, get the owner's transform
 	if (!isEngineCamera)
 		componentTransform = owner->GetTransform();
+	//Set Default Values for the component
+	aspectRatio = 1.778f;
+	cameraSensitivity = .1f;
+	cameraSpeed = 120.f;
+	baseCameraSpeed = 120.f;
+	speedMultiplier = 1;
+	//Create the frustum
+	cameraFrustum = Frustum();
+	//Set Default Values for the frusum
+	cameraFrustum.SetPerspective(45.0f, 90.0f);
+	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
+	cameraFrustum.SetViewPlaneDistances(0.01f, 1000.0f);
+	cameraFrustum.SetFrame(float3(0.0f,0.0f,20.0f),float3(0.0f,0.0f,1.0f),float3(0.0f,1.0f,0.0f));
+	cameraFrustum.SetHorizontalFovAndAspectRatio(45.0f,aspectRatio);
 
-	right = float3(1.0f, 0.0f, 0.0f);
-	up = float3(0.0f, 1.0f, 0.0f);
-	front = float3(0.0f, 0.0f, 1.0f);
-
-	position = float3(0.0f, 5.0f, -15.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	LookAt(float3::zero);
-	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumRightHanded);
 
-	CalculateViewMatrix();
 
 }
 
@@ -79,13 +75,6 @@ bool C_Camera::Update(float dt)
 	// Add update functionality when we are able to change the main camera.
 	if (!isEngineCamera)
 	{
-		position = componentTransform->GetPosition();
-
-		up = componentTransform->Up();
-		front = componentTransform->Front();
-		//right = componentTransform->Right();
-
-		CalculateViewMatrix();
 
 		if (isFrustumCullingActive)
 			FrustumCulling();
@@ -111,18 +100,17 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 	{
 		DrawDeleteButton(owner, this);
 
+		float verticalFOV = cameraFrustum.VerticalFov();
 		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
 		{
-			isProjectionDirty = true;
+			cameraFrustum.SetVerticalFovAndAspectRatio(verticalFOV, aspectRatio);
 		}
-		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
+		float2 planeDistances = { cameraFrustum.NearPlaneDistance(),cameraFrustum.FarPlaneDistance() };
+		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
 		{
-			isProjectionDirty = true;
+			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 		}
-		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
-		{
-			isProjectionDirty = true;
-		}
+
 		if (ImGui::Checkbox("Draw frustum", &isDrawFrustumActive))
 		{
 		}
@@ -143,9 +131,9 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 void C_Camera::Save(Json& json) const
 {
 	json["type"] = "camera";
-	json["vertical_fov"] = verticalFOV;
-	json["near_plane_distance"] = nearPlaneDistance;
-	json["far_plane_distance"] = farPlaneDistance;
+	json["vertical_fov"] = cameraFrustum.VerticalFov();
+	json["near_plane_distance"] = cameraFrustum.NearPlaneDistance();
+	json["far_plane_distance"] = cameraFrustum.FarPlaneDistance();
 	json["draw_frustum"] = isDrawFrustumActive;
 	json["frustum_culling"] = isFrustumCullingActive;
 	json["isMainCamera"] = isMainCamera;
@@ -153,13 +141,12 @@ void C_Camera::Save(Json& json) const
 
 void C_Camera::Load(Json& json)
 {
-	verticalFOV = json.at("vertical_fov");
-	nearPlaneDistance = json.at("near_plane_distance");
-	farPlaneDistance = json.at("far_plane_distance");
+	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"),1.778f);
+	cameraFrustum.SetViewPlaneDistances(json.at("near_plane_distance"), json.at("far_plane_distance"));
 	isDrawFrustumActive = json.at("draw_frustum");
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
-	if(isMainCamera)
+	if (isMainCamera)
 		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 }
 
@@ -170,7 +157,7 @@ float C_Camera::GetFarPlaneHeight() const
 
 float C_Camera::GetFarPlaneWidth() const
 {
-	return GetFarPlaneHeight()*aspectRatio;
+	return GetFarPlaneHeight() * aspectRatio;
 }
 
 float4x4 C_Camera::GetViewMatrix() const
@@ -181,20 +168,17 @@ float4x4 C_Camera::GetViewMatrix() const
 void C_Camera::SetAspectRatio(const float& aspectRatio)
 {
 	cameraFrustum.SetHorizontalFovAndAspectRatio(cameraFrustum.HorizontalFov(), aspectRatio);
-	cameraFrustum.SetVerticalFovAndAspectRatio(2.f * Atan(Tan(cameraFrustum.HorizontalFov() * 0.5 / aspectRatio)),aspectRatio);
-	this->isProjectionDirty = true;
-	RecalculateProjection();
+	this->aspectRatio = aspectRatio;
 }
 
 void C_Camera::LookAt(const float3& point)
 {
 	reference = point;
 
-	front = (reference - position).Normalized();
-	right = float3(0.0f, 1.0f, 0.0f).Cross(front).Normalized();
-	up = front.Cross(right);
+	cameraFrustum.SetFront((reference - cameraFrustum.Pos()).Normalized());
+	
+	cameraFrustum.SetUp(cameraFrustum.Front().Cross(cameraFrustum.WorldRight()));
 
-	CalculateViewMatrix();
 }
 
 void C_Camera::ChangeSpeed(int multiplier)
@@ -202,31 +186,6 @@ void C_Camera::ChangeSpeed(int multiplier)
 	cameraSpeed = baseCameraSpeed * multiplier;
 }
 
-void C_Camera::CalculateViewMatrix(bool ortho)
-{
-	if (isProjectionDirty)
-		RecalculateProjection(ortho);
-
-	cameraFrustum.SetFrame(position, front, up);
-	float3::Orthonormalize((float3&)cameraFrustum.Front(),(float3&)cameraFrustum.Up());
-	right = up.Cross(front);
-}
-
-void C_Camera::RecalculateProjection(bool ortho)
-{
-	if (!ortho ) {
-		cameraFrustum.SetPerspective(cameraFrustum.HorizontalFov(),verticalFOV);
-		cameraFrustum.SetViewPlaneDistances(nearPlaneDistance, farPlaneDistance);
-		cameraFrustum.SetVerticalFovAndAspectRatio((verticalFOV * 3.141592 / 2) / 180.f,aspectRatio);
-	}
-	else {
-		if (owner)
-		{
-			cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->lastViewportSize.x, owner->GetEngine()->GetEditor()->lastViewportSize.y);
-		}
-		
-	}
-}
 
 void C_Camera::FrustumCulling()
 {

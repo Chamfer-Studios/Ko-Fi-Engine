@@ -73,18 +73,18 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "Root"
+        "DefaultScene": ""
     },
     "UI": null,
     "Window": {
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 1017,
+        "Height": 768,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine - testing_anims",
-        "Width": 1920
+        "Title": "Ko-Fi Engine - Root",
+        "Width": 1024
     }
 }

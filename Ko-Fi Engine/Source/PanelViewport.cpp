@@ -99,7 +99,6 @@ bool PanelViewport::Update()
 		{
 			editor->lastViewportSize = viewportSize;
 			engine->GetCamera3D()->currentCamera->SetAspectRatio(viewportSize.x / viewportSize.y);
-			engine->GetCamera3D()->currentCamera->RecalculateProjection();
 			engine->GetRenderer()->ResizeFrameBuffers(viewportSize.x, viewportSize.y);
 		}
 		editor->viewportSize = viewportSize;
