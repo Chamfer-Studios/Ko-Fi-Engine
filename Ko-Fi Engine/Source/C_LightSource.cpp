@@ -7,9 +7,10 @@
 // GameObject
 #include "GameObject.h"
 #include "C_Transform.h"
-
+#include "C_Camera.h"
 #include "Globals.h"
 #include "SceneIntro.h"
+#include "M_Renderer3D.h"
 
 C_LightSource::C_LightSource(GameObject* parent) : Component(parent)
 {
@@ -17,7 +18,9 @@ C_LightSource::C_LightSource(GameObject* parent) : Component(parent)
 	sourceType = SourceType::DIRECTIONAL;
 	DirectionalLight* dLight = new DirectionalLight();
 	lightSource = (LightSource*)dLight;
+	numOfDirectional++;
 	lightSource->position = owner->GetTransform()->GetPosition();
+	shadowCam = nullptr;
 }
 
 C_LightSource::~C_LightSource()
@@ -26,12 +29,29 @@ C_LightSource::~C_LightSource()
 
 bool C_LightSource::Start()
 {
+	shadowCam = owner->GetComponent<C_Camera>();
+	if (shadowCam == nullptr)
+	{
+		shadowCam = owner->CreateComponent<C_Camera>();
+		shadowCam->ortho = true;
+		shadowCam->freeRotation = true;
+		//make the cam look in the direction of the light rays
+		shadowCam->LookAt(shadowCam->position + ((DirectionalLight*)lightSource)->direction.Normalized());
+	}
 	return true;
 }
 
 bool C_LightSource::Update(float dt)
 {
 	lightSource->position = owner->GetTransform()->GetGlobalTransform().TranslatePart();
+
+	if (sourceType == SourceType::DIRECTIONAL)
+	{
+		//Keep the direction of the camera updated. Maybe this does not work because it sets itself back to match the transform
+		//maybe too much to update it every frame
+		shadowCam->LookAt(shadowCam->position + ((DirectionalLight*)lightSource)->direction.Normalized());
+		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->cameraFrustum.ViewProjMatrix();
+	}
 
 	return true;
 }
@@ -220,6 +240,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			if (ImGui::DragFloat3("light Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 			{
 				currentLight->direction = { direction[0], direction[1], direction[2] };
+				//TODO change light direction
 			}
 
 			float ambientValue = currentLight->ambient;
@@ -232,6 +253,10 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->diffuse = diffuseValue;
+			}
+
+			if (ImGui::Checkbox("testingDepthBuffer", &owner->GetEngine()->GetRenderer()->testingDepthBuffer))
+			{
 			}
 			break;
 		}
@@ -324,7 +349,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 				currentLight->linear = linearValue;
 			}
 			float quadraticValue = currentLight->quadratic;
-			if (ImGui::DragFloat("(0.0 - 0.2) Long range Attenuation", &quadraticValue, 0.01f, 0.0f, .2f, "%.2f"))
+			if (ImGui::DragFloat("(0.0 - 0.2) Long range Attenuation", &quadraticValue, 0.001f, 0.0f, .2f, "%.3f"))
 			{
 				currentLight->quadratic = quadraticValue;
 			}
@@ -366,6 +391,16 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 			lightSource = (LightSource*)dLight;
 			sourceType = type;
 			numOfDirectional++;
+
+			shadowCam = owner->GetComponent<C_Camera>();
+			if (shadowCam == nullptr)
+			{
+				shadowCam = owner->CreateComponent<C_Camera>();
+				shadowCam->ortho = true;
+				//make the cam look in the direction of the light rays
+				shadowCam->freeRotation = true;
+				shadowCam->LookAt(shadowCam->position + dLight->direction.Normalized());
+			}
 		}
 		else
 			CONSOLE_LOG("[C_LightSource]: MAX of directional lights reached");
@@ -379,6 +414,12 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 			lightSource = (LightSource*)pLight;
 			sourceType = type;
 			numOfPoint++;
+
+			shadowCam = owner->GetComponent<C_Camera>();
+			if (shadowCam != nullptr)
+			{
+				owner->DeleteComponent(shadowCam);
+			}
 		}
 		else
 			CONSOLE_LOG("[C_LightSource]: MAX of point lights reached");
@@ -392,6 +433,12 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 			lightSource = (LightSource*)fLight;
 			sourceType = type;
 			numOfFocal++;
+
+			shadowCam = owner->GetComponent<C_Camera>();
+			if (shadowCam != nullptr)
+			{
+				owner->DeleteComponent(shadowCam);
+			}
 		}
 		else
 			CONSOLE_LOG("[C_LightSource]: MAX of focal lights reached");
@@ -420,8 +467,8 @@ DirectionalLight::DirectionalLight() : LightSource()
 PointLight::PointLight() : LightSource()
 {
 	constant = 1.00f;
-	linear = 0.220f;
-	quadratic = 0.20f;
+	linear = 0.050f;
+	quadratic = 0.020f;
 }
 
 FocalLight::FocalLight() : LightSource()
@@ -430,6 +477,6 @@ FocalLight::FocalLight() : LightSource()
 	lightDirection = float3(0.0f, 1.0f, 0.0f);
 
 	constant = 1.00f;
-	linear = 0.220f;
-	quadratic = 0.20f;
+	linear = 0.050f;
+	quadratic = 0.020f;
 }

@@ -47,6 +47,8 @@ public:
 	float cameraSensitivity = .5f;
 	float cameraSpeed = 60.f;
 	bool projectionIsDirty = true;
+	bool ortho = false;
+	bool freeRotation = false;
 
 	// Debug bools
 	bool drawFrustum = true;

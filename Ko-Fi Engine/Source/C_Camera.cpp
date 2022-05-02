@@ -85,11 +85,14 @@ bool C_Camera::Update(float dt)
 	{
 		position = componentTransform->GetPosition();
 
-		up = componentTransform->Up();
-		front = componentTransform->Front();
-		//right = componentTransform->Right();
+		if (!freeRotation)
+		{
+			up = componentTransform->Up();
+			front = componentTransform->Front();
+			//right = componentTransform->Right();
+		}
 
-		CalculateViewMatrix();
+		CalculateViewMatrix(ortho);
 
 		if (frustumCulling)
 			FrustumCulling();
@@ -138,8 +141,8 @@ void C_Camera::RecalculateProjection(bool ortho)
 			cameraFrustum.type = FrustumType::OrthographicFrustum;
 			cameraFrustum.nearPlaneDistance = nearPlaneDistance;
 			cameraFrustum.farPlaneDistance = farPlaneDistance;
-			cameraFrustum.orthographicWidth = owner->GetEngine()->GetEditor()->lastViewportSize.x;
-			cameraFrustum.orthographicHeight = owner->GetEngine()->GetEditor()->lastViewportSize.y;
+			cameraFrustum.orthographicWidth = 125.0;
+			cameraFrustum.orthographicHeight = 125.0;//owner->GetEngine()->GetEditor()->lastViewportSize.y;
 		}
 		
 	}
