@@ -400,10 +400,9 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 		material->SetMaterial(rMaterial);
 
 		// Texture
-		R_Texture* rTexture = nullptr;
 		if (node.texture != 0)
 		{
-			rTexture = (R_Texture*)engine->GetResourceManager()->RequestResource(node.texture);
+			R_Texture* rTexture = (R_Texture*)engine->GetResourceManager()->RequestResource(node.texture);
 			if (rTexture == nullptr)
 			{
 				CONSOLE_LOG("[ERROR] Scene: Could not get resource texture from model node.");

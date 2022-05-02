@@ -165,8 +165,6 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 
 bool I_Animations::Load(const char* path, R_Animation* animation)
 {
-	animation->SetAssetPath(path);
-
 	if (engine->GetFileSystem()->CheckDirectory(ANIMATIONS_DIR))
 	{
 		std::ifstream file;
