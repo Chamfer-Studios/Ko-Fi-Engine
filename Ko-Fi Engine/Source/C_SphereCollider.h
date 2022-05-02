@@ -49,7 +49,6 @@ private:
 	bool isTrigger = false;
 	float scaleFactor = 1.0f;
 	float3 center = { 0,0,0 };
-
 };
 #endif // !__C_SPHERE_COLLIDER_H__
 

@@ -278,9 +278,8 @@ void C_Camera::DrawFrustum() const
 	cameraFrustum.GetCornerPoints(cornerPoints);
 
 	//Draw Operations
-
-	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
-	glLineWidth(3.5f);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glLineWidth(1.5f);
 	glBegin(GL_LINES);
 
 	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
@@ -320,8 +319,6 @@ void C_Camera::DrawFrustum() const
 	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
 
 	glEnd();
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glLineWidth(1.0f);
 	glPopMatrix();
 
 }

@@ -11,7 +11,6 @@
 
 // Resources
 #include "R_Animation.h"
-#include "AnimatorClip.h"
 
 #include "FSDefs.h"
 #include "Color.h"
@@ -42,10 +41,11 @@ bool C_Animator::Start()
 		animation->SetStartFrame(0);
 		animation->SetEndFrame(10);
 	}
-	if (selectedClip == nullptr)
+	if (selectedClip.GetName().c_str() == "[NONE]")
 	{
-		AnimatorClip* animClip = new AnimatorClip(animation, "Default clip", 0, 10, 1.0f, true);
-		CreateDefaultClip(animClip);
+		AnimatorClip animClip(animation, "Default clip", 0, 10, 1.0f, true);
+		CreateClip(animClip);
+		SetSelectedClip(animClip.GetName());
 	}
 	
 	return true;
@@ -60,12 +60,6 @@ bool C_Animator::CleanUp()
 {
 	if (animation != nullptr)
 		RELEASE(animation);
-
-	if (selectedClip != nullptr)
-		selectedClip = nullptr;
-
-	if (clipToDelete != nullptr)
-		clipToDelete = nullptr;
 
 	C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
 	if (cMesh != nullptr)
@@ -125,13 +119,13 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 		ImGui::Text("Select Clip");
 
-		if (ImGui::BeginCombo("Select Clip", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Select Clip", ((selectedClip.GetName().c_str() != "[NONE]") ? selectedClip.GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
-				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == selectedClip), ImGuiSelectableFlags_None))
+				if (ImGui::Selectable(clip->second.GetName().c_str(), (clip->second.GetName() == selectedClip.GetName()), ImGuiSelectableFlags_None))
 				{
-					selectedClip = &clip->second;
+					selectedClip = clip->second;
 
 					/*strcpy(editedName, selectedClip->GetName());
 					editedStart = (int)selectedClip->GetStart();
@@ -148,33 +142,44 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 		ImGui::Text("Delete Clip");
 
-		if (ImGui::BeginCombo("Delete Clip", ((clipToDelete != nullptr) ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Delete Clip", ((clipToDelete.GetName().c_str() != "[NONE]") ? clipToDelete.GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
-				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == clipToDelete), ImGuiSelectableFlags_None))
+				if (ImGui::Selectable(clip->second.GetName().c_str(), (clip->second.GetName() == clipToDelete.GetName()), ImGuiSelectableFlags_None))
 				{
-					if (clip->second.GetName().c_str() != "Default clip")
+					if (clip->second.GetName() != "Default clip")
 					{
-						clipToDelete = &clip->second;
-						SetSelectedClip(std::string("Default clip"));
+						clipToDelete = clip->second;
+						deleteDefaultClipMessage = false;
 					}
 					else
-						clipToDelete = nullptr;
+					{
+						deleteDefaultClipMessage = true;
+					}
 				}
 			}
 
 			ImGui::EndCombo();
 		}
 
+		if (deleteDefaultClipMessage)
+		{
+			ImGui::TextColored(Red.ToImVec4(), "The default clip can't be deleted!");
+			ImGui::TextColored(Red.ToImVec4(), "A clip is needed for the animation...");
+		}
+
 		if (ImGui::Button("Delete"))
 		{
-			clips.erase(clipToDelete->GetName().c_str());
-			clipToDelete = nullptr;
+			if(clipToDelete.GetName() == selectedClip.GetName())
+				SetSelectedClip(std::string("Default clip"));
+
+			clips.erase(clipToDelete.GetName().c_str());
+			clipToDelete = AnimatorClip();
 		}
 
 		ImGui::Text("Clip Options: ");
-		if (ImGui::Checkbox("Loop", &selectedClip->GetLoopBool())) {}
+		if (ImGui::Checkbox("Loop", &selectedClip.GetLoopBool())) {}
 
 		/*ImGui::SameLine();
 		if (ImGui::Button("Restart", ImVec2(70, 18)))
@@ -210,7 +215,7 @@ void C_Animator::Save(Json& json) const
 
 		json["clips"].push_back(jsonClips);
 	}
-	json["selectedClip"] = selectedClip->GetName();
+	json["selectedClip"] = selectedClip.GetName();
 }
 
 void C_Animator::Load(Json& json)
@@ -281,24 +286,6 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 	clips.emplace(clip.GetName(), clip);
 }
 
-bool C_Animator::CreateDefaultClip(AnimatorClip* clip)
-{
-	if (clip->GetAnimation() == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip->GetName());
-		return false;
-	}
-	if (clips.find(clip->GetName()) != clips.end())
-	{
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip->GetName().c_str());
-		return false;
-	}
-
-	clips.emplace(clip->GetName(), *clip);
-
-	selectedClip = clip;
-}
-
 void C_Animator::SetAnim(R_Animation* anim)
 {
 	if (this->animation != nullptr)
@@ -307,19 +294,19 @@ void C_Animator::SetAnim(R_Animation* anim)
 	this->animation = anim;
 }
 
-AnimatorClip* C_Animator::GetSelectedClip()
+AnimatorClip C_Animator::GetSelectedClip()
 {
 	return selectedClip;
 }
 
 bool C_Animator::IsCurrentClipPlaying()
 {
-	return !GetSelectedClip()->GetFinishedBool();
+	return !GetSelectedClip().GetFinishedBool();
 }
 
 bool C_Animator::IsCurrentClipLooping()
 {
-	return GetSelectedClip()->GetLoopBool();
+	return GetSelectedClip().GetLoopBool();
 }
 
 void C_Animator::SetSelectedClip(std::string name)
@@ -328,8 +315,7 @@ void C_Animator::SetSelectedClip(std::string name)
 	{
 		if ((*clip).first == name)
 		{
-			selectedClip = &clip->second;
-			selectedClip->SetFinishedBool(false);
+			selectedClip = clip->second;
 			break;
 		}
 	}

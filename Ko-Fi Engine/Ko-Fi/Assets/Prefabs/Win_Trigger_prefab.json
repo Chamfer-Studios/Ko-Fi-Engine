@@ -10,8 +10,8 @@
             "active": true,
             "position": [
                 0.0,
-                0.0,
-                0.0
+                18.98356819152832,
+                42.1121826171875
             ],
             "rotation": [
                 0.0,
@@ -54,6 +54,19 @@
                 12.0
             ],
             "type": "boxCollider"
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Triggers/WinTrigger.lua",
+            "id": 309597680,
+            "inspector_variables": [
+                {
+                    "name": "sceneName",
+                    "type": "string",
+                    "value": "0_level"
+                }
+            ],
+            "type": "script"
         }
     ],
     "isPrefab": true,

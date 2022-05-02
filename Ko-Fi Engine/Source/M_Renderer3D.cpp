@@ -72,6 +72,8 @@ bool M_Renderer3D::Awake(Json configModule)
 
 	InitFrameBuffers();
 
+
+
 	ret = LoadConfiguration(configModule);
 
 	return ret;
@@ -83,8 +85,8 @@ bool M_Renderer3D::PreUpdate(float dt)
 	OPTICK_EVENT();
 
 	bool ret = true;
+	
 	PrepareFrameBuffers();
-
 	isFirstPass = true;
 
 	return ret;
@@ -99,10 +101,11 @@ bool M_Renderer3D::Update(float dt)
 bool M_Renderer3D::PostUpdate(float dt)
 {
 	OPTICK_EVENT();
-
+	OnResize();
 	PassProjectionAndViewToRenderer();
 	RenderScene(engine->GetCamera3D()->currentCamera);
 	isFirstPass = false;
+#ifndef KOFI_GAME
 	UnbindFrameBuffers();
 	if (engine->GetEditor()->toggleCameraViewportPanel)
 	{
@@ -111,8 +114,9 @@ bool M_Renderer3D::PostUpdate(float dt)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		PassPreviewProjectionAndViewToRenderer();
 		RenderScene(engine->GetCamera3D()->gameCamera);
-		UnbindFrameBuffers();
 	}
+#endif // KOFI_GAME
+	UnbindFrameBuffers();
 	SwapWindow();
 	return true;
 }
@@ -333,6 +337,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
+				CONSOLE_LOG(go->GetName());
 				RenderMeshes(camera, go);
 				RenderBoundingBox(cMesh);
 			}
@@ -346,6 +351,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			}
 			if (go->GetComponent<C_RigidBody>())
 				engine->GetPhysics()->RenderPhysics();
+
 		}
 	}
 	RenderAllParticles();
@@ -412,11 +418,11 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			if (mesh->IsAnimated())
 			{
 				// ...
-				AnimatorClip* animatorClip = go->GetComponent<C_Animator>()->GetSelectedClip();
-				if (animatorClip->GetFinishedBool() && animatorClip->GetLoopBool())
-					animatorClip->SetFinishedBool(false);
+				AnimatorClip animatorClip = go->GetComponent<C_Animator>()->GetSelectedClip();
+				if (animatorClip.GetFinishedBool() && animatorClip.GetLoopBool())
+					animatorClip.SetFinishedBool(false);
 
-				if (!animatorClip->GetFinishedBool())
+				if (!animatorClip.GetFinishedBool())
 				{
 					float currentTimeMillis = engine->GetSceneManager()->GetGameTime();
 					std::vector<float4x4> transformsAnim;

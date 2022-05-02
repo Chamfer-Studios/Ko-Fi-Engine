@@ -6,6 +6,7 @@
 class M_Editor;
 class Importer;
 class GameObject;
+enum class Shape;
 
 class MainBar : public Panel
 {
@@ -20,11 +21,12 @@ public:
 
 	void ChoosersListener();
 
+	void CreatePrimitive(Shape shape);
+
 private:
 	M_Editor* editor;
 	bool loadingModel = false;
-	bool openSaveAsPopup = false; //This is a temporal solution since imgui doesnt allow to call openpopup from MenuItem() yet. However we will use the panelchooser to do this task soon so just temp code.
-	std::string saveAsSceneName = "Scene Name";
+
 };
 
 #endif // !__MAINBAR_H__

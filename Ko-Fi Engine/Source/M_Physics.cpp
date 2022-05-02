@@ -60,33 +60,37 @@ bool M_Physics::Update(float dt)
 
 bool M_Physics::RenderPhysics()
 {
-	reactphysics3d::DebugRenderer& debugRenderer = world->getDebugRenderer();
-	int numLines = debugRenderer.getNbLines();
-	int numTriangles = debugRenderer.getNbTriangles();
-
-	const reactphysics3d::Array<reactphysics3d::DebugRenderer::DebugLine>& lines = debugRenderer.getLines();
-	const reactphysics3d::Array<reactphysics3d::DebugRenderer::DebugTriangle>& triangles = debugRenderer.getTriangles();
-
-	for (int i = 0; i < numLines; ++i)
+	if (debugPhysics)
 	{
-		glBegin(GL_LINES);
-		glVertex2f(lines[i].point1.x, lines[i].point1.y);
-		glVertex2f(lines[i].point2.x, lines[i].point2.y);
-		glEnd();
-	}
-	for (int i = 0; i < numTriangles; ++i)
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		reactphysics3d::DebugRenderer& debugRenderer = world->getDebugRenderer();
+		int numLines = debugRenderer.getNbLines();
+		int numTriangles = debugRenderer.getNbTriangles();
 
-		glBegin(GL_TRIANGLES);
-		glColor3f(0.49f, 1.0f, 212.0f);
-		glVertex3f(triangles[i].point1.x, triangles[i].point1.y, triangles[i].point1.z);
-		glVertex3f(triangles[i].point2.x, triangles[i].point2.y, triangles[i].point2.z);
-		glVertex3f(triangles[i].point3.x, triangles[i].point3.y, triangles[i].point3.z);
-		glEnd();
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		const reactphysics3d::Array<reactphysics3d::DebugRenderer::DebugLine>& lines = debugRenderer.getLines();
+		const reactphysics3d::Array<reactphysics3d::DebugRenderer::DebugTriangle>& triangles = debugRenderer.getTriangles();
 
+		for (int i = 0; i < numLines; ++i)
+		{
+			glBegin(GL_LINES);
+			glVertex2f(lines[i].point1.x, lines[i].point1.y);
+			glVertex2f(lines[i].point2.x, lines[i].point2.y);
+			glEnd();
+		}
+		for (int i = 0; i < numTriangles; ++i)
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+			glBegin(GL_TRIANGLES);
+			glColor3f(0.49f, 1.0f, 212.0f);
+			glVertex3f(triangles[i].point1.x, triangles[i].point1.y, triangles[i].point1.z);
+			glVertex3f(triangles[i].point2.x, triangles[i].point2.y, triangles[i].point2.z);
+			glVertex3f(triangles[i].point3.x, triangles[i].point3.y, triangles[i].point3.z);
+			glEnd();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		}
 	}
+
 	return true;
 }
 
@@ -170,6 +174,7 @@ bool M_Physics::InspectorDraw()
 	{
 		if (ImGui::TreeNodeEx("Filters"))
 		{
+			// Filter list
 			auto iter = filters.begin();
 			while (iter != filters.end())
 			{
@@ -187,7 +192,6 @@ bool M_Physics::InspectorDraw()
 				++iter;
 			}
 
-
 			ImGui::Text("Create Filter: ");
 			ImGui::InputText("##addFilter", &imguiNewFilterText);
 			ImGui::SameLine();
@@ -196,13 +200,11 @@ bool M_Physics::InspectorDraw()
 				AddFilter(imguiNewFilterText);
 				engine->SaveConfiguration();
 			}
-			ImGui::TreePop();
-		}
-		ImGui::Separator();
-		if (ImGui::TreeNodeEx("Filter Matrix"))
-		{
-			size_t filSize = filters.size();
 
+			ImGui::Separator();
+
+			// Filter matrix
+			size_t filSize = filters.size();
 			for (auto iterI = filters.begin(); iterI != filters.end(); ++iterI)
 			{
 				int i = std::distance(filters.begin(), iterI);
@@ -240,9 +242,13 @@ bool M_Physics::InspectorDraw()
 
 			ImGui::TreePop();
 		}
+
 		ImGui::Separator();
 
-
+		// Debug physics (draw colliders)
+		bool newDebugPhysics = IsDebugPhysics();
+		if (ImGui::Checkbox("Debug Physics##", &newDebugPhysics))
+			DebugPhysics(newDebugPhysics);
 	}
 
 	return true;

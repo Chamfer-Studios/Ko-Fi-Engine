@@ -63,7 +63,7 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (panelChooser->IsReadyToClose("AddFont")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+			if (!panelChooser->OnChooserClosed().empty()) {
 				std::string path = panelChooser->OnChooserClosed();
 				SetFont(path.c_str());
 				SetTextValue(textValue);

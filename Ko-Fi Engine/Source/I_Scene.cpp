@@ -248,8 +248,9 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 	
 	// Creating a default clip with all the keyframes of the animation.
-	AnimatorClip* animClip = new AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
-	cAnim->CreateDefaultClip(animClip);
+	AnimatorClip animClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
+	cAnim->CreateClip(animClip);
+	cAnim->SetSelectedClip(animClip.GetName());
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)
@@ -348,6 +349,7 @@ bool I_Scene::Save(Scene* scene,const char* customName)
 		jsonGameObject["UID"] = gameObject->GetUID();
 		jsonGameObject["is3D"] = gameObject->is3D;
 		jsonGameObject["tag"] = (int)gameObject->tag;
+		jsonGameObject["is_prefab"] = gameObject->isPrefab;
 
 		// We don't want to save also its children here.
 		// We will arrive and create them when they get here with the loop.
@@ -564,7 +566,8 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			
 			std::string name = jsonGo.at("name");
 			GameObject* go = new GameObject(UID, engine, name.c_str(), is3D);
-
+			if (jsonGo.contains("is_prefab"))
+				go->isPrefab = jsonGo.at("is_prefab");
 			go->active = jsonGo.at("active");
 			go->tag = tag;
 			uint parentUid = jsonGo.at("parent_UID");

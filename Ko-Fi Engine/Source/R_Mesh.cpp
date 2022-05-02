@@ -1,22 +1,27 @@
+#define PAR_SHAPES_IMPLEMENTATION
 #include "R_Mesh.h"
-#include "R_Texture.h"
+#include "Globals.h"
+
+// Modules
+#include "Engine.h"
+#include "M_Renderer3D.h"
 
 #include "GameObject.h"
 #include "C_Material.h"
 #include "C_Transform.h"
 #include "C_Animator.h"
+#include "C_Image.h"
+#include "C_Button.h"
+#include "C_Canvas.h"
 
+// Resources
+#include "R_Texture.h"
 #include "R_Animation.h"
 #include "AnimatorClip.h"
-#include "R_Animation.h"
 #include "Channel.h"
 
-#include "Globals.h"
-
 #include "Importer.h"
-//#include "I_Mesh.h"
 
-// OpenGL / GLEW
 #include "glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -25,14 +30,8 @@
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/float4x4.h"
 
-#include "C_Material.h"
-#include "C_Transform.h"
-#include "GameObject.h"
-#include "Globals.h"
-#include "Engine.h"
-#include "M_Renderer3D.h"
-
 #include "optick.h"
+
 
 R_Mesh::R_Mesh(Shape shape) : Resource(ResourceType::MESH)
 {
@@ -59,7 +58,7 @@ R_Mesh::R_Mesh(Shape shape) : Resource(ResourceType::MESH)
 		PrimitiveMesh(par_shapes_create_torus(20, 20, 0.2));
 		break;
 	case Shape::PLANE:
-		PrimitiveMesh(par_shapes_create_plane(20, 20));
+		PrimitiveMesh(par_shapes_create_plane(5, 5));
 		break;
 	case Shape::CONE:
 		PrimitiveMesh(par_shapes_create_cone(20, 20));
@@ -308,10 +307,76 @@ void R_Mesh::DrawFaceNormals() const
 
 void R_Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 {
-	//vertexNum = primitiveMesh->npoints;
-	//indexNum = primitiveMesh->ntriangles * 3;
-	//normalNum = primitiveMesh->ntriangles;
 
+	//verticesSizeBytes = sizeof(float) * primitiveMesh->npoints * 3;
+	//normalsSizeBytes = verticesSizeBytes;
+	//texCoordSizeBytes = sizeof(float) * primitiveMesh->npoints * 2;
+	//indicesSizeBytes = sizeof(uint) * primitiveMesh->ntriangles * 3;
+
+	//vertices = (float*)malloc(verticesSizeBytes);
+	//normals = (float*)malloc(normalsSizeBytes);
+	//indices = (uint*)malloc(indicesSizeBytes);
+	//texCoords = (float*)malloc(texCoordSizeBytes);
+
+
+	//par_shapes_compute_normals(primitiveMesh);
+	////memcpy(vertices, primitiveMesh->points, verticesSizeBytes);
+	////for (uint i = 0; i < primitiveMesh->ntriangles; i++)
+	////{
+
+	////	indices[i * 3] = primitiveMesh->triangles[i * 3];
+	////	
+	////}
+
+	////memcpy(normals, primitiveMesh->normals, normalsSizeBytes);
+	////memcpy(texCoords, primitiveMesh->tcoords, texCoordSizeBytes);
+
+	//for (size_t i = 0; i < primitiveMesh->npoints; ++i)
+	//{
+	//	memcpy(&vertices[i], &primitiveMesh->points[i * 3], sizeof(float) * 3);
+	//	memcpy(&normals[i], &primitiveMesh->normals[i * 3], sizeof(float) * 3);
+	//	if (primitiveMesh->tcoords != nullptr)
+	//	{
+	//		memcpy(&texCoords[i], &primitiveMesh->tcoords[i * 2], sizeof(float) * 2);
+	//	}
+	//	else if (meshType == Shape::CUBE)
+	//	{
+	//		switch (i % 4)
+	//		{
+	//		case 0:
+	//			texCoords[i] = 0.0f;
+	//			texCoords[i + 1] = 0.0f;
+	//			break;
+	//		case 1:
+	//			texCoords[i] = 1.0f;
+	//			texCoords[i + 1] = 0.0f;
+	//			break;
+	//		case 2:
+	//			texCoords[i] = 1.0f;
+	//			texCoords[i + 1] = 1.0f;
+	//			break;
+	//		case 3:
+	//			texCoords[i] = 0.0f;
+	//			texCoords[i + 1] = 1.0f;
+	//			break;
+	//		}
+	//	}
+	//	else
+	//	{
+	//		texCoords[i] = 0.0f;
+	//		texCoords[i + 1] = 0.0f;
+	//	}
+	//}
+
+	//for (size_t i = 0; i < (primitiveMesh->ntriangles * 3); ++i)
+	//{
+	//	indices[i] = primitiveMesh->triangles[i];
+	//}
+
+	//memcpy(&normals[0], primitiveMesh->normals, primitiveMesh->npoints);
+
+
+	//par_shapes_free_mesh(primitiveMesh);
 	vertices = (float*)malloc(primitiveMesh->npoints);
 	normals = (float*)malloc(primitiveMesh->ntriangles);
 	indices = (uint*)malloc(primitiveMesh->ntriangles * 3);
@@ -394,11 +459,11 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	float timeInTicks = timeInSeconds * ticksPerSecond;
 
 	float startFrame, endFrame, animDur;
-	AnimatorClip* selectedClip = gameObject->GetComponent<C_Animator>()->GetSelectedClip();
-	if (selectedClip != nullptr)
+	AnimatorClip selectedClip = gameObject->GetComponent<C_Animator>()->GetSelectedClip();
+	if (selectedClip.GetName().c_str() != "[NONE]")
 	{
-		startFrame = selectedClip->GetStartFrame();
-		endFrame = selectedClip->GetEndFrame();
+		startFrame = selectedClip.GetStartFrame();
+		endFrame = selectedClip.GetEndFrame();
 		animDur = endFrame - startFrame;
 	}
 	else
@@ -411,14 +476,14 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	float animationTimeTicks = fmod(timeInTicks, (float)animDur); // This divides the whole animation into segments of animDur.
 
 	// Checking if the animation has finished (the animation time ticks is equal to the duration time ticks).
-	float animationSeconds = fmod(timeInSeconds, (float)selectedClip->GetDurationInSeconds());
+	float animationSeconds = fmod(timeInSeconds, (float)selectedClip.GetDurationInSeconds());
 	if (animationSeconds < 0.1f)
 	{
-		if (!selectedClip->GetLoopBool())
-			selectedClip->SetFinishedBool(true);
+		if (!selectedClip.GetLoopBool())
+			selectedClip.SetFinishedBool(true);
 	}
 
-	ReadNodeHeirarchy(animationTimeTicks + startFrame, rootNode, identity); // We add startFrame as an offset to the duration.
+	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
 	transforms.resize(boneInfo.size());
 	transformsAnim.resize(boneInfo.size());
 
@@ -475,6 +540,9 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 #pragma omp parallel for
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
+		/*if (pNode->GetChildren().at(i)->GetComponent<C_Image>() || pNode->GetChildren().at(i)->GetComponent<C_Canvas>() || pNode->GetChildren().at(i)->GetComponent<C_Button>())
+			continue;*/
+
 		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);
 	}
 }

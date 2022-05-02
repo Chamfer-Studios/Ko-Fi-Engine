@@ -1,48 +1,48 @@
 static = false
-local staticIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-staticIV = InspectorVariable.new("static", staticIVT, static)
-NewVariable(staticIV)
+--local staticIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+--staticIV = InspectorVariable.new("static", staticIVT, static)
+--NewVariable(staticIV)
 
 speed = 20
-local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-speedIV = InspectorVariable.new("speed", speedIVT, speed)
-NewVariable(speedIV)
+--local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+--speedIV = InspectorVariable.new("speed", speedIVT, speed)
+--NewVariable(speedIV)
 
-visionConeAngle = 90
-local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-visionConeAngleIV = InspectorVariable.new("visionConeAngle", visionConeAngleIVT, visionConeAngle)
-NewVariable(visionConeAngleIV)
+visionConeAngle = 30
+--local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+--visionConeAngleIV = InspectorVariable.new("visionConeAngle", visionConeAngleIVT, visionConeAngle)
+--NewVariable(visionConeAngleIV)
 
 visionConeRadius = 50
-local visionConeRadiusIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-visionConeRadiusIV = InspectorVariable.new("visionConeRadius", visionConeRadiusIVT, visionConeRadius)
-NewVariable(visionConeRadiusIV)
+--local visionConeRadiusIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+--visionConeRadiusIV = InspectorVariable.new("visionConeRadius", visionConeRadiusIVT, visionConeRadius)
+--NewVariable(visionConeRadiusIV)
 
 hearingRange = 30
-local hearingRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-hearingRangeIV = InspectorVariable.new("hearingRange", hearingRangeIVT, hearingRange)
-NewVariable(hearingRangeIV)
+--local hearingRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+--hearingRangeIV = InspectorVariable.new("hearingRange", hearingRangeIVT, hearingRange)
+--NewVariable(hearingRangeIV)
 
 awarenessSpeed = 0.4
-local awarenessSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
-awarenessSpeedIV = InspectorVariable.new("awarenessSpeed", awarenessSpeedIVT, awarenessSpeed)
-NewVariable(awarenessSpeedIV)
+--local awarenessSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+--awarenessSpeedIV = InspectorVariable.new("awarenessSpeed", awarenessSpeedIVT, awarenessSpeed)
+--NewVariable(awarenessSpeedIV)
 
-pingpong = false
-local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-pingpongIV = InspectorVariable.new("pingpong", pingpongIVT, pingpong)
-NewVariable(pingpongIV)
+pingpong = true
+--local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+--pingpongIV = InspectorVariable.new("pingpong", pingpongIVT, pingpong)
+--NewVariable(pingpongIV)
 
-loop = false
-local loopIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
-loopIV = InspectorVariable.new("loop", loopIVT, loop)
-NewVariable(loopIV)
+loop = true
+--local loopIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+--loopIV = InspectorVariable.new("loop", loopIVT, loop)
+--NewVariable(loopIV)
 
 patrolOldWaypoints = {}
-patrolWaypoints = {}
-local patrolWaypointsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3_ARRAY
-patrolWaypointsIV = InspectorVariable.new("patrolWaypoints", patrolWaypointsIVT, patrolWaypoints)
-NewVariable(patrolWaypointsIV)
+patrolWaypoints = { float3.new(-1600, 0, 0), float3.new(-1750, 0, 0) }
+--local patrolWaypointsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3_ARRAY
+--patrolWaypointsIV = InspectorVariable.new("patrolWaypoints", patrolWaypointsIVT, patrolWaypoints)
+--NewVariable(patrolWaypointsIV)
 
 function Float3Length(v)
     return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
@@ -316,6 +316,7 @@ function Update(dt)
         awareness = awareness - awarenessSpeed * dt
     end
 
+    --Log(tostring(awareness) .. "\n")
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
         if seeingSource ~= nil then
             DispatchEvent("State_Suspicious", { seeingPosition })

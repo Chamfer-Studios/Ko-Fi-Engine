@@ -125,7 +125,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
         if (chooser->IsReadyToClose("Add Track"))
         {
-            if (chooser->OnChooserClosed() != nullptr)
+            if (!chooser->OnChooserClosed().empty())
             {
                 std::string path = chooser->OnChooserClosed();
 

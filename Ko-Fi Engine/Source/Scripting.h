@@ -63,9 +63,9 @@ public:
 	std::string name;
 	INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
 
-	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
+	std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
 
-	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value) : name(name), type(type), value(value) {}
+	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value) : name(name), type(type), value(value) {}
 };
 
 class Scripting
@@ -283,7 +283,7 @@ public:
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
-											sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *>)>(),
+											sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *>)>(),
 											"name", &InspectorVariable::name,
 											"type", &InspectorVariable::type,
 											"value", &InspectorVariable::value);
@@ -403,6 +403,14 @@ public:
 			case 13:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
+			}
+			case 14:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Q);
+			}
+			case 15:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
 			}
 
 			case 21:

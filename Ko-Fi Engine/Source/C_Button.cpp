@@ -93,7 +93,7 @@ bool C_Button::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (panelChooser->IsReadyToClose("IDLETextureButton")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+			if (!panelChooser->OnChooserClosed().empty()) {
 				std::string path = panelChooser->OnChooserClosed();
 				SetIdleTexture(path.c_str());
 			}
@@ -117,7 +117,7 @@ bool C_Button::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (panelChooser->IsReadyToClose("HOVERTextureButton")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+			if (!panelChooser->OnChooserClosed().empty()) {
 				std::string path = panelChooser->OnChooserClosed();
 				SetHoverTexture(path.c_str());
 			}
@@ -141,7 +141,7 @@ bool C_Button::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (panelChooser->IsReadyToClose("PRESSEDTextureButton")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+			if (!panelChooser->OnChooserClosed().empty()) {
 				std::string path = panelChooser->OnChooserClosed();
 				SetPressedTexture(path.c_str());
 			}
