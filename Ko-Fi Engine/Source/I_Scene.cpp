@@ -54,7 +54,8 @@
 
 I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 {
-
+	assimpScene = nullptr;
+	alreadyImportedAnim = false;
 }
 
 I_Scene::~I_Scene()
@@ -64,6 +65,9 @@ I_Scene::~I_Scene()
 
 bool I_Scene::Import(R_Model* model, bool isPrefab)
 {
+	assimpScene = nullptr;
+	alreadyImportedAnim = false;
+
 	if (model == nullptr)
 	{
 		CONSOLE_LOG("[ERROR] Importer: model is nullptr.");
@@ -1395,8 +1399,9 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 
 	// Creating a default clip with all the keyframes of the animation.
-	AnimatorClip* animClip = new AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
-	cAnim->CreateDefaultClip(animClip);
+	AnimatorClip animClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
+	cAnim->CreateClip(animClip);
+	cAnim->SetSelectedClip(animClip.GetName());
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)

@@ -386,30 +386,31 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 					animator->SetAnim(rAnimation);
 
 					// Creating a default clip with all the keyframes of the animation.
-					AnimatorClip* animClip = new AnimatorClip(rAnimation, "Default clip", 0, rAnimation->duration, 1.0f, true);
-					animator->CreateDefaultClip(animClip);
+					AnimatorClip animClip(rAnimation, "Default clip", 0, rAnimation->duration, 1.0f, true);
+					animator->CreateClip(animClip);
+					animator->SetSelectedClip(animClip.GetName());
 				}
 			}
 		}
-	}
 
-	// Material & Shader
-	C_Material* material = (C_Material*)gameobject->AddComponentByType(ComponentType::MATERIAL);
-	std::string shaderPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
-	R_Material* rMaterial = (R_Material*)engine->GetResourceManager()->GetResourceFromLibrary(shaderPath.c_str());
-	material->SetMaterial(rMaterial);
+		// Material & Shader
+		C_Material* material = (C_Material*)gameobject->AddComponentByType(ComponentType::MATERIAL);
+		std::string shaderPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+		R_Material* rMaterial = (R_Material*)engine->GetResourceManager()->GetResourceFromLibrary(shaderPath.c_str());
+		material->SetMaterial(rMaterial);
 
-	// Texture
-	R_Texture* rTexture = nullptr;
-	if (node.texture != 0)
-	{
-		rTexture = (R_Texture*)engine->GetResourceManager()->RequestResource(node.texture);
-		if (rTexture == nullptr)
+		// Texture
+		R_Texture* rTexture = nullptr;
+		if (node.texture != 0)
 		{
-			CONSOLE_LOG("[ERROR] Scene: Could not get resource texture from model node.");
-			return;
+			rTexture = (R_Texture*)engine->GetResourceManager()->RequestResource(node.texture);
+			if (rTexture == nullptr)
+			{
+				CONSOLE_LOG("[ERROR] Scene: Could not get resource texture from model node.");
+				return;
+			}
+			material->texture = rTexture;
 		}
-		material->texture = rTexture;
 	}
 }
 

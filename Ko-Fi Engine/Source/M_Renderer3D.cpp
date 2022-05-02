@@ -410,11 +410,11 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			if (mesh->IsAnimated())
 			{
 				// ...
-				AnimatorClip* animatorClip = go->GetComponent<C_Animator>()->GetSelectedClip();
-				if (animatorClip->GetFinishedBool() && animatorClip->GetLoopBool())
-					animatorClip->SetFinishedBool(false);
+				AnimatorClip animatorClip = go->GetComponent<C_Animator>()->GetSelectedClip();
+				if (animatorClip.GetFinishedBool() && animatorClip.GetLoopBool())
+					animatorClip.SetFinishedBool(false);
 
-				if (!animatorClip->GetFinishedBool())
+				if (!animatorClip.GetFinishedBool())
 				{
 					float currentTimeMillis = engine->GetSceneManager()->GetGameTime();
 					std::vector<float4x4> transformsAnim;

@@ -62,6 +62,8 @@ private:
 
 	// Instance of some generic Assimp variables in case we need them from the outside of the import method
 	aiScene* assimpScene = nullptr;
+
+	bool alreadyImportedAnim = false;
 };
 
 #endif // !__I_SCENE_H__

@@ -208,10 +208,15 @@ void C_Material::Load(Json& json)
 		}
 
 		std::string textureAssetPath = json.at("texture").at("asset_path").get<std::string>();
-		texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(textureAssetPath.c_str());
-		
-		if (texture == nullptr)
-			CONSOLE_LOG("[ERROR] Component Texture: could not load resource from library.");
+		if (textureAssetPath != "")
+		{
+			texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(textureAssetPath.c_str());
+
+			if (texture == nullptr)
+				CONSOLE_LOG("[ERROR] Component Material: texture couldn't be loaded from library.");
+		}
+		else
+			CONSOLE_LOG("[WARNING] Component Material: texture asset path was not found while loading.");
 	}
 }
 
@@ -341,9 +346,9 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				//		textures.push_back(texture);
 				//	}
 				//}
-				if (!path.empty() && texture->GetTextureId() == currentTextureId)
+				if (!path.empty() || path != "")
 				{
-					if (texture != nullptr && texture->textureID != TEXTUREID_DEFAULT)
+					if (texture != nullptr)
 						owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
 
 					texture = nullptr;
@@ -362,7 +367,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				if (material != nullptr && material->shaderProgramID != SHADERID_DEFAULT)
 					owner->GetEngine()->GetResourceManager()->FreeResource(material->GetUID());
 
-				if (!path.empty())
+				if (!path.empty() || path != "")
 					material = nullptr;
 				else
 					path = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
@@ -376,41 +381,44 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
 		//ImGui::Text("Material Texture:");
 		//for (R_Texture& tex : textures)
-		if (texture != nullptr && texture->GetTextureId() != TEXTUREID_DEFAULT)
+		if (texture != nullptr)
 		{
-			ImGui::Image((ImTextureID)texture->GetTextureId(), ImVec2(85, 85));
-			ImGui::SameLine();
-			ImGui::BeginGroup();
-
-			if (texture->GetLibraryPath() != nullptr)
+			if (texture->GetTextureId() != TEXTUREID_DEFAULT)
 			{
-				ImGui::Text("Texture Path: ");
+				ImGui::Image((ImTextureID)texture->GetTextureId(), ImVec2(85, 85));
 				ImGui::SameLine();
-				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-				if (ImGui::Selectable(texture->GetLibraryPath())) {}
-				ImGui::PopStyleColor();
+				ImGui::BeginGroup();
+
+				if (texture->GetLibraryPath() != nullptr)
+				{
+					ImGui::Text("Texture Path: ");
+					ImGui::SameLine();
+					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+					if (ImGui::Selectable(texture->GetLibraryPath())) {}
+					ImGui::PopStyleColor();
+				}
+
+				ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
+				if (ImGui::Button("Change Texture"))
+				{
+					panelChooser->OpenPanel("ChangeTexture", "png", { "png" });
+					currentTextureId = texture->GetTextureId();
+				}
+
+				ImGui::PopID();
+
+				ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
+				if (ImGui::Button("Delete Texture"))
+				{
+					//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
+					if (texture != nullptr && texture->textureID != TEXTUREID_DEFAULT)
+						owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
+				}
+				ImGui::PopID();
+				ImGui::EndGroup();
 			}
-
-			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
-
-			if (ImGui::Button("Change Texture"))
-			{
-				panelChooser->OpenPanel("ChangeTexture", "png", { "png" });
-				currentTextureId = texture->GetTextureId();
-			}
-
-			ImGui::PopID();
-
-			ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
-
-			if (ImGui::Button("Delete Texture"))
-			{
-				//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
-				if (texture != nullptr && texture->textureID != TEXTUREID_DEFAULT)
-					owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
-			}
-			ImGui::PopID();
-			ImGui::EndGroup();
 		}
 		else
 		{
@@ -426,13 +434,16 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 
 		ImGui::Separator();
 
-		if (material != nullptr && material->GetLibraryPath() != nullptr)
+		if (material != nullptr)
 		{
-			ImGui::Text("Shader Path: ");
-			ImGui::SameLine();
-			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-			if (ImGui::Selectable(material->GetLibraryPath())) {}
-			ImGui::PopStyleColor();
+			if (material->GetLibraryPath() != nullptr)
+			{
+				ImGui::Text("Shader Path: ");
+				ImGui::SameLine();
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+				if (ImGui::Selectable(material->GetLibraryPath())) {}
+				ImGui::PopStyleColor();
+			}
 
 			if (ImGui::Button("Change Shader"))
 				panelChooser->OpenPanel("ChangeShader", "glsl", { "glsl" });
