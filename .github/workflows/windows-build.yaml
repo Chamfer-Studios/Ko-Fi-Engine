@@ -8,7 +8,7 @@ on:
     types: [published]
 #do the following jobs
 jobs:
-  create-folders:
+  build-engine:
     runs-on: windows-latest #run on the latest version of windows
     env:
       RELEASE_NAME: Ko-Fi_Engine #setting up the release name variable to use later in the workflow
@@ -44,7 +44,7 @@ jobs:
       run: |
         cd "Ko-Fi Engine"
         dir
-        msbuild.exe "Ko-Fi Engine.vcxproj" -maxcpucount:2
+        msbuild.exe "DuneBuild.proj" -maxcpucount:2
         copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\"
       shell: cmd
     - name: Generate Artifacts

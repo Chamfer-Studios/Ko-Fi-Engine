@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-      <ProjectToBuild Include="Ko-Fi Engine.sln">
-          <Properties>Configuration=ReleaseGame</Properties>
-      </ProjectToBuild>
-      <ProjectToBuild Include="Ko-Fi Engine.sln">
-          <Properties>Configuration=Release</Properties>
-      </ProjectToBuild>
-  </ItemGroup>
-  <Target Name="Build">
-      <MSBuild Projects="@(ProjectToBuild)" BuildInParallel="true" />
-  </Target>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>

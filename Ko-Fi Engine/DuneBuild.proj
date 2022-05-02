@@ -1,0 +1,6 @@
+<Project xmlns="https://schemas.microsoft.com/developer/msbuild/2003">  
+    <Target Name="Build">  
+        <MSBuild Projects="Ko-Fi Engine.sln..." Properties="Configuration=Release"/>  
+        <MSBuild Projects="Ko-Fi Engine.sln" Properties="Configuration=ReleaseGame"/>  
+    </Target>  
+</Project>  
