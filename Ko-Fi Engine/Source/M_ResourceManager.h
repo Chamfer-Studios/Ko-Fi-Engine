@@ -30,6 +30,8 @@ public:
 	// Engine config inspector draw -------------------------------------
 	bool InspectorDraw() override;
 
+	std::string GetValidPath(const char* path) const;
+
 	// Import method
 	UID ImportFile(const char* assetPath);
 
@@ -85,7 +87,6 @@ private:
 
 	UID ImportFromAssets(const char* assetPath);
 
-	std::string GetValidPath(const char* path) const;
 	ResourceType GetTypeFromPathExtension(const char* path);
 
 	bool SaveMetaFile(Resource* resource) const;

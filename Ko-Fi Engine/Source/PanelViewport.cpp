@@ -97,7 +97,7 @@ bool PanelViewport::Update()
 				if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
 				{
 					std::string path = (const char*)payload->Data;
-
+					path = engine->GetResourceManager()->GetValidPath(path.c_str());
 					Resource* resource = engine->GetResourceManager()->GetResourceFromLibrary(path.c_str());
 					if (resource != nullptr)
 						engine->GetSceneManager()->LoadResourceToScene(resource);
