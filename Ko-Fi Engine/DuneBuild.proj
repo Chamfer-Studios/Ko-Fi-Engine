@@ -1,6 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
     <Target Name="Build">  
-        <MSBuild Projects="../Ko-Fi Engine.sln" BuildInParallel="true" Properties="Configuration=Release"/>  
-        <MSBuild Projects="../Ko-Fi Engine.sln" BuildInParallel="true" Properties="Configuration=ReleaseGame"/>  
+        <MSBuild Projects="../Ko-Fi Engine.sln" BuildInParallel="true" Properties="Configuration=Release;ReleaseGame"/>  
     </Target>  
 </Project>  
