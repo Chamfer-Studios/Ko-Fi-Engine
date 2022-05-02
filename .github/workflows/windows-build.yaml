@@ -36,30 +36,17 @@ jobs:
         mkdir ${{env.RELEASE_NAME}}
         cd "../../../Ko-Fi-Engine"
         dir
-  build-engine:
-    runs-on: windows-latest #run on the latest version of windows
-    needs: [create-folders]
-    env:
-      RELEASE_NAME: Ko-Fi_Engine #setting up the release name variable to use later in the workflow
-      GNUTARGET: default
-    steps:
     #set up msbuild in the action to be used
     - name: SetUp MSBuild
       uses: microsoft/setup-msbuild@v1.1
     #compile the exe
     - name: Build Solution (MSVC16)
       run: |
+        cd "Ko-Fi Engine"
         dir
-        msbuild.exe "Ko-Fi Engine.sln" /property:Configuration=Release
+        msbuild.exe "Ko-Fi Engine.vcxproj" -maxcpucount:2
         copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\"
       shell: cmd
-  artifacts:
-    runs-on: windows-latest
-    needs: [build-engine]
-    env:
-      RELEASE_NAME: Ko-Fi_Engine #setting up the release name variable to use later in the workflow
-      GNUTARGET: default
-    steps:
     - name: Generate Artifacts
       run: |
         robocopy ".\Ko-Fi Engine\Ko-Fi" .\build\${{ env.RELEASE_NAME }}\${{ env.RELEASE_NAME }} /S
