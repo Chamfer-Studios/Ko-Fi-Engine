@@ -84,7 +84,7 @@ bool C_Image::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (panelChooser->IsReadyToClose("AddTextureImage")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+			if (!panelChooser->OnChooserClosed().empty()) {
 				std::string path = panelChooser->OnChooserClosed();
 				SetTexture(path.c_str());
 			}

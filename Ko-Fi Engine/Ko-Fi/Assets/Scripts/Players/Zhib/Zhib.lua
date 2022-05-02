@@ -135,6 +135,8 @@ function Update(dt)
 	--	end
 	--end
 
+	-- TODO: Move all timers & helpers to a bool function
+	
 	-- Running state logic
 	if (isDoubleClicking == true) then
 		if (doubleClickTimer < doubleClickDuration) then
@@ -157,6 +159,7 @@ function Update(dt)
 		decoyTimer = decoyTimer + dt
 		if (decoyTimer >= decoyCooldown) then
 			decoyTimer = nil
+			DispatchGlobalEvent("Player_Ability", { characterID, 2, 0 })
 		end
 	end
 
@@ -165,6 +168,7 @@ function Update(dt)
 		ultimateTimer = ultimateTimer + dt
 		if (ultimateTimer >= ultimateCooldown) then
 			ultimateTimer = nil
+			DispatchGlobalEvent("Player_Ability", { characterID, 3, 0 })
 		end
 	end
 	
@@ -198,7 +202,7 @@ function Update(dt)
 			if (playing == true) then
 				return
 			else
-				--componentAnimator:SetSelectedClip("Idle")
+				componentAnimator:SetSelectedClip("Idle")
 			end
 		end
 	end
@@ -260,7 +264,9 @@ function Update(dt)
 				if (currentMovement == Movement.WALK and isDoubleClicking == true) then
 					currentMovement = Movement.RUN
 				else
-					currentMovement = Movement.WALK
+					if (currentMovement == Movement.IDLE) then
+						currentMovement = Movement.WALK
+					end
 					isDoubleClicking = true
 				end
 				if (mouseParticles ~= nil) then
@@ -273,21 +279,25 @@ function Update(dt)
 		-- H
 		if (GetInput(5) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.IDLE
+			DispatchGlobalEvent("Player_Ability", { characterID, 0, 0 })
 		end
 
 		-- K
 		if (GetInput(6) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.AIM_PRIMARY
+			DispatchGlobalEvent("Player_Ability", { characterID, 1, 1 })
 		end	
 
 		-- D
 		if (GetInput(12) == KEY_STATE.KEY_DOWN) then
 			currentAction = Action.AIM_SECONDARY
+			DispatchGlobalEvent("Player_Ability", { characterID, 2, 1 })
 		end	
 
 		-- SPACE
 		if (GetInput(4) == KEY_STATE.KEY_DOWN) then 
 			currentAction = Action.AIM_ULTIMATE
+			DispatchGlobalEvent("Player_Ability", { characterID, 3, 1 })
 		end
 
 		-- C -> Toggle crouch
@@ -423,6 +433,7 @@ function FireKnife()
 	end
 
 	StopMovement()
+	DispatchGlobalEvent("Player_Ability", { characterID, 1, 2 })
 end
 
 -- Secondary ability
@@ -436,6 +447,7 @@ function PlaceDecoy(mousePos)
 	end
 	decoyTimer = 0.0
 	StopMovement()
+	DispatchGlobalEvent("Player_Ability", { characterID, 2, 2 })
 end
 
 -- Ultimate ability
@@ -511,6 +523,7 @@ function Ultimate(mousePos)
 	end
 
 	StopMovement()
+	DispatchGlobalEvent("Player_Ability", { characterID, 3, 2 })
 
 	ultimateTimer = 0.0
 end

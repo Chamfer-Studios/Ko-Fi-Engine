@@ -49,7 +49,6 @@ private:
 	bool isTrigger = false;
 	float3 scaleFactor = float3(1, 1, 1);
 	float3 center = { 0,0,0 };
-	float3 size = { 1,1,1 };
 };
 #endif // !__C_BOX_COLLIDER_H__
 

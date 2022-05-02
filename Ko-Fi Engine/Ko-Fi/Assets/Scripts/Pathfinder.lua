@@ -1,7 +1,7 @@
 minRetargetingDistance = 3
-local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
-NewVariable(minRetargetingDistanceIV)
+--local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+--minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
+--NewVariable(minRetargetingDistanceIV)
 
 navigation = GetNavigation()
 
@@ -69,6 +69,7 @@ function FollowPath(speed, dt, loop)
     DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
     delta = { x = direction.x * speed * _dt, y = direction.y * speed * _dt, z = direction.z * speed * _dt }
     nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
+
     componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
 end
 

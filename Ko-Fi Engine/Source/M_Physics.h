@@ -79,6 +79,9 @@ public:
 
 	//RayCast
 	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo);
+
+	inline bool IsDebugPhysics() const { return debugPhysics; };
+	inline void DebugPhysics(const bool newDebugPhysics) { debugPhysics = newDebugPhysics; }
 private:
 	// Filter matrix private methods
 	inline void DeleteFilterMatrix()
@@ -106,6 +109,7 @@ private:
 	std::map<reactphysics3d::CollisionBody*, GameObject*> collisionBodyToObjectMap;
 	std::string imguiNewFilterText;
 	bool** filterMatrix = nullptr;
+	bool debugPhysics = true;
 };
 
 #endif // !__M_PHYSICS_H__

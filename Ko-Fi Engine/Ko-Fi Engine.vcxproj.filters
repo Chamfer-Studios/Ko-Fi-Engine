@@ -155,6 +155,9 @@
     <Filter Include="Source\GameObject\Components\Physics\Colliders">
       <UniqueIdentifier>{7da255b9-a53c-474b-b894-73c266794dcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Triggers">
+      <UniqueIdentifier>{7e8486b1-55c4-4bfc-b286-f5be96494dcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -1413,6 +1416,9 @@
     </None>
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_RestartButton.lua">
       <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Triggers\WinTrigger.lua">
+      <Filter>Scripts\Triggers</Filter>
     </None>
   </ItemGroup>
 </Project>

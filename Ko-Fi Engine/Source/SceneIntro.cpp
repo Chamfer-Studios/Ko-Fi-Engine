@@ -73,7 +73,14 @@ bool SceneIntro::Start()
 		C_Camera *cCamera = camera->CreateComponent<C_Camera>();
 		cCamera->SetIsMainCamera(true);
 		engine->GetCamera3D()->SetGameCamera(cCamera);
+
+
 	}
+#ifdef KOFI_GAME
+	engine->GetCamera3D()->currentCamera = engine->GetCamera3D()->gameCamera;
+	engine->GetSceneManager()->OnPlay();
+#endif //KOFI_ENGINE
+
 	if (this->GetLights(SourceType::DIRECTIONAL).size() == 0)
 	{
 		GameObject* go = CreateEmptyGameObject("Direct Light");

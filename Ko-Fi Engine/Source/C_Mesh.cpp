@@ -237,59 +237,61 @@ void C_Mesh::GenerateGlobalBoundingBox()
 
 void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 {
-	glLineWidth(2.0f);
-	glColor3f(rgb.x, rgb.y, rgb.z);
-	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
-	glBegin(GL_LINES);
+	if (drawAABB)
+	{
+		glLineWidth(2.0f);
+		glColor3f(rgb.x, rgb.y, rgb.z);
+		glPushMatrix();
+		glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+		glBegin(GL_LINES);
 
-	// Bottom 1
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+		// Bottom 1
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
 
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
 
-	// Bottom 2
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+		// Bottom 2
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
 
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
 
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
 
-	// Top 1
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+		// Top 1
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
-	glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MinY(), aabb.MinZ());
 
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
 
-	// Top 2
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
-	glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
+		// Top 2
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MaxX(), aabb.MaxY(), aabb.MaxZ());
 
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
-	glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MaxZ());
 
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
-	glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MaxZ());
+		glVertex3f(aabb.MinX(), aabb.MaxY(), aabb.MinZ());
 
-	glEnd();
-	glColor3f(1.f, 1.f, 1.f);
-	glLineWidth(1.0f);
-	glPopMatrix();
+		glEnd();
+		glColor3f(1.f, 1.f, 1.f);
+		glLineWidth(1.0f);
+		glPopMatrix();
 
-	glPopMatrix();
-
+		glPopMatrix();
+	}
 }
 
 bool C_Mesh::InspectorDraw(PanelChooser* chooser)
@@ -319,6 +321,9 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 		bool faces = GetFaceNormals();
 		if (ImGui::Checkbox("Faces Normals", &faces))
 			mesh->SetFaceNormals(faces);
+		bool drawAABB = SetDrawAABB();
+		if (ImGui::Checkbox("Draw AABB##", &drawAABB))
+			GetDrawAABB(drawAABB);
 	}
 	else
 		DrawDeleteButton(owner, this);

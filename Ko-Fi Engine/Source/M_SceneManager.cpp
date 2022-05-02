@@ -287,9 +287,10 @@ void M_SceneManager::OnClick(SDL_Event event)
 
 void M_SceneManager::GuizmoTransformation()
 {
+#ifndef KOFI_GAME
 	std::vector<GameObject*> selectedGameObjects;
 	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
-	selectedGameObjects.push_back(currentScene->GetGameObject(engine->GetEditor()->engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
+		selectedGameObjects.push_back(currentScene->GetGameObject(engine->GetEditor()->engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
 
 	for (int i = 0; i < selectedGameObjects.size(); i++)
 	{
@@ -297,7 +298,7 @@ void M_SceneManager::GuizmoTransformation()
 
 		if (selectedGameObjects[i] == nullptr || selectedGameObjects[i]->GetUID() == -1) return;
 	}
-	
+
 
 	float4x4 viewMatrix = engine->GetCamera3D()->currentCamera->GetCameraFrustum().ViewMatrix();
 	viewMatrix.Transpose();
@@ -311,10 +312,11 @@ void M_SceneManager::GuizmoTransformation()
 	}
 
 	window = ImGui::FindWindowByName("Scene");
-	window->DrawList->PushClipRect(engine->GetEditor()->scenePanelOrigin, ImVec2((engine->GetEditor()->scenePanelOrigin.x + engine->GetEditor()->viewportSize.x),(engine->GetEditor()->scenePanelOrigin.y + engine->GetEditor()->viewportSize.y)), true);
+
+	window->DrawList->PushClipRect(engine->GetEditor()->scenePanelOrigin, ImVec2((engine->GetEditor()->scenePanelOrigin.x + engine->GetEditor()->viewportSize.x), (engine->GetEditor()->scenePanelOrigin.y + engine->GetEditor()->viewportSize.y)), true);
 	ImGuizmo::SetDrawlist(window->DrawList);
 
-	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x , engine->GetEditor()->scenePanelOrigin.y , engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
+	ImGuizmo::SetRect(engine->GetEditor()->scenePanelOrigin.x, engine->GetEditor()->scenePanelOrigin.y, engine->GetEditor()->viewportSize.x, engine->GetEditor()->viewportSize.y);
 
 	std::vector<float*> tempTransform;
 
@@ -323,7 +325,7 @@ void M_SceneManager::GuizmoTransformation()
 		tempTransform.push_back((float*)malloc(16 * sizeof(float)));
 		memcpy(tempTransform[i], modelProjection[i].ptr(), 16 * sizeof(float));
 	}
-	
+
 	ImGuizmo::MODE finalMode = (currentGizmoOperation == ImGuizmo::OPERATION::SCALE ? ImGuizmo::MODE::LOCAL : currentGizmoMode);
 
 	for (int i = 0; i < selectedGameObjects.size(); i++)
@@ -341,24 +343,28 @@ void M_SceneManager::GuizmoTransformation()
 
 			selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection[i]);
 		}
-		
+
 	}
+#endif // KOFI_GAME
+
+	
 }
 
 void M_SceneManager::UpdateGuizmo()
 {
+#ifndef KOFI_GAME
 	std::vector<GameObject*> selectedGameObjects;
 	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 	{
 		selectedGameObjects.push_back(currentScene->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
 	}
-	
+
 	for (int i = 0; i < selectedGameObjects.size(); i++)
 	{
 		if (selectedGameObjects[i] != nullptr && selectedGameObjects[i]->GetComponent<C_Camera>() != nullptr && currentGizmoOperation == ImGuizmo::OPERATION::SCALE)
 			currentGizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
 	}
-	
+
 	if (engine->GetEditor()->MouseOnScene() && (engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT))
 	{
 		for (int i = 0; i < selectedGameObjects.size(); i++)
@@ -383,4 +389,7 @@ void M_SceneManager::UpdateGuizmo()
 			}
 		}
 	}
+#endif // KOFI_GAME
+
+	
 }
