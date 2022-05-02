@@ -49,6 +49,7 @@ jobs:
     #compile the exe
     - name: Build Solution (MSVC16)
       run: |
+        dir
         msbuild.exe "Ko-Fi Engine.sln" /property:Configuration=Release
         copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\"
       shell: cmd
