@@ -17,7 +17,7 @@ function Update(dt)
 		if (isActive1 == false) then
 			gameObject:GetImage():SetTexture(path1)
 		end
-		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- 1
+		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- 1
 			startTime1 = os.time()
 			endTime1 = startTime1+3
 			gameObject:GetImage():SetTexture(path12)
@@ -31,7 +31,7 @@ function Update(dt)
 		if (isActive2 == false) then
 			gameObject:GetImage():SetTexture(path2)
 		end
-		if (GetInput(12) == KEY_STATE.KEY_DOWN) then -- 1
+		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- 1
 			startTime2 = os.time()
 			endTime2 = startTime2+3
 			gameObject:GetImage():SetTexture(path22)
