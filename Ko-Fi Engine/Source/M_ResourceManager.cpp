@@ -335,9 +335,16 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetPath)
 					if (resourcesMap.find(containedUid) != resourcesMap.end())
 						continue;
 
-					std::filesystem::path tmpPath = assetPath;
 					containedPath = containedIt.value().at("asset_file");
-					containedPath = tmpPath.parent_path().string() + "/" + containedPath;
+					std::filesystem::path tmpPath = containedPath;
+
+					if (tmpPath.extension() == PNG_EXTENSION)
+						containedPath = ASSETS_TEXTURES_DIR + containedPath;
+					else
+					{
+						tmpPath = assetPath;
+						containedPath = tmpPath.parent_path().string() + "/" + containedPath;
+					}
 
 					bool loadedResource = LoadResource(containedUid, containedPath.c_str());
 					if (!loadedResource)
