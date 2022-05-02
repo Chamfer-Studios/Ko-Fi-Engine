@@ -339,7 +339,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
-				if (!cCamera->GetIsEngineCamera() && cCamera->GetIsDrawFrustumActive())
+				if (!cCamera->IsEngineCamera() && cCamera->GetIsDrawFrustumActive())
 				{
 					cCamera->DrawFrustum();
 				}
@@ -683,7 +683,6 @@ void M_Renderer3D::OnResize()
 	glViewport(0, 0, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
 	if (engine->GetCamera3D()->currentCamera)
 	{
-		//engine->GetCamera3D()->aspectRatio = engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight();
 		engine->GetCamera3D()->currentCamera->SetAspectRatio(engine->GetWindow()->GetWidth() / engine->GetWindow()->GetHeight());
 	}
 	else

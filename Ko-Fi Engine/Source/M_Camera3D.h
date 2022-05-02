@@ -42,7 +42,8 @@ public:
 	// ------------------------------------------------------------------
 
 	void CheckInput(float dt);
-	void CheckMouseMotion(float dt);
+	void MouseZoom(float dt);
+	void MouseRotation(float dt);
 
 	void SetGameCamera(C_Camera* gameCamera);
 	

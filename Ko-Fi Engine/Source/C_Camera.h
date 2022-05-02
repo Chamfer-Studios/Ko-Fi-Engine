@@ -4,9 +4,8 @@
 #include "Component.h"
 
 #include "MathGeoLib/Math/float3.h"
-#include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Geometry/Frustum.h"
-#include "MathGeoLib/Geometry/Plane.h"
+#include "MathGeoLib/Math/MathFunc.h"
 
 class GameObject;
 class C_Transform;
@@ -40,7 +39,7 @@ public:
 	inline float GetAspectRatio() const { return aspectRatio; }
 	inline float3 GetReference() const { return reference; }
 
-	inline bool GetIsEngineCamera() const { return isEngineCamera; }
+	inline bool IsEngineCamera() const { return isEngineCamera; }
 	inline bool GetIsMainCamera() const { return isMainCamera; }
 	inline bool GetIsDrawFrustumActive() const { return isDrawFrustumActive; }
 
@@ -49,8 +48,12 @@ public:
 	inline float3 GetFront() const { return cameraFrustum.Front(); }
 	inline float3 GetUp() const { return cameraFrustum.Up(); }
 	inline float3 GetPosition() const { return cameraFrustum.Pos(); }
-	inline float GetVerticalFov() const { return cameraFrustum.VerticalFov(); }
-	inline float GetHorizontalFov() const { return cameraFrustum.HorizontalFov(); }
+
+	// CAUTION! --> The Value is on DEG
+	inline float GetVerticalFov() const { return RadToDeg(cameraFrustum.VerticalFov()); }
+	// CAUTION! --> The Value is on DEG
+	inline float GetHorizontalFov() const { return RadToDeg(cameraFrustum.HorizontalFov()); }
+
 	inline float GetNearPlaneDistance() const { return cameraFrustum.NearPlaneDistance(); }
 	inline float GetFarPlaneDistance() const { return cameraFrustum.FarPlaneDistance(); }
 
@@ -69,9 +72,10 @@ public:
 	
 	inline void SetFront(float3 newFront) { this->cameraFrustum.SetFront(newFront); }
 	inline void SetUp(float3 newUp) { this->cameraFrustum.SetUp(newUp); }
-	inline void SetPosition(float3 newPos) { this->cameraFrustum.SetPos(newPos); }
-	inline void SetVerticalFov(float verticalFov) { this->cameraFrustum.SetVerticalFovAndAspectRatio(verticalFov, aspectRatio); }
-	inline void SetHorizontalFov(float horizontalFov) { this->cameraFrustum.SetHorizontalFovAndAspectRatio(horizontalFov, aspectRatio); }
+	void SetPosition(float3 newPos);
+
+	// IMPORTANT!! Horizontal Fov Must Be In DEG, not in radians!
+	inline void SetHorizontalFov(float horizontalFov) { this->cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontalFov) , aspectRatio); }
 	inline void SetNearPlaneDistance(float nearPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(nearPlaneDistance,cameraFrustum.FarPlaneDistance());}
 	inline void SetFarPlaneDistance(float farPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(cameraFrustum.NearPlaneDistance(),farPlaneDistance);}
 	inline void SetViewPlaneDistances(float nearPlaneDistance,float farPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(nearPlaneDistance,farPlaneDistance);}

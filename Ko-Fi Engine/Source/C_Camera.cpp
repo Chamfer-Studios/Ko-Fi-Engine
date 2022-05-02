@@ -22,6 +22,7 @@
 
 #include "MathGeoLib/Math/MathFunc.h"
 #include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/Geometry/Plane.h"
 
 #include "optick.h"
 
@@ -41,16 +42,15 @@ C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
 	//Create the frustum
 	cameraFrustum = Frustum();
 	//Set Default Values for the frusum
-	cameraFrustum.SetPerspective(45.0f, 90.0f);
 	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
+	cameraFrustum.SetPerspective(DegToRad(43.0f), DegToRad(22.0f));
+	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(45.0f),aspectRatio);
 	cameraFrustum.SetViewPlaneDistances(0.01f, 1000.0f);
 	cameraFrustum.SetFrame(float3(0.0f,0.0f,20.0f),float3(0.0f,0.0f,1.0f),float3(0.0f,1.0f,0.0f));
-	cameraFrustum.SetHorizontalFovAndAspectRatio(45.0f,aspectRatio);
 
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	LookAt(float3::zero);
-
 
 }
 
@@ -62,8 +62,6 @@ bool C_Camera::Start()
 {
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
-
-	LookAt(float3::zero);
 
 	bool ret = true;
 
@@ -171,6 +169,13 @@ void C_Camera::SetAspectRatio(const float& aspectRatio)
 	this->aspectRatio = aspectRatio;
 }
 
+void C_Camera::SetPosition(float3 newPos)
+{
+	cameraFrustum.SetPos(newPos);
+	//this->owner->GetTransform()->SetPosition(newPos);
+
+}
+
 void C_Camera::LookAt(const float3& point)
 {
 	reference = point;
@@ -226,10 +231,11 @@ void C_Camera::ResetFrustumCulling()
 void C_Camera::DrawFrustum() const
 {
 	glPushMatrix();
+	
+	this->owner->GetTransform()->SetPosition(cameraFrustum.Pos());
 	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
-
 	//Draw Operations
 
 	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
