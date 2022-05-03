@@ -15,7 +15,7 @@ class C_Camera : public Component
 {
 public:
 	// Constructors
-	C_Camera(GameObject* gameObject, bool isEngineCamera = false);
+	C_Camera(GameObject* gameObject);
 	~C_Camera();
 
 	// Game Loop
@@ -36,7 +36,7 @@ public:
 	inline float GetCameraSensitivity() const { return cameraSensitivity; }
 	inline float GetLastDeltaX() const { return lastDeltaX; }
 	inline float GetLastDeltaY() const { return lastDeltaY; }
-	inline float GetAspectRatio() const { return aspectRatio; }
+	inline float GetAspectRatio() const { return cameraFrustum.AspectRatio(); }
 	inline float3 GetReference() const { return reference; }
 
 	inline bool IsEngineCamera() const { return isEngineCamera; }
@@ -50,6 +50,7 @@ public:
 	inline float3 GetPosition() const { return cameraFrustum.Pos(); }
 
 	// CAUTION! --> The Value is on DEG
+	// Vertical FOV is LOCKED, You can't set it.
 	inline float GetVerticalFov() const { return RadToDeg(cameraFrustum.VerticalFov()); }
 	// CAUTION! --> The Value is on DEG
 	inline float GetHorizontalFov() const { return RadToDeg(cameraFrustum.HorizontalFov()); }
@@ -58,6 +59,8 @@ public:
 	inline float GetFarPlaneDistance() const { return cameraFrustum.FarPlaneDistance(); }
 
 	float4x4 GetViewMatrix() const;
+	float4x4 GetWorldMatrix() const;
+	float4x4 GetProjectionMatrix() const;
 	
 	// Setters
 	void SetAspectRatio(const float& aspectRatio);
@@ -75,11 +78,13 @@ public:
 	void SetPosition(float3 newPos);
 
 	// IMPORTANT!! Horizontal Fov Must Be In DEG, not in radians!
-	inline void SetHorizontalFov(float horizontalFov) { this->cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontalFov) , aspectRatio); }
+	inline void SetHorizontalFov(float horizontalFov) { this->cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontalFov) , cameraFrustum.AspectRatio()); }
 	inline void SetNearPlaneDistance(float nearPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(nearPlaneDistance,cameraFrustum.FarPlaneDistance());}
 	inline void SetFarPlaneDistance(float farPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(cameraFrustum.NearPlaneDistance(),farPlaneDistance);}
 	inline void SetViewPlaneDistances(float nearPlaneDistance,float farPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(nearPlaneDistance,farPlaneDistance);}
 
+	inline void SetIsFrustumActive(bool value) { isFrustumCullingActive = value; }
+	inline void SetIsDrawFrustumActive(bool newValue) { isDrawFrustumActive = newValue; }
 	// Camera Functions
 	void LookAt(const float3& point);
 
@@ -95,9 +100,6 @@ private:
 	float3 reference;
 	Frustum cameraFrustum;
 
-	float aspectRatio = 1.f;
-	
-
 	float cameraSensitivity = .1f;
 	float cameraSpeed = 60.f;
 	float baseCameraSpeed = 60.f;
@@ -111,8 +113,6 @@ private:
 
 	bool isMainCamera = false;
 	bool isEngineCamera = false;
-
-	C_Transform* componentTransform = nullptr;
 	
 };
 

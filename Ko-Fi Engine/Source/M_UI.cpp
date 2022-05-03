@@ -213,7 +213,7 @@ void M_UI::PrepareUIRender()
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetViewMatrix().Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetViewMatrix().ptr());
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -234,9 +234,10 @@ void M_UI::EndUIRender()
 
 	glPopMatrix();
 
-	engine->GetCamera3D()->currentCamera->SetUp(up);
-	engine->GetCamera3D()->currentCamera->SetFront(front);
-	engine->GetCamera3D()->currentCamera->SetPosition(position);
+	//engine->GetCamera3D()->currentCamera->SetUp(up);
+	//engine->GetCamera3D()->currentCamera->SetFront(front);
+	//engine->GetCamera3D()->currentCamera->SetPosition(position);
+	engine->GetCamera3D()->currentCamera->GetCameraFrustum().SetFrame(position,front,up);// SHOUD BE NORMALIZED
 
 
 	glMatrixMode(GL_PROJECTION);

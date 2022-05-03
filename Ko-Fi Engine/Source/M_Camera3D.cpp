@@ -28,11 +28,14 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	name = "Camera";
 	this->engine = engine;
 	engineCameraObject = new GameObject(0, engine, "");
-	engineCamera = new C_Camera(engineCameraObject, true);
+	engineCamera = new C_Camera(engineCameraObject);
+	engineCamera->SetIsEngineCamera(true);
 
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
 	engineCamera->SetFarPlaneDistance(5000.f);
-	engineCamera->LookAt(float3::zero);
+	engineCamera->LookAt(engineCamera->GetFront());
+	engineCamera->SetIsFrustumActive(true);
+	engineCamera->SetIsDrawFrustumActive(true);
 
 	currentCamera = engineCamera;
 }
@@ -52,10 +55,12 @@ bool M_Camera3D::Awake(Json configModule)
 
 bool M_Camera3D::Start()
 {
+	bool ret = true;
+	
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
 
-	bool ret = true;
+	engineCamera->SetPosition(float3(0.0f, 0.0f, -100.f));
 
 	return ret;
 }
@@ -64,6 +69,10 @@ bool M_Camera3D::Start()
 bool M_Camera3D::Update(float dt)
 {
 	OPTICK_EVENT();
+
+	// Update Engine Transform
+	engineCamera->Update(dt);
+	engineCamera->owner->GetTransform()->Update(dt);
 
 	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
 		return true;
@@ -196,7 +205,7 @@ bool M_Camera3D::InspectorDraw()
 		}
 
 		float newHorizontallFov = currentCamera->GetHorizontalFov();
-		if (ImGui::DragFloat("Fov", &newHorizontallFov))
+		if (ImGui::DragFloat("Fov", &newHorizontallFov, 0.5f, 1.0f, 179.f))
 		{
 			currentCamera->SetHorizontalFov(newHorizontallFov);
 		}
@@ -206,7 +215,24 @@ bool M_Camera3D::InspectorDraw()
 		{
 			currentCamera->SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 		}
+		
+		ImGui::Text("x: %f y: %f z: %f", engineCamera->GetPosition().x, engineCamera->GetPosition().y, engineCamera->GetPosition().z);
 
+		// Position ImGui
+		float3 newPosition = engineCamera->owner->GetTransform()->GetPosition();
+		if (ImGui::DragFloat3("Location##", &(newPosition[0]), 0.5f))
+		{
+			engineCamera->owner->GetTransform()->SetPosition(newPosition);
+		}
+
+		// Rotation ImGui
+		float3 newRotationEuler = engineCamera->owner->GetTransform()->GetRotationEuler();
+		newRotationEuler = RadToDeg(newRotationEuler);
+		if (ImGui::DragFloat3("Rotation##", &(newRotationEuler[0]), 0.045f))
+		{
+			newRotationEuler = DegToRad(newRotationEuler);
+			engineCamera->owner->GetTransform()->SetRotationEuler(newRotationEuler);
+		}
 	}
 	return true;
 }

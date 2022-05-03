@@ -26,31 +26,28 @@
 
 #include "optick.h"
 
-C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
+C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
-	this->isEngineCamera = isEngineCamera;
 	type = ComponentType::CAMERA;
 	//if its not engine camera, get the owner's transform
-	if (!isEngineCamera)
-		componentTransform = owner->GetTransform();
+
 	//Set Default Values for the component
-	aspectRatio = 1.778f;
 	cameraSensitivity = .1f;
 	cameraSpeed = 120.f;
 	baseCameraSpeed = 120.f;
 	speedMultiplier = 1;
+
 	//Create the frustum
 	cameraFrustum = Frustum();
+
 	//Set Default Values for the frusum
 	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
 	cameraFrustum.SetPerspective(DegToRad(43.0f), DegToRad(22.0f));
-	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(45.0f),aspectRatio);
+	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(45.0f), 1.778f);
 	cameraFrustum.SetViewPlaneDistances(0.01f, 1000.0f);
-	cameraFrustum.SetFrame(float3(0.0f,0.0f,20.0f),float3(0.0f,0.0f,1.0f),float3(0.0f,1.0f,0.0f));
+	cameraFrustum.SetFrame(float3(0.0f,0.0f,0.0f),float3(0.0f,0.0f,1.0f),float3(0.0f,1.0f,0.0f));
 
-	reference = float3(0.0f, 0.0f, 0.0f);
-
-	LookAt(float3::zero);
+	LookAt(cameraFrustum.Front());
 
 }
 
@@ -70,14 +67,16 @@ bool C_Camera::Start()
 
 bool C_Camera::Update(float dt)
 {
-	// Add update functionality when we are able to change the main camera.
-	if (!isEngineCamera)
-	{
+	// Frustum Position shoud be same as the object pos
+	//cameraFrustum.SetPos(owner->GetTransform()->GetPosition());
+	cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
+	
+	if (isEngineCamera == true)
+		DrawFrustum();
 
-		if (isFrustumCullingActive)
-			FrustumCulling();
+	if (isFrustumCullingActive)
+		FrustumCulling();
 
-	}
 
 	return true;
 }
@@ -98,10 +97,10 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 	{
 		DrawDeleteButton(owner, this);
 
-		float verticalFOV = cameraFrustum.VerticalFov();
-		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
+		float verticalFOV = GetHorizontalFov();
+		if (ImGui::DragFloat("Fov", &verticalFOV, 1.0f, 0.0f, 180.f))
 		{
-			cameraFrustum.SetVerticalFovAndAspectRatio(verticalFOV, aspectRatio);
+			SetHorizontalFov(verticalFOV);
 		}
 		float2 planeDistances = { cameraFrustum.NearPlaneDistance(),cameraFrustum.FarPlaneDistance() };
 		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
@@ -155,7 +154,7 @@ float C_Camera::GetFarPlaneHeight() const
 
 float C_Camera::GetFarPlaneWidth() const
 {
-	return GetFarPlaneHeight() * aspectRatio;
+	return GetFarPlaneHeight() * cameraFrustum.AspectRatio();
 }
 
 float4x4 C_Camera::GetViewMatrix() const
@@ -163,17 +162,25 @@ float4x4 C_Camera::GetViewMatrix() const
 	return cameraFrustum.ViewMatrix();
 }
 
+float4x4 C_Camera::GetWorldMatrix() const
+{
+	return cameraFrustum.WorldMatrix();
+}
+
+float4x4 C_Camera::GetProjectionMatrix() const
+{
+	return cameraFrustum.ProjectionMatrix();
+}
+
 void C_Camera::SetAspectRatio(const float& aspectRatio)
 {
 	cameraFrustum.SetHorizontalFovAndAspectRatio(cameraFrustum.HorizontalFov(), aspectRatio);
-	this->aspectRatio = aspectRatio;
 }
 
 void C_Camera::SetPosition(float3 newPos)
 {
 	cameraFrustum.SetPos(newPos);
-	//this->owner->GetTransform()->SetPosition(newPos);
-
+	this->owner->GetTransform()->SetPosition(newPos);
 }
 
 void C_Camera::LookAt(const float3& point)
@@ -204,7 +211,7 @@ void C_Camera::FrustumCulling()
 		if (componentMesh == nullptr || gameObject == owner)
 			continue;
 
-		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
+		if (!ClipsWithBBox(componentMesh->GetLocalAABB()))
 			componentMesh->SetRenderMesh(false);
 		else
 			componentMesh->SetRenderMesh(true);
@@ -232,13 +239,13 @@ void C_Camera::DrawFrustum() const
 {
 	glPushMatrix();
 	
-	this->owner->GetTransform()->SetPosition(cameraFrustum.Pos());
-	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+//	this->owner->GetTransform()->SetPosition(cameraFrustum.Pos());
+	glMultMatrixf(GetWorldMatrix().Transposed().ptr());
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
 	//Draw Operations
 
-	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(3.5f);
 	glBegin(GL_LINES);
 
