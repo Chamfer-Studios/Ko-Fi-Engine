@@ -41,7 +41,6 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 	type = ComponentType::MESH;
 	radius = 0.0f;
 	mesh = nullptr;
-	renderMesh = true;
 	time = 0.0f;
 
 }

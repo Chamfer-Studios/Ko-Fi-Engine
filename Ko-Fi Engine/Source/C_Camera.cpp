@@ -208,9 +208,9 @@ void C_Camera::FrustumCulling()
 			continue;
 
 		if (!ClipsWithBBox(componentMesh->GetLocalAABB()))
-			componentMesh->SetRenderMesh(false);
+			gameObject->SetRenderGameObject(false);
 		else
-			componentMesh->SetRenderMesh(true);
+			gameObject->SetRenderGameObject(true);
 	}
 }
 
@@ -227,7 +227,7 @@ void C_Camera::ResetFrustumCulling()
 			continue;
 
 		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
-			componentMesh->SetRenderMesh(true);
+			gameObject->SetRenderGameObject(true);
 	}
 }
 

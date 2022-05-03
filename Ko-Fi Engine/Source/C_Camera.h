@@ -57,6 +57,7 @@ public:
 
 	inline float GetNearPlaneDistance() const { return cameraFrustum.NearPlaneDistance(); }
 	inline float GetFarPlaneDistance() const { return cameraFrustum.FarPlaneDistance(); }
+	inline bool GetIsFrustumActive() const { return isFrustumCullingActive; }
 
 	float4x4 GetViewMatrix() const;
 	float4x4 GetWorldMatrix() const;

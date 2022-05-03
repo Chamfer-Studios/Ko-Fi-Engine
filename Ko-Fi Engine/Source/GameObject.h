@@ -86,6 +86,7 @@ public:
 
 	void SetParentUID(uint uid);
 	uint GetParentUID() const;
+	inline bool GetRenderGameObject() const { return renderGameObject; }
 
 	bool HasChildrenWithUID(uint uid);
 	bool HasParentWithUID(uint uid);
@@ -98,6 +99,7 @@ public:
 	bool LoadPrefabJson(const char *path, bool exists);
 	bool LoadPrefab(Json &jsonFile);
 	bool UpdatePrefab(Json &jsonFile);
+	inline void SetRenderGameObject(bool renderGameObject) { this->renderGameObject = renderGameObject; }
 
 	bool IsSelected();
 	void LoadSceneFromName(std::string name);
@@ -141,7 +143,7 @@ private:
 	GameObject *parent = nullptr;
 	uint uid;
 	uint parentUid;
-
+	bool renderGameObject = false;
 	KoFiEngine *engine = nullptr;
 	C_Transform *transform = nullptr;
 };

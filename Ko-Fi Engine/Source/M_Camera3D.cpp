@@ -265,7 +265,12 @@ bool M_Camera3D::InspectorDraw()
 		{
 			engineCamera->ChangeSpeed(newSpeedMultiplier);
 		}
-
+		//Frustum Active
+		bool frustumActive = engineCamera->GetIsFrustumActive();
+		if (ImGui::Checkbox("Frustum culling", &frustumActive))
+		{
+			engineCamera->SetIsFrustumActive(frustumActive);
+		}
 		float newHorizontallFov = currentCamera->GetHorizontalFov();
 		if (ImGui::DragFloat("Fov", &newHorizontallFov, 0.5f, 1.0f, 179.f))
 		{
@@ -295,6 +300,7 @@ bool M_Camera3D::InspectorDraw()
 			newRotationEuler = DegToRad(newRotationEuler);
 			engineCamera->owner->GetTransform()->SetRotationEuler(newRotationEuler);
 		}
+
 	}
 	return true;
 }
