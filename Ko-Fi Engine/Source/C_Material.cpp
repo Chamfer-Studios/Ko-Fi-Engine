@@ -414,7 +414,10 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				{
 					//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
 					if (texture != nullptr && texture->textureID != TEXTUREID_DEFAULT)
+					{
 						owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
+						Importer::GetInstance()->textureImporter->Import(nullptr,texture);
+					}
 				}
 				ImGui::PopID();
 				ImGui::EndGroup();
