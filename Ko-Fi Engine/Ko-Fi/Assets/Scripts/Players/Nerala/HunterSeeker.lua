@@ -1,25 +1,28 @@
 ------------------- Variables --------------------
 
 characterID = 2
-speed = 1000
-lifeTime = 20.0	-- secs --iv required
+speed = 3000
+lifeTime = 30.0	-- secs --iv required
 lifeTimer = 0
 destination = nil
 target = nil
 attackRange = 20.0 -- Maybe too big
 
-componentAnimator = gameObject:GetComponentAnimator()
-if (componentAnimator ~= nil) then
-	componentAnimator:SetSelectedClip("Idle")
-end
-
 -------------------- Methods ---------------------
 
 function Start()
+
 	componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
-	local nerala = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+	destination = GetVariable("Nerala.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
+	player = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT) -- player = Find("Nerala")
+	local playerPos = player:GetTransform():GetPosition()
+	local targetPos2D = { destination.x, destination.z }
+	local pos2D = { playerPos.x, playerPos.z }
+	local d = Distance(pos2D, targetPos2D)
+	local vec2 = { targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2] }
+	vec2 = Normalize(vec2, d)
 	if (componentRigidBody ~= nil) then		
-		componentRigidBody:SetRigidBodyPos(float3.new(nerala:GetTransform():GetPosition().x + 10, nerala:GetTransform():GetPosition().y, nerala:GetTransform():GetPosition().z))
+		componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, 10, playerPos.z + vec2[2] * 3))
 	end
 end
 
@@ -28,16 +31,20 @@ function Update(dt)
 	
 	if (lifeTimer >= lifeTime) then
 		DeleteGameObject()
-		return
-	else
-		lifeTimer = lifeTimer + dt
+		DispatchGlobalEvent("Mosquito_Death", {})
+		return		
+	end
+
+	lifeTimer = lifeTimer + dt
+
+	if (lastRotation ~= nil) then
+		componentTransform:LookAt(lastRotation, float3.new(0, 1, 0))
 	end
 
 	if (target ~= nil) then
 		if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) <= attackRange) then
 			Attack()
 		else
-			print("a")
 			destination = target:GetTransform():GetPosition()
 			MoveToDestination(dt)
 		end
@@ -77,6 +84,12 @@ function MoveToDestination(dt)
 	local d = Distance3D(destination, pos)
 
 	if (d > 5.0) then
+
+		-- Adapt speed on arrive
+		if (d < 2.0) then
+			speed = speed * 0.5
+		end
+
 		-- Movement
 		local vec = float3.new(destination.x - pos.x, destination.y - pos.y, destination.z - pos.z)
 		vec.x = vec.x / d
@@ -85,12 +98,11 @@ function MoveToDestination(dt)
 		if (componentRigidBody ~= nil) then
 			componentRigidBody:SetLinearVelocity(float3.new(vec.x * speed * dt, 0, vec.z * speed * dt))
 		end
+		
 		-- Rotation
-		local rad = math.acos(vec.z)
-		if (vec.x < 0)	then
-			rad = rad * (-1)
-		end
-		componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x, rad, componentTransform:GetRotation().z))
+		lastRotation = float3.new(vec.x, 0, vec.z)
+		componentTransform:LookAt(lastRotation, float3.new(0, 1, 0))
+
 	else
 		destination = nil
 		if (componentRigidBody ~= nil) then
@@ -112,10 +124,8 @@ function IsSelected()
 end
 
 function Attack()
-	if (componentAnimator ~= nil) then
-		componentAnimator:SetSelectedClip("Attack")
-	end
-	SetLuaVariableFromGameObject(target, "lethal", lethal)
+	
+	--SetLuaVariableFromGameObject(target, "lethal", lethal)
 end
 
 function StopMovement()
@@ -136,6 +146,21 @@ function Distance3D(a, b)
 
     diff = { x = b.x - a.x, y = b.y - a.y, z = b.z - a.z }
     return math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z)
+end
+
+function Normalize(vec, distance)
+    
+	vec[1] = vec[1] / distance
+	vec[2] = vec[2] / distance
+
+	return vec
+end
+
+function Distance(a, b)
+
+    local dx, dy = a[1] - b[1], a[2] - b[2]
+    return math.sqrt(dx * dx + dy * dy)
+
 end
 
 --------------------------------------------------
