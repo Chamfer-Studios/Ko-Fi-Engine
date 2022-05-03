@@ -483,7 +483,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 			selectedClip.SetFinishedBool(true);
 	}
 
-	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
+	ReadNodeHeirarchy(animationTimeTicks + startFrame, rootNode, identity); // We add startFrame as an offset to the duration.
 	transforms.resize(boneInfo.size());
 	transformsAnim.resize(boneInfo.size());
 
@@ -526,8 +526,6 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 	}
 
 	float4x4 globalTransformation = parentTransform * nodeTransformation;
-	float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
-	float4x4 partial = rootTransform * globalTransformation;
 
 	if (boneNameToIndexMap.contains(nodeName))
 	{
@@ -540,9 +538,6 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 #pragma omp parallel for
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
-		/*if (pNode->GetChildren().at(i)->GetComponent<C_Image>() || pNode->GetChildren().at(i)->GetComponent<C_Canvas>() || pNode->GetChildren().at(i)->GetComponent<C_Button>())
-			continue;*/
-
 		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);
 	}
 }
