@@ -1,17 +1,21 @@
 #include "Globals.h"
 #include "M_Camera3D.h"
+
+// Modules
 #include "Engine.h"
 #include "M_Input.h"
 #include "M_SceneManager.h"
 #include "M_Editor.h"
+#include "M_Renderer3D.h"
+
+// GameObjects
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Script.h"
-#include "M_Renderer3D.h"
+
 #include "PanelViewport.h"
 #include "Scripting.h"
-#include "GameObject.h"
 
 #include "SDL.h"
 #include "Log.h"
@@ -170,63 +174,77 @@ void M_Camera3D::MouseRotation(float dt)
 	// TODO: MOUSE MOTION
 	bool hasRotated = false;
 
-	int dx = -engine->GetInput()->GetMouseXMotion();
-	int dy = -engine->GetInput()->GetMouseYMotion();
-
-	const float newDeltaX = (float)dx * cameraSensitivity;
-	const float newDeltaY = (float)dy * cameraSensitivity;
-
-	//if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1) // If Object is Selected
-	//{
-
-	//	// Orbit Around The Object
-	//	engineCamera->SetReference(engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetComponent<C_Transform>()->GetPosition());
-
-	//	Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
-
-	//	if (abs(engineCamera->GetUp().y) < 0.3f) // Avoid gimball lock on up & down apex
-	//	{
-	//		if (engineCamera->GetPosition().y > engineCamera->GetReference().y && newDeltaY < 0.f)
-	//			orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
-	//		if (engineCamera->GetPosition().y < engineCamera->GetReference().y && newDeltaY > 0.f)
-	//			orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
-	//	}
-	//	else
-	//	{
-	//		orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
-	//	}
-
-	//	engineCamera->SetPosition(orbitMat * (currentCamera->GetPosition() - currentCamera->GetReference()) + currentCamera->GetReference());
-	//	engineCamera->LookAt(engineCamera->GetReference());
-	//}
+	int dx = engine->GetInput()->GetMouseXMotion();
+	int dy = engine->GetInput()->GetMouseYMotion();
+	//KOFI_DEBUG("dx: %d dy: %d", dx, dy);
 
 
-	if (dx != 0)
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
 	{
 		const float newDeltaX = (float)dx * cameraSensitivity;
-		float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
-		lastDeltaX = deltaX;
-		Quat rotateY = Quat::RotateY(engineCamera->GetUp().y >= 0.f ? deltaX * .1f : -deltaX * .1f);
-		//engineCamera->SetUp(rotateY * engineCamera->GetUp());
-		//engineCamera->SetFront(rotateY * engineCamera->GetFront());
-		engineCamera->GetCameraFrustum().SetFrame(engineCamera->GetPosition(), rotateY * engineCamera->GetFront(), rotateY * engineCamera->GetUp());
-
-		hasRotated = true;
-	}
-
-	if (dy != 0)
-	{
 		const float newDeltaY = (float)dy * cameraSensitivity;
-		float deltaY = newDeltaY + 0.95f * (lastDeltaY - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
-		lastDeltaY = deltaY;
-		Quat rotateX = Quat::RotateAxisAngle(engineCamera->GetRight(), -deltaY * .1f);
-		//engineCamera->SetUp(rotateX * engineCamera->GetUp());
-		//engineCamera->SetFront(rotateX * engineCamera->GetFront());
-		engineCamera->GetCameraFrustum().SetFrame(engineCamera->GetPosition(), rotateX * engineCamera->GetFront(), rotateX * engineCamera->GetUp());
-		hasRotated = true;
+
+		engineCamera->SetReference(engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()
+			->panelGameObjectInfo.selectedGameObjectID)->GetComponent<C_Transform>()->GetPosition()); /*engine->GetEditor()->gameobjectSelected->transform->GetPosition()*/
+
+		Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
+
+		if (abs(engineCamera->GetUp().y) < 0.3f) // Avoid gimball lock on up & down apex
+		{
+			if (engineCamera->GetPosition().y > engineCamera->GetReference().y && newDeltaY < 0.f)
+				orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
+			if (engineCamera->GetPosition().y < engineCamera->GetReference().y && newDeltaY > 0.f)
+				orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
+		}
+		else
+		{
+			orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
+		}
+
+		engineCamera->SetPosition(orbitMat * (engineCamera->GetPosition() - engineCamera->GetReference()) + engineCamera->GetReference());
+
+		engineCamera->LookAt(engineCamera->GetReference());
 	}
+	else
+	{
+		if (dx != 0)
+		{
+			const float newDeltaX = (float)dx * cameraSensitivity;
+			float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
+			lastDeltaX = deltaX;
+			Quat rotateX = Quat::RotateY(engineCamera->GetUp().y >= 0.f ? deltaX * .1f : -deltaX * .1f);
 
+			engineCamera->SetFront(rotateX * engineCamera->GetFront());
+	
 
+			hasRotated = true;
+		}
+
+		//if (dy != 0)
+		//{
+		//	const float newDeltaY = (float)dy * cameraSensitivity;
+		//	float deltaY = newDeltaY + 0.95f * (lastDeltaY - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
+		//	lastDeltaY = deltaY;
+		//	Quat rotateY = Quat::RotateAxisAngle(engineCamera->GetRight(), deltaY * .1f);
+		//	//Quat rotateY = Quat::RotateX(engineCamera->GetRight().x >= 0.f ? deltaY * .1f : -deltaY * .1f);
+
+		//	//engineCamera->GetCameraFrustum().SetFrame(engineCamera->GetPosition(),(rotateX * engineCamera->GetFront()).Normalized(),(rotateX * engineCamera->GetUp()).Normalized());
+		//	//engineCamera->GetCameraFrustum().SetFrontUp(rotateY * engineCamera->GetFront(), rotateY * engineCamera->GetUp());
+		//	float3 front = (rotateY * engineCamera->GetFront());
+		//	/*abs(front.x);
+		//	abs(front.y);
+		//	abs(front.z);*/
+		//	KOFI_DEBUG("FRONT x: %f y: %f z: %f w: %f", front.x, front.y, front.z);
+		//	float3 up = (rotateY * engineCamera->GetUp());
+		//	/*abs(up.x);
+		//	abs(up.y);
+		//	abs(up.z);*/
+		//	KOFI_DEBUG("UP x: %f y: %f z: %f w: %f", up.x, up.y, up.z);
+
+		//	engineCamera->SetUp(up);
+		//	engineCamera->SetFront(front);
+		//}
+	}
 
 	if (!hasRotated)
 	{
@@ -294,7 +312,7 @@ bool M_Camera3D::InspectorDraw()
 			currentCamera->SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 		}
 
-			ImGui::Text("x: %f y: %f z: %f", engineCamera->GetPosition().x, engineCamera->GetPosition().y, engineCamera->GetPosition().z);
+		ImGui::Text("x: %f y: %f z: %f", engineCamera->GetPosition().x, engineCamera->GetPosition().y, engineCamera->GetPosition().z);
 
 		// Position ImGui
 		float3 newPosition = engineCamera->owner->GetTransform()->GetPosition();

@@ -1,6 +1,9 @@
 #include "R_Mesh.h"
 #include "R_Texture.h"
 
+#include "Engine.h"
+#include "M_Renderer3D.h"
+
 #include "GameObject.h"
 #include "C_Material.h"
 #include "C_Transform.h"
@@ -11,7 +14,6 @@
 
 #include "R_Animation.h"
 #include "AnimatorClip.h"
-#include "R_Animation.h"
 #include "Channel.h"
 
 #include "Globals.h"
@@ -27,13 +29,6 @@
 
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/float4x4.h"
-
-#include "C_Material.h"
-#include "C_Transform.h"
-#include "GameObject.h"
-#include "Globals.h"
-#include "Engine.h"
-#include "M_Renderer3D.h"
 
 #include "optick.h"
 
