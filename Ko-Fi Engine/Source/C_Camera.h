@@ -74,8 +74,8 @@ public:
 	inline void SetIsEngineCamera(bool value) { isEngineCamera = value; }
 	inline void SetIsMainCamera(bool value) { isMainCamera = value; }
 	
-	inline void SetFront(float3 newFront) { this->cameraFrustum.SetFront(newFront); }
-	inline void SetUp(float3 newUp) { this->cameraFrustum.SetUp(newUp); }
+	inline void SetFront(float3 newFront) { this->cameraFrustum.SetFront(newFront.Normalized()); }
+	inline void SetUp(float3 newUp) { this->cameraFrustum.SetUp(newUp.Normalized()); }
 	void SetPosition(float3 newPos);
 
 	// IMPORTANT!! Horizontal Fov Must Be In DEG, not in radians!

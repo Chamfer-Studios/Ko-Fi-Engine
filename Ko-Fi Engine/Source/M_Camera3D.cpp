@@ -32,7 +32,7 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetIsEngineCamera(true);
 
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-	engineCamera->SetFarPlaneDistance(5000.f);
+	engineCamera->SetFarPlaneDistance(4000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
 	engineCamera->SetIsFrustumActive(true);
 
@@ -278,12 +278,12 @@ bool M_Camera3D::InspectorDraw()
 		}
 
 		float2 planeDistances = { currentCamera->GetNearPlaneDistance(),currentCamera->GetFarPlaneDistance() };
-		if (ImGui::DragFloat("Near plane distance", &(planeDistances[0])))
+		if (ImGui::DragFloat2("Near plane distance", &(planeDistances[0])))
 		{
 			currentCamera->SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 		}
 
-		ImGui::Text("x: %f y: %f z: %f", engineCamera->GetPosition().x, engineCamera->GetPosition().y, engineCamera->GetPosition().z);
+			ImGui::Text("x: %f y: %f z: %f", engineCamera->GetPosition().x, engineCamera->GetPosition().y, engineCamera->GetPosition().z);
 
 		// Position ImGui
 		float3 newPosition = engineCamera->owner->GetTransform()->GetPosition();
