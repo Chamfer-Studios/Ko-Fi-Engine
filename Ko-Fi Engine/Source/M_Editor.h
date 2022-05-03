@@ -30,7 +30,6 @@ struct EngineConfig;
 
 struct PanelGameObjectInfo
 {
-	int selectedGameObjectID = -1;
 	std::vector<int> selectedGameObjects;
 };
 

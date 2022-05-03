@@ -159,23 +159,33 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 	if (ImGui::TreeNodeEx(go->GetName(), flags))
 	{
 		DragNDrop(go);
-		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(1)))
+
+		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(0)))
 		{
 			editor->panelGameObjectInfo.selectedGameObjects.clear();
 			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
-			editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
+			//editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
 			CONSOLE_LOG("%s || %d", go->GetName(), go->GetUID());
+			appLog->AddLog("Left Clicked");
 		}
-		if (ImGui::IsItemClicked(1)) {
+		if ((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) ||  ImGui::IsItemClicked(1))
+		{
+			editor->panelGameObjectInfo.selectedGameObjects.clear();
+			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
+		}
+		if (ImGui::IsMouseReleased(1))
+		{
+			appLog->AddLog("Right Clicked");
 			ImGui::OpenPopup("Test");
 		}
 		
+		
+		
 		for (int i = 0; i < go->GetChildren().size(); i++)
 		{
-
 			DisplayTree(go->GetChildren().at(i), flags, ++id);
-
 		}
 		if (ImGui::BeginPopup("Test"))
 		{
