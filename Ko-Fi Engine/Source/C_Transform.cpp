@@ -59,14 +59,13 @@ bool C_Transform::Update(float dt)
 
 bool C_Transform::PostUpdate(float dt)
 {
-	return true;
 
-	glBegin(GL_LINES);
-	glColor3f(0, 0, 1.0f);
-	glLineWidth(4.f);
-	glVertex3f(GetPosition().x, GetPosition().y, GetPosition().z);
-	glVertex3f(GetPosition().x + Front().x * 50, GetPosition().y + Front().y * 50, GetPosition().z + Front().z * 50);
-	glEnd();
+	//glBegin(GL_LINES);
+	//glColor3f(0, 0, 1.0f);
+	//glLineWidth(4.f);
+	//glVertex3f(GetPosition().x, GetPosition().y, GetPosition().z);
+	//glVertex3f(GetPosition().x + Front().x * 50, GetPosition().y + Front().y * 50, GetPosition().z + Front().z * 50);
+	//glEnd();
 
 	return true;
 }

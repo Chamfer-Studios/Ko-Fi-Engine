@@ -60,6 +60,8 @@ bool C_Camera::Start()
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
 
+	owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
+
 	bool ret = true;
 
 	return ret;
@@ -67,16 +69,11 @@ bool C_Camera::Start()
 
 bool C_Camera::Update(float dt)
 {
-	// Frustum Position shoud be same as the object pos
-	//cameraFrustum.SetPos(owner->GetTransform()->GetPosition());
-	cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
-	
-	if (isEngineCamera == true)
-		DrawFrustum();
+	// Tranform Should be the same as frustumPos
+	 owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
 
 	if (isFrustumCullingActive)
 		FrustumCulling();
-
 
 	return true;
 }
@@ -180,7 +177,6 @@ void C_Camera::SetAspectRatio(const float& aspectRatio)
 void C_Camera::SetPosition(float3 newPos)
 {
 	cameraFrustum.SetPos(newPos);
-	this->owner->GetTransform()->SetPosition(newPos);
 }
 
 void C_Camera::LookAt(const float3& point)
@@ -237,9 +233,6 @@ void C_Camera::ResetFrustumCulling()
 
 void C_Camera::DrawFrustum() const
 {	
-//	this->owner->GetTransform()->SetPosition(cameraFrustum.Pos());
-
-
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
 	//Draw Operations

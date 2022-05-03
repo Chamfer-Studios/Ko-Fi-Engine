@@ -35,7 +35,6 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetFarPlaneDistance(5000.f);
 	engineCamera->LookAt(engineCamera->GetFront());
 	engineCamera->SetIsFrustumActive(true);
-	engineCamera->SetIsDrawFrustumActive(true);
 
 	currentCamera = engineCamera;
 }
@@ -56,7 +55,7 @@ bool M_Camera3D::Awake(Json configModule)
 bool M_Camera3D::Start()
 {
 	bool ret = true;
-	
+
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
 
@@ -70,9 +69,11 @@ bool M_Camera3D::Update(float dt)
 {
 	OPTICK_EVENT();
 
+
 	// Update Engine Transform
-	engineCamera->Update(dt);
+	engineCamera->Update(dt); // Update First**
 	engineCamera->owner->GetTransform()->Update(dt);
+	engineCamera->owner->GetTransform()->PostUpdate(dt);
 
 	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
 		return true;
@@ -129,20 +130,20 @@ void M_Camera3D::OnGui()
 void M_Camera3D::CheckInput(float dt)
 {
 	float3 newPos(0, 0, 0);
-	float speed = currentCamera->GetCameraSpeed() * dt;
+	float speed = engineCamera->GetCameraSpeed() * dt;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 5.0f;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += currentCamera->GetFront() * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= currentCamera->GetFront() * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += engineCamera->GetFront() * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= engineCamera->GetFront() * speed;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= currentCamera->GetRight() * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += currentCamera->GetRight() * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= engineCamera->GetRight() * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += engineCamera->GetRight() * speed;
 
-	currentCamera->SetPosition(currentCamera->GetPosition() + newPos);
+	engineCamera->SetPosition(engineCamera->GetPosition() + newPos);
 }
 
 void M_Camera3D::MouseZoom(float dt)
@@ -150,16 +151,77 @@ void M_Camera3D::MouseZoom(float dt)
 	float3 newPos = float3(0.f, 0.f, 0.f);
 
 	// Mouse Middle Button
-	if (engine->GetInput()->GetMouseZ() > 0) newPos += currentCamera->GetFront() * currentCamera->GetCameraSpeed();
-	if (engine->GetInput()->GetMouseZ() < 0) newPos -= currentCamera->GetFront() * currentCamera->GetCameraSpeed();
+	if (engine->GetInput()->GetMouseZ() > 0) newPos += engineCamera->GetFront() * engineCamera->GetCameraSpeed();
+	if (engine->GetInput()->GetMouseZ() < 0) newPos -= engineCamera->GetFront() * engineCamera->GetCameraSpeed();
 
-	currentCamera->SetPosition(currentCamera->GetPosition() + newPos);
+	engineCamera->SetPosition(engineCamera->GetPosition() + newPos);
 }
 
 void M_Camera3D::MouseRotation(float dt)
 {
 	// TODO: MOUSE MOTION
+	bool hasRotated = false;
 
+	int dx = -engine->GetInput()->GetMouseXMotion();
+	int dy = -engine->GetInput()->GetMouseYMotion();
+
+	const float newDeltaX = (float)dx * engineCamera->GetCameraSensitivity();
+	const float newDeltaY = (float)dy * engineCamera->GetCameraSensitivity();
+
+	//if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1) // If Object is Selected
+	//{
+
+	//	// Orbit Around The Object
+	//	engineCamera->SetReference(engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetComponent<C_Transform>()->GetPosition());
+
+	//	Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
+
+	//	if (abs(engineCamera->GetUp().y) < 0.3f) // Avoid gimball lock on up & down apex
+	//	{
+	//		if (engineCamera->GetPosition().y > engineCamera->GetReference().y && newDeltaY < 0.f)
+	//			orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
+	//		if (engineCamera->GetPosition().y < engineCamera->GetReference().y && newDeltaY > 0.f)
+	//			orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
+	//	}
+	//	else
+	//	{
+	//		orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
+	//	}
+
+	//	engineCamera->SetPosition(orbitMat * (currentCamera->GetPosition() - currentCamera->GetReference()) + currentCamera->GetReference());
+	//	engineCamera->LookAt(engineCamera->GetReference());
+	//}
+
+
+	if (dx != 0)
+	{
+		const float newDeltaX = (float)dx * engineCamera->GetCameraSensitivity();
+		float deltaX = newDeltaX + 0.95f * (engineCamera->GetLastDeltaX() - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
+		engineCamera->SetLastDeltaX(deltaX);
+		Quat rotateY = Quat::RotateY(engineCamera->GetUp().y >= 0.f ? deltaX * .1f : -deltaX * .1f);
+		//engineCamera->SetUp(rotateY * engineCamera->GetUp());
+		engineCamera->SetFront(rotateY * engineCamera->GetFront());
+		hasRotated = true;
+	}
+
+	if (dy != 0)
+	{
+		const float newDeltaY = (float)dy * engineCamera->GetCameraSensitivity();
+		float deltaY = newDeltaY + 0.95f * (engineCamera->GetLastDeltaY() - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
+		engineCamera->SetLastDeltaY(deltaY);
+		Quat rotateX = Quat::RotateAxisAngle(engineCamera->GetRight(), -deltaY * .1f);
+		//engineCamera->SetUp(rotateX * engineCamera->GetUp());
+		engineCamera->SetFront(rotateX * engineCamera->GetFront());
+		hasRotated = true;
+	}
+
+
+
+	if (!hasRotated)
+	{
+		engineCamera->SetLastDeltaX(0.0f);
+		engineCamera->SetLastDeltaY(0.0f);
+	}
 
 }
 
@@ -215,14 +277,14 @@ bool M_Camera3D::InspectorDraw()
 		{
 			currentCamera->SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 		}
-		
+
 		ImGui::Text("x: %f y: %f z: %f", engineCamera->GetPosition().x, engineCamera->GetPosition().y, engineCamera->GetPosition().z);
 
 		// Position ImGui
 		float3 newPosition = engineCamera->owner->GetTransform()->GetPosition();
 		if (ImGui::DragFloat3("Location##", &(newPosition[0]), 0.5f))
 		{
-			engineCamera->owner->GetTransform()->SetPosition(newPosition);
+			engineCamera->SetPosition(newPosition);
 		}
 
 		// Rotation ImGui
