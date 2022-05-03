@@ -29,13 +29,6 @@
 C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAMERA;
-	//if its not engine camera, get the owner's transform
-
-	//Set Default Values for the component
-	cameraSensitivity = .1f;
-	cameraSpeed = 120.f;
-	baseCameraSpeed = 120.f;
-	speedMultiplier = 1;
 
 	//Create the frustum
 	cameraFrustum = Frustum();
@@ -188,12 +181,6 @@ void C_Camera::LookAt(const float3& point)
 	cameraFrustum.SetUp(cameraFrustum.Front().Cross(cameraFrustum.WorldRight()));
 
 }
-
-void C_Camera::ChangeSpeed(int multiplier)
-{
-	cameraSpeed = baseCameraSpeed * multiplier;
-}
-
 
 void C_Camera::FrustumCulling()
 {

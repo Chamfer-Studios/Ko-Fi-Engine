@@ -220,16 +220,13 @@ void PanelViewport::DrawViewportBar()
 	}
 	if (ImGui::BeginPopup("Camera Speed Popup"))
 	{
-		int newSpeedMultiplier = editor->engine->GetCamera3D()->engineCamera->GetSpeedMultiplier();
+		int newSpeedMultiplier = editor->engine->GetCamera3D()->GetSpeedMultiplier();
 		if (ImGui::SliderInt("##Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
 		{
-			editor->engine->GetCamera3D()->engineCamera->ChangeSpeed(newSpeedMultiplier);
+			editor->engine->GetCamera3D()->ChangeSpeed(newSpeedMultiplier);
 		}
 		ImGui::EndPopup();
 	}
-	
-
-	
 	
 	ImGui::EndGroup();
 }
