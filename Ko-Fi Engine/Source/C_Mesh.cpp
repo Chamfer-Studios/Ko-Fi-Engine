@@ -239,10 +239,12 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 {
 	if (drawAABB)
 	{
-		glLineWidth(2.0f);
-		glColor3f(rgb.x, rgb.y, rgb.z);
 		glPushMatrix();
 		glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+
+		glLineWidth(2.0f);
+		glColor3f(rgb.x, rgb.y, rgb.z);
+
 		glBegin(GL_LINES);
 
 		// Bottom 1
@@ -290,7 +292,6 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 		glLineWidth(1.0f);
 		glPopMatrix();
 
-		glPopMatrix();
 	}
 }
 

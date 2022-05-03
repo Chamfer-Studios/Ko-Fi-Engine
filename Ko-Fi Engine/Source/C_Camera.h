@@ -61,7 +61,7 @@ public:
 	float4x4 GetViewMatrix() const;
 	float4x4 GetWorldMatrix() const;
 	float4x4 GetProjectionMatrix() const;
-	
+	//float3 IntersectionPoint(ref Plane a, ref Plane b, ref Plane c);
 	// Setters
 	void SetAspectRatio(const float& aspectRatio);
 	void ChangeSpeed(int multiplier);

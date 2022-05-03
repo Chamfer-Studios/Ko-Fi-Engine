@@ -236,11 +236,10 @@ void C_Camera::ResetFrustumCulling()
 }
 
 void C_Camera::DrawFrustum() const
-{
-	glPushMatrix();
-	
+{	
 //	this->owner->GetTransform()->SetPosition(cameraFrustum.Pos());
-	glMultMatrixf(GetWorldMatrix().Transposed().ptr());
+
+
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
 	//Draw Operations
@@ -248,47 +247,45 @@ void C_Camera::DrawFrustum() const
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(3.5f);
 	glBegin(GL_LINES);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
+	//Near plane BL-BR
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);//Near BL
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);//Near BR
+	//Near plane BL-TL
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z); //Near BL
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z); //Near TL
+	//Near plane TL - TR
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);//Near TL
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);//Near TR
+	//Near plane BR - TR
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);//Near BR
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);//Near TR
+	//Near plane BL - Far plane BL
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z); //Near BL
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z); //Far BL
+	//Far BL - BR
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);//Far BL
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);//Far BR
+	//Far BR - Near BR
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z); //Far BR
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z); //Near BR
+	//Far BR - TR
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z); //Far BR
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
+	//Far TR - TL
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); //Far TL
+	//Far TL - Near TL
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); //Far TL
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z); //Near TL
+	//Far TL - BL
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); // Far TL
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z); //Far BL
+	//Far TR - Near TR
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z); //Near TR
 	glEnd();
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.0f);
-	glPopMatrix();
 
 }
 
