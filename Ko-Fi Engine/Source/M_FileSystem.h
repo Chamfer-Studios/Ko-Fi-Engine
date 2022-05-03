@@ -8,8 +8,6 @@ namespace fs = std::filesystem;
 
 class M_Renderer3D;
 class GameObject;
-#define CHECKERS_HEIGHT 128
-#define CHECKERS_WIDTH 128
 
 class M_FileSystem : public Module
 {

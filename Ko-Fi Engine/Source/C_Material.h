@@ -3,9 +3,6 @@
 
 #include "Component.h"
 
-#define CHECKERS_HEIGHT 128
-#define CHECKERS_WIDTH 128
-
 using Json = nlohmann::json;
 
 class PanelChooser;
@@ -45,6 +42,8 @@ private:
 	R_Material* material = nullptr;
 
 	int currentTextureId = 0;
+
+	bool checkerTexture = false;
 };
 
 #endif // !__C_MATERIAL_H__

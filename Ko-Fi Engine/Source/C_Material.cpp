@@ -39,6 +39,7 @@ C_Material::C_Material(GameObject* parent) : Component(parent)
 	material = nullptr;
 	texture = nullptr;
 	currentTextureId = 0;
+	checkerTexture = false;
 }
 
 C_Material::~C_Material()
@@ -211,12 +212,21 @@ void C_Material::Load(Json& json)
 		if (textureAssetPath != "")
 		{
 			texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(textureAssetPath.c_str());
+			checkerTexture = false;
 
 			if (texture == nullptr)
+			{
 				CONSOLE_LOG("[ERROR] Component Material: texture couldn't be loaded from library.");
+				checkerTexture = true;
+				texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
+			}
 		}
 		else
+		{
 			CONSOLE_LOG("[WARNING] Component Material: texture asset path was not found while loading.");
+			checkerTexture = true;
+			texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
+		}
 	}
 }
 
@@ -354,6 +364,16 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 					texture = nullptr;
 
 					texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(path.c_str());
+
+					checkerTexture = false;
+				}
+				else
+				{
+					if (texture != nullptr)
+						owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
+
+					checkerTexture = true;
+					texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 				}
 			}
 		}
@@ -397,6 +417,12 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 					if (ImGui::Selectable(texture->GetLibraryPath())) {}
 					ImGui::PopStyleColor();
 				}
+				else
+				{
+					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+					if (ImGui::Selectable("Checker Texture")) {}
+					ImGui::PopStyleColor();
+				}
 
 				ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
@@ -416,7 +442,8 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 					if (texture != nullptr && texture->textureID != TEXTUREID_DEFAULT)
 					{
 						owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
-						Importer::GetInstance()->textureImporter->Import(nullptr,texture);
+						checkerTexture = true;
+						texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 					}
 				}
 				ImGui::PopID();
@@ -431,9 +458,6 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				currentTextureId = texture->GetTextureId();
 			}
 		}
-
-		//if (ImGui::Button("Add Texture"))
-		//	panelChooser->OpenPanel("AddTexture", "png");
 
 		ImGui::Separator();
 

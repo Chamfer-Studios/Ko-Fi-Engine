@@ -28,7 +28,7 @@ bool R_Texture::SaveMeta(Json& json) const
 	return true;
 }
 
-void R_Texture::SetUpTexture(bool checkers)
+void R_Texture::SetUpTexture()
 {
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -41,26 +41,18 @@ void R_Texture::SetUpTexture(bool checkers)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	if (checkers)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (data != nullptr)
 	{
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		if (nrChannels == 4)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		else if (nrChannels == 3)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
-	{
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		if (data != nullptr)
-		{
-			if (nrChannels == 4)
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-			else if (nrChannels == 3)
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-			appLog->AddLog("Texture Image not loaded correctly.\n");
-	}
+		appLog->AddLog("Texture Image not loaded correctly.\n");
 }

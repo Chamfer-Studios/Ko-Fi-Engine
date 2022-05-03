@@ -12,9 +12,9 @@
 #include <string>
 #include <fstream>
 
-#define CHECKERS_SIZE 32
+#define CHECKERS_SIZE 64
 
-I_Texture::I_Texture(KoFiEngine* engine) : engine(engine)
+I_Texture::I_Texture(KoFiEngine* engine) : engine(engine), checkerTexture(nullptr)
 {}
 
 I_Texture::~I_Texture()
@@ -22,42 +22,17 @@ I_Texture::~I_Texture()
 
 bool I_Texture::Import(const char* path, R_Texture* texture)
 {
-	if (texture == nullptr)
+	if (texture == nullptr || path == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Texture! Error: R_Texture* was nullptr.");
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Texture! Error: R_Texture or Path was nullptr.");
 		return false;
 	}
 
-	if (path == nullptr)
-	{
-		GLubyte checkerImage[CHECKERS_SIZE][CHECKERS_SIZE][4];
-		for (int i = 0; i < CHECKERS_SIZE; i++)
-		{
-			for (int j = 0; j < CHECKERS_SIZE; j++)
-			{
-				int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-				checkerImage[i][j][0] = (GLubyte)c;
-				checkerImage[i][j][1] = (GLubyte)c;
-				checkerImage[i][j][2] = (GLubyte)c;
-				checkerImage[i][j][3] = (GLubyte)255;
-			}
-		}
+	texture->data = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, 0);
 
-		texture->SetUpTexture(true);
+	texture->imageSizeBytes = texture->GetTextureWidth() * texture->GetTextureHeight() * texture->GetNrChannels() * sizeof(unsigned char);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_SIZE, CHECKERS_SIZE,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
-
-		return true;
-	}
-	else
-	{
-		texture->data = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, 0);
-
-		texture->imageSizeBytes = texture->GetTextureWidth() * texture->GetTextureHeight() * texture->GetNrChannels() * sizeof(unsigned char);
-		
-		texture->SetUpTexture(false);
-	}
+	texture->SetUpTexture();
 
 	return true;
 }
@@ -109,7 +84,7 @@ bool I_Texture::Load(const char* path, R_Texture* texture)
 
 			file.close();
 
-			texture->SetUpTexture(false);
+			texture->SetUpTexture();
 
 			return true;
 		}
@@ -118,4 +93,47 @@ bool I_Texture::Load(const char* path, R_Texture* texture)
 		CONSOLE_LOG("[ERROR] Texture Load: directory %s couldn't be accessed.", TEXTURES_DIR);
 
 	return false;
+}
+
+R_Texture* I_Texture::GetCheckerTexture()
+{
+	if (checkerTexture == nullptr)
+	{
+		checkerTexture = new R_Texture();
+
+		GLubyte checkerImage[CHECKERS_SIZE][CHECKERS_SIZE][4];
+		for (int i = 0; i < CHECKERS_SIZE; i++)
+		{
+			for (int j = 0; j < CHECKERS_SIZE; j++)
+			{
+				int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+				checkerImage[i][j][0] = (GLubyte)c;
+				checkerImage[i][j][1] = (GLubyte)c;
+				checkerImage[i][j][2] = (GLubyte)c;
+				checkerImage[i][j][3] = (GLubyte)255;
+			}
+		}
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+		glGenTextures(1, &checkerTexture->textureID);
+
+		glBindTexture(GL_TEXTURE_2D, checkerTexture->textureID);
+
+		// Set the texture wrapping/filtering options (on the currently bound texture object)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); // 03/05/2022 was GL_LINEAR
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_SIZE, CHECKERS_SIZE,
+			0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
+		checkerTexture->width = CHECKERS_SIZE;
+		checkerTexture->height = CHECKERS_SIZE;
+		checkerTexture->nrChannels = 4;
+		checkerTexture->imageSizeBytes = CHECKERS_SIZE * CHECKERS_SIZE * 4 * sizeof(unsigned char);
+	}
+	return checkerTexture;
 }

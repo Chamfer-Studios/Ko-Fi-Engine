@@ -15,8 +15,12 @@ public:
 	bool Save(const R_Texture* texture, const char* path);
 	bool Load(const char* path, R_Texture* texture);
 
+	R_Texture* GetCheckerTexture();
+
 private:
 	KoFiEngine* engine = nullptr;
+
+	R_Texture* checkerTexture = nullptr;
 };
 
 #endif // !__I_TEXTURE_H__

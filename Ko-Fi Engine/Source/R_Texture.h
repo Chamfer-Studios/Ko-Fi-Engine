@@ -16,7 +16,7 @@ public:
 
 	bool SaveMeta(Json& json) const override;
 
-	void SetUpTexture(bool checkers);
+	void SetUpTexture();
 
 	inline const char* GetTexturePath() const { return GetAssetPath(); }
 	inline void SetTexturePath(const char* path)

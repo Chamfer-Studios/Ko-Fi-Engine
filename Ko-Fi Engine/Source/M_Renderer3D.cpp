@@ -392,7 +392,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 		}
 	}
 	//Set Shaders
-	if (cMesh->GetRenderMesh())
+	if (cMat && cMesh->GetRenderMesh())
 	{
 		uint shader = cMat->GetMaterial()->shaderProgramID;
 		if (shader != 0)

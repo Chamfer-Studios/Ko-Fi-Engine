@@ -335,20 +335,6 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		it.second->GetComponent<C_Transform>()->SetDirty(true);
 	}
 
-	// animation
-	//if (modelRoot != nullptr)
-	//{
-	//	if (model->animation != 0)
-	//	{
-	//		C_Animator* animator = (C_Animator*)modelRoot->AddComponentByType(ComponentType::ANIMATOR);
-	//		R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
-	//		if (rAnimation != nullptr)
-	//		{
-	//			animator->SetAnim(rAnimation);
-	//		}
-	//	}
-	//}
-
 	return true;
 }
 
@@ -409,6 +395,10 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 				return;
 			}
 			material->texture = rTexture;
+		}
+		else
+		{
+			material->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 		}
 	}
 }
