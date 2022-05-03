@@ -31,11 +31,6 @@ public:
 	// Getters
 	float GetFarPlaneHeight() const;
 	float GetFarPlaneWidth() const;
-	inline int GetSpeedMultiplier() const { return speedMultiplier; }
-	inline float GetCameraSpeed() const { return cameraSpeed; }
-	inline float GetCameraSensitivity() const { return cameraSensitivity; }
-	inline float GetLastDeltaX() const { return lastDeltaX; }
-	inline float GetLastDeltaY() const { return lastDeltaY; }
 	inline float GetAspectRatio() const { return cameraFrustum.AspectRatio(); }
 	inline float3 GetReference() const { return reference; }
 
@@ -62,14 +57,11 @@ public:
 	float4x4 GetViewMatrix() const;
 	float4x4 GetWorldMatrix() const;
 	float4x4 GetProjectionMatrix() const;
-	//float3 IntersectionPoint(ref Plane a, ref Plane b, ref Plane c);
+	
 	// Setters
 	void SetAspectRatio(const float& aspectRatio);
-	void ChangeSpeed(int multiplier);
 
 	inline void SetReference(float3 newReference) { reference = newReference; }
-	inline void SetLastDeltaX(float newValueX) { lastDeltaX = newValueX; }
-	inline void SetLastDeltaY(float newValueY) { lastDeltaY = newValueY; }
 
 	inline void SetIsEngineCamera(bool value) { isEngineCamera = value; }
 	inline void SetIsMainCamera(bool value) { isMainCamera = value; }
@@ -100,13 +92,6 @@ private:
 	// Properties
 	float3 reference;
 	Frustum cameraFrustum;
-
-	float cameraSensitivity = .1f;
-	float cameraSpeed = 60.f;
-	float baseCameraSpeed = 60.f;
-	int speedMultiplier = 1.0f;
-
-	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
 	// Debug bools
 	bool isDrawFrustumActive = true;

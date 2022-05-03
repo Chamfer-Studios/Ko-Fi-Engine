@@ -27,6 +27,14 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 {
 	name = "Camera";
 	this->engine = engine;
+
+	//Set Default Values
+	cameraSensitivity = .1f;
+	cameraSpeed = 120.f;
+	baseCameraSpeed = 120.f;
+	speedMultiplier = 1;
+
+	// Initialize Engine Camera
 	engineCameraObject = new GameObject(0, engine, "");
 	engineCamera = new C_Camera(engineCameraObject);
 	engineCamera->SetIsEngineCamera(true);
@@ -130,7 +138,7 @@ void M_Camera3D::OnGui()
 void M_Camera3D::CheckInput(float dt)
 {
 	float3 newPos(0, 0, 0);
-	float speed = engineCamera->GetCameraSpeed() * dt;
+	float speed = cameraSpeed * dt;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 5.0f;
 
@@ -151,8 +159,8 @@ void M_Camera3D::MouseZoom(float dt)
 	float3 newPos = float3(0.f, 0.f, 0.f);
 
 	// Mouse Middle Button
-	if (engine->GetInput()->GetMouseZ() > 0) newPos += engineCamera->GetFront() * engineCamera->GetCameraSpeed();
-	if (engine->GetInput()->GetMouseZ() < 0) newPos -= engineCamera->GetFront() * engineCamera->GetCameraSpeed();
+	if (engine->GetInput()->GetMouseZ() > 0) newPos += engineCamera->GetFront() * cameraSpeed;
+	if (engine->GetInput()->GetMouseZ() < 0) newPos -= engineCamera->GetFront() * cameraSpeed;
 
 	engineCamera->SetPosition(engineCamera->GetPosition() + newPos);
 }
@@ -165,8 +173,8 @@ void M_Camera3D::MouseRotation(float dt)
 	int dx = -engine->GetInput()->GetMouseXMotion();
 	int dy = -engine->GetInput()->GetMouseYMotion();
 
-	const float newDeltaX = (float)dx * engineCamera->GetCameraSensitivity();
-	const float newDeltaY = (float)dy * engineCamera->GetCameraSensitivity();
+	const float newDeltaX = (float)dx * cameraSensitivity;
+	const float newDeltaY = (float)dy * cameraSensitivity;
 
 	//if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1) // If Object is Selected
 	//{
@@ -195,23 +203,26 @@ void M_Camera3D::MouseRotation(float dt)
 
 	if (dx != 0)
 	{
-		const float newDeltaX = (float)dx * engineCamera->GetCameraSensitivity();
-		float deltaX = newDeltaX + 0.95f * (engineCamera->GetLastDeltaX() - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
-		engineCamera->SetLastDeltaX(deltaX);
+		const float newDeltaX = (float)dx * cameraSensitivity;
+		float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
+		lastDeltaX = deltaX;
 		Quat rotateY = Quat::RotateY(engineCamera->GetUp().y >= 0.f ? deltaX * .1f : -deltaX * .1f);
 		//engineCamera->SetUp(rotateY * engineCamera->GetUp());
-		engineCamera->SetFront(rotateY * engineCamera->GetFront());
+		//engineCamera->SetFront(rotateY * engineCamera->GetFront());
+		engineCamera->GetCameraFrustum().SetFrame(engineCamera->GetPosition(), rotateY * engineCamera->GetFront(), rotateY * engineCamera->GetUp());
+
 		hasRotated = true;
 	}
 
 	if (dy != 0)
 	{
-		const float newDeltaY = (float)dy * engineCamera->GetCameraSensitivity();
-		float deltaY = newDeltaY + 0.95f * (engineCamera->GetLastDeltaY() - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
-		engineCamera->SetLastDeltaY(deltaY);
+		const float newDeltaY = (float)dy * cameraSensitivity;
+		float deltaY = newDeltaY + 0.95f * (lastDeltaY - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
+		lastDeltaY = deltaY;
 		Quat rotateX = Quat::RotateAxisAngle(engineCamera->GetRight(), -deltaY * .1f);
 		//engineCamera->SetUp(rotateX * engineCamera->GetUp());
-		engineCamera->SetFront(rotateX * engineCamera->GetFront());
+		//engineCamera->SetFront(rotateX * engineCamera->GetFront());
+		engineCamera->GetCameraFrustum().SetFrame(engineCamera->GetPosition(), rotateX * engineCamera->GetFront(), rotateX * engineCamera->GetUp());
 		hasRotated = true;
 	}
 
@@ -219,8 +230,8 @@ void M_Camera3D::MouseRotation(float dt)
 
 	if (!hasRotated)
 	{
-		engineCamera->SetLastDeltaX(0.0f);
-		engineCamera->SetLastDeltaY(0.0f);
+		lastDeltaX = 0.0f;
+		lastDeltaY = 0.0f;
 	}
 
 }
@@ -260,10 +271,10 @@ bool M_Camera3D::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Engine Camera##"))
 	{
-		int newSpeedMultiplier = engineCamera->GetSpeedMultiplier();
+		int newSpeedMultiplier = speedMultiplier;
 		if (ImGui::SliderInt("Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
 		{
-			engineCamera->ChangeSpeed(newSpeedMultiplier);
+			ChangeSpeed(newSpeedMultiplier);
 		}
 		//Frustum Active
 		bool frustumActive = engineCamera->GetIsFrustumActive();
@@ -395,8 +406,6 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 
 	normalX = (normalX - 0.5f) * 2.0f;
 	normalY = -(normalY - 0.5f) * 2.0f;
-	/*CONSOLE_LOG("x: %f", normalX);
-	CONSOLE_LOG("y: %f", normalY);*/
 
 	LineSegment newRay = currentCamera->GetCameraFrustum().UnProjectLineSegment(normalX, normalY);
 	engine->GetSceneManager()->GetCurrentScene()->ray = newRay;
@@ -468,9 +477,6 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 				float distance;
 				if (rayLocal.Intersects(triangle, &distance, &lastMouseClick))
 				{
-					//float tmp = lastMouseClick.y;
-					//lastMouseClick.y = lastMouseClick.z;
-					//lastMouseClick.z = tmp;
 					lastMouseClick.x *= gameObject->GetTransform()->GetScale().x;
 					lastMouseClick.y *= gameObject->GetTransform()->GetScale().y;
 					lastMouseClick.z *= gameObject->GetTransform()->GetScale().z;
