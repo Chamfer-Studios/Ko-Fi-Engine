@@ -52,7 +52,7 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 	}
 	else
 	{
-		texture->data = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, STBI_rgb_alpha);
+		texture->data = stbi_load(path, &texture->width, &texture->height, &texture->nrChannels, 0);
 
 		texture->imageSizeBytes = texture->GetTextureWidth() * texture->GetTextureHeight() * texture->GetNrChannels() * sizeof(unsigned char);
 		
