@@ -409,7 +409,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				ImGui::SameLine();
 				ImGui::BeginGroup();
 
-				if (texture->GetLibraryPath() != nullptr)
+				if (!checkerTexture && texture->GetLibraryPath() != nullptr && texture->GetLibraryPath() != "")
 				{
 					ImGui::Text("Texture Path: ");
 					ImGui::SameLine();
@@ -417,7 +417,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 					if (ImGui::Selectable(texture->GetLibraryPath())) {}
 					ImGui::PopStyleColor();
 				}
-				else
+				else if (checkerTexture)
 				{
 					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
 					if (ImGui::Selectable("Checker Texture")) {}
@@ -450,20 +450,20 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				ImGui::EndGroup();
 			}
 		}
-		else
-		{
-			if (ImGui::Button("Add Texture"))
-			{
-				panelChooser->OpenPanel("ChangeTexture", "png", { "png" });
-				currentTextureId = texture->GetTextureId();
-			}
-		}
+		//else
+		//{
+		//	if (ImGui::Button("Add Texture"))
+		//	{
+		//		panelChooser->OpenPanel("ChangeTexture", "png", { "png" });
+		//		currentTextureId = texture->GetTextureId();
+		//	}
+		//}
 
 		ImGui::Separator();
 
 		if (material != nullptr)
 		{
-			if (material->GetLibraryPath() != nullptr)
+			if (material->GetLibraryPath() != nullptr && material->GetLibraryPath() != "")
 			{
 				ImGui::Text("Shader Path: ");
 				ImGui::SameLine();

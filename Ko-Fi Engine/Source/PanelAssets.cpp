@@ -2,6 +2,7 @@
 #include "M_FileSystem.h"
 #include "PanelTextEditor.h"
 #include "Engine.h"
+#include "FSDefs.h"
 #include <imgui.h>
 #include "M_Editor.h"
 #include "glew.h"
@@ -52,54 +53,57 @@ bool PanelAssets::Update()
 	{
 		const auto& path = directoryEntry.path();
 		auto relativePath = std::filesystem::relative(path, assetsDir);
+
 		std::string filenameString = relativePath.filename().string();
 
-		uint id = directoryEntry.is_directory() ? directoryTexture.id : fileTexture.id;
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-		ImGui::ImageButton((ImTextureID)id, { iconSize,iconSize });
-		ImGui::PopStyleColor();
-
-		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
+		if (relativePath.extension().string() != META_EXTENSION)
 		{
-			if (directoryEntry.is_directory())
+			uint id = directoryEntry.is_directory() ? directoryTexture.id : fileTexture.id;
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+			ImGui::ImageButton((ImTextureID)id, { iconSize,iconSize });
+			ImGui::PopStyleColor();
+
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
 			{
-				currentDir /= path.filename();
-			}
-			else
-			{
-				std::string ext = path.extension().string();
-				if (ext == ".milk" || ext == ".cream" || ext == ".txt" || ext == ".glsl" || ext == ".mat" || ext == ".lua")
+				if (directoryEntry.is_directory())
 				{
-					editor->OpenTextEditor(path.string(),ext.c_str());
-					PanelTextEditor* panel = editor->GetPanel<PanelTextEditor>();
-					panel->Focus();
+					currentDir /= path.filename();
+				}
+				else
+				{
+					std::string ext = path.extension().string();
+					if (ext == ".milk" || ext == ".cream" || ext == ".txt" || ext == ".glsl" || ext == ".mat" || ext == ".lua")
+					{
+						editor->OpenTextEditor(path.string(), ext.c_str());
+						PanelTextEditor* panel = editor->GetPanel<PanelTextEditor>();
+						panel->Focus();
+					}
+				}
+
+			}
+			if (ImGui::IsItemHovered() && (ImGui::IsMouseClicked(1) || ImGui::IsMouseClicked(0)))
+			{
+				if (!directoryEntry.is_directory())
+				{
+					selectedFile = path.string();
+
 				}
 			}
 
-		}
-		if (ImGui::IsItemHovered() && (ImGui::IsMouseClicked(1) || ImGui::IsMouseClicked(0)))
-		{
-			if (!directoryEntry.is_directory())
+			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 			{
-				selectedFile = path.string();
+				std::string itemPath = selectedFile;
 
+				if (itemPath.find_last_of('.') != std::string::npos)
+				{
+					ImGui::SetDragDropPayload("ASSETS_ITEM", itemPath.c_str(), itemPath.size() * sizeof(const char*));
+					ImGui::Text(itemPath.c_str());
+				}
+				ImGui::EndDragDropSource();
 			}
+			ImGui::TextWrapped(filenameString.c_str());
+			ImGui::NextColumn();
 		}
-	
-		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
-		{
-			std::string itemPath = selectedFile;
-
-			if (itemPath.find_last_of('.') != std::string::npos)
-			{
-				ImGui::SetDragDropPayload("ASSETS_ITEM", itemPath.c_str(), itemPath.size() * sizeof(const char*));
-				ImGui::Text(itemPath.c_str());
-			}
-			ImGui::EndDragDropSource();
-		}
-		ImGui::TextWrapped(filenameString.c_str());
-		ImGui::NextColumn();
-		
 	}
 	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1))
 	{
