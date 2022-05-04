@@ -411,18 +411,18 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				ImGui::SameLine();
 				ImGui::BeginGroup();
 
-				if (!checkerTexture && texture->GetLibraryPath() != nullptr && texture->GetLibraryPath() != "")
+				if (checkerTexture)
+				{
+					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+					if (ImGui::Selectable("Checker Texture")) {}
+					ImGui::PopStyleColor();
+				}
+				else
 				{
 					ImGui::Text("Texture Path: ");
 					ImGui::SameLine();
 					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
 					if (ImGui::Selectable(texture->GetLibraryPath())) {}
-					ImGui::PopStyleColor();
-				}
-				else if (checkerTexture)
-				{
-					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-					if (ImGui::Selectable("Checker Texture")) {}
 					ImGui::PopStyleColor();
 				}
 
