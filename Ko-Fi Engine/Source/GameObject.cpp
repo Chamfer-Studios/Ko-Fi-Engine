@@ -1030,7 +1030,7 @@ bool GameObject::IsSelected()
 
 void GameObject::LoadSceneFromName(std::string name)
 {
-	Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), name.c_str());
+	Importer::GetInstance()->sceneImporter->LoadScene(engine->GetSceneManager()->GetCurrentScene(), name.c_str());
 }
 
 std::string GameObject::SetObjectNumberedName(const char* _name)

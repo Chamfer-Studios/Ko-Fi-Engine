@@ -63,7 +63,7 @@ public:
 
 	virtual bool InspectorDraw(PanelChooser *chooser) { return true; }
 
-	virtual void Save(Json& json) const { json["type"] = (int)type; }
+	virtual void Save(Json& json) const {}
 	virtual void Load(Json &json) {}
 
 	ComponentType GetType() { return type; }

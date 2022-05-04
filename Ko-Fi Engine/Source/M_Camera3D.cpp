@@ -137,7 +137,7 @@ void M_Camera3D::CheckInput(float dt)
 	{
 		// TO DO: Manage current object selection by the game object itself! Not by its index...
 		if (/*engine->GetEditor()->gameobjectSelected != nullptr <-- Should be this way*/
-			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != 0)
 		{
 			// If we change the previous TO DO, this will be no longer needed...
 			GameObject* gameObjectSelected =
@@ -163,7 +163,7 @@ void M_Camera3D::CheckInput(float dt)
 	}
 
 	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
-	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != 0)
 	{
 		C_Transform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform();
 		if (transform != nullptr) {
@@ -206,7 +206,7 @@ void M_Camera3D::CheckMouseMotion(float dt)
 
 		if (engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) {
 			if (/*engine->GetEditor()->gameobjectSelected != nullptr*/
-				engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != 0)
 			{
 				const float newDeltaX = (float)dx * currentCamera->cameraSensitivity;
 				const float newDeltaY = (float)dy * currentCamera->cameraSensitivity;

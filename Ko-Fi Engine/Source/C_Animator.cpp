@@ -202,8 +202,11 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 void C_Animator::Save(Json& json) const
 {
+	json["type"] = (int)type;
+
 	if (animation != nullptr)
 	{
+		json["animation"]["uid"] = animation->GetUID();
 		json["animation"]["asset_path"] = animation->GetAssetPath();
 
 		Json jsonClips;
@@ -231,8 +234,10 @@ void C_Animator::Load(Json& json)
 		RELEASE(animation);
 
 		Json jsonAnimation = json.at("animation");
-		std::string animationAssetPath = jsonAnimation.at("asset_path").get<std::string>();
-		animation = (R_Animation*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(animationAssetPath.c_str());
+
+		UID uid = jsonAnimation.at("uid");
+		owner->GetEngine()->GetResourceManager()->LoadResource(uid, jsonAnimation.at("asset_path").get<std::string>().c_str());
+		animation = (R_Animation*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
 
 		if (animation == nullptr)
 			CONSOLE_LOG("[ERROR] Component Animation: could not load resource from library.");

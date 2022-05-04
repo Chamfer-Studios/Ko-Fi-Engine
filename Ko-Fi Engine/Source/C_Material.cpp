@@ -71,6 +71,8 @@ bool C_Material::Update(float dt)
 
 void C_Material::Save(Json& json) const
 {
+	json["type"] = (int)type;
+
 	if (material != nullptr)
 	{
 		json["color"] = {material->diffuseColor.r,material->diffuseColor.g,material->diffuseColor.b,material->diffuseColor.a};

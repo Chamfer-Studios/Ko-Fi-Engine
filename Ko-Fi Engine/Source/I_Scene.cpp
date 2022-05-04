@@ -375,7 +375,6 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 			Json jsonGo = goIt.value();
 			uint uid = jsonGo.at("UID");
 
-
 			bool is3D = true;
 			if (jsonGo.find("is3D") != jsonGo.end())
 				is3D = jsonGo.at("is3D");
@@ -435,7 +434,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 					}
 					case ComponentType::INFO:
 					{
-						C_Info* infoCmp = (C_Info*)go->AddComponentByType(ComponentType::INFO);
+						C_Info* infoCmp = go->GetComponent<C_Info>();
 						infoCmp->active = active;
 						//infoCmp->Load(jsonCmp); // Does nothing as of now
 						break;
@@ -470,7 +469,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)
 			{
-				if ((*goIt)->GetUID() == (*childrenIt)->GetParentUID() && (*childrenIt)->GetUID() != -1)
+				if ((*goIt)->GetUID() == (*childrenIt)->GetParentUID() && (*childrenIt)->GetUID() != 0)
 					(*goIt)->AttachChild((*childrenIt));
 			}
 		}
@@ -1015,7 +1014,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)
 			{
-				if ((*goIt)->GetUID() == (*childrenIt)->GetParentUID() && (*childrenIt)->GetUID() != -1)
+				if ((*goIt)->GetUID() == (*childrenIt)->GetParentUID() && (*childrenIt)->GetUID() != 0)
 				{
 					(*goIt)->AttachChild((*childrenIt));
 				}

@@ -65,7 +65,7 @@ void Scene::DeleteCurrentScene()
 	lights.shrink_to_fit();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
-	rootGo = new GameObject(-1, engine, "Root");
+	rootGo = new GameObject(0, engine, "Root");
 	gameObjectList.push_back(rootGo);
 }
 

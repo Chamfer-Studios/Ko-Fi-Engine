@@ -201,7 +201,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 					for (int i = 0; i < editor->panelGameObjectInfo.selectedGameObjects.size(); i++)
 					{
-						if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjects[i] && go->GetUID() != -1) {
+						if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjects[i] && go->GetUID() != 0) {
 							go->isPrefab = true;
 							editor->panelGameObjectInfo.selectedGameObjects.erase(editor->panelGameObjectInfo.selectedGameObjects.begin() + i);
 						}

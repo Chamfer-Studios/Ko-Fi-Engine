@@ -85,8 +85,11 @@ bool C_Mesh::CleanUp()
 
 void C_Mesh::Save(Json& json) const
 {
+	json["type"] = (int)type;
+
 	if (mesh != nullptr)
 	{
+		json["mesh"]["uid"] = mesh->GetUID();
 		json["mesh"]["asset_path"] = mesh->GetAssetPath();
 		json["mesh"]["shape_type"] = (int)mesh->meshType;
 		json["mesh"]["draw_vertex_normals"] = mesh->GetVertexNormals();
@@ -105,8 +108,9 @@ void C_Mesh::Load(Json& json)
 		CleanUp();
 
 		Json jsonMesh = json.at("mesh");
-		std::string meshAssetPath = jsonMesh.at("asset_path").get<std::string>();
-		mesh = (R_Mesh*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(meshAssetPath.c_str());
+		UID uid = jsonMesh.at("uid");
+		owner->GetEngine()->GetResourceManager()->LoadResource(uid, jsonMesh.at("asset_path").get<std::string>().c_str());
+		mesh = (R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
 
 		if (mesh == nullptr)
 			CONSOLE_LOG("[ERROR] Component Mesh: could not load resource from library.");

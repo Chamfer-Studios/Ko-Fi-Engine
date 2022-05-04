@@ -289,6 +289,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		CONSOLE_LOG("[ERROR] Scene Manager: Could not generate GameObjects from resource model, model was nullptr.");
 		return false;
 	}
+	// TODO: Add sceneModels map
 
 	std::map<UID, GameObject*> tmp;
 	GameObject* modelRoot = nullptr;
@@ -296,9 +297,9 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 	// nodes
 	for (const auto& node : model->nodes)
 	{
-		GameObject* go = currentScene->CreateEmptyGameObject(node.name.c_str());
+		GameObject* go = new GameObject(node.uid, engine, node.name.c_str());
 
-		go->SetUID(node.uid);
+		currentScene->rootGo->AttachChild(go);
 		go->SetParentUID(node.parentUid);
 		go->GetComponent<C_Transform>()->SetPosition(node.position);
 		go->GetComponent<C_Transform>()->SetRotationQuat(node.rotation);
@@ -309,16 +310,40 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		if (node.parentUid == 0)
 		{
 			modelRoot = go;
-			std::pair<UID, std::string> modelResource = { model->GetUID(),model->GetAssetPath() };
-			currentScene->sceneModels.emplace(modelRoot->GetUID(), modelResource);
+		//	std::pair<UID, std::string> modelResource = { model->GetUID(),model->GetAssetPath() };
+		//	currentScene->sceneModels.emplace(modelRoot->GetUID(), modelResource);
 		}
 		tmp.emplace(go->GetUID(), go);
 	}
 
-	// Reparenting
+	//first = old UID (repeated)
+	//second = new UID
+	std::map<UID,UID> repeatedUIDs;
+
+	//save repeated UIDs
+	for (const auto& it : tmp)
+	{
+		if (currentScene->GetGameObject(it.first) != nullptr)
+		{
+			it.second->SetUID(RNG::GetRandomUint());
+			repeatedUIDs.emplace(it.first,it.second->GetUID());
+		}
+		currentScene->gameObjectList.push_back(it.second);
+	}
+
+	// Reparenting & update gameobjects with repeated UIDs
 	for (const auto& it : tmp)
 	{
 		UID parentUid = it.second->GetParentUID();
+		for (const auto& repeatedIt : repeatedUIDs)
+		{
+			if (parentUid == repeatedIt.first)
+			{
+				it.second->SetParentUID(repeatedIt.second);
+				break;
+			}
+		}
+
 		if (parentUid == 0 && modelRoot != nullptr)
 		{
 			it.second->SetParentUID(0);
@@ -411,7 +436,7 @@ void M_SceneManager::OnPlay()
 	gameTime = 0.0f;
 
 	// Serialize scene and save it as a .json
-	Importer::GetInstance()->sceneImporter->Save(currentScene);
+	Importer::GetInstance()->sceneImporter->SaveScene(currentScene);
 
 	for (GameObject* go : currentScene->gameObjectList)
 	{
@@ -438,7 +463,7 @@ void M_SceneManager::OnStop()
 	time = 0.0f;
 	gameTime = 0.0f;
 
-	Importer::GetInstance()->sceneImporter->Load(currentScene,currentScene->name.c_str());
+	Importer::GetInstance()->sceneImporter->LoadScene(currentScene,currentScene->name.c_str());
 	// Load the scene we saved before in .json
 	//LoadScene(currentScene, "SceneIntro");
 	for (GameObject* go : currentScene->gameObjectList)
@@ -483,7 +508,7 @@ void M_SceneManager::GuizmoTransformation()
 	{
 		if (!selectedGameObjects[i]->GetComponent<C_Transform>()) return;
 
-		if (selectedGameObjects[i] == nullptr || selectedGameObjects[i]->GetUID() == -1) return;
+		if (selectedGameObjects[i] == nullptr || selectedGameObjects[i]->GetUID() == 0) return;
 	}
 	
 

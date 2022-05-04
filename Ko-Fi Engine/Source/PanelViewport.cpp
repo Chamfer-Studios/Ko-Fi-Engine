@@ -104,7 +104,7 @@ bool PanelViewport::Update()
 					else
 					{
 						if (path.find(".json") != std::string::npos)
-							Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
+							Importer::GetInstance()->sceneImporter->LoadScene(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
 						else
 							dragDropPopup = true;
 					}
@@ -117,7 +117,7 @@ bool PanelViewport::Update()
 					//{
 					//	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 					//	{
-					//		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != -1)
+					//		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != 0)
 					//		{
 					//			GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
 

@@ -209,7 +209,7 @@ bool M_Input::PreUpdate(float dt)
 		//		{
 		//			for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 		//			{
-		//				if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != -1)
+		//				if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != 0)
 		//				{
 		//					GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
 

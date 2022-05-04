@@ -62,7 +62,7 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Save Scene"))
 			{
 				saveAsSceneName = editor->engine->GetSceneManager()->GetCurrentScene()->name.c_str();
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
+				Importer::GetInstance()->sceneImporter->SaveScene(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
 			}
 			if (ImGui::MenuItem("Save Scene As"))
 			{
@@ -299,8 +299,9 @@ bool MainBar::Update()
 		{
 			
 			ImGui::InputText("Scene Name", &saveAsSceneName);
-			if (ImGui::Button("Save##") && !saveAsSceneName.empty()) {
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName.c_str());
+			if (ImGui::Button("Save##") && !saveAsSceneName.empty())
+			{
+				Importer::GetInstance()->sceneImporter->SaveScene(editor->engine->GetSceneManager()->GetCurrentScene(), saveAsSceneName.c_str());
 				openSaveAsPopup = false;
 			}
 			ImGui::EndPopup();
@@ -332,7 +333,7 @@ void MainBar::ChoosersListener()
 		{
 	#pragma omp parallel private()
 			{
-				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
+				Importer::GetInstance()->sceneImporter->LoadScene(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
 			}
 			
 		}
