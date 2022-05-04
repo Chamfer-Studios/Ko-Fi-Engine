@@ -133,6 +133,9 @@ void C_Mesh::Load(Json& json)
 
 		mesh->meshType = meshType;
 	}
+	else {
+		int a = 0;
+	}
 
 	std::string path = json.at("path");
 	if (json.contains("isAnimated"))

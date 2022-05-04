@@ -61,7 +61,7 @@ public:
 
 	void SetId(int id);
 
-	ScriptHandler* s;
+	ScriptHandler* s = nullptr;
 	int id = -1;
 
 	std::queue<ScriptingEvent> eventQueue;
