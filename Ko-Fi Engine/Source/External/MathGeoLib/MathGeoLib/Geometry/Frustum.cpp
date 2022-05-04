@@ -126,6 +126,13 @@ void Frustum::SetUp(const vec &u)
 	WorldMatrixChanged();
 }
 
+void Frustum::SetFrontUp(const vec& f, const vec& u)
+{
+	front = f;
+	up = u;
+	WorldMatrixChanged();
+}
+
 void Frustum::SetPerspective(float h, float v)
 {
 	type = PerspectiveFrustum;

@@ -205,6 +205,8 @@ public:
 		@see SetKind(), SetViewPlaneDistances(), SetFrame(), SetPos(), SetFront(), SetPerspective(), SetOrthographic(), Up(). */
 	void SetUp(const vec &up);
 
+	void SetFrontUp(const vec& f, const vec& u);
+
 	/// Makes this Frustum use a perspective projection formula with the given FOV parameters.
 	/** A Frustum that uses the perspective projection is shaped like a pyramid that is cut from the top, and has a
 		base with a rectangular area.

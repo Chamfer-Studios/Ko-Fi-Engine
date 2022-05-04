@@ -23,6 +23,7 @@
 #include "MathGeoLib/Math/MathFunc.h"
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Geometry/Plane.h"
+#include "MathGeoLib/Math/float3x3.h"
 
 #include "optick.h"
 
@@ -76,6 +77,24 @@ bool C_Camera::CleanUp()
 	appLog->AddLog("Cleaning up the camera\n");
 
 	return true;
+}
+
+// A function that rotates the camera frustrum based on a quaternion.
+void C_Camera::Rotate(Quat quat)
+{
+	cameraFrustum.Transform(quat);
+}
+
+Quat C_Camera::GetRotation()
+{
+	// Get the front vector of the camera and store it in a variable
+	float3 front = cameraFrustum.Front();
+
+	// Get the up vector of the camera and store it in a variable
+	float3 up = cameraFrustum.Up();
+	
+	// Get the euler angles between the front vector and the world forward vector
+	return Quat::LookAt(float3::unitZ, front, up, float3::unitY);
 }
 
 bool C_Camera::InspectorDraw(PanelChooser* chooser)
@@ -175,10 +194,35 @@ void C_Camera::LookAt(const float3& point)
 {
 	reference = point;
 
-	cameraFrustum.SetFront((reference - cameraFrustum.Pos()).Normalized());
+	cameraFrustum.SetFrontUp((reference - cameraFrustum.Pos()).Normalized(), cameraFrustum.Front().Cross(cameraFrustum.WorldRight()));
 	
-	cameraFrustum.SetUp(cameraFrustum.Front().Cross(cameraFrustum.WorldRight()));
+	//cameraFrustum.SetUp(cameraFrustum.Front().Cross(cameraFrustum.WorldRight()));
+}
 
+void C_Camera::LookAt2(float3 _front, float3 _up)
+{
+	_front = _front.Normalized();
+	_up = _up.Normalized();
+
+	float angle = atan2(_front.z, _front.x);
+
+	Quat r = cameraFrustum.ComputeWorldMatrix().RotatePart().ToQuat();
+
+	float3 cross = _up.Cross(cameraFrustum.Up());
+	float angleBetween = _up.AngleBetween(cameraFrustum.Up());
+
+	r = r.RotateAxisAngle(cross, angleBetween);
+
+	float3 currentEuler = r.ToEulerXYZ();
+
+	float diff = currentEuler.y - angle;
+
+	diff += 90.0f * DEGTORAD;
+
+	r = r.RotateAxisAngle(_up, diff);
+
+	float3 newFront = r * cameraFrustum.Front();
+	cameraFrustum.SetFront(newFront);
 }
 
 void C_Camera::FrustumCulling()

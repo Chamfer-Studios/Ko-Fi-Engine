@@ -57,6 +57,9 @@ public:
 	float4x4 GetViewMatrix() const;
 	float4x4 GetWorldMatrix() const;
 	float4x4 GetProjectionMatrix() const;
+
+	void Rotate(Quat quat);
+	Quat GetRotation();
 	
 	// Setters
 	void SetAspectRatio(const float& aspectRatio);
@@ -80,6 +83,7 @@ public:
 	inline void SetIsDrawFrustumActive(bool newValue) { isDrawFrustumActive = newValue; }
 	// Camera Functions
 	void LookAt(const float3& point);
+	void LookAt2(float3 front, float3 up);
 
 	// Frustum Culling
 	void FrustumCulling();

@@ -169,92 +169,35 @@ void M_Camera3D::MouseZoom(float dt)
 	engineCamera->SetPosition(engineCamera->GetPosition() + newPos);
 }
 
+// A function that takes the delta mouse motion as x and y inputs, creates a quaternion representing a rotation based on the mouse motion, and applies that rotation to the camera's orientation.
 void M_Camera3D::MouseRotation(float dt)
 {
-	// TODO: MOUSE MOTION
-	bool hasRotated = false;
-
-	int dx = engine->GetInput()->GetMouseXMotion();
-	int dy = engine->GetInput()->GetMouseYMotion();
-	//KOFI_DEBUG("dx: %d dy: %d", dx, dy);
-
-
-	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != -1)
-	{
-		const float newDeltaX = (float)dx * cameraSensitivity;
-		const float newDeltaY = (float)dy * cameraSensitivity;
-
-		engineCamera->SetReference(engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()
-			->panelGameObjectInfo.selectedGameObjectID)->GetComponent<C_Transform>()->GetPosition()); /*engine->GetEditor()->gameobjectSelected->transform->GetPosition()*/
-
-		Quat orbitMat = Quat::RotateY(newDeltaX * .1f);
-
-		if (abs(engineCamera->GetUp().y) < 0.3f) // Avoid gimball lock on up & down apex
-		{
-			if (engineCamera->GetPosition().y > engineCamera->GetReference().y && newDeltaY < 0.f)
-				orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
-			if (engineCamera->GetPosition().y < engineCamera->GetReference().y && newDeltaY > 0.f)
-				orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
-		}
-		else
-		{
-			orbitMat = orbitMat * math::Quat::RotateAxisAngle(engineCamera->GetRight(), newDeltaY * .1f);
-		}
-
-		engineCamera->SetPosition(orbitMat * (engineCamera->GetPosition() - engineCamera->GetReference()) + engineCamera->GetReference());
-
-		engineCamera->LookAt(engineCamera->GetReference());
+	int xMotion = engine->GetInput()->GetMouseXMotion();
+	if (xMotion != 0) {
+		int xDir = xMotion > 0 ? 1 : -1;
+		float3 axis = engineCamera->GetUp();
+		float angle = xDir * cameraSensitivity * dt;
+		// Convert the angle to radians
+		//angle = DegToRad(angle);
+		Quat rot = Quat::RotateAxisAngle(axis, angle);
+		engineCamera->LookAt(engineCamera->GetPosition() + (rot * engineCamera->GetFront()));
+		//engineCamera->SetFront(rot * engineCamera->GetFront());
+		//engineCamera->SetUp(engineCamera->GetUp().Cross(axis));
 	}
-	else
-	{
-		if (dx != 0)
-		{
-			const float newDeltaX = (float)dx * cameraSensitivity;
-			float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX); //lerp for smooth rotation acceleration to avoid jittering
-			lastDeltaX = deltaX;
-			Quat rotateX = Quat::RotateY(engineCamera->GetUp().y >= 0.f ? deltaX * .1f : -deltaX * .1f);
-
-			engineCamera->SetFront(rotateX * engineCamera->GetFront());
 	
-
-			hasRotated = true;
-		}
-
-		//if (dy != 0)
-		//{
-		//	const float newDeltaY = (float)dy * cameraSensitivity;
-		//	float deltaY = newDeltaY + 0.95f * (lastDeltaY - newDeltaY); //lerp for smooth rotation acceleration to avoid jittering
-		//	lastDeltaY = deltaY;
-		//	Quat rotateY = Quat::RotateAxisAngle(engineCamera->GetRight(), deltaY * .1f);
-		//	//Quat rotateY = Quat::RotateX(engineCamera->GetRight().x >= 0.f ? deltaY * .1f : -deltaY * .1f);
-
-		//	//engineCamera->GetCameraFrustum().SetFrame(engineCamera->GetPosition(),(rotateX * engineCamera->GetFront()).Normalized(),(rotateX * engineCamera->GetUp()).Normalized());
-		//	//engineCamera->GetCameraFrustum().SetFrontUp(rotateY * engineCamera->GetFront(), rotateY * engineCamera->GetUp());
-		//	float3 front = (rotateY * engineCamera->GetFront());
-		//	/*abs(front.x);
-		//	abs(front.y);
-		//	abs(front.z);*/
-		//	KOFI_DEBUG("FRONT x: %f y: %f z: %f w: %f", front.x, front.y, front.z);
-		//	float3 up = (rotateY * engineCamera->GetUp());
-		//	/*abs(up.x);
-		//	abs(up.y);
-		//	abs(up.z);*/
-		//	KOFI_DEBUG("UP x: %f y: %f z: %f w: %f", up.x, up.y, up.z);
-
-		//	engineCamera->SetUp(up);
-		//	engineCamera->SetFront(front);
-		//}
+	int yMotion = engine->GetInput()->GetMouseYMotion();
+	if (yMotion != 0) {
+		int yDir = yMotion > 0 ? 1 : -1;
+		float3 axis = engineCamera->GetRight();
+		float angle = yDir * cameraSensitivity * dt;
+		// Convert the angle to radians
+		//angle = DegToRad(angle);
+		Quat rot = Quat::RotateAxisAngle(axis, angle);
+		engineCamera->LookAt(engineCamera->GetPosition() + (rot * engineCamera->GetFront()));
+		//engineCamera->SetFront(rot * engineCamera->GetFront());
+		//engineCamera->SetUp(engineCamera->GetUp().Cross(axis));
 	}
-
-	if (!hasRotated)
-	{
-		lastDeltaX = 0.0f;
-		lastDeltaY = 0.0f;
-	}
-
 }
-
-
 
 void M_Camera3D::OnPlay()
 {
