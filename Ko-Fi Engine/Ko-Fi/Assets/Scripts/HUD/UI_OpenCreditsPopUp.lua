@@ -21,4 +21,4 @@ function Update(dt)
 	end
 end
 
-print("UI_OpenPopUp.lua compiled succesfully")
+print("UI_OpenCreditsPopUp.lua compiled succesfully")
