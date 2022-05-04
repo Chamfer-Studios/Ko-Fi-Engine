@@ -9,9 +9,9 @@
         {
             "active": true,
             "position": [
-                20.15013885498047,
-                0.5,
-                -6.259487008719589e-07
+                -2800.0,
+                0.0,
+                -17.180999755859375
             ],
             "rotation": [
                 0.0,
@@ -20,38 +20,11 @@
                 1.0
             ],
             "scale": [
-                0.004999999888241291,
-                0.004999999888241291,
-                0.0024999999441206455
+                10.0,
+                10.0,
+                10.0
             ],
             "type": "transform"
-        },
-        {
-            "active": true,
-            "angular_damping": 0.0,
-            "angular_velocity": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "density": 1.0,
-            "freeze_position_x": false,
-            "freeze_position_y": true,
-            "freeze_position_z": false,
-            "freeze_rotation_x": false,
-            "freeze_rotation_y": false,
-            "freeze_rotation_z": false,
-            "is_kinematic": false,
-            "is_static": false,
-            "linear_damping": 0.0,
-            "linear_velocity": [
-                -2.1691794245271012e-05,
-                0.0,
-                -6.464658452651206e-13
-            ],
-            "mass": 5.0,
-            "type": "rigidBody",
-            "use_gravity": true
         },
         {
             "active": true,
@@ -65,43 +38,24 @@
         {
             "active": true,
             "color": [
-                0.800000011920929,
-                0.800000011920929,
-                0.800000011920929,
+                1.0,
+                1.0,
+                1.0,
                 1.0
             ],
             "shader_path": "Assets/Shaders/default_shader.glsl",
-            "texture_path": "",
+            "texture_path": "Assets/Textures/Characters/zhib_base_color.png",
             "type": "material",
             "uniforms": null
         },
         {
             "active": true,
-            "box_collider_size": [
-                7.965396881103516,
-                2.450152635574341,
-                6.413100719451904
-            ],
-            "collider_type": 1,
-            "draw_collider": false,
-            "enabled": true,
-            "filter": "terrain",
-            "is_trigger": true,
-            "offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "type": "collider"
-        },
-        {
-            "active": true,
             "file_name": "Assets/Scripts/Players/Zhib/Decoy.lua",
-            "id": 1704281197,
+            "id": 2052230088,
             "type": "script"
         }
     ],
     "isPrefab": true,
     "name": "Decoy",
-    "tag": 0
+    "tag": 3
 }

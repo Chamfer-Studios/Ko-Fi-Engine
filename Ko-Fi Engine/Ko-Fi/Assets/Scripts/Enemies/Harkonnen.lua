@@ -13,15 +13,15 @@ minSeekDistance = 100
 --local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 --speedIV = InspectorVariable.new("speed", speedIVT, speed)
 --NewVariable(speedIV)
-
+--
 --local playerIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT
 --playerIV = InspectorVariable.new("player", playerIVT, playerName)
 --NewVariable(playerIV)
-
+--
 --local minSeekDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 --minSeekDistanceIV = InspectorVariable.new("minSeekDistance", minSeekDistanceIVT, minSeekDistance)
 --NewVariable(minSeekDistanceIV)
-
+--
 --local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 --minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
 --NewVariable(minRetargetingDistanceIV)

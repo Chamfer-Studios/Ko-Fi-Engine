@@ -9,9 +9,9 @@
         {
             "active": true,
             "position": [
-                -5.905917644500732,
-                -1.0015189218393061e-05,
-                -36.811683654785156
+                -1644.9022216796875,
+                -3.7979631423950195,
+                -70.53199005126953
             ],
             "rotation": [
                 0.0,
@@ -36,7 +36,7 @@
                             "modules": [
                                 {
                                     "maxParticleLife": 3.0,
-                                    "minParticleLife": 1.0,
+                                    "minParticleLife": 0.6000000238418579,
                                     "randomParticleLife": false,
                                     "spawnTime": 0.0,
                                     "spawnTimer": 0.0,
@@ -83,20 +83,34 @@
                                 },
                                 {
                                     "maxSize": [
-                                        10.0,
-                                        10.0,
-                                        10.0
+                                        7.5,
+                                        7.5,
+                                        7.5
                                     ],
                                     "minSize": [
-                                        10.0,
-                                        10.0,
-                                        10.0
+                                        7.5,
+                                        7.5,
+                                        7.5
                                     ],
                                     "type": 4
                                 },
                                 {
                                     "billboardingType": 1,
                                     "type": 5
+                                },
+                                {
+                                    "colors": [
+                                        {
+                                            "color": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "position": 1.0
+                                        }
+                                    ],
+                                    "type": 3
                                 }
                             ],
                             "name": "Emitter",

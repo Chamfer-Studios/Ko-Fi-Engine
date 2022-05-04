@@ -1,1900 +1,6 @@
 {
     "active": true,
-    "children": [
-        {
-            "active": true,
-            "children": [
-                {
-                    "active": true,
-                    "children": [
-                        {
-                            "active": true,
-                            "children": [
-                                {
-                                    "active": true,
-                                    "children": [
-                                        {
-                                            "active": true,
-                                            "children": [
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [
-                                                                {
-                                                                    "active": true,
-                                                                    "children": [
-                                                                        {
-                                                                            "active": true,
-                                                                            "children": [],
-                                                                            "components": [
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "type": "info"
-                                                                                },
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "position": [
-                                                                                        0.0,
-                                                                                        187.09765625,
-                                                                                        0.0
-                                                                                    ],
-                                                                                    "rotation": [
-                                                                                        0.0,
-                                                                                        0.0,
-                                                                                        0.0,
-                                                                                        1.0
-                                                                                    ],
-                                                                                    "scale": [
-                                                                                        1.0,
-                                                                                        1.0,
-                                                                                        1.0
-                                                                                    ],
-                                                                                    "type": "transform"
-                                                                                }
-                                                                            ],
-                                                                            "isPrefab": false,
-                                                                            "name": "mixamorig:HeadTop_End_end",
-                                                                            "tag": 0
-                                                                        }
-                                                                    ],
-                                                                    "components": [
-                                                                        {
-                                                                            "active": true,
-                                                                            "type": "info"
-                                                                        },
-                                                                        {
-                                                                            "active": true,
-                                                                            "position": [
-                                                                                -3.7670135498046875e-05,
-                                                                                181.50997924804688,
-                                                                                -45.380611419677734
-                                                                            ],
-                                                                            "rotation": [
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                1.0
-                                                                            ],
-                                                                            "scale": [
-                                                                                1.0,
-                                                                                1.0,
-                                                                                1.0
-                                                                            ],
-                                                                            "type": "transform"
-                                                                        }
-                                                                    ],
-                                                                    "isPrefab": false,
-                                                                    "name": "mixamorig:HeadTop_End",
-                                                                    "tag": 0
-                                                                }
-                                                            ],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": "info"
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        5.7220458984375e-06,
-                                                                        109.42866516113281,
-                                                                        -27.35906982421875
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.04599441960453987,
-                                                                        0.0006777527160011232,
-                                                                        0.03394617512822151,
-                                                                        0.9983645081520081
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": "transform"
-                                                                }
-                                                            ],
-                                                            "isPrefab": false,
-                                                            "name": "mixamorig:Head",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": "info"
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                -6.4373016357421875e-06,
-                                                                183.93313598632813,
-                                                                7.033348083496094e-06
-                                                            ],
-                                                            "rotation": [
-                                                                0.013454682193696499,
-                                                                0.015270034782588482,
-                                                                -0.010028827004134655,
-                                                                0.9997425675392151
-                                                            ],
-                                                            "scale": [
-                                                                0.9999986886978149,
-                                                                0.9999913573265076,
-                                                                1.0
-                                                            ],
-                                                            "type": "transform"
-                                                        }
-                                                    ],
-                                                    "isPrefab": false,
-                                                    "name": "mixamorig:Neck",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [
-                                                                {
-                                                                    "active": true,
-                                                                    "children": [
-                                                                        {
-                                                                            "active": true,
-                                                                            "children": [
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "children": [
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "children": [
-                                                                                                {
-                                                                                                    "active": true,
-                                                                                                    "children": [
-                                                                                                        {
-                                                                                                            "active": true,
-                                                                                                            "children": [
-                                                                                                                {
-                                                                                                                    "active": true,
-                                                                                                                    "children": [],
-                                                                                                                    "components": [
-                                                                                                                        {
-                                                                                                                            "active": true,
-                                                                                                                            "type": "info"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "active": true,
-                                                                                                                            "position": [
-                                                                                                                                0.0,
-                                                                                                                                59.215599060058594,
-                                                                                                                                0.0
-                                                                                                                            ],
-                                                                                                                            "rotation": [
-                                                                                                                                0.0,
-                                                                                                                                0.0,
-                                                                                                                                0.0,
-                                                                                                                                1.0
-                                                                                                                            ],
-                                                                                                                            "scale": [
-                                                                                                                                1.0,
-                                                                                                                                1.0,
-                                                                                                                                1.0
-                                                                                                                            ],
-                                                                                                                            "type": "transform"
-                                                                                                                        }
-                                                                                                                    ],
-                                                                                                                    "isPrefab": false,
-                                                                                                                    "name": "mixamorig:LeftHandIndex4_end",
-                                                                                                                    "tag": 0
-                                                                                                                }
-                                                                                                            ],
-                                                                                                            "components": [
-                                                                                                                {
-                                                                                                                    "active": true,
-                                                                                                                    "type": "info"
-                                                                                                                },
-                                                                                                                {
-                                                                                                                    "active": true,
-                                                                                                                    "position": [
-                                                                                                                        -15.364143371582031,
-                                                                                                                        49.35020446777344,
-                                                                                                                        -28.89698028564453
-                                                                                                                    ],
-                                                                                                                    "rotation": [
-                                                                                                                        0.0,
-                                                                                                                        0.0,
-                                                                                                                        0.0,
-                                                                                                                        1.0
-                                                                                                                    ],
-                                                                                                                    "scale": [
-                                                                                                                        1.0,
-                                                                                                                        1.0,
-                                                                                                                        1.0
-                                                                                                                    ],
-                                                                                                                    "type": "transform"
-                                                                                                                }
-                                                                                                            ],
-                                                                                                            "isPrefab": false,
-                                                                                                            "name": "mixamorig:LeftHandIndex4",
-                                                                                                            "tag": 0
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "components": [
-                                                                                                        {
-                                                                                                            "active": true,
-                                                                                                            "type": "info"
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "active": true,
-                                                                                                            "position": [
-                                                                                                                -22.47480010986328,
-                                                                                                                70.22335052490234,
-                                                                                                                -33.40702819824219
-                                                                                                            ],
-                                                                                                            "rotation": [
-                                                                                                                0.05140799283981323,
-                                                                                                                0.0644584521651268,
-                                                                                                                0.09107018262147903,
-                                                                                                                0.9924256205558777
-                                                                                                            ],
-                                                                                                            "scale": [
-                                                                                                                0.9999999403953552,
-                                                                                                                1.0,
-                                                                                                                1.0
-                                                                                                            ],
-                                                                                                            "type": "transform"
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "isPrefab": false,
-                                                                                                    "name": "mixamorig:LeftHandIndex3",
-                                                                                                    "tag": 0
-                                                                                                }
-                                                                                            ],
-                                                                                            "components": [
-                                                                                                {
-                                                                                                    "active": true,
-                                                                                                    "type": "info"
-                                                                                                },
-                                                                                                {
-                                                                                                    "active": true,
-                                                                                                    "position": [
-                                                                                                        4.9591064453125e-05,
-                                                                                                        47.32677459716797,
-                                                                                                        -5.340576171875e-05
-                                                                                                    ],
-                                                                                                    "rotation": [
-                                                                                                        0.2631271779537201,
-                                                                                                        0.0765291079878807,
-                                                                                                        0.16927343606948853,
-                                                                                                        0.9467068910598755
-                                                                                                    ],
-                                                                                                    "scale": [
-                                                                                                        0.9999999403953552,
-                                                                                                        0.9999998211860657,
-                                                                                                        0.9999999403953552
-                                                                                                    ],
-                                                                                                    "type": "transform"
-                                                                                                }
-                                                                                            ],
-                                                                                            "isPrefab": false,
-                                                                                            "name": "mixamorig:LeftHandIndex2",
-                                                                                            "tag": 0
-                                                                                        }
-                                                                                    ],
-                                                                                    "components": [
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "type": "info"
-                                                                                        },
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "position": [
-                                                                                                7.62939453125e-06,
-                                                                                                107.46904754638672,
-                                                                                                4.1961669921875e-05
-                                                                                            ],
-                                                                                            "rotation": [
-                                                                                                -0.24348238110542297,
-                                                                                                0.05587899312376976,
-                                                                                                0.153455451130867,
-                                                                                                0.9560571908950806
-                                                                                            ],
-                                                                                            "scale": [
-                                                                                                1.0,
-                                                                                                0.9999997615814209,
-                                                                                                0.9999998807907104
-                                                                                            ],
-                                                                                            "type": "transform"
-                                                                                        }
-                                                                                    ],
-                                                                                    "isPrefab": false,
-                                                                                    "name": "mixamorig:LeftHandIndex1",
-                                                                                    "tag": 0
-                                                                                }
-                                                                            ],
-                                                                            "components": [
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "type": "info"
-                                                                                },
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "position": [
-                                                                                        3.0517578125e-05,
-                                                                                        272.7925109863281,
-                                                                                        -7.62939453125e-06
-                                                                                    ],
-                                                                                    "rotation": [
-                                                                                        0.08883795142173767,
-                                                                                        0.007329575251787901,
-                                                                                        -0.22050100564956665,
-                                                                                        0.9713050127029419
-                                                                                    ],
-                                                                                    "scale": [
-                                                                                        0.9999998807907104,
-                                                                                        1.0,
-                                                                                        1.0
-                                                                                    ],
-                                                                                    "type": "transform"
-                                                                                }
-                                                                            ],
-                                                                            "isPrefab": false,
-                                                                            "name": "mixamorig:LeftHand",
-                                                                            "tag": 0
-                                                                        }
-                                                                    ],
-                                                                    "components": [
-                                                                        {
-                                                                            "active": true,
-                                                                            "type": "info"
-                                                                        },
-                                                                        {
-                                                                            "active": true,
-                                                                            "position": [
-                                                                                -3.3736228942871094e-05,
-                                                                                276.7834167480469,
-                                                                                6.008148193359375e-05
-                                                                            ],
-                                                                            "rotation": [
-                                                                                0.015567684546113014,
-                                                                                -0.006469916086643934,
-                                                                                0.26554375886917114,
-                                                                                0.9639514088630676
-                                                                            ],
-                                                                            "scale": [
-                                                                                0.9999997019767761,
-                                                                                0.9999997615814209,
-                                                                                0.9999958872795105
-                                                                            ],
-                                                                            "type": "transform"
-                                                                        }
-                                                                    ],
-                                                                    "isPrefab": false,
-                                                                    "name": "mixamorig:LeftForeArm",
-                                                                    "tag": 0
-                                                                }
-                                                            ],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": "info"
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        -3.814697265625e-06,
-                                                                        224.2660369873047,
-                                                                        2.7671456336975098e-05
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.4166898727416992,
-                                                                        0.2068636268377304,
-                                                                        0.10556549578905106,
-                                                                        0.8788816332817078
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        0.9999999403953552
-                                                                    ],
-                                                                    "type": "transform"
-                                                                }
-                                                            ],
-                                                            "isPrefab": false,
-                                                            "name": "mixamorig:LeftArm",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": "info"
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                108.89476013183594,
-                                                                145.57310485839844,
-                                                                -1.030019760131836
-                                                            ],
-                                                            "rotation": [
-                                                                -0.555699348449707,
-                                                                -0.4171654284000397,
-                                                                0.6119049191474915,
-                                                                -0.377814382314682
-                                                            ],
-                                                            "scale": [
-                                                                1.0000172853469849,
-                                                                1.000006914138794,
-                                                                1.0000001192092896
-                                                            ],
-                                                            "type": "transform"
-                                                        }
-                                                    ],
-                                                    "isPrefab": false,
-                                                    "name": "mixamorig:LeftShoulder",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [
-                                                                {
-                                                                    "active": true,
-                                                                    "children": [
-                                                                        {
-                                                                            "active": true,
-                                                                            "children": [
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "children": [
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "children": [
-                                                                                                {
-                                                                                                    "active": true,
-                                                                                                    "children": [
-                                                                                                        {
-                                                                                                            "active": true,
-                                                                                                            "children": [
-                                                                                                                {
-                                                                                                                    "active": true,
-                                                                                                                    "children": [],
-                                                                                                                    "components": [
-                                                                                                                        {
-                                                                                                                            "active": true,
-                                                                                                                            "type": "info"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "active": true,
-                                                                                                                            "position": [
-                                                                                                                                0.0,
-                                                                                                                                51.433250427246094,
-                                                                                                                                0.0
-                                                                                                                            ],
-                                                                                                                            "rotation": [
-                                                                                                                                0.0,
-                                                                                                                                0.0,
-                                                                                                                                0.0,
-                                                                                                                                1.0
-                                                                                                                            ],
-                                                                                                                            "scale": [
-                                                                                                                                1.0,
-                                                                                                                                1.0,
-                                                                                                                                1.0
-                                                                                                                            ],
-                                                                                                                            "type": "transform"
-                                                                                                                        }
-                                                                                                                    ],
-                                                                                                                    "isPrefab": false,
-                                                                                                                    "name": "mixamorig:RightHandIndex4_end",
-                                                                                                                    "tag": 0
-                                                                                                                }
-                                                                                                            ],
-                                                                                                            "components": [
-                                                                                                                {
-                                                                                                                    "active": true,
-                                                                                                                    "type": "info"
-                                                                                                                },
-                                                                                                                {
-                                                                                                                    "active": true,
-                                                                                                                    "position": [
-                                                                                                                        17.20452880859375,
-                                                                                                                        48.05342102050781,
-                                                                                                                        6.3444976806640625
-                                                                                                                    ],
-                                                                                                                    "rotation": [
-                                                                                                                        0.0,
-                                                                                                                        0.0,
-                                                                                                                        0.0,
-                                                                                                                        1.0
-                                                                                                                    ],
-                                                                                                                    "scale": [
-                                                                                                                        1.0,
-                                                                                                                        1.0,
-                                                                                                                        1.0
-                                                                                                                    ],
-                                                                                                                    "type": "transform"
-                                                                                                                }
-                                                                                                            ],
-                                                                                                            "isPrefab": false,
-                                                                                                            "name": "mixamorig:RightHandIndex4",
-                                                                                                            "tag": 0
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "components": [
-                                                                                                        {
-                                                                                                            "active": true,
-                                                                                                            "type": "info"
-                                                                                                        },
-                                                                                                        {
-                                                                                                            "active": true,
-                                                                                                            "position": [
-                                                                                                                17.18872833251953,
-                                                                                                                72.07669067382813,
-                                                                                                                14.65142822265625
-                                                                                                            ],
-                                                                                                            "rotation": [
-                                                                                                                0.09968450665473938,
-                                                                                                                -0.04009246081113815,
-                                                                                                                0.062038883566856384,
-                                                                                                                0.9922735095024109
-                                                                                                            ],
-                                                                                                            "scale": [
-                                                                                                                1.0,
-                                                                                                                0.9999992847442627,
-                                                                                                                0.9999986886978149
-                                                                                                            ],
-                                                                                                            "type": "transform"
-                                                                                                        }
-                                                                                                    ],
-                                                                                                    "isPrefab": false,
-                                                                                                    "name": "mixamorig:RightHandIndex3",
-                                                                                                    "tag": 0
-                                                                                                }
-                                                                                            ],
-                                                                                            "components": [
-                                                                                                {
-                                                                                                    "active": true,
-                                                                                                    "type": "info"
-                                                                                                },
-                                                                                                {
-                                                                                                    "active": true,
-                                                                                                    "position": [
-                                                                                                        -1.52587890625e-05,
-                                                                                                        41.97706985473633,
-                                                                                                        2.86102294921875e-06
-                                                                                                    ],
-                                                                                                    "rotation": [
-                                                                                                        0.23164646327495575,
-                                                                                                        -0.042871102690696716,
-                                                                                                        0.16016076505184174,
-                                                                                                        0.9585669040679932
-                                                                                                    ],
-                                                                                                    "scale": [
-                                                                                                        0.9999996423721313,
-                                                                                                        0.9999997615814209,
-                                                                                                        0.9999997615814209
-                                                                                                    ],
-                                                                                                    "type": "transform"
-                                                                                                }
-                                                                                            ],
-                                                                                            "isPrefab": false,
-                                                                                            "name": "mixamorig:RightHandIndex2",
-                                                                                            "tag": 0
-                                                                                        }
-                                                                                    ],
-                                                                                    "components": [
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "type": "info"
-                                                                                        },
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "position": [
-                                                                                                2.288818359375e-05,
-                                                                                                104.93060302734375,
-                                                                                                -0.0005550384521484375
-                                                                                            ],
-                                                                                            "rotation": [
-                                                                                                0.14897304773330688,
-                                                                                                0.008128312416374683,
-                                                                                                -0.007137918844819069,
-                                                                                                0.9887821078300476
-                                                                                            ],
-                                                                                            "scale": [
-                                                                                                0.9999916553497314,
-                                                                                                0.9999995827674866,
-                                                                                                1.0
-                                                                                            ],
-                                                                                            "type": "transform"
-                                                                                        }
-                                                                                    ],
-                                                                                    "isPrefab": false,
-                                                                                    "name": "mixamorig:RightHandIndex1",
-                                                                                    "tag": 0
-                                                                                },
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "children": [
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "children": [],
-                                                                                            "components": [
-                                                                                                {
-                                                                                                    "active": true,
-                                                                                                    "type": "info"
-                                                                                                },
-                                                                                                {
-                                                                                                    "active": true,
-                                                                                                    "position": [
-                                                                                                        0.0,
-                                                                                                        390.04150390625,
-                                                                                                        0.0
-                                                                                                    ],
-                                                                                                    "rotation": [
-                                                                                                        0.0,
-                                                                                                        0.0,
-                                                                                                        0.0,
-                                                                                                        1.0
-                                                                                                    ],
-                                                                                                    "scale": [
-                                                                                                        1.0,
-                                                                                                        1.0,
-                                                                                                        1.0
-                                                                                                    ],
-                                                                                                    "type": "transform"
-                                                                                                }
-                                                                                            ],
-                                                                                            "isPrefab": false,
-                                                                                            "name": "khopesh_hand_end",
-                                                                                            "tag": 0
-                                                                                        }
-                                                                                    ],
-                                                                                    "components": [
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "type": "info"
-                                                                                        },
-                                                                                        {
-                                                                                            "active": true,
-                                                                                            "position": [
-                                                                                                -10.300430297851563,
-                                                                                                136.08982849121094,
-                                                                                                55.83914566040039
-                                                                                            ],
-                                                                                            "rotation": [
-                                                                                                0.801729142665863,
-                                                                                                -0.04553110525012016,
-                                                                                                0.577032208442688,
-                                                                                                -0.14896711707115173
-                                                                                            ],
-                                                                                            "scale": [
-                                                                                                1.0,
-                                                                                                1.0000007152557373,
-                                                                                                1.0000168085098267
-                                                                                            ],
-                                                                                            "type": "transform"
-                                                                                        }
-                                                                                    ],
-                                                                                    "isPrefab": false,
-                                                                                    "name": "khopesh_hand",
-                                                                                    "tag": 0
-                                                                                }
-                                                                            ],
-                                                                            "components": [
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "type": "info"
-                                                                                },
-                                                                                {
-                                                                                    "active": true,
-                                                                                    "position": [
-                                                                                        -3.0517578125e-05,
-                                                                                        272.7554931640625,
-                                                                                        -1.9073486328125e-05
-                                                                                    ],
-                                                                                    "rotation": [
-                                                                                        -0.017886074259877205,
-                                                                                        0.038526128977537155,
-                                                                                        0.17569246888160706,
-                                                                                        0.9835283160209656
-                                                                                    ],
-                                                                                    "scale": [
-                                                                                        1.0,
-                                                                                        1.0,
-                                                                                        1.0
-                                                                                    ],
-                                                                                    "type": "transform"
-                                                                                }
-                                                                            ],
-                                                                            "isPrefab": false,
-                                                                            "name": "mixamorig:RightHand",
-                                                                            "tag": 0
-                                                                        }
-                                                                    ],
-                                                                    "components": [
-                                                                        {
-                                                                            "active": true,
-                                                                            "type": "info"
-                                                                        },
-                                                                        {
-                                                                            "active": true,
-                                                                            "position": [
-                                                                                -7.62939453125e-06,
-                                                                                276.7571716308594,
-                                                                                -5.91278076171875e-05
-                                                                            ],
-                                                                            "rotation": [
-                                                                                0.014920437708497047,
-                                                                                0.006744277663528919,
-                                                                                -0.26260000467300415,
-                                                                                0.9647658467292786
-                                                                            ],
-                                                                            "scale": [
-                                                                                0.9999997615814209,
-                                                                                0.9999997615814209,
-                                                                                1.0
-                                                                            ],
-                                                                            "type": "transform"
-                                                                        }
-                                                                    ],
-                                                                    "isPrefab": false,
-                                                                    "name": "mixamorig:RightForeArm",
-                                                                    "tag": 0
-                                                                }
-                                                            ],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": "info"
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        2.09808349609375e-05,
-                                                                        224.89759826660156,
-                                                                        -6.979703903198242e-05
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.41135373711586,
-                                                                        -0.16824349761009216,
-                                                                        -0.1159408912062645,
-                                                                        0.8882791996002197
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": "transform"
-                                                                }
-                                                            ],
-                                                            "isPrefab": false,
-                                                            "name": "mixamorig:RightArm",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": "info"
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                -108.89472961425781,
-                                                                145.5621337890625,
-                                                                -0.47566699981689453
-                                                            ],
-                                                            "rotation": [
-                                                                0.6148948073387146,
-                                                                -0.3867243826389313,
-                                                                0.5503824949264526,
-                                                                0.4116159975528717
-                                                            ],
-                                                            "scale": [
-                                                                1.000000238418579,
-                                                                1.000001072883606,
-                                                                1.0000008344650269
-                                                            ],
-                                                            "type": "transform"
-                                                        }
-                                                    ],
-                                                    "isPrefab": false,
-                                                    "name": "mixamorig:RightShoulder",
-                                                    "tag": 0
-                                                }
-                                            ],
-                                            "components": [
-                                                {
-                                                    "active": true,
-                                                    "type": "info"
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "position": [
-                                                        2.956390380859375e-05,
-                                                        163.4962921142578,
-                                                        3.2186508178710938e-06
-                                                    ],
-                                                    "rotation": [
-                                                        0.014543798752129078,
-                                                        -0.026044560596346855,
-                                                        0.002903599292039871,
-                                                        0.9995507597923279
-                                                    ],
-                                                    "scale": [
-                                                        0.9999936819076538,
-                                                        1.0,
-                                                        0.9999991059303284
-                                                    ],
-                                                    "type": "transform"
-                                                }
-                                            ],
-                                            "isPrefab": false,
-                                            "name": "mixamorig:Spine2",
-                                            "tag": 0
-                                        },
-                                        {
-                                            "active": true,
-                                            "children": [
-                                                {
-                                                    "active": true,
-                                                    "children": [],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": "info"
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                0.0,
-                                                                260.0516357421875,
-                                                                0.0
-                                                            ],
-                                                            "rotation": [
-                                                                0.0,
-                                                                0.0,
-                                                                0.0,
-                                                                1.0
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "type": "transform"
-                                                        }
-                                                    ],
-                                                    "isPrefab": false,
-                                                    "name": "khopesh_back_end",
-                                                    "tag": 0
-                                                }
-                                            ],
-                                            "components": [
-                                                {
-                                                    "active": true,
-                                                    "type": "info"
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "position": [
-                                                        -5.86631965637207,
-                                                        -51.06742858886719,
-                                                        -212.80909729003906
-                                                    ],
-                                                    "rotation": [
-                                                        0.009828013367950916,
-                                                        0.03849182650446892,
-                                                        0.011558775790035725,
-                                                        0.9991437196731567
-                                                    ],
-                                                    "scale": [
-                                                        0.9999997019767761,
-                                                        1.0,
-                                                        0.9999991655349731
-                                                    ],
-                                                    "type": "transform"
-                                                }
-                                            ],
-                                            "isPrefab": false,
-                                            "name": "khopesh_back",
-                                            "tag": 0
-                                        }
-                                    ],
-                                    "components": [
-                                        {
-                                            "active": true,
-                                            "type": "info"
-                                        },
-                                        {
-                                            "active": true,
-                                            "position": [
-                                                1.430511474609375e-06,
-                                                147.31051635742188,
-                                                2.682209014892578e-06
-                                            ],
-                                            "rotation": [
-                                                0.01467668917030096,
-                                                -0.02611524425446987,
-                                                0.0022167759016156197,
-                                                0.9995487332344055
-                                            ],
-                                            "scale": [
-                                                0.9999991655349731,
-                                                0.9999913573265076,
-                                                0.9999992847442627
-                                            ],
-                                            "type": "transform"
-                                        }
-                                    ],
-                                    "isPrefab": false,
-                                    "name": "mixamorig:Spine1",
-                                    "tag": 0
-                                }
-                            ],
-                            "components": [
-                                {
-                                    "active": true,
-                                    "type": "info"
-                                },
-                                {
-                                    "active": true,
-                                    "position": [
-                                        2.6226043701171875e-06,
-                                        122.59850311279297,
-                                        -2.4057881832122803
-                                    ],
-                                    "rotation": [
-                                        0.0019189795712009072,
-                                        -0.0024203823413699865,
-                                        0.002283657668158412,
-                                        0.9999926090240479
-                                    ],
-                                    "scale": [
-                                        1.0,
-                                        0.9999913573265076,
-                                        1.0
-                                    ],
-                                    "type": "transform"
-                                }
-                            ],
-                            "isPrefab": false,
-                            "name": "mixamorig:Spine",
-                            "tag": 0
-                        },
-                        {
-                            "active": true,
-                            "children": [
-                                {
-                                    "active": true,
-                                    "children": [
-                                        {
-                                            "active": true,
-                                            "children": [
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [
-                                                                {
-                                                                    "active": true,
-                                                                    "children": [],
-                                                                    "components": [
-                                                                        {
-                                                                            "active": true,
-                                                                            "type": "info"
-                                                                        },
-                                                                        {
-                                                                            "active": true,
-                                                                            "position": [
-                                                                                0.0,
-                                                                                100.877685546875,
-                                                                                0.0
-                                                                            ],
-                                                                            "rotation": [
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                1.0
-                                                                            ],
-                                                                            "scale": [
-                                                                                1.0,
-                                                                                1.0,
-                                                                                1.0
-                                                                            ],
-                                                                            "type": "transform"
-                                                                        }
-                                                                    ],
-                                                                    "isPrefab": false,
-                                                                    "name": "mixamorig:LeftToe_End_end",
-                                                                    "tag": 0
-                                                                }
-                                                            ],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": "info"
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        -6.374716758728027e-05,
-                                                                        100.87665557861328,
-                                                                        4.76837158203125e-07
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": "transform"
-                                                                }
-                                                            ],
-                                                            "isPrefab": false,
-                                                            "name": "mixamorig:LeftToe_End",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": "info"
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                2.7000904083251953e-05,
-                                                                251.9923553466797,
-                                                                3.337860107421875e-05
-                                                            ],
-                                                            "rotation": [
-                                                                0.2556154131889343,
-                                                                -0.03709067031741142,
-                                                                0.009652804583311081,
-                                                                0.966018557548523
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                0.9999997615814209,
-                                                                1.0
-                                                            ],
-                                                            "type": "transform"
-                                                        }
-                                                    ],
-                                                    "isPrefab": false,
-                                                    "name": "mixamorig:LeftToeBase",
-                                                    "tag": 0
-                                                }
-                                            ],
-                                            "components": [
-                                                {
-                                                    "active": true,
-                                                    "type": "info"
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "position": [
-                                                        -4.38690185546875e-05,
-                                                        597.9553833007813,
-                                                        -4.9591064453125e-05
-                                                    ],
-                                                    "rotation": [
-                                                        0.6123723387718201,
-                                                        -0.1597428023815155,
-                                                        0.041697368025779724,
-                                                        0.7731388807296753
-                                                    ],
-                                                    "scale": [
-                                                        0.9999996423721313,
-                                                        1.0,
-                                                        0.9999999403953552
-                                                    ],
-                                                    "type": "transform"
-                                                }
-                                            ],
-                                            "isPrefab": false,
-                                            "name": "mixamorig:LeftFoot",
-                                            "tag": 0
-                                        }
-                                    ],
-                                    "components": [
-                                        {
-                                            "active": true,
-                                            "type": "info"
-                                        },
-                                        {
-                                            "active": true,
-                                            "position": [
-                                                -4.76837158203125e-06,
-                                                612.20654296875,
-                                                -1.621246337890625e-05
-                                            ],
-                                            "rotation": [
-                                                -0.28518950939178467,
-                                                -0.07848592847585678,
-                                                0.05011171102523804,
-                                                0.9539369940757751
-                                            ],
-                                            "scale": [
-                                                1.0,
-                                                1.0,
-                                                1.0
-                                            ],
-                                            "type": "transform"
-                                        }
-                                    ],
-                                    "isPrefab": false,
-                                    "name": "mixamorig:LeftLeg",
-                                    "tag": 0
-                                },
-                                {
-                                    "active": true,
-                                    "children": [
-                                        {
-                                            "active": true,
-                                            "children": [],
-                                            "components": [
-                                                {
-                                                    "active": true,
-                                                    "type": "info"
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "position": [
-                                                        0.0,
-                                                        439.5908203125,
-                                                        0.0
-                                                    ],
-                                                    "rotation": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0,
-                                                        1.0
-                                                    ],
-                                                    "scale": [
-                                                        1.0,
-                                                        1.0,
-                                                        1.0
-                                                    ],
-                                                    "type": "transform"
-                                                }
-                                            ],
-                                            "isPrefab": false,
-                                            "name": "karambit_end",
-                                            "tag": 0
-                                        }
-                                    ],
-                                    "components": [
-                                        {
-                                            "active": true,
-                                            "type": "info"
-                                        },
-                                        {
-                                            "active": true,
-                                            "position": [
-                                                -45.4029426574707,
-                                                58.06867218017578,
-                                                -59.85370635986328
-                                            ],
-                                            "rotation": [
-                                                0.042822305113077164,
-                                                0.12192647159099579,
-                                                0.9911282062530518,
-                                                0.031065134331583977
-                                            ],
-                                            "scale": [
-                                                1.000000238418579,
-                                                1.000000238418579,
-                                                0.9999999403953552
-                                            ],
-                                            "type": "transform"
-                                        }
-                                    ],
-                                    "isPrefab": false,
-                                    "name": "karambit",
-                                    "tag": 0
-                                }
-                            ],
-                            "components": [
-                                {
-                                    "active": true,
-                                    "type": "info"
-                                },
-                                {
-                                    "active": true,
-                                    "position": [
-                                        165.72610473632813,
-                                        -68.2098159790039,
-                                        12.830389976501465
-                                    ],
-                                    "rotation": [
-                                        0.03868892043828964,
-                                        0.09232978522777557,
-                                        0.9946194291114807,
-                                        -0.02665671333670616
-                                    ],
-                                    "scale": [
-                                        1.0,
-                                        1.0000016689300537,
-                                        0.9999999403953552
-                                    ],
-                                    "type": "transform"
-                                }
-                            ],
-                            "isPrefab": false,
-                            "name": "mixamorig:LeftUpLeg",
-                            "tag": 0
-                        },
-                        {
-                            "active": true,
-                            "children": [
-                                {
-                                    "active": true,
-                                    "children": [
-                                        {
-                                            "active": true,
-                                            "children": [
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [
-                                                                {
-                                                                    "active": true,
-                                                                    "children": [],
-                                                                    "components": [
-                                                                        {
-                                                                            "active": true,
-                                                                            "type": "info"
-                                                                        },
-                                                                        {
-                                                                            "active": true,
-                                                                            "position": [
-                                                                                0.0,
-                                                                                99.3047103881836,
-                                                                                0.0
-                                                                            ],
-                                                                            "rotation": [
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                1.0
-                                                                            ],
-                                                                            "scale": [
-                                                                                1.0,
-                                                                                1.0,
-                                                                                1.0
-                                                                            ],
-                                                                            "type": "transform"
-                                                                        }
-                                                                    ],
-                                                                    "isPrefab": false,
-                                                                    "name": "mixamorig:RightToe_End_end",
-                                                                    "tag": 0
-                                                                }
-                                                            ],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": "info"
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        -1.996755599975586e-06,
-                                                                        99.30380249023438,
-                                                                        1.430511474609375e-06
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": "transform"
-                                                                }
-                                                            ],
-                                                            "isPrefab": false,
-                                                            "name": "mixamorig:RightToe_End",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": "info"
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                3.4570693969726563e-06,
-                                                                249.30035400390625,
-                                                                1.621246337890625e-05
-                                                            ],
-                                                            "rotation": [
-                                                                0.2533176839351654,
-                                                                0.03650042787194252,
-                                                                -0.009565640240907669,
-                                                                0.9666469693183899
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "type": "transform"
-                                                        }
-                                                    ],
-                                                    "isPrefab": false,
-                                                    "name": "mixamorig:RightToeBase",
-                                                    "tag": 0
-                                                }
-                                            ],
-                                            "components": [
-                                                {
-                                                    "active": true,
-                                                    "type": "info"
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "position": [
-                                                        -4.57763671875e-05,
-                                                        597.9970703125,
-                                                        1.1444091796875e-05
-                                                    ],
-                                                    "rotation": [
-                                                        0.5916765332221985,
-                                                        0.1441260427236557,
-                                                        -0.028051847591996193,
-                                                        0.7926914095878601
-                                                    ],
-                                                    "scale": [
-                                                        0.9999998807907104,
-                                                        1.0,
-                                                        1.0
-                                                    ],
-                                                    "type": "transform"
-                                                }
-                                            ],
-                                            "isPrefab": false,
-                                            "name": "mixamorig:RightFoot",
-                                            "tag": 0
-                                        }
-                                    ],
-                                    "components": [
-                                        {
-                                            "active": true,
-                                            "type": "info"
-                                        },
-                                        {
-                                            "active": true,
-                                            "position": [
-                                                -3.814697265625e-05,
-                                                611.6707763671875,
-                                                7.62939453125e-06
-                                            ],
-                                            "rotation": [
-                                                -0.2582153379917145,
-                                                0.028247185051441193,
-                                                -0.04399332031607628,
-                                                0.9646717309951782
-                                            ],
-                                            "scale": [
-                                                0.9999992847442627,
-                                                0.9999998807907104,
-                                                1.0
-                                            ],
-                                            "type": "transform"
-                                        }
-                                    ],
-                                    "isPrefab": false,
-                                    "name": "mixamorig:RightLeg",
-                                    "tag": 0
-                                }
-                            ],
-                            "components": [
-                                {
-                                    "active": true,
-                                    "type": "info"
-                                },
-                                {
-                                    "active": true,
-                                    "position": [
-                                        -165.72610473632813,
-                                        -68.2098388671875,
-                                        16.40119171142578
-                                    ],
-                                    "rotation": [
-                                        -0.0919596254825592,
-                                        0.09134130924940109,
-                                        0.9911370277404785,
-                                        0.0291134063154459
-                                    ],
-                                    "scale": [
-                                        1.0,
-                                        1.0,
-                                        0.9999999403953552
-                                    ],
-                                    "type": "transform"
-                                }
-                            ],
-                            "isPrefab": false,
-                            "name": "mixamorig:RightUpLeg",
-                            "tag": 0
-                        }
-                    ],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": "info"
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                -0.23211669921875,
-                                1363.247802734375,
-                                -8.304618835449219
-                            ],
-                            "rotation": [
-                                -0.026441503316164017,
-                                -0.011799073778092861,
-                                -0.013387396931648254,
-                                0.9994910955429077
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                0.9999940991401672
-                            ],
-                            "type": "transform"
-                        }
-                    ],
-                    "isPrefab": false,
-                    "name": "mixamorig:Hips",
-                    "tag": 0
-                }
-            ],
-            "components": [
-                {
-                    "active": true,
-                    "type": "info"
-                },
-                {
-                    "active": true,
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": "transform"
-                }
-            ],
-            "isPrefab": false,
-            "name": "Armature",
-            "tag": 0
-        },
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": "info"
-                },
-                {
-                    "active": true,
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": "transform"
-                },
-                {
-                    "active": true,
-                    "draw_face_normals": false,
-                    "draw_vertex_normals": false,
-                    "isAnimated": true,
-                    "path": "Library/Meshes/khopesh.sugar",
-                    "rootNodeUID": 4294967295,
-                    "shape_type": 0,
-                    "type": "mesh"
-                },
-                {
-                    "active": true,
-                    "clips": [
-                        {
-                            "clipDuration": 591.0,
-                            "clipDurationInSeconds": 24.625,
-                            "clipEndFrame": 591.0,
-                            "clipFinished": false,
-                            "clipLoop": true,
-                            "clipName": "Default clip",
-                            "clipStartFrame": 0.0,
-                            "mapString": "Default clip"
-                        }
-                    ],
-                    "path": "Library/Animations/khopesh.cake",
-                    "selectedClip": "Default clip",
-                    "type": "animator"
-                },
-                {
-                    "active": true,
-                    "color": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "shader_path": "Assets/Shaders/default_shader.glsl",
-                    "texture_path": "Assets/Textures/character_Base_color.png",
-                    "type": "material",
-                    "uniforms": null
-                }
-            ],
-            "isPrefab": false,
-            "name": "khopesh",
-            "tag": 0
-        },
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": "info"
-                },
-                {
-                    "active": true,
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": "transform"
-                },
-                {
-                    "active": true,
-                    "draw_face_normals": false,
-                    "draw_vertex_normals": false,
-                    "isAnimated": true,
-                    "path": "Library/Meshes/karambit001.sugar",
-                    "rootNodeUID": 4294967295,
-                    "shape_type": 0,
-                    "type": "mesh"
-                },
-                {
-                    "active": true,
-                    "clips": [
-                        {
-                            "clipDuration": 591.0,
-                            "clipDurationInSeconds": 24.625,
-                            "clipEndFrame": 591.0,
-                            "clipFinished": false,
-                            "clipLoop": true,
-                            "clipName": "Default clip",
-                            "clipStartFrame": 0.0,
-                            "mapString": "Default clip"
-                        }
-                    ],
-                    "path": "Library/Animations/karambit001.cake",
-                    "selectedClip": "Default clip",
-                    "type": "animator"
-                },
-                {
-                    "active": true,
-                    "color": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "shader_path": "Assets/Shaders/default_shader.glsl",
-                    "texture_path": "Assets/Textures/character_Base_color.png",
-                    "type": "material",
-                    "uniforms": null
-                }
-            ],
-            "isPrefab": false,
-            "name": "karambit001",
-            "tag": 0
-        },
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": "info"
-                },
-                {
-                    "active": true,
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": "transform"
-                },
-                {
-                    "active": true,
-                    "draw_face_normals": false,
-                    "draw_vertex_normals": false,
-                    "isAnimated": true,
-                    "path": "Library/Meshes/khopesh_back001.sugar",
-                    "rootNodeUID": 4294967295,
-                    "shape_type": 0,
-                    "type": "mesh"
-                },
-                {
-                    "active": true,
-                    "clips": [
-                        {
-                            "clipDuration": 591.0,
-                            "clipDurationInSeconds": 24.625,
-                            "clipEndFrame": 591.0,
-                            "clipFinished": false,
-                            "clipLoop": true,
-                            "clipName": "Default clip",
-                            "clipStartFrame": 0.0,
-                            "mapString": "Default clip"
-                        }
-                    ],
-                    "path": "Library/Animations/khopesh_back001.cake",
-                    "selectedClip": "Default clip",
-                    "type": "animator"
-                },
-                {
-                    "active": true,
-                    "color": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "shader_path": "Assets/Shaders/default_shader.glsl",
-                    "texture_path": "Assets/Textures/character_Base_color.png",
-                    "type": "material",
-                    "uniforms": null
-                }
-            ],
-            "isPrefab": false,
-            "name": "khopesh_back001",
-            "tag": 0
-        },
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": "info"
-                },
-                {
-                    "active": true,
-                    "position": [
-                        32.0,
-                        25.5,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        0.009999999776482582,
-                        0.009999999776482582,
-                        0.009999999776482582
-                    ],
-                    "type": "transform"
-                },
-                {
-                    "active": true,
-                    "draw_face_normals": false,
-                    "draw_vertex_normals": false,
-                    "isAnimated": true,
-                    "path": "Library/Meshes/Zhib_mesh.sugar",
-                    "rootNodeUID": 4294967295,
-                    "shape_type": 0,
-                    "type": "mesh"
-                },
-                {
-                    "active": true,
-                    "clips": [
-                        {
-                            "clipDuration": 38.0,
-                            "clipDurationInSeconds": 1.5833333730697632,
-                            "clipEndFrame": 183.0,
-                            "clipFinished": false,
-                            "clipLoop": true,
-                            "clipName": "Crouch",
-                            "clipStartFrame": 145.0,
-                            "mapString": "Crouch"
-                        },
-                        {
-                            "clipDuration": 591.0,
-                            "clipDurationInSeconds": 24.625,
-                            "clipEndFrame": 591.0,
-                            "clipFinished": false,
-                            "clipLoop": true,
-                            "clipName": "Default clip",
-                            "clipStartFrame": 0.0,
-                            "mapString": "Default clip"
-                        },
-                        {
-                            "clipDuration": 103.0,
-                            "clipDurationInSeconds": 4.291666507720947,
-                            "clipEndFrame": 104.0,
-                            "clipFinished": false,
-                            "clipLoop": true,
-                            "clipName": "Idle",
-                            "clipStartFrame": 1.0,
-                            "mapString": "Idle"
-                        },
-                        {
-                            "clipDuration": 15.0,
-                            "clipDurationInSeconds": 0.625,
-                            "clipEndFrame": 346.0,
-                            "clipFinished": false,
-                            "clipLoop": true,
-                            "clipName": "Run",
-                            "clipStartFrame": 331.0,
-                            "mapString": "Run"
-                        },
-                        {
-                            "clipDuration": 22.0,
-                            "clipDurationInSeconds": 0.9166666865348816,
-                            "clipEndFrame": 132.0,
-                            "clipFinished": false,
-                            "clipLoop": true,
-                            "clipName": "Walk",
-                            "clipStartFrame": 110.0,
-                            "mapString": "Walk"
-                        }
-                    ],
-                    "path": "Library/Animations/Zhib_mesh.cake",
-                    "selectedClip": "Idle",
-                    "type": "animator"
-                },
-                {
-                    "active": true,
-                    "color": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "shader_path": "Assets/Shaders/default_shader.glsl",
-                    "texture_path": "Assets/Textures/character_Base_color.png",
-                    "type": "material",
-                    "uniforms": null
-                },
-                {
-                    "active": true,
-                    "body_type": "Dynamic",
-                    "freeze_position_x": false,
-                    "freeze_position_y": false,
-                    "freeze_position_z": false,
-                    "freeze_rotation_x": false,
-                    "freeze_rotation_y": false,
-                    "freeze_rotation_z": true,
-                    "mass": 1.0,
-                    "type": "rigidBody",
-                    "use_gravity": true
-                },
-                {
-                    "active": true,
-                    "center": [
-                        0.0,
-                        12.5,
-                        0.0
-                    ],
-                    "filter": "player",
-                    "is_trigger": false,
-                    "scale_factor": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": "boxCollider"
-                },
-                {
-                    "active": true,
-                    "file_name": "Assets/Scripts/Players/Zhib/Zhib.lua",
-                    "id": 1892765777,
-                    "type": "script"
-                }
-            ],
-            "isPrefab": false,
-            "name": "Zhib_mesh",
-            "tag": 1
-        }
-    ],
+    "children": [],
     "components": [
         {
             "active": true,
@@ -1903,22 +9,208 @@
         {
             "active": true,
             "position": [
+                -1640.0,
                 0.0,
-                0.0,
-                0.0
+                -30.5
             ],
             "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
+                -0.0033076307736337185,
+                -4.675111995311454e-07,
+                -0.011681086383759975,
+                0.9999263882637024
             ],
             "scale": [
+                0.010000023059546947,
+                0.010000023059546947,
+                0.009999975562095642
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "draw_face_normals": false,
+            "draw_vertex_normals": false,
+            "isAnimated": true,
+            "path": "Library/Meshes/Zhib.sugar",
+            "rootNodeUID": 4294967295,
+            "shape_type": 0,
+            "type": "mesh"
+        },
+        {
+            "active": true,
+            "clips": [
+                {
+                    "clipDuration": 38.0,
+                    "clipDurationInSeconds": 1.5833333730697632,
+                    "clipEndFrame": 183.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Crouch",
+                    "clipStartFrame": 145.0,
+                    "mapString": "Crouch"
+                },
+                {
+                    "clipDuration": 45.0,
+                    "clipDurationInSeconds": 1.875,
+                    "clipEndFrame": 281.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Decoy",
+                    "clipStartFrame": 236.0,
+                    "mapString": "Decoy"
+                },
+                {
+                    "clipDuration": 3.0,
+                    "clipDurationInSeconds": 0.125,
+                    "clipEndFrame": 285.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "DecoyToIdle",
+                    "clipStartFrame": 282.0,
+                    "mapString": "DecoyToIdle"
+                },
+                {
+                    "clipDuration": 591.0,
+                    "clipDurationInSeconds": 24.625,
+                    "clipEndFrame": 591.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Default clip",
+                    "clipStartFrame": 0.0,
+                    "mapString": "Default clip"
+                },
+                {
+                    "clipDuration": 103.0,
+                    "clipDurationInSeconds": 4.291666507720947,
+                    "clipEndFrame": 104.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Idle",
+                    "clipStartFrame": 1.0,
+                    "mapString": "Idle"
+                },
+                {
+                    "clipDuration": 4.0,
+                    "clipDurationInSeconds": 0.1666666716337204,
+                    "clipEndFrame": 144.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "IdleToCrouch",
+                    "clipStartFrame": 140.0,
+                    "mapString": "IdleToCrouch"
+                },
+                {
+                    "clipDuration": 45.0,
+                    "clipDurationInSeconds": 1.875,
+                    "clipEndFrame": 515.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Knife",
+                    "clipStartFrame": 470.0,
+                    "mapString": "Knife"
+                },
+                {
+                    "clipDuration": 8.0,
+                    "clipDurationInSeconds": 0.3333333432674408,
+                    "clipEndFrame": 524.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "KnifeToIdle",
+                    "clipStartFrame": 516.0,
+                    "mapString": "KnifeToIdle"
+                },
+                {
+                    "clipDuration": 15.0,
+                    "clipDurationInSeconds": 0.625,
+                    "clipEndFrame": 346.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Run",
+                    "clipStartFrame": 331.0,
+                    "mapString": "Run"
+                },
+                {
+                    "clipDuration": 34.0,
+                    "clipDurationInSeconds": 1.4166666269302368,
+                    "clipEndFrame": 589.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Ultimate_end",
+                    "clipStartFrame": 555.0,
+                    "mapString": "Ultimate_end"
+                },
+                {
+                    "clipDuration": 22.0,
+                    "clipDurationInSeconds": 0.9166666865348816,
+                    "clipEndFrame": 549.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Ultimate_start",
+                    "clipStartFrame": 527.0,
+                    "mapString": "Ultimate_start"
+                },
+                {
+                    "clipDuration": 22.0,
+                    "clipDurationInSeconds": 0.9166666865348816,
+                    "clipEndFrame": 132.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Walk",
+                    "clipStartFrame": 110.0,
+                    "mapString": "Walk"
+                }
+            ],
+            "path": "Library/Animations/Zhib.cake",
+            "selectedClip": "Idle",
+            "type": "animator"
+        },
+        {
+            "active": true,
+            "color": [
+                1.0,
                 1.0,
                 1.0,
                 1.0
             ],
-            "type": "transform"
+            "shader_path": "Assets/Shaders/default_shader.glsl",
+            "texture_path": "Assets/Textures/Characters/zhib_base_color.png",
+            "type": "material",
+            "uniforms": null
+        },
+        {
+            "active": true,
+            "body_type": "Dynamic",
+            "freeze_position_x": false,
+            "freeze_position_y": true,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": "rigidBody",
+            "use_gravity": false
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                12.0,
+                0.0
+            ],
+            "filter": "player",
+            "is_trigger": false,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "boxCollider"
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Players/Zhib/Zhib.lua",
+            "id": 1484921687,
+            "type": "script"
         }
     ],
     "isPrefab": true,

@@ -100,8 +100,13 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		ImGui::InputText("Clip Name", clipName, IM_ARRAYSIZE(clipName), inputTxtFlags);
 
 		ImGui::Text("Reel selector: ");
-		ImGui::DragInt("Edit Start", &animation->startFrame, 0, animation->duration);
-		ImGui::DragInt("Edit End", &animation->endFrame, 0, animation->duration);
+		int newStartFrame = animation->startFrame;
+		if (ImGui::DragInt("Edit Start", &newStartFrame, 0, animation->duration))
+			animation->startFrame = newStartFrame;
+
+		int newEndFrame = animation->endFrame;
+		if (ImGui::DragInt("Edit End", &newEndFrame, 0, animation->duration))
+			animation->endFrame = newEndFrame;
 
 		if (ImGui::Button("Create Clip", ImVec2(80, 35)))
 		{
@@ -141,7 +146,6 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		}
 
 		ImGui::Text("Delete Clip");
-
 		if (ImGui::BeginCombo("Delete Clip", ((clipToDelete.GetName().c_str() != "[NONE]") ? clipToDelete.GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
@@ -179,7 +183,9 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		}
 
 		ImGui::Text("Clip Options: ");
-		if (ImGui::Checkbox("Loop", &selectedClip.GetLoopBool())) {}
+		bool newLoop = selectedClip.GetLoopBool();
+		if (ImGui::Checkbox("Loop", &newLoop)) 
+			selectedClip.SetLoopBool(newLoop);
 
 		/*ImGui::SameLine();
 		if (ImGui::Button("Restart", ImVec2(70, 18)))
