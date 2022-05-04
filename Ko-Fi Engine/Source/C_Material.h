@@ -38,12 +38,12 @@ public:
 	R_Texture* texture = nullptr;
 	//std::vector<R_Texture> textures;
 
+	bool checkerTexture = false;
+
 private:
 	R_Material* material = nullptr;
 
 	int currentTextureId = 0;
-
-	bool checkerTexture = false;
 };
 
 #endif // !__C_MATERIAL_H__

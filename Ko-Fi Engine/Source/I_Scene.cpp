@@ -260,16 +260,16 @@ bool I_Scene::SaveScene(Scene* scene, const char* customName)
 	jsonFile[name]["navmesh"] = Json::object();
 	engine->GetNavigation()->Save(jsonFile[name]["navmesh"]);
 
-	jsonFile[name]["models_in_scene_list"] = Json::array();
-	for (const auto& model : scene->sceneModels)
-	{
-		Json jsonModel;
-		jsonModel["game_object_uid"] = model.first;
-		jsonModel["model_uid"] = model.second.first;
-		jsonModel["model_asset_path"] = model.second.second;
+	//jsonFile[name]["models_in_scene_list"] = Json::array();
+	//for (const auto& model : scene->sceneModels)
+	//{
+	//	Json jsonModel;
+	//	jsonModel["game_object_uid"] = model.first;
+	//	jsonModel["model_uid"] = model.second.first;
+	//	jsonModel["model_asset_path"] = model.second.second;
 
-		jsonFile[name]["models_in_scene_list"].push_back(jsonModel);
-	}
+	//	jsonFile[name]["models_in_scene_list"].push_back(jsonModel);
+	//}
 
 	jsonFile[name]["game_objects_amount"] = gameObjectList.size() - 1;
 	jsonFile[name]["game_objects_list"] = Json::array();
@@ -350,22 +350,22 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		if (jsonScene.find("navmesh") != jsonScene.end())
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
 
-		Json jsonModels = jsonScene.at("models_in_scene_list");
-		for (const auto& modelIt : jsonModels.items())
-		{
-			UID goUid = modelIt.value().at("game_object_uid");
-			UID modelUid = modelIt.value().at("model_uid");
-			std::string assetPath = modelIt.value().at("model_asset_path");
+		//Json jsonModels = jsonScene.at("models_in_scene_list");
+		//for (const auto& modelIt : jsonModels.items())
+		//{
+		//	UID goUid = modelIt.value().at("game_object_uid");
+		//	UID modelUid = modelIt.value().at("model_uid");
+		//	std::string assetPath = modelIt.value().at("model_asset_path");
 
-			R_Model* rModel = (R_Model*)engine->GetResourceManager()->GetResourceFromLibrary(assetPath.c_str());
-			if (rModel != nullptr)
-				scene->sceneModels.emplace(goUid, std::pair<UID, std::string>(modelUid, assetPath));
-			else
-			{
-				CONSOLE_LOG("[ERROR] Importer: model resource could not be loaded.");
-				return false;
-			}
-		}
+		//	R_Model* rModel = (R_Model*)engine->GetResourceManager()->GetResourceFromLibrary(assetPath.c_str());
+		//	if (rModel != nullptr)
+		//		scene->sceneModels.emplace(goUid, std::pair<UID, std::string>(modelUid, assetPath));
+		//	else
+		//	{
+		//		CONSOLE_LOG("[ERROR] Importer: model resource could not be loaded.");
+		//		return false;
+		//	}
+		//}
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		float startTime = (float)engine->GetEngineTime();

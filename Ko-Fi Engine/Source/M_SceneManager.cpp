@@ -310,8 +310,8 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		if (node.parentUid == 0)
 		{
 			modelRoot = go;
-		//	std::pair<UID, std::string> modelResource = { model->GetUID(),model->GetAssetPath() };
-		//	currentScene->sceneModels.emplace(modelRoot->GetUID(), modelResource);
+			//std::pair<UID, std::string> modelResource = { model->GetUID(),model->GetAssetPath() };
+			//currentScene->sceneModels.emplace(modelRoot->GetUID(), modelResource);
 		}
 		tmp.emplace(go->GetUID(), go);
 	}
@@ -420,10 +420,12 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 				return;
 			}
 			material->texture = rTexture;
+			material->checkerTexture = false;
 		}
 		else
 		{
 			material->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
+			material->checkerTexture = true;
 		}
 	}
 }
