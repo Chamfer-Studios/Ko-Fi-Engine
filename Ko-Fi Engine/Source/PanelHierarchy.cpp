@@ -175,7 +175,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
 		}
-		if (ImGui::IsMouseReleased(1))
+		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1))
 		{
 			appLog->AddLog("Right Clicked");
 			ImGui::OpenPopup("Test");
