@@ -1,0 +1,23 @@
+{
+    "asset_file": "zhib_decoy.fbx",
+    "asset_path": "Assets/Models/Characters/CharacterAbilities/zhib_decoy.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "zhib_trap.sugar",
+            "library_path": "Library/Meshes/1852415865.sugar",
+            "type": 0,
+            "uid": 1852415865
+        },
+        {
+            "asset_file": "zhib_base_color.png",
+            "library_path": "Library/Textures/2062000227.cacao",
+            "type": 1,
+            "uid": 2062000227
+        }
+    ],
+    "library_file": "1092388835.tea",
+    "library_path": "Library/Models/1092388835.tea",
+    "mod_time": 411318016,
+    "type": 3,
+    "uid": 1092388835
+}

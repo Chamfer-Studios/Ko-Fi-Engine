@@ -1,0 +1,23 @@
+{
+    "asset_file": "navmesh_test4.fbx",
+    "asset_path": "Assets/Models/Other models/navmesh/navmesh_test4.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/757570267.sugar",
+            "type": 0,
+            "uid": 757570267
+        },
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/887373397.sugar",
+            "type": 0,
+            "uid": 887373397
+        }
+    ],
+    "library_file": "2110483914.tea",
+    "library_path": "Library/Models/2110483914.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 2110483914
+}

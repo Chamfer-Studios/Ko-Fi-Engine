@@ -1,0 +1,23 @@
+{
+    "asset_file": "rocks_blockouts.fbx",
+    "asset_path": "Assets/Models/Other models/rocks_blockouts.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.175.sugar",
+            "library_path": "Library/Meshes/51857428.sugar",
+            "type": 0,
+            "uid": 51857428
+        },
+        {
+            "asset_file": "Grey.png",
+            "library_path": "Library/Textures/445984181.cacao",
+            "type": 1,
+            "uid": 445984181
+        }
+    ],
+    "library_file": "1174301196.tea",
+    "library_path": "Library/Models/1174301196.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 1174301196
+}

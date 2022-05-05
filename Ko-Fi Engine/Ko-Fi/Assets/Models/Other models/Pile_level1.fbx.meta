@@ -1,0 +1,23 @@
+{
+    "asset_file": "Pile_level1.fbx",
+    "asset_path": "Assets/Models/Other models/Pile_level1.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "StonePile.sugar",
+            "library_path": "Library/Meshes/1614873783.sugar",
+            "type": 0,
+            "uid": 1614873783
+        },
+        {
+            "asset_file": "Grey 2.png",
+            "library_path": "Library/Textures/1916274852.cacao",
+            "type": 1,
+            "uid": 1916274852
+        }
+    ],
+    "library_file": "2078248226.tea",
+    "library_path": "Library/Models/2078248226.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 2078248226
+}

@@ -1,0 +1,41 @@
+{
+    "asset_file": "assets_group_1.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_1/props/assets_group_1.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/1183717764.sugar",
+            "type": 0,
+            "uid": 1183717764
+        },
+        {
+            "asset_file": "Cube.002.sugar",
+            "library_path": "Library/Meshes/1744601808.sugar",
+            "type": 0,
+            "uid": 1744601808
+        },
+        {
+            "asset_file": "Cube.003.sugar",
+            "library_path": "Library/Meshes/1867577008.sugar",
+            "type": 0,
+            "uid": 1867577008
+        },
+        {
+            "asset_file": "Cube.007.sugar",
+            "library_path": "Library/Meshes/1110643339.sugar",
+            "type": 0,
+            "uid": 1110643339
+        },
+        {
+            "asset_file": "Jail.sugar",
+            "library_path": "Library/Meshes/2032000252.sugar",
+            "type": 0,
+            "uid": 2032000252
+        }
+    ],
+    "library_file": "584801653.tea",
+    "library_path": "Library/Models/584801653.tea",
+    "mod_time": 411318016,
+    "type": 3,
+    "uid": 584801653
+}

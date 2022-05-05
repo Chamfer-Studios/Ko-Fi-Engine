@@ -1,0 +1,17 @@
+{
+    "asset_file": "camera.fbx",
+    "asset_path": "Assets/Models/Other models/camera.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "camera.sugar",
+            "library_path": "Library/Meshes/2019331694.sugar",
+            "type": 0,
+            "uid": 2019331694
+        }
+    ],
+    "library_file": "1024804115.tea",
+    "library_path": "Library/Models/1024804115.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 1024804115
+}

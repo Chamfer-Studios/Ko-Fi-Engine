@@ -1,0 +1,17 @@
+{
+    "asset_file": "door_rock.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_4/props/door_rock.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Door.sugar",
+            "library_path": "Library/Meshes/1103994286.sugar",
+            "type": 0,
+            "uid": 1103994286
+        }
+    ],
+    "library_file": "416389382.tea",
+    "library_path": "Library/Models/416389382.tea",
+    "mod_time": 411318017,
+    "type": 3,
+    "uid": 416389382
+}

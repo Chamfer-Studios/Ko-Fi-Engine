@@ -1,0 +1,17 @@
+{
+    "asset_file": "spice_tank.fbx",
+    "asset_path": "Assets/Models/Environment/1_levelSietch/spice_tank.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cylinder.002.sugar",
+            "library_path": "Library/Meshes/1269630417.sugar",
+            "type": 0,
+            "uid": 1269630417
+        }
+    ],
+    "library_file": "138385016.tea",
+    "library_path": "Library/Models/138385016.tea",
+    "mod_time": 411318023,
+    "type": 3,
+    "uid": 138385016
+}

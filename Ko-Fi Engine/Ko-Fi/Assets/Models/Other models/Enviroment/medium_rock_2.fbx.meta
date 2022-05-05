@@ -1,0 +1,17 @@
+{
+    "asset_file": "medium_rock_2.fbx",
+    "asset_path": "Assets/Models/Other models/Enviroment/medium_rock_2.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Low.sugar",
+            "library_path": "Library/Meshes/652110213.sugar",
+            "type": 0,
+            "uid": 652110213
+        }
+    ],
+    "library_file": "1827785205.tea",
+    "library_path": "Library/Models/1827785205.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 1827785205
+}

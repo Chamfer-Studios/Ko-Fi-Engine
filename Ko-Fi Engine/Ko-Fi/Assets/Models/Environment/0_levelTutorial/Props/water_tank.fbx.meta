@@ -1,0 +1,17 @@
+{
+    "asset_file": "water_tank.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Props/water_tank.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cylinder.001.sugar",
+            "library_path": "Library/Meshes/139420221.sugar",
+            "type": 0,
+            "uid": 139420221
+        }
+    ],
+    "library_file": "58214617.tea",
+    "library_path": "Library/Models/58214617.tea",
+    "mod_time": 411318023,
+    "type": 3,
+    "uid": 58214617
+}

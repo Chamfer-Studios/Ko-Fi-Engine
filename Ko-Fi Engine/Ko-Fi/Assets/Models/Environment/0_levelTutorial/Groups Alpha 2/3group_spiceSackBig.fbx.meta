@@ -1,0 +1,17 @@
+{
+    "asset_file": "3group_spiceSackBig.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/3group_spiceSackBig.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.002.sugar",
+            "library_path": "Library/Meshes/1721525597.sugar",
+            "type": 0,
+            "uid": 1721525597
+        }
+    ],
+    "library_file": "545894594.tea",
+    "library_path": "Library/Models/545894594.tea",
+    "mod_time": 411318016,
+    "type": 3,
+    "uid": 545894594
+}

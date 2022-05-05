@@ -1,0 +1,29 @@
+{
+    "asset_file": "watch_tower.fbx",
+    "asset_path": "Assets/Models/Other models/Enviroment/watch_tower.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/1479092372.sugar",
+            "type": 0,
+            "uid": 1479092372
+        },
+        {
+            "asset_file": "Cube.001.sugar",
+            "library_path": "Library/Meshes/1911390818.sugar",
+            "type": 0,
+            "uid": 1911390818
+        },
+        {
+            "asset_file": "Cube.002.sugar",
+            "library_path": "Library/Meshes/884298497.sugar",
+            "type": 0,
+            "uid": 884298497
+        }
+    ],
+    "library_file": "1706548148.tea",
+    "library_path": "Library/Models/1706548148.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 1706548148
+}

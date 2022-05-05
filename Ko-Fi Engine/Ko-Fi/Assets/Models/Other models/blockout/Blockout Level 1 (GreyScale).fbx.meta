@@ -1,0 +1,137 @@
+{
+    "asset_file": "Blockout Level 1 (GreyScale).fbx",
+    "asset_path": "Assets/Models/Other models/blockout/Blockout Level 1 (GreyScale).fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/1469496716.sugar",
+            "type": 0,
+            "uid": 1469496716
+        },
+        {
+            "asset_file": "Grey (Light).png",
+            "library_path": "Library/Textures/1709921556.cacao",
+            "type": 1,
+            "uid": 1709921556
+        },
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/1100116019.sugar",
+            "type": 0,
+            "uid": 1100116019
+        },
+        {
+            "asset_file": "Grey (Dark).png",
+            "library_path": "Library/Textures/1173088544.cacao",
+            "type": 1,
+            "uid": 1173088544
+        },
+        {
+            "asset_file": "Cube.098.sugar",
+            "library_path": "Library/Meshes/172886572.sugar",
+            "type": 0,
+            "uid": 172886572
+        },
+        {
+            "asset_file": "Grey.png",
+            "library_path": "Library/Textures/2037671424.cacao",
+            "type": 1,
+            "uid": 2037671424
+        },
+        {
+            "asset_file": "Box.sugar",
+            "library_path": "Library/Meshes/906204114.sugar",
+            "type": 0,
+            "uid": 906204114
+        },
+        {
+            "asset_file": "Grey 2.png",
+            "library_path": "Library/Textures/2062039228.cacao",
+            "type": 1,
+            "uid": 2062039228
+        },
+        {
+            "asset_file": "StonePilePlatform.sugar",
+            "library_path": "Library/Meshes/192566619.sugar",
+            "type": 0,
+            "uid": 192566619
+        },
+        {
+            "asset_file": "StonePile.sugar",
+            "library_path": "Library/Meshes/915100718.sugar",
+            "type": 0,
+            "uid": 915100718
+        },
+        {
+            "asset_file": "Water Tank.sugar",
+            "library_path": "Library/Meshes/1727392881.sugar",
+            "type": 0,
+            "uid": 1727392881
+        },
+        {
+            "asset_file": "Blue.png",
+            "library_path": "Library/Textures/1588052454.cacao",
+            "type": 1,
+            "uid": 1588052454
+        },
+        {
+            "asset_file": "Tent.sugar",
+            "library_path": "Library/Meshes/1687150775.sugar",
+            "type": 0,
+            "uid": 1687150775
+        },
+        {
+            "asset_file": "Spaceship.sugar",
+            "library_path": "Library/Meshes/1564873462.sugar",
+            "type": 0,
+            "uid": 1564873462
+        },
+        {
+            "asset_file": "Stilltent.sugar",
+            "library_path": "Library/Meshes/594535651.sugar",
+            "type": 0,
+            "uid": 594535651
+        },
+        {
+            "asset_file": "Button.sugar",
+            "library_path": "Library/Meshes/1107659286.sugar",
+            "type": 0,
+            "uid": 1107659286
+        },
+        {
+            "asset_file": "ArtilleryGun.sugar",
+            "library_path": "Library/Meshes/2133030565.sugar",
+            "type": 0,
+            "uid": 2133030565
+        },
+        {
+            "asset_file": "Dummy.sugar",
+            "library_path": "Library/Meshes/1493454036.sugar",
+            "type": 0,
+            "uid": 1493454036
+        },
+        {
+            "asset_file": "RocketLauncher.sugar",
+            "library_path": "Library/Meshes/1369536911.sugar",
+            "type": 0,
+            "uid": 1369536911
+        },
+        {
+            "asset_file": "Watchtower.sugar",
+            "library_path": "Library/Meshes/1453904486.sugar",
+            "type": 0,
+            "uid": 1453904486
+        },
+        {
+            "asset_file": "WeaponStand.sugar",
+            "library_path": "Library/Meshes/205608731.sugar",
+            "type": 0,
+            "uid": 205608731
+        }
+    ],
+    "library_file": "388817306.tea",
+    "library_path": "Library/Models/388817306.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 388817306
+}

@@ -1,0 +1,41 @@
+{
+    "asset_file": "group_5.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_5/props/group_5.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.001.sugar",
+            "library_path": "Library/Meshes/479434876.sugar",
+            "type": 0,
+            "uid": 479434876
+        },
+        {
+            "asset_file": "Cylinder.001.sugar",
+            "library_path": "Library/Meshes/837851403.sugar",
+            "type": 0,
+            "uid": 837851403
+        },
+        {
+            "asset_file": "Cylinder.002.sugar",
+            "library_path": "Library/Meshes/2098155837.sugar",
+            "type": 0,
+            "uid": 2098155837
+        },
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/143738157.sugar",
+            "type": 0,
+            "uid": 143738157
+        },
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/1006911477.sugar",
+            "type": 0,
+            "uid": 1006911477
+        }
+    ],
+    "library_file": "2122793005.tea",
+    "library_path": "Library/Models/2122793005.tea",
+    "mod_time": 411318017,
+    "type": 3,
+    "uid": 2122793005
+}

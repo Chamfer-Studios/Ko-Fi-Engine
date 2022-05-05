@@ -1,0 +1,137 @@
+{
+    "asset_file": "Blockout Level 1 (GreyScale).fbx",
+    "asset_path": "Assets/Models/Other models/Blockout Level 1 (GreyScale).fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/1455985343.sugar",
+            "type": 0,
+            "uid": 1455985343
+        },
+        {
+            "asset_file": "Grey (Light).png",
+            "library_path": "Library/Textures/1632459309.cacao",
+            "type": 1,
+            "uid": 1632459309
+        },
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/173187164.sugar",
+            "type": 0,
+            "uid": 173187164
+        },
+        {
+            "asset_file": "Grey (Dark).png",
+            "library_path": "Library/Textures/1490350586.cacao",
+            "type": 1,
+            "uid": 1490350586
+        },
+        {
+            "asset_file": "Cube.098.sugar",
+            "library_path": "Library/Meshes/1620054525.sugar",
+            "type": 0,
+            "uid": 1620054525
+        },
+        {
+            "asset_file": "Grey.png",
+            "library_path": "Library/Textures/1827460938.cacao",
+            "type": 1,
+            "uid": 1827460938
+        },
+        {
+            "asset_file": "Box.sugar",
+            "library_path": "Library/Meshes/1948264280.sugar",
+            "type": 0,
+            "uid": 1948264280
+        },
+        {
+            "asset_file": "Grey 2.png",
+            "library_path": "Library/Textures/745326066.cacao",
+            "type": 1,
+            "uid": 745326066
+        },
+        {
+            "asset_file": "StonePilePlatform.sugar",
+            "library_path": "Library/Meshes/1005120582.sugar",
+            "type": 0,
+            "uid": 1005120582
+        },
+        {
+            "asset_file": "StonePile.sugar",
+            "library_path": "Library/Meshes/1265394172.sugar",
+            "type": 0,
+            "uid": 1265394172
+        },
+        {
+            "asset_file": "Water Tank.sugar",
+            "library_path": "Library/Meshes/1518554867.sugar",
+            "type": 0,
+            "uid": 1518554867
+        },
+        {
+            "asset_file": "Blue.png",
+            "library_path": "Library/Textures/540969950.cacao",
+            "type": 1,
+            "uid": 540969950
+        },
+        {
+            "asset_file": "Tent.sugar",
+            "library_path": "Library/Meshes/519188588.sugar",
+            "type": 0,
+            "uid": 519188588
+        },
+        {
+            "asset_file": "Spaceship.sugar",
+            "library_path": "Library/Meshes/645238211.sugar",
+            "type": 0,
+            "uid": 645238211
+        },
+        {
+            "asset_file": "Stilltent.sugar",
+            "library_path": "Library/Meshes/1437615466.sugar",
+            "type": 0,
+            "uid": 1437615466
+        },
+        {
+            "asset_file": "Button.sugar",
+            "library_path": "Library/Meshes/867899571.sugar",
+            "type": 0,
+            "uid": 867899571
+        },
+        {
+            "asset_file": "ArtilleryGun.sugar",
+            "library_path": "Library/Meshes/329712972.sugar",
+            "type": 0,
+            "uid": 329712972
+        },
+        {
+            "asset_file": "Dummy.sugar",
+            "library_path": "Library/Meshes/622715785.sugar",
+            "type": 0,
+            "uid": 622715785
+        },
+        {
+            "asset_file": "RocketLauncher.sugar",
+            "library_path": "Library/Meshes/23859667.sugar",
+            "type": 0,
+            "uid": 23859667
+        },
+        {
+            "asset_file": "Watchtower.sugar",
+            "library_path": "Library/Meshes/419690513.sugar",
+            "type": 0,
+            "uid": 419690513
+        },
+        {
+            "asset_file": "WeaponStand.sugar",
+            "library_path": "Library/Meshes/1231279650.sugar",
+            "type": 0,
+            "uid": 1231279650
+        }
+    ],
+    "library_file": "1810565130.tea",
+    "library_path": "Library/Models/1810565130.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 1810565130
+}

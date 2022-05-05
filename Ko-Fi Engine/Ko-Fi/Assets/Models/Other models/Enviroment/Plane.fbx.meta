@@ -1,0 +1,17 @@
+{
+    "asset_file": "Plane.fbx",
+    "asset_path": "Assets/Models/Other models/Enviroment/Plane.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/641550706.sugar",
+            "type": 0,
+            "uid": 641550706
+        }
+    ],
+    "library_file": "297016924.tea",
+    "library_path": "Library/Models/297016924.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 297016924
+}

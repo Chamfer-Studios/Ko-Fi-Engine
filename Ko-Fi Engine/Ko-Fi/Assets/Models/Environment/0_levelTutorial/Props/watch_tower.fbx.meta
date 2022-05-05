@@ -1,0 +1,17 @@
+{
+    "asset_file": "watch_tower.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Props/watch_tower.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.001.sugar",
+            "library_path": "Library/Meshes/1635081640.sugar",
+            "type": 0,
+            "uid": 1635081640
+        }
+    ],
+    "library_file": "696839302.tea",
+    "library_path": "Library/Models/696839302.tea",
+    "mod_time": 411318023,
+    "type": 3,
+    "uid": 696839302
+}

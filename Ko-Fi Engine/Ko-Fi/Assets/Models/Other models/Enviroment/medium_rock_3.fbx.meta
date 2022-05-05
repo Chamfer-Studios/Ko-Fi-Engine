@@ -1,0 +1,17 @@
+{
+    "asset_file": "medium_rock_3.fbx",
+    "asset_path": "Assets/Models/Other models/Enviroment/medium_rock_3.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "lowpo.001.sugar",
+            "library_path": "Library/Meshes/2098299837.sugar",
+            "type": 0,
+            "uid": 2098299837
+        }
+    ],
+    "library_file": "613358046.tea",
+    "library_path": "Library/Models/613358046.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 613358046
+}

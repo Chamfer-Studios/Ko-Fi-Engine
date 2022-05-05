@@ -1,0 +1,29 @@
+{
+    "asset_file": "omozra.fbx",
+    "asset_path": "Assets/Models/Characters/omozra.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "omozra.sugar",
+            "library_path": "Library/Meshes/1356096813.sugar",
+            "type": 0,
+            "uid": 1356096813
+        },
+        {
+            "asset_file": "omozra_base_color.png",
+            "library_path": "Library/Textures/2061024312.cacao",
+            "type": 1,
+            "uid": 2061024312
+        },
+        {
+            "asset_file": "omozra_armature|omozra_armature|omozra_armature|Armature|Armature|Armature|Arma.cake",
+            "library_path": "Library/Animations/845161165.cake",
+            "type": 5,
+            "uid": 845161165
+        }
+    ],
+    "library_file": "155309446.tea",
+    "library_path": "Library/Models/155309446.tea",
+    "mod_time": 411318016,
+    "type": 3,
+    "uid": 155309446
+}

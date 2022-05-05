@@ -1,0 +1,17 @@
+{
+    "asset_file": "metallic_box.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Props/metallic_box.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.003.sugar",
+            "library_path": "Library/Meshes/1125363556.sugar",
+            "type": 0,
+            "uid": 1125363556
+        }
+    ],
+    "library_file": "1655317720.tea",
+    "library_path": "Library/Models/1655317720.tea",
+    "mod_time": 411318023,
+    "type": 3,
+    "uid": 1655317720
+}

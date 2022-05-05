@@ -1,0 +1,17 @@
+{
+    "asset_file": "column_rock.fbx",
+    "asset_path": "Assets/Models/Other models/Enviroment/column_rock.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Column.sugar",
+            "library_path": "Library/Meshes/947783687.sugar",
+            "type": 0,
+            "uid": 947783687
+        }
+    ],
+    "library_file": "85445167.tea",
+    "library_path": "Library/Models/85445167.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 85445167
+}

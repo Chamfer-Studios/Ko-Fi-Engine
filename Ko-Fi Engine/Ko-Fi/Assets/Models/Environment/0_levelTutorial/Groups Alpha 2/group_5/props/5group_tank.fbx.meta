@@ -1,0 +1,17 @@
+{
+    "asset_file": "5group_tank.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_5/props/5group_tank.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cylinder.001.sugar",
+            "library_path": "Library/Meshes/601633162.sugar",
+            "type": 0,
+            "uid": 601633162
+        }
+    ],
+    "library_file": "887586860.tea",
+    "library_path": "Library/Models/887586860.tea",
+    "mod_time": 411318017,
+    "type": 3,
+    "uid": 887586860
+}

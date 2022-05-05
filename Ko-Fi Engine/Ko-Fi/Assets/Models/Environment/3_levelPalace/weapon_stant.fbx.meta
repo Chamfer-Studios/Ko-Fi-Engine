@@ -1,0 +1,17 @@
+{
+    "asset_file": "weapon_stant.fbx",
+    "asset_path": "Assets/Models/Environment/3_levelPalace/weapon_stant.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.007.sugar",
+            "library_path": "Library/Meshes/112114677.sugar",
+            "type": 0,
+            "uid": 112114677
+        }
+    ],
+    "library_file": "1865929542.tea",
+    "library_path": "Library/Models/1865929542.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 1865929542
+}

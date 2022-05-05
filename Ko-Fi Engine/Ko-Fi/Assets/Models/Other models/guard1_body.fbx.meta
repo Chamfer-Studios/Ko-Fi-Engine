@@ -1,0 +1,17 @@
+{
+    "asset_file": "guard1_body.fbx",
+    "asset_path": "Assets/Models/Other models/guard1_body.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "RootNode001.sugar",
+            "library_path": "Library/Meshes/2105099012.sugar",
+            "type": 0,
+            "uid": 2105099012
+        }
+    ],
+    "library_file": "1003775931.tea",
+    "library_path": "Library/Models/1003775931.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 1003775931
+}

@@ -1,0 +1,29 @@
+{
+    "asset_file": "group_7_high.fbx",
+    "asset_path": "Assets/Models/Environment/1_levelSietch/group_7_high.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.002.sugar",
+            "library_path": "Library/Meshes/1563568159.sugar",
+            "type": 0,
+            "uid": 1563568159
+        },
+        {
+            "asset_file": "Box001.sugar",
+            "library_path": "Library/Meshes/993300355.sugar",
+            "type": 0,
+            "uid": 993300355
+        },
+        {
+            "asset_file": "Cube.003.sugar",
+            "library_path": "Library/Meshes/1239650640.sugar",
+            "type": 0,
+            "uid": 1239650640
+        }
+    ],
+    "library_file": "178822577.tea",
+    "library_path": "Library/Models/178822577.tea",
+    "mod_time": 411318023,
+    "type": 3,
+    "uid": 178822577
+}

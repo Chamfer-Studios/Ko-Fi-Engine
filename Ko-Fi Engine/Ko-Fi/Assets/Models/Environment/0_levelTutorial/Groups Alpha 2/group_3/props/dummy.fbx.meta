@@ -1,0 +1,17 @@
+{
+    "asset_file": "dummy.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_3/props/dummy.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cylinder.003.sugar",
+            "library_path": "Library/Meshes/955685501.sugar",
+            "type": 0,
+            "uid": 955685501
+        }
+    ],
+    "library_file": "717047628.tea",
+    "library_path": "Library/Models/717047628.tea",
+    "mod_time": 411318017,
+    "type": 3,
+    "uid": 717047628
+}

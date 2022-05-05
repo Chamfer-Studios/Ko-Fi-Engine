@@ -1,0 +1,17 @@
+{
+    "asset_file": "karambit_low.fbx",
+    "asset_path": "Assets/Models/Other models/karambit_low.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Karambit_low.sugar",
+            "library_path": "Library/Meshes/394347223.sugar",
+            "type": 0,
+            "uid": 394347223
+        }
+    ],
+    "library_file": "989176460.tea",
+    "library_path": "Library/Models/989176460.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 989176460
+}

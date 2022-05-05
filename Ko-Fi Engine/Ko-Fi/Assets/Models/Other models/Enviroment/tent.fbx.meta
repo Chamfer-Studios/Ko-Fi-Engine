@@ -1,0 +1,23 @@
+{
+    "asset_file": "tent.fbx",
+    "asset_path": "Assets/Models/Other models/Enviroment/tent.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/1701290777.sugar",
+            "type": 0,
+            "uid": 1701290777
+        },
+        {
+            "asset_file": "Cube.001.sugar",
+            "library_path": "Library/Meshes/125120708.sugar",
+            "type": 0,
+            "uid": 125120708
+        }
+    ],
+    "library_file": "1459699508.tea",
+    "library_path": "Library/Models/1459699508.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 1459699508
+}

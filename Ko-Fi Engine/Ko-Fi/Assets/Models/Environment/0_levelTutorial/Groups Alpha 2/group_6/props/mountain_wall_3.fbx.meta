@@ -1,0 +1,17 @@
+{
+    "asset_file": "mountain_wall_3.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_6/props/mountain_wall_3.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.001.sugar",
+            "library_path": "Library/Meshes/556091123.sugar",
+            "type": 0,
+            "uid": 556091123
+        }
+    ],
+    "library_file": "387000960.tea",
+    "library_path": "Library/Models/387000960.tea",
+    "mod_time": 411318018,
+    "type": 3,
+    "uid": 387000960
+}

@@ -1,0 +1,17 @@
+{
+    "asset_file": "weapon_stant.fbx",
+    "asset_path": "Assets/Models/Environment/2_levelBuilding/weapon_stant.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.007.sugar",
+            "library_path": "Library/Meshes/994958827.sugar",
+            "type": 0,
+            "uid": 994958827
+        }
+    ],
+    "library_file": "1054404126.tea",
+    "library_path": "Library/Models/1054404126.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 1054404126
+}

@@ -1,0 +1,17 @@
+{
+    "asset_file": "7group_tent.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_7/props/7group_tent.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/1985253975.sugar",
+            "type": 0,
+            "uid": 1985253975
+        }
+    ],
+    "library_file": "469369243.tea",
+    "library_path": "Library/Models/469369243.tea",
+    "mod_time": 411318019,
+    "type": 3,
+    "uid": 469369243
+}

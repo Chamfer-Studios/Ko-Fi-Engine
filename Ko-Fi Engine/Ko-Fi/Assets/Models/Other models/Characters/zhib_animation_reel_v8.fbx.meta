@@ -1,0 +1,47 @@
+{
+    "asset_file": "zhib_animation_reel_v8.fbx",
+    "asset_path": "Assets/Models/Other models/Characters/zhib_animation_reel_v8.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "khopesh1.sugar",
+            "library_path": "Library/Meshes/698224338.sugar",
+            "type": 0,
+            "uid": 698224338
+        },
+        {
+            "asset_file": "character_low.sugar",
+            "library_path": "Library/Meshes/20415811.sugar",
+            "type": 0,
+            "uid": 20415811
+        },
+        {
+            "asset_file": "Character_Base_color.png",
+            "library_path": "Library/Textures/1882486964.cacao",
+            "type": 1,
+            "uid": 1882486964
+        },
+        {
+            "asset_file": "khopesh.sugar",
+            "library_path": "Library/Meshes/1042129651.sugar",
+            "type": 0,
+            "uid": 1042129651
+        },
+        {
+            "asset_file": "karambit.sugar",
+            "library_path": "Library/Meshes/2051372821.sugar",
+            "type": 0,
+            "uid": 2051372821
+        },
+        {
+            "asset_file": "Armature|Armature|Armature|Armature|Take 001|BaseLayer.cake",
+            "library_path": "Library/Animations/1016795926.cake",
+            "type": 5,
+            "uid": 1016795926
+        }
+    ],
+    "library_file": "1540584538.tea",
+    "library_path": "Library/Models/1540584538.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 1540584538
+}

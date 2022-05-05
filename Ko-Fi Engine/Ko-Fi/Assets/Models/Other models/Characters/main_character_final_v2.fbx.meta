@@ -1,0 +1,23 @@
+{
+    "asset_file": "main_character_final_v2.fbx",
+    "asset_path": "Assets/Models/Other models/Characters/main_character_final_v2.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "character_low.sugar",
+            "library_path": "Library/Meshes/1418226219.sugar",
+            "type": 0,
+            "uid": 1418226219
+        },
+        {
+            "asset_file": "Armature|Armature|Take 001|BaseLayer.cake",
+            "library_path": "Library/Animations/1324471233.cake",
+            "type": 5,
+            "uid": 1324471233
+        }
+    ],
+    "library_file": "1682189339.tea",
+    "library_path": "Library/Models/1682189339.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 1682189339
+}

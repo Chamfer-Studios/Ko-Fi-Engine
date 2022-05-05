@@ -1,0 +1,17 @@
+{
+    "asset_file": "fence.fbx",
+    "asset_path": "Assets/Models/Environment/3_levelPalace/fence.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Jail.sugar",
+            "library_path": "Library/Meshes/1458123677.sugar",
+            "type": 0,
+            "uid": 1458123677
+        }
+    ],
+    "library_file": "1837383335.tea",
+    "library_path": "Library/Models/1837383335.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 1837383335
+}

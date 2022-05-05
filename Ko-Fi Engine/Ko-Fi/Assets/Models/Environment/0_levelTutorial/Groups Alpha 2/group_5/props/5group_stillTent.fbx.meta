@@ -1,0 +1,17 @@
+{
+    "asset_file": "5group_stillTent.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_5/props/5group_stillTent.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/765779242.sugar",
+            "type": 0,
+            "uid": 765779242
+        }
+    ],
+    "library_file": "331358026.tea",
+    "library_path": "Library/Models/331358026.tea",
+    "mod_time": 411318017,
+    "type": 3,
+    "uid": 331358026
+}

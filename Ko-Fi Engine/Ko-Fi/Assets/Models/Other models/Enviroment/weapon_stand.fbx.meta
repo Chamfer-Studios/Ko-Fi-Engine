@@ -1,0 +1,29 @@
+{
+    "asset_file": "weapon_stand.fbx",
+    "asset_path": "Assets/Models/Other models/Enviroment/weapon_stand.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/994418011.sugar",
+            "type": 0,
+            "uid": 994418011
+        },
+        {
+            "asset_file": "Cube.001.sugar",
+            "library_path": "Library/Meshes/109091469.sugar",
+            "type": 0,
+            "uid": 109091469
+        },
+        {
+            "asset_file": "Cube.002.sugar",
+            "library_path": "Library/Meshes/836131233.sugar",
+            "type": 0,
+            "uid": 836131233
+        }
+    ],
+    "library_file": "1696345386.tea",
+    "library_path": "Library/Models/1696345386.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 1696345386
+}

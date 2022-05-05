@@ -1,0 +1,17 @@
+{
+    "asset_file": "1group_cage.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/group_1/props/1group_cage.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.002.sugar",
+            "library_path": "Library/Meshes/629830116.sugar",
+            "type": 0,
+            "uid": 629830116
+        }
+    ],
+    "library_file": "788998006.tea",
+    "library_path": "Library/Models/788998006.tea",
+    "mod_time": 411318016,
+    "type": 3,
+    "uid": 788998006
+}

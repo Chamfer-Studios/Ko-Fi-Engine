@@ -412,11 +412,11 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 				glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 				GLint view_location = glGetUniformLocation(shader, "view");
-				glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
+				glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
 
 
 				GLint projection_location = glGetUniformLocation(shader, "projection");
-				glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+				glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 
 				if (mesh->IsAnimated())
 				{
@@ -439,7 +439,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				}
 
 				GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-				glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
+				glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
 
 				float2 resolution = float2(1080.0f, 720.0f);
 				glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());

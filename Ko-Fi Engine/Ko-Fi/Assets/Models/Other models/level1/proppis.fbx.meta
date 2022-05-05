@@ -1,0 +1,23 @@
+{
+    "asset_file": "proppis.fbx",
+    "asset_path": "Assets/Models/Other models/level1/proppis.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "ArtilleryGun.sugar",
+            "library_path": "Library/Meshes/1132728970.sugar",
+            "type": 0,
+            "uid": 1132728970
+        },
+        {
+            "asset_file": "Grey 2.png",
+            "library_path": "Library/Textures/1829135236.cacao",
+            "type": 1,
+            "uid": 1829135236
+        }
+    ],
+    "library_file": "246841477.tea",
+    "library_path": "Library/Models/246841477.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 246841477
+}

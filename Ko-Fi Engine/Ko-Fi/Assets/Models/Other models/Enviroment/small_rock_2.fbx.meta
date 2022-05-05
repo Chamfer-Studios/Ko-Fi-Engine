@@ -1,0 +1,23 @@
+{
+    "asset_file": "small_rock_2.fbx",
+    "asset_path": "Assets/Models/Other models/Enviroment/small_rock_2.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Circle.004.sugar",
+            "library_path": "Library/Meshes/630180763.sugar",
+            "type": 0,
+            "uid": 630180763
+        },
+        {
+            "asset_file": "Circle.004|Circle.004|Take 001|BaseLayer.cake",
+            "library_path": "Library/Animations/723992613.cake",
+            "type": 5,
+            "uid": 723992613
+        }
+    ],
+    "library_file": "1966052959.tea",
+    "library_path": "Library/Models/1966052959.tea",
+    "mod_time": 411318025,
+    "type": 3,
+    "uid": 1966052959
+}

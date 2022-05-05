@@ -1,0 +1,17 @@
+{
+    "asset_file": "small_rock_1.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Props/small_rock_1.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Circle.sugar",
+            "library_path": "Library/Meshes/193583242.sugar",
+            "type": 0,
+            "uid": 193583242
+        }
+    ],
+    "library_file": "846994955.tea",
+    "library_path": "Library/Models/846994955.tea",
+    "mod_time": 411318023,
+    "type": 3,
+    "uid": 846994955
+}

@@ -1,0 +1,17 @@
+{
+    "asset_file": "1group_weaponStand.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Groups Alpha 2/1group_weaponStand.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.007.sugar",
+            "library_path": "Library/Meshes/536968616.sugar",
+            "type": 0,
+            "uid": 536968616
+        }
+    ],
+    "library_file": "541201262.tea",
+    "library_path": "Library/Models/541201262.tea",
+    "mod_time": 411318016,
+    "type": 3,
+    "uid": 541201262
+}

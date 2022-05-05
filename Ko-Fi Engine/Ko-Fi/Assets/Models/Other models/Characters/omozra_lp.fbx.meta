@@ -1,0 +1,17 @@
+{
+    "asset_file": "omozra_lp.fbx",
+    "asset_path": "Assets/Models/Other models/Characters/omozra_lp.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "omozra.sugar",
+            "library_path": "Library/Meshes/1830992371.sugar",
+            "type": 0,
+            "uid": 1830992371
+        }
+    ],
+    "library_file": "1102780234.tea",
+    "library_path": "Library/Models/1102780234.tea",
+    "mod_time": 411318024,
+    "type": 3,
+    "uid": 1102780234
+}

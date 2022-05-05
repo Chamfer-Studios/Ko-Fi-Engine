@@ -1,0 +1,17 @@
+{
+    "asset_file": "vertical_rock.fbx",
+    "asset_path": "Assets/Models/Environment/0_levelTutorial/Props/vertical_rock.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/560192289.sugar",
+            "type": 0,
+            "uid": 560192289
+        }
+    ],
+    "library_file": "220202473.tea",
+    "library_path": "Library/Models/220202473.tea",
+    "mod_time": 411318023,
+    "type": 3,
+    "uid": 220202473
+}
