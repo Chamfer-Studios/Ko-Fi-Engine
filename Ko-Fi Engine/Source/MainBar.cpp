@@ -61,7 +61,7 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Import Model"))
 			{
-				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
+				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx" });
 			}
 			if (ImGui::MenuItem("Save Scene"))
 			{
