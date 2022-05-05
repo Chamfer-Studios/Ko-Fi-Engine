@@ -331,7 +331,9 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		/*if (DrawDeleteButton(owner, this))
+			return true;*/
+
 		//if (panelChooser->IsReadyToClose("AddTexture"))
 		//{
 		//	if (panelChooser->OnChooserClosed() != nullptr)
@@ -525,8 +527,8 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			}
 		}
 	}
-	else
-		DrawDeleteButton(owner, this);
+	//else
+	//	DrawDeleteButton(owner, this);
 
 	return true;
 }

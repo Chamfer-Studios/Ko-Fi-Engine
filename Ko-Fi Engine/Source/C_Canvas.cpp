@@ -100,7 +100,8 @@ bool C_Canvas::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Canvas 2D", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		ImGui::Text("Size: %f, %f", owner->GetEngine()->GetEditor()->lastViewportSize.x, owner->GetEngine()->GetEditor()->lastViewportSize.y);
 		ImGui::DragFloat2("Logical Size", &logicalSize[0]);

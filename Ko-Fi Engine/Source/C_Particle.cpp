@@ -105,7 +105,8 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Particle System", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		if (resource != nullptr)
 		{

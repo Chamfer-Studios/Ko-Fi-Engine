@@ -29,7 +29,7 @@ public:
 
 	bool CreateClip(const AnimatorClip& clip);
 	void SetSelectedClip(std::string name);
-	AnimatorClip GetSelectedClip();
+	AnimatorClip* GetSelectedClip();
 
 	bool IsCurrentClipPlaying();
 	bool IsCurrentClipLooping();
@@ -39,8 +39,8 @@ public:
 
 private:
 	std::map<std::string, AnimatorClip> clips;
-	AnimatorClip selectedClip;
-	AnimatorClip clipToDelete;
+	AnimatorClip* selectedClip;
+	AnimatorClip* clipToDelete;
 
 	bool createClipErrorMessage = false;
 	bool deleteDefaultClipMessage = false;

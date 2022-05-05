@@ -56,7 +56,8 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Text", ImGuiTreeNodeFlags_AllowItemOverlap)) 
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		if (ImGui::InputText("Value", &(textValue))) 
 		{

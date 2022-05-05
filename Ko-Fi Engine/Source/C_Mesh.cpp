@@ -276,7 +276,8 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 	bool ret = true;
 	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		/*if (DrawDeleteButton(owner, this))
+			return true;*/
 
 		if (mesh->GetLibraryPath() != nullptr)
 		{
@@ -301,8 +302,8 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Draw AABB##", &drawAABB))
 			GetDrawAABB(drawAABB);
 	}
-	else
-		DrawDeleteButton(owner, this);
+	//else
+	//	DrawDeleteButton(owner, this);
 
 	return ret;
 }
