@@ -190,6 +190,9 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Component LightSource", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{	
+		if (DrawDeleteButton(owner, this))
+			return true;
+
 		ImGui::Combo("###combo", &sType, "Directional Light Source\0Point Light Source\0Focal Light Source");
 
 		ImGui::SameLine();
@@ -322,10 +325,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 		}
 		} 
 		ImGui::NewLine();
-
-		DrawDeleteButton(owner, this);
 	}
-
 	else
 		DrawDeleteButton(owner, this);
 

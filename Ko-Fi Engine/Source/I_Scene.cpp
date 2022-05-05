@@ -248,9 +248,8 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 	
 	// Creating a default clip with all the keyframes of the animation.
-	AnimatorClip animClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
-	cAnim->CreateClip(animClip);
-	cAnim->SetSelectedClip(animClip.GetName());
+	cAnim->CreateClip(AnimatorClip(anim, "Default clip", 0, anim->duration, 1.0f, true));
+	cAnim->SetSelectedClip("Default clip");
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)

@@ -62,7 +62,8 @@ bool C_SphereCollider::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Sphere Collider", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		std::string newFilter = GetFilter();
 		if (ImGui::BeginCombo("Set Filter##", newFilter == "" ? "Set Filter" : newFilter.c_str()))
@@ -108,9 +109,8 @@ bool C_SphereCollider::InspectorDraw(PanelChooser* chooser)
 		}
 	}
 	else
-	{
 		DrawDeleteButton(owner, this);
-	}
+
 	return true;
 }
 

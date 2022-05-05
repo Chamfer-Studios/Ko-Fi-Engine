@@ -121,7 +121,8 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
     if (ImGui::CollapsingHeader("Audio Switch", ImGuiTreeNodeFlags_AllowItemOverlap))
     {
-        DrawDeleteButton(owner, this);
+        if (DrawDeleteButton(owner, this))
+            return true;
 
         if (chooser->IsReadyToClose("Add Track"))
         {

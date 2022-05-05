@@ -48,14 +48,18 @@ const char* Component::GetNameByComponentType(ComponentType type)
 		return "TRANSFORM";
 	case ComponentType::INFO:
 		return "INFO";
+	case ComponentType::ANIMATOR:
+		return "ANIMATOR";
 	default:
 		return "ERROR, goto Component.cpp line 13";
 	}
 	return "ERROR, no component type!";
 }
 
-void Component::DrawDeleteButton(GameObject* owner, Component* component)
+bool Component::DrawDeleteButton(GameObject* owner, Component* component)
 {
+	bool ret = false;
+
 	bool showPopup = false;
 
 	// Make the button appear at the same line of the collapsing header, positioned on the right minus 15 pixels
@@ -72,9 +76,7 @@ void Component::DrawDeleteButton(GameObject* owner, Component* component)
 
 	// ImGui button
 	if (ImGui::Button(label.c_str()))
-	{
 		showPopup = true;
-	}
 
 	// Whenever showPopup bool is true, the popups keeps open
 	if (showPopup) ImGui::OpenPopup(titlePopup.c_str());
@@ -83,23 +85,26 @@ void Component::DrawDeleteButton(GameObject* owner, Component* component)
 	if (ImGui::BeginPopupModal(titlePopup.c_str()))
 	{
 		// Delete button
-		if (ImGui::Button("DELETE"))																
+		if (ImGui::Button("DELETE"))
 		{
 			owner->DeleteComponent(component);
-
 			showPopup = false;
 			ImGui::CloseCurrentPopup();
+			ret = true;
 		}
 
 		// No delete button
-		if (ImGui::Button("CANCEL"))																
+		if (ImGui::Button("CANCEL"))
 		{
 			showPopup = false;
 			ImGui::CloseCurrentPopup();
+			ret = false;
 		}
 
 		ImGui::EndPopup();
 	}
+
+	return ret;
 }
 
 const char* componentTypeUtils::ComponentTypeToString(ComponentType e)

@@ -69,7 +69,7 @@ public:
 	ComponentType GetType() { return type; }
 
 protected:
-	void DrawDeleteButton(GameObject *owner, Component *component);
+	bool DrawDeleteButton(GameObject *owner, Component *component);
 	const char* GetNameByComponentType(ComponentType type);
 
 public:

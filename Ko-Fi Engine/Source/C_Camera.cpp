@@ -107,7 +107,8 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
 		{

@@ -21,8 +21,10 @@ bool C_Walkable::Update(float dt)
 
 bool C_Walkable::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Walkable Surface", ImGuiTreeNodeFlags_AllowItemOverlap)) {
-		DrawDeleteButton(owner, this);
+	if (ImGui::CollapsingHeader("Walkable Surface", ImGuiTreeNodeFlags_AllowItemOverlap))
+	{
+		if (DrawDeleteButton(owner, this))
+			return true;
 	}
 	else
 		DrawDeleteButton(owner, this);

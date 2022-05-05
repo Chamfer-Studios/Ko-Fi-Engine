@@ -67,8 +67,10 @@ bool C_Image::PostUpdate(float dt)
 
 bool C_Image::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_AllowItemOverlap)) {
-		DrawDeleteButton(owner, this);
+	if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_AllowItemOverlap))
+	{
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		// Texture display
 		ImGui::Text("Texture: ");

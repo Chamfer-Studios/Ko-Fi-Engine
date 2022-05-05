@@ -23,8 +23,11 @@ bool C_SoundTriggerCreator::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Sound Trigger Creator", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-
+		if (DrawDeleteButton(owner, this))
+			return true;
 	}
+	else
+		DrawDeleteButton(owner, this);
 
 	return true;
 }

@@ -71,7 +71,8 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Rigid Body##", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		std::string newBodyType = GetBodyType();
 		if (ImGui::BeginCombo("Set Type##", newBodyType.c_str()))
