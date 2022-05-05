@@ -101,7 +101,7 @@ bool M_Renderer3D::Update(float dt)
 bool M_Renderer3D::PostUpdate(float dt)
 {
 	OPTICK_EVENT();
-	OnResize();
+
 	PassProjectionAndViewToRenderer();
 	RenderScene(engine->GetCamera3D()->currentCamera);
 	isFirstPass = false;

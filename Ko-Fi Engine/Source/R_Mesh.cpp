@@ -13,6 +13,7 @@
 #include "C_Image.h"
 #include "C_Button.h"
 #include "C_Canvas.h"
+#include "C_Text.h"
 
 // Resources
 #include "R_Texture.h"
@@ -538,6 +539,8 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 #pragma omp parallel for
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
+		if (pNode->GetChildren().at(i)->GetComponent<C_Image>() || pNode->GetChildren().at(i)->GetComponent<C_Canvas>() || pNode->GetChildren().at(i)->GetComponent<C_Button>() || pNode->GetChildren().at(i)->GetComponent<C_Text>())
+			continue;
 		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);
 	}
 }
