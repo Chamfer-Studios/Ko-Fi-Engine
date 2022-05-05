@@ -335,13 +335,12 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 	for (const auto& it : tmp)
 	{
 		UID parentUid = it.second->GetParentUID();
-		for (const auto& repeatedIt : repeatedUIDs)
+
+		auto newParentUid = repeatedUIDs.find(parentUid);
+		if (newParentUid != repeatedUIDs.end())
 		{
-			if (parentUid == repeatedIt.first)
-			{
-				it.second->SetParentUID(repeatedIt.second);
-				break;
-			}
+			it.second->SetParentUID(newParentUid->second);
+			break;
 		}
 
 		if (parentUid == 0 && modelRoot != nullptr)
