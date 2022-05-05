@@ -414,6 +414,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				GLint view_location = glGetUniformLocation(shader, "view");
 				glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->viewMatrix.Transposed().ptr());
 
+
 				GLint projection_location = glGetUniformLocation(shader, "projection");
 				glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
