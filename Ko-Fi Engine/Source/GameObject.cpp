@@ -122,7 +122,6 @@ bool GameObject::CleanUp()
 {
 	for (auto& component : components)
 	{
-		component->CleanUp();
 		RELEASE(component);
 	}
 

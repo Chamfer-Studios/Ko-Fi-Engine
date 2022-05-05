@@ -143,7 +143,6 @@ bool M_SceneManager::CleanUp()
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->CleanUp();
 		RELEASE((*scene));
 	}
 	scenes.clear();
