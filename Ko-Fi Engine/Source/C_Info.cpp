@@ -41,7 +41,10 @@ bool C_Info::InspectorDraw(PanelChooser* chooser)
 		{
 			owner->SetName(newName.c_str());
 		}
-		ImGui::Checkbox("Active", &owner->active);
+		if (ImGui::Checkbox("Active", &owner->active))
+		{
+			owner->isActiveWindow = true;
+		}
 		ImGui::SameLine();
 		tag = (int)owner->tag;
 		// Take care with the order in the combo, it has to follow the Tag enum class order
@@ -50,6 +53,7 @@ bool C_Info::InspectorDraw(PanelChooser* chooser)
 			if (owner->tag != (Tag)tag)
 				owner->tag = (Tag)tag;
 		}
+		
 	}
 
 	return ret;

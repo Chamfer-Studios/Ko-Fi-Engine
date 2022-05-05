@@ -155,6 +155,9 @@
     <Filter Include="Source\GameObject\Components\Physics\Colliders">
       <UniqueIdentifier>{7da255b9-a53c-474b-b894-73c266794dcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Triggers">
+      <UniqueIdentifier>{7e8486b1-55c4-4bfc-b286-f5be96494dcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -316,9 +319,6 @@
     <ClCompile Include="Source\M_Editor.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\External\mmgr\mmgr.cpp">
-      <Filter>Libs\mmgr</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PanelConfiguration.cpp">
       <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
@@ -453,9 +453,6 @@
     </ClCompile>
     <ClCompile Include="Source\C_Canvas.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\par_shapes.cpp">
-      <Filter>Source\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\C_Button.cpp">
       <Filter>Source\GameObject\Components\UI</Filter>
@@ -906,12 +903,6 @@
     <ClInclude Include="Source\M_Editor.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\mmgr\mmgr.h">
-      <Filter>Libs\mmgr</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\mmgr\nommgr.h">
-      <Filter>Libs\mmgr</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PanelConfiguration.h">
       <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
@@ -1155,9 +1146,6 @@
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>Libs\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="Source\par_shapes.h">
-      <Filter>Source\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Resource.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
@@ -1208,6 +1196,9 @@
     </ClInclude>
     <ClInclude Include="Source\C_RigidBody.h">
       <Filter>Source\GameObject\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\par_shapes.h">
+      <Filter>Source\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1392,6 +1383,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Smokebomb.lua">
       <Filter>Scripts\Players\Nerala</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ClosePopUp.lua">
       <Filter>Scripts\UI</Filter>
     </None>
@@ -1424,6 +1416,9 @@
     </None>
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_RestartButton.lua">
       <Filter>Scripts\UI</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Triggers\WinTrigger.lua">
+      <Filter>Scripts\Triggers</Filter>
     </None>
   </ItemGroup>
 </Project>

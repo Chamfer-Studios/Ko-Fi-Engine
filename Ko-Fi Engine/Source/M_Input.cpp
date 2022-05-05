@@ -233,7 +233,7 @@ bool M_Input::PreUpdate(float dt)
 	}
 	ImGui_ImplSDL2_ProcessEvent(&event);
 
-	if (quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
+	if (quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP || quitGame == true)
 		return false;
 
 	return true;

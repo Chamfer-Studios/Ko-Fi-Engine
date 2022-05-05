@@ -1,9 +1,10 @@
 #include "C_CapsuleCollider.h"
 #include "Engine.h"
+#include "Globals.h"
 #include "GameObject.h"
 #include "M_Physics.h"
 #include "C_RigidBody.h"
-#include <minmax.h>
+#include "C_Mesh.h"
 
 C_CapsuleCollider::C_CapsuleCollider(GameObject* parent) : Component(parent)
 {
@@ -17,9 +18,22 @@ C_CapsuleCollider::~C_CapsuleCollider()
 
 bool C_CapsuleCollider::Start()
 {
-	if (!collider)
+	if (owner->GetComponent<C_Mesh>())
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
+		if (boundingBoxSize.y == 0)
+			boundingBoxSize.y = 0.01;
+		else if (boundingBoxSize.x == 0)
+			boundingBoxSize.x = 0.01;
+		else if (boundingBoxSize.z == 0)
+			boundingBoxSize.z = 0.01;
+		capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape(boundingBoxSize.x < boundingBoxSize.z ? boundingBoxSize.z / 2 : boundingBoxSize.x / 2, boundingBoxSize.y / 2);
+		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, transform);
+	}
+	else
+	{
+		float3 boundingBoxSize = float3(5, 5, 5);
 		capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape(boundingBoxSize.x < boundingBoxSize.z ? boundingBoxSize.z / 2 : boundingBoxSize.x / 2, boundingBoxSize.y / 2);
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, transform);
@@ -68,7 +82,6 @@ bool C_CapsuleCollider::InspectorDraw(PanelChooser* chooser)
 					UpdateFilter();
 				}
 			}
-
 			ImGui::EndCombo();
 		}
 		ImGui::Text("Current filter:");
@@ -160,12 +173,30 @@ void C_CapsuleCollider::UpdateFilter()
 
 void C_CapsuleCollider::UpdateScaleFactor()
 {
-	float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-	reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
-	owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
-	owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyCapsuleShape(capsuleShape);
-	capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape((boundingBoxSize.x < boundingBoxSize.z ? boundingBoxSize.z : boundingBoxSize.x) / 2 * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y);
-	collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, oldTransform);
+	if (owner->GetComponent<C_Mesh>())
+	{
+		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
+		reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
+		owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyCapsuleShape(capsuleShape);
+		capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape((boundingBoxSize.x < boundingBoxSize.z ? boundingBoxSize.z : boundingBoxSize.x) / 2 * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y);
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, oldTransform);
+	}
+	else
+	{
+		float3 boundingBoxSize = float3(5, 5, 5);
+		reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
+		owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
+		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyCapsuleShape(capsuleShape);
+		capsuleShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createCapsuleShape((boundingBoxSize.x < boundingBoxSize.z ? boundingBoxSize.z : boundingBoxSize.x) / 2 * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y);
+		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(capsuleShape, oldTransform);
+	}
+
+	UpdateFilter();
+
+	UpdateIsTrigger();
+
+	UpdateCenter();
 }
 
 void C_CapsuleCollider::UpdateIsTrigger()

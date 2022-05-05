@@ -11,6 +11,7 @@
 #include "QuadTree3D.h"
 #include <vector>
 #include "M_Physics.h"
+#include "C_RigidBody.h"
 
 GameObject* Scene::GetGameObject(int uid)
 {
@@ -41,7 +42,7 @@ GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, b
 {
 	GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
 	this->gameObjectList.push_back(go);
-	if (parent)
+ 	if (parent)
 		parent->AttachChild(go);
 	else
 		this->rootGo->AttachChild(go);
@@ -106,6 +107,10 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 		if (gameObject->GetComponent<C_LightSource>() != nullptr)
 		{
 			RemoveLight(gameObject);
+		}
+		if (gameObject->GetComponent<C_RigidBody>() != nullptr)
+		{
+			engine->GetPhysics()->DeleteBodyFromObjectMap(gameObject);
 		}
 		RELEASE(gameObject);
 	}

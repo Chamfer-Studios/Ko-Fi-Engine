@@ -4,6 +4,8 @@
 #include "C_Transform2D.h"
 #include "C_RenderedUI.h"
 
+#include "SDL_ttf.h"
+
 #include "R_Texture.h"
 
 #include "glew.h"
@@ -33,6 +35,8 @@ public:
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void SetTextValue(std::string newValue);
+	void SetFont(std::string path);
+	void SetSize(int size);
 	std::string GetTextValue() { return textValue; };
 
 	void Draw() override;
@@ -43,6 +47,16 @@ private:
 	GLuint SurfaceToOpenGLTexture(SDL_Surface* surface);
 	void FreeTextures();
 
+	SDL_Color GetColor();
+
+	void SetColor(SDL_Color color);
+
+	bool ColorPicker(const char* label);
+
 	std::string textValue = "HELLO WORLD!";
+
+	TTF_Font* selectedFont = nullptr;
+	SDL_Color col = { 255, 255, 255, 255 };
+	int size = 0;
 };
 

@@ -32,6 +32,7 @@
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
 #include "C_RigidBody.h"
+#include "C_BoxCollider.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -62,9 +63,9 @@ public:
 	std::string name;
 	INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
 
-	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
+	std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
 
-	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value) : name(name), type(type), value(value) {}
+	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value) : name(name), type(type), value(value) {}
 };
 
 class Scripting
@@ -182,6 +183,7 @@ public:
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
+									 "GetBoxCollider", &GameObject::GetComponent<C_BoxCollider>,
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
@@ -193,6 +195,7 @@ public:
 									 "OnStoped", &GameObject::OnStoped,
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "Active", &GameObject::Active,
+									 "Quit", &GameObject::Quit,
 									 "ChangeScene", &GameObject::SetChangeScene
 
 									 /*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
@@ -228,8 +231,8 @@ public:
 		lua.new_usertype<C_Camera>("C_Transform",
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
-			"right", &C_Camera::right,
-			"up", &C_Camera::up
+			"right", &C_Camera::GetRight,
+			"up", &C_Camera::GetUp
 			);
 
 		// Component Mesh
@@ -260,7 +263,9 @@ public:
 		// Component Animator
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 											sol::constructors<void(GameObject *)>(),
-											"SetSelectedClip", &C_Animator::SetSelectedClip);
+											"SetSelectedClip", &C_Animator::SetSelectedClip,
+											"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
+											"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
 		// Component Particle
 		lua.new_usertype<C_Particle>("C_Particle",
@@ -270,28 +275,40 @@ public:
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
-			sol::constructors<void(GameObject *)>(),
-			"PlayTrack", &C_AudioSwitch::PlayTrack,
-			"PauseTrack", &C_AudioSwitch::PauseTrack,
-			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack);
+										sol::constructors<void(GameObject *)>(),
+										"PlayTrack", &C_AudioSwitch::PlayTrack,
+										"PauseTrack", &C_AudioSwitch::PauseTrack,
+										"ResumeTrack", &C_AudioSwitch::ResumeTrack,
+										"StopTrack", &C_AudioSwitch::StopTrack);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
-											sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *>)>(),
+											sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *>)>(),
 											"name", &InspectorVariable::name,
 											"type", &InspectorVariable::type,
 											"value", &InspectorVariable::value);
 
 		// Rigid Body structure
 		lua.new_usertype<C_RigidBody>("C_RigidBody",
-											 sol::constructors<void(GameObject *)>(),
-											 "IsStatic", &C_RigidBody::IsStatic,
-											 "IsKinematic", &C_RigidBody::IsKinematic,
-											 "SetStatic", &C_RigidBody::SetBodyStatic,
-											 "SetDynamic", &C_RigidBody::SetBodyDynamic,
-											 "FreezePositionY", &C_RigidBody::FreezePositionY,
-											 "SetLinearVelocity", &C_RigidBody::SetLinearVelocity);
+											sol::constructors<void(GameObject *)>(),
+											"IsStatic", &C_RigidBody::IsStatic,
+											"IsKinematic", &C_RigidBody::IsKinematic,
+											"SetStatic", &C_RigidBody::SetBodyStatic,
+											"SetDynamic", &C_RigidBody::SetBodyDynamic,
+											"FreezePositionY", &C_RigidBody::FreezePositionY,
+											"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+											"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos,
+											"SetUseGravity", &C_RigidBody::SetUseGravity, 
+											"UpdateEnableGravity", &C_RigidBody::UpdateEnableGravity);
+
+		lua.new_usertype<C_BoxCollider>("C_BoxCollider",
+											sol::constructors<void(GameObject*)>(),
+											"IsTrigger", &C_BoxCollider::GetIsTrigger,
+											"SetTrigger", &C_BoxCollider::SetIsTrigger,
+											"GetFilter", &C_BoxCollider::GetFilter,
+											"SetFilter", &C_BoxCollider::SetFilter,
+											"UpdateFilter", &C_BoxCollider::UpdateFilter,
+											"UpdateIsTrigger", &C_BoxCollider::UpdateIsTrigger);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
@@ -382,6 +399,18 @@ public:
 			case 12:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
+			}
+			case 13:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
+			}
+			case 14:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Q);
+			}
+			case 15:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
 			}
 
 			case 21:

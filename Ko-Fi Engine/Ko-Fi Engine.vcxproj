@@ -5,6 +5,10 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseGame|Win32">
+      <Configuration>ReleaseGame</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -30,6 +34,13 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseGame|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -39,6 +50,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseGame|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -52,6 +66,10 @@
     <IncludePath>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseGame|Win32'">
+    <IncludePath>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib;$(ProjectDir)Source\External\imgui_node_editor;$(ProjectDir)Source\External\imgui;$(ProjectDir)Source\External\imgui\Extras\Markdown;$(ProjectDir)Source\External\imgui\Extras\IconFontCppHeaders;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
@@ -62,7 +80,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\ReactPhysics3D\reactphysics3d_debug\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\ReactPhysics3D\reactphysics3d_debug\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -92,6 +110,35 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\Detour\include;$(ProjectDir)Source\External\Recast\include;$(ProjectDir)Source\External\ReactPhysics3D\reactphysics3d_release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;NDEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\lua;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\optick\lib\x64\release;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\lib;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\glew\libx86\Release\Win32;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\OpenAL\libx86;$(ProjectDir)Source\External\ReactPhysics3D\reactphysics3d_release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32s.lib;ProfilerCore32.lib;assimp-vc142-mtd.lib;SDL2_ttf.lib;freetype.lib;SDL2_image.lib;OpenAL32.lib;OptickCore.lib;reactphysics3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseGame|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\Detour\include;$(ProjectDir)Source\External\Recast\include;$(ProjectDir)Source\External\ReactPhysics3D\reactphysics3d_release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;NDEBUG;WIN32;KOFI_GAME;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
@@ -194,7 +241,6 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
-    <ClCompile Include="Source\External\mmgr\mmgr.cpp" />
     <ClCompile Include="Source\External\Recast\Source\Recast.cpp" />
     <ClCompile Include="Source\External\Recast\Source\RecastAlloc.cpp" />
     <ClCompile Include="Source\External\Recast\Source\RecastArea.cpp" />
@@ -239,7 +285,6 @@
     <ClCompile Include="Source\ParticleModule.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\R_ParticleResource.cpp" />
-    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\M_Physics.cpp" />
     <ClCompile Include="Source\PieShape.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
@@ -274,6 +319,7 @@
     <ClInclude Include="Source\C_CapsuleCollider.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\C_SphereCollider.h" />
+    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\P_Actor.h" />
     <ClInclude Include="Source\P_Collision.h" />
     <ClInclude Include="Source\P_World.h" />
@@ -291,7 +337,6 @@
     <ClInclude Include="Source\Event.h" />
     <ClInclude Include="Source\I_Track.h" />
     <ClInclude Include="Source\R_Model.h" />
-    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\PieShape.h" />
     <ClInclude Include="Source\R_Track.h" />
@@ -402,8 +447,6 @@
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Math\sse_mathfun.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.h" />
-    <ClInclude Include="Source\External\mmgr\mmgr.h" />
-    <ClInclude Include="Source\External\mmgr\nommgr.h" />
     <ClInclude Include="Source\External\sol\config.hpp" />
     <ClInclude Include="Source\External\sol\forward.hpp" />
     <ClInclude Include="Source\External\sol\sol.hpp" />
@@ -480,6 +523,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua" />
     <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua" />
@@ -531,6 +575,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Triggers\WinTrigger.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

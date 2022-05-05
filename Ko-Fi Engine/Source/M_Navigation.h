@@ -20,8 +20,8 @@ class M_Navigation : public Module
 {
 public:
 	struct NavMeshConfig {
-		float cs = .3f;
-		float ch = .2f;
+		float cs = 6.f;
+		float ch = 6.f;
 		float walkableSlopeAngle = 45;
 		float walkableClimb = 1.0f;
 		int walkableHeight = 2;
@@ -31,8 +31,8 @@ public:
 		float borderSize = 0.5f;
 		float maxEdgeLen = 30.f;
 		int maxVertsPerPoly = 6;
-		float detailSampleMaxError = 1.0f;
-		float detailSampleDist = 1.0f;
+		float detailSampleMaxError = 5.f;
+		float detailSampleDist = 10.0f;
 	};
 
 	enum PolyAreas
@@ -82,4 +82,5 @@ private:
 	rcPolyMeshDetail* navMeshDetail = nullptr;
 	dtNavMesh* dtNavMesh = nullptr;
 	NavMeshConfig navMeshConfig;
+	bool drawNavmesh = false;
 };

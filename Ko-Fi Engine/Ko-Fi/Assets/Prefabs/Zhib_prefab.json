@@ -1,0 +1,219 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                -1640.0,
+                0.0,
+                -30.5
+            ],
+            "rotation": [
+                -0.0033076307736337185,
+                -4.675111995311454e-07,
+                -0.011681086383759975,
+                0.9999263882637024
+            ],
+            "scale": [
+                0.010000023059546947,
+                0.010000023059546947,
+                0.009999975562095642
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "draw_face_normals": false,
+            "draw_vertex_normals": false,
+            "isAnimated": true,
+            "path": "Library/Meshes/Zhib.sugar",
+            "rootNodeUID": 4294967295,
+            "shape_type": 0,
+            "type": "mesh"
+        },
+        {
+            "active": true,
+            "clips": [
+                {
+                    "clipDuration": 38.0,
+                    "clipDurationInSeconds": 1.5833333730697632,
+                    "clipEndFrame": 183.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Crouch",
+                    "clipStartFrame": 145.0,
+                    "mapString": "Crouch"
+                },
+                {
+                    "clipDuration": 45.0,
+                    "clipDurationInSeconds": 1.875,
+                    "clipEndFrame": 281.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Decoy",
+                    "clipStartFrame": 236.0,
+                    "mapString": "Decoy"
+                },
+                {
+                    "clipDuration": 3.0,
+                    "clipDurationInSeconds": 0.125,
+                    "clipEndFrame": 285.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "DecoyToIdle",
+                    "clipStartFrame": 282.0,
+                    "mapString": "DecoyToIdle"
+                },
+                {
+                    "clipDuration": 591.0,
+                    "clipDurationInSeconds": 24.625,
+                    "clipEndFrame": 591.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Default clip",
+                    "clipStartFrame": 0.0,
+                    "mapString": "Default clip"
+                },
+                {
+                    "clipDuration": 103.0,
+                    "clipDurationInSeconds": 4.291666507720947,
+                    "clipEndFrame": 104.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Idle",
+                    "clipStartFrame": 1.0,
+                    "mapString": "Idle"
+                },
+                {
+                    "clipDuration": 4.0,
+                    "clipDurationInSeconds": 0.1666666716337204,
+                    "clipEndFrame": 144.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "IdleToCrouch",
+                    "clipStartFrame": 140.0,
+                    "mapString": "IdleToCrouch"
+                },
+                {
+                    "clipDuration": 45.0,
+                    "clipDurationInSeconds": 1.875,
+                    "clipEndFrame": 515.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Knife",
+                    "clipStartFrame": 470.0,
+                    "mapString": "Knife"
+                },
+                {
+                    "clipDuration": 8.0,
+                    "clipDurationInSeconds": 0.3333333432674408,
+                    "clipEndFrame": 524.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "KnifeToIdle",
+                    "clipStartFrame": 516.0,
+                    "mapString": "KnifeToIdle"
+                },
+                {
+                    "clipDuration": 15.0,
+                    "clipDurationInSeconds": 0.625,
+                    "clipEndFrame": 346.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Run",
+                    "clipStartFrame": 331.0,
+                    "mapString": "Run"
+                },
+                {
+                    "clipDuration": 34.0,
+                    "clipDurationInSeconds": 1.4166666269302368,
+                    "clipEndFrame": 589.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Ultimate_end",
+                    "clipStartFrame": 555.0,
+                    "mapString": "Ultimate_end"
+                },
+                {
+                    "clipDuration": 22.0,
+                    "clipDurationInSeconds": 0.9166666865348816,
+                    "clipEndFrame": 549.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Ultimate_start",
+                    "clipStartFrame": 527.0,
+                    "mapString": "Ultimate_start"
+                },
+                {
+                    "clipDuration": 22.0,
+                    "clipDurationInSeconds": 0.9166666865348816,
+                    "clipEndFrame": 132.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Walk",
+                    "clipStartFrame": 110.0,
+                    "mapString": "Walk"
+                }
+            ],
+            "path": "Library/Animations/Zhib.cake",
+            "selectedClip": "Idle",
+            "type": "animator"
+        },
+        {
+            "active": true,
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "shader_path": "Assets/Shaders/default_shader.glsl",
+            "texture_path": "Assets/Textures/Characters/zhib_base_color.png",
+            "type": "material",
+            "uniforms": null
+        },
+        {
+            "active": true,
+            "body_type": "Dynamic",
+            "freeze_position_x": false,
+            "freeze_position_y": true,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": "rigidBody",
+            "use_gravity": false
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                12.0,
+                0.0
+            ],
+            "filter": "player",
+            "is_trigger": false,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "boxCollider"
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Players/Zhib/Zhib.lua",
+            "id": 1484921687,
+            "type": "script"
+        }
+    ],
+    "isPrefab": true,
+    "name": "Zhib",
+    "tag": 1
+}

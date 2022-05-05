@@ -32,6 +32,7 @@
 #include "C_RenderedUI.h"
 #include "C_LightSource.h"
 #include "C_Animator.h"
+#include "C_RigidBody.h"
 
 #include "R_Material.h"
 #include "PieShape.h"
@@ -71,6 +72,8 @@ bool M_Renderer3D::Awake(Json configModule)
 
 	InitFrameBuffers();
 
+
+
 	ret = LoadConfiguration(configModule);
 
 	return ret;
@@ -82,8 +85,8 @@ bool M_Renderer3D::PreUpdate(float dt)
 	OPTICK_EVENT();
 
 	bool ret = true;
+	
 	PrepareFrameBuffers();
-
 	isFirstPass = true;
 
 	return ret;
@@ -102,6 +105,7 @@ bool M_Renderer3D::PostUpdate(float dt)
 	PassProjectionAndViewToRenderer();
 	RenderScene(engine->GetCamera3D()->currentCamera);
 	isFirstPass = false;
+#ifndef KOFI_GAME
 	UnbindFrameBuffers();
 	if (engine->GetEditor()->toggleCameraViewportPanel)
 	{
@@ -110,8 +114,9 @@ bool M_Renderer3D::PostUpdate(float dt)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		PassPreviewProjectionAndViewToRenderer();
 		RenderScene(engine->GetCamera3D()->gameCamera);
-		UnbindFrameBuffers();
 	}
+#endif // KOFI_GAME
+	UnbindFrameBuffers();
 	SwapWindow();
 	return true;
 }
@@ -262,18 +267,18 @@ void M_Renderer3D::PassProjectionAndViewToRenderer()
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->currentCamera)
 	{
-		if (currentCamera3D->currentCamera->projectionIsDirty) {
+		if (currentCamera3D->currentCamera->GetIsProjectionDirty()) {
 			RecalculateProjectionMatrix();
 			currentCamera3D->currentCamera->CalculateViewMatrix();
 		}
 
-		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->viewMatrix.Transposed().ptr());
+		glLoadMatrixf((GLfloat*)currentCamera3D->currentCamera->GetViewMatrix().Transposed().ptr());
 	}
 	float3 cameraPos = float3::zero;
 	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
 	if (engine->GetCamera3D()->currentCamera)
 	{
-		cameraPos = engine->GetCamera3D()->currentCamera->position;
+		cameraPos = engine->GetCamera3D()->currentCamera->GetPosition();
 	}
 	else {
 		cameraPos = float3(0.0f, 20.0f, 0.0f);
@@ -287,18 +292,18 @@ void M_Renderer3D::PassPreviewProjectionAndViewToRenderer()
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->gameCamera)
 	{
-		if (currentCamera3D->gameCamera->projectionIsDirty) {
+		if (currentCamera3D->gameCamera->GetIsProjectionDirty()) {
 			RecalculateProjectionMatrix();
 			currentCamera3D->gameCamera->CalculateViewMatrix();
 		}
 
-		glLoadMatrixf((GLfloat*)currentCamera3D->gameCamera->viewMatrix.Transposed().ptr());
+		glLoadMatrixf((GLfloat*)currentCamera3D->gameCamera->GetViewMatrix().Transposed().ptr());
 	}
 	float3 cameraPos = float3::zero;
 	//TODO NEED TO CHANGE THIS TO engine->camera->currentcamera when the component camera can be set as camera.
 	if (engine->GetCamera3D()->gameCamera)
 	{
-		cameraPos = engine->GetCamera3D()->gameCamera->position;
+		cameraPos = engine->GetCamera3D()->gameCamera->GetPosition();
 	}
 	else {
 		cameraPos = float3(0.0f, 20.0f, 0.0f);
@@ -311,7 +316,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 	glLoadIdentity();
 	if (engine->GetCamera3D()->currentCamera)
 	{
-		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	}
 	else
 	{
@@ -332,21 +337,24 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
+				CONSOLE_LOG(go->GetName());
 				RenderMeshes(camera, go);
 				RenderBoundingBox(cMesh);
 			}
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
-				if (!cCamera->isEngineCamera && cCamera->drawFrustum)
+				if (!cCamera->GetIsEngineCamera() && cCamera->GetIsDrawFrustumActive())
 				{
 					cCamera->DrawFrustum();
 				}
 			}
+			if (go->GetComponent<C_RigidBody>())
+				engine->GetPhysics()->RenderPhysics();
+
 		}
 	}
 	RenderAllParticles();
-	engine->GetPhysics()->RenderPhysics();
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)

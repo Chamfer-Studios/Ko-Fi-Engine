@@ -123,10 +123,10 @@ void PanelTextEditor::Focus()
 void PanelTextEditor::ChooserListener()
 {
 	if (editor->GetPanelChooser()->IsReadyToClose("TextEditor")) {
-		if (editor->GetPanelChooser()->OnChooserClosed() != nullptr) {
-			const char* path = editor->GetPanelChooser()->OnChooserClosed();
+		if (!editor->GetPanelChooser()->OnChooserClosed().empty()) {
+			std::string path = editor->GetPanelChooser()->OnChooserClosed();
 			this->filePath = path;
-			std::string text = editor->engine->GetFileSystem()->OpenFile(path);
+			std::string text = editor->engine->GetFileSystem()->OpenFile(path.c_str());
 			textEditor.SetText(text);
 		}
 	}

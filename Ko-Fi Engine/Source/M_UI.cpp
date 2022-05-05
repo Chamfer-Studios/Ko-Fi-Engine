@@ -201,22 +201,22 @@ bool M_UI::InspectorDraw()
 
 void M_UI::PrepareUIRender()
 {
-	right = engine->GetCamera3D()->currentCamera->right;
-	up = engine->GetCamera3D()->currentCamera->up;
-	front = engine->GetCamera3D()->currentCamera->front;
-	position = engine->GetCamera3D()->currentCamera->position;
+	right = engine->GetCamera3D()->currentCamera->GetRight();
+	up = engine->GetCamera3D()->currentCamera->GetUp();
+	front = engine->GetCamera3D()->currentCamera->GetFront();
+	position = engine->GetCamera3D()->currentCamera->GetPosition();
 
 	float2 offset = { engine->GetEditor()->lastViewportSize.x / 2, engine->GetEditor()->lastViewportSize.y / 2 };
-	engine->GetCamera3D()->currentCamera->position = { offset.x, offset.y, 0 };
+	engine->GetCamera3D()->currentCamera->SetPosition({ offset.x, offset.y, 0 });
 	engine->GetCamera3D()->currentCamera->LookAt({ offset.x, offset.y, -1 });
 
-	engine->GetCamera3D()->currentCamera->projectionIsDirty = true;
+	engine->GetCamera3D()->currentCamera->SetIsProjectionDirty(true);
 	engine->GetCamera3D()->currentCamera->CalculateViewMatrix(true);
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetViewMatrix().Transposed().ptr());
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -237,18 +237,18 @@ void M_UI::EndUIRender()
 
 	glPopMatrix();
 
-	engine->GetCamera3D()->currentCamera->right = right;
-	engine->GetCamera3D()->currentCamera->up = up;
-	engine->GetCamera3D()->currentCamera->front = front;
-	engine->GetCamera3D()->currentCamera->position = position;
+	engine->GetCamera3D()->currentCamera->SetRight(right);
+	engine->GetCamera3D()->currentCamera->SetUp(up);
+	engine->GetCamera3D()->currentCamera->SetFront(front);
+	engine->GetCamera3D()->currentCamera->SetPosition(position);
 
-	engine->GetCamera3D()->currentCamera->projectionIsDirty = true;
+	engine->GetCamera3D()->currentCamera->SetIsProjectionDirty(true);
 	engine->GetCamera3D()->currentCamera->CalculateViewMatrix();
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(engine->GetCamera3D()->currentCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->currentCamera->viewMatrix.Transposed().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetViewMatrix().Transposed().ptr());
 }
 
 float2 M_UI::GetUINormalizedMousePosition()

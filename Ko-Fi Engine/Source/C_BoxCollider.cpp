@@ -22,14 +22,18 @@ bool C_BoxCollider::Start()
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
 		if (boundingBoxSize.y == 0)
-			boundingBoxSize.y = 0.001;
+			boundingBoxSize.y = 0.01;
+		else if (boundingBoxSize.x == 0)
+			boundingBoxSize.x = 0.01;
+		else if (boundingBoxSize.z == 0)
+			boundingBoxSize.z = 0.01;
 		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(boundingBoxSize.x / 2, boundingBoxSize.y / 2, boundingBoxSize.z / 2));
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, transform);
 	}
 	else
 	{
-		float3 boundingBoxSize = float3::one;
+		float3 boundingBoxSize = float3(5, 5, 5);
 		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(boundingBoxSize.x / 2, boundingBoxSize.y / 2, boundingBoxSize.z / 2));
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, transform);
@@ -143,7 +147,6 @@ void C_BoxCollider::Load(Json &json)
 	center = float3(values[0], values[1], values[2]);
 	values.clear();
 	UpdateCenter();
-
 }
 
 void C_BoxCollider::UpdateFilter()
@@ -183,13 +186,19 @@ void C_BoxCollider::UpdateScaleFactor()
 	}
 	else
 	{
-		float3 boundingBoxSize = float3::one;
+		float3 boundingBoxSize = float3(5, 5, 5);
 		reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
 		owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
 		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyBoxShape(boxShape);
 		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3((boundingBoxSize.x / 2) * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y, (boundingBoxSize.z / 2) * scaleFactor.z));
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, oldTransform);
 	}
+
+	UpdateFilter();
+
+	UpdateIsTrigger();
+
+	UpdateCenter();
 }
 
 void C_BoxCollider::UpdateIsTrigger()

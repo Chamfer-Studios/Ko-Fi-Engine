@@ -12,7 +12,6 @@
 
 // Resources
 #include "R_Animation.h"
-#include "AnimatorClip.h"
 
 #include "FSDefs.h"
 #include "Color.h"
@@ -47,7 +46,7 @@ bool C_Animator::Start()
 		animation->SetStartFrame(0);
 		animation->SetEndFrame(10);
 	}
-
+	
 	if (selectedClip.GetName().c_str() == "[NONE]")
 	{
 		AnimatorClip animClip(animation, "Default clip", 0, 10, 1.0f, true);
@@ -300,6 +299,16 @@ void C_Animator::SetAnim(R_Animation* anim)
 AnimatorClip C_Animator::GetSelectedClip()
 {
 	return selectedClip;
+}
+
+bool C_Animator::IsCurrentClipPlaying()
+{
+	return !GetSelectedClip().GetFinishedBool();
+}
+
+bool C_Animator::IsCurrentClipLooping()
+{
+	return GetSelectedClip().GetLoopBool();
 }
 
 void C_Animator::SetSelectedClip(std::string name)

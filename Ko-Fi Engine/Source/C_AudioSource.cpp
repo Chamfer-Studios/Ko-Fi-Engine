@@ -88,7 +88,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
 
         if (chooser->IsReadyToClose("Load Track"))
         {
-            if (chooser->OnChooserClosed() != nullptr)
+            if (!chooser->OnChooserClosed().empty())
             {
                 std::string path = chooser->OnChooserClosed();
 

@@ -25,12 +25,14 @@ public:
 
 	void Reset();
 
-	bool CreateClip(const AnimatorClip& clip);
-
 	void SetAnim(R_Animation* anim);
+
+	bool CreateClip(const AnimatorClip& clip);
+	void SetSelectedClip(std::string name);
 	AnimatorClip GetSelectedClip();
 
-	void SetSelectedClip(std::string name);
+	bool IsCurrentClipPlaying();
+	bool IsCurrentClipLooping();
 
 public:
 	R_Animation* animation = nullptr;

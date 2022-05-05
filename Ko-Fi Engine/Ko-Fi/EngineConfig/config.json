@@ -14,7 +14,15 @@
     "Navigation": null,
     "Physics": {
         "Filter_Matrix": [
+            false,
             true,
+            true,
+            true,
+            false,
+            true,
+            false,
+            true,
+            false,
             true,
             true,
             true,
@@ -22,19 +30,20 @@
             false,
             true,
             true,
-            true,
-            true,
+            false,
+            false,
+            false,
+            false,
             false,
             true,
             true,
-            true,
-            true,
-            true
+            false,
+            false
         ],
         "Filters": [
             [
                 1,
-                "patata"
+                "player"
             ],
             [
                 2,
@@ -42,11 +51,15 @@
             ],
             [
                 3,
-                "cositas"
+                "terrain"
             ],
             [
                 4,
-                "mamahuevo"
+                "win_trigger"
+            ],
+            [
+                5,
+                "projectile"
             ]
         ],
         "Gravity": [
@@ -60,7 +73,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": ""
+        "DefaultScene": "level_tutorial_final_version"
     },
     "UI": null,
     "Window": {

@@ -1,0 +1,90 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": "info"
+        },
+        {
+            "active": true,
+            "position": [
+                -2783.5,
+                10.0,
+                -59.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                3.0,
+                3.0,
+                3.0
+            ],
+            "type": "transform"
+        },
+        {
+            "active": true,
+            "draw_face_normals": false,
+            "draw_vertex_normals": false,
+            "isAnimated": false,
+            "path": "Library/Meshes/Mosquito.sugar",
+            "shape_type": 0,
+            "type": "mesh"
+        },
+        {
+            "active": true,
+            "color": [
+                0.800000011920929,
+                0.800000011920929,
+                0.800000011920929,
+                1.0
+            ],
+            "shader_path": "Assets/Shaders/default_shader.glsl",
+            "texture_path": "Assets/Textures/Characters/nerala_base_color.png",
+            "type": "material",
+            "uniforms": null
+        },
+        {
+            "active": true,
+            "body_type": "Dynamic",
+            "freeze_position_x": false,
+            "freeze_position_y": true,
+            "freeze_position_z": false,
+            "freeze_rotation_x": true,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": true,
+            "mass": 1.0,
+            "type": "rigidBody",
+            "use_gravity": false
+        },
+        {
+            "active": true,
+            "center": [
+                0.6000000238418579,
+                1.0,
+                0.0
+            ],
+            "filter": "projectile",
+            "is_trigger": true,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "boxCollider"
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Players/Nerala/HunterSeeker.lua",
+            "id": 532803876,
+            "type": "script"
+        }
+    ],
+    "isPrefab": true,
+    "name": "Mosquito",
+    "tag": 4
+}

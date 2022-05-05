@@ -72,14 +72,6 @@ bool C_Camera::Start()
 	return ret;
 }
 
-bool C_Camera::CleanUp()
-{
-	CONSOLE_LOG("Cleaning up the camera");
-	appLog->AddLog("Cleaning up the camera\n");
-
-	return true;
-}
-
 bool C_Camera::Update(float dt)
 {
 	// Add update functionality when we are able to change the main camera.
@@ -93,12 +85,103 @@ bool C_Camera::Update(float dt)
 
 		CalculateViewMatrix();
 
-		if (frustumCulling)
+		if (isFrustumCullingActive)
 			FrustumCulling();
 
 	}
 
 	return true;
+}
+
+bool C_Camera::CleanUp()
+{
+	CONSOLE_LOG("Cleaning up the camera");
+	appLog->AddLog("Cleaning up the camera\n");
+
+	return true;
+}
+
+bool C_Camera::InspectorDraw(PanelChooser* chooser)
+{
+	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
+
+	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
+	{
+		DrawDeleteButton(owner, this);
+
+		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
+		{
+			isProjectionDirty = true;
+		}
+		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
+		{
+			isProjectionDirty = true;
+		}
+		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
+		{
+			isProjectionDirty = true;
+		}
+		if (ImGui::Checkbox("Draw frustum", &isDrawFrustumActive))
+		{
+		}
+		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
+		{
+			ResetFrustumCulling();
+		}
+		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
+		{
+			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
+		}
+	}
+	else
+		DrawDeleteButton(owner, this);
+	return ret;
+}
+
+void C_Camera::Save(Json& json) const
+{
+	json["type"] = "camera";
+	json["vertical_fov"] = verticalFOV;
+	json["near_plane_distance"] = nearPlaneDistance;
+	json["far_plane_distance"] = farPlaneDistance;
+	json["draw_frustum"] = isDrawFrustumActive;
+	json["frustum_culling"] = isFrustumCullingActive;
+	json["isMainCamera"] = isMainCamera;
+}
+
+void C_Camera::Load(Json& json)
+{
+	verticalFOV = json.at("vertical_fov");
+	nearPlaneDistance = json.at("near_plane_distance");
+	farPlaneDistance = json.at("far_plane_distance");
+	isDrawFrustumActive = json.at("draw_frustum");
+	isFrustumCullingActive = json.at("frustum_culling");
+	isMainCamera = json.at("isMainCamera");
+	if(isMainCamera)
+		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
+}
+
+float C_Camera::GetFarPlaneHeight() const
+{
+	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
+}
+
+float C_Camera::GetFarPlaneWidth() const
+{
+	return GetFarPlaneHeight()*aspectRatio;
+}
+
+float4x4 C_Camera::GetViewMatrix() const
+{
+	return cameraFrustum.ViewMatrix();
+}
+
+void C_Camera::SetAspectRatio(const float& aspectRatio)
+{
+	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
+	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
+	this->isProjectionDirty = true;
+	RecalculateProjection();
 }
 
 void C_Camera::LookAt(const float3& point)
@@ -112,9 +195,14 @@ void C_Camera::LookAt(const float3& point)
 	CalculateViewMatrix();
 }
 
+void C_Camera::ChangeSpeed(int multiplier)
+{
+	cameraSpeed = baseCameraSpeed * multiplier;
+}
+
 void C_Camera::CalculateViewMatrix(bool ortho)
 {
-	if (projectionIsDirty)
+	if (isProjectionDirty)
 		RecalculateProjection(ortho);
 
 	cameraFrustum.pos = position;
@@ -122,7 +210,6 @@ void C_Camera::CalculateViewMatrix(bool ortho)
 	cameraFrustum.up = up.Normalized();
 	float3::Orthonormalize(cameraFrustum.front, cameraFrustum.up);
 	right = up.Cross(front);
-	viewMatrix = cameraFrustum.ViewMatrix();
 }
 
 void C_Camera::RecalculateProjection(bool ortho)
@@ -144,174 +231,6 @@ void C_Camera::RecalculateProjection(bool ortho)
 			cameraFrustum.orthographicHeight = owner->GetEngine()->GetEditor()->lastViewportSize.y;
 		}
 		
-	}
-}
-
-bool C_Camera::InspectorDraw(PanelChooser* chooser)
-{
-	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
-
-	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
-	{
-		DrawDeleteButton(owner, this);
-
-		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
-		{
-			projectionIsDirty = true;
-		}
-		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
-		{
-			projectionIsDirty = true;
-		}
-		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
-		{
-			projectionIsDirty = true;
-		}
-		if (ImGui::Checkbox("Draw frustum", &drawFrustum))
-		{
-		}
-		if (ImGui::Checkbox("Frustum culling", &frustumCulling))
-		{
-			ResetFrustumCulling();
-		}
-		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
-		{
-			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
-		}
-	}
-	else
-		DrawDeleteButton(owner, this);
-	return ret;
-}
-
-void C_Camera::Save(Json& json) const
-{
-	json["type"] = (int)type;
-
-	json["vertical_fov"] = verticalFOV;
-	json["near_plane_distance"] = nearPlaneDistance;
-	json["far_plane_distance"] = farPlaneDistance;
-	json["draw_frustum"] = drawFrustum;
-	json["frustum_culling"] = frustumCulling;
-	json["isMainCamera"] = isMainCamera;
-}
-
-void C_Camera::Load(Json& json)
-{
-	verticalFOV = json.at("vertical_fov");
-	nearPlaneDistance = json.at("near_plane_distance");
-	farPlaneDistance = json.at("far_plane_distance");
-	drawFrustum = json.at("draw_frustum");
-	frustumCulling = json.at("frustum_culling");
-	isMainCamera = json.at("isMainCamera");
-	if(isMainCamera)
-		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
-}
-
-void C_Camera::ChangeSpeed(int multiplier)
-{
-	cameraSpeed = baseCameraSpeed * multiplier;
-}
-
-//void ModuleCamera3D::OnSave(JSONWriter& writer) const
-//{
-//	writer.String("camera");
-//	writer.StartObject();
-//	SAVE_JSON_FLOAT(verticalFOV)
-//		SAVE_JSON_FLOAT(nearPlaneDistance)
-//		SAVE_JSON_FLOAT(farPlaneDistance)
-//		SAVE_JSON_FLOAT(cameraSpeed)
-//		SAVE_JSON_FLOAT(cameraSensitivity)
-//		writer.EndObject();
-//}
-
-//void ModuleCamera3D::OnLoad(const JSONReader& reader)
-//{
-//	if (reader.HasMember("camera"))
-//	{
-//		const auto& config = reader["camera"];
-//		LOAD_JSON_FLOAT(verticalFOV);
-//		LOAD_JSON_FLOAT(nearPlaneDistance);
-//		LOAD_JSON_FLOAT(farPlaneDistance);
-//		LOAD_JSON_FLOAT(cameraSpeed);
-//		LOAD_JSON_FLOAT(cameraSensitivity);
-//	}
-//	RecalculateProjection();
-//}
-
-void C_Camera::DrawFrustum() const
-{
-	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
-	float3 cornerPoints[8];
-	cameraFrustum.GetCornerPoints(cornerPoints);
-
-	//Draw Operations
-
-	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
-	glLineWidth(3.5f);
-	glBegin(GL_LINES);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
-	glEnd();
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glLineWidth(1.0f);
-	glPopMatrix();
-
-}
-
-bool C_Camera::ClipsWithBBox(const AABB& refBox) const
-{
-	float3 vertexCorner[8];
-
-	// Get bounding box
-	refBox.GetCornerPoints(vertexCorner);
-
-	for (int p = 0; p < 6; ++p)
-	{
-		int cornersOutside = 8;
-
-		for (int i = 0; i < 8; ++i)
-		{
-			if (cameraFrustum.GetPlane(p).IsOnPositiveSide(vertexCorner[i])) --cornersOutside;
-		}
-
-		if (cornersOutside == 0) return false;
 	}
 }
 
@@ -351,20 +270,76 @@ void C_Camera::ResetFrustumCulling()
 	}
 }
 
-void C_Camera::SetAspectRatio(const float& aspectRatio)
+void C_Camera::DrawFrustum() const
 {
-	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
-	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
-	this->projectionIsDirty = true;
-	RecalculateProjection();
+	glPushMatrix();
+	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+	float3 cornerPoints[8];
+	cameraFrustum.GetCornerPoints(cornerPoints);
+
+	//Draw Operations
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glLineWidth(1.5f);
+	glBegin(GL_LINES);
+
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
+
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
+
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
+
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
+
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
+
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
+
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
+
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
+
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
+
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
+
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
+
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
+
+	glEnd();
+	glPopMatrix();
+
 }
 
-float C_Camera::GetFarPlaneHeight() const
+bool C_Camera::ClipsWithBBox(const AABB& refBox) const
 {
-	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
+	float3 vertexCorner[8];
+
+	// Get bounding box
+	refBox.GetCornerPoints(vertexCorner);
+
+	for (int p = 0; p < 6; ++p)
+	{
+		int cornersOutside = 8;
+
+		for (int i = 0; i < 8; ++i)
+		{
+			if (cameraFrustum.GetPlane(p).IsOnPositiveSide(vertexCorner[i])) --cornersOutside;
+		}
+
+		if (cornersOutside == 0) return false;
+	}
 }
 
-float C_Camera::GetFarPlaneWidth() const
-{
-	return GetFarPlaneHeight()*aspectRatio;
-}

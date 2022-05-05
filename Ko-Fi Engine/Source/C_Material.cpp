@@ -346,7 +346,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 
 		if (panelChooser->IsReadyToClose("ChangeTexture"))
 		{
-			if (panelChooser->OnChooserClosed() != nullptr)
+			if (!panelChooser->OnChooserClosed().empty())
 			{
 				std::string path = panelChooser->OnChooserClosed();
 				//for (R_Texture& tex : textures)
@@ -382,7 +382,7 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 
 		if (panelChooser->IsReadyToClose("ChangeShader"))
 		{
-			if (panelChooser->OnChooserClosed() != nullptr)
+			if (!panelChooser->OnChooserClosed().empty())
 			{
 				std::string path = panelChooser->OnChooserClosed();
 

@@ -13,7 +13,6 @@
 #include "PanelChooser.h"
 #include "SceneIntro.h"
 
-#include "par_shapes.h"
 #include "Log.h"
 #include "M_UI.h"
 #include "R_Material.h"
@@ -85,7 +84,7 @@ bool C_Image::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (panelChooser->IsReadyToClose("AddTextureImage")) {
-			if (panelChooser->OnChooserClosed() != nullptr) {
+			if (!panelChooser->OnChooserClosed().empty()) {
 				std::string path = panelChooser->OnChooserClosed();
 				SetTexture(path.c_str());
 			}

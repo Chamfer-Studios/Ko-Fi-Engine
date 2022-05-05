@@ -7,6 +7,7 @@
 #include "Engine.h"
 #include "M_Editor.h"
 #include "M_SceneManager.h"
+#include "M_Input.h"
 
 // Components
 #include "C_Mesh.h"
@@ -105,6 +106,7 @@ bool GameObject::Update(float dt)
 		if (component)
 			ret = component->Update(dt);
 	}
+
 	return ret;
 }
 
@@ -114,6 +116,10 @@ bool GameObject::PostUpdate(float dt)
 
 	for (Component* component : components)
 		ret = component->PostUpdate(dt);
+
+	// Propagate isActive to children if needed
+	if (isActiveWindow)
+		PropragateIsActive();
 
 	return ret;
 }
@@ -213,7 +219,6 @@ void GameObject::DeleteComponent(Component* component)
 		components.shrink_to_fit();
 	}
 }
-
 
 Component* GameObject::AddComponentByType(ComponentType componentType)
 {
@@ -362,10 +367,10 @@ void GameObject::AttachChild(GameObject* child)
 {
 	if (child->parent != nullptr)
 		child->parent->RemoveChild(child);
-	
+
 	child->parent = this;
 	children.push_back(child);
-	//child->PropagateTransform();
+	// child->PropagateTransform();
 }
 
 void GameObject::RemoveChild(GameObject* child)
@@ -389,7 +394,7 @@ void GameObject::SetName(const char* name)
 	this->name = SetObjectNumberedName(name).c_str();
 }
 
-const char *GameObject::GetName() const
+const char* GameObject::GetName() const
 {
 	return name.c_str();
 }
@@ -409,7 +414,7 @@ GameObject* GameObject::GetParent() const
 	return parent;
 }
 
-C_Transform *GameObject::GetTransform() const
+C_Transform* GameObject::GetTransform() const
 {
 	return this->transform;
 }
@@ -486,7 +491,7 @@ bool GameObject::PrefabSaveJson()
 	this->PrefabSave(jsonFile);
 
 	std::string path = "Assets/Prefabs/" + std::string(name) + "_prefab.json";
-	
+
 	this->prefabPath = path;
 
 	ret = jsonHandler.SaveJson(jsonFile, path.c_str());
@@ -522,6 +527,12 @@ bool GameObject::PrefabSave(Json& jsonFile)
 		{
 			C_Transform* transformCmp = (C_Transform*)component;
 			transformCmp->Save(jsonComponent);
+			break;
+		}
+		case ComponentType::PARTICLE:
+		{
+			C_Particle* particleCmp = (C_Particle*)component;
+			particleCmp->Save(jsonComponent);
 			break;
 		}
 		case ComponentType::MESH:
@@ -820,6 +831,15 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			animCmp->active = true;
 			animCmp->Load(jsonCmp);
 		}
+		else if (type == "particle")
+		{
+			C_Particle* particleCmp = this->GetComponent<C_Particle>();
+			if (!particleCmp)
+				AddComponentByType(ComponentType::PARTICLE);
+			particleCmp = this->GetComponent<C_Particle>();
+			particleCmp->active = true;
+			particleCmp->Load(jsonCmp);
+		}
 	}
 	Json jsonChd = jsonFile.at("children");
 	for (const auto& chdIt : jsonChd.items())
@@ -865,7 +885,7 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		{
 			C_Info* infoCmp = this->GetComponent<C_Info>();
 			infoCmp->active = true;
-			infoCmp->Load(jsonCmp); //does nothing as of now
+			infoCmp->Load(jsonCmp); // does nothing as of now
 		}
 		else if (type == "transform")
 		{
@@ -994,6 +1014,15 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			animCmp->active = true;
 			animCmp->Load(jsonCmp);
 		}
+		else if (type == "particle")
+		{
+			C_Particle* particleCmp = this->GetComponent<C_Particle>();
+			if (!particleCmp)
+				AddComponentByType(ComponentType::PARTICLE);
+			particleCmp = this->GetComponent<C_Particle>();
+			particleCmp->active = true;
+			particleCmp->Load(jsonCmp);
+		}
 	}
 	Json jsonChd = jsonFile.at("children");
 	for (const auto& chdIt : jsonChd.items())
@@ -1064,8 +1093,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 	else
 		return name; // If there is no object with that name return the name asigned
 
-
-	while (scene->IsGameObjectInScene(chainName) != false) // Check if replics exists || BakerHouse0, BakerHouse1... 
+	while (scene->IsGameObjectInScene(chainName) != false) // Check if replics exists || BakerHouse0, BakerHouse1...
 	{
 		count++;
 		number = std::to_string(count);
@@ -1081,6 +1109,48 @@ void GameObject::SetChangeScene(bool changeSceneLua, std::string sceneNameLua)
 	sceneName = sceneNameLua;
 }
 
+void GameObject::PropragateIsActive()
+{
+	if (children.size() == 0)
+	{
+		isActiveWindow = false;
+		return;
+	}
+
+	if (ImGui::BeginPopupModal("Apply To Children"))
+	{
+		ImGui::SetWindowSize(ImVec2(250, 120));
+		ImGui::Text("Do you want to apply to all children?");
+		ImGui::Spacing();
+
+		if (ImGui::Button("YES", ImVec2(70, 30)))
+		{
+			SetIsActiveToChildren(children, active);
+			isActiveWindow = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("NO", ImVec2(70, 30)))
+		{
+			isActiveWindow = false;
+		}
+
+		ImGui::EndPopup();
+	}
+	ImGui::OpenPopup("Apply To Children");
+
+}
+
+void GameObject::SetIsActiveToChildren(std::vector<GameObject*>& list, bool value)
+{
+	for (GameObject* go : list)
+	{
+		go->active = value;
+		if (go->children.size() > 0)
+		{
+			SetIsActiveToChildren(go->children, value);
+		}
+	}
+}
 void GameObject::OnStoped()
 {
 	isQuitting = true;
@@ -1103,4 +1173,9 @@ void GameObject::Active(bool isActive)
 		(*chdIt)->Active(isActive);
 
 	this->active = isActive;
+}
+
+void GameObject::Quit()
+{
+	this->GetEngine()->GetInput()->quitGame = true;
 }

@@ -15,7 +15,7 @@ class C_Collider2;
 class C_Animator;
 class C_LightSource;
 
-enum class Tag 
+enum class Tag
 {
 	TAG_UNTAGGED,
 	TAG_PLAYER,
@@ -29,7 +29,7 @@ class GameObject
 public:
 	GameObject(UID uid, KoFiEngine* engine, const char* name = nullptr, bool is3D = true);
 	GameObject();
-	//GameObject(const char* path, int id, const char* name = nullptr);
+	// GameObject(const char* path, int id, const char* name = nullptr);
 	~GameObject();
 
 	bool Start();
@@ -47,38 +47,39 @@ public:
 	void Enable();
 	void Disable();
 
-	template<class T> T* GetComponent()
+	template <class T>
+	T *GetComponent()
 	{
-		T* component = nullptr;
-		for (Component* c : components)
+		T *component = nullptr;
+		for (Component *c : components)
 		{
-			component = dynamic_cast<T*>(c);
+			component = dynamic_cast<T *>(c);
 			if (component)
 				break;
 		}
 		return component;
 	}
-	
+
 	// New way
-	void DeleteComponent(Component* component);
-	void PushBackComponent(Component* component) { components.push_back(component); }
-	Component* AddComponentByType(ComponentType componentType);
-	void AttachChild(GameObject* child);
-	void RemoveChild(GameObject* child);
+	void DeleteComponent(Component *component);
+	void PushBackComponent(Component *component) { components.push_back(component); }
+	Component *AddComponentByType(ComponentType componentType);
+	void AttachChild(GameObject *child);
+	void RemoveChild(GameObject *child);
 
 	void PropagateTransform();
 
 	// Old way
-	void SetName(const char* name);
-	const char* GetName() const;
+	void SetName(const char *name);
+	const char *GetName() const;
 
-	std::vector<GameObject*> GetChildren() const;
-	GameObject* GetChildWithName(std::string childName);
-	void SetChild(GameObject* child);
-	GameObject* GetParent() const;
+	std::vector<GameObject *> GetChildren() const;
+	GameObject *GetChildWithName(std::string childName);
+	void SetChild(GameObject *child);
+	GameObject *GetParent() const;
 
-	C_Transform* GetTransform() const;
-	std::vector<Component*> GetComponents() const;
+	C_Transform *GetTransform() const;
+	std::vector<Component *> GetComponents() const;
 	AABB BoundingAABB();
 	UID GetUID() const;
 	void SetUID(UID uid);
@@ -89,33 +90,40 @@ public:
 	bool HasChildrenWithUID(UID uid);
 	bool HasParentWithUID(UID uid);
 
-	KoFiEngine* GetEngine() const;
-	void SetEngine(KoFiEngine* engine);
-	
+	KoFiEngine *GetEngine() const;
+	void SetEngine(KoFiEngine *engine);
+
 	bool PrefabSaveJson();
-	bool PrefabSave(Json& jsonFile);
-	bool LoadPrefabJson(const char* path, bool exists);
-	bool LoadPrefab(Json& jsonFile);
-	bool UpdatePrefab(Json& jsonFile);
+	bool PrefabSave(Json &jsonFile);
+	bool LoadPrefabJson(const char *path, bool exists);
+	bool LoadPrefab(Json &jsonFile);
+	bool UpdatePrefab(Json &jsonFile);
 
 	bool IsSelected();
 	void LoadSceneFromName(std::string name);
 	void SetChangeScene(bool changeSceneLua, std::string sceneNameLua);
+
+	void PropragateIsActive();
+	void SetIsActiveToChildren(std::vector<GameObject *> &list, bool value);
 	void OnStoped();
 	void Active(bool isActive);
+	void Quit();
 
 private:
-	std::string SetObjectNumberedName(const char* _name);
+	std::string SetObjectNumberedName(const char *_name);
 
 public:
-	template<class T> T* CreateComponent()
+	template <class T>
+	T *CreateComponent()
 	{
-		T* newComponent = new T(this);
+		T *newComponent = new T(this);
 		return newComponent;
 	}
 
 public:
 	bool active = true;
+	bool isActiveWindow = false;
+
 	int numScripts = 0;
 	bool is3D = true;
 	bool isPrefab = false;
@@ -125,7 +133,8 @@ public:
 	std::string prefabPath;
 	Tag tag;
 
-	std::vector<GameObject*> children;
+	std::vector<GameObject *> children;
+
 private:
 	std::string name;
 	std::vector<Component*> components;
@@ -133,8 +142,8 @@ private:
 	UID uid;
 	UID parentUid;
 
-	KoFiEngine* engine = nullptr;
-	C_Transform* transform = nullptr;
+	KoFiEngine *engine = nullptr;
+	C_Transform *transform = nullptr;
 };
 
 #endif // !__GAMEOBJECT_H__
