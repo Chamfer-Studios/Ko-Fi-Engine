@@ -233,7 +233,7 @@ void C_Animator::Save(Json& json) const
 
 			json["clips"].push_back(jsonClips);
 		}
-		json["selectedClip"] = selectedClip.GetName();
+		json["selectedClip"] = selectedClip->GetName();
 	}
 }
 

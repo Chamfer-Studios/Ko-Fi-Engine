@@ -1,0 +1,2083 @@
+{
+    "SceneIntro": {
+        "active": true,
+        "game_objects_amount": 57,
+        "game_objects_list": [
+            {
+                "UID": 2124772854,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.5,
+                            13.5,
+                            -90.02790832519531
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "draw_frustum": true,
+                        "far_plane_distance": 100.0,
+                        "frustum_culling": false,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.10000000149011612,
+                        "type": 4,
+                        "vertical_fov": 60.0
+                    }
+                ],
+                "is3D": true,
+                "name": "Main Camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1547328386,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "ambientValue": 0.5,
+                        "diffuseValue": 0.800000011920929,
+                        "lightColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "lightDirection": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "lightPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "sourceType": 0,
+                        "specularValue": 0.0,
+                        "type": 19
+                    }
+                ],
+                "is3D": true,
+                "name": "Direct Light",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 21498601,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.4124622344970703,
+                            71.7874526977539,
+                            -67.84387969970703
+                        ],
+                        "rotation": [
+                            -0.2284264862537384,
+                            -0.65351402759552,
+                            0.6550359129905701,
+                            0.30276843905448914
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "crossbow_base",
+                "parent_UID": 1041530073,
+                "tag": 0
+            },
+            {
+                "UID": 30681849,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.890647888183594,
+                            35.07242965698242,
+                            0.00017070770263671875
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_thumb_4",
+                "parent_UID": 458238861,
+                "tag": 0
+            },
+            {
+                "UID": 66314450,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.18145465850830078,
+                            46.36986541748047,
+                            0.00030803680419921875
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_index_4",
+                "parent_UID": 1295166073,
+                "tag": 0
+            },
+            {
+                "UID": 86536148,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.340576171875e-05,
+                            100.00873565673828,
+                            -8.726119995117188e-05
+                        ],
+                        "rotation": [
+                            0.5473883748054504,
+                            0.0055961571633815765,
+                            -0.0462736114859581,
+                            0.8355796933174133
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_arm",
+                "parent_UID": 592355216,
+                "tag": 0
+            },
+            {
+                "UID": 114931482,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -6.67572021484375e-06,
+                            469.6740417480469,
+                            -3.8623809814453125e-05
+                        ],
+                        "rotation": [
+                            0.5667608380317688,
+                            -0.01226861122995615,
+                            -0.05721911042928696,
+                            0.821801483631134
+                        ],
+                        "scale": [
+                            0.9999998807907104,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_foot",
+                "parent_UID": 1981198052,
+                "tag": 0
+            },
+            {
+                "UID": 120639600,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.7229467630386353e-07,
+                            180.329833984375,
+                            -2.2433698177337646e-05
+                        ],
+                        "rotation": [
+                            0.3015790581703186,
+                            -0.00703883683308959,
+                            0.002196843968704343,
+                            0.9534127116203308
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_toe_base",
+                "parent_UID": 114931482,
+                "tag": 0
+            },
+            {
+                "UID": 124750437,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0001095011830329895,
+                            96.93421173095703,
+                            -0.4021625220775604
+                        ],
+                        "rotation": [
+                            0.008820015005767345,
+                            -0.010713460855185986,
+                            0.0248027965426445,
+                            0.9995960593223572
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_spine",
+                "parent_UID": 711141182,
+                "tag": 0
+            },
+            {
+                "UID": 220542146,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            0.009999999776482582,
+                            0.009999999776482582,
+                            0.009999999776482582
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Characters/Players/Nerala/nerala_low.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 2004154263
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "animation": {
+                            "asset_path": "Assets/Models/Characters/Players/Nerala/nerala_armature|nerala_reel.cake",
+                            "uid": 277827175
+                        },
+                        "clips": [
+                            {
+                                "clipDuration": 10.0,
+                                "clipDurationInSeconds": 0.4166666567325592,
+                                "clipEndFrame": 10.0,
+                                "clipFinished": false,
+                                "clipLoop": true,
+                                "clipName": "Default clip",
+                                "clipStartFrame": 0.0,
+                                "mapString": "Default clip"
+                            }
+                        ],
+                        "selectedClip": "Default clip",
+                        "type": 12
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/nerala_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_low",
+                "parent_UID": 230378952,
+                "tag": 0
+            },
+            {
+                "UID": 230378952,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            30.03496551513672
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 233612090,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.814697265625e-05,
+                            70.73599243164063,
+                            -0.0001285076141357422
+                        ],
+                        "rotation": [
+                            0.07406887412071228,
+                            -0.0033765367697924376,
+                            -0.027572084218263626,
+                            0.9968662261962891
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_index_1",
+                "parent_UID": 432387731,
+                "tag": 0
+            },
+            {
+                "UID": 241048183,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -5.716457962989807e-06,
+                            74.2353744506836,
+                            -9.834766387939453e-07
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_toe_end",
+                "parent_UID": 120639600,
+                "tag": 0
+            },
+            {
+                "UID": 250479916,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.256035804748535e-05,
+                            265.1925964355469,
+                            -22.293643951416016
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_head_top_end",
+                "parent_UID": 2059639707,
+                "tag": 0
+            },
+            {
+                "UID": 305961775,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.3366341590881348e-05,
+                            178.30982971191406,
+                            -7.43865966796875e-05
+                        ],
+                        "rotation": [
+                            0.3039933443069458,
+                            0.007432416081428528,
+                            -0.0023503275588154793,
+                            0.9526422619819641
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_toe_base",
+                "parent_UID": 1957943407,
+                "tag": 0
+            },
+            {
+                "UID": 325796205,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            7.2479248046875e-05,
+                            71.39836883544922,
+                            0.00029087066650390625
+                        ],
+                        "rotation": [
+                            0.07308472692966461,
+                            0.006756399758160114,
+                            0.0255886223167181,
+                            0.996974527835846
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_index_1",
+                "parent_UID": 2088697227,
+                "tag": 0
+            },
+            {
+                "UID": 334484362,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            23.710542678833008,
+                            33.13595199584961,
+                            0.00011682510375976563
+                        ],
+                        "rotation": [
+                            0.1653074473142624,
+                            -0.22118479013442993,
+                            -0.3767955005168915,
+                            0.8841809034347534
+                        ],
+                        "scale": [
+                            1.0000001192092896,
+                            1.0000001192092896,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_thumb_1",
+                "parent_UID": 2088697227,
+                "tag": 0
+            },
+            {
+                "UID": 390773342,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            0.009999999776482582,
+                            0.009999999776482582,
+                            0.009999999776482582
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Characters/Players/Nerala/crossbow.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 1708003186
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "animation": {
+                            "asset_path": "Assets/Models/Characters/Players/Nerala/nerala_armature|nerala_reel.cake",
+                            "uid": 277827175
+                        },
+                        "clips": [
+                            {
+                                "clipDuration": 10.0,
+                                "clipDurationInSeconds": 0.4166666567325592,
+                                "clipEndFrame": 10.0,
+                                "clipFinished": false,
+                                "clipLoop": true,
+                                "clipName": "Default clip",
+                                "clipStartFrame": 0.0,
+                                "mapString": "Default clip"
+                            }
+                        ],
+                        "selectedClip": "Default clip",
+                        "type": 12
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": ""
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "name": "crossbow",
+                "parent_UID": 230378952,
+                "tag": 0
+            },
+            {
+                "UID": 432387731,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            306.97161865234375,
+                            -9.894371032714844e-05
+                        ],
+                        "rotation": [
+                            0.08908538520336151,
+                            -0.14070084691047668,
+                            -0.021200934424996376,
+                            0.9858081936836243
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand",
+                "parent_UID": 1041530073,
+                "tag": 0
+            },
+            {
+                "UID": 458238861,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -10.273994445800781,
+                            36.99822998046875,
+                            9.441375732421875e-05
+                        ],
+                        "rotation": [
+                            0.03218504786491394,
+                            -0.010269494727253914,
+                            0.14159944653511047,
+                            0.9893473982810974
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999998807907104,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_thumb_3",
+                "parent_UID": 1341316336,
+                "tag": 0
+            },
+            {
+                "UID": 474442682,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.914535045623779e-05,
+                            73.90304565429688,
+                            2.6226043701171875e-06
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_toe_end",
+                "parent_UID": 305961775,
+                "tag": 0
+            },
+            {
+                "UID": 511173709,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            37.3076171875,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_thumb_4_end",
+                "parent_UID": 942733570,
+                "tag": 0
+            },
+            {
+                "UID": 535308691,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.6459293365478516,
+                            58.07383728027344,
+                            0.0001010894775390625
+                        ],
+                        "rotation": [
+                            0.18014520406723022,
+                            0.0011407973943278193,
+                            0.01190378237515688,
+                            0.9835673570632935
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998807907104,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_index_2",
+                "parent_UID": 325796205,
+                "tag": 0
+            },
+            {
+                "UID": 548355911,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.245208740234375e-05,
+                            100.00868225097656,
+                            0.0004253387451171875
+                        ],
+                        "rotation": [
+                            0.4240267276763916,
+                            0.004557088017463684,
+                            -0.007613940630108118,
+                            0.905606210231781
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_arm",
+                "parent_UID": 823054172,
+                "tag": 0
+            },
+            {
+                "UID": 561660468,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -110.12184143066406,
+                            -53.764373779296875,
+                            -3.2959203720092773
+                        ],
+                        "rotation": [
+                            -0.039241742342710495,
+                            0.007094857282936573,
+                            0.9931055903434753,
+                            -0.11023185402154922
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_up_leg",
+                "parent_UID": 711141182,
+                "tag": 0
+            },
+            {
+                "UID": 592355216,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            48.71885681152344,
+                            133.9766082763672,
+                            -0.3171732425689697
+                        ],
+                        "rotation": [
+                            0.6450425982475281,
+                            0.38446521759033203,
+                            -0.4872403144836426,
+                            0.4457617998123169
+                        ],
+                        "scale": [
+                            1.0000001192092896,
+                            1.000000238418579,
+                            1.000000238418579
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_shoulder",
+                "parent_UID": 1451754653,
+                "tag": 0
+            },
+            {
+                "UID": 669725916,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            223.47784423828125,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "crossbow_end_end",
+                "parent_UID": 2105481909,
+                "tag": 0
+            },
+            {
+                "UID": 711141182,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            7.129046440124512,
+                            1128.487060546875,
+                            5.019859313964844
+                        ],
+                        "rotation": [
+                            -0.008319951593875885,
+                            0.013654804788529873,
+                            -0.04582890495657921,
+                            0.9988213181495667
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_hips",
+                "parent_UID": 1805141396,
+                "tag": 0
+            },
+            {
+                "UID": 727989015,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            73.9033432006836,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_toe_end_end",
+                "parent_UID": 474442682,
+                "tag": 0
+            },
+            {
+                "UID": 749168976,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.814697265625e-06,
+                            533.1988525390625,
+                            1.9073486328125e-05
+                        ],
+                        "rotation": [
+                            -0.2514205574989319,
+                            -0.07485315203666687,
+                            0.06818028539419174,
+                            0.9625675082206726
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_leg",
+                "parent_UID": 1376021526,
+                "tag": 0
+            },
+            {
+                "UID": 823054172,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -48.71857452392578,
+                            133.9742889404297,
+                            0.2223668098449707
+                        ],
+                        "rotation": [
+                            0.6046553254127502,
+                            -0.42571887373924255,
+                            0.5360869765281677,
+                            0.4071439504623413
+                        ],
+                        "scale": [
+                            1.0,
+                            1.000000238418579,
+                            1.0000001192092896
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_shoulder",
+                "parent_UID": 1451754653,
+                "tag": 0
+            },
+            {
+                "UID": 826305909,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.5725533962249756e-06,
+                            113.09247589111328,
+                            9.685754776000977e-08
+                        ],
+                        "rotation": [
+                            0.0063054985366761684,
+                            0.001780517166480422,
+                            0.05188913270831108,
+                            0.9986313581466675
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_spine_1",
+                "parent_UID": 124750437,
+                "tag": 0
+            },
+            {
+                "UID": 942733570,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.897918701171875,
+                            36.23159408569336,
+                            -4.9591064453125e-05
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_thumb_4",
+                "parent_UID": 1923159006,
+                "tag": 0
+            },
+            {
+                "UID": 1041530073,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.673004150390625e-05,
+                            247.90252685546875,
+                            0.0003986358642578125
+                        ],
+                        "rotation": [
+                            0.0014858925715088844,
+                            -0.02148258686065674,
+                            0.12561175227165222,
+                            0.9918457269668579
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_fore_arm",
+                "parent_UID": 86536148,
+                "tag": 0
+            },
+            {
+                "UID": 1095018196,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            266.1268310546875,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_head_top_end_end",
+                "parent_UID": 250479916,
+                "tag": 0
+            },
+            {
+                "UID": 1188766729,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.3912167549133301,
+                            47.8638801574707,
+                            3.218650817871094e-05
+                        ],
+                        "rotation": [
+                            0.08865521103143692,
+                            -0.00015038832498248667,
+                            0.014322330243885517,
+                            0.9959594011306763
+                        ],
+                        "scale": [
+                            0.9999998807907104,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_index_3",
+                "parent_UID": 1413659159,
+                "tag": 0
+            },
+            {
+                "UID": 1256167976,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.2527809143066406,
+                            45.003700256347656,
+                            0.00026154518127441406
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_index_4",
+                "parent_UID": 1188766729,
+                "tag": 0
+            },
+            {
+                "UID": 1270087012,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.8371810913085938e-05,
+                            247.92852783203125,
+                            -0.00011934340000152588
+                        ],
+                        "rotation": [
+                            0.001316829933784902,
+                            0.02366894669830799,
+                            -0.15353477001190186,
+                            0.9878589510917664
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_fore_arm",
+                "parent_UID": 548355911,
+                "tag": 0
+            },
+            {
+                "UID": 1292850458,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.00023436546325683594,
+                            145.4039306640625,
+                            6.586313247680664e-06
+                        ],
+                        "rotation": [
+                            0.011357155628502369,
+                            -0.002245306968688965,
+                            -0.018950579687952995,
+                            0.9997534155845642
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_neck",
+                "parent_UID": 1451754653,
+                "tag": 0
+            },
+            {
+                "UID": 1295166073,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.46450328826904297,
+                            47.66726303100586,
+                            8.487701416015625e-05
+                        ],
+                        "rotation": [
+                            0.11979036778211594,
+                            0.000914038741029799,
+                            -0.016803303733468056,
+                            0.9926565885543823
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_index_3",
+                "parent_UID": 535308691,
+                "tag": 0
+            },
+            {
+                "UID": 1341316336,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.383026123046875,
+                            32.29365539550781,
+                            4.57763671875e-05
+                        ],
+                        "rotation": [
+                            0.0831836685538292,
+                            -0.1215544119477272,
+                            -0.431884765625,
+                            0.8898205161094666
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_thumb_2",
+                "parent_UID": 1987939952,
+                "tag": 0
+            },
+            {
+                "UID": 1376021526,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            110.12203216552734,
+                            -53.76436233520508,
+                            -5.769357204437256
+                        ],
+                        "rotation": [
+                            0.11225727945566177,
+                            0.16093884408473969,
+                            0.9748169779777527,
+                            -0.10596628487110138
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_up_leg",
+                "parent_UID": 711141182,
+                "tag": 0
+            },
+            {
+                "UID": 1413659159,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.13837718963623047,
+                            57.15359878540039,
+                            6.747245788574219e-05
+                        ],
+                        "rotation": [
+                            0.18009713292121887,
+                            -0.0006508783553726971,
+                            -0.000563605222851038,
+                            0.9836484789848328
+                        ],
+                        "scale": [
+                            0.9999998807907104,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_index_2",
+                "parent_UID": 233612090,
+                "tag": 0
+            },
+            {
+                "UID": 1451754653,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.3229589462280273e-06,
+                            129.2461395263672,
+                            -3.0100345611572266e-06
+                        ],
+                        "rotation": [
+                            0.006377068813890219,
+                            0.006312717217952013,
+                            0.05112650990486145,
+                            0.998651921749115
+                        ],
+                        "scale": [
+                            0.9999998807907104,
+                            0.9999999403953552,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_spine_2",
+                "parent_UID": 826305909,
+                "tag": 0
+            },
+            {
+                "UID": 1502264111,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            35.56326675415039,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_thumb_4_end",
+                "parent_UID": 30681849,
+                "tag": 0
+            },
+            {
+                "UID": 1546616668,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            45.0039176940918,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_index_4_end",
+                "parent_UID": 1256167976,
+                "tag": 0
+            },
+            {
+                "UID": 1578330985,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            74.23540496826172,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_toe_end_end",
+                "parent_UID": 241048183,
+                "tag": 0
+            },
+            {
+                "UID": 1805141396,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_armature",
+                "parent_UID": 230378952,
+                "tag": 0
+            },
+            {
+                "UID": 1923159006,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            17.085487365722656,
+                            36.25397872924805,
+                            0.00016307830810546875
+                        ],
+                        "rotation": [
+                            0.033060379326343536,
+                            0.009321494959294796,
+                            -0.2685156762599945,
+                            0.9626626968383789
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_thumb_3",
+                "parent_UID": 1970582381,
+                "tag": 0
+            },
+            {
+                "UID": 1935966047,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            46.37107849121094,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_index_4_end",
+                "parent_UID": 66314450,
+                "tag": 0
+            },
+            {
+                "UID": 1957943407,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.86102294921875e-05,
+                            469.6479187011719,
+                            3.814697265625e-06
+                        ],
+                        "rotation": [
+                            0.5209066867828369,
+                            -0.09198646992444992,
+                            -0.08013125509023666,
+                            0.8448513150215149
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_foot",
+                "parent_UID": 749168976,
+                "tag": 0
+            },
+            {
+                "UID": 1970582381,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.187088012695313,
+                            31.551734924316406,
+                            -2.288818359375e-05
+                        ],
+                        "rotation": [
+                            0.07528630644083023,
+                            0.12390066683292389,
+                            0.5581602454185486,
+                            0.8169686198234558
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_thumb_2",
+                "parent_UID": 334484362,
+                "tag": 0
+            },
+            {
+                "UID": 1981198052,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.0001010894775390625,
+                            533.0399169921875,
+                            2.3484230041503906e-05
+                        ],
+                        "rotation": [
+                            -0.1293519288301468,
+                            0.05115990713238716,
+                            -0.008224978111684322,
+                            0.9902439713478088
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_leg",
+                "parent_UID": 561660468,
+                "tag": 0
+            },
+            {
+                "UID": 1987939952,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -26.853679656982422,
+                            30.634254455566406,
+                            0.0001735687255859375
+                        ],
+                        "rotation": [
+                            0.14286814630031586,
+                            0.23752664029598236,
+                            0.3281199634075165,
+                            0.903054416179657
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_thumb_1",
+                "parent_UID": 432387731,
+                "tag": 0
+            },
+            {
+                "UID": 2059639707,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.000128135085105896,
+                            123.9248046875,
+                            -10.417933464050293
+                        ],
+                        "rotation": [
+                            0.013312269933521748,
+                            0.006829472258687019,
+                            -0.07146187871694565,
+                            0.9973310828208923
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_head",
+                "parent_UID": 1292850458,
+                "tag": 0
+            },
+            {
+                "UID": 2088697227,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.1961669921875e-05,
+                            306.75054931640625,
+                            -7.486343383789063e-05
+                        ],
+                        "rotation": [
+                            0.10006099194288254,
+                            0.014852138236165047,
+                            0.06813769787549973,
+                            0.9925344586372375
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand",
+                "parent_UID": 1270087012,
+                "tag": 0
+            },
+            {
+                "UID": 2105481909,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            159.3563232421875,
+                            17.152233123779297,
+                            -155.73599243164063
+                        ],
+                        "rotation": [
+                            0.00018880385323427618,
+                            0.43944859504699707,
+                            0.002526629716157913,
+                            0.8982641696929932
+                        ],
+                        "scale": [
+                            1.0000001192092896,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "crossbow_end",
+                "parent_UID": 21498601,
+                "tag": 0
+            }
+        ],
+        "name": "SceneIntro",
+        "navmesh": {}
+    }
+}

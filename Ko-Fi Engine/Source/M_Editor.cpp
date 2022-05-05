@@ -84,7 +84,7 @@ M_Editor::M_Editor(KoFiEngine* engine)
 
 	//AddPanel(mainMenuBar);
 	AddPanel(panelHierarchy);
-	//AddPanel(panelConfig);
+	AddPanel(panelConfig);
 	AddPanel(panelLog);
 	AddPanel(panelAbout);
 	AddPanel(panelNavigation);
