@@ -102,9 +102,9 @@ public:
 
 	void InitDepthMapFramebufferAndTexture();
 	void LightUniforms(uint shader);
-	void ShadowMapUniforms(C_Mesh* cMesh, uint shader);
-	void FillShadowMap(GameObject* go);
-	bool fillShadowMap = false;
+	bool ShadowMapUniforms(C_Mesh* cMesh, uint shader);
+	void FillShadowMap(C_Camera* camera);
+
 public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
@@ -112,9 +112,10 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	bool isFirstPass = true;
-
-	//setting this bool to true will render the light's depth buffer instead of the mainCamera
-	bool testingDepthBuffer = false;
+	
+	//Lights
+	unsigned int depthMapFBO;
+	unsigned int depthMapTexture;
 
 private:
 	bool vsync = false;
@@ -136,9 +137,7 @@ private:
 	//Particle Map
 	std::map<float, ParticleRenderer> particles;
 
-	//Lights
-	unsigned int depthMapFBO;
-	unsigned int depthMapTexture;
+	
 };
 
 #endif // !__RENDERER_3D_H__

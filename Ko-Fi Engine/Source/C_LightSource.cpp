@@ -254,10 +254,8 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			{
 				currentLight->diffuse = diffuseValue;
 			}
-
-			if (ImGui::Checkbox("testingDepthBuffer", &owner->GetEngine()->GetRenderer()->testingDepthBuffer))
-			{
-			}
+			
+			ImGui::Image((ImTextureID)owner->GetEngine()->GetRenderer()->depthMapTexture, ImVec2(200, 200));
 			break;
 		}
 		case SourceType::POINT:

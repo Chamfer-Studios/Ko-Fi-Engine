@@ -81,7 +81,7 @@ bool M_Renderer3D::PreUpdate(float dt)
 	OPTICK_EVENT();
 
 	bool ret = true;
-	PrepareFrameBuffers();
+	//PrepareFrameBuffers();
 
 	isFirstPass = true;
 
@@ -100,12 +100,13 @@ bool M_Renderer3D::PostUpdate(float dt)
 	
 	//ShadowMap creation
 	//glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);	//configure viewport
+	UnbindFrameBuffers();
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
 	glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
-	fillShadowMap = true;
-	RenderScene(engine->GetCamera3D()->gameCamera);	
-	UnbindFrameBuffers();
+	FillShadowMap(engine->GetCamera3D()->gameCamera);
+	//fillShadowMap = true;
 	//OnResize();
+	UnbindFrameBuffers();
 	PrepareFrameBuffers();
 	PassProjectionAndViewToRenderer();
 	RenderScene(engine->GetCamera3D()->currentCamera);
@@ -263,11 +264,12 @@ void M_Renderer3D::SetGLFlag(GLenum flag, bool setTo)
 
 void M_Renderer3D::PassProjectionAndViewToRenderer()
 {
+
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	M_Camera3D* currentCamera3D = engine->GetCamera3D();
 	if (currentCamera3D->currentCamera)
-	{
+ 	{
 		if (currentCamera3D->currentCamera->projectionIsDirty) {
 			RecalculateProjectionMatrix();
 			currentCamera3D->currentCamera->CalculateViewMatrix();
@@ -338,14 +340,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
-				if (fillShadowMap)
-				{
-					FillShadowMap(go);
-					fillShadowMap = false;
-				}
-				else
-					RenderMeshes(camera, go);
-
+				RenderMeshes(camera, go);
 				RenderBoundingBox(cMesh);
 			}
 
@@ -398,7 +393,6 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 	C_Material* cMat = go->GetComponent<C_Material>();
 	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 	R_Mesh* mesh = cMesh->GetMesh();
-	bool depthMap = false;
 	//Check textures
 	if (cMat && mesh)
 	{
@@ -408,13 +402,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 		}
 		else
 		{
-			//TODO chekea lo mismo pero menos mal. :)
-			depthMap = ( cMat->texture->path == "Assets/Textures/shadow_map_test.png") ? true : false;
-
-			if (depthMap)
-				glBindTexture(GL_TEXTURE_2D, depthMapTexture); 
-			else
-				glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
+			glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
 		}
 	}
 	//Set Shaders
@@ -505,44 +493,6 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 		mesh->Draw();
 		glUseProgram(0);		
 	}
-}
-
-void M_Renderer3D::FillShadowMap(GameObject* go)
-{
-	//Get needed variables
-	C_Material* cMat = go->GetComponent<C_Material>();
-	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
-	R_Mesh* mesh = cMesh->GetMesh();
-
-	//Check textures
-	if (cMat && mesh)
-	{
-		if (!cMat->active)
-		{
-			glDisable(GL_TEXTURE_2D);
-		}
-		else
-		{
-			glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
-		}
-	}
-
-	// TODO: es necesario hacerlo cada frame?
-
-	//assign and use the correct shader to generate the depthmap
-	std::string shaderPath = ASSETS_SHADERS_DIR;
-	shaderPath = shaderPath + "simple_depth_shader" + SHADER_EXTENSION;
-	cMat->GetMaterial()->SetShaderPath(shaderPath.c_str());
-	Importer::GetInstance()->materialImporter->LoadAndCreateShader(cMat->GetMaterial()->GetShaderPath(), cMat->GetMaterial());
-	uint shader = cMat->GetMaterial()->shaderProgramID;
-	glUseProgram(shader); 
-
-	//fill uniforms
-	ShadowMapUniforms(cMesh, shader);
-
-	//Draw Mesh
-	mesh->Draw();
-	glUseProgram(0);
 }
 
 void M_Renderer3D::LightUniforms(uint shader)
@@ -966,7 +916,7 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 	glBindTexture(GL_TEXTURE_2D, depthMapTexture);
 	//we are only interested in storing the depth component inside the texture
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -983,7 +933,56 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader)
+void M_Renderer3D::FillShadowMap(C_Camera* camera)
+{
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (!go->active)
+			continue;
+
+		//Get needed variables
+		C_Material* cMat = go->GetComponent<C_Material>();
+		C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+		
+		if (!cMesh || !cMat)
+			continue;
+
+		//since there is no way of creating a shader program without a material, I copy the shaderPath
+			//before doing any modifications to restore it after the shadow map shader has run.
+		std::string pathDuplicate = cMat->GetMaterial()->GetShaderPath();
+
+		R_Mesh* mesh = cMesh->GetMesh();
+
+		//assign and use the correct shader to generate the depthmap
+		std::string shaderPath = ASSETS_SHADERS_DIR;
+		shaderPath = shaderPath + "simple_depth_shader" + SHADER_EXTENSION;
+		cMat->GetMaterial()->SetShaderPath(shaderPath.c_str());
+		Importer::GetInstance()->materialImporter->LoadAndCreateShader(cMat->GetMaterial()->GetShaderPath(), cMat->GetMaterial());
+		uint shader = cMat->GetMaterial()->shaderProgramID;
+
+		glUseProgram(shader);
+		// Passing Shader Uniforms
+		GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+		glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+
+		float4x4 projectionView = camera->cameraFrustum.ViewProjMatrix();
+
+		GLint lightSpaceMatrix = glGetUniformLocation(shader, "lightSpaceMatrix");
+		glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, projectionView.Transposed().ptr());
+		
+		//fill uniforms
+		//if (ShadowMapUniforms(cMesh, shader))
+		mesh->Draw();
+		
+		glUseProgram(0);		
+
+		//restore the original shader to render the mesh normally
+		cMat->GetMaterial()->SetShaderPath(pathDuplicate.c_str());
+		Importer::GetInstance()->materialImporter->LoadAndCreateShader(cMat->GetMaterial()->GetShaderPath(), cMat->GetMaterial());
+	}
+}
+
+bool M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader)
 {
 	std::vector<GameObject*> directionalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::DIRECTIONAL);
 	if (directionalLights.size() > 0)
@@ -998,7 +997,10 @@ void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader)
 
 		GLint lightSpaceMatrix = glGetUniformLocation(shader, "lightSpaceMatrix");
 		glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, dirLight->lightSpaceMatrix.ptr());
+
+		return true;
 	}
+	return false;
 }
 
 ParticleRenderer::ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform):

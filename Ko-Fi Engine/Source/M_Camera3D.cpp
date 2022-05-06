@@ -293,7 +293,7 @@ bool M_Camera3D::LoadConfiguration(Json& configModule)
 }
 
 bool M_Camera3D::InspectorDraw()
-{
+{ 
 	return true;
 }
 
