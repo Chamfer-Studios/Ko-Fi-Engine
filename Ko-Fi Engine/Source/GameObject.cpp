@@ -45,7 +45,7 @@ GameObject::GameObject(int uid, KoFiEngine* engine, const char* name, bool _is3D
 
 	SetName(name);
 
-	CreateComponent<C_Info>();
+	//CreateComponent<C_Info>();
 
 	is3D = _is3D;
 	if (is3D)
@@ -67,8 +67,9 @@ GameObject::GameObject()
 	this->uid = uid;
 	this->engine = engine;
 
-	CreateComponent<C_Info>();
-	transform = CreateComponent<C_Transform>();
+	//CreateComponent<C_Info>();
+	if (is3D)
+		transform = CreateComponent<C_Transform>();
 
 	tag = Tag::TAG_UNTAGGED;
 
