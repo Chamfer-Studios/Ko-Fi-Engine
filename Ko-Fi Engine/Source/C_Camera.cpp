@@ -30,6 +30,7 @@
 C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAMERA;
+	cameraType = CameraType::PERSPECTIVE;
 
 	//Create the frustum
 	cameraFrustum = Frustum();
@@ -41,6 +42,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum.SetViewPlaneDistances(0.01f, 1000.0f);
 	cameraFrustum.SetFrame(float3(0.0f,0.0f,0.0f),float3(0.0f,0.0f,1.0f),float3(0.0f,1.0f,0.0f));
 	LookAt(cameraFrustum.Front());
+
 
 }
 
@@ -79,27 +81,28 @@ bool C_Camera::CleanUp()
 	return true;
 }
 
-// A function that rotates the camera frustrum based on a quaternion.
-void C_Camera::Rotate(Quat quat)
-{
-	cameraFrustum.Transform(quat);
-}
-
-Quat C_Camera::GetRotation()
-{
-	// Get the front vector of the camera and store it in a variable
-	float3 front = cameraFrustum.Front();
-
-	// Get the up vector of the camera and store it in a variable
-	float3 up = cameraFrustum.Up();
-	
-	// Get the euler angles between the front vector and the world forward vector
-	return Quat::LookAt(float3::unitZ, front, up, float3::unitY);
-}
-
 bool C_Camera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
+
+	//switch (cameraType)
+	//{
+	//case C_Camera::PERSPECTIVE:
+	//	//TODO 
+
+	//	// 
+
+
+	//	break;
+	//case C_Camera::ORTHOGRAPHIC:
+	//	break;
+	//default:
+	//	break;
+	//}
+
+
+
+
 
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
@@ -127,6 +130,27 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		{
 			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 		}
+		/*if (ImGui::Checkbox("Set Type", &isOrtho))
+		{
+			if (isOrtho)
+				ChangeCameraType(ORTHOGRAPHIC);
+			else
+				ChangeCameraType(PERSPECTIVE);
+		}*/
+	/*	if(ImGui::Combo("###Combo", &cameraType, "Perspective\0Orthographic\0"))
+		{
+
+		}*/
+	/*		if ((ImGui::Button("Assign Type")))
+			{
+				switch (cameraType)
+				{
+				case (int)CameraType::PERSPECTIVE: ChangeSourceType((SourceType)sType); break;
+				case (int)SourceType::POINT: ChangeSourceType((SourceType)sType); break;
+				case (int)SourceType::FOCAL: ChangeSourceType((SourceType)sType); break;
+				}
+			}*/
+
 	}
 	else
 		DrawDeleteButton(owner, this);
@@ -153,16 +177,6 @@ void C_Camera::Load(Json& json)
 	isMainCamera = json.at("isMainCamera");
 	if (isMainCamera)
 		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
-}
-
-float C_Camera::GetFarPlaneHeight() const
-{
-	return 2.0f * cameraFrustum.FarPlaneDistance() * Tan(cameraFrustum.VerticalFov() * 0.5f * DEGTORAD);
-}
-
-float C_Camera::GetFarPlaneWidth() const
-{
-	return GetFarPlaneHeight() * cameraFrustum.AspectRatio();
 }
 
 float4x4 C_Camera::GetViewMatrix() const
@@ -198,30 +212,20 @@ void C_Camera::LookAt(const float3& point)
 	cameraFrustum.SetFrontUp(tempFront, tempFront.Cross(tempRight));	
 }
 
-void C_Camera::LookAt2(float3 _front, float3 _up)
+void C_Camera::ChangeCameraType(const CameraType& type)
 {
-	_front = _front.Normalized();
-	_up = _up.Normalized();
+	this->cameraType = type;
 
-	float angle = atan2(_front.z, _front.x);
+	// Set Camera Properties
+	if (type == CameraType::ORTHOGRAPHIC)
+	{
+		hFov = cameraFrustum.HorizontalFov();
+		vFov = cameraFrustum.VerticalFov();
+		cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->viewportSize.x, owner->GetEngine()->GetEditor()->viewportSize.y);
 
-	Quat r = cameraFrustum.ComputeWorldMatrix().RotatePart().ToQuat();
-
-	float3 cross = _up.Cross(cameraFrustum.Up());
-	float angleBetween = _up.AngleBetween(cameraFrustum.Up());
-
-	r = r.RotateAxisAngle(cross, angleBetween);
-
-	float3 currentEuler = r.ToEulerXYZ();
-
-	float diff = currentEuler.y - angle;
-
-	diff += 90.0f * DEGTORAD;
-
-	r = r.RotateAxisAngle(_up, diff);
-
-	float3 newFront = r * cameraFrustum.Front();
-	cameraFrustum.SetFront(newFront);
+	}
+	else
+		cameraFrustum.SetPerspective(hFov,vFov);
 }
 
 void C_Camera::FrustumCulling()
