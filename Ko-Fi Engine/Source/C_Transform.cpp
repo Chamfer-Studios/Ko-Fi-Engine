@@ -42,11 +42,11 @@ bool C_Transform::Update(float dt)
 				owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
 
 			RecomputeGlobalMatrix();
-				owner->PropagateTransform();
+			owner->PropagateTransform();
 
-				// Update colliders
-				if (owner->GetComponent<C_BoxCollider>())
-					owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
+			// Update colliders
+			if (owner->GetComponent<C_BoxCollider>())
+				owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
 			if (owner->GetComponent<C_SphereCollider>())
 				owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
 			if (owner->GetComponent<C_CapsuleCollider>())
@@ -54,7 +54,6 @@ bool C_Transform::Update(float dt)
 
 			isDirty = false;
 		}
-
 	}
 
 	return true;

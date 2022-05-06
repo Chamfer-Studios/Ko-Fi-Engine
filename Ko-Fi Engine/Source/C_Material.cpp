@@ -439,15 +439,17 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				ImGui::PopID();
 
 				ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
-
-				if (ImGui::Button("Delete Texture"))
+				if (!checkerTexture)
 				{
-					//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
-					if (texture != nullptr && texture->textureID != TEXTUREID_DEFAULT)
+					if (ImGui::Button("Delete Texture"))
 					{
-						owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
-						checkerTexture = true;
-						texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
+						//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
+						if (texture != nullptr && texture->textureID != TEXTUREID_DEFAULT)
+						{
+							owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
+							checkerTexture = true;
+							texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
+						}
 					}
 				}
 				ImGui::PopID();

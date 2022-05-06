@@ -5,6 +5,7 @@
 #include "M_Editor.h"
 #include "M_FileSystem.h"
 #include "M_SceneManager.h"
+#include "M_ResourceManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -151,20 +152,20 @@ bool MainBar::Update()
 					CreatePrimitive(Shape::CYLINDER);
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->engine->GetSceneIntro()->gameObjectList);
 				}
-				if (ImGui::MenuItem("Line"))
-				{
-					
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
-				}
+				//if (ImGui::MenuItem("Line"))
+				//{
+				//	
+				//	//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
+				//}
 				if (ImGui::MenuItem("Plane"))
 				{
 					CreatePrimitive(Shape::PLANE);
 				}
-				if (ImGui::MenuItem("Pyramid"))
-				{
-					
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
-				}
+				//if (ImGui::MenuItem("Pyramid"))
+				//{
+				//	
+				//	//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
+				//}
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("UI"))
@@ -321,7 +322,10 @@ void MainBar::ChoosersListener()
 		std::string file = editor->GetPanelChooser()->OnChooserClosed();
 		if (!file.empty())
 		{
-			Importer::GetInstance()->sceneImporter->LoadScene(editor->engine->GetSceneManager()->GetCurrentScene(), file.c_str());
+			file = editor->engine->GetResourceManager()->GetValidPath(file.c_str());
+			Resource* resource = editor->engine->GetResourceManager()->GetResourceFromLibrary(file.c_str());
+			if (resource != nullptr)
+				editor->engine->GetSceneManager()->LoadResourceToScene(resource);
 		}
 	}
 	if (editor->GetPanelChooser()->IsReadyToClose("LoadScene"))

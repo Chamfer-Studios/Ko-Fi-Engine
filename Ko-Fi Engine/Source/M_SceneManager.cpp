@@ -337,15 +337,10 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 
 		auto newParentUid = repeatedUIDs.find(parentUid);
 		if (newParentUid != repeatedUIDs.end())
-		{
 			it.second->SetParentUID(newParentUid->second);
-			break;
-		}
 
 		if (parentUid == 0 && modelRoot != nullptr)
-		{
 			it.second->SetParentUID(0);
-		}
 		else
 		{
 			std::map<UID, GameObject*>::iterator parent = tmp.find(parentUid);
@@ -394,10 +389,11 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 					rMesh->SetAnimation(rAnimation);
 					animator->SetAnim(rAnimation);
 
-					// Creating a default clip with all the keyframes of the animation.
-					AnimatorClip animClip(rAnimation, "Default clip", 0, rAnimation->duration, 1.0f, true);
-					animator->CreateClip(animClip);
-					animator->SetSelectedClip(animClip.GetName());
+					// Updating default clip with all the keyframes of the animation.
+					AnimatorClip* animClip = animator->GetSelectedClip();
+					animClip->SetDuration(rAnimation->duration);
+					animClip->SetStartFrame(0);
+					animClip->SetEndFrame(rAnimation->duration);
 				}
 			}
 		}

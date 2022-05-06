@@ -375,7 +375,12 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 	for (int selectedId : engine->GetEditor()->panelGameObjectInfo.selectedGameObjects)
 	{
 		if (selectedId == cMesh->owner->GetUID())
-			cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+		{
+			if (cMesh->GetMesh() != nullptr)
+				cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+			else
+				CONSOLE_LOG("[ERROR] Renderer: Could not draw local AABB, mesh was nullptr.");
+		}
 	}
 	
 }
