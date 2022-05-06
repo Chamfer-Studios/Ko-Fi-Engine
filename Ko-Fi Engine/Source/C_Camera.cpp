@@ -208,7 +208,7 @@ void C_Camera::LookAt(const float3& point)
 	reference = point;
 	float3 tempFront = (reference - cameraFrustum.Pos()).Normalized();
 	float3 tempRight = float3(0.0f, 1.0f, 0.0f).Cross(tempFront).Normalized();
-	cameraFrustum.SetFrontUp(tempFront, tempFront.Cross(tempRight));
+	cameraFrustum.SetFrontUp(tempFront, tempFront.Cross(tempRight).Normalized());
 }
 
 void C_Camera::LookAt2(float3 _front, float3 _up)
