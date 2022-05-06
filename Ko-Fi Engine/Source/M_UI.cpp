@@ -213,7 +213,7 @@ void M_UI::PrepareUIRender()
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetViewMatrix().ptr());
+	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetViewMatrix().Transposed().ptr());
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
