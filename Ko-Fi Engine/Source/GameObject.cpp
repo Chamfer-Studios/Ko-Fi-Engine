@@ -522,10 +522,17 @@ bool GameObject::PrefabSaveJson()
 
 bool GameObject::PrefabSave(Json& jsonFile)
 {
-	jsonFile["name"] = this->name;
-	jsonFile["active"] = this->active;
-	jsonFile["isPrefab"] = this->isPrefab;
-	jsonFile["tag"] = (uint)this->tag;
+	jsonFile["name"] = name;
+	jsonFile["active"] = active;
+	jsonFile["UID"] = uid;
+	jsonFile["is3D"] = is3D;
+	jsonFile["isPrefab"] = isPrefab;
+	jsonFile["tag"] = (uint)tag;
+
+	if (GetParent())
+		jsonFile["parent_UID"] = GetParent()->GetUID();
+	else
+		jsonFile["parent_UID"] = uid;
 
 	std::vector<Component*> componentsList = this->GetComponents();
 	jsonFile["components"] = Json::array();
@@ -719,11 +726,18 @@ bool GameObject::LoadPrefabJson(const char* path, bool exists)
 
 bool GameObject::LoadPrefab(Json& jsonFile)
 {
-	this->name = jsonFile.at("name");
-	this->isPrefab = jsonFile.at("isPrefab");
-	this->active = jsonFile.at("active");
+	name = jsonFile.at("name");
+	isPrefab = jsonFile.at("isPrefab");
+	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
-		this->tag = (Tag)jsonFile["tag"];
+		tag = (Tag)jsonFile["tag"];
+	if (jsonFile.contains("is3D"))
+		is3D = jsonFile.at("is3D");
+	if (jsonFile.contains("parent_UID"))
+		parentUid = jsonFile.at("parent_UID");
+	if (jsonFile.contains("UID"))
+		uid = jsonFile.at("UID");
+
 	Json jsonCmp = jsonFile.at("components");
 	for (const auto& cmpIt : jsonCmp.items())
 	{
@@ -930,11 +944,18 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 
 bool GameObject::UpdatePrefab(Json& jsonFile)
 {
-	this->name = jsonFile.at("name");
-	this->isPrefab = jsonFile.at("isPrefab");
-	this->active = jsonFile.at("active");
+	name = jsonFile.at("name");
+	isPrefab = jsonFile.at("isPrefab");
+	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
-		this->tag = (Tag)jsonFile["tag"];
+		tag = (Tag)jsonFile["tag"];
+	if (jsonFile.contains("is3D"))
+		is3D = jsonFile.at("is3D");
+	if (jsonFile.contains("parent_UID"))
+		parentUid = jsonFile.at("parent_UID");
+	if (jsonFile.contains("UID"))
+		uid = jsonFile.at("UID");
+
 	Json jsonCmp = jsonFile.at("components");
 	for (const auto& cmpIt : jsonCmp.items())
 	{
