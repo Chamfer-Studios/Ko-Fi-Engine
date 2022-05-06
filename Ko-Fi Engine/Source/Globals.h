@@ -124,6 +124,8 @@ enum update_status
 #define MAX_DIR_LIGHTS 5
 #define MAX_POINT_LIGHTS 5
 #define MAX_FOCAL_LIGHTS 5
+#define SHADOW_HEIGHT 1024
+#define SHADOW_WIDTH 1024
 
 
 #endif // !__GLOBALS_H__

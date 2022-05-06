@@ -7,9 +7,10 @@
 // GameObject
 #include "GameObject.h"
 #include "C_Transform.h"
-
+#include "C_Camera.h"
 #include "Globals.h"
 #include "SceneIntro.h"
+#include "M_Renderer3D.h"
 
 C_LightSource::C_LightSource(GameObject* parent) : Component(parent)
 {
@@ -17,7 +18,9 @@ C_LightSource::C_LightSource(GameObject* parent) : Component(parent)
 	sourceType = SourceType::DIRECTIONAL;
 	DirectionalLight* dLight = new DirectionalLight();
 	lightSource = (LightSource*)dLight;
+	numOfDirectional++;
 	lightSource->position = owner->GetTransform()->GetPosition();
+	shadowCam = nullptr;
 }
 
 C_LightSource::~C_LightSource()
@@ -26,12 +29,29 @@ C_LightSource::~C_LightSource()
 
 bool C_LightSource::Start()
 {
+	shadowCam = owner->GetComponent<C_Camera>();
+	if (shadowCam == nullptr)
+	{
+		shadowCam = owner->CreateComponent<C_Camera>();
+		shadowCam->ortho = true;
+		shadowCam->freeRotation = true;
+		//make the cam look in the direction of the light rays
+		shadowCam->LookAt(shadowCam->position + ((DirectionalLight*)lightSource)->direction.Normalized());
+	}
 	return true;
 }
 
 bool C_LightSource::Update(float dt)
 {
 	lightSource->position = owner->GetTransform()->GetGlobalTransform().TranslatePart();
+
+	if (sourceType == SourceType::DIRECTIONAL)
+	{
+		//Keep the direction of the camera updated. Maybe this does not work because it sets itself back to match the transform
+		//maybe too much to update it every frame
+		shadowCam->LookAt(shadowCam->position + ((DirectionalLight*)lightSource)->direction.Normalized());
+		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->cameraFrustum.ViewProjMatrix();
+	}
 
 	return true;
 }
@@ -220,6 +240,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			if (ImGui::DragFloat3("light Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 			{
 				currentLight->direction = { direction[0], direction[1], direction[2] };
+				//TODO change light direction
 			}
 
 			float ambientValue = currentLight->ambient;
@@ -233,6 +254,8 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			{
 				currentLight->diffuse = diffuseValue;
 			}
+			
+			ImGui::Image((ImTextureID)owner->GetEngine()->GetRenderer()->depthMapTexture, ImVec2(200, 200));
 			break;
 		}
 		case SourceType::POINT:
@@ -244,11 +267,11 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			{
 				currentLight->color = { color[0], color[1], color[2] };
 			}
-			float ambientValue = currentLight->ambient;
+			/*float ambientValue = currentLight->ambient;
 			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->ambient = ambientValue;
-			}
+			}*/
 			float diffuseValue = currentLight->diffuse;
 			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
@@ -256,17 +279,22 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			}
 
 			float constantValue = currentLight->constant;
-			if (ImGui::DragFloat("Constant Light Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("General Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->constant = constantValue;
 			}
+			
+			ImGui::Spacing();
+			ImGui::Text("    Advanced attenuation parameters");
+			ImGui::Spacing();
+
 			float linearValue = currentLight->linear;
-			if (ImGui::DragFloat("Linear Light Attenuation", &linearValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("(0.0 - 0.3) Mid-rage Attenuation", &linearValue, 0.01f, 0.0f, .3f, "%.2f"))
 			{
 				currentLight->linear = linearValue;
 			}
 			float quadraticValue = currentLight->quadratic;
-			if (ImGui::DragFloat("Quadratic Light Attenuation", &quadraticValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("(0.0 - 0.2) Long range Attenuation", &quadraticValue, 0.01f, 0.0f, .2f, "%.2f"))
 			{
 				currentLight->quadratic = quadraticValue;
 			}
@@ -281,11 +309,11 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			{
 				currentLight->color = { color[0], color[1], color[2] };
 			}
-			float ambientValue = currentLight->ambient;
+			/*float ambientValue = currentLight->ambient;
 			if (ImGui::DragFloat("Ambient Light Value", &ambientValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->ambient = ambientValue;
-			}
+			}*/
 			float diffuseValue = currentLight->diffuse;
 			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
@@ -293,9 +321,9 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			}
 
 			float cutOffValue = (acos(currentLight->cutOffAngle)) * RADTODEG;
-			if (ImGui::DragFloat("Light Cone Angle", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("Light Cone Angle", &cutOffValue, 0.1f, 0.0f, 180.0f, "%.1f"))
 			{
-				currentLight->cutOffAngle = (cutOffValue);
+				currentLight->cutOffAngle = cos((cutOffValue) * DEGTORAD);
 			}
 			float direction[3] = { currentLight->lightDirection.x, currentLight->lightDirection.y, currentLight->lightDirection.z };
 			if (ImGui::DragFloat3("Light Cone Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))
@@ -304,17 +332,22 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			}
 
 			float constantValue = currentLight->constant;
-			if (ImGui::DragFloat("Constant Light Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("General Attenuation", &constantValue, 0.1f, 0.0f, 1.0f, "%.1f"))
 			{
 				currentLight->constant = constantValue;
 			}
+
+			ImGui::Spacing();
+			ImGui::Text("    Advanced attenuation parameters");
+			ImGui::Spacing();
+
 			float linearValue = currentLight->linear;
-			if (ImGui::DragFloat("Linear Light Attenuation", &linearValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("(0.0 - 0.3) Mid-rage Attenuation", &linearValue, 0.01f, 0.0f, .3f, "%.2f"))
 			{
 				currentLight->linear = linearValue;
 			}
 			float quadraticValue = currentLight->quadratic;
-			if (ImGui::DragFloat("Quadratic Light Attenuation", &quadraticValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("(0.0 - 0.2) Long range Attenuation", &quadraticValue, 0.001f, 0.0f, .2f, "%.3f"))
 			{
 				currentLight->quadratic = quadraticValue;
 			}
@@ -356,6 +389,16 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 			lightSource = (LightSource*)dLight;
 			sourceType = type;
 			numOfDirectional++;
+
+			shadowCam = owner->GetComponent<C_Camera>();
+			if (shadowCam == nullptr)
+			{
+				shadowCam = owner->CreateComponent<C_Camera>();
+				shadowCam->ortho = true;
+				//make the cam look in the direction of the light rays
+				shadowCam->freeRotation = true;
+				shadowCam->LookAt(shadowCam->position + dLight->direction.Normalized());
+			}
 		}
 		else
 			CONSOLE_LOG("[C_LightSource]: MAX of directional lights reached");
@@ -369,6 +412,12 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 			lightSource = (LightSource*)pLight;
 			sourceType = type;
 			numOfPoint++;
+
+			shadowCam = owner->GetComponent<C_Camera>();
+			if (shadowCam != nullptr)
+			{
+				owner->DeleteComponent(shadowCam);
+			}
 		}
 		else
 			CONSOLE_LOG("[C_LightSource]: MAX of point lights reached");
@@ -382,6 +431,12 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 			lightSource = (LightSource*)fLight;
 			sourceType = type;
 			numOfFocal++;
+
+			shadowCam = owner->GetComponent<C_Camera>();
+			if (shadowCam != nullptr)
+			{
+				owner->DeleteComponent(shadowCam);
+			}
 		}
 		else
 			CONSOLE_LOG("[C_LightSource]: MAX of focal lights reached");
@@ -417,7 +472,7 @@ PointLight::PointLight() : LightSource()
 
 FocalLight::FocalLight() : LightSource()
 {
-	cutOffAngle = 0.965f; //cosinus of 15º
+	cutOffAngle = 0.965f; //cosinus of 15ï¿½
 	lightDirection = float3(0.0f, 1.0f, 0.0f);
 	ambient = 0.0f;
 	constant = 1.00f;

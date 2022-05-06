@@ -40,7 +40,7 @@ void main() {
     }
     if(isAnimated == false) {
         totalPosition = vec4(position, 1.0f);
-    }
+    } 
 
     mat4 viewModel = view * model_matrix;
     gl_Position = projection * viewModel * totalPosition;

@@ -128,6 +128,9 @@
     <Filter Include="Scripts\Players">
       <UniqueIdentifier>{b60b2e15-ad68-4868-b194-05cbcd60c8cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Helpers\Physics">
+      <UniqueIdentifier>{5e576769-6fa5-4e63-9e84-299ec3eb37f2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Scripts\Enemies">
       <UniqueIdentifier>{eaea32bb-f20e-4cce-a1a5-b570cd06a4a1}</UniqueIdentifier>
     </Filter>
@@ -157,6 +160,7 @@
     </Filter>
     <Filter Include="Libs\MathGeoLib\emscripten">
       <UniqueIdentifier>{324e99fe-3e9a-4edd-a394-b335c3393677}</UniqueIdentifier>
+    </Filter>
     </Filter>
   </ItemGroup>
   <ItemGroup>
