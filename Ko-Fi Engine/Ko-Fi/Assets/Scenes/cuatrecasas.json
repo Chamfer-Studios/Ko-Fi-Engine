@@ -1,16 +1,12 @@
 {
     "cuatrecasas": {
         "active": true,
-        "game_objects_amount": 44,
+        "game_objects_amount": 43,
         "game_objects_list": [
             {
                 "UID": 1106341605,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -30,6 +26,10 @@
                             0.9999992847442627
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     },
                     {
                         "active": true,
@@ -54,10 +54,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             0.0,
                             390.0,
@@ -75,6 +71,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     },
                     {
                         "active": true,
@@ -112,10 +112,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             0.0,
                             0.0,
@@ -133,6 +129,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     },
                     {
                         "active": true,
@@ -151,10 +151,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             0.0,
                             0.0,
@@ -172,6 +168,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     },
                     {
                         "active": true,
@@ -219,10 +219,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             0.0,
                             0.0,
@@ -240,6 +236,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     },
                     {
                         "active": true,
@@ -273,6 +273,35 @@
                                 }
                             }
                         ]
+                    },
+                    {
+                        "active": true,
+                        "body_type": "Dynamic",
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "mass": 1.0,
+                        "type": "rigidBody",
+                        "use_gravity": false
+                    },
+                    {
+                        "active": true,
+                        "center": [
+                            0.0,
+                            -86.0,
+                            0.0
+                        ],
+                        "filter": "",
+                        "is_trigger": false,
+                        "scale_factor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": "boxCollider"
                     }
                 ],
                 "is3D": true,
@@ -287,10 +316,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             0.0,
                             0.0,
@@ -308,6 +333,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -322,10 +351,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             0.0,
                             0.0,
@@ -343,6 +368,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -357,27 +386,27 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             -0.18123507499694824,
                             419.1922607421875,
                             6.491641521453857
                         ],
                         "rotation": [
-                            -0.015613002702593803,
-                            0.004085395019501448,
-                            -0.0010132011957466602,
-                            0.9998692870140076
+                            -0.015613407827913761,
+                            0.004085457883775234,
+                            -0.001013218890875578,
+                            0.9998693466186523
                         ],
                         "scale": [
-                            0.9999999403953552,
-                            0.9999992847442627,
-                            0.9999999403953552
+                            0.999999463558197,
+                            0.9999958276748657,
+                            0.9999992847442627
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -392,27 +421,27 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             -8.940696716308594e-08,
                             52.778255462646484,
                             -2.5163090229034424
                         ],
                         "rotation": [
-                            0.048467978835105896,
-                            0.0009570727706886828,
-                            0.0006710501038469374,
+                            0.04846788942813873,
+                            0.0009570781840011477,
+                            0.000671055749990046,
                             0.9988240599632263
                         ],
                         "scale": [
-                            0.9999992847442627,
-                            0.9999999403953552,
+                            0.9999934434890747,
+                            0.9999998211860657,
                             0.9999999403953552
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -427,27 +456,27 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             -3.3527612686157227e-08,
                             62.08102035522461,
                             -6.677728379145265e-07
                         ],
                         "rotation": [
-                            0.07194783538579941,
-                            0.0013095225440338254,
-                            0.0002155462425434962,
-                            0.9974075555801392
+                            0.07194807380437851,
+                            0.0013095226604491472,
+                            0.00021554673730861396,
+                            0.9974074959754944
                         ],
                         "scale": [
                             1.0,
-                            0.9999998211860657,
-                            0.9999998211860657
+                            0.9999994039535522,
+                            0.9999997019767761
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -460,10 +489,6 @@
                 "UID": 1765915016,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -483,6 +508,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -495,10 +524,6 @@
                 "UID": 1330538186,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -518,6 +543,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -532,27 +561,27 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             2.2649765014648438e-06,
                             18.96263313293457,
                             5.265877723693848
                         ],
                         "rotation": [
-                            -0.14823198318481445,
-                            0.00047171328333206475,
-                            -0.005447321105748415,
+                            -0.14823201298713684,
+                            0.0004717133124358952,
+                            -0.00544732017442584,
                             0.988937497138977
                         ],
                         "scale": [
                             1.0,
-                            0.9999997615814209,
+                            0.999999463558197,
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -565,10 +594,6 @@
                 "UID": 375217737,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -588,6 +613,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -600,10 +629,6 @@
                 "UID": 1042985569,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -623,6 +648,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -635,10 +664,6 @@
                 "UID": 833743338,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -658,6 +683,10 @@
                             0.9999999403953552
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -672,27 +701,27 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             3.0517578125e-05,
                             139.0620574951172,
                             -2.288818359375e-05
                         ],
                         "rotation": [
-                            0.026498185470700264,
-                            -0.00492358673363924,
+                            0.026498284190893173,
+                            -0.004923575092107058,
                             0.18910600244998932,
                             0.981586754322052
                         ],
                         "scale": [
                             1.0,
                             1.0,
-                            0.9999992847442627
+                            0.999998152256012
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -705,10 +734,6 @@
                 "UID": 1535405742,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -728,6 +753,10 @@
                             0.9999998807907104
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -742,27 +771,27 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             8.0108642578125e-05,
                             26.7041015625,
                             4.1961669921875e-05
                         ],
                         "rotation": [
-                            0.4726339876651764,
+                            0.4726340174674988,
                             0.8776788115501404,
-                            -0.015387671999633312,
-                            -0.07784783840179443
+                            -0.015387790277600288,
+                            -0.0778476744890213
                         ],
                         "scale": [
-                            1.0000011920928955,
+                            1.0000063180923462,
                             0.9999998807907104,
-                            1.000001311302185
+                            1.000007152557373
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -775,10 +804,6 @@
                 "UID": 1661295627,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -798,6 +823,10 @@
                             0.9999996423721313
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -810,10 +839,6 @@
                 "UID": 1888587241,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -833,6 +858,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -845,10 +874,6 @@
                 "UID": 1351050792,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -868,6 +893,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -880,10 +909,6 @@
                 "UID": 1723451232,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -903,6 +928,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -915,10 +944,6 @@
                 "UID": 2044414241,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -938,6 +963,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -950,10 +979,6 @@
                 "UID": 1095233148,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -973,6 +998,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -987,10 +1016,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             1.239776611328125e-05,
                             116.74313354492188,
@@ -998,16 +1023,20 @@
                         ],
                         "rotation": [
                             0.1362016499042511,
-                            0.02735869400203228,
-                            -0.0987071841955185,
+                            0.027358662337064743,
+                            -0.0987071692943573,
                             0.9853717684745789
                         ],
                         "scale": [
-                            0.9999992847442627,
+                            0.9999991655349731,
                             0.9999999403953552,
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1020,10 +1049,6 @@
                 "UID": 63288684,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1043,6 +1068,10 @@
                             1.000000238418579
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1055,10 +1084,6 @@
                 "UID": 1732508767,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1078,6 +1103,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1090,10 +1119,6 @@
                 "UID": 1278866258,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1113,6 +1138,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1127,10 +1156,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             5.343257904052734,
                             15.800762176513672,
@@ -1138,7 +1163,7 @@
                         ],
                         "rotation": [
                             0.13607244193553925,
-                            0.02842429094016552,
+                            0.028424309566617012,
                             -0.07115165144205093,
                             0.9877316355705261
                         ],
@@ -1148,6 +1173,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1160,10 +1189,6 @@
                 "UID": 768880085,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1183,6 +1208,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1195,10 +1224,6 @@
                 "UID": 2023012663,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1218,6 +1243,10 @@
                             0.9999999403953552
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1230,10 +1259,6 @@
                 "UID": 1449622228,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1253,6 +1278,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1265,10 +1294,6 @@
                 "UID": 1007661176,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1288,6 +1313,10 @@
                             0.9999999403953552
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1300,10 +1329,6 @@
                 "UID": 382954100,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1323,6 +1348,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1337,10 +1366,6 @@
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
                         "position": [
                             -8.121877908706665e-05,
                             39.6266975402832,
@@ -1348,8 +1373,8 @@
                         ],
                         "rotation": [
                             0.12347283959388733,
-                            0.04740083962678909,
-                            0.03664116933941841,
+                            0.04740098491311073,
+                            0.036641139537096024,
                             0.9905377626419067
                         ],
                         "scale": [
@@ -1358,6 +1383,10 @@
                             0.9999997019767761
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1370,10 +1399,6 @@
                 "UID": 421198888,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1393,6 +1418,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1405,10 +1434,6 @@
                 "UID": 398581663,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1428,6 +1453,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1440,10 +1469,6 @@
                 "UID": 2017756836,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1463,6 +1488,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1475,10 +1504,6 @@
                 "UID": 605910651,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1498,6 +1523,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1510,10 +1539,6 @@
                 "UID": 1084155250,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1533,6 +1558,10 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     }
                 ],
                 "is3D": true,
@@ -1545,10 +1574,6 @@
                 "UID": 217435494,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1568,6 +1593,10 @@
                             0.20000000298023224
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "type": "info"
                     },
                     {
                         "active": true,
@@ -1591,10 +1620,20 @@
                                 "clipName": "Default clip",
                                 "clipStartFrame": 0.0,
                                 "mapString": "Default clip"
+                            },
+                            {
+                                "clipDuration": 32.0,
+                                "clipDurationInSeconds": 1.3333333730697632,
+                                "clipEndFrame": 135.0,
+                                "clipFinished": false,
+                                "clipLoop": true,
+                                "clipName": "WALK",
+                                "clipStartFrame": 103.0,
+                                "mapString": "WALK"
                             }
                         ],
                         "path": "Library/Animations/harkonnen1.cake",
-                        "selectedClip": "Default clip",
+                        "selectedClip": "WALK",
                         "type": "animator"
                     },
                     {
@@ -1642,12 +1681,12 @@
                             {
                                 "name": "static",
                                 "type": "bool",
-                                "value": false
+                                "value": true
                             },
                             {
                                 "name": "speed",
                                 "type": "int",
-                                "value": 171
+                                "value": 40
                             },
                             {
                                 "name": "visionConeAngle",
@@ -1662,7 +1701,25 @@
                             {
                                 "name": "hearingRange",
                                 "type": "int",
-                                "value": 30
+                                "value": 500
+                            },
+                            {
+                                "name": "awarenessOffset",
+                                "type": "float3",
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 250.0,
+                                    "z": 0.0
+                                }
+                            },
+                            {
+                                "name": "awarenessSize",
+                                "type": "float3",
+                                "value": {
+                                    "x": 0.15000000596046448,
+                                    "y": 0.30000001192092896,
+                                    "z": 0.15000000596046448
+                                }
                             },
                             {
                                 "name": "pingpong",
@@ -1678,12 +1735,12 @@
                                 "name": "patrolWaypoints",
                                 "type": "float3_array",
                                 "value": [
-                                    -221.0,
+                                    -220.0,
                                     -90.0,
                                     0.0,
                                     220.0,
                                     -90.0,
-                                    -186.5
+                                    -180.0
                                 ]
                             }
                         ],
@@ -1697,13 +1754,9 @@
                 "tag": 0
             },
             {
-                "UID": 675015395,
+                "UID": 679940852,
                 "active": true,
                 "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
                     {
                         "active": true,
                         "position": [
@@ -1723,80 +1776,18 @@
                             1.0
                         ],
                         "type": "transform"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Testers/sound_trigger_tester.lua",
+                        "id": 1180026271,
+                        "type": "script"
                     }
                 ],
                 "is3D": true,
                 "is_prefab": false,
-                "name": "awareness",
+                "name": "GameObject 679940852",
                 "parent_UID": 4294967295,
-                "tag": 0
-            },
-            {
-                "UID": 1862167994,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "isAnimated": false,
-                        "path": "Library/Meshes/Cylinder.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/checker.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "Cylinder",
-                "parent_UID": 675015395,
                 "tag": 0
             }
         ],

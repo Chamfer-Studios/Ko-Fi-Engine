@@ -104,7 +104,7 @@ public:
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
-	std::map<GameObject*, std::string> gameObjectListToCreate;
+	std::map<std::string, std::string> gameObjectListToCreate;
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;

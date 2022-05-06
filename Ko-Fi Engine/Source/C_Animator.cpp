@@ -154,26 +154,28 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 			ImGui::EndCombo();
 		}
 
-		ImGui::Text("Delete Clip");
-		if (ImGui::BeginCombo("Delete Clip", ((clipToDelete->GetName().c_str() != "[NONE]") ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
-		{
-			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
+		if (clipToDelete != nullptr) {
+			ImGui::Text("Delete Clip");
+			if (ImGui::BeginCombo("Delete Clip", ((clipToDelete->GetName().c_str() != "[NONE]") ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
 			{
-				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == clipToDelete), ImGuiSelectableFlags_None))
+				for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 				{
-					if (clip->second.GetName() != "Default clip")
+					if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == clipToDelete), ImGuiSelectableFlags_None))
 					{
-						clipToDelete = &clip->second;
-						deleteDefaultClipMessage = false;
-					}
-					else
-					{
-						deleteDefaultClipMessage = true;
+						if (clip->second.GetName() != "Default clip")
+						{
+							clipToDelete = &clip->second;
+							deleteDefaultClipMessage = false;
+						}
+						else
+						{
+							deleteDefaultClipMessage = true;
+						}
 					}
 				}
-			}
 
-			ImGui::EndCombo();
+				ImGui::EndCombo();
+			}
 		}
 
 		if (deleteDefaultClipMessage)

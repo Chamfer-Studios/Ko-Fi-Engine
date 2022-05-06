@@ -120,9 +120,9 @@ void C_Transform::SetScale(const float3 &newScale)
 {
 	float3 fixedScale = newScale;
 	// If it is equal to 0 it crashes
-	if (fixedScale.x == 0) fixedScale.x = 0.1f;
-	if (fixedScale.y == 0) fixedScale.y = 0.1f;
-	if (fixedScale.z == 0) fixedScale.z = 0.1f;
+	if (fixedScale.x == 0) fixedScale.x = 0.00001f;
+	if (fixedScale.y == 0) fixedScale.y = 0.00001f;
+	if (fixedScale.z == 0) fixedScale.z = 0.00001f;
 
 	if (fixedScale.x <= 0) fixedScale.x *= -1.f;
 	if (fixedScale.y <= 0) fixedScale.y *= -1.f;

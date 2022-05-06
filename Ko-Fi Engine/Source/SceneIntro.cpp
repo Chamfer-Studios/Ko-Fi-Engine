@@ -98,13 +98,14 @@ bool SceneIntro::Start()
 
 bool SceneIntro::PreUpdate(float dt)
 {
-	for (std::map<GameObject*, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
+	for (std::map<std::string, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
 	{
 		std::string path = "Assets/Prefabs/" + (*mapIt).second + "_prefab.json";
 		if (!std::filesystem::exists(path))
 			return true;
 		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 		go->LoadPrefabJson(path.c_str(), false);
+		go->SetName(((*mapIt).first).c_str());
 		for (Component* component : go->GetComponents()) // This method used because there could be multiple scripts in one go
 		{
 			if (component->GetType() != ComponentType::SCRIPT)
