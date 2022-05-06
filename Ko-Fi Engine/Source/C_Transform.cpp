@@ -230,14 +230,29 @@ const float3 &C_Transform::Right() const
 	return transformMatrixLocal.Col3(0).Normalized();
 }
 
+const float3& C_Transform::GlobalRight() const
+{
+	return transformMatrix.Col3(0).Normalized();
+}
+
 const float3 &C_Transform::Up() const
 {
 	return transformMatrixLocal.Col3(1).Normalized();
 }
 
+const float3& C_Transform::GlobalUp() const
+{
+	return transformMatrix.Col3(1).Normalized();
+}
+
 const float3 &C_Transform::Front() const
 {
 	return transformMatrixLocal.Col3(2).Normalized();
+}
+
+const float3& C_Transform::GlobalFront() const
+{
+	return transformMatrix.Col3(2).Normalized();
 }
 
 void C_Transform::RecomputeGlobalMatrix()

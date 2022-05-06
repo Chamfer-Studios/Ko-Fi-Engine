@@ -80,11 +80,6 @@ bool M_Camera3D::Update(float dt)
 {
 	OPTICK_EVENT();
 
-	// Update Engine Transform
-	engineCamera->Update(dt); // Update First**
-	engineCamera->owner->GetTransform()->Update(dt);
-	engineCamera->owner->GetTransform()->PostUpdate(dt);
-
 	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
 		return true;
 
