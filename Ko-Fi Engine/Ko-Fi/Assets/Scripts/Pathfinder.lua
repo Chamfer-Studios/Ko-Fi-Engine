@@ -1,7 +1,7 @@
-minRetargetingDistance = 1
---local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
---minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
---NewVariable(minRetargetingDistanceIV)
+minRetargetingDistance = 10
+local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
+NewVariable(minRetargetingDistanceIV)
 
 navigation = GetNavigation()
 
