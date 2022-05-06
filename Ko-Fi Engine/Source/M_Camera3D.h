@@ -47,7 +47,9 @@ public:
 
 	// Setters
 	void SetGameCamera(C_Camera* gameCamera);
-	inline void ChangeSpeed(float speedMultiplayer) { cameraSpeed = baseCameraSpeed * speedMultiplayer; }
+	inline void ChangeSpeed(int speedMultiplayer) { 
+		this->speedMultiplier = speedMultiplayer;
+		cameraSpeed = baseCameraSpeed * speedMultiplayer; }
 	inline int GetSpeedMultiplier() const { return speedMultiplier; }
 
 	// Getters
