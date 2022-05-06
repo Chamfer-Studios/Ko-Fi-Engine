@@ -221,6 +221,8 @@ bool M_Renderer3D::InitOpenGL()
 
 		SetGLFlag(GL_DEPTH_TEST, true);
 		SetGLFlag(GL_CULL_FACE, true);
+		glCullFace(GL_BACK);
+		glFrontFace(GL_CW);
 		lights[0].Active(true);
 		SetGLFlag(GL_LIGHTING, true);
 		SetGLFlag(GL_COLOR_MATERIAL, true);
