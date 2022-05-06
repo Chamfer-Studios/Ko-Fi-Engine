@@ -582,9 +582,11 @@ bool I_Scene::Load(Scene* scene, const char* name)
 				{
 					std::string type = jsonCmp.at("type");
 
-					if (type == "transform")
+					if (type == "transform" && go->is3D)
 					{
 						C_Transform* transformCmp = go->GetComponent<C_Transform>();
+						if (!transformCmp)
+							transformCmp = (C_Transform*)go->AddComponentByType(ComponentType::TRANSFORM);
 						transformCmp->active = true;
 						transformCmp->Load(jsonCmp);
 					}
@@ -610,7 +612,9 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					}
 					else if (type == "info")
 					{
-						C_Info* infoCmp = (C_Info*)go->AddComponentByType(ComponentType::INFO);
+						C_Info* infoCmp = go->GetComponent<C_Info>();
+						if (!infoCmp)
+							infoCmp = (C_Info*)go->AddComponentByType(ComponentType::INFO);
 						infoCmp->active = true;
 						infoCmp->Load(jsonCmp); // Does nothing as of now
 					}
@@ -792,6 +796,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 							follCmp = go->CreateComponent<C_FollowPath>();
 						}
 						follCmp->active = true;
+						follCmp->Load(jsonCmp);
 					}
 					else if (type == "lightSource")
 					{

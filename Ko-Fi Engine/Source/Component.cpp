@@ -130,7 +130,9 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 			{ ComponentType::WALKABLE, "WALKABLE" },
 			{ ComponentType::FOLLOW_PATH, "FOLLOW_PATH" },
 			{ ComponentType::LIGHT_SOURCE, "LIGHT_SOURCE" },
-
+			{ ComponentType::TRANSFORM, "TRANSFORM" },
+			{ ComponentType::TRANSFORM2D, "TRANSFORM2D" },
+			{ ComponentType::INFO, "INFO" },
 		};
 		auto   it = componentTypeStrings.find(e);
 		return it == componentTypeStrings.end() ? "Out of range" : it->second;
