@@ -14,6 +14,13 @@ using Json = nlohmann::json;
 class C_Camera : public Component
 {
 public:
+
+	// Camera Type
+	enum CameraType {
+		KOFI_PERSPECTIVE,
+		KOFI_ORTHOGRAPHIC,
+	};
+
 	// Constructors
 	C_Camera(GameObject* gameObject);
 	~C_Camera();
@@ -29,8 +36,11 @@ public:
 	void Load(Json& json) override;
 
 	// Getters
-	float GetFarPlaneHeight() const;
-	float GetFarPlaneWidth() const;
+	// OrthoGraphic Planes Have the Same SIZE!
+	float GetNearPlaneHeight() const { return cameraFrustum.NearPlaneHeight(); }
+	// OrthoGraphic Planes Have the Same SIZE!
+	float GetNearPlaneWidth() const { return cameraFrustum.NearPlaneWidth(); }
+
 	inline float GetAspectRatio() const { return cameraFrustum.AspectRatio(); }
 	inline float3 GetReference() const { return reference; }
 
@@ -58,9 +68,6 @@ public:
 	float4x4 GetWorldMatrix() const;
 	float4x4 GetProjectionMatrix() const;
 
-	void Rotate(Quat quat);
-	Quat GetRotation();
-	
 	// Setters
 	void SetAspectRatio(const float& aspectRatio);
 
@@ -84,6 +91,8 @@ public:
 	void LookAt(const float3& point);
 	void LookAt2(float3 front, float3 up);
 
+	void SetProjectionType(const CameraType &type);
+
 	// Frustum Culling
 	void FrustumCulling();
 	void ResetFrustumCulling();
@@ -102,6 +111,11 @@ private:
 
 	bool isMainCamera = false;
 	bool isEngineCamera = false;
+
+	CameraType cameraType = KOFI_PERSPECTIVE;
+
+	// DON'T USE, USE GETFOV INSTEAD
+	float hFov, vFov = 0.0f;
 	
 };
 

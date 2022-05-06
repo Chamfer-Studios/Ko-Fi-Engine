@@ -72,11 +72,15 @@ private:
 	float3 lastMouseClick;
 
 	float cameraSensitivity = .1f;
-	float cameraSpeed = 60.f;
-	float baseCameraSpeed = 60.f;
+	float cameraSpeed = 1.f;
+	float baseCameraSpeed = 10.f;
+	float maxSpeed = 25.f;
 	int speedMultiplier = 1.0f;
 
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
+
+	bool isMoving = false;
+
 
 };
 

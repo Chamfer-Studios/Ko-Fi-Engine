@@ -30,6 +30,7 @@
 C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAMERA;
+	cameraType = KOFI_PERSPECTIVE;
 
 	//Create the frustum
 	cameraFrustum = Frustum();
@@ -39,7 +40,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum.SetPerspective(DegToRad(43.0f), DegToRad(22.0f));
 	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(45.0f), 1.778f);
 	cameraFrustum.SetViewPlaneDistances(0.01f, 1000.0f);
-	cameraFrustum.SetFrame(float3(0.0f,0.0f,0.0f),float3(0.0f,0.0f,1.0f),float3(0.0f,1.0f,0.0f));
+	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
 
 }
@@ -63,10 +64,18 @@ bool C_Camera::Start()
 bool C_Camera::Update(float dt)
 {
 	// Tranform Should be the same as frustumPos
-	 owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
+	if (isEngineCamera)
+		owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
 
-	if (isFrustumCullingActive)
-		FrustumCulling();
+	if (!isEngineCamera)
+	{
+		if (isFrustumCullingActive)
+			FrustumCulling();
+		if (isDrawFrustumActive)
+			DrawFrustum();
+
+		owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
+	}
 
 	return true;
 }
@@ -79,57 +88,68 @@ bool C_Camera::CleanUp()
 	return true;
 }
 
-// A function that rotates the camera frustrum based on a quaternion.
-void C_Camera::Rotate(Quat quat)
-{
-	cameraFrustum.Transform(quat);
-}
-
-Quat C_Camera::GetRotation()
-{
-	// Get the front vector of the camera and store it in a variable
-	float3 front = cameraFrustum.Front();
-
-	// Get the up vector of the camera and store it in a variable
-	float3 up = cameraFrustum.Up();
-	
-	// Get the euler angles between the front vector and the world forward vector
-	return Quat::LookAt(float3::unitZ, front, up, float3::unitY);
-}
-
 bool C_Camera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
+
+		// PROJECTION TYPE
 
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		DrawDeleteButton(owner, this);
 
-		float verticalFOV = GetHorizontalFov();
-		if (ImGui::DragFloat("Fov", &verticalFOV, 1.0f, 0.0f, 180.f))
-		{
-			SetHorizontalFov(verticalFOV);
-		}
-		float2 planeDistances = { cameraFrustum.NearPlaneDistance(),cameraFrustum.FarPlaneDistance() };
-		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
-		{
-			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
-		}
-
+		// DRAW FRUSTUM
 		if (ImGui::Checkbox("Draw frustum", &isDrawFrustumActive))
 		{
 		}
+		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
 		{
 			ResetFrustumCulling();
 		}
+		// TODO: SET MAIN CAMERA TO TAG!
 		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
 		{
 			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 		}
+
+		static const char* types[]{ "Perspective", "Orthographic" };
+		static int selectedItem = 0;
+		if (ImGui::Combo("Combo", &selectedItem, types, IM_ARRAYSIZE(types)))
+		{
+			if (selectedItem == 0)
+				SetProjectionType(CameraType::KOFI_PERSPECTIVE);
+			if (selectedItem == 1)
+				SetProjectionType(CameraType::KOFI_ORTHOGRAPHIC);
+		}
+
+		switch (cameraType)
+		{
+		case C_Camera::KOFI_PERSPECTIVE:
+		{
+			// FOV 
+			float fov = GetHorizontalFov();
+			if (ImGui::DragFloat("Fov", &fov, 1.0f, 0.0f, 180.f))
+			{
+				SetHorizontalFov(fov);
+			}
+
+
+			break;
+		}
+		}
+		//PLANES
+		float2 planeDistances = { cameraFrustum.NearPlaneDistance(),cameraFrustum.FarPlaneDistance() };
+		ImGui::Text("Clipping Spaces");
+		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
+		{
+			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
+		}
 	}
 	else
 		DrawDeleteButton(owner, this);
+
+
 	return ret;
 }
 
@@ -146,23 +166,13 @@ void C_Camera::Save(Json& json) const
 
 void C_Camera::Load(Json& json)
 {
-	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"),1.778f);
+	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"), 1.778f);
 	cameraFrustum.SetViewPlaneDistances(json.at("near_plane_distance"), json.at("far_plane_distance"));
 	isDrawFrustumActive = json.at("draw_frustum");
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
 	if (isMainCamera)
 		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
-}
-
-float C_Camera::GetFarPlaneHeight() const
-{
-	return 2.0f * cameraFrustum.FarPlaneDistance() * Tan(cameraFrustum.VerticalFov() * 0.5f * DEGTORAD);
-}
-
-float C_Camera::GetFarPlaneWidth() const
-{
-	return GetFarPlaneHeight() * cameraFrustum.AspectRatio();
 }
 
 float4x4 C_Camera::GetViewMatrix() const
@@ -195,7 +205,7 @@ void C_Camera::LookAt(const float3& point)
 	reference = point;
 	float3 tempFront = (reference - cameraFrustum.Pos()).Normalized();
 	float3 tempRight = float3(0.0f, 1.0f, 0.0f).Cross(tempFront).Normalized();
-	cameraFrustum.SetFrontUp(tempFront, tempFront.Cross(tempRight));	
+	cameraFrustum.SetFrontUp(tempFront, tempFront.Cross(tempRight));
 }
 
 void C_Camera::LookAt2(float3 _front, float3 _up)
@@ -222,6 +232,23 @@ void C_Camera::LookAt2(float3 _front, float3 _up)
 
 	float3 newFront = r * cameraFrustum.Front();
 	cameraFrustum.SetFront(newFront);
+}
+
+void C_Camera::SetProjectionType(const CameraType& type)
+{
+	cameraType = type;
+
+	if (type == CameraType::KOFI_ORTHOGRAPHIC)
+	{
+		hFov = cameraFrustum.HorizontalFov();
+		vFov = cameraFrustum.VerticalFov();
+		cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->viewportSize.x, owner->GetEngine()->GetEditor()->viewportSize.y);
+	}
+	else if (type == CameraType::KOFI_PERSPECTIVE)
+	{
+		cameraFrustum.SetPerspective(hFov, vFov);
+		hFov = vFov = 0.0f;
+	}
 }
 
 void C_Camera::FrustumCulling()
@@ -261,7 +288,7 @@ void C_Camera::ResetFrustumCulling()
 }
 
 void C_Camera::DrawFrustum() const
-{	
+{
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
 	//Draw Operations

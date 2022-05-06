@@ -143,7 +143,7 @@ private:
 	GameObject *parent = nullptr;
 	uint uid;
 	uint parentUid;
-	bool renderGameObject = false;
+	bool renderGameObject = true;
 	KoFiEngine *engine = nullptr;
 	C_Transform *transform = nullptr;
 };
