@@ -1,5 +1,4 @@
-#ifndef __ENGINE_H__
-#define __ENGINE_H__
+#pragma once
 
 #include "Module.h"
 #include "EngineConfig.h"
@@ -126,5 +125,3 @@ public:
 		return make_iterable(modules.begin(), modules.end());
 	}
 };
-
-#endif // !__ENGINE_H__

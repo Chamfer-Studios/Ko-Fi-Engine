@@ -6,6 +6,7 @@
 class M_Editor;
 class KoFiEngine;
 class R_Texture;
+
 class PanelViewport : public Panel
 {
 public:
