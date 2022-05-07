@@ -1,0 +1,17 @@
+{
+    "asset_file": "awareness.fbx",
+    "asset_path": "Assets/Models/Enemies/awareness.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cylinder.sugar",
+            "library_path": "Library/Meshes/1248813141.sugar",
+            "type": 0,
+            "uid": 1248813141
+        }
+    ],
+    "library_file": "327022428.tea",
+    "library_path": "Library/Models/327022428.tea",
+    "mod_time": 411484091,
+    "type": 3,
+    "uid": 327022428
+}

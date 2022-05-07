@@ -4,14 +4,14 @@
     "contained_resources": [
         {
             "asset_file": "Jail.sugar",
-            "library_path": "Library/Meshes/377426168.sugar",
+            "library_path": "Library/Meshes/1798018018.sugar",
             "type": 0,
-            "uid": 377426168
+            "uid": 1798018018
         }
     ],
-    "library_file": "1611322682.tea",
-    "library_path": "Library/Models/1611322682.tea",
-    "mod_time": 409246298,
+    "library_file": "1418789323.tea",
+    "library_path": "Library/Models/1418789323.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 1611322682
+    "uid": 1418789323
 }

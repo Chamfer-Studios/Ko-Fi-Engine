@@ -4,14 +4,14 @@
     "contained_resources": [
         {
             "asset_file": "Cube.sugar",
-            "library_path": "Library/Meshes/999506750.sugar",
+            "library_path": "Library/Meshes/1675980502.sugar",
             "type": 0,
-            "uid": 999506750
+            "uid": 1675980502
         }
     ],
-    "library_file": "177337636.tea",
-    "library_path": "Library/Models/177337636.tea",
-    "mod_time": 408899752,
+    "library_file": "843163901.tea",
+    "library_path": "Library/Models/843163901.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 177337636
+    "uid": 843163901
 }

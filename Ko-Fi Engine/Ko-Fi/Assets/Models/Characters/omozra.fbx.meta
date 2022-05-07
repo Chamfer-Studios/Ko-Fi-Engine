@@ -4,26 +4,26 @@
     "contained_resources": [
         {
             "asset_file": "omozra.sugar",
-            "library_path": "Library/Meshes/1531841726.sugar",
+            "library_path": "Library/Meshes/179573324.sugar",
             "type": 0,
-            "uid": 1531841726
+            "uid": 179573324
         },
         {
             "asset_file": "omozra_base_color.png",
-            "library_path": "Library/Textures/169890410.cacao",
+            "library_path": "Library/Textures/1200931555.cacao",
             "type": 1,
-            "uid": 169890410
+            "uid": 1200931555
         },
         {
             "asset_file": "omozra_armature|omozra_reel.cake",
-            "library_path": "Library/Animations/19928532.cake",
+            "library_path": "Library/Animations/1572081017.cake",
             "type": 5,
-            "uid": 19928532
+            "uid": 1572081017
         }
     ],
-    "library_file": "201329520.tea",
-    "library_path": "Library/Models/201329520.tea",
-    "mod_time": 410994399,
+    "library_file": "558274256.tea",
+    "library_path": "Library/Models/558274256.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 201329520
+    "uid": 558274256
 }

@@ -4,26 +4,26 @@
     "contained_resources": [
         {
             "asset_file": "Column.sugar",
-            "library_path": "Library/Meshes/236414865.sugar",
+            "library_path": "Library/Meshes/908633185.sugar",
             "type": 0,
-            "uid": 236414865
+            "uid": 908633185
         },
         {
             "asset_file": "Plane.sugar",
-            "library_path": "Library/Meshes/1694554277.sugar",
+            "library_path": "Library/Meshes/303575364.sugar",
             "type": 0,
-            "uid": 1694554277
+            "uid": 303575364
         },
         {
             "asset_file": "Door.sugar",
-            "library_path": "Library/Meshes/508493211.sugar",
+            "library_path": "Library/Meshes/2058427013.sugar",
             "type": 0,
-            "uid": 508493211
+            "uid": 2058427013
         }
     ],
-    "library_file": "1309369835.tea",
-    "library_path": "Library/Models/1309369835.tea",
-    "mod_time": 410393782,
+    "library_file": "1169787863.tea",
+    "library_path": "Library/Models/1169787863.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 1309369835
+    "uid": 1169787863
 }

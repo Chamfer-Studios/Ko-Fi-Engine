@@ -4,14 +4,14 @@
     "contained_resources": [
         {
             "asset_file": "Box001.sugar",
-            "library_path": "Library/Meshes/464627721.sugar",
+            "library_path": "Library/Meshes/1701166656.sugar",
             "type": 0,
-            "uid": 464627721
+            "uid": 1701166656
         }
     ],
-    "library_file": "1051325862.tea",
-    "library_path": "Library/Models/1051325862.tea",
-    "mod_time": 408641032,
+    "library_file": "954531263.tea",
+    "library_path": "Library/Models/954531263.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 1051325862
+    "uid": 954531263
 }

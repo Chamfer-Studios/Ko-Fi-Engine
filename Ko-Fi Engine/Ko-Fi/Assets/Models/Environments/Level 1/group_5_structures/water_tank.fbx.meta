@@ -4,14 +4,14 @@
     "contained_resources": [
         {
             "asset_file": "Cylinder.001.sugar",
-            "library_path": "Library/Meshes/1863963005.sugar",
+            "library_path": "Library/Meshes/1792767805.sugar",
             "type": 0,
-            "uid": 1863963005
+            "uid": 1792767805
         }
     ],
-    "library_file": "1724693849.tea",
-    "library_path": "Library/Models/1724693849.tea",
-    "mod_time": 408899376,
+    "library_file": "570000232.tea",
+    "library_path": "Library/Models/570000232.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 1724693849
+    "uid": 570000232
 }

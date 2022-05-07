@@ -4,14 +4,14 @@
     "contained_resources": [
         {
             "asset_file": "Circle.sugar",
-            "library_path": "Library/Meshes/1423553600.sugar",
+            "library_path": "Library/Meshes/578851946.sugar",
             "type": 0,
-            "uid": 1423553600
+            "uid": 578851946
         }
     ],
-    "library_file": "1737239628.tea",
-    "library_path": "Library/Models/1737239628.tea",
-    "mod_time": 408656064,
+    "library_file": "1623765069.tea",
+    "library_path": "Library/Models/1623765069.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 1737239628
+    "uid": 1623765069
 }

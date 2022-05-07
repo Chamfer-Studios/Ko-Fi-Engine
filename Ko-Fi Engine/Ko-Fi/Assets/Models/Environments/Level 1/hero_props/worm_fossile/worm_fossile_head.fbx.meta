@@ -4,20 +4,20 @@
     "contained_resources": [
         {
             "asset_file": "worm_head_l.sugar",
-            "library_path": "Library/Meshes/492841442.sugar",
+            "library_path": "Library/Meshes/1800572474.sugar",
             "type": 0,
-            "uid": 492841442
+            "uid": 1800572474
         },
         {
             "asset_file": "worm_fossile_base_color.png",
-            "library_path": "Library/Textures/1767805363.cacao",
+            "library_path": "Library/Textures/445802376.cacao",
             "type": 1,
-            "uid": 1767805363
+            "uid": 445802376
         }
     ],
-    "library_file": "383401968.tea",
-    "library_path": "Library/Models/383401968.tea",
-    "mod_time": 410996152,
+    "library_file": "1704258159.tea",
+    "library_path": "Library/Models/1704258159.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 383401968
+    "uid": 1704258159
 }

@@ -4,14 +4,14 @@
     "contained_resources": [
         {
             "asset_file": "Door.sugar",
-            "library_path": "Library/Meshes/1018316126.sugar",
+            "library_path": "Library/Meshes/409241972.sugar",
             "type": 0,
-            "uid": 1018316126
+            "uid": 409241972
         }
     ],
-    "library_file": "235812021.tea",
-    "library_path": "Library/Models/235812021.tea",
-    "mod_time": 408828018,
+    "library_file": "2008591419.tea",
+    "library_path": "Library/Models/2008591419.tea",
+    "mod_time": 411483049,
     "type": 3,
-    "uid": 235812021
+    "uid": 2008591419
 }
