@@ -65,7 +65,8 @@ bool C_Camera::Start()
 bool C_Camera::Update(float dt)
 {
 	// Tranform Should be the same as frustumPos
-	 owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
+	if(owner->GetEngine()->GetSceneManager()->GetCurrentScene()->currentCamera == this->owner)
+		owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
 
 	if (isFrustumCullingActive)
 		FrustumCulling();

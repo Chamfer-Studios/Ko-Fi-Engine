@@ -27,6 +27,7 @@
 #include "Log.h"
 #include "node_editor.h"
 #include "QuadTree3D.h"
+#include "FSDefs.h"
 
 #include "SDL_assert.h"
 
@@ -83,8 +84,7 @@ bool SceneIntro::Start()
 
 	if (this->GetLights(SourceType::DIRECTIONAL).size() == 0)
 	{
-		GameObject* go = CreateEmptyGameObject("Direct Light");
-		go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+		//create dir light?
 	}
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");

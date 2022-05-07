@@ -103,8 +103,9 @@ public:
 
 	void InitDepthMapFramebufferAndTexture();
 	void LightUniforms(uint shader);
-	bool ShadowMapUniforms(C_Mesh* cMesh, uint shader);
+	void ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light);
 	void FillShadowMap(C_Camera* camera);
+	bool renderShadowMap;
 
 public:
 	Light lights[MAX_LIGHTS];

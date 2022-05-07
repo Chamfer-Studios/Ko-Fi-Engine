@@ -8,9 +8,13 @@
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Camera.h"
+#include "C_Material.h"
+#include "R_Material.h"
 #include "Globals.h"
 #include "SceneIntro.h"
 #include "M_Renderer3D.h"
+
+#include "FSDefs.h"
 
 C_LightSource::C_LightSource(GameObject* parent) : Component(parent)
 {
@@ -33,10 +37,9 @@ bool C_LightSource::Start()
 	if (shadowCam == nullptr)
 	{
 		shadowCam = owner->CreateComponent<C_Camera>();
-		shadowCam->ortho = true;
-		shadowCam->freeRotation = true;
+		shadowCam->ChangeCameraType(CameraType::ORTHOGRAPHIC);
 		//make the cam look in the direction of the light rays
-		shadowCam->LookAt(shadowCam->position + ((DirectionalLight*)lightSource)->direction.Normalized());
+		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
 	}
 	return true;
 }
@@ -49,8 +52,10 @@ bool C_LightSource::Update(float dt)
 	{
 		//Keep the direction of the camera updated. Maybe this does not work because it sets itself back to match the transform
 		//maybe too much to update it every frame
-		shadowCam->LookAt(shadowCam->position + ((DirectionalLight*)lightSource)->direction.Normalized());
-		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->cameraFrustum.ViewProjMatrix();
+		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
+		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->GetCameraFrustum().ViewProjMatrix();
+		//TODO: transform the object to match the camera transform
+
 	}
 
 	return true;
@@ -255,7 +260,13 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 				currentLight->diffuse = diffuseValue;
 			}
 			
-			ImGui::Image((ImTextureID)owner->GetEngine()->GetRenderer()->depthMapTexture, ImVec2(200, 200));
+			ImGui::Image((ImTextureID)owner->GetEngine()->GetRenderer()->depthMapTexture, ImVec2(512, 512));
+
+			if ((ImGui::Button("Activate Shadow Cast")))
+			{
+				CastShadows();
+				owner->GetEngine()->GetSceneManager()->GetCurrentScene()->SetShadowCaster(owner);
+			}
 			break;
 		}
 		case SourceType::POINT:
@@ -394,10 +405,10 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 			if (shadowCam == nullptr)
 			{
 				shadowCam = owner->CreateComponent<C_Camera>();
-				shadowCam->ortho = true;
+				shadowCam->ChangeCameraType(CameraType::ORTHOGRAPHIC);
+				
 				//make the cam look in the direction of the light rays
-				shadowCam->freeRotation = true;
-				shadowCam->LookAt(shadowCam->position + dLight->direction.Normalized());
+				shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
 			}
 		}
 		else
@@ -445,6 +456,39 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 	}
 
 	return lightSource;
+}
+
+//function to make the light source to cast shadows (currently only one shadow caster allowed)
+void C_LightSource::CastShadows()
+{
+	if (!shadowCam)
+	{
+		CONSOLE_LOG("shadowCam is null");
+		return;
+	}
+
+	C_Material* cMat = nullptr;
+	R_Material* rMat = nullptr;
+
+	if (!owner->GetComponent<C_Material>())
+	{
+		cMat = owner->CreateComponent<C_Material>();
+		rMat = new R_Material();
+
+	}
+	else
+	{
+		cMat = owner->GetComponent<C_Material>();
+		rMat = cMat->GetMaterial();
+	}
+
+	//make the material to have the depth shader. This will allow accessing it from the renderer.
+	std::string shaderPath = ASSETS_SHADERS_DIR;
+	shaderPath = shaderPath + "simple_depth_shader" + SHADER_EXTENSION;
+	rMat->SetShaderPath(shaderPath.c_str());
+	Importer::GetInstance()->materialImporter->LoadAndCreateShader(cMat->GetMaterial()->GetShaderPath(), rMat);
+
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->SetShadowCaster(owner);
 }
 
 LightSource::LightSource()

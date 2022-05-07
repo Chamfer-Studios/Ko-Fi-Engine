@@ -96,7 +96,8 @@ public:
 	void SetPosition(float3 position) { this->lightSource->position = position; }
 	//set Ambient, Diffuse and Specular parameters from 0 to 1 in a float3
 	void SetADS(float3 ADS) { lightSource->ambient = ADS.x, lightSource->diffuse = ADS.y, lightSource->specular = ADS.z; }
-
+	
+	void CastShadows();
 private:
 
 	//light parameters
@@ -112,6 +113,7 @@ private:
 
 	//inspector variables
 	int sType = 0;
+	bool castShadows = false;
 };
 
 #endif // !__C_LIGHTSOURCE_H__
