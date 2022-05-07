@@ -382,7 +382,8 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 
 void C_Script::Save(Json &json) const
 {
-	json["type"] = "script";
+	json["type"] = (int)type;
+
 	json["id"] = id;
 	json["file_name"] = s->path;
 	Json jsonIV;

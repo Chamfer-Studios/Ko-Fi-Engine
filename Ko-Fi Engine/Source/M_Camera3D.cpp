@@ -138,7 +138,9 @@ void M_Camera3D::CheckInput(float dt)
 	// Focus --> NEEDS TO BE FIXED... SOME (MESH) FUNCTIONS DEPEND ON A PRIMITIVE LIBRARY WE STILL DON'T HAVE IMPLEMENTED.
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size() > 0)
+		// TO DO: Manage current object selection by the game object itself! Not by its index...
+		if (/*engine->GetEditor()->gameobjectSelected != nullptr <-- Should be this way*/
+			engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != 0)
 		{
 			// If we change the previous TO DO, this will be no longer needed...
 			GameObject* gameObjectSelected =
@@ -164,7 +166,7 @@ void M_Camera3D::CheckInput(float dt)
 	}
 
 	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
-	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size() > 0)
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != 0 && engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID) != nullptr)
 	{
 		C_Transform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0])->GetTransform();
 		if (transform != nullptr) {
@@ -205,7 +207,8 @@ void M_Camera3D::CheckMouseMotion(float dt)
 		int dy = -engine->GetInput()->GetMouseYMotion();
 
 		if (engine->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) {
-			if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size() > 0)
+			if (/*engine->GetEditor()->gameobjectSelected != nullptr*/
+				engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != 0)
 			{
 				const float newDeltaX = (float)dx * currentCamera->GetCameraSensitivity();
 				const float newDeltaY = (float)dy * currentCamera->GetCameraSensitivity();

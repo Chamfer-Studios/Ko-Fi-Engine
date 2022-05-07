@@ -38,20 +38,22 @@ bool C_Transform::Update(float dt)
 	{
 		if (owner->GetComponent<C_Mesh>())
 		{
-			owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
+			if (owner->GetComponent<C_Mesh>()->GetMesh())
+				owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
+
+			RecomputeGlobalMatrix();
+			owner->PropagateTransform();
+
+			// Update colliders
+			if (owner->GetComponent<C_BoxCollider>())
+				owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
+			if (owner->GetComponent<C_SphereCollider>())
+				owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
+			if (owner->GetComponent<C_CapsuleCollider>())
+				owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
+
+			isDirty = false;
 		}
-		RecomputeGlobalMatrix();
-		owner->PropagateTransform();
-
-		// Update colliders
-		if (owner->GetComponent<C_BoxCollider>())
-			owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
-		if (owner->GetComponent<C_SphereCollider>())
-			owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
-		if (owner->GetComponent<C_CapsuleCollider>())
-			owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
-
-		isDirty = false;
 	}
 
 	return true;
@@ -256,11 +258,12 @@ void C_Transform::RecomputeGlobalMatrix()
 
 void C_Transform::Save(Json &json) const
 {
+	json["type"] = (int)type;
+
 	float3 position = GetPosition();
 	float3 scale = GetScale();
 	Quat rotation = GetRotationQuat();
 
-	json["type"] = "transform";
 	json["position"] = {position.x, position.y, position.z};
 	json["rotation"] = {rotation.x, rotation.y, rotation.z, rotation.w};
 	json["scale"] = {scale.x, scale.y, scale.z};

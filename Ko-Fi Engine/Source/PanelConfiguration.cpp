@@ -70,6 +70,11 @@ bool PanelConfiguration::Update()
 		ImGui::PlotHistogram("##milliseconds", &engineConfig->msLog[0], engineConfig->msLog.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 	}
 
+	if (ImGui::CollapsingHeader("Resource Manager"))
+	{
+		if (ImGui::Checkbox("Show Loaded Resources", &editor->toggleResourcesPanel)) {}
+	}
+
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
 		bool vsync = editor->engine->GetRenderer()->GetVsync();
@@ -78,7 +83,8 @@ bool PanelConfiguration::Update()
 		if (ImGui::Checkbox("Draw scene partition tree", &editor->engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {}
 	}
 
-	if (ImGui::CollapsingHeader("M_Input")) {
+	if (ImGui::CollapsingHeader("Input"))
+	{
 		int mouseX = editor->engine->GetInput()->GetMouseX();
 		int mouseY = editor->engine->GetInput()->GetMouseY();
 		ImGui::Text("Mouse Position:");
@@ -99,8 +105,6 @@ bool PanelConfiguration::Update()
 
 	if (ImGui::CollapsingHeader("Window"))
 	{
-
-		
 		ImGui::Text("Icon:");
 		ImGui::SameLine();
 		if (editor->GetPanelChooser()->IsReadyToClose("PanelConfig"))

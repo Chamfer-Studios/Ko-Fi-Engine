@@ -5,6 +5,7 @@
 #include "M_Editor.h"
 #include "M_FileSystem.h"
 #include "M_SceneManager.h"
+#include "M_ResourceManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -61,11 +62,11 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Import Model"))
 			{
-				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
+				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx" });
 			}
 			if (ImGui::MenuItem("Save Scene"))
 			{
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
+				Importer::GetInstance()->sceneImporter->SaveScene(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
 			}
 			if (ImGui::MenuItem("Save Scene As"))
 			{
@@ -151,20 +152,20 @@ bool MainBar::Update()
 					CreatePrimitive(Shape::CYLINDER);
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->engine->GetSceneIntro()->gameObjectList);
 				}
-				if (ImGui::MenuItem("Line"))
-				{
-					
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
-				}
+				//if (ImGui::MenuItem("Line"))
+				//{
+				//	
+				//	//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
+				//}
 				if (ImGui::MenuItem("Plane"))
 				{
 					CreatePrimitive(Shape::PLANE);
 				}
-				if (ImGui::MenuItem("Pyramid"))
-				{
-					
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
-				}
+				//if (ImGui::MenuItem("Pyramid"))
+				//{
+				//	
+				//	//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
+				//}
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("UI"))
@@ -315,12 +316,16 @@ bool MainBar::PostUpdate()
 
 void MainBar::ChoosersListener()
 {
+	// TODO
 	if (editor->GetPanelChooser()->IsReadyToClose("MainBar"))
 	{
 		std::string file = editor->GetPanelChooser()->OnChooserClosed();
 		if (!file.empty())
 		{
-			Importer::GetInstance()->sceneImporter->Import(file.c_str());
+			file = editor->engine->GetResourceManager()->GetValidPath(file.c_str());
+			Resource* resource = editor->engine->GetResourceManager()->GetResourceFromLibrary(file.c_str());
+			if (resource != nullptr)
+				editor->engine->GetSceneManager()->LoadResourceToScene(resource);
 		}
 	}
 	if (editor->GetPanelChooser()->IsReadyToClose("LoadScene"))
@@ -330,7 +335,7 @@ void MainBar::ChoosersListener()
 		{
 #pragma omp parallel private()
 			{
-				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
+				Importer::GetInstance()->sceneImporter->LoadScene(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
 			}
 
 		}
@@ -358,7 +363,7 @@ void MainBar::ChoosersListener()
 			auto pos1 = path.find_last_of("/");
 			auto pos2 = path.find_last_of(".");
 			std::string sceneName = path.substr(pos1+1, pos2-pos1-1);
-			Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), sceneName.c_str());
+			Importer::GetInstance()->sceneImporter->SaveScene(editor->engine->GetSceneManager()->GetCurrentScene(), sceneName.c_str());
 		};
 		editor->GetPanelChooser()->Save();
 	}

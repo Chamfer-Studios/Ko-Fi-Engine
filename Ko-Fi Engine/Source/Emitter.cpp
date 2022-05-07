@@ -4,8 +4,8 @@
 Emitter::Emitter(const char* newName)
 {
 	name = newName;
-	texture.path = "Assets/Textures/firework_projectile.png";
-	Importer::GetInstance()->textureImporter->Import(texture.path.c_str(), &texture);
+	texture.SetTexturePath("Assets/Textures/firework_projectile.png");
+	Importer::GetInstance()->textureImporter->Import(texture.GetTexturePath(), &texture);
 	modules.push_back(CreateModule<EmitterDefault>());
 	modules.push_back(CreateModule<EmitterMovement>());
 	modules.push_back(CreateModule<EmitterSize>());

@@ -76,6 +76,7 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr, bool is3D = true);
 
+	//Cleans current Scene
 	virtual void DeleteCurrentScene();
 
 	virtual void DeleteGameObject(GameObject* gameObject);
@@ -108,8 +109,12 @@ public:
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
+
+	// Models in scene map
+	// Pairs a GameObject UID with the model Resource UID and the Asset Path (.fbx)
+	std::multimap<UID, std::pair<UID, std::string>> sceneModels;
 	
-	//Space Partitioning
+	// Space Partitioning
 	bool sceneTreeIsDirty = true;
 	bool drawSceneTree = false;
 	QuadTree3D* sceneTree = nullptr;

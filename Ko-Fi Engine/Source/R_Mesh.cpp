@@ -101,8 +101,6 @@ R_Mesh::~R_Mesh()
 	boneInfo.clear();
 	boneInfo.shrink_to_fit();
 	boneNameToIndexMap.clear();
-	path.clear();
-	path.shrink_to_fit();
 }
 
 void R_Mesh::SetUpMeshBuffers()
@@ -484,7 +482,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 			selectedClip->SetFinishedBool(true);
 	}
 
-	ReadNodeHeirarchy(animationTimeTicks + startFrame, rootNode, identity); // We add startFrame as an offset to the duration.
+	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
 	transforms.resize(boneInfo.size());
 	transformsAnim.resize(boneInfo.size());
 

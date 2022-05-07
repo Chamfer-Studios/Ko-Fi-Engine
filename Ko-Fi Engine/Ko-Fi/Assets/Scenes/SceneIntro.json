@@ -1,66 +1,21 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 42,
+        "game_objects_amount": 51,
         "game_objects_list": [
             {
-                "UID": 1106341605,
+                "UID": 770357391,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1.0010000467300415,
-                            1092.95703125,
-                            -1352.9329833984375
-                        ],
-                        "rotation": [
-                            0.3826834559440613,
-                            0.0,
-                            0.0,
-                            0.9238795042037964
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999992847442627,
-                            0.9999992847442627
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_frustum": true,
-                        "far_plane_distance": 3908.0,
-                        "frustum_culling": false,
-                        "isMainCamera": true,
-                        "near_plane_distance": 0.10000000149011612,
-                        "type": "camera",
-                        "vertical_fov": 60.0
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "Main Camera",
-                "parent_UID": 4294967295,
-                "tag": 0
-            },
-            {
-                "UID": 812914756,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
                             0.0,
-                            390.0,
+                            0.0,
                             0.0
                         ],
                         "rotation": [
@@ -74,1452 +29,707 @@
                             1.0,
                             1.0
                         ],
-                        "type": "transform"
+                        "type": 21
                     },
                     {
                         "active": true,
-                        "ambientValue": 0.800000011920929,
-                        "diffuseValue": 1.0,
+                        "draw_frustum": true,
+                        "far_plane_distance": 100.0,
+                        "frustum_culling": false,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.10000000149011612,
+                        "type": 4,
+                        "vertical_fov": 60.0
+                    }
+                ],
+                "is3D": true,
+                "name": "Main Camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1795318633,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "ambientValue": 0.5,
+                        "diffuseValue": 0.800000011920929,
                         "lightColor": [
                             1.0,
                             1.0,
                             1.0
                         ],
                         "lightDirection": [
-                            44.0,
-                            26.899999618530273,
-                            28.899999618530273
+                            1.0,
+                            1.0,
+                            0.0
                         ],
                         "lightPosition": [
                             0.0,
-                            390.0,
+                            0.0,
                             0.0
                         ],
                         "sourceType": 0,
                         "specularValue": 0.0,
-                        "type": "lightSource"
+                        "type": 19
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
                 "name": "Direct Light",
-                "parent_UID": 4294967295,
+                "parent_UID": 0,
                 "tag": 0
             },
             {
-                "UID": 25687695,
+                "UID": 17128998,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            0.0,
-                            0.0,
-                            0.0
+                            -3.135204315185547e-05,
+                            247.90245056152344,
+                            3.9637088775634766e-06
                         ],
                         "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
+                            0.0014886371791362762,
+                            -0.021502168849110603,
+                            0.1258351355791092,
+                            0.9918169975280762
+                        ],
+                        "scale": [
+                            0.9999991655349731,
+                            1.0,
                             1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_fore_arm",
+                "parent_UID": 1334739942,
+                "tag": 0
+            },
+            {
+                "UID": 19937331,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            17.085311889648438,
+                            36.254249572753906,
+                            0.00012063980102539063
+                        ],
+                        "rotation": [
+                            0.03796814754605293,
+                            0.012174748815596104,
+                            -0.230448380112648,
+                            0.9722673296928406
                         ],
                         "scale": [
                             1.0,
                             1.0,
                             1.0
                         ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "type": "walkable"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "navmesh_test3",
-                "parent_UID": 4294967295,
+                "name": "nerala_right_hand_thumb_3",
+                "parent_UID": 1667407010,
                 "tag": 0
             },
             {
-                "UID": 1696619291,
+                "UID": 57481617,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "isAnimated": false,
-                        "path": "Library/Meshes/Cube.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/checker.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "Cube",
-                "parent_UID": 25687695,
-                "tag": 0
-            },
-            {
-                "UID": 305060878,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    },
-                    {
-                        "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "isAnimated": false,
-                        "path": "Library/Meshes/Plane.sugar",
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.800000011920929,
-                            0.800000011920929,
-                            0.800000011920929,
-                            1.0
-                        ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/checker.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "Plane",
-                "parent_UID": 25687695,
-                "tag": 0
-            },
-            {
-                "UID": 1552807865,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen",
-                "parent_UID": 4294967295,
-                "tag": 0
-            },
-            {
-                "UID": 1562095538,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_armature",
-                "parent_UID": 1552807865,
-                "tag": 0
-            },
-            {
-                "UID": 1786599724,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -0.18123507499694824,
-                            419.1922607421875,
-                            6.491641521453857
-                        ],
-                        "rotation": [
-                            -0.015612997114658356,
-                            0.004085395019501448,
-                            -0.0010132011957466602,
-                            0.9998692870140076
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999994039535522,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_hips",
-                "parent_UID": 1562095538,
-                "tag": 0
-            },
-            {
-                "UID": 459066717,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -8.940696716308594e-08,
-                            52.778255462646484,
-                            -2.5163090229034424
-                        ],
-                        "rotation": [
-                            0.048467982560396194,
-                            0.000957072654273361,
-                            0.0006710499874316156,
-                            0.9988240599632263
-                        ],
-                        "scale": [
-                            0.9999994039535522,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_spine",
-                "parent_UID": 1786599724,
-                "tag": 0
-            },
-            {
-                "UID": 1832269603,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -3.3527612686157227e-08,
-                            62.08102035522461,
-                            -6.677728379145265e-07
-                        ],
-                        "rotation": [
-                            0.07194779813289642,
-                            0.0013095224276185036,
-                            0.00021554618433583528,
-                            0.9974075555801392
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_spine_1",
-                "parent_UID": 459066717,
-                "tag": 0
-            },
-            {
-                "UID": 1765915016,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            70.9488525390625,
-                            1.6824807971715927e-05
-                        ],
-                        "rotation": [
-                            0.07194699347019196,
-                            0.0013705258024856448,
-                            0.0001635662920307368,
-                            0.9974074959754944
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999998807907104,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_spine_2",
-                "parent_UID": 1832269603,
-                "tag": 0
-            },
-            {
-                "UID": 1330538186,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1.0132789611816406e-06,
-                            79.2566146850586,
-                            -7.584551349282265e-05
-                        ],
-                        "rotation": [
-                            0.0508393719792366,
-                            0.0008946734596975148,
-                            0.0060679716989398,
-                            0.9986880421638489
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_neck",
-                "parent_UID": 1765915016,
-                "tag": 0
-            },
-            {
-                "UID": 1691934161,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.2649765014648438e-06,
-                            18.96263313293457,
-                            5.265877723693848
-                        ],
-                        "rotation": [
-                            -0.14823192358016968,
-                            0.00047171322512440383,
-                            -0.005447319708764553,
-                            0.9889376163482666
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999998807907104,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_head",
-                "parent_UID": 1330538186,
-                "tag": 0
-            },
-            {
-                "UID": 375217737,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -9.5367431640625e-07,
-                            110.66742706298828,
-                            30.733444213867188
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_head_top_end",
-                "parent_UID": 1691934161,
-                "tag": 0
-            },
-            {
-                "UID": 1042985569,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            41.44794464111328,
-                            70.3192138671875,
-                            -0.5436950325965881
-                        ],
-                        "rotation": [
-                            0.6291377544403076,
-                            0.47741925716400146,
-                            -0.483172208070755,
-                            0.3778904974460602
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_shoulder",
-                "parent_UID": 1765915016,
-                "tag": 0
-            },
-            {
-                "UID": 833743338,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -0.00010538101196289063,
-                            84.87822723388672,
-                            3.814697265625e-06
-                        ],
-                        "rotation": [
-                            0.27289578318595886,
-                            0.036841023713350296,
-                            0.28879761695861816,
-                            0.9169332385063171
-                        ],
-                        "scale": [
-                            0.9999998807907104,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_arm",
-                "parent_UID": 1042985569,
-                "tag": 0
-            },
-            {
-                "UID": 1709440135,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.0517578125e-05,
-                            139.0620574951172,
-                            -2.288818359375e-05
-                        ],
-                        "rotation": [
-                            0.026498181745409966,
-                            -0.004923587199300528,
-                            0.18910600244998932,
-                            0.981586754322052
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999994039535522
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_fore_arm",
-                "parent_UID": 833743338,
-                "tag": 0
-            },
-            {
-                "UID": 1535405742,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -8.392333984375e-05,
-                            116.71037292480469,
-                            6.866455078125e-05
-                        ],
-                        "rotation": [
-                            0.3843255043029785,
-                            -0.6984533071517944,
-                            0.0807722732424736,
-                            0.598274827003479
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            0.9999998807907104
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_hand_index",
-                "parent_UID": 1709440135,
-                "tag": 0
-            },
-            {
-                "UID": 1189667063,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            8.0108642578125e-05,
-                            26.7041015625,
-                            4.1961669921875e-05
-                        ],
-                        "rotation": [
-                            0.4726340174674988,
-                            0.8776788115501404,
-                            -0.015387664549052715,
-                            -0.07784783840179443
-                        ],
-                        "scale": [
-                            1.0000009536743164,
-                            0.9999998807907104,
-                            1.000001072883606
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_hand_index_1",
-                "parent_UID": 1535405742,
-                "tag": 0
-            },
-            {
-                "UID": 1661295627,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -2.09808349609375e-05,
-                            21.882076263427734,
-                            3.814697265625e-06
-                        ],
-                        "rotation": [
-                            0.14007335901260376,
-                            0.16929925978183746,
-                            0.5064474940299988,
-                            0.8338034152984619
-                        ],
-                        "scale": [
-                            0.9999997615814209,
-                            1.0,
-                            0.9999996423721313
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_hand_index_2",
-                "parent_UID": 1189667063,
-                "tag": 0
-            },
-            {
-                "UID": 1888587241,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -8.340450286865234,
-                            25.495521545410156,
-                            -16.795997619628906
-                        ],
-                        "rotation": [
-                            -0.10174927860498428,
-                            0.04559233784675598,
-                            0.15205657482147217,
-                            0.9820627570152283
-                        ],
-                        "scale": [
-                            0.9999998807907104,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_hand_index_3",
-                "parent_UID": 1661295627,
-                "tag": 0
-            },
-            {
-                "UID": 1351050792,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -9.354723930358887,
-                            21.17683982849121,
-                            -9.774428367614746
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_hand_index_4",
-                "parent_UID": 1888587241,
-                "tag": 0
-            },
-            {
-                "UID": 1723451232,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -41.44797897338867,
-                            70.3076400756836,
-                            -0.30918633937835693
-                        ],
-                        "rotation": [
-                            0.6195945739746094,
-                            -0.4768965542316437,
-                            0.47797998785972595,
-                            0.4002591669559479
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_shoulder",
-                "parent_UID": 1765915016,
-                "tag": 0
-            },
-            {
-                "UID": 2044414241,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.910064697265625e-05,
-                            85.53260040283203,
-                            -2.47955322265625e-05
-                        ],
-                        "rotation": [
-                            0.35987213253974915,
-                            0.057480618357658386,
-                            -0.2580300569534302,
-                            0.8947672843933105
-                        ],
-                        "scale": [
-                            0.9999998807907104,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_arm",
-                "parent_UID": 1723451232,
-                "tag": 0
-            },
-            {
-                "UID": 1095233148,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1.1444091796875e-05,
-                            131.30661010742188,
+                            7.62939453125e-06,
+                            533.1990356445313,
                             1.52587890625e-05
                         ],
                         "rotation": [
-                            0.023032255470752716,
-                            0.004868508782237768,
-                            -0.12314359098672867,
-                            0.9921095967292786
+                            -0.2519873082637787,
+                            -0.07618357241153717,
+                            0.06849752366542816,
+                            0.9622923731803894
                         ],
                         "scale": [
                             1.0,
                             1.0,
                             1.0
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_fore_arm",
-                "parent_UID": 2044414241,
+                "name": "nerala_left_leg",
+                "parent_UID": 1271075733,
                 "tag": 0
             },
             {
-                "UID": 525142879,
+                "UID": 64034673,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            1.239776611328125e-05,
-                            116.74313354492188,
-                            -1.52587890625e-05
+                            -1.33514404296875e-05,
+                            71.39830017089844,
+                            7.987022399902344e-05
                         ],
                         "rotation": [
-                            0.1362016499042511,
-                            0.02735869400203228,
-                            -0.0987071692943573,
-                            0.9853717684745789
+                            0.08989869803190231,
+                            0.0074119409546256065,
+                            0.02498970367014408,
+                            0.9956098794937134
                         ],
                         "scale": [
-                            0.9999994039535522,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_hand",
-                "parent_UID": 1095233148,
-                "tag": 0
-            },
-            {
-                "UID": 63288684,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -6.103515625e-05,
-                            31.11405372619629,
-                            -4.57763671875e-05
-                        ],
-                        "rotation": [
-                            0.4259320795536041,
-                            -0.6088283658027649,
-                            -0.42044955492019653,
-                            0.5207034349441528
-                        ],
-                        "scale": [
-                            1.0000001192092896,
-                            0.9999998807907104,
-                            1.000000238418579
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_hand_index_1",
-                "parent_UID": 525142879,
-                "tag": 0
-            },
-            {
-                "UID": 1732508767,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -3.4332275390625e-05,
-                            21.03866195678711,
-                            -4.57763671875e-05
-                        ],
-                        "rotation": [
-                            0.16883869469165802,
-                            -0.2681207060813904,
-                            -0.6517153978347778,
-                            0.6891094446182251
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_hand_index_2",
-                "parent_UID": 63288684,
-                "tag": 0
-            },
-            {
-                "UID": 1278866258,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            9.740821838378906,
-                            22.702892303466797,
-                            -19.8560848236084
-                        ],
-                        "rotation": [
-                            -0.045167483389377594,
-                            -0.13931679725646973,
-                            -0.18524745106697083,
-                            0.971717119216919
-                        ],
-                        "scale": [
+                            0.9999995231628418,
                             0.9999998211860657,
-                            0.9999998807907104,
-                            1.0
+                            0.9999995231628418
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_hand_index_3",
-                "parent_UID": 1732508767,
+                "name": "nerala_right_hand_index_1",
+                "parent_UID": 337843804,
                 "tag": 0
             },
             {
-                "UID": 1275743598,
+                "UID": 84259950,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            5.343257904052734,
-                            15.800762176513672,
-                            -12.914604187011719
+                            -48.71879196166992,
+                            133.9743194580078,
+                            0.2223646640777588
                         ],
                         "rotation": [
-                            0.13607244193553925,
-                            0.028424285352230072,
-                            -0.07115165144205093,
-                            0.9877316355705261
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999997019767761,
-                            1.0
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_hand_index_4",
-                "parent_UID": 1278866258,
-                "tag": 0
-            },
-            {
-                "UID": 768880085,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -22.82791519165039,
-                            31.67345428466797,
-                            11.79879379272461
-                        ],
-                        "rotation": [
-                            -0.5681071877479553,
-                            0.369046688079834,
-                            -0.413385808467865,
-                            0.608416736125946
+                            0.6042181253433228,
+                            -0.42617541551589966,
+                            0.5360640287399292,
+                            0.4073455035686493
                         ],
                         "scale": [
                             1.0,
                             1.0,
                             1.0
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_weapon",
-                "parent_UID": 525142879,
+                "name": "nerala_right_shoulder",
+                "parent_UID": 1933031779,
                 "tag": 0
             },
             {
-                "UID": 2023012663,
+                "UID": 123973834,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            58.862884521484375,
-                            -29.26361846923828,
-                            -4.96705961227417
+                            4.383079528808594,
+                            32.29352951049805,
+                            -7.05718994140625e-05
                         ],
                         "rotation": [
-                            0.11832302063703537,
-                            0.1745995432138443,
-                            0.9664139747619629,
-                            -0.14682883024215698
+                            0.09414637833833694,
+                            -0.1218101754784584,
+                            -0.46538200974464417,
+                            0.8716182112693787
                         ],
                         "scale": [
-                            1.0000020265579224,
-                            1.0000022649765015,
-                            0.9999999403953552
+                            1.0,
+                            0.9999996423721313,
+                            0.9999998807907104
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_up_leg",
-                "parent_UID": 1786599724,
+                "name": "nerala_left_hand_thumb_2",
+                "parent_UID": 1797205709,
                 "tag": 0
             },
             {
-                "UID": 1449622228,
+                "UID": 311255242,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            4.298868179321289,
-                            204.83447265625,
-                            35.24266815185547
+                            0.2527904510498047,
+                            45.00371170043945,
+                            0.00013303756713867188
                         ],
                         "rotation": [
-                            -0.37325721979141235,
-                            0.05780957639217377,
-                            -0.09098013490438461,
-                            0.9214443564414978
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
                         ],
                         "scale": [
                             1.0,
                             1.0,
                             1.0
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_leg",
-                "parent_UID": 2023012663,
+                "name": "nerala_left_hand_index_4",
+                "parent_UID": 2069079255,
                 "tag": 0
             },
             {
-                "UID": 1007661176,
+                "UID": 335804413,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            0.6049232482910156,
-                            176.83773803710938,
-                            -0.9601783752441406
+                            -1.33514404296875e-05,
+                            70.73507690429688,
+                            -0.0001232624053955078
                         ],
                         "rotation": [
-                            0.6304831504821777,
-                            0.036244090646505356,
-                            -0.02569236233830452,
-                            0.774930477142334
+                            0.09085683524608612,
+                            -0.003963282331824303,
+                            -0.026429759338498116,
+                            0.9955053329467773
                         ],
                         "scale": [
-                            0.9999999403953552,
-                            1.0,
-                            0.9999999403953552
-                        ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_foot",
-                "parent_UID": 1449622228,
-                "tag": 0
-            },
-            {
-                "UID": 382954100,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.8438866138458252e-05,
-                            100.0635986328125,
-                            3.2186508178710938e-06
-                        ],
-                        "rotation": [
-                            0.2906261384487152,
-                            0.0071723610162734985,
-                            -0.0021347946021705866,
-                            0.9568074345588684
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
+                            0.9999992251396179,
+                            0.9999992847442627,
                             1.0
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_toe_base",
-                "parent_UID": 1007661176,
+                "name": "nerala_left_hand_index_1",
+                "parent_UID": 684545673,
                 "tag": 0
             },
             {
-                "UID": 637918595,
+                "UID": 337843804,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            -8.121877908706665e-05,
-                            39.6266975402832,
-                            2.384185791015625e-07
+                            1.71661376953125e-05,
+                            306.7502136230469,
+                            -9.715557098388672e-05
                         ],
                         "rotation": [
-                            0.12347283959388733,
-                            0.047400832176208496,
-                            0.03664118051528931,
-                            0.9905377626419067
+                            0.10005344450473785,
+                            0.014499220065772533,
+                            0.06790125370025635,
+                            0.9925565719604492
                         ],
                         "scale": [
+                            1.0,
                             0.9999998211860657,
-                            0.9999998807907104,
                             0.9999997019767761
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_left_toe_end",
-                "parent_UID": 382954100,
+                "name": "nerala_right_hand",
+                "parent_UID": 1065156248,
                 "tag": 0
             },
             {
-                "UID": 421198888,
+                "UID": 421062203,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            -58.86287307739258,
-                            -29.26396942138672,
-                            -6.1865386962890625
+                            8.982062339782715,
+                            1128.8394775390625,
+                            7.977428436279297
                         ],
                         "rotation": [
-                            -0.14534321427345276,
-                            0.18551626801490784,
-                            0.9641985893249512,
-                            0.12157371640205383
+                            -0.006220347248017788,
+                            -0.00987109076231718,
+                            -0.04610874503850937,
+                            0.9988682866096497
                         ],
                         "scale": [
-                            0.9999997019767761,
-                            1.0000001192092896,
-                            1.0
+                            0.9999995231628418,
+                            0.9999997615814209,
+                            0.9999991655349731
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_up_leg",
-                "parent_UID": 1786599724,
+                "name": "nerala_hips",
+                "parent_UID": 1797549275,
                 "tag": 0
             },
             {
-                "UID": 398581663,
+                "UID": 445519621,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            -1.52587890625e-05,
-                            196.9711456298828,
+                            -10.274040222167969,
+                            36.998016357421875,
+                            0.0001583099365234375
+                        ],
+                        "rotation": [
+                            0.03892141208052635,
+                            -0.013037762604653835,
+                            0.10286573320627213,
+                            0.9938480257987976
+                        ],
+                        "scale": [
+                            0.9999995231628418,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_thumb_3",
+                "parent_UID": 123973834,
+                "tag": 0
+            },
+            {
+                "UID": 533341805,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            27.0068359375
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 565143833,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -9.310245513916016e-05,
+                            178.30899047851563,
+                            8.153915405273438e-05
+                        ],
+                        "rotation": [
+                            0.30410996079444885,
+                            0.007426219992339611,
+                            -0.00234813941642642,
+                            0.952605128288269
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_toe_base",
+                "parent_UID": 1165622796,
+                "tag": 0
+            },
+            {
+                "UID": 684545673,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.288818359375e-05,
+                            306.9721374511719,
+                            -2.2411346435546875e-05
+                        ],
+                        "rotation": [
+                            0.08834511041641235,
+                            -0.14093483984470367,
+                            -0.021358834579586983,
+                            0.9858378767967224
+                        ],
+                        "scale": [
+                            0.999999463558197,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand",
+                "parent_UID": 17128998,
+                "tag": 0
+            },
+            {
+                "UID": 717706368,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.205371856689453e-06,
+                            113.09246826171875,
+                            1.7881393432617188e-07
+                        ],
+                        "rotation": [
+                            0.00646602176129818,
+                            0.0017552415374666452,
+                            0.05186917260289192,
+                            0.9986314177513123
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_spine_1",
+                "parent_UID": 1619853513,
+                "tag": 0
+            },
+            {
+                "UID": 782485589,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.897956848144531,
+                            36.2315673828125,
                             -3.814697265625e-05
                         ],
                         "rotation": [
-                            -0.3805878460407257,
-                            -0.0712781473994255,
-                            0.02638031542301178,
-                            0.9216161966323853
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
                         ],
                         "scale": [
                             1.0,
                             1.0,
                             1.0
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_leg",
-                "parent_UID": 421198888,
+                "name": "nerala_right_hand_thumb_4",
+                "parent_UID": 19937331,
                 "tag": 0
             },
             {
-                "UID": 2017756836,
+                "UID": 788219486,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            3.910064697265625e-05,
-                            173.6293487548828,
-                            -3.4809112548828125e-05
+                            1.8909573554992676e-05,
+                            123.92588806152344,
+                            -10.417947769165039
                         ],
                         "rotation": [
-                            0.6285755634307861,
-                            0.04549061506986618,
-                            0.03627802059054375,
-                            0.7755690217018127
+                            0.013511767610907555,
+                            0.005482659675180912,
+                            -0.07067203521728516,
+                            0.997393012046814
                         ],
                         "scale": [
                             1.0,
-                            1.0,
-                            1.0
+                            0.9999999403953552,
+                            0.9999991655349731
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_foot",
-                "parent_UID": 398581663,
+                "name": "nerala_head",
+                "parent_UID": 1100295563,
                 "tag": 0
             },
             {
-                "UID": 605910651,
+                "UID": 804897560,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            2.370402216911316e-05,
-                            100.88868713378906,
-                            -9.059906005859375e-06
+                            48.71870803833008,
+                            133.97691345214844,
+                            -0.3171837329864502
                         ],
                         "rotation": [
-                            0.28675663471221924,
-                            -0.005300543736666441,
-                            0.0015639462508261204,
-                            0.9579875469207764
+                            0.6458557844161987,
+                            0.3834456205368042,
+                            -0.4868398606777191,
+                            0.44589993357658386
                         ],
                         "scale": [
                             1.0,
-                            1.0,
+                            1.0000001192092896,
                             1.0
                         ],
-                        "type": "transform"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_toe_base",
-                "parent_UID": 2017756836,
+                "name": "nerala_left_shoulder",
+                "parent_UID": 1933031779,
                 "tag": 0
             },
             {
-                "UID": 1084155250,
+                "UID": 899958820,
                 "active": true,
                 "components": [
                     {
                         "active": true,
-                        "type": "info"
+                        "type": 23
                     },
                     {
                         "active": true,
                         "position": [
-                            4.590488970279694e-06,
-                            38.881778717041016,
-                            -2.3245811462402344e-06
+                            0.0,
+                            -9.118755340576172,
+                            60.42549133300781
                         ],
                         "rotation": [
                             0.0,
@@ -1528,64 +738,36 @@
                             1.0
                         ],
                         "scale": [
-                            1.0,
-                            1.0,
-                            1.0
+                            0.009999999776482582,
+                            0.009999999776482582,
+                            0.009999999776482582
                         ],
-                        "type": "transform"
-                    }
-                ],
-                "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen_right_toe_end",
-                "parent_UID": 605910651,
-                "tag": 0
-            },
-            {
-                "UID": 217435494,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": "info"
+                        "type": 21
                     },
                     {
                         "active": true,
-                        "position": [
-                            218.0,
-                            -90.0,
-                            -69.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            0.20000000298023224,
-                            0.20000000298023224,
-                            0.20000000298023224
-                        ],
-                        "type": "transform"
+                        "mesh": {
+                            "asset_path": "Assets/Models/Characters/Nerala/nerala_low.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 1050122348
+                        },
+                        "type": 1
                     },
                     {
                         "active": true,
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "isAnimated": true,
-                        "path": "Library/Meshes/harkonnen1.sugar",
-                        "rootNodeUID": 1552807865,
-                        "shape_type": 0,
-                        "type": "mesh"
-                    },
-                    {
-                        "active": true,
+                        "animation": {
+                            "asset_path": "Assets/Models/Characters/Nerala/nerala_armature|nerala_armature|nerala_armature|nerala_reel.cake",
+                            "uid": 325295736
+                        },
                         "clips": [
                             {
-                                "clipDuration": 289.0,
-                                "clipDurationInSeconds": 12.041666984558105,
-                                "clipEndFrame": 289.0,
+                                "clipDuration": 742.0,
+                                "clipDurationInSeconds": 0.4166666567325592,
+                                "clipEndFrame": 742.0,
                                 "clipFinished": false,
                                 "clipLoop": true,
                                 "clipName": "Default clip",
@@ -1593,1718 +775,1140 @@
                                 "mapString": "Default clip"
                             }
                         ],
-                        "path": "Library/Animations/harkonnen1.cake",
                         "selectedClip": "Default clip",
-                        "type": "animator"
+                        "type": 12
                     },
                     {
                         "active": true,
                         "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/nerala_base_color.png"
+                        },
+                        "type": 2
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Characters/Nerala/Nerala.lua",
+                        "id": 1016174262,
+                        "type": 5
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_low",
+                "parent_UID": 533341805,
+                "tag": 0
+            },
+            {
+                "UID": 944255347,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -110.12201690673828,
+                            -53.76408004760742,
+                            -3.2959108352661133
+                        ],
+                        "rotation": [
+                            -0.03903210535645485,
+                            0.0063581690192222595,
+                            0.9932174682617188,
+                            -0.10933972895145416
+                        ],
+                        "scale": [
+                            1.0000011920928955,
+                            1.000001311302185,
+                            0.9999997615814209
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_up_leg",
+                "parent_UID": 421062203,
+                "tag": 0
+            },
+            {
+                "UID": 1065156248,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.5033950805664063e-05,
+                            247.92916870117188,
+                            -8.189678192138672e-05
+                        ],
+                        "rotation": [
+                            0.0013164890697225928,
+                            0.023670107126235962,
+                            -0.15354733169078827,
+                            0.987856924533844
+                        ],
+                        "scale": [
                             1.0,
+                            1.0,
+                            0.9999991655349731
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_fore_arm",
+                "parent_UID": 1484138993,
+                "tag": 0
+            },
+            {
+                "UID": 1100295563,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.00011095404624938965,
+                            145.4039306640625,
+                            9.79006290435791e-06
+                        ],
+                        "rotation": [
+                            0.011170299723744392,
+                            -0.002472174819558859,
+                            -0.01894845999777317,
+                            0.9997550249099731
+                        ],
+                        "scale": [
+                            0.9999993443489075,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_neck",
+                "parent_UID": 1933031779,
+                "tag": 0
+            },
+            {
+                "UID": 1111544002,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            159.35610961914063,
+                            17.15229606628418,
+                            -155.73634338378906
+                        ],
+                        "rotation": [
+                            0.000188819773029536,
+                            0.4394487738609314,
+                            0.0025266008451581,
+                            0.8982641100883484
+                        ],
+                        "scale": [
+                            0.9999998807907104,
+                            0.9999999403953552,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "crossbow_end",
+                "parent_UID": 1791205052,
+                "tag": 0
+            },
+            {
+                "UID": 1165622796,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.4332275390625e-05,
+                            469.6479187011719,
+                            4.482269287109375e-05
+                        ],
+                        "rotation": [
+                            0.5224605798721313,
+                            -0.09223759919404984,
+                            -0.08021337538957596,
+                            0.8438560366630554
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_foot",
+                "parent_UID": 57481617,
+                "tag": 0
+            },
+            {
+                "UID": 1232111523,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.9073486328125e-06,
+                            533.0411376953125,
+                            -9.5367431640625e-07
+                        ],
+                        "rotation": [
+                            -0.1265954226255417,
+                            0.04811907559633255,
+                            -0.00761241652071476,
+                            0.990757405757904
+                        ],
+                        "scale": [
+                            0.9999992847442627,
+                            0.9999999403953552,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_leg",
+                "parent_UID": 944255347,
+                "tag": 0
+            },
+            {
+                "UID": 1271075733,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            110.1219253540039,
+                            -53.76341247558594,
+                            -5.769349098205566
+                        ],
+                        "rotation": [
+                            0.1124420091509819,
+                            0.16135165095329285,
+                            0.9747779369354248,
+                            -0.10550101101398468
+                        ],
+                        "scale": [
+                            1.000001072883606,
+                            1.0000015497207642,
+                            0.9999995827674866
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_up_leg",
+                "parent_UID": 421062203,
+                "tag": 0
+            },
+            {
+                "UID": 1334739942,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.52587890625e-05,
+                            100.0088119506836,
+                            0.00024509429931640625
+                        ],
+                        "rotation": [
+                            0.5463603138923645,
+                            0.0036657722666859627,
+                            -0.04616740718483925,
+                            0.8362688422203064
+                        ],
+                        "scale": [
+                            0.999999463558197,
+                            0.9999995827674866,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_arm",
+                "parent_UID": 804897560,
+                "tag": 0
+            },
+            {
+                "UID": 1408786777,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.1814095377922058,
+                            46.37023162841797,
+                            -0.00021791458129882813
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
                             1.0,
                             1.0,
                             1.0
                         ],
-                        "shader_path": "Assets/Shaders/default_shader.glsl",
-                        "texture_path": "Assets/Textures/harkonnen_base_color.png",
-                        "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Pathfinder.lua",
-                        "id": 286847470,
-                        "type": "script"
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/EnemyController.lua",
-                        "id": 1157275417,
-                        "inspector_variables": [
-                            {
-                                "name": "static",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
-                                "name": "speed",
-                                "type": "int",
-                                "value": 171
-                            },
-                            {
-                                "name": "visionConeAngle",
-                                "type": "int",
-                                "value": 90
-                            },
-                            {
-                                "name": "visionConeRadius",
-                                "type": "int",
-                                "value": 50
-                            },
-                            {
-                                "name": "hearingRange",
-                                "type": "int",
-                                "value": 30
-                            },
-                            {
-                                "name": "pingpong",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
-                                "name": "loop",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
-                                "name": "patrolWaypoints",
-                                "type": "float3_array",
-                                "value": [
-                                    -221.0,
-                                    -90.0,
-                                    0.0,
-                                    220.0,
-                                    -90.0,
-                                    -186.5
-                                ]
-                            }
-                        ],
-                        "type": "script"
+                        "type": 21
                     }
                 ],
                 "is3D": true,
-                "is_prefab": false,
-                "name": "harkonnen1",
-                "parent_UID": 1552807865,
+                "name": "nerala_right_hand_index_4",
+                "parent_UID": 1669339370,
+                "tag": 0
+            },
+            {
+                "UID": 1415220020,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.890727996826172,
+                            35.072242736816406,
+                            0.0003337860107421875
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_thumb_4",
+                "parent_UID": 445519621,
+                "tag": 0
+            },
+            {
+                "UID": 1429665846,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            70.4171371459961
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Characters/Nerala/crossbow.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 1046309563
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "animation": {
+                            "asset_path": "Assets/Models/Characters/Nerala/nerala_armature|nerala_armature|nerala_armature|nerala_reel.cake",
+                            "uid": 325295736
+                        },
+                        "clips": [
+                            {
+                                "clipDuration": 742.0,
+                                "clipDurationInSeconds": 0.4166666567325592,
+                                "clipEndFrame": 742.0,
+                                "clipFinished": false,
+                                "clipLoop": true,
+                                "clipName": "Default clip",
+                                "clipStartFrame": 0.0,
+                                "mapString": "Default clip"
+                            }
+                        ],
+                        "selectedClip": "Default clip",
+                        "type": 12
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/nerala_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "name": "crossbow",
+                "parent_UID": 533341805,
+                "tag": 0
+            },
+            {
+                "UID": 1455427214,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.24617052078247e-06,
+                            74.23487854003906,
+                            -1.8477439880371094e-06
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_toe_end",
+                "parent_UID": 2087757122,
+                "tag": 0
+            },
+            {
+                "UID": 1484138993,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.8133392333984375e-05,
+                            100.00855255126953,
+                            0.00011169910430908203
+                        ],
+                        "rotation": [
+                            0.4241546392440796,
+                            0.004014380741864443,
+                            -0.01114197913557291,
+                            0.9055123329162598
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_arm",
+                "parent_UID": 84259950,
+                "tag": 0
+            },
+            {
+                "UID": 1532056231,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.13837909698486328,
+                            57.1535530090332,
+                            0.0001289844512939453
+                        ],
+                        "rotation": [
+                            0.19665250182151794,
+                            -0.0007171356119215488,
+                            0.0005246090004220605,
+                            0.9804728627204895
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_index_2",
+                "parent_UID": 335804413,
+                "tag": 0
+            },
+            {
+                "UID": 1619853513,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -6.543099880218506e-05,
+                            96.93578338623047,
+                            -0.40213778614997864
+                        ],
+                        "rotation": [
+                            0.008987868204712868,
+                            -0.010790064930915833,
+                            0.025121424347162247,
+                            0.9995858073234558
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_spine",
+                "parent_UID": 421062203,
+                "tag": 0
+            },
+            {
+                "UID": 1667407010,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.187332153320313,
+                            31.55158233642578,
+                            -0.0001220703125
+                        ],
+                        "rotation": [
+                            0.08456277847290039,
+                            0.12399705499410629,
+                            0.5891284346580505,
+                            0.7939783334732056
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_thumb_2",
+                "parent_UID": 1782576340,
+                "tag": 0
+            },
+            {
+                "UID": 1669339370,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.464510440826416,
+                            47.66683578491211,
+                            0.00016450881958007813
+                        ],
+                        "rotation": [
+                            0.13653656840324402,
+                            0.00097648985683918,
+                            -0.017245633527636528,
+                            0.9904845356941223
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.999999463558197
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_index_3",
+                "parent_UID": 2129401408,
+                "tag": 0
+            },
+            {
+                "UID": 1749547015,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.574920654296875e-05,
+                            469.674072265625,
+                            9.5367431640625e-07
+                        ],
+                        "rotation": [
+                            0.56634521484375,
+                            -0.012088995426893234,
+                            -0.05677785351872444,
+                            0.8221212029457092
+                        ],
+                        "scale": [
+                            0.9999991655349731,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_foot",
+                "parent_UID": 1232111523,
+                "tag": 0
+            },
+            {
+                "UID": 1782576340,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            23.710479736328125,
+                            33.13604736328125,
+                            4.100799560546875e-05
+                        ],
+                        "rotation": [
+                            0.16061125695705414,
+                            -0.23070524632930756,
+                            -0.3408287763595581,
+                            0.8971147537231445
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_thumb_1",
+                "parent_UID": 337843804,
+                "tag": 0
+            },
+            {
+                "UID": 1791205052,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.412466049194336,
+                            71.78760528564453,
+                            -67.84392547607422
+                        ],
+                        "rotation": [
+                            -0.22842632234096527,
+                            -0.6535142064094543,
+                            0.6550359129905701,
+                            0.3027682304382324
+                        ],
+                        "scale": [
+                            1.0000001192092896,
+                            1.0000001192092896,
+                            1.0000001192092896
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "crossbow_base",
+                "parent_UID": 17128998,
+                "tag": 0
+            },
+            {
+                "UID": 1797205709,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -26.853721618652344,
+                            30.633256912231445,
+                            0.0002117156982421875
+                        ],
+                        "rotation": [
+                            0.138951376080513,
+                            0.24671654403209686,
+                            0.29125791788101196,
+                            0.9137791395187378
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_thumb_1",
+                "parent_UID": 684545673,
+                "tag": 0
+            },
+            {
+                "UID": 1797549275,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_armature",
+                "parent_UID": 533341805,
+                "tag": 0
+            },
+            {
+                "UID": 1830900606,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            7.291138172149658e-05,
+                            73.90235900878906,
+                            -1.9073486328125e-06
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_toe_end",
+                "parent_UID": 565143833,
+                "tag": 0
+            },
+            {
+                "UID": 1933031779,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.7881393432617188e-07,
+                            129.2454071044922,
+                            1.0132789611816406e-06
+                        ],
+                        "rotation": [
+                            0.006537954322993755,
+                            0.006282816641032696,
+                            0.05110683664679527,
+                            0.9986520409584045
+                        ],
+                        "scale": [
+                            0.9999997615814209,
+                            1.0,
+                            0.9999991655349731
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_spine_2",
+                "parent_UID": 717706368,
+                "tag": 0
+            },
+            {
+                "UID": 1979203015,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.1473894119262695e-05,
+                            265.1911926269531,
+                            -22.29360008239746
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_head_top_end",
+                "parent_UID": 788219486,
+                "tag": 0
+            },
+            {
+                "UID": 2069079255,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.3911857604980469,
+                            47.86405944824219,
+                            6.866455078125e-05
+                        ],
+                        "rotation": [
+                            0.10543346405029297,
+                            -0.00015997882292140275,
+                            0.015371033921837807,
+                            0.9943075180053711
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_left_hand_index_3",
+                "parent_UID": 1532056231,
+                "tag": 0
+            },
+            {
+                "UID": 2087757122,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.2267380952835083e-05,
+                            180.3291473388672,
+                            -6.905198097229004e-05
+                        ],
+                        "rotation": [
+                            0.3012606203556061,
+                            -0.007048683241009712,
+                            0.002199111972004175,
+                            0.9535132646560669
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_toe_base",
+                "parent_UID": 1749547015,
+                "tag": 0
+            },
+            {
+                "UID": 2129401408,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.645958423614502,
+                            58.073795318603516,
+                            -4.0531158447265625e-05
+                        ],
+                        "rotation": [
+                            0.19672712683677673,
+                            0.0012668443378061056,
+                            0.011377560906112194,
+                            0.9803914427757263
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999995827674866,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_right_hand_index_2",
+                "parent_UID": 64034673,
+                "tag": 0
+            },
+            {
+                "UID": 68248381,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_grenade",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1286706437,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.058659553527832,
+                            3.5244882106781006,
+                            65.752685546875
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            2.3605501651763916,
+                            2.3605501651763916,
+                            2.3605501651763916
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Characters/Nerala/nerala_smoke_grenade.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": false,
+                            "shape_type": 0,
+                            "uid": 1655999419
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/nerala_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "name": "nerala_smoke_grenade",
+                "parent_UID": 68248381,
                 "tag": 0
             }
         ],
         "name": "SceneIntro",
-        "navmesh": {
-            "basic": {
-                "areas": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                "bmax": [
-                    500.0,
-                    112.0,
-                    500.0
-                ],
-                "bmin": [
-                    -500.0,
-                    -100.0,
-                    -500.0
-                ],
-                "borderSize": 0,
-                "ch": 6.0,
-                "cs": 6.0,
-                "flags": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    0,
-                    0,
-                    14709,
-                    13659,
-                    50176,
-                    32769,
-                    7272,
-                    2419,
-                    7400,
-                    2419,
-                    9384,
-                    2419,
-                    1,
-                    56797,
-                    25344,
-                    26996,
-                    25974,
-                    2816,
-                    14,
-                    0,
-                    41678,
-                    1996,
-                    0,
-                    0,
-                    15,
-                    0
-                ],
-                "maxEdgeError": 2.0,
-                "maxpolys": 52,
-                "npolys": 26,
-                "nverts": 56,
-                "nvp": 6,
-                "polys": [
-                    7,
-                    8,
-                    9,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    1,
-                    65535,
-                    65535,
-                    65535,
-                    6,
-                    7,
-                    9,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    0,
-                    2,
-                    65535,
-                    65535,
-                    65535,
-                    6,
-                    9,
-                    10,
-                    5,
-                    65535,
-                    65535,
-                    1,
-                    65535,
-                    3,
-                    65535,
-                    65535,
-                    65535,
-                    2,
-                    3,
-                    4,
-                    5,
-                    10,
-                    11,
-                    65535,
-                    5,
-                    65535,
-                    2,
-                    65535,
-                    4,
-                    0,
-                    1,
-                    2,
-                    11,
-                    65535,
-                    65535,
-                    13,
-                    65535,
-                    3,
-                    65535,
-                    65535,
-                    65535,
-                    3,
-                    12,
-                    13,
-                    4,
-                    65535,
-                    65535,
-                    65535,
-                    10,
-                    65535,
-                    3,
-                    65535,
-                    65535,
-                    19,
-                    20,
-                    21,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    7,
-                    65535,
-                    65535,
-                    65535,
-                    18,
-                    19,
-                    21,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    6,
-                    8,
-                    65535,
-                    65535,
-                    65535,
-                    18,
-                    21,
-                    22,
-                    17,
-                    65535,
-                    65535,
-                    7,
-                    65535,
-                    9,
-                    65535,
-                    65535,
-                    65535,
-                    14,
-                    15,
-                    16,
-                    17,
-                    22,
-                    23,
-                    65535,
-                    14,
-                    65535,
-                    8,
-                    65535,
-                    10,
-                    13,
-                    12,
-                    14,
-                    23,
-                    65535,
-                    65535,
-                    5,
-                    65535,
-                    9,
-                    65535,
-                    65535,
-                    65535,
-                    24,
-                    25,
-                    26,
-                    27,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    28,
-                    29,
-                    30,
-                    31,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    32,
-                    33,
-                    1,
-                    0,
-                    65535,
-                    65535,
-                    24,
-                    65535,
-                    4,
-                    65535,
-                    65535,
-                    65535,
-                    15,
-                    34,
-                    35,
-                    16,
-                    65535,
-                    65535,
-                    65535,
-                    19,
-                    65535,
-                    9,
-                    65535,
-                    65535,
-                    40,
-                    41,
-                    42,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    16,
-                    65535,
-                    65535,
-                    65535,
-                    39,
-                    40,
-                    42,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    15,
-                    17,
-                    65535,
-                    65535,
-                    65535,
-                    39,
-                    42,
-                    43,
-                    38,
-                    65535,
-                    65535,
-                    16,
-                    65535,
-                    18,
-                    65535,
-                    65535,
-                    65535,
-                    45,
-                    36,
-                    37,
-                    38,
-                    43,
-                    44,
-                    65535,
-                    25,
-                    65535,
-                    17,
-                    65535,
-                    19,
-                    35,
-                    34,
-                    45,
-                    44,
-                    65535,
-                    65535,
-                    14,
-                    65535,
-                    18,
-                    65535,
-                    65535,
-                    65535,
-                    48,
-                    49,
-                    50,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    21,
-                    65535,
-                    65535,
-                    65535,
-                    48,
-                    50,
-                    51,
-                    65535,
-                    65535,
-                    65535,
-                    20,
-                    65535,
-                    22,
-                    65535,
-                    65535,
-                    65535,
-                    47,
-                    48,
-                    51,
-                    52,
-                    65535,
-                    65535,
-                    65535,
-                    21,
-                    65535,
-                    23,
-                    65535,
-                    65535,
-                    53,
-                    54,
-                    55,
-                    46,
-                    47,
-                    52,
-                    25,
-                    65535,
-                    24,
-                    65535,
-                    22,
-                    65535,
-                    55,
-                    33,
-                    32,
-                    46,
-                    65535,
-                    65535,
-                    65535,
-                    13,
-                    65535,
-                    23,
-                    65535,
-                    65535,
-                    53,
-                    37,
-                    36,
-                    54,
-                    65535,
-                    65535,
-                    65535,
-                    18,
-                    65535,
-                    23,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535
-                ],
-                "regs": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    5,
-                    2,
-                    2,
-                    2,
-                    2,
-                    2,
-                    9,
-                    10,
-                    6,
-                    7,
-                    3,
-                    3,
-                    3,
-                    3,
-                    3,
-                    4,
-                    4,
-                    4,
-                    4,
-                    4,
-                    8,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                "verts": [
-                    3,
-                    2,
-                    70,
-                    64,
-                    2,
-                    71,
-                    64,
-                    2,
-                    65,
-                    71,
-                    2,
-                    64,
-                    70,
-                    2,
-                    3,
-                    53,
-                    2,
-                    3,
-                    36,
-                    2,
-                    3,
-                    19,
-                    2,
-                    3,
-                    3,
-                    2,
-                    3,
-                    3,
-                    2,
-                    19,
-                    3,
-                    2,
-                    36,
-                    3,
-                    2,
-                    53,
-                    96,
-                    2,
-                    64,
-                    97,
-                    2,
-                    3,
-                    102,
-                    2,
-                    64,
-                    103,
-                    2,
-                    71,
-                    164,
-                    2,
-                    70,
-                    164,
-                    2,
-                    53,
-                    164,
-                    2,
-                    36,
-                    164,
-                    2,
-                    19,
-                    164,
-                    2,
-                    3,
-                    147,
-                    2,
-                    3,
-                    130,
-                    2,
-                    3,
-                    113,
-                    2,
-                    3,
-                    69,
-                    2,
-                    69,
-                    69,
-                    2,
-                    98,
-                    98,
-                    2,
-                    98,
-                    98,
-                    2,
-                    69,
-                    69,
-                    34,
-                    69,
-                    69,
-                    34,
-                    98,
-                    98,
-                    34,
-                    98,
-                    98,
-                    34,
-                    69,
-                    3,
-                    2,
-                    97,
-                    64,
-                    2,
-                    96,
-                    103,
-                    2,
-                    95,
-                    164,
-                    2,
-                    96,
-                    95,
-                    2,
-                    103,
-                    96,
-                    2,
-                    164,
-                    113,
-                    2,
-                    164,
-                    130,
-                    2,
-                    164,
-                    147,
-                    2,
-                    164,
-                    164,
-                    2,
-                    164,
-                    164,
-                    2,
-                    147,
-                    164,
-                    2,
-                    130,
-                    164,
-                    2,
-                    113,
-                    101,
-                    2,
-                    103,
-                    3,
-                    2,
-                    113,
-                    3,
-                    2,
-                    130,
-                    3,
-                    2,
-                    147,
-                    3,
-                    2,
-                    164,
-                    19,
-                    2,
-                    164,
-                    36,
-                    2,
-                    164,
-                    53,
-                    2,
-                    164,
-                    70,
-                    2,
-                    164,
-                    71,
-                    2,
-                    103,
-                    64,
-                    2,
-                    102
-                ]
-            },
-            "detail": {
-                "meshes": [
-                    0,
-                    3,
-                    0,
-                    1,
-                    3,
-                    3,
-                    1,
-                    1,
-                    6,
-                    4,
-                    2,
-                    2,
-                    10,
-                    6,
-                    4,
-                    4,
-                    16,
-                    4,
-                    8,
-                    2,
-                    20,
-                    4,
-                    10,
-                    2,
-                    24,
-                    3,
-                    12,
-                    1,
-                    27,
-                    3,
-                    13,
-                    1,
-                    30,
-                    4,
-                    14,
-                    2,
-                    34,
-                    6,
-                    16,
-                    4,
-                    40,
-                    4,
-                    20,
-                    2,
-                    44,
-                    4,
-                    22,
-                    2,
-                    48,
-                    4,
-                    24,
-                    2,
-                    52,
-                    4,
-                    26,
-                    2,
-                    56,
-                    4,
-                    28,
-                    2,
-                    60,
-                    3,
-                    30,
-                    1,
-                    63,
-                    3,
-                    31,
-                    1,
-                    66,
-                    4,
-                    32,
-                    2,
-                    70,
-                    6,
-                    34,
-                    4,
-                    76,
-                    4,
-                    38,
-                    2,
-                    80,
-                    3,
-                    40,
-                    1,
-                    83,
-                    3,
-                    41,
-                    1,
-                    86,
-                    4,
-                    42,
-                    2,
-                    90,
-                    6,
-                    44,
-                    4,
-                    96,
-                    4,
-                    48,
-                    2,
-                    100,
-                    4,
-                    50,
-                    2
-                ],
-                "nmeshes": 26,
-                "ntris": 52,
-                "nverts": 104,
-                "tris": [
-                    2,
-                    0,
-                    1,
-                    21,
-                    2,
-                    0,
-                    1,
-                    21,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    5,
-                    0,
-                    4,
-                    17,
-                    0,
-                    1,
-                    4,
-                    1,
-                    1,
-                    3,
-                    4,
-                    4,
-                    1,
-                    2,
-                    3,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    2,
-                    0,
-                    1,
-                    21,
-                    2,
-                    0,
-                    1,
-                    21,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    5,
-                    0,
-                    4,
-                    17,
-                    0,
-                    1,
-                    4,
-                    1,
-                    1,
-                    3,
-                    4,
-                    4,
-                    1,
-                    2,
-                    3,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    2,
-                    0,
-                    1,
-                    21,
-                    2,
-                    0,
-                    1,
-                    21,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    5,
-                    0,
-                    4,
-                    17,
-                    0,
-                    1,
-                    4,
-                    1,
-                    1,
-                    3,
-                    4,
-                    4,
-                    1,
-                    2,
-                    3,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    2,
-                    0,
-                    1,
-                    21,
-                    2,
-                    0,
-                    1,
-                    21,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    5,
-                    0,
-                    4,
-                    17,
-                    0,
-                    3,
-                    4,
-                    4,
-                    0,
-                    2,
-                    3,
-                    4,
-                    0,
-                    1,
-                    2,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5,
-                    3,
-                    0,
-                    2,
-                    17,
-                    0,
-                    1,
-                    2,
-                    5
-                ],
-                "verts": [
-                    -386.0,
-                    -82.0,
-                    -482.0,
-                    -482.0,
-                    -82.0,
-                    -482.0,
-                    -482.0,
-                    -82.0,
-                    -386.0,
-                    -284.0,
-                    -82.0,
-                    -482.0,
-                    -386.0,
-                    -82.0,
-                    -482.0,
-                    -482.0,
-                    -82.0,
-                    -386.0,
-                    -284.0,
-                    -82.0,
-                    -482.0,
-                    -482.0,
-                    -82.0,
-                    -386.0,
-                    -482.0,
-                    -82.0,
-                    -284.0,
-                    -182.0,
-                    -82.0,
-                    -482.0,
-                    -116.0,
-                    -82.0,
-                    -110.0,
-                    -74.0,
-                    -82.0,
-                    -116.0,
-                    -80.0,
-                    -82.0,
-                    -482.0,
-                    -182.0,
-                    -82.0,
-                    -482.0,
-                    -482.0,
-                    -82.0,
-                    -284.0,
-                    -482.0,
-                    -82.0,
-                    -182.0,
-                    -482.0,
-                    -82.0,
-                    -80.0,
-                    -116.0,
-                    -82.0,
-                    -74.0,
-                    -116.0,
-                    -82.0,
-                    -110.0,
-                    -482.0,
-                    -82.0,
-                    -182.0,
-                    -74.0,
-                    -82.0,
-                    -116.0,
-                    76.0,
-                    -82.0,
-                    -116.0,
-                    82.0,
-                    -82.0,
-                    -482.0,
-                    -80.0,
-                    -82.0,
-                    -482.0,
-                    484.0,
-                    -82.0,
-                    -386.0,
-                    484.0,
-                    -82.0,
-                    -482.0,
-                    382.0,
-                    -82.0,
-                    -482.0,
-                    484.0,
-                    -82.0,
-                    -284.0,
-                    484.0,
-                    -82.0,
-                    -386.0,
-                    382.0,
-                    -82.0,
-                    -482.0,
-                    484.0,
-                    -82.0,
-                    -284.0,
-                    382.0,
-                    -82.0,
-                    -482.0,
-                    280.0,
-                    -82.0,
-                    -482.0,
-                    484.0,
-                    -82.0,
-                    -182.0,
-                    112.0,
-                    -82.0,
-                    -116.0,
-                    118.0,
-                    -82.0,
-                    -74.0,
-                    484.0,
-                    -82.0,
-                    -80.0,
-                    484.0,
-                    -82.0,
-                    -182.0,
-                    280.0,
-                    -82.0,
-                    -482.0,
-                    178.0,
-                    -82.0,
-                    -482.0,
-                    82.0,
-                    -82.0,
-                    -482.0,
-                    76.0,
-                    -82.0,
-                    -116.0,
-                    112.0,
-                    -82.0,
-                    -116.0,
-                    178.0,
-                    -82.0,
-                    -482.0,
-                    -86.0,
-                    -82.0,
-                    -86.0,
-                    -86.0,
-                    -82.0,
-                    88.0,
-                    88.0,
-                    -82.0,
-                    88.0,
-                    88.0,
-                    -82.0,
-                    -86.0,
-                    -86.0,
-                    110.0,
-                    -86.0,
-                    -86.0,
-                    110.0,
-                    88.0,
-                    88.0,
-                    110.0,
-                    88.0,
-                    88.0,
-                    110.0,
-                    -86.0,
-                    -482.0,
-                    -82.0,
-                    82.0,
-                    -116.0,
-                    -82.0,
-                    76.0,
-                    -116.0,
-                    -82.0,
-                    -74.0,
-                    -482.0,
-                    -82.0,
-                    -80.0,
-                    118.0,
-                    -82.0,
-                    -74.0,
-                    118.0,
-                    -82.0,
-                    70.0,
-                    484.0,
-                    -82.0,
-                    76.0,
-                    484.0,
-                    -82.0,
-                    -80.0,
-                    382.0,
-                    -82.0,
-                    484.0,
-                    484.0,
-                    -82.0,
-                    484.0,
-                    484.0,
-                    -82.0,
-                    382.0,
-                    280.0,
-                    -82.0,
-                    484.0,
-                    382.0,
-                    -82.0,
-                    484.0,
-                    484.0,
-                    -82.0,
-                    382.0,
-                    280.0,
-                    -82.0,
-                    484.0,
-                    484.0,
-                    -82.0,
-                    382.0,
-                    484.0,
-                    -82.0,
-                    280.0,
-                    178.0,
-                    -82.0,
-                    484.0,
-                    106.0,
-                    -82.0,
-                    118.0,
-                    70.0,
-                    -82.0,
-                    118.0,
-                    76.0,
-                    -82.0,
-                    484.0,
-                    178.0,
-                    -82.0,
-                    484.0,
-                    484.0,
-                    -82.0,
-                    280.0,
-                    484.0,
-                    -82.0,
-                    178.0,
-                    484.0,
-                    -82.0,
-                    76.0,
-                    118.0,
-                    -82.0,
-                    70.0,
-                    106.0,
-                    -82.0,
-                    118.0,
-                    484.0,
-                    -82.0,
-                    178.0,
-                    -482.0,
-                    -82.0,
-                    382.0,
-                    -482.0,
-                    -82.0,
-                    484.0,
-                    -386.0,
-                    -82.0,
-                    484.0,
-                    -482.0,
-                    -82.0,
-                    382.0,
-                    -386.0,
-                    -82.0,
-                    484.0,
-                    -284.0,
-                    -82.0,
-                    484.0,
-                    -482.0,
-                    -82.0,
-                    280.0,
-                    -482.0,
-                    -82.0,
-                    382.0,
-                    -284.0,
-                    -82.0,
-                    484.0,
-                    -182.0,
-                    -82.0,
-                    484.0,
-                    -80.0,
-                    -82.0,
-                    484.0,
-                    -74.0,
-                    -82.0,
-                    118.0,
-                    -116.0,
-                    -82.0,
-                    112.0,
-                    -482.0,
-                    -82.0,
-                    178.0,
-                    -482.0,
-                    -82.0,
-                    280.0,
-                    -182.0,
-                    -82.0,
-                    484.0,
-                    -116.0,
-                    -82.0,
-                    112.0,
-                    -116.0,
-                    -82.0,
-                    76.0,
-                    -482.0,
-                    -82.0,
-                    82.0,
-                    -482.0,
-                    -82.0,
-                    178.0,
-                    -80.0,
-                    -82.0,
-                    484.0,
-                    76.0,
-                    -82.0,
-                    484.0,
-                    70.0,
-                    -82.0,
-                    118.0,
-                    -74.0,
-                    -82.0,
-                    118.0
-                ]
-            }
-        }
+        "navmesh": {}
     }
 }

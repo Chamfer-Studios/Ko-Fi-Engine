@@ -39,7 +39,7 @@ SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 
 	jsonHandler.LoadJson(j, "EngineConfig/window_test.json");
 
-	rootGo = new GameObject(-1, engine, "Root");
+	rootGo = new GameObject(0, engine, "Root");
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
 
@@ -61,7 +61,7 @@ bool SceneIntro::Start()
 	// Load Default Screen (Can be changed from settings)
 	if (!engine->GetSceneManager()->GetDefaultScene().empty())
 	{
-		Importer::GetInstance()->sceneImporter->Load(this, engine->GetSceneManager()->GetDefaultScene().c_str());
+		Importer::GetInstance()->sceneImporter->LoadScene(this, engine->GetSceneManager()->GetDefaultScene().c_str());
 	}
 	else
 	{
@@ -175,7 +175,7 @@ bool SceneIntro::PostUpdate(float dt)
 	if (switchScene)
 	{
 		switchScene = false;
-		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+		Importer::GetInstance()->sceneImporter->LoadScene(this, sceneNameGO.c_str());
 	}
 
 	if (quitPlease)

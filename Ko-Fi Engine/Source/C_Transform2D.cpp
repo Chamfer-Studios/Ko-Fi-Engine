@@ -38,7 +38,7 @@ bool C_Transform2D::CleanUp()
 
 void C_Transform2D::Save(Json& json) const
 {
-	json["type"] = "transform2D";
+	json["type"] = (int)type;
 
 	json["position"] = {
 		GetPosition().x,

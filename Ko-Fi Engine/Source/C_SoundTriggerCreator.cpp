@@ -34,6 +34,7 @@ bool C_SoundTriggerCreator::InspectorDraw(PanelChooser* chooser)
 
 void C_SoundTriggerCreator::Save(Json& json) const
 {
+	json["type"] = (int)type;
 }
 
 void C_SoundTriggerCreator::Load(Json& json)

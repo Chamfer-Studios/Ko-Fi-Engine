@@ -31,14 +31,14 @@ public:
 
 	// SetMesh
 	void SetMesh(R_Mesh* mesh);
-	inline void SetPath(const char* path) { mesh->path = path; }
+	inline void SetPath(const char* path) { mesh->SetAssetPath(path); }
 	void SetVertexNormals(bool vertexNormals);
 	void SetFaceNormals(bool facesNormals);
 	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
 	
 	// Getters
 	inline R_Mesh* GetMesh() const { return mesh; }
-	inline const char* GetMeshPath() const { mesh->path.c_str(); }
+	inline const char* GetMeshPath() const { mesh->GetAssetPath(); }
 	inline float GetSphereRadius() const { return radius; }
 	inline bool GetRenderMesh() const { return renderMesh; }
 	float3 GetCenterPoint() const { return mesh->localAABB.CenterPoint();  }

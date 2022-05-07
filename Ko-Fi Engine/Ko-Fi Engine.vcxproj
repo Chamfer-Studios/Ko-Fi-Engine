@@ -164,6 +164,7 @@
     <ClCompile Include="Source\C_RigidBody.cpp" />
     <ClCompile Include="Source\C_SphereCollider.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
+    <ClCompile Include="Source\PanelResources.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
     <ClCompile Include="Source\M_Camera3D.cpp" />
@@ -319,6 +320,7 @@
     <ClInclude Include="Source\C_CapsuleCollider.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\C_SphereCollider.h" />
+    <ClInclude Include="Source\PanelResources.h" />
     <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\P_Actor.h" />
     <ClInclude Include="Source\P_Collision.h" />

@@ -38,7 +38,6 @@ C_AudioSource::~C_AudioSource()
 
 bool C_AudioSource::Start()
 {
-
     return true;
 }
 
@@ -122,7 +121,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             ImGui::Spacing();
             if (ImGui::Button("Change Track"))
             {
-                chooser->OpenPanel("Load Track", "wav", { "wav" });
+                chooser->OpenPanel("Load Track", "wav", { "wav", "mp3", "flac" });
             }
             ImGui::SameLine();
             if (ImGui::Button("Delete Track"))
@@ -204,7 +203,7 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
 
 void C_AudioSource::Save(Json& json) const
 {
-    json["type"] = "audio_source";
+    json["type"] = (int)type;
 
     if (track != nullptr)
     {

@@ -6,10 +6,7 @@ Component::Component(GameObject* parent) : owner(parent)
 	type = ComponentType::NONE;
 
 	if (parent)
-	{
 		parent->PushBackComponent(this);
-
-	}
 }
 
 const char* Component::GetNameByComponentType(ComponentType type)
@@ -17,43 +14,43 @@ const char* Component::GetNameByComponentType(ComponentType type)
 	switch (type)
 	{
 	case ComponentType::NONE:
-		return "NONE";
+		return "None";
 	case ComponentType::MESH:
-		return "MESH";
+		return "Mesh";
 	case ComponentType::MATERIAL:
-		return "MATERIAL";
+		return "Material";
 	case ComponentType::CAMERA:
-		return "CAMERA";
+		return "Camera";
 	case ComponentType::BOX_COLLIDER:
-		return "BOX_COLLIDER";
+		return "Box Collider";
 	case ComponentType::SPHERE_COLLIDER:
-		return "SPHERE_COLLIDER";
+		return "Sphere Collider";
 	case ComponentType::CAPSULE_COLLIDER:
-		return "CAPSULE_COLLIDER";
+		return "Capsule Collider";
 	case ComponentType::SCRIPT:
-		return "SCRIPT";
+		return "Script";
 	case ComponentType::RIGID_BODY:
-		return "RIGID_BODY";
+		return "Rigid Body";
 	case ComponentType::TRANSFORM2D:
-		return "TRANSFORM2D";
+		return "Transform 2D";
 	case ComponentType::CANVAS:
-		return "CANVAS";
+		return "Canvas";
 	case ComponentType::IMAGE:
-		return "IMAGE";
+		return "Image";
 	case ComponentType::BUTTON:
-		return "BUTTON";
+		return "Button";
 	case ComponentType::TEXT:
-		return "TEXT";
+		return "Text";
 	case ComponentType::TRANSFORM:
-		return "TRANSFORM";
+		return "Transform";
 	case ComponentType::INFO:
 		return "INFO";
 	case ComponentType::ANIMATOR:
 		return "ANIMATOR";
 	default:
-		return "ERROR, goto Component.cpp line 13";
+		return "[ERROR] Component: Unable to return name.";
 	}
-	return "ERROR, no component type!";
+	return "[ERROR] Component: No component type detected!";
 }
 
 bool Component::DrawDeleteButton(GameObject* owner, Component* component)

@@ -63,7 +63,7 @@ public:
 
 	virtual bool InspectorDraw(PanelChooser *chooser) { return true; }
 
-	virtual void Save(Json &json) const {}
+	virtual void Save(Json& json) const {}
 	virtual void Load(Json &json) {}
 
 	ComponentType GetType() { return type; }
@@ -75,7 +75,7 @@ protected:
 public:
 	bool active = true;
 	GameObject *owner = nullptr;
-	ComponentType type;
+	ComponentType type = ComponentType::NONE;
 };
 
 #endif //__COMPONENT_H__

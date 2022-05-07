@@ -583,9 +583,6 @@
     <ClCompile Include="Source\External\stb_image\stb_image.cpp">
       <Filter>Libs\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="Source\par_shapes.cpp">
-      <Filter>Source\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Resource.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
@@ -633,6 +630,9 @@
     </ClCompile>
     <ClCompile Include="Source\C_Animator.cpp">
       <Filter>Source\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelResources.cpp">
+      <Filter>Source\Editor\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1199,6 +1199,9 @@
     </ClInclude>
     <ClInclude Include="Source\par_shapes.h">
       <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelResources.h">
+      <Filter>Source\Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

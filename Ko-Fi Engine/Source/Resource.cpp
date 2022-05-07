@@ -2,6 +2,17 @@
 #include "RNG.h"
 #include "FSDefs.h"
 
+Resource::Resource() :
+type(ResourceType::UNKNOWN),
+uid(0),
+referenceCount(0),
+assetPath(""),
+assetFile(""),
+libraryPath(""),
+libraryFile("")
+{
+}
+
 Resource::Resource(ResourceType type) :
 type(type),
 uid(RNG::GetRandomUint()),
@@ -30,7 +41,14 @@ bool Resource::CleanUp()
 	assetFile.shrink_to_fit();
 	libraryPath.shrink_to_fit();
 	libraryFile.shrink_to_fit();
+
 	return true;
+}
+
+void Resource::ForceUID(const UID& uid)
+{
+	this->uid = uid;
+	SetLibraryPathAndFile();
 }
 
 void Resource::ModifyReferenceCount(int modification)
@@ -55,13 +73,33 @@ void Resource::SetLibraryPathAndFile()
 		dir = TEXTURES_DIR;
 		extension = TEXTURE_EXTENSION;
 		break;
-	case ResourceType::SCENE:
-		dir = ASSETS_SCENES_DIR;
-		extension = SCENE_EXTENSION;
+	//case ResourceType::SCENE:
+	//	dir = SCENES_DIR;
+	//	extension = SCENE_EXTENSION;
+	//	break;
+	//case ResourceType::FONT:
+	//	dir = FONTS_DIR;
+	//	extension = FONT_EXTENSION;
+	//	break;
+	//case ResourceType::TRACK:
+	//	dir = AUDIOS_DIR;
+	//	extension = AUDIO_EXTENSION;
+	//	break;
+	//case ResourceType::PARTICLE:
+	//	dir = FONTS_DIR;
+	//	extension = FONT_EXTENSION;
+	//	break;
+	case ResourceType::MODEL:
+		dir = MODELS_DIR;
+		extension = MODEL_EXTENSION;
 		break;
-	case ResourceType::FONT:
-		dir = FONT_DIR;
-		extension = FONT_EXTENSION;
+	case ResourceType::MATERIAL:
+		dir = SHADERS_DIR;
+		extension = SHADER_EXTENSION;
+		break;
+	case ResourceType::ANIMATION:
+		dir = ANIMATIONS_DIR;
+		extension = ANIMATION_EXTENSION;
 		break;
 	case ResourceType::UNKNOWN:
 		break;
@@ -73,13 +111,8 @@ void Resource::SetLibraryPathAndFile()
 	libraryFile = file + extension;
 }
 
-void Resource::SetAssetsPathAndFile(const char* path,const char* file)
+void Resource::SetAssetsPathAndFile(const char* path, const char* file)
 {
 	assetPath = path;
 	assetFile = file;
 }
-
-//bool Resource::HasResource(UID uid) const
-//{
-//	return false;
-//}

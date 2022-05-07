@@ -1,0 +1,35 @@
+{
+    "asset_file": "rabban.fbx",
+    "asset_path": "Assets/Models/Characters/Enemies/rabban.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "axe.sugar",
+            "library_path": "Library/Meshes/1053862176.sugar",
+            "type": 0,
+            "uid": 1053862176
+        },
+        {
+            "asset_file": "rabban_base_color.png",
+            "library_path": "Library/Textures/1830524315.cacao",
+            "type": 1,
+            "uid": 1830524315
+        },
+        {
+            "asset_file": "rabban.sugar",
+            "library_path": "Library/Meshes/977727914.sugar",
+            "type": 0,
+            "uid": 977727914
+        },
+        {
+            "asset_file": "rabban_armature|rabban_reel.cake",
+            "library_path": "Library/Animations/12271894.cake",
+            "type": 5,
+            "uid": 12271894
+        }
+    ],
+    "library_file": "726391114.tea",
+    "library_path": "Library/Models/726391114.tea",
+    "mod_time": 410994650,
+    "type": 3,
+    "uid": 726391114
+}

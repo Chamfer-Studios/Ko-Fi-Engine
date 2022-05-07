@@ -92,7 +92,7 @@ bool C_Particle::CleanUp()
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
 
-	//TODO: refs -1
+	resource->ModifyReferenceCount(-1);
 	resource->CleanUp();
 	RELEASE(resource);
 
@@ -147,9 +147,9 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					if (!chooser->OnChooserClosed().empty())
 					{
 						std::string path = chooser->OnChooserClosed();
-						if (emitter->texture.textureID == currentTextureId)
+						if (emitter->texture.GetTextureId() == currentTextureId)
 						{
-							emitter->texture.textureID = TEXTUREID_DEFAULT;
+							emitter->texture.SetTextureId(TEXTUREID_DEFAULT);
 							emitter->texture.SetTexturePath(nullptr);
 
 							R_Texture tex;
@@ -160,9 +160,9 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				}
 
 				ImGui::Text("Material Texture:");
-				if (emitter->texture.textureID != -1)
+				if (emitter->texture.GetTextureId() != TEXTUREID_DEFAULT)
 				{
-					ImGui::Image((ImTextureID)emitter->texture.textureID, ImVec2(85, 85));
+					ImGui::Image((ImTextureID)emitter->texture.GetTextureId(), ImVec2(85, 85));
 					ImGui::SameLine();
 					ImGui::BeginGroup();
 					ImGui::Text(emitter->texture.GetTexturePath());
@@ -173,7 +173,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					if (ImGui::Button(changeTexture.c_str()))
 					{
 						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg"});
-						currentTextureId = emitter->texture.textureID;
+						currentTextureId = emitter->texture.GetTextureId();
 					}
 
 					ImGui::PopID();
@@ -183,7 +183,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					std::string deleteTexture = "Delete Texture to " + emitter->name;
 					if (ImGui::Button(deleteTexture.c_str()))
 					{
-						emitter->texture.textureID = -1;
+						emitter->texture.SetTextureId(TEXTUREID_DEFAULT);
 						emitter->texture.SetTexturePath(nullptr);
 					}
 					ImGui::PopID();
@@ -196,7 +196,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					{
 						std::string changeTexture = "Change Texture to " + emitter->name;
 						chooser->OpenPanel(changeTexture.c_str(), "png", { "png","jpg","jpeg" });
-						currentTextureId = emitter->texture.textureID;
+						currentTextureId = emitter->texture.GetTextureId();
 					}
 				}
 
@@ -635,7 +635,8 @@ void C_Particle::NewEmitterName(std::string& name, int n)
 
 void C_Particle::Save(Json& json) const
 {
-	json["type"] = "particle";
+	json["type"] = (int)type;
+
 	Json jsonResource;
 	if (resource != nullptr)
 	{
@@ -645,7 +646,7 @@ void C_Particle::Save(Json& json) const
 		{
 			jsonEmitter["maxParticles"] = e->maxParticles;
 			jsonEmitter["name"] = e->name;
-			jsonEmitter["texture_path"] = e->texture.path;
+			jsonEmitter["texture_path"] = e->texture.GetTexturePath();
 			Json jsonModule;
 			for (auto m : e->modules)
 			{
@@ -743,9 +744,9 @@ void C_Particle::Load(Json& json)
 				ei->Init();
 				e->maxParticles = emitter.value().at("maxParticles");
 				e->texture = R_Texture();
-				e->texture.path = emitter.value().at("texture_path").get<std::string>();
-				if (e->texture.path != "")
-					Importer::GetInstance()->textureImporter->Import(e->texture.path.c_str(), &e->texture);
+				e->texture.SetTexturePath(emitter.value().at("texture_path").get<std::string>().c_str());
+				if (e->texture.GetTexturePath() != "")
+					Importer::GetInstance()->textureImporter->Import(e->texture.GetTexturePath(), &e->texture);
 
 				e->modules.clear();
 				e->modules.shrink_to_fit();

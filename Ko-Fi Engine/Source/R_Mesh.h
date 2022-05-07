@@ -157,7 +157,6 @@ public:
 	AABB localAABB;
 
 	Shape meshType;
-	std::string path;
 
 private:
 	// Debug functions for drawing

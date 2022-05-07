@@ -34,9 +34,10 @@ public:
 	bool IsCurrentClipPlaying();
 	bool IsCurrentClipLooping();
 
-private:
+public:
 	R_Animation* animation = nullptr;
 
+private:
 	std::map<std::string, AnimatorClip> clips;
 	AnimatorClip* selectedClip;
 	AnimatorClip* clipToDelete;

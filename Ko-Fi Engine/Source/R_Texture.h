@@ -14,24 +14,35 @@ public:
 	R_Texture();
 	~R_Texture();
 
-	inline const char* GetTexturePath() { return path.c_str(); }
+	bool SaveMeta(Json& json) const override;
+
+	void SetUpTexture();
+
+	inline const char* GetTexturePath() const { return GetAssetPath(); }
 	inline void SetTexturePath(const char* path)
-	{ 
-		path != nullptr ? this->path = path : this->path = "";
+	{
+		path != nullptr ? SetAssetPath(path) : SetAssetPath("");
 	}
 
 	inline uint GetTextureId() const { return textureID; }
+	inline void SetTextureId(const uint id) { textureID = id; }
 	inline int GetTextureWidth() const { return width; }
+	inline void SetTextureWidth(const int width) { this->width = width; }
 	inline int GetTextureHeight() const { return height; }
+	inline void SetTextureHeight(const int height) { this->height = height; }
 	inline int GetNrChannels() const { return nrChannels; }
+	inline void SetNrChannels(const int channels) { nrChannels = channels; }
 
 public:
+	unsigned char* data = nullptr;
+	int imageSizeBytes = 0;
+	// Total bytes to save: width x height x bytes_per_pixel
+
 	uint textureID = TEXTUREID_DEFAULT;
+
 	int width = -1;
 	int height = -1;
 	int nrChannels = 1;
-
-	std::string path = "";
 };
 
 #endif // !__TEXTURE_H__

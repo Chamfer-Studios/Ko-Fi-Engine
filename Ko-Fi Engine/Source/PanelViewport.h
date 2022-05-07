@@ -28,6 +28,7 @@ private:
 	R_Texture* gizmoRotateIcon = nullptr;
 	R_Texture* gizmoScaleIcon = nullptr;
 
+	bool dragDropPopup = false;
 };
 
 #endif // !__PANEL_VIEWPORT_H__

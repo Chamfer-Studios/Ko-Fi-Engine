@@ -44,9 +44,9 @@ bool C_Image::CleanUp()
 
 void C_Image::Save(Json& json) const
 {
-	json["type"] = "image";
+	json["type"] = (int)type;
 
-	json["texture"] = openGLTexture.path;
+	json["texture"] = openGLTexture.GetTexturePath();
 }
 
 void C_Image::Load(Json& json)
