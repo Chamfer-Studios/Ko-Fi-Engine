@@ -42,14 +42,16 @@ SkyBox::SkyBox()
 	//"EngineConfig/Skybox/back.jpg"
 	//};
 
-		faces =
+	faces =
 	{
-	"EngineConfig/Skybox/Skybox2/Daylight-Box_Right.jpg",
-	"EngineConfig/Skybox/Skybox2/Daylight-Box_Left.jpg",
-	"EngineConfig/Skybox/Skybox2/Daylight-Box_Top.jpg",
-	"EngineConfig/Skybox/Skybox2/Daylight-Box_Bottom.jpg",
-	"EngineConfig/Skybox/Skybox2/Daylight-Box_Front.jpg",
-	"EngineConfig/Skybox/Skybox2/Daylight-Box_Back.jpg"
+
+	"EngineConfig/Skybox/DaySkybox/right.png",
+	"EngineConfig/Skybox/DaySkybox/left.png",
+	"EngineConfig/Skybox/DaySkybox/top.png",
+	"EngineConfig/Skybox/DaySkybox/bottom.png",
+	"EngineConfig/Skybox/DaySkybox/front.png",
+	"EngineConfig/Skybox/DaySkybox/back.png"
+
 	};
 }
 
@@ -127,7 +129,7 @@ void SkyBox::InitTexture()
 		if (data)
 		{
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-				0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+				0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data
 			);
 			stbi_image_free(data);
 		}
