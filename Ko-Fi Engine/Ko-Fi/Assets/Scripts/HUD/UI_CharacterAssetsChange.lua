@@ -3,6 +3,7 @@
 path1 =  "Assets/HUD/hud_portrait_main_v1.0.png"
 path2 =  "Assets/HUD/hud_portrait_nerala_v1.1.png"
 path3 =  "Assets/HUD/hud_portrait_omozra_v1.1.png"
+pathBlank = "Assets/HUD/blank_asset_v1.0.png"
 
 --local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 --characterIDIV = InspectorVariable.new("lives", characterIDIVT, characterID)
@@ -24,13 +25,13 @@ NewVariable(path3IV)
 function Update(dt)
 	currentCharacter = GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 	if (currentCharacter == 1) then
-		gameObject:GetImage():SetTexture(path1) -- It would be nice if it worked with events instead of every frame
-	end
-	if (currentCharacter == 2) then
-		gameObject:GetImage():SetTexture(path2) -- It would be nice if it worked with events instead of every frame
-	end
-	if (currentCharacter == 3) then
-		gameObject:GetImage():SetTexture(path3) -- It would be nice if it worked with events instead of every frame
+		gameObject:GetImage():SetTexture(path1)
+	elseif (currentCharacter == 2) then
+		gameObject:GetImage():SetTexture(path2)
+	elseif (currentCharacter == 3) then
+		gameObject:GetImage():SetTexture(path3)
+	elseif (currentCharacter == 0) then
+		gameObject:GetImage():SetTexture(pathBlank)
 	end
 end
 

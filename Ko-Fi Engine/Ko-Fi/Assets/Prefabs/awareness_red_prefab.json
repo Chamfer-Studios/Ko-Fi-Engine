@@ -1,0 +1,98 @@
+{
+    "UID": 518661648,
+    "active": true,
+    "children": [
+        {
+            "UID": 1952554750,
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": "transform"
+                },
+                {
+                    "active": true,
+                    "draw_face_normals": false,
+                    "draw_vertex_normals": false,
+                    "isAnimated": false,
+                    "path": "Library/Meshes/Cylinder.sugar",
+                    "shape_type": 0,
+                    "type": "mesh"
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.800000011920929,
+                        0.800000011920929,
+                        0.800000011920929,
+                        1.0
+                    ],
+                    "shader_path": "Assets/Shaders/default_shader.glsl",
+                    "texture_path": "Assets/Textures/awareness/red.png",
+                    "type": "material",
+                    "uniforms": [
+                        {
+                            "name": "albedoTint",
+                            "type": 35666,
+                            "value": {
+                                "w": 1.0,
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            }
+                        }
+                    ]
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Cylinder",
+            "parent_UID": 518661648,
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "transform"
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "awareness",
+    "parent_UID": 4294967295,
+    "tag": 0
+}

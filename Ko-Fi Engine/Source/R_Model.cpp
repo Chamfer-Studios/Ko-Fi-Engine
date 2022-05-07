@@ -1,122 +1,127 @@
 #include "R_Model.h"
 #include "FSDefs.h"
 
-R_Model::R_Model() : Resource(ResourceType::MODEL)
+R_Model::R_Model() : Resource(ResourceType::MODEL),
+animation(0),
+animationName("")
 {
 }
 
 R_Model::~R_Model()
 {
+	nodes.clear();
+	nodes.shrink_to_fit();
+
+	animationName.clear();
+	animationName.shrink_to_fit();
 }
 
 bool R_Model::SaveMeta(Json& json) const
 {
-	Json jsonResources;
-	for (auto node : nodes)
+	bool ret = true;
+
+	std::vector<UID> savedMeshesUid;
+	std::vector<UID> savedTexturesUid;
+
+	json["contained_resources"].array();
+	Json jsonResource;
+	for (const auto& node : nodes)
 	{
-		Json jsonResource;
 		if (node.mesh != 0)
 		{
-			std::string meshNode = node.name + MESH_EXTENSION;
-			std::string meshPath = MESHES_DIR + std::to_string(node.mesh) + MESH_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::MESH;
-			jsonResource["name"] = meshNode.c_str();
-			jsonResource["library_path"] = meshPath.c_str();
-			jsonResources[node.name].push_back(jsonResource);
-		}
-		if (node.material != 0)
-		{
-			std::string materialNode = node.name + MATERIAL_EXTENSION;
-			std::string materialPath = MATERIALS_DIR + std::to_string(node.material) + MATERIAL_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::MATERIAL;
-			jsonResource["name"] = materialNode.c_str();
-			jsonResource["library_path"] = materialPath.c_str();
-			jsonResources[node.name].push_back(jsonResource);
-		}
-		if (node.shader != 0)
-		{
-			std::string shaderNode = node.name + SHADER_EXTENSION;
-			//TODO: Should we put shader dir?
-			//std::string shaderPath = SHADER_DIR + std::to_string(node.shader) + SHADER_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::SHADER;
-			jsonResource["name"] = shaderNode.c_str();
-			//jsonResource["library_path"] = shaderPath.c_str();
-			jsonResources[node.name].push_back(jsonResource);
-		}
-		if (node.texture != 0)
-		{
-			std::string textureNode = node.textureName;
-			std::string texturePath = TEXTURES_DIR + std::to_string(node.texture) + TEXTURE_EXTENSION;
-			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::TEXTURE;
-			jsonResource["name"] = textureNode.c_str();
-			jsonResource["library_path"] = texturePath.c_str();
-			jsonResources[node.name].push_back(jsonResource);
-		}
+			bool alreadySaved = false;
+			for (const auto& meshIt : savedMeshesUid)
+			{
+				if (meshIt == node.mesh)
+				{
+					alreadySaved = true;
+					break;
+				}
+			}
 
-		//TODO: ANIMATION WHEN READY
+			if (!alreadySaved)
+			{
+				std::string meshName = node.name + MESH_EXTENSION;
+				std::string meshPath = MESHES_DIR + std::to_string(node.mesh) + MESH_EXTENSION;
+				jsonResource["uid"] = node.mesh;
+				jsonResource["type"] = ResourceType::MESH;
+				jsonResource["asset_file"] = meshName;
+				jsonResource["library_path"] = meshPath;
+				json["contained_resources"].push_back(jsonResource);
+				savedMeshesUid.push_back(node.mesh);
+			}
+		}
+		if (node.texture != 0 && node.textureName != "")
+		{
+			bool alreadySaved = false;
+			for (const auto& textureIt : savedTexturesUid)
+			{
+				if (textureIt == node.texture)
+				{
+					alreadySaved = true;
+					break;
+				}
+			}
 
-		json["resources"].push_back(jsonResources);
+			if (!alreadySaved)
+			{
+				std::string texturePath = TEXTURES_DIR + std::to_string(node.texture) + TEXTURE_EXTENSION;
+				jsonResource["uid"] = node.texture;
+				jsonResource["type"] = ResourceType::TEXTURE;
+				jsonResource["asset_file"] = node.textureName;
+				jsonResource["library_path"] = texturePath;
+				json["contained_resources"].push_back(jsonResource);
+				savedTexturesUid.push_back(node.texture);
+			}
+		}
 	}
-	return true;
-}
 
-bool R_Model::LoadMeta(Json& json)
-{
-	return true;
+	savedMeshesUid.clear();
+	savedMeshesUid.shrink_to_fit();
+	savedTexturesUid.clear();
+	savedTexturesUid.shrink_to_fit();
+
+	if (animation != 0 && animationName != "")
+	{
+		Json jsonAnim;
+		std::string animationFile = animationName + ANIMATION_EXTENSION;
+		std::string animationPath = ANIMATIONS_DIR + std::to_string(animation) + ANIMATION_EXTENSION;
+		jsonAnim["uid"] = animation;
+		jsonAnim["type"] = ResourceType::ANIMATION;
+		jsonAnim["asset_file"] = animationFile;
+		jsonAnim["library_path"] = animationPath;
+		json["contained_resources"].push_back(jsonAnim);
+	}
+
+	return ret;
 }
 
 // MODEL NODE ------------------------------------------------------------------------------------------------
 
 ModelNode::ModelNode() :
-	name("NAME"),
+	name(""),
 	uid(0),
 	parentUid(0),
 	mesh(0),
-	material(0),
-	shader(0),
 	texture(0),
-	textureName(0)
+	textureName(""),
+	position(float3::zero),
+	rotation(Quat::identity),
+	scale(float3::zero)
 {}
 
-ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID material, UID shader, UID texture, std::string textureName) :
+ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID texture, std::string textureName, float3 position, Quat rotation, float3 scale) :
 name(name),
 uid(uid),
 parentUid(parentUid),
 mesh(mesh),
-material(material),
-shader(shader),
 texture(texture),
-textureName(textureName)
+textureName(textureName),
+position(position),
+rotation(rotation),
+scale(scale)
 {}
 
 ModelNode::~ModelNode()
 {
-}
-
-void ModelNode::Save(Json& json) const
-{
-	json["name"] = name.c_str();
-	json["uid"] = uid;
-	json["parent_uid"] = parentUid;
-	json["mesh_uid"] = mesh;
-	json["material_uid"] = material;
-	json["shader_uid"] = shader;
-	json["texture_uid"] = texture;
-	json["texture_name"] = textureName.c_str();
-}
-
-void ModelNode::Load(Json& json)
-{
-	name = json.at("name").get<std::string>();
-	uid = json.at("uid");
-	parentUid = json.at("parent_uid");
-	mesh = json.at("mesh_uid");
-	material = json.at("material_uid");
-	shader = json.at("shader_uid");
-	texture = json.at("texture_uid");
-	textureName = json.at("texture_name").get<std::string>();
 }

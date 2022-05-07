@@ -5,9 +5,7 @@
 #include <glew.h>
 
 R_Material::R_Material() :
-	shaderProgramID(0),
-	//materialPath(MATERIALS_DIR + std::string("default") + MATERIAL_EXTENSION),
-	shaderPath(ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION),
+	shaderProgramID(SHADERID_DEFAULT),
 	Resource(ResourceType::MATERIAL)
 {
 }
@@ -18,9 +16,12 @@ R_Material::~R_Material()
 
 	uniforms.clear();
 	uniforms.shrink_to_fit();
+}
 
-	shaderPath.clear();
-	shaderPath.shrink_to_fit();
+bool R_Material::SaveMeta(Json& json) const
+{
+	json["contained_resources"].array();
+	return true;
 }
 
 Uniform* R_Material::FindUniform(std::string name)

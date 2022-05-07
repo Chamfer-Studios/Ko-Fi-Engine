@@ -47,8 +47,8 @@ bool PanelCameraViewport::RenderPanel(bool* showPanel )
 	
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	float width = editor->engine->GetCamera3D()->gameCamera->GetFarPlaneWidth();
-	float height = editor->engine->GetCamera3D()->gameCamera->GetFarPlaneHeight();
+	float width = editor->engine->GetCamera3D()->gameCamera->GetNearPlaneWidth();
+	float height = editor->engine->GetCamera3D()->gameCamera->GetNearPlaneHeight();
 	ImGui::SetNextWindowSize(ImVec2(width*250, height*250));
 	if (ImGui::Begin("Camera Preview", showPanel, ImGuiWindowFlags_NoScrollbar ))
 	{
@@ -58,7 +58,6 @@ bool PanelCameraViewport::RenderPanel(bool* showPanel )
 		{
 			editor->lastCameraViewportSize = viewportSize;
 			engine->GetCamera3D()->gameCamera->SetAspectRatio(viewportSize.x / viewportSize.y);
-			engine->GetCamera3D()->gameCamera->RecalculateProjection();
 
 			engine->GetRenderer()->ResizePreviewFrameBuffers(viewportSize.x, viewportSize.y);
 

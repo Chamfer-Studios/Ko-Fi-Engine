@@ -27,7 +27,7 @@ enum class Tag
 class GameObject
 {
 public:
-	GameObject(int id, KoFiEngine *engine, const char *name = nullptr, bool is3D = true);
+	GameObject(UID uid, KoFiEngine* engine, const char* name = nullptr, bool is3D = true);
 	GameObject();
 	// GameObject(const char* path, int id, const char* name = nullptr);
 	~GameObject();
@@ -81,14 +81,15 @@ public:
 	C_Transform *GetTransform() const;
 	std::vector<Component *> GetComponents() const;
 	AABB BoundingAABB();
-	void SetUID(uint uid);
-	uint GetUID() const;
+	UID GetUID() const;
+	void SetUID(UID uid);
 
-	void SetParentUID(uint uid);
-	uint GetParentUID() const;
+	UID GetParentUID() const;
+	void SetParentUID(UID uid);
+	inline bool GetRenderGameObject() const { return renderGameObject; }
 
-	bool HasChildrenWithUID(uint uid);
-	bool HasParentWithUID(uint uid);
+	bool HasChildrenWithUID(UID uid);
+	bool HasParentWithUID(UID uid);
 
 	KoFiEngine *GetEngine() const;
 	void SetEngine(KoFiEngine *engine);
@@ -98,6 +99,7 @@ public:
 	bool LoadPrefabJson(const char *path, bool exists);
 	bool LoadPrefab(Json &jsonFile);
 	bool UpdatePrefab(Json &jsonFile);
+	inline void SetRenderGameObject(bool renderGameObject) { this->renderGameObject = renderGameObject; }
 
 	bool IsSelected();
 	void LoadSceneFromName(std::string name);
@@ -137,10 +139,11 @@ public:
 
 private:
 	std::string name;
-	std::vector<Component *> components;
-	GameObject *parent = nullptr;
-	uint uid;
-	uint parentUid;
+	std::vector<Component*> components;
+	GameObject* parent = nullptr;
+	UID uid;
+	UID parentUid;
+	bool renderGameObject = true;
 
 	KoFiEngine *engine = nullptr;
 	C_Transform *transform = nullptr;

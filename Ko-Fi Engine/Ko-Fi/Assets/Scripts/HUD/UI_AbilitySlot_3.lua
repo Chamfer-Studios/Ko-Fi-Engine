@@ -1,61 +1,109 @@
--- player = Find("Character")
---characterID = 1
 isActive1 = false
 isActive2 = false
 isActive3 = false
+zhib = 1
+nerala = 1
+omozra = 1
 path1 =  "Assets/HUD/zhib_ultimate_normal_v1.0.png"
 path12 =  "Assets/HUD/zhib_ultimate_active_v1.0.png"
+path13 =  "Assets/HUD/zhib_ultimate_cooldown_v1.0.png"
 path2 =  "Assets/HUD/nerala_ultimate_normal_v1.0.png"
 path22 =  "Assets/HUD/nerala_ultimate_active_v1.0.png"
+path23 =  "Assets/HUD/nerala_ultimate_cooldown_v1.0.png"
 path3 =  "Assets/HUD/omozra_ultimate_normal_v1.0.png"
 path32 =  "Assets/HUD/omozra_ultimate_active_v1.0.png"
+path33 =  "Assets/HUD/omozra_ultimate_cooldown_v1.0.png"
+pathBlank = "Assets/HUD/blank_asset_v1.0.png"
 
 -- Called each loop iteration
 function Update(dt)
-	currentCharacter = GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
-	if (currentCharacter == 1) then
-		if (isActive1 == false) then
+	if (GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT) == 1) then
+		if (zhib == 1) then
 			gameObject:GetImage():SetTexture(path1)
-		end
-		if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- 1
-			startTime1 = os.time()
-			endTime1 = startTime1+3
+		elseif (zhib == 2) then
 			gameObject:GetImage():SetTexture(path12)
-			isActive1 = true
+		elseif (zhib == 3) then
+			gameObject:GetImage():SetTexture(path13)
 		end
-		if (os.time() >= endTime1) then
-			isActive1 = false
-		end
-	end
-	if (currentCharacter == 2) then
-		if (isActive2 == false) then
+	elseif (GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT) == 2) then
+		if (nerala == 1) then
 			gameObject:GetImage():SetTexture(path2)
-		end
-		if (GetInput(12) == KEY_STATE.KEY_DOWN) then -- 1
-			startTime2 = os.time()
-			endTime2 = startTime2+3
+		elseif (nerala == 2) then
 			gameObject:GetImage():SetTexture(path22)
-			isActive2 = true
+		elseif (nerala == 3) then
+			gameObject:GetImage():SetTexture(path23)
 		end
-		if (os.time() >= endTime2) then
-			isActive2 = false
-		end
-	end
-	if (currentCharacter == 3) then
-		if (isActive3 == false) then
+	elseif (GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT) == 3) then
+		if (omozra == 1) then
 			gameObject:GetImage():SetTexture(path3)
-		end
-		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- 1
-			startTime3 = os.time()
-			endTime3 = startTime3+3
+		elseif (omozra == 2) then
 			gameObject:GetImage():SetTexture(path32)
-			isActive3 = true
+		elseif (omozra == 3) then
+			gameObject:GetImage():SetTexture(path33)
 		end
-		if (os.time() >= endTime3) then
-			isActive3 = false
-		end
+	elseif (GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT) == 0) then
+		gameObject:GetImage():SetTexture(pathBlank)
 	end
-	
 end
 
-print("UI_AbilitySlot_1.lua compiled succesfully")
+function EventHandler(key, fields)
+    if key == "Player_Ability" then -- fields[1] -> characterID; fields[2] -> ability n; fields[3] -> ability state
+        if (fields[1] == 1) then -- Zhib
+			if (fields[2] == 0) then
+				if (fields[3] == 0) then
+					if (isActive1 == true) then
+						zhib = 1
+						isActive1 = false
+					end
+				end
+			end
+			if (fields[2] == 3) then
+				if (fields[3] == 1) then
+					zhib = 2
+					isActive1 = true
+				elseif (fields[3] == 2) then
+					zhib = 3
+					isActive1 = false
+				end
+			end
+        elseif (fields[1] == 2) then -- Nerala
+			if (fields[2] == 0) then
+				if (fields[3] == 0) then
+					if (isActive2 == true) then
+						nerala = 1
+						isActive2 = false
+					end
+				end
+			end
+			if (fields[2] == 3) then
+				if (fields[3] == 1) then
+					nerala = 2
+					isActive2 = true
+				elseif (fields[3] == 2) then
+					nerala = 3
+					isActive2 = false
+				end
+			end
+        elseif (fields[1] == 3) then -- Omozra
+			if (fields[2] == 0) then
+				if (fields[3] == 0) then
+					if (isActive3 == true) then
+						omozra = 1
+						isActive3 = false
+					end
+				end
+			end
+			if (fields[2] == 3) then
+				if (fields[3] == 1) then
+					omozra = 2
+					isActive3 = true
+				elseif (fields[3] == 2) then
+					omozra = 3
+					isActive3 = false
+				end
+			end
+        end
+    end
+end
+
+print("UI_AbilitySlot_3.lua compiled succesfully")

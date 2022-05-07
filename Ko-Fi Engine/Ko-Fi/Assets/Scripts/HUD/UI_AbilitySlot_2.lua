@@ -13,6 +13,7 @@ path23 =  "Assets/HUD/smoke_bomb_cooldown_v1.0.png"
 path3 =  "Assets/HUD/hunter_worm_normal_v1.0.png"
 path32 =  "Assets/HUD/hunter_worm_active_v1.0.png"
 path33 =  "Assets/HUD/hunter_worm_cooldown_v1.0.png"
+pathBlank = "Assets/HUD/blank_asset_v1.0.png"
 
 -- Called each loop iteration
 function Update(dt)

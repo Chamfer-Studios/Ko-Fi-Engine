@@ -6,10 +6,7 @@ Component::Component(GameObject* parent) : owner(parent)
 	type = ComponentType::NONE;
 
 	if (parent)
-	{
 		parent->PushBackComponent(this);
-
-	}
 }
 
 const char* Component::GetNameByComponentType(ComponentType type)
@@ -17,45 +14,49 @@ const char* Component::GetNameByComponentType(ComponentType type)
 	switch (type)
 	{
 	case ComponentType::NONE:
-		return "NONE";
+		return "None";
 	case ComponentType::MESH:
-		return "MESH";
+		return "Mesh";
 	case ComponentType::MATERIAL:
-		return "MATERIAL";
+		return "Material";
 	case ComponentType::CAMERA:
-		return "CAMERA";
+		return "Camera";
 	case ComponentType::BOX_COLLIDER:
-		return "BOX_COLLIDER";
+		return "Box Collider";
 	case ComponentType::SPHERE_COLLIDER:
-		return "SPHERE_COLLIDER";
+		return "Sphere Collider";
 	case ComponentType::CAPSULE_COLLIDER:
-		return "CAPSULE_COLLIDER";
+		return "Capsule Collider";
 	case ComponentType::SCRIPT:
-		return "SCRIPT";
+		return "Script";
 	case ComponentType::RIGID_BODY:
-		return "RIGID_BODY";
+		return "Rigid Body";
 	case ComponentType::TRANSFORM2D:
-		return "TRANSFORM2D";
+		return "Transform 2D";
 	case ComponentType::CANVAS:
-		return "CANVAS";
+		return "Canvas";
 	case ComponentType::IMAGE:
-		return "IMAGE";
+		return "Image";
 	case ComponentType::BUTTON:
-		return "BUTTON";
+		return "Button";
 	case ComponentType::TEXT:
-		return "TEXT";
+		return "Text";
 	case ComponentType::TRANSFORM:
-		return "TRANSFORM";
+		return "Transform";
 	case ComponentType::INFO:
 		return "INFO";
+	case ComponentType::ANIMATOR:
+		return "ANIMATOR";
 	default:
-		return "ERROR, goto Component.cpp line 13";
+		return "[ERROR] Component: Unable to return name.";
 	}
-	return "ERROR, no component type!";
+	return "[ERROR] Component: No component type detected!";
 }
 
-void Component::DrawDeleteButton(GameObject* owner, Component* component)
+bool Component::DrawDeleteButton(GameObject* owner, Component* component)
 {
+	bool ret = false;
+
 	bool showPopup = false;
 
 	// Make the button appear at the same line of the collapsing header, positioned on the right minus 15 pixels
@@ -72,9 +73,7 @@ void Component::DrawDeleteButton(GameObject* owner, Component* component)
 
 	// ImGui button
 	if (ImGui::Button(label.c_str()))
-	{
 		showPopup = true;
-	}
 
 	// Whenever showPopup bool is true, the popups keeps open
 	if (showPopup) ImGui::OpenPopup(titlePopup.c_str());
@@ -83,23 +82,26 @@ void Component::DrawDeleteButton(GameObject* owner, Component* component)
 	if (ImGui::BeginPopupModal(titlePopup.c_str()))
 	{
 		// Delete button
-		if (ImGui::Button("DELETE"))																
+		if (ImGui::Button("DELETE"))
 		{
 			owner->DeleteComponent(component);
-
 			showPopup = false;
 			ImGui::CloseCurrentPopup();
+			ret = true;
 		}
 
 		// No delete button
-		if (ImGui::Button("CANCEL"))																
+		if (ImGui::Button("CANCEL"))
 		{
 			showPopup = false;
 			ImGui::CloseCurrentPopup();
+			ret = false;
 		}
 
 		ImGui::EndPopup();
 	}
+
+	return ret;
 }
 
 const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
@@ -125,7 +127,9 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 			{ ComponentType::WALKABLE, "WALKABLE" },
 			{ ComponentType::FOLLOW_PATH, "FOLLOW_PATH" },
 			{ ComponentType::LIGHT_SOURCE, "LIGHT_SOURCE" },
-
+			{ ComponentType::TRANSFORM, "TRANSFORM" },
+			{ ComponentType::TRANSFORM2D, "TRANSFORM2D" },
+			{ ComponentType::INFO, "INFO" },
 		};
 		auto   it = componentTypeStrings.find(e);
 		return it == componentTypeStrings.end() ? "Out of range" : it->second;

@@ -4,6 +4,7 @@
 #include "Assimp.h"
 
 class R_Animation;
+class KoFiEngine;
 struct Channel;
 
 typedef unsigned int uint;
@@ -11,7 +12,7 @@ typedef unsigned int uint;
 class I_Animations
 {
 public:
-	I_Animations();
+	I_Animations(KoFiEngine* engine);
 	~I_Animations();
 
 	bool Import(const aiAnimation* aiAnim, R_Animation* anim);
@@ -27,5 +28,8 @@ public:
 
 	void ValidateChannel(Channel& rChannel); // Detects and erases any discrepancies with the given channel.
 	void FuseChannels(const Channel& newChannel, Channel& existingChannel); // Fuses channels with the same name. New are fused into existing.
+
+private:
+	KoFiEngine* engine = nullptr;
 };
 #endif // !__I_ANIMATIONS_H__

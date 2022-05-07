@@ -14,7 +14,7 @@ C_FollowPath::C_FollowPath(GameObject* parent) : Component(parent)
 
 void C_FollowPath::Save(Json& json) const
 {
-	json["type"] = "followPath";
+	json["type"] = (int)type;
 
 	std::vector<float> wpVector;
 
@@ -103,8 +103,10 @@ void C_FollowPath::CalculatePath()
 
 bool C_FollowPath::InspectorDraw(PanelChooser* chooser)
 {
-	if (ImGui::CollapsingHeader("Path Follower", ImGuiTreeNodeFlags_AllowItemOverlap)) {
-		DrawDeleteButton(owner, this);
+	if (ImGui::CollapsingHeader("Path Follower", ImGuiTreeNodeFlags_AllowItemOverlap))
+	{
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		ImGui::DragFloat("Speed", &speed, 0.5f);
 

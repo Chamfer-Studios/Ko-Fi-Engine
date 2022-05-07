@@ -31,17 +31,15 @@ public:
 
 	// SetMesh
 	void SetMesh(R_Mesh* mesh);
-	inline void SetPath(const char* path) { mesh->path = path; }
+	void SetPath(const char* path);
 	void SetVertexNormals(bool vertexNormals);
 	void SetFaceNormals(bool facesNormals);
-	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
 	
 	// Getters
 	inline R_Mesh* GetMesh() const { return mesh; }
-	inline const char* GetMeshPath() const { mesh->path.c_str(); }
+	const char* GetMeshPath() const;
 	inline float GetSphereRadius() const { return radius; }
-	inline bool GetRenderMesh() const { return renderMesh; }
-	float3 GetCenterPoint() const { return mesh->localAABB.CenterPoint();  }
+	float3 GetCenterPoint() const;
 	float3 GetCenterPointInWorldCoords() const;
 	uint GetVertices();
 	bool GetVertexNormals() const;
@@ -60,7 +58,6 @@ public:
 	
 private:
 	R_Mesh* mesh = nullptr;
-	bool renderMesh = true;
 	float time = 0;
 
 	//COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;

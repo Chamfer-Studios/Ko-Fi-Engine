@@ -194,41 +194,41 @@ bool M_Input::PreUpdate(float dt)
 		//	SDL_free(dropped_filedir);    // Free dropped_filedir memory
 		//	break;
 		//}
-		case SDL_DROPFILE:
-		{
-			std::string tmp;
-			tmp.assign(event.drop.file);
-			if (!tmp.empty())
-			{
-				//TODO: We should call ImportFile here I'm pretty sure instead of all this other stuff
-				if (tmp.find(".fbx") != std::string::npos)
-				{
-					Importer::GetInstance()->sceneImporter->Import(tmp.c_str());
-				}
-				else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
-				{
-					for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
-					{
-						if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != -1)
-						{
-							GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
+		//case SDL_DROPFILE:
+		//{
+		//	std::string tmp;
+		//	tmp.assign(event.drop.file);
+		//	if (!tmp.empty())
+		//	{
+		//		//TODO: We should call ImportFile here I'm pretty sure instead of all this other stuff
+		//		if (tmp.find(".fbx") != std::string::npos)
+		//		{
+		//			Importer::GetInstance()->sceneImporter->Import(tmp.c_str());
+		//		}
+		//		else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
+		//		{
+		//			for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+		//			{
+		//				if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != 0)
+		//				{
+		//					GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
 
-							if (go->GetComponent<C_Material>())
-							{
-								R_Texture* texture = new R_Texture();
-								Importer::GetInstance()->textureImporter->Import(tmp.c_str(), texture);
+		//					if (go->GetComponent<C_Material>())
+		//					{
+		//						R_Texture* texture = new R_Texture();
+		//						Importer::GetInstance()->textureImporter->Import(tmp.c_str(), texture);
 
-								go->GetComponent<C_Material>()->texture = texture;
-								//cMaterial->textures.push_back(texture);
-							}
-						}
-					}
-					// Apply texture
-					
-				}
-			}
-			break;
-		}
+		//						go->GetComponent<C_Material>()->texture = texture;
+		//						//cMaterial->textures.push_back(texture);
+		//					}
+		//				}
+		//			}
+		//			// Apply texture
+		//			
+		//		}
+		//	}
+		//	break;
+		//}
 		}
 	}
 	ImGui_ImplSDL2_ProcessEvent(&event);

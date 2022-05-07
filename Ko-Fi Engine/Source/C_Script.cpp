@@ -178,7 +178,8 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 	if (ImGui::CollapsingHeader(headerName.c_str(), ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		if (chooser->IsReadyToClose("Add Script_" + std::to_string(id)))
 		{
@@ -349,7 +350,6 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 			ReloadScript(s);
 		}
 	}
-	
 	else
 		DrawDeleteButton(owner, this);
 
@@ -382,7 +382,8 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 
 void C_Script::Save(Json &json) const
 {
-	json["type"] = "script";
+	json["type"] = (int)type;
+
 	json["id"] = id;
 	json["file_name"] = s->path;
 	Json jsonIV;

@@ -68,7 +68,8 @@ bool C_BoxCollider::InspectorDraw(PanelChooser *chooser)
 {
 	if (ImGui::CollapsingHeader("Box Collider", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		std::string newFilter = GetFilter();
 		if (ImGui::BeginCombo("Set Filter##", newFilter == "" ? "Set Filter" : newFilter.c_str()))
@@ -114,15 +115,15 @@ bool C_BoxCollider::InspectorDraw(PanelChooser *chooser)
 		}
 	}
 	else
-	{
 		DrawDeleteButton(owner, this);
-	}
+
 	return true;
 }
 
 void C_BoxCollider::Save(Json &json) const
 {
-	json["type"] = "boxCollider";
+	json["type"] = (int)type;
+
 	json["filter"] = filter;
 	json["is_trigger"] = isTrigger;
 	json["scale_factor"] = {scaleFactor.x, scaleFactor.y, scaleFactor.z};

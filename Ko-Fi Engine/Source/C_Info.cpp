@@ -61,7 +61,7 @@ bool C_Info::InspectorDraw(PanelChooser* chooser)
 
 void C_Info::Save(Json& json) const
 {
-	json["type"] = "info";
+	json["type"] = (int)type;
 }
 
 void C_Info::Load(Json& json)

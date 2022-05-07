@@ -1,7 +1,7 @@
-minRetargetingDistance = 1
---local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
---minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
---NewVariable(minRetargetingDistanceIV)
+minRetargetingDistance = 10
+local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
+NewVariable(minRetargetingDistanceIV)
 
 navigation = GetNavigation()
 
@@ -44,10 +44,6 @@ end
 
 function FollowPath(speed, dt, loop)
     if #_G.finalPath == 0 or currentPathIndex > #_G.finalPath then
-        do return end
-    end
-
-    if currentPathIndex == #_G.finalPath and loop == false then
         do return end
     end
 

@@ -1,17 +1,39 @@
 #include "I_Material.h"
 #include "R_Material.h"
+#include "Engine.h"
+#include "M_FileSystem.h"
+#include "M_ResourceManager.h"
+
+#include <glew.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
 
 #include "FSDefs.h"
 #include "Globals.h"
 #include "Color.h"
 #include "Log.h"
 
-I_Material::I_Material()
+I_Material::I_Material(KoFiEngine* engine) : engine(engine)
 {
 }
 
 I_Material::~I_Material()
 {
+}
+
+bool I_Material::Load(const char* assetsPath, R_Material* material)
+{
+	bool ret = true;
+
+	if (material == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: R_Material* was nullptr.");
+		return false;
+	}
+
+	ret = LoadAndCreateShader(assetsPath, material);
+
+	return ret;
 }
 
 bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
@@ -35,27 +57,23 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 		material->diffuseColor = Color(color.r, color.g, color.b, color.a);
 	}
 
-	std::string defaultPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
-	material->SetShaderPath(defaultPath.c_str());
-
-	ret = LoadAndCreateShader(defaultPath.c_str(), material);
+	ret = LoadAndCreateShader(material->GetAssetPath(), material);
 
 	return ret;
 }
 
-//bool I_Material::Save(const R_Material* material)
-//{
-//	bool ret = true;
-//
-//	return ret;
-//}
-//
-//bool I_Material::Load(R_Material* material)
-//{
-//	bool ret = true;
-//
-//	return ret;
-//}
+bool I_Material::Save(const R_Material* material, const char* path)
+{
+	if (engine->GetFileSystem()->CheckDirectory(SHADERS_DIR))
+	{
+		return engine->GetFileSystem()->CopyFileTo(material->GetAssetPath(), path);
+	}
+	else
+	{
+		CONSOLE_LOG("[ERROR] Shader Save: directory %s couldn't be accessed.", SHADERS_DIR);
+		return false;
+	}
+}
 
 bool I_Material::LoadAndCreateShader(const char* shaderPath, R_Material* material)
 {
