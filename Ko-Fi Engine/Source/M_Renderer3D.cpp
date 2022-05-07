@@ -18,6 +18,7 @@
 #include "ImGuiAppLog.h"
 #include "M_FileSystem.h"
 #include "R_Texture.h"
+#include "M_UI.h"
 
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -40,7 +41,7 @@
 
 #include "PanelViewport.h"
 
-#include "M_UI.h"
+#include "SkyBox.h"
 
 #include <iostream>
 
@@ -324,6 +325,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 void M_Renderer3D::RenderScene(C_Camera* camera)
 {
 	OPTICK_EVENT();
+	RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
 #pragma omp parallel for
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
@@ -643,6 +645,37 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 		glUseProgram(0);
 
 	}
+}
+
+void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox &skybox)
+{
+	glDepthMask(GL_FALSE);
+
+	uint shader = skybox.material->shaderProgramID;
+
+	float4x4 mat = float4x4::identity;
+
+	if (shader != 0)
+	{
+		glUseProgram(shader);
+
+		// Passing Shader Uniforms
+		GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+		glUniformMatrix4fv(model_matrix, 1, GL_FALSE, mat.ptr());
+		float4x4 view = float4x4::identity;
+		view.Set3x3Part(camera->GetViewMatrix().Float3x3Part());
+		GLint view_location = glGetUniformLocation(shader, "view");
+		glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
+
+		GLint projection_location = glGetUniformLocation(shader, "projection");
+		glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
+
+		skybox.DrawSkyBox();
+		glUseProgram(0); // Always Last!
+	}
+
+	glDepthMask(GL_TRUE);
+
 }
 
 void M_Renderer3D::RenderUI(GameObject* go)

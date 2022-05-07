@@ -673,6 +673,9 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp">
       <Filter>Libs\MathGeoLib\Time</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SkyBox.cpp">
+      <Filter>Source\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1292,6 +1295,9 @@
     </ClInclude>
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\emscripten\library_system.h">
       <Filter>Libs\MathGeoLib\emscripten</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SkyBox.h">
+      <Filter>Source\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

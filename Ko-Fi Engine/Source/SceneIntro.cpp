@@ -43,6 +43,7 @@ SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
 
+	skybox = SkyBox();
 	// LCG random;
 	// uint uid = random.Int();
 	// GameObject * g = this->CreateEmptyGameObject("Particle Test");
@@ -58,6 +59,8 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	bool ret = true;
+	skybox.Start();
+
 	// Load Default Screen (Can be changed from settings)
 	if (!engine->GetSceneManager()->GetDefaultScene().empty())
 	{

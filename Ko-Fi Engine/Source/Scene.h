@@ -12,6 +12,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include "SkyBox.h"
+
 class GameObject;
 class KoFiEngine;
 class C_LightSource;
@@ -118,6 +120,8 @@ public:
 
 	std::vector<GameObject*> lights;
 	LineSegment ray;
+
+	SkyBox skybox;
 
 };
 

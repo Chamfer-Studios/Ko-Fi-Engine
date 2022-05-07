@@ -308,6 +308,7 @@
     <ClCompile Include="Source\R_Track.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\M_SceneManager.cpp" />
+    <ClCompile Include="Source\SkyBox.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\R_Texture.cpp" />
     <ClCompile Include="Source\M_UI.cpp" />
@@ -533,6 +534,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\M_SceneManager.h" />
     <ClInclude Include="Source\C_SoundTriggerCreator.h" />
+    <ClInclude Include="Source\SkyBox.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\R_Texture.h" />
     <ClInclude Include="Source\Vec1Node.h" />
