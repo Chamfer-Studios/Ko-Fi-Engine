@@ -60,7 +60,7 @@ I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 
 I_Scene::~I_Scene()
 {
-
+	loadedTextures.clear();
 }
 
 bool I_Scene::Import(R_Model* model, bool isPrefab)
@@ -102,7 +102,6 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 	ImportNode(assimpScene, assimpScene->mRootNode, model, ModelNode(), isPrefab);
 
 	loadedNodes.clear();
-	loadedTextures.clear();
 	forcedUIDs.clear();
 
 	return true;
@@ -1178,7 +1177,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	}
 
 	aiString aiTexturePath;
-	R_Texture* texture;
+	R_Texture* texture = nullptr;
 	if (assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
 		std::filesystem::path textureFilename = aiTexturePath.C_Str();
@@ -1186,7 +1185,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		std::string texturePath = ASSETS_TEXTURES_DIR + textureFilename.filename().string();
 		if (std::filesystem::exists(texturePath))
 		{
-			std::map<std::string, UID>::iterator it = loadedTextures.find(texturePath);
+			std::map<std::string, UID>::iterator it = loadedTextures.find(textureFilename.filename().string());
 			if (it != loadedTextures.end())
 			{
 				node.texture = it->second;
@@ -1208,13 +1207,24 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 			node.texture = texture->GetUID();
 			node.textureName = texture->GetAssetFile();
 
-			loadedTextures.emplace(texturePath, texture->GetUID());
+			loadedTextures.emplace(textureFilename.filename().string(), texture->GetUID());
 
 			engine->GetResourceManager()->SaveResource(texture);
 			engine->GetResourceManager()->UnloadResource(texture);
 		}
 		else
-			CONSOLE_LOG("[ERROR] Importer: couldn't load textrue with path %s.", aiTexturePath.C_Str());
+		{
+			CONSOLE_LOG("[STATUS] Importer: Texture was not in default texture folder, checking by name...");
+
+			std::map<std::string, UID>::iterator it = loadedTextures.find(textureFilename.filename().string());
+			if (it != loadedTextures.end())
+			{
+				node.texture = it->second;
+				node.textureName = textureFilename.filename().string();
+				return;
+			}
+				CONSOLE_LOG("[ERROR] Importer: couldn't load textrue with path %s.", aiTexturePath.C_Str());
+		}
 	}
 }
 

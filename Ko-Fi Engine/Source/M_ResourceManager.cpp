@@ -60,6 +60,8 @@ bool M_ResourceManager::Start()
 	}
 	else
 	{
+		RefreshDirectoryFiles(ASSETS_TEXTURES_DIR);
+
 		RefreshDirectoryFiles(ASSETS_DIR);
 
 		TrimLibrary();
