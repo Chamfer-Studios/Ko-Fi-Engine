@@ -46,6 +46,7 @@
 #include <iostream>
 
 #include "optick.h"
+#include "QuadTree3D.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -371,6 +372,13 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			}
 		}
 	}
+
+	if (engine->GetSceneManager()->GetCurrentScene()->sceneTree != nullptr && engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)
+	{
+		engine->GetSceneManager()->GetCurrentScene()->ComputeQuadTree();
+		engine->GetSceneManager()->GetCurrentScene()->sceneTree->Draw();
+	}
+
 
 }
 

@@ -150,11 +150,7 @@ bool SceneIntro::Update(float dt)
 	//if (ray.IsFinite())
 		// DrawDebugRay(ray);
 
-	if (sceneTree != nullptr && drawSceneTree)
-	{
-		ComputeQuadTree();
-		sceneTree->Draw();
-	}
+	
 	return true;
 }
 

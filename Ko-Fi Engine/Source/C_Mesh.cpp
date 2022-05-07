@@ -330,7 +330,15 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 		ImGui::Text("Num. vertices: ");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
+		if (owner->GetRenderGameObject())
+		{
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "Visible");
+		}
+		else
+		{
+			ImGui::TextColored(ImVec4(1, 0, 0, 1), "Not Visible");
 
+		}
 		bool vertex = GetVertexNormals();
 		if (ImGui::Checkbox("Vertex Normals", &vertex))
 			mesh->SetVertexNormals(vertex);

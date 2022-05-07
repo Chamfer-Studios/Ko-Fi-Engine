@@ -43,10 +43,10 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera = new C_Camera(engineCameraObject);
 	engineCamera->SetIsEngineCamera(true);
 	
-
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-	engineCamera->SetFarPlaneDistance(60000.0f);
+	engineCamera->SetFarPlaneDistance(1000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
+	engineCamera->SetIsFrustumActive(true);
 
 	currentCamera = engineCamera;
 }
