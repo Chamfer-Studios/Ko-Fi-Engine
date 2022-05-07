@@ -816,189 +816,62 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 		bool active = jsonCmp.at("active");
 		if (jsonCmp.contains("type"))
 		{
-			std::string type = jsonCmp.at("type");
-
-			if (type == "transform")
+			ComponentType type = (ComponentType)jsonCmp.at("type").get<int>();
+			switch (type)
 			{
-				C_Transform* transformCmp = GetComponent<C_Transform>();
-				transformCmp->active = true;
-				transformCmp->Load(jsonCmp);
-			}
-			else if (type == "mesh")
-			{
-				C_Mesh* meshCmp = GetComponent<C_Mesh>();
-				if (!meshCmp)
-					meshCmp = (C_Mesh*)AddComponentByType(ComponentType::MESH);
-				meshCmp->active = true;
-				meshCmp->Load(jsonCmp);
-			}
-			else if (type == "material")
-			{
-				C_Material* materialCmp = GetComponent<C_Material>();
-				if (!materialCmp)
-					materialCmp = (C_Material*)AddComponentByType(ComponentType::MATERIAL);
-				materialCmp->active = true;
-				materialCmp->Load(jsonCmp);
-			}
-			else if (type == "info")
-			{
-				C_Info* infoCmp = (C_Info*)AddComponentByType(ComponentType::INFO);
-				infoCmp->active = true;
-				infoCmp->Load(jsonCmp); // does nothing as of now
-			}
-			else if (type == "camera")
-			{
-				C_Camera* cameraCmp = GetComponent<C_Camera>();
-				if (!cameraCmp)
-					cameraCmp = (C_Camera*)AddComponentByType(ComponentType::CAMERA);
-				cameraCmp->active = true;
-				cameraCmp->Load(jsonCmp);
-			}
-			else if (type == "script")
+			case ComponentType::SCRIPT:
 			{
 				C_Script* scriptCmp = nullptr;
-				for (auto c : GetComponents()) {
-					if (c->type == ComponentType::SCRIPT) {
+				for (auto c : GetComponents())
+				{
+					if (c->type == ComponentType::SCRIPT)
+					{
 						int cID = ((C_Script*)c)->id;
-						if (jsonCmp.find("id") != jsonCmp.end()) {
-							if (cID == jsonCmp.at("id")) {
+						if (jsonCmp.find("id") != jsonCmp.end())
+						{
+							if (cID == jsonCmp.at("id"))
 								scriptCmp = (C_Script*)c;
-							}
 						}
 					}
 				}
-				if (!scriptCmp)
+
+				if (scriptCmp == nullptr)
 					scriptCmp = (C_Script*)AddComponentByType(ComponentType::SCRIPT);
-				scriptCmp->active = true;
+
+				scriptCmp->active = active;
 				scriptCmp->Load(jsonCmp);
+				break;
 			}
-			else if (type == "transform2D")
+			case ComponentType::TRANSFORM:
 			{
-				C_Transform2D* transform2DCmp = GetComponent<C_Transform2D>();
-				if (!transform2DCmp)
-					transform2DCmp = (C_Transform2D*)AddComponentByType(ComponentType::TRANSFORM2D);
-				transform2DCmp->active = true;
-				transform2DCmp->Load(jsonCmp);
+				C_Transform* transformCmp = GetComponent<C_Transform>();
+				transformCmp->active = active;
+				transformCmp->Load(jsonCmp);
+				break;
 			}
-			else if (type == "canvas")
+			case ComponentType::INFO:
 			{
-				C_Canvas* canvasCmp = GetComponent<C_Canvas>();
-				if (!canvasCmp)
-					canvasCmp = (C_Canvas*)AddComponentByType(ComponentType::CANVAS);
-				canvasCmp->active = true;
-				canvasCmp->Load(jsonCmp);
+				C_Info* infoCmp = GetComponent<C_Info>();
+				infoCmp->active = active;
+				//infoCmp->Load(jsonCmp); // Does nothing as of now
+				break;
 			}
-			else if (type == "image")
+			case ComponentType::NONE:
 			{
-				C_Image* imageCmp = GetComponent<C_Image>();
-				if (!imageCmp)
-					imageCmp = (C_Image*)AddComponentByType(ComponentType::IMAGE);
-				imageCmp->active = true;
-				imageCmp->Load(jsonCmp);
+				CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
+				return false;
+				break;
 			}
-			else if (type == "button")
+			default:
 			{
-				C_Button* buttonCmp = GetComponent<C_Button>();
-				if (!buttonCmp)
-					buttonCmp = (C_Button*)AddComponentByType(ComponentType::BUTTON);
-				buttonCmp->active = true;
-				buttonCmp->Load(jsonCmp);
+				Component* component = AddComponentByType(type);
+				if (component != nullptr)
+				{
+					component->active = active;
+					component->Load(jsonCmp);
+				}
+				break;
 			}
-			else if (type == "text")
-			{
-				C_Text* textCmp = GetComponent<C_Text>();
-				if (!textCmp)
-					textCmp = (C_Text*)AddComponentByType(ComponentType::TEXT);
-				textCmp->active = true;
-				textCmp->Load(jsonCmp);
-			}
-			else if (type == "rigidBody")
-			{
-				C_RigidBody* rbCmp = GetComponent<C_RigidBody>();
-				if (!rbCmp)
-					rbCmp = (C_RigidBody*)AddComponentByType(ComponentType::RIGID_BODY);
-				rbCmp->active = true;
-				rbCmp->Load(jsonCmp);
-			}
-			else if (type == "boxCollider")
-			{
-				C_BoxCollider* boxColCmp = GetComponent<C_BoxCollider>();
-				if (!boxColCmp)
-					boxColCmp = (C_BoxCollider*)AddComponentByType(ComponentType::BOX_COLLIDER);
-				boxColCmp->active = true;
-				boxColCmp->Load(jsonCmp);
-			}
-			else if (type == "sphereCollider")
-			{
-				C_SphereCollider* sphereColCmp = GetComponent<C_SphereCollider>();
-				if (!sphereColCmp)
-					sphereColCmp = (C_SphereCollider*)AddComponentByType(ComponentType::SPHERE_COLLIDER);
-				sphereColCmp->active = true;
-				sphereColCmp->Load(jsonCmp);
-			}
-			else if (type == "capsuleCollider")
-			{
-				C_CapsuleCollider* capsuleColCmp = GetComponent<C_CapsuleCollider>();
-				if (!capsuleColCmp)
-					capsuleColCmp = (C_CapsuleCollider*)AddComponentByType(ComponentType::CAPSULE_COLLIDER);
-				capsuleColCmp->active = true;
-				capsuleColCmp->Load(jsonCmp);
-			}
-			else if (type == "particle")
-			{
-				C_Particle* partCmp = GetComponent<C_Particle>();
-				if (!partCmp)
-					partCmp = (C_Particle*)AddComponentByType(ComponentType::PARTICLE);
-				partCmp->active = true;
-				partCmp->Load(jsonCmp);
-			}
-			else if (type == "audio_source")
-			{
-				C_AudioSource* audioSrcCmp = GetComponent<C_AudioSource>();
-				if (!audioSrcCmp)
-					audioSrcCmp = (C_AudioSource*)AddComponentByType(ComponentType::AUDIO_SOURCE);
-				audioSrcCmp->active = true;
-				audioSrcCmp->Load(jsonCmp);
-			}
-			else if (type == "audio_switch")
-			{
-				C_AudioSwitch* audioSwitchCmp = GetComponent<C_AudioSwitch>();
-				if (!audioSwitchCmp)
-					audioSwitchCmp = (C_AudioSwitch*)AddComponentByType(ComponentType::AUDIO_SWITCH);
-				audioSwitchCmp->active = true;
-				audioSwitchCmp->Load(jsonCmp);
-			}
-			else if (type == "animator")
-			{
-				C_Animator* cAnimator = GetComponent<C_Animator>();
-				if (!cAnimator)
-					cAnimator = (C_Animator*)AddComponentByType(ComponentType::ANIMATOR);
-				cAnimator->active = true;
-				cAnimator->Load(jsonCmp);
-			}
-			else if (type == "walkable")
-			{
-				C_Walkable* walCmp = GetComponent<C_Walkable>();
-				if (!walCmp)
-					walCmp = (C_Walkable*)AddComponentByType(ComponentType::WALKABLE);
-				walCmp->active = true;
-				walCmp->Load(jsonCmp);
-			}
-			else if (type == "followPath")
-			{
-				C_FollowPath* follCmp = GetComponent<C_FollowPath>();
-				if (!follCmp)
-					follCmp = (C_FollowPath*)AddComponentByType(ComponentType::FOLLOW_PATH);
-				follCmp->active = true;
-				follCmp->Load(jsonCmp);
-			}
-			else if (type == "lightSource")
-			{
-				C_LightSource* componentLightSource = GetComponent<C_LightSource>();
-				if (!componentLightSource)
-					componentLightSource = (C_LightSource*)AddComponentByType(ComponentType::LIGHT_SOURCE);
-				componentLightSource->active = true;
-				componentLightSource->Load(jsonCmp);
 			}
 		}
 	}
