@@ -21,38 +21,27 @@
 #include <gl/GLU.h>
 
 #include "MathGeoLib/Math/MathFunc.h"
+#include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/Geometry/Plane.h"
+#include "MathGeoLib/Math/float3x3.h"
 
 #include "optick.h"
 
-C_Camera::C_Camera(GameObject* parent, bool isEngineCamera) : Component(parent)
+C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
-	this->isEngineCamera = isEngineCamera;
 	type = ComponentType::CAMERA;
+	cameraType = KOFI_PERSPECTIVE;
 
-	if (isEngineCamera)
-	{
-		aspectRatio = 1.f;
-		verticalFOV = 60.f;
-		nearPlaneDistance = 0.1f;
-		farPlaneDistance = 5000.f;
-		cameraSensitivity = .1f;
-		cameraSpeed = 120.f;
-		baseCameraSpeed = 120.f;
-		speedMultiplier = 1;
-	}
-	if (!isEngineCamera)
-		componentTransform = owner->GetTransform();
+	//Create the frustum
+	cameraFrustum = Frustum();
 
-	right = float3(1.0f, 0.0f, 0.0f);
-	up = float3(0.0f, 1.0f, 0.0f);
-	front = float3(0.0f, 0.0f, 1.0f);
-
-	position = float3(0.0f, 5.0f, -15.0f);
-	reference = float3(0.0f, 0.0f, 0.0f);
-
-	LookAt(float3::zero);
-
-	CalculateViewMatrix();
+	//Set Default Values for the frusum
+	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
+	cameraFrustum.SetPerspective(DegToRad(43.0f), DegToRad(22.0f));
+	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(45.0f), 1.778f);
+	cameraFrustum.SetViewPlaneDistances(0.01f, 1000.0f);
+	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
+	LookAt(cameraFrustum.Front());
 
 }
 
@@ -65,7 +54,7 @@ bool C_Camera::Start()
 	CONSOLE_LOG("Setting up the camera");
 	appLog->AddLog("Setting up the camera\n");
 
-	LookAt(float3::zero);
+	owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
 
 	bool ret = true;
 
@@ -74,21 +63,20 @@ bool C_Camera::Start()
 
 bool C_Camera::Update(float dt)
 {
-	// Add update functionality when we are able to change the main camera.
+	//Transform Update Camera Frustum
+	//Camera Position Rotation of the camera
 	if (!isEngineCamera)
 	{
-		position = componentTransform->GetPosition();
+		C_Transform* transform = owner->GetTransform();
 
-		up = componentTransform->Up();
-		front = componentTransform->Front();
-		//right = componentTransform->Right();
-
-		CalculateViewMatrix();
-
+		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
+		//Apply rotation
 		if (isFrustumCullingActive)
 			FrustumCulling();
 
 	}
+	// Camera Frustum Updates Transform
+	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 
 	return true;
 }
@@ -105,72 +93,87 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
+		// PROJECTION TYPE
+
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		if (DrawDeleteButton(owner, this))
 			return true;
 
-		if (ImGui::DragFloat("Vertical fov", &verticalFOV))
-		{
-			isProjectionDirty = true;
-		}
-		if (ImGui::DragFloat("Near plane distance", &nearPlaneDistance))
-		{
-			isProjectionDirty = true;
-		}
-		if (ImGui::DragFloat("Far plane distance", &farPlaneDistance))
-		{
-			isProjectionDirty = true;
-		}
-		if (ImGui::Checkbox("Draw frustum", &isDrawFrustumActive))
-		{
-		}
+		// CLEAR FLAG
+		//owner->GetEngine()->GetSceneManager()->GetCurrentScene()->skybox.InspectorDraw();
+
+		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
 		{
 			ResetFrustumCulling();
 		}
+		// TODO: SET MAIN CAMERA TO TAG!
 		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
 		{
 			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 		}
+
+		static const char* types[]{ "Perspective", "Orthographic" };
+		static int selectedItem = 0;
+		if (ImGui::Combo("Combo", &selectedItem, types, IM_ARRAYSIZE(types)))
+		{
+			if (selectedItem == 0)
+				SetProjectionType(CameraType::KOFI_PERSPECTIVE);
+			if (selectedItem == 1)
+				SetProjectionType(CameraType::KOFI_ORTHOGRAPHIC);
+
+
+		}
+
+		switch (cameraType)
+		{
+		case C_Camera::KOFI_PERSPECTIVE:
+		{
+			// FOV 
+			float fov = GetHorizontalFov();
+			if (ImGui::DragFloat("Fov", &fov, 1.0f, 0.0f, 180.f))
+			{
+				SetHorizontalFov(fov);
+			}
+
+
+			break;
+		}
+		}
+		//PLANES
+		float2 planeDistances = { cameraFrustum.NearPlaneDistance(),cameraFrustum.FarPlaneDistance() };
+		ImGui::Text("Clipping Spaces");
+		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
+		{
+			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
+		}
 	}
 	else
 		DrawDeleteButton(owner, this);
+
+
 	return ret;
 }
 
 void C_Camera::Save(Json& json) const
 {
-	json["type"] = (int)type;
-
-	json["vertical_fov"] = verticalFOV;
-	json["near_plane_distance"] = nearPlaneDistance;
-	json["far_plane_distance"] = farPlaneDistance;
-	json["draw_frustum"] = isDrawFrustumActive;
+	json["type"] = "camera";
+	json["vertical_fov"] = cameraFrustum.VerticalFov();
+	json["near_plane_distance"] = cameraFrustum.NearPlaneDistance();
+	json["far_plane_distance"] = cameraFrustum.FarPlaneDistance();
 	json["frustum_culling"] = isFrustumCullingActive;
 	json["isMainCamera"] = isMainCamera;
 }
 
 void C_Camera::Load(Json& json)
 {
-	verticalFOV = json.at("vertical_fov");
-	nearPlaneDistance = json.at("near_plane_distance");
-	farPlaneDistance = json.at("far_plane_distance");
-	isDrawFrustumActive = json.at("draw_frustum");
+	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"), 1.778f);
+	cameraFrustum.SetViewPlaneDistances(json.at("near_plane_distance"), json.at("far_plane_distance"));
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
-	if(isMainCamera)
+	if (isMainCamera)
 		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
-}
-
-float C_Camera::GetFarPlaneHeight() const
-{
-	return 2.0f * cameraFrustum.farPlaneDistance * Tan(cameraFrustum.verticalFov * 0.5f * DEGTORAD);
-}
-
-float C_Camera::GetFarPlaneWidth() const
-{
-	return GetFarPlaneHeight()*aspectRatio;
 }
 
 float4x4 C_Camera::GetViewMatrix() const
@@ -178,61 +181,74 @@ float4x4 C_Camera::GetViewMatrix() const
 	return cameraFrustum.ViewMatrix();
 }
 
+float4x4 C_Camera::GetWorldMatrix() const
+{
+	return cameraFrustum.WorldMatrix();
+}
+
+float4x4 C_Camera::GetProjectionMatrix() const
+{
+	return cameraFrustum.ProjectionMatrix();
+}
+
 void C_Camera::SetAspectRatio(const float& aspectRatio)
 {
-	cameraFrustum.horizontalFov = cameraFrustum.horizontalFov;
-	cameraFrustum.verticalFov = 2.f * Atan(Tan(cameraFrustum.horizontalFov * 0.5 / aspectRatio));
-	this->isProjectionDirty = true;
-	RecalculateProjection();
+	cameraFrustum.SetHorizontalFovAndAspectRatio(cameraFrustum.HorizontalFov(), aspectRatio);
 }
 
-void C_Camera::LookAt(const float3& point)
+void C_Camera::SetPosition(float3 newPos)
+{
+	cameraFrustum.SetPos(newPos);
+}
+
+void C_Camera::LookAt(const float3 point)
 {
 	reference = point;
-
-	front = (reference - position).Normalized();
-	right = float3(0.0f, 1.0f, 0.0f).Cross(front).Normalized();
-	up = front.Cross(right);
-
-	CalculateViewMatrix();
+	float3 tempFront = (reference - cameraFrustum.Pos()).Normalized();
+	float3 tempRight = float3(0.0f, 1.0f, 0.0f).Cross(tempFront).Normalized();
+	cameraFrustum.SetFrontUp(tempFront, tempFront.Cross(tempRight).Normalized());
 }
 
-void C_Camera::ChangeSpeed(int multiplier)
+void C_Camera::LookAt2(float3 _front, float3 _up)
 {
-	cameraSpeed = baseCameraSpeed * multiplier;
+	_front = _front.Normalized();
+	_up = _up.Normalized();
+
+	float angle = atan2(_front.z, _front.x);
+
+	Quat r = cameraFrustum.ComputeWorldMatrix().RotatePart().ToQuat();
+
+	float3 cross = _up.Cross(cameraFrustum.Up());
+	float angleBetween = _up.AngleBetween(cameraFrustum.Up());
+
+	r = r.RotateAxisAngle(cross, angleBetween);
+
+	float3 currentEuler = r.ToEulerXYZ();
+
+	float diff = currentEuler.y - angle;
+
+	diff += 90.0f * DEGTORAD;
+
+	r = r.RotateAxisAngle(_up, diff);
+
+	float3 newFront = r * cameraFrustum.Front();
+	cameraFrustum.SetFront(newFront);
 }
 
-void C_Camera::CalculateViewMatrix(bool ortho)
+void C_Camera::SetProjectionType(const CameraType& type)
 {
-	if (isProjectionDirty)
-		RecalculateProjection(ortho);
+	cameraType = type;
 
-	cameraFrustum.pos = position;
-	cameraFrustum.front = front.Normalized();
-	cameraFrustum.up = up.Normalized();
-	float3::Orthonormalize(cameraFrustum.front, cameraFrustum.up);
-	right = up.Cross(front);
-}
-
-void C_Camera::RecalculateProjection(bool ortho)
-{
-	if (!ortho ) {
-		cameraFrustum.type = FrustumType::PerspectiveFrustum;
-		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-		cameraFrustum.farPlaneDistance = farPlaneDistance;
-		cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
-		cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+	if (type == CameraType::KOFI_ORTHOGRAPHIC)
+	{
+		hFov = cameraFrustum.HorizontalFov();
+		vFov = cameraFrustum.VerticalFov();
+		cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->viewportSize.x, owner->GetEngine()->GetEditor()->viewportSize.y);
 	}
-	else {
-		if (owner)
-		{
-			cameraFrustum.type = FrustumType::OrthographicFrustum;
-			cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-			cameraFrustum.farPlaneDistance = farPlaneDistance;
-			cameraFrustum.orthographicWidth = owner->GetEngine()->GetEditor()->lastViewportSize.x;
-			cameraFrustum.orthographicHeight = owner->GetEngine()->GetEditor()->lastViewportSize.y;
-		}
-		
+	else if (type == CameraType::KOFI_PERSPECTIVE)
+	{
+		cameraFrustum.SetPerspective(hFov, vFov);
+		hFov = vFov = 0.0f;
 	}
 }
 
@@ -248,10 +264,10 @@ void C_Camera::FrustumCulling()
 		if (componentMesh == nullptr || gameObject == owner)
 			continue;
 
-		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
-			componentMesh->SetRenderMesh(false);
+		if (!ClipsWithBBox(componentMesh->GetLocalAABB()))
+			gameObject->SetRenderGameObject(false);
 		else
-			componentMesh->SetRenderMesh(true);
+			gameObject->SetRenderGameObject(true);
 	}
 }
 
@@ -268,60 +284,57 @@ void C_Camera::ResetFrustumCulling()
 			continue;
 
 		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
-			componentMesh->SetRenderMesh(true);
+			gameObject->SetRenderGameObject(true);
 	}
 }
 
 void C_Camera::DrawFrustum() const
 {
-	glPushMatrix();
-	glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
-
 	//Draw Operations
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.5f);
 	glBegin(GL_LINES);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);
-
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);
-
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z);
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);
-
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z);
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);
-
+	//Near plane BL-BR
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);//Near BL
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);//Near BR
+	//Near plane BL-TL
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z); //Near BL
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z); //Near TL
+	//Near plane TL - TR
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);//Near TL
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);//Near TR
+	//Near plane BR - TR
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);//Near BR
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);//Near TR
+	//Near plane BL - Far plane BL
+	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z); //Near BL
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z); //Far BL
+	//Far BL - BR
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);//Far BL
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);//Far BR
+	//Far BR - Near BR
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z); //Far BR
+	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z); //Near BR
+	//Far BR - TR
+	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z); //Far BR
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
+	//Far TR - TL
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); //Far TL
+	//Far TL - Near TL
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); //Far TL
+	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z); //Near TL
+	//Far TL - BL
+	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); // Far TL
+	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z); //Far BL
+	//Far TR - Near TR
+	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
+	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z); //Near TR
 	glEnd();
-	glPopMatrix();
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glLineWidth(1.0f);
 
 }
 

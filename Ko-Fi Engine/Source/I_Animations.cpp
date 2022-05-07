@@ -321,7 +321,7 @@ uint I_Animations::GetChannelsDataSize(const R_Animation* rAnimation)
 
 	if (rAnimation == nullptr)
 	{
-		LOG("[ERROR] Animations Importer: Could not get Channels Size Of Data! Error: Argument R_Animation* was nullptr");
+		KOFI_ERROR("Animations Importer: Could not get Channels Size Of Data! Error: Argument R_Animation* was nullptr");
 		return 0;
 	}
 

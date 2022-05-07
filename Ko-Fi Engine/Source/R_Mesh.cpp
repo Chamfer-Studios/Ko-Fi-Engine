@@ -6,6 +6,9 @@
 #include "Engine.h"
 #include "M_Renderer3D.h"
 
+#include "Engine.h"
+#include "M_Renderer3D.h"
+
 #include "GameObject.h"
 #include "C_Material.h"
 #include "C_Transform.h"

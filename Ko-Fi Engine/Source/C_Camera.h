@@ -4,9 +4,8 @@
 #include "Component.h"
 
 #include "MathGeoLib/Math/float3.h"
-#include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Geometry/Frustum.h"
-#include "MathGeoLib/Geometry/Plane.h"
+#include "MathGeoLib/Math/MathFunc.h"
 
 class GameObject;
 class C_Transform;
@@ -15,8 +14,15 @@ using Json = nlohmann::json;
 class C_Camera : public Component
 {
 public:
+
+	// Camera Type
+	enum CameraType {
+		KOFI_PERSPECTIVE,
+		KOFI_ORTHOGRAPHIC,
+	};
+
 	// Constructors
-	C_Camera(GameObject* gameObject, bool isEngineCamera = false);
+	C_Camera(GameObject* gameObject);
 	~C_Camera();
 
 	// Game Loop
@@ -30,52 +36,61 @@ public:
 	void Load(Json& json) override;
 
 	// Getters
-	float GetFarPlaneHeight() const;
-	float GetFarPlaneWidth() const;
-	inline float GetNearPlaneDistance() const { return nearPlaneDistance; }
-	inline float GetFarPlaneDistance() const { return farPlaneDistance; }
-	inline int GetSpeedMultiplier() const { return speedMultiplier; }
-	inline float GetVerticalFloat() const { return verticalFOV; }
-	inline float GetCameraSpeed() const { return cameraSpeed; }
-	inline float GetCameraSensitivity() const { return cameraSensitivity; }
-	inline float GetLastDeltaX() const { return lastDeltaX; }
-	inline float GetLastDeltaY() const { return lastDeltaY; }
-	inline float GetAspectRatio() const { return aspectRatio; }
+	// OrthoGraphic Planes Have the Same SIZE!
+	float GetNearPlaneHeight() const { return cameraFrustum.NearPlaneHeight(); }
+	// OrthoGraphic Planes Have the Same SIZE!
+	float GetNearPlaneWidth() const { return cameraFrustum.NearPlaneWidth(); }
 
-	inline float3 GetPosition() const { return position; }
-	inline float3 GetRight() const { return right; }
-	inline float3 GetUp() const { return up; }
-	inline float3 GetFront() const { return front; }
+	inline float GetAspectRatio() const { return cameraFrustum.AspectRatio(); }
 	inline float3 GetReference() const { return reference; }
 
-	inline Frustum GetCameraFrustum() const { return cameraFrustum; }
-	float4x4 GetViewMatrix() const;
-
-	inline bool GetIsProjectionDirty() const { return isProjectionDirty; }
-	inline bool GetIsEngineCamera() const { return isEngineCamera; }
+	inline bool IsEngineCamera() const { return isEngineCamera; }
 	inline bool GetIsMainCamera() const { return isMainCamera; }
-	inline bool GetIsDrawFrustumActive() const { return isDrawFrustumActive; }
-	
+
+	inline Frustum GetCameraFrustum() const { return cameraFrustum; }
+	inline float3 GetRight() const { return cameraFrustum.WorldRight(); }
+	inline float3 GetFront() const { return cameraFrustum.Front(); }
+	inline float3 GetUp() const { return cameraFrustum.Up(); }
+	inline float3 GetPosition() const { return cameraFrustum.Pos(); }
+
+	// CAUTION! --> The Value is on DEG
+	// Vertical FOV is LOCKED, You can't set it.
+	inline float GetVerticalFov() const { return RadToDeg(cameraFrustum.VerticalFov()); }
+	// CAUTION! --> The Value is on DEG
+	inline float GetHorizontalFov() const { return RadToDeg(cameraFrustum.HorizontalFov()); }
+
+	inline float GetNearPlaneDistance() const { return cameraFrustum.NearPlaneDistance(); }
+	inline float GetFarPlaneDistance() const { return cameraFrustum.FarPlaneDistance(); }
+	inline bool GetIsFrustumActive() const { return isFrustumCullingActive; }
+
+	float4x4 GetViewMatrix() const;
+	float4x4 GetWorldMatrix() const;
+	float4x4 GetProjectionMatrix() const;
+
 	// Setters
 	void SetAspectRatio(const float& aspectRatio);
-	inline void SetIsProjectionDirty(bool value) { isProjectionDirty = value; }
+
+	inline void SetReference(float3 newReference) { reference = newReference; }
+
 	inline void SetIsEngineCamera(bool value) { isEngineCamera = value; }
 	inline void SetIsMainCamera(bool value) { isMainCamera = value; }
-	inline void SetPosition(float3 newPos) { position = newPos; }
-	inline void SetRight(float3 newRigth) { right = newRigth; }
-	inline void SetUp(float3 newUp) { up = newUp; }
-	inline void SetFront(float3 newFront) { front = newFront; }
-	inline void SetReference(float3 newReference) { reference = newReference; }
-	inline void SetLastDeltaX(float newValueX) { lastDeltaX = newValueX; }
-	inline void SetLastDeltaY(float newValueY) { lastDeltaY = newValueY; }
+	
+	inline void SetFrontAndUp(float3 newFront, float3 newUp) { this->cameraFrustum.SetFrontUp(newFront.Normalized(),newUp.Normalized()); }
+	void SetPosition(float3 newPos);
 
+	// IMPORTANT!! Horizontal Fov Must Be In DEG, not in radians!
+	inline void SetHorizontalFov(float horizontalFov) { this->cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontalFov) , cameraFrustum.AspectRatio()); }
+	inline void SetNearPlaneDistance(float nearPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(nearPlaneDistance,cameraFrustum.FarPlaneDistance());}
+	inline void SetFarPlaneDistance(float farPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(cameraFrustum.NearPlaneDistance(),farPlaneDistance);}
+	inline void SetViewPlaneDistances(float nearPlaneDistance,float farPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(nearPlaneDistance,farPlaneDistance);}
+
+	inline void SetIsFrustumActive(bool value) { isFrustumCullingActive = value; }
 	// Camera Functions
-	void LookAt(const float3& point);
-	void ChangeSpeed(int multiplier);
-	
-	void CalculateViewMatrix(bool ortho = false);
-	void RecalculateProjection(bool ortho = false);
-	
+	void LookAt(const float3 point);
+	void LookAt2(float3 front, float3 up);
+
+	void SetProjectionType(const CameraType &type);
+
 	// Frustum Culling
 	void FrustumCulling();
 	void ResetFrustumCulling();
@@ -85,30 +100,19 @@ public:
 
 private:
 	// Properties
-	float3 right, up, front, position, reference;
+	float3 reference;
 	Frustum cameraFrustum;
 
-	float aspectRatio = 1.f;
-	float verticalFOV = 60.f;
-	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 100.f;
-
-	float cameraSensitivity = .1f;
-	float cameraSpeed = 60.f;
-	float baseCameraSpeed = 60.f;
-	int speedMultiplier = 1.0f;
-
-	float lastDeltaX = 0.f, lastDeltaY = 0.f;
-
 	// Debug bools
-	bool isDrawFrustumActive = true;
 	bool isFrustumCullingActive = false;
-	bool isProjectionDirty = true;
 
 	bool isMainCamera = false;
 	bool isEngineCamera = false;
 
-	C_Transform* componentTransform = nullptr;
+	CameraType cameraType = KOFI_PERSPECTIVE;
+
+	// DON'T USE, USE GETFOV INSTEAD
+	float hFov, vFov = 0.0f;
 	
 };
 

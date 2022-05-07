@@ -100,7 +100,6 @@ bool PanelViewport::Update()
 		{
 			editor->lastViewportSize = viewportSize;
 			engine->GetCamera3D()->currentCamera->SetAspectRatio(viewportSize.x / viewportSize.y);
-			engine->GetCamera3D()->currentCamera->RecalculateProjection();
 			engine->GetRenderer()->ResizeFrameBuffers(viewportSize.x, viewportSize.y);
 		}
 		editor->viewportSize = viewportSize;
@@ -229,10 +228,10 @@ void PanelViewport::DrawViewportBar()
 	}
 	if (ImGui::BeginPopup("Camera Speed Popup"))
 	{
-		int newSpeedMultiplier = editor->engine->GetCamera3D()->engineCamera->GetSpeedMultiplier();
+		int newSpeedMultiplier = editor->engine->GetCamera3D()->GetSpeedMultiplier();
 		if (ImGui::SliderInt("##Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
 		{
-			editor->engine->GetCamera3D()->engineCamera->ChangeSpeed(newSpeedMultiplier);
+			editor->engine->GetCamera3D()->ChangeSpeed(newSpeedMultiplier);
 		}
 		ImGui::EndPopup();
 	}

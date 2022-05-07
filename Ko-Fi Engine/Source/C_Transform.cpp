@@ -61,14 +61,13 @@ bool C_Transform::Update(float dt)
 
 bool C_Transform::PostUpdate(float dt)
 {
-	return true;
 
-	glBegin(GL_LINES);
-	glColor3f(0, 0, 1.0f);
-	glLineWidth(4.f);
-	glVertex3f(GetPosition().x, GetPosition().y, GetPosition().z);
-	glVertex3f(GetPosition().x + Front().x * 50, GetPosition().y + Front().y * 50, GetPosition().z + Front().z * 50);
-	glEnd();
+	//glBegin(GL_LINES);
+	//glColor3f(0, 0, 1.0f);
+	//glLineWidth(4.f);
+	//glVertex3f(GetPosition().x, GetPosition().y, GetPosition().z);
+	//glVertex3f(GetPosition().x + Front().x * 50, GetPosition().y + Front().y * 50, GetPosition().z + Front().z * 50);
+	//glEnd();
 
 	return true;
 }
@@ -234,14 +233,29 @@ const float3 &C_Transform::Right() const
 	return transformMatrixLocal.Col3(0).Normalized();
 }
 
+const float3& C_Transform::GlobalRight() const
+{
+	return transformMatrix.Col3(0).Normalized();
+}
+
 const float3 &C_Transform::Up() const
 {
 	return transformMatrixLocal.Col3(1).Normalized();
 }
 
+const float3& C_Transform::GlobalUp() const
+{
+	return transformMatrix.Col3(1).Normalized();
+}
+
 const float3 &C_Transform::Front() const
 {
 	return transformMatrixLocal.Col3(2).Normalized();
+}
+
+const float3& C_Transform::GlobalFront() const
+{
+	return transformMatrix.Col3(2).Normalized();
 }
 
 void C_Transform::RecomputeGlobalMatrix()

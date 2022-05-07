@@ -5,9 +5,6 @@
 #include "Globals.h"
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float2.h"
-#include "MathGeoLib/Math/float4x4.h"
-#include "MathGeoLib/Geometry/Frustum.h"
-#include "glmath.h"
 
 
 class GameObject;
@@ -23,6 +20,7 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
+
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
@@ -41,16 +39,27 @@ public:
 	bool InspectorDraw() override;
 	// ------------------------------------------------------------------
 
+	// Camera Functions
+	// Inputs
 	void CheckInput(float dt);
-	void CheckMouseMotion(float dt);
+	void MouseZoom(float dt);
+	void MouseRotation(float dt);
+	void FocusTarget();
 
+	// Setters
 	void SetGameCamera(C_Camera* gameCamera);
+	inline void ChangeSpeed(int speedMultiplayer) { 
+		this->speedMultiplier = speedMultiplayer;
+		cameraSpeed = baseCameraSpeed * speedMultiplayer; }
+	inline int GetSpeedMultiplier() const { return speedMultiplier; }
+
+	// Getters
+	float3 GetLastMouseClick() const;
 	
 	GameObject* MousePicking(const bool& isRightButton = false);
 
 	float2 WorldToScreen(float3 position);
 
-	float3 GetLastMouseClick() const;
 
 public:
 	GameObject* engineCameraObject = nullptr; // The engine camera needs a game object as holder if we want to be able to access "engine" from component camera.
@@ -60,8 +69,19 @@ public:
 	C_Camera* gameCamera = nullptr; // The game camera, asigning this to currentCamera will display de game camera
 
 private:
-	float3 lastMouseClick;
 	KoFiEngine* engine = nullptr;
+	float3 lastMouseClick;
+
+	float cameraSensitivity = .1f;
+	float cameraSpeed = 1.f;
+	float baseCameraSpeed = 10.f;
+	float maxSpeed = 25.f;
+	int speedMultiplier = 1.0f;
+
+	float lastDeltaX = 0.f, lastDeltaY = 0.f;
+
+	bool isMoving = false; // Checker for using the mouse out of the window after clicking the mouse
+
 
 };
 

@@ -12,6 +12,7 @@
 
 #include "MathGeoLib/Algorithm/Random/LCG.h"
 #include "MathGeoLib/Math/MathFunc.h"
+#include "MathGeoLib/Math/float3x3.h"
 
 ParticleModule::ParticleModule()
 {

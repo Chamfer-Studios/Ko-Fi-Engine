@@ -88,7 +88,7 @@ void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 	float2 normalizedPosition = cTransform->GetNormalizedPosition();
 	float2 normalizedSize = cTransform->GetNormalizedSize();
 
-	float3 position3d = { normalizedPosition.x, normalizedPosition.y, -1};
+	float3 position3d = { normalizedPosition.x, normalizedPosition.y, 1};
 	float3 rotation3d = cTransform->GetRotation();
 	Quat quaternion3d = Quat::FromEulerXYZ(rotation3d.x, rotation3d.y, rotation3d.z);
 	float3 size3d = { normalizedSize.x, normalizedSize.y, 1 };
@@ -208,11 +208,10 @@ void M_UI::PrepareUIRender()
 
 	float2 offset = { engine->GetEditor()->lastViewportSize.x / 2, engine->GetEditor()->lastViewportSize.y / 2 };
 	engine->GetCamera3D()->currentCamera->SetPosition({ offset.x, offset.y, 0 });
-	engine->GetCamera3D()->currentCamera->LookAt({ offset.x, offset.y, -1 });
+	engine->GetCamera3D()->currentCamera->LookAt({ offset.x, offset.y, 1 });
 
-	engine->GetCamera3D()->currentCamera->SetIsProjectionDirty(true);
-	engine->GetCamera3D()->currentCamera->CalculateViewMatrix(true);
-
+	engine->GetCamera3D()->currentCamera->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
+	
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
@@ -237,13 +236,10 @@ void M_UI::EndUIRender()
 
 	glPopMatrix();
 
-	engine->GetCamera3D()->currentCamera->SetRight(right);
-	engine->GetCamera3D()->currentCamera->SetUp(up);
-	engine->GetCamera3D()->currentCamera->SetFront(front);
-	engine->GetCamera3D()->currentCamera->SetPosition(position);
-
-	engine->GetCamera3D()->currentCamera->SetIsProjectionDirty(true);
-	engine->GetCamera3D()->currentCamera->CalculateViewMatrix();
+	engine->GetCamera3D()->currentCamera->SetPosition({ position.x, position.y, position.z });
+	engine->GetCamera3D()->currentCamera->SetFrontAndUp(front, up);
+	
+	engine->GetCamera3D()->currentCamera->SetProjectionType(C_Camera::CameraType::KOFI_PERSPECTIVE);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());

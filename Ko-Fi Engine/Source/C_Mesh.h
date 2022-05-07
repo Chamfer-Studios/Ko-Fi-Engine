@@ -34,7 +34,6 @@ public:
 	void SetPath(const char* path);
 	void SetVertexNormals(bool vertexNormals);
 	void SetFaceNormals(bool facesNormals);
-	inline void SetRenderMesh(bool renderMesh) { this->renderMesh = renderMesh; }
 	
 	// Getters
 	inline R_Mesh* GetMesh() const { return mesh; }
@@ -60,7 +59,6 @@ public:
 	
 private:
 	R_Mesh* mesh = nullptr;
-	bool renderMesh = true;
 	float time = 0;
 
 	//COMPONENT_SUBTYPE subtype = COMPONENT_SUBTYPE::COMPONENT_MESH_MESH;
