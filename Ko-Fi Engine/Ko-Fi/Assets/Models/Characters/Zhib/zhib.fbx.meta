@@ -4,44 +4,44 @@
     "contained_resources": [
         {
             "asset_file": "zhib_khopesh.sugar",
-            "library_path": "Library/Meshes/995275470.sugar",
+            "library_path": "Library/Meshes/1113096008.sugar",
             "type": 0,
-            "uid": 995275470
+            "uid": 1113096008
         },
         {
             "asset_file": "zhib_base_color.png",
-            "library_path": "Library/Textures/801468851.cacao",
+            "library_path": "Library/Textures/1256778656.cacao",
             "type": 1,
-            "uid": 801468851
+            "uid": 1256778656
         },
         {
             "asset_file": "zhib_low.sugar",
-            "library_path": "Library/Meshes/174925298.sugar",
+            "library_path": "Library/Meshes/442555135.sugar",
             "type": 0,
-            "uid": 174925298
+            "uid": 442555135
         },
         {
             "asset_file": "zhib_khopesh_back001.sugar",
-            "library_path": "Library/Meshes/24803335.sugar",
+            "library_path": "Library/Meshes/2009213484.sugar",
             "type": 0,
-            "uid": 24803335
+            "uid": 2009213484
         },
         {
             "asset_file": "zhib_karambit001.sugar",
-            "library_path": "Library/Meshes/1737840946.sugar",
+            "library_path": "Library/Meshes/995095489.sugar",
             "type": 0,
-            "uid": 1737840946
+            "uid": 995095489
         },
         {
             "asset_file": "zhib_armature|zhib_reel.cake",
-            "library_path": "Library/Animations/651310936.cake",
+            "library_path": "Library/Animations/126545650.cake",
             "type": 5,
-            "uid": 651310936
+            "uid": 126545650
         }
     ],
-    "library_file": "242023629.tea",
-    "library_path": "Library/Models/242023629.tea",
-    "mod_time": 411500055,
+    "library_file": "2134889705.tea",
+    "library_path": "Library/Models/2134889705.tea",
+    "mod_time": 411508007,
     "type": 3,
-    "uid": 242023629
+    "uid": 2134889705
 }

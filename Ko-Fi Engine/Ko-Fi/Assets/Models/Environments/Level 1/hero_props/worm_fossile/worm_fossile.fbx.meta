@@ -4,14 +4,14 @@
     "contained_resources": [
         {
             "asset_file": "worm_l.sugar",
-            "library_path": "Library/Meshes/1504343054.sugar",
+            "library_path": "Library/Meshes/527125207.sugar",
             "type": 0,
-            "uid": 1504343054
+            "uid": 527125207
         }
     ],
-    "library_file": "622245894.tea",
-    "library_path": "Library/Models/622245894.tea",
-    "mod_time": 411500055,
+    "library_file": "504330711.tea",
+    "library_path": "Library/Models/504330711.tea",
+    "mod_time": 411508007,
     "type": 3,
-    "uid": 622245894
+    "uid": 504330711
 }

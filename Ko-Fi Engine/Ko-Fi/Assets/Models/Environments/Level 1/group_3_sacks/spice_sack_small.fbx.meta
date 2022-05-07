@@ -4,14 +4,14 @@
     "contained_resources": [
         {
             "asset_file": "Plane.003.sugar",
-            "library_path": "Library/Meshes/1737021942.sugar",
+            "library_path": "Library/Meshes/259420824.sugar",
             "type": 0,
-            "uid": 1737021942
+            "uid": 259420824
         }
     ],
-    "library_file": "1006561783.tea",
-    "library_path": "Library/Models/1006561783.tea",
-    "mod_time": 411500055,
+    "library_file": "1374400923.tea",
+    "library_path": "Library/Models/1374400923.tea",
+    "mod_time": 411508007,
     "type": 3,
-    "uid": 1006561783
+    "uid": 1374400923
 }

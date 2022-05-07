@@ -4,32 +4,32 @@
     "contained_resources": [
         {
             "asset_file": "worm_l.sugar",
-            "library_path": "Library/Meshes/1520358470.sugar",
+            "library_path": "Library/Meshes/250351647.sugar",
             "type": 0,
-            "uid": 1520358470
+            "uid": 250351647
         },
         {
             "asset_file": "worm_fossile_base_color.png",
-            "library_path": "Library/Textures/1555562887.cacao",
+            "library_path": "Library/Textures/754736735.cacao",
             "type": 1,
-            "uid": 1555562887
+            "uid": 754736735
         },
         {
             "asset_file": "worm_head_l.sugar",
-            "library_path": "Library/Meshes/1737203200.sugar",
+            "library_path": "Library/Meshes/1239781646.sugar",
             "type": 0,
-            "uid": 1737203200
+            "uid": 1239781646
         },
         {
             "asset_file": "worm_spine_l.sugar",
-            "library_path": "Library/Meshes/1299447904.sugar",
+            "library_path": "Library/Meshes/1134895802.sugar",
             "type": 0,
-            "uid": 1299447904
+            "uid": 1134895802
         }
     ],
-    "library_file": "636273376.tea",
-    "library_path": "Library/Models/636273376.tea",
-    "mod_time": 411500055,
+    "library_file": "1802279262.tea",
+    "library_path": "Library/Models/1802279262.tea",
+    "mod_time": 411508007,
     "type": 3,
-    "uid": 636273376
+    "uid": 1802279262
 }

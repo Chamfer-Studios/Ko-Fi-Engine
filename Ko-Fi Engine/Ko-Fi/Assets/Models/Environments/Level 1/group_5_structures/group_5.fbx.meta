@@ -4,38 +4,38 @@
     "contained_resources": [
         {
             "asset_file": "Cube.001.sugar",
-            "library_path": "Library/Meshes/402281320.sugar",
+            "library_path": "Library/Meshes/26305532.sugar",
             "type": 0,
-            "uid": 402281320
+            "uid": 26305532
         },
         {
             "asset_file": "Cylinder.001.sugar",
-            "library_path": "Library/Meshes/366033817.sugar",
+            "library_path": "Library/Meshes/1008712847.sugar",
             "type": 0,
-            "uid": 366033817
+            "uid": 1008712847
         },
         {
             "asset_file": "Cylinder.002.sugar",
-            "library_path": "Library/Meshes/1762342911.sugar",
+            "library_path": "Library/Meshes/170273984.sugar",
             "type": 0,
-            "uid": 1762342911
+            "uid": 170273984
         },
         {
             "asset_file": "Cube.sugar",
-            "library_path": "Library/Meshes/897383821.sugar",
+            "library_path": "Library/Meshes/1290501466.sugar",
             "type": 0,
-            "uid": 897383821
+            "uid": 1290501466
         },
         {
             "asset_file": "Plane.sugar",
-            "library_path": "Library/Meshes/1192126397.sugar",
+            "library_path": "Library/Meshes/282338520.sugar",
             "type": 0,
-            "uid": 1192126397
+            "uid": 282338520
         }
     ],
-    "library_file": "86682852.tea",
-    "library_path": "Library/Models/86682852.tea",
-    "mod_time": 411500055,
+    "library_file": "1825819896.tea",
+    "library_path": "Library/Models/1825819896.tea",
+    "mod_time": 411508007,
     "type": 3,
-    "uid": 86682852
+    "uid": 1825819896
 }

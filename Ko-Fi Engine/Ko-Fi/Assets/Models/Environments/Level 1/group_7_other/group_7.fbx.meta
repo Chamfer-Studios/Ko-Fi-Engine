@@ -4,26 +4,26 @@
     "contained_resources": [
         {
             "asset_file": "Cube.002.sugar",
-            "library_path": "Library/Meshes/1791231285.sugar",
+            "library_path": "Library/Meshes/1604615197.sugar",
             "type": 0,
-            "uid": 1791231285
+            "uid": 1604615197
         },
         {
             "asset_file": "Cube.sugar",
-            "library_path": "Library/Meshes/1122675433.sugar",
+            "library_path": "Library/Meshes/1954067200.sugar",
             "type": 0,
-            "uid": 1122675433
+            "uid": 1954067200
         },
         {
             "asset_file": "Box001.sugar",
-            "library_path": "Library/Meshes/84744089.sugar",
+            "library_path": "Library/Meshes/1178979099.sugar",
             "type": 0,
-            "uid": 84744089
+            "uid": 1178979099
         }
     ],
-    "library_file": "58223368.tea",
-    "library_path": "Library/Models/58223368.tea",
-    "mod_time": 411500055,
+    "library_file": "339291893.tea",
+    "library_path": "Library/Models/339291893.tea",
+    "mod_time": 411508007,
     "type": 3,
-    "uid": 58223368
+    "uid": 339291893
 }

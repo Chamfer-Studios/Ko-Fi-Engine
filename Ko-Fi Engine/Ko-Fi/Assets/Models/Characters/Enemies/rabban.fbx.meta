@@ -4,32 +4,32 @@
     "contained_resources": [
         {
             "asset_file": "axe.sugar",
-            "library_path": "Library/Meshes/634653030.sugar",
+            "library_path": "Library/Meshes/1248329845.sugar",
             "type": 0,
-            "uid": 634653030
+            "uid": 1248329845
         },
         {
             "asset_file": "rabban_base_color.png",
-            "library_path": "Library/Textures/15336986.cacao",
+            "library_path": "Library/Textures/1567265310.cacao",
             "type": 1,
-            "uid": 15336986
+            "uid": 1567265310
         },
         {
             "asset_file": "rabban.sugar",
-            "library_path": "Library/Meshes/2081249620.sugar",
+            "library_path": "Library/Meshes/1086021433.sugar",
             "type": 0,
-            "uid": 2081249620
+            "uid": 1086021433
         },
         {
             "asset_file": "rabban_armature|rabban_reel.cake",
-            "library_path": "Library/Animations/702564605.cake",
+            "library_path": "Library/Animations/1308944655.cake",
             "type": 5,
-            "uid": 702564605
+            "uid": 1308944655
         }
     ],
-    "library_file": "1081869733.tea",
-    "library_path": "Library/Models/1081869733.tea",
-    "mod_time": 411500055,
+    "library_file": "1542357222.tea",
+    "library_path": "Library/Models/1542357222.tea",
+    "mod_time": 411508007,
     "type": 3,
-    "uid": 1081869733
+    "uid": 1542357222
 }
