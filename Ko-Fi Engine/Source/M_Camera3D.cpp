@@ -44,7 +44,7 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetIsEngineCamera(true);
 
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-	engineCamera->SetFarPlaneDistance(10000.0f);
+	engineCamera->SetFarPlaneDistance(60000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
 
 	currentCamera = engineCamera;
@@ -79,6 +79,8 @@ bool M_Camera3D::Start()
 bool M_Camera3D::Update(float dt)
 {
 	OPTICK_EVENT();
+
+	FocusTarget();
 
 	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
 		return true;
@@ -157,29 +159,7 @@ void M_Camera3D::CheckInput(float dt)
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= engineCamera->GetRight() * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += engineCamera->GetRight() * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN) 
-	{
-		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0] != -1)
-		{
-			GameObject* selectedGameObject = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0]);
-			C_Mesh* mesh = selectedGameObject->GetComponent<C_Mesh>();
-			if (mesh)
-			{
-				const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
-				engineCamera->LookAt(meshCenter);
-				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
-				const float currentDistance = meshCenter.Distance(currentCamera->GetPosition());
-				const float desiredDistance = (meshRadius * 2) / atan(currentCamera->GetCameraFrustum().HorizontalFov());
-				currentCamera->SetPosition(currentCamera->GetPosition() + currentCamera->GetFront() * (currentDistance - desiredDistance));
-			}
-			else
-			{
-				C_Transform* transform = selectedGameObject->GetTransform();
-				if (transform != nullptr)
-					currentCamera->LookAt(selectedGameObject->GetTransform()->GetPosition());
-			}
-		}
-	}
+	
 	engineCamera->SetPosition(engineCamera->GetPosition() + newPos);
 	cameraSpeed =cameraSpeed + (cameraSpeed* dt);
 	KOFI_DEBUG("Speed %f", cameraSpeed);
@@ -223,6 +203,33 @@ void M_Camera3D::MouseRotation(float dt)
 		engineCamera->SetFrontAndUp( rot* engineCamera->GetFront(), rot * engineCamera->GetUp());
 	}
 
+}
+
+void M_Camera3D::FocusTarget()
+{
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0] != -1)
+		{
+			GameObject* selectedGameObject = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0]);
+			C_Mesh* mesh = selectedGameObject->GetComponent<C_Mesh>();
+			if (mesh)
+			{
+				const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
+				engineCamera->LookAt(meshCenter);
+				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
+				const float currentDistance = meshCenter.Distance(currentCamera->GetPosition());
+				const float desiredDistance = (meshRadius * 2) / atan(currentCamera->GetCameraFrustum().HorizontalFov());
+				currentCamera->SetPosition(currentCamera->GetPosition() + currentCamera->GetFront() * (currentDistance - desiredDistance));
+			}
+			else
+			{
+				C_Transform* transform = selectedGameObject->GetTransform();
+				if (transform != nullptr)
+					currentCamera->LookAt(selectedGameObject->GetTransform()->GetPosition());
+			}
+		}
+	}
 }
 
 void M_Camera3D::OnPlay()

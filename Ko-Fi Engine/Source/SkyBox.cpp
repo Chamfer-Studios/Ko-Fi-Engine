@@ -32,16 +32,25 @@
 
 SkyBox::SkyBox()
 {
-	faces =
-	{
-	"EngineConfig/Skybox/right.jpg",
-	"EngineConfig/Skybox/left.jpg",
-	"EngineConfig/Skybox/top.jpg",
-	"EngineConfig/Skybox/bottom.jpg",
-	"EngineConfig/Skybox/front.jpg",
-	"EngineConfig/Skybox/back.jpg"
-	};
+	//faces =
+	//{
+	//"EngineConfig/Skybox/right.jpg",
+	//"EngineConfig/Skybox/left.jpg",
+	//"EngineConfig/Skybox/top.jpg",
+	//"EngineConfig/Skybox/bottom.jpg",
+	//"EngineConfig/Skybox/front.jpg",
+	//"EngineConfig/Skybox/back.jpg"
+	//};
 
+		faces =
+	{
+	"EngineConfig/Skybox/Skybox2/Daylight-Box_Right.jpg",
+	"EngineConfig/Skybox/Skybox2/Daylight-Box_Left.jpg",
+	"EngineConfig/Skybox/Skybox2/Daylight-Box_Top.jpg",
+	"EngineConfig/Skybox/Skybox2/Daylight-Box_Bottom.jpg",
+	"EngineConfig/Skybox/Skybox2/Daylight-Box_Front.jpg",
+	"EngineConfig/Skybox/Skybox2/Daylight-Box_Back.jpg"
+	};
 }
 
 

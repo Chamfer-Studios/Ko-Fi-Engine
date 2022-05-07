@@ -44,6 +44,7 @@ public:
 	void CheckInput(float dt);
 	void MouseZoom(float dt);
 	void MouseRotation(float dt);
+	void FocusTarget();
 
 	// Setters
 	void SetGameCamera(C_Camera* gameCamera);
