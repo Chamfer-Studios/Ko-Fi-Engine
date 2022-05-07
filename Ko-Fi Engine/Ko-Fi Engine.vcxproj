@@ -409,6 +409,7 @@
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Math\vec2d.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.h" />
+    <ClInclude Include="Source\Grid.h" />
     <ClInclude Include="Source\P_Actor.h" />
     <ClInclude Include="Source\P_Collision.h" />
     <ClInclude Include="Source\P_World.h" />

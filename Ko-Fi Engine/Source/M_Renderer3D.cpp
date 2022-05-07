@@ -340,9 +340,16 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
-				if (!cCamera->IsEngineCamera() && cCamera->GetIsDrawFrustumActive())
+				KOFI_DEBUG("%d", engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+				if (!engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
 				{
-					cCamera->DrawFrustum();
+					int uid = engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.at(0);
+
+					if (!cCamera->IsEngineCamera() && cCamera->owner->GetUID() == uid)
+					{
+						cCamera->DrawFrustum();
+					}
+
 				}
 			}
 			if (go->GetComponent<C_RigidBody>())
@@ -661,14 +668,15 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox &skybox)
 
 		// Passing Shader Uniforms
 		glUniform1d(glGetUniformLocation(shader, "skybox"), 0);
+
 		float4x4 view = float4x4::identity;
-		//view.Set3x3Part(float3x3::LookAt(camera->GetFront(), (camera->GetPosition() + camera->GetUp()).Normalized(), camera->GetUp(), float3(0.f, 1.0f, 0.f).Normalized()));
-		//view.LookAt(camera->GetFront(), (camera->GetPosition() + camera->GetReference()).Normalized(), camera->GetUp(), float3(0.f, 1.0f, 0.f).Normalized());
 		view.Set3x3Part(camera->GetViewMatrix().Float3x3Part());
+
 		GLint view_location = glGetUniformLocation(shader, "view");
 		glUniformMatrix4fv(view_location, 1, GL_FALSE, view.Transposed().ptr());
 		float4x4 proj = float4x4::identity;
 		proj = camera->GetProjectionMatrix();
+
 		GLint projection_location = glGetUniformLocation(shader, "projection");
 		glUniformMatrix4fv(projection_location, 1, GL_FALSE, proj.Transposed().ptr());
 

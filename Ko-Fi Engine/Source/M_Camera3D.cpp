@@ -162,7 +162,6 @@ void M_Camera3D::CheckInput(float dt)
 	
 	engineCamera->SetPosition(engineCamera->GetPosition() + newPos);
 	cameraSpeed =cameraSpeed + (cameraSpeed* dt);
-	KOFI_DEBUG("Speed %f", cameraSpeed);
 }
 
 void M_Camera3D::MouseZoom(float dt)

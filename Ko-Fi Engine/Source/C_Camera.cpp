@@ -73,8 +73,6 @@ bool C_Camera::Update(float dt)
 		//Apply rotation
 		if (isFrustumCullingActive)
 			FrustumCulling();
-		if (isDrawFrustumActive)
-			DrawFrustum();
 
 	}
 	// Camera Frustum Updates Transform
@@ -101,10 +99,9 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 	{
 		DrawDeleteButton(owner, this);
 
-		// DRAW FRUSTUM
-		if (ImGui::Checkbox("Draw frustum", &isDrawFrustumActive))
-		{
-		}
+		// CLEAR FLAG
+		//owner->GetEngine()->GetSceneManager()->GetCurrentScene()->skybox.InspectorDraw();
+
 		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
 		{
@@ -124,6 +121,8 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 				SetProjectionType(CameraType::KOFI_PERSPECTIVE);
 			if (selectedItem == 1)
 				SetProjectionType(CameraType::KOFI_ORTHOGRAPHIC);
+
+
 		}
 
 		switch (cameraType)
@@ -162,7 +161,6 @@ void C_Camera::Save(Json& json) const
 	json["vertical_fov"] = cameraFrustum.VerticalFov();
 	json["near_plane_distance"] = cameraFrustum.NearPlaneDistance();
 	json["far_plane_distance"] = cameraFrustum.FarPlaneDistance();
-	json["draw_frustum"] = isDrawFrustumActive;
 	json["frustum_culling"] = isFrustumCullingActive;
 	json["isMainCamera"] = isMainCamera;
 }
@@ -171,7 +169,6 @@ void C_Camera::Load(Json& json)
 {
 	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"), 1.778f);
 	cameraFrustum.SetViewPlaneDistances(json.at("near_plane_distance"), json.at("far_plane_distance"));
-	isDrawFrustumActive = json.at("draw_frustum");
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
 	if (isMainCamera)
@@ -297,7 +294,7 @@ void C_Camera::DrawFrustum() const
 	//Draw Operations
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glLineWidth(3.5f);
+	glLineWidth(1.5f);
 	glBegin(GL_LINES);
 	//Near plane BL-BR
 	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);//Near BL

@@ -80,7 +80,7 @@ private:
 
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
-	bool isMoving = false;
+	bool isMoving = false; // Checker for using the mouse out of the window after clicking the mouse
 
 
 };

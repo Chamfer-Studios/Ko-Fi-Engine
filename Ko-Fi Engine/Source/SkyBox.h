@@ -6,11 +6,21 @@
 #include <string>
 #include <vector>
 
+#include "MathGeoLib/Math/float4.h"
+
 class R_Material;
 class KoFiEngine;
 class C_Camera;
 
 class SkyBox {
+
+    enum ClearFlag { // How the Camera Clears The BackGround
+        SKYBOX,
+        SOLIDCOLOR,
+        DEPTH,
+        NOTHING,
+    };
+
 
 public:
    // SkyBox(KoFiEngine* engine);
@@ -18,9 +28,9 @@ public:
 	~SkyBox();
 
     void Start();
-
 	void Update(float dt);
 	void CleanUp();
+    void InspectorDraw();
 
 	void InitSkyBox();
     void DrawSkyBox();
@@ -29,8 +39,11 @@ public:
 	void InitMaterial();
 	void InitTexture();
 
+    void SetClearFlag(ClearFlag flag);
+
 public:
     KoFiEngine *engine = nullptr;
+    ClearFlag clearFlag = ClearFlag::SKYBOX;
 
     float skyboxVertices[108] = {
         // positions          
@@ -77,6 +90,7 @@ public:
          1.0f, -1.0f,  1.0f
     };
 
+    // SkyBox
     uint VAO = 0;
     uint VBO = 0;
     uint textureID = 0;
@@ -86,6 +100,9 @@ public:
     std::vector<std::string> faces;
 
     int width, height, nrChannels;
+
+    // Solid Color
+    float4 Color;
 
 };
 

@@ -46,7 +46,6 @@ public:
 
 	inline bool IsEngineCamera() const { return isEngineCamera; }
 	inline bool GetIsMainCamera() const { return isMainCamera; }
-	inline bool GetIsDrawFrustumActive() const { return isDrawFrustumActive; }
 
 	inline Frustum GetCameraFrustum() const { return cameraFrustum; }
 	inline float3 GetRight() const { return cameraFrustum.WorldRight(); }
@@ -86,7 +85,6 @@ public:
 	inline void SetViewPlaneDistances(float nearPlaneDistance,float farPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(nearPlaneDistance,farPlaneDistance);}
 
 	inline void SetIsFrustumActive(bool value) { isFrustumCullingActive = value; }
-	inline void SetIsDrawFrustumActive(bool newValue) { isDrawFrustumActive = newValue; }
 	// Camera Functions
 	void LookAt(const float3 point);
 	void LookAt2(float3 front, float3 up);
@@ -106,7 +104,6 @@ private:
 	Frustum cameraFrustum;
 
 	// Debug bools
-	bool isDrawFrustumActive = true;
 	bool isFrustumCullingActive = false;
 
 	bool isMainCamera = false;

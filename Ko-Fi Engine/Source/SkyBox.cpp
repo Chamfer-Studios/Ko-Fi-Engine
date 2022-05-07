@@ -75,6 +75,23 @@ void SkyBox::CleanUp()
 {
 }
 
+void SkyBox::InspectorDraw()
+{
+	static const char* types[]{ "SkyBox", "SolidColor", "Depth", "Don't Clear"};
+	static int selectedItem = 0;
+	ImGui::Text("Clear Flags");
+	if (ImGui::Combo("fadf", &selectedItem, types, IM_ARRAYSIZE(types)))
+	{
+		if (selectedItem == 0)
+			SetClearFlag(ClearFlag::SKYBOX);
+		if (selectedItem == 1)
+			SetClearFlag(ClearFlag::SOLIDCOLOR);
+	
+		ImGui::EndCombo();
+	}
+
+}
+
 void SkyBox::InitSkyBox()
 {
 	InitMesh();
@@ -145,4 +162,9 @@ void SkyBox::InitTexture()
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
+}
+
+void SkyBox::SetClearFlag(ClearFlag flag)
+{
+	clearFlag = flag;
 }
