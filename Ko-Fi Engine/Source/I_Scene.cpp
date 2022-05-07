@@ -1356,7 +1356,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	mesh->SetIsAnimated(true);
 	mesh->SetAnimation(anim);
 
-	C_Animator* cAnim = gameObj->CreateComponent<C_Animator>();
+	C_Animator* cAnim = (C_Animator*)gameObj->AddComponentByType(ComponentType::ANIMATOR);
 	if (cAnim != nullptr)
 		cAnim->SetAnim(anim);
 	else
@@ -1380,7 +1380,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	}
 
 	// Import Material to GameObject
-	C_Material* cMaterial = (C_Material*)gameObj->AddComponentByType(ComponentType::MATERIAL);//CreateComponent<C_Material>();
+	C_Material* cMaterial = (C_Material*)gameObj->AddComponentByType(ComponentType::MATERIAL);
 
 	if (cMaterial == nullptr)
 	{

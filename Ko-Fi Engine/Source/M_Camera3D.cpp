@@ -239,7 +239,7 @@ void M_Camera3D::OnPlay()
 	if (gameCamera == nullptr)
 	{
 		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("MainCamera");
-		C_Camera* cCamera = go->CreateComponent<C_Camera>();
+		C_Camera* cCamera = (C_Camera*)go->AddComponentByType(ComponentType::CAMERA);
 		cCamera->SetIsMainCamera(true);
 		gameCamera = cCamera;
 
