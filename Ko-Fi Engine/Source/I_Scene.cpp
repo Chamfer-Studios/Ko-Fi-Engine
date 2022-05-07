@@ -287,6 +287,7 @@ bool I_Scene::SaveScene(Scene* scene, const char* customName)
 		jsonGameObject["UID"] = gameObject->GetUID();
 		jsonGameObject["is3D"] = gameObject->is3D;
 		jsonGameObject["tag"] = (int)gameObject->tag;
+		jsonGameObject["isPrefab"] = gameObject->isPrefab;
 
 		// We don't want to save also its children here.
 		// We will arrive and create them when they get here with the loop.
@@ -385,6 +386,10 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 
 			std::string name = jsonGo.at("name");
 			GameObject* go = new GameObject(uid, engine, name.c_str(), is3D);
+
+			bool newIsPrefab = false;
+			if (jsonGo.contains("isPrefab"))
+				go->isPrefab = jsonGo.at("isPrefab");
 
 			go->active = jsonGo.at("active");
 			go->tag = tag;
