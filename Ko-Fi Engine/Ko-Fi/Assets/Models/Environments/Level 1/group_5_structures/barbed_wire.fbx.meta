@@ -1,0 +1,17 @@
+{
+    "asset_file": "barbed_wire.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_5_structures/barbed_wire.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/2080974048.sugar",
+            "type": 0,
+            "uid": 2080974048
+        }
+    ],
+    "library_file": "339504339.tea",
+    "library_path": "Library/Models/339504339.tea",
+    "mod_time": 408899360,
+    "type": 3,
+    "uid": 339504339
+}

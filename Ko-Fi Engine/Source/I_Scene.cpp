@@ -464,18 +464,14 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		float endTime = (float)engine->GetEngineTime() - startTime;
 		appLog->AddLog("Time to load: %f\n", endTime);
 
-		//Reparenting
+		// Reparenting
 #pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)
 			{
 				if ((*goIt)->GetUID() == (*childrenIt)->GetParentUID() && (*childrenIt)->GetUID() != 0)
-				{
 					(*goIt)->AttachChild((*childrenIt));
-					(*goIt)->GetTransform()->RecomputeGlobalMatrix();
-					(*goIt)->PropagateTransform();
-				}
 			}
 		}
 		ret = true;

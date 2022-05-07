@@ -27,6 +27,9 @@ public:
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 
+	// Engine Editor ----------------------------------------------------
+	inline const std::map<UID, Resource*>* GetResourcesMap() const { return &this->resourcesMap; }
+
 	// Engine config inspector draw -------------------------------------
 	bool InspectorDraw() override;
 

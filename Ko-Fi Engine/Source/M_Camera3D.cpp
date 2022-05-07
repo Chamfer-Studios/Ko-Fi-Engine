@@ -166,7 +166,7 @@ void M_Camera3D::CheckInput(float dt)
 	}
 
 	vec3 spot(0, 0, 0); // Spot where the current selected game object is located.
-	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != 0)
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID != 0 && engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID) != nullptr)
 	{
 		C_Transform* transform = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID)->GetTransform();
 		if (transform != nullptr) {

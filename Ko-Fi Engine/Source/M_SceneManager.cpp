@@ -353,6 +353,8 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		it.second->GetComponent<C_Transform>()->SetDirty(true);
 	}
 
+	engine->GetResourceManager()->FreeResource(model->GetUID());
+
 	return true;
 }
 

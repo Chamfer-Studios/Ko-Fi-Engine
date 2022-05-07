@@ -24,6 +24,7 @@ class PanelNodeEditor;
 class PanelTextEditor;
 class PanelSettings;
 class PanelNavigation;
+class PanelResources;
 
 class GameObject;
 struct EngineConfig;
@@ -108,6 +109,7 @@ public:
 	bool toggleTextEditor = false;
 	bool toggleSettingsPanel = false;
 	bool toggleCameraViewportPanel = false;
+	bool toggleResourcesPanel = false;
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
 	PanelInspector* panelGameObject = nullptr;
@@ -141,6 +143,7 @@ private:
 	PanelTextEditor* panelTextEditor = nullptr;
 	PanelSettings* panelSettings = nullptr;
 	PanelNavigation* panelNavigation = nullptr;
+	PanelResources* panelResources = nullptr;
 	
 	bool isSceneWindowClicked = false;
 

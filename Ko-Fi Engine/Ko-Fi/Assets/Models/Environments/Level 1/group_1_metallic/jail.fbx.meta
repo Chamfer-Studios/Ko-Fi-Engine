@@ -1,0 +1,17 @@
+{
+    "asset_file": "jail.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_1_metallic/jail.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.002.sugar",
+            "library_path": "Library/Meshes/1512734373.sugar",
+            "type": 0,
+            "uid": 1512734373
+        }
+    ],
+    "library_file": "1556765009.tea",
+    "library_path": "Library/Models/1556765009.tea",
+    "mod_time": 409246232,
+    "type": 3,
+    "uid": 1556765009
+}

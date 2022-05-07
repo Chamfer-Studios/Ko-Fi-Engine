@@ -1,0 +1,17 @@
+{
+    "asset_file": "still_tent.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_5_structures/still_tent.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/1717985693.sugar",
+            "type": 0,
+            "uid": 1717985693
+        }
+    ],
+    "library_file": "1218764419.tea",
+    "library_path": "Library/Models/1218764419.tea",
+    "mod_time": 408899404,
+    "type": 3,
+    "uid": 1218764419
+}

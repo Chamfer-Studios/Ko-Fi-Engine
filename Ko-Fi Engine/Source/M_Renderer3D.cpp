@@ -337,7 +337,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
-				CONSOLE_LOG(go->GetName());
+				//CONSOLE_LOG(go->GetName());
 				RenderMeshes(camera, go);
 				RenderBoundingBox(cMesh);
 			}
