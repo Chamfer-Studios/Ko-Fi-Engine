@@ -1,9 +1,7 @@
 #include "SkyBox.h"
 
 #include "Engine.h"
-#include "M_Camera3D.h"
 
-#include "C_Camera.h"
 
 #include "Importer.h"
 
@@ -37,7 +35,7 @@ SkyBox::SkyBox()
 	faces =
 	{
 	"EngineConfig/Skybox/right.jpg",
-	"EngineConfig/Skybox/ngleft.jpg",
+	"EngineConfig/Skybox/left.jpg",
 	"EngineConfig/Skybox/top.jpg",
 	"EngineConfig/Skybox/bottom.jpg",
 	"EngineConfig/Skybox/front.jpg",
@@ -106,6 +104,7 @@ void SkyBox::InitMesh()
 
 void SkyBox::InitMaterial()
 {
+	material = new R_Material();
 	material->SetShaderPath("EngineConfig/Skybox/skybox.glsl");
 	Importer::GetInstance()->materialImporter->LoadAndCreateShader("EngineConfig/Skybox/skybox.glsl", material);
 }

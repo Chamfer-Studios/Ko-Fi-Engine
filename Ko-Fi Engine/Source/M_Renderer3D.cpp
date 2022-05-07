@@ -649,7 +649,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 
 void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox &skybox)
 {
-	glDepthMask(GL_FALSE);
+	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 
 	uint shader = skybox.material->shaderProgramID;
 
@@ -673,8 +673,8 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox &skybox)
 		skybox.DrawSkyBox();
 		glUseProgram(0); // Always Last!
 	}
+	glDepthFunc(GL_LESS);  // change depth function so depth test passes when values are equal to depth buffer's content
 
-	glDepthMask(GL_TRUE);
 
 }
 

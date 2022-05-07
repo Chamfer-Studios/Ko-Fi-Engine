@@ -81,7 +81,7 @@ public:
     uint VBO = 0;
     uint textureID = 0;
 
-    R_Material* material;
+    R_Material* material = nullptr;
 
     std::vector<std::string> faces;
 

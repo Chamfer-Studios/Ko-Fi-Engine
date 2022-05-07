@@ -35,7 +35,7 @@ public:
 	inline void SetShaderPath(const char* name) { this->shaderPath = name; }
 
 public:
-	uint shaderProgramID =0;
+	uint shaderProgramID = 0;
 	std::vector<Uniform*> uniforms;
 
 	Color diffuseColor;
