@@ -4,12 +4,13 @@
 #include "M_FileSystem.h"
 #include "Importer.h"
 #include "R_Texture.h"
+#include "FSDefs.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include <string>
 #include <vector>
 
-PanelChooser::PanelChooser(M_Editor* editor) : currentDir(assetsDir), fileIconPath("Assets/Icons/file_icon.png"), directoryIconPath("Assets/Icons/directory_icon.png")
+PanelChooser::PanelChooser(M_Editor* editor) : currentDir(assetsDir), fileIconPath(ICONS_DIR + std::string("file_icon.png")), directoryIconPath(ICONS_DIR + std::string("directory_icon.png"))
 {
 	this->editor = editor;
 	panelName = "Chooser";
