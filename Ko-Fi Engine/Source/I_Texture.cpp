@@ -36,10 +36,10 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 
 	texture->SetUpTexture();
 
-	std::filesystem::path filename = path;
-	std::map<std::string, UID>::iterator it = Importer::GetInstance()->sceneImporter->loadedTextures.find(filename.filename().string().c_str());
-	if (it == Importer::GetInstance()->sceneImporter->loadedTextures.end())
-		Importer::GetInstance()->sceneImporter->loadedTextures.emplace(filename.filename().string().c_str(), texture->GetUID());
+	//std::filesystem::path filename = path;
+	//std::map<std::string, UID>::iterator it = Importer::GetInstance()->sceneImporter->loadedTextures.find(filename.filename().string().c_str());
+	//if (it == Importer::GetInstance()->sceneImporter->loadedTextures.end())
+	//	Importer::GetInstance()->sceneImporter->loadedTextures.emplace(filename.filename().string().c_str(), texture->GetUID());
 
 	return true;
 }
