@@ -1,0 +1,35 @@
+{
+    "asset_file": "worm_fossile_var.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/hero_props/worm_fossile/worm_fossile_var.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "worm_l.sugar",
+            "library_path": "Library/Meshes/1520358470.sugar",
+            "type": 0,
+            "uid": 1520358470
+        },
+        {
+            "asset_file": "worm_fossile_base_color.png",
+            "library_path": "Library/Textures/1555562887.cacao",
+            "type": 1,
+            "uid": 1555562887
+        },
+        {
+            "asset_file": "worm_head_l.sugar",
+            "library_path": "Library/Meshes/1737203200.sugar",
+            "type": 0,
+            "uid": 1737203200
+        },
+        {
+            "asset_file": "worm_spine_l.sugar",
+            "library_path": "Library/Meshes/1299447904.sugar",
+            "type": 0,
+            "uid": 1299447904
+        }
+    ],
+    "library_file": "636273376.tea",
+    "library_path": "Library/Models/636273376.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 636273376
+}

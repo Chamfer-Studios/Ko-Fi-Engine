@@ -42,6 +42,7 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCameraObject = new GameObject(0, engine, "");
 	engineCamera = new C_Camera(engineCameraObject);
 	engineCamera->SetIsEngineCamera(true);
+	
 
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
 	engineCamera->SetFarPlaneDistance(60000.0f);
@@ -81,6 +82,8 @@ bool M_Camera3D::Update(float dt)
 	OPTICK_EVENT();
 
 	FocusTarget();
+	if (engineCamera->GetIsFrustumActive())
+		engineCamera->FrustumCulling();
 
 	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
 		return true;
@@ -269,22 +272,12 @@ bool M_Camera3D::InspectorDraw()
 		{
 			ChangeSpeed(newSpeedMultiplier);
 		}
-		//Frustum Active
-		/*bool frustumActive = engineCamera->GetIsFrustumActive();
+
+		//	Frustum Active
+		bool frustumActive = engineCamera->GetIsFrustumActive();
 		if (ImGui::Checkbox("Frustum culling", &frustumActive))
 		{
 			engineCamera->SetIsFrustumActive(frustumActive);
-		}*/
-		float newHorizontallFov = currentCamera->GetHorizontalFov();
-		if (ImGui::DragFloat("Fov", &newHorizontallFov, 0.5f, 1.0f, 179.f))
-		{
-			currentCamera->SetHorizontalFov(newHorizontallFov);
-		}
-
-		float2 planeDistances = { currentCamera->GetNearPlaneDistance(),currentCamera->GetFarPlaneDistance() };
-		if (ImGui::DragFloat2("Near plane distance", &(planeDistances[0])))
-		{
-			currentCamera->SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 		}
 
 	}

@@ -39,7 +39,6 @@ public:
 	inline R_Mesh* GetMesh() const { return mesh; }
 	const char* GetMeshPath() const;
 	inline float GetSphereRadius() const { return radius; }
-	inline bool GetRenderMesh() const { return renderMesh; }
 	float3 GetCenterPoint() const;
 	float3 GetCenterPointInWorldCoords() const;
 	uint GetVertices();

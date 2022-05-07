@@ -1,0 +1,29 @@
+{
+    "asset_file": "harkonnen.fbx",
+    "asset_path": "Assets/Models/Characters/Enemies/harkonnen.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "harkonnen.sugar",
+            "library_path": "Library/Meshes/565670575.sugar",
+            "type": 0,
+            "uid": 565670575
+        },
+        {
+            "asset_file": "harkonnen_base_color.png",
+            "library_path": "Library/Textures/840211846.cacao",
+            "type": 1,
+            "uid": 840211846
+        },
+        {
+            "asset_file": "harkonnen_armature|harkonnen_reel.cake",
+            "library_path": "Library/Animations/1995983389.cake",
+            "type": 5,
+            "uid": 1995983389
+        }
+    ],
+    "library_file": "1059266866.tea",
+    "library_path": "Library/Models/1059266866.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 1059266866
+}

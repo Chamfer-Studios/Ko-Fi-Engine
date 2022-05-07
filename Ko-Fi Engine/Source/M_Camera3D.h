@@ -74,7 +74,7 @@ private:
 
 	float cameraSensitivity = .1f;
 	float cameraSpeed = 1.f;
-	float baseCameraSpeed = 10.f;
+	float baseCameraSpeed = 1.f;
 	float maxSpeed = 25.f;
 	int speedMultiplier = 1.0f;
 

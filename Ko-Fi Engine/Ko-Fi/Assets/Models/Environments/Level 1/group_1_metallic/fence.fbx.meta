@@ -1,0 +1,17 @@
+{
+    "asset_file": "fence.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_1_metallic/fence.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Jail.sugar",
+            "library_path": "Library/Meshes/1820109310.sugar",
+            "type": 0,
+            "uid": 1820109310
+        }
+    ],
+    "library_file": "561505217.tea",
+    "library_path": "Library/Models/561505217.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 561505217
+}

@@ -1,0 +1,17 @@
+{
+    "asset_file": "floating_platform.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_1_metallic/floating_platform.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/1795097072.sugar",
+            "type": 0,
+            "uid": 1795097072
+        }
+    ],
+    "library_file": "1262712981.tea",
+    "library_path": "Library/Models/1262712981.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 1262712981
+}

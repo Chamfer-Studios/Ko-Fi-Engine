@@ -1,0 +1,29 @@
+{
+    "asset_file": "group_4.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_4_big_rocks/group_4.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Column.sugar",
+            "library_path": "Library/Meshes/461648180.sugar",
+            "type": 0,
+            "uid": 461648180
+        },
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/1970745953.sugar",
+            "type": 0,
+            "uid": 1970745953
+        },
+        {
+            "asset_file": "Door.sugar",
+            "library_path": "Library/Meshes/1440554116.sugar",
+            "type": 0,
+            "uid": 1440554116
+        }
+    ],
+    "library_file": "1493303163.tea",
+    "library_path": "Library/Models/1493303163.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 1493303163
+}

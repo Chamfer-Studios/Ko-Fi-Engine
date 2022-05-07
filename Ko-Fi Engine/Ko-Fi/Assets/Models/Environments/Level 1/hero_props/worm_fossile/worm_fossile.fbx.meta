@@ -1,0 +1,17 @@
+{
+    "asset_file": "worm_fossile.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/hero_props/worm_fossile/worm_fossile.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "worm_l.sugar",
+            "library_path": "Library/Meshes/1504343054.sugar",
+            "type": 0,
+            "uid": 1504343054
+        }
+    ],
+    "library_file": "622245894.tea",
+    "library_path": "Library/Models/622245894.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 622245894
+}

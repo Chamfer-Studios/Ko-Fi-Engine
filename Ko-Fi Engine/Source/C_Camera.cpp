@@ -70,10 +70,10 @@ bool C_Camera::Update(float dt)
 		C_Transform* transform = owner->GetTransform();
 
 		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
+
 		//Apply rotation
 		if (isFrustumCullingActive)
 			FrustumCulling();
-
 	}
 	// Camera Frustum Updates Transform
 	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
@@ -158,7 +158,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 
 void C_Camera::Save(Json& json) const
 {
-	json["type"] = "camera";
+	json["type"] = (int)type;
 	json["vertical_fov"] = cameraFrustum.VerticalFov();
 	json["near_plane_distance"] = cameraFrustum.NearPlaneDistance();
 	json["far_plane_distance"] = cameraFrustum.FarPlaneDistance();

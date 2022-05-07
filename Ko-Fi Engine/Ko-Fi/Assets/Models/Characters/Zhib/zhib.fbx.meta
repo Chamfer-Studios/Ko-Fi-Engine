@@ -1,0 +1,47 @@
+{
+    "asset_file": "zhib.fbx",
+    "asset_path": "Assets/Models/Characters/Zhib/zhib.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "zhib_khopesh.sugar",
+            "library_path": "Library/Meshes/995275470.sugar",
+            "type": 0,
+            "uid": 995275470
+        },
+        {
+            "asset_file": "zhib_base_color.png",
+            "library_path": "Library/Textures/801468851.cacao",
+            "type": 1,
+            "uid": 801468851
+        },
+        {
+            "asset_file": "zhib_low.sugar",
+            "library_path": "Library/Meshes/174925298.sugar",
+            "type": 0,
+            "uid": 174925298
+        },
+        {
+            "asset_file": "zhib_khopesh_back001.sugar",
+            "library_path": "Library/Meshes/24803335.sugar",
+            "type": 0,
+            "uid": 24803335
+        },
+        {
+            "asset_file": "zhib_karambit001.sugar",
+            "library_path": "Library/Meshes/1737840946.sugar",
+            "type": 0,
+            "uid": 1737840946
+        },
+        {
+            "asset_file": "zhib_armature|zhib_reel.cake",
+            "library_path": "Library/Animations/651310936.cake",
+            "type": 5,
+            "uid": 651310936
+        }
+    ],
+    "library_file": "242023629.tea",
+    "library_path": "Library/Models/242023629.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 242023629
+}

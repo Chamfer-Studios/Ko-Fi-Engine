@@ -1,0 +1,17 @@
+{
+    "asset_file": "medium_rock_3.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_2_rocks/medium_rock_3.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Circle.sugar",
+            "library_path": "Library/Meshes/1008939353.sugar",
+            "type": 0,
+            "uid": 1008939353
+        }
+    ],
+    "library_file": "1932243885.tea",
+    "library_path": "Library/Models/1932243885.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 1932243885
+}

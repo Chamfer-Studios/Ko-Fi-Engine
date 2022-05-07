@@ -1,0 +1,17 @@
+{
+    "asset_file": "spaceship.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_7_other/spaceship.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Box001.sugar",
+            "library_path": "Library/Meshes/706459161.sugar",
+            "type": 0,
+            "uid": 706459161
+        }
+    ],
+    "library_file": "409997323.tea",
+    "library_path": "Library/Models/409997323.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 409997323
+}

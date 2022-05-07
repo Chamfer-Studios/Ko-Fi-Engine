@@ -1,0 +1,29 @@
+{
+    "asset_file": "group_6.fbx",
+    "asset_path": "Assets/Models/Environments/Level 1/group_6_mountains/group_6.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.022.sugar",
+            "library_path": "Library/Meshes/276264062.sugar",
+            "type": 0,
+            "uid": 276264062
+        },
+        {
+            "asset_file": "Cube.001.sugar",
+            "library_path": "Library/Meshes/1755284177.sugar",
+            "type": 0,
+            "uid": 1755284177
+        },
+        {
+            "asset_file": "Cube.002.sugar",
+            "library_path": "Library/Meshes/1052016488.sugar",
+            "type": 0,
+            "uid": 1052016488
+        }
+    ],
+    "library_file": "1965394655.tea",
+    "library_path": "Library/Models/1965394655.tea",
+    "mod_time": 411500055,
+    "type": 3,
+    "uid": 1965394655
+}

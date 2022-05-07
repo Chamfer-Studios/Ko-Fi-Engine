@@ -54,7 +54,7 @@ M_Editor::M_Editor(KoFiEngine* engine)
 	// We should do it here
 	mainMenuBar = new MainBar(this);
 	panelHierarchy = new PanelHierarchy(this);
-	//panelConfig = new PanelConfiguration(this, engine->GetEngineConfig());
+	panelConfig = new PanelConfiguration(this, engine->GetEngineConfig());
 	panelLog = new PanelLog();
 	panelAbout = new PanelAbout(this);
 	panelSettings = new PanelSettings(this);
