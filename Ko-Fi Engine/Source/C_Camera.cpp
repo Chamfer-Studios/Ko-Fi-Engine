@@ -203,7 +203,7 @@ void C_Camera::SetPosition(float3 newPos)
 	cameraFrustum.SetPos(newPos);
 }
 
-void C_Camera::LookAt(const float3& point)
+void C_Camera::LookAt(const float3 point)
 {
 	reference = point;
 	float3 tempFront = (reference - cameraFrustum.Pos()).Normalized();

@@ -88,7 +88,7 @@ public:
 	inline void SetIsFrustumActive(bool value) { isFrustumCullingActive = value; }
 	inline void SetIsDrawFrustumActive(bool newValue) { isDrawFrustumActive = newValue; }
 	// Camera Functions
-	void LookAt(const float3& point);
+	void LookAt(const float3 point);
 	void LookAt2(float3 front, float3 up);
 
 	void SetProjectionType(const CameraType &type);
