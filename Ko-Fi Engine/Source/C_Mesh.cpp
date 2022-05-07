@@ -140,42 +140,81 @@ void C_Mesh::SetMesh(R_Mesh* mesh)
 	GenerateLocalBoundingBox();
 }
 
+void C_Mesh::SetPath(const char* path)
+{
+	if (mesh != nullptr)
+		mesh->SetAssetPath(path);
+	else
+		CONSOLE_LOG("[ERROR] Mesh: Could not set path, mesh was nullptr.");
+}
+
 void C_Mesh::SetVertexNormals(bool vertexNormals)
 {
-	this->mesh->SetVertexNormals(vertexNormals);
+	if (this->mesh != nullptr)
+		this->mesh->SetVertexNormals(vertexNormals);
 }
 
 void C_Mesh::SetFaceNormals(bool facesNormals)
 {
-	this->mesh->SetFaceNormals(facesNormals);
+	if (this->mesh != nullptr)
+		this->mesh->SetFaceNormals(facesNormals);
+}
+
+const char* C_Mesh::GetMeshPath() const
+{
+	if (mesh != nullptr)
+		return mesh->GetAssetPath();
+	else
+		CONSOLE_LOG("[ERROR] Mesh: Could not get assets path, mesh was nullptr.");
+	return nullptr;
+}
+
+float3 C_Mesh::GetCenterPoint() const
+{
+	if (mesh != nullptr)
+		return mesh->localAABB.CenterPoint();
+	else
+		CONSOLE_LOG("[ERROR] Mesh: Could not get center point, mesh was nullptr.");
+	return float3::zero;
 }
 
 float3 C_Mesh::GetCenterPointInWorldCoords() const
 {
-	return owner->GetTransform()->GetGlobalTransform().TransformPos(GetCenterPoint());
+	if (this->mesh != nullptr)
+		return owner->GetTransform()->GetGlobalTransform().TransformPos(GetCenterPoint());
 }
 
 uint C_Mesh::GetVertices()
 {
 	uint numVertices = 0;
-	numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
+	if (this->mesh != nullptr)
+		numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
 	return numVertices;
 }
 
 bool C_Mesh::GetVertexNormals() const
 {
-	return mesh->GetVertexNormals();
+	if (this->mesh != nullptr)
+		return mesh->GetVertexNormals();
 }
 
 bool C_Mesh::GetFaceNormals() const
 {
-	return mesh->GetFaceNormals();
+	if (this->mesh != nullptr)
+		return mesh->GetFaceNormals();
 }
 
 const AABB C_Mesh::GetLocalAABB()
 {
-	GenerateLocalBoundingBox();
-	return mesh->localAABB;
+	if (this->mesh != nullptr)
+	{
+		GenerateLocalBoundingBox();
+		return mesh->localAABB;
+	}
+	else
+		CONSOLE_LOG("[ERROR] Mesh: Could not get local AABB, mesh was nullptr.");
+
+	return AABB();
 }
 
 const AABB C_Mesh::GetGlobalAABB() const

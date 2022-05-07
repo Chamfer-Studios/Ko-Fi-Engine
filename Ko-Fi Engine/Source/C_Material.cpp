@@ -57,7 +57,7 @@ bool C_Material::CleanUp()
 		owner->GetEngine()->GetResourceManager()->FreeResource(material->GetUID());
 	material = nullptr;
 
-	if (texture != nullptr)
+	if (texture != nullptr && !checkerTexture)
 		owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
 	texture = nullptr;
 
