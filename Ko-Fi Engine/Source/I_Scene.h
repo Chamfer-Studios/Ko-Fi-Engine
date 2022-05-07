@@ -51,13 +51,15 @@ private:
 	
 	void CheckAndApplyForcedUID(Resource* resource);
 
+public:
+	std::map<std::string, UID> loadedTextures;
+
 private:
 	KoFiEngine* engine = nullptr;
 
 	std::string nodeName;
 
 	std::map<uint, ModelNode> loadedNodes;
-	std::map<std::string, UID> loadedTextures;
 	std::map<std::string, UID> forcedUIDs;
 
 	// Instance of some generic Assimp variables in case we need them from the outside of the import method

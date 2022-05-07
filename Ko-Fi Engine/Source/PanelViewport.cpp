@@ -25,6 +25,7 @@
 #include "R_Texture.h"
 
 #include "Log.h"
+#include "FSDefs.h"
 // Tools
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -51,11 +52,17 @@ bool PanelViewport::Start()
 	gizmoMoveIcon = new R_Texture();
 	gizmoRotateIcon = new R_Texture();
 	gizmoScaleIcon = new R_Texture();
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/video.png", speedCameraIcon);
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/lit_mode.png", litIcon);
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/translate.png", gizmoMoveIcon);
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/3d-rotate.png", gizmoRotateIcon);
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/maximize.png", gizmoScaleIcon);
+
+	std::string name = ICONS_DIR + std::string("video.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), speedCameraIcon);
+	name = ICONS_DIR + std::string("lit_mode.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), litIcon);
+	name = ICONS_DIR + std::string("translate.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoMoveIcon);
+	name = ICONS_DIR + std::string("3d-rotate.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoRotateIcon);
+	name = ICONS_DIR + std::string("maximize.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoScaleIcon);
 	return true;
 }
 

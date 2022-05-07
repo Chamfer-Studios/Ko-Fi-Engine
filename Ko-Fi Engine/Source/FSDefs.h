@@ -8,9 +8,7 @@
 #define ASSETS_TEXTURES_DIR "Assets/Textures/"
 #define ASSETS_SHADERS_DIR "Assets/Shaders/"
 #define ASSETS_AUDIO_DIR "Assets/Audio/"
-
 #define ASSETS_FONTS_DIR "Assets/Fonts/"
-#define ASSETS_ICONS_DIR "Assets/Icons/"
 
 // LIBRARY DIRECTORIES
 #define LIBRARY_DIR "Library/"
@@ -21,11 +19,11 @@
 #define TEXTURES_DIR "Library/Textures/"
 #define SHADERS_DIR "Library/Shaders/"
 #define AUDIOS_DIR "Library/Audio/"
-
 #define FONTS_DIR "Library/Fonts/"
-#define ICONS_DIR "Library/Icons/"
 
+// CONFIG DIRECTORIES
 #define CONFIG_DIR "EngineConfig/"
+#define ICONS_DIR "EngineConfig/Icons/"
 
 // EXTENSIONS
 #define MODEL_EXTENSION ".tea"

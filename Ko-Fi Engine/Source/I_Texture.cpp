@@ -5,6 +5,8 @@
 #include "FSDefs.h"
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "Importer.h"
+#include "I_Scene.h"
 
 #include "glew.h"
 #include "stb_image.h"
@@ -33,6 +35,11 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 	texture->imageSizeBytes = texture->GetTextureWidth() * texture->GetTextureHeight() * texture->GetNrChannels() * sizeof(unsigned char);
 
 	texture->SetUpTexture();
+
+	std::filesystem::path filename = path;
+	std::map<std::string, UID>::iterator it = Importer::GetInstance()->sceneImporter->loadedTextures.find(filename.filename().string().c_str());
+	if (it == Importer::GetInstance()->sceneImporter->loadedTextures.end())
+		Importer::GetInstance()->sceneImporter->loadedTextures.emplace(filename.filename().string().c_str(), texture->GetUID());
 
 	return true;
 }

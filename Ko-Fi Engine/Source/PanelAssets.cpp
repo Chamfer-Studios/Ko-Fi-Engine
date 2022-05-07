@@ -9,7 +9,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-PanelAssets::PanelAssets(M_Editor* editor) : currentDir(assetsDir), fileIcon("Assets/Icons/file_icon.png"), directoryIcon("Assets/Icons/directory_icon.png")
+PanelAssets::PanelAssets(M_Editor* editor) : currentDir(assetsDir), fileIcon(ICONS_DIR + std::string("file_icon.png")), directoryIcon(ICONS_DIR + std::string("directory_icon.png"))
 {
 	panelName = "Assets";
 	this->editor = editor;
