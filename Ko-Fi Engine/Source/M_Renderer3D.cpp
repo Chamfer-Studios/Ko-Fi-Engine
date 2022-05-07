@@ -660,8 +660,7 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox &skybox)
 		glUseProgram(shader);
 
 		// Passing Shader Uniforms
-		GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
-		glUniformMatrix4fv(model_matrix, 1, GL_FALSE, mat.ptr());
+		glUniform1d(glGetUniformLocation(shader, "skybox"), 0);
 		float4x4 view = float4x4::identity;
 		view.Set3x3Part(camera->GetViewMatrix().Float3x3Part());
 		GLint view_location = glGetUniformLocation(shader, "view");
