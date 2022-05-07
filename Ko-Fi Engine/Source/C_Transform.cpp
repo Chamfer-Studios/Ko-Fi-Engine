@@ -36,13 +36,13 @@ bool C_Transform::Update(float dt)
 	
 	if (isDirty) // When Object is Modified
 	{
+		RecomputeGlobalMatrix();
+		owner->PropagateTransform();
+
 		if (owner->GetComponent<C_Mesh>())
 		{
 			if (owner->GetComponent<C_Mesh>()->GetMesh())
 				owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
-
-			RecomputeGlobalMatrix();
-			owner->PropagateTransform();
 
 			// Update colliders
 			if (owner->GetComponent<C_BoxCollider>())
@@ -182,6 +182,7 @@ void C_Transform::LookAt(float3 &_front, float3 &_up)
 void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
 {
 	if (owner->GetParent() == nullptr) return;
+
 	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
 	//transformMatrix = globalTransform;
 	isDirty = true;
