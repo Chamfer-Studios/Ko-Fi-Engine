@@ -193,18 +193,7 @@
                         "shader_path": "Assets/Shaders/default_shader.glsl",
                         "texture_path": "Assets/Textures/checker.png",
                         "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
+                        "uniforms": null
                     }
                 ],
                 "is3D": true,
@@ -261,18 +250,7 @@
                         "shader_path": "Assets/Shaders/default_shader.glsl",
                         "texture_path": "Assets/Textures/checker.png",
                         "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
+                        "uniforms": null
                     },
                     {
                         "active": true,
@@ -392,14 +370,14 @@
                             6.491641521453857
                         ],
                         "rotation": [
-                            -0.015613407827913761,
-                            0.004085457883775234,
-                            -0.001013218890875578,
+                            -0.015613654628396034,
+                            0.004085516557097435,
+                            -0.0010132374009117484,
                             0.9998693466186523
                         ],
                         "scale": [
-                            0.999999463558197,
-                            0.9999958276748657,
+                            0.9999968409538269,
+                            0.999995231628418,
                             0.9999992847442627
                         ],
                         "type": "transform"
@@ -428,12 +406,12 @@
                         ],
                         "rotation": [
                             0.04846788942813873,
-                            0.0009570781840011477,
-                            0.000671055749990046,
+                            0.000957080686930567,
+                            0.0006710595334880054,
                             0.9988240599632263
                         ],
                         "scale": [
-                            0.9999934434890747,
+                            0.9999908208847046,
                             0.9999998211860657,
                             0.9999999403953552
                         ],
@@ -1647,18 +1625,7 @@
                         "shader_path": "Assets/Shaders/default_shader.glsl",
                         "texture_path": "Assets/Textures/harkonnen_base_color.png",
                         "type": "material",
-                        "uniforms": [
-                            {
-                                "name": "albedoTint",
-                                "type": 35666,
-                                "value": {
-                                    "w": 1.0,
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                }
-                            }
-                        ]
+                        "uniforms": null
                     },
                     {
                         "active": true,
@@ -1681,7 +1648,7 @@
                             {
                                 "name": "static",
                                 "type": "bool",
-                                "value": true
+                                "value": false
                             },
                             {
                                 "name": "speed",
@@ -1760,9 +1727,9 @@
                     {
                         "active": true,
                         "position": [
-                            0.0,
-                            0.0,
-                            0.0
+                            -281.2142333984375,
+                            -90.0,
+                            238.25941467285156
                         ],
                         "rotation": [
                             0.0,

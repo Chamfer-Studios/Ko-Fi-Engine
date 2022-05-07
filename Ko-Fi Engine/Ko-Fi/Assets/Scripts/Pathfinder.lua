@@ -47,10 +47,6 @@ function FollowPath(speed, dt, loop)
         do return end
     end
 
-    if currentPathIndex == #_G.finalPath and loop == false then
-        do return end
-    end
-
     currentTarget = _G.finalPath[currentPathIndex]
     currentPosition = componentTransform:GetPosition()
     if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then

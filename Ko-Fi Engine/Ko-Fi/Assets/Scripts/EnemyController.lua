@@ -67,7 +67,7 @@ function Float3Length(v)
 end
 
 function Float3Difference(a, b)
-    return { x = b.x - a.x, y = b.y - a.y, z = b.z - a.z }
+    return float3.new(b.x - a.x, b.y - a.y, b.z - a.z)
 end
 
 function Float3Distance(a, b)
@@ -335,7 +335,7 @@ function UpdateAwarenessBars()
     awareness_yellow:GetTransform():SetPosition(float3.new(position.x + awarenessOffset.x, position.y + awarenessOffset.y, position.z + awarenessOffset.z))
     awareness_red:GetTransform():SetPosition(float3.new(position.x + awarenessOffset.x, position.y + awarenessOffset.y, position.z + awarenessOffset.z))
 
-    Log(tostring(awareness) .. "\n")
+    --Log(tostring(awareness) .. "\n")
 
     if awareness < 1 then
         awareness_green:GetTransform():SetScale(float3.new(awarenessSize.x, awarenessSize.y * awareness, awarenessSize.z))
@@ -377,7 +377,6 @@ function Update(dt)
         awareness = awareness - awarenessSpeed * dt
     end
 
-    --Log(tostring(awareness) .. "\n")
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
         if seeingSource ~= nil then
             DispatchEvent("State_Suspicious", { seeingPosition })
@@ -407,6 +406,24 @@ function Update(dt)
         if auditoryTriggerIsRepeating == true then
             auditoryTriggerIsRepeating = false
             SetTargetStateToUNAWARE()
+        end
+    end
+
+    if state == STATE.AGGRO then
+        s = nil
+        if seeingSource ~= nil then
+            s = seeingSource
+        elseif awarenessSource ~= nil then
+            s = awarenessSource
+        end
+
+        if s ~= nil then
+            if static == true then
+                DispatchEvent(pathfinderUpdateKey, { {}, false, componentTransform:GetPosition() })
+                LookAtDirection(Float3Difference(componentTransform:GetPosition(), s:GetTransform():GetPosition()))
+            else
+                DispatchEvent(pathfinderUpdateKey, { { s:GetTransform():GetPosition() }, false, componentTransform:GetPosition() })
+            end
         end
     end
 
