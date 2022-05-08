@@ -38,7 +38,7 @@ bool C_Transform2D::CleanUp()
 
 void C_Transform2D::Save(Json& json) const
 {
-	json["type"] = "transform2D";
+	json["type"] = (int)type;
 
 	json["position"] = {
 		GetPosition().x,
@@ -104,7 +104,8 @@ bool C_Transform2D::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Transform 2D", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		float2 newPosition = GetPosition();
 		if (ImGui::DragFloat2("Location", &newPosition[0])) // POSITION

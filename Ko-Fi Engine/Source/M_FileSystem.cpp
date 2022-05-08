@@ -9,7 +9,6 @@
 #include "SDL.h"
 #include <fstream>
 #include <filesystem>
-#include <iomanip>
 #include "JsonHandler.h"
 
 #include "optick.h"
@@ -113,12 +112,12 @@ std::string M_FileSystem::OpenFile(const char* path) const
 
 	SDL_assert(path != nullptr);
 	std::ifstream stream(path);
-	if (stream.is_open()) {
+	if (stream.is_open())
+	{
 		std::string line;
 
-		while (std::getline(stream, line)) {
+		while (std::getline(stream, line))
 			fileText.append(line + "\n");
-		}
 	}
 	stream.close();
 	return fileText;
@@ -130,12 +129,12 @@ std::string M_FileSystem::OpenFileBinary(const char* path) const
 
 	SDL_assert(path != nullptr);
 	std::ifstream stream(path, std::ios::binary);
-	if (stream.is_open()) {
+	if (stream.is_open())
+	{
 		std::string line;
 
-		while (std::getline(stream, line)) {
+		while (std::getline(stream, line))
 			fileText.append(line + "\n");
-		}
 	}
 	stream.close();
 	return fileText;
@@ -146,9 +145,10 @@ bool M_FileSystem::SaveFile(const char* path, std::string text) const
 	bool ret = true;
 	SDL_assert(path != nullptr);
 	std::ofstream stream(path);
-	if (stream.is_open()) {
+
+	if (stream.is_open())
 		stream.write(text.c_str(), text.size());
-	}
+
 	stream.close();
 	return ret;
 }
@@ -159,13 +159,9 @@ void M_FileSystem::EnumerateFiles(const char* path, std::vector<std::string>& fi
 	for (const auto& file : std::filesystem::directory_iterator(p))
 	{
 		if (std::filesystem::is_directory(file.path()))
-		{
 			dirs.push_back(file.path().filename().string());
-		}
 		else
-		{
 			files.push_back(file.path().filename().string());
-		}
 	}
 }
 
@@ -214,15 +210,18 @@ void M_FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<s
 	}
 
 	std::vector<std::string> directories;
-	EnumerateFiles(directory, files, directories);
+	std::vector<std::string> allFiles;
+	EnumerateFiles(directory, allFiles, directories);
 
-	for (auto & file : files)
+	for (auto & file : allFiles)
 	{
 		std::filesystem::path fileTmp = file;
 		if (!fileTmp.extension().empty())
 		{
-			if (StringCompare((const char*)fileTmp.extension().c_str(), filter) == 0)
-				files.push_back(file);
+			if (StringCompare(fileTmp.extension().string().c_str(), filter) == 0)
+				filteredFiles.push_back(directory + file);
+			else
+				files.push_back(directory + file);
 		}
 	}
 
@@ -269,17 +268,47 @@ bool M_FileSystem::CheckDirectory(const char* path)
 	return true;
 }
 
-void M_FileSystem::GetLastModTime(const char* path)
+int M_FileSystem::GetLastModTime(const char* path)
 {
 	auto fTime = std::filesystem::last_write_time(path);
+
+	int ret = std::chrono::time_point_cast<std::chrono::seconds>(fTime).time_since_epoch().count();
+	return ret;
 }
 
-const char* M_FileSystem::GetFileName(const char* path) const
+bool M_FileSystem::CopyFileTo(const char* sourcePath, const char* destinationPath)
 {
-	std::string p = path;
-	std::string name = p.substr(p.find_last_of("/") + 1, p.size());
-	const char* n = name.c_str();
-	return n;
+	if (!std::filesystem::exists(sourcePath))
+		return false;
+
+	std::filesystem::path source = sourcePath;
+	std::filesystem::path dest = destinationPath;
+
+	if (std::filesystem::is_directory(source) || std::filesystem::is_directory(dest))
+		return false;
+
+	if (source.extension() != dest.extension())
+		return false;
+	else if (CheckDirectory(dest.parent_path().string().c_str()))
+	{
+		try
+		{
+			std::filesystem::copy_file(source, dest, std::filesystem::copy_options::update_existing);
+		}
+		catch (std::filesystem::filesystem_error& e)
+		{
+			CONSOLE_LOG("[ERROR] Filesystem: couldn't copy &s: &s", sourcePath, e.what());
+			return false;
+		}
+	}
+	return true;
+}
+
+std::string M_FileSystem::GetFileName(const char* path) const
+{
+	std::string fileName = path;
+	fileName = fileName.substr(fileName.find_last_of("/") + 1, fileName.size());
+	return fileName.c_str();
 }
 
 std::string M_FileSystem::GetNameFromPath(std::string path)

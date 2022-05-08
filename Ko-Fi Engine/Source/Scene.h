@@ -12,6 +12,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include "SkyBox.h"
+
 class GameObject;
 class KoFiEngine;
 class C_LightSource;
@@ -76,6 +78,7 @@ public:
 
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr, bool is3D = true);
 
+	//Cleans current Scene
 	virtual void DeleteCurrentScene();
 
 	virtual void DeleteGameObject(GameObject* gameObject);
@@ -106,12 +109,16 @@ public:
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
-	std::map<GameObject*, std::string> gameObjectListToCreate;
+	std::map<std::string, std::string> gameObjectListToCreate;
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
 	GameObject* currentCamera = nullptr;
+
+	// Models in scene map
+	// Pairs a GameObject UID with the model Resource UID and the Asset Path (.fbx)
+	std::multimap<UID, std::pair<UID, std::string>> sceneModels;
 	
-	//Space Partitioning
+	// Space Partitioning
 	bool sceneTreeIsDirty = true;
 	bool drawSceneTree = false;
 	QuadTree3D* sceneTree = nullptr;
@@ -122,6 +129,8 @@ public:
 	LineSegment ray;
 
 	GameObject* shadowCaster = nullptr; //current light that casts shadows
+	SkyBox skybox;
+
 };
 
 

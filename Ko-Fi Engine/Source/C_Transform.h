@@ -37,8 +37,11 @@ public:
 	float3 GetRotationEuler() const;
 	Quat GetRotationQuat() const;
 	const float3 &Right() const;
+	const float3 &GlobalRight() const;
 	const float3 &Up() const;
+	const float3 &GlobalUp() const;
 	const float3 &Front() const;
+	const float3 &GlobalFront() const;
 	inline float4x4 GetGlobalTransform() const { return transformMatrix; }
 	inline float4x4 GetLocalTransform() const { return transformMatrixLocal; }
 	inline bool GetDirty() const { return isDirty; }

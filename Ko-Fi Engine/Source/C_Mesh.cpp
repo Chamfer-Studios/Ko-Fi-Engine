@@ -13,6 +13,7 @@
 #include "M_Renderer3D.h"
 #include "M_Camera3D.h"
 #include "M_Editor.h"
+#include "M_ResourceManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -42,7 +43,6 @@ C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 	radius = 0.0f;
 	mesh = nullptr;
 	time = 0.0f;
-
 }
 
 C_Mesh::~C_Mesh()
@@ -52,7 +52,7 @@ C_Mesh::~C_Mesh()
 
 bool C_Mesh::Start()
 {
-	if (mesh)
+	if (mesh != nullptr)
 		GenerateGlobalBoundingBox();
 	return true;
 }
@@ -74,130 +74,146 @@ bool C_Mesh::CleanUp()
 	std::string temp(owner->GetName());
 	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
-	RELEASE(mesh);
+
+	if (mesh != nullptr)
+		owner->GetEngine()->GetResourceManager()->FreeResource(mesh->GetUID());
+	mesh = nullptr;
 
 	return true;
 }
 
 void C_Mesh::Save(Json& json) const
 {
-	json["type"] = "mesh";
+	json["type"] = (int)type;
 
-	std::string name = owner->GetName();
-	mesh->path = MESHES_DIR + name + MESH_EXTENSION;
-	Importer::GetInstance()->meshImporter->Save(mesh, mesh->path.c_str());
-
-	json["path"] = mesh->path;
-	json["shape_type"] = (int)mesh->meshType;
-	json["draw_vertex_normals"] = mesh->GetVertexNormals();
-	json["draw_face_normals"] = mesh->GetFaceNormals();
-	json["isAnimated"] = mesh->IsAnimated();
-	if (mesh->IsAnimated())
+	if (mesh != nullptr)
 	{
-		json["rootNodeUID"] = mesh->GetRootNode()->GetUID();
+		json["mesh"]["uid"] = mesh->GetUID();
+		json["mesh"]["asset_path"] = mesh->GetAssetPath();
+		json["mesh"]["shape_type"] = (int)mesh->meshType;
+		json["mesh"]["draw_vertex_normals"] = mesh->GetVertexNormals();
+		json["mesh"]["draw_face_normals"] = mesh->GetFaceNormals();
+		json["mesh"]["is_animated"] = mesh->IsAnimated();
+
+		if (mesh->IsAnimated())
+			json["mesh"]["root_node_UID"] = mesh->GetRootNode()->GetUID();
 	}
 }
 
 void C_Mesh::Load(Json& json)
 {
-	if (mesh == nullptr)
+	if (!json.empty())
 	{
-		int type = json.at("shape_type");
-		Shape meshType = Shape::NONE;
-		switch (type)
+		CleanUp();
+
+		Json jsonMesh = json.at("mesh");
+		UID uid = jsonMesh.at("uid");
+		owner->GetEngine()->GetResourceManager()->LoadResource(uid, jsonMesh.at("asset_path").get<std::string>().c_str());
+		mesh = (R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
+
+		if (mesh == nullptr)
+			CONSOLE_LOG("[ERROR] Component Mesh: could not load resource from library.");
+		else
 		{
-		case 0:
-			meshType = Shape::NONE;
-			break;
-		case 1:
-			meshType = Shape::CUBE;
-			break;
-		case 2:
-			meshType = Shape::SPHERE;
-			break;
-		case 3:
-			meshType = Shape::CYLINDER;
-			break;
-		case 4:
-			meshType = Shape::TORUS;
-			break;
-		case 5:
-			meshType = Shape::PLANE;
-			break;
-		case 6:
-			meshType = Shape::CONE;
-			break;
+			GenerateLocalBoundingBox();
+			GenerateGlobalBoundingBox();
+			mesh->meshType = (Shape)jsonMesh.at("shape_type").get<int>();
+			mesh->SetVertexNormals(jsonMesh.at("draw_vertex_normals"));
+			mesh->SetFaceNormals(jsonMesh.at("draw_face_normals"));
+			mesh->SetIsAnimated(jsonMesh.at("is_animated"));
+
+			if (mesh->IsAnimated())
+				mesh->SetRootNode(owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(jsonMesh.at("root_node_UID")));
 		}
-		SetMesh(new R_Mesh(meshType));
-
-		mesh->meshType = meshType;
 	}
-
-	std::string path = json.at("path");
-	if (json.contains("isAnimated"))
-		mesh->SetIsAnimated(json.at("isAnimated"));
-	else
-		mesh->SetIsAnimated(false);
-	Importer::GetInstance()->meshImporter->Load(path.c_str(), mesh); // TODO: CHECK IF MESH DATA IS USED
-	mesh->path = path;
-
-	SetVertexNormals(json.at("draw_vertex_normals"));
-	SetFaceNormals(json.at("draw_face_normals"));
-	if (mesh->IsAnimated())
-	{
-		uint uid = (uint)json.at("rootNodeUID");
-
-		GameObject* object = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid);
-		this->GetMesh()->SetRootNode(object);
-	}
-	GenerateGlobalBoundingBox();
 }
 
 void C_Mesh::SetMesh(R_Mesh* mesh)
 {
 	if (this->mesh != nullptr)
-		RELEASE(this->mesh);
+		owner->GetEngine()->GetResourceManager()->FreeResource(this->mesh->GetUID());
+
+	this->mesh = nullptr;
 
 	this->mesh = mesh;
 	GenerateLocalBoundingBox();
 }
 
+void C_Mesh::SetPath(const char* path)
+{
+	if (mesh != nullptr)
+		mesh->SetAssetPath(path);
+	else
+		CONSOLE_LOG("[ERROR] Mesh: Could not set path, mesh was nullptr.");
+}
+
 void C_Mesh::SetVertexNormals(bool vertexNormals)
 {
-	this->mesh->SetVertexNormals(vertexNormals);
+	if (this->mesh != nullptr)
+		this->mesh->SetVertexNormals(vertexNormals);
 }
 
 void C_Mesh::SetFaceNormals(bool facesNormals)
 {
-	this->mesh->SetFaceNormals(facesNormals);
+	if (this->mesh != nullptr)
+		this->mesh->SetFaceNormals(facesNormals);
+}
+
+const char* C_Mesh::GetMeshPath() const
+{
+	if (mesh != nullptr)
+		return mesh->GetAssetPath();
+	else
+		CONSOLE_LOG("[ERROR] Mesh: Could not get assets path, mesh was nullptr.");
+	return nullptr;
+}
+
+float3 C_Mesh::GetCenterPoint() const
+{
+	if (mesh != nullptr)
+		return mesh->localAABB.CenterPoint();
+	else
+		CONSOLE_LOG("[ERROR] Mesh: Could not get center point, mesh was nullptr.");
+	return float3::zero;
 }
 
 float3 C_Mesh::GetCenterPointInWorldCoords() const
 {
-	return owner->GetTransform()->GetGlobalTransform().TransformPos(GetCenterPoint());
+	if (this->mesh != nullptr)
+		return owner->GetTransform()->GetGlobalTransform().TransformPos(GetCenterPoint());
 }
 
 uint C_Mesh::GetVertices()
 {
 	uint numVertices = 0;
-	numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
+	if (this->mesh != nullptr)
+		numVertices += mesh->verticesSizeBytes / (sizeof(float) * 3);
 	return numVertices;
 }
 
 bool C_Mesh::GetVertexNormals() const
 {
-	return mesh->GetVertexNormals();
+	if (this->mesh != nullptr)
+		return mesh->GetVertexNormals();
 }
 
 bool C_Mesh::GetFaceNormals() const
 {
-	return mesh->GetFaceNormals();
+	if (this->mesh != nullptr)
+		return mesh->GetFaceNormals();
 }
 
 const AABB C_Mesh::GetLocalAABB()
 {
-	GenerateLocalBoundingBox();
-	return mesh->localAABB;
+	if (this->mesh != nullptr)
+	{
+		GenerateLocalBoundingBox();
+		return mesh->localAABB;
+	}
+	else
+		CONSOLE_LOG("[ERROR] Mesh: Could not get local AABB, mesh was nullptr.");
+
+	return AABB();
 }
 
 const AABB C_Mesh::GetGlobalAABB() const
@@ -297,24 +313,32 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
-	if (mesh != nullptr && ImGui::CollapsingHeader("R_Mesh", ImGuiTreeNodeFlags_AllowItemOverlap))
+	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		/*if (DrawDeleteButton(owner, this))
+			return true;*/
 
-		if (mesh->path.empty())
-			ImGui::BeginDisabled();
-		ImGui::Text("Mesh Path: ");
-		ImGui::SameLine();
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
-		if (ImGui::Selectable(mesh->path.c_str())) {}
-		ImGui::PopStyleColor();
-		if (mesh->path.empty())
-			ImGui::EndDisabled();
+		if (mesh->GetLibraryPath() != nullptr)
+		{
+			ImGui::Text("Mesh Path: ");
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
+			if (ImGui::Selectable(mesh->GetLibraryPath())) {}
+			ImGui::PopStyleColor();
+		}
 
 		ImGui::Text("Num. vertices: ");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", GetVertices());
+		if (owner->GetRenderGameObject())
+		{
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "Visible");
+		}
+		else
+		{
+			ImGui::TextColored(ImVec4(1, 0, 0, 1), "Not Visible");
 
+		}
 		bool vertex = GetVertexNormals();
 		if (ImGui::Checkbox("Vertex Normals", &vertex))
 			mesh->SetVertexNormals(vertex);
@@ -325,8 +349,8 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Draw AABB##", &drawAABB))
 			GetDrawAABB(drawAABB);
 	}
-	else
-		DrawDeleteButton(owner, this);
+	//else
+	//	DrawDeleteButton(owner, this);
 
 	return ret;
 }

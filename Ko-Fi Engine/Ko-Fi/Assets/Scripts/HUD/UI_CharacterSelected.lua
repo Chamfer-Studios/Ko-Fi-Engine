@@ -8,8 +8,11 @@ NewVariable(characterIDIV)
 -- Called each loop iteration
 function Update(dt)
 	if (gameObject:GetButton():IsPressed() == true) then
-		SetVariable(characterID, "GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT);
-		print("CharacterSelected")
+		if (GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT) == characterID) then
+			SetVariable(0, "GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT);
+		elseif (GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT) ~= characterID) then
+			SetVariable(characterID, "GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT);
+		end
 	end
 end
 

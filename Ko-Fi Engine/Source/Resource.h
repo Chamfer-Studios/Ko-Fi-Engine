@@ -10,40 +10,29 @@ enum class ResourceType
 {
 	MESH,
 	TEXTURE,
-	SCENE,
-	SHADER,
-	FONT,
-	TRACK,
-	PARTICLE,
+	//SCENE,
+	PARTICLE, // TODO
 	MODEL,
 	MATERIAL,
 	ANIMATION,
+	//TRACK
 	UNKNOWN
 };
 
 class Resource
 {
 public:
-	enum class Type
-	{
-		MESH,
-		TEXTURE,
-		SCENE,
-		SHADER,
-		UNKNOWN,
-	};
-
-	Resource() {}
+	Resource();
 	Resource(ResourceType type);
 	virtual ~Resource();
 
 	virtual bool CleanUp();
 
 	virtual bool SaveMeta(Json& json) const { return true; }
-	virtual bool LoadMeta(Json& json) { return true; }
 
 	virtual inline ResourceType GetType() const { return type; }
 
+	void ForceUID(const UID& uid);
 	inline UID GetUID() const { return uid; }
 	inline void SetUID(const UID& uid) { this->uid = uid; }
 
@@ -63,13 +52,6 @@ public:
 
 	void SetLibraryPathAndFile();
 	void SetAssetsPathAndFile(const char* path, const char* file);
-	//bool HasResource(UID uid) const;
-
-	//bool LoadToMemory();
-	//bool IsLoadedToMemory();
-
-	//virtual void Save() const;
-	//virtual void Load();
 
 private:
 	UID uid = 0;

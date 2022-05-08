@@ -87,7 +87,7 @@ bool PanelHierarchy::Update()
 			}
 		}
 		if (ImGui::Button("Create Prefab")) {
-			editor->GetPanelChooser()->OpenPanel("CreatePrefab", "fbx", {"fbx","dae","obj","stl","gltf"});
+			editor->GetPanelChooser()->OpenPanel("CreatePrefab", "fbx", { "fbx" });
 		}
 		if (editor->GetPanelChooser()->IsReadyToClose("LoadPrefab")) {
 			if (!editor->GetPanelChooser()->OnChooserClosed().empty()) {
@@ -159,23 +159,33 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 	if (ImGui::TreeNodeEx(go->GetName(), flags))
 	{
 		DragNDrop(go);
-		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(1)))
+
+		if (((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) || ImGui::IsItemClicked(0)))
 		{
 			editor->panelGameObjectInfo.selectedGameObjects.clear();
 			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
-
+			//editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
 			CONSOLE_LOG("%s || %d", go->GetName(), go->GetUID());
+			appLog->AddLog("Left Clicked");
 		}
-		if (ImGui::IsItemClicked(1)) {
+		if ((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) ||  ImGui::IsItemClicked(1))
+		{
+			editor->panelGameObjectInfo.selectedGameObjects.clear();
+			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
+		}
+		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1))
+		{
+			appLog->AddLog("Right Clicked");
 			ImGui::OpenPopup("Test");
 		}
 		
+		
+		
 		for (int i = 0; i < go->GetChildren().size(); i++)
 		{
-
 			DisplayTree(go->GetChildren().at(i), flags, ++id);
-
 		}
 		if (ImGui::BeginPopup("Test"))
 		{
@@ -201,7 +211,7 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 				for (GameObject* go : editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 					for (int i = 0; i < editor->panelGameObjectInfo.selectedGameObjects.size(); i++)
 					{
-						if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjects[i] && go->GetUID() != -1) {
+						if (go->GetUID() == editor->panelGameObjectInfo.selectedGameObjects[i] && go->GetUID() != 0) {
 							go->isPrefab = true;
 							editor->panelGameObjectInfo.selectedGameObjects.erase(editor->panelGameObjectInfo.selectedGameObjects.begin() + i);
 						}

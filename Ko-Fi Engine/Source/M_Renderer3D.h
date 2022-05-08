@@ -7,6 +7,7 @@
 #include "Light.h"
 #include "SDL_video.h"
 #include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/float3x3.h"
 #include "MathGeoLib/Math/float3.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
@@ -20,6 +21,7 @@ class C_Camera;
 class R_Texture;
 class PieShape;
 class FocalLight;
+class SkyBox;
 
 
 struct ParticleRenderer
@@ -69,6 +71,7 @@ public:
 	void RenderScene(C_Camera* camera);
 	void RenderBoundingBox(C_Mesh* cMesh);
 	void RenderMeshes(C_Camera* camera, GameObject* go);
+	void RenderSkyBox(C_Camera* camera, SkyBox &skybox);
 
 	void RenderUI(GameObject* go);
 

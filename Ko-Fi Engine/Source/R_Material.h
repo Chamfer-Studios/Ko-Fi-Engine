@@ -1,6 +1,8 @@
 #ifndef __MATERIAL_H__
 #define __MATERIAL_H__
 
+#define SHADERID_DEFAULT 4294967295
+
 #include "Globals.h"
 #include "Color.h"
 #include "Resource.h"
@@ -25,26 +27,19 @@ public:
 	R_Material();
 	~R_Material();
 
+	bool SaveMeta(Json& json) const override;
+
 	Uniform* FindUniform(std::string name);
 	void AddUniform(Uniform* uniform);
 
-	//inline const char* GetMaterialPath() const { return materialPath.c_str(); }
-	//inline void SetMaterialPath(const char* name) { this->materialPath = name; }
-
-	inline const char* GetShaderPath() const { return shaderPath.c_str(); }
-	inline void SetShaderPath(const char* name) { this->shaderPath = name; }
+	inline const char* GetShaderPath() const { return GetAssetPath(); }
+	inline void SetShaderPath(const char* name) { SetAssetPath(name); }
 
 public:
-	uint shaderProgramID =0;
+	uint shaderProgramID = SHADERID_DEFAULT;
 	std::vector<Uniform*> uniforms;
 
 	Color diffuseColor;
-
-	//std::string materialName;
-
-private:
-	//std::string materialPath;
-	std::string shaderPath = "";
 };
 
 #endif // !__MATERIAL_H__

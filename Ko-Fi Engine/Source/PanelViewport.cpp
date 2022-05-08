@@ -10,6 +10,7 @@
 #include "M_Window.h"
 #include "M_FileSystem.h"
 #include "M_Renderer3D.h"
+#include "M_ResourceManager.h"
 //Importer
 #include "I_Texture.h"
 //Resources
@@ -24,6 +25,7 @@
 #include "R_Texture.h"
 
 #include "Log.h"
+#include "FSDefs.h"
 // Tools
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -50,11 +52,17 @@ bool PanelViewport::Start()
 	gizmoMoveIcon = new R_Texture();
 	gizmoRotateIcon = new R_Texture();
 	gizmoScaleIcon = new R_Texture();
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/video.png", speedCameraIcon);
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/lit_mode.png", litIcon);
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/translate.png", gizmoMoveIcon);
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/3d-rotate.png", gizmoRotateIcon);
-	Importer::GetInstance()->textureImporter->Import("Assets/Icons/maximize.png", gizmoScaleIcon);
+
+	std::string name = ICONS_DIR + std::string("video.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), speedCameraIcon);
+	name = ICONS_DIR + std::string("lit_mode.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), litIcon);
+	name = ICONS_DIR + std::string("translate.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoMoveIcon);
+	name = ICONS_DIR + std::string("3d-rotate.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoRotateIcon);
+	name = ICONS_DIR + std::string("maximize.png");
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoScaleIcon);
 	return true;
 }
 
@@ -111,36 +119,43 @@ bool PanelViewport::Update()
 				if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
 				{
 					std::string path = (const char*)payload->Data;
-
-					if (path.find(".fbx") != std::string::npos || path.find(".md5mesh") != std::string::npos)
+					path = engine->GetResourceManager()->GetValidPath(path.c_str());
+					Resource* resource = engine->GetResourceManager()->GetResourceFromLibrary(path.c_str());
+					if (resource != nullptr)
+						engine->GetSceneManager()->LoadResourceToScene(resource);
+					else
 					{
-						Importer::GetInstance()->sceneImporter->Import(path.c_str());
+						if (path.find(".json") != std::string::npos)
+							Importer::GetInstance()->sceneImporter->LoadScene(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
+						else
+							dragDropPopup = true;
 					}
-					else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos)
-					{
-						for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
-						{
-							if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != -1)
-							{
-								GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
+					// OLD STUF
+					//if (path.find(".fbx") != std::string::npos || path.find(".md5mesh") != std::string::npos)
+					//{
+					//	Importer::GetInstance()->sceneImporter->Import(path.c_str());
+					//}
+					//else if (path.find(".jpg") != std::string::npos || path.find(".png") != std::string::npos)
+					//{
+					//	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+					//	{
+					//		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != 0)
+					//		{
+					//			GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
 
-								if (go->GetComponent<C_Material>())
-								{
-									R_Texture* texture = new R_Texture();
-									Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
+					//			if (go->GetComponent<C_Material>())
+					//			{
+					//				R_Texture* texture = new R_Texture();
+					//				Importer::GetInstance()->textureImporter->Import(path.c_str(), texture);
 
-									go->GetComponent<C_Material>()->texture = texture;
-									//cMaterial->textures.push_back(texture);
-								}
-							}
-						}
-						// Apply texture
-						
-					}
-					else if (path.find(".json") != std::string::npos) {
-
-						Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), engine->GetFileSystem()->GetNameFromPath(path).c_str());
-					}
+					//				go->GetComponent<C_Material>()->texture = texture;
+					//				//cMaterial->textures.push_back(texture);
+					//			}
+					//		}
+					//	}
+					//	// Apply texture
+					//	
+					//}
 				}
 			}
 			ImGui::EndDragDropTarget();
@@ -227,6 +242,27 @@ void PanelViewport::DrawViewportBar()
 		}
 		ImGui::EndPopup();
 	}
+	if (dragDropPopup)
+	{
+		ImGui::OpenPopup("Unsupported Extension");
+		ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+		if (ImGui::BeginPopupModal("Unsupported Extension", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::Text("The current file extension is unsupported.\nYour asset is not imported yet, maybe you should try refreshing?\n\n");
+
+			if (ImGui::Button("OK", ImVec2(120, 0)))
+			{
+				dragDropPopup = false;
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SetItemDefaultFocus();
+			ImGui::EndPopup();
+		}
+	}
+
+
+	
 	
 	ImGui::EndGroup();
 }

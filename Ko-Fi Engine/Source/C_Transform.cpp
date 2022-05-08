@@ -36,22 +36,24 @@ bool C_Transform::Update(float dt)
 	
 	if (isDirty) // When Object is Modified
 	{
-		if (owner->GetComponent<C_Mesh>())
-		{
-			owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
-		}
 		RecomputeGlobalMatrix();
 		owner->PropagateTransform();
 
-		// Update colliders
-		if (owner->GetComponent<C_BoxCollider>())
-			owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
-		if (owner->GetComponent<C_SphereCollider>())
-			owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
-		if (owner->GetComponent<C_CapsuleCollider>())
-			owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
+		if (owner->GetComponent<C_Mesh>())
+		{
+			if (owner->GetComponent<C_Mesh>()->GetMesh())
+				owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
 
-		isDirty = false;
+			// Update colliders
+			if (owner->GetComponent<C_BoxCollider>())
+				owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
+			if (owner->GetComponent<C_SphereCollider>())
+				owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
+			if (owner->GetComponent<C_CapsuleCollider>())
+				owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
+
+			isDirty = false;
+		}
 	}
 
 	return true;
@@ -119,9 +121,9 @@ void C_Transform::SetScale(const float3 &newScale)
 {
 	float3 fixedScale = newScale;
 	// If it is equal to 0 it crashes
-	if (fixedScale.x == 0) fixedScale.x = 0.1f;
-	if (fixedScale.y == 0) fixedScale.y = 0.1f;
-	if (fixedScale.z == 0) fixedScale.z = 0.1f;
+	if (fixedScale.x == 0) fixedScale.x = 0.00001f;
+	if (fixedScale.y == 0) fixedScale.y = 0.00001f;
+	if (fixedScale.z == 0) fixedScale.z = 0.00001f;
 
 	if (fixedScale.x <= 0) fixedScale.x *= -1.f;
 	if (fixedScale.y <= 0) fixedScale.y *= -1.f;
@@ -179,6 +181,7 @@ void C_Transform::LookAt(float3 &_front, float3 &_up)
 void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
 {
 	if (owner->GetParent() == nullptr) return;
+
 	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
 	//transformMatrix = globalTransform;
 	isDirty = true;
@@ -230,14 +233,29 @@ const float3 &C_Transform::Right() const
 	return transformMatrixLocal.Col3(0).Normalized();
 }
 
+const float3& C_Transform::GlobalRight() const
+{
+	return transformMatrix.Col3(0).Normalized();
+}
+
 const float3 &C_Transform::Up() const
 {
 	return transformMatrixLocal.Col3(1).Normalized();
 }
 
+const float3& C_Transform::GlobalUp() const
+{
+	return transformMatrix.Col3(1).Normalized();
+}
+
 const float3 &C_Transform::Front() const
 {
 	return transformMatrixLocal.Col3(2).Normalized();
+}
+
+const float3& C_Transform::GlobalFront() const
+{
+	return transformMatrix.Col3(2).Normalized();
 }
 
 void C_Transform::RecomputeGlobalMatrix()
@@ -255,11 +273,12 @@ void C_Transform::RecomputeGlobalMatrix()
 
 void C_Transform::Save(Json &json) const
 {
+	json["type"] = (int)type;
+
 	float3 position = GetPosition();
 	float3 scale = GetScale();
 	Quat rotation = GetRotationQuat();
 
-	json["type"] = "transform";
 	json["position"] = {position.x, position.y, position.z};
 	json["rotation"] = {rotation.x, rotation.y, rotation.z, rotation.w};
 	json["scale"] = {scale.x, scale.y, scale.z};

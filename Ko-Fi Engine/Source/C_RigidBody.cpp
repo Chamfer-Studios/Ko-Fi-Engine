@@ -71,7 +71,8 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 {
 	if (ImGui::CollapsingHeader("Rigid Body##", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		std::string newBodyType = GetBodyType();
 		if (ImGui::BeginCombo("Set Type##", newBodyType.c_str()))
@@ -211,7 +212,7 @@ void C_RigidBody::UpdateConstrains()
 
 void C_RigidBody::Save(Json& json) const
 {
-	json["type"] = "rigidBody";
+	json["type"] = (int)type;
 
 	json["body_type"] = bodyType;
 	json["use_gravity"] = useGravity;

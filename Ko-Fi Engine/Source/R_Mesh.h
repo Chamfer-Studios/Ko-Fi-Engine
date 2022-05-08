@@ -9,9 +9,10 @@
 
 #include "Assimp.h"
 #include "Resource.h"
-#include "par_shapes.h"
 #include "Globals.h"
 #include "Log.h"
+
+#include "par_shapes.h"
 
 #define POSITION_LOCATION 0
 #define TEX_COORD_LOCATION 1
@@ -156,7 +157,6 @@ public:
 	AABB localAABB;
 
 	Shape meshType;
-	std::string path;
 
 private:
 	// Debug functions for drawing

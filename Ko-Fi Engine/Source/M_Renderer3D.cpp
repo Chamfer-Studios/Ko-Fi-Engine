@@ -18,6 +18,7 @@
 #include "ImGuiAppLog.h"
 #include "M_FileSystem.h"
 #include "R_Texture.h"
+#include "M_UI.h"
 
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -41,11 +42,12 @@
 
 #include "PanelViewport.h"
 
-#include "M_UI.h"
+#include "SkyBox.h"
 
 #include <iostream>
 
 #include "optick.h"
+#include "QuadTree3D.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -234,6 +236,8 @@ bool M_Renderer3D::InitOpenGL()
 
 		SetGLFlag(GL_DEPTH_TEST, true);
 		SetGLFlag(GL_CULL_FACE, true);
+		glCullFace(GL_BACK);
+		glFrontFace(GL_CW);
 		lights[0].Active(true);
 		SetGLFlag(GL_LIGHTING, true);
 		SetGLFlag(GL_COLOR_MATERIAL, true);
@@ -336,6 +340,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 void M_Renderer3D::RenderScene(C_Camera* camera)
 {
 	OPTICK_EVENT();
+	RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
 #pragma omp parallel for
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
@@ -344,19 +349,28 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
+				//CONSOLE_LOG(go->GetName());
 				RenderMeshes(camera, go);
 				RenderBoundingBox(cMesh);
 			}
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
-				if (!cCamera->IsEngineCamera() && cCamera->GetIsDrawFrustumActive())
+				if (!engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
 				{
-					cCamera->DrawFrustum();
+					int uid = engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.at(0);
+				KOFI_DEBUG("%d", engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
+
+					if (!cCamera->IsEngineCamera() && cCamera->owner->GetUID() == uid)
+					{
+						cCamera->DrawFrustum();
+					}
+
 				}
 			}
 			if (go->GetComponent<C_RigidBody>())
 				engine->GetPhysics()->RenderPhysics();
+
 		}
 	}
 	RenderAllParticles();
@@ -373,6 +387,13 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 		}
 	}
 
+	if (engine->GetSceneManager()->GetCurrentScene()->sceneTree != nullptr && engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)
+	{
+		engine->GetSceneManager()->GetCurrentScene()->ComputeQuadTree();
+		engine->GetSceneManager()->GetCurrentScene()->sceneTree->Draw();
+	}
+
+
 }
 
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
@@ -381,7 +402,12 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 	for (int selectedId : engine->GetEditor()->panelGameObjectInfo.selectedGameObjects)
 	{
 		if (selectedId == cMesh->owner->GetUID())
-			cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+		{
+			if (cMesh->GetMesh() != nullptr)
+				cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+			else
+				CONSOLE_LOG("[ERROR] Renderer: Could not draw local AABB, mesh was nullptr.");
+		}
 	}
 
 }
@@ -393,112 +419,149 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 	C_Material* cMat = go->GetComponent<C_Material>();
 	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 	R_Mesh* mesh = cMesh->GetMesh();
-	//Check textures
-	if (cMat && mesh)
+	if (mesh)
 	{
-		if (!cMat->active)
+		//Check textures
+		if (cMat)
 		{
-			glDisable(GL_TEXTURE_2D);
-		}
-		else
-		{
-			glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
+			if (!cMat->active)
+			{
+				glDisable(GL_TEXTURE_2D);
+			}
+			else
+			{
+				glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
+			}
+
+			//Set Shaders
+			uint shader = cMat->GetMaterial()->shaderProgramID;
+			if (shader != 0)
+			{
+				glUseProgram(shader);
+				// Passing Shader Uniforms
+				GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+				glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+				GLint view_location = glGetUniformLocation(shader, "view");
+				glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
+
+
+				GLint projection_location = glGetUniformLocation(shader, "projection");
+				glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
+
+				if (mesh->IsAnimated())
+				{
+					// ...
+					AnimatorClip* animatorClip = go->GetComponent<C_Animator>()->GetSelectedClip();
+					if (animatorClip->GetFinishedBool() && animatorClip->GetLoopBool())
+						animatorClip->SetFinishedBool(false);
+
+					if (!animatorClip->GetFinishedBool())
+					{
+						float currentTimeMillis = engine->GetSceneManager()->GetGameTime();
+						std::vector<float4x4> transformsAnim;
+						mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+
+						GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+						glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+						GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+						glUniform1i(isAnimated, mesh->IsAnimated());
+					}
+				}
+
+				GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
+				glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
+
+				float2 resolution = float2(1080.0f, 720.0f);
+				glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
+
+				this->timeWaterShader += 0.02f;
+				glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
+
+				//Pass all varibale uniforms from the material to the shader
+				for (Uniform* uniform : cMat->GetMaterial()->uniforms)
+				{
+					switch (uniform->type)
+					{
+					case GL_INT:
+					{
+						glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
+					}
+					break;
+					case GL_FLOAT:
+					{
+						glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
+					}
+					break;
+					case GL_BOOL:
+					{
+						glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<bool>*)uniform)->value);
+					}
+					break;
+					case GL_FLOAT_VEC2:
+					{
+						UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
+						glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
+					}
+					break;
+					case GL_FLOAT_VEC3:
+					{
+						UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
+						glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
+					}
+					break;
+					case GL_FLOAT_VEC4:
+					{
+						UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
+						glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
+					}
+					break;
+					default:
+						break;
+					}
+				}
+				LightUniforms();
+				//Draw Mesh
+				mesh->Draw();
+				glUseProgram(0);
+
+			}
 		}
 	}
-	//Set Shaders
+}
 
-	uint shader = cMat->GetMaterial()->shaderProgramID;
+
+void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox& skybox)
+{
+	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+
+	uint shader = skybox.material->shaderProgramID;
+
+	float4x4 mat = float4x4::identity;
+
 	if (shader != 0)
 	{
 		glUseProgram(shader);
+
 		// Passing Shader Uniforms
-		GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
-		glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+		glUniform1d(glGetUniformLocation(shader, "skybox"), 0);
+
+		float4x4 view = float4x4::identity;
+		view.Set3x3Part(camera->GetViewMatrix().Float3x3Part());
+
 		GLint view_location = glGetUniformLocation(shader, "view");
-		glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
+		glUniformMatrix4fv(view_location, 1, GL_FALSE, view.Transposed().ptr());
+		float4x4 proj = float4x4::identity;
+		proj = camera->GetProjectionMatrix();
 
 		GLint projection_location = glGetUniformLocation(shader, "projection");
-		glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 
-		if (mesh->IsAnimated())
-		{
-			// ...
-			AnimatorClip animatorClip = go->GetComponent<C_Animator>()->GetSelectedClip();
-			if (animatorClip.GetFinishedBool() && animatorClip.GetLoopBool())
-				animatorClip.SetFinishedBool(false);
+		glUniformMatrix4fv(projection_location, 1, GL_FALSE, proj.Transposed().ptr());
+		skybox.DrawSkyBox();
+		glUseProgram(0); // Always Last!
 
-			if (!animatorClip.GetFinishedBool())
-			{
-				float currentTimeMillis = engine->GetSceneManager()->GetGameTime();
-				std::vector<float4x4> transformsAnim;
-				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
-
-				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
-				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
-				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->IsAnimated());
-			}
-		}
-
-		GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
-		glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
-
-		float2 resolution = float2(1080.0f, 720.0f);
-		glUniform2fv(glGetUniformLocation(shader, "resolution"), 1, resolution.ptr());
-
-		this->timeWaterShader += 0.02f;
-		glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
-
-		//Pass all varibale uniforms from the material to the shader
-		for (Uniform* uniform : cMat->GetMaterial()->uniforms)
-		{
-			switch (uniform->type)
-			{
-			case GL_INT:
-			{
-				glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<int>*)uniform)->value);
-			}
-			break;
-			case GL_FLOAT:
-			{
-				glUniform1f(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<float>*)uniform)->value);
-			}
-			break;
-			case GL_BOOL:
-			{
-				glUniform1d(glGetUniformLocation(shader, uniform->name.c_str()), ((UniformT<bool>*)uniform)->value);
-			}
-			break;
-			case GL_FLOAT_VEC2:
-			{
-				UniformT<float2>* uf2 = (UniformT<float2>*)uniform;
-				glUniform2fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf2->value.ptr());
-			}
-			break;
-			case GL_FLOAT_VEC3:
-			{
-				UniformT<float3>* uf3 = (UniformT<float3>*)uniform;
-				glUniform3fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf3->value.ptr());
-			}
-			break;
-			case GL_FLOAT_VEC4:
-			{
-				UniformT<float4>* uf4 = (UniformT<float4>*)uniform;
-				glUniform4fv(glGetUniformLocation(shader, uniform->name.c_str()), 1, uf4->value.ptr());
-			}
-			break;
-			default:
-				break;
-			}
-		}
-
-		//lights rendering 
-		LightUniforms(shader);
-
-		//Draw Mesh
-		mesh->Draw();
-		glUseProgram(0);		
 	}
+	glDepthFunc(GL_LESS);  // change depth function so depth test passes when values are equal to depth buffer's content
+
 }
 
 void M_Renderer3D::LightUniforms(uint shader)
@@ -661,7 +724,6 @@ void M_Renderer3D::LightUniforms(uint shader)
 		glUniform1i(numFocalLights, 0);
 	}
 }
-
 void M_Renderer3D::RenderUI(GameObject* go)
 {
 	C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();

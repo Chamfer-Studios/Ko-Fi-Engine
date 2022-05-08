@@ -31,15 +31,15 @@ public:
 
 	// SetMesh
 	void SetMesh(R_Mesh* mesh);
-	inline void SetPath(const char* path) { mesh->path = path; }
+	void SetPath(const char* path);
 	void SetVertexNormals(bool vertexNormals);
 	void SetFaceNormals(bool facesNormals);
 	
 	// Getters
 	inline R_Mesh* GetMesh() const { return mesh; }
-	inline const char* GetMeshPath() const { mesh->path.c_str(); }
+	const char* GetMeshPath() const;
 	inline float GetSphereRadius() const { return radius; }
-	float3 GetCenterPoint() const { return mesh->localAABB.CenterPoint();  }
+	float3 GetCenterPoint() const;
 	float3 GetCenterPointInWorldCoords() const;
 	uint GetVertices();
 	bool GetVertexNormals() const;

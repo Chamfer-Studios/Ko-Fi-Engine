@@ -38,7 +38,7 @@ enum class AudioFormat
 	FLAC
 };
 
-class R_Track : public Resource
+class R_Track //: public Resource
 {
 public:
 	R_Track();

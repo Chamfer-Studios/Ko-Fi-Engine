@@ -82,5 +82,5 @@ private:
 	rcPolyMeshDetail* navMeshDetail = nullptr;
 	dtNavMesh* dtNavMesh = nullptr;
 	NavMeshConfig navMeshConfig;
-	bool drawNavmesh = true;
+	bool drawNavmesh = false;
 };

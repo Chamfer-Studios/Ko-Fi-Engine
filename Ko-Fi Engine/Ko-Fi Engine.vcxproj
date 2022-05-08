@@ -80,7 +80,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External\sol;$(ProjectDir)Source\External\lua\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\mmgr;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\ReactPhysics3D\reactphysics3d_debug\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External\optick\include;$(ProjectDir)Source\External\Detour\Include;$(ProjectDir)Source\External\Recast\Include;$(ProjectDir)Source\External\freetype;$(ProjectDir)Source\External\SDL_ttf\include;$(ProjectDir)Source\External\stb_truetype;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\glew\include\GL;$(ProjectDir)Source\External\MathGeoLib\;$(ProjectDir)Source\External\JsonParser;$(ProjectDir)Source\External\Brofiler;$(ProjectDir)Source\External\stb_image;$(ProjectDir)Source\External\SDL\include;$(ProjectDir)Source\External\SDL_image\include;$(ProjectDir)Source\External\ImGuizmo\include;$(ProjectDir)Source\External\OpenAL\include;$(ProjectDir)Source\External\DrWav\include;$(ProjectDir)Source\External\ReactPhysics3D\reactphysics3d_debug\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;GLEW_STATIC;_MBCS;NOMINMAX;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -206,6 +206,7 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
+    <ClCompile Include="Source\PanelResources.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
     <ClCompile Include="Source\M_Camera3D.cpp" />
@@ -297,7 +298,6 @@
     <ClCompile Include="Source\ParticleModule.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\R_ParticleResource.cpp" />
-    <ClCompile Include="Source\par_shapes.cpp" />
     <ClCompile Include="Source\M_Physics.cpp" />
     <ClCompile Include="Source\PieShape.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
@@ -308,6 +308,7 @@
     <ClCompile Include="Source\R_Track.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\M_SceneManager.cpp" />
+    <ClCompile Include="Source\SkyBox.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\R_Texture.cpp" />
     <ClCompile Include="Source\M_UI.cpp" />
@@ -332,6 +333,8 @@
     <ClInclude Include="Source\C_CapsuleCollider.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\C_SphereCollider.h" />
+    <ClInclude Include="Source\PanelResources.h" />
+    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\GJK.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\GJK2D.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\Random\LCG.h" />
@@ -408,6 +411,7 @@
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Math\vec2d.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.h" />
+    <ClInclude Include="Source\Grid.h" />
     <ClInclude Include="Source\P_Actor.h" />
     <ClInclude Include="Source\P_Collision.h" />
     <ClInclude Include="Source\P_World.h" />
@@ -425,7 +429,6 @@
     <ClInclude Include="Source\Event.h" />
     <ClInclude Include="Source\I_Track.h" />
     <ClInclude Include="Source\R_Model.h" />
-    <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\PieShape.h" />
     <ClInclude Include="Source\R_Track.h" />
@@ -533,6 +536,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\M_SceneManager.h" />
     <ClInclude Include="Source\C_SoundTriggerCreator.h" />
+    <ClInclude Include="Source\SkyBox.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\R_Texture.h" />
     <ClInclude Include="Source\Vec1Node.h" />

@@ -40,14 +40,15 @@ SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 
 	jsonHandler.LoadJson(j, "EngineConfig/window_test.json");
 
-	rootGo = new GameObject(-1, engine, "Root");
+	rootGo = new GameObject(0, engine, "Root");
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
 
+	skybox = SkyBox();
 	// LCG random;
 	// uint uid = random.Int();
 	// GameObject * g = this->CreateEmptyGameObject("Particle Test");
-	// g->AddComponentByType(ComponentType::PARTICLE);//CreateComponent<C_Particle>();
+	// g->AddComponentByType(ComponentType::PARTICLE);
 }
 
 SceneIntro::~SceneIntro()
@@ -59,10 +60,12 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	bool ret = true;
+	skybox.Start();
+
 	// Load Default Screen (Can be changed from settings)
 	if (!engine->GetSceneManager()->GetDefaultScene().empty())
 	{
-		Importer::GetInstance()->sceneImporter->Load(this, engine->GetSceneManager()->GetDefaultScene().c_str());
+		Importer::GetInstance()->sceneImporter->LoadScene(this, engine->GetSceneManager()->GetDefaultScene().c_str());
 	}
 	else
 	{
@@ -71,7 +74,7 @@ bool SceneIntro::Start()
 	if (!engine->GetCamera3D()->gameCamera)
 	{
 		GameObject *camera = CreateEmptyGameObject("Main Camera");
-		C_Camera *cCamera = camera->CreateComponent<C_Camera>();
+		C_Camera *cCamera = (C_Camera*)camera->AddComponentByType(ComponentType::CAMERA);
 		cCamera->SetIsMainCamera(true);
 		engine->GetCamera3D()->SetGameCamera(cCamera);
 
@@ -98,13 +101,14 @@ bool SceneIntro::Start()
 
 bool SceneIntro::PreUpdate(float dt)
 {
-	for (std::map<GameObject*, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
+	for (std::map<std::string, std::string>::iterator mapIt = gameObjectListToCreate.begin(); mapIt != gameObjectListToCreate.end(); mapIt++)
 	{
 		std::string path = "Assets/Prefabs/" + (*mapIt).second + "_prefab.json";
 		if (!std::filesystem::exists(path))
 			return true;
 		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 		go->LoadPrefabJson(path.c_str(), false);
+		go->SetName(((*mapIt).first).c_str());
 		for (Component* component : go->GetComponents()) // This method used because there could be multiple scripts in one go
 		{
 			if (component->GetType() != ComponentType::SCRIPT)
@@ -146,11 +150,7 @@ bool SceneIntro::Update(float dt)
 	//if (ray.IsFinite())
 		// DrawDebugRay(ray);
 
-	if (sceneTree != nullptr && drawSceneTree)
-	{
-		ComputeQuadTree();
-		sceneTree->Draw();
-	}
+	
 	return true;
 }
 
@@ -174,7 +174,7 @@ bool SceneIntro::PostUpdate(float dt)
 	if (switchScene)
 	{
 		switchScene = false;
-		Importer::GetInstance()->sceneImporter->Load(this, sceneNameGO.c_str());
+		Importer::GetInstance()->sceneImporter->LoadScene(this, sceneNameGO.c_str());
 	}
 
 	if (quitPlease)

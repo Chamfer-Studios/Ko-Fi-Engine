@@ -33,18 +33,18 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	this->engine = engine;
 
 	//Set Default Values
-	cameraSensitivity = 2.0f;
-	cameraSpeed = 120.f;
-	baseCameraSpeed = 120.f;
+	cameraSensitivity = 5.0f;
+	cameraSpeed = 1.f;
+	baseCameraSpeed = 1.f;
 	speedMultiplier = 1;
 
 	// Initialize Engine Camera
 	engineCameraObject = new GameObject(0, engine, "");
 	engineCamera = new C_Camera(engineCameraObject);
 	engineCamera->SetIsEngineCamera(true);
-
+	
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-	engineCamera->SetFarPlaneDistance(4000.0f);
+	engineCamera->SetFarPlaneDistance(1000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
 	engineCamera->SetIsFrustumActive(true);
 
@@ -81,13 +81,11 @@ bool M_Camera3D::Update(float dt)
 {
 	OPTICK_EVENT();
 
+	FocusTarget();
+	if (engineCamera->GetIsFrustumActive())
+		engineCamera->FrustumCulling();
 
-	// Update Engine Transform
-	engineCamera->Update(dt); // Update First**
-	engineCamera->owner->GetTransform()->Update(dt);
-	engineCamera->owner->GetTransform()->PostUpdate(dt);
-
-	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
+	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
 		return true;
 
 	if (currentCamera->IsEngineCamera() && engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
@@ -97,6 +95,11 @@ bool M_Camera3D::Update(float dt)
 		MouseRotation(dt);
 		lastDeltaX = 0.0f;
 		lastDeltaY = 0.0f;
+		isMoving = true;
+	}
+	else {
+		isMoving = false;
+		cameraSpeed = baseCameraSpeed;
 	}
 
 	return true;
@@ -144,20 +147,24 @@ void M_Camera3D::OnGui()
 void M_Camera3D::CheckInput(float dt)
 {
 	float3 newPos(0, 0, 0);
-	float speed = cameraSpeed * dt;
+	if (cameraSpeed >= maxSpeed)
+		cameraSpeed = maxSpeed;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 5.0f;
+	float speed = cameraSpeed;
+
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 2.0f;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += engineCamera->GetFront() * speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= engineCamera->GetFront() * speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= engineCamera->GetFront() * speed ;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= engineCamera->GetRight() * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += engineCamera->GetRight() * speed;
-
+	
 	engineCamera->SetPosition(engineCamera->GetPosition() + newPos);
+	cameraSpeed =cameraSpeed + (cameraSpeed* dt);
 }
 
 void M_Camera3D::MouseZoom(float dt)
@@ -200,12 +207,39 @@ void M_Camera3D::MouseRotation(float dt)
 
 }
 
+void M_Camera3D::FocusTarget()
+{
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0] != -1)
+		{
+			GameObject* selectedGameObject = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0]);
+			C_Mesh* mesh = selectedGameObject->GetComponent<C_Mesh>();
+			if (mesh)
+			{
+				const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
+				engineCamera->LookAt(meshCenter);
+				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
+				const float currentDistance = meshCenter.Distance(currentCamera->GetPosition());
+				const float desiredDistance = (meshRadius * 2) / atan(currentCamera->GetCameraFrustum().HorizontalFov());
+				currentCamera->SetPosition(currentCamera->GetPosition() + currentCamera->GetFront() * (currentDistance - desiredDistance));
+			}
+			else
+			{
+				C_Transform* transform = selectedGameObject->GetTransform();
+				if (transform != nullptr)
+					currentCamera->LookAt(selectedGameObject->GetTransform()->GetPosition());
+			}
+		}
+	}
+}
+
 void M_Camera3D::OnPlay()
 {
 	if (gameCamera == nullptr)
 	{
 		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("MainCamera");
-		C_Camera* cCamera = go->CreateComponent<C_Camera>();
+		C_Camera* cCamera = (C_Camera*)go->AddComponentByType(ComponentType::CAMERA);
 		cCamera->SetIsMainCamera(true);
 		gameCamera = cCamera;
 
@@ -247,40 +281,12 @@ bool M_Camera3D::InspectorDraw()
 		{
 			ChangeSpeed(newSpeedMultiplier);
 		}
-		//Frustum Active
+
+		//	Frustum Active
 		bool frustumActive = engineCamera->GetIsFrustumActive();
 		if (ImGui::Checkbox("Frustum culling", &frustumActive))
 		{
 			engineCamera->SetIsFrustumActive(frustumActive);
-		}
-		float newHorizontallFov = currentCamera->GetHorizontalFov();
-		if (ImGui::DragFloat("Fov", &newHorizontallFov, 0.5f, 1.0f, 179.f))
-		{
-			currentCamera->SetHorizontalFov(newHorizontallFov);
-		}
-
-		float2 planeDistances = { currentCamera->GetNearPlaneDistance(),currentCamera->GetFarPlaneDistance() };
-		if (ImGui::DragFloat2("Near plane distance", &(planeDistances[0])))
-		{
-			currentCamera->SetViewPlaneDistances(planeDistances.x, planeDistances.y);
-		}
-
-		ImGui::Text("x: %f y: %f z: %f", engineCamera->GetPosition().x, engineCamera->GetPosition().y, engineCamera->GetPosition().z);
-
-		// Position ImGui
-		float3 newPosition = engineCamera->owner->GetTransform()->GetPosition();
-		if (ImGui::DragFloat3("Location##", &(newPosition[0]), 0.5f))
-		{
-			engineCamera->SetPosition(newPosition);
-		}
-
-		// Rotation ImGui
-		float3 newRotationEuler = engineCamera->owner->GetTransform()->GetRotationEuler();
-		newRotationEuler = RadToDeg(newRotationEuler);
-		if (ImGui::DragFloat3("Rotation##", &(newRotationEuler[0]), 0.045f))
-		{
-			newRotationEuler = DegToRad(newRotationEuler);
-			engineCamera->owner->GetTransform()->SetRotationEuler(newRotationEuler);
 		}
 
 	}
@@ -318,7 +324,7 @@ void M_Camera3D::OnClick(SDL_Event event)
 
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.push_back(hit->GetUID());
 			}
-			else
+			else if(engine->GetSceneManager()->GetGameState() != GameState::PLAYING && !ImGuizmo::IsOver())
 			{
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();

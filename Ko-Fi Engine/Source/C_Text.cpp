@@ -31,7 +31,8 @@ bool C_Text::CleanUp()
 
 void C_Text::Save(Json& json) const
 {
-	json["type"] = "text";
+	json["type"] = (int)type;
+
 	json["value"] = textValue;
 }
 
@@ -55,7 +56,8 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 {
 	if (ImGui::CollapsingHeader("Text", ImGuiTreeNodeFlags_AllowItemOverlap)) 
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		if (ImGui::InputText("Value", &(textValue))) 
 		{

@@ -30,19 +30,17 @@
 C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAMERA;
-	cameraType = CameraType::PERSPECTIVE;
+	cameraType = KOFI_PERSPECTIVE;
 
 	//Create the frustum
 	cameraFrustum = Frustum();
 
 	//Set Default Values for the frusum
 	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
-	cameraFrustum.SetPerspective(DegToRad(43.0f), DegToRad(22.0f));
-	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(45.0f), 1.778f);
-	cameraFrustum.SetViewPlaneDistances(0.01f, 1000.0f);
-	cameraFrustum.SetFrame(float3(0.0f,0.0f,0.0f),float3(0.0f,0.0f,1.0f),float3(0.0f,1.0f,0.0f));
+	cameraFrustum.SetPerspective(DegToRad(60.0f), DegToRad(22.0f));
+	cameraFrustum.SetViewPlaneDistances(0.01f, 500.0f);
+	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
-
 
 }
 
@@ -64,12 +62,20 @@ bool C_Camera::Start()
 
 bool C_Camera::Update(float dt)
 {
-	// Tranform Should be the same as frustumPos
-	if(owner->GetEngine()->GetSceneManager()->GetCurrentScene()->currentCamera == this->owner)
-		owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
+	//Transform Update Camera Frustum
+	//Camera Position Rotation of the camera
+	if (!isEngineCamera)
+	{
+		C_Transform* transform = owner->GetTransform();
 
-	if (isFrustumCullingActive)
-		FrustumCulling();
+		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
+
+		//Apply rotation
+		if (isFrustumCullingActive)
+			FrustumCulling();
+	}
+	// Camera Frustum Updates Transform
+	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 
 	return true;
 }
@@ -86,94 +92,83 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
-	//switch (cameraType)
-	//{
-	//case C_Camera::PERSPECTIVE:
-	//	//TODO 
-
-	//	// 
-
-
-	//	break;
-	//case C_Camera::ORTHOGRAPHIC:
-	//	break;
-	//default:
-	//	break;
-	//}
-
-
-
-
+		// PROJECTION TYPE
 
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
-		float verticalFOV = GetHorizontalFov();
-		if (ImGui::DragFloat("Fov", &verticalFOV, 1.0f, 0.0f, 180.f))
-		{
-			SetHorizontalFov(verticalFOV);
-		}
-		float2 planeDistances = { cameraFrustum.NearPlaneDistance(),cameraFrustum.FarPlaneDistance() };
-		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
-		{
-			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
-		}
+		// CLEAR FLAG
+		//owner->GetEngine()->GetSceneManager()->GetCurrentScene()->skybox.InspectorDraw();
 
-		if (ImGui::Checkbox("Draw frustum", &isDrawFrustumActive))
-		{
-		}
+		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
 		{
 			ResetFrustumCulling();
 		}
+		// TODO: SET MAIN CAMERA TO TAG!
 		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
 		{
 			owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 		}
-		/*if (ImGui::Checkbox("Set Type", &isOrtho))
-		{
-			if (isOrtho)
-				ChangeCameraType(ORTHOGRAPHIC);
-			else
-				ChangeCameraType(PERSPECTIVE);
-		}*/
-	/*	if(ImGui::Combo("###Combo", &cameraType, "Perspective\0Orthographic\0"))
-		{
 
-		}*/
-	/*		if ((ImGui::Button("Assign Type")))
+		static const char* types[]{ "Perspective", "Orthographic" };
+		static int selectedItem = 0;
+		if (ImGui::Combo("Combo", &selectedItem, types, IM_ARRAYSIZE(types)))
+		{
+			if (selectedItem == 0)
+				SetProjectionType(CameraType::KOFI_PERSPECTIVE);
+			if (selectedItem == 1)
+				SetProjectionType(CameraType::KOFI_ORTHOGRAPHIC);
+
+
+		}
+
+		switch (cameraType)
+		{
+		case C_Camera::KOFI_PERSPECTIVE:
+		{
+			// FOV 
+			float fov = GetHorizontalFov();
+			if (ImGui::DragFloat("Fov", &fov, 1.0f, 0.0f, 180.f))
 			{
-				switch (cameraType)
-				{
-				case (int)CameraType::PERSPECTIVE: ChangeSourceType((SourceType)sType); break;
-				case (int)SourceType::POINT: ChangeSourceType((SourceType)sType); break;
-				case (int)SourceType::FOCAL: ChangeSourceType((SourceType)sType); break;
-				}
-			}*/
+				SetHorizontalFov(fov);
+			}
 
+
+			break;
+		}
+		}
+		//PLANES
+		float2 planeDistances = { cameraFrustum.NearPlaneDistance(),cameraFrustum.FarPlaneDistance() };
+		ImGui::Text("Clipping Spaces");
+		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
+		{
+			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
+		}
 	}
 	else
 		DrawDeleteButton(owner, this);
+
+
 	return ret;
 }
 
 void C_Camera::Save(Json& json) const
 {
-	json["type"] = "camera";
+	json["type"] = (int)type;
 	json["vertical_fov"] = cameraFrustum.VerticalFov();
 	json["near_plane_distance"] = cameraFrustum.NearPlaneDistance();
 	json["far_plane_distance"] = cameraFrustum.FarPlaneDistance();
-	json["draw_frustum"] = isDrawFrustumActive;
 	json["frustum_culling"] = isFrustumCullingActive;
 	json["isMainCamera"] = isMainCamera;
 }
 
 void C_Camera::Load(Json& json)
 {
-	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"),1.778f);
+	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"), 1.778f);
 	cameraFrustum.SetViewPlaneDistances(json.at("near_plane_distance"), json.at("far_plane_distance"));
-	isDrawFrustumActive = json.at("draw_frustum");
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
 	if (isMainCamera)
@@ -205,28 +200,55 @@ void C_Camera::SetPosition(float3 newPos)
 	cameraFrustum.SetPos(newPos);
 }
 
-void C_Camera::LookAt(const float3& point)
+void C_Camera::LookAt(const float3 point)
 {
 	reference = point;
 	float3 tempFront = (reference - cameraFrustum.Pos()).Normalized();
 	float3 tempRight = float3(0.0f, 1.0f, 0.0f).Cross(tempFront).Normalized();
-	cameraFrustum.SetFrontUp(tempFront, tempFront.Cross(tempRight));	
+	cameraFrustum.SetFrontUp(tempFront, tempFront.Cross(tempRight).Normalized());
 }
 
-void C_Camera::ChangeCameraType(const CameraType& type)
+void C_Camera::LookAt2(float3 _front, float3 _up)
 {
-	this->cameraType = type;
+	_front = _front.Normalized();
+	_up = _up.Normalized();
 
-	// Set Camera Properties
-	if (type == CameraType::ORTHOGRAPHIC)
+	float angle = atan2(_front.z, _front.x);
+
+	Quat r = cameraFrustum.ComputeWorldMatrix().RotatePart().ToQuat();
+
+	float3 cross = _up.Cross(cameraFrustum.Up());
+	float angleBetween = _up.AngleBetween(cameraFrustum.Up());
+
+	r = r.RotateAxisAngle(cross, angleBetween);
+
+	float3 currentEuler = r.ToEulerXYZ();
+
+	float diff = currentEuler.y - angle;
+
+	diff += 90.0f * DEGTORAD;
+
+	r = r.RotateAxisAngle(_up, diff);
+
+	float3 newFront = r * cameraFrustum.Front();
+	cameraFrustum.SetFront(newFront);
+}
+
+void C_Camera::SetProjectionType(const CameraType& type)
+{
+	cameraType = type;
+
+	if (type == CameraType::KOFI_ORTHOGRAPHIC)
 	{
 		hFov = cameraFrustum.HorizontalFov();
 		vFov = cameraFrustum.VerticalFov();
 		cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->viewportSize.x, owner->GetEngine()->GetEditor()->viewportSize.y);
-
 	}
-	else
-		cameraFrustum.SetPerspective(hFov,vFov);
+	else if (type == CameraType::KOFI_PERSPECTIVE)
+	{
+		cameraFrustum.SetPerspective(hFov, vFov);
+		hFov = vFov = 0.0f;
+	}
 }
 
 void C_Camera::FrustumCulling()
@@ -241,7 +263,7 @@ void C_Camera::FrustumCulling()
 		if (componentMesh == nullptr || gameObject == owner)
 			continue;
 
-		if (!ClipsWithBBox(componentMesh->GetLocalAABB()))
+		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
 			gameObject->SetRenderGameObject(false);
 		else
 			gameObject->SetRenderGameObject(true);
@@ -266,13 +288,12 @@ void C_Camera::ResetFrustumCulling()
 }
 
 void C_Camera::DrawFrustum() const
-{	
+{
 	float3 cornerPoints[8];
 	cameraFrustum.GetCornerPoints(cornerPoints);
 	//Draw Operations
-
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glLineWidth(3.5f);
+	glLineWidth(1.5f);
 	glBegin(GL_LINES);
 	//Near plane BL-BR
 	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);//Near BL

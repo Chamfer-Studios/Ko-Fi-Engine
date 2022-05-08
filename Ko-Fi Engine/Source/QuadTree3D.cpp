@@ -187,6 +187,7 @@ void QuadTree3D::Clear()
 
 void QuadTree3D::Draw()
 {
+
 	glBegin(GL_LINES);
 	glLineWidth(3.0f);
 	glColor3f(0.8f, 0.8f, 0.f);

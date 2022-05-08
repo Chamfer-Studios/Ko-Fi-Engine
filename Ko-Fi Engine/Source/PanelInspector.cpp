@@ -41,7 +41,7 @@ bool PanelInspector::Update()
 	for (int i = 0; i < editor->engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 	{
 		
-		if (panelGameObjectInfo.selectedGameObjects[i] != -1)
+		if (panelGameObjectInfo.selectedGameObjects[i] != 0)
 		{
 			// Current game object (the one we have selected at the moment)
 			GameObject* currentGameObject = editor->engine->GetSceneManager()->GetCurrentScene()->GetGameObject(editor->panelGameObjectInfo.selectedGameObjects[i]);

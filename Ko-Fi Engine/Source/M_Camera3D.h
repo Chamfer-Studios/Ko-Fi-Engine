@@ -44,6 +44,7 @@ public:
 	void CheckInput(float dt);
 	void MouseZoom(float dt);
 	void MouseRotation(float dt);
+	void FocusTarget();
 
 	// Setters
 	void SetGameCamera(C_Camera* gameCamera);
@@ -72,11 +73,15 @@ private:
 	float3 lastMouseClick;
 
 	float cameraSensitivity = .1f;
-	float cameraSpeed = 60.f;
-	float baseCameraSpeed = 60.f;
+	float cameraSpeed = 1.f;
+	float baseCameraSpeed = 1.f;
+	float maxSpeed = 25.f;
 	int speedMultiplier = 1.0f;
 
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
+
+	bool isMoving = false; // Checker for using the mouse out of the window after clicking the mouse
+
 
 };
 

@@ -27,12 +27,12 @@ bool R_Model::SaveMeta(Json& json) const
 		}
 		if (node.material != 0)
 		{
-			std::string materialNode = node.name + MATERIAL_EXTENSION;
-			std::string materialPath = MATERIALS_DIR + std::to_string(node.material) + MATERIAL_EXTENSION;
+			//std::string materialNode = node.name + MATERIAL_EXTENSION;
+			//std::string materialPath = MATERIALS_DIR + std::to_string(node.material) + MATERIAL_EXTENSION;
 			jsonResource["uid"] = node.uid;
 			jsonResource["type"] = ResourceType::MATERIAL;
-			jsonResource["name"] = materialNode.c_str();
-			jsonResource["library_path"] = materialPath.c_str();
+			//jsonResource["name"] = materialNode.c_str();
+			//jsonResource["library_path"] = materialPath.c_str();
 			jsonResources[node.name].push_back(jsonResource);
 		}
 		if (node.shader != 0)
@@ -41,7 +41,7 @@ bool R_Model::SaveMeta(Json& json) const
 			//TODO: Should we put shader dir?
 			//std::string shaderPath = SHADER_DIR + std::to_string(node.shader) + SHADER_EXTENSION;
 			jsonResource["uid"] = node.uid;
-			jsonResource["type"] = ResourceType::SHADER;
+			//jsonResource["type"] = ResourceType::SHADER;
 			jsonResource["name"] = shaderNode.c_str();
 			//jsonResource["library_path"] = shaderPath.c_str();
 			jsonResources[node.name].push_back(jsonResource);

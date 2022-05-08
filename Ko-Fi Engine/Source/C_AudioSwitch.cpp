@@ -62,8 +62,6 @@ C_AudioSwitch::~C_AudioSwitch()
 
 bool C_AudioSwitch::Start()
 {
-
-
     return true;
 }
 
@@ -121,7 +119,8 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
     if (ImGui::CollapsingHeader("Audio Switch", ImGuiTreeNodeFlags_AllowItemOverlap))
     {
-        DrawDeleteButton(owner, this);
+        if (DrawDeleteButton(owner, this))
+            return true;
 
         if (chooser->IsReadyToClose("Add Track"))
         {
@@ -149,7 +148,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
         ImGui::Spacing();
         if (ImGui::Button("Add Track") && totalTracks < 9)
         {
-            chooser->OpenPanel("Add Track", "wav", { "wav" });
+            chooser->OpenPanel("Add Track", "wav", { "wav", "mp3", "flac" });
         }
         // STOP TRACK
         if (IsAnyTrackPlaying())
@@ -296,7 +295,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
 void C_AudioSwitch::Save(Json& json) const
 {
-    json["type"] = "audio_switch";
+    json["type"] = (int)type;
 
     json["total_tracks"] = totalTracks;
     json["fade_time"] = fadeTime;

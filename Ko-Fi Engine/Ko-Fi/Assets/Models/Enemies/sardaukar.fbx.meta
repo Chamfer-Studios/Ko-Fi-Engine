@@ -1,0 +1,36 @@
+{
+    "asset_file": "sardaukar.fbx",
+    "asset_path": "Assets/Models/Enemies/sardaukar.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "sardaukar_sword.sugar",
+            "library_path": "Library/Meshes/658904900.sugar",
+            "type": 0,
+            "uid": 658904900
+        },
+        {
+            "asset_file": "sardaukar_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Enemies/Sardaukar/sardaukar_base_color.png",
+            "library_path": "Library/Textures/1290834884.cacao",
+            "type": 1,
+            "uid": 1290834884
+        },
+        {
+            "asset_file": "sardaukar_low.sugar",
+            "library_path": "Library/Meshes/1364818079.sugar",
+            "type": 0,
+            "uid": 1364818079
+        },
+        {
+            "asset_file": "sardaukar_armature|sardaukar_reel.cake",
+            "library_path": "Library/Animations/1219859333.cake",
+            "type": 5,
+            "uid": 1219859333
+        }
+    ],
+    "library_file": "2092710568.tea",
+    "library_path": "Library/Models/2092710568.tea",
+    "mod_time": 411531224,
+    "type": 3,
+    "uid": 2092710568
+}

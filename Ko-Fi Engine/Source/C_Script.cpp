@@ -33,7 +33,6 @@ C_Script::C_Script(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
 	SetId(RNG::GetRandomUint());
-	s = new ScriptHandler(owner, this);
 }
 
 C_Script::~C_Script()
@@ -62,19 +61,19 @@ bool C_Script::CleanUp()
 
 bool C_Script::Update(float dt)
 {
-	for (auto v : s->inspectorVariables) {
-		if (v->type == INSPECTOR_GAMEOBJECT) {
-			try {
-				GameObject* go = std::get<GameObject*>(v->value);
-			}
-			catch (...) {
-				v->value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
-			}
-		}
-	}
-
 	if (s != nullptr)
 	{
+		for (auto v : s->inspectorVariables) {
+			if (v->type == INSPECTOR_GAMEOBJECT) {
+				try {
+					GameObject* go = std::get<GameObject*>(v->value);
+				}
+				catch (...) {
+					v->value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
+				}
+			}
+		}
+
 		while (eventQueue.size() != 0) {
 			auto e = eventQueue.front();
 			eventQueue.pop();
@@ -179,7 +178,8 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 	if (ImGui::CollapsingHeader(headerName.c_str(), ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		DrawDeleteButton(owner, this);
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		if (chooser->IsReadyToClose("Add Script_" + std::to_string(id)))
 		{
@@ -190,10 +190,9 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				if (!path.empty())
 				{
 					this->CleanUp();
-					ScriptHandler* handler = new ScriptHandler(owner, this);
-					s = handler;
-					handler->path = path;
-					ReloadScript(handler);
+					s = new ScriptHandler(owner, this);
+					s->path = path;
+					ReloadScript(s);
 					
 				}
 			}
@@ -351,7 +350,6 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 			ReloadScript(s);
 		}
 	}
-	
 	else
 		DrawDeleteButton(owner, this);
 
@@ -384,7 +382,8 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 
 void C_Script::Save(Json &json) const
 {
-	json["type"] = "script";
+	json["type"] = (int)type;
+
 	json["id"] = id;
 	json["file_name"] = s->path;
 	Json jsonIV;
@@ -481,6 +480,8 @@ void C_Script::Save(Json &json) const
 
 void C_Script::Load(Json &json)
 {
+	if (s == nullptr) s = new ScriptHandler(owner, this);
+
 	s->path = json.at("file_name");
 	if (json.find("id") != json.end()) {
 		id = json.at("id");

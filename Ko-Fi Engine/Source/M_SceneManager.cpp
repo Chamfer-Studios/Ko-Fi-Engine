@@ -4,15 +4,19 @@
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
 #include "M_Window.h"
+#include "M_ResourceManager.h"
 #include <imgui_stdlib.h>
 
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Material.h"
+#include "C_Animator.h"
 #include "C_Info.h"
 #include "C_Camera.h"
 #include "C_Script.h"
+#include "AnimatorClip.h"
+
 // UI
 #include "C_Canvas.h"
 #include "C_Transform2D.h"
@@ -22,13 +26,17 @@
 
 #include "R_Material.h"
 #include "R_Texture.h"
+#include "R_Model.h"
+#include "R_Animation.h"
 
 #include "PanelViewport.h"
 #include "Log.h"
 #include "Scripting.h"
+#include "Importer.h"
 
 #include "Log.h"
 #include "Globals.h"
+#include "FSDefs.h"
 
 #include "optick.h"
 
@@ -135,7 +143,6 @@ bool M_SceneManager::CleanUp()
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->CleanUp();
 		RELEASE((*scene));
 	}
 	scenes.clear();
@@ -215,6 +222,210 @@ GameState M_SceneManager::GetGameState()
 	return runtimeState;
 }
 
+bool M_SceneManager::LoadResourceToScene(Resource* resource)
+{
+	if (resource == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Scene: Could not load resource into scene, resource pointer was nullptr.");
+		return false;
+	}
+
+	bool ret = false;
+	switch (resource->GetType())
+	{
+	case ResourceType::MODEL:
+		ret = CreateGameObjectsFromModel((R_Model*)resource);
+		break;
+	case ResourceType::TEXTURE:
+		ret = ApplyTextureToSelectedGameObject(resource->GetUID());
+		break;
+	default:
+		CONSOLE_LOG("[WARNING] Scene: Could not load resource into scene, resource type not accepted by drag and drop.");
+		break;
+	}
+
+	return ret;
+}
+
+bool M_SceneManager::ApplyTextureToSelectedGameObject(UID uid)
+{
+	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
+	{
+		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), no GameObject was selected.");
+		return false;
+	}
+	if (uid == 0)
+	{
+		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), texture uid was 0.");
+		return false;
+	}
+
+	R_Texture* texture = (R_Texture*)engine->GetResourceManager()->RequestResource(uid);
+	if (texture == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), resource texture was nullptr.");
+		return false;
+	}
+
+	for (const auto& i : engine->GetEditor()->panelGameObjectInfo.selectedGameObjects)
+	{
+		GameObject* go = currentScene->GetGameObject(i);
+		C_Material* cMaterial = go->GetComponent<C_Material>();
+
+		if (cMaterial == nullptr)
+			continue;
+
+		cMaterial->texture = texture;
+	}
+
+	return true;
+}
+
+bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
+{
+	if (model == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Scene Manager: Could not generate GameObjects from resource model, model was nullptr.");
+		return false;
+	}
+	// TODO: Add sceneModels map
+
+	std::map<UID, GameObject*> tmp;
+	GameObject* modelRoot = nullptr;
+
+	// nodes
+	for (const auto& node : model->nodes)
+	{
+		GameObject* go = new GameObject(node.uid, engine, node.name.c_str());
+
+		currentScene->rootGo->AttachChild(go);
+		go->SetParentUID(node.parentUid);
+		go->GetComponent<C_Transform>()->SetPosition(node.position);
+		go->GetComponent<C_Transform>()->SetRotationQuat(node.rotation);
+		go->GetComponent<C_Transform>()->SetScale(node.scale);
+
+		CreateComponentsFromNode(model, node, go);
+
+		if (node.parentUid == 0)
+		{
+			modelRoot = go;
+			//std::pair<UID, std::string> modelResource = { model->GetUID(),model->GetAssetPath() };
+			//currentScene->sceneModels.emplace(modelRoot->GetUID(), modelResource);
+		}
+		tmp.emplace(go->GetUID(), go);
+	}
+
+	//first = old UID (repeated)
+	//second = new UID
+	std::map<UID,UID> repeatedUIDs;
+
+	//save repeated UIDs
+	for (const auto& it : tmp)
+	{
+		if (currentScene->GetGameObject(it.first) != nullptr)
+		{
+			it.second->SetUID(RNG::GetRandomUint());
+			repeatedUIDs.emplace(it.first,it.second->GetUID());
+		}
+		currentScene->gameObjectList.push_back(it.second);
+	}
+
+	// Reparenting & update gameobjects with repeated UIDs
+	for (const auto& it : tmp)
+	{
+		UID parentUid = it.second->GetParentUID();
+
+		auto newParentUid = repeatedUIDs.find(parentUid);
+		if (newParentUid != repeatedUIDs.end())
+			it.second->SetParentUID(newParentUid->second);
+
+		if (parentUid == 0 && modelRoot != nullptr)
+			it.second->SetParentUID(0);
+		else
+		{
+			std::map<UID, GameObject*>::iterator parent = tmp.find(parentUid);
+			if (parent != tmp.end())
+			{
+				it.second->SetParentUID(parent->second->GetUID());
+				parent->second->AttachChild(it.second);
+			}
+		}
+		it.second->GetComponent<C_Transform>()->SetDirty(true);
+	}
+
+	engine->GetResourceManager()->FreeResource(model->GetUID());
+
+	return true;
+}
+
+void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, GameObject* gameobject)
+{
+	// Mesh
+	if (node.mesh != 0)
+	{
+		C_Mesh* mesh = (C_Mesh*)gameobject->AddComponentByType(ComponentType::MESH);
+		R_Mesh* rMesh = (R_Mesh*)engine->GetResourceManager()->RequestResource(node.mesh);
+		if (rMesh == nullptr)
+		{
+			CONSOLE_LOG("[ERROR] Scene: Could not get resource mesh from model node.");
+			gameobject->DeleteComponent(mesh);
+			return;
+		}
+		if (mesh != nullptr)
+		{
+			mesh->SetMesh(rMesh);
+			rMesh->SetRootNode(gameobject->GetParent());
+		}
+
+		if (rMesh->IsAnimated())
+		{
+			// Animation
+			if (model->animation != 0 && model->animationName != "")
+			{
+				C_Animator* animator = (C_Animator*)gameobject->AddComponentByType(ComponentType::ANIMATOR);
+				RELEASE(animator->animation);
+
+				R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
+				if (animator != nullptr && rAnimation != nullptr)
+				{
+					rMesh->SetAnimation(rAnimation);
+					animator->SetAnim(rAnimation);
+
+					// Updating default clip with all the keyframes of the animation.
+					AnimatorClip* animClip = animator->GetSelectedClip();
+					animClip->SetDuration(rAnimation->duration);
+					animClip->SetStartFrame(0);
+					animClip->SetEndFrame(rAnimation->duration);
+				}
+			}
+		}
+
+		// Material & Shader
+		C_Material* material = (C_Material*)gameobject->AddComponentByType(ComponentType::MATERIAL);
+		std::string shaderPath = ASSETS_SHADERS_DIR + std::string("default_shader") + SHADER_EXTENSION;
+		R_Material* rMaterial = (R_Material*)engine->GetResourceManager()->GetResourceFromLibrary(shaderPath.c_str());
+		material->SetMaterial(rMaterial);
+
+		// Texture
+		if (node.texture != 0)
+		{
+			R_Texture* rTexture = (R_Texture*)engine->GetResourceManager()->RequestResource(node.texture);
+			if (rTexture == nullptr)
+			{
+				CONSOLE_LOG("[ERROR] Scene: Could not get resource texture from model node.");
+				return;
+			}
+			material->texture = rTexture;
+			material->checkerTexture = false;
+		}
+		else
+		{
+			material->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
+			material->checkerTexture = true;
+		}
+	}
+}
+
 void M_SceneManager::OnPlay()
 {
 	runtimeState = GameState::PLAYING;
@@ -223,7 +434,7 @@ void M_SceneManager::OnPlay()
 	gameTime = 0.0f;
 
 	// Serialize scene and save it as a .json
-	Importer::GetInstance()->sceneImporter->Save(currentScene);
+	Importer::GetInstance()->sceneImporter->SaveScene(currentScene);
 
 	for (GameObject* go : currentScene->gameObjectList)
 	{
@@ -250,7 +461,7 @@ void M_SceneManager::OnStop()
 	time = 0.0f;
 	gameTime = 0.0f;
 
-	Importer::GetInstance()->sceneImporter->Load(currentScene,currentScene->name.c_str());
+	Importer::GetInstance()->sceneImporter->LoadScene(currentScene,currentScene->name.c_str());
 	// Load the scene we saved before in .json
 	//LoadScene(currentScene, "SceneIntro");
 	for (GameObject* go : currentScene->gameObjectList)
@@ -296,7 +507,7 @@ void M_SceneManager::GuizmoTransformation()
 	{
 		if (!selectedGameObjects[i]->GetComponent<C_Transform>()) return;
 
-		if (selectedGameObjects[i] == nullptr || selectedGameObjects[i]->GetUID() == -1) return;
+		if (selectedGameObjects[i] == nullptr || selectedGameObjects[i]->GetUID() == 0) return;
 	}
 
 
@@ -308,7 +519,7 @@ void M_SceneManager::GuizmoTransformation()
 	std::vector<float4x4> modelProjection;
 	for (int i = 0; i < selectedGameObjects.size(); i++)
 	{
-		modelProjection.push_back(selectedGameObjects[i]->GetComponent<C_Transform>()->GetLocalTransform().Transposed());
+		modelProjection.push_back(selectedGameObjects[i]->GetComponent<C_Transform>()->GetGlobalTransform().Transposed());
 	}
 
 	window = ImGui::FindWindowByName("Scene");
@@ -330,10 +541,7 @@ void M_SceneManager::GuizmoTransformation()
 
 	for (int i = 0; i < selectedGameObjects.size(); i++)
 	{
-		if (selectedGameObjects.size() > 0) {
-			ImGuizmo::SetID(selectedGameObjects[0]->GetUID());
-			ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform[i]);
-		}
+		ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform[i]);
 	}
 
 	if (ImGuizmo::IsUsing())

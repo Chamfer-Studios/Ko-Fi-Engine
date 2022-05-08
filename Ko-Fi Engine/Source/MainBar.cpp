@@ -5,6 +5,7 @@
 #include "M_Editor.h"
 #include "M_FileSystem.h"
 #include "M_SceneManager.h"
+#include "M_ResourceManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -18,13 +19,16 @@
 #include "C_LightSource.h"
 #include "C_Mesh.h"
 
+// Resources
+#include "R_Material.h"
+#include "R_Mesh.h"
+
 #include "PanelChooser.h"
+#include "Primitive.h"
+#include "Importer.h"
 #include "SDL.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
-#include "Primitive.h"
-#include "Importer.h"
-#include "R_Material.h"
 
 MainBar::MainBar(M_Editor* editor)
 {
@@ -58,11 +62,11 @@ bool MainBar::Update()
 		{
 			if (ImGui::MenuItem("Import Model"))
 			{
-				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx","dae","obj","stl","gltf" });
+				editor->GetPanelChooser()->OpenPanel("MainBar", "fbx", { "fbx" });
 			}
 			if (ImGui::MenuItem("Save Scene"))
 			{
-				Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
+				Importer::GetInstance()->sceneImporter->SaveScene(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetSceneManager()->GetCurrentScene()->rootGo->GetName());
 			}
 			if (ImGui::MenuItem("Save Scene As"))
 			{
@@ -108,7 +112,7 @@ bool MainBar::Update()
 			if (ImGui::MenuItem("Create Camera"))
 			{
 				GameObject* camera = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("camera");
-				camera->CreateComponent<C_Camera>();
+				camera->AddComponentByType(ComponentType::CAMERA);
 			}
 			if (ImGui::BeginMenu("Lights"))
 			{
@@ -136,34 +140,32 @@ bool MainBar::Update()
 			{
 				if (ImGui::MenuItem("Cube"))
 				{
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CUBE, editor->engine->GetSceneIntro()->gameObjectList);
-					//GameObject* obj = nullptr;
-					//obj = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Cube");
-					//obj->AddComponentByType(ComponentType::MATERIAL);
-					//obj->AddComponentByType(ComponentType::MESH);
-					//R_Mesh* cube = new R_Mesh(Shape::CUBE);
-					//obj->GetComponent<C_Mesh>()->SetMesh(cube);
+					CreatePrimitive(Shape::CUBE);
 				}
 				if (ImGui::MenuItem("Sphere"))
 				{
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE. editor->engine->GetSceneIntro()->gameObjectList);
+					CreatePrimitive(Shape::SPHERE);
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{
+					CreatePrimitive(Shape::CYLINDER);
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->engine->GetSceneIntro()->gameObjectList);
 				}
-				if (ImGui::MenuItem("Line"))
-				{
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
-				}
+				//if (ImGui::MenuItem("Line"))
+				//{
+				//	
+				//	//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_LINE, editor->engine->GetSceneIntro()->gameObjectList);
+				//}
 				if (ImGui::MenuItem("Plane"))
 				{
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PLANE, editor->engine->GetSceneIntro()->gameObjectList);
+					CreatePrimitive(Shape::PLANE);
 				}
-				if (ImGui::MenuItem("Pyramid"))
-				{
-					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
-				}
+				//if (ImGui::MenuItem("Pyramid"))
+				//{
+				//	
+				//	//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_PYRAMID, editor->engine->GetSceneIntro()->gameObjectList);
+				//}
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("UI"))
@@ -171,7 +173,7 @@ bool MainBar::Update()
 				if (ImGui::MenuItem("Canvas")) {
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Canvas");
-					go->CreateComponent<C_Canvas>();
+					go->AddComponentByType(ComponentType::CANVAS);
 				}
 				if (ImGui::MenuItem("Image")) {
 					//create canvas first 
@@ -192,13 +194,13 @@ bool MainBar::Update()
 					{
 						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 						newCanvas->SetName("Canvas");
-						newCanvas->CreateComponent<C_Canvas>();
+						newCanvas->AddComponentByType(ComponentType::CANVAS);
 					}
 
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Image");
-					go->CreateComponent<C_Transform2D>();
-					go->CreateComponent<C_Image>();
+					go->AddComponentByType(ComponentType::TRANSFORM2D);
+					go->AddComponentByType(ComponentType::IMAGE);
 
 					if (canvasExists == true && lastCanvas != nullptr)
 					{
@@ -209,7 +211,7 @@ bool MainBar::Update()
 						newCanvas->AttachChild(go);
 					}
 
-					//go->CreateComponent<C_Material>();
+					
 				}
 				if (ImGui::MenuItem("Button")) {
 
@@ -230,14 +232,13 @@ bool MainBar::Update()
 					{
 						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 						newCanvas->SetName("Canvas");
-						newCanvas->CreateComponent<C_Canvas>();
+						newCanvas->AddComponentByType(ComponentType::CANVAS);
 					}
 
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Button");
-					go->CreateComponent<C_Transform2D>();
-					go->CreateComponent<C_Button>();
-					//go->CreateComponent<C_Material>();
+					go->AddComponentByType(ComponentType::TRANSFORM2D);
+					go->AddComponentByType(ComponentType::BUTTON);
 
 					if (canvasExists == true && lastCanvas != nullptr)
 					{
@@ -268,13 +269,13 @@ bool MainBar::Update()
 					{
 						newCanvas = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 						newCanvas->SetName("Canvas");
-						newCanvas->CreateComponent<C_Canvas>();
+						newCanvas->AddComponentByType(ComponentType::CANVAS);
 					}
 
 					GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, nullptr, false);
 					go->SetName("Text");
-					go->CreateComponent<C_Transform2D>();
-					go->CreateComponent<C_Text>();
+					go->AddComponentByType(ComponentType::TRANSFORM2D);
+					go->AddComponentByType(ComponentType::TEXT);
 
 					if (canvasExists == true && lastCanvas != nullptr)
 					{
@@ -284,7 +285,6 @@ bool MainBar::Update()
 					{
 						newCanvas->AttachChild(go);
 					}
-					//go->CreateComponent<C_Material>();
 				}
 				ImGui::EndMenu();
 			}
@@ -302,7 +302,6 @@ bool MainBar::Update()
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
-
 	}
 
 	return ret;
@@ -315,12 +314,16 @@ bool MainBar::PostUpdate()
 
 void MainBar::ChoosersListener()
 {
+	// TODO
 	if (editor->GetPanelChooser()->IsReadyToClose("MainBar"))
 	{
 		std::string file = editor->GetPanelChooser()->OnChooserClosed();
 		if (!file.empty())
 		{
-			Importer::GetInstance()->sceneImporter->Import(file.c_str());
+			file = editor->engine->GetResourceManager()->GetValidPath(file.c_str());
+			Resource* resource = editor->engine->GetResourceManager()->GetResourceFromLibrary(file.c_str());
+			if (resource != nullptr)
+				editor->engine->GetSceneManager()->LoadResourceToScene(resource);
 		}
 	}
 	if (editor->GetPanelChooser()->IsReadyToClose("LoadScene"))
@@ -330,7 +333,7 @@ void MainBar::ChoosersListener()
 		{
 #pragma omp parallel private()
 			{
-				Importer::GetInstance()->sceneImporter->Load(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
+				Importer::GetInstance()->sceneImporter->LoadScene(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
 			}
 
 		}
@@ -358,8 +361,49 @@ void MainBar::ChoosersListener()
 			auto pos1 = path.find_last_of("/");
 			auto pos2 = path.find_last_of(".");
 			std::string sceneName = path.substr(pos1+1, pos2-pos1-1);
-			Importer::GetInstance()->sceneImporter->Save(editor->engine->GetSceneManager()->GetCurrentScene(), sceneName.c_str());
+			Importer::GetInstance()->sceneImporter->SaveScene(editor->engine->GetSceneManager()->GetCurrentScene(), sceneName.c_str());
 		};
 		editor->GetPanelChooser()->Save();
 	}
+}
+
+void MainBar::CreatePrimitive(Shape shape)
+{
+	std::string name;
+	switch (shape)
+	{
+	case Shape::CUBE:
+		name = "Cube";
+		break;
+	case Shape::SPHERE:
+		name = "Sphere";
+		break;
+	case Shape::CYLINDER:
+		name = "Cylinder";
+		break;
+	case Shape::TORUS:
+		name = "Torus";
+		break;
+	case Shape::PLANE:
+		name = "Plane";
+		break;
+	case Shape::CONE:
+		name = "Cone";
+		break;
+	};
+
+	GameObject* c = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(name.c_str());
+	
+	// Mesh
+	R_Mesh* rMesh = new R_Mesh(shape);
+	rMesh->SetUpMeshBuffers();
+	C_Mesh* m = (C_Mesh*)c->AddComponentByType(ComponentType::MESH);
+	m->SetMesh(rMesh);
+
+
+	// Material
+	C_Material *mat = (C_Material*)c->AddComponentByType(ComponentType::MATERIAL);
+	R_Material *material = new R_Material();
+	Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
+	mat->SetMaterial(material);
 }

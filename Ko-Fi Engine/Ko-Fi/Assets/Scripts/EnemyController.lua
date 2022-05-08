@@ -1,55 +1,73 @@
 static = false
---local staticIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
---staticIV = InspectorVariable.new("static", staticIVT, static)
---NewVariable(staticIV)
+local staticIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+staticIV = InspectorVariable.new("static", staticIVT, static)
+NewVariable(staticIV)
 
 speed = 20
---local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
---speedIV = InspectorVariable.new("speed", speedIVT, speed)
---NewVariable(speedIV)
+local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+speedIV = InspectorVariable.new("speed", speedIVT, speed)
+NewVariable(speedIV)
 
-visionConeAngle = 30
---local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
---visionConeAngleIV = InspectorVariable.new("visionConeAngle", visionConeAngleIVT, visionConeAngle)
---NewVariable(visionConeAngleIV)
+visionConeAngle = 90
+local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+visionConeAngleIV = InspectorVariable.new("visionConeAngle", visionConeAngleIVT, visionConeAngle)
+NewVariable(visionConeAngleIV)
 
 visionConeRadius = 50
---local visionConeRadiusIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
---visionConeRadiusIV = InspectorVariable.new("visionConeRadius", visionConeRadiusIVT, visionConeRadius)
---NewVariable(visionConeRadiusIV)
+local visionConeRadiusIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+visionConeRadiusIV = InspectorVariable.new("visionConeRadius", visionConeRadiusIVT, visionConeRadius)
+NewVariable(visionConeRadiusIV)
 
 hearingRange = 30
---local hearingRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
---hearingRangeIV = InspectorVariable.new("hearingRange", hearingRangeIVT, hearingRange)
---NewVariable(hearingRangeIV)
+local hearingRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+hearingRangeIV = InspectorVariable.new("hearingRange", hearingRangeIVT, hearingRange)
+NewVariable(hearingRangeIV)
+
+awarenessOffset = float3.new(0, 900, 0)
+local awarenessOffsetIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3
+awarenessOffsetIV = InspectorVariable.new("awarenessOffset", awarenessOffsetIVT, awarenessOffset)
+NewVariable(awarenessOffsetIV)
+
+awarenessSize = float3.new(0.15, 0.3, 0.15)
+local awarenessSizeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3
+awarenessSizeIV = InspectorVariable.new("awarenessSize", awarenessSizeIVT, awarenessSize)
+NewVariable(awarenessSizeIV)
 
 awarenessSpeed = 0.4
 --local awarenessSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 --awarenessSpeedIV = InspectorVariable.new("awarenessSpeed", awarenessSpeedIVT, awarenessSpeed)
 --NewVariable(awarenessSpeedIV)
 
-pingpong = true
---local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
---pingpongIV = InspectorVariable.new("pingpong", pingpongIVT, pingpong)
---NewVariable(pingpongIV)
+pingpong = false
+local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+pingpongIV = InspectorVariable.new("pingpong", pingpongIVT, pingpong)
+NewVariable(pingpongIV)
 
-loop = true
---local loopIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
---loopIV = InspectorVariable.new("loop", loopIVT, loop)
---NewVariable(loopIV)
+loop = false
+local loopIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
+loopIV = InspectorVariable.new("loop", loopIVT, loop)
+NewVariable(loopIV)
 
 patrolOldWaypoints = {}
-patrolWaypoints = { float3.new(-1600, 0, 0), float3.new(-1750, 0, 0) }
---local patrolWaypointsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3_ARRAY
---patrolWaypointsIV = InspectorVariable.new("patrolWaypoints", patrolWaypointsIVT, patrolWaypoints)
---NewVariable(patrolWaypointsIV)
+patrolWaypoints = {}
+local patrolWaypointsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3_ARRAY
+patrolWaypointsIV = InspectorVariable.new("patrolWaypoints", patrolWaypointsIVT, patrolWaypoints)
+NewVariable(patrolWaypointsIV)
+
+awareness_green = nil
+awareness_yellow = nil
+awareness_red = nil
+
+awareness_green_name = "awareness_green_" .. gameObject:GetUID()
+awareness_yellow_name = "awareness_yellow_" .. gameObject:GetUID()
+awareness_red_name = "awareness_red_" .. gameObject:GetUID()
 
 function Float3Length(v)
     return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
 end
 
 function Float3Difference(a, b)
-    return { x = b.x - a.x, y = b.y - a.y, z = b.z - a.z }
+    return float3.new(b.x - a.x, b.y - a.y, b.z - a.z)
 end
 
 function Float3Distance(a, b)
@@ -305,18 +323,60 @@ function EventHandler(key, fields)
     end
 end
 
+function ConfigAwarenessBars()
+    awareness_green = Find(awareness_green_name)
+    awareness_yellow = Find(awareness_yellow_name)
+    awareness_red = Find(awareness_red_name)
+end
+
+function UpdateAwarenessBars()
+    position = componentTransform:GetPosition()
+    awareness_green:GetTransform():SetPosition(float3.new(position.x + awarenessOffset.x, position.y + awarenessOffset.y, position.z + awarenessOffset.z))
+    awareness_yellow:GetTransform():SetPosition(float3.new(position.x + awarenessOffset.x, position.y + awarenessOffset.y, position.z + awarenessOffset.z))
+    awareness_red:GetTransform():SetPosition(float3.new(position.x + awarenessOffset.x, position.y + awarenessOffset.y, position.z + awarenessOffset.z))
+
+    --Log(tostring(awareness) .. "\n")
+
+    if awareness < 1 then
+        awareness_green:GetTransform():SetScale(float3.new(awarenessSize.x, awarenessSize.y * awareness, awarenessSize.z))
+        awareness_yellow:GetTransform():SetScale(float3.new(0, 0, 0))
+        awareness_red:GetTransform():SetScale(float3.new(0, 0, 0))
+    end
+
+    if awareness >= 1 and awareness < 2 then
+        awareness_green:GetTransform():SetScale(float3.new(awarenessSize.x * 0.8, awarenessSize.y * 0.8, awarenessSize.z * 0.8))
+        awareness_yellow:GetTransform():SetScale(float3.new(awarenessSize.x, awarenessSize.y * (awareness - 1), awarenessSize.z))
+        awareness_red:GetTransform():SetScale(float3.new(0, 0, 0))
+    end
+
+    if awareness == 2 then
+        awareness_green:GetTransform():SetScale(float3.new(awarenessSize.x * 0.6, awarenessSize.y * 0.6, awarenessSize.z * 0.6))
+        awareness_yellow:GetTransform():SetScale(float3.new(awarenessSize.x * 0.8, awarenessSize.y * 0.8, awarenessSize.z * 0.8))
+        awareness_red:GetTransform():SetScale(float3.new(awarenessSize.x, awarenessSize.y, awarenessSize.z))
+    end
+end
+
 function Start()
     CheckAndRecalculatePath(true)
+
+    InstantiateNamedPrefab("awareness_green", awareness_green_name)
+    InstantiateNamedPrefab("awareness_yellow", awareness_yellow_name)
+    InstantiateNamedPrefab("awareness_red", awareness_red_name)
 end
 
 function Update(dt)
+    if awareness_green == nil then
+        ConfigAwarenessBars()
+    else
+        UpdateAwarenessBars()
+    end
+
     if awareness < targetAwareness then
         awareness = awareness + awarenessSpeed * dt
     elseif awareness > targetAwareness then
         awareness = awareness - awarenessSpeed * dt
     end
 
-    --Log(tostring(awareness) .. "\n")
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
         if seeingSource ~= nil then
             DispatchEvent("State_Suspicious", { seeingPosition })
@@ -346,6 +406,24 @@ function Update(dt)
         if auditoryTriggerIsRepeating == true then
             auditoryTriggerIsRepeating = false
             SetTargetStateToUNAWARE()
+        end
+    end
+
+    if state == STATE.AGGRO then
+        s = nil
+        if seeingSource ~= nil then
+            s = seeingSource
+        elseif awarenessSource ~= nil then
+            s = awarenessSource
+        end
+
+        if s ~= nil then
+            if static == true then
+                DispatchEvent(pathfinderUpdateKey, { {}, false, componentTransform:GetPosition() })
+                LookAtDirection(Float3Difference(componentTransform:GetPosition(), s:GetTransform():GetPosition()))
+            else
+                DispatchEvent(pathfinderUpdateKey, { { s:GetTransform():GetPosition() }, false, componentTransform:GetPosition() })
+            end
         end
     end
 

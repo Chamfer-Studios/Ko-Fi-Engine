@@ -1,7 +1,7 @@
-minRetargetingDistance = 3
---local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
---minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
---NewVariable(minRetargetingDistanceIV)
+minRetargetingDistance = 10
+local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
+NewVariable(minRetargetingDistanceIV)
 
 navigation = GetNavigation()
 
@@ -43,27 +43,21 @@ function Float3Angle(a, b)
 end
 
 function FollowPath(speed, dt, loop)
-    if #finalPath == 0 or currentPathIndex > #finalPath then
+    if #_G.finalPath == 0 or currentPathIndex > #_G.finalPath then
         do return end
     end
 
-    if currentPathIndex == #finalPath and loop == false then
-        do return end
-    end
-
-    currentTarget = finalPath[currentPathIndex]
+    currentTarget = _G.finalPath[currentPathIndex]
     currentPosition = componentTransform:GetPosition()
-    while Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance do
+    if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
         currentPathIndex = currentPathIndex + 1
-        if currentPathIndex > #finalPath and loop then
+        if currentPathIndex > #_G.finalPath and loop then
             currentPathIndex = 1
-            break
         end
-        if currentPathIndex > #finalPath then
+        if currentPathIndex > #finalPath and not loop then
             currentPathIndex = currentPathIndex - 1
-            break
         end
-        currentTarget = finalPath[currentPathIndex]
+        currentTarget = _G.finalPath[currentPathIndex]
     end
     direction = Float3NormalizedDifference(currentPosition, currentTarget)
     DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
@@ -115,12 +109,18 @@ function UpdatePath(wp, pingpong, currentPos)
 
     closestIndex = 1
 
-    --for i=1,#_finalPath do
-    --    p = _finalPath[i]
+    for i=1,#_G.finalPath do
+        p = _G.finalPath[i]
 
-    --    if (Float3Distance(currentPos, p) < Float3Distance(currentPos, _finalPath[closestIndex])) then
-    --        closestIndex = i
-    --    end
+        if (Float3Distance(currentPos, p) < Float3Distance(currentPos, _G.finalPath[closestIndex])) then
+            closestIndex = i
+        end
+    end
+
+    --currentPosition = componentTransform:GetPosition()
+    --Log(tostring(Float3Distance(currentPosition, _G.finalPath[closestIndex]) < minRetargetingDistance) .. "\n")
+    --while Float3Distance(currentPosition, _G.finalPath[closestIndex]) < minRetargetingDistance do
+    --    closestIndex = closestIndex + 1
     --end
     
     currentPathIndex = closestIndex

@@ -13,7 +13,6 @@
 #include "PanelChooser.h"
 #include "SceneIntro.h"
 
-#include "par_shapes.h"
 #include "Log.h"
 #include "M_UI.h"
 #include "R_Material.h"
@@ -45,9 +44,9 @@ bool C_Image::CleanUp()
 
 void C_Image::Save(Json& json) const
 {
-	json["type"] = "image";
+	json["type"] = (int)type;
 
-	json["texture"] = openGLTexture.path;
+	json["texture"] = openGLTexture.GetTexturePath();
 }
 
 void C_Image::Load(Json& json)
@@ -68,8 +67,10 @@ bool C_Image::PostUpdate(float dt)
 
 bool C_Image::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_AllowItemOverlap)) {
-		DrawDeleteButton(owner, this);
+	if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_AllowItemOverlap))
+	{
+		if (DrawDeleteButton(owner, this))
+			return true;
 
 		// Texture display
 		ImGui::Text("Texture: ");

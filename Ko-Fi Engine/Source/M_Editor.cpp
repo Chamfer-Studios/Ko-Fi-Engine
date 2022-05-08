@@ -27,6 +27,7 @@
 #include "PanelNodeEditor.h"
 #include "ImGuizmo.h"
 #include "PanelNavigation.h"
+#include "PanelResources.h"
 #include "optick.h"
 #include "M_SceneManager.h"
 
@@ -63,6 +64,7 @@ M_Editor::M_Editor(KoFiEngine* engine)
 	//panelNodeEditor = new PanelNodeEditor(this);
 	panelTextEditor = new PanelTextEditor(this);
 	panelNavigation = new PanelNavigation(this);
+	panelResources = new PanelResources(this);
 
 	// Panel instances with its own bool
 	/*if (panelsState.showGameWindow)
@@ -92,6 +94,7 @@ M_Editor::M_Editor(KoFiEngine* engine)
 	AddPanel(panelChooser);
 	AddPanel(panelGameObject);
 	AddPanel(panelAssets);
+	AddPanel(panelResources);
 	//AddPanel(panelNodeEditor);
 	AddPanel(panelTextEditor);
 #endif //KOFI_GAME
@@ -151,6 +154,8 @@ bool M_Editor::Awake(Json configModule)
 	
 
 	ret = LoadConfiguration(configModule);
+
+	panelResources->SetResourceManager(engine->GetResourceManager());
 
 	return ret;
 }
@@ -379,6 +384,7 @@ bool M_Editor::CleanUp()
 	panelGameObject = nullptr;
 	panelViewport = nullptr;
 	panelCameraViewport = nullptr;
+	panelResources = nullptr;
 	//RELEASE(panelGame);
 	panelRuntimeState = nullptr;
 

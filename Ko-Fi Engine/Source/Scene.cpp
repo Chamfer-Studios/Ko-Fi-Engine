@@ -42,7 +42,7 @@ GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, b
 {
 	GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
 	this->gameObjectList.push_back(go);
-	if (parent)
+ 	if (parent)
 		parent->AttachChild(go);
 	else
 		this->rootGo->AttachChild(go);
@@ -61,9 +61,12 @@ void Scene::DeleteCurrentScene()
 	}
 	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
 	gameObjectList.clear();
+	gameObjectList.shrink_to_fit();
 	lights.clear();
+	lights.shrink_to_fit();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
-	rootGo = new GameObject(-1, engine, "Root");
+	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
+	rootGo = new GameObject(0, engine, "Root");
 	gameObjectList.push_back(rootGo);
 }
 
