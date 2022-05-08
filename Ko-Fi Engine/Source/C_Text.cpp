@@ -157,7 +157,7 @@ void C_Text::SetTextValue(std::string newValue)
 
 	int w, h;
 	TTF_SizeUTF8(selectedFont, newValue.c_str(), &w, &h);
-	owner->GetComponent<C_Transform2D>()->SetSize({ (float)w, (float)h });
+	//owner->GetComponent<C_Transform2D>()->SetSize({ (float)w, (float)h });
 
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
