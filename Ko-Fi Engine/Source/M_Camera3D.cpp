@@ -215,7 +215,7 @@ void M_Camera3D::FocusTarget()
 		{
 			GameObject* selectedGameObject = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0]);
 			C_Mesh* mesh = selectedGameObject->GetComponent<C_Mesh>();
-			if (mesh)
+			if (mesh->GetMesh())
 			{
 				const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
 				engineCamera->LookAt(meshCenter);

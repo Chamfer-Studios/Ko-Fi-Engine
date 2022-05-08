@@ -345,7 +345,6 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 				if (!engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
 				{
 					int uid = engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.at(0);
-				KOFI_DEBUG("%d", engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 
 					if (!cCamera->IsEngineCamera() && cCamera->owner->GetUID() == uid)
 					{
