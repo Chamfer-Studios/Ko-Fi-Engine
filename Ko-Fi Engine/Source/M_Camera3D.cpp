@@ -47,7 +47,6 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetFarPlaneDistance(10000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
 	engineCamera->SetIsFrustumActive(true);
-
 	currentCamera = engineCamera;
 }
 
@@ -278,6 +277,18 @@ bool M_Camera3D::InspectorDraw()
 		if (ImGui::Checkbox("Frustum culling", &frustumActive))
 		{
 			engineCamera->SetIsFrustumActive(frustumActive);
+		}
+
+		static const char* types[]{ "Perspective", "Orthographic" };
+		static int selectedItem = 0;
+		if (ImGui::Combo("Combo", &selectedItem, types, IM_ARRAYSIZE(types)))
+		{
+			if (selectedItem == 0)
+				engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_PERSPECTIVE);
+			if (selectedItem == 1)
+				engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
+
+
 		}
 
 	}

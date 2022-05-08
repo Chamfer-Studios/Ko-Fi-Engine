@@ -37,7 +37,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 
 	//Set Default Values for the frusum
 	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
-	cameraFrustum.SetPerspective(DegToRad(60.0f), DegToRad(22.0f));
+	cameraFrustum.SetPerspective(DegToRad(45.0f), DegToRad(22.0f));
 	cameraFrustum.SetViewPlaneDistances(0.01f, 500.0f);
 	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());

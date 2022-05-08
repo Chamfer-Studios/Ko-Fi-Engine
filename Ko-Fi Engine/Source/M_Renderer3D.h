@@ -22,7 +22,6 @@ class R_Texture;
 class PieShape;
 class SkyBox;
 
-
 struct ParticleRenderer
 {
 	ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform);
@@ -33,6 +32,24 @@ struct ParticleRenderer
 	Color		color;
 	float4x4	transform;
 };
+
+class OcclusionQuery
+{
+public:
+	OcclusionQuery() { id = 0; type = 0; }
+	OcclusionQuery(int type);
+	~OcclusionQuery();
+	void Start();
+	void End();
+	void Delete();
+	int GetResult();
+
+private:
+	unsigned int id = 0;
+	int type = 0;
+};
+
+
 
 class M_Renderer3D : public Module
 {
@@ -68,8 +85,10 @@ public:
 	
 	//Render Functions
 	void RenderScene(C_Camera* camera);
+	void QueryScene(C_Camera* camera);
 	void RenderBoundingBox(C_Mesh* cMesh);
 	void RenderMeshes(C_Camera* camera, GameObject* go);
+	void RenderMeshesQuery(C_Camera* camera, GameObject* go);
 	void RenderSkyBox(C_Camera* camera, SkyBox &skybox);
 
 	void RenderUI(GameObject* go);
@@ -110,6 +129,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	bool isFirstPass = true;
+	bool enableOcclusionCulling = true;
 
 private:
 	bool vsync = false;
@@ -127,9 +147,10 @@ private:
 	uint textureBuffer = 0;
 	uint previewTextureBuffer = 0;
 	bool show_viewport_window = true;
-
 	//Particle Map
 	std::map<float, ParticleRenderer> particles;
+	OcclusionQuery query;
+	unsigned int queryId = 0;
 };
 
 #endif // !__RENDERER_3D_H__

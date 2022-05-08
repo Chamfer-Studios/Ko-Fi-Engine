@@ -300,7 +300,7 @@
     <ClCompile Include="Source\R_ParticleResource.cpp" />
     <ClCompile Include="Source\M_Physics.cpp" />
     <ClCompile Include="Source\PieShape.cpp" />
-    <ClCompile Include="Source\QuadTree3D.cpp" />
+    <ClCompile Include="Source\Quadtree.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ResourceBase.cpp" />
     <ClCompile Include="Source\M_ResourceManager.cpp" />
@@ -531,7 +531,7 @@
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleModule.h" />
     <ClInclude Include="Source\M_Physics.h" />
-    <ClInclude Include="Source\QuadTree3D.h" />
+    <ClInclude Include="Source\Quadtree.h" />
     <ClInclude Include="Source\M_ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\M_SceneManager.h" />

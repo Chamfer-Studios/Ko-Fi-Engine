@@ -8,7 +8,6 @@
 #include "GameObject.h"
 #include "C_LightSource.h"
 
-#include "QuadTree3D.h"
 #include <vector>
 #include "M_Physics.h"
 #include "C_RigidBody.h"
@@ -143,21 +142,21 @@ void Scene::RemoveGameObjectIterator(std::vector<GameObject*>::iterator go)
 
 void Scene::ComputeQuadTree()
 {
-	{
-		if (!sceneTreeIsDirty) return;
 
-		std::vector<GameObject*>* objects = new std::vector<GameObject*>();
+		//if (!sceneTreeIsDirty) return;
 
-		if (sceneTree != nullptr) delete sceneTree;
-		sceneTree = new QuadTree3D(AABB(float3(-100, -100, -100), float3(100, 100, 100)));
+		//std::vector<GameObject*>* objects = new std::vector<GameObject*>();
 
-		ApplyToObjects([objects](GameObject* it) mutable {
-			objects->push_back(it);
-			});
+		//if (sceneTree != nullptr) delete sceneTree;
+		//sceneTree = new QuadTree3D(AABB(float3(-100, -100, -100), float3(100, 100, 100)));
 
-		sceneTree->AddObjects(*objects);
-		delete objects;
-	}
+		//ApplyToObjects([objects](GameObject* it) mutable {
+		//	objects->push_back(it);
+		//	});
+
+		//sceneTree->AddObjects(*objects);
+		//delete objects;
+	
 }
 
 void Scene::AddLight(GameObject* newLight)

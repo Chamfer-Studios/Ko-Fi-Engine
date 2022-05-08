@@ -1,5 +1,4 @@
-#include "QuadTree3D.h"
-#include "GameObject.h"
+#include "Quadtree.h"
 #include "optick.h"
 #include "Globals.h"
 #include "C_Transform.h"

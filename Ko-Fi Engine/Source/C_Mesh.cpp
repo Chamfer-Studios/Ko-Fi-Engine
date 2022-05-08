@@ -71,6 +71,7 @@ bool C_Mesh::PostUpdate(float dt) //AKA the real render
 
 bool C_Mesh::CleanUp()
 {
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Erase(owner);
 	std::string temp(owner->GetName());
 	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
@@ -244,7 +245,8 @@ void C_Mesh::GenerateGlobalBoundingBox()
 	// Generate global OBB
 	obb.SetFrom(GetLocalAABB());
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
-
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Erase(owner);
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Insert(owner);
 	// Generate global AABB
 	aabb.SetNegativeInfinity();
 	aabb.Enclose(obb);

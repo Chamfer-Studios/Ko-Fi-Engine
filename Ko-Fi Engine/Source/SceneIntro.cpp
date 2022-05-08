@@ -26,7 +26,7 @@
 #include "R_Material.h"
 #include "Log.h"
 #include "node_editor.h"
-#include "QuadTree3D.h"
+#include "Quadtree.h"
 
 #include "SDL_assert.h"
 
@@ -94,7 +94,9 @@ bool SceneIntro::Start()
 
 	example::NodeEditorInitialize();
 
-	ComputeQuadTree();
+	//ComputeQuadTree();
+	sceneTree.SetBoundaries(AABB(float3(-500, 0, -500), float3(500, 30, 500)));
+
 
 	return ret;
 }
