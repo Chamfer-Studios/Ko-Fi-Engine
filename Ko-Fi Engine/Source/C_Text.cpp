@@ -77,14 +77,14 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		SDL_Color tmpcol = GetColor();
-		float c[4] = { tmpcol.r,tmpcol.g,tmpcol.b,tmpcol.a };
+		float c[4] = { tmpcol.r / 255.0, tmpcol.g / 255.0, tmpcol.b / 255.0, tmpcol.a / 255.0 };
 
-		if (ImGui::ColorEdit4("Text Color", c, ImGuiColorEditFlags_DisplayRGB) != false)
+		if (ImGui::ColorEdit4("Text Color", c, ImGuiColorEditFlags_DefaultOptions_) != false)
 		{
-			tmpcol.r = c[0];
-			tmpcol.g = c[1];
-			tmpcol.b = c[2];
-			tmpcol.a = c[3];
+			tmpcol.r = c[0] * 255;
+			tmpcol.g = c[1] * 255;
+			tmpcol.b = c[2] * 255;
+			tmpcol.a = c[3] * 255;
 			SetColor(tmpcol);
 			SetTextValue(textValue);
 		}
@@ -208,7 +208,7 @@ SDL_Color C_Text::GetColor()
 
 void C_Text::SetColor(SDL_Color color)
 {
-	col.r = color.a;
+	col.r = color.r;
 	col.g = color.g;
 	col.b = color.b;
 	col.a = color.a;
