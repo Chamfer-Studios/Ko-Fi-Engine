@@ -1,0 +1,24 @@
+{
+    "asset_file": "nerala_mosquito.fbx",
+    "asset_path": "Assets/Models/Characters/Nerala/nerala_mosquito.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "nerala_mosquito.sugar",
+            "library_path": "Library/Meshes/1316043007.sugar",
+            "type": 0,
+            "uid": 1316043007
+        },
+        {
+            "asset_file": "nerala_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png",
+            "library_path": "Library/Textures/800379155.cacao",
+            "type": 1,
+            "uid": 800379155
+        }
+    ],
+    "library_file": "1799104438.tea",
+    "library_path": "Library/Models/1799104438.tea",
+    "mod_time": 411056297,
+    "type": 3,
+    "uid": 1799104438
+}

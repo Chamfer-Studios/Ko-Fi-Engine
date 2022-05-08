@@ -1,5 +1,6 @@
 #include "R_Model.h"
 #include "FSDefs.h"
+#include <filesystem>
 
 R_Model::R_Model() : Resource(ResourceType::MODEL),
 animation(0),
@@ -24,7 +25,8 @@ bool R_Model::SaveMeta(Json& json) const
 	std::vector<UID> savedTexturesUid;
 
 	json["contained_resources"].array();
-	Json jsonResource;
+	Json jsonResourceMesh;
+	Json jsonResourceTexture;
 	for (const auto& node : nodes)
 	{
 		if (node.mesh != 0)
@@ -43,15 +45,15 @@ bool R_Model::SaveMeta(Json& json) const
 			{
 				std::string meshName = node.name + MESH_EXTENSION;
 				std::string meshPath = MESHES_DIR + std::to_string(node.mesh) + MESH_EXTENSION;
-				jsonResource["uid"] = node.mesh;
-				jsonResource["type"] = ResourceType::MESH;
-				jsonResource["asset_file"] = meshName;
-				jsonResource["library_path"] = meshPath;
-				json["contained_resources"].push_back(jsonResource);
+				jsonResourceMesh["uid"] = node.mesh;
+				jsonResourceMesh["type"] = ResourceType::MESH;
+				jsonResourceMesh["asset_file"] = meshName;
+				jsonResourceMesh["library_path"] = meshPath;
+				json["contained_resources"].push_back(jsonResourceMesh);
 				savedMeshesUid.push_back(node.mesh);
 			}
 		}
-		if (node.texture != 0 && node.textureName != "")
+		if (node.texture != 0 && node.texturePath != "")
 		{
 			bool alreadySaved = false;
 			for (const auto& textureIt : savedTexturesUid)
@@ -66,11 +68,13 @@ bool R_Model::SaveMeta(Json& json) const
 			if (!alreadySaved)
 			{
 				std::string texturePath = TEXTURES_DIR + std::to_string(node.texture) + TEXTURE_EXTENSION;
-				jsonResource["uid"] = node.texture;
-				jsonResource["type"] = ResourceType::TEXTURE;
-				jsonResource["asset_file"] = node.textureName;
-				jsonResource["library_path"] = texturePath;
-				json["contained_resources"].push_back(jsonResource);
+				jsonResourceTexture["uid"] = node.texture;
+				jsonResourceTexture["type"] = ResourceType::TEXTURE;
+				std::filesystem::path textureName = node.texturePath;
+				jsonResourceTexture["asset_file"] = textureName.filename().string();
+				jsonResourceTexture["asset_path"] = node.texturePath;
+				jsonResourceTexture["library_path"] = texturePath;
+				json["contained_resources"].push_back(jsonResourceTexture);
 				savedTexturesUid.push_back(node.texture);
 			}
 		}
@@ -104,19 +108,19 @@ ModelNode::ModelNode() :
 	parentUid(0),
 	mesh(0),
 	texture(0),
-	textureName(""),
+	texturePath(""),
 	position(float3::zero),
 	rotation(Quat::identity),
 	scale(float3::zero)
 {}
 
-ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID texture, std::string textureName, float3 position, Quat rotation, float3 scale) :
+ModelNode::ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID texture, std::string texturePath, float3 position, Quat rotation, float3 scale) :
 name(name),
 uid(uid),
 parentUid(parentUid),
 mesh(mesh),
 texture(texture),
-textureName(textureName),
+texturePath(texturePath),
 position(position),
 rotation(rotation),
 scale(scale)

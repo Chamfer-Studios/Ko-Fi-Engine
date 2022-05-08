@@ -60,8 +60,6 @@ bool M_ResourceManager::Start()
 	}
 	else
 	{
-		RefreshDirectoryFiles(ASSETS_TEXTURES_DIR);
-
 		RefreshDirectoryFiles(ASSETS_DIR);
 
 		TrimLibrary();
@@ -341,7 +339,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetPath)
 					std::filesystem::path tmpPath = containedPath;
 
 					if (tmpPath.extension() == PNG_EXTENSION)
-						containedPath = ASSETS_TEXTURES_DIR + containedPath;
+						containedPath = containedIt.value().at("asset_path");
 					else
 					{
 						tmpPath = assetPath;

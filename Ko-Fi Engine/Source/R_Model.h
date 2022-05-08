@@ -13,7 +13,7 @@ class ModelNode
 {
 public:
 	ModelNode();
-	ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID texture, std::string textureName, float3 pos, Quat rot, float3 scale);
+	ModelNode(std::string name, UID uid, UID parentUid, UID mesh, UID texture, std::string texturePath, float3 pos, Quat rot, float3 scale);
 	~ModelNode();
 
 public:
@@ -22,7 +22,7 @@ public:
 	UID parentUid;
 	UID mesh;
 	UID texture;
-	std::string textureName;
+	std::string texturePath;
 	float3 position;
 	Quat rotation;
 	float3 scale;
