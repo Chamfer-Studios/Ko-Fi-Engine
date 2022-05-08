@@ -66,9 +66,10 @@ bool C_Animator::Update(float dt)
 bool C_Animator::CleanUp()
 {
 	if (animation != nullptr)
+	{
 		owner->GetEngine()->GetResourceManager()->FreeResource(animation->GetUID());
-
-	animation = nullptr;
+		animation = nullptr;
+	}
 
 	clips.clear();
 
@@ -142,11 +143,11 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 		ImGui::Text("Select Clip");
 
-		if (ImGui::BeginCombo("Select Clip", ((selectedClip) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Select Clip", (selectedClip ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
-				if (ImGui::Selectable(clip->second.GetName().c_str(), (clip->second.GetName() == selectedClip->GetName()), ImGuiSelectableFlags_None))
+				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == selectedClip), ImGuiSelectableFlags_None))
 				{
 					selectedClip = &clip->second;
 
@@ -164,17 +165,20 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		}
 
 		ImGui::Text("Delete Clip");
-		if (ImGui::BeginCombo("Delete Clip", ((clipToDelete->GetName().c_str() != "[NONE]") ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Delete Clip", (clipToDelete ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
 				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == clipToDelete), ImGuiSelectableFlags_None))
 				{
-					clipToDelete = &clip->second;
-					deleteDefaultClipMessage = false;
+					if (clip->second.GetName() != "Default clip")
+					{
+						clipToDelete = &clip->second;
+						deleteDefaultClipMessage = false;
+					}
+					else
+						deleteDefaultClipMessage = true;
 				}
-				else
-					deleteDefaultClipMessage = true;
 			}
 
 			ImGui::EndCombo();
@@ -188,7 +192,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 		if (ImGui::Button("Delete"))
 		{
-			if(clipToDelete == selectedClip)
+			if (clipToDelete == selectedClip)
 				SetSelectedClip(std::string("Default clip"));
 
 			if (clipToDelete)
@@ -303,9 +307,10 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 void C_Animator::SetAnim(R_Animation* anim)
 {
 	if (this->animation != nullptr)
+	{
 		owner->GetEngine()->GetResourceManager()->FreeResource(this->animation->GetUID());
-
-	this->animation = nullptr;
+		this->animation = nullptr;
+	}
 
 	this->animation = anim;
 }

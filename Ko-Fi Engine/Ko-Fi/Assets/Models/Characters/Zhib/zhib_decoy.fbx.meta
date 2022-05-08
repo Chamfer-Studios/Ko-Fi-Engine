@@ -4,21 +4,21 @@
     "contained_resources": [
         {
             "asset_file": "zhib_trap.sugar",
-            "library_path": "Library/Meshes/444183696.sugar",
+            "library_path": "Library/Meshes/1499453325.sugar",
             "type": 0,
-            "uid": 444183696
+            "uid": 1499453325
         },
         {
             "asset_file": "zhib_base_color.png",
             "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png",
-            "library_path": "Library/Textures/508686661.cacao",
+            "library_path": "Library/Textures/1957222662.cacao",
             "type": 1,
-            "uid": 508686661
+            "uid": 1957222662
         }
     ],
-    "library_file": "1035615154.tea",
-    "library_path": "Library/Models/1035615154.tea",
-    "mod_time": 410805999,
+    "library_file": "1039233614.tea",
+    "library_path": "Library/Models/1039233614.tea",
+    "mod_time": 411570769,
     "type": 3,
-    "uid": 1035615154
+    "uid": 1039233614
 }
