@@ -47,12 +47,21 @@ void C_Text::Save(Json& json) const
 
 void C_Text::Load(Json& json)
 {
-	std::vector<int> color = json["color"].get<std::vector<int>>();
+	std::vector<int> color;
+	if (json.find("color") != json.end()) {
+		color = json["color"].get<std::vector<int>>();
 
-	col.r = color[0];
-	col.g = color[1];
-	col.b = color[2];
-	col.a = color[3];
+		col.r = color[0];
+		col.g = color[1];
+		col.b = color[2];
+		col.a = color[3];
+	}
+	else {
+		col.r = 255;
+		col.g = 255;
+		col.b = 255;
+		col.a = 255;
+	}
 
 	std::string value = json["value"].get<std::string>();
 	SetTextValue(value);
