@@ -11,6 +11,8 @@
 #include "M_UI.h"
 #include "PanelChooser.h"
 
+#include <vector>
+
 C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::TEXT;
@@ -31,13 +33,27 @@ bool C_Text::CleanUp()
 
 void C_Text::Save(Json& json) const
 {
-	json["type"] = (int)type;
+	std::vector<int> color;
 
+	color.push_back(col.r);
+	color.push_back(col.g);
+	color.push_back(col.b);
+	color.push_back(col.a);
+
+	json["type"] = (int)type;
 	json["value"] = textValue;
+	json["color"] = color;
 }
 
 void C_Text::Load(Json& json)
 {
+	std::vector<int> color = json["color"].get<std::vector<int>>();
+
+	col.r = color[0];
+	col.g = color[1];
+	col.b = color[2];
+	col.a = color[3];
+
 	std::string value = json["value"].get<std::string>();
 	SetTextValue(value);
 }
