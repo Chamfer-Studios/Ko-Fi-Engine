@@ -864,7 +864,6 @@ void M_ResourceManager::DeleteFromLibrary(const char* assetPath)
 	for (uint i = 0; i < toDelete.size(); ++i)
 	{
 		std::filesystem::remove(toDelete[i].c_str());
-		std::filesystem::remove(std::string(assetPath) + META_EXTENSION);
 	}
 
 	toDelete.clear();
@@ -1023,6 +1022,12 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 				{
 					UID containedUid = containedIt.value().at("uid");
+					if (containedUid == 0)
+					{
+						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
+						continue;
+					}
+
 					ResourceType containedType = (ResourceType)containedIt.value().at("type").get<int>();
 
 					std::string containedAssetPath = "";
@@ -1031,18 +1036,20 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 					std::string containedLibraryPath = containedIt.value().at("library_path");
 					std::string containedLibraryFile = "";
 
-					std::string directory = "";
-					bool success = GetAssetDirectoryFromType(containedType, directory);
-					if (!success)
-						continue;
-
-					if (containedUid == 0)
+					if (containedType == ResourceType::TEXTURE)
 					{
-						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
-						continue;
+						containedAssetPath = containedIt.value().at("asset_path");
+					}
+					else
+					{
+						std::string directory = "";
+						bool success = GetAssetDirectoryFromType(containedType, directory);
+						if (!success)
+							continue;
+
+						containedAssetPath = directory + containedAssetFile;
 					}
 
-					containedAssetPath = directory + containedAssetFile;
 					containedLibraryFile = engine->GetFileSystem()->GetFileName(containedLibraryPath.c_str());
 					bases.push_back(ResourceBase(containedUid, containedType, containedAssetPath, containedAssetFile, containedLibraryPath, containedLibraryFile));
 				}
