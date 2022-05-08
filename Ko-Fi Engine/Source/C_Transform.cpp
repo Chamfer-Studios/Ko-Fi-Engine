@@ -261,7 +261,7 @@ const float3& C_Transform::GlobalFront() const
 void C_Transform::RecomputeGlobalMatrix()
 {
 
-	if (owner->GetParent() != nullptr)
+	if (owner->GetParent() != nullptr && owner->GetParent()->GetComponent<C_Transform>())
 	{
 		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
 	}
