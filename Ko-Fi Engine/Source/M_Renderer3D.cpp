@@ -1112,7 +1112,7 @@ void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* lig
 	glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 
 	GLint lightSpaceMatrix = glGetUniformLocation(shader, "lightSpaceMatrix");
-	glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, dirLight->lightSpaceMatrix.ptr());
+	glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, dirLight->lightSpaceMatrix.Transposed().ptr());
 }
 
 ParticleRenderer::ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform):

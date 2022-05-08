@@ -39,21 +39,20 @@ bool C_LightSource::Start()
 		shadowCam = owner->CreateComponent<C_Camera>();
 		shadowCam->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
 		//make the cam look in the direction of the light rays
-		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
+		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction);
 	}
 	return true;
 }
 
 bool C_LightSource::Update(float dt)
 {
-	lightSource->position = owner->GetTransform()->GetGlobalTransform().TranslatePart();
+	lightSource->position = owner->GetTransform()->GetPosition();
 
 	if (sourceType == SourceType::DIRECTIONAL)
 	{
 		//Keep the direction of the camera updated. Maybe this does not work because it sets itself back to match the transform
 		//maybe too much to update it every frame
-		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
-		KOFI_DEBUG("x %f y %f z %f", ((DirectionalLight*)lightSource)->direction.x, ((DirectionalLight*)lightSource)->direction.y, ((DirectionalLight*)lightSource)->direction.z);
+		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction);
 		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->GetCameraFrustum().ViewProjMatrix();
 		//TODO: transform the object to match the camera transform
 
@@ -411,7 +410,7 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 				
 				//make the cam look in the direction of the light rays
 				float3 tmpRight = float3(1.0f, 0.0f, 0.0f).Cross(((DirectionalLight*)lightSource)->direction);
-				shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
+				shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction);
 			}
 		}
 		else

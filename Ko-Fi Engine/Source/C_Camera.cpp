@@ -60,14 +60,17 @@ bool C_Camera::Start()
 	return ret;
 }
 
+bool C_Camera::PreUpdate()
+{
+	// SET CAMERA FRUSTUM, OBJECT TRANSFORM
+	cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
+	return true;
+}
+
 bool C_Camera::Update(float dt)
 {
 	//Transform Update Camera Frustum
 	//Camera Position Rotation of the camera
-
-	C_Transform* transform = owner->GetTransform();
-
-	cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
 
 	//Apply rotation
 	if (isFrustumCullingActive)
@@ -79,7 +82,7 @@ bool C_Camera::Update(float dt)
 bool C_Camera::PostUpdate(float dt)
 {
 	// Camera Frustum Updates Transform
-	LookAt(reference);
+	C_Transform* transform = owner->GetTransform();
 	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 	return true;
 }
