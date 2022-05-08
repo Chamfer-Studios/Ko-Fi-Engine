@@ -154,6 +154,10 @@ bool PanelConfiguration::Update()
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%d.%d.%d", engineConfig->sdlVersion.major, engineConfig->sdlVersion.minor, engineConfig->sdlVersion.patch);
 		ImGui::Separator();
+		ImGui::Text("OpenGL Version:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0), "%s", engineConfig->gpuVersion);
+		ImGui::Separator();
 		ImGui::Text("CPUs:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(0.8196, 0.7176, 0.6078, 1.0),"%d", engineConfig->cpuCores);
