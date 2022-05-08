@@ -37,7 +37,7 @@ bool C_LightSource::Start()
 	if (shadowCam == nullptr)
 	{
 		shadowCam = owner->CreateComponent<C_Camera>();
-		shadowCam->ChangeCameraType(CameraType::ORTHOGRAPHIC);
+		shadowCam->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
 		//make the cam look in the direction of the light rays
 		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
 	}
@@ -53,6 +53,7 @@ bool C_LightSource::Update(float dt)
 		//Keep the direction of the camera updated. Maybe this does not work because it sets itself back to match the transform
 		//maybe too much to update it every frame
 		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
+		KOFI_DEBUG("x %f y %f z %f", ((DirectionalLight*)lightSource)->direction.x, ((DirectionalLight*)lightSource)->direction.y, ((DirectionalLight*)lightSource)->direction.z);
 		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->GetCameraFrustum().ViewProjMatrix();
 		//TODO: transform the object to match the camera transform
 
@@ -406,9 +407,10 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 			if (shadowCam == nullptr)
 			{
 				shadowCam = owner->CreateComponent<C_Camera>();
-				shadowCam->ChangeCameraType(CameraType::ORTHOGRAPHIC);
+				shadowCam->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
 				
 				//make the cam look in the direction of the light rays
+				float3 tmpRight = float3(1.0f, 0.0f, 0.0f).Cross(((DirectionalLight*)lightSource)->direction);
 				shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction.Normalized());
 			}
 		}
@@ -487,7 +489,9 @@ void C_LightSource::CastShadows()
 	std::string shaderPath = ASSETS_SHADERS_DIR;
 	shaderPath = shaderPath + "simple_depth_shader" + SHADER_EXTENSION;
 	rMat->SetShaderPath(shaderPath.c_str());
-	Importer::GetInstance()->materialImporter->LoadAndCreateShader(cMat->GetMaterial()->GetShaderPath(), rMat);
+	
+	Importer::GetInstance()->materialImporter->LoadAndCreateShader(rMat->GetShaderPath(), rMat);
+	cMat->SetMaterial(rMat);
 
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->SetShadowCaster(owner);
 }

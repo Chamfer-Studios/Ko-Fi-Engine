@@ -267,14 +267,6 @@ bool M_Camera3D::InspectorDraw()
 {
 	if (ImGui::CollapsingHeader("Engine Camera##"))
 	{
-		if (ImGui::Checkbox("Set Type", &engineCamera->isOrtho))
-		{
-			if (engineCamera->isOrtho)
-				engineCamera->ChangeCameraType(CameraType::ORTHOGRAPHIC);
-			else
-				engineCamera->ChangeCameraType(CameraType::PERSPECTIVE);
-		}
-
 
 		int newSpeedMultiplier = speedMultiplier;
 		if (ImGui::SliderInt("Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
