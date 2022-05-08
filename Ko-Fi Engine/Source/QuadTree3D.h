@@ -1,66 +1,104 @@
-#pragma once
+#ifndef __QUADTREE_H__
+#define __QUADTREE_H__
 
-#include "MathGeoLib/MathGeoLib.h"
-
-#include <queue>
-#include <vector>
-
-#define QUADTREE_MAX_ITEMS 4
-#define QUADTREE_MIN_SIZE 150.0f
-
+#include "MathGeoLib/Math/float2.h"
+#include "MathGeoLib/Geometry/AABB.h"
+#include <map>
+#include <list>
 class GameObject;
 
-class QuadTreeNode3D
+class QuadtreeNode
 {
 public:
-	QuadTreeNode3D(const AABB box, QuadTreeNode3D* parent);
-	~QuadTreeNode3D();
-
+	QuadtreeNode(const AABB& box);
+	virtual ~QuadtreeNode();
 	bool IsLeaf() const;
-
-	void Insert(GameObject* object);
-	void Remove(GameObject* object);
-
-	void Clear();
-
-	void Draw();
-
-	void Subdivide();
-	void PutChildrenInDivisions();
-
-	template<typename CULL>
-	void TestIntersection(const CULL& culler, std::queue<GameObject*>& result) const;
-
-	void GetAllObjects(std::vector<GameObject*>& result);
-
+	
+	void Insert(GameObject* go);
+	void Erase(GameObject* go);
+	void CreateChilds();
+	void RedistributeChilds();
+	void CollectBoxes(std::vector<const QuadtreeNode*>& nodes) const;
+	void CollectObjects(std::vector<GameObject*>& objects) const;
+	void CollectObjects(std::map<float, GameObject*>& objects, const float3& origin) const;
+	template<typename TYPE>
+	void CollectIntersections(std::map<float, GameObject*>& objects, const TYPE& primitive) const;
+	template<typename TYPE>
+	void CollectIntersections(std::vector<GameObject*>& objects, const TYPE& primitive) const;
 public:
-
-	AABB aabb;
-	std::vector<GameObject*> objects;
-	QuadTreeNode3D* parent = nullptr;
-	QuadTreeNode3D* children[4];
-
+	AABB box;
+	std::list<GameObject*> objects;
+	QuadtreeNode* parent;
+	QuadtreeNode* childs[4];
 };
 
-class QuadTree3D
+class Quadtree
 {
 public:
-	QuadTree3D(AABB boundaries);
-	~QuadTree3D();
-
+	Quadtree();
+	virtual ~Quadtree();
+	void SetBoundaries(const AABB& box);
+	void Insert(GameObject* go);
+	void Erase(GameObject* go);
 	void Clear();
-	void AddObjects(std::vector<GameObject*>& objects);
-	void Insert(GameObject* object);
-	void Remove(GameObject* object);
-
-	void Draw();
-
-	template<typename CULL>
-	void TestIntersection(const CULL& culler, std::queue<GameObject*>& result) const;
-
-	void GetAllObjects(std::vector<GameObject*>& result);
+	void CollectBoxes(std::vector<const QuadtreeNode*>& nodes) const;
+	void CollectObjects(std::vector<GameObject*>& objects) const;
+	void CollectObjects(std::map<float, GameObject*>& objects, const float3& origin) const;
+	template<typename TYPE>
+	void CollectIntersections(std::map<float, GameObject*>& objects, const TYPE& primitive) const;
+	template<typename TYPE>
+	void CollectIntersections(std::vector<GameObject*>& objects, const TYPE& primitive) const;
 
 public:
-	QuadTreeNode3D* root = nullptr;
+	QuadtreeNode* root = nullptr;
 };
+//Intersection methods could use a different number of primitives, so we use a template
+template<typename TYPE>
+inline void Quadtree::CollectIntersections(std::map<float, GameObject*>& objects, const TYPE& primitive) const
+{
+	if (root != nullptr)
+		root->CollectIntersections(objects, primitive);
+}
+
+template<typename TYPE>
+inline void Quadtree::CollectIntersections(std::vector<GameObject*>& objects, const TYPE& primitive) const
+{
+	if (root != nullptr)
+		root->CollectIntersections(objects, primitive);
+}
+
+template<typename TYPE>
+inline void QuadtreeNode::CollectIntersections(std::map<float, GameObject*>& objects, const TYPE& primitive) const
+{
+	if (primitive.Intersects(box))
+	{
+		float hit_near, hit_far;
+		for (std::list<GameObject*>::const_iterator it = this->objects.begin(); it != this->objects.end(); ++it)
+		{
+			if (primitive.Intersects((*it)->global_bbox, hit_near, hit_far))
+				objects[hit_near] = *it;
+		}
+
+		for (int i = 0; i < 4; ++i)
+			if (childs[i] != nullptr) childs[i]->CollectIntersections(objects, primitive);
+	}
+}
+
+template<typename TYPE>
+inline void QuadtreeNode::CollectIntersections(std::vector<GameObject*>& objects, const TYPE& primitive) const
+{
+	if (primitive.Intersects(box))
+	{
+		for (std::list<GameObject*>::const_iterator it = this->objects.begin(); it != this->objects.end(); ++it)
+		{
+			if (primitive.Intersects((*it)->global_bbox))
+				objects.push_back(*it);
+		}
+
+		for (int i = 0; i < 4; ++i)
+			if (childs[i] != nullptr) childs[i]->CollectIntersections(objects, primitive);
+	}
+}
+
+#endif // !__QUADTREE_H__
 

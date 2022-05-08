@@ -1,253 +1,208 @@
 #include "QuadTree3D.h"
-
 #include "GameObject.h"
-#include "C_Mesh.h"
+#include "optick.h"
+#include "Globals.h"
+#include "C_Transform.h"
 
-#include "SDL_opengl.h"
-#include <algorithm>
+#define NE 0
+#define SE 1
+#define SW 2
+#define NW 3
 
-QuadTreeNode3D::QuadTreeNode3D(const AABB aabb, QuadTreeNode3D* parent = nullptr) : aabb(aabb), parent(parent)
+#define QUADTREE_MAX_ITEMS 8
+#define QUADTREE_MIN_SIZE 10.0f
+
+QuadtreeNode::QuadtreeNode(const AABB& box)
+{
+	parent = childs[NE] = childs[SE] = childs[SW] = childs[NW] = nullptr;
+}
+
+QuadtreeNode::~QuadtreeNode()
 {
 	for (int i = 0; i < 4; ++i)
-	{
-		children[i] = nullptr;
-	}
+		if (childs[i] != nullptr) RELEASE(childs[i]);
 }
 
-QuadTreeNode3D::~QuadTreeNode3D()
+bool QuadtreeNode::IsLeaf() const
 {
-	for (int i = 0; i < 4; i++)
-	{
-		if (children[i] != nullptr)
-		{
-			children[i]->objects.clear();
-			delete children[i];
-		}
-	}
+	return childs[0] == nullptr;
 }
 
-bool QuadTreeNode3D::IsLeaf() const
+void QuadtreeNode::Insert(GameObject* go)
 {
-	return children[0] == nullptr;
-}
-
-void QuadTreeNode3D::Insert(GameObject* object)
-{
-	bool fits = (objects.size() < QUADTREE_MAX_ITEMS || aabb.HalfSize().LengthSq() <= QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE);
-	if (IsLeaf() && fits)
-		objects.push_back(object);
+	if (IsLeaf() == true &&
+		(objects.size() < QUADTREE_MAX_ITEMS ||
+			(box.HalfSize().LengthSq() <= QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE)))
+		objects.push_back(go);
 	else
 	{
-		if (IsLeaf())
-		{
-			Subdivide();
-			objects.push_back(object);
-			PutChildrenInDivisions();
-		}
-		else
-		{
-			for (int i = 0; i < 4; ++i)
-			{
-				if (children[i]->aabb.Intersects(object->BoundingAABB()))
-					children[i]->Insert(object);
-			}
-		}
+		if (IsLeaf() == true)
+			CreateChilds();
+
+		objects.push_back(go);
+		RedistributeChilds();
 	}
 }
 
-void QuadTreeNode3D::Remove(GameObject* object)
+void QuadtreeNode::Erase(GameObject* go)
 {
-	if (!IsLeaf())
-	{
-		for (int i = 0; i < 4; ++i)
-			children[i]->Remove(object);
-		return;
-	}
-
-	auto it = std::find(objects.begin(), objects.end(), object);
-
+	std::list<GameObject*>::iterator it = std::find(objects.begin(), objects.end(), go);
 	if (it != objects.end())
 		objects.erase(it);
-}
 
-void QuadTreeNode3D::Clear()
-{
-	for (int i = 0; i < 4; i++)
+	if (IsLeaf() == false)
 	{
-		if (children[i] != nullptr)
-		{
-			children[i]->Clear();
-		}
-	}
-	objects.clear();
-	objects.shrink_to_fit();
-}
-
-void QuadTreeNode3D::Draw()
-{
-	for (int i = 0; i < 12; i++)
-	{
-		glVertex3f(aabb.Edge(i).a.x, aabb.Edge(i).a.y, aabb.Edge(i).a.z);
-		glVertex3f(aabb.Edge(i).b.x, aabb.Edge(i).b.y, aabb.Edge(i).b.z);
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		if (children[i] != nullptr)
-			children[i]->Draw();
+		for (int i = 0; i < 4; ++i)
+			childs[i]->Erase(go);
 	}
 }
 
-void QuadTreeNode3D::Subdivide()
+/*
+		----------- MaxPoint
+		| NW | NE |
+		|---------|
+		| SW | SE |
+		-----------
+MinPoint
+*/
+void QuadtreeNode::CreateChilds()
 {
-	float3 size = aabb.Size();
-	float3 childrenSize = float3(size.x * 0.5f, size.y, size.z * 0.5f);
+	// We need to subdivide this node ...
+	float3 size(box.Size());
+	float3 new_size(size.x * 0.5f, size.y, size.z * 0.5f); // Octree would subdivide y too
 
-	float3 center = aabb.CenterPoint();
-	float3 childCenter;
+	float3 center(box.CenterPoint());
+	float3 new_center(center);
+	AABB new_box;
 
-	AABB child;
+	// NorthEast
+	new_center.x = center.x + size.x * 0.25f;
+	new_center.z = center.z + size.z * 0.25f;
+	new_box.SetFromCenterAndSize(new_center, new_size);
+	childs[NE] = new QuadtreeNode(new_box);
 
-	childCenter = float3(center.x - childrenSize.x * 0.5f, center.y, center.z - childrenSize.z * 0.5f);
-	child.SetFromCenterAndSize(childCenter, childrenSize);
-	children[0] = new QuadTreeNode3D(child, this);
+	// SouthEast
+	new_center.x = center.x + size.x * 0.25f;
+	new_center.z = center.z - size.z * 0.25f;
+	new_box.SetFromCenterAndSize(new_center, new_size);
+	childs[SE] = new QuadtreeNode(new_box);
 
-	childCenter = float3(center.x + childrenSize.x * 0.5f, center.y, center.z - childrenSize.z * 0.5f);
-	child.SetFromCenterAndSize(childCenter, childrenSize);
-	children[1] = new QuadTreeNode3D(child, this);
+	// SouthWest
+	new_center.x = center.x - size.x * 0.25f;
+	new_center.z = center.z - size.z * 0.25f;
+	new_box.SetFromCenterAndSize(new_center, new_size);
+	childs[SW] = new QuadtreeNode(new_box);
 
-	childCenter = float3(center.x + childrenSize.x * 0.5f, center.y, center.z + childrenSize.z * 0.5f);
-	child.SetFromCenterAndSize(childCenter, childrenSize);
-	children[2] = new QuadTreeNode3D(child, this);
-
-	childCenter = float3(center.x - childrenSize.x * 0.5f, center.y, center.z + childrenSize.z * 0.5f);
-	child.SetFromCenterAndSize(childCenter, childrenSize);
-	children[3] = new QuadTreeNode3D(child, this);
+	// NorthWest
+	new_center.x = center.x - size.x * 0.25f;
+	new_center.z = center.z + size.z * 0.25f;
+	new_box.SetFromCenterAndSize(new_center, new_size);
+	childs[NW] = new QuadtreeNode(new_box);
 }
 
-void QuadTreeNode3D::PutChildrenInDivisions()
+void QuadtreeNode::RedistributeChilds()
 {
-	for (auto it = objects.begin(); it != objects.end();)
+	// Now redistribute ALL objects
+	for (std::list<GameObject*>::iterator it = objects.begin(); it != objects.end();)
 	{
-		if ((*it)->GetComponent<C_Mesh>() == nullptr) {
-			it++;
-			continue;
-		}
-		float intersecting[4] = { 0, 0, 0, 0 };
-		for (int i = 0; i < 4; i++)
-			intersecting[i] = children[i]->aabb.Intersection((*it)->BoundingAABB()).Volume();
+		GameObject* go = *it;
 
-		bool allIntersecting = true;
-		for (int i = 0; i < 4; i++)
-		{
-			if (intersecting[i] <= 0)
-				allIntersecting = false;
-		}
-		if (allIntersecting) it++;
+		AABB new_box(go->BoundingAABB().MinimalEnclosingAABB());
+
+		// Now distribute this new gameobject onto the childs
+		bool intersects[4];
+		for (int i = 0; i < 4; ++i)
+			intersects[i] = childs[i]->box.Intersects(new_box);
+
+		if (intersects[0] && intersects[1] && intersects[2] && intersects[3])
+			++it; // if it hits all childs, better to just keep it here
 		else
 		{
-			auto max = std::distance(intersecting, std::max_element(intersecting, intersecting + 4));
-			if (children[max]->aabb.Contains((*it)->BoundingAABB()))
-			{
-				children[max]->Insert(*it);
-				it = objects.erase(it);
-			}
-			else it++;
+			it = objects.erase(it);
+			for (int i = 0; i < 4; ++i)
+				if (intersects[i]) childs[i]->Insert(go);
 		}
 	}
 }
 
-void QuadTreeNode3D::GetAllObjects(std::vector<GameObject*>& result)
+void QuadtreeNode::CollectObjects(std::vector<GameObject*>& objects) const
 {
-	for (auto it = objects.begin(); it != objects.end(); ++it)
-		result.push_back(*it);
+	for (std::list<GameObject*>::const_iterator it = this->objects.begin(); it != this->objects.end(); ++it)
+		objects.push_back(*it);
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; ++i)
+		if (childs[i] != nullptr) childs[i]->CollectObjects(objects);
+}
+
+void QuadtreeNode::CollectObjects(std::map<float, GameObject*>& objects, const float3& origin) const
+{
+	for (std::list<GameObject*>::const_iterator it = this->objects.begin(); it != this->objects.end(); ++it)
 	{
-		if (children[i] != nullptr)
-			children[i]->GetAllObjects(result);
-	}
-}
-
-QuadTree3D::QuadTree3D(AABB boundaries)
-{
-	root = new QuadTreeNode3D(boundaries);
-}
-
-QuadTree3D::~QuadTree3D()
-{
-	delete root;
-}
-
-void QuadTree3D::Clear()
-{
-	if (root == nullptr) return;
-	root->Clear();
-}
-
-void QuadTree3D::Draw()
-{
-
-	glBegin(GL_LINES);
-	glLineWidth(3.0f);
-	glColor3f(0.8f, 0.8f, 0.f);
-
-	if (root != nullptr)
-		root->Draw();
-
-	glEnd();
-}
-
-void QuadTree3D::AddObjects(std::vector<GameObject*>& objects)
-{
-	for (auto it = objects.begin(); it != objects.end(); ++it)
-	{
-		if ((*it)->GetComponent<C_Mesh>() == nullptr) continue;
-		Insert(*it);
-		AddObjects((*it)->children);
-	}
-}
-
-void QuadTree3D::Insert(GameObject* object)
-{
-	if (object->BoundingAABB().Intersects(root->aabb))
-	{
-		root->Insert(object);
-	}
-}
-
-void QuadTree3D::Remove(GameObject* object)
-{
-	root->Remove(object);
-}
-
-void QuadTree3D::GetAllObjects(std::vector<GameObject*>& result)
-{
-	root->GetAllObjects(result);
-}
-
-template<typename CULL>
-void QuadTreeNode3D::TestIntersection(const CULL& culler, std::queue<GameObject*>& result) const
-{
-	if (!culler.Intersects(aabb))
-		return;
-
-	for (auto it = objects.begin(); it != objects.end(); ++it)
-	{
-		if (culler.Intersects((*it)->BoundingAABB()))
-			result.push(*it);
+		float dist = origin.DistanceSq((*it)->GetTransform()->GetPosition());
+		objects[dist] = *it;
 	}
 
 	for (int i = 0; i < 4; ++i)
+		if (childs[i] != nullptr) childs[i]->CollectObjects(objects, origin);
+}
+
+void QuadtreeNode::CollectBoxes(std::vector<const QuadtreeNode*>& nodes) const
+{
+	nodes.push_back(this);
+
+	for (int i = 0; i < 4; ++i)
+		if (childs[i] != nullptr) childs[i]->CollectBoxes(nodes);
+}
+
+Quadtree::Quadtree()
+{
+}
+
+Quadtree::~Quadtree()
+{
+	Clear();
+}
+
+void Quadtree::SetBoundaries(const AABB& box)
+{
+	Clear();
+	root = new QuadtreeNode(box);
+}
+
+void Quadtree::Insert(GameObject* go)
+{
+	if (root != nullptr)
 	{
-		if (children[i] != nullptr)
-			children[i]->TestIntersection(culler, result);
+		if (go->BoundingAABB().MinimalEnclosingAABB().Intersects(root->box))
+			root->Insert(go);
 	}
 }
 
-template<typename CULL>
-inline void QuadTree3D::TestIntersection(const CULL& culler, std::queue<GameObject*>& result) const
+void Quadtree::Erase(GameObject* go)
 {
 	if (root != nullptr)
-		root->TestIntersection(culler, result);
+		root->Erase(go);
+}
+
+void Quadtree::Clear()
+{
+	RELEASE(root);
+}
+
+void Quadtree::CollectBoxes(std::vector<const QuadtreeNode*>& nodes) const
+{
+	if (root != nullptr)
+		root->CollectBoxes(nodes);
+}
+
+void Quadtree::CollectObjects(std::vector<GameObject*>& objects) const
+{
+	if (root != nullptr)
+		root->CollectObjects(objects);
+}
+
+void Quadtree::CollectObjects(std::map<float, GameObject*>& objects, const float3& origin) const
+{
+	if (root != nullptr)
+		root->CollectObjects(objects, origin);
 }
