@@ -65,6 +65,7 @@ bool C_Camera::Update(float dt)
 {
 	//Transform Update Camera Frustum
 	//Camera Position Rotation of the camera
+
 	if (!isEngineCamera)
 	{
 		C_Transform* transform = owner->GetTransform();
@@ -137,42 +138,10 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 				SetHorizontalFov(fov);
 			}
 
-			// SIZE
-			float w = cameraFrustum.OrthographicWidth();
-			if (ImGui::DragFloat("Width", &w, 0.003f, 0.1f, 180.f))
-			{
-				cameraFrustum.SetOrthographicWidth(w);
-			}
-
-			float h = cameraFrustum.OrthographicHeight();
-			if (ImGui::DragFloat("Height", &h, 0.003f, 0.1f, 180.f))
-			{
-				cameraFrustum.SetOrthographicHeight(h);
-			}
-
 			break;
 		}
 		case C_Camera::KOFI_ORTHOGRAPHIC:
 		{
-			// SIZE
-			float w = cameraFrustum.OrthographicWidth();
-			if (ImGui::DragFloat("W", &w, 0.003f, 0.1f, 180.f))
-			{
-				cameraFrustum.SetOrthographicWidth(w);
-			}
-
-			float h = cameraFrustum.OrthographicHeight();
-			if (ImGui::DragFloat("H", &h, 0.003f, 0.1f, 180.f))
-			{
-				cameraFrustum.SetOrthographicHeight(h);
-			}
-
-			// FOV 
-			float fov = GetHorizontalFov();
-			if (ImGui::DragFloat("Fov", &fov, 1.0f, 1.0f, 180.f))
-			{
-				SetHorizontalFov(fov);
-			}
 
 			break;
 		}
@@ -229,7 +198,8 @@ float4x4 C_Camera::GetProjectionMatrix() const
 
 void C_Camera::SetAspectRatio(const float& aspectRatio)
 {
-	cameraFrustum.SetHorizontalFovAndAspectRatio(cameraFrustum.HorizontalFov(), aspectRatio);
+	if(cameraType == CameraType::KOFI_PERSPECTIVE)
+		cameraFrustum.SetHorizontalFovAndAspectRatio(cameraFrustum.HorizontalFov(), aspectRatio);
 }
 
 void C_Camera::SetPosition(float3 newPos)
@@ -278,13 +248,16 @@ void C_Camera::SetProjectionType(const CameraType& type)
 	if (type == CameraType::KOFI_ORTHOGRAPHIC)
 	{
 		float3 position = cameraFrustum.Pos();
+		float3 front, up;
+		front = GetFront();
+		up = GetUp();
 		hFov = cameraFrustum.HorizontalFov();
 		vFov = cameraFrustum.VerticalFov();
-		float w = 1.f * 1.778f;
-		float h = 1.f * 1.778f;
+		float w = owner->GetEngine()->GetEditor()->lastViewportSize.x;
+		float h = owner->GetEngine()->GetEditor()->lastViewportSize.y;
 		cameraFrustum.SetOrthographic(w, h);
-		/*cameraFrustum.SetHorizontalFovAndAspectRatio(hFov, 1.778f);
-		cameraFrustum.SetPos(position);*/
+		cameraFrustum.SetFrame(position,front,up);		
+		/*cameraFrustum.SetHorizontalFovAndAspectRatio(hFov, 1.778f);*/
 	}
 	else if (type == CameraType::KOFI_PERSPECTIVE)
 	{
@@ -337,42 +310,13 @@ void C_Camera::DrawFrustum() const
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.5f);
 	glBegin(GL_LINES);
-	//Near plane BL-BR
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);//Near BL
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);//Near BR
-	//Near plane BL-TL
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z); //Near BL
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z); //Near TL
-	//Near plane TL - TR
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);//Near TL
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);//Near TR
-	//Near plane BR - TR
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);//Near BR
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);//Near TR
-	//Near plane BL - Far plane BL
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z); //Near BL
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z); //Far BL
-	//Far BL - BR
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);//Far BL
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);//Far BR
-	//Far BR - Near BR
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z); //Far BR
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z); //Near BR
-	//Far BR - TR
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z); //Far BR
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
-	//Far TR - TL
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); //Far TL
-	//Far TL - Near TL
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); //Far TL
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z); //Near TL
-	//Far TL - BL
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); // Far TL
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z); //Far BL
-	//Far TR - Near TR
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z); //Near TR
+
+	for (uint i = 0; i < 12; i++)
+	{
+		glVertex3f(cameraFrustum.Edge(i).a.x, cameraFrustum.Edge(i).a.y, cameraFrustum.Edge(i).a.z);
+		glVertex3f(cameraFrustum.Edge(i).b.x, cameraFrustum.Edge(i).b.y, cameraFrustum.Edge(i).b.z);
+	}
+
 	glEnd();
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.0f);
