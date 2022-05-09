@@ -24,6 +24,7 @@ public:
 	Quat rotation;
 	//float3 rotationEuler;
 	float3 scale;
+	float3 initialScale;
 
 	float3 velocity;
 	float3 acceleration;

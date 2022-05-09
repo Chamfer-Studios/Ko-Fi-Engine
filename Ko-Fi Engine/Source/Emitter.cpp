@@ -4,12 +4,14 @@
 Emitter::Emitter(const char* newName)
 {
 	name = newName;
-	texture.SetTexturePath("Assets/Textures/firework_projectile.png");
-	Importer::GetInstance()->textureImporter->Import(texture.GetTexturePath(), &texture);
+	texture = new R_Texture();
+	texture->SetTexturePath("Assets/Textures/firework_projectile.png");
+	Importer::GetInstance()->textureImporter->Import(texture->GetTexturePath(), texture);
 	modules.push_back(CreateModule<EmitterDefault>());
 	modules.push_back(CreateModule<EmitterMovement>());
 	modules.push_back(CreateModule<EmitterSize>());
 	modules.push_back(CreateModule<ParticleBillboarding>());
+	checkerTexture = false;
 }
 
 Emitter::~Emitter()

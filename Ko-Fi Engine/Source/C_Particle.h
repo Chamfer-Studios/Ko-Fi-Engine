@@ -7,8 +7,11 @@
 #include "Color.h"
 
 class EmitterInstance;
-class R_ParticleResource;
+class R_Particle;
 class GameObject;
+
+enum class ParticleModuleType;
+//enum class ParticleBillboarding::BillboardingType;
 
 class C_Particle : public Component
 {
@@ -30,17 +33,18 @@ public:
 	void ClearParticles();
 	void StopParticleSpawn();
 	void ResumeParticleSpawn();
+
 private:
 	void NewEmitterName(std::string& name, int n = 1);
+	const char* ModuleTypeToString(ParticleModuleType e);
 
 public:
 	std::vector<EmitterInstance*> emitterInstances;
-	R_ParticleResource* resource = nullptr;
+	R_Particle* resource = nullptr;
 	int moduleToAdd = 0;
 	int resourceToAdd = 0;
 	int currentTextureId = 0;
 	int billboardingType = 0;
-	
 };
 
 #endif // __C_PARTICLE_H__

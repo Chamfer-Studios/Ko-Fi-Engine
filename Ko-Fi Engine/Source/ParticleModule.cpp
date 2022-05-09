@@ -232,7 +232,10 @@ EmitterSize::EmitterSize()
 void EmitterSize::Spawn(Particle* particle, EmitterInstance* emitter)
 {
 	LCG random;
-	particle->scale = particle->scale.Lerp(minSize, maxSize, random.Float());
+	if (randomSize)
+		particle->scale = particle->initialScale = particle->scale.Lerp(minSize, maxSize, random.Float());
+	else
+		particle->scale = particle->initialScale = minSize;
 }
 
 bool EmitterSize::Update(float dt, EmitterInstance* emitter)
@@ -243,12 +246,16 @@ bool EmitterSize::Update(float dt, EmitterInstance* emitter)
 	}
 	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
-		unsigned int particleIndex = emitter->particleIndices[i];
-		Particle* particle = &emitter->particles[particleIndex];
-
-		float p = GetPercentage(particle);
-		particle->scale = particle->scale.Lerp(minSize, maxSize, p);
+		Particle* particle = &emitter->particles[i];
+		particle->scale = particle->scale.Lerp(particle->initialScale, maxSize, GetPercentage(particle));
+		//if(CompareSize(tmpScale, particle->scale))
+		//	particle->scale = tmpScale;
 	}
+}
+
+bool EmitterSize::CompareSize(float3 a, float3 b)
+{
+	return (a.x >= b.x && a.y >= b.y && a.z >= b.z);
 }
 
 ParticleBillboarding::ParticleBillboarding(BillboardingType typeB)
@@ -285,14 +292,14 @@ Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, const fl
 
 	switch (billboardingType)
 	{
-	case(BillboardingType::ScreenAligned):
+	case(BillboardingType::SCREEN_ALIGNED):
 	{
 		N = cameraTransform.WorldZ().Normalized().Neg();	// N is the inverse of the camera +Z
 		U = cameraTransform.WorldY().Normalized();			// U is the up vector from the camera (already perpendicular to N)
 		R = U.Cross(N).Normalized();						// R is the cross product between  U and N
 	}
 	break;
-	case(BillboardingType::WorldAligned):
+	case(BillboardingType::WORLD_ALIGNED):
 	{
 		N = direction;										// N is the direction
 		_U = cameraTransform.WorldY().Normalized();			// _U is the up vector form the camera, only used to calculate R
@@ -300,21 +307,21 @@ Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, const fl
 		U = N.Cross(R).Normalized();						// U is the cross product between N and R
 	}
 	break;
-	case(BillboardingType::XAxisAligned):
+	case(BillboardingType::X_AXIS_ALIGNED):
 	{
 		R = float3::unitX;									// R = (1,0,0)
 		U = direction.Cross(R).Normalized();				// U cross between R and direction
 		N = R.Cross(U).Normalized();						// N faces the camera
 	}
 	break;
-	case(BillboardingType::YAxisAligned):
+	case(BillboardingType::Y_AXIS_ALIGNED):
 	{
 		U = float3::unitY;
 		R = U.Cross(direction).Normalized();
 		N = R.Cross(U).Normalized();
 	}
 	break;
-	case(BillboardingType::ZAxisAligned):
+	case(BillboardingType::Z_AXIS_ALIGNED):
 	{
 		N = float3::unitZ;
 		R = direction.Cross(N).Normalized();
@@ -325,4 +332,17 @@ Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, const fl
 	float3x3 result = float3x3(R, U, N);
 
 	return result.ToQuat();
+}
+
+const char* ParticleBillboarding::BillboardTypeToString(ParticleBillboarding::BillboardingType e)
+{
+	const std::map<ParticleBillboarding::BillboardingType, const char*> moduleTypeStrings{
+		{ParticleBillboarding::BillboardingType::SCREEN_ALIGNED, "Screen Aligned"},
+		{ParticleBillboarding::BillboardingType::WORLD_ALIGNED, "World Aligned"},
+		{ParticleBillboarding::BillboardingType::X_AXIS_ALIGNED, "X Axis Aligned"},
+		{ParticleBillboarding::BillboardingType::Y_AXIS_ALIGNED, "Y Axis Aligned"},
+		{ParticleBillboarding::BillboardingType::Z_AXIS_ALIGNED, "Z Axis Aligned"},
+	};
+	auto   it = moduleTypeStrings.find(e);
+	return it == moduleTypeStrings.end() ? "Out of range" : it->second;
 }

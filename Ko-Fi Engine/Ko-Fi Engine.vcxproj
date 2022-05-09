@@ -297,7 +297,7 @@
     <ClCompile Include="Source\C_Particle.cpp" />
     <ClCompile Include="Source\ParticleModule.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
-    <ClCompile Include="Source\R_ParticleResource.cpp" />
+    <ClCompile Include="Source\R_Particle.cpp" />
     <ClCompile Include="Source\M_Physics.cpp" />
     <ClCompile Include="Source\PieShape.cpp" />
     <ClCompile Include="Source\QuadTree3D.cpp" />
@@ -517,7 +517,7 @@
     <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
     <ClInclude Include="Source\Scripting.h" />
-    <ClInclude Include="Source\R_ParticleResource.h" />
+    <ClInclude Include="Source\R_Particle.h" />
     <ClInclude Include="Source\ResourceBase.h" />
     <ClInclude Include="Source\M_UI.h" />
     <ClInclude Include="Source\Node.h" />

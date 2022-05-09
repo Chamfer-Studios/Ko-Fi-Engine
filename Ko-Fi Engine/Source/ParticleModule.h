@@ -14,7 +14,8 @@ class EmitterInstance;
 		MOVEMENT,
 		COLOR,
 		SIZE,
-		BILLBOARDING
+		BILLBOARDING,
+		END
 	};
 
 class ParticleModule
@@ -99,7 +100,11 @@ public:
 	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);
 
+private:
+	bool CompareSize(float3 a, float3 b);
+
 public:
+	bool randomSize = false;
 	float3 minSize = float3(1.0f, 1.0f, 1.0f);
 	float3 maxSize = float3(1.5f, 1.5f, 1.5f);
 };
@@ -109,23 +114,24 @@ class ParticleBillboarding : public ParticleModule
 public:
 	enum class BillboardingType
 	{
-		ScreenAligned,
-		WorldAligned,
-		XAxisAligned,
-		YAxisAligned,
-		ZAxisAligned,
-
-		None,
+		NONE,
+		SCREEN_ALIGNED,
+		WORLD_ALIGNED,
+		X_AXIS_ALIGNED,
+		Y_AXIS_ALIGNED,
+		Z_AXIS_ALIGNED,
+		END
 	};
 
-	ParticleBillboarding(BillboardingType typeB = BillboardingType::WorldAligned);
+	ParticleBillboarding(BillboardingType typeB = BillboardingType::WORLD_ALIGNED);
 
 	void Spawn(EmitterInstance* emitter, Particle* particle);
 	bool Update(float dt, EmitterInstance* emitter);
 
 	Quat GetAlignmentRotation(const float3& position, const float4x4& cameraTransform);
+	const char* BillboardTypeToString(ParticleBillboarding::BillboardingType e);
 
-	BillboardingType billboardingType = BillboardingType::WorldAligned;
+	BillboardingType billboardingType = BillboardingType::WORLD_ALIGNED;
 	bool hideBillboarding = false;
 };
 

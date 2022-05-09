@@ -13,7 +13,7 @@
 #include "R_Material.h"
 #include "R_Animation.h"
 #include "R_Model.h"
-#include "R_ParticleResource.h"
+#include "R_Particle.h"
 #include "R_Track.h"
 
 #include "json.hpp"

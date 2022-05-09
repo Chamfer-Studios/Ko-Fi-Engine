@@ -394,7 +394,7 @@
     <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c">
       <Filter>Libs\SDL_ttf</Filter>
     </ClCompile>
-    <ClCompile Include="Source\R_ParticleResource.cpp">
+    <ClCompile Include="Source\R_Particle.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\M_Audio.cpp">
@@ -948,7 +948,7 @@
     <ClInclude Include="Source\C_RenderedUI.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\R_ParticleResource.h">
+    <ClInclude Include="Source\R_Particle.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\M_Audio.h">
