@@ -75,7 +75,7 @@ bool M_Renderer3D::Awake(Json configModule)
 	InitFrameBuffers();
 
 	query = new OcclusionQuery();
-	enableOcclusionCulling = true;
+	enableOcclusionCulling = false;
 	occlusionMat = new R_Material();
 	occlusionMat->SetShaderPath("EngineConfig/Shaders/BasicShader.glsl");
 	Importer::GetInstance()->materialImporter->LoadAndCreateShader("EngineConfig/Shaders/BasicShader.glsl", occlusionMat);
@@ -108,6 +108,7 @@ bool M_Renderer3D::Update(float dt)
 bool M_Renderer3D::PostUpdate(float dt)
 {
 	OPTICK_EVENT();
+
 	//ShadowMap creation
 	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
 	if (light)
@@ -122,31 +123,17 @@ bool M_Renderer3D::PostUpdate(float dt)
 	}
 	
 	PrepareFrameBuffers();
-	PassProjectionAndViewToRenderer();
-	RenderScene(engine->GetCamera3D()->currentCamera);
-	isFirstPass = false;
 
-#ifndef KOFI_GAME
-	UnbindFrameBuffers();
-	if (engine->GetEditor()->toggleCameraViewportPanel)
+	PassProjectionAndViewToRenderer();
+	if (enableOcclusionCulling)
 	{
 		QueryScene(engine->GetCamera3D()->currentCamera);
 	}
-
+	
 	RenderScene(engine->GetCamera3D()->currentCamera);
-
 	isFirstPass = false;
-	//#ifndef KOFI_GAME
-	//	UnbindFrameBuffers();
-	//	if (engine->GetEditor()->toggleCameraViewportPanel)
-	//	{
-	//		glBindFramebuffer(GL_FRAMEBUFFER, previewFrameBuffer);
-	//		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//		PassPreviewProjectionAndViewToRenderer();
-	//		RenderScene(engine->GetCamera3D()->gameCamera);
-	//	}
-	//#endif // KOFI_GAME
+
+
 	UnbindFrameBuffers();
 
 	SwapWindow();
@@ -363,7 +350,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 {
 	OPTICK_EVENT();
 
-	//RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
+	RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
 #pragma omp parallel for
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{

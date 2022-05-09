@@ -126,7 +126,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, DirLight light)
     //vertex remains untouched so this step is actually quite meaningless.
     //However, it is necessary when using perspective projection so 
     //keeping this line ensures it works with both projection matrices.
-    vec3 projCoords = fragPosLightSpace.xyz / fragPosLight  Space.w;
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     
     projCoords = projCoords * 0.5 + 0.5; 
     float closestDepth = texture(depthMap, projCoords.xy).r;   

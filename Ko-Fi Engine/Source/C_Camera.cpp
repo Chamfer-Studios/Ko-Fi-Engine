@@ -261,17 +261,12 @@ void C_Camera::SetProjectionType(const CameraType& type)
 
 	if (type == CameraType::KOFI_ORTHOGRAPHIC)
 	{
-		float3 position = cameraFrustum.Pos();
-		float3 front, up;
-		front = GetFront();
-		up = GetUp();
 		hFov = cameraFrustum.HorizontalFov();
 		vFov = cameraFrustum.VerticalFov();
 		float w = owner->GetEngine()->GetEditor()->lastViewportSize.x;
 		float h = owner->GetEngine()->GetEditor()->lastViewportSize.y;
 		cameraFrustum.SetOrthographic(w, h);
-		cameraFrustum.SetFrame(position,front,up);		
-		/*cameraFrustum.SetHorizontalFovAndAspectRatio(hFov, 1.778f);*/
+		
 	}
 	else if (type == CameraType::KOFI_PERSPECTIVE)
 	{
