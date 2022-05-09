@@ -36,7 +36,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum = Frustum();
 
 	//Set Default Values for the frusum
-	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
+	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumRightHanded);
 	cameraFrustum.SetPerspective(DegToRad(45.0f), DegToRad(22.0f));
 	cameraFrustum.SetViewPlaneDistances(0.01f, 500.0f);
 	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
@@ -131,11 +131,47 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		{
 			// FOV 
 			float fov = GetHorizontalFov();
-			if (ImGui::DragFloat("Fov", &fov, 1.0f, 0.0f, 180.f))
+			if (ImGui::DragFloat("Fov", &fov, 1.0f, 1.0f, 180.f))
 			{
 				SetHorizontalFov(fov);
 			}
 
+			// SIZE
+			float w = cameraFrustum.OrthographicWidth();
+			if (ImGui::DragFloat("Width", &w, 0.003f, 0.1f, 180.f))
+			{
+				cameraFrustum.SetOrthographicWidth(w);
+			}
+
+			float h = cameraFrustum.OrthographicHeight();
+			if (ImGui::DragFloat("Height", &h, 0.003f, 0.1f, 180.f))
+			{
+				cameraFrustum.SetOrthographicHeight(h);
+			}
+
+			break;
+		}
+		case C_Camera::KOFI_ORTHOGRAPHIC:
+		{
+			// SIZE
+			float w = cameraFrustum.OrthographicWidth();
+			if (ImGui::DragFloat("W", &w, 0.003f, 0.1f, 180.f))
+			{
+				cameraFrustum.SetOrthographicWidth(w);
+			}
+
+			float h = cameraFrustum.OrthographicHeight();
+			if (ImGui::DragFloat("H", &h, 0.003f, 0.1f, 180.f))
+			{
+				cameraFrustum.SetOrthographicHeight(h);
+			}
+
+			// FOV 
+			float fov = GetHorizontalFov();
+			if (ImGui::DragFloat("Fov", &fov, 1.0f, 1.0f, 180.f))
+			{
+				SetHorizontalFov(fov);
+			}
 
 			break;
 		}
@@ -240,9 +276,14 @@ void C_Camera::SetProjectionType(const CameraType& type)
 
 	if (type == CameraType::KOFI_ORTHOGRAPHIC)
 	{
+		float3 position = cameraFrustum.Pos();
 		hFov = cameraFrustum.HorizontalFov();
 		vFov = cameraFrustum.VerticalFov();
-		cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->viewportSize.x, owner->GetEngine()->GetEditor()->viewportSize.y);
+		float w = 1.f * 1.778f;
+		float h = 1.f * 1.778f;
+		cameraFrustum.SetOrthographic(w, h);
+		/*cameraFrustum.SetHorizontalFovAndAspectRatio(hFov, 1.778f);
+		cameraFrustum.SetPos(position);*/
 	}
 	else if (type == CameraType::KOFI_PERSPECTIVE)
 	{

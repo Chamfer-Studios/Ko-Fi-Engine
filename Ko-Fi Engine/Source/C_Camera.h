@@ -113,6 +113,7 @@ private:
 
 	// DON'T USE, USE GETFOV INSTEAD
 	float hFov, vFov = 0.0f;
+	float orthoSize = 0.1f;
 	
 };
 

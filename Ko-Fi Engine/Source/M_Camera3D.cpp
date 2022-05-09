@@ -180,8 +180,8 @@ void M_Camera3D::MouseZoom(float dt)
 // A function that takes the delta mouse motion as x and y inputs, creates a quaternion representing a rotation based on the mouse motion, and applies that rotation to the camera's orientation.
 void M_Camera3D::MouseRotation(float dt)
 {
-	int xMotion = engine->GetInput()->GetMouseXMotion();
-	int yMotion = engine->GetInput()->GetMouseYMotion();
+	int xMotion = -engine->GetInput()->GetMouseXMotion();
+	int yMotion = -engine->GetInput()->GetMouseYMotion();
 	if (xMotion != 0) {
 		const float newDeltaX = (float)xMotion * cameraSensitivity;
 		float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX);
@@ -264,34 +264,35 @@ bool M_Camera3D::LoadConfiguration(Json& configModule)
 
 bool M_Camera3D::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("Engine Camera##"))
-	{
-		int newSpeedMultiplier = speedMultiplier;
-		if (ImGui::SliderInt("Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
-		{
-			ChangeSpeed(newSpeedMultiplier);
-		}
+	//if (ImGui::CollapsingHeader("Engine Camera##"))
+	//{
+	//	int newSpeedMultiplier = speedMultiplier;
+	//	if (ImGui::SliderInt("Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
+	//	{
+	//		ChangeSpeed(newSpeedMultiplier);
+	//	}
 
-		//	Frustum Active
-		bool frustumActive = engineCamera->GetIsFrustumActive();
-		if (ImGui::Checkbox("Frustum culling", &frustumActive))
-		{
-			engineCamera->SetIsFrustumActive(frustumActive);
-		}
+	//	//	Frustum Active
+	//	bool frustumActive = engineCamera->GetIsFrustumActive();
+	//	if (ImGui::Checkbox("Frustum culling", &frustumActive))
+	//	{
+	//		engineCamera->SetIsFrustumActive(frustumActive);
+	//	}
 
-		static const char* types[]{ "Perspective", "Orthographic" };
-		static int selectedItem = 0;
-		if (ImGui::Combo("Combo", &selectedItem, types, IM_ARRAYSIZE(types)))
-		{
-			if (selectedItem == 0)
-				engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_PERSPECTIVE);
-			if (selectedItem == 1)
-				engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
+	//	static const char* types[]{ "Perspective", "Orthographic" };
+	//	static int selectedItem = 0;
+	//	if (ImGui::Combo("Combo", &selectedItem, types, IM_ARRAYSIZE(types)))
+	//	{
+	//		if (selectedItem == 0)
+	//			engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_PERSPECTIVE);
+	//		if (selectedItem == 1)
+	//			engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
 
 
-		}
+	//	}
 
-	}
+	//}
+	engineCamera->InspectorDraw(nullptr);
 	return true;
 }
 

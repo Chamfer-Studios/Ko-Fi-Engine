@@ -228,8 +228,6 @@ bool M_Renderer3D::InitOpenGL()
 		SetGLFlag(GL_DEPTH_TEST, true);
 		glDepthFunc(GL_LESS);  // change depth function so depth test passes when values are equal to depth buffer's content
 		SetGLFlag(GL_CULL_FACE, true);
-		glCullFace(GL_BACK);
-		glFrontFace(GL_CW);
 		lights[0].Active(true);
 		SetGLFlag(GL_LIGHTING, true);
 		SetGLFlag(GL_COLOR_MATERIAL, true);
@@ -318,6 +316,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 	glLoadIdentity();
 	if (engine->GetCamera3D()->currentCamera)
 	{
+		
 		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	}
 	else
@@ -1020,9 +1019,10 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox& skybox)
 
 		GLint view_location = glGetUniformLocation(shader, "view");
 		glUniformMatrix4fv(view_location, 1, GL_FALSE, view.Transposed().ptr());
+		
+
 		float4x4 proj = float4x4::identity;
 		proj = camera->GetProjectionMatrix();
-
 		GLint projection_location = glGetUniformLocation(shader, "projection");
 		glUniformMatrix4fv(projection_location, 1, GL_FALSE, proj.Transposed().ptr());
 
