@@ -167,6 +167,32 @@ bool C_Script::OnPlay()
 	return ret;
 }
 
+bool C_Script::OnSceneSwitch()
+{
+	bool ret = true;
+
+	if (s != nullptr)
+	{
+		auto start = sol::protected_function(s->handler->lua["Start"]);
+		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
+		{
+			if (start.valid()) {
+				sol::protected_function_result result = start();
+				if (result.valid()) {
+					// Call succeeded
+				}
+				else {
+					// Call failed
+					sol::error err = result;
+					std::string what = err.what();
+					appLog->AddLog("%s\n", what.c_str());
+				}
+			}
+		}
+	}
+	return ret;
+}
+
 bool C_Script::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.

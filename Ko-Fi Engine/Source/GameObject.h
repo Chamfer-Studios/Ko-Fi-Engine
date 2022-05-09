@@ -39,6 +39,7 @@ public:
 	bool CleanUp();
 
 	bool OnPlay();
+	bool OnSceneSwitch();
 	bool OnPause();
 	bool OnStop();
 	bool OnResume();

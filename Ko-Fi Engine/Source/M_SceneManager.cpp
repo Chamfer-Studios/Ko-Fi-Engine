@@ -443,6 +443,15 @@ void M_SceneManager::OnPlay()
 	}
 }
 
+void M_SceneManager::OnSceneSwitch()
+{
+
+	for (GameObject* go : currentScene->gameObjectList)
+	{
+		go->OnSceneSwitch();
+	}
+}
+
 void M_SceneManager::OnPause()
 {
 	runtimeState = GameState::PAUSED;

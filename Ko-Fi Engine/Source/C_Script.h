@@ -51,6 +51,7 @@ public:
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool OnPlay() override;
+	bool OnSceneSwitch() override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 	void Save(Json& json) const override;

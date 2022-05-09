@@ -159,6 +159,15 @@ bool GameObject::OnPlay()
 	return ret;
 }
 
+bool GameObject::OnSceneSwitch()
+{
+	bool ret = true;
+	for (Component* component : components)
+		ret = component->OnSceneSwitch();
+
+	return ret;
+}
+
 bool GameObject::OnPause()
 {
 	bool ret = true;

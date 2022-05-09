@@ -56,6 +56,7 @@ public:
 	virtual void Disable() { active = false; }
 
 	virtual bool OnPlay() { return true; }
+	virtual bool OnSceneSwitch() { return true; }
 	virtual bool OnPause() { return true; }
 	virtual bool OnStop() { return true; }
 	virtual bool OnResume() { return true; }
