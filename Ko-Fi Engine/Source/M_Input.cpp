@@ -230,16 +230,21 @@ bool M_Input::PreUpdate(float dt)
 					}
 
 					destinationDir += "/";
+					std::string path;
 					if (found)
 					{
 						destinationDir = metaFilename.parent_path().string();
 						destinationDir += "/";
-						appLog->AddLog("[STATUS] The asset %s has been updated.", originPath.filename().string().c_str());
+
+						path = destinationDir + originPath.filename().string();
+						appLog->AddLog("[STATUS] The file %s has been updated.", path.c_str());
 					}
 					else
-						appLog->AddLog("[STATUS] The asset %s has been imported successfully.", originPath.filename().string().c_str());
+					{
+						path = destinationDir + originPath.filename().string();
+						appLog->AddLog("[STATUS] The file %s has been imported successfully.", path.c_str());
+					}
 
-					std::string path = destinationDir + originPath.filename().string();
 					engine->GetFileSystem()->CopyFileTo(originPath.string().c_str(), path.c_str());
 					engine->GetResourceManager()->RefreshDirectoryFiles(destinationDir.c_str());
 				}
