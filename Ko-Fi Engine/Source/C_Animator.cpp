@@ -89,6 +89,7 @@ bool C_Animator::CleanUp()
 bool C_Animator::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
+
 	if (ImGui::CollapsingHeader("Animator", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		if (DrawDeleteButton(owner, this))
@@ -122,7 +123,6 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		int newStartFrame = animation->startFrame;
 		if (ImGui::DragInt("Edit Start", &newStartFrame, 0, animation->duration))
 			animation->startFrame = newStartFrame;
-
 		int newEndFrame = animation->endFrame;
 		if (ImGui::DragInt("Edit End", &newEndFrame, 0, animation->duration))
 			animation->endFrame = newEndFrame;
@@ -142,7 +142,6 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 			ImGui::TextColored(Red.ToImVec4(), "Please, select a valid clip interval.");
 
 		ImGui::Text("Select Clip");
-
 		if (ImGui::BeginCombo("Select Clip", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
@@ -203,9 +202,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		}
 
 		ImGui::Text("Clip Options: ");
-		bool newLoop = selectedClip->GetLoopBool();
-		if (ImGui::Checkbox("Loop", &newLoop)) 
-			selectedClip->SetLoopBool(newLoop);
+		if (ImGui::Checkbox("Loop", &selectedClip->GetLoopBool())) {}
 
 		/*ImGui::SameLine();
 		if (ImGui::Button("Restart", ImVec2(70, 18)))

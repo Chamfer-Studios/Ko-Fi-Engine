@@ -539,11 +539,8 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
-#pragma omp parallel for
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
-		if (pNode->GetChildren().at(i)->GetComponent<C_Image>() || pNode->GetChildren().at(i)->GetComponent<C_Canvas>() || pNode->GetChildren().at(i)->GetComponent<C_Button>() || pNode->GetChildren().at(i)->GetComponent<C_Text>())
-			continue;
 		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);
 	}
 }
@@ -572,7 +569,8 @@ void R_Mesh::CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, con
 	OPTICK_EVENT();
 
 	// we need at least two values to interpolate...
-	if (pNodeAnim->positionKeyframes.size() == 1) {
+	if (pNodeAnim->positionKeyframes.size() == 1)
+	{
 		Out = pNodeAnim->positionKeyframes.at(0).value;
 		return;
 	}
@@ -604,7 +602,6 @@ uint R_Mesh::FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim)
 
 	return 0;
 }
-
 
 void R_Mesh::CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {
