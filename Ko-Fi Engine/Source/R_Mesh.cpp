@@ -435,6 +435,7 @@ void R_Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 	memcpy(&normals[0], primitiveMesh->normals, primitiveMesh->npoints);
 
 	par_shapes_free_mesh(primitiveMesh);
+	SetUpMeshBuffers();
 }
 
 void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject)

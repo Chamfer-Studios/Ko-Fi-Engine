@@ -143,7 +143,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 		ImGui::Text("Select Clip");
 
-		if (ImGui::BeginCombo("Select Clip", (selectedClip ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Select Clip", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
@@ -165,7 +165,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		}
 
 		ImGui::Text("Delete Clip");
-		if (ImGui::BeginCombo("Delete Clip", (clipToDelete ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Delete Clip", ((clipToDelete != nullptr) ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{

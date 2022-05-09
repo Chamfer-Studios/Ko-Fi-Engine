@@ -4,33 +4,33 @@
     "contained_resources": [
         {
             "asset_file": "axe.sugar",
-            "library_path": "Library/Meshes/973669442.sugar",
+            "library_path": "Library/Meshes/621126703.sugar",
             "type": 0,
-            "uid": 973669442
+            "uid": 621126703
         },
         {
             "asset_file": "rabban_base_color.png",
             "asset_path": "Assets/Textures/Characters/Enemies/Rabban/rabban_base_color.png",
-            "library_path": "Library/Textures/800720353.cacao",
+            "library_path": "Library/Textures/74445893.cacao",
             "type": 1,
-            "uid": 800720353
+            "uid": 74445893
         },
         {
             "asset_file": "rabban.sugar",
-            "library_path": "Library/Meshes/842707348.sugar",
+            "library_path": "Library/Meshes/438405811.sugar",
             "type": 0,
-            "uid": 842707348
+            "uid": 438405811
         },
         {
             "asset_file": "rabban_armature|rabban_reel.cake",
-            "library_path": "Library/Animations/371420280.cake",
+            "library_path": "Library/Animations/1731473571.cake",
             "type": 5,
-            "uid": 371420280
+            "uid": 1731473571
         }
     ],
-    "library_file": "48667870.tea",
-    "library_path": "Library/Models/48667870.tea",
-    "mod_time": 411570769,
+    "library_file": "2059425150.tea",
+    "library_path": "Library/Models/2059425150.tea",
+    "mod_time": 411601499,
     "type": 3,
-    "uid": 48667870
+    "uid": 2059425150
 }

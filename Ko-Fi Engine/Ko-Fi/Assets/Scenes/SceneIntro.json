@@ -1,0 +1,245 @@
+{
+    "SceneIntro": {
+        "active": true,
+        "game_objects_amount": 5,
+        "game_objects_list": [
+            {
+                "UID": 1966060652,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 500.0,
+                        "frustum_culling": false,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.009999999776482582,
+                        "type": 4,
+                        "vertical_fov": 0.3839724361896515
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Main Camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 648476759,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "ambientValue": 0.5,
+                        "diffuseValue": 0.800000011920929,
+                        "lightColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "lightDirection": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "lightPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "sourceType": 0,
+                        "specularValue": 0.0,
+                        "type": 19
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Direct Light",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1246909346,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 13
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Canvas",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1196631538,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            795.0,
+                            200.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/Textures/awareness/red.png",
+                        "idleTexture": "Assets/Textures/awareness/green.png",
+                        "pressedTexture": "Assets/Textures/awareness/yellow.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Button",
+                "parent_UID": 1246909346,
+                "tag": 0
+            },
+            {
+                "UID": 1728566331,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            612.0,
+                            75.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            248,
+                            0,
+                            255,
+                            255
+                        ],
+                        "type": 16,
+                        "value": "Hello world!"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text",
+                "parent_UID": 1196631538,
+                "tag": 0
+            }
+        ],
+        "name": "SceneIntro",
+        "navmesh": {}
+    }
+}

@@ -4,99 +4,99 @@
     "contained_resources": [
         {
             "asset_file": "Tooth.002.sugar",
-            "library_path": "Library/Meshes/874339717.sugar",
+            "library_path": "Library/Meshes/1173890920.sugar",
             "type": 0,
-            "uid": 874339717
+            "uid": 1173890920
         },
         {
             "asset_file": "worm_base_color.png",
             "asset_path": "Assets/Textures/Characters/Worm/worm_base_color.png",
-            "library_path": "Library/Textures/1383931096.cacao",
+            "library_path": "Library/Textures/2132353618.cacao",
             "type": 1,
-            "uid": 1383931096
+            "uid": 2132353618
         },
         {
             "asset_file": "Tooth.011.sugar",
-            "library_path": "Library/Meshes/219745582.sugar",
+            "library_path": "Library/Meshes/1099170530.sugar",
             "type": 0,
-            "uid": 219745582
+            "uid": 1099170530
         },
         {
             "asset_file": "Tooth.004.sugar",
-            "library_path": "Library/Meshes/676603449.sugar",
+            "library_path": "Library/Meshes/1776465079.sugar",
             "type": 0,
-            "uid": 676603449
+            "uid": 1776465079
         },
         {
             "asset_file": "Tooth.008.sugar",
-            "library_path": "Library/Meshes/1180193286.sugar",
+            "library_path": "Library/Meshes/1374703811.sugar",
             "type": 0,
-            "uid": 1180193286
+            "uid": 1374703811
         },
         {
             "asset_file": "Worm.002.sugar",
-            "library_path": "Library/Meshes/658052522.sugar",
+            "library_path": "Library/Meshes/918137903.sugar",
             "type": 0,
-            "uid": 658052522
+            "uid": 918137903
         },
         {
             "asset_file": "Tooth.001.sugar",
-            "library_path": "Library/Meshes/1914517180.sugar",
+            "library_path": "Library/Meshes/1333590725.sugar",
             "type": 0,
-            "uid": 1914517180
+            "uid": 1333590725
         },
         {
             "asset_file": "Tooth.006.sugar",
-            "library_path": "Library/Meshes/1307934216.sugar",
+            "library_path": "Library/Meshes/1153388935.sugar",
             "type": 0,
-            "uid": 1307934216
+            "uid": 1153388935
         },
         {
             "asset_file": "Tooth.003.sugar",
-            "library_path": "Library/Meshes/788765708.sugar",
+            "library_path": "Library/Meshes/1860522291.sugar",
             "type": 0,
-            "uid": 788765708
+            "uid": 1860522291
         },
         {
             "asset_file": "Tooth.010.sugar",
-            "library_path": "Library/Meshes/1329189443.sugar",
+            "library_path": "Library/Meshes/766034554.sugar",
             "type": 0,
-            "uid": 1329189443
+            "uid": 766034554
         },
         {
             "asset_file": "Tooth.012.sugar",
-            "library_path": "Library/Meshes/893933283.sugar",
+            "library_path": "Library/Meshes/1945033819.sugar",
             "type": 0,
-            "uid": 893933283
+            "uid": 1945033819
         },
         {
             "asset_file": "Tooth.009.sugar",
-            "library_path": "Library/Meshes/2071628468.sugar",
+            "library_path": "Library/Meshes/767764761.sugar",
             "type": 0,
-            "uid": 2071628468
+            "uid": 767764761
         },
         {
             "asset_file": "Tooth.005.sugar",
-            "library_path": "Library/Meshes/1030762516.sugar",
+            "library_path": "Library/Meshes/1625314403.sugar",
             "type": 0,
-            "uid": 1030762516
+            "uid": 1625314403
         },
         {
             "asset_file": "Tooth.007.sugar",
-            "library_path": "Library/Meshes/1155485183.sugar",
+            "library_path": "Library/Meshes/858165432.sugar",
             "type": 0,
-            "uid": 1155485183
+            "uid": 858165432
         },
         {
             "asset_file": "worm_armature|worm_reel.cake",
-            "library_path": "Library/Animations/1981463042.cake",
+            "library_path": "Library/Animations/674587441.cake",
             "type": 5,
-            "uid": 1981463042
+            "uid": 674587441
         }
     ],
-    "library_file": "1936174744.tea",
-    "library_path": "Library/Models/1936174744.tea",
-    "mod_time": 411570768,
+    "library_file": "1652242629.tea",
+    "library_path": "Library/Models/1652242629.tea",
+    "mod_time": 411601499,
     "type": 3,
-    "uid": 1936174744
+    "uid": 1652242629
 }

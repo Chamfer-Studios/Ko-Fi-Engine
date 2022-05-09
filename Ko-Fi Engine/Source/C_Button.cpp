@@ -21,6 +21,10 @@
 C_Button::C_Button(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::BUTTON;
+
+	idleOpenGLTexture.SetTextureId(TEXTUREID_DEFAULT);
+	hoverOpenGLTexture.SetTextureId(TEXTUREID_DEFAULT);
+	pressedOpenGLTexture.SetTextureId(TEXTUREID_DEFAULT);
 }
 
 C_Button::~C_Button()
@@ -181,22 +185,22 @@ void C_Button::Load(Json& json)
 
 void C_Button::Draw()
 {
-	R_Texture openGLTexture;
+	R_Texture* openGLTexture = nullptr;
 
 	switch (state) {
 	case BUTTON_STATE::IDLE:
-		openGLTexture = idleOpenGLTexture;
+		openGLTexture = &idleOpenGLTexture;
 		break;
 	case BUTTON_STATE::HOVER:
-		openGLTexture = hoverOpenGLTexture;
+		openGLTexture = &hoverOpenGLTexture;
 		break;
 	case BUTTON_STATE::PRESSED:
-		openGLTexture = pressedOpenGLTexture;
+		openGLTexture = &pressedOpenGLTexture;
 		break;
 	}
 
 	owner->GetEngine()->GetUI()->PrepareUIRender();
-	owner->GetComponent<C_Transform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
+	owner->GetComponent<C_Transform2D>()->drawablePlane->DrawPlane2D(openGLTexture->GetTextureId(), { 255, 255, 255 });
 	owner->GetEngine()->GetUI()->EndUIRender();
 }
 
@@ -204,18 +208,21 @@ void C_Button::SetIdleTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::IDLE);
 	Importer::GetInstance()->textureImporter->Import(path,&idleOpenGLTexture);
+	idleOpenGLTexture.SetTexturePath(path);
 }
 
 void C_Button::SetHoverTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::HOVER);
 	Importer::GetInstance()->textureImporter->Import(path, &hoverOpenGLTexture);
+	hoverOpenGLTexture.SetTexturePath(path);
 }
 
 void C_Button::SetPressedTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::PRESSED);
 	Importer::GetInstance()->textureImporter->Import(path, &pressedOpenGLTexture);
+	pressedOpenGLTexture.SetTexturePath(path);
 }
 
 void C_Button::FreeTextures(BUTTON_STATE type)

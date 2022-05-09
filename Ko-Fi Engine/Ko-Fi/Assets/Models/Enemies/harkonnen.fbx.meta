@@ -4,27 +4,27 @@
     "contained_resources": [
         {
             "asset_file": "harkonnen.sugar",
-            "library_path": "Library/Meshes/1750092596.sugar",
+            "library_path": "Library/Meshes/891955186.sugar",
             "type": 0,
-            "uid": 1750092596
+            "uid": 891955186
         },
         {
             "asset_file": "harkonnen_base_color.png",
             "asset_path": "Assets/Textures/Characters/Enemies/Harkonnen/harkonnen_base_color.png",
-            "library_path": "Library/Textures/260458778.cacao",
+            "library_path": "Library/Textures/1697880658.cacao",
             "type": 1,
-            "uid": 260458778
+            "uid": 1697880658
         },
         {
             "asset_file": "harkonnen_armature|harkonnen_reel.cake",
-            "library_path": "Library/Animations/1416946277.cake",
+            "library_path": "Library/Animations/27384207.cake",
             "type": 5,
-            "uid": 1416946277
+            "uid": 27384207
         }
     ],
-    "library_file": "197941848.tea",
-    "library_path": "Library/Models/197941848.tea",
-    "mod_time": 411570769,
+    "library_file": "1662460135.tea",
+    "library_path": "Library/Models/1662460135.tea",
+    "mod_time": 411601499,
     "type": 3,
-    "uid": 197941848
+    "uid": 1662460135
 }

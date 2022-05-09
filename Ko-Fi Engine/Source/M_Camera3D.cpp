@@ -44,7 +44,7 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetIsEngineCamera(true);
 	
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-	engineCamera->SetFarPlaneDistance(1000.0f);
+	engineCamera->SetFarPlaneDistance(10000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
 	engineCamera->SetIsFrustumActive(true);
 
@@ -209,14 +209,17 @@ void M_Camera3D::MouseRotation(float dt)
 
 void M_Camera3D::FocusTarget()
 {
+	if((engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size() == 0)) return;
+
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
 		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0] != -1)
 		{
 			GameObject* selectedGameObject = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0]);
 			C_Mesh* mesh = selectedGameObject->GetComponent<C_Mesh>();
-			if (mesh)
+			if (mesh && mesh->GetMesh())
 			{
+				
 				const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
 				engineCamera->LookAt(meshCenter);
 				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
