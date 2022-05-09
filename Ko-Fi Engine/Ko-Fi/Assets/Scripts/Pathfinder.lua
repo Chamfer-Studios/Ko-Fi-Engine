@@ -49,7 +49,7 @@ function FollowPath(speed, dt, loop)
 
     currentTarget = _G.finalPath[currentPathIndex]
     currentPosition = componentTransform:GetPosition()
-    while Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance do
+    if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
         currentPathIndex = currentPathIndex + 1
         if currentPathIndex > #_G.finalPath and loop then
             currentPathIndex = 2
@@ -69,6 +69,8 @@ function FollowPath(speed, dt, loop)
         componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
     elseif currentPathIndex < #_G.finalPath then
         currentPathIndex = currentPathIndex + 1
+    else
+        currentPathIndex = 2
     end
 end
 

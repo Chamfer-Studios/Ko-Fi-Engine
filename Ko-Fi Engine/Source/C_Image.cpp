@@ -127,6 +127,7 @@ void C_Image::FreeTextures()
 		if (openGLTexture.data != nullptr)
 		{
 			stbi_image_free(openGLTexture.data);
+			openGLTexture.data = nullptr;
 		}
 	}
 }

@@ -241,6 +241,7 @@ void C_Button::FreeTextures(BUTTON_STATE type)
 			if (idleOpenGLTexture.data != nullptr)
 			{
 				stbi_image_free(idleOpenGLTexture.data);
+				idleOpenGLTexture.data = nullptr;
 			}
 		}
 		break;
@@ -254,6 +255,7 @@ void C_Button::FreeTextures(BUTTON_STATE type)
 			if (hoverOpenGLTexture.data != nullptr)
 			{
 				stbi_image_free(hoverOpenGLTexture.data);
+				hoverOpenGLTexture.data = nullptr;
 			}
 		}
 		break;
@@ -267,6 +269,7 @@ void C_Button::FreeTextures(BUTTON_STATE type)
 			if (pressedOpenGLTexture.data != nullptr)
 			{
 				stbi_image_free(pressedOpenGLTexture.data);
+				pressedOpenGLTexture.data = nullptr;
 			}
 		}
 		break;

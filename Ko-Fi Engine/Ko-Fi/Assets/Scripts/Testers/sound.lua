@@ -5,7 +5,7 @@ function Update(dt)
         GetGameObjectHovered()
         position = GetLastMouseClick()
         constantSoundPos = nil
-        DispatchGlobalEvent("Auditory_Trigger", { position, 20, "single", nil })
+        DispatchGlobalEvent("Auditory_Trigger", { position, 20, "single", gameObject })
     end
 
     if (GetInput(3) == KEY_STATE.KEY_DOWN) then
@@ -15,6 +15,6 @@ function Update(dt)
     end
 
     if constantSoundPos ~= nil then
-        DispatchGlobalEvent("Auditory_Trigger", { constantSoundPos, 20, "repeated", nil })
+        DispatchGlobalEvent("Auditory_Trigger", { constantSoundPos, 20, "repeated", gameObject })
     end
 end

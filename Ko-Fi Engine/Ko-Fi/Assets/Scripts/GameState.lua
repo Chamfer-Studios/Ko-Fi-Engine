@@ -33,6 +33,12 @@ function Update(dt)
 	end
 end
 
+function EventHandler(key, fields)
+    if key == "Character_Selected" then -- fields[1] -> characterSelected;
+		characterSelected = fields[1]
+		--characterSelected = 1
+    end
+end
 --------------------------------------------------
 
 print("GameState.lua compiled succesfully")

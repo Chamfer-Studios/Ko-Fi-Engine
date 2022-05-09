@@ -1131,18 +1131,6 @@
                         "active": true,
                         "file_name": "Assets/Scripts/Characters/Zhib/Zhib.lua",
                         "id": 2108452580,
-                        "inspector_variables": [
-                            {
-                                "name": "maxHP",
-                                "type": "int",
-                                "value": 3
-                            },
-                            {
-                                "name": "currentHP",
-                                "type": "int",
-                                "value": 3
-                            }
-                        ],
                         "type": 5
                     }
                 ],

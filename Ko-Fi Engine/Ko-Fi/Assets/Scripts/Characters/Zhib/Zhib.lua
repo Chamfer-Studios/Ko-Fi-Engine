@@ -25,6 +25,7 @@ State = {
 	AIM_SECONDARY = 4,
 	AIM_ULTIMATE = 5,
 	DEAD = 6,
+	WORM = 7,
 }
 
 ---------------------------------------------------------
@@ -378,7 +379,7 @@ function ManageTimers(dt)
 				componentRigidBody:UpdateEnableGravity()
 			end
 			if (componentAnimator ~= nil) then
-				componentAnimator:SetSelectedClip("Ultimate_end")
+				componentAnimator:SetSelectedClip("UltimateEnd")
 			end
 		end
 		ret = false
@@ -395,9 +396,9 @@ function ManageTimers(dt)
 				elseif (currentState == State.AIM_SECONDARY) then
 					PlaceDecoy()
 				elseif (currentState == State.AIM_ULTIMATE) then
-					Ultimate()
+					DoUltimate()
 				else 
-					componentAnimator:SetSelectedClip("Idle")
+					--componentAnimator:SetSelectedClip("Idle") -- Comment this line to test animations in-game
 				end
 			end
 		end
@@ -550,7 +551,7 @@ end
 -- Ultimate ability
 function CastUltimate(position)
 
-	componentAnimator:SetSelectedClip("Ultimate_start")
+	componentAnimator:SetSelectedClip("UltimateStart")
 	ultimateTimer = 0.0		
 	StopMovement()
 
@@ -558,7 +559,7 @@ function CastUltimate(position)
 	LookAtTarget(position)
 end
 
-function Ultimate()
+function DoUltimate()
 	
 	-- Get all enemies in range of the Mouse
 	enemiesInRange = { target }
@@ -681,6 +682,18 @@ function Die()
 		currentTrackID = 5 -- Should be 6
 		componentSwitch:PlayTrack(currentTrackID)
 	end
+end
+--------------------------------------------------
+
+-------------------- Events ----------------------
+function EventHandler(key, fields)
+    if (key == "Omozra_Ultimate_Target" and fields[1] == gameObject) then -- fields[1] -> go;
+		StopMovement()
+		if (componentAnimator ~= nil) then
+			componentAnimator:SetSelectedClip("Idle") -- (?)
+		end
+        currentState = State.WORM
+    end
 end
 --------------------------------------------------
 

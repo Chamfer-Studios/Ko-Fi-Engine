@@ -35,6 +35,8 @@ function Update(dt)
 			end
 		end
 		if (purchased == true) then
+			--DeleteGameObject()
+			--gameObject:GetChild("Text15"):GetText():SetTextValue("false")
 			gameObject:GetChild(name).active = false
 		end
 		if (purchased == false) then

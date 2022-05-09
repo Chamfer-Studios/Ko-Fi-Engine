@@ -18,6 +18,7 @@ R_Texture::~R_Texture()
 	if (data != nullptr)
 	{
 		stbi_image_free(data);
+		data = nullptr;
 	}
 	glDeleteTextures(1, (GLuint*)&textureID);
 }
