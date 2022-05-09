@@ -23,6 +23,8 @@
 
 #include "SDL.h"
 
+#include "stb_image.h"
+
 #include "glew.h"
 #include <vector>
 
@@ -121,5 +123,10 @@ void C_Image::FreeTextures()
 	if (openGLTexture.GetTextureId() != TEXTUREID_DEFAULT) {
 		GLuint id = openGLTexture.GetTextureId();
 		glDeleteTextures(1, &id);
+
+		if (openGLTexture.data != nullptr)
+		{
+			stbi_image_free(openGLTexture.data);
+		}
 	}
 }

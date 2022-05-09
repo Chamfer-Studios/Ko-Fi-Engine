@@ -252,7 +252,8 @@ public:
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
 			sol::constructors<void(GameObject *)>(),
-			"SetTexture", &C_Image::SetTexture
+			"SetTexture", &C_Image::SetTexture,
+			"GetTexturePath", &C_Image::GetTexturePath
 			);
 
 		lua.new_usertype<C_Button>("C_Button",

@@ -18,6 +18,8 @@
 #include "PanelChooser.h"
 #include "ImGuiAppLog.h"
 
+#include "stb_image.h"
+
 C_Button::C_Button(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::BUTTON;
@@ -233,24 +235,43 @@ void C_Button::FreeTextures(BUTTON_STATE type)
 		//if (idleSDLTexture != nullptr)
 		//	SDL_DestroyTexture(idleSDLTexture);
 		id = idleOpenGLTexture.GetTextureId();
-		if (id != 0)
+		if (id != TEXTUREID_DEFAULT)
+		{
 			glDeleteTextures(1, &id);
+			if (idleOpenGLTexture.data != nullptr)
+			{
+				stbi_image_free(idleOpenGLTexture.data);
+			}
+		}
 		break;
 	case BUTTON_STATE::HOVER:
 		//if (hoverSDLTexture != nullptr)
 		//	SDL_DestroyTexture(hoverSDLTexture);
 		id = hoverOpenGLTexture.GetTextureId();
-		if (id != 0)
+		if (id != TEXTUREID_DEFAULT)
+		{
 			glDeleteTextures(1, &id);
+			if (hoverOpenGLTexture.data != nullptr)
+			{
+				stbi_image_free(hoverOpenGLTexture.data);
+			}
+		}
 		break;
 	case BUTTON_STATE::PRESSED:
 		//if (pressedSDLTexture != nullptr)
 		//	SDL_DestroyTexture(pressedSDLTexture);
 		id = pressedOpenGLTexture.GetTextureId();
-		if (id != 0)
+		if (id != TEXTUREID_DEFAULT)
+		{
 			glDeleteTextures(1, &id);
+			if (pressedOpenGLTexture.data != nullptr)
+			{
+				stbi_image_free(pressedOpenGLTexture.data);
+			}
+		}
 		break;
 	}
+
 }
 
 bool C_Button::IsPressed()
