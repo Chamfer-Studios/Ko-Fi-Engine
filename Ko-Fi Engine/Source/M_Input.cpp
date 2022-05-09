@@ -7,6 +7,7 @@
 #include "M_Editor.h"
 #include "M_Window.h"
 #include "M_FileSystem.h"
+#include "M_ResourceManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -18,8 +19,10 @@
 
 #include "Log.h"
 #include "ImGuiAppLog.h"
+#include "FSDefs.h"
 #include "SDL.h"
-// FIXME: The list of meshes should be in scene intro.
+
+#include "PanelAssets.h"
 
 #include <imgui_impl_sdl.h>
 
@@ -194,41 +197,55 @@ bool M_Input::PreUpdate(float dt)
 		//	SDL_free(dropped_filedir);    // Free dropped_filedir memory
 		//	break;
 		//}
-		//case SDL_DROPFILE:
-		//{
-		//	std::string tmp;
-		//	tmp.assign(event.drop.file);
-		//	if (!tmp.empty())
-		//	{
-		//		//TODO: We should call ImportFile here I'm pretty sure instead of all this other stuff
-		//		if (tmp.find(".fbx") != std::string::npos)
-		//		{
-		//			Importer::GetInstance()->sceneImporter->Import(tmp.c_str());
-		//		}
-		//		else if ((tmp.find(".jpg") || tmp.find(".png")) != std::string::npos)
-		//		{
-		//			for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
-		//			{
-		//				if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i] != 0)
-		//				{
-		//					GameObject* go = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]);
+		case SDL_DROPFILE:
+		{
+			std::vector<std::string> assetsFiles;
+			std::vector<std::string> metaFiles;
+			engine->GetFileSystem()->DiscoverAllFilesFiltered(ASSETS_DIR, assetsFiles, metaFiles, META_EXTENSION);
 
-		//					if (go->GetComponent<C_Material>())
-		//					{
-		//						R_Texture* texture = new R_Texture();
-		//						Importer::GetInstance()->textureImporter->Import(tmp.c_str(), texture);
+			std::filesystem::path originPath = event.drop.file;
+			if (!originPath.empty())
+			{
+				if (engine->GetFileSystem()->StringCompare(originPath.extension().string().c_str(), FBX_EXTENSION) == 0
+					|| engine->GetFileSystem()->StringCompare(originPath.extension().string().c_str(), PNG_EXTENSION) == 0)
+				{
+					std::string destinationDir = engine->GetEditor()->GetPanelAssets()->GetCurrentDir();
+					for (uint i = 0; i < destinationDir.size(); ++i)
+					{
+						if (destinationDir[i] == '\\')
+							destinationDir[i] = '/';
+					}
 
-		//						go->GetComponent<C_Material>()->texture = texture;
-		//						//cMaterial->textures.push_back(texture);
-		//					}
-		//				}
-		//			}
-		//			// Apply texture
-		//			
-		//		}
-		//	}
-		//	break;
-		//}
+					bool found = false;
+					std::filesystem::path metaFilename;
+					for (const auto& metaIt : metaFiles)
+					{
+						metaFilename = metaIt;
+						std::string tmp = originPath.filename().string() + META_EXTENSION;
+						if (metaFilename.filename().string() == tmp)
+						{
+							found = true;
+							break;
+						}
+					}
+
+					destinationDir += "/";
+					if (found)
+					{
+						destinationDir = metaFilename.parent_path().string();
+						destinationDir += "/";
+						appLog->AddLog("[STATUS] The asset %s has been updated.", originPath.filename().string().c_str());
+					}
+					else
+						appLog->AddLog("[STATUS] The asset %s has been imported successfully.", originPath.filename().string().c_str());
+
+					std::string path = destinationDir + originPath.filename().string();
+					engine->GetFileSystem()->CopyFileTo(originPath.string().c_str(), path.c_str());
+					engine->GetResourceManager()->RefreshDirectoryFiles(destinationDir.c_str());
+				}
+			}
+			break;
+		}
 		}
 	}
 	ImGui_ImplSDL2_ProcessEvent(&event);
