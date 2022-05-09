@@ -46,19 +46,21 @@ bool C_LightSource::Start()
 
 bool C_LightSource::Update(float dt)
 {
-	lightSource->position = owner->GetTransform()->GetPosition();
 
+	return true;
+}
+
+bool C_LightSource::PostUpdate(float dt)
+{
+	lightSource->position = owner->GetTransform()->GetPosition();
 	if (sourceType == SourceType::DIRECTIONAL)
 	{
 		//Keep the direction of the camera updated. Maybe this does not work because it sets itself back to match the transform
-		//maybe too much to update it every frame
 		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction);
 		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->GetCameraFrustum().ViewProjMatrix();
-		//TODO: transform the object to match the camera transform
 
 	}
-
-	return true;
+	return false;
 }
 
 bool C_LightSource::CleanUp()

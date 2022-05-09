@@ -76,6 +76,7 @@ public:
 
 	bool Start();
 	bool Update(float dt);
+	bool PostUpdate(float dt);
 	bool CleanUp();
 
 	void Save(Json& json) const;

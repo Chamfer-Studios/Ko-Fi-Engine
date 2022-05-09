@@ -106,13 +106,18 @@ bool M_Renderer3D::PostUpdate(float dt)
 {
 	OPTICK_EVENT();
 	//ShadowMap creation
-	//glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);	//configure viewport
-	UnbindFrameBuffers();
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
-	glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
-	FillShadowMap(engine->GetCamera3D()->gameCamera);
+	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
+	if (light)
+	{
+		UnbindFrameBuffers();
+		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);	//configure viewport
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
+		glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
+		FillShadowMap(engine->GetCamera3D()->gameCamera);
+		UnbindFrameBuffers();
+		glViewport(0, 0, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+	}
 	
-	UnbindFrameBuffers();
 	PrepareFrameBuffers();
 	PassProjectionAndViewToRenderer();
 	RenderScene(engine->GetCamera3D()->currentCamera);
@@ -429,7 +434,14 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			}
 			else
 			{
+				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
+			}
+
+			if (engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster())
+			{
+				glActiveTexture(GL_TEXTURE1);
+				glBindTexture(GL_TEXTURE_2D, depthMapTexture);
 			}
 
 			//Set Shaders
@@ -442,8 +454,6 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 				GLint view_location = glGetUniformLocation(shader, "view");
 				glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
-
-
 				GLint projection_location = glGetUniformLocation(shader, "projection");
 				glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 
@@ -519,6 +529,21 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 					}
 				}
 				LightUniforms(shader);
+				
+				GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
+				if (light)
+				{
+					DirectionalLight* dirLight = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+					GLint lightSpaceMatrix = glGetUniformLocation(shader, "lightSpaceMatrix");
+					glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, dirLight->lightSpaceMatrix.Transposed().ptr());
+				}
+
+				GLint ourTexture = glGetUniformLocation(shader, "ourTexture");
+				glUniform1i(ourTexture, 0);
+
+				GLint depthMap = glGetUniformLocation(shader, "depthMap");
+				glUniform1i(depthMap, 1);
+
 				//Draw Mesh
 				mesh->Draw();
 				glUseProgram(0);
@@ -1023,7 +1048,7 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 	glBindTexture(GL_TEXTURE_2D, depthMapTexture);
 	//we are only interested in storing the depth component inside the texture
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-		1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -1105,7 +1130,6 @@ void M_Renderer3D::FillShadowMap(C_Camera* camera)
 void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light)
 {
 	DirectionalLight* dirLight = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
-	//TODO: is it worth it to allocate this array and update only whan dirty?
 	int i = 0;
 	// Passing Shader Uniforms
 	GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
