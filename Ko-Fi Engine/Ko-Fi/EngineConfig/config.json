@@ -80,11 +80,11 @@
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 1080,
+        "Height": 768,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
         "Title": "Ko-Fi Engine",
-        "Width": 1920
+        "Width": 1024
     }
 }

@@ -29,7 +29,6 @@
 #include "Importer.h"
 #include "R_Material.h"
 
-#include "glew.h"
 #include <gl/GL.h>
 
 #include <MathGeoLib/Math/float2.h>
@@ -252,7 +251,7 @@ void C_Mesh::GenerateGlobalBoundingBox()
 	aabb.Enclose(obb);
 }
 
-void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
+void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb, GLenum renderType)
 {
 	if (drawAABB)
 	{
@@ -262,7 +261,7 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 		glLineWidth(2.0f);
 		glColor3f(rgb.x, rgb.y, rgb.z);
 
-		glBegin(GL_LINES);
+		glBegin(renderType);
 
 		// Bottom 1
 		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());

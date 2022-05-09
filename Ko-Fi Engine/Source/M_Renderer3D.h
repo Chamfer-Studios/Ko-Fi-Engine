@@ -11,12 +11,15 @@
 #include "MathGeoLib/Math/float3.h"
 
 #include "MathGeoLib/Geometry/LineSegment.h"
-
+#include <vector>
 #define MAX_LIGHTS 8
 
 class GameObject;
 typedef unsigned int GLenum;
+typedef unsigned int GLuint;
+typedef int GLint;
 class C_Mesh;
+class R_Material;
 class C_Camera;
 class R_Texture;
 class PieShape;
@@ -36,17 +39,18 @@ struct ParticleRenderer
 class OcclusionQuery
 {
 public:
-	OcclusionQuery() { id = 0; type = 0; }
-	OcclusionQuery(int type);
+	OcclusionQuery();
+
 	~OcclusionQuery();
-	void Start();
-	void End();
-	void Delete();
-	int GetResult();
+	void BeginQuery() const;
+	void EndQuery();
+	GLint GetNumSamplesPassed()const;
+	GLint GetResultAvilable()const;
+	bool AnySamplesPassed()const;
 
 private:
-	unsigned int id = 0;
-	int type = 0;
+	GLuint queryID =  0 ; // OpenGL query object ID
+	GLint samplesPassed = 0; // Number of samples passed in last query
 };
 
 
@@ -88,7 +92,7 @@ public:
 	void QueryScene(C_Camera* camera);
 	void RenderBoundingBox(C_Mesh* cMesh);
 	void RenderMeshes(C_Camera* camera, GameObject* go);
-	void RenderMeshesQuery(C_Camera* camera, GameObject* go);
+	void RenderMeshesQuery(C_Camera* camera, GameObject* go,int queryPosition);
 	void RenderSkyBox(C_Camera* camera, SkyBox &skybox);
 
 	void RenderUI(GameObject* go);
@@ -129,7 +133,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	bool isFirstPass = true;
-	bool enableOcclusionCulling = true;
+	bool enableOcclusionCulling = false;
 
 private:
 	bool vsync = false;
@@ -149,8 +153,10 @@ private:
 	bool show_viewport_window = true;
 	//Particle Map
 	std::map<float, ParticleRenderer> particles;
-	OcclusionQuery query;
-	unsigned int queryId = 0;
+	//Occlusion Culling things
+	OcclusionQuery* query = nullptr;
+	R_Material* occlusionMat = nullptr;
+
 };
 
 #endif // !__RENDERER_3D_H__
