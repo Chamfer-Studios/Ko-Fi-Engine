@@ -202,7 +202,15 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		}
 
 		ImGui::Text("Clip Options: ");
-		if (ImGui::Checkbox("Loop", &selectedClip->GetLoopBool())) {}
+		if (ImGui::Checkbox("Loop", &selectedClip->GetLoopBool()))
+		{
+			for (const auto& it : owner->GetParent()->children)
+			{
+				C_Animator* cAnim = it->GetComponent<C_Animator>();
+				if(cAnim != nullptr)
+					cAnim->selectedClip->SetLoopBool(selectedClip->GetLoopBool());
+			}
+		}
 
 		/*ImGui::SameLine();
 		if (ImGui::Button("Restart", ImVec2(70, 18)))

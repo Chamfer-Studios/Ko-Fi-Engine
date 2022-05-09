@@ -481,7 +481,8 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 
 	// Checking if the animation has finished (the animation time ticks is equal to the duration time ticks).
 	float animationSeconds = fmod(timeInSeconds, (float)selectedClip->GetDurationInSeconds());
-	if (animationSeconds < 0.1f)
+	CONSOLE_LOG("%f", animationSeconds);
+	if ((selectedClip->GetDurationInSeconds() - animationSeconds) <= 0.1f && timeInSeconds != 0.0f)
 	{
 		if (!selectedClip->GetLoopBool())
 			selectedClip->SetFinishedBool(true);

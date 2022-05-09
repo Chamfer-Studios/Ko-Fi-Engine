@@ -47,6 +47,6 @@ private:
 	bool				interruptible;
 	const R_Animation*	clipAnim;
 
-	bool				finished = false;
+	bool				finished = true;
 };
 #endif // !__ANIMATOR_CLIP_H__
