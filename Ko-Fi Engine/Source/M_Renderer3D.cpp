@@ -427,8 +427,8 @@ void M_Renderer3D::QueryScene(C_Camera* camera)
 						glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 						GLint color = glGetUniformLocation(shader, "color");
 						glUniform4f(color, 1.0f,0.0f,0.0f,1.0f);
-						glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-						glDepthMask(GL_FALSE);
+						glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+						glDepthMask(GL_TRUE);
 						query->BeginQuery();
 						//Draw Mesh
 						cMesh->GetMesh()->Draw();
