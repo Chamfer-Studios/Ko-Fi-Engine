@@ -393,9 +393,10 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 
 					// Updating default clip with all the keyframes of the animation.
 					AnimatorClip* animClip = animator->GetSelectedClip();
-					animClip->SetDuration(rAnimation->duration);
 					animClip->SetStartFrame(0);
 					animClip->SetEndFrame(rAnimation->duration);
+					animClip->SetDuration(((float)(animClip->GetEndFrame() - animClip->GetStartFrame())) / 1.0f);
+					animClip->SetDurationInSeconds(animClip->GetDuration() / rAnimation->GetTicksPerSecond());
 				}
 			}
 		}
