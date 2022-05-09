@@ -91,6 +91,7 @@ bool M_Renderer3D::PreUpdate(float dt)
 	bool ret = true;
 
 	PrepareFrameBuffers();
+
 	isFirstPass = true;
 
 	return ret;
@@ -112,6 +113,7 @@ bool M_Renderer3D::PostUpdate(float dt)
 	{
 		QueryScene(engine->GetCamera3D()->currentCamera);
 	}
+
 	RenderScene(engine->GetCamera3D()->currentCamera);
 
 	isFirstPass = false;
@@ -323,7 +325,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 	glLoadIdentity();
 	if (engine->GetCamera3D()->currentCamera)
 	{
-		
+
 		glLoadMatrixf((GLfloat*)engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 	}
 	else
@@ -339,8 +341,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 void M_Renderer3D::RenderScene(C_Camera* camera)
 {
 	OPTICK_EVENT();
-	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-	glDepthMask(GL_TRUE);
+
 	//RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
 #pragma omp parallel for
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
@@ -423,7 +424,7 @@ void M_Renderer3D::QueryScene(C_Camera* camera)
 						GLint projection_location = glGetUniformLocation(shader, "projection");
 						glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 						GLint color = glGetUniformLocation(shader, "color");
-						glUniform4f(color, static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX),1.0f);
+						glUniform4f(color, static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), 1.0f);
 						glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 						glDepthMask(GL_TRUE);
 						query->BeginQuery();
@@ -437,9 +438,9 @@ void M_Renderer3D::QueryScene(C_Camera* camera)
 						glDepthMask(GL_TRUE);
 					}
 				}
-				
+
 			}
-			
+
 		}
 
 
@@ -760,7 +761,7 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox& skybox)
 
 		GLint view_location = glGetUniformLocation(shader, "view");
 		glUniformMatrix4fv(view_location, 1, GL_FALSE, view.Transposed().ptr());
-		
+
 
 		float4x4 proj = float4x4::identity;
 		proj = camera->GetProjectionMatrix();
@@ -1116,8 +1117,8 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 
 OcclusionQuery::OcclusionQuery()
 {
-		glGenQueries(1, &queryID);
-		CONSOLE_LOG("Created occlusion query with ID");
+	glGenQueries(1, &queryID);
+	CONSOLE_LOG("Created occlusion query with ID");
 }
 
 OcclusionQuery::~OcclusionQuery()
