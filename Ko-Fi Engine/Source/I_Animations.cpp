@@ -24,12 +24,12 @@ bool I_Animations::Import(const aiAnimation* assimpAnimation, R_Animation* rAnim
 {
 	if (rAnimation == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Animation! Error: R_Anim* was nullptr.");
+		KOFI_ERROR(" Importer: Could not Import Animation! Error: R_Anim* was nullptr.");
 		return false;
 	}
 	if (assimpAnimation == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Animation! Error: Animation* was nullptr.");
+		KOFI_ERROR(" Importer: Could not Import Animation! Error: Animation* was nullptr.");
 		return false;
 	}
 
@@ -158,7 +158,7 @@ bool I_Animations::Save(const R_Animation* animation, const char* path)
 		}
 	}
 	else
-		CONSOLE_LOG("[ERROR] Animation Save: directory %s couldn't be accessed.", ANIMATIONS_DIR);
+		KOFI_ERROR(" Animation Save: directory %s couldn't be accessed.", ANIMATIONS_DIR);
 
 	return false;
 }
@@ -271,7 +271,7 @@ bool I_Animations::Load(const char* path, R_Animation* animation)
 		}
 	}
 	else
-		CONSOLE_LOG("[ERROR] Animation Load: directory %s couldn't be accessed.", ANIMATIONS_DIR);
+		KOFI_ERROR(" Animation Load: directory %s couldn't be accessed.", ANIMATIONS_DIR);
 
 	return false;
 }

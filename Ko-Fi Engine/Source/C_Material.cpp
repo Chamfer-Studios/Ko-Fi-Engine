@@ -154,7 +154,7 @@ void C_Material::Load(Json& json)
 		material = (R_Material*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(materialAssetPath.c_str());
 
 		if (material == nullptr)
-			CONSOLE_LOG("[ERROR] Component Material: could not load resource from library.");
+			KOFI_ERROR(" Component Material: could not load resource from library.");
 		else
 		{
 			std::vector<float> values = json.at("color").get<std::vector<float>>();
@@ -218,7 +218,7 @@ void C_Material::Load(Json& json)
 
 			if (texture == nullptr)
 			{
-				CONSOLE_LOG("[ERROR] Component Material: texture couldn't be loaded from library.");
+				KOFI_ERROR(" Component Material: texture couldn't be loaded from library.");
 				checkerTexture = true;
 				texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 			}

@@ -21,12 +21,12 @@ bool I_Mesh::Import(const aiMesh* aiMesh, R_Mesh* mesh, const aiScene* assimpSce
 {
 	if (mesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Mesh! Error: R_Mesh* was nullptr.");
+		KOFI_ERROR(" Importer: Could not Import Mesh! Error: R_Mesh* was nullptr.");
 		return false;
 	}
 	if (aiMesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Mesh! Error: aiMesh* was nullptr.");
+		KOFI_ERROR(" Importer: Could not Import Mesh! Error: aiMesh* was nullptr.");
 		return false;
 	}
 
@@ -38,7 +38,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, R_Mesh* mesh, const aiScene* assimpSce
 		mesh->vertices = (float*)malloc(mesh->verticesSizeBytes);
 		memcpy(mesh->vertices, aiMesh->mVertices, mesh->verticesSizeBytes); // &vertices[0]
 
-		CONSOLE_LOG("[STATUS] Imported %u position vertices!", aiMesh->mNumVertices * 3);
+		KOFI_STATUS(" Imported %u position vertices!", aiMesh->mNumVertices * 3);
 	}
 
 	if (aiMesh->HasFaces())
@@ -61,7 +61,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, R_Mesh* mesh, const aiScene* assimpSce
 		mesh->normals = (float*)malloc(mesh->normalsSizeBytes);
 		memcpy(mesh->normals, aiMesh->mNormals, mesh->normalsSizeBytes);
 
-		CONSOLE_LOG("[STATUS] Imported %u normals!", aiMesh->mNumVertices * 3);
+		KOFI_STATUS("Imported %u normals!", aiMesh->mNumVertices * 3);
 	}
 
 	if (aiMesh->HasTextureCoords(0))
@@ -74,7 +74,7 @@ bool I_Mesh::Import(const aiMesh* aiMesh, R_Mesh* mesh, const aiScene* assimpSce
 			mesh->texCoords[j * 2 + 1] = 1.0f - aiMesh->mTextureCoords[0][j].y;
 		}
 
-		CONSOLE_LOG("[STATUS] Imported %u texture coordinates!", aiMesh->mNumVertices * 2);
+		KOFI_STATUS("Imported %u texture coordinates!", aiMesh->mNumVertices * 2);
 	}
 	else
 		mesh->texCoords = 0;
@@ -211,7 +211,7 @@ bool I_Mesh::Save(const R_Mesh* mesh, const char* path)
 		}
 	}
 	else
-		CONSOLE_LOG("[ERROR] Mesh Save: directory %s couldn't be accessed.", MESHES_DIR);
+		KOFI_ERROR(" Mesh Save: directory %s couldn't be accessed.", MESHES_DIR);
 
 	return false;
 }
@@ -333,7 +333,7 @@ bool I_Mesh::Load(const char* path, R_Mesh* mesh)
 		}
 	}
 	else
-		CONSOLE_LOG("[ERROR] Mesh Load: directory %s couldn't be accessed.", MESHES_DIR);
+		KOFI_ERROR(" Mesh Load: directory %s couldn't be accessed.", MESHES_DIR);
 
 	return false;
 }

@@ -112,7 +112,7 @@ void C_Mesh::Load(Json& json)
 		mesh = (R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
 
 		if (mesh == nullptr)
-			CONSOLE_LOG("[ERROR] Component Mesh: could not load resource from library.");
+			KOFI_ERROR(" Component Mesh: could not load resource from library.");
 		else
 		{
 			GenerateLocalBoundingBox();
@@ -144,7 +144,7 @@ void C_Mesh::SetPath(const char* path)
 	if (mesh != nullptr)
 		mesh->SetAssetPath(path);
 	else
-		CONSOLE_LOG("[ERROR] Mesh: Could not set path, mesh was nullptr.");
+		KOFI_ERROR(" Mesh: Could not set path, mesh was nullptr.");
 }
 
 void C_Mesh::SetVertexNormals(bool vertexNormals)
@@ -164,7 +164,7 @@ const char* C_Mesh::GetMeshPath() const
 	if (mesh != nullptr)
 		return mesh->GetAssetPath();
 	else
-		CONSOLE_LOG("[ERROR] Mesh: Could not get assets path, mesh was nullptr.");
+		KOFI_ERROR(" Mesh: Could not get assets path, mesh was nullptr.");
 	return nullptr;
 }
 
@@ -173,7 +173,7 @@ float3 C_Mesh::GetCenterPoint() const
 	if (mesh != nullptr)
 		return mesh->localAABB.CenterPoint();
 	else
-		CONSOLE_LOG("[ERROR] Mesh: Could not get center point, mesh was nullptr.");
+		KOFI_ERROR(" Mesh: Could not get center point, mesh was nullptr.");
 	return float3::zero;
 }
 
@@ -211,7 +211,7 @@ const AABB C_Mesh::GetLocalAABB()
 		return mesh->localAABB;
 	}
 	else
-		CONSOLE_LOG("[ERROR] Mesh: Could not get local AABB, mesh was nullptr.");
+		KOFI_ERROR(" Mesh: Could not get local AABB, mesh was nullptr.");
 
 	return AABB();
 }

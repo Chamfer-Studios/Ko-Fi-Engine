@@ -771,7 +771,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			}
 			case ComponentType::NONE:
 			{
-				CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
+				KOFI_ERROR(" Importer: Component type is none, something went wrong!");
 				return false;
 				break;
 			}
@@ -864,7 +864,7 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			}
 			case ComponentType::NONE:
 			{
-				CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
+				KOFI_ERROR(" Importer: Component type is none, something went wrong!");
 				return false;
 				break;
 			}

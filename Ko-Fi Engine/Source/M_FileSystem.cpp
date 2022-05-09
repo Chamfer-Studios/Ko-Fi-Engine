@@ -169,12 +169,12 @@ void M_FileSystem::DiscoverAllFiles(const char* directory, std::vector<std::stri
 {
 	if (directory == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory string was nullptr.");
+		KOFI_ERROR(" Resource Manager: discovering files, directory string was nullptr.");
 		return;
 	}
 	if (!std::filesystem::exists(directory))
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
+		KOFI_ERROR(" Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
 		return;
 	}
 
@@ -195,17 +195,17 @@ void M_FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<s
 {
 	if (directory == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory string was nullptr.");
+		KOFI_ERROR(" Resource Manager: discovering files, directory string was nullptr.");
 		return;
 	}
 	if (!std::filesystem::exists(directory))
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
+		KOFI_ERROR(" Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
 		return;
 	}
 	if (filter == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: Filter was nullptr.");
+		KOFI_ERROR(" Resource Manager: Filter was nullptr.");
 		return;
 	}
 
@@ -297,7 +297,7 @@ bool M_FileSystem::CopyFileTo(const char* sourcePath, const char* destinationPat
 		}
 		catch (std::filesystem::filesystem_error& e)
 		{
-			CONSOLE_LOG("[ERROR] Filesystem: couldn't copy &s: &s", sourcePath, e.what());
+			KOFI_ERROR(" Filesystem: couldn't copy &s: &s", sourcePath, e.what());
 			return false;
 		}
 	}

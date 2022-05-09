@@ -181,7 +181,7 @@ bool M_Renderer3D::InitOpenGL()
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &contextMinorVersion);
 	if (!context)
 	{
-		CONSOLE_LOG("[ERROR] OpenGL context could not be created! SDL_ERROR: %s\n", SDL_GetError());
+		KOFI_ERROR(" OpenGL context could not be created! SDL_ERROR: %s\n", SDL_GetError());
 		ret = false;
 	}
 	ret = InitGlew();
@@ -190,12 +190,12 @@ bool M_Renderer3D::InitOpenGL()
 		if (this->vsync)
 		{
 			SDL_GL_SetSwapInterval(1) < 0 ?
-				CONSOLE_LOG("[ERROR] Unable to set Vsync! SDL Error: %s\n", SDL_GetError()) : CONSOLE_LOG("[STATUS] Vsync is activated!");
+				KOFI_ERROR(" Unable to set Vsync! SDL Error: %s\n", SDL_GetError()) : KOFI_STATUS(" Vsync is activated!");
 		}
 		else
 		{
 			SDL_GL_SetSwapInterval(0) < 0 ?
-				CONSOLE_LOG("[ERROR] Unable to set frame update interval to immediate! SDL Error: %s\n", SDL_GetError()) : CONSOLE_LOG("[STATUS] Vsync is deactivated!");
+				KOFI_ERROR(" Unable to set frame update interval to immediate! SDL Error: %s\n", SDL_GetError()) : KOFI_STATUS(" Vsync is deactivated!");
 		}
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -247,7 +247,7 @@ bool M_Renderer3D::InitGlew()
 	GLuint GLEWerr = glewInit();
 	if (GLEWerr != GLEW_OK)
 	{
-		CONSOLE_LOG("[ERROR] GLEW could not initialize!: %s\n", glewGetErrorString(GLEWerr));
+		KOFI_ERROR(" GLEW could not initialize!: %s\n", glewGetErrorString(GLEWerr));
 		ret = false;
 	}
 	return ret;
@@ -315,7 +315,7 @@ void M_Renderer3D::RecalculateProjectionMatrix()
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] M_Renderer3D: Could not recalculate the projection matrix!Error : Current Camera was nullptr.");
+		KOFI_ERROR(" M_Renderer3D: Could not recalculate the projection matrix!Error : Current Camera was nullptr.");
 	}
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -389,7 +389,7 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 			if (cMesh->GetMesh() != nullptr)
 				cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
 			else
-				CONSOLE_LOG("[ERROR] Renderer: Could not draw local AABB, mesh was nullptr.");
+				KOFI_ERROR(" Renderer: Could not draw local AABB, mesh was nullptr.");
 		}
 	}
 
@@ -744,7 +744,7 @@ void M_Renderer3D::OnResize()
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Renderer 3D: Could not recalculate the aspect ratio! Error: Current Camera was nullptr.");
+		KOFI_ERROR(" Renderer 3D: Could not recalculate the aspect ratio! Error: Current Camera was nullptr.");
 	}
 	RecalculateProjectionMatrix();
 }

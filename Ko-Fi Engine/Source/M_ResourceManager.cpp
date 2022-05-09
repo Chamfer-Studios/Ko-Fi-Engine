@@ -138,7 +138,7 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 {
 	if (directory == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: trying to refresh directory files, string was nullptr.");
+		KOFI_ERROR(" Resource Manager: trying to refresh directory files, string was nullptr.");
 		return;
 	}
 
@@ -196,7 +196,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading file, assets file path was nullptr.");
+		KOFI_ERROR(" Resource Manager: loading file, assets file path was nullptr.");
 		return uid;
 	}
 
@@ -209,14 +209,14 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 	std::string cleanPath = GetValidPath(assetPath);
 	if (cleanPath.c_str() == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading file, couldn't validate path.");
+		KOFI_ERROR(" Resource Manager: loading file, couldn't validate path.");
 		return uid;
 	}
 
 	bool metaIsValid = ValidateMetaFile(assetPath);
 	if (metaIsValid)
 	{
-		CONSOLE_LOG("[STATUS] Resource Manager: file to import was already in the library.");
+		KOFI_STATUS(" Resource Manager: file to import was already in the library.");
 
 		std::map<UID, ResourceBase> libraryItems;
 		GetLibraryPairs(assetPath, libraryItems);
@@ -237,7 +237,7 @@ UID M_ResourceManager::ImportFile(const char* assetPath)
 		uid = ImportFromAssets(assetPath);
 
 		if (uid == 0)
-			CONSOLE_LOG("[ERROR] Resource Manager: loading file, error loading file from assets.");
+			KOFI_ERROR(" Resource Manager: loading file, error loading file from assets.");
 	}
 
 	return uid;
@@ -249,7 +249,7 @@ bool M_ResourceManager::SaveResource(Resource* resource)
 
 	if (resource == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: saving resource, resource was nullptr.");
+		KOFI_ERROR(" Resource Manager: saving resource, resource was nullptr.");
 		return false;
 	}
 
@@ -300,7 +300,7 @@ Resource* M_ResourceManager::GetResourceFromLibrary(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting resource, library path was nullptr.");
+		KOFI_ERROR(" Resource Manager: getting resource, library path was nullptr.");
 		return nullptr;
 	}
 
@@ -418,7 +418,7 @@ UID M_ResourceManager::LoadFromLibrary(const char* assetPath)
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
+		KOFI_ERROR(" Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
 	}
 
 	return uid;
@@ -462,7 +462,7 @@ Resource* M_ResourceManager::RequestResource(UID uid)
 {
 	if (uid == 0)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: resource request failed! Requested UID was 0.");
+		KOFI_ERROR(" Resource Manager: resource request failed! Requested UID was 0.");
 		return nullptr;
 	}
 
@@ -479,17 +479,17 @@ bool M_ResourceManager::LoadResource(UID uid, const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, assets path was nullptr.");
+		KOFI_ERROR(" Resource Manager: could not load resource, assets path was nullptr.");
 		return false;
 	}
 	if (uid == 0)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, invalid uid.");
+		KOFI_ERROR(" Resource Manager: could not load resource, invalid uid.");
 		return false;
 	}
 	if (library.find(uid) == library.end())
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not load resource, resource could not be found in library.");
+		KOFI_ERROR(" Resource Manager: could not load resource, resource could not be found in library.");
 		return false;
 	}
 
@@ -535,12 +535,12 @@ bool M_ResourceManager::LoadResource(UID uid, const char* assetPath)
 	if (ret)
 	{
 		resourcesMap.emplace(resource->GetUID(), resource);
-		CONSOLE_LOG("[STATUS] Resource Manager: successfully loaded resource: %s in memory.", resource->GetAssetFile());
+		KOFI_STATUS(" Resource Manager: successfully loaded resource: %s in memory.", resource->GetAssetFile());
 	}
 	else
 	{
 		UnloadResource(resource);
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't load the resource data from file: %s.", libraryPath.c_str());
+		KOFI_ERROR(" Resource Manager: couldn't load the resource data from file: %s.", libraryPath.c_str());
 	}
 
 	return ret;
@@ -550,14 +550,14 @@ bool M_ResourceManager::FreeResource(UID uid)
 {
 	if (uid == 0)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: resource free failed! Requested UID was 0.");
+		KOFI_ERROR(" Resource Manager: resource free failed! Requested UID was 0.");
 		return false;
 	}
 
 	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
 	if (it == resourcesMap.end())
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: resource free failed! Requested UID wasn't in the resources map.");
+		KOFI_ERROR(" Resource Manager: resource free failed! Requested UID wasn't in the resources map.");
 		return false;
 	}
 
@@ -571,7 +571,7 @@ bool M_ResourceManager::UnloadResource(Resource* resource)
 {
 	if (resource == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: trying to unload resource, resource was nullptr.");
+		KOFI_ERROR(" Resource Manager: trying to unload resource, resource was nullptr.");
 		return false;
 	}
 
@@ -595,14 +595,14 @@ bool M_ResourceManager::UnloadResource(UID uid)
 {
 	if (uid == 0)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: Could not Deallocate Resource! Error: Given UID was 0");
+		KOFI_ERROR(" Resource Manager: Could not Deallocate Resource! Error: Given UID was 0");
 		return false;
 	}
 
 	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
 	if (it == resourcesMap.end())
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't unload resource. Resource was not allocated in memory.");
+		KOFI_ERROR(" Resource Manager: couldn't unload resource. Resource was not allocated in memory.");
 		return false;
 	}
 
@@ -621,7 +621,7 @@ bool M_ResourceManager::DeleteAndUnloadResource(UID uid)
 	std::map<UID, Resource*>::iterator it = resourcesMap.find(uid);
 	if (it == resourcesMap.end())
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: trying to delete resource, resource was not inside map!");
+		KOFI_ERROR(" Resource Manager: trying to delete resource, resource was not inside map!");
 		return false;
 	}
 
@@ -650,7 +650,7 @@ void M_ResourceManager::FindAndForceUID(Resource* resource)
 {
 	if (resource == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: Resource pointer is nullptr.");
+		KOFI_ERROR(" Resource Manager: Resource pointer is nullptr.");
 		return;
 	}
 
@@ -663,7 +663,7 @@ UID M_ResourceManager::GetForcedUIDFromMeta(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: Could not get forced UID from meta, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: Could not get forced UID from meta, asset path was nullptr.");
 		return 0;
 	}
 
@@ -682,10 +682,10 @@ UID M_ResourceManager::GetForcedUIDFromMeta(const char* assetPath)
 	{
 		uid = jsonMeta.at("uid");
 		if (uid == 0)
-			CONSOLE_LOG("[ERROR] Resource Manager: Resource UID was 0.");
+			KOFI_ERROR(" Resource Manager: Resource UID was 0.");
 	}
 	else
-		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UID from meta. Asset path had no associated meta file.");
+		KOFI_ERROR(" Resource Manager: getting forced UID from meta. Asset path had no associated meta file.");
 
 	return uid;
 }
@@ -696,7 +696,7 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: getting forced UIDs from meta, asset path was nullptr.");
 		return false;
 	}
 
@@ -716,7 +716,7 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 		UID uid = jsonMeta.at("uid");
 		if (uid == 0)
 		{
-			CONSOLE_LOG("[ERROR] Resource Manager: main resource UID was 0.");
+			KOFI_ERROR(" Resource Manager: main resource UID was 0.");
 			return false;
 		}
 
@@ -732,7 +732,7 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 					UID containedUid = containedIt.value().at("uid");
 					if (containedUid == 0)
 					{
-						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
+						KOFI_ERROR(" Resource Manager: contained resource UID was 0.");
 						continue;
 					}
 					uids.emplace(containedName, containedUid);
@@ -741,7 +741,7 @@ bool M_ResourceManager::GetForcedUIDsFromMeta(const char* assetPath, std::map<st
 		}
 	}
 	else
-		CONSOLE_LOG("[ERROR] Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
+		KOFI_ERROR(" Resource Manager: getting forced UIDs from meta. Asset path had no associated meta file.");
 
 	return ret;
 }
@@ -809,7 +809,7 @@ void M_ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& fi
 
 		if (assetTime != metaTime)
 		{
-			CONSOLE_LOG("[STATUS] Resource Manager: modification time discrepancy with file %s\n", item.first.c_str());
+			KOFI_STATUS(" Resource Manager: modification time discrepancy with file %s\n", item.first.c_str());
 			toUpdate.push_back(item.first);
 		}
 	}
@@ -842,13 +842,13 @@ void M_ResourceManager::DeleteFromLibrary(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: deleting file from library, asset path was nullptr.");
 		return;
 	}
 
 	if (!HasMetaFile(assetPath))
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting file from library, %s file couldn't be found or doesn't exist.", assetPath);
+		KOFI_ERROR(" Resource Manager: deleting file from library, %s file couldn't be found or doesn't exist.", assetPath);
 		return;
 	}
 
@@ -876,7 +876,7 @@ void M_ResourceManager::DeleteFromAssets(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: deleting from assets, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: deleting from assets, asset path was nullptr.");
 		return;
 	}
 
@@ -937,7 +937,7 @@ bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetPath, std::vect
 
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting UIDs from meta, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: getting UIDs from meta, asset path was nullptr.");
 		return false;
 	}
 
@@ -952,7 +952,7 @@ bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetPath, std::vect
 		UID uid = jsonMeta.at("uid");
 		if (uid == 0)
 		{
-			CONSOLE_LOG("[ERROR] Resource Manager: main resource UID was 0.");
+			KOFI_ERROR(" Resource Manager: main resource UID was 0.");
 			return false;
 		}
 
@@ -967,7 +967,7 @@ bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetPath, std::vect
 					UID containedUid = containedIt.value().at("uid");
 					if (containedUid == 0)
 					{
-						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
+						KOFI_ERROR(" Resource Manager: contained resource UID was 0.");
 						continue;
 					}
 					uids.push_back(containedUid);
@@ -976,7 +976,7 @@ bool M_ResourceManager::GetResourceUIDsFromMeta(const char* assetPath, std::vect
 		}
 	}
 	else
-		CONSOLE_LOG("[ERROR] Resource Manager: getting UIDs from meta. Asset path had no associated meta file.");
+		KOFI_ERROR(" Resource Manager: getting UIDs from meta. Asset path had no associated meta file.");
 
 	return ret;
 }
@@ -987,7 +987,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting resource bases from meta, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: getting resource bases from meta, asset path was nullptr.");
 		return false;
 	}
 
@@ -1010,7 +1010,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 
 		if (uid == 0)
 		{
-			CONSOLE_LOG("[ERROR] Resource Manager: main resource UID was 0.");
+			KOFI_ERROR(" Resource Manager: main resource UID was 0.");
 			return false;
 		}
 		bases.push_back(ResourceBase(uid, type, assetPath, assetFile, libraryPath, libraryFile));
@@ -1024,7 +1024,7 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 					UID containedUid = containedIt.value().at("uid");
 					if (containedUid == 0)
 					{
-						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
+						KOFI_ERROR(" Resource Manager: contained resource UID was 0.");
 						continue;
 					}
 
@@ -1068,7 +1068,7 @@ bool M_ResourceManager::GetLibraryFilePathsFromMeta(const char* assetPath, std::
 
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting library file paths from meta, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: getting library file paths from meta, asset path was nullptr.");
 		return false;
 	}
 
@@ -1145,7 +1145,7 @@ bool M_ResourceManager::GetAssetDirectoryFromType(const ResourceType& type, std:
 		//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::UNKNOWN:
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't return asset directory from type because it is UNKNOWN.");
+		KOFI_ERROR(" Resource Manager: couldn't return asset directory from type because it is UNKNOWN.");
 		return false;
 	}
 	break;
@@ -1170,7 +1170,7 @@ bool M_ResourceManager::GetLibraryDirectoryAndExtensionFromType(const ResourceTy
 		//case ResourceType::PARTICLE: { directory = ASSETS_MODELS_DIR; } break;
 	case ResourceType::UNKNOWN:
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't return library directory from type because it is UNKNOWN.");
+		KOFI_ERROR(" Resource Manager: couldn't return library directory from type because it is UNKNOWN.");
 		return false;
 	}
 	break;
@@ -1185,7 +1185,7 @@ bool M_ResourceManager::LoadMetaLibraryPairsIntoLibrary(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading meta file into library, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: loading meta file into library, asset path was nullptr.");
 		return false;
 	}
 
@@ -1207,7 +1207,7 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetPath, std::map<UID, Res
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting library pairs, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: getting library pairs, asset path was nullptr.");
 		return false;
 	}
 
@@ -1236,7 +1236,7 @@ int M_ResourceManager::GetModTimeFromMeta(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: getting modification time from meta, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: getting modification time from meta, asset path was nullptr.");
 		return 0;
 	}
 
@@ -1268,7 +1268,7 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: loading from assets, path was nullptr.");
+		KOFI_ERROR(" Resource Manager: loading from assets, path was nullptr.");
 		return uid;
 	}
 
@@ -1299,7 +1299,7 @@ UID M_ResourceManager::ImportFromAssets(const char* assetPath)
 
 	if (!success)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: could not import asset file: %s", assetPath);
+		KOFI_ERROR(" Resource Manager: could not import asset file: %s", assetPath);
 		UnloadResource(resource);
 		return 0;
 	}
@@ -1333,7 +1333,7 @@ std::string M_ResourceManager::GetValidPath(const char* path) const
 	else if (libraryStart != std::string::npos)
 		resultPath = normalizedPath.substr(libraryStart, normalizedPath.size());
 	else
-		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't validate path.");
+		KOFI_ERROR(" Resource Manager: Couldn't validate path.");
 
 	return resultPath;
 }
@@ -1364,7 +1364,7 @@ ResourceType M_ResourceManager::GetTypeFromPathExtension(const char* path)
 	//else if (engine->GetFileSystem()->StringCompare(extension.c_str(), FONT_EXTENSION) == 0)
 		//ret = ResourceType::FONT;
 	else
-		CONSOLE_LOG("[ERROR] Resource Manager: couldn't import from the given asset path. File extension: %s is not supported.", extension.c_str());
+		KOFI_ERROR(" Resource Manager: couldn't import from the given asset path. File extension: %s is not supported.", extension.c_str());
 
 	return ret;
 }
@@ -1375,7 +1375,7 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 
 	if (resource == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: saving meta file, resource was nullptr.");
+		KOFI_ERROR(" Resource Manager: saving meta file, resource was nullptr.");
 		return false;
 	}
 
@@ -1396,9 +1396,9 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 	ret = jsonHandler.SaveJson(jsonMeta, path.c_str());
 
 	if (ret)
-		CONSOLE_LOG("[STATUS] Resource Manager: meta file saved for resource: %s", resource->GetAssetPath());
+		KOFI_STATUS(" Resource Manager: meta file saved for resource: %s", resource->GetAssetPath());
 	else
-		CONSOLE_LOG("[ERROR] Resource Manager: Couldn't save meta file for resource: %s", resource->GetAssetPath());
+		KOFI_ERROR(" Resource Manager: Couldn't save meta file for resource: %s", resource->GetAssetPath());
 
 	return ret;
 }
@@ -1407,7 +1407,7 @@ bool M_ResourceManager::HasMetaFile(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: checking for meta file, asset path was nullptr.");
+		KOFI_ERROR(" Resource Manager: checking for meta file, asset path was nullptr.");
 		return false;
 	}
 
@@ -1421,7 +1421,7 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetPath, bool libraryChec
 
 	if (assetPath == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: validating meta file, assetPath was nullptr.");
+		KOFI_ERROR(" Resource Manager: validating meta file, assetPath was nullptr.");
 		return false;
 	}
 
@@ -1431,7 +1431,7 @@ bool M_ResourceManager::ValidateMetaFile(const char* assetPath, bool libraryChec
 
 	if (!std::filesystem::exists(metaPath))
 	{
-		CONSOLE_LOG("[STATUS] Resource Manager: couldn't find meta file.");
+		KOFI_STATUS(" Resource Manager: couldn't find meta file.");
 		return false;
 	}
 
@@ -1534,7 +1534,7 @@ bool M_ResourceManager::ResourceHasMetaType(Resource* resource) const
 {
 	if (resource == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: checking meta type, resource was nullptr.");
+		KOFI_ERROR(" Resource Manager: checking meta type, resource was nullptr.");
 		return false;
 	}
 

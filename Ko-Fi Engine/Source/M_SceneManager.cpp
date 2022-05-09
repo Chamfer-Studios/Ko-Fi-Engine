@@ -226,7 +226,7 @@ bool M_SceneManager::LoadResourceToScene(Resource* resource)
 {
 	if (resource == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Scene: Could not load resource into scene, resource pointer was nullptr.");
+		KOFI_ERROR(" Scene: Could not load resource into scene, resource pointer was nullptr.");
 		return false;
 	}
 
@@ -251,19 +251,19 @@ bool M_SceneManager::ApplyTextureToSelectedGameObject(UID uid)
 {
 	if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
 	{
-		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), no GameObject was selected.");
+		KOFI_ERROR(" Scene: Could not apply texture to selected GameObject(s), no GameObject was selected.");
 		return false;
 	}
 	if (uid == 0)
 	{
-		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), texture uid was 0.");
+		KOFI_ERROR(" Scene: Could not apply texture to selected GameObject(s), texture uid was 0.");
 		return false;
 	}
 
 	R_Texture* texture = (R_Texture*)engine->GetResourceManager()->RequestResource(uid);
 	if (texture == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Scene: Could not apply texture to selected GameObject(s), resource texture was nullptr.");
+		KOFI_ERROR(" Scene: Could not apply texture to selected GameObject(s), resource texture was nullptr.");
 		return false;
 	}
 
@@ -285,7 +285,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 {
 	if (model == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Scene Manager: Could not generate GameObjects from resource model, model was nullptr.");
+		KOFI_ERROR(" Scene Manager: Could not generate GameObjects from resource model, model was nullptr.");
 		return false;
 	}
 	// TODO: Add sceneModels map
@@ -367,7 +367,7 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 		R_Mesh* rMesh = (R_Mesh*)engine->GetResourceManager()->RequestResource(node.mesh);
 		if (rMesh == nullptr)
 		{
-			CONSOLE_LOG("[ERROR] Scene: Could not get resource mesh from model node.");
+			KOFI_ERROR(" Scene: Could not get resource mesh from model node.");
 			gameobject->DeleteComponent(mesh);
 			return;
 		}
@@ -412,7 +412,7 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 			R_Texture* rTexture = (R_Texture*)engine->GetResourceManager()->RequestResource(node.texture);
 			if (rTexture == nullptr)
 			{
-				CONSOLE_LOG("[ERROR] Scene: Could not get resource texture from model node.");
+				KOFI_ERROR(" Scene: Could not get resource texture from model node.");
 				return;
 			}
 			material->texture = rTexture;

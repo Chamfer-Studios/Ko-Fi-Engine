@@ -254,7 +254,7 @@ void C_Animator::Load(Json& json)
 		animation = (R_Animation*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
 
 		if (animation == nullptr)
-			CONSOLE_LOG("[ERROR] Component Animation: could not load resource from library.");
+			KOFI_ERROR(" Component Animation: could not load resource from library.");
 		else
 		{
 			C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
@@ -289,12 +289,12 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 {
 	if (clip.GetAnimation() == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip.GetName());
+		KOFI_ERROR(" Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip.GetName());
 		return false;
 	}
 	if (clips.find(clip.GetName()) != clips.end())
 	{ 
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip.GetName().c_str());
+		KOFI_ERROR(" Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip.GetName().c_str());
 		return false;
 	}
 
