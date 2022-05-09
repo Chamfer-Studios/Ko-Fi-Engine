@@ -46,7 +46,6 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
 	engineCamera->SetFarPlaneDistance(10000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
-	engineCamera->SetIsFrustumActive(true);
 
 	currentCamera = engineCamera;
 }
@@ -82,8 +81,6 @@ bool M_Camera3D::Update(float dt)
 	OPTICK_EVENT();
 
 	FocusTarget();
-	if (engineCamera->GetIsFrustumActive())
-		engineCamera->FrustumCulling();
 
 	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
 		return true;
@@ -181,8 +178,8 @@ void M_Camera3D::MouseZoom(float dt)
 // A function that takes the delta mouse motion as x and y inputs, creates a quaternion representing a rotation based on the mouse motion, and applies that rotation to the camera's orientation.
 void M_Camera3D::MouseRotation(float dt)
 {
-	int xMotion = engine->GetInput()->GetMouseXMotion();
-	int yMotion = engine->GetInput()->GetMouseYMotion();
+	int xMotion = -engine->GetInput()->GetMouseXMotion(); // (-) Because is a Right Handed Camera
+	int yMotion = -engine->GetInput()->GetMouseYMotion(); // (-) Because is a Right Handed Camera
 	if (xMotion != 0) {
 		const float newDeltaX = (float)xMotion * cameraSensitivity;
 		float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX);
