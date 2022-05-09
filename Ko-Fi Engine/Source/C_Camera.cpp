@@ -253,7 +253,8 @@ void C_Camera::SetProjectionType(const CameraType& type)
 	{
 		hFov = cameraFrustum.HorizontalFov();
 		vFov = cameraFrustum.VerticalFov();
-		cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->viewportSize.x, owner->GetEngine()->GetEditor()->viewportSize.y);
+		cameraFrustum.SetOrthographic(265.0, 256.0);
+		//SetViewPlaneDistances(0, 256.0);
 	}
 	else if (type == CameraType::KOFI_PERSPECTIVE)
 	{

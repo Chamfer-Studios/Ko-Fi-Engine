@@ -115,6 +115,8 @@ private:
 	//inspector variables
 	int sType = 0;
 	bool castShadows = false;
+	float hFov = 0.0f;
+	float vFov = 0.0f;
 };
 
 #endif // !__C_LIGHTSOURCE_H__

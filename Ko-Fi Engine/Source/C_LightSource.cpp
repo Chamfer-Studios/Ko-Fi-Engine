@@ -46,7 +46,7 @@ bool C_LightSource::Start()
 
 bool C_LightSource::Update(float dt)
 {
-
+	
 	return true;
 }
 
@@ -60,7 +60,7 @@ bool C_LightSource::PostUpdate(float dt)
 		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->GetCameraFrustum().ViewProjMatrix();
 
 	}
-	return false;
+	return true;
 }
 
 bool C_LightSource::CleanUp()
@@ -273,6 +273,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 				CastShadows();
 				owner->GetEngine()->GetSceneManager()->GetCurrentScene()->SetShadowCaster(owner);
 			}
+
 			break;
 		}
 		case SourceType::POINT:

@@ -126,7 +126,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, DirLight light)
     //vertex remains untouched so this step is actually quite meaningless.
     //However, it is necessary when using perspective projection so 
     //keeping this line ensures it works with both projection matrices.
-    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLight  Space.w;
     
     projCoords = projCoords * 0.5 + 0.5; 
     float closestDepth = texture(depthMap, projCoords.xy).r;   
@@ -136,7 +136,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, DirLight light)
     //the bias is to reduce artifacts when looking at shadows from an angle.
     //simply offsets the depth of the shadow map a little
     float bias = 0.01; 
-    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;  
+    float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;  
 
     return (1.0 - shadow);
 }
