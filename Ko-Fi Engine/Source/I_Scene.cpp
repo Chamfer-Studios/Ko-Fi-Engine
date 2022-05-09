@@ -60,7 +60,9 @@ I_Scene::I_Scene(KoFiEngine* engine) : engine(engine)
 
 I_Scene::~I_Scene()
 {
+	loadedNodes.clear();
 	loadedTextures.clear();
+	forcedUIDs.clear();
 }
 
 bool I_Scene::Import(R_Model* model, bool isPrefab)
@@ -99,9 +101,13 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 
 	nodeName = engine->GetFileSystem()->GetNameFromPath(model->GetAssetPath());
 
+	std::vector<std::string> metaFiles;
+	engine->GetFileSystem()->DiscoverAllFilesFiltered(ASSETS_TEXTURES_DIR, metaFiles, pngFiles, PNG_EXTENSION);
+
 	ImportNode(assimpScene, assimpScene->mRootNode, model, ModelNode(), isPrefab);
 
 	loadedNodes.clear();
+	loadedTextures.clear();
 	forcedUIDs.clear();
 
 	return true;
@@ -132,7 +138,7 @@ bool I_Scene::SaveModel(const R_Model* model, const char* path)
 		jsonNode["parent_uid"] = node.parentUid;
 		jsonNode["mesh_uid"] = node.mesh;
 		jsonNode["texture_uid"] = node.texture;
-		jsonNode["texture_name"] = node.textureName;
+		jsonNode["texture_path"] = node.texturePath;
 
 		jsonNode["position"]["x"] = node.position.x;
 		jsonNode["position"]["y"] = node.position.y;
@@ -197,7 +203,7 @@ bool I_Scene::LoadModel(const char* path, R_Model* model)
 				modelNode.parentUid = node.value().at("parent_uid");
 				modelNode.mesh = node.value().at("mesh_uid");
 				modelNode.texture = node.value().at("texture_uid");
-				modelNode.textureName = node.value().at("texture_name").get<std::string>();
+				modelNode.texturePath = node.value().at("texture_path").get<std::string>();
 
 				modelNode.position.x = node.value().at("position").at("x");
 				modelNode.position.y = node.value().at("position").at("y");
@@ -1181,50 +1187,62 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 	if (assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &aiTexturePath) == AI_SUCCESS)
 	{
 		std::filesystem::path textureFilename = aiTexturePath.C_Str();
+		textureFilename = textureFilename.filename();
 
-		std::string texturePath = ASSETS_TEXTURES_DIR + textureFilename.filename().string();
-		if (std::filesystem::exists(texturePath))
+
+		std::string texturePath;
+		std::filesystem::path filteredFilename;
+		for (const auto& filterIt : pngFiles)
 		{
-			std::map<std::string, UID>::iterator it = loadedTextures.find(textureFilename.filename().string());
-			if (it != loadedTextures.end())
+			filteredFilename = filterIt;
+			if (filteredFilename.filename() == textureFilename)
 			{
-				node.texture = it->second;
-				node.textureName = textureFilename.filename().string();
-				return;
+				texturePath = filteredFilename.string();
+				break;
 			}
+		}
 
-			texture = (R_Texture*)engine->GetResourceManager()->CreateNewResource(ResourceType::TEXTURE, texturePath.c_str());
-			bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
+		if (texturePath.empty())
+		{
+			CONSOLE_LOG("[ERROR] Importer: couldn't load texture with filename %s.", textureFilename.string().c_str());
+			return;
+		}
 
-			if (!ret)
-			{
-				CONSOLE_LOG("[ERROR] Importer: Texture couldn't import texture: %s", texturePath.c_str());
-				engine->GetResourceManager()->UnloadResource(texture);
-				return;
-			}
+		std::map<std::string, UID>::iterator it = loadedTextures.find(textureFilename.string());
+		if (it != loadedTextures.end())
+		{
+			node.texture = it->second;
+			node.texturePath = texturePath;
+			return;
+		}
 
-			CheckAndApplyForcedUID(texture);
+		texture = (R_Texture*)engine->GetResourceManager()->GetResourceFromLibrary(texturePath.c_str());
+		if (texture != nullptr)
+		{
 			node.texture = texture->GetUID();
-			node.textureName = texture->GetAssetFile();
-
-			loadedTextures.emplace(textureFilename.filename().string(), texture->GetUID());
-
-			engine->GetResourceManager()->SaveResource(texture);
-			engine->GetResourceManager()->UnloadResource(texture);
+			node.texturePath = texturePath;
+			loadedTextures.emplace(textureFilename.string(), texture->GetUID());
+			engine->GetResourceManager()->FreeResource(texture->GetUID());
+			return;
 		}
-		else
+
+		texture = (R_Texture*)engine->GetResourceManager()->CreateNewResource(ResourceType::TEXTURE, texturePath.c_str());
+		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
+		if (!ret)
 		{
-			CONSOLE_LOG("[STATUS] Importer: Texture was not in default texture folder, checking by name...");
-
-			std::map<std::string, UID>::iterator it = loadedTextures.find(textureFilename.filename().string());
-			if (it != loadedTextures.end())
-			{
-				node.texture = it->second;
-				node.textureName = textureFilename.filename().string();
-				return;
-			}
-				CONSOLE_LOG("[ERROR] Importer: couldn't load textrue with path %s.", aiTexturePath.C_Str());
+			CONSOLE_LOG("[ERROR] Importer: Texture couldn't import texture: %s", texturePath.c_str());
+			engine->GetResourceManager()->UnloadResource(texture);
+			return;
 		}
+
+		CheckAndApplyForcedUID(texture);
+		node.texture = texture->GetUID();
+		node.texturePath = texture->GetAssetPath();
+
+		loadedTextures.emplace(textureFilename.string(), texture->GetUID());
+
+		engine->GetResourceManager()->SaveResource(texture);
+		engine->GetResourceManager()->UnloadResource(texture);
 	}
 }
 

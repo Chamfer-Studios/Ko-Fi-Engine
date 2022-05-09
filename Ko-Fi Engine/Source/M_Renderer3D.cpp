@@ -46,6 +46,7 @@
 #include <iostream>
 
 #include "optick.h"
+#include "QuadTree3D.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -222,8 +223,6 @@ bool M_Renderer3D::InitOpenGL()
 
 		SetGLFlag(GL_DEPTH_TEST, true);
 		SetGLFlag(GL_CULL_FACE, true);
-		glCullFace(GL_BACK);
-		glFrontFace(GL_CW);
 		lights[0].Active(true);
 		SetGLFlag(GL_LIGHTING, true);
 		SetGLFlag(GL_COLOR_MATERIAL, true);
@@ -344,7 +343,6 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 				if (!engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
 				{
 					int uid = engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.at(0);
-				KOFI_DEBUG("%d", engine->GetEditor()->panelGameObjectInfo.selectedGameObjectID);
 
 					if (!cCamera->IsEngineCamera() && cCamera->owner->GetUID() == uid)
 					{
@@ -371,6 +369,13 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			}
 		}
 	}
+
+	if (engine->GetSceneManager()->GetCurrentScene()->sceneTree != nullptr && engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)
+	{
+		engine->GetSceneManager()->GetCurrentScene()->ComputeQuadTree();
+		engine->GetSceneManager()->GetCurrentScene()->sceneTree->Draw();
+	}
+
 
 }
 

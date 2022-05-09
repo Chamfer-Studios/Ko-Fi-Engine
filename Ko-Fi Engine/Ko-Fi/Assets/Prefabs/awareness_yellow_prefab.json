@@ -1,12 +1,16 @@
 {
-    "UID": 518661648,
+    "UID": 1249876711,
     "active": true,
     "children": [
         {
-            "UID": 1952554750,
+            "UID": 1629120091,
             "active": true,
             "children": [],
             "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
                 {
                     "active": true,
                     "position": [
@@ -25,50 +29,50 @@
                         1.0,
                         1.0
                     ],
-                    "type": "transform"
+                    "type": 21
                 },
                 {
                     "active": true,
-                    "draw_face_normals": false,
-                    "draw_vertex_normals": false,
-                    "isAnimated": false,
-                    "path": "Library/Meshes/Cylinder.sugar",
-                    "shape_type": 0,
-                    "type": "mesh"
+                    "mesh": {
+                        "asset_path": "Assets/Models/Enemies/Cylinder.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1621039206
+                    },
+                    "type": 1
                 },
                 {
                     "active": true,
                     "color": [
-                        0.800000011920929,
-                        0.800000011920929,
-                        0.800000011920929,
+                        0.0,
+                        0.0,
+                        0.0,
                         1.0
                     ],
-                    "shader_path": "Assets/Shaders/default_shader.glsl",
-                    "texture_path": "Assets/Textures/awareness/yellow.png",
-                    "type": "material",
-                    "uniforms": [
-                        {
-                            "name": "albedoTint",
-                            "type": 35666,
-                            "value": {
-                                "w": 1.0,
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            }
-                        }
-                    ]
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/awareness/yellow.png"
+                    },
+                    "type": 2
                 }
             ],
             "is3D": true,
             "isPrefab": false,
             "name": "Cylinder",
-            "parent_UID": 518661648,
+            "parent_UID": 1249876711,
             "tag": 0
         }
     ],
     "components": [
+        {
+            "active": true,
+            "type": 23
+        },
         {
             "active": true,
             "position": [
@@ -87,12 +91,12 @@
                 1.0,
                 1.0
             ],
-            "type": "transform"
+            "type": 21
         }
     ],
     "is3D": true,
     "isPrefab": true,
-    "name": "awareness",
-    "parent_UID": 4294967295,
+    "name": "awareness_yellow",
+    "parent_UID": 0,
     "tag": 0
 }

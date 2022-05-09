@@ -435,13 +435,15 @@ void R_Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 	memcpy(&normals[0], primitiveMesh->normals, primitiveMesh->npoints);
 
 	par_shapes_free_mesh(primitiveMesh);
+	SetUpMeshBuffers();
 }
 
 void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject)
 {
 	OPTICK_EVENT();
 
-	if (!gameObject->GetEngine()->GetRenderer()->isFirstPass) {
+	if (!gameObject->GetEngine()->GetRenderer()->isFirstPass)
+	{
 		transforms.resize(transformsAnim.size());
 
 		for (uint i = 0; i < transformsAnim.size(); i++)
@@ -462,7 +464,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 
 	float startFrame, endFrame, animDur;
 	AnimatorClip* selectedClip = gameObject->GetComponent<C_Animator>()->GetSelectedClip();
-	if (selectedClip->GetName().c_str() != "[NONE]")
+	if (selectedClip != nullptr)
 	{
 		startFrame = selectedClip->GetStartFrame();
 		endFrame = selectedClip->GetEndFrame();

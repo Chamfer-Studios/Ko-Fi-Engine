@@ -390,9 +390,13 @@ void GameObject::PropagateTransform()
 	}
 }
 
-void GameObject::SetName(const char* name)
+void GameObject::SetName(const char* name, bool numbered)
 {
-	this->name = SetObjectNumberedName(name).c_str();
+	if (numbered) {
+		this->name = SetObjectNumberedName(name).c_str();
+	} else {
+		this->name = name;
+	}
 }
 
 const char* GameObject::GetName() const

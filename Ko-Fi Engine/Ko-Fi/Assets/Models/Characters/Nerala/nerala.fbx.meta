@@ -4,32 +4,33 @@
     "contained_resources": [
         {
             "asset_file": "crossbow.sugar",
-            "library_path": "Library/Meshes/1380205881.sugar",
+            "library_path": "Library/Meshes/824902898.sugar",
             "type": 0,
-            "uid": 1380205881
+            "uid": 824902898
         },
         {
             "asset_file": "nerala_base_color.png",
-            "library_path": "Library/Textures/585070227.cacao",
+            "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png",
+            "library_path": "Library/Textures/1253489952.cacao",
             "type": 1,
-            "uid": 585070227
+            "uid": 1253489952
         },
         {
             "asset_file": "nerala_low.sugar",
-            "library_path": "Library/Meshes/1235818245.sugar",
+            "library_path": "Library/Meshes/339105419.sugar",
             "type": 0,
-            "uid": 1235818245
+            "uid": 339105419
         },
         {
             "asset_file": "nerala_armature|nerala_armature|nerala_armature|nerala_reel.cake",
-            "library_path": "Library/Animations/10372439.cake",
+            "library_path": "Library/Animations/409489937.cake",
             "type": 5,
-            "uid": 10372439
+            "uid": 409489937
         }
     ],
-    "library_file": "553251380.tea",
-    "library_path": "Library/Models/553251380.tea",
-    "mod_time": 411508007,
+    "library_file": "11987903.tea",
+    "library_path": "Library/Models/11987903.tea",
+    "mod_time": 411601499,
     "type": 3,
-    "uid": 553251380
+    "uid": 11987903
 }

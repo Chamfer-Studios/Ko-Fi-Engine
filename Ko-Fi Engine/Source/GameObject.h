@@ -70,7 +70,7 @@ public:
 	void PropagateTransform();
 
 	// Old way
-	void SetName(const char *name);
+	void SetName(const char *name, bool numbered = true);
 	const char *GetName() const;
 
 	std::vector<GameObject *> GetChildren() const;

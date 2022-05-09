@@ -36,10 +36,9 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum = Frustum();
 
 	//Set Default Values for the frusum
-	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
-	cameraFrustum.SetPerspective(DegToRad(43.0f), DegToRad(22.0f));
-	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(45.0f), 1.778f);
-	cameraFrustum.SetViewPlaneDistances(0.01f, 1000.0f);
+	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumRightHanded);
+	cameraFrustum.SetPerspective(DegToRad(60.0f), DegToRad(22.0f));
+	cameraFrustum.SetViewPlaneDistances(0.01f, 500.0f);
 	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
 
@@ -74,9 +73,10 @@ bool C_Camera::Update(float dt)
 		//Apply rotation
 		if (isFrustumCullingActive)
 			FrustumCulling();
+	
+		// Camera Frustum Updates Transform
+		owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 	}
-	// Camera Frustum Updates Transform
-	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 
 	return true;
 }
@@ -108,6 +108,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		{
 			ResetFrustumCulling();
 		}
+
 		// TODO: SET MAIN CAMERA TO TAG!
 		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
 		{
@@ -264,7 +265,7 @@ void C_Camera::FrustumCulling()
 		if (componentMesh == nullptr || gameObject == owner)
 			continue;
 
-		if (!ClipsWithBBox(componentMesh->GetLocalAABB()))
+		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
 			gameObject->SetRenderGameObject(false);
 		else
 			gameObject->SetRenderGameObject(true);

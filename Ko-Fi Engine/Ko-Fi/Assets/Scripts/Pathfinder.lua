@@ -49,22 +49,27 @@ function FollowPath(speed, dt, loop)
 
     currentTarget = _G.finalPath[currentPathIndex]
     currentPosition = componentTransform:GetPosition()
-    if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
+    while Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance do
         currentPathIndex = currentPathIndex + 1
         if currentPathIndex > #_G.finalPath and loop then
-            currentPathIndex = 1
+            currentPathIndex = 2
+            currentTarget = _G.finalPath[currentPathIndex]
         end
-        if currentPathIndex > #finalPath and not loop then
+        if currentPathIndex > #_G.finalPath and not loop then
             currentPathIndex = currentPathIndex - 1
+            currentTarget = _G.finalPath[currentPathIndex]
         end
         currentTarget = _G.finalPath[currentPathIndex]
     end
-    direction = Float3NormalizedDifference(currentPosition, currentTarget)
-    DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
-    delta = { x = direction.x * speed * _dt, y = direction.y * speed * _dt, z = direction.z * speed * _dt }
-    nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
-
-    componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
+    if Float3Distance(currentTarget, currentPosition) >= minRetargetingDistance then
+        direction = Float3NormalizedDifference(currentPosition, currentTarget)
+        DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
+        delta = { x = direction.x * speed * _dt, y = direction.y * speed * _dt, z = direction.z * speed * _dt }
+        nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
+        componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
+    elseif currentPathIndex < #_G.finalPath then
+        currentPathIndex = currentPathIndex + 1
+    end
 end
 
 function UpdatePath(wp, pingpong, currentPos)

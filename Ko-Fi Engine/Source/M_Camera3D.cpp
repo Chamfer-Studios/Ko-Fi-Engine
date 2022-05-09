@@ -43,9 +43,8 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera = new C_Camera(engineCameraObject);
 	engineCamera->SetIsEngineCamera(true);
 	
-
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-	engineCamera->SetFarPlaneDistance(60000.0f);
+	engineCamera->SetFarPlaneDistance(10000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
 
 	currentCamera = engineCamera;
@@ -82,8 +81,6 @@ bool M_Camera3D::Update(float dt)
 	OPTICK_EVENT();
 
 	FocusTarget();
-	if (engineCamera->GetIsFrustumActive())
-		engineCamera->FrustumCulling();
 
 	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
 		return true;
@@ -181,8 +178,8 @@ void M_Camera3D::MouseZoom(float dt)
 // A function that takes the delta mouse motion as x and y inputs, creates a quaternion representing a rotation based on the mouse motion, and applies that rotation to the camera's orientation.
 void M_Camera3D::MouseRotation(float dt)
 {
-	int xMotion = engine->GetInput()->GetMouseXMotion();
-	int yMotion = engine->GetInput()->GetMouseYMotion();
+	int xMotion = -engine->GetInput()->GetMouseXMotion(); // (-) Because is a Right Handed Camera
+	int yMotion = -engine->GetInput()->GetMouseYMotion(); // (-) Because is a Right Handed Camera
 	if (xMotion != 0) {
 		const float newDeltaX = (float)xMotion * cameraSensitivity;
 		float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX);
@@ -209,14 +206,17 @@ void M_Camera3D::MouseRotation(float dt)
 
 void M_Camera3D::FocusTarget()
 {
+	if((engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size() == 0)) return;
+
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
 		if (engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0] != -1)
 		{
 			GameObject* selectedGameObject = engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[0]);
 			C_Mesh* mesh = selectedGameObject->GetComponent<C_Mesh>();
-			if (mesh)
+			if (mesh && mesh->GetMesh())
 			{
+				
 				const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
 				engineCamera->LookAt(meshCenter);
 				const float meshRadius = mesh->GetSphereRadius(); // FIX THIS FUNCTION
