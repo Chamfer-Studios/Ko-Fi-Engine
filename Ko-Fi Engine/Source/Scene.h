@@ -100,6 +100,8 @@ public:
 
 	std::vector<GameObject*> GetLights(SourceType type);
 
+	void SetShadowCaster(GameObject* shadowCaster);
+	GameObject* GetShadowCaster();
 
 public:
 	std::string name = "";
@@ -126,6 +128,7 @@ public:
 	std::vector<GameObject*> lights;
 	LineSegment ray;
 
+	GameObject* shadowCaster = nullptr; //current light that casts shadows
 	SkyBox skybox;
 
 };

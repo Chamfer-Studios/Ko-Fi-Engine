@@ -151,6 +151,7 @@ bool M_Editor::Awake(Json configModule)
 	//input->gameObjects = &gameObjects;
 	ImGuizmo::Enable(true);
 	ImGuizmo::AllowAxisFlip(false);
+	
 
 	ret = LoadConfiguration(configModule);
 

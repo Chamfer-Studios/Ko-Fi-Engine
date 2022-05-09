@@ -3,8 +3,10 @@
 
 #include "Component.h"
 #include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/Math/float4x4.h"
 
 class GameObject;
+class C_Camera;
 
 enum class SourceType
 {
@@ -35,6 +37,7 @@ public:
 	void SetDirection(float3 direction) { this->direction = direction; }
 
 	float3 direction;
+	float4x4 lightSpaceMatrix;
 };
 
 //omnidirectional rays with attenuation following the next formula: 
@@ -73,6 +76,7 @@ public:
 
 	bool Start();
 	bool Update(float dt);
+	bool PostUpdate(float dt);
 	bool CleanUp();
 
 	void Save(Json& json) const;
@@ -93,7 +97,8 @@ public:
 	void SetPosition(float3 position) { this->lightSource->position = position; }
 	//set Ambient, Diffuse and Specular parameters from 0 to 1 in a float3
 	void SetADS(float3 ADS) { lightSource->ambient = ADS.x, lightSource->diffuse = ADS.y, lightSource->specular = ADS.z; }
-
+	
+	void CastShadows();
 private:
 
 	//light parameters
@@ -105,9 +110,13 @@ private:
 	int numOfFocal = 0;
 
 	LightSource* lightSource;
+	C_Camera* shadowCam;
 
 	//inspector variables
 	int sType = 0;
+	bool castShadows = false;
+	float hFov = 0.0f;
+	float vFov = 0.0f;
 };
 
 #endif // !__C_LIGHTSOURCE_H__

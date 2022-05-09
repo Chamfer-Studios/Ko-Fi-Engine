@@ -23,6 +23,7 @@ class R_Material;
 class C_Camera;
 class R_Texture;
 class PieShape;
+class FocalLight;
 class SkyBox;
 
 struct ParticleRenderer
@@ -126,6 +127,12 @@ public:
 	void RenderParticle(ParticleRenderer* particle);
 	void RenderAllParticles();
 
+	void InitDepthMapFramebufferAndTexture();
+	void LightUniforms(uint shader);
+	void ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light);
+	void FillShadowMap(C_Camera* camera);
+	bool renderShadowMap;
+
 public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
@@ -134,6 +141,10 @@ public:
 
 	bool isFirstPass = true;
 	bool enableOcclusionCulling = false;
+	
+	//Lights
+	unsigned int depthMapFBO;
+	unsigned int depthMapTexture;
 
 private:
 	bool vsync = false;

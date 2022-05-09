@@ -86,8 +86,7 @@ bool SceneIntro::Start()
 
 	if (this->GetLights(SourceType::DIRECTIONAL).size() == 0)
 	{
-		GameObject* go = CreateEmptyGameObject("Direct Light");
-		go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+		//create dir light?
 	}
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");

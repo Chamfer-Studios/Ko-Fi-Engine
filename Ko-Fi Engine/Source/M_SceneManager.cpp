@@ -515,6 +515,7 @@ void M_SceneManager::GuizmoTransformation()
 	viewMatrix.Transpose();
 
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed();
+	ImGuizmo::SetGizmoSizeClipSpace(0.3f);
 
 	std::vector<float4x4> modelProjection;
 	for (int i = 0; i < selectedGameObjects.size(); i++)

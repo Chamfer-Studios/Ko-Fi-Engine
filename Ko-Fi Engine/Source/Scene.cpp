@@ -185,13 +185,31 @@ std::vector<GameObject*> Scene::GetLights(SourceType type)
 
 	for (int i = 0; i < lights.size(); i++)
 	{
-		if (lights[i]->GetComponent<C_LightSource>()->GetSourceType() == type)
+		C_LightSource* light = lights[i]->GetComponent<C_LightSource>();
+		if (light == nullptr)
+		{
+			RemoveLight(lights[i]);
+			continue;
+		}
+		else if(light->GetSourceType() == type)
 		{
 			ret.push_back(lights[i]);
 		}
 	}
 
 	return ret;
+}
+
+void Scene::SetShadowCaster(GameObject* shadowCaster)
+{
+	//if there is a shadow caster active maybe do smthng
+
+	this->shadowCaster = shadowCaster;
+}
+
+GameObject* Scene::GetShadowCaster()
+{
+	return shadowCaster;
 }
 
 template<class UnaryFunction>
