@@ -792,7 +792,9 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 	for (const auto& chdIt : jsonChd.items())
 	{
 		Json jsonChd = chdIt.value();
-		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+		std::string name = jsonChd.at("name");
+		bool is3D = jsonChd.at("is3D");
+		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(name.c_str(), this, is3D);
 		go->LoadPrefab(jsonChd);
 		this->AttachChild(go);
 	}
