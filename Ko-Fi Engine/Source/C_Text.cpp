@@ -11,6 +11,8 @@
 #include "M_UI.h"
 #include "PanelChooser.h"
 
+#include <vector>
+
 C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::TEXT;
@@ -31,13 +33,36 @@ bool C_Text::CleanUp()
 
 void C_Text::Save(Json& json) const
 {
-	json["type"] = (int)type;
+	std::vector<int> color;
 
+	color.push_back(col.r);
+	color.push_back(col.g);
+	color.push_back(col.b);
+	color.push_back(col.a);
+
+	json["type"] = (int)type;
 	json["value"] = textValue;
+	json["color"] = color;
 }
 
 void C_Text::Load(Json& json)
 {
+	std::vector<int> color;
+	if (json.find("color") != json.end()) {
+		color = json["color"].get<std::vector<int>>();
+
+		col.r = color[0];
+		col.g = color[1];
+		col.b = color[2];
+		col.a = color[3];
+	}
+	else {
+		col.r = 255;
+		col.g = 255;
+		col.b = 255;
+		col.a = 255;
+	}
+
 	std::string value = json["value"].get<std::string>();
 	SetTextValue(value);
 }
@@ -77,14 +102,14 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		SDL_Color tmpcol = GetColor();
-		float c[4] = { tmpcol.r,tmpcol.g,tmpcol.b,tmpcol.a };
+		float c[4] = { tmpcol.r / 255.0, tmpcol.g / 255.0, tmpcol.b / 255.0, tmpcol.a / 255.0 };
 
-		if (ImGui::ColorEdit4("Text Color", c, ImGuiColorEditFlags_DisplayRGB) != false)
+		if (ImGui::ColorEdit4("Text Color", c, ImGuiColorEditFlags_DefaultOptions_) != false)
 		{
-			tmpcol.r = c[0];
-			tmpcol.g = c[1];
-			tmpcol.b = c[2];
-			tmpcol.a = c[3];
+			tmpcol.r = c[0] * 255;
+			tmpcol.g = c[1] * 255;
+			tmpcol.b = c[2] * 255;
+			tmpcol.a = c[3] * 255;
 			SetColor(tmpcol);
 			SetTextValue(textValue);
 		}
@@ -132,7 +157,7 @@ void C_Text::SetTextValue(std::string newValue)
 
 	int w, h;
 	TTF_SizeUTF8(selectedFont, newValue.c_str(), &w, &h);
-	owner->GetComponent<C_Transform2D>()->SetSize({ (float)w, (float)h });
+	//owner->GetComponent<C_Transform2D>()->SetSize({ (float)w, (float)h });
 
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
@@ -208,7 +233,7 @@ SDL_Color C_Text::GetColor()
 
 void C_Text::SetColor(SDL_Color color)
 {
-	col.r = color.a;
+	col.r = color.r;
 	col.g = color.g;
 	col.b = color.b;
 	col.a = color.a;

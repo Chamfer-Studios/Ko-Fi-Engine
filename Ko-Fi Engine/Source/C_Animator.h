@@ -39,8 +39,8 @@ public:
 
 private:
 	std::map<std::string, AnimatorClip> clips;
-	AnimatorClip* selectedClip;
-	AnimatorClip* clipToDelete;
+	AnimatorClip* selectedClip = nullptr;
+	AnimatorClip* clipToDelete = nullptr;
 
 	bool createClipErrorMessage = false;
 	bool deleteDefaultClipMessage = false;

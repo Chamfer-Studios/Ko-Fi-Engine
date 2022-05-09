@@ -140,16 +140,16 @@ bool MainBar::Update()
 			{
 				if (ImGui::MenuItem("Cube"))
 				{
-					CreatePrimitive(Shape::CUBE);
+					//CreatePrimitive(Shape::CUBE);
 				}
 				if (ImGui::MenuItem("Sphere"))
 				{
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_SPHERE. editor->engine->GetSceneIntro()->gameObjectList);
-					CreatePrimitive(Shape::SPHERE);
+					//CreatePrimitive(Shape::SPHERE);
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{
-					CreatePrimitive(Shape::CYLINDER);
+					//CreatePrimitive(Shape::CYLINDER);
 					//editor->engine->GetFileSystem()->GameObjectFromPrimitive(COMPONENT_SUBTYPE::COMPONENT_MESH_CYLINDER, editor->engine->GetSceneIntro()->gameObjectList);
 				}
 				//if (ImGui::MenuItem("Line"))
@@ -159,7 +159,7 @@ bool MainBar::Update()
 				//}
 				if (ImGui::MenuItem("Plane"))
 				{
-					CreatePrimitive(Shape::PLANE);
+					//CreatePrimitive(Shape::PLANE);
 				}
 				//if (ImGui::MenuItem("Pyramid"))
 				//{
@@ -396,7 +396,7 @@ void MainBar::CreatePrimitive(Shape shape)
 	
 	// Mesh
 	R_Mesh* rMesh = new R_Mesh(shape);
-	rMesh->SetUpMeshBuffers();
+
 	C_Mesh* m = (C_Mesh*)c->AddComponentByType(ComponentType::MESH);
 	m->SetMesh(rMesh);
 

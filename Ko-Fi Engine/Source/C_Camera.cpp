@@ -75,9 +75,10 @@ bool C_Camera::Update(float dt)
 		//Apply rotation
 		if (isFrustumCullingActive)
 			FrustumCulling();
+	
+		// Camera Frustum Updates Transform
+		owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 	}
-	// Camera Frustum Updates Transform
-	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 
 	return true;
 }
@@ -109,6 +110,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		{
 			ResetFrustumCulling();
 		}
+
 		// TODO: SET MAIN CAMERA TO TAG!
 		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
 		{

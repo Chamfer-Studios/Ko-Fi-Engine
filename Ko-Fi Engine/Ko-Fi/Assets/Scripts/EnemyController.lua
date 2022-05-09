@@ -160,6 +160,8 @@ function CheckIfPointInCone(position)
         do return(false) end
     end
 
+    Log(tostring(componentTransform:GetFront()) .. "\n")
+
     angle = Float3Angle(Float3Difference(componentTransform:GetPosition(), position), componentTransform:GetFront())
 
     angle = math.abs(math.deg(angle))
@@ -335,8 +337,6 @@ function UpdateAwarenessBars()
     awareness_yellow:GetTransform():SetPosition(float3.new(position.x + awarenessOffset.x, position.y + awarenessOffset.y, position.z + awarenessOffset.z))
     awareness_red:GetTransform():SetPosition(float3.new(position.x + awarenessOffset.x, position.y + awarenessOffset.y, position.z + awarenessOffset.z))
 
-    --Log(tostring(awareness) .. "\n")
-
     if awareness < 1 then
         awareness_green:GetTransform():SetScale(float3.new(awarenessSize.x, awarenessSize.y * awareness, awarenessSize.z))
         awareness_yellow:GetTransform():SetScale(float3.new(0, 0, 0))
@@ -344,14 +344,14 @@ function UpdateAwarenessBars()
     end
 
     if awareness >= 1 and awareness < 2 then
-        awareness_green:GetTransform():SetScale(float3.new(awarenessSize.x * 0.8, awarenessSize.y * 0.8, awarenessSize.z * 0.8))
+        awareness_green:GetTransform():SetScale(float3.new(0, 0, 0))
         awareness_yellow:GetTransform():SetScale(float3.new(awarenessSize.x, awarenessSize.y * (awareness - 1), awarenessSize.z))
         awareness_red:GetTransform():SetScale(float3.new(0, 0, 0))
     end
 
     if awareness == 2 then
-        awareness_green:GetTransform():SetScale(float3.new(awarenessSize.x * 0.6, awarenessSize.y * 0.6, awarenessSize.z * 0.6))
-        awareness_yellow:GetTransform():SetScale(float3.new(awarenessSize.x * 0.8, awarenessSize.y * 0.8, awarenessSize.z * 0.8))
+        awareness_green:GetTransform():SetScale(float3.new(0, 0, 0))
+        awareness_yellow:GetTransform():SetScale(float3.new(0, 0, 0))
         awareness_red:GetTransform():SetScale(float3.new(awarenessSize.x, awarenessSize.y, awarenessSize.z))
     end
 end
@@ -363,6 +363,8 @@ function Start()
     InstantiateNamedPrefab("awareness_yellow", awareness_yellow_name)
     InstantiateNamedPrefab("awareness_red", awareness_red_name)
 end
+
+oldSourcePos = nil
 
 function Update(dt)
     if awareness_green == nil then
@@ -409,6 +411,7 @@ function Update(dt)
         end
     end
 
+    
     if state == STATE.AGGRO then
         s = nil
         if seeingSource ~= nil then
@@ -417,7 +420,7 @@ function Update(dt)
             s = awarenessSource
         end
 
-        if s ~= nil then
+        if s ~= nil and (oldSourcePos == nil or Float3Distance(oldSourcePos, componentTransform:GetPosition()) > 10) then
             if static == true then
                 DispatchEvent(pathfinderUpdateKey, { {}, false, componentTransform:GetPosition() })
                 LookAtDirection(Float3Difference(componentTransform:GetPosition(), s:GetTransform():GetPosition()))
@@ -425,6 +428,8 @@ function Update(dt)
                 DispatchEvent(pathfinderUpdateKey, { { s:GetTransform():GetPosition() }, false, componentTransform:GetPosition() })
             end
         end
+
+        oldSourcePos = s:GetTransform():GetPosition()
     end
 
     _loop = loop

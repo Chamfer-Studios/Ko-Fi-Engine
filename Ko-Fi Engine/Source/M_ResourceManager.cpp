@@ -134,6 +134,62 @@ bool M_ResourceManager::InspectorDraw()
 	return true;
 }
 
+void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
+{
+	if (directory == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Resource Manager: trying to refresh directory files, string was nullptr.");
+		return;
+	}
+
+	std::vector<std::string> toImport;
+	std::vector<std::string> toUpdate;
+	std::vector<std::string> toDelete;
+
+	std::vector<std::string> assetsFiles;
+	std::vector<std::string> metaFiles;
+	std::map<std::string, std::string> filePairs;
+
+	engine->GetFileSystem()->DiscoverAllFilesFiltered(directory, assetsFiles, metaFiles, META_EXTENSION);
+
+	FindFilesToImport(assetsFiles, metaFiles, filePairs, toImport);
+	FindFilesToUpdate(filePairs, toUpdate);
+	FindFilesToDelete(metaFiles, filePairs, toDelete);
+
+	LoadFilesIntoLibrary(filePairs);
+
+	filePairs.clear();
+	metaFiles.clear();
+	metaFiles.shrink_to_fit();
+	assetsFiles.clear();
+	assetsFiles.shrink_to_fit();
+
+	for (uint i = 0; i < toDelete.size(); ++i)
+		DeleteFromLibrary(toDelete[i].c_str());
+
+	for (uint i = 0; i < toUpdate.size(); ++i)
+	{
+		std::filesystem::path pathUpdate = toUpdate[i].c_str();
+		std::string extension = pathUpdate.extension().string();
+
+		if (HasImportSupportedExtension(extension.c_str()))
+		{
+			DeleteFromLibrary(toUpdate[i].c_str());
+			ImportFile(toUpdate[i].c_str());
+		}
+	}
+
+	for (uint i = 0; i < toImport.size(); ++i)
+		ImportFile(toImport[i].c_str());
+
+	toDelete.clear();
+	toDelete.shrink_to_fit();
+	toUpdate.clear();
+	toUpdate.shrink_to_fit();
+	toImport.clear();
+	toImport.shrink_to_fit();
+}
+
 UID M_ResourceManager::ImportFile(const char* assetPath)
 {
 	UID uid = 0;
@@ -704,62 +760,6 @@ bool M_ResourceManager::ImportTexture(const char* assetPath, R_Texture* texture)
 	return (ret && texture != nullptr);
 }
 
-void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
-{
-	if (directory == nullptr)
-	{
-		CONSOLE_LOG("[ERROR] Resource Manager: trying to refresh directory files, string was nullptr.");
-		return;
-	}
-
-	std::vector<std::string> toImport;
-	std::vector<std::string> toUpdate;
-	std::vector<std::string> toDelete;
-
-	std::vector<std::string> assetsFiles;
-	std::vector<std::string> metaFiles;
-	std::map<std::string, std::string> filePairs;
-
-	engine->GetFileSystem()->DiscoverAllFilesFiltered(directory, assetsFiles, metaFiles, META_EXTENSION);
-
-	FindFilesToImport(assetsFiles, metaFiles, filePairs, toImport);
-	FindFilesToUpdate(filePairs, toUpdate);
-	FindFilesToDelete(metaFiles, filePairs, toDelete);
-
-	LoadFilesIntoLibrary(filePairs);
-
-	filePairs.clear();
-	metaFiles.clear();
-	metaFiles.shrink_to_fit();
-	assetsFiles.clear();
-	assetsFiles.shrink_to_fit();
-
-	for (uint i = 0; i < toDelete.size(); ++i)
-		DeleteFromLibrary(toDelete[i].c_str());
-
-	for (uint i = 0; i < toUpdate.size(); ++i)
-	{
-		std::filesystem::path pathUpdate = toUpdate[i].c_str();
-		std::string extension = pathUpdate.extension().string();
-
-		if (HasImportSupportedExtension(extension.c_str()))
-		{
-			DeleteFromLibrary(toUpdate[i].c_str());
-			ImportFile(toUpdate[i].c_str());
-		}
-	}
-
-	for (uint i = 0; i < toImport.size(); ++i)
-		ImportFile(toImport[i].c_str());
-
-	toDelete.clear();
-	toDelete.shrink_to_fit();
-	toUpdate.clear();
-	toUpdate.shrink_to_fit();
-	toImport.clear();
-	toImport.shrink_to_fit();
-}
-
 void M_ResourceManager::FindFilesToImport(std::vector<std::string>& assetsFiles, std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toImport)
 {
 	if (assetsFiles.empty())
@@ -864,7 +864,6 @@ void M_ResourceManager::DeleteFromLibrary(const char* assetPath)
 	for (uint i = 0; i < toDelete.size(); ++i)
 	{
 		std::filesystem::remove(toDelete[i].c_str());
-		std::filesystem::remove(std::string(assetPath) + META_EXTENSION);
 	}
 
 	toDelete.clear();
@@ -1023,6 +1022,12 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 				for (const auto& containedIt : jsonMeta.at("contained_resources").items())
 				{
 					UID containedUid = containedIt.value().at("uid");
+					if (containedUid == 0)
+					{
+						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
+						continue;
+					}
+
 					ResourceType containedType = (ResourceType)containedIt.value().at("type").get<int>();
 
 					std::string containedAssetPath = "";
@@ -1031,18 +1036,20 @@ bool M_ResourceManager::GetResourceBasesFromMeta(const char* assetPath, std::vec
 					std::string containedLibraryPath = containedIt.value().at("library_path");
 					std::string containedLibraryFile = "";
 
-					std::string directory = "";
-					bool success = GetAssetDirectoryFromType(containedType, directory);
-					if (!success)
-						continue;
-
-					if (containedUid == 0)
+					if (containedType == ResourceType::TEXTURE)
 					{
-						CONSOLE_LOG("[ERROR] Resource Manager: contained resource UID was 0.");
-						continue;
+						containedAssetPath = containedIt.value().at("asset_path");
+					}
+					else
+					{
+						std::string directory = "";
+						bool success = GetAssetDirectoryFromType(containedType, directory);
+						if (!success)
+							continue;
+
+						containedAssetPath = directory + containedAssetFile;
 					}
 
-					containedAssetPath = directory + containedAssetFile;
 					containedLibraryFile = engine->GetFileSystem()->GetFileName(containedLibraryPath.c_str());
 					bases.push_back(ResourceBase(containedUid, containedType, containedAssetPath, containedAssetFile, containedLibraryPath, containedLibraryFile));
 				}

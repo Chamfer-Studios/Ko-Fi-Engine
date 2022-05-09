@@ -79,8 +79,6 @@ void MyPlane::DrawPlane2D(R_Texture* texture, SDL_Color color)
 }
 
 void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
-	if (texture == 0) return;
-
 	OPTICK_EVENT();
 
 	C_Transform2D* cTransform = owner->GetComponent<C_Transform2D>();

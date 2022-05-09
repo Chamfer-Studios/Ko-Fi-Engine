@@ -435,13 +435,15 @@ void R_Mesh::PrimitiveMesh(par_shapes_mesh* primitiveMesh)
 	memcpy(&normals[0], primitiveMesh->normals, primitiveMesh->npoints);
 
 	par_shapes_free_mesh(primitiveMesh);
+	SetUpMeshBuffers();
 }
 
 void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject)
 {
 	OPTICK_EVENT();
 
-	if (!gameObject->GetEngine()->GetRenderer()->isFirstPass) {
+	if (!gameObject->GetEngine()->GetRenderer()->isFirstPass)
+	{
 		transforms.resize(transformsAnim.size());
 
 		for (uint i = 0; i < transformsAnim.size(); i++)
@@ -462,7 +464,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 
 	float startFrame, endFrame, animDur;
 	AnimatorClip* selectedClip = gameObject->GetComponent<C_Animator>()->GetSelectedClip();
-	if (selectedClip->GetName().c_str() != "[NONE]")
+	if (selectedClip != nullptr)
 	{
 		startFrame = selectedClip->GetStartFrame();
 		endFrame = selectedClip->GetEndFrame();
@@ -537,11 +539,8 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
-#pragma omp parallel for
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
 	{
-		if (pNode->GetChildren().at(i)->GetComponent<C_Image>() || pNode->GetChildren().at(i)->GetComponent<C_Canvas>() || pNode->GetChildren().at(i)->GetComponent<C_Button>() || pNode->GetChildren().at(i)->GetComponent<C_Text>())
-			continue;
 		ReadNodeHeirarchy(animationTimeTicks, pNode->GetChildren().at(i), globalTransformation);
 	}
 }
@@ -570,7 +569,8 @@ void R_Mesh::CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, con
 	OPTICK_EVENT();
 
 	// we need at least two values to interpolate...
-	if (pNodeAnim->positionKeyframes.size() == 1) {
+	if (pNodeAnim->positionKeyframes.size() == 1)
+	{
 		Out = pNodeAnim->positionKeyframes.at(0).value;
 		return;
 	}
@@ -602,7 +602,6 @@ uint R_Mesh::FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim)
 
 	return 0;
 }
-
 
 void R_Mesh::CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim)
 {

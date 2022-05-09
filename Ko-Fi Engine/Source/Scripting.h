@@ -222,6 +222,7 @@ public:
 			"GetScale", &C_Transform::GetScale,
 			"SetScale", &C_Transform::SetScale,
 			"GetFront", &C_Transform::Front,
+			"GetGlobalFront", &C_Transform::GlobalFront,
 			"GetRight", &C_Transform::Right,
 			"GetUp", &C_Transform::Up,
 			"LookAt", &C_Transform::LookAt

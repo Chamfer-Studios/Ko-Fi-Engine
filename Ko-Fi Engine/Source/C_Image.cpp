@@ -106,6 +106,7 @@ void C_Image::SetTexture(const char* path)
 {
 	FreeTextures();
 	Importer::GetInstance()->textureImporter->Import(path, &openGLTexture);
+	openGLTexture.SetTexturePath(path);
 }
 
 void C_Image::Draw()

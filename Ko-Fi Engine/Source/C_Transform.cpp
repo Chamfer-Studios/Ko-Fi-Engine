@@ -33,6 +33,10 @@ C_Transform::~C_Transform()
 
 bool C_Transform::Update(float dt)
 {
+
+	if (std::string(owner->GetName()) == std::string("harkonnen")) {
+		int a = 0;
+	}
 	
 	if (isDirty) // When Object is Modified
 	{
@@ -80,7 +84,7 @@ bool C_Transform::CleanUp()
 bool C_Transform::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true;
-	if (ImGui::CollapsingHeader("Transform"))
+	if (ImGui::CollapsingHeader("Transform"), ImGuiTreeNodeFlags_DefaultOpen)
 	{
 
 		// Position ImGui
@@ -145,7 +149,7 @@ void C_Transform::SetRotationEuler(const float3 &newRotation)
 void C_Transform::SetRotationQuat(const Quat &newRotation)
 {
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), newRotation, GetScale());
-	
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
 }
 
@@ -228,32 +232,32 @@ Quat C_Transform::GetRotationQuat() const
 	return rotation;
 }
 
-const float3 &C_Transform::Right() const
+const float3 C_Transform::Right() const
 {
 	return transformMatrixLocal.Col3(0).Normalized();
 }
 
-const float3& C_Transform::GlobalRight() const
+const float3 C_Transform::GlobalRight() const
 {
 	return transformMatrix.Col3(0).Normalized();
 }
 
-const float3 &C_Transform::Up() const
+const float3 C_Transform::Up() const
 {
 	return transformMatrixLocal.Col3(1).Normalized();
 }
 
-const float3& C_Transform::GlobalUp() const
+const float3 C_Transform::GlobalUp() const
 {
 	return transformMatrix.Col3(1).Normalized();
 }
 
-const float3 &C_Transform::Front() const
+const float3 C_Transform::Front() const
 {
 	return transformMatrixLocal.Col3(2).Normalized();
 }
 
-const float3& C_Transform::GlobalFront() const
+const float3 C_Transform::GlobalFront() const
 {
 	return transformMatrix.Col3(2).Normalized();
 }
@@ -261,7 +265,7 @@ const float3& C_Transform::GlobalFront() const
 void C_Transform::RecomputeGlobalMatrix()
 {
 
-	if (owner->GetParent() != nullptr)
+	if (owner->GetParent() != nullptr && owner->GetParent()->GetComponent<C_Transform>())
 	{
 		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
 	}
