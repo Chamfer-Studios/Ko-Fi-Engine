@@ -87,7 +87,7 @@ private:
 
 	bool LoadMetaLibraryPairsIntoLibrary(const char* assetPath);
 	bool GetLibraryPairs(const char* assetPath, std::map<UID, ResourceBase>& pairs);
-	int GetModTimeFromMeta(const char* assetPath);
+	std::string GetHashFromMeta(const char* assetPath);
 
 	UID ImportFromAssets(const char* assetPath);
 

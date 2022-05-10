@@ -11,6 +11,8 @@
 #include <filesystem>
 #include "JsonHandler.h"
 
+#include "md5.h"
+
 #include "optick.h"
 
 M_FileSystem::M_FileSystem(KoFiEngine* engine)
@@ -274,6 +276,47 @@ int M_FileSystem::GetLastModTime(const char* path)
 
 	int ret = std::chrono::time_point_cast<std::chrono::seconds>(fTime).time_since_epoch().count();
 	return ret;
+}
+
+std::string M_FileSystem::GetFileHash(const char* path)
+{
+	if (path == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Filesystem: generating MD5 hash, file path was nullptr.");
+		return "";
+	}
+
+	MD5 digestMd5;
+
+	std::ifstream file;
+	std::istream* input = NULL;
+
+	file.open(path, std::ios::in | std::ios::binary);
+	if (!file)
+	{
+		CONSOLE_LOG("[ERROR] Filesystem: generating MD5 hash, file %s couldn't be accessed.", path);
+		return "";
+	}
+	else
+		input = &file;
+
+	// each cycle processes about 1 MByte
+	const size_t bufferSize = 144 * 7 * 1024;
+	char* buffer = new char[bufferSize];
+
+	while (*input)
+	{
+		input->read(buffer, bufferSize);
+		std::size_t bytesRead = size_t(input->gcount());
+
+		digestMd5.add(buffer, bytesRead);
+	}
+
+	file.close();
+	delete[] buffer;
+	buffer = nullptr;
+
+	return digestMd5.getHash();
 }
 
 bool M_FileSystem::CopyFileTo(const char* sourcePath, const char* destinationPath)

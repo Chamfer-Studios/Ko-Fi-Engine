@@ -170,9 +170,8 @@ void M_ResourceManager::RefreshDirectoryFiles(const char* directory)
 	for (uint i = 0; i < toUpdate.size(); ++i)
 	{
 		std::filesystem::path pathUpdate = toUpdate[i].c_str();
-		std::string extension = pathUpdate.extension().string();
 
-		if (HasImportSupportedExtension(extension.c_str()))
+		if (HasImportSupportedExtension(pathUpdate.string().c_str()))
 		{
 			DeleteFromLibrary(toUpdate[i].c_str());
 			ImportFile(toUpdate[i].c_str());
@@ -804,10 +803,10 @@ void M_ResourceManager::FindFilesToUpdate(std::map<std::string, std::string>& fi
 
 	for (const auto& item : filePairs)
 	{
-		int assetTime = engine->GetFileSystem()->GetLastModTime(item.first.c_str());
-		int metaTime = GetModTimeFromMeta(item.second.c_str());
+		std::string assetHash = engine->GetFileSystem()->GetFileHash(item.first.c_str());
+		std::string metaHash = GetHashFromMeta(item.second.c_str());
 
-		if (assetTime != metaTime)
+		if (assetHash != metaHash)
 		{
 			KOFI_STATUS(" Resource Manager: modification time discrepancy with file %s\n", item.first.c_str());
 			toUpdate.push_back(item.first);
@@ -1232,12 +1231,12 @@ bool M_ResourceManager::GetLibraryPairs(const char* assetPath, std::map<UID, Res
 	return true;
 }
 
-int M_ResourceManager::GetModTimeFromMeta(const char* assetPath)
+std::string M_ResourceManager::GetHashFromMeta(const char* assetPath)
 {
 	if (assetPath == nullptr)
 	{
 		KOFI_ERROR(" Resource Manager: getting modification time from meta, asset path was nullptr.");
-		return 0;
+		return "";
 	}
 
 	std::string errorString = "[ERROR] Resource Manager: could not get modification time from { " + std::string(assetPath) + " }'s meta file";
@@ -1250,16 +1249,16 @@ int M_ResourceManager::GetModTimeFromMeta(const char* assetPath)
 
 	if (loaded && !jsonMeta.is_null() && !jsonMeta.empty())
 	{
-		int modTime = jsonMeta.at("mod_time");
-		return modTime;
+		std::string hash = jsonMeta.at("hash");
+		return hash;
 	}
 	else
 	{
 		CONSOLE_LOG("%s Asset path had no associated meta file.", errorString.c_str());
-		return 0;
+		return "";
 	}
 
-	return 0;
+	return "";
 }
 
 UID M_ResourceManager::ImportFromAssets(const char* assetPath)
@@ -1386,7 +1385,7 @@ bool M_ResourceManager::SaveMetaFile(Resource* resource) const
 	jsonMeta["asset_path"] = resource->GetAssetPath();
 	jsonMeta["library_file"] = resource->GetLibraryFile();
 	jsonMeta["library_path"] = resource->GetLibraryPath();
-	jsonMeta["mod_time"] = engine->GetFileSystem()->GetLastModTime(resource->GetAssetPath());
+	jsonMeta["hash"] = engine->GetFileSystem()->GetFileHash(resource->GetAssetPath());
 
 	resource->SaveMeta(jsonMeta);
 

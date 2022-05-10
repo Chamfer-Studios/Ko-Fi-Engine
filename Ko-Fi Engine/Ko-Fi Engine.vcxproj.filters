@@ -158,6 +158,9 @@
     <Filter Include="Libs\MathGeoLib\emscripten">
       <UniqueIdentifier>{324e99fe-3e9a-4edd-a394-b335c3393677}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\hash_library">
+      <UniqueIdentifier>{12511034-19ff-4fa5-88a2-e44a1517b406}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -672,6 +675,18 @@
     </ClCompile>
     <ClCompile Include="Source\SkyBox.cpp">
       <Filter>Source\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\hash_library\md5.cpp">
+      <Filter>Libs\hash_library</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\hash_library\sha1.cpp">
+      <Filter>Libs\hash_library</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\hash_library\sha3.cpp">
+      <Filter>Libs\hash_library</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\hash_library\sha256.cpp">
+      <Filter>Libs\hash_library</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1301,6 +1316,21 @@
     </ClInclude>
     <ClInclude Include="Source\Grid.h">
       <Filter>Source\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\hash.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\md5.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\sha1.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\sha3.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\sha256.h">
+      <Filter>Libs\hash_library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
