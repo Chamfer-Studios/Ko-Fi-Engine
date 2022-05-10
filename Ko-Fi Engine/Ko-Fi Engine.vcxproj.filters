@@ -161,6 +161,9 @@
     <Filter Include="Source\Helpers\Scripting">
       <UniqueIdentifier>{825826c2-3623-476c-ac98-bad6ba41ba51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\duktape">
+      <UniqueIdentifier>{52d2f720-6b52-4c0e-abf9-b975f4b79b0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -683,6 +686,12 @@
       <Filter>Source\Helpers\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="Source\ApplicationInterface.cpp">
+      <Filter>Source\Helpers\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\duktape\duktape.c">
+      <Filter>Libs\duktape</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DuktapeJSLanguageEnvironment.cpp">
       <Filter>Source\Helpers\Scripting</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1321,6 +1330,15 @@
       <Filter>Source\Helpers\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="Source\ApplicationInterface.h">
+      <Filter>Source\Helpers\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\duktape\duk_config.h">
+      <Filter>Libs\duktape</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\duktape\duktape.h">
+      <Filter>Libs\duktape</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DuktapeJSLanguageEnvironment.h">
       <Filter>Source\Helpers\Scripting</Filter>
     </ClInclude>
   </ItemGroup>

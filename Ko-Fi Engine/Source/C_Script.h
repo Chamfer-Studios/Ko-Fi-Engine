@@ -12,6 +12,7 @@
 #include "PerfTimer.h"
 
 #include "LuaLanguageEnvironment.h"
+#include "DuktapeJSLanguageEnvironment.h"
 
 class Scripting;
 class GameObject;

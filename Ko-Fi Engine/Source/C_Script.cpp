@@ -153,7 +153,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 		if (ImGui::Button("Add Script"))
 		{
-			chooser->OpenPanel("Add Script_" + std::to_string(id), "lua", {"lua"});
+			chooser->OpenPanel("Add Script_" + std::to_string(id), nullptr, {"lua", "js"});
 		}
 
 		if (s != nullptr)
@@ -511,7 +511,7 @@ void C_Script::LoadInspectorVariables(Json &json)
 
 ScriptHandler::ScriptHandler(GameObject* owner, C_Script* script)
 {
-	handler = new LuaLanguageEnvironment(script);
+	handler = new DuktapeJSLanguageEnvironment(script);
 	handler->Init();
 }
 
