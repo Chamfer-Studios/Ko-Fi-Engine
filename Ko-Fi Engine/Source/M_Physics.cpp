@@ -413,19 +413,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionEnter = sol::protected_function(script->s->handler->lua["OnCollisionEnter"]);
-						if (onCollisionEnter.valid()) {
-							sol::protected_function_result result = onCollisionEnter(go2);
-							if (result.valid()) {
-								// Call succeeded
-							}
-							else {
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnCollisionEnter(go2);
 					}
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -435,21 +423,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionEnter = sol::protected_function(script->s->handler->lua["OnCollisionEnter"]);
-						if (onCollisionEnter.valid()) {
-							sol::protected_function_result result = onCollisionEnter(go1);
-							if (result.valid()) 
-							{
-								// Call succeeded
-							}
-							else 
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnCollisionEnter(go1);
 					}
 				}
 			}
@@ -462,21 +436,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionRepeat = sol::protected_function(script->s->handler->lua["OnCollisionRepeat"]);
-						if (onCollisionRepeat.valid()) {
-							sol::protected_function_result result = onCollisionRepeat(go2);
-							if (result.valid()) 
-							{
-								// Call succeeded
-							}
-							else 
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnCollisionRepeat(go2);
 					}
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -486,21 +446,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionRepeat = sol::protected_function(script->s->handler->lua["OnCollisionRepeat"]);
-						if (onCollisionRepeat.valid()) {
-							sol::protected_function_result result = onCollisionRepeat(go1);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnCollisionRepeat(go1);
 					}
 				}
 			}
@@ -513,21 +459,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionExit = sol::protected_function(script->s->handler->lua["OnCollisionExit"]);
-						if (onCollisionExit.valid()) {
-							sol::protected_function_result result = onCollisionExit(go2);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnCollisionExit(go2);
 					}
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -537,21 +469,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionExit = sol::protected_function(script->s->handler->lua["OnCollisionExit"]);
-						if (onCollisionExit.valid()) {
-							sol::protected_function_result result = onCollisionExit(go1);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnCollisionExit(go1);
 					}
 				}
 			}
@@ -594,21 +512,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerEnter = sol::protected_function(script->s->handler->lua["OnTriggerEnter"]);
-						if (onTriggerEnter.valid()) {
-							sol::protected_function_result result = onTriggerEnter(go2);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnTriggerEnter(go2);
 					}
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -618,21 +522,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerEnter = sol::protected_function(script->s->handler->lua["OnTriggerEnter"]);
-						if (onTriggerEnter.valid()) {
-							sol::protected_function_result result = onTriggerEnter(go1);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnTriggerEnter(go1);
 					}
 				}
 			}
@@ -645,21 +535,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerStay = sol::protected_function(script->s->handler->lua["OnTriggerStay"]);
-						if (onTriggerStay.valid()) {
-							sol::protected_function_result result = onTriggerStay(go2);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnTriggerStay(go2);
 					}
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -669,21 +545,8 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerStay = sol::protected_function(script->s->handler->lua["OnTriggerStay"]);
-						if (onTriggerStay.valid()) {
-							sol::protected_function_result result = onTriggerStay(go1);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnTriggerStay(go1);
+
 					}
 				}
 			}
@@ -696,21 +559,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerExit = sol::protected_function(script->s->handler->lua["OnTriggerExit"]);
-						if (onTriggerExit.valid()) {
-							sol::protected_function_result result = onTriggerExit(go2);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnTriggerExit(go2);
 					}
 				}
 				for (Component* component : go2->GetComponents()) // This method used because there could be multiple scripts in one go
@@ -720,21 +569,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerExit = sol::protected_function(script->s->handler->lua["OnTriggerExit"]);
-						if (onTriggerExit.valid()) {
-							sol::protected_function_result result = onTriggerExit(go1);
-							if (result.valid())
-							{
-								// Call succeeded
-							}
-							else
-							{
-								// Call failed
-								sol::error err = result;
-								std::string what = err.what();
-								appLog->AddLog("%s\n", what.c_str());
-							}
-						}
+						script->s->handler->OnTriggerExit(go1);
 					}
 				}
 			}
@@ -758,7 +593,7 @@ reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysi
 			continue;
 		C_Script* script = (C_Script*)component;
 		if (!script->s->path.empty())
-		script->s->handler->lua["OnRayCastHit"]();
+		script->s->handler->OnRayCastHit();
 	}
 
 	// Return a fraction of 1.0 to gather all hits 

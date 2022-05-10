@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ApplicationInterface.cpp" />
     <ClCompile Include="Source\C_Image.cpp" />
     <ClCompile Include="Source\C_Material.cpp" />
     <ClCompile Include="Source\C_SoundTriggerCreator.cpp" />
@@ -205,6 +206,8 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
+    <ClCompile Include="Source\LanguageEnvironment.cpp" />
+    <ClCompile Include="Source\LuaLanguageEnvironment.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\PanelResources.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
@@ -328,11 +331,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\ApplicationInterface.h" />
     <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\C_BoxCollider.h" />
     <ClInclude Include="Source\C_CapsuleCollider.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\C_SphereCollider.h" />
+    <ClInclude Include="Source\LanguageEnvironment.h" />
+    <ClInclude Include="Source\LuaLanguageEnvironment.h" />
     <ClInclude Include="Source\PanelResources.h" />
     <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\GJK.h" />

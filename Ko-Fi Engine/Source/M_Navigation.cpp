@@ -337,6 +337,8 @@ void M_Navigation::CollectWalkableObjects(GameObject* go, std::vector<GameObject
 
 std::tuple<std::vector<float3>> M_Navigation::FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength)
 {
+	OPTICK_EVENT();
+
 	std::vector<float3> path;
 	if (dtNavMesh == nullptr) return std::make_tuple(path);
 	int actualPolyLength = 0;

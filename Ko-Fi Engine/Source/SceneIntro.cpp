@@ -114,7 +114,7 @@ bool SceneIntro::PreUpdate(float dt)
 			if (component->GetType() != ComponentType::SCRIPT)
 				continue;
 			C_Script* script = (C_Script*)component;
-			script->s->handler->lua["Start"]();
+			script->s->handler->Start();
 		}
 	}
 	gameObjectListToCreate.clear();
@@ -130,6 +130,8 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update(dt);

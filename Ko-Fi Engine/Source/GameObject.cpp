@@ -101,6 +101,8 @@ bool GameObject::PreUpdate()
 
 bool GameObject::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	bool ret = true;
 	for (Component* component : components)
 	{

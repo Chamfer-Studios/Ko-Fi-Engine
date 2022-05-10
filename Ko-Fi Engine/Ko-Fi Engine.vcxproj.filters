@@ -158,6 +158,9 @@
     <Filter Include="Libs\MathGeoLib\emscripten">
       <UniqueIdentifier>{324e99fe-3e9a-4edd-a394-b335c3393677}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Helpers\Scripting">
+      <UniqueIdentifier>{825826c2-3623-476c-ac98-bad6ba41ba51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -672,6 +675,15 @@
     </ClCompile>
     <ClCompile Include="Source\SkyBox.cpp">
       <Filter>Source\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LuaLanguageEnvironment.cpp">
+      <Filter>Source\Helpers\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LanguageEnvironment.cpp">
+      <Filter>Source\Helpers\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ApplicationInterface.cpp">
+      <Filter>Source\Helpers\Scripting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1301,6 +1313,15 @@
     </ClInclude>
     <ClInclude Include="Source\Grid.h">
       <Filter>Source\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LanguageEnvironment.h">
+      <Filter>Source\Helpers\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LuaLanguageEnvironment.h">
+      <Filter>Source\Helpers\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ApplicationInterface.h">
+      <Filter>Source\Helpers\Scripting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

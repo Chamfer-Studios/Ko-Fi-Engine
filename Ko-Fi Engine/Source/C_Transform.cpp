@@ -116,6 +116,7 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 
 void C_Transform::SetPosition(const float3 &newPosition)
 {
+	OPTICK_EVENT();
 	transformMatrixLocal = float4x4::FromTRS(newPosition, GetRotationQuat(), GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
@@ -123,11 +124,11 @@ void C_Transform::SetPosition(const float3 &newPosition)
 
 void C_Transform::SetScale(const float3 &newScale)
 {
-	float3 fixedScale = newScale;
+	float3 fixedScale = float3(newScale.x, newScale.y, newScale.z);
 	// If it is equal to 0 it crashes
-	if (fixedScale.x == 0) fixedScale.x = 0.00001f;
-	if (fixedScale.y == 0) fixedScale.y = 0.00001f;
-	if (fixedScale.z == 0) fixedScale.z = 0.00001f;
+	if (fixedScale.x == 0) fixedScale.x = 0.001f;
+	if (fixedScale.y == 0) fixedScale.y = 0.001f;
+	if (fixedScale.z == 0) fixedScale.z = 0.001f;
 
 	if (fixedScale.x <= 0) fixedScale.x *= -1.f;
 	if (fixedScale.y <= 0) fixedScale.y *= -1.f;
@@ -207,6 +208,7 @@ float3 C_Transform::GetPosition() const
 
 float3 C_Transform::GetScale() const
 {
+	OPTICK_EVENT();
 	float3 position = float3::zero;
 	float3 scale = float3::zero;
 	Quat rotation = Quat::identity;
@@ -225,6 +227,7 @@ float3 C_Transform::GetRotationEuler() const
 
 Quat C_Transform::GetRotationQuat() const
 {
+	OPTICK_EVENT();
 	float3 position = float3::zero;
 	float3 scale = float3::zero;
 	Quat rotation = Quat::identity;

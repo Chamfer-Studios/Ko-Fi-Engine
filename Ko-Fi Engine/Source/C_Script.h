@@ -9,6 +9,10 @@
 #include "MathGeoLib/Math/float2.h"
 #include "MathGeoLib/Math/float3.h"
 
+#include "PerfTimer.h"
+
+#include "LuaLanguageEnvironment.h"
+
 class Scripting;
 class GameObject;
 class C_Transform;
@@ -22,23 +26,10 @@ struct ScriptHandler
 {
 	ScriptHandler(GameObject* owner, C_Script* script);
 
-	sol::protected_function_result script; // Check if it can be private
-	Scripting* handler = nullptr;
+	LanguageEnvironment* handler = nullptr;
 	std::string path = "";
 	std::vector<InspectorVariable*> inspectorVariables;
-	sol::protected_function lua_update;
 	bool isScriptLoaded = false;
-};
-
-struct ScriptingEvent
-{
-	ScriptingEvent(std::string _key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> _fields) {
-		this->key = _key;
-		this->fields = _fields;
-	}
-
-	std::string key;
-	std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields;
 };
 
 class C_Script : public Component 
@@ -58,7 +49,7 @@ public:
 	void Load(Json& json) override;
 	void LoadInspectorVariables(Json& json);
 	void RemoveOldVariables();
-	void ReloadScript(ScriptHandler* script);
+	void ReloadScript();
 
 	void SetId(int id);
 
@@ -66,4 +57,6 @@ public:
 	int id = -1;
 
 	std::queue<ScriptingEvent> eventQueue;
+
+	PerfTimer ptimer;
 };
