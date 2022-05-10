@@ -1,3 +1,1 @@
-function Update(dt) {
-    Log("Hello!!!!\n");
-}
+"Hello World!"

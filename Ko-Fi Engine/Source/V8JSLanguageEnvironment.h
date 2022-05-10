@@ -9,7 +9,8 @@
 #include "M_SceneManager.h"
 #include "GameObject.h"
 
-#include "duktape.h"
+#include <libplatform/libplatform.h>
+#include <v8.h>
 
 class GameObject;
 class C_Script;
@@ -17,10 +18,10 @@ class M_Navigation;
 class M_Camera3D;
 class M_Physics;
 
-class DuktapeJSLanguageEnvironment final : public LanguageEnvironment {
+class V8JSLanguageEnvironment final : public LanguageEnvironment {
 public:
-	DuktapeJSLanguageEnvironment(C_Script* _script);
-	~DuktapeJSLanguageEnvironment();
+	V8JSLanguageEnvironment(C_Script* _script);
+	~V8JSLanguageEnvironment();
 
 public:
 	bool ReloadScript() final;
@@ -46,9 +47,12 @@ public:
 	void OnTriggerExit(GameObject* go);
 	void OnRayCastHit();
 
+	static void InitV8Platform();
+	static void KillV8Platform();
+
 private:
-	duk_context* ctx = nullptr;
+	v8::Local<v8::Context> context;
 
 public:
-	static duk_ret_t Log(duk_context* ctx);
+
 };

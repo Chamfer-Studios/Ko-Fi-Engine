@@ -13,6 +13,7 @@
 
 #include "LuaLanguageEnvironment.h"
 #include "DuktapeJSLanguageEnvironment.h"
+#include "V8JSLanguageEnvironment.h"
 
 class Scripting;
 class GameObject;

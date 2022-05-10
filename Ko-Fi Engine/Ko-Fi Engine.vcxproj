@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\v8-v142-x86.10.0.139.9\build\native\v8-v142-x86.props" Condition="Exists('..\packages\v8-v142-x86.10.0.139.9\build\native\v8-v142-x86.props')" />
+  <Import Project="..\packages\v8.redist-v142-x86.10.0.139.9\build\native\v8.redist-v142-x86.props" Condition="Exists('..\packages\v8.redist-v142-x86.10.0.139.9\build\native\v8.redist-v142-x86.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -330,6 +332,7 @@
     <ClCompile Include="Source\C_Mesh.cpp" />
     <ClCompile Include="Source\C_Walkable.cpp" />
     <ClCompile Include="Source\M_Window.cpp" />
+    <ClCompile Include="Source\V8JSLanguageEnvironment.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
@@ -550,6 +553,8 @@
     <ClInclude Include="Source\SkyBox.h" />
     <ClInclude Include="Source\TextEditor.h" />
     <ClInclude Include="Source\R_Texture.h" />
+    <ClInclude Include="Source\V8Isolate.h" />
+    <ClInclude Include="Source\V8JSLanguageEnvironment.h" />
     <ClInclude Include="Source\Vec1Node.h" />
     <ClInclude Include="Source\Panel.h" />
     <ClInclude Include="Source\PanelAbout.h" />
@@ -622,6 +627,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Triggers\WinTrigger.lua" />
+    <None Include="packages.config" />
     <None Include="Source\External\MathGeoLib\MathGeoLib\emscripten\library_system.js" />
     <None Include="Source\External\MathGeoLib\MathGeoLib\Geometry\KDTree.inl" />
     <None Include="Source\External\MathGeoLib\MathGeoLib\Geometry\QuadTree.inl" />
@@ -632,6 +638,12 @@
     <None Include="Source\External\MathGeoLib\MathGeoLib\Math\Matrix.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\v8.redist-v142-x86.10.0.139.9\build\native\v8.redist-v142-x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\v8.redist-v142-x86.10.0.139.9\build\native\v8.redist-v142-x86.props'))" />
+    <Error Condition="!Exists('..\packages\v8-v142-x86.10.0.139.9\build\native\v8-v142-x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\v8-v142-x86.10.0.139.9\build\native\v8-v142-x86.props'))" />
+  </Target>
 </Project>

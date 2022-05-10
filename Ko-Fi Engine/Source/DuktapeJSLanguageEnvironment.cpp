@@ -88,11 +88,6 @@ bool DuktapeJSLanguageEnvironment::CleanUp()
 	return true;
 }
 
-sol::protected_function DuktapeJSLanguageEnvironment::GetFunction(std::string name)
-{
-	return sol::protected_function();
-}
-
 template<typename ...Args>
 bool DuktapeJSLanguageEnvironment::SafeFunctionCall(std::string name, Args ...args)
 {
