@@ -4,6 +4,7 @@
 Emitter::Emitter(const char* newName)
 {
 	name = newName;
+	maxParticles = MAX_PARTICLES;
 	texture = new R_Texture();
 	texture->SetTexturePath("Assets/Textures/firework_projectile.png");
 	Importer::GetInstance()->textureImporter->Import(texture->GetTexturePath(), texture);

@@ -989,6 +989,7 @@ void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 trans
 
 void M_Renderer3D::RenderAllParticles()
 {
+	CONSOLE_LOG("particles: %d", particles.size());
 	for (auto particle : particles)
 	{
 		RenderParticle(&particle.second);

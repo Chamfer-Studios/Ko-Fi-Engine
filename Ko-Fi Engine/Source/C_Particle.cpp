@@ -274,10 +274,8 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								ImGui::PopItemWidth();
 								ImGui::PushItemWidth(7.5f * ImGui::GetFontSize());
 
-								float spawnTimer = e->spawnTimer;
-								std::string spawnTimerName = emitter->name + " - SpawnTimer";
-								if (ImGui::InputFloat(spawnTimerName.c_str(), &spawnTimer, 0.0f, 100.0f))
-									e->spawnTimer = spawnTimer;
+								std::string spawnTimerName = emitter->name + " - SpawnTimer: " + std::to_string(e->spawnTimer);
+								ImGui::Text(spawnTimerName.c_str());
 
 								float spawnTime = e->spawnTime;
 								std::string spawnTimeName = emitter->name + " - SpawnTime";
@@ -305,6 +303,22 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									if (ImGui::DragFloat(particleLifeName.c_str(), &particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
 										e->minParticleLife = particleLife;
 								}
+
+								if (e->instance)
+								{
+									std::string activeParticlesName = emitter->name + " - ActiveParticles: " + std::to_string(e->instance->activeParticles);
+									ImGui::Text(activeParticlesName.c_str());
+								}
+
+								int maxParticles = emitter->maxParticles;
+								std::string maxParticlesName = emitter->name + " - MaxParticles";
+								if (ImGui::DragInt(maxParticlesName.c_str(), &maxParticles, 1, 1, (uint)MAX_PARTICLES))
+								{
+									if (maxParticles > MAX_PARTICLES)
+										maxParticles = MAX_PARTICLES;
+									emitter->maxParticles = maxParticles;
+								}
+
 								ImGui::PopItemWidth();
 								ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
 								break;

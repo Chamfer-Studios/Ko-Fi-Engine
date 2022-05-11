@@ -50,6 +50,7 @@ public:
 	bool randomParticleLife = false;
 	float minParticleLife = 1.0f;
 	float maxParticleLife = 3.0f;
+	EmitterInstance* instance = nullptr;
 };
 
 class EmitterMovement : public ParticleModule

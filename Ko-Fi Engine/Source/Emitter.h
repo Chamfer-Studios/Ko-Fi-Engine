@@ -15,6 +15,8 @@ class EmitterSize;
 class ParticleBillboarding;
 //class R_Texture;
 
+#define MAX_PARTICLES 500
+
 class Emitter
 {
 public:
@@ -47,7 +49,7 @@ public:
 	void DeleteModule(ParticleModule* m);
 
 public:
-	uint maxParticles = 50;
+	uint maxParticles = MAX_PARTICLES;
 	std::vector<ParticleModule*> modules;
 	std::string name = "Emitter";
 	R_Texture* texture = nullptr;
