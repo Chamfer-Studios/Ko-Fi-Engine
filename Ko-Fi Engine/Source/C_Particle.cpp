@@ -413,19 +413,19 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								{
 									float minAcceleration[3] = { e->minAcceleration.x,e->minAcceleration.y,e->minAcceleration.z };
 									std::string minAccelerationName = emitter->name + " - minAcceleration";
-									if (ImGui::DragFloat3(minAccelerationName.c_str(), minAcceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+									if (ImGui::DragFloat3(minAccelerationName.c_str(), minAcceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
 										e->minAcceleration = { minAcceleration[0],minAcceleration[1],minAcceleration[2] };
 
 									float maxAcceleration[3] = { e->maxAcceleration.x,e->maxAcceleration.y,e->maxAcceleration.z };
 									std::string maxAccelerationName = emitter->name + " - maxAcceleration";
-									if (ImGui::DragFloat3(maxAccelerationName.c_str(), maxAcceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+									if (ImGui::DragFloat3(maxAccelerationName.c_str(), maxAcceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
 										e->maxAcceleration = { maxAcceleration[0],maxAcceleration[1],maxAcceleration[2] };
 								}
 								else
 								{
 									float acceleration[3] = { e->minAcceleration.x,e->minAcceleration.y,e->minAcceleration.z };
 									std::string accelerationName = emitter->name + " - Acceleration";
-									if (ImGui::DragFloat3(accelerationName.c_str(), acceleration, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+									if (ImGui::DragFloat3(accelerationName.c_str(), acceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
 										e->minAcceleration = { acceleration[0],acceleration[1],acceleration[2] };
 								}
 

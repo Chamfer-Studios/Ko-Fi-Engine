@@ -18,7 +18,7 @@ Particle::Particle()
 	lifeTime = 0.0f;
 	maxLifetime = 0.0f;
 	distanceToCamera = 0.0f;
-	CurrentColor = Color();
+	CurrentColor = Color(1.0f,1.0f,1.0f,1.0f);
 }
 
 Particle::~Particle()

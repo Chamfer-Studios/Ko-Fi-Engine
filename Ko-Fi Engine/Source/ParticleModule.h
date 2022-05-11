@@ -71,12 +71,12 @@ public:
 	float3 maxPosition = float3::zero;
 
 	bool randomVelocity = false;
-	float minVelocity = 1.0f;
-	float maxVelocity = 3.0f;
+	float minVelocity = 3.0f;
+	float maxVelocity = 5.0f;
 
 	bool randomAcceleration = false;
-	float3 minAcceleration = float3(-1.0f, 0.0f, -1.0f);
-	float3 maxAcceleration = float3(1.0f, 1.0f, 1.0f);
+	float3 minAcceleration = float3(-0.25f, 0.0f, -0.25f);
+	float3 maxAcceleration = float3(0.25f, 0.25f, 0.25f);
 };
 
 class EmitterColor : public ParticleModule
