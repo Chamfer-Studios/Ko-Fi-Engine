@@ -62,7 +62,7 @@ void EmitterDefault::Spawn(Particle* particle, EmitterInstance* emitter)
 	particle->lifeTime = 0.0f;
 }
 
-bool EmitterDefault::Update(float dt, EmitterInstance* emitter)
+bool EmitterDefault::Update(float dt, EmitterInstance* instance)
 {
 	if (disable)
 	{
@@ -71,18 +71,27 @@ bool EmitterDefault::Update(float dt, EmitterInstance* emitter)
 	spawnTimer += dt;
 	if (spawnTimer >= spawnTime)
 	{
-		emitter->SpawnParticle();
+		// create a particlesPerBurst variable to generate multiple particles at once
+		int particlesPerBurst = instance->emitter->particlesPerSpawn;
+
+		//in case the particlesPerBurst var is higher than the max particles of the emitter
+		int burstCap = instance->emitter->maxParticles - instance->activeParticles;
+		if (particlesPerBurst > burstCap)
+			particlesPerBurst = burstCap;
+
+		instance->SpawnParticle(particlesPerBurst);
+
 		spawnTimer = 0;
 	}
-	for (unsigned int i = 0; i < emitter->activeParticles; i++)
+	for (unsigned int i = 0; i < instance->activeParticles; i++)
 	{
-		unsigned int particleIndex = emitter->particleIndices[i];
-		Particle* particle = &emitter->particles[particleIndex];
+		unsigned int particleIndex = instance->particleIndices[i];
+		Particle* particle = &instance->particles[particleIndex];
 
-		emitter->particles[i].lifeTime += dt;
-		if (emitter->particles[i].lifeTime >= emitter->particles[i].maxLifetime)
-			emitter->particles[i].lifeTime = emitter->particles[i].maxLifetime;
-		particle->distanceToCamera = float3(emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->
+		instance->particles[i].lifeTime += dt;
+		if (instance->particles[i].lifeTime >= instance->particles[i].maxLifetime)
+			instance->particles[i].lifeTime = instance->particles[i].maxLifetime;
+		particle->distanceToCamera = float3(instance->component->owner->GetEngine()->GetCamera3D()->currentCamera->
 			GetCameraFrustum().WorldMatrix().TranslatePart() - particle->position).LengthSq();
 	}
 }

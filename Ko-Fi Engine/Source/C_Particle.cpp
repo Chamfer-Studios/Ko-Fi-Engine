@@ -319,6 +319,13 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									emitter->maxParticles = maxParticles;
 								}
 
+								int particlesPerSpawn = emitter->particlesPerSpawn;
+								std::string particlesPerSpawnName = emitter->name + " - ParticlesPerSpawn";
+								if (ImGui::DragInt(particlesPerSpawnName.c_str(), &particlesPerSpawn, 1, 1, 50))
+								{
+									emitter->particlesPerSpawn = particlesPerSpawn;
+								}
+
 								ImGui::PopItemWidth();
 								ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
 								break;

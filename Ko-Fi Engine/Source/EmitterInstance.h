@@ -22,7 +22,8 @@ public:
 
 	void DrawParticles();
 
-	void SpawnParticle();
+	//change burst to generate more than particle at once
+	void SpawnParticle(int burst = 1);
 
 	void KillDeadParticles();
 	void KillParticles();

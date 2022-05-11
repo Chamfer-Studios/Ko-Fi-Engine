@@ -48,22 +48,26 @@ void EmitterInstance::DrawParticles()
 	}
 }
 
-void EmitterInstance::SpawnParticle()
+void EmitterInstance::SpawnParticle(int burst)
 {
 	if (deactivateParticleEmission || activeParticles == emitter->maxParticles)
 	{
 		return;
 	}
 
-	unsigned int particleIndex = particleIndices[activeParticles];
-	Particle* particle = &particles[particleIndex];
-
-	for (unsigned int i = 0; i < emitter->modules.size(); i++)
+	//burst to generate more than particle at once
+	for (int j = 0; j < burst; j++)
 	{
-		emitter->modules[i]->Spawn(particle, this);
-	}
+		unsigned int particleIndex = particleIndices[activeParticles];
+		Particle* particle = &particles[particleIndex];
 
-	++activeParticles;
+		for (unsigned int i = 0; i < emitter->modules.size(); i++)
+		{
+			emitter->modules[i]->Spawn(particle, this);
+		}
+	
+		++activeParticles;
+	}
 }
 
 void EmitterInstance::KillDeadParticles()
