@@ -40,7 +40,7 @@ extern Color White;
 
 struct FadeColor
 {
-	FadeColor() : color(Color()), pos(0.5f)
+	FadeColor() : color(Color(1.0f,1.0f,1.0f,1.0f)), pos(0.5f)
 	{}
 
 	FadeColor(Color c, float p) : color(c), pos(p)

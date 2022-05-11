@@ -990,9 +990,9 @@ void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 trans
 void M_Renderer3D::RenderAllParticles()
 {
 	CONSOLE_LOG("particles: %d", particles.size());
-	for (auto particle : particles)
+	for (std::map<float,ParticleRenderer>::reverse_iterator particle = particles.rbegin();particle != particles.rend();++particle)
 	{
-		RenderParticle(&particle.second);
+		RenderParticle(&particle->second);
 	}
 
 	particles.clear();
@@ -1011,9 +1011,7 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_TEXTURE_2D);
-	glPushMatrix();
-	glMultMatrixf(particle->transform.Transposed().ptr());	// model
-	glColor3f(1.0f, 1.0f, 1.0f);
+	//glColor3f(1.0f, 1.0f, 1.0f);
 	if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
 	{
 		glEnable(GL_TEXTURE_2D);
@@ -1022,6 +1020,8 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 
 	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);
 
+	glPushMatrix();
+	glMultMatrixf(particle->transform.Transposed().ptr());	// model
 	//Drawing to tris in direct mode
 	glBegin(GL_TRIANGLES);
 
