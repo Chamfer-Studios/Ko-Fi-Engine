@@ -25,7 +25,7 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 {
 	if (texture == nullptr || path == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Texture! Error: R_Texture or Path was nullptr.");
+		KOFI_ERROR(" Importer: Could not Import Texture! Error: R_Texture or Path was nullptr.");
 		return false;
 	}
 
@@ -60,7 +60,7 @@ bool I_Texture::Save(const R_Texture* texture, const char* path)
 		}
 	}
 	else
-		CONSOLE_LOG("[ERROR] Texture Save: directory %s couldn't be accessed.", TEXTURES_DIR);
+		KOFI_ERROR(" Texture Save: directory %s couldn't be accessed.", TEXTURES_DIR);
 
 	return false;
 }
@@ -91,7 +91,7 @@ bool I_Texture::Load(const char* path, R_Texture* texture)
 		}
 	}
 	else
-		CONSOLE_LOG("[ERROR] Texture Load: directory %s couldn't be accessed.", TEXTURES_DIR);
+		KOFI_ERROR(" Texture Load: directory %s couldn't be accessed.", TEXTURES_DIR);
 
 	return false;
 }

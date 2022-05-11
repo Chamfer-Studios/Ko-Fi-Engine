@@ -89,6 +89,7 @@ bool C_Animator::CleanUp()
 bool C_Animator::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true;
+
 	if (ImGui::CollapsingHeader("Animator", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
 		if (DrawDeleteButton(owner, this))
@@ -122,7 +123,6 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		int newStartFrame = animation->startFrame;
 		if (ImGui::DragInt("Edit Start", &newStartFrame, 0, animation->duration))
 			animation->startFrame = newStartFrame;
-
 		int newEndFrame = animation->endFrame;
 		if (ImGui::DragInt("Edit End", &newEndFrame, 0, animation->duration))
 			animation->endFrame = newEndFrame;
@@ -142,7 +142,6 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 			ImGui::TextColored(Red.ToImVec4(), "Please, select a valid clip interval.");
 
 		ImGui::Text("Select Clip");
-
 		if (ImGui::BeginCombo("Select Clip", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
@@ -203,9 +202,15 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		}
 
 		ImGui::Text("Clip Options: ");
-		bool newLoop = selectedClip->GetLoopBool();
-		if (ImGui::Checkbox("Loop", &newLoop)) 
-			selectedClip->SetLoopBool(newLoop);
+		if (ImGui::Checkbox("Loop", &selectedClip->GetLoopBool()))
+		{
+			for (const auto& it : owner->GetParent()->children)
+			{
+				C_Animator* cAnim = it->GetComponent<C_Animator>();
+				if(cAnim != nullptr)
+					cAnim->selectedClip->SetLoopBool(selectedClip->GetLoopBool());
+			}
+		}
 
 		/*ImGui::SameLine();
 		if (ImGui::Button("Restart", ImVec2(70, 18)))
@@ -257,7 +262,7 @@ void C_Animator::Load(Json& json)
 		animation = (R_Animation*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
 
 		if (animation == nullptr)
-			CONSOLE_LOG("[ERROR] Component Animation: could not load resource from library.");
+			KOFI_ERROR(" Component Animation: could not load resource from library.");
 		else
 		{
 			C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
@@ -292,12 +297,12 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 {
 	if (clip.GetAnimation() == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip.GetName());
+		KOFI_ERROR(" Animator Component: Could not Add Clip { %s }! Error: Clip's R_Animation* was nullptr.", clip.GetName());
 		return false;
 	}
 	if (clips.find(clip.GetName()) != clips.end())
 	{ 
-		CONSOLE_LOG("[ERROR] Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip.GetName().c_str());
+		KOFI_ERROR(" Animator Component: Could not Add Clip { %s }! Error: A clip with the same name already exists.", clip.GetName().c_str());
 		return false;
 	}
 

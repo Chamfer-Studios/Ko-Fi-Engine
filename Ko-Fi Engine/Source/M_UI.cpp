@@ -86,7 +86,7 @@ void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 	float2 normalizedPosition = cTransform->GetNormalizedPosition();
 	float2 normalizedSize = cTransform->GetNormalizedSize();
 
-	float3 position3d = { normalizedPosition.x, normalizedPosition.y, 1};
+	float3 position3d = { normalizedPosition.x, normalizedPosition.y, -1};
 	float3 rotation3d = cTransform->GetRotation();
 	Quat quaternion3d = Quat::FromEulerXYZ(rotation3d.x, rotation3d.y, rotation3d.z);
 	float3 size3d = { normalizedSize.x, normalizedSize.y, 1 };
@@ -206,7 +206,7 @@ void M_UI::PrepareUIRender()
 
 	float2 offset = { engine->GetEditor()->lastViewportSize.x / 2, engine->GetEditor()->lastViewportSize.y / 2 };
 	engine->GetCamera3D()->currentCamera->SetPosition({ offset.x, offset.y, 0 });
-	engine->GetCamera3D()->currentCamera->LookAt({ offset.x, offset.y, 1 });
+	engine->GetCamera3D()->currentCamera->LookAt({ offset.x, offset.y, -1 });
 
 	engine->GetCamera3D()->currentCamera->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
 	

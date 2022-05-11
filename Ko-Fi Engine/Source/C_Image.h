@@ -34,6 +34,7 @@ public:
 	bool InspectorDraw(PanelChooser* chooser) override;
 
 	void SetTexture(const char* path);
+	inline const char* GetTexturePath() { return openGLTexture.GetAssetPath(); }
 	//void Set();
 
 	void Draw() override;

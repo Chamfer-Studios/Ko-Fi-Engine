@@ -28,6 +28,8 @@ public:
 	std::string FileExistsMaterial(std::string fileName, int i);
 	std::string FileExsistsShader(std::string fileName, int i);
 
+	std::string GetCurrentDir() { return currentDir.string(); }
+
 private:
 	M_Editor* editor = nullptr;
 	TextureIcon fileTexture;

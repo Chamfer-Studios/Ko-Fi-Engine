@@ -11,6 +11,8 @@
 #include <filesystem>
 #include "JsonHandler.h"
 
+#include "md5.h"
+
 #include "optick.h"
 
 M_FileSystem::M_FileSystem(KoFiEngine* engine)
@@ -169,12 +171,12 @@ void M_FileSystem::DiscoverAllFiles(const char* directory, std::vector<std::stri
 {
 	if (directory == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory string was nullptr.");
+		KOFI_ERROR(" Resource Manager: discovering files, directory string was nullptr.");
 		return;
 	}
 	if (!std::filesystem::exists(directory))
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
+		KOFI_ERROR(" Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
 		return;
 	}
 
@@ -195,17 +197,17 @@ void M_FileSystem::DiscoverAllFilesFiltered(const char* directory, std::vector<s
 {
 	if (directory == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory string was nullptr.");
+		KOFI_ERROR(" Resource Manager: discovering files, directory string was nullptr.");
 		return;
 	}
 	if (!std::filesystem::exists(directory))
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
+		KOFI_ERROR(" Resource Manager: discovering files, directory %s doesn't exist or not found.", directory);
 		return;
 	}
 	if (filter == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Resource Manager: Filter was nullptr.");
+		KOFI_ERROR(" Resource Manager: Filter was nullptr.");
 		return;
 	}
 
@@ -276,6 +278,47 @@ int M_FileSystem::GetLastModTime(const char* path)
 	return ret;
 }
 
+std::string M_FileSystem::GetFileHash(const char* path)
+{
+	if (path == nullptr)
+	{
+		CONSOLE_LOG("[ERROR] Filesystem: generating MD5 hash, file path was nullptr.");
+		return "";
+	}
+
+	MD5 digestMd5;
+
+	std::ifstream file;
+	std::istream* input = NULL;
+
+	file.open(path, std::ios::in | std::ios::binary);
+	if (!file)
+	{
+		CONSOLE_LOG("[ERROR] Filesystem: generating MD5 hash, file %s couldn't be accessed.", path);
+		return "";
+	}
+	else
+		input = &file;
+
+	// each cycle processes about 1 MByte
+	const size_t bufferSize = 144 * 7 * 1024;
+	char* buffer = new char[bufferSize];
+
+	while (*input)
+	{
+		input->read(buffer, bufferSize);
+		std::size_t bytesRead = size_t(input->gcount());
+
+		digestMd5.add(buffer, bytesRead);
+	}
+
+	file.close();
+	delete[] buffer;
+	buffer = nullptr;
+
+	return digestMd5.getHash();
+}
+
 bool M_FileSystem::CopyFileTo(const char* sourcePath, const char* destinationPath)
 {
 	if (!std::filesystem::exists(sourcePath))
@@ -297,7 +340,7 @@ bool M_FileSystem::CopyFileTo(const char* sourcePath, const char* destinationPat
 		}
 		catch (std::filesystem::filesystem_error& e)
 		{
-			CONSOLE_LOG("[ERROR] Filesystem: couldn't copy &s: &s", sourcePath, e.what());
+			KOFI_ERROR(" Filesystem: couldn't copy &s: &s", sourcePath, e.what());
 			return false;
 		}
 	}

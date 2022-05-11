@@ -175,6 +175,7 @@ bool SceneIntro::PostUpdate(float dt)
 	{
 		switchScene = false;
 		Importer::GetInstance()->sceneImporter->LoadScene(this, sceneNameGO.c_str());
+		engine->GetSceneManager()->OnSceneSwitch();
 	}
 
 	if (quitPlease)

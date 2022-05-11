@@ -72,17 +72,17 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 
 	if (model == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: model is nullptr.");
+		KOFI_ERROR(" Importer: model is nullptr.");
 		return false;
 	}
 
 	if (model->GetAssetPath() == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
+		KOFI_ERROR(" Importer: Path is nullptr.");
 		return false;
 	}
 
-	CONSOLE_LOG("[STATUS] Importer: Importing Model: %s", model->GetAssetPath());
+	KOFI_STATUS(" Importer: Importing Model: %s", model->GetAssetPath());
 
 	std::string errorString = "[ERROR] Importer: Could not Import R_Model { " + std::string(model->GetAssetPath()) + " }";
 
@@ -91,7 +91,7 @@ bool I_Scene::Import(R_Model* model, bool isPrefab)
 
 	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
+		KOFI_ERROR(" Importer: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
 		return false;
 	}
 
@@ -118,12 +118,12 @@ bool I_Scene::SaveModel(const R_Model* model, const char* path)
 	bool ret = true;
 	if (path == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Model Save: couldn't save model in library, path was nullptr.");
+		KOFI_ERROR(" Model Save: couldn't save model in library, path was nullptr.");
 		return false;
 	}
 	if (model == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Model Save: couldn't save model in library, model was nullptr.");
+		KOFI_ERROR(" Model Save: couldn't save model in library, model was nullptr.");
 		return false;
 	}
 
@@ -169,7 +169,7 @@ bool I_Scene::SaveModel(const R_Model* model, const char* path)
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Model Save: directory %s couldn't be accessed.", MODELS_DIR);
+		KOFI_ERROR(" Model Save: directory %s couldn't be accessed.", MODELS_DIR);
 		ret = false;
 	}
 
@@ -182,7 +182,7 @@ bool I_Scene::LoadModel(const char* path, R_Model* model)
 
 	if (model == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Model Load: couldn't load model from library, model was nullptr.");
+		KOFI_ERROR(" Model Load: couldn't load model from library, model was nullptr.");
 		return false;
 	}
 
@@ -231,17 +231,17 @@ bool I_Scene::LoadModel(const char* path, R_Model* model)
 			}
 			//engine->GetSceneManager()->GetCurrentScene()->sceneModels.emplace(model->nodes.front().uid, std::pair<UID, std::string>(model->GetUID(), model->GetAssetPath()));
 
-			CONSOLE_LOG("[STATUS] Model Load: successfully loaded model: { %s }", model->GetAssetFile());
+			KOFI_STATUS(" Model Load: successfully loaded model: { %s }", model->GetAssetFile());
 		}
 		else
 		{
-			CONSOLE_LOG("[ERROR] Model Load: couldn't load model from library.");
+			KOFI_ERROR(" Model Load: couldn't load model from library.");
 			return false;
 		}
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Model Load: directory %s couldn't be accessed.", MODELS_DIR);
+		KOFI_ERROR(" Model Load: directory %s couldn't be accessed.", MODELS_DIR);
 		ret = false;
 	}
 
@@ -368,7 +368,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		//		scene->sceneModels.emplace(goUid, std::pair<UID, std::string>(modelUid, assetPath));
 		//	else
 		//	{
-		//		CONSOLE_LOG("[ERROR] Importer: model resource could not be loaded.");
+		//		KOFI_ERROR(" Importer: model resource could not be loaded.");
 		//		return false;
 		//	}
 		//}
@@ -451,7 +451,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 					}
 					case ComponentType::NONE:
 					{
-						CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
+						KOFI_ERROR(" Importer: Component type is none, something went wrong!");
 						return false;
 						break;
 					}
@@ -496,11 +496,11 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 {
 	if (path == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Path is nullptr.");
+		KOFI_ERROR(" Importer: Path is nullptr.");
 		return false;
 	}
 
-	CONSOLE_LOG("[STATUS] Importer: Importing Scene: %s", path);
+	KOFI_STATUS(" Importer: Importing Scene: %s", path);
 
 	std::string errorString = "[ERROR] Importer: Could not Import R_Model { " + std::string(path) + " }";
 
@@ -509,7 +509,7 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 
 	if (assimpScene == nullptr || assimpScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !assimpScene->mRootNode)
 	{
-		CONSOLE_LOG("[ERROR] Importer: %s! Error: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
+		KOFI_ERROR(" Importer: %s! Error: Assimp Error [%s]", errorString.c_str(), aiGetErrorString());
 		return false;
 	}
 
@@ -1059,7 +1059,7 @@ const aiNode* I_Scene::ImportTransform(const aiNode* assimpNode, ModelNode& node
 	node.rotation = rotation;
 	node.scale = scale;
 
-	CONSOLE_LOG("[STATUS] Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());
+	KOFI_STATUS(" Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());
 
 	return assimpNode;
 }
@@ -1068,13 +1068,13 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 {
 	if (assimpScene == nullptr || assimpNode == nullptr || model == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp Scene / Node or GameObject is nullptr.");
+		KOFI_ERROR(" Importer: Assimp Scene / Node or GameObject is nullptr.");
 		return;
 	}
 
 	if (!assimpScene->HasMeshes())
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any Mesh.");
+		KOFI_ERROR(" Importer: Assimp does not have any Mesh.");
 		return;
 	}
 
@@ -1103,7 +1103,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 			}
 		}
 		else
-			CONSOLE_LOG("[ERROR] Importer: aiMesh is missing or does not have faces.");
+			KOFI_ERROR(" Importer: aiMesh is missing or does not have faces.");
 
 		loadedNodes.emplace(assimpNode->mMeshes[i], node);
 	}
@@ -1123,7 +1123,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, R_Model
 
 	if (mesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: mesh (name: %s) was not imported correctly.", nodeName);
+		KOFI_ERROR(" Importer: mesh (name: %s) was not imported correctly.", nodeName);
 		return;
 	}
 
@@ -1153,7 +1153,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, R_Model
 	R_Animation* anim = (R_Animation*)engine->GetResourceManager()->CreateNewResource(ResourceType::ANIMATION, animAssetPath.c_str());
 	if (anim == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: animation (name: %s) was not imported correctly.", assimpScene->mAnimations[0]->mName.C_Str());
+		KOFI_ERROR(" Importer: animation (name: %s) was not imported correctly.", assimpScene->mAnimations[0]->mName.C_Str());
 		return;
 	}
 
@@ -1178,7 +1178,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 {
 	if (assimpMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: aiMaterial is nullptr.");
+		KOFI_ERROR(" Importer: aiMaterial is nullptr.");
 		return;
 	}
 
@@ -1204,7 +1204,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 
 		if (texturePath.empty())
 		{
-			CONSOLE_LOG("[ERROR] Importer: couldn't load texture with filename %s.", textureFilename.string().c_str());
+			KOFI_ERROR(" Importer: couldn't load texture with filename %s.", textureFilename.string().c_str());
 			return;
 		}
 
@@ -1230,7 +1230,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
 		if (!ret)
 		{
-			CONSOLE_LOG("[ERROR] Importer: Texture couldn't import texture: %s", texturePath.c_str());
+			KOFI_ERROR(" Importer: Texture couldn't import texture: %s", texturePath.c_str());
 			engine->GetResourceManager()->UnloadResource(texture);
 			return;
 		}
@@ -1307,7 +1307,7 @@ const aiNode* I_Scene::ImportTransform(const aiNode* assimpNode, GameObject* chi
 	child->GetComponent<C_Transform>()->SetRotationQuat(rotation);
 	child->GetComponent<C_Transform>()->SetScale(scale);
 
-	CONSOLE_LOG("[STATUS] Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());
+	KOFI_STATUS(" Importer: Imported transforms of node: %s", assimpNode->mName.C_Str());
 
 	return assimpNode;
 }
@@ -1316,13 +1316,13 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 {
 	if (assimpScene == nullptr || assimpNode == nullptr || gameObj == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp Scene / Node or GameObject is nullptr.");
+		KOFI_ERROR(" Importer: Assimp Scene / Node or GameObject is nullptr.");
 		return;
 	}
 
 	if (!assimpScene->HasMeshes())
 	{
-		CONSOLE_LOG("[ERROR] Importer: Assimp does not have any Mesh.");
+		KOFI_ERROR(" Importer: Assimp does not have any Mesh.");
 		return;
 	}
 
@@ -1343,7 +1343,7 @@ void I_Scene::ImportMeshesAndMaterials(const aiScene* assimpScene, const aiNode*
 			}
 		}
 		else
-			CONSOLE_LOG("[ERROR] Importer: aiMesh is missing or does not have faces.");
+			KOFI_ERROR(" Importer: aiMesh is missing or does not have faces.");
 	}
 }
 
@@ -1362,7 +1362,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 
 	if (mesh == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: R_Mesh (name: %s) was not imported correctly.", nodeName);
+		KOFI_ERROR(" Importer: R_Mesh (name: %s) was not imported correctly.", nodeName);
 		return;
 	}
 
@@ -1374,7 +1374,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Component Mesh is nullptr.");
+		KOFI_ERROR(" Component Mesh is nullptr.");
 		return;
 	}
 
@@ -1394,7 +1394,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 		cAnim->SetAnim(anim);
 	else
 	{
-		CONSOLE_LOG("[ERROR] Component Animator is nullptr.");
+		KOFI_ERROR(" Component Animator is nullptr.");
 		return;
 	}
 
@@ -1408,7 +1408,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 {
 	if (assimpMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: aiMaterial is nullptr.");
+		KOFI_ERROR(" Importer: aiMaterial is nullptr.");
 		return;
 	}
 
@@ -1417,7 +1417,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 
 	if (cMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Component Material is nullptr.");
+		KOFI_ERROR(" Component Material is nullptr.");
 		return;
 	}
 
@@ -1447,7 +1447,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 
 	if (!Importer::GetInstance()->materialImporter->Import(assimpMaterial, material))
 	{
-		CONSOLE_LOG("[ERROR] Importer: error while importing the material.");
+		KOFI_ERROR(" Importer: error while importing the material.");
 		return;
 	}
 	else

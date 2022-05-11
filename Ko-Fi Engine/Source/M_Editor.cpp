@@ -153,8 +153,10 @@ bool M_Editor::Awake(Json configModule)
 	ImGuizmo::AllowAxisFlip(false);
 
 	ret = LoadConfiguration(configModule);
-
+#ifndef  KOFI_GAME
 	panelResources->SetResourceManager(engine->GetResourceManager());
+#endif // ! KOFI_GAME
+
 
 	return ret;
 }
@@ -190,7 +192,7 @@ bool M_Editor::Start()
 
 	LoadFontsEditor(16);
 #ifndef KOFI_GAME
-	iniToLoad = "EngineConfig/Layouts/defaultEngineLayout.ini";
+	iniToLoad = "Assets/Layouts/defaultEngineLayout.ini";
 #endif // KOFI_ENGINE
 
 	return ret;

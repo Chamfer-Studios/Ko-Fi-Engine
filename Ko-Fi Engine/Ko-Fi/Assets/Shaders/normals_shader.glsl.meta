@@ -2,9 +2,9 @@
     "asset_file": "normals_shader.glsl",
     "asset_path": "Assets/Shaders/normals_shader.glsl",
     "contained_resources": null,
+    "hash": "0afbf23d7dcf3e70e9b87bf84d8d03ae",
     "library_file": "1467561790.glsl",
     "library_path": "Library/Shaders/1467561790.glsl",
-    "mod_time": 410840972,
     "type": 4,
     "uid": 1467561790
 }

@@ -159,6 +159,15 @@ bool GameObject::OnPlay()
 	return ret;
 }
 
+bool GameObject::OnSceneSwitch()
+{
+	bool ret = true;
+	for (Component* component : components)
+		ret = component->OnSceneSwitch();
+
+	return ret;
+}
+
 bool GameObject::OnPause()
 {
 	bool ret = true;
@@ -771,7 +780,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			}
 			case ComponentType::NONE:
 			{
-				CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
+				KOFI_ERROR(" Importer: Component type is none, something went wrong!");
 				return false;
 				break;
 			}
@@ -792,7 +801,9 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 	for (const auto& chdIt : jsonChd.items())
 	{
 		Json jsonChd = chdIt.value();
-		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+		std::string name = jsonChd.at("name");
+		bool is3D = jsonChd.at("is3D");
+		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(name.c_str(), this, is3D);
 		go->LoadPrefab(jsonChd);
 		this->AttachChild(go);
 	}
@@ -862,7 +873,7 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			}
 			case ComponentType::NONE:
 			{
-				CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
+				KOFI_ERROR(" Importer: Component type is none, something went wrong!");
 				return false;
 				break;
 			}

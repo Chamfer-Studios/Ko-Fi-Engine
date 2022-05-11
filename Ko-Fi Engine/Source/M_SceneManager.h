@@ -89,6 +89,7 @@ public:
 	void CreateComponentsFromNode(R_Model* model, ModelNode node, GameObject* gameobject);
 
 	void OnPlay();
+	void OnSceneSwitch();
 	void OnStop();
 	void OnPause();
 	void OnResume();
