@@ -1,5 +1,5 @@
 {
-    "SceneIntro": {
+    "Slider": {
         "active": true,
         "game_objects_amount": 4,
         "game_objects_list": [
@@ -148,7 +148,7 @@
             },
             {
                 "UID": 1933581531,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -182,12 +182,6 @@
                         "idleTexture": "",
                         "pressedTexture": "",
                         "type": 15
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_ItsActuallyASlider.lua",
-                        "id": 1534935298,
-                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -197,7 +191,7 @@
                 "tag": 0
             }
         ],
-        "name": "SceneIntro",
+        "name": "Slider",
         "navmesh": {}
     }
 }

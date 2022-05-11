@@ -44,6 +44,7 @@ public:
 	bool IsHovered();
 	bool IsIdle();
 	void OnStoped();
+	float GetMouseXPos();
 
 private:
 	enum class BUTTON_STATE {

@@ -321,3 +321,8 @@ void C_Button::OnStoped()
 	sceneManager->OnStop();
 	camera->OnStop();
 }
+
+float C_Button::GetMouseXPos()
+{
+	return owner->GetEngine()->GetInput()->GetMouseX();
+}

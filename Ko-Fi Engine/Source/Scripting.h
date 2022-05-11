@@ -20,6 +20,7 @@
 #include "MathGeoLib/Math/Quat.h"
 #include "GameObject.h"
 #include "C_Transform.h"
+#include "C_Transform2D.h"
 #include "C_Mesh.h"
 #include "C_Script.h"
 #include "C_Text.h"
@@ -256,11 +257,18 @@ public:
 			"GetTexturePath", &C_Image::GetTexturePath
 			);
 
+		// Component Button
 		lua.new_usertype<C_Button>("C_Button",
 										  sol::constructors<void(GameObject *)>(),
 										  "IsPressed", &C_Button::IsPressed,
 										  "IsIdle", &C_Button::IsIdle,
+										  "GetMouseX", &C_Button::GetMouseXPos,
 										  "IsHovered", &C_Button::IsHovered);
+		
+		// Component Transform2D
+		lua.new_usertype<C_Transform2D>("C_Transform2D",
+			sol::constructors<void(GameObject*)>(),
+			"SetPosition", &C_Transform2D::SetPosition);
 
 		// Component Animator
 		lua.new_usertype<C_Animator>("ComponentAnimator",

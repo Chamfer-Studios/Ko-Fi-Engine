@@ -599,6 +599,7 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ClosePopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Disable.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_HoverSkill.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ItsActuallyASlider.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_1.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_2.lua" />
