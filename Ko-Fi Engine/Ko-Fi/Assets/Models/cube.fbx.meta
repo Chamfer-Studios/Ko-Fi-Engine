@@ -1,0 +1,17 @@
+{
+    "asset_file": "cube.fbx",
+    "asset_path": "Assets/Models/cube.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Box001.sugar",
+            "library_path": "Library/Meshes/1446826782.sugar",
+            "type": 0,
+            "uid": 1446826782
+        }
+    ],
+    "hash": "b2c78c4b42e50be795c6cccca74b5607",
+    "library_file": "1733098131.tea",
+    "library_path": "Library/Models/1733098131.tea",
+    "type": 3,
+    "uid": 1733098131
+}
