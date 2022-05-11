@@ -421,8 +421,8 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 		}
 		else
 		{
-			material->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
-			material->checkerTexture = true;
+		material->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
+		material->checkerTexture = true;
 		}
 	}
 }
@@ -471,7 +471,7 @@ void M_SceneManager::OnStop()
 	time = 0.0f;
 	gameTime = 0.0f;
 
-	Importer::GetInstance()->sceneImporter->LoadScene(currentScene,currentScene->name.c_str());
+	Importer::GetInstance()->sceneImporter->LoadScene(currentScene, currentScene->name.c_str());
 	// Load the scene we saved before in .json
 	//LoadScene(currentScene, "SceneIntro");
 	for (GameObject* go : currentScene->gameObjectList)
@@ -510,8 +510,14 @@ void M_SceneManager::GuizmoTransformation()
 {
 #ifndef KOFI_GAME
 	std::vector<GameObject*> selectedGameObjects;
+
 	for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
 		selectedGameObjects.push_back(currentScene->GetGameObject(engine->GetEditor()->engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
+
+	if (selectedGameObjects.size() == 0)
+	{
+		return;
+	}
 
 	for (int i = 0; i < selectedGameObjects.size(); i++)
 	{
@@ -527,10 +533,9 @@ void M_SceneManager::GuizmoTransformation()
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed();
 
 	std::vector<float4x4> modelProjection;
-	for (int i = 0; i < selectedGameObjects.size(); i++)
-	{
-		modelProjection.push_back(selectedGameObjects[i]->GetComponent<C_Transform>()->GetGlobalTransform().Transposed());
-	}
+
+	modelProjection.push_back(selectedGameObjects[0]->GetComponent<C_Transform>()->GetGlobalTransform().Transposed());
+
 
 	window = ImGui::FindWindowByName("Scene");
 
@@ -541,28 +546,86 @@ void M_SceneManager::GuizmoTransformation()
 
 	std::vector<float*> tempTransform;
 
-	for (int i = 0; i < selectedGameObjects.size(); i++)
-	{
-		tempTransform.push_back((float*)malloc(16 * sizeof(float)));
-		memcpy(tempTransform[i], modelProjection[i].ptr(), 16 * sizeof(float));
-	}
+	tempTransform.push_back((float*)malloc(16 * sizeof(float)));
+	memcpy(tempTransform[0], modelProjection[0].ptr(), 16 * sizeof(float));
 
 	ImGuizmo::MODE finalMode = (currentGizmoOperation == ImGuizmo::OPERATION::SCALE ? ImGuizmo::MODE::LOCAL : currentGizmoMode);
 
-	for (int i = 0; i < selectedGameObjects.size(); i++)
-	{
-		ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform[i]);
-	}
+
+	ImGuizmo::Manipulate(viewMatrix.ptr(), projectionMatrix.ptr(), currentGizmoOperation, finalMode, tempTransform[0]);
+
 
 	if (ImGuizmo::IsUsing())
 	{
 		for (int i = 0; i < selectedGameObjects.size(); i++)
 		{
 			float4x4 newTransform;
-			newTransform.Set(tempTransform[i]);
-			modelProjection[i] = newTransform.Transposed();
+			newTransform.Set(tempTransform[0]);
+			modelProjection[0] = newTransform.Transposed();
 
-			selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection[i]);
+
+			if (i == 0)
+			{
+				/*addX = modelProjection[i][0][3] - guizmoOffsets[i][0][3];
+				addY = modelProjection[i][1][3] - guizmoOffsets[i][1][3];
+				addZ = modelProjection[i][2][3] - guizmoOffsets[i][2][3];*/
+				addMatrix = modelProjection[i] - guizmoOffsets[i];
+
+				selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection[i]);
+
+				appLog->AddLog("FIRST OBJECT! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", 
+					modelProjection[0][0][0], modelProjection[0][0][1], modelProjection[0][0][2], modelProjection[0][0][3],
+					modelProjection[0][1][0], modelProjection[0][1][1], modelProjection[0][1][2], modelProjection[0][1][3],
+					modelProjection[0][2][0], modelProjection[0][2][1], modelProjection[0][2][2], modelProjection[0][2][3],
+					modelProjection[0][3][0], modelProjection[0][3][1], modelProjection[0][3][2], modelProjection[0][3][3]);
+
+				float4x4 buffer2 = selectedGameObjects[i]->GetComponent<C_Transform>()->GetGlobalTransform();
+				appLog->AddLog("%i OBJECT TRANSPOSED POS! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", i,
+					buffer2[0][0], buffer2[0][1], buffer2[0][2], buffer2[0][3],
+					buffer2[1][0], buffer2[1][1], buffer2[1][2], buffer2[1][3],
+					buffer2[2][0], buffer2[2][1], buffer2[2][2], buffer2[2][3],
+					buffer2[3][0], buffer2[3][1], buffer2[3][2], buffer2[3][3]);
+
+				appLog->AddLog("LATER POSITION: X: %f, Y: %f, Z: %f:  \n", selectedGameObjects[i]->GetComponent<C_Transform>()->GetPosition()[0], selectedGameObjects[i]->GetComponent<C_Transform>()->GetPosition()[1], selectedGameObjects[i]->GetComponent<C_Transform>()->GetPosition()[2]);
+			}
+			else
+			{
+
+				appLog->AddLog("GUIZMO SIZE: %i \n", guizmoOffsets.size());
+				
+				float4x4 buffer = guizmoOffsets[i];
+				/*buffer[0][3] = modelProjection[0][0][3];
+				buffer[1][3] = modelProjection[0][1][3];
+				buffer[2][3] = modelProjection[0][2][3];*/
+
+
+				appLog->AddLog("%i OBJECT! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", i,
+					buffer[0][0], buffer[0][1], buffer[0][2], buffer[0][3],
+					buffer[1][0], buffer[1][1], buffer[1][2], buffer[1][3],
+					buffer[2][0], buffer[2][1], buffer[2][2], buffer[2][3],
+					buffer[3][0], buffer[3][1], buffer[3][2], buffer[3][3]);
+
+				appLog->AddLog("INITIAL POSITION: %f, %f, %f,\n", guizmoOffsets[i][0][3], guizmoOffsets[i][1][3], guizmoOffsets[i][2][3]);
+				appLog->AddLog("LAST POSITION: %f, %f, %f,\n", buffer[0][3], buffer[1][3], buffer[2][3]);
+
+				float differenceX = buffer[0][3] - guizmoOffsets[i][0][3];
+				float differenceY = buffer[1][3] - guizmoOffsets[i][1][3];
+				float differenceZ = buffer[2][3] - guizmoOffsets[i][2][3];
+				differenceMatrix = buffer - guizmoOffsets[i];
+				/*buffer[0][3] -= differenceX - addX;
+				buffer[1][3] -= differenceY - addY;
+				buffer[2][3] -= differenceZ - addZ;*/
+
+				buffer += addMatrix;
+
+				appLog->AddLog("ADD POSITION: X: %f, Y: %f, Z: %f:  \n", addX, addY, addZ);
+
+				selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(buffer);
+				
+			}
+			
+
+			
 		}
 
 	}

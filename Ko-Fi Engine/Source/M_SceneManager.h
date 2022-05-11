@@ -105,6 +105,7 @@ public:
 
 public:
 	bool active;
+	std::vector<float4x4> guizmoOffsets;
 
 private:
 	// Modules
@@ -112,6 +113,9 @@ private:
 
 	// Scenes
 	std::vector<Scene*> scenes;
+	float4x4 addMatrix;
+	float4x4 differenceMatrix;
+
 	Scene* currentScene = nullptr;
 	SceneIntro* sceneIntro = nullptr;
 	std::string defaultScene = "";
@@ -121,6 +125,10 @@ private:
 
 	ImGuiWindow* window = nullptr;
 	float2 cornerPos;
+
+	float addX = 0;
+	float addY = 0;
+	float addZ = 0;
 	// TIME MANAGEMENT
 	// --------------------------------------------------
 	// Frame Count: app graphics frames since game start
