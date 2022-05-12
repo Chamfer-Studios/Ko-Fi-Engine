@@ -567,6 +567,7 @@ void M_SceneManager::GuizmoTransformation()
 			if (i == 0)
 			{
 				addMatrix = modelProjection[i] - guizmoOffsets[i];
+
 				selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection[i]);
 				/*appLog->AddLog("FIRST OBJECT! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", 
 					modelProjection[0][0][0], modelProjection[0][0][1], modelProjection[0][0][2], modelProjection[0][0][3],
@@ -579,6 +580,7 @@ void M_SceneManager::GuizmoTransformation()
 				/*appLog->AddLog("GUIZMO SIZE: %i \n", guizmoOffsets.size());*/
 				
 				float4x4 buffer = guizmoOffsets[i];
+				float3x3 rotationBuffer = guizmoOffsets[i].RotatePart();
 				/*appLog->AddLog("SCALE OF ORIGINAL MATRIX: %f, %f, %f \n", modelProjection[i].scaleX, modelProjection[i].scaleY, modelProjection[i].scaleZ);
 
 				appLog->AddLog("SCALE OF ADD MATRIX: %f, %f, %f \n", guizmoOffsets[i].scaleX, guizmoOffsets[i].scaleY, guizmoOffsets[i].scaleZ);*/
@@ -616,13 +618,10 @@ void M_SceneManager::GuizmoTransformation()
 				if (currentGizmoOperation == ImGuizmo::OPERATION::ROTATE)
 				{
 					appLog->AddLog("Removing");
-					appLog->AddLog("MODIFIED SCALE: X: %f, Y: %f, Z: %f:  \n", buffer.scaleX, buffer.scaleY, buffer.scaleZ);
-					appLog->AddLog("ORIGINAL SCALE: X: %f, Y: %f, Z: %f:  \n", guizmoOffsets[i].scaleX, guizmoOffsets[i].scaleY, guizmoOffsets[i].scaleZ);
-
 					buffer.RemoveScale();
 
+					appLog->AddLog("MODIFIED ROTATION: X: %f, Y: %f, Z: %f:  \n", buffer.RotatePart().ToEulerXYZ().x, buffer.RotatePart().ToEulerXYZ().y, buffer.RotatePart().ToEulerXYZ().z);
 					selectedGameObjects[i]->GetComponent<C_Transform>()->SetRotationEuler(buffer.RotatePart().ToEulerXYZ());
-
 				}
 				else
 				{

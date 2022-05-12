@@ -311,10 +311,20 @@ void M_Camera3D::OnClick(SDL_Event event)
 			if (engine->GetEditor()->contr == true && engine->GetSceneManager()->GetGameState() != GameState::PLAYING && !ImGuizmo::IsOver())
 			{
 				auto it = std::find(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.begin(), engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.end(), hit->GetUID());
-				if (it != engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.end()) return;
+				if (it != engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.end())
+				{
+					engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.erase(it);
+					return;
+				}
 
 				engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.push_back(hit->GetUID());
-				engine->GetSceneManager()->guizmoOffsets.push_back(float4x4(hit->GetTransform()->GetGlobalTransform()));
+
+				engine->GetSceneManager()->guizmoOffsets.clear();
+				engine->GetSceneManager()->guizmoOffsets.shrink_to_fit();
+				for (int i = 0; i < engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.size(); i++)
+				{
+					engine->GetSceneManager()->guizmoOffsets.push_back(engine->GetSceneManager()->GetCurrentScene()->GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i])->GetTransform()->GetGlobalTransform());
+				}
 			}
 			else if(engine->GetSceneManager()->GetGameState() != GameState::PLAYING && !ImGuizmo::IsOver())
 			{
