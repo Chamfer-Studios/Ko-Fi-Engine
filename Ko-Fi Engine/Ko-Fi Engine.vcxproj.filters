@@ -673,6 +673,9 @@
     <ClCompile Include="Source\SkyBox.cpp">
       <Filter>Source\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\I_Particles.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
@@ -1301,6 +1304,9 @@
     </ClInclude>
     <ClInclude Include="Source\Grid.h">
       <Filter>Source\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\I_Particles.h">
+      <Filter>Source\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@
 #define ASSETS_SHADERS_DIR "Assets/Shaders/"
 #define ASSETS_AUDIO_DIR "Assets/Audio/"
 #define ASSETS_FONTS_DIR "Assets/Fonts/"
+#define ASSETS_PARTICLES_DIR "Assets/Particles/"
 
 // LIBRARY DIRECTORIES
 #define LIBRARY_DIR "Library/"
@@ -20,6 +21,7 @@
 #define SHADERS_DIR "Library/Shaders/"
 #define AUDIOS_DIR "Library/Audio/"
 #define FONTS_DIR "Library/Fonts/"
+#define PARTICLES_DIR "Library/Particles/"
 
 // CONFIG DIRECTORIES
 #define CONFIG_DIR "EngineConfig/"
@@ -34,6 +36,7 @@
 #define TEXTURE_EXTENSION ".cacao"
 #define SCENE_EXTENSION ".json"
 #define META_EXTENSION ".meta"
+#define PARTICLE_EXTENSION ".cookie"
 
 #define PNG_EXTENSION ".png"
 #define FBX_EXTENSION ".fbx"

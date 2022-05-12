@@ -50,7 +50,6 @@ public:
 
 public:
 	uint maxParticles = MAX_PARTICLES;
-	uint particlesPerSpawn = 1;
 	std::vector<ParticleModule*> modules;
 	std::string name = "Emitter";
 	R_Texture* texture = nullptr;

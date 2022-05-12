@@ -205,6 +205,7 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
+    <ClCompile Include="Source\I_Particles.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\PanelResources.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
@@ -333,6 +334,7 @@
     <ClInclude Include="Source\C_CapsuleCollider.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\C_SphereCollider.h" />
+    <ClInclude Include="Source\I_Particles.h" />
     <ClInclude Include="Source\PanelResources.h" />
     <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\GJK.h" />

@@ -319,11 +319,11 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									emitter->maxParticles = maxParticles;
 								}
 
-								int particlesPerSpawn = emitter->particlesPerSpawn;
+								int particlesPerSpawn = e->particlesPerSpawn;
 								std::string particlesPerSpawnName = emitter->name + " - ParticlesPerSpawn";
 								if (ImGui::DragInt(particlesPerSpawnName.c_str(), &particlesPerSpawn, 1, 1, 50))
 								{
-									emitter->particlesPerSpawn = particlesPerSpawn;
+									e->particlesPerSpawn = particlesPerSpawn;
 								}
 
 								ImGui::PopItemWidth();
@@ -672,6 +672,11 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					eI->Init();
 				}
 			}
+		}
+
+		if(ImGui::Button("Save Resource"))
+		{
+
 		}
 	}
 	else
