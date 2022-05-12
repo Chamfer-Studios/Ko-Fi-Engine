@@ -498,16 +498,25 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 
 								bool constantSize = e->constantSize;
 								if (ImGui::Checkbox("Constant Size", &constantSize))
+								{
 									e->constantSize = constantSize;
+									e->randomInitialSize = false;
+									e->randomFinalSize = false;
+								}
 
 								bool randomInitialSize = e->randomInitialSize;
 								if (ImGui::Checkbox("Random Initial Size", &randomInitialSize))
+								{
 									e->randomInitialSize = randomInitialSize;
-
+									e->constantSize = false;
+								}
 
 								bool randomFinalSize = e->randomFinalSize;
 								if (ImGui::Checkbox("Random Final Size", &randomFinalSize))
+								{
 									e->randomFinalSize = randomFinalSize;
+									e->constantSize = false;
+								}
 
 								if (constantSize)
 								{
@@ -932,16 +941,6 @@ void C_Particle::Load(Json& json)
 					case 4:
 					{
 						EmitterSize* mSize = new EmitterSize();
-						jsonModule["minInitialSize"] = { mSize->minInitialSize.x,mSize->minInitialSize.y,mSize->minInitialSize.z };
-						if (!mSize->constantSize)
-						{
-							if (!mSize->randomInitialSize)
-								jsonModule["maxInitialSize"] = { mSize->minInitialSize.x,mSize->minInitialSize.y,mSize->minInitialSize.z };
-							jsonModule["minFinalSize"] = { mSize->minFinalSize.x,mSize->minFinalSize.y,mSize->minFinalSize.z };
-							if (!mSize->randomFinalSize)
-								jsonModule["maxFinalSize"] = { mSize->maxFinalSize.x,mSize->maxFinalSize.y,mSize->maxFinalSize.z };
-						}
-
 						std::vector<float> values = pModule.value().at("minInitialSize").get<std::vector<float>>();
 						mSize->minInitialSize = { values[0],values[1],values[2] };
 						values.clear();

@@ -105,7 +105,7 @@ private:
 	bool CompareSize(float3 a, float3 b);
 
 public:
-	bool constantSize = false;
+	bool constantSize = true;
 	bool randomInitialSize = false;
 	bool randomFinalSize = false;
 	float3 minInitialSize = float3(1.0f, 1.0f, 1.0f);
