@@ -175,6 +175,7 @@ public:
 									 sol::constructors<void()>(),
 									 "active", &GameObject::active,
 									 "GetName", &GameObject::GetName,
+									 "SetName", &GameObject::SetName,
 									 "GetUID", &GameObject::GetUID,
 									 "tag", &GameObject::tag,
 									 "GetParent", &GameObject::GetParent,

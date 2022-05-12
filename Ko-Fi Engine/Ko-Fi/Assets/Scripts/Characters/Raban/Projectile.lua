@@ -1,10 +1,12 @@
 ------------------- Variables --------------------
 
+lifeTime = 6.0
 speed = 200
 
 -------------------- Methods ---------------------
 
 function Start()
+	lifeTimer = 0.0
 	boxCollider = gameObject:GetBoxCollider() -- This is here instead of at "awake" so the order of component creation does not affect
 	componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
 	initialPos = float3.new(0.0,1.5,0.0)
@@ -12,10 +14,7 @@ function Start()
 	destination = true
 	if (componentRigidBody ~= nil) then		
 		componentRigidBody:SetRigidBodyPos(initialPos)
-		if (boxCollider ~= nil) then
-			componentTransform:SetScale(initialScale)	
-			--boxCollider:SetScaleFactorFloat3(initialScale)
-		end
+		componentTransform:SetScale(initialScale)	
 	end
 end
 
@@ -24,14 +23,13 @@ function Update(dt)
 
 	-- SPACE (reset)
 	if (GetInput(4) == KEY_STATE.KEY_DOWN and componentRigidBody ~= nil) then 
-		componentRigidBody:SetRigidBodyPos(initialPos)
-		if (boxCollider ~= nil) then
-			componentTransform:SetScale(initialScale)
-			--boxCollider:SetScaleFactorFloat3(initialScale)
-		end
+		Reset()
 	end
 	if (destination ~= nil) then
 		MoveToDestination(dt)
+	end
+	if (lifeTimer >= lifeTime) then
+		DeleteGameObject()
 	end
 end
 
@@ -48,6 +46,11 @@ function MoveToDestination(dt)
 	-- Scale
 	local scale = componentTransform:GetScale()
 	componentTransform:SetScale(float3.new(scale.x + 2.0 * dt, scale.y, scale.z))
+end
+
+function Reset()
+	componentRigidBody:SetRigidBodyPos(initialPos)
+	componentTransform:SetScale(initialScale)
 end
 
 print("Projectile.lua")
