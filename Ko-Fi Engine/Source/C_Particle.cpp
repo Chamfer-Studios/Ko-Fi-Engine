@@ -5,6 +5,7 @@
 #include "M_Renderer3D.h"
 #include "M_Editor.h"
 #include "M_ResourceManager.h"
+#include "M_FileSystem.h"
 #include "ParticleModule.h"
 
 // GameObject
@@ -38,6 +39,16 @@ C_Particle::~C_Particle()
 
 bool C_Particle::Start()
 {
+	std::vector<std::string> tmp;
+	std::vector<std::string> tmpFiltered;
+	owner->GetEngine()->GetFileSystem()->DiscoverAllFilesFiltered(ASSETS_PARTICLES_DIR, tmp, tmpFiltered, PARTICLES_EXTENSION);
+
+	for (const auto& file : tmpFiltered)
+	{
+		std::filesystem::path filename = file;
+		resourcesList.push_back(filename.stem().string());
+	}
+
 	if (resource != nullptr)
 	{
 		Emitter* e = new Emitter();
@@ -680,20 +691,59 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 		else
 		{
 			std::string addResourceName = "Add Resource";
-			ImGui::Combo("##Resource Combo", &resourceToAdd, "Add Resource\0New Resource");
-			ImGui::SameLine();
-			if ((ImGui::Button(addResourceName.c_str())))
+			if (ImGui::BeginCombo("Add Resource##", addResourceName.c_str()))
 			{
-				if (resourceToAdd == 1)
+				for (int i = -1; i != (int)resourcesList.size(); ++i)
 				{
-					resource = new R_Particle();
-					Emitter* e = new Emitter();
-					resource->emitters.push_back(e);
-					EmitterInstance* eI = new EmitterInstance(e, this);
-					emitterInstances.push_back(eI);
-					eI->Init();
+					if (i == -1)
+					{
+						if (ImGui::Selectable("New Resource"))
+						{
+							resource = new R_Particle();
+							Emitter* e = new Emitter();
+							resource->emitters.push_back(e);
+							EmitterInstance* eI = new EmitterInstance(e, this);
+							emitterInstances.push_back(eI);
+							eI->Init();
+						}
+					}
+					else
+					{
+						if (ImGui::Selectable(resourcesList.at(i).c_str()))
+						{
+							if (resource == nullptr)
+								resource = new R_Particle();
+							Importer::GetInstance()->particleImporter->Load(resource, "New Particle Effect");
+							for (const auto& emitter : resource->emitters)
+							{
+								EmitterInstance* ei = new EmitterInstance(emitter, this);
+								emitterInstances.push_back(ei);
+								ei->Init();
+							}
+						}
+					}
 				}
+				ImGui::EndCombo();
 			}
+
+
+
+
+			//std::string addResourceName = "Add Resource";
+			//ImGui::Combo("##Resource Combo", &resourceToAdd, "Add Resource\0New Resource");
+			//ImGui::SameLine();
+			//if ((ImGui::Button(addResourceName.c_str())))
+			//{
+			//	if (resourceToAdd == 1)
+			//	{
+			//		resource = new R_Particle();
+			//		Emitter* e = new Emitter();
+			//		resource->emitters.push_back(e);
+			//		EmitterInstance* eI = new EmitterInstance(e, this);
+			//		emitterInstances.push_back(eI);
+			//		eI->Init();
+			//	}
+			//}
 		}
 	}
 	else

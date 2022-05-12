@@ -39,6 +39,7 @@ private:
 	const char* ModuleTypeToString(ParticleModuleType e);
 
 public:
+	std::vector<std::string> resourcesList;
 	std::vector<EmitterInstance*> emitterInstances;
 	R_Particle* resource = nullptr;
 	int moduleToAdd = 0;
