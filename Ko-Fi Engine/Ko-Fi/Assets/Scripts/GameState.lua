@@ -1,15 +1,30 @@
 ------------------- Variables --------------------
 
-characterSelected = 0
+characterSelected = 1
 
 -------------------- Methods ---------------------
+function Start()
+	characters = { Find("Zhib"), Find("Nerala"), Find("Omozra") }
+	characterSelectedMesh = Find("CharacterSelectedMesh")
+end
 
 -- Called each loop iteration
 function Update(dt)
 
 	currentState = GetRuntimeState()
 	if (currentState == RuntimeState.PLAYING) then
-		if (GetInput(21) == KEY_STATE.KEY_DOWN) then
+		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
+			local goHovered = GetGameObjectHovered()
+			if (goHovered.tag == Tag.PLAYER) then
+				if (goHovered:GetName() == "Zhib") then
+					characterSelected = 1
+				elseif (goHovered:GetName() == "Nerala") then
+					characterSelected = 2
+				elseif (goHovered:GetName() == "Omozra") then
+					characterSelected = 3
+				end
+			end
+		elseif (GetInput(21) == KEY_STATE.KEY_DOWN) then
 			if (characterSelected == 1) then
 				characterSelected = 0
 			else
@@ -27,6 +42,12 @@ function Update(dt)
 			else
 				characterSelected = 3
 			end
+		end
+		if (characterSelected ~= 0) then
+			playerPos = characters[characterSelected]:GetTransform():GetPosition() 
+			characterSelectedMesh:GetTransform():SetPosition(float3.new(playerPos.x, playerPos.y + 30, playerPos.z))
+		else 
+			characterSelectedMesh:GetTransform():SetPosition(float3.new(characterSelectedMesh:GetTransform():GetPosition().x, -20, characterSelectedMesh:GetTransform():GetPosition().z))
 		end
 	else
 		characterSelected = 0

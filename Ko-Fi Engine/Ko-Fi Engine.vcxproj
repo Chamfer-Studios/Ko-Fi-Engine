@@ -568,6 +568,16 @@
   <ItemGroup>
     <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Dart.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\HunterSeeker.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Nerala.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Smokebomb.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Omozra\Omozra.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Omozra\Worm.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Raban\Projectile.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Decoy.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Knife.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua" />
     <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua" />
@@ -605,13 +615,6 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\HunterSeeker.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Smokebomb.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra\Omozra.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Decoy.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Knife.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
