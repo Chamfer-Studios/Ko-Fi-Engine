@@ -24,19 +24,19 @@ function Update(dt)
 					characterSelected = 3
 				end
 			end
-		elseif (GetInput(21) == KEY_STATE.KEY_DOWN) then
+		elseif (GetInput(6) == KEY_STATE.KEY_DOWN) then
 			if (characterSelected == 1) then
 				characterSelected = 0
 			else
 				characterSelected = 1
 			end
-		elseif (GetInput(22) == KEY_STATE.KEY_DOWN) then
+		elseif (GetInput(8) == KEY_STATE.KEY_DOWN) then
 			if (characterSelected == 2) then
 				characterSelected = 0
 			else
 				characterSelected = 2
 			end
-		elseif (GetInput(23) == KEY_STATE.KEY_DOWN) then
+		elseif (GetInput(9) == KEY_STATE.KEY_DOWN) then
 			if (characterSelected == 3) then
 				characterSelected = 0
 			else

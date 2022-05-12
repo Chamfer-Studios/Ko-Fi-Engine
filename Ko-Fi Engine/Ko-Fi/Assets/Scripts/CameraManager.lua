@@ -52,7 +52,7 @@ function Update(dt)
     if(target ~=0) then
 		gameObject:GetCamera():LookAt(target)
     end
-    if (GetInput(14) == KEY_STATE.KEY_DOWN) then -- H
+    if (GetInput(14) == KEY_STATE.KEY_DOWN) then -- Q
  
         if(rotationAngle > 0) then
         rotationAngle = -rotationAngle
@@ -61,7 +61,7 @@ function Update(dt)
         counter = targetTime
     end
  
-    if (GetInput(15) == KEY_STATE.KEY_DOWN) then -- K
+    if (GetInput(15) == KEY_STATE.KEY_DOWN) then -- E
  
         if(rotationAngle < 0) then
         rotationAngle = rotationAngle * -1

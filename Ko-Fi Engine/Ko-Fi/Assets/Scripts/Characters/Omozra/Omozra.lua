@@ -151,8 +151,8 @@ function Update(dt)
 	--Gather Inputs
 	if (IsSelected() == true) then 
 
-		-- Left Click
-		if (GetInput(1) == KEY_STATE.KEY_DOWN) then
+		-- Right Click
+		if (GetInput(3) == KEY_STATE.KEY_DOWN) then
 
 			-- Primary ability ()
 			if (currentState == State.AIM_PRIMARY) then
@@ -199,7 +199,7 @@ function Update(dt)
 		end
 
 		-- Right Click
-		if (GetInput(3) == KEY_STATE.KEY_DOWN) then
+		if (GetInput(3) == KEY_STATE.KEY_DOWN and currentState == State.IDLE) then
 			goHit = GetGameObjectHovered()
 			if (goHit ~= gameObject) then
 				destination = GetLastMouseClick()
@@ -237,32 +237,32 @@ function Update(dt)
 			end
 		end
 		
-		-- H
-		if (GetInput(5) == KEY_STATE.KEY_DOWN) then 
+		-- Left Click
+		if (GetInput(1) == KEY_STATE.KEY_DOWN) then 
 			currentState = State.IDLE
 			DispatchGlobalEvent("Player_Ability", { characterID, 0, 0 })
 		end
 
-		-- K
-		if (GetInput(6) == KEY_STATE.KEY_DOWN) then 
+		-- 1
+		if (GetInput(21) == KEY_STATE.KEY_DOWN) then 
 			currentState = State.AIM_PRIMARY
 			DispatchGlobalEvent("Player_Ability", { characterID, 1, 1 })
 		end	
 
-		-- D
-		if (GetInput(12) == KEY_STATE.KEY_DOWN) then
+		-- 2
+		if (GetInput(22) == KEY_STATE.KEY_DOWN) then
 			currentState = State.AIM_SECONDARY
 			DispatchGlobalEvent("Player_Ability", { characterID, 2, 1 })
 		end	
 
-		-- SPACE
-		if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- Ult step 1
+		-- 3
+		if (GetInput(23) == KEY_STATE.KEY_DOWN) then -- Ult step 1
 			currentState = State.AIM_ULTIMATE
 			DispatchGlobalEvent("Player_Ability", { characterID, 3, 1 })
 		end
 
-		-- C -> Toggle crouch
-		if (GetInput(9) == KEY_STATE.KEY_DOWN) then 
+		--Shift -> Toggle crouch
+		if (GetInput(12) == KEY_STATE.KEY_DOWN) then 
 			if (currentMovement == Movement.CROUCH) then
 				if (destination ~= nil) then
 					currentMovement = Movement.WALK
