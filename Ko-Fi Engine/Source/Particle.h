@@ -25,6 +25,7 @@ public:
 	//float3 rotationEuler;
 	float3 scale;
 	float3 initialScale;
+	float3 finalScale;
 
 	float3 velocity;
 	float3 acceleration;

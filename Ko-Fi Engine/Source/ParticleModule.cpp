@@ -242,10 +242,21 @@ EmitterSize::EmitterSize()
 void EmitterSize::Spawn(Particle* particle, EmitterInstance* emitter)
 {
 	LCG random;
-	if (randomSize)
-		particle->scale = particle->initialScale = particle->scale.Lerp(minSize, maxSize, random.Float());
+	if (constantSize)
+		particle->scale = minInitialSize;
 	else
-		particle->scale = particle->initialScale = minSize;
+	{
+		if (randomInitialSize)
+			particle->scale = particle->scale.Lerp(minInitialSize, maxInitialSize, random.Float());
+		else
+			particle->scale = minInitialSize;
+
+		if (randomFinalSize)
+			particle->scale = particle->scale.Lerp(minFinalSize, maxFinalSize, random.Float());
+		else
+			particle->scale = minFinalSize;
+
+	}
 }
 
 bool EmitterSize::Update(float dt, EmitterInstance* emitter)
@@ -257,9 +268,7 @@ bool EmitterSize::Update(float dt, EmitterInstance* emitter)
 	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
 		Particle* particle = &emitter->particles[i];
-		particle->scale = particle->scale.Lerp(particle->initialScale, maxSize, GetPercentage(particle));
-		//if(CompareSize(tmpScale, particle->scale))
-		//	particle->scale = tmpScale;
+		particle->scale = particle->scale.Lerp(particle->initialScale,particle->finalScale, GetPercentage(&emitter->particles[i]));
 	}
 }
 

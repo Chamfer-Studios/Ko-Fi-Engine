@@ -496,30 +496,68 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 							{
 								EmitterSize* e = (EmitterSize*)module;
 
-								bool randomSize = e->randomSize;
-								if (ImGui::Checkbox("Random Size", &randomSize))
-									e->randomSize = randomSize;
+								bool constantSize = e->constantSize;
+								if (ImGui::Checkbox("Constant Size", &constantSize))
+									e->constantSize = constantSize;
 
-								if (randomSize)
+								bool randomInitialSize = e->randomInitialSize;
+								if (ImGui::Checkbox("Random Initial Size", &randomInitialSize))
+									e->randomInitialSize = randomInitialSize;
+
+
+								bool randomFinalSize = e->randomFinalSize;
+								if (ImGui::Checkbox("Random Final Size", &randomFinalSize))
+									e->randomFinalSize = randomFinalSize;
+
+								if (constantSize)
 								{
-									float minSize[3] = { e->minSize.x,e->minSize.y,e->minSize.z };
-									std::string minSizeName = emitter->name + " - minSize";
-									if (ImGui::DragFloat3(minSizeName.c_str(), minSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
-										e->minSize = { minSize[0],minSize[1],minSize[2] };
-
-									float maxSize[3] = { e->maxSize.x,e->maxSize.y,e->maxSize.z };
-									std::string maxSizeName = emitter->name + " - maxSize";
-									if (ImGui::DragFloat3(maxSizeName.c_str(), maxSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
-										e->maxSize = { maxSize[0],maxSize[1],maxSize[2] };
+									float size[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
+									std::string sizeInitialName = emitter->name + " - Size";
+									if (ImGui::DragFloat3(sizeInitialName.c_str(), size, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										e->minInitialSize = { size[0],size[1],size[2] };
 								}
 								else
 								{
-									float size[3] = { e->minSize.x,e->minSize.y,e->minSize.z };
-									std::string sizeName = emitter->name + " - Size";
-									if (ImGui::DragFloat3(sizeName.c_str(), size, 0.1f, -10000.0f, 10000.0f, "%.1f"))
-										e->minSize = { size[0],size[1],size[2] };
-								}
+									if (randomInitialSize)
+									{
+										float minInitialSize[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
+										std::string minInitialSizeName = emitter->name + " - minInitialSize";
+										if (ImGui::DragFloat3(minInitialSizeName.c_str(), minInitialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->minInitialSize = { minInitialSize[0],minInitialSize[1],minInitialSize[2] };
 
+										float maxInitialSize[3] = { e->maxInitialSize.x,e->maxInitialSize.y,e->maxInitialSize.z };
+										std::string maxInitialSizeName = emitter->name + " - maxInitialSize";
+										if (ImGui::DragFloat3(maxInitialSizeName.c_str(), maxInitialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->maxInitialSize = { maxInitialSize[0],maxInitialSize[1],maxInitialSize[2] };
+									}
+									else
+									{
+										float initialSize[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
+										std::string sizeInitialName = emitter->name + " - InitialSize";
+										if (ImGui::DragFloat3(sizeInitialName.c_str(), initialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->minInitialSize = { initialSize[0],initialSize[1],initialSize[2] };
+									}
+
+									if (randomFinalSize)
+									{
+										float minFinalSize[3] = { e->minFinalSize.x,e->minFinalSize.y,e->minFinalSize.z };
+										std::string minFinalSizeName = emitter->name + " - minFinalSize";
+										if (ImGui::DragFloat3(minFinalSizeName.c_str(), minFinalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->minFinalSize = { minFinalSize[0],minFinalSize[1],minFinalSize[2] };
+
+										float maxFinalSize[3] = { e->maxFinalSize.x,e->maxFinalSize.y,e->maxFinalSize.z };
+										std::string maxFinalSizeName = emitter->name + " - maxFinalSize";
+										if (ImGui::DragFloat3(maxFinalSizeName.c_str(), maxFinalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->maxFinalSize = { maxFinalSize[0],maxFinalSize[1],maxFinalSize[2] };
+									}
+									else
+									{
+										float finalSize[3] = { e->minFinalSize.x,e->minFinalSize.y,e->minFinalSize.z };
+										std::string sizeFinalName = emitter->name + " - FinalSize";
+										if (ImGui::DragFloat3(sizeFinalName.c_str(), finalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->minFinalSize = { finalSize[0],finalSize[1],finalSize[2] };
+									}
+								}
 								std::string deleteEmitter = emitter->name + " - Delete Module Size";
 								if (ImGui::Button(deleteEmitter.c_str()))
 								{
@@ -757,8 +795,16 @@ void C_Particle::Save(Json& json) const
 				{
 					EmitterSize* mSize = (EmitterSize*)m;
 					jsonModule["type"] = (int)mSize->type;
-					jsonModule["minSize"] = { mSize->minSize.x,mSize->minSize.y,mSize->minSize.z };
-					jsonModule["maxSize"] = { mSize->maxSize.x,mSize->maxSize.y,mSize->maxSize.z };
+
+					jsonModule["minInitialSize"] = { mSize->minInitialSize.x,mSize->minInitialSize.y,mSize->minInitialSize.z };
+					if (!mSize->constantSize)
+					{
+						if (mSize->randomInitialSize)
+							jsonModule["maxInitialSize"] = { mSize->minInitialSize.x,mSize->minInitialSize.y,mSize->minInitialSize.z };
+						jsonModule["minFinalSize"] = { mSize->minFinalSize.x,mSize->minFinalSize.y,mSize->minFinalSize.z };
+						if (mSize->randomFinalSize)
+							jsonModule["maxFinalSize"] = { mSize->maxFinalSize.x,mSize->maxFinalSize.y,mSize->maxFinalSize.z };
+					}
 					break;
 				}
 				case ParticleModuleType::BILLBOARDING:
@@ -886,12 +932,43 @@ void C_Particle::Load(Json& json)
 					case 4:
 					{
 						EmitterSize* mSize = new EmitterSize();
-						std::vector<float> values = pModule.value().at("minSize").get<std::vector<float>>();
-						mSize->minSize = { values[0],values[1],values[2] };
+						jsonModule["minInitialSize"] = { mSize->minInitialSize.x,mSize->minInitialSize.y,mSize->minInitialSize.z };
+						if (!mSize->constantSize)
+						{
+							if (!mSize->randomInitialSize)
+								jsonModule["maxInitialSize"] = { mSize->minInitialSize.x,mSize->minInitialSize.y,mSize->minInitialSize.z };
+							jsonModule["minFinalSize"] = { mSize->minFinalSize.x,mSize->minFinalSize.y,mSize->minFinalSize.z };
+							if (!mSize->randomFinalSize)
+								jsonModule["maxFinalSize"] = { mSize->maxFinalSize.x,mSize->maxFinalSize.y,mSize->maxFinalSize.z };
+						}
+
+						std::vector<float> values = pModule.value().at("minInitialSize").get<std::vector<float>>();
+						mSize->minInitialSize = { values[0],values[1],values[2] };
 						values.clear();
-						values = pModule.value().at("maxSize").get<std::vector<float>>();
-						mSize->maxSize = { values[0],values[1],values[2] };
-						values.clear();
+						if (pModule.value().contains("maxInitialSize"))
+						{
+							mSize->randomInitialSize = true;
+							values = pModule.value().at("maxInitialSize").get<std::vector<float>>();
+							mSize->maxInitialSize = { values[0],values[1],values[2] };
+							values.clear();
+						}
+						if (pModule.value().contains("minFinalSize"))
+						{
+							values = pModule.value().at("minFinalSize").get<std::vector<float>>();
+							mSize->minFinalSize = { values[0],values[1],values[2] };
+							values.clear();
+						}
+						if (pModule.value().contains("maxFinalSize"))
+						{
+							mSize->randomFinalSize = true;
+							values = pModule.value().at("maxFinalSize").get<std::vector<float>>();
+							mSize->maxFinalSize = { values[0],values[1],values[2] };
+							values.clear();
+						}
+
+						if (!mSize->randomInitialSize && !mSize->randomFinalSize)
+							mSize->constantSize = true;
+
 						values.shrink_to_fit();
 						m = mSize;
 						break;

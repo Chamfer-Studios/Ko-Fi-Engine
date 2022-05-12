@@ -105,9 +105,13 @@ private:
 	bool CompareSize(float3 a, float3 b);
 
 public:
-	bool randomSize = false;
-	float3 minSize = float3(1.0f, 1.0f, 1.0f);
-	float3 maxSize = float3(1.5f, 1.5f, 1.5f);
+	bool constantSize = false;
+	bool randomInitialSize = false;
+	bool randomFinalSize = false;
+	float3 minInitialSize = float3(1.0f, 1.0f, 1.0f);
+	float3 maxInitialSize = float3(1.5f, 1.5f, 1.5f);
+	float3 minFinalSize = float3(0.5f, 0.5f, 0.5f);
+	float3 maxFinalSize = float3(0.75f, 0.75f, 0.75f);
 };
 
 class ParticleBillboarding : public ParticleModule
