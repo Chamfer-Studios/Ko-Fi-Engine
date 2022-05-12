@@ -566,47 +566,36 @@ void M_SceneManager::GuizmoTransformation()
 
 			if (i == 0)
 			{
-				/*addX = modelProjection[i][0][3] - guizmoOffsets[i][0][3];
-				addY = modelProjection[i][1][3] - guizmoOffsets[i][1][3];
-				addZ = modelProjection[i][2][3] - guizmoOffsets[i][2][3];*/
 				addMatrix = modelProjection[i] - guizmoOffsets[i];
-
 				selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection[i]);
-
-				appLog->AddLog("FIRST OBJECT! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", 
+				/*appLog->AddLog("FIRST OBJECT! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", 
 					modelProjection[0][0][0], modelProjection[0][0][1], modelProjection[0][0][2], modelProjection[0][0][3],
 					modelProjection[0][1][0], modelProjection[0][1][1], modelProjection[0][1][2], modelProjection[0][1][3],
 					modelProjection[0][2][0], modelProjection[0][2][1], modelProjection[0][2][2], modelProjection[0][2][3],
-					modelProjection[0][3][0], modelProjection[0][3][1], modelProjection[0][3][2], modelProjection[0][3][3]);
-
-				float4x4 buffer2 = selectedGameObjects[i]->GetComponent<C_Transform>()->GetGlobalTransform();
-				appLog->AddLog("%i OBJECT TRANSPOSED POS! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", i,
-					buffer2[0][0], buffer2[0][1], buffer2[0][2], buffer2[0][3],
-					buffer2[1][0], buffer2[1][1], buffer2[1][2], buffer2[1][3],
-					buffer2[2][0], buffer2[2][1], buffer2[2][2], buffer2[2][3],
-					buffer2[3][0], buffer2[3][1], buffer2[3][2], buffer2[3][3]);
-
-				appLog->AddLog("LATER POSITION: X: %f, Y: %f, Z: %f:  \n", selectedGameObjects[i]->GetComponent<C_Transform>()->GetPosition()[0], selectedGameObjects[i]->GetComponent<C_Transform>()->GetPosition()[1], selectedGameObjects[i]->GetComponent<C_Transform>()->GetPosition()[2]);
+					modelProjection[0][3][0], modelProjection[0][3][1], modelProjection[0][3][2], modelProjection[0][3][3]);*/
 			}
 			else
 			{
-
-				appLog->AddLog("GUIZMO SIZE: %i \n", guizmoOffsets.size());
+				/*appLog->AddLog("GUIZMO SIZE: %i \n", guizmoOffsets.size());*/
 				
 				float4x4 buffer = guizmoOffsets[i];
+				/*appLog->AddLog("SCALE OF ORIGINAL MATRIX: %f, %f, %f \n", modelProjection[i].scaleX, modelProjection[i].scaleY, modelProjection[i].scaleZ);
+
+				appLog->AddLog("SCALE OF ADD MATRIX: %f, %f, %f \n", guizmoOffsets[i].scaleX, guizmoOffsets[i].scaleY, guizmoOffsets[i].scaleZ);*/
+
 				/*buffer[0][3] = modelProjection[0][0][3];
 				buffer[1][3] = modelProjection[0][1][3];
 				buffer[2][3] = modelProjection[0][2][3];*/
 
 
-				appLog->AddLog("%i OBJECT! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", i,
+				/*appLog->AddLog("%i OBJECT! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", i,
 					buffer[0][0], buffer[0][1], buffer[0][2], buffer[0][3],
 					buffer[1][0], buffer[1][1], buffer[1][2], buffer[1][3],
 					buffer[2][0], buffer[2][1], buffer[2][2], buffer[2][3],
 					buffer[3][0], buffer[3][1], buffer[3][2], buffer[3][3]);
 
 				appLog->AddLog("INITIAL POSITION: %f, %f, %f,\n", guizmoOffsets[i][0][3], guizmoOffsets[i][1][3], guizmoOffsets[i][2][3]);
-				appLog->AddLog("LAST POSITION: %f, %f, %f,\n", buffer[0][3], buffer[1][3], buffer[2][3]);
+				appLog->AddLog("LAST POSITION: %f, %f, %f,\n", buffer[0][3], buffer[1][3], buffer[2][3]);*/
 
 				float differenceX = buffer[0][3] - guizmoOffsets[i][0][3];
 				float differenceY = buffer[1][3] - guizmoOffsets[i][1][3];
@@ -618,10 +607,28 @@ void M_SceneManager::GuizmoTransformation()
 
 				buffer += addMatrix;
 
-				appLog->AddLog("ADD POSITION: X: %f, Y: %f, Z: %f:  \n", addX, addY, addZ);
+				appLog->AddLog("%i OBJECT! ADD MATRIX \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", i,
+					addMatrix[0][0], addMatrix[0][1], addMatrix[0][2], addMatrix[0][3],
+					addMatrix[1][0], addMatrix[1][1], addMatrix[1][2], addMatrix[1][3],
+					addMatrix[2][0], addMatrix[2][1], addMatrix[2][2], addMatrix[2][3],
+					addMatrix[3][0], addMatrix[3][1], addMatrix[3][2], addMatrix[3][3]);
 
-				selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(buffer);
-				
+				if (currentGizmoOperation == ImGuizmo::OPERATION::ROTATE)
+				{
+					appLog->AddLog("Removing");
+					appLog->AddLog("MODIFIED SCALE: X: %f, Y: %f, Z: %f:  \n", buffer.scaleX, buffer.scaleY, buffer.scaleZ);
+					appLog->AddLog("ORIGINAL SCALE: X: %f, Y: %f, Z: %f:  \n", guizmoOffsets[i].scaleX, guizmoOffsets[i].scaleY, guizmoOffsets[i].scaleZ);
+
+					buffer.RemoveScale();
+
+					selectedGameObjects[i]->GetComponent<C_Transform>()->SetRotationEuler(buffer.RotatePart().ToEulerXYZ());
+
+				}
+				else
+				{
+					appLog->AddLog("Setting Global Transform");
+					selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(buffer);
+				}
 			}
 			
 
