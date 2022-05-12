@@ -463,7 +463,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	float timeInTicks = timeInSeconds * ticksPerSecond;
 
 	float startFrame, endFrame, animDur;
-	AnimatorClip* selectedClip = gameObject->GetComponent<C_Animator>()->GetSelectedClip();
+	AnimatorClip* selectedClip = gameObject->GetParent()->GetComponent<C_Animator>()->GetSelectedClip();
 	if (selectedClip != nullptr)
 	{
 		startFrame = selectedClip->GetStartFrame();

@@ -377,7 +377,7 @@ void GameObject::AttachChild(GameObject* child)
 {
 	if (child->parent != nullptr)
 		child->parent->RemoveChild(child);
-
+	child->parentUid = this->uid;
 	child->parent = this;
 	children.push_back(child);
 	// child->PropagateTransform();
@@ -517,15 +517,15 @@ bool GameObject::PrefabSave(Json& jsonFile)
 {
 	jsonFile["name"] = name;
 	jsonFile["active"] = active;
-	jsonFile["UID"] = uid;
+	//jsonFile["UID"] = uid;
 	jsonFile["is3D"] = is3D;
 	jsonFile["isPrefab"] = isPrefab;
 	jsonFile["tag"] = (uint)tag;
 
-	if (GetParent())
+	/*if (GetParent())
 		jsonFile["parent_UID"] = GetParent()->GetUID();
 	else
-		jsonFile["parent_UID"] = uid;
+		jsonFile["parent_UID"] = uid;*/
 
 	std::vector<Component*> componentsList = this->GetComponents();
 	jsonFile["components"] = Json::array();
@@ -726,10 +726,13 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 		tag = (Tag)jsonFile["tag"];
 	if (jsonFile.contains("is3D"))
 		is3D = jsonFile.at("is3D");
-	if (jsonFile.contains("parent_UID"))
-		parentUid = jsonFile.at("parent_UID");
-	if (jsonFile.contains("UID"))
-		uid = jsonFile.at("UID");
+	//if (jsonFile.contains("parent_UID"))
+		//parentUid = jsonFile.at("parent_UID");
+	//if (jsonFile.contains("UID"))
+		//uid = jsonFile.at("UID");
+
+	if (GetParent())
+		parentUid = GetParent()->GetUID();
 
 	Json jsonCmp = jsonFile.at("components");
 	for (const auto& cmpIt : jsonCmp.items())

@@ -28,6 +28,7 @@
 // Resources
 #include "Importer.h"
 #include "R_Material.h"
+#include "R_Animation.h"
 
 #include "glew.h"
 #include <gl/GL.h>
@@ -94,6 +95,8 @@ void C_Mesh::Save(Json& json) const
 		json["mesh"]["draw_vertex_normals"] = mesh->GetVertexNormals();
 		json["mesh"]["draw_face_normals"] = mesh->GetFaceNormals();
 		json["mesh"]["is_animated"] = mesh->IsAnimated();
+		json["mesh"]["anim_uid"] = mesh->GetAnimation()->GetUID();
+		json["mesh"]["anim_path"] = mesh->GetAnimation()->GetAssetPath();
 
 		if (mesh->IsAnimated())
 			json["mesh"]["root_node_UID"] = mesh->GetRootNode()->GetUID();
@@ -121,6 +124,9 @@ void C_Mesh::Load(Json& json)
 			mesh->SetVertexNormals(jsonMesh.at("draw_vertex_normals"));
 			mesh->SetFaceNormals(jsonMesh.at("draw_face_normals"));
 			mesh->SetIsAnimated(jsonMesh.at("is_animated"));
+			// Setting the animation...
+			owner->GetEngine()->GetResourceManager()->LoadResource(jsonMesh.at("anim_uid"), jsonMesh.at("anim_path").get<std::string>().c_str());
+			mesh->SetAnimation((R_Animation*)owner->GetEngine()->GetResourceManager()->RequestResource(jsonMesh.at("anim_uid")));
 
 			if (mesh->IsAnimated())
 				mesh->SetRootNode(owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(jsonMesh.at("root_node_UID")));

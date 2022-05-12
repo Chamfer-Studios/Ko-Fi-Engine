@@ -36,7 +36,6 @@ public:
 
 public:
 	R_Texture* texture = nullptr;
-	//std::vector<R_Texture> textures;
 
 	bool checkerTexture = false;
 

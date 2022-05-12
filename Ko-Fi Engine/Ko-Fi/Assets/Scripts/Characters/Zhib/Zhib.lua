@@ -46,7 +46,7 @@ speed = 2000.0
 -- Primary ability --
 knifeCastRange = 100.0
 maxKnives = 2 -- Move to a Start() func!!!
-knifeCount = maxKnives
+knifePickupTime = 0.5
 
 -- Secondary ability --
 decoyCastRange = 100.0
@@ -140,11 +140,19 @@ function Start()
 
 	currentHP = maxHP
 
+	knifeCount = maxKnives
+
+	knifeCounter = Find("KnifeCounter")
+
 	DispatchGlobalEvent("Player_Health", { characterID, currentHP, maxHP })
 end
 
 -- Called each loop iteration
 function Update(dt)
+
+	if (knifeCount == 1) then
+		
+	end
 
 	if (lastRotation ~= nil) then
 		componentTransform:LookAt(lastRotation, float3.new(0, 1, 0))
@@ -212,7 +220,7 @@ function Update(dt)
 			goHit = GetGameObjectHovered()
 			if (goHit ~= gameObject) then
 				destination = GetLastMouseClick()
-				DispatchEvent("Pathfinder_UpdatePath", { { destination }, true, componentTransform:GetPosition() })
+				DispatchEvent("Pathfinder_UpdatePath", { { destination }, false, componentTransform:GetPosition() })
 				if (currentMovement == Movement.WALK and isDoubleClicking == true) then
 
 					currentMovement = Movement.RUN
@@ -344,6 +352,12 @@ function ManageTimers(dt)
 	end
 
 	-- Primary ability cooldown
+	if (knifePickupTimer ~= nil) then
+		knifePickupTimer = knifePickupTimer + dt
+		if (knifePickupTimer >= knifePickupTime) then
+			knifePickupTimer = nil
+		end
+	end
 
 	-- Secondary ability cooldown
 	if (decoyTimer ~= nil) then
@@ -398,7 +412,7 @@ function ManageTimers(dt)
 				elseif (currentState == State.AIM_ULTIMATE) then
 					DoUltimate()
 				else 
-					--componentAnimator:SetSelectedClip("Idle") -- Comment this line to test animations in-game
+					componentAnimator:SetSelectedClip("Idle") -- Comment this line to test animations in-game
 				end
 			end
 		end
@@ -441,7 +455,7 @@ function MoveToDestination(dt)
 		-- Movement
 		vec2 = Normalize(vec2, d)
 		if (componentRigidBody ~= nil) then
-			componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * s * dt, 0, vec2[2] * s * dt))
+			--componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * s * dt, 0, vec2[2] * s * dt))
 		end
 	
 		-- Rotation
@@ -700,10 +714,9 @@ end
 ------------------ Collisions --------------------
 function OnTriggerEnter(go)
 	
-	if (go.tag == Tag.PROJECTILE) then
-		print("+1 knives")
+	if (go.tag == Tag.PROJECTILE and knifePickupTimer == nil) then
 		knifeCount = knifeCount + 1
-
+		knifePickupTimer = 0.0
 	elseif (go.tag == Tag.ENEMY and iFramesTimer == nil) then
 		TakeDamage(1)
 	end

@@ -125,23 +125,11 @@
     <Filter Include="Scripts\Dialogue">
       <UniqueIdentifier>{d8aab11d-2215-4e32-83a2-dcd4ccc3d9ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\Players">
-      <UniqueIdentifier>{b60b2e15-ad68-4868-b194-05cbcd60c8cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\Enemies">
       <UniqueIdentifier>{eaea32bb-f20e-4cce-a1a5-b570cd06a4a1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scripts\UI">
       <UniqueIdentifier>{116bf457-0b8c-4108-82e6-e2cef9c3e313}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\Players\Zhib">
-      <UniqueIdentifier>{d445d04a-4f59-4f92-b5b2-17fbe248b2da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\Players\Nerala">
-      <UniqueIdentifier>{5a50019e-6459-4d3b-a988-7fd48a5de20d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\Players\Omozra">
-      <UniqueIdentifier>{6dcabfe7-3963-40c4-9df6-560195d54bff}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\GameObject\Components\Testing">
       <UniqueIdentifier>{bf57a971-4322-4b16-9ae8-20a8bc4d2623}</UniqueIdentifier>
@@ -157,6 +145,24 @@
     </Filter>
     <Filter Include="Libs\MathGeoLib\emscripten">
       <UniqueIdentifier>{324e99fe-3e9a-4edd-a394-b335c3393677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\hash_library">
+      <UniqueIdentifier>{12511034-19ff-4fa5-88a2-e44a1517b406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Characters">
+      <UniqueIdentifier>{b60b2e15-ad68-4868-b194-05cbcd60c8cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Characters\Zhib">
+      <UniqueIdentifier>{ebfbfe5c-6865-484a-a90f-874a3eb63540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Characters\Nerala">
+      <UniqueIdentifier>{4bc0d85a-1f78-4552-a326-6eb897ff52eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Characters\Omozra">
+      <UniqueIdentifier>{cc35c081-6239-49ca-83b0-80ecc45d9545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Characters\Raban">
+      <UniqueIdentifier>{c6de36aa-faa1-4ca4-89c0-08d81df7dec3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -672,6 +678,18 @@
     </ClCompile>
     <ClCompile Include="Source\SkyBox.cpp">
       <Filter>Source\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\hash_library\md5.cpp">
+      <Filter>Libs\hash_library</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\hash_library\sha1.cpp">
+      <Filter>Libs\hash_library</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\hash_library\sha3.cpp">
+      <Filter>Libs\hash_library</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\hash_library\sha256.cpp">
+      <Filter>Libs\hash_library</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1302,6 +1320,21 @@
     <ClInclude Include="Source\Grid.h">
       <Filter>Source\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\hash_library\hash.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\md5.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\sha1.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\sha3.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\hash_library\sha256.h">
+      <Filter>Libs\hash_library</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\M_ResourceManager.h">
@@ -1455,15 +1488,6 @@
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Decoy.lua">
-      <Filter>Scripts\Players\Zhib</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Zhib.lua">
-      <Filter>Scripts\Players\Zhib</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Zhib\Knife.lua">
-      <Filter>Scripts\Players\Zhib</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua">
       <Filter>Scripts\Enemies</Filter>
     </None>
@@ -1472,18 +1496,6 @@
     </None>
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
       <Filter>Scripts</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Omozra\Omozra.lua">
-      <Filter>Scripts\Players\Omozra</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\HunterSeeker.lua">
-      <Filter>Scripts\Players\Nerala</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Nerala.lua">
-      <Filter>Scripts\Players\Nerala</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Players\Nerala\Smokebomb.lua">
-      <Filter>Scripts\Players\Nerala</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ClosePopUp.lua">
@@ -1545,6 +1557,36 @@
     </None>
     <None Include="Source\External\MathGeoLib\MathGeoLib\emscripten\library_system.js">
       <Filter>Libs\MathGeoLib\emscripten</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Decoy.lua">
+      <Filter>Scripts\Characters\Zhib</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Knife.lua">
+      <Filter>Scripts\Characters\Zhib</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Zhib.lua">
+      <Filter>Scripts\Characters\Zhib</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Dart.lua">
+      <Filter>Scripts\Characters\Nerala</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\HunterSeeker.lua">
+      <Filter>Scripts\Characters\Nerala</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Nerala.lua">
+      <Filter>Scripts\Characters\Nerala</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Smokebomb.lua">
+      <Filter>Scripts\Characters\Nerala</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Omozra\Omozra.lua">
+      <Filter>Scripts\Characters\Omozra</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Omozra\Worm.lua">
+      <Filter>Scripts\Characters\Omozra</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Characters\Raban\Projectile.lua">
+      <Filter>Scripts\Characters\Raban</Filter>
     </None>
   </ItemGroup>
 </Project>
