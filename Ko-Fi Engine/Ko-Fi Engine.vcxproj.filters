@@ -164,6 +164,9 @@
     <Filter Include="Scripts\Characters\Raban">
       <UniqueIdentifier>{c6de36aa-faa1-4ca4-89c0-08d81df7dec3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Dialogues">
+      <UniqueIdentifier>{c6df6a8a-1855-4bc5-8e05-f6148515cfde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -1587,6 +1590,9 @@
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Characters\Raban\Projectile.lua">
       <Filter>Scripts\Characters\Raban</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Dialogues\Dialogues.lua">
+      <Filter>Scripts\Dialogues</Filter>
     </None>
   </ItemGroup>
 </Project>

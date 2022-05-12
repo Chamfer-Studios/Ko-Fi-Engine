@@ -39,6 +39,19 @@
                         "near_plane_distance": 0.009999999776482582,
                         "type": 4,
                         "vertical_fov": 0.3839724361896515
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Dialogues/Dialogues.lua",
+                        "id": 731744029,
+                        "inspector_variables": [
+                            {
+                                "name": "id",
+                                "type": "int",
+                                "value": 0
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": true,
@@ -1131,6 +1144,18 @@
                         "active": true,
                         "file_name": "Assets/Scripts/Characters/Zhib/Zhib.lua",
                         "id": 2108452580,
+                        "inspector_variables": [
+                            {
+                                "name": "maxHP",
+                                "type": "int",
+                                "value": 3
+                            },
+                            {
+                                "name": "currentHP",
+                                "type": "int",
+                                "value": 3
+                            }
+                        ],
                         "type": 5
                     }
                 ],

@@ -1,10 +1,10 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 5,
+        "game_objects_amount": 2,
         "game_objects_list": [
             {
-                "UID": 1966060652,
+                "UID": 807276007,
                 "active": true,
                 "components": [
                     {
@@ -20,9 +20,9 @@
                         ],
                         "rotation": [
                             0.0,
+                            1.0,
                             0.0,
-                            0.0,
-                            1.0
+                            0.0
                         ],
                         "scale": [
                             1.0,
@@ -48,7 +48,7 @@
                 "tag": 0
             },
             {
-                "UID": 648476759,
+                "UID": 1568357710,
                 "active": true,
                 "components": [
                     {
@@ -97,145 +97,25 @@
                         "sourceType": 0,
                         "specularValue": 0.0,
                         "type": 19
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Dialogues/Dialogues.lua",
+                        "id": 1807091505,
+                        "inspector_variables": [
+                            {
+                                "name": "id",
+                                "type": "int",
+                                "value": 0
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": true,
                 "isPrefab": false,
                 "name": "Direct Light",
                 "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 1246909346,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "logicalSize": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": 13
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Canvas",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 1196631538,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            795.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/Textures/awareness/red.png",
-                        "idleTexture": "Assets/Textures/awareness/green.png",
-                        "pressedTexture": "Assets/Textures/awareness/yellow.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button",
-                "parent_UID": 1246909346,
-                "tag": 0
-            },
-            {
-                "UID": 1728566331,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            612.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            248,
-                            0,
-                            255,
-                            255
-                        ],
-                        "type": 16,
-                        "value": "Hello world!"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text",
-                "parent_UID": 1196631538,
                 "tag": 0
             }
         ],

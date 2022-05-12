@@ -580,6 +580,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Zhib.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua" />
     <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Dialogues\Dialogues.lua" />
     <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua" />
     <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
