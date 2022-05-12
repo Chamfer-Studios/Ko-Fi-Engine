@@ -133,6 +133,7 @@ bool M_SceneManager::PostUpdate(float dt)
 
 	FinishUpdate();
 	GuizmoTransformation();
+
 	return ret;
 }
 
@@ -176,6 +177,7 @@ bool M_SceneManager::InspectorDraw()
 	{
 		ImGui::InputText("Default Scene: ", &defaultScene);
 	}
+
 	return true;
 }
 
@@ -384,7 +386,8 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 					if (cMesh != nullptr)
 					{
 						R_Mesh* rMesh = cMesh->GetMesh();
-						rMesh->SetAnimation(rAnimation);
+						if (rMesh->IsAnimated())
+							rMesh->SetAnimation(rAnimation);
 					}
 				}
 				animator->SetAnimation(rAnimation);
@@ -422,30 +425,6 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 			mesh->SetMesh(rMesh);
 			rMesh->SetRootNode(gameobject->GetParent());
 		}
-
-		//if (rMesh->IsAnimated())
-		//{
-		//	// Animation
-		//	if (model->animation != 0 && model->animationName != "")
-		//	{
-		//		C_Animator* animator = (C_Animator*)gameobject->AddComponentByType(ComponentType::ANIMATOR);
-		//		RELEASE(animator->animation);
-
-		//		R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
-		//		if (animator != nullptr && rAnimation != nullptr)
-		//		{
-		//			rMesh->SetAnimation(rAnimation);
-		//			animator->SetAnimation(rAnimation);
-
-		//			// Updating default clip with all the keyframes of the animation.
-		//			AnimatorClip* animClip = animator->GetSelectedClip();
-		//			animClip->SetStartFrame(0);
-		//			animClip->SetEndFrame(rAnimation->duration);
-		//			animClip->SetDuration(((float)(animClip->GetEndFrame() - animClip->GetStartFrame())) / 1.0f);
-		//			animClip->SetDurationInSeconds(animClip->GetDuration() / rAnimation->GetTicksPerSecond());
-		//		}
-		//	}
-		//}
 
 		// Material & Shader
 		C_Material* material = (C_Material*)gameobject->AddComponentByType(ComponentType::MATERIAL);
@@ -491,7 +470,6 @@ void M_SceneManager::OnPlay()
 
 void M_SceneManager::OnSceneSwitch()
 {
-
 	for (GameObject* go : currentScene->gameObjectList)
 	{
 		go->OnSceneSwitch();
@@ -613,8 +591,6 @@ void M_SceneManager::GuizmoTransformation()
 
 	}
 #endif // KOFI_GAME
-
-	
 }
 
 void M_SceneManager::UpdateGuizmo()
