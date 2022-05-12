@@ -33,6 +33,7 @@ bool I_Particle::Create(R_Particle* particle)
 	{
 		Json jsonEmitter;
 
+		jsonEmitter["name"] = (*e)->name;
 		jsonEmitter["maxParticles"] = (*e)->maxParticles;
 		jsonEmitter["texture_path"] = (*e)->texture->GetTexturePath();
 		std::vector<ParticleModule*> modules;
@@ -142,7 +143,7 @@ bool I_Particle::Save(const R_Particle* particle, const char* path)
 
 bool I_Particle::Load(R_Particle* particle, const char* name)
 {
-	bool ret = false;
+	bool ret = true;
 
 	JsonHandler jsonHandler;
 	Json jsonFile;
@@ -154,13 +155,16 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 	if (ret && !jsonFile.is_null())
 	{
 		if (particle == nullptr)
+		{
+			RELEASE(particle);
 			particle = new R_Particle();
+		}
 
 		particle->emitters.clear();
 		particle->emitters.shrink_to_fit();
-		particle->name = jsonFile.at("name").get<std::string>();
+		particle->name = jsonFile.at(name).at("name").get<std::string>();
 
-			for (const auto& emitter : jsonFile.at("emitters").items())
+			for (const auto& emitter : jsonFile.at(name).at("emitters").items())
 			{
 				Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
 				e->maxParticles = emitter.value().at("maxParticles");

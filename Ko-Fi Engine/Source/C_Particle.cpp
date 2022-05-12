@@ -687,11 +687,6 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				}
 			}
 		}
-
-		if(ImGui::Button("Save Resource"))
-		{
-
-		}
 	}
 	else
 		DrawDeleteButton(owner, this);
