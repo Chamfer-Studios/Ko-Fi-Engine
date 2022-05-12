@@ -113,24 +113,33 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 			return true;
 
 		//DEBUG BUTTON
-		if ((ImGui::Button("DEBUG: load resource")))
-		{
-			if (resource == nullptr)
-				resource = new R_Particle();
-			Importer::GetInstance()->particleImporter->Load(resource, "New Particle Effect");
-			for (const auto& emitter : resource->emitters)
-			{
-				EmitterInstance* ei = new EmitterInstance(emitter, this);
-				ei->Init();
-				emitterInstances.push_back(ei);
-			}
-		}
+		//if ((ImGui::Button("DEBUG: load resource")))
+		//{
+		//	if (resource == nullptr)
+		//		resource = new R_Particle();
+		//	Importer::GetInstance()->particleImporter->Load(resource, "New Particle Effect");
+		//	for (const auto& emitter : resource->emitters)
+		//	{
+		//		EmitterInstance* ei = new EmitterInstance(emitter, this);
+		//		ei->Init();
+		//		emitterInstances.push_back(ei);
+		//	}
+		//}
 
 		if (resource != nullptr)
 		{
+			ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
+
 			ImGui::Text("Resource Name:");
 			ImGui::SameLine();
 			ImGui::InputText("##Resource",&(resource->name));
+			ImGui::PopItemWidth();
+			ImGui::SameLine();
+			//DEBUG BUTTON
+			if ((ImGui::Button("Save Resource")))
+			{
+				Importer::GetInstance()->particleImporter->Create(resource);
+			}
 
 			ImGui::Text("Emitters: %d", resource->emitters.size());
 
@@ -144,15 +153,6 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				EmitterInstance* ei = new EmitterInstance(e, this);
 				ei->Init();
 				emitterInstances.push_back(ei);
-			}
-
-			//DEBUG BUTTON
-			if ((ImGui::Button("DEBUG: save resource")))
-			{
-				//std::string path = ASSETS_PARTICLES_DIR;
-				//path += "particles_test";
-				//path += SCENE_EXTENSION;
-				Importer::GetInstance()->particleImporter->Create(resource);
 			}
 
 			ImGui::Text("Emitter Instances: %d", emitterInstances.size());
