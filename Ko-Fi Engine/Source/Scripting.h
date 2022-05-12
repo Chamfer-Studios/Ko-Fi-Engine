@@ -378,7 +378,7 @@ public:
 			}
 			case 6:
 			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K);
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Z);
 			}
 			case 7:
 			{
@@ -402,7 +402,7 @@ public:
 			}
 			case 12:
 			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_LSHIFT);
 			}
 			case 13:
 			{
