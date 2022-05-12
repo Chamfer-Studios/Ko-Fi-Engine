@@ -353,6 +353,52 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		it.second->GetComponent<C_Transform>()->SetDirty(true);
 	}
 
+	// Adding the animator component to the proper game objects.
+	bool hasAnimatedMeshes = false;
+	for (GameObject* go : modelRoot->GetChildren())
+	{
+		C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+		if (cMesh != nullptr)
+		{
+			if (cMesh->GetMesh()->IsAnimated())
+			{
+				hasAnimatedMeshes = true;
+				break;
+			}
+		}
+	}
+	if (hasAnimatedMeshes) // If the game object contains other game objects with animated meshes...
+	{
+		// Animation
+		if (model->animation != 0 && model->animationName != "")
+		{
+			C_Animator* animator = (C_Animator*)modelRoot->AddComponentByType(ComponentType::ANIMATOR);
+			RELEASE(animator->animation);
+
+			R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
+			if (animator != nullptr && rAnimation != nullptr)
+			{
+				for (GameObject* go : modelRoot->GetChildren())
+				{
+					C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+					if (cMesh != nullptr)
+					{
+						R_Mesh* rMesh = cMesh->GetMesh();
+						rMesh->SetAnimation(rAnimation);
+					}
+				}
+				animator->SetAnimation(rAnimation);
+
+				// Updating default clip with all the keyframes of the animation.
+				AnimatorClip* animClip = animator->GetSelectedClip();
+				animClip->SetStartFrame(0);
+				animClip->SetEndFrame(rAnimation->duration);
+				animClip->SetDuration(((float)(animClip->GetEndFrame() - animClip->GetStartFrame())) / 1.0f);
+				animClip->SetDurationInSeconds(animClip->GetDuration() / rAnimation->GetTicksPerSecond());
+			}
+		}
+	}
+
 	engine->GetResourceManager()->FreeResource(model->GetUID());
 
 	return true;
@@ -377,29 +423,29 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 			rMesh->SetRootNode(gameobject->GetParent());
 		}
 
-		if (rMesh->IsAnimated())
-		{
-			// Animation
-			if (model->animation != 0 && model->animationName != "")
-			{
-				C_Animator* animator = (C_Animator*)gameobject->AddComponentByType(ComponentType::ANIMATOR);
-				RELEASE(animator->animation);
+		//if (rMesh->IsAnimated())
+		//{
+		//	// Animation
+		//	if (model->animation != 0 && model->animationName != "")
+		//	{
+		//		C_Animator* animator = (C_Animator*)gameobject->AddComponentByType(ComponentType::ANIMATOR);
+		//		RELEASE(animator->animation);
 
-				R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
-				if (animator != nullptr && rAnimation != nullptr)
-				{
-					rMesh->SetAnimation(rAnimation);
-					animator->SetAnim(rAnimation);
+		//		R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
+		//		if (animator != nullptr && rAnimation != nullptr)
+		//		{
+		//			rMesh->SetAnimation(rAnimation);
+		//			animator->SetAnimation(rAnimation);
 
-					// Updating default clip with all the keyframes of the animation.
-					AnimatorClip* animClip = animator->GetSelectedClip();
-					animClip->SetStartFrame(0);
-					animClip->SetEndFrame(rAnimation->duration);
-					animClip->SetDuration(((float)(animClip->GetEndFrame() - animClip->GetStartFrame())) / 1.0f);
-					animClip->SetDurationInSeconds(animClip->GetDuration() / rAnimation->GetTicksPerSecond());
-				}
-			}
-		}
+		//			// Updating default clip with all the keyframes of the animation.
+		//			AnimatorClip* animClip = animator->GetSelectedClip();
+		//			animClip->SetStartFrame(0);
+		//			animClip->SetEndFrame(rAnimation->duration);
+		//			animClip->SetDuration(((float)(animClip->GetEndFrame() - animClip->GetStartFrame())) / 1.0f);
+		//			animClip->SetDurationInSeconds(animClip->GetDuration() / rAnimation->GetTicksPerSecond());
+		//		}
+		//	}
+		//}
 
 		// Material & Shader
 		C_Material* material = (C_Material*)gameobject->AddComponentByType(ComponentType::MATERIAL);

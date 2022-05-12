@@ -309,7 +309,7 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 	clips.emplace(clip.GetName(), clip);
 }
 
-void C_Animator::SetAnim(R_Animation* anim)
+void C_Animator::SetAnimation(R_Animation* anim)
 {
 	if (this->animation != nullptr)
 	{
