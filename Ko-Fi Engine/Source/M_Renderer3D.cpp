@@ -1012,15 +1012,13 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_TEXTURE_2D);
 	//glColor3f(1.0f, 1.0f, 1.0f);
-	if (particle->tex)
-	{
-		if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
-		{
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, particle->tex.GetTextureId());
-		}
-	}
 
+	if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, particle->tex.GetTextureId());
+	}
+	
 	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);
 
 	glPushMatrix();

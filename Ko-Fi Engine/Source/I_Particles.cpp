@@ -9,7 +9,7 @@
 #include <filesystem>
 #include "Log.h"
 
-I_Particle::I_Particle(KoFiEngine* engine)
+I_Particle::I_Particle(KoFiEngine* engine) : engine(engine)
 {
 }
 
@@ -116,7 +116,7 @@ bool I_Particle::Create(R_Particle* particle)
 		jsonFile[name]["emitters"].push_back(jsonEmitter);
 	}
 
-	std::string path = ASSETS_PARTICLES_DIR + std::string(name) + PARTICLE_EXTENSION;
+	std::string path = ASSETS_PARTICLES_DIR + std::string(name) + PARTICLES_EXTENSION;
 
 	if (engine->GetFileSystem()->CheckDirectory(ASSETS_PARTICLES_DIR))
 		ret = jsonHandler.SaveJson(jsonFile, path.c_str());
@@ -142,14 +142,13 @@ bool I_Particle::Save(const R_Particle* particle, const char* path)
 
 bool I_Particle::Load(R_Particle* particle, const char* name)
 {
-
 	bool ret = false;
 
 	JsonHandler jsonHandler;
 	Json jsonFile;
 	Json jsonScene;
 
-	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
+	std::string path = ASSETS_PARTICLES_DIR + std::string(name) + PARTICLES_EXTENSION;
 	ret = jsonHandler.LoadJson(jsonFile, path.c_str());
 
 	if (ret && !jsonFile.is_null())

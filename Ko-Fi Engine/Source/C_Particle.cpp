@@ -16,6 +16,7 @@
 
 #include "PanelChooser.h"
 
+#include "FSDefs.h"
 #include "Log.h"
 #include "imgui_stdlib.h"
 
@@ -100,6 +101,12 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 		if (DrawDeleteButton(owner, this))
 			return true;
 
+		//DEBUG BUTTON
+		if ((ImGui::Button("DEBUG: load resource")))
+		{
+			Importer::GetInstance()->particleImporter->Load(resource, "New Particle Effect");
+		}
+
 		if (resource != nullptr)
 		{
 			ImGui::Text("Resource Name:");
@@ -118,6 +125,15 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				EmitterInstance* ei = new EmitterInstance(e, this);
 				ei->Init();
 				emitterInstances.push_back(ei);
+			}
+
+			//DEBUG BUTTON
+			if ((ImGui::Button("DEBUG: save resource")))
+			{
+				//std::string path = ASSETS_PARTICLES_DIR;
+				//path += "particles_test";
+				//path += SCENE_EXTENSION;
+				Importer::GetInstance()->particleImporter->Create(resource);
 			}
 
 			ImGui::Text("Emitter Instances: %d", emitterInstances.size());
@@ -243,8 +259,6 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				}
 
 				ImGui::Text("Modules: %d", emitter->modules.size());
-
-
 
 				ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
 				std::string addName = "Add Module to " + emitter->name;

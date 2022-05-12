@@ -1,0 +1,73 @@
+{
+    "New Particle Effect": {
+        "emitters": [
+            {
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 2.700000047683716,
+                        "particlesPerSpawn": 25,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.5,
+                        "spawnTimer": 0.4209999740123749,
+                        "type": 1
+                    },
+                    {
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "maxPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "maxVelocity": 5.0,
+                        "minAcceleration": [
+                            -0.25,
+                            0.0,
+                            -0.25
+                        ],
+                        "minDirection": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "minPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minVelocity": 3.0,
+                        "randAcceleration": true,
+                        "randDirection": false,
+                        "randPosition": false,
+                        "randVelocity": false,
+                        "type": 2
+                    },
+                    {
+                        "minInitialSize": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "billboardingType": 2,
+                        "type": 5
+                    }
+                ],
+                "texture_path": "Assets/Textures/Particles/light.png"
+            }
+        ],
+        "name": "New Particle Effect"
+    }
+}

@@ -71,15 +71,12 @@ bool EmitterDefault::Update(float dt, EmitterInstance* instance)
 	spawnTimer += dt;
 	if (spawnTimer >= spawnTime)
 	{
-		// create a particlesPerBurst variable to generate multiple particles at once
-		int particlesPerBurst = instance->emitter->particlesPerSpawn;
-
 		//in case the particlesPerBurst var is higher than the max particles of the emitter
 		int burstCap = instance->emitter->maxParticles - instance->activeParticles;
-		if (particlesPerBurst > burstCap)
-			particlesPerBurst = burstCap;
+		if (particlesPerSpawn > burstCap)
+			particlesPerSpawn = burstCap;
 
-		instance->SpawnParticle(particlesPerBurst);
+		instance->SpawnParticle(particlesPerSpawn);
 
 		spawnTimer = 0;
 	}

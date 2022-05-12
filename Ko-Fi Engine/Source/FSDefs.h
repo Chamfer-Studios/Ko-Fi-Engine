@@ -36,7 +36,7 @@
 #define TEXTURE_EXTENSION ".cacao"
 #define SCENE_EXTENSION ".json"
 #define META_EXTENSION ".meta"
-#define PARTICLE_EXTENSION ".cookie"
+#define PARTICLES_EXTENSION ".cookie"
 
 #define PNG_EXTENSION ".png"
 #define FBX_EXTENSION ".fbx"
