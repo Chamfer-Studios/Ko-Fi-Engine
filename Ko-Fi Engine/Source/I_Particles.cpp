@@ -154,12 +154,6 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 
 	if (ret && !jsonFile.is_null())
 	{
-		if (particle == nullptr)
-		{
-			RELEASE(particle);
-			particle = new R_Particle();
-		}
-
 		particle->emitters.clear();
 		particle->emitters.shrink_to_fit();
 		particle->name = jsonFile.at(name).at("name").get<std::string>();

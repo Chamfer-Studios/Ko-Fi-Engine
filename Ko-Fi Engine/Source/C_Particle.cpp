@@ -104,7 +104,15 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 		//DEBUG BUTTON
 		if ((ImGui::Button("DEBUG: load resource")))
 		{
+			if (resource == nullptr)
+				resource = new R_Particle();
 			Importer::GetInstance()->particleImporter->Load(resource, "New Particle Effect");
+			for (const auto& emitter : resource->emitters)
+			{
+				EmitterInstance* ei = new EmitterInstance(emitter, this);
+				ei->Init();
+				emitterInstances.push_back(ei);
+			}
 		}
 
 		if (resource != nullptr)
