@@ -3,4 +3,6 @@
 #include <libplatform/libplatform.h>
 #include <v8.h>
 
-extern v8::Isolate* isolate = nullptr;
+extern std::unique_ptr<v8::Platform> platform;
+extern v8::Isolate::CreateParams createParams;
+extern v8::Isolate* isolate;

@@ -7,6 +7,10 @@
 
 #include "V8Isolate.h"
 
+std::unique_ptr<v8::Platform> platform = nullptr;
+v8::Isolate::CreateParams createParams;
+v8::Isolate* isolate = nullptr;
+
 V8JSLanguageEnvironment::V8JSLanguageEnvironment(C_Script* _script) : LanguageEnvironment(_script)
 {
 }
@@ -53,7 +57,7 @@ bool V8JSLanguageEnvironment::ReloadScript()
 		v8::Local<v8::Script> script = v8::Script::Compile(context, source).ToLocalChecked();
 
 		// Run the script to get the result.
-		v8::Local<v8::Value> result = script->Run(context).ToLocalChecked();
+		v8::Local<v8::Value> result = script->Run(context).ToLocal();
 
 		// Convert the result to an UTF8 string and print it.
 		v8::String::Utf8Value utf8(isolate, result);
@@ -92,8 +96,6 @@ bool V8JSLanguageEnvironment::PostUpdate(float dt)
 
 bool V8JSLanguageEnvironment::CleanUp()
 {
-	isolate->Dispose();
-
 	return true;
 }
 
@@ -144,11 +146,10 @@ void V8JSLanguageEnvironment::OnRayCastHit()
 void V8JSLanguageEnvironment::InitV8Platform()
 {
 	if (isolate == nullptr) {
-		std::unique_ptr<v8::Platform> platform = v8::platform::NewDefaultPlatform();
+		platform = v8::platform::NewDefaultPlatform();
 		v8::V8::InitializePlatform(platform.get());
 		v8::V8::Initialize();
 
-		v8::Isolate::CreateParams createParams;
 		createParams.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
 		isolate = v8::Isolate::New(createParams);
 	}
