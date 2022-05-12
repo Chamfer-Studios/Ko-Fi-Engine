@@ -430,8 +430,10 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 void M_SceneManager::OnPlay()
 {
 	runtimeState = GameState::PLAYING;
+	frameCount = 0;
+	time = 0.0f;
+	timer.Start();
 	gameClockSpeed = timeScale;
-
 	gameTime = 0.0f;
 
 	// Serialize scene and save it as a .json
@@ -466,9 +468,9 @@ void M_SceneManager::OnPause()
 void M_SceneManager::OnStop()
 {
 	runtimeState = GameState::STOPPED;
-	gameClockSpeed = 0.0f;
 	frameCount = 0;
 	time = 0.0f;
+	gameClockSpeed = 0.0f;
 	gameTime = 0.0f;
 
 	Importer::GetInstance()->sceneImporter->LoadScene(currentScene,currentScene->name.c_str());
@@ -483,6 +485,7 @@ void M_SceneManager::OnStop()
 void M_SceneManager::OnResume()
 {
 	runtimeState = GameState::PLAYING;
+	timer.Start();
 	gameClockSpeed = timeScale;
 
 	for (GameObject* go : currentScene->gameObjectList)
@@ -494,6 +497,7 @@ void M_SceneManager::OnResume()
 void M_SceneManager::OnTick()
 {
 	runtimeState = GameState::TICK;
+	timer.Start();
 	gameClockSpeed = timeScale;
 
 	for (GameObject* go : currentScene->gameObjectList)
