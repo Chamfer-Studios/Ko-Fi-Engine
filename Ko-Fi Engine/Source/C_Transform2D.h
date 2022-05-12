@@ -46,6 +46,8 @@ public:
 	inline float2 GetSize() const { return size; };
 	inline Anchor GetAnchor() const { return anchor; };
 
+	void SetPositionX(const float& newPositionX);
+
 	virtual float2 GetNormalizedPosition();
 	virtual float2 GetNormalizedSize();
 	virtual float2 GetNormalizedPivotOffset();

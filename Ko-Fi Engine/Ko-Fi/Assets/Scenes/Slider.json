@@ -179,9 +179,27 @@
                     {
                         "active": true,
                         "hoverTexture": "",
-                        "idleTexture": "",
+                        "idleTexture": "Assets/UI/Logo/logo_exe_color.png",
                         "pressedTexture": "",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_ItsActuallyASlider.lua",
+                        "id": 1132752452,
+                        "inspector_variables": [
+                            {
+                                "name": "rightPos",
+                                "type": "int",
+                                "value": 200
+                            },
+                            {
+                                "name": "leftPos",
+                                "type": "int",
+                                "value": -200
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": false,

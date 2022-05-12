@@ -182,6 +182,7 @@ public:
 									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
+									 "GetTransform2D", &GameObject::GetComponent<C_Transform2D>,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
 									 "GetBoxCollider", &GameObject::GetComponent<C_BoxCollider>,
@@ -268,7 +269,7 @@ public:
 		// Component Transform2D
 		lua.new_usertype<C_Transform2D>("C_Transform2D",
 			sol::constructors<void(GameObject*)>(),
-			"SetPosition", &C_Transform2D::SetPosition);
+			"SetPositionX", &C_Transform2D::SetPositionX);
 
 		// Component Animator
 		lua.new_usertype<C_Animator>("ComponentAnimator",
