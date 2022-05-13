@@ -1,7 +1,7 @@
 #pragma once
 
-#include <libplatform/libplatform.h>
-#include <v8.h>
+#include "v8.h"
+#include "libplatform/libplatform.h"
 
 extern std::unique_ptr<v8::Platform> platform;
 extern v8::Isolate::CreateParams createParams;

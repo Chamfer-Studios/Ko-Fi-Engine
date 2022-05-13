@@ -54,11 +54,15 @@ bool V8JSLanguageEnvironment::ReloadScript()
 	// Create a stack-allocated handle scope.
 	v8::HandleScope handleScope(isolate);
 
+	v8::Local<v8::ObjectTemplate> global = v8::ObjectTemplate::New(isolate);
+
 	// Create a new context.
-	context = v8::Context::New(isolate);
+	context = v8::Global<v8::Context>(isolate, v8::Context::New(isolate, nullptr, global));
+
+	//context.Get()->Enter();
 
 	// Enter the context for compiling and running the script.
-	v8::Context::Scope contextScope(context);
+	v8::Context::Scope contextScope(context.Get(isolate));
 
 	v8::TryCatch tryCatch(isolate);
 
@@ -66,7 +70,7 @@ bool V8JSLanguageEnvironment::ReloadScript()
 
 	// Compile the source code.
 	v8::Local<v8::Script> script;
-	if (!v8::Script::Compile(context, source).ToLocal(&script)) {
+	if (!v8::Script::Compile(context.Get(isolate), source).ToLocal(&script)) {
 		v8::String::Utf8Value error(isolate, tryCatch.Exception());
 		appLog->AddLog(*error);
 		// The script failed to compile; bail out.
@@ -75,7 +79,7 @@ bool V8JSLanguageEnvironment::ReloadScript()
 
 	// Run the script to get the result.
 	v8::Local<v8::Value> result;
-	if (!script->Run(context).ToLocal(&result)) {
+	if (!script->Run(context.Get(isolate)).ToLocal(&result)) {
 		v8::String::Utf8Value error(isolate, tryCatch.Exception());
 		appLog->AddLog(*error);
 		// The script failed to compile; bail out.
@@ -85,6 +89,8 @@ bool V8JSLanguageEnvironment::ReloadScript()
 	// Convert the result to an UTF8 string and print it.
 	v8::String::Utf8Value utf8(isolate, result);
 	appLog->AddLog(*utf8);
+
+	//context->Exit();
 
 	return true;
 }
@@ -106,7 +112,9 @@ bool V8JSLanguageEnvironment::EventHandler()
 
 bool V8JSLanguageEnvironment::Update(float dt)
 {
-	SafeFunctionCall("Update", dt);
+	std::vector<inspectorVariantType> args;
+	args.push_back(dt);
+	SafeFunctionCall("Update", args);
 
 	return true;
 }
@@ -122,37 +130,36 @@ bool V8JSLanguageEnvironment::CleanUp()
 }
 
 template<typename ...Args>
-bool V8JSLanguageEnvironment::SafeFunctionCall(std::string name, Args ...args)
+bool V8JSLanguageEnvironment::SafeFunctionCall(std::string name, std::vector<inspectorVariantType> args)
 {
-	v8::Local<v8::Object> global = context->Global();
-	v8::MaybeLocal<v8::Value> value = global->Get(context, v8::String::NewFromUtf8(isolate, name.c_str()).ToLocalChecked());
+	v8::Local<v8::Object> global = context.Get(isolate)->Global();
+	v8::MaybeLocal<v8::Value> value = global->Get(context.Get(isolate), v8::String::NewFromUtf8(isolate, name.c_str()).ToLocalChecked());
 
-	if (value->IsFunction()) {
-		v8::Local<v8::Function> func = v8::Handle<v8::Function>::Cast(value);
+	if (value.IsEmpty())
+		return true;
 
-		std::vector<any> vec = { args... };
+	if (value.ToLocalChecked()->IsFunction()) {
+		v8::TryCatch tryCatch(isolate);
 
-		v8::Local<v8::Value> v8args[vec.size()];
+		v8::Local<v8::Function> func = v8::Handle<v8::Function>::Cast(value.ToLocalChecked());
 
-		for (unsigned int i = 0; i < vec.size(); i++) {
-			switch (vec[i].get_type())
-			{
-			case any::Float:
-				v8args[i] = v8::Number::New(isolate, v8::Number::New(isolate, vec[i].get_float()));
-				break;
-			case any::String:
-				v8args[i] = v8::String::New(isolate, v8::String::NewFromUtf8(isolate, vec[i].get_string()));
-				break;
-			case any::VariantVector:
-				v8args[i] = v8::Object::New(isolate, v8::Object::New(isolate, vec[i].get_variant_vector()));
-				break;
-			default:
-				break;
-			}
+		std::vector<v8::Local<v8::Value>> v8args;
+		for (unsigned int i = 0; i < args.size(); i++) {
+
+			auto a = std::get<void*>(args[i]);
+			
+			v8args.push_back(v8::External::New(isolate, a));
 		}
 
-		v8::Local<v8::Value> jsResult = func->Call(global, vec.size(), v8args);
+		v8::Local<v8::Value> jsResult;
+		if (!func->Call(context.Get(isolate), global, v8args.size(), v8args.data()).ToLocal(&jsResult)) {
+			v8::String::Utf8Value error(isolate, tryCatch.Exception());
+			appLog->AddLog(*error);
+			return true;
+		}
 	}
+
+	//context->Exit();
 
 	return true;
 }

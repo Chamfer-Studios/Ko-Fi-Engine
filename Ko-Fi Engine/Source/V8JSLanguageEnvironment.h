@@ -9,8 +9,8 @@
 #include "M_SceneManager.h"
 #include "GameObject.h"
 
-#include <libplatform/libplatform.h>
-#include <v8.h>
+#include "v8.h"
+#include "libplatform/libplatform.h"
 
 class GameObject;
 class C_Script;
@@ -53,7 +53,7 @@ public:
 	bool CleanUp() final;
 
 	template<typename... Args>
-	bool SafeFunctionCall(std::string name, Args... args);
+	bool SafeFunctionCall(std::string name, std::vector<inspectorVariantType> args);
 
 	inspectorVariantType GetProperty(std::string name) final;
 	void SetProperty(std::string name, inspectorVariantType value) final;
@@ -70,7 +70,7 @@ public:
 	static void KillV8Platform();
 
 private:
-	v8::Local<v8::Context> context;
+	v8::Global<v8::Context> context;
 
 public:
 
