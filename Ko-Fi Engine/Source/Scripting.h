@@ -63,9 +63,9 @@ public:
 	std::string name;
 	INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
 
-	std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
+	std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
 
-	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value) : name(name), type(type), value(value) {}
+	InspectorVariable(std::string name, INSPECTOR_VARIABLE_TYPE type, std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value) : name(name), type(type), value(value) {}
 };
 
 class Scripting
@@ -286,7 +286,7 @@ public:
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
-											sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject *>)>(),
+											sol::constructors<void(std::string, INSPECTOR_VARIABLE_TYPE, std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *>)>(),
 											"name", &InspectorVariable::name,
 											"type", &InspectorVariable::type,
 											"value", &InspectorVariable::value);
@@ -494,7 +494,7 @@ public:
 		return ret;
 	}
 
-	std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
+	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
@@ -508,7 +508,7 @@ public:
 					{
 						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
 						{
-							return (float)script->s->handler->lua[variable.c_str()];
+							return (int)script->s->handler->lua[variable.c_str()];
 						}
 						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
 						{
@@ -540,10 +540,10 @@ public:
 			}
 		}
 
-		return -999.0f;
+		return -999;
 	}
 
-	void LuaSetVariable(std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value, std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
+	void LuaSetVariable(std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value, std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
@@ -556,7 +556,7 @@ public:
 					{
 						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_INT:
 						{
-							script->s->handler->lua[variable.c_str()] = std::get<float>(value);
+							script->s->handler->lua[variable.c_str()] = std::get<int>(value);
 							return;
 						}
 						case INSPECTOR_VARIABLE_TYPE::INSPECTOR_FLOAT:
@@ -605,7 +605,7 @@ public:
 				{
 				case INSPECTOR_INT:
 				{
-					lua[inspectorVariable->name.c_str()] = std::get<float>((*var)->value);
+					lua[inspectorVariable->name.c_str()] = std::get<int>((*var)->value);
 					return;
 				}
 				case INSPECTOR_FLOAT:
@@ -675,7 +675,7 @@ public:
 		appLog->AddLog(log);
 	}
 
-	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value)
+	void LuaSetLuaVariableFromGameObject(GameObject* go, std::string variable, std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value)
 	{
 		if (go == nullptr)
 			return;
@@ -701,7 +701,7 @@ public:
 		return tmp;
 	}
 
-	void DispatchGlobalEvent(std::string key, std::vector<std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields) {
+	void DispatchGlobalEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields) {
 		for (auto go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList) {
 			for (auto c : go->GetComponents()) {
 				if (c->type == ComponentType::SCRIPT) {
@@ -711,7 +711,7 @@ public:
 		}
 	}
 
-	void DispatchEvent(std::string key, std::vector<std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields) {
+	void DispatchEvent(std::string key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields) {
 		for (auto c : gameObject->GetComponents()) {
 			if (c->type == ComponentType::SCRIPT) {
 				((C_Script*)c)->eventQueue.push(ScriptingEvent(key, fields));
