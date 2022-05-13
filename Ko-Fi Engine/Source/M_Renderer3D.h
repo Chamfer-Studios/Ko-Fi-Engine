@@ -19,9 +19,9 @@ typedef unsigned int GLenum;
 class C_Mesh;
 class C_Camera;
 class R_Texture;
+class R_Mesh;
 class PieShape;
 class SkyBox;
-
 
 struct ParticleRenderer
 {
@@ -40,13 +40,13 @@ public:
 	M_Renderer3D(KoFiEngine* engine);
 	~M_Renderer3D();
 
+	// Game loop methods
 	bool Awake(Json configModule);
 	bool PreUpdate(float dt);
 	bool Update(float dt);
 	bool PostUpdate(float dt);
-	void SwapWindow();
 	bool CleanUp();
-
+	void SwapWindow();
 
 	// Engine config serialization --------------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
@@ -57,8 +57,7 @@ public:
 	bool InspectorDraw() override;
 	// ------------------------------------------------------------------
 
-	// Method to receive and manage events
-	//Renderer Set Up Functions
+	// Renderer Set Up Functions
 	bool InitOpenGL();
 	bool InitGlew();
 	void SetGLFlag(GLenum flag, bool setTo);
@@ -66,20 +65,24 @@ public:
 	void PassPreviewProjectionAndViewToRenderer();
 	void RecalculateProjectionMatrix();
 	
-	//Render Functions
+	// Render Functions
 	void RenderScene(C_Camera* camera);
 	void RenderBoundingBox(C_Mesh* cMesh);
 	void RenderMeshes(C_Camera* camera, GameObject* go);
 	void RenderSkyBox(C_Camera* camera, SkyBox &skybox);
-
 	void RenderUI(GameObject* go);
 
+	// Method to update the animated meshes bones and notify the shader about it.
+	void StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader);
+
+	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
 	bool GetVsync() const;
 	void SetVsync(bool vsync);
 	void OnResize();
 
+	// Primitives
 	void DrawCylinder(float4x4 transform);
 	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length);
 	void DrawCircle(float3 position, float radius);
@@ -96,9 +99,10 @@ public:
 	void ResizeFrameBuffers(int width, int height);
 	void ResizePreviewFrameBuffers(int width, int height);
 	void ReleaseFrameBuffers();
-
 	uint GetTextureBuffer();
 	uint GetPreviewTextureBuffer();
+
+	// Particles methods
 	void AddParticle(R_Texture& tex, Color color, const float4x4 transform, float distanceToCamera);
 	void RenderParticle(ParticleRenderer* particle);
 	void RenderAllParticles();

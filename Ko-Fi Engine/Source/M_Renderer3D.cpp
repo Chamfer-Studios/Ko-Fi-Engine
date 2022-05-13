@@ -74,8 +74,6 @@ bool M_Renderer3D::Awake(Json configModule)
 
 	InitFrameBuffers();
 
-
-
 	ret = LoadConfiguration(configModule);
 
 	return ret;
@@ -122,13 +120,6 @@ bool M_Renderer3D::PostUpdate(float dt)
 	return true;
 }
 
-void M_Renderer3D::SwapWindow()
-{
-	OPTICK_EVENT();
-
-	SDL_GL_SwapWindow(engine->GetWindow()->GetWindow());
-}
-
 // Called before quitting
 bool M_Renderer3D::CleanUp()
 {
@@ -140,6 +131,13 @@ bool M_Renderer3D::CleanUp()
 	ReleaseFrameBuffers();
 
 	return true;
+}
+
+void M_Renderer3D::SwapWindow()
+{
+	OPTICK_EVENT();
+
+	SDL_GL_SwapWindow(engine->GetWindow()->GetWindow());
 }
 
 bool M_Renderer3D::SaveConfiguration(Json& configModule) const
@@ -375,8 +373,6 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 		engine->GetSceneManager()->GetCurrentScene()->ComputeQuadTree();
 		engine->GetSceneManager()->GetCurrentScene()->sceneTree->Draw();
 	}
-
-
 }
 
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
@@ -392,7 +388,6 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 				KOFI_ERROR(" Renderer: Could not draw local AABB, mesh was nullptr.");
 		}
 	}
-
 }
 
 void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
@@ -416,40 +411,23 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
 			}
 
-			//Set Shaders
+			// Set Shaders
 			uint shader = cMat->GetMaterial()->shaderProgramID;
 			if (shader != 0)
 			{
 				glUseProgram(shader);
+
 				// Passing Shader Uniforms
 				GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
 				glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 				GLint view_location = glGetUniformLocation(shader, "view");
 				glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
 
-
 				GLint projection_location = glGetUniformLocation(shader, "projection");
 				glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 
 				if (mesh->IsAnimated())
-				{
-					// ...
-					AnimatorClip* animatorClip = go->GetParent()->GetComponent<C_Animator>()->GetSelectedClip();
-					if (animatorClip->GetFinishedBool() && animatorClip->GetLoopBool())
-						animatorClip->SetFinishedBool(false);
-
-					if (!animatorClip->GetFinishedBool())
-					{
-						float currentTimeMillis = engine->GetSceneManager()->GetGameTime();
-						std::vector<float4x4> transformsAnim;
-						mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
-
-						GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
-						glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
-						GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-						glUniform1i(isAnimated, mesh->IsAnimated());
-					}
-				}
+					StepAnimatedMesh(go, mesh, shader);
 
 				GLint refractTexCoord = glGetUniformLocation(shader, "refractTexCoord");
 				glUniformMatrix4fv(refractTexCoord, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
@@ -460,7 +438,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				this->timeWaterShader += 0.02f;
 				glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
 
-				//Pass all varibale uniforms from the material to the shader
+				// Pass all varibale uniforms from the material to the shader
 				for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 				{
 					switch (uniform->type)
@@ -503,8 +481,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 					}
 				}
 
-				//lights rendering 
-
+				// Lights rendering 
 				if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
 				{
 					// ---- directional lights ----
@@ -661,10 +638,10 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 					GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
 					glUniform1i(numFocalLights, 0);
 				}
-				//Draw Mesh
+
+				// Draw Mesh
 				mesh->Draw();
 				glUseProgram(0);
-
 			}
 		}
 	}
@@ -708,6 +685,32 @@ void M_Renderer3D::RenderUI(GameObject* go)
 {
 	C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 	cRenderedUI->Draw();
+}
+
+void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
+{
+	C_Animator* cAnimator = go->GetParent()->GetComponent<C_Animator>();
+	if (cAnimator != nullptr)
+	{
+		AnimatorClip* animatorClip = cAnimator->GetSelectedClip();
+		if (animatorClip != nullptr)
+		{
+			if (animatorClip->GetFinishedBool() && animatorClip->GetLoopBool())
+				animatorClip->SetFinishedBool(false);
+
+			if (!animatorClip->GetFinishedBool())
+			{
+				float currentTimeMillis = engine->GetSceneManager()->GetGameTime();
+				std::vector<float4x4> transformsAnim;
+				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+
+				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+				glUniform1i(isAnimated, mesh->IsAnimated());
+			}
+		}
+	}
 }
 
 // Method to receive and manage events
