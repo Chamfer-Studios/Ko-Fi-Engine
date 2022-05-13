@@ -49,3 +49,26 @@ std::string Scripting::GetDialogueString(const char* key, int id)
 	}
 	return "no value";
 }
+
+int Scripting::GetDialogueTargetID(const char* key, int id)
+{
+	const char* path = "Assets/Dialogues/dialogues.json";
+	for (std::map<std::string, Json>::iterator file = files.begin(); file != files.end(); ++file)
+	{
+		if ((*file).first == path)
+		{
+			KOFI_DEBUG("File Found: %s", (*file).first);
+			Json dialogues = (*file).second.at("dialogues");
+			for (const auto& node : dialogues.items())
+			{
+				if (node.value().at("id") == id)
+				{
+					int targetID = node.value().at(key);
+					return targetID;
+				}
+			}
+
+
+		}
+	}
+}

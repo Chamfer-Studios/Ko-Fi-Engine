@@ -2,6 +2,7 @@
   "dialogues": [
     {
       "id": 1,
+      "targetID":  2,
       "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_zhib_v1.2.png",
       "char": "Zhib",
       "line1": "blablablabla",
@@ -9,10 +10,11 @@
     },
     {
       "id": 2,
+      "targetID": -1,
       "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_nebala_v1.1.png",
       "char": "Nerala",
       "line1": "Hola Soy Maria me gusta la Maria",
-      "line2": "Tambien me gustan los macarrones" 
+      "line2": "Tambien me gustan los macarrones"
     }
   ]
 }

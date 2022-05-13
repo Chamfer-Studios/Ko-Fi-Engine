@@ -354,7 +354,7 @@ public:
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
-		lua.set_function("GetIntFromJson", &Scripting::GetIntFromJson, this);
+		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
 
 
@@ -739,17 +739,7 @@ public:
 
 	std::string GetDialogueString(const char* key, int id);
 
-	int GetIntFromJson(const char* path, const char* value)
-	{
-		for (std::map<std::string, Json>::iterator file = files.begin(); file != files.end(); ++file)
-		{
-			if ((*file).first == path)
-			{
-				int tmp = (*file).second.at(value);
-				return tmp;
-			}
-		}
-	}
+	int GetDialogueTargetID(const char* key, int id);
 
 public:
 	sol::state lua;
