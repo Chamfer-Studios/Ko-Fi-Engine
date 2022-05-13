@@ -96,18 +96,17 @@ public:
 	void OnTick();
 	void OnClick(SDL_Event event);
 
-	//GUIZMO
+	// Guizmo
 	ImGuizmo::OPERATION GetGizmoOperation() { return currentGizmoOperation; }
 	void SetGizmoOperation(ImGuizmo::OPERATION operation) { currentGizmoOperation = operation; }
 	void GuizmoTransformation();
 	void UpdateGuizmo();
-	//
 
 public:
 	bool active;
 
 private:
-	// Modules
+	// Pointer to the whole engine
 	KoFiEngine* engine = nullptr;
 
 	// Scenes
@@ -115,12 +114,16 @@ private:
 	Scene* currentScene = nullptr;
 	SceneIntro* sceneIntro = nullptr;
 	std::string defaultScene = "";
+
 	// Guizmo
 	ImGuizmo::OPERATION currentGizmoOperation;
 	ImGuizmo::MODE currentGizmoMode;
 
 	ImGuiWindow* window = nullptr;
 	float2 cornerPos;
+
+	GameState runtimeState = GameState::STOPPED;
+
 	// TIME MANAGEMENT
 	// --------------------------------------------------
 	// Frame Count: app graphics frames since game start
@@ -129,18 +132,15 @@ private:
 	float time = 0.0f; // To keep the seconds when we pause the simulation
 	// Time Scale: scale at which time is passing (Game Clock)
 	// Modify this variable to change the speed of our game in runtime.
-	float timeScale = 1.0f; // 1 --> Real Time / < 1 --> Slower / > 1 Faster, 0 Pause or Stop
-	// Delta Time: last frame time expressed in seconds (Game Clock)
+	float timeScale = 1.0f; // 1 --> Real Time / < 1 --> Slower / > 1 --> Faster, 0 --> Pause or Stop
+	// Game Delta Time: last frame time expressed in seconds (Game Clock)
 	Timer timer; // Used for gameDt (resets each frame)
 	float gameDt = 0.0f;
 	float gameClockSpeed = 0.0f; // != 0 (timeScale) --> Playing / == 0 --> Pause or Stop
+	float gameTime = 0.0f; // Total game time
 	// Real Time Since Startup: seconds since game start (Real Time Clock) --> Engine.cpp
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
 	// --------------------------------------------------
-
-	float gameTime = 0.0f;
-	
-	GameState runtimeState = GameState::STOPPED;
 };
 
 #endif // !__M_SCENE_MANAGER_H__

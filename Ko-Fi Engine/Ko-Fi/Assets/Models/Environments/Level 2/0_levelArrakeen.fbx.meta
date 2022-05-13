@@ -41,6 +41,13 @@
             "uid": 208083136
         },
         {
+            "asset_file": "lvl3_floor_texture_base_color.png",
+            "asset_path": "Assets/Textures/Environments/Level 2/lvl3_floor_texture_base_color.png",
+            "library_path": "Library/Textures/2118647430.cacao",
+            "type": 1,
+            "uid": 2118647430
+        },
+        {
             "asset_file": "ThroneBase.003.sugar",
             "library_path": "Library/Meshes/1446065369.sugar",
             "type": 0,

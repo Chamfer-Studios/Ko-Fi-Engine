@@ -48,7 +48,7 @@ void C_Image::Save(Json& json) const
 {
 	json["type"] = (int)type;
 
-	json["texture"] = openGLTexture.GetTexturePath();
+	json["texture"] = openGLTexture.GetAssetPath();
 }
 
 void C_Image::Load(Json& json)
@@ -83,7 +83,7 @@ bool C_Image::InspectorDraw(PanelChooser* panelChooser)
 		}
 		else
 		{
-			ImGui::Text(openGLTexture.GetTexturePath());
+			ImGui::Text(openGLTexture.GetAssetPath());
 			ImGui::Image((ImTextureID)openGLTexture.GetTextureId(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 		}
 
@@ -108,7 +108,7 @@ void C_Image::SetTexture(const char* path)
 {
 	FreeTextures();
 	Importer::GetInstance()->textureImporter->Import(path, &openGLTexture);
-	openGLTexture.SetTexturePath(path);
+	openGLTexture.SetAssetPath(path);
 }
 
 void C_Image::Draw()

@@ -95,7 +95,7 @@ bool C_Button::InspectorDraw(PanelChooser* panelChooser)
 		}
 		else
 		{
-			ImGui::Text(idleOpenGLTexture.GetTexturePath());
+			ImGui::Text(idleOpenGLTexture.GetAssetPath());
 			ImGui::Image((ImTextureID)idleOpenGLTexture.GetTextureId(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 		}
 
@@ -119,7 +119,7 @@ bool C_Button::InspectorDraw(PanelChooser* panelChooser)
 		}
 		else
 		{
-			ImGui::Text(hoverOpenGLTexture.GetTexturePath());
+			ImGui::Text(hoverOpenGLTexture.GetAssetPath());
 			ImGui::Image((ImTextureID)hoverOpenGLTexture.GetTextureId(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 		}
 
@@ -143,7 +143,7 @@ bool C_Button::InspectorDraw(PanelChooser* panelChooser)
 		}
 		else
 		{
-			ImGui::Text(pressedOpenGLTexture.GetTexturePath());
+			ImGui::Text(pressedOpenGLTexture.GetAssetPath());
 			ImGui::Image((ImTextureID)pressedOpenGLTexture.GetTextureId(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 		}
 
@@ -168,9 +168,9 @@ void C_Button::Save(Json& json) const
 {
 	json["type"] = (int)type;
 
-	json["idleTexture"] = idleOpenGLTexture.GetTexturePath();
-	json["hoverTexture"] = hoverOpenGLTexture.GetTexturePath();
-	json["pressedTexture"] = pressedOpenGLTexture.GetTexturePath();
+	json["idleTexture"] = idleOpenGLTexture.GetAssetPath();
+	json["hoverTexture"] = hoverOpenGLTexture.GetAssetPath();
+	json["pressedTexture"] = pressedOpenGLTexture.GetAssetPath();
 }
 
 void C_Button::Load(Json& json)
@@ -210,21 +210,21 @@ void C_Button::SetIdleTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::IDLE);
 	Importer::GetInstance()->textureImporter->Import(path,&idleOpenGLTexture);
-	idleOpenGLTexture.SetTexturePath(path);
+	idleOpenGLTexture.SetAssetPath(path);
 }
 
 void C_Button::SetHoverTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::HOVER);
 	Importer::GetInstance()->textureImporter->Import(path, &hoverOpenGLTexture);
-	hoverOpenGLTexture.SetTexturePath(path);
+	hoverOpenGLTexture.SetAssetPath(path);
 }
 
 void C_Button::SetPressedTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::PRESSED);
 	Importer::GetInstance()->textureImporter->Import(path, &pressedOpenGLTexture);
-	pressedOpenGLTexture.SetTexturePath(path);
+	pressedOpenGLTexture.SetAssetPath(path);
 }
 
 void C_Button::FreeTextures(BUTTON_STATE type)
