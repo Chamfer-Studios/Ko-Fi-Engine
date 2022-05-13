@@ -14,6 +14,7 @@ class EmitterInstance;
 		MOVEMENT,
 		COLOR,
 		SIZE,
+		ROTATE,
 		BILLBOARDING,
 		END
 	};
@@ -102,9 +103,6 @@ public:
 	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);
 
-private:
-	bool CompareSize(float3 a, float3 b);
-
 public:
 	bool constantSize = true;
 	bool randomInitialSize = false;
@@ -113,6 +111,24 @@ public:
 	float3 maxInitialSize = float3(1.5f, 1.5f, 1.5f);
 	float3 minFinalSize = float3(0.5f, 0.5f, 0.5f);
 	float3 maxFinalSize = float3(0.75f, 0.75f, 0.75f);
+};
+
+class EmitterRotate : public ParticleModule
+{
+public:
+	EmitterRotate();
+
+	void Spawn(Particle* particle, EmitterInstance* emitter);
+	bool Update(float dt, EmitterInstance* emitter);
+
+public:
+	bool constantRotation = true;
+	bool randomInitialRotation = false;
+	bool randomFinalRotation = false;
+	float minInitialRotation = 0.0f;
+	float maxInitialRotation = 90.0f;
+	float minFinalRotation = 90.0f;
+	float maxFinalRotation = 180.0f;
 };
 
 class ParticleBillboarding : public ParticleModule

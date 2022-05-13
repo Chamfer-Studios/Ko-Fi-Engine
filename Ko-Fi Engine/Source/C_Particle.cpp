@@ -447,8 +447,6 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (ImGui::Checkbox("Random Acceleration", &randomAcceleration))
 									e->randomAcceleration = randomAcceleration;
 
-								ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
-
 								if (randomAcceleration)
 								{
 									float minAcceleration[3] = { e->minAcceleration.x,e->minAcceleration.y,e->minAcceleration.z };
@@ -612,6 +610,100 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 										}
 									}
 								}
+								break;
+							}
+							case ParticleModuleType::ROTATE:
+							{
+								EmitterRotate* e = (EmitterRotate*)module;
+								ImGui::PopItemWidth();
+								ImGui::PushItemWidth(7.5f * ImGui::GetFontSize());
+
+								bool constantRotation = e->constantRotation;
+								if (ImGui::Checkbox("Constant Rotation", &constantRotation))
+								{
+									e->constantRotation = constantRotation;
+									e->randomInitialRotation = false;
+									e->randomFinalRotation = false;
+								}
+
+								bool randomInitialRotation = e->randomInitialRotation;
+								if (ImGui::Checkbox("Random Initial Rotation", &randomInitialRotation))
+								{
+									e->randomInitialRotation = randomInitialRotation;
+									e->constantRotation = false;
+								}
+
+								bool randomFinalRotation = e->randomFinalRotation;
+								if (ImGui::Checkbox("Random Final Rotation", &randomFinalRotation))
+								{
+									e->randomFinalRotation = randomFinalRotation;
+									e->constantRotation = false;
+								}
+
+								if (constantRotation)
+								{
+									float rotation = e->minInitialRotation;
+									std::string rotationInitialName = emitter->name + " - Rotation";
+									if (ImGui::DragFloat(rotationInitialName.c_str(), &rotation, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										e->minInitialRotation = rotation;
+								}
+								else
+								{
+									if (randomInitialRotation)
+									{
+										float minInitialRotation = e->minInitialRotation;
+										std::string minInitialRotationName = emitter->name + " - minInitialRotation";
+										if (ImGui::DragFloat(minInitialRotationName.c_str(), &minInitialRotation, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->minInitialRotation = minInitialRotation;
+
+										float maxInitialRotation = e->maxInitialRotation;
+										std::string maxInitialRotationName = emitter->name + " - maxInitialRotation";
+										if (ImGui::DragFloat(maxInitialRotationName.c_str(), &maxInitialRotation, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->maxInitialRotation = maxInitialRotation;
+									}
+									else
+									{
+										float initialRotation = e->minInitialRotation;
+										std::string rotationInitialName = emitter->name + " - InitialRotation";
+										if (ImGui::DragFloat(rotationInitialName.c_str(), &initialRotation, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->minInitialRotation = initialRotation;
+									}
+
+									if (randomFinalRotation)
+									{
+										float minFinalRotation = e->minFinalRotation;
+										std::string minFinalRotationName = emitter->name + " - minFinalRotation";
+										if (ImGui::DragFloat(minFinalRotationName.c_str(), &minFinalRotation, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->minFinalRotation = minFinalRotation;
+
+										float maxFinalRotation = e->maxFinalRotation;
+										std::string maxFinalRotationName = emitter->name + " - maxFinalRotation";
+										if (ImGui::DragFloat(maxFinalRotationName.c_str(), &maxFinalRotation, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->maxFinalRotation = maxFinalRotation;
+									}
+									else
+									{
+										float finalRotation = e->minFinalRotation;
+										std::string rotationFinalName = emitter->name + " - FinalRotation";
+										if (ImGui::DragFloat(rotationFinalName.c_str(), &finalRotation, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+											e->minFinalRotation = finalRotation;
+									}
+								}
+								std::string deleteEmitter = emitter->name + " - Delete Module Rotate";
+								if (ImGui::Button(deleteEmitter.c_str()))
+								{
+									for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
+									{
+										if ((*it)->type == ParticleModuleType::ROTATE)
+										{
+											emitter->modules.erase(it);
+											break;
+										}
+									}
+								}
+
+								ImGui::PopItemWidth();
+								ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
 								break;
 							}
 							case ParticleModuleType::BILLBOARDING:
@@ -1071,6 +1163,7 @@ const char* C_Particle::ModuleTypeToString(ParticleModuleType e)
 		{ParticleModuleType::MOVEMENT, "Movement"},
 		{ParticleModuleType::COLOR, "Color"},
 		{ParticleModuleType::SIZE, "Size"},
+		{ParticleModuleType::ROTATE, "Rotate"},
 		{ParticleModuleType::BILLBOARDING, "Billboarding"},
 	};
 	auto   it = moduleTypeStrings.find(e);

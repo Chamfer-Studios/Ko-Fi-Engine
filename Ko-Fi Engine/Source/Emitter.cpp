@@ -79,6 +79,11 @@ void Emitter::AddModuleByType(ParticleModuleType type)
 		modules.push_back(CreateModule<EmitterSize>());
 		break;
 	}
+	case ParticleModuleType::ROTATE:
+	{
+		modules.push_back(CreateModule<EmitterRotate>());
+		break;
+	}
 	case ParticleModuleType::BILLBOARDING:
 	{
 		modules.push_back(CreateModule<ParticleBillboarding>());
