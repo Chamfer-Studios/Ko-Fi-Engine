@@ -32,13 +32,13 @@ struct ScriptHandler
 
 struct ScriptingEvent
 {
-	ScriptingEvent(std::string _key, std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> _fields) {
+	ScriptingEvent(std::string _key, std::vector<std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> _fields) {
 		this->key = _key;
 		this->fields = _fields;
 	}
 
 	std::string key;
-	std::vector<std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields;
+	std::vector<std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*>> fields;
 };
 
 class C_Script : public Component 
