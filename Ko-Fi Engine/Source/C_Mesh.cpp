@@ -145,14 +145,6 @@ void C_Mesh::SetMesh(R_Mesh* mesh)
 	GenerateLocalBoundingBox();
 }
 
-void C_Mesh::SetPath(const char* path)
-{
-	if (mesh != nullptr)
-		mesh->SetAssetPath(path);
-	else
-		KOFI_ERROR(" Mesh: Could not set path, mesh was nullptr.");
-}
-
 void C_Mesh::SetVertexNormals(bool vertexNormals)
 {
 	if (this->mesh != nullptr)
@@ -163,15 +155,6 @@ void C_Mesh::SetFaceNormals(bool facesNormals)
 {
 	if (this->mesh != nullptr)
 		this->mesh->SetFaceNormals(facesNormals);
-}
-
-const char* C_Mesh::GetMeshPath() const
-{
-	if (mesh != nullptr)
-		return mesh->GetAssetPath();
-	else
-		KOFI_ERROR(" Mesh: Could not get assets path, mesh was nullptr.");
-	return nullptr;
 }
 
 float3 C_Mesh::GetCenterPoint() const

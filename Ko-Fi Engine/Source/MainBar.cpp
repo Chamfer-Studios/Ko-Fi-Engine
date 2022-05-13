@@ -404,6 +404,6 @@ void MainBar::CreatePrimitive(Shape shape)
 	// Material
 	C_Material *mat = (C_Material*)c->AddComponentByType(ComponentType::MATERIAL);
 	R_Material *material = new R_Material();
-	Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
+	Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetAssetPath(), material);
 	mat->SetMaterial(material);
 }

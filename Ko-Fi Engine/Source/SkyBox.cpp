@@ -131,7 +131,7 @@ void SkyBox::InitMesh()
 void SkyBox::InitMaterial()
 {
 	material = new R_Material();
-	material->SetShaderPath("EngineConfig/Skybox/skybox.glsl");
+	material->SetAssetPath("EngineConfig/Skybox/skybox.glsl");
 	Importer::GetInstance()->materialImporter->LoadAndCreateShader("EngineConfig/Skybox/skybox.glsl", material);
 }
 

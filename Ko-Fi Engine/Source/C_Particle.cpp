@@ -150,7 +150,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 						if (emitter->texture.GetTextureId() == currentTextureId)
 						{
 							emitter->texture.SetTextureId(TEXTUREID_DEFAULT);
-							emitter->texture.SetTexturePath(nullptr);
+							emitter->texture.SetAssetPath(nullptr);
 
 							R_Texture tex;
 							Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
@@ -165,7 +165,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					ImGui::Image((ImTextureID)emitter->texture.GetTextureId(), ImVec2(85, 85));
 					ImGui::SameLine();
 					ImGui::BeginGroup();
-					ImGui::Text(emitter->texture.GetTexturePath());
+					ImGui::Text(emitter->texture.GetAssetPath());
 					ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 
 
@@ -184,7 +184,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					if (ImGui::Button(deleteTexture.c_str()))
 					{
 						emitter->texture.SetTextureId(TEXTUREID_DEFAULT);
-						emitter->texture.SetTexturePath(nullptr);
+						emitter->texture.SetAssetPath(nullptr);
 					}
 					ImGui::PopID();
 					ImGui::EndGroup();
@@ -646,7 +646,7 @@ void C_Particle::Save(Json& json) const
 		{
 			jsonEmitter["maxParticles"] = e->maxParticles;
 			jsonEmitter["name"] = e->name;
-			jsonEmitter["texture_path"] = e->texture.GetTexturePath();
+			jsonEmitter["texture_path"] = e->texture.GetAssetPath();
 			Json jsonModule;
 			for (auto m : e->modules)
 			{
@@ -744,9 +744,9 @@ void C_Particle::Load(Json& json)
 				ei->Init();
 				e->maxParticles = emitter.value().at("maxParticles");
 				e->texture = R_Texture();
-				e->texture.SetTexturePath(emitter.value().at("texture_path").get<std::string>().c_str());
-				if (e->texture.GetTexturePath() != "")
-					Importer::GetInstance()->textureImporter->Import(e->texture.GetTexturePath(), &e->texture);
+				e->texture.SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
+				if (e->texture.GetAssetPath() != "")
+					Importer::GetInstance()->textureImporter->Import(e->texture.GetAssetPath(), &e->texture);
 
 				e->modules.clear();
 				e->modules.shrink_to_fit();

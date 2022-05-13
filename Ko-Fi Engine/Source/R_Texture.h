@@ -18,12 +18,6 @@ public:
 
 	void SetUpTexture();
 
-	inline const char* GetTexturePath() const { return GetAssetPath(); }
-	inline void SetTexturePath(const char* path)
-	{
-		path != nullptr ? SetAssetPath(path) : SetAssetPath("");
-	}
-
 	inline uint GetTextureId() const { return textureID; }
 	inline void SetTextureId(const uint id) { textureID = id; }
 	inline int GetTextureWidth() const { return width; }
@@ -36,7 +30,7 @@ public:
 public:
 	unsigned char* data = nullptr;
 	int imageSizeBytes = 0;
-	// Total bytes to save: width x height x bytes_per_pixel
+	// Total bytes to save: width x height x bytes_per_pixel (channels)
 
 	uint textureID = TEXTUREID_DEFAULT;
 
