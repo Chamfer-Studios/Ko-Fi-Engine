@@ -13,6 +13,7 @@
 #include "C_Transform.h"
 #include "C_Mesh.h"
 #include "C_Script.h"
+#include "C_Camera.h"
 
 #include "PanelViewport.h"
 #include "Scripting.h"

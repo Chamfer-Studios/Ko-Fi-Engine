@@ -19,11 +19,30 @@ class M_Camera3D;
 class M_Physics;
 
 class V8JSLanguageEnvironment final : public LanguageEnvironment {
+	struct any {
+		enum type { Float, String, VariantVector };
+		any(float e) { m_data.FLOAT = e; m_type = Float; }
+		any(char* e) { m_data.STRING = e; m_type = String; }
+		any(std::vector<inspectorVariantType>* e) { m_data.VARIANT_VECTOR = e; m_type = VariantVector; }
+		type get_type() const { return m_type; }
+		float get_float() const { return m_data.FLOAT; }
+		char* get_string() const { return m_data.STRING; }
+		std::vector<inspectorVariantType>* get_variant_vector() const { return m_data.VARIANT_VECTOR; }
+	private:
+		type m_type;
+		union {
+			float FLOAT;
+			char* STRING;
+			std::vector<inspectorVariantType>* VARIANT_VECTOR;
+		} m_data;
+	};
+
 public:
 	V8JSLanguageEnvironment(C_Script* _script);
 	~V8JSLanguageEnvironment();
 
 public:
+	v8::MaybeLocal<v8::String> ReadFile(v8::Isolate* isolate, const char* name);
 	bool ReloadScript() final;
 
 	void Init() final;

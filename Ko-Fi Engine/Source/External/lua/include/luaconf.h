@@ -453,11 +453,11 @@
 
 #elif LUA_FLOAT_TYPE == LUA_FLOAT_DOUBLE	/* }{ double */
 
-#define LUA_NUMBER	double
+#define LUA_NUMBER	float
 
 #define l_floatatt(n)		(DBL_##n)
 
-#define LUAI_UACNUMBER	double
+#define LUAI_UACNUMBER	float
 
 #define LUA_NUMBER_FRMLEN	""
 #define LUA_NUMBER_FMT		"%.14g"
@@ -740,7 +740,7 @@
 @@ LUAI_MAXALIGN defines fields that, when used in a union, ensure
 ** maximum alignment for the other items in that union.
 */
-#define LUAI_MAXALIGN  lua_Number n; double u; void *s; lua_Integer i; long l
+#define LUAI_MAXALIGN  lua_Number n; float u; void *s; lua_Integer i; long l
 
 /* }================================================================== */
 

@@ -596,7 +596,7 @@ inline inspectorVariantType LuaLanguageEnvironment::LuaGetVariable(std::string p
 		}
 	}
 
-	return -999;
+	return -999.0f;
 }
 
 inline void LuaLanguageEnvironment::LuaSetVariable(inspectorVariantType value, std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
@@ -624,7 +624,7 @@ inline void LuaLanguageEnvironment::LuaNewVariable(InspectorVariable* inspectorV
 			{
 			case INSPECTOR_INT:
 			{
-				lua[inspectorVariable->name.c_str()] = std::get<int>((*var)->value);
+				lua[inspectorVariable->name.c_str()] = std::get<float>((*var)->value);
 				return;
 			}
 			case INSPECTOR_FLOAT:
@@ -671,7 +671,6 @@ inline void LuaLanguageEnvironment::LuaNewVariable(InspectorVariable* inspectorV
 		}
 	}
 	script->s->inspectorVariables.push_back(inspectorVariable);
-
 }
 
 inline GameState LuaLanguageEnvironment::LuaGetRuntimeState() const

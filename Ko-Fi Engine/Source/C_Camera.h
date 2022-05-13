@@ -1,5 +1,4 @@
-#ifndef __C_CAMERA_H__
-#define __C_CAMERA_H__
+#pragma once
 
 #include "Component.h"
 
@@ -115,5 +114,3 @@ private:
 	float hFov, vFov = 0.0f;
 	
 };
-
-#endif // !__C_CAMERA_H__

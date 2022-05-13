@@ -31,13 +31,11 @@ public:
 
 	// SetMesh
 	void SetMesh(R_Mesh* mesh);
-	void SetPath(const char* path);
 	void SetVertexNormals(bool vertexNormals);
 	void SetFaceNormals(bool facesNormals);
 	
 	// Getters
 	inline R_Mesh* GetMesh() const { return mesh; }
-	const char* GetMeshPath() const;
 	inline float GetSphereRadius() const { return radius; }
 	float3 GetCenterPoint() const;
 	float3 GetCenterPointInWorldCoords() const;

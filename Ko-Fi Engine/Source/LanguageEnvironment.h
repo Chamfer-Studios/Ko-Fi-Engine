@@ -13,7 +13,7 @@ class GameObject;
 class C_Script;
 class C_Transform;
 
-typedef std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> inspectorVariantType;
+typedef std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> inspectorVariantType;
 
 static enum INSPECTOR_VARIABLE_TYPE
 {

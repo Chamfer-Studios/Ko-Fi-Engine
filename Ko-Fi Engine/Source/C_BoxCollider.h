@@ -1,5 +1,5 @@
-#ifndef __C_BOX_COLLIDER_H__
-#define __C_BOX_COLLIDER_H__
+#pragma once
+
 #include "Component.h"
 #include "reactphysics3d/reactphysics3d.h"
 #include "MathGeoLib/Math/float3.h"
@@ -50,5 +50,3 @@ private:
 	float3 scaleFactor = float3(1, 1, 1);
 	float3 center = { 0,0,0 };
 };
-#endif // !__C_BOX_COLLIDER_H__
-

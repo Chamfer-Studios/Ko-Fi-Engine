@@ -101,6 +101,7 @@ public:
 	bool inline IsAnimated() const { return isAnimated; }
 	void inline SetRootNode(const GameObject* rootNode) { this->rootNode = rootNode; }
 	inline const GameObject* GetRootNode() { return rootNode; }
+	inline const R_Animation* GetAnimation() const { return animation; }
 	void inline SetAnimation(R_Animation* animation) { this->animation = animation; }
 	const Channel* FindNodeAnim(std::string nodeName);
 

@@ -265,9 +265,17 @@ void C_Animator::Load(Json& json)
 			KOFI_ERROR(" Component Animation: could not load resource from library.");
 		else
 		{
-			C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
-			if (cMesh != nullptr && cMesh->GetMesh()->IsAnimated())
-				owner->GetComponent<C_Mesh>()->GetMesh()->SetAnimation(animation);
+			// Setting the animation resource to all the animated meshes of the owner's children.
+			//for (GameObject* go : owner->GetChildren())
+			//{
+			//	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+			//	if (cMesh != nullptr)
+			//	{
+			//		R_Mesh* rMesh = cMesh->GetMesh();
+			//		if (rMesh->IsAnimated())
+			//			rMesh->SetAnimation(animation);
+			//	}
+			//}
 
 			for (const auto& clip : json.at("clips").items())
 			{
@@ -309,7 +317,7 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 	clips.emplace(clip.GetName(), clip);
 }
 
-void C_Animator::SetAnim(R_Animation* anim)
+void C_Animator::SetAnimation(R_Animation* anim)
 {
 	if (this->animation != nullptr)
 	{
