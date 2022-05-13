@@ -1,18 +1,23 @@
 {
-    "Afterburner": {
+    "Swoosh": {
         "emitters": [
             {
                 "maxParticles": 500,
                 "modules": [
                     {
                         "maxParticleLife": 3.0,
-                        "minParticleLife": 1.0,
+                        "minParticleLife": 0.20000000298023224,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
                         "spawnTime": 0.5,
                         "type": 1
                     },
                     {
+                        "billboardingType": 2,
+                        "type": 5
+                    },
+                    {
+                        "followForward": true,
                         "maxAcceleration": [
                             0.25,
                             0.25,
@@ -28,7 +33,7 @@
                             0.0,
                             0.0
                         ],
-                        "maxVelocity": 0.5,
+                        "maxVelocity": 5.0,
                         "minAcceleration": [
                             0.0,
                             0.0,
@@ -40,58 +45,35 @@
                             1.0
                         ],
                         "minPosition": [
-                            5.0,
+                            0.0,
                             0.0,
                             0.0
                         ],
-                        "minVelocity": -0.5,
+                        "minVelocity": 40.0,
                         "randAcceleration": false,
-                        "randDirection": true,
-                        "followForward": true,
+                        "randDirection": false,
                         "randPosition": false,
-                        "randVelocity": true,
+                        "randVelocity": false,
                         "type": 2
                     },
                     {
+                        "minFinalSize": [
+                            0.5,
+                            0.5,
+                            0.5
+                        ],
                         "minInitialSize": [
-                            10.0,
-                            10.0,
-                            10.0
+                            5.0,
+                            5.0,
+                            5.0
                         ],
                         "type": 4
-                    },
-                    {
-                        "colors": [
-                            {
-                                "color": [
-                                    0.0691264271736145,
-                                    0.5531777739524841,
-                                    0.7978339195251465,
-                                    1.0
-                                ],
-                                "position": 0.0
-                            },
-                            {
-                                "color": [
-                                    0.08573030680418015,
-                                    0.27695098519325256,
-                                    0.9133573770523071,
-                                    1.0
-                                ],
-                                "position": 1.0
-                            }
-                        ],
-                        "type": 3
-                    },
-                    {
-                        "billboardingType": 1,
-                        "type": 5
                     }
                 ],
                 "name": "Emitter",
-                "texture_path": "Assets/Textures/Particles/afterburner.png"
+                "texture_path": "Assets/Textures/Particles/dash_projectile.png"
             }
         ],
-        "name": "Afterburner"
+        "name": "Swoosh"
     }
 }

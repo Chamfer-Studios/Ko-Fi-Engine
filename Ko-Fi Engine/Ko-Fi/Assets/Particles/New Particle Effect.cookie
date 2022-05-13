@@ -47,6 +47,7 @@
                         "minVelocity": 3.0,
                         "randAcceleration": false,
                         "randDirection": false,
+                        "followForward": true,
                         "randPosition": false,
                         "randVelocity": false,
                         "type": 2

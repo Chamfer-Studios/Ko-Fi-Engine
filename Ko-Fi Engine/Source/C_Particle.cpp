@@ -393,28 +393,35 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 
 								ImGui::Spacing();
 
-								bool randomDirection = e->randomDirection;
-								if (ImGui::Checkbox("Random Direction", &randomDirection))
-									e->randomDirection = randomDirection;
+								bool followForward = e->followForward;
+								if (ImGui::Checkbox("Follow Forward", &followForward))
+									e->followForward = followForward;
 
-								if (randomDirection)
+								if (!followForward)
 								{
-									float minDirection[3] = { e->minDirection.x,e->minDirection.y,e->minDirection.z };
-									std::string minDirectionName = emitter->name + " - minDirection";
-									if (ImGui::DragFloat3(minDirectionName.c_str(), minDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
-										e->minDirection = { minDirection[0],minDirection[1],minDirection[2] };
+									bool randomDirection = e->randomDirection;
+									if (ImGui::Checkbox("Random Direction", &randomDirection))
+										e->randomDirection = randomDirection;
 
-									float maxDirection[3] = { e->maxDirection.x,e->maxDirection.y,e->maxDirection.z };
-									std::string maxDirectionName = emitter->name + " - maxDirection";
-									if (ImGui::DragFloat3(maxDirectionName.c_str(), maxDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
-										e->maxDirection = { maxDirection[0],maxDirection[1],maxDirection[2] };
-								}
-								else
-								{
-									float direction[3] = { e->minDirection.x,e->minDirection.y,e->minDirection.z };
-									std::string directionName = emitter->name + " - Direction";
-									if (ImGui::DragFloat3(directionName.c_str(), direction, 0.005f, -1.0f, 1.0f, "%.3f"))
-										e->minDirection = { direction[0],direction[1],direction[2] };
+									if (randomDirection)
+									{
+										float minDirection[3] = { e->minDirection.x,e->minDirection.y,e->minDirection.z };
+										std::string minDirectionName = emitter->name + " - minDirection";
+										if (ImGui::DragFloat3(minDirectionName.c_str(), minDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
+											e->minDirection = { minDirection[0],minDirection[1],minDirection[2] };
+
+										float maxDirection[3] = { e->maxDirection.x,e->maxDirection.y,e->maxDirection.z };
+										std::string maxDirectionName = emitter->name + " - maxDirection";
+										if (ImGui::DragFloat3(maxDirectionName.c_str(), maxDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
+											e->maxDirection = { maxDirection[0],maxDirection[1],maxDirection[2] };
+									}
+									else
+									{
+										float direction[3] = { e->minDirection.x,e->minDirection.y,e->minDirection.z };
+										std::string directionName = emitter->name + " - Direction";
+										if (ImGui::DragFloat3(directionName.c_str(), direction, 0.005f, -1.0f, 1.0f, "%.3f"))
+											e->minDirection = { direction[0],direction[1],direction[2] };
+									}
 								}
 
 								ImGui::Spacing();

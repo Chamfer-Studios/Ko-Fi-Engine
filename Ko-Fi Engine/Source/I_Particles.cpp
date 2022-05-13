@@ -63,6 +63,7 @@ bool I_Particle::Create(R_Particle* particle)
 				jsonModule["randVelocity"] = mMovement->randomVelocity;
 				jsonModule["minVelocity"] = mMovement->minVelocity;
 				jsonModule["maxVelocity"] = mMovement->maxVelocity;
+				jsonModule["followForward"] = mMovement->followForward;
 				jsonModule["randDirection"] = mMovement->randomDirection;
 				jsonModule["minDirection"] = { mMovement->minDirection.x,mMovement->minDirection.y,mMovement->minDirection.z };
 				jsonModule["maxDirection"] = { mMovement->maxDirection.x,mMovement->maxDirection.y,mMovement->maxDirection.z };
@@ -197,6 +198,8 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 						values = pModule.value().at("maxPosition").get<std::vector<float>>();
 						mMovement->maxPosition = { values[0],values[1],values[2] };
 						values.clear();
+
+						mMovement->followForward = pModule.value().at("followForward");
 
 						mMovement->randomDirection = pModule.value().at("randDirection");
 						values = pModule.value().at("minDirection").get<std::vector<float>>();

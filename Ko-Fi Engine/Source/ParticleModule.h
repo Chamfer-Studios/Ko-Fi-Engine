@@ -63,6 +63,7 @@ public:
 	bool Update(float dt, EmitterInstance* emitter);
 
 public:
+	bool followForward = true;
 	bool randomDirection = false;
 	float3 minDirection = float3(1.0f, 1.0f, 1.0f);
 	float3 maxDirection = float3(-1.0f, -1.0f, -1.0f);

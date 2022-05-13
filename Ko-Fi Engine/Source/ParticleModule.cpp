@@ -111,15 +111,22 @@ void EmitterMovement::Spawn(Particle* particle, EmitterInstance* emitter)
 	else
 		particle->position += minPosition;
 
-	if (randomDirection)
+	if (followForward)
 	{
-		float directionX = math::Lerp(minDirection.x, maxDirection.x, random.Float());
-		float directionY = math::Lerp(minDirection.y, maxDirection.y, random.Float());
-		float directionZ = math::Lerp(minDirection.z, maxDirection.z, random.Float());
-		particle->direction = float3(directionX, directionY, directionZ);
+		particle->direction = -emitter->component->owner->GetTransform()->Front();
 	}
 	else
-		particle->direction = minDirection;
+	{
+		if (randomDirection)
+		{
+			float directionX = math::Lerp(minDirection.x, maxDirection.x, random.Float());
+			float directionY = math::Lerp(minDirection.y, maxDirection.y, random.Float());
+			float directionZ = math::Lerp(minDirection.z, maxDirection.z, random.Float());
+			particle->direction = float3(directionX, directionY, directionZ);
+		}
+		else
+			particle->direction = minDirection;
+	}
 
 	if (randomVelocity)
 	{
