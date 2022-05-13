@@ -694,6 +694,9 @@
     <ClCompile Include="Source\External\hash_library\sha256.cpp">
       <Filter>Libs\hash_library</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scripting.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">

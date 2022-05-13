@@ -1,17 +1,24 @@
-id = 0
+id = 1
 local idIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 idIV = InspectorVariable.new("id", idIVT, id)
 NewVariable(idIV)
 
-path = "Assets/Dialogues/dialogues.json"
+local src = " "
+local char = " "
+local lines = {}
+
 
 function Start()
 	LoadJsonFile(path)
-	a = GetIntFromJson(path, "id")
+
+	src = GetDialogueString("src",id)
+	char = GetDialogueString("char",id)
 
 end
 
 function Update(dt)
-
-	print(a)
+	print(src)
+	print(char)
 end
+
+print("Dialogue Script Load Success")

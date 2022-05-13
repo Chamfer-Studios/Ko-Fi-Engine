@@ -1,12 +1,24 @@
 {
-  "dialogues": {
-    "id": 1,
-    "char": "Manolo",
-    "lines": [
-      "blablablablablablablablablablabla",
-      "blablablabalbalbalb",
-      "blablabblalabalb"
-    ]
-  }
-  }
+  "dialogues": [
+    {
+      "id": 1,
+      "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_zhib_v1.2.png",
+      "char": "Zhib",
+      "lines": [
+        "blablablablablablablablablablabla",
+        "blablablabalbalbalb",
+        "blablabblalabalb"
+      ]
+    },
+    {
+      "id": 2,
+      "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_nebala_v1.1.png",
+      "char": "Nerala",
+      "lines": [
+        "blablablablablablablablablablabla",
+        "blablablabalbalbalb",
+        "blablabblalabalb"
+      ]
+    }
+  ]
 }

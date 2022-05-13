@@ -312,6 +312,7 @@
     <ClCompile Include="Source\R_Track.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\M_SceneManager.cpp" />
+    <ClCompile Include="Source\Scripting.cpp" />
     <ClCompile Include="Source\SkyBox.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\R_Texture.cpp" />

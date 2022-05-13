@@ -352,12 +352,9 @@ public:
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
-		lua.set_function("GetStringFromJson", &Scripting::GetStringFromJson, this);
+		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
 		lua.set_function("GetIntFromJson", &Scripting::GetIntFromJson, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
-		
-
-
 
 	}
 
@@ -731,44 +728,9 @@ public:
 		gameObject->GetEngine()->GetRenderer()->DrawCircle(position, range);
 	}
 
-	bool LoadJsonFile(const char* path)
-	{
-		for (std::map<const char*, Json>::iterator file = files.begin(); file != files.end(); ++file)
-		{
-			if ((*file).first == path)
-			{
-				KOFI_ERROR("JSON FILE ALREADY OPENED ON LUA");
-				return false;
-			}
-		}
+	bool LoadJsonFile(const char* path);
 
-		JsonHandler jsonHandler = JsonHandler();
-		Json newFile = Json();
-
-		bool status = jsonHandler.LoadJson(newFile,"Assets/Dialogues/dialogues.json");
-		if(status == false) {
-			KOFI_ERROR("Fatal error on LoadJSON(),scripting.h FILE DOES NOT EXIST");
-			return false;
-		}
-		files.insert({ path, newFile });
-		//CONSOLE_LOG("%s json loaded", path);
-
-		return true;
-
-	}
-
-	const char* GetStringFromJson(const char* path, const char *value) 
-	{
-		for (std::map<const char*, Json>::iterator file = files.begin(); file != files.end(); ++file)
-		{
-			if ((*file).first == path)
-			{
-				std::string tmp = (*file).second.at(value);
-				return tmp.c_str();
-			}
-		}
-	
-	}
+	std::string GetDialogueString(const char* key, int id);
 
 	int GetIntFromJson(const char* path, const char* value)
 	{
