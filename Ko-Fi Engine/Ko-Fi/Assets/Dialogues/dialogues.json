@@ -4,21 +4,15 @@
       "id": 1,
       "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_zhib_v1.2.png",
       "char": "Zhib",
-      "lines": [
-        "blablablablablablablablablablabla",
-        "blablablabalbalbalb",
-        "blablabblalabalb"
-      ]
+      "line1": "blablablabla",
+      "line2": "blablababla"
     },
     {
       "id": 2,
       "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_nebala_v1.1.png",
       "char": "Nerala",
-      "lines": [
-        "blablablablablablablablablablabla",
-        "blablablabalbalbalb",
-        "blablabblalabalb"
-      ]
+      "line1": "Hola Soy Maria me gusta la Maria",
+      "line2": "Tambien me gustan los macarrones" 
     }
   ]
 }

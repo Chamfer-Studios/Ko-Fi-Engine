@@ -335,6 +335,7 @@ public:
 		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("InstantiateNamedPrefab", &Scripting::LuaInstantiateNamedPrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
+		lua.set_function("DeleteGameObjectByUID", &Scripting::DeleteGameObjectByUID, this);
 		lua.set_function("Find", &Scripting::LuaFind, this);
 		lua.set_function("GetObjectsByTag", &Scripting::LuaGetObjectsByTag, this);
 		lua.set_function("GetVariable", &Scripting::LuaGetVariable, this);
@@ -477,6 +478,10 @@ public:
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToDelete.push_back(gameObject);
 	}
 
+	void DeleteGameObjectByUID(UID uid)
+	{
+		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToDelete.push_back(gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid));
+	}
 	GameObject *LuaFind(std::string name)
 	{
 		for (GameObject *go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)

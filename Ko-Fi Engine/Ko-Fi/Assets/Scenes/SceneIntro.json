@@ -4,7 +4,7 @@
         "game_objects_amount": 2,
         "game_objects_list": [
             {
-                "UID": 1153446972,
+                "UID": 438425422,
                 "active": true,
                 "components": [
                     {
@@ -48,7 +48,7 @@
                 "tag": 0
             },
             {
-                "UID": 1128141694,
+                "UID": 1431230251,
                 "active": true,
                 "components": [
                     {
@@ -101,12 +101,12 @@
                     {
                         "active": true,
                         "file_name": "Assets/Scripts/Dialogues/Dialogues.lua",
-                        "id": 207470956,
+                        "id": 1657480154,
                         "inspector_variables": [
                             {
                                 "name": "id",
                                 "type": "int",
-                                "value": 1
+                                "value": 2
                             }
                         ],
                         "type": 5
