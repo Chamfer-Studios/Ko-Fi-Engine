@@ -46,7 +46,6 @@ bool I_Particle::Create(R_Particle* particle)
 			{
 				EmitterDefault* mDefault = (EmitterDefault*)(*m);
 				jsonModule["type"] = (int)mDefault->type;
-				jsonModule["spawnTimer"] = mDefault->spawnTimer;
 				jsonModule["spawnTime"] = mDefault->spawnTime;
 				jsonModule["randomParticleLife"] = mDefault->randomParticleLife;
 				jsonModule["minParticleLife"] = mDefault->minParticleLife;
@@ -112,7 +111,6 @@ bool I_Particle::Create(R_Particle* particle)
 				break;
 			}
 			jsonEmitter["modules"].push_back(jsonModule);
-			jsonModule.clear();
 		}
 		jsonFile[name]["emitters"].push_back(jsonEmitter);
 	}
@@ -179,8 +177,8 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 					case 1:
 					{
 						EmitterDefault* mDefault = new EmitterDefault();
-						mDefault->spawnTimer = pModule.value().at("spawnTimer");
 						mDefault->spawnTime = pModule.value().at("spawnTime");
+						mDefault->spawnTimer = 0.0f;
 						mDefault->randomParticleLife = pModule.value().at("randomParticleLife");
 						mDefault->minParticleLife = pModule.value().at("minParticleLife");
 						mDefault->maxParticleLife = pModule.value().at("maxParticleLife");
@@ -291,6 +289,12 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 					if (m != nullptr)
 						e->modules.push_back(m);
 				}
+				if (!e->GetModule<ParticleBillboarding>())
+					e->AddModuleByType(ParticleModuleType::BILLBOARDING);
+
+				if (!e->GetModule<EmitterDefault>())
+					e->AddModuleByType(ParticleModuleType::DEFAULT);
+
 				particle->emitters.push_back(e);
 			}
 	}

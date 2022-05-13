@@ -273,57 +273,6 @@ bool EmitterSize::Update(float dt, EmitterInstance* emitter)
 	}
 }
 
-EmitterRotate::EmitterRotate()
-{
-	type = ParticleModuleType::ROTATE;
-}
-
-void EmitterRotate::Spawn(Particle* particle, EmitterInstance* emitter)
-{
-	LCG random;
-	if (constantRotation)
-	{
-		particle->finalRotation = particle->initialRotation = minInitialRotation;
-		//particle->rotation.FromEulerXYZ(DegToRad(minInitialRotation.x), DegToRad(minInitialRotation.y), DegToRad(minInitialRotation.z));
-	}
-	else
-	{
-		if (randomInitialRotation)
-		{
-			particle->initialRotation = Lerp(minInitialRotation, maxInitialRotation, random.Float());
-			//particle->rotation.FromEulerXYZ(DegToRad(particle->initialRotation.x), DegToRad(particle->initialRotation.y), DegToRad(particle->initialRotation.z));
-		}
-		else
-		{
-			particle->initialRotation = minInitialRotation;
-			//particle->rotation.FromEulerXYZ(DegToRad(minInitialRotation.x), DegToRad(minInitialRotation.y), DegToRad(minInitialRotation.z));
-		}
-
-		if (randomInitialRotation)
-			particle->finalRotation = Lerp(minFinalRotation, maxFinalRotation, random.Float());
-		else
-			particle->finalRotation = minFinalRotation;
-	}
-}
-
-bool EmitterRotate::Update(float dt, EmitterInstance* emitter)
-{
-	if (disable)
-	{
-		return true;
-	}
-
-	if (!constantRotation)
-	{
-		for (unsigned int i = 0; i < emitter->activeParticles; i++)
-		{
-			Particle* particle = &emitter->particles[i];
-			float resultingRotation = Lerp(particle->initialRotation, particle->finalRotation, GetPercentage(&emitter->particles[i]));
-			//particle->rotation.FromEulerXYZ(DegToRad(resultingRotation.x), DegToRad(resultingRotation.y), DegToRad(resultingRotation.z));
-		}
-	}
-}
-
 ParticleBillboarding::ParticleBillboarding(BillboardingType typeB)
 {
 	type = ParticleModuleType::BILLBOARDING;

@@ -9,8 +9,8 @@ Emitter::Emitter(const char* newName)
 	texture->SetTexturePath("Assets/Textures/Particles/light.png");
 	Importer::GetInstance()->textureImporter->Import(texture->GetTexturePath(), texture);
 	modules.push_back(CreateModule<EmitterDefault>());
-	modules.push_back(CreateModule<EmitterMovement>());
-	modules.push_back(CreateModule<EmitterSize>());
+	//modules.push_back(CreateModule<EmitterMovement>());
+	//modules.push_back(CreateModule<EmitterSize>());
 	modules.push_back(CreateModule<ParticleBillboarding>());
 	checkerTexture = false;
 }
@@ -77,11 +77,6 @@ void Emitter::AddModuleByType(ParticleModuleType type)
 	case ParticleModuleType::SIZE:
 	{
 		modules.push_back(CreateModule<EmitterSize>());
-		break;
-	}
-	case ParticleModuleType::ROTATE:
-	{
-		modules.push_back(CreateModule<EmitterRotate>());
 		break;
 	}
 	case ParticleModuleType::BILLBOARDING:
