@@ -1,10 +1,10 @@
 {
-    "SceneIntro": {
+    "ExitMenu": {
         "active": true,
         "game_objects_amount": 9,
         "game_objects_list": [
             {
-                "UID": 321358556,
+                "UID": 544265253,
                 "active": true,
                 "components": [
                     {
@@ -48,7 +48,7 @@
                 "tag": 0
             },
             {
-                "UID": 819392830,
+                "UID": 2089711445,
                 "active": true,
                 "components": [
                     {
@@ -106,7 +106,7 @@
                 "tag": 0
             },
             {
-                "UID": 173522655,
+                "UID": 546159453,
                 "active": true,
                 "components": [
                     {
@@ -167,7 +167,7 @@
                 "tag": 0
             },
             {
-                "UID": 1225249380,
+                "UID": 821823531,
                 "active": true,
                 "components": [
                     {
@@ -205,11 +205,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Image",
-                "parent_UID": 173522655,
+                "parent_UID": 546159453,
                 "tag": 0
             },
             {
-                "UID": 933708898,
+                "UID": 1640158444,
                 "active": true,
                 "components": [
                     {
@@ -253,11 +253,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text",
-                "parent_UID": 173522655,
+                "parent_UID": 546159453,
                 "tag": 0
             },
             {
-                "UID": 1417192968,
+                "UID": 1323067793,
                 "active": true,
                 "components": [
                     {
@@ -288,20 +288,20 @@
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
+                        "hoverTexture": "",
                         "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
+                        "pressedTexture": "",
                         "type": 15
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Button",
-                "parent_UID": 173522655,
+                "parent_UID": 546159453,
                 "tag": 0
             },
             {
-                "UID": 1619109198,
+                "UID": 882288836,
                 "active": true,
                 "components": [
                     {
@@ -332,20 +332,20 @@
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
+                        "hoverTexture": "",
                         "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
+                        "pressedTexture": "",
                         "type": 15
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Button1",
-                "parent_UID": 173522655,
+                "parent_UID": 546159453,
                 "tag": 0
             },
             {
-                "UID": 145855197,
+                "UID": 1824817233,
                 "active": true,
                 "components": [
                     {
@@ -389,11 +389,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text1",
-                "parent_UID": 173522655,
+                "parent_UID": 546159453,
                 "tag": 0
             },
             {
-                "UID": 1281987321,
+                "UID": 468022173,
                 "active": true,
                 "components": [
                     {
@@ -437,11 +437,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text2",
-                "parent_UID": 173522655,
+                "parent_UID": 546159453,
                 "tag": 0
             }
         ],
-        "name": "SceneIntro",
+        "name": "ExitMenu",
         "navmesh": {}
     }
 }
