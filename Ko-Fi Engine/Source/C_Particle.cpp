@@ -6,7 +6,9 @@
 #include "M_Editor.h"
 #include "M_ResourceManager.h"
 #include "M_FileSystem.h"
+#include "M_Camera3D.h"
 #include "ParticleModule.h"
+#include "C_Camera.h"
 
 // GameObject
 #include "GameObject.h"
@@ -71,9 +73,17 @@ bool C_Particle::Update(float dt)
 		{
 			unsigned int particleIndex = it->particleIndices[i];
 			Particle* particle = &it->particles[particleIndex];
-		
+			float4x4 resultMatrix;
+			float4x4 cameraTransform = owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix();
+			resultMatrix = owner->GetTransform()->GetLocalTransform().RotatePart() * float4x4::FromTRS(particle->position, particle->rotation, particle->scale);
+			float3 N = cameraTransform.WorldZ().Normalized().Neg();	// N is the inverse of the camera +Z
+			float3 U = cameraTransform.WorldY().Normalized();			// U is the up vector from the camera (already perpendicular to N)
+			float3 R = U.Cross(N).Normalized();						// R is the cross product between  U and N
+
+			resultMatrix = float3x3(R, U, N).ToQuat() * resultMatrix;
+
 			owner->GetEngine()->GetRenderer()->AddParticle(*it->emitter->texture, particle->CurrentColor,
-				float4x4::FromTRS(particle->position, particle->rotation, particle->scale), 
+				resultMatrix,
 				particle->distanceToCamera);
 		}
 	}
