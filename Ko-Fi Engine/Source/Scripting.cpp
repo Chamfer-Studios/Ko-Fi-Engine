@@ -2,7 +2,7 @@
 
 bool Scripting::LoadJsonFile(const char* path)
 {
-	for (std::map<const char*, Json>::iterator file = files.begin(); file != files.end(); ++file)
+	for (std::map<std::string, Json>::iterator file = files.begin(); file != files.end(); ++file)
 	{
 		if ((*file).first == path)
 		{
@@ -29,7 +29,7 @@ bool Scripting::LoadJsonFile(const char* path)
 std::string Scripting::GetDialogueString(const char* key, int id)
 {
 	const char* path = "Assets/Dialogues/dialogues.json";
-	for (std::map<const char*, Json>::iterator file = files.begin(); file != files.end(); ++file)
+	for (std::map<std::string, Json>::iterator file = files.begin(); file != files.end(); ++file)
 	{
 		if ((*file).first == path)
 		{

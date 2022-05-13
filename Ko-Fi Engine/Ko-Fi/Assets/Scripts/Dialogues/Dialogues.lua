@@ -7,6 +7,7 @@ local src = " "
 local char = " "
 local lines = {}
 
+path = "Assets/Dialogues/dialogues.json"
 
 function Start()
 	LoadJsonFile(path)
@@ -17,7 +18,7 @@ function Start()
 end
 
 function Update(dt)
-	print(src)
+	--print(src)
 	print(char)
 end
 

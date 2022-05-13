@@ -356,6 +356,8 @@ public:
 		lua.set_function("GetIntFromJson", &Scripting::GetIntFromJson, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
 
+
+
 	}
 
 	bool CleanUp()
@@ -734,7 +736,7 @@ public:
 
 	int GetIntFromJson(const char* path, const char* value)
 	{
-		for (std::map<const char*, Json>::iterator file = files.begin(); file != files.end(); ++file)
+		for (std::map<std::string, Json>::iterator file = files.begin(); file != files.end(); ++file)
 		{
 			if ((*file).first == path)
 			{
@@ -750,7 +752,7 @@ public:
 	C_Transform *componentTransform = nullptr;
 	C_Script* script = nullptr;
 
-	std::map<const char*, Json> files;
+	std::map<std::string, Json> files;
 };
 
 #endif // !__SCRIPTING_H__
