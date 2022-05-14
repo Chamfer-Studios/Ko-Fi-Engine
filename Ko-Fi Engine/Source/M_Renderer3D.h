@@ -90,7 +90,8 @@ public:
 	
 	//Render Functions
 	void RenderScene(C_Camera* camera);
-	void QueryScene(C_Camera* camera);
+	void QueryScene1(C_Camera* camera);
+	void QueryScene2(C_Camera* camera);
 	void RenderBoundingBox(C_Mesh* cMesh);
 	void RenderMeshes(C_Camera* camera, GameObject* go);
 	void RenderMeshesQuery(C_Camera* camera, GameObject* go,int queryPosition);
@@ -167,7 +168,7 @@ private:
 	//Occlusion Culling things
 	OcclusionQuery* query = nullptr;
 	R_Material* occlusionMat = nullptr;
-
+	std::vector<GameObject*> gameObejctsToRenderDistanceOrdered;
 };
 
 #endif // !__RENDERER_3D_H__

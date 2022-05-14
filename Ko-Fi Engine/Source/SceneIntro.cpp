@@ -131,6 +131,7 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
+	OPTICK_EVENT();
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update(dt);

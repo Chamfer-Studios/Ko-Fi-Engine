@@ -39,7 +39,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumRightHanded);
 	cameraFrustum.SetPerspective(DegToRad(44.0f), DegToRad(72.57f));
 	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(44.0f), 1.778);
-	cameraFrustum.SetViewPlaneDistances(0.01f, 2000.0f);
+	cameraFrustum.SetViewPlaneDistances(0.3f, 1000.0f);
 	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
 
@@ -68,6 +68,8 @@ bool C_Camera::PreUpdate()
 
 bool C_Camera::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	//Transform Update Camera Frustum
 	//Camera Position Rotation of the camera
 
@@ -79,8 +81,11 @@ bool C_Camera::Update(float dt)
 		//Camera Position Rotation of the camera
 
 		//Apply rotation
+		if (isSphereCullingActive)
+			SphereCulling();
 		if (isFrustumCullingActive)
 			FrustumCulling();
+
 
 		// Camera Frustum Updates Transform
 		C_Transform* transform = owner->GetTransform();
@@ -118,9 +123,12 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		//owner->GetEngine()->GetSceneManager()->GetCurrentScene()->skybox.InspectorDraw();
 
 		// FRUSTUM CULLING
+		ImGui::Checkbox("Sphere culling", &isSphereCullingActive);
+		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
 		{
-			ResetFrustumCulling();
+			//ResetFrustumCulling();
+
 		}
 
 		// TODO: SET MAIN CAMERA TO TAG!
@@ -275,13 +283,54 @@ void C_Camera::SetProjectionType(const CameraType& type)
 	}
 }
 
-void C_Camera::FrustumCulling()
+void C_Camera::SphereCulling()
 {
+	OPTICK_EVENT();
+	//1st culling iteration where we check the distance of the game object to a middle point between the near and far plane,
+	//If object is further from the sphere radius, we discard them.
 	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
 	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 	{
 		GameObject* gameObject = (*go);
+		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
+		if (!cMesh || gameObject == owner)
+			continue;
+		float3 goPos = gameObject->GetTransform()->GetPosition();
+		float3 middlePoint = this->cameraFrustum.CenterPoint(); //no need to recalculate
+		float distance = middlePoint.DistanceSq(goPos); 
+		gameObject->SetRenderGameObject(true);
+		if (distance > (sCullingRadius* sCullingRadius))
+		{
+			gameObject->SetRenderGameObject(false);
+		}
+
+	}
+}
+
+void C_Camera::DrawSphereCulling() const
+{
+	glPushMatrix();
+	float4x4 wM = float4x4::identity;
+	wM.SetFloat3x4Part(this->cameraFrustum.WorldMatrix());
+	glMultMatrixf(wM.Transposed().ptr());
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	gluSphere(gluNewQuadric(), sCullingRadius, 20, 20);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPopMatrix();
+}
+
+void C_Camera::FrustumCulling()
+{
+	OPTICK_EVENT();
+
+	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	{
+		GameObject* gameObject = (*go);
+	/*	if (!gameObject->GetRenderGameObject())
+			continue;*/
 		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
 
 		if (componentMesh == nullptr || gameObject == owner)

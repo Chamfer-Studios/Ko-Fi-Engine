@@ -6,6 +6,7 @@
 #include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "MathGeoLib/Geometry/Plane.h"
 
 #include "Log.h"
 #include "M_Window.h"
@@ -101,6 +102,21 @@ bool M_Renderer3D::PreUpdate(float dt)
 
 bool M_Renderer3D::Update(float dt)
 {
+	OPTICK_EVENT();
+	gameObejctsToRenderDistanceOrdered.clear();
+	gameObejctsToRenderDistanceOrdered.shrink_to_fit();
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+
+		if (go->active && go->GetRenderGameObject() && go->GetComponent<C_Mesh>())
+		{
+			gameObejctsToRenderDistanceOrdered.push_back(std::ref(go));
+		}
+	}
+	float3 cameraPosition = engine->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
+	std::sort(gameObejctsToRenderDistanceOrdered.begin(), 
+		gameObejctsToRenderDistanceOrdered.end(), 
+		[&cameraPosition](const GameObject* lhs, const GameObject* rhs) {return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition()); });
 	return true;
 }
 
@@ -125,12 +141,14 @@ bool M_Renderer3D::PostUpdate(float dt)
 	PrepareFrameBuffers();
 
 	PassProjectionAndViewToRenderer();
+
 	if (enableOcclusionCulling)
 	{
-		QueryScene(engine->GetCamera3D()->currentCamera);
+		QueryScene2(engine->GetCamera3D()->gameCamera);
 	}
-	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	RenderScene(engine->GetCamera3D()->currentCamera);
+
 	isFirstPass = false;
 
 
@@ -186,6 +204,7 @@ bool M_Renderer3D::InspectorDraw()
 			engine->SaveConfiguration();
 		}
 		ImGui::Checkbox("Enable Occlusion Culling", &enableOcclusionCulling);
+		ImGui::Text("Rendering %d objects", gameObejctsToRenderDistanceOrdered.size());
 	}
 
 	return true;
@@ -370,8 +389,12 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 				{
 					int uid = engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.at(0);
 
-					if (!cCamera->IsEngineCamera() && cCamera->owner->GetUID() == uid)
+					if (!cCamera->IsEngineCamera() /*&& cCamera->owner->GetUID() == uid*/)
 					{
+						if (cCamera->GetIsSphereCullingActive())
+						{
+							cCamera->DrawSphereCulling();
+						}
 						cCamera->DrawFrustum();
 					}
 
@@ -404,12 +427,11 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 
 
 }
-
-void M_Renderer3D::QueryScene(C_Camera* camera)
+void M_Renderer3D::QueryScene1(C_Camera* camera)
 {
 	OPTICK_EVENT();
 
-	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	for (GameObject* go : gameObejctsToRenderDistanceOrdered)
 	{
 		if (go->active)
 		{
@@ -433,8 +455,53 @@ void M_Renderer3D::QueryScene(C_Camera* camera)
 						glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
 						GLint color = glGetUniformLocation(shader, "color");
 						glUniform4f(color, static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), 1.0f);
-						glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-						glDepthMask(GL_TRUE);
+
+						//Draw Mesh
+						cMesh->GetMesh()->Draw();
+				
+						glUseProgram(0);
+
+					}
+				}
+
+			}
+
+		}
+
+
+	}
+
+
+}
+void M_Renderer3D::QueryScene2(C_Camera* camera)
+{
+	OPTICK_EVENT();
+
+	for (GameObject* go : gameObejctsToRenderDistanceOrdered)
+	{
+		if (go->active)
+		{
+			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+			if (cMesh)
+			{
+
+				if (cMesh->GetMesh() != nullptr)
+				{
+					//render the meshes
+					uint shader = occlusionMat->shaderProgramID;
+					if (shader != 0)
+					{
+						glUseProgram(shader);
+						// Passing Shader Uniforms
+						GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+						glUniformMatrix4fv(model_matrix, 1, GL_FALSE, cMesh->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+						GLint view_location = glGetUniformLocation(shader, "view");
+						glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
+						GLint projection_location = glGetUniformLocation(shader, "projection");
+						glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
+						GLint color = glGetUniformLocation(shader, "color");
+						glUniform4f(color, static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), 1.0f);
+	
 						query->BeginQuery();
 						//Draw Mesh
 						cMesh->GetMesh()->Draw();
@@ -442,8 +509,7 @@ void M_Renderer3D::QueryScene(C_Camera* camera)
 						bool active = query->AnySamplesPassed();
 						go->SetRenderGameObject(active);
 						glUseProgram(0);
-						glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-						glDepthMask(GL_TRUE);
+				
 					}
 				}
 
