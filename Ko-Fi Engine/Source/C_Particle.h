@@ -8,6 +8,7 @@
 
 class EmitterInstance;
 class R_Particle;
+class Emitter;
 class GameObject;
 
 enum class ParticleModuleType;
@@ -28,11 +29,11 @@ public:
 	void Load(Json& json) override;
 
 	bool InspectorDraw(PanelChooser* chooser) override;
-	void InspectorDrawColor(std::string emitterName,FadeColor& color, int index);
 
 	void ClearParticles();
 	void StopParticleSpawn();
 	void ResumeParticleSpawn();
+	void DeleteModule(Emitter* e,ParticleModuleType t);
 
 private:
 	void NewEmitterName(std::string& name, int n = 1);

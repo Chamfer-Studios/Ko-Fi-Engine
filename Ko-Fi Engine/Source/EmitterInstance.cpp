@@ -103,9 +103,15 @@ void EmitterInstance::KillAllParticles()
 {
 	for (auto it : particles)
 		it.active = false;
+	activeParticles = 0;
 }
 
 void EmitterInstance::SetParticleEmission(bool set)
 {
 	deactivateParticleEmission = !set;
+}
+
+bool EmitterInstance::GetParticleEmission()
+{
+	return !deactivateParticleEmission;
 }

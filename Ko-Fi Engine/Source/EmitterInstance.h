@@ -28,6 +28,7 @@ public:
 	void KillDeadParticles();
 	void KillAllParticles();
 	void SetParticleEmission(bool set);
+	bool GetParticleEmission();
 
 public:
 	uint activeParticles = 0;

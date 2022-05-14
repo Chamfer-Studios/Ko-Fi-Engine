@@ -9,6 +9,7 @@
 #include "M_Camera3D.h"
 #include "ParticleModule.h"
 #include "C_Camera.h"
+#include "Emitter.h"
 
 // GameObject
 #include "GameObject.h"
@@ -115,20 +116,6 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 		if (DrawDeleteButton(owner, this))
 			return true;
 
-		//DEBUG BUTTON
-		//if ((ImGui::Button("DEBUG: load resource")))
-		//{
-		//	if (resource == nullptr)
-		//		resource = new R_Particle();
-		//	Importer::GetInstance()->particleImporter->Load(resource, "New Particle Effect");
-		//	for (const auto& emitter : resource->emitters)
-		//	{
-		//		EmitterInstance* ei = new EmitterInstance(emitter, this);
-		//		ei->Init();
-		//		emitterInstances.push_back(ei);
-		//	}
-		//}
-
 		if (resource != nullptr)
 		{
 			ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
@@ -138,16 +125,17 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 			ImGui::InputText("##Resource",&(resource->name));
 			ImGui::PopItemWidth();
 			ImGui::SameLine();
-			//DEBUG BUTTON
-			if ((ImGui::Button("Save Resource")))
-			{
-				Importer::GetInstance()->particleImporter->Create(resource);
-			}
 
+			if ((ImGui::Button("Save Resource")))
+				Importer::GetInstance()->particleImporter->Create(resource);
+
+			if (ImGui::Button("Kill All Particles"))
+				ClearParticles();
+
+			ImGui::Text("Emitter Instances: %d", emitterInstances.size());
 			ImGui::Text("Emitters: %d", resource->emitters.size());
 
-			std::string addEmitterName = "Add Emitter to " + resource->name;
-			if ((ImGui::Button(addEmitterName.c_str())))
+			if (ImGui::Button("Add Emitter"))
 			{
 				std::string name = "Emitter";
 				NewEmitterName(name);
@@ -158,63 +146,31 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				emitterInstances.push_back(ei);
 			}
 
-			ImGui::Text("Emitter Instances: %d", emitterInstances.size());
-
 			if(resource->emitters.size() > 0)
 				ImGui::Separator();
 
-			int emitterAt = 1;
 			for (Emitter* emitter : resource->emitters)
 			{
-				std::string emitterName = "##Emitter" + std::to_string(emitterAt);
+				ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
 				ImGui::Text("Name:");
 				ImGui::SameLine();
-				ImGui::InputText(emitterName.c_str(), &(emitter->name));
-
-				//std::string changeTexture = "Change Texture to " + emitter->name;
-				//if (chooser->IsReadyToClose(changeTexture.c_str()))
-				//{
-				//	if (!chooser->OnChooserClosed().empty())
-				//	{
-				//		std::string path = chooser->OnChooserClosed();
-				//		if (emitter->texture->GetTextureId() == currentTextureId)
-				//		{
-				//			emitter->texture->SetTextureId(TEXTUREID_DEFAULT);
-				//			emitter->texture->SetTexturePath(nullptr);
-
-				//			R_Texture* tex = new R_Texture();
-				//			Importer::GetInstance()->textureImporter->Import(path.c_str(), tex);
-				//			emitter->texture = tex;
-				//		}
-				//	}
-				//}
-
+				ImGui::InputText("##Emitter", &(emitter->name));
 				ImGui::Text("Texture:");
 
-				std::string changeTexture = "Change Texture to " + emitter->name;
+				std::string changeTexture = "Change Texture to" + emitter->name;
 				if (chooser->IsReadyToClose(changeTexture))
 				{
 					if (!chooser->OnChooserClosed().empty())
 					{
 						std::string path = chooser->OnChooserClosed();
-						//for (R_Texture& tex : textures)
-						//{
-						//	if (tex.textureID == currentTextureId)
-						//	{
-						//		R_Texture tex;
-						//		Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
-						//		textures.push_back(texture);
-						//	}
-						//}
+
 						if (!path.empty() || path != "")
 						{
 							if (emitter->texture != nullptr)
 								owner->GetEngine()->GetResourceManager()->FreeResource(emitter->texture->GetUID());
 
 							emitter->texture = nullptr;
-
 							emitter->texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(path.c_str());
-
 							emitter->checkerTexture = false;
 						}
 						else
@@ -244,7 +200,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 						}
 						else
 						{
-							ImGui::Text("Texture Path: ");
+							ImGui::Text("Texture Path:");
 							ImGui::SameLine();
 							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 0, 1));
 							if (ImGui::Selectable(emitter->texture->GetLibraryPath())) {}
@@ -260,12 +216,11 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 						}
 
 						ImGui::PopID();
-
 						ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
 						if (!emitter->checkerTexture)
 						{
-							std::string deleteTexture = "Delete Texture to " + emitter->name;
-							if (ImGui::Button(deleteTexture.c_str()))
+							if (ImGui::Button("Delete Texture"))
 							{
 								if (emitter->texture != nullptr && emitter->texture->textureID != TEXTUREID_DEFAULT)
 								{
@@ -279,12 +234,24 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 						ImGui::EndGroup();
 					}
 				}
+				EmitterInstance* ei = nullptr;
+				for (const auto& eiIt : emitterInstances)
+				{
+					if (eiIt->emitter == emitter)
+						ei = eiIt;
+				}
+
+				if (ImGui::Button("Kill All Emitter Particles"))
+						ei->KillAllParticles();
+
+				bool stopParticleEmission = ei->GetParticleEmission();
+				if (ImGui::Checkbox("Stop Particles Emission", &stopParticleEmission))
+					ei->SetParticleEmission(stopParticleEmission);
 
 				ImGui::Text("Modules: %d", emitter->modules.size());
-
 				ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
-				std::string addName = "Add Module to " + emitter->name;
-				if (ImGui::BeginCombo("Add Module##", addName.c_str()))
+
+				if (ImGui::BeginCombo("Add Module##", "Add Module"))
 				{
 					for (int i = (int)ParticleModuleType::NONE + 1; i != (int)ParticleModuleType::END; ++i)
 					{
@@ -295,8 +262,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					ImGui::EndCombo();
 				}
 
-				std::string tabBarName = emitter->name + "Modules";
-				if (ImGui::BeginTabBar(tabBarName.c_str(), ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_AutoSelectNewTabs | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton & ImGuiTabBarFlags_TabListPopupButton))
+				if (ImGui::BeginTabBar("Modules", ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_AutoSelectNewTabs | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton & ImGuiTabBarFlags_TabListPopupButton))
 				{
 					for (ParticleModule* module : emitter->modules)
 					{
@@ -307,15 +273,15 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 							case ParticleModuleType::DEFAULT:
 							{
 								EmitterDefault* e = (EmitterDefault*)module;
+
 								ImGui::PopItemWidth();
 								ImGui::PushItemWidth(7.5f * ImGui::GetFontSize());
 
-								std::string spawnTimerName = emitter->name + " - SpawnTimer: " + std::to_string(e->spawnTimer);
+								std::string spawnTimerName = "SpawnTimer: " + std::to_string(e->spawnTimer);
 								ImGui::Text(spawnTimerName.c_str());
 
 								float spawnTime = e->spawnTime;
-								std::string spawnTimeName = emitter->name + " - SpawnTime";
-								if (ImGui::DragFloat(spawnTimeName.c_str(), &spawnTime,0.001f, 0.0f, 25.0f,"%.3f"))
+								if (ImGui::DragFloat("SpawnTime", &spawnTime,0.001f, 0.0f, 25.0f,"%.3f"))
 									e->spawnTime = spawnTime;
 
 								bool randomParticleLife = e->randomParticleLife;
@@ -325,8 +291,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (randomParticleLife)
 								{
 									float particleLife[2] = { e->minParticleLife,e->maxParticleLife };
-									std::string particleLifeName = emitter->name + " - ParticleLife";
-									if (ImGui::DragFloat2(particleLifeName.c_str(), particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
+									if (ImGui::DragFloat2("ParticleLife", particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
 									{
 										e->minParticleLife = particleLife[0];
 										e->maxParticleLife = particleLife[1];
@@ -335,32 +300,28 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								else
 								{
 									float particleLife = e->minParticleLife;
-									std::string particleLifeName = emitter->name + " - ParticleLife";
-									if (ImGui::DragFloat(particleLifeName.c_str(), &particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
+									if (ImGui::DragFloat("ParticleLife", &particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
 										e->minParticleLife = particleLife;
 								}
 
 								if (e->instance)
 								{
-									std::string activeParticlesName = emitter->name + " - ActiveParticles: " + std::to_string(e->instance->activeParticles);
+									std::string activeParticlesName = "ActiveParticles: " + std::to_string(e->instance->activeParticles);
 									ImGui::Text(activeParticlesName.c_str());
 								}
 
 								int maxParticles = emitter->maxParticles;
-								std::string maxParticlesName = emitter->name + " - MaxParticles";
-								if (ImGui::DragInt(maxParticlesName.c_str(), &maxParticles, 1, 1, (uint)MAX_PARTICLES))
+								if (ImGui::DragInt("Max Particles", &maxParticles, 1, 1, (uint)MAX_PARTICLES))
 								{
 									if (maxParticles > MAX_PARTICLES)
 										maxParticles = MAX_PARTICLES;
+
 									emitter->maxParticles = maxParticles;
 								}
 
 								int particlesPerSpawn = e->particlesPerSpawn;
-								std::string particlesPerSpawnName = emitter->name + " - ParticlesPerSpawn";
-								if (ImGui::DragInt(particlesPerSpawnName.c_str(), &particlesPerSpawn, 1, 1, 50))
-								{
+								if (ImGui::DragInt("Particles Per Spawn", &particlesPerSpawn, 1, 1, 50))
 									e->particlesPerSpawn = particlesPerSpawn;
-								}
 
 								ImGui::PopItemWidth();
 								ImGui::PushItemWidth(12.5f * ImGui::GetFontSize());
@@ -377,23 +338,19 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (randomPosition)
 								{
 									float minPosition[3] = { e->minPosition.x,e->minPosition.y,e->minPosition.z };
-									std::string minPositionName = emitter->name + " - minPosition";
-									if (ImGui::DragFloat3(minPositionName.c_str(), minPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+									if (ImGui::DragFloat3("Min Position", minPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 										e->minPosition = { minPosition[0],minPosition[1],minPosition[2] };
 
 									float maxPosition[3] = { e->maxPosition.x,e->maxPosition.y,e->maxPosition.z };
-									std::string maxPositionName = emitter->name + " - maxPosition";
-									if (ImGui::DragFloat3(maxPositionName.c_str(), maxPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+									if (ImGui::DragFloat3("Max Position", maxPosition, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 										e->maxPosition = { maxPosition[0],maxPosition[1],maxPosition[2] };
 								}
 								else
 								{
 									float position[3] = { e->minPosition.x,e->minPosition.y,e->minPosition.z };
-									std::string positionName = emitter->name + " - Position";
-									if (ImGui::DragFloat3(positionName.c_str(), position, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+									if (ImGui::DragFloat3("Position", position, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 										e->minPosition = { position[0],position[1],position[2] };
 								}
-
 								ImGui::Spacing();
 
 								bool followForward = e->followForward;
@@ -409,24 +366,20 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									if (randomDirection)
 									{
 										float minDirection[3] = { e->minDirection.x,e->minDirection.y,e->minDirection.z };
-										std::string minDirectionName = emitter->name + " - minDirection";
-										if (ImGui::DragFloat3(minDirectionName.c_str(), minDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
+										if (ImGui::DragFloat3("Min Direction", minDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
 											e->minDirection = { minDirection[0],minDirection[1],minDirection[2] };
 
 										float maxDirection[3] = { e->maxDirection.x,e->maxDirection.y,e->maxDirection.z };
-										std::string maxDirectionName = emitter->name + " - maxDirection";
-										if (ImGui::DragFloat3(maxDirectionName.c_str(), maxDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
+										if (ImGui::DragFloat3("Max Direction", maxDirection, 0.005f, -1.0f, 1.0f, "%.3f"))
 											e->maxDirection = { maxDirection[0],maxDirection[1],maxDirection[2] };
 									}
 									else
 									{
 										float direction[3] = { e->minDirection.x,e->minDirection.y,e->minDirection.z };
-										std::string directionName = emitter->name + " - Direction";
-										if (ImGui::DragFloat3(directionName.c_str(), direction, 0.005f, -1.0f, 1.0f, "%.3f"))
+										if (ImGui::DragFloat3("Direction", direction, 0.005f, -1.0f, 1.0f, "%.3f"))
 											e->minDirection = { direction[0],direction[1],direction[2] };
 									}
 								}
-
 								ImGui::Spacing();
 
 								bool randomVelocity = e->randomVelocity;
@@ -436,8 +389,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (randomVelocity)
 								{
 									float velocity[2] = { e->minVelocity,e->maxVelocity };
-									std::string velocityName = emitter->name + " - Velocity";
-									if (ImGui::DragFloat2(velocityName.c_str(), velocity, 0.1f, 0.0f, 1000.0f, "%.1f"))
+									if (ImGui::DragFloat2("Velocity", velocity, 0.1f, 0.0f, 1000.0f, "%.1f"))
 									{
 										e->minVelocity = velocity[0];
 										e->maxVelocity = velocity[1];
@@ -446,11 +398,9 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								else
 								{
 									float velocity = e->minVelocity;
-									std::string velocityName = emitter->name + " - Velocity";
-									if (ImGui::DragFloat(velocityName.c_str(), &velocity, 0.1f, 0.0f, 1000.0f, "%.1f"))
+									if (ImGui::DragFloat("Velocity", &velocity, 0.1f, 0.0f, 1000.0f, "%.1f"))
 										e->minVelocity = velocity;
 								}
-
 								ImGui::Spacing();
 
 								bool randomAcceleration = e->randomAcceleration;
@@ -460,77 +410,68 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (randomAcceleration)
 								{
 									float minAcceleration[3] = { e->minAcceleration.x,e->minAcceleration.y,e->minAcceleration.z };
-									std::string minAccelerationName = emitter->name + " - minAcceleration";
-									if (ImGui::DragFloat3(minAccelerationName.c_str(), minAcceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
+									if (ImGui::DragFloat3("Min Acceleration", minAcceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
 										e->minAcceleration = { minAcceleration[0],minAcceleration[1],minAcceleration[2] };
 
 									float maxAcceleration[3] = { e->maxAcceleration.x,e->maxAcceleration.y,e->maxAcceleration.z };
-									std::string maxAccelerationName = emitter->name + " - maxAcceleration";
-									if (ImGui::DragFloat3(maxAccelerationName.c_str(), maxAcceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
+									if (ImGui::DragFloat3("Max Acceleration", maxAcceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
 										e->maxAcceleration = { maxAcceleration[0],maxAcceleration[1],maxAcceleration[2] };
 								}
 								else
 								{
 									float acceleration[3] = { e->minAcceleration.x,e->minAcceleration.y,e->minAcceleration.z };
-									std::string accelerationName = emitter->name + " - Acceleration";
-									if (ImGui::DragFloat3(accelerationName.c_str(), acceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
+									if (ImGui::DragFloat3("Acceleration", acceleration, 0.001f, -10.0f, 10.0f, "%.3f"))
 										e->minAcceleration = { acceleration[0],acceleration[1],acceleration[2] };
 								}
 
-								std::string deleteEmitter = emitter->name + " - Delete Module Movement";
-								if (ImGui::Button(deleteEmitter.c_str()))
-								{
-									for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
-									{
-										if ((*it)->type == ParticleModuleType::MOVEMENT)
-										{
-											emitter->modules.erase(it);
-											break;
-										}
-									}
-								}
+								if (ImGui::Button("Delete Module Movement"))
+									DeleteModule(emitter, ParticleModuleType::MOVEMENT);
+
 								break;
 							}
 							case ParticleModuleType::COLOR:
 							{
 								EmitterColor* e = (EmitterColor*)module;
+
 								ImGui::Text("Colors: %d", e->colorOverTime.size());
-
 								ImGui::Spacing();
-
-								int posList = 0;
 								for (std::vector<FadeColor>::iterator color = e->colorOverTime.begin(); color < e->colorOverTime.end(); ++color)
 								{
-									InspectorDrawColor(emitter->name, (*color), posList);
+									ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+									FadeColor currentColor = (*color);
 
-									std::string deleteColor = emitter->name + " - Delete Color " + std::to_string(posList + 1);
-									if (ImGui::Button(deleteColor.c_str()))
+									float c[4] = { currentColor.color.r,currentColor.color.g,currentColor.color.b,currentColor.color.a };
+									if (ImGui::ColorEdit4("Color", c))
+									{
+										currentColor.color.r = c[0];
+										currentColor.color.g = c[1];
+										currentColor.color.b = c[2];
+										currentColor.color.a = c[3];
+									}
+
+									float p = currentColor.pos;
+									if (ImGui::DragFloat("Position", &p, 0.005f, 0.0f, 1.0f, "%.3f"))
+										currentColor.pos = p;
+
+									if (ImGui::Button("Delete Color"))
 									{
 										e->colorOverTime.erase(color);
+										ImGui::PopID();
 										break;
 									}
 
 									if (color != e->colorOverTime.end())
 										ImGui::Spacing();
-									++posList;
+
+									ImGui::PopID();
 								}
 
-								std::string addColorName = "Add Color to " + emitter->name;
-								if (ImGui::Button(addColorName.c_str()))
+								if (ImGui::Button("Add Color"))
 									e->colorOverTime.push_back(FadeColor());
 
-								std::string deleteEmitter = emitter->name + " - Delete Module Color";
-								if (ImGui::Button(deleteEmitter.c_str()))
-								{
-									for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
-									{
-										if ((*it)->type == ParticleModuleType::COLOR)
-										{
-											emitter->modules.erase(it);
-											break;
-										}
-									}
-								}
+								if (ImGui::Button("Delete Module Color"))
+									DeleteModule(emitter, ParticleModuleType::COLOR);
+
 								break;
 							}
 							case ParticleModuleType::SIZE:
@@ -562,8 +503,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (constantSize)
 								{
 									float size[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
-									std::string sizeInitialName = emitter->name + " - Size";
-									if (ImGui::DragFloat3(sizeInitialName.c_str(), size, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+									if (ImGui::DragFloat3("Size", size, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 										e->minInitialSize = { size[0],size[1],size[2] };
 								}
 								else
@@ -571,63 +511,48 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									if (randomInitialSize)
 									{
 										float minInitialSize[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
-										std::string minInitialSizeName = emitter->name + " - minInitialSize";
-										if (ImGui::DragFloat3(minInitialSizeName.c_str(), minInitialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Min Initial Size", minInitialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 											e->minInitialSize = { minInitialSize[0],minInitialSize[1],minInitialSize[2] };
 
 										float maxInitialSize[3] = { e->maxInitialSize.x,e->maxInitialSize.y,e->maxInitialSize.z };
-										std::string maxInitialSizeName = emitter->name + " - maxInitialSize";
-										if (ImGui::DragFloat3(maxInitialSizeName.c_str(), maxInitialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Max Initial Size", maxInitialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 											e->maxInitialSize = { maxInitialSize[0],maxInitialSize[1],maxInitialSize[2] };
 									}
 									else
 									{
 										float initialSize[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
-										std::string sizeInitialName = emitter->name + " - InitialSize";
-										if (ImGui::DragFloat3(sizeInitialName.c_str(), initialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Initial Size", initialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 											e->minInitialSize = { initialSize[0],initialSize[1],initialSize[2] };
 									}
 
 									if (randomFinalSize)
 									{
 										float minFinalSize[3] = { e->minFinalSize.x,e->minFinalSize.y,e->minFinalSize.z };
-										std::string minFinalSizeName = emitter->name + " - minFinalSize";
-										if (ImGui::DragFloat3(minFinalSizeName.c_str(), minFinalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Min Final Size", minFinalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 											e->minFinalSize = { minFinalSize[0],minFinalSize[1],minFinalSize[2] };
 
 										float maxFinalSize[3] = { e->maxFinalSize.x,e->maxFinalSize.y,e->maxFinalSize.z };
-										std::string maxFinalSizeName = emitter->name + " - maxFinalSize";
-										if (ImGui::DragFloat3(maxFinalSizeName.c_str(), maxFinalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Max Final Size", maxFinalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 											e->maxFinalSize = { maxFinalSize[0],maxFinalSize[1],maxFinalSize[2] };
 									}
 									else
 									{
 										float finalSize[3] = { e->minFinalSize.x,e->minFinalSize.y,e->minFinalSize.z };
-										std::string sizeFinalName = emitter->name + " - FinalSize";
-										if (ImGui::DragFloat3(sizeFinalName.c_str(), finalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Final Size", finalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 											e->minFinalSize = { finalSize[0],finalSize[1],finalSize[2] };
 									}
 								}
-								std::string deleteEmitter = emitter->name + " - Delete Module Size";
-								if (ImGui::Button(deleteEmitter.c_str()))
-								{
-									for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
-									{
-										if ((*it)->type == ParticleModuleType::SIZE)
-										{
-											emitter->modules.erase(it);
-											break;
-										}
-									}
-								}
+
+								if (ImGui::Button("Delete Module Size"))
+									DeleteModule(emitter, ParticleModuleType::SIZE);
+
 								break;
 							}
 							case ParticleModuleType::BILLBOARDING:
 							{
 								ParticleBillboarding* particleBillboarding = (ParticleBillboarding*)module;
 
-								std::string addBillboarding = "Change Type of " + emitter->name;
-								if (ImGui::BeginCombo("Billboarding##", addBillboarding.c_str()))
+								if (ImGui::BeginCombo("Billboarding##", "Change Type"))
 								{
 									for (int i = (int)ParticleBillboarding::BillboardingType::NONE + 1; i != (int)ParticleBillboarding::BillboardingType::END; ++i)
 									{
@@ -642,18 +567,9 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (ImGui::Checkbox("Hide Billboarding", &hideModule))
 									particleBillboarding->hideBillboarding = hideModule;
 
-								std::string deleteEmitter = emitter->name + " - Delete Module Billboarding";
-								if (ImGui::Button(deleteEmitter.c_str()))
-								{
-									for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
-									{
-										if ((*it)->type == ParticleModuleType::BILLBOARDING)
-										{
-											emitter->modules.erase(it);
-											break;
-										}
-									}
-								}
+								if (ImGui::Button("Delete Module Billboarding"))
+									DeleteModule(emitter, ParticleModuleType::BILLBOARDING);
+
 								break;
 							}
 							default:
@@ -693,13 +609,12 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				if (resource->emitters.size() > 0 && emitter != resource->emitters.back())
 					ImGui::Separator();
 
-				++emitterAt;
+				ImGui::PopID();
 			}
 		}
 		else
 		{
-			std::string addResourceName = "Add Resource";
-			if (ImGui::BeginCombo("Add Resource##", addResourceName.c_str()))
+			if (ImGui::BeginCombo("Add Resource##", "Add Resource"))
 			{
 				for (int i = -1; i != (int)resourcesList.size(); ++i)
 				{
@@ -733,25 +648,6 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				}
 				ImGui::EndCombo();
 			}
-
-
-
-
-			//std::string addResourceName = "Add Resource";
-			//ImGui::Combo("##Resource Combo", &resourceToAdd, "Add Resource\0New Resource");
-			//ImGui::SameLine();
-			//if ((ImGui::Button(addResourceName.c_str())))
-			//{
-			//	if (resourceToAdd == 1)
-			//	{
-			//		resource = new R_Particle();
-			//		Emitter* e = new Emitter();
-			//		resource->emitters.push_back(e);
-			//		EmitterInstance* eI = new EmitterInstance(e, this);
-			//		emitterInstances.push_back(eI);
-			//		eI->Init();
-			//	}
-			//}
 		}
 	}
 	else
@@ -760,47 +656,34 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 	return ret;
 }
 
-void C_Particle::InspectorDrawColor(std::string emitterName, FadeColor& color, int index)
-{
-	float c[4] = { color.color.r,color.color.g,color.color.b,color.color.a };
-	std::string colorName = emitterName + " - Color " + std::to_string(index + 1);
-	if (ImGui::ColorEdit4(colorName.c_str(), c))
-	{
-		color.color.r = c[0];
-		color.color.g = c[1];
-		color.color.b = c[2];
-		color.color.a = c[3];
-	}
-	float p = color.pos;
-	std::string positionName = emitterName + " - Position " + std::to_string(index + 1);
-	if (ImGui::DragFloat(positionName.c_str(), &p, 0.005f, 0.0f, 1.0f, "%.3f"))
-	{
-		color.pos = p;
-	}
-}
-
 void C_Particle::ClearParticles()
 {
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
-	{
 		(*it)->KillAllParticles();
+}
+
+void C_Particle::DeleteModule(Emitter* e, ParticleModuleType t)
+{
+	for (std::vector<ParticleModule*>::iterator it = e->modules.begin(); it < e->modules.end(); ++it)
+	{
+		if ((*it)->type == t)
+		{
+			e->modules.erase(it);
+			return;
+		}
 	}
 }
 
 void C_Particle::StopParticleSpawn()
 {
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
-	{
 		(*it)->SetParticleEmission(false);
-	}
 }
 
 void C_Particle::ResumeParticleSpawn()
 {
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
-	{
 		(*it)->SetParticleEmission(true);
-	}
 }
 
 void C_Particle::NewEmitterName(std::string& name, int n)
