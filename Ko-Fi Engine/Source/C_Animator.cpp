@@ -346,5 +346,6 @@ void C_Animator::SetSelectedClip(std::string name)
 			break;
 		}
 	}
+	selectedClip->SetFinishedBool(false);
 	owner->GetEngine()->GetSceneManager()->ResetTimer();
 }
