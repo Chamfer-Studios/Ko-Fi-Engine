@@ -6,6 +6,7 @@
 #include "MathGeoLib/Geometry/AABB.h"
 #include "MathGeoLib/Geometry/Sphere.h"
 #include "R_Mesh.h"
+#include "glew.h"
 
 class C_Transform;
 class C_Material;
@@ -48,7 +49,7 @@ public:
 	// Mesh Functions
 	void GenerateLocalBoundingBox();
 	void GenerateGlobalBoundingBox();
-	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
+	void DrawBoundingBox(const AABB& aabb, const float3& rgb, GLenum renderType = GL_LINES);
 	bool InspectorDraw(PanelChooser* chooser);
 
 	inline bool SetDrawAABB() const { return drawAABB; }

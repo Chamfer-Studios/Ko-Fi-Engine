@@ -26,7 +26,7 @@
 #include "R_Material.h"
 #include "Log.h"
 #include "node_editor.h"
-#include "QuadTree3D.h"
+#include "Quadtree.h"
 
 #include "SDL_assert.h"
 
@@ -86,15 +86,16 @@ bool SceneIntro::Start()
 
 	if (this->GetLights(SourceType::DIRECTIONAL).size() == 0)
 	{
-		GameObject* go = CreateEmptyGameObject("Direct Light");
-		go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+		//create dir light?
 	}
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 
 	example::NodeEditorInitialize();
 
-	ComputeQuadTree();
+	//ComputeQuadTree();
+	sceneTree.SetBoundaries(AABB(float3(-500, 0, -500), float3(500, 30, 500)));
+
 
 	return ret;
 }
@@ -130,6 +131,7 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
+	OPTICK_EVENT();
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update(dt);
