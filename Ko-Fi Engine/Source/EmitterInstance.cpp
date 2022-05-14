@@ -1,6 +1,7 @@
 #include "EmitterInstance.h"
 #include "ParticleModule.h"
 #include "R_Texture.h"
+#include "Log.h"
 
 EmitterInstance::EmitterInstance(Emitter* e, C_Particle* cp) : emitter(e),component(cp)
 {
@@ -27,7 +28,6 @@ void EmitterInstance::Init()
 
 bool EmitterInstance::Update(float dt)
 {
-	KillDeadParticles();
 
 	//update modules
 	for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
@@ -35,6 +35,7 @@ bool EmitterInstance::Update(float dt)
 		(*it)->Update(dt, this);
 	}
 
+	KillDeadParticles();
 	//add particle to render list
 	//it is done at the component particle
 	return true;
@@ -60,6 +61,10 @@ void EmitterInstance::SpawnParticle(int burst)
 	{
 		unsigned int particleIndex = particleIndices[activeParticles];
 		Particle* particle = &particles[particleIndex];
+		if (particle->active)
+			CONSOLE_LOG("EHHHHHH!");
+
+		particle->active = true;
 
 		for (unsigned int i = 0; i < emitter->modules.size(); i++)
 		{
@@ -86,18 +91,18 @@ void EmitterInstance::KillDeadParticles()
 				particleIndices[i] = particleIndices[activeParticles - 1];
 				particleIndices[activeParticles - 1] = particleIndex;
 			}
+			particle->lifeTime = particle->maxLifetime;
+			particle->active = false;
 
 			--activeParticles;
 		}
 	}
 }
 
-void EmitterInstance::KillParticles()
+void EmitterInstance::KillAllParticles()
 {
 	for (auto it : particles)
-	{
 		it.active = false;
-	}
 }
 
 void EmitterInstance::SetParticleEmission(bool set)

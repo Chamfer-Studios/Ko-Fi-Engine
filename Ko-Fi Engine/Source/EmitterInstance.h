@@ -26,7 +26,7 @@ public:
 	void SpawnParticle(int burst = 1);
 
 	void KillDeadParticles();
-	void KillParticles();
+	void KillAllParticles();
 	void SetParticleEmission(bool set);
 
 public:

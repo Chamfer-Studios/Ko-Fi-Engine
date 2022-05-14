@@ -68,6 +68,7 @@ bool C_Particle::Update(float dt)
 	for (auto it : emitterInstances)
 	{
 		it->Update(dt); //kill inactive and update emitter instances
+		CONSOLE_LOG("active particles: %d", it->activeParticles);
 
 		for (unsigned int i = 0; i < it->activeParticles; i++)
 		{
@@ -314,7 +315,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 
 								float spawnTime = e->spawnTime;
 								std::string spawnTimeName = emitter->name + " - SpawnTime";
-								if (ImGui::InputFloat(spawnTimeName.c_str(), &spawnTime, 0.0f, 25.0f))
+								if (ImGui::DragFloat(spawnTimeName.c_str(), &spawnTime,0.001f, 0.0f, 25.0f,"%.3f"))
 									e->spawnTime = spawnTime;
 
 								bool randomParticleLife = e->randomParticleLife;
@@ -782,7 +783,7 @@ void C_Particle::ClearParticles()
 {
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
 	{
-		(*it)->KillParticles();
+		(*it)->KillAllParticles();
 	}
 }
 

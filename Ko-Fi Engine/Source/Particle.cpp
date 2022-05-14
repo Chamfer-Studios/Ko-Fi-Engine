@@ -7,7 +7,7 @@
 
 Particle::Particle()
 {
-	active = true;
+	active = false;
 	position = float3::zero;
 	rotation = Quat(0.0f, 0.0f, 0.0f, 0.0f);
 	scale = float3(1.0f, 1.0f, 1.0f);

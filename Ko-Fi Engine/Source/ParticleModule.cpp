@@ -52,44 +52,53 @@ void EmitterDefault::Spawn(Particle* particle, EmitterInstance* emitter)
 	instance = emitter;
 
 	particle->position = go->GetTransform()->GetGlobalTransform().TranslatePart();
+
 	if (randomParticleLife)
-	{
-		float particleLife = math::Lerp(minParticleLife, maxParticleLife, random.Float());
-		particle->maxLifetime = particleLife;
-	}
+		particle->maxLifetime = math::Lerp(minParticleLife, maxParticleLife, random.Float());
 	else
 		particle->maxLifetime = minParticleLife;
+
 	particle->lifeTime = 0.0f;
 }
 
 bool EmitterDefault::Update(float dt, EmitterInstance* instance)
 {
 	if (disable)
-	{
 		return true;
-	}
+
 	spawnTimer += dt;
 	if (spawnTimer >= spawnTime)
 	{
+		spawnTimer = 0;
+
 		//in case the particlesPerBurst var is higher than the max particles of the emitter
 		int burstCap = instance->emitter->maxParticles - instance->activeParticles;
 		if (particlesPerSpawn > burstCap)
-			particlesPerSpawn = burstCap;
-
-		instance->SpawnParticle(particlesPerSpawn);
-
-		spawnTimer = 0;
+			instance->SpawnParticle(burstCap);
+		else
+			instance->SpawnParticle(particlesPerSpawn);
 	}
+
 	for (unsigned int i = 0; i < instance->activeParticles; i++)
 	{
 		unsigned int particleIndex = instance->particleIndices[i];
 		Particle* particle = &instance->particles[particleIndex];
 
-		instance->particles[i].lifeTime += dt;
-		if (instance->particles[i].lifeTime >= instance->particles[i].maxLifetime)
-			instance->particles[i].lifeTime = instance->particles[i].maxLifetime;
-		particle->distanceToCamera = float3(instance->component->owner->GetEngine()->GetCamera3D()->currentCamera->
-			GetCameraFrustum().WorldMatrix().TranslatePart() - particle->position).LengthSq();
+		if (particle->active)
+		{
+			if (!randomParticleLife)
+				particle->maxLifetime = minParticleLife;
+			else
+			{
+				if (particle->maxLifetime >= maxParticleLife)
+					particle->maxLifetime = maxParticleLife;
+			}
+			particle->lifeTime += dt;
+			if (particle->lifeTime >= particle->maxLifetime)
+				particle->lifeTime = particle->maxLifetime;
+			particle->distanceToCamera = float3(instance->component->owner->GetEngine()->GetCamera3D()->currentCamera->
+				GetCameraFrustum().WorldMatrix().TranslatePart() - particle->position).LengthSq();
+		}
 	}
 }
 
@@ -150,16 +159,18 @@ void EmitterMovement::Spawn(Particle* particle, EmitterInstance* emitter)
 bool EmitterMovement::Update(float dt, EmitterInstance* emitter)
 {
 	if (disable)
-	{
 		return true;
-	}
+
 	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
 		unsigned int particleIndex = emitter->particleIndices[i];
 		Particle* particle = &emitter->particles[particleIndex];
 
-		particle->velocity += particle->acceleration;
-		particle->position += particle->velocity * dt;
+		if (particle->active)
+		{
+			particle->velocity += particle->acceleration;
+			particle->position += particle->velocity * dt;
+		}
 	}
 }
 
@@ -177,15 +188,15 @@ void EmitterColor::Spawn(Particle* particle, EmitterInstance* emitter)
 bool EmitterColor::Update(float dt, EmitterInstance* emitter)
 {
 	if (disable)
-	{
 		return true;
-	}
+
 	for (unsigned int i = 0; i < emitter->activeParticles; i++)
 	{
 		unsigned int particleIndex = emitter->particleIndices[i];
 		Particle* particle = &emitter->particles[particleIndex];
 
-		particle->CurrentColor = ColorLerp(GetPercentage(&emitter->particles[i]));
+		if(particle->active)
+			particle->CurrentColor = ColorLerp(GetPercentage(particle));
 	}
 }
 
@@ -266,16 +277,17 @@ void EmitterSize::Spawn(Particle* particle, EmitterInstance* emitter)
 bool EmitterSize::Update(float dt, EmitterInstance* emitter)
 {
 	if (disable)
-	{
 		return true;
-	}
 
 	if (!constantSize)
 	{
 		for (unsigned int i = 0; i < emitter->activeParticles; i++)
 		{
-			Particle* particle = &emitter->particles[i];
-			particle->scale = particle->scale.Lerp(particle->initialScale, particle->finalScale, GetPercentage(&emitter->particles[i]));
+			unsigned int particleIndex = emitter->particleIndices[i];
+			Particle* particle = &emitter->particles[particleIndex];
+
+			if (particle->active)
+				particle->scale = particle->scale.Lerp(particle->initialScale, particle->finalScale, GetPercentage(particle));
 		}
 	}
 }
@@ -294,15 +306,15 @@ void ParticleBillboarding::Spawn(EmitterInstance* emitter, Particle* particle)
 bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
 {
 	if (disable)
-	{
 		return true;
-	}
+
 	for (unsigned int i = 0; i < emitter->activeParticles; ++i)
 	{
 		unsigned int particleIndex = emitter->particleIndices[i];
 		Particle* particle = &emitter->particles[particleIndex];
 
-		particle->rotation = GetAlignmentRotation(particle->position, emitter, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
+		if(particle->active)
+			particle->rotation = GetAlignmentRotation(particle->position, emitter, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
 	}
 }
 

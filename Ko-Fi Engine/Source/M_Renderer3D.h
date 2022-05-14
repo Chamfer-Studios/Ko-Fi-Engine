@@ -129,7 +129,7 @@ private:
 	bool show_viewport_window = true;
 
 	//Particle Map
-	std::map<float, ParticleRenderer> particles;
+	std::multimap<float, ParticleRenderer> particles;
 };
 
 #endif // !__RENDERER_3D_H__
