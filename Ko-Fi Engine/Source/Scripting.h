@@ -433,6 +433,10 @@ public:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4);
 			}
+			case 25:
+			{
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_ESCAPE);
+			}
 		}
 	}
 

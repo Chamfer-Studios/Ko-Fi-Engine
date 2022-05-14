@@ -4,7 +4,7 @@
         "game_objects_amount": 9,
         "game_objects_list": [
             {
-                "UID": 321358556,
+                "UID": 1913634110,
                 "active": true,
                 "components": [
                     {
@@ -48,7 +48,7 @@
                 "tag": 0
             },
             {
-                "UID": 819392830,
+                "UID": 1382396077,
                 "active": true,
                 "components": [
                     {
@@ -106,7 +106,7 @@
                 "tag": 0
             },
             {
-                "UID": 173522655,
+                "UID": 2026209213,
                 "active": true,
                 "components": [
                     {
@@ -158,6 +158,19 @@
                             200.0
                         ],
                         "type": 13
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_OpenExitPopUp.lua",
+                        "id": 1583821558,
+                        "inspector_variables": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "value": "ExitMenu"
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -167,7 +180,7 @@
                 "tag": 0
             },
             {
-                "UID": 1225249380,
+                "UID": 2031050016,
                 "active": true,
                 "components": [
                     {
@@ -205,11 +218,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Image",
-                "parent_UID": 173522655,
+                "parent_UID": 2026209213,
                 "tag": 0
             },
             {
-                "UID": 933708898,
+                "UID": 1219860808,
                 "active": true,
                 "components": [
                     {
@@ -253,11 +266,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text",
-                "parent_UID": 173522655,
+                "parent_UID": 2026209213,
                 "tag": 0
             },
             {
-                "UID": 1417192968,
+                "UID": 1393525859,
                 "active": true,
                 "components": [
                     {
@@ -292,16 +305,22 @@
                         "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
                         "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_Quit.lua",
+                        "id": 1063783031,
+                        "type": 5
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Button",
-                "parent_UID": 173522655,
+                "name": "YesButton",
+                "parent_UID": 2026209213,
                 "tag": 0
             },
             {
-                "UID": 1619109198,
+                "UID": 1414350657,
                 "active": true,
                 "components": [
                     {
@@ -336,16 +355,29 @@
                         "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
                         "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_ClosePopUp.lua",
+                        "id": 1356669009,
+                        "inspector_variables": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "value": "UI_OpenPopUp.lua"
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Button1",
-                "parent_UID": 173522655,
+                "name": "NoButton",
+                "parent_UID": 2026209213,
                 "tag": 0
             },
             {
-                "UID": 145855197,
+                "UID": 2066099581,
                 "active": true,
                 "components": [
                     {
@@ -389,11 +421,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text1",
-                "parent_UID": 173522655,
+                "parent_UID": 2026209213,
                 "tag": 0
             },
             {
-                "UID": 1281987321,
+                "UID": 1169285447,
                 "active": true,
                 "components": [
                     {
@@ -437,7 +469,7 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text2",
-                "parent_UID": 173522655,
+                "parent_UID": 2026209213,
                 "tag": 0
             }
         ],

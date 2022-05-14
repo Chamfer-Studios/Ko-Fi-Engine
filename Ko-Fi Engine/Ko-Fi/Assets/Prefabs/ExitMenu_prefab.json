@@ -125,11 +125,17 @@
                     "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
                     "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
                     "type": 15
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/HUD/UI_Quit.lua",
+                    "id": 1063783031,
+                    "type": 5
                 }
             ],
             "is3D": false,
             "isPrefab": false,
-            "name": "Button",
+            "name": "YesButton",
             "tag": 0
         },
         {
@@ -168,11 +174,24 @@
                     "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
                     "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
                     "type": 15
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/HUD/UI_ClosePopUp.lua",
+                    "id": 1356669009,
+                    "inspector_variables": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "value": "UI_OpenPopUp.lua"
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": false,
             "isPrefab": false,
-            "name": "Button1",
+            "name": "NoButton",
             "tag": 0
         },
         {
@@ -320,6 +339,19 @@
                 200.0
             ],
             "type": 13
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/HUD/UI_OpenExitPopUp.lua",
+            "id": 1583821558,
+            "inspector_variables": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "value": "ExitMenu"
+                }
+            ],
+            "type": 5
         }
     ],
     "is3D": false,
