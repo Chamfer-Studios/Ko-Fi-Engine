@@ -133,7 +133,7 @@ public:
 	void Spawn(EmitterInstance* emitter, Particle* particle);
 	bool Update(float dt, EmitterInstance* emitter);
 
-	Quat GetAlignmentRotation(const float3& position, const float3& ownerPosition, const float4x4& cameraTransform);
+	Quat GetAlignmentRotation(const float3& position, EmitterInstance* emitter, const float4x4& cameraTransform);
 	const char* BillboardTypeToString(ParticleBillboarding::BillboardingType e);
 
 	BillboardingType billboardingType = BillboardingType::WORLD_ALIGNED;
