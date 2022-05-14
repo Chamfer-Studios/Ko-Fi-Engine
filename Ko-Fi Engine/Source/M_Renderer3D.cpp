@@ -56,6 +56,13 @@ M_Renderer3D::M_Renderer3D(KoFiEngine* engine) : Module()
 {
 	name = "Renderer3D";
 	this->engine = engine;
+
+	/*auto compGO = [this](GameObject* a, GameObject* b) {
+		float3 cameraPosition = this->engine->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
+		return cameraPosition.DistanceSq(a->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(b->GetTransform()->GetPosition());
+	};*/
+
+	//gameObejctsToRenderDistanceOrdered = std::set<GameObject*, decltype(compGO)>(compGO);
 }
 
 // Destructor
@@ -103,20 +110,20 @@ bool M_Renderer3D::PreUpdate(float dt)
 bool M_Renderer3D::Update(float dt)
 {
 	OPTICK_EVENT();
-	gameObejctsToRenderDistanceOrdered.clear();
-	gameObejctsToRenderDistanceOrdered.shrink_to_fit();
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
-
 		if (go->active && go->GetRenderGameObject() && go->GetComponent<C_Mesh>())
 		{
-			gameObejctsToRenderDistanceOrdered.push_back(std::ref(go));
+			gameObejctsToRenderDistanceOrdered.insert(go);
+		}
+		else {
+			gameObejctsToRenderDistanceOrdered.erase(go);
 		}
 	}
-	float3 cameraPosition = engine->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
-	std::sort(gameObejctsToRenderDistanceOrdered.begin(), 
+	//float3 cameraPosition = engine->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
+	/*std::sort(gameObejctsToRenderDistanceOrdered.begin(),
 		gameObejctsToRenderDistanceOrdered.end(), 
-		[&cameraPosition](const GameObject* lhs, const GameObject* rhs) {return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition()); });
+		[&cameraPosition](const GameObject* lhs, const GameObject* rhs) {return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition()); });*/
 	return true;
 }
 
@@ -519,8 +526,6 @@ void M_Renderer3D::QueryScene2(C_Camera* camera)
 
 
 	}
-
-
 }
 
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
@@ -1352,4 +1357,10 @@ GLint OcclusionQuery::GetResultAvilable() const
 bool OcclusionQuery::AnySamplesPassed() const
 {
 	return samplesPassed > 0;
+}
+
+inline bool M_Renderer3D::GOComp::operator()(const GameObject* lhs, const GameObject* rhs) const
+{
+	float3 cameraPosition = lhs->GetEngine()->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
+	return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition());
 }

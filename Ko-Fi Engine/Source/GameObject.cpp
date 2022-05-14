@@ -8,6 +8,7 @@
 #include "M_Editor.h"
 #include "M_SceneManager.h"
 #include "M_Input.h"
+#include "M_Camera3D.h"
 
 // Components
 #include "C_Mesh.h"

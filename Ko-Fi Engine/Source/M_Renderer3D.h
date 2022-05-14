@@ -1,5 +1,4 @@
-#ifndef __RENDERER_3D_H__
-#define __RENDERER_3D_H__
+#pragma once
 
 #include "Module.h"
 #include "Globals.h"
@@ -12,6 +11,7 @@
 
 #include "MathGeoLib/Geometry/LineSegment.h"
 #include <vector>
+#include <set>
 #define MAX_LIGHTS 8
 
 class GameObject;
@@ -168,7 +168,15 @@ private:
 	//Occlusion Culling things
 	OcclusionQuery* query = nullptr;
 	R_Material* occlusionMat = nullptr;
-	std::vector<GameObject*> gameObejctsToRenderDistanceOrdered;
-};
 
-#endif // !__RENDERER_3D_H__
+	struct GOComp
+	{
+		// uses forward decl from before in arguments. since we're
+		//  using pointers, no other type info is required. we don't
+		//  actually implement this yet (we can't, we don't know what
+		//  "base" really is yet).
+		bool operator ()(const GameObject* lhs, const GameObject* rhs) const;
+	};
+
+	std::set<GameObject*, GOComp> gameObejctsToRenderDistanceOrdered;
+};
