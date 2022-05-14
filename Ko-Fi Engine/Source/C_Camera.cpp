@@ -176,6 +176,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
 		{
 			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
+			sCullingRadius = planeDistances.y / 2.0f;
 		}
 	}
 	else
@@ -303,11 +304,11 @@ void C_Camera::SphereCulling()
 		float distance = middlePoint.DistanceSq(goPos); 
 		if (distance > (sCullingRadius* sCullingRadius))
 		{
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(gameObject);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(gameObject);
 			gameObject->SetRenderGameObject(false);
 		}
 		else {
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(gameObject);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
 			gameObject->SetRenderGameObject(true);
 		}
 
@@ -330,9 +331,9 @@ void C_Camera::FrustumCulling()
 {
 	OPTICK_EVENT();
 
-	std::set<GameObject*,M_Renderer3D::GOComp>::iterator it;
+	std::unordered_set<GameObject*>::iterator it;
 
-	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.begin();it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.end();)
+	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.end();)
 	{
 		GameObject* go = (*it);
 	/*	if (!gameObject->GetRenderGameObject())
@@ -344,14 +345,14 @@ void C_Camera::FrustumCulling()
 
 		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
 		{
-			it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(it);
+			it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(it);
 			go->SetRenderGameObject(false);
-
 		}
 		else
 		{
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(it++,go);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(go);
 			go->SetRenderGameObject(true);
+			it++;
 		}
 	}
 }

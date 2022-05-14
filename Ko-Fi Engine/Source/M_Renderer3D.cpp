@@ -110,16 +110,20 @@ bool M_Renderer3D::PreUpdate(float dt)
 bool M_Renderer3D::Update(float dt)
 {
 	OPTICK_EVENT();
-	//for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
-	//{
-	//	if (go->active && go->GetRenderGameObject() && go->GetComponent<C_Mesh>())
-	//	{
-	//		gameObejctsToRenderDistanceOrdered.insert(go);
-	//	}
-	//	else {
-	//		gameObejctsToRenderDistanceOrdered.erase(go);
-	//	}
-	//}
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->active && go->GetRenderGameObject() && go->GetComponent<C_Mesh>())
+		{
+			if (gameObejctsToRenderDistance.contains(go)) {
+				gameObejctsToRenderDistanceOrdered.insert(go);
+			}
+		}
+		else {
+			if (!gameObejctsToRenderDistance.contains(go)) {
+				gameObejctsToRenderDistanceOrdered.erase(go);
+			}
+		}
+	}
 	//float3 cameraPosition = engine->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
 	/*std::sort(gameObejctsToRenderDistanceOrdered.begin(),
 		gameObejctsToRenderDistanceOrdered.end(), 
@@ -390,6 +394,23 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 				RenderBoundingBox(cMesh);
 			}
 
+			if (go->GetComponent<C_RigidBody>())
+				engine->GetPhysics()->RenderPhysics();
+
+		}
+	}
+	RenderAllParticles();
+#pragma omp parallel for
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->active)
+		{
+			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
+			if (cRenderedUI)
+			{
+				RenderUI(go);
+			}
+
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
 			if (cCamera) {
 				if (!engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
@@ -406,22 +427,6 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 					}
 
 				}
-			}
-			if (go->GetComponent<C_RigidBody>())
-				engine->GetPhysics()->RenderPhysics();
-
-		}
-	}
-	RenderAllParticles();
-#pragma omp parallel for
-	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
-	{
-		if (go->active)
-		{
-			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
-			if (cRenderedUI)
-			{
-				RenderUI(go);
 			}
 		}
 	}

@@ -40,7 +40,11 @@ bool C_LightSource::Start()
 		shadowCam->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
 		//make the cam look in the direction of the light rays
 		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction);
+
+		shadowCam->isSphereCullingActive = false;
+		shadowCam->isFrustumCullingActive = false;
 	}
+
 	return true;
 }
 

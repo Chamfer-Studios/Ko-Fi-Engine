@@ -108,10 +108,11 @@ private:
 	float3 reference;
 	Frustum cameraFrustum;
 
-	// Debug bools
+public:
 	bool isSphereCullingActive = false;
 	bool isFrustumCullingActive = false;
 
+private:
 	bool isMainCamera = false;
 	bool isEngineCamera = false;
 

@@ -12,6 +12,7 @@
 #include "MathGeoLib/Geometry/LineSegment.h"
 #include <vector>
 #include <set>
+#include <unordered_set>
 #define MAX_LIGHTS 8
 
 class GameObject;
@@ -181,4 +182,5 @@ public:
 	};
 public:
 	std::set<GameObject*, GOComp> gameObejctsToRenderDistanceOrdered;
+	std::unordered_set<GameObject*> gameObejctsToRenderDistance;
 };
