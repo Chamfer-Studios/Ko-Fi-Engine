@@ -700,7 +700,7 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 
 			if (!animatorClip->GetFinishedBool())
 			{
-				float currentTimeMillis = engine->GetSceneManager()->GetGameTime();
+				float currentTimeMillis = cAnimator->GetAnimTime();
 				std::vector<float4x4> transformsAnim;
 				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
 

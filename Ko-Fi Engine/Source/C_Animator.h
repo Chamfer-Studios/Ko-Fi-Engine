@@ -16,7 +16,9 @@ public:
 	~C_Animator();
 
 	bool Start();
+	bool PreUpdate();
 	bool Update(float dt);
+	bool PostUpdate();
 	bool CleanUp();
 	bool InspectorDraw(PanelChooser* chooser);
 
@@ -34,6 +36,10 @@ public:
 	bool IsCurrentClipPlaying();
 	bool IsCurrentClipLooping();
 
+	void ResetAnimation();
+
+	const float inline const GetAnimTime() const { return animTime; };
+
 public:
 	R_Animation* animation = nullptr;
 
@@ -44,6 +50,11 @@ private:
 
 	bool createClipErrorMessage = false;
 	bool deleteDefaultClipMessage = false;
+
+	// ANIMATION TIME MANAGEMENT
+	// ----------------------------------------------------------------------------------------------------
+	float animTime = 0.0f; // Total animation time
+	// ----------------------------------------------------------------------------------------------------
 };
 
 #endif // !__C_ANIMATOR_H__
