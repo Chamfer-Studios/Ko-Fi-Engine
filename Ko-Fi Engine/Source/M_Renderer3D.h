@@ -93,6 +93,7 @@ public:
 	void RenderScene(C_Camera* camera);
 	void QueryScene1(C_Camera* camera);
 	void QueryScene2(C_Camera* camera);
+	void ResetFrustumCulling();
 	void RenderBoundingBox(C_Mesh* cMesh);
 	void RenderMeshes(C_Camera* camera, GameObject* go);
 	void RenderMeshesQuery(C_Camera* camera, GameObject* go,int queryPosition);

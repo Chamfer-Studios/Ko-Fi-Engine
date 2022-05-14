@@ -440,6 +440,8 @@ void M_SceneManager::OnPlay()
 	{
 		go->OnPlay();
 	}
+
+	engine->GetRenderer()->ResetFrustumCulling();
 }
 
 void M_SceneManager::OnPause()
@@ -469,9 +471,7 @@ void M_SceneManager::OnStop()
 		go->OnStop();
 	}
 
-	engine->GetRenderer()->gameObejctsToRenderDistanceSphere.clear();
-	engine->GetRenderer()->gameObejctsToRenderDistance.clear();
-	engine->GetRenderer()->gameObejctsToRenderDistanceOrdered.clear();
+	engine->GetRenderer()->ResetFrustumCulling();
 }
 
 void M_SceneManager::OnResume()

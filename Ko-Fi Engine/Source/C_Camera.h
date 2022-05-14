@@ -98,7 +98,6 @@ public:
 	void SphereCulling();
 	void DrawSphereCulling() const;
 	void FrustumCulling();
-	void ResetFrustumCulling();
 	void DrawFrustum() const;
 	
 	bool ClipsWithBBox(const AABB& refBox) const;
@@ -109,8 +108,8 @@ private:
 	Frustum cameraFrustum;
 
 public:
-	bool isSphereCullingActive = true;
-	bool isFrustumCullingActive = true;
+	bool isSphereCullingActive = false;
+	bool isFrustumCullingActive = false;
 
 private:
 	bool isMainCamera = false;

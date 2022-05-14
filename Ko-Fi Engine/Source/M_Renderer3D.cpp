@@ -214,7 +214,12 @@ bool M_Renderer3D::InspectorDraw()
 		if (ImGui::Checkbox("Draw scene partition tree", &engine->GetSceneManager()->GetCurrentScene()->drawSceneTree)) {
 			engine->SaveConfiguration();
 		}
-		ImGui::Checkbox("Enable Occlusion Culling", &enableOcclusionCulling);
+		if (ImGui::Checkbox("Enable Occlusion Culling", &enableOcclusionCulling)) {
+			engine->GetRenderer()->gameObejctsToRenderDistanceSphere.clear();
+			engine->GetRenderer()->gameObejctsToRenderDistance.clear();
+			engine->GetRenderer()->gameObejctsToRenderDistanceOrdered.clear();
+		}
+
 		ImGui::Text("Rendering %d objects", gameObejctsToRenderDistanceOrdered.size());
 	}
 
@@ -399,7 +404,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 		}
 	};
 
-	if (enableOcclusionCulling) {
+	if (gameObejctsToRenderDistanceOrdered.size() != 0) {
 #pragma omp parallel for
 		for (GameObject* go : gameObejctsToRenderDistanceOrdered)
 		{
@@ -545,6 +550,13 @@ void M_Renderer3D::QueryScene2(C_Camera* camera)
 
 
 	}
+}
+
+void M_Renderer3D::ResetFrustumCulling()
+{
+	gameObejctsToRenderDistanceSphere.clear();
+	gameObejctsToRenderDistance.clear();
+	gameObejctsToRenderDistanceOrdered.clear();
 }
 
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
