@@ -183,4 +183,5 @@ public:
 public:
 	std::set<GameObject*, GOComp> gameObejctsToRenderDistanceOrdered;
 	std::unordered_set<GameObject*> gameObejctsToRenderDistance;
+	std::unordered_set<GameObject*> gameObejctsToRenderDistanceSphere;
 };
