@@ -111,7 +111,7 @@ public:
 	bool toggleSettingsPanel = false;
 	bool toggleCameraViewportPanel = false;
 	bool toggleResourcesPanel = false;
-	bool showCloseAppPopup = false;														// Enable/Disable the Close App popup.
+	bool toggleCloseAppPopUpPanel = false;														// Enable/Disable the Close App popup.
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
 	PanelInspector* panelGameObject = nullptr;

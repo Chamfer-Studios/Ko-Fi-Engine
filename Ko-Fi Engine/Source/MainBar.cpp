@@ -292,7 +292,7 @@ bool MainBar::Update()
 			ImGui::EndMenu();
 		}
 
-		if (editor->showCloseAppPopup)
+		if (editor->toggleCloseAppPopUpPanel)
 		{
 			CloseAppPopup();																	// Not actually inside MainMenuBar but related to FileMainMenuItem().
 		}
@@ -426,7 +426,7 @@ bool MainBar::CloseAppPopup()
 		if (ImGui::Button("CONFIRM"))
 		{
 			ImGui::CloseCurrentPopup();
-			editor->showCloseAppPopup = false;
+			editor->toggleCloseAppPopUpPanel = false;
 
 			editor->engine->GetInput()->quitGame = true;
 		}
@@ -438,7 +438,7 @@ bool MainBar::CloseAppPopup()
 		if (ImGui::Button("CANCEL"))
 		{
 			ImGui::CloseCurrentPopup();
-			editor->showCloseAppPopup = false;
+			editor->toggleCloseAppPopUpPanel = false;
 		}
 		ImGui::PopStyleColor();
 

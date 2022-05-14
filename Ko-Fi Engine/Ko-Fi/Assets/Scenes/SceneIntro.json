@@ -4,7 +4,7 @@
         "game_objects_amount": 2,
         "game_objects_list": [
             {
-                "UID": 1281247151,
+                "UID": 1819743143,
                 "active": true,
                 "components": [
                     {
@@ -48,7 +48,7 @@
                 "tag": 0
             },
             {
-                "UID": 1679654332,
+                "UID": 1539604038,
                 "active": true,
                 "components": [
                     {
