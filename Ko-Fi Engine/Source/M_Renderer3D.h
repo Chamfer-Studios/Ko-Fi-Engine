@@ -132,6 +132,8 @@ public:
 	void LightUniforms(uint shader);
 	void ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light);
 	void FillShadowMap(C_Camera* camera);
+	void InsertGameObjectToRender(GameObject* go);
+	void EraseGameObjectToRender(GameObject* go);
 	bool renderShadowMap;
 
 public:
@@ -168,7 +170,7 @@ private:
 	//Occlusion Culling things
 	OcclusionQuery* query = nullptr;
 	R_Material* occlusionMat = nullptr;
-
+public:
 	struct GOComp
 	{
 		// uses forward decl from before in arguments. since we're
@@ -177,6 +179,6 @@ private:
 		//  "base" really is yet).
 		bool operator ()(const GameObject* lhs, const GameObject* rhs) const;
 	};
-
+public:
 	std::set<GameObject*, GOComp> gameObejctsToRenderDistanceOrdered;
 };

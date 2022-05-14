@@ -110,16 +110,16 @@ bool M_Renderer3D::PreUpdate(float dt)
 bool M_Renderer3D::Update(float dt)
 {
 	OPTICK_EVENT();
-	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
-	{
-		if (go->active && go->GetRenderGameObject() && go->GetComponent<C_Mesh>())
-		{
-			gameObejctsToRenderDistanceOrdered.insert(go);
-		}
-		else {
-			gameObejctsToRenderDistanceOrdered.erase(go);
-		}
-	}
+	//for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	//{
+	//	if (go->active && go->GetRenderGameObject() && go->GetComponent<C_Mesh>())
+	//	{
+	//		gameObejctsToRenderDistanceOrdered.insert(go);
+	//	}
+	//	else {
+	//		gameObejctsToRenderDistanceOrdered.erase(go);
+	//	}
+	//}
 	//float3 cameraPosition = engine->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
 	/*std::sort(gameObejctsToRenderDistanceOrdered.begin(),
 		gameObejctsToRenderDistanceOrdered.end(), 
@@ -378,7 +378,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 
 	RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
 #pragma omp parallel for
-	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	for (GameObject* go : gameObejctsToRenderDistanceOrdered)
 	{
 		if (go->active && go->GetRenderGameObject())
 		{
@@ -1254,6 +1254,17 @@ void M_Renderer3D::FillShadowMap(C_Camera* camera)
 			//Importer::GetInstance()->materialImporter->LoadAndCreateShader(cMat->GetMaterial()->GetShaderPath(), cMat->GetMaterial());
 		}
 	}
+}
+
+void M_Renderer3D::InsertGameObjectToRender(GameObject* go)
+{
+	this->gameObejctsToRenderDistanceOrdered.insert(go);
+}
+
+void M_Renderer3D::EraseGameObjectToRender(GameObject* go)
+{
+	this->gameObejctsToRenderDistanceOrdered.erase(go);
+
 }
 
 void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light)

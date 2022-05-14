@@ -5,6 +5,7 @@
 #include "M_SceneManager.h"
 #include "M_Camera3D.h"
 #include "M_Editor.h"
+#include "M_Renderer3D.h"
 
 // GameObject
 #include "GameObject.h"
@@ -42,6 +43,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum.SetViewPlaneDistances(0.3f, 1000.0f);
 	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
+	SetIsSphereCullingActive(true);
 
 }
 
@@ -299,10 +301,14 @@ void C_Camera::SphereCulling()
 		float3 goPos = gameObject->GetTransform()->GetPosition();
 		float3 middlePoint = this->cameraFrustum.CenterPoint(); //no need to recalculate
 		float distance = middlePoint.DistanceSq(goPos); 
-		gameObject->SetRenderGameObject(true);
 		if (distance > (sCullingRadius* sCullingRadius))
 		{
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(gameObject);
 			gameObject->SetRenderGameObject(false);
+		}
+		else {
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(gameObject);
+			gameObject->SetRenderGameObject(true);
 		}
 
 	}
@@ -324,22 +330,29 @@ void C_Camera::FrustumCulling()
 {
 	OPTICK_EVENT();
 
-	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+	std::set<GameObject*,M_Renderer3D::GOComp>::iterator it;
 
-	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.begin();it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.end();)
 	{
-		GameObject* gameObject = (*go);
+		GameObject* go = (*it);
 	/*	if (!gameObject->GetRenderGameObject())
 			continue;*/
-		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
+		C_Mesh* componentMesh = go->GetComponent<C_Mesh>();
 
-		if (componentMesh == nullptr || gameObject == owner)
+		if (componentMesh == nullptr || go == owner)
 			continue;
 
 		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
-			gameObject->SetRenderGameObject(false);
+		{
+			it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(it);
+			go->SetRenderGameObject(false);
+
+		}
 		else
-			gameObject->SetRenderGameObject(true);
+		{
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(it++,go);
+			go->SetRenderGameObject(true);
+		}
 	}
 }
 
