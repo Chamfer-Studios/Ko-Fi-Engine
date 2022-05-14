@@ -44,6 +44,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
 	SetIsSphereCullingActive(true);
+	SetIsFrustumActive(true);
 
 }
 
@@ -75,35 +76,14 @@ bool C_Camera::Update(float dt)
 	//Transform Update Camera Frustum
 	//Camera Position Rotation of the camera
 
-	if (!isEngineCamera && owner->GetEngine()->GetCamera3D()->currentCamera == this)
+	if (/*!isEngineCamera && */owner->GetEngine()->GetCamera3D()->currentCamera == this)
 	{
 		// SET CAMERA FRUSTUM, OBJECT TRANSFORM
 		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
 		//Transform Update Camera Frustum
 		//Camera Position Rotation of the camera
 
-		//Apply rotation
-		if (isSphereCullingActive)
-			SphereCulling();
-		else {
-			std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
-
-			for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
-			{
-				GameObject* gameObject = (*go);
-				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
-			}
-		}
-		if (isFrustumCullingActive)
-			FrustumCulling();
-		else {
-			std::unordered_set<GameObject*>::iterator it;
-
-			for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
-			{
-				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(*it);
-			}
-		}
+		ApplyCullings(isSphereCullingActive, isFrustumCullingActive);
 
 
 		// Camera Frustum Updates Transform
@@ -413,6 +393,32 @@ void C_Camera::DrawFrustum() const
 
 }
 
+void C_Camera::ApplyCullings(bool applySphereCulling, bool applyFrustumCulling)
+{
+	//Apply rotation
+	if (applySphereCulling)
+		SphereCulling();
+	else {
+		std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+		for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+		{
+			GameObject* gameObject = (*go);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
+		}
+	}
+	if (applyFrustumCulling)
+		FrustumCulling();
+	else {
+		std::unordered_set<GameObject*>::iterator it;
+
+		for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
+		{
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(*it);
+		}
+	}
+}
+
 bool C_Camera::ClipsWithBBox(const AABB& refBox) const
 {
 	float3 vertexCorner[8];
@@ -431,5 +437,10 @@ bool C_Camera::ClipsWithBBox(const AABB& refBox) const
 
 		if (cornersOutside == 0) return false;
 	}
+}
+
+void C_Camera::SetSCullingRadius(float radius)
+{
+	this->sCullingRadius = radius;
 }
 

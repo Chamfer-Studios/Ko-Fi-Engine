@@ -60,7 +60,7 @@ bool PanelConfiguration::Update()
 		strcpy_s(organization, 120, engineConfig->organization.c_str());
 		ImGui::InputText("Organization", organization, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
-		if (ImGui::SliderInt("Max FPS", &engineConfig->maxFps, 0, 120))
+		if (ImGui::SliderInt("Max FPS", &engineConfig->maxFps, 0, 200))
 			engineConfig->cappedMs = 1000 / engineConfig->maxFps;
 
 		char title[25];

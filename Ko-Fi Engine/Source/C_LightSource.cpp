@@ -41,8 +41,8 @@ bool C_LightSource::Start()
 		//make the cam look in the direction of the light rays
 		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction);
 
-		shadowCam->isSphereCullingActive = false;
-		shadowCam->isFrustumCullingActive = false;
+		shadowCam->SetIsSphereCullingActive(false);
+		shadowCam->SetIsFrustumActive(false);
 	}
 
 	return true;

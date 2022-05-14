@@ -93,25 +93,25 @@ public:
 	void LookAt2(float3 front, float3 up);
 
 	void SetProjectionType(const CameraType &type);
-
+private:
 	// Frustum Culling
 	void SphereCulling();
-	void DrawSphereCulling() const;
 	void FrustumCulling();
+public:
+	void DrawSphereCulling() const;
 	void DrawFrustum() const;
-	
+	void ApplyCullings(bool applySphereCulling, bool applyFrustumCulling);
 	bool ClipsWithBBox(const AABB& refBox) const;
-
+	void SetSCullingRadius(float radius);
 private:
 	// Properties
 	float3 reference;
 	Frustum cameraFrustum;
 
-public:
+private:
 	bool isSphereCullingActive = false;
 	bool isFrustumCullingActive = false;
 
-private:
 	bool isMainCamera = false;
 	bool isEngineCamera = false;
 

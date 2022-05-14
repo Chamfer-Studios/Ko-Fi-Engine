@@ -46,8 +46,10 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
 	engineCamera->SetViewPlaneDistances(.3f,20000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
-	engineCamera->SetIsFrustumActive(false);
+	engineCamera->SetIsSphereCullingActive(true);
+	engineCamera->SetIsFrustumActive(true);
 	currentCamera = engineCamera;
+	engineCamera->SetSCullingRadius(20000.0f / 2);
 }
 
 M_Camera3D::~M_Camera3D()
@@ -98,7 +100,7 @@ bool M_Camera3D::Update(float dt)
 		isMoving = false;
 		cameraSpeed = baseCameraSpeed;
 	}
-
+	engineCamera->ApplyCullings(engineCamera->GetIsSphereCullingActive(), engineCamera->GetIsFrustumActive());
 	return true;
 }
 
