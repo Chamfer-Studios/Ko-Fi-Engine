@@ -6,6 +6,7 @@
 #include "M_FileSystem.h"
 #include "M_SceneManager.h"
 #include "M_ResourceManager.h"
+#include "M_Input.h"
 
 // GameObject
 #include "GameObject.h"
@@ -291,6 +292,11 @@ bool MainBar::Update()
 			ImGui::EndMenu();
 		}
 
+		if (editor->showCloseAppPopup)
+		{
+			CloseAppPopup();																	// Not actually inside MainMenuBar but related to FileMainMenuItem().
+		}
+
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("About"))
@@ -406,4 +412,38 @@ void MainBar::CreatePrimitive(Shape shape)
 	R_Material *material = new R_Material();
 	Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetAssetPath(), material);
 	mat->SetMaterial(material);
+}
+
+bool MainBar::CloseAppPopup()
+{
+	bool ret = true;
+
+	ImGui::OpenPopup("Close Application?");
+
+	if (ImGui::BeginPopupModal("Close Application?"))
+	{
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 1.0f, 0.0f, 0.25f));
+		if (ImGui::Button("CONFIRM"))
+		{
+			ImGui::CloseCurrentPopup();
+			editor->showCloseAppPopup = false;
+
+			editor->engine->GetInput()->quitGame = true;
+		}
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine();
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.0f, 0.0f, 0.25f));
+		if (ImGui::Button("CANCEL"))
+		{
+			ImGui::CloseCurrentPopup();
+			editor->showCloseAppPopup = false;
+		}
+		ImGui::PopStyleColor();
+
+		ImGui::EndPopup();
+	}
+
+	return ret;
 }

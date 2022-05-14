@@ -255,7 +255,7 @@ bool M_Input::PreUpdate(float dt)
 	}
 	ImGui_ImplSDL2_ProcessEvent(&event);
 
-	if ((quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP || quitGame == true) && (engine->GetSceneManager()->GetGameState() == GameState::STOPPED))
+	if ((quit == true || quitGame == true) && (engine->GetSceneManager()->GetGameState() == GameState::STOPPED))
 		return false;
 	if ((quit == true || quitGame == true) && (engine->GetSceneManager()->GetGameState() == GameState::PLAYING))
 		return false;
