@@ -288,7 +288,7 @@ ParticleBillboarding::ParticleBillboarding(BillboardingType typeB)
 
 void ParticleBillboarding::Spawn(EmitterInstance* emitter, Particle* particle)
 {
-	particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
+	particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetTransform()->GetPosition(), emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
 }
 
 bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
@@ -302,15 +302,15 @@ bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
 		unsigned int particleIndex = emitter->particleIndices[i];
 		Particle* particle = &emitter->particles[particleIndex];
 
-		particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
+		particle->rotation = GetAlignmentRotation(particle->position, emitter->component->owner->GetTransform()->GetPosition(), emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
 	}
-
 }
 
-Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, const float4x4& cameraTransform)
+Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, const float3& ownerPosition, const float4x4& cameraTransform)
 {
 	float3 N, U, _U, R;
 	float3 direction = float3(cameraTransform.TranslatePart() - position).Normalized(); //normalized vector between the camera and gameobject position
+	float3 ownerDirection = float3(cameraTransform.TranslatePart() - ownerPosition).Normalized();
 
 	switch (billboardingType)
 	{
@@ -350,6 +350,16 @@ Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, const fl
 		U = N.Cross(R).Normalized();
 	}
 	break;
+	case(BillboardingType::XZ_AXIS_LOCKED):
+	{
+		//N = ownerDirection;										// N is the direction
+		//_U = float3::unitY;									// _U is the up vector form the camera, only used to calculate R
+		//R = _U.Cross(N).Normalized();						// R is the cross product between U and N
+		//U = N.Cross(R).Normalized();						// U is the cross product between N and R
+		N = float3::unitY;	// N is the inverse of the camera +Z
+		U = float3::unitZ.Neg();			// U is the up vector from the camera (already perpendicular to N)
+		R = float3::unitX;
+	}
 	}
 	float3x3 result = float3x3(R, U, N);
 
@@ -364,6 +374,7 @@ const char* ParticleBillboarding::BillboardTypeToString(ParticleBillboarding::Bi
 		{ParticleBillboarding::BillboardingType::X_AXIS_ALIGNED, "X Axis Aligned"},
 		{ParticleBillboarding::BillboardingType::Y_AXIS_ALIGNED, "Y Axis Aligned"},
 		{ParticleBillboarding::BillboardingType::Z_AXIS_ALIGNED, "Z Axis Aligned"},
+		{ParticleBillboarding::BillboardingType::XZ_AXIS_LOCKED, "xy Axis locked"},
 	};
 	auto   it = moduleTypeStrings.find(e);
 	return it == moduleTypeStrings.end() ? "Out of range" : it->second;
