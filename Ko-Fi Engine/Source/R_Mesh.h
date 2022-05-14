@@ -104,6 +104,7 @@ public:
 	inline const R_Animation* GetAnimation() const { return animation; }
 	void inline SetAnimation(R_Animation* animation) { this->animation = animation; }
 	const Channel* FindNodeAnim(std::string nodeName);
+	inline const std::vector<float4x4> GetLastBoneTransforms() const { return transformsAnim; }
 
 	uint FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim);
 	void CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);

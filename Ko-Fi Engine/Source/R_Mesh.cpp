@@ -485,7 +485,10 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	if ((selectedClip->GetDurationInSeconds() - animationSeconds) <= 0.1f && timeInSeconds != 0.0f)
 	{
 		if (!selectedClip->GetLoopBool())
+		{
 			selectedClip->SetFinishedBool(true);
+			return;
+		}
 	}
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
