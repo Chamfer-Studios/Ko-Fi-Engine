@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Importer.h"
 #include "M_ResourceManager.h"
+#include "M_SceneManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -345,4 +346,5 @@ void C_Animator::SetSelectedClip(std::string name)
 			break;
 		}
 	}
+	owner->GetEngine()->GetSceneManager()->ResetTimer();
 }
