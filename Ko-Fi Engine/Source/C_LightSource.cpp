@@ -291,16 +291,23 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 				currentLight->ambient = ambientValue;
 			}
 			float diffuseValue = currentLight->diffuse;
-			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("Diffuse Light Value", &diffuseValue, 0.1f, 0.0f, 9999.0f, "%.1f"))
 			{
 				currentLight->diffuse = diffuseValue;
 			}
 
 			float cutOffValue = (acos(currentLight->cutOffAngle)) * RADTODEG;
-			if (ImGui::DragFloat("Light Cone Angle", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("Light Cone Angle", &cutOffValue, 0.1f, 0.0f, 179.0f, "%.1f"))
 			{
-				currentLight->cutOffAngle = (cutOffValue);
+				currentLight->cutOffAngle = cos(cutOffValue * DEGTORAD);
 			}
+
+			float range = currentLight->range;
+			if (ImGui::DragFloat("Light Cone Range", &range, 0.1f))
+			{
+				currentLight->range = range;
+			}
+
 			float direction[3] = { currentLight->lightDirection.x, currentLight->lightDirection.y, currentLight->lightDirection.z };
 			if (ImGui::DragFloat3("Light Cone Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))
 			{
@@ -393,6 +400,39 @@ LightSource* C_LightSource::ChangeSourceType(SourceType type)
 	return lightSource;
 }
 
+void C_LightSource::SetDirection(float3 direction)
+{
+	try {
+		FocalLight* f = (FocalLight*)lightSource;
+		f->lightDirection = direction;
+	}
+	catch (...) {
+
+	}
+}
+
+void C_LightSource::SetRange(float range)
+{
+	try {
+		FocalLight* f = (FocalLight*)lightSource;
+		f->range = range;
+	}
+	catch (...) {
+
+	}
+}
+
+void C_LightSource::SetAngle(float angle)
+{
+	try {
+		FocalLight* f = (FocalLight*)lightSource;
+		f->cutOffAngle = cos(angle * DEGTORAD);;
+	}
+	catch (...) {
+
+	}
+}
+
 LightSource::LightSource()
 {
 	position = float3::zero;
@@ -419,6 +459,7 @@ PointLight::PointLight() : LightSource()
 FocalLight::FocalLight() : LightSource()
 {
 	cutOffAngle = 0.965f; //cosinus of 15º
+	range = 200.0f;
 	lightDirection = float3(0.0f, 1.0f, 0.0f);
 	ambient = 0.0f;
 	constant = 1.00f;

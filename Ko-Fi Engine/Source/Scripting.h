@@ -33,6 +33,7 @@
 #include "C_Script.h"
 #include "C_RigidBody.h"
 #include "C_BoxCollider.h"
+#include "C_LightSource.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -182,6 +183,7 @@ public:
 									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
+									 "GetLight", &GameObject::GetComponent<C_LightSource>,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
 									 "GetBoxCollider", &GameObject::GetComponent<C_BoxCollider>,
@@ -313,6 +315,12 @@ public:
 											"UpdateFilter", &C_BoxCollider::UpdateFilter,
 											"UpdateIsTrigger", &C_BoxCollider::UpdateIsTrigger);
 
+		lua.new_usertype<C_LightSource>("C_LightSource",
+			sol::constructors<void(GameObject*)>(),
+			"SetDirection", &C_LightSource::SetDirection,
+			"SetAngle", &C_LightSource::SetAngle,
+			"SetRange", &C_LightSource::SetRange);
+
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
 									 "FindPath", &M_Navigation::FindPath);
@@ -351,6 +359,7 @@ public:
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
+		lua.set_function("DrawCone", &Scripting::DrawCone, this);
 
 	}
 
