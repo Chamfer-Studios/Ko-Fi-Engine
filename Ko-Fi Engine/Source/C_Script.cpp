@@ -69,7 +69,7 @@ bool C_Script::Update(float dt)
 					GameObject* go = std::get<GameObject*>(v->value);
 				}
 				catch (...) {
-					//v->value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
+					v->value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
 				}
 			}
 		}
@@ -266,21 +266,17 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				{
 				case INSPECTOR_INT:
 				{
-					std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> v = std::get<float>((*variable)->value);
-					if (ImGui::DragFloat(label, &std::get<float>(v), 1.0f, -2100.0f, 2100.0f, "%.0f")) // THIS CRASHES ON THE RELEASE
+					if (ImGui::DragInt((*variable)->name.c_str(), &std::get<int>((*variable)->value)))
 					{
-						s->handler->lua[(*variable)->name.c_str()] = std::get<float>(v);
-						std::get<float>((*variable)->value) = std::get<float>(v);
+						s->handler->lua[(*variable)->name.c_str()] = std::get<int>((*variable)->value);
 					}
 					break;
 				}
 				case INSPECTOR_FLOAT:
 				{
-					std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> v = std::get<float>((*variable)->value);
-					if (ImGui::DragFloat(label, &std::get<float>(v), 0.1f, 0.1f, 2100.0f, "%.2f")) // THIS CRASHES ON THE RELEASE
+					if (ImGui::DragFloat(label, &std::get<float>((*variable)->value))) // THIS CRASHES ON THE RELEASE
 					{
-						s->handler->lua[(*variable)->name.c_str()] = std::get<float>(v);
-						std::get<float>((*variable)->value) = std::get<float>(v);
+						s->handler->lua[(*variable)->name.c_str()] = std::get<float>((*variable)->value);
 					}
 					break;
 				}
@@ -421,13 +417,13 @@ void C_Script::Save(Json &json) const
 	{
 		switch (variable->type)
 		{
-		break;
 		case INSPECTOR_INT:
 		{
 			jsonIV["name"] = variable->name;
 			jsonIV["type"] = "int";
-			jsonIV["value"] = std::get<float>(variable->value);
+			jsonIV["value"] = std::get<int>(variable->value);
 		}
+		break;
 		case INSPECTOR_FLOAT:
 		{
 			jsonIV["name"] = variable->name;
@@ -543,16 +539,16 @@ void C_Script::LoadInspectorVariables(Json &json)
 
 		std::string type_s = var.value().at("type").get<std::string>();
 		INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
-		std::variant<float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
+		std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
 
-		if (type_s == "float")
-		{
-			type = INSPECTOR_FLOAT;
-			value = (float)var.value().at("value");
-		}
-		else if (type_s == "int")
+		if (type_s == "int")
 		{
 			type = INSPECTOR_INT;
+			value = (int)var.value().at("value");
+		}
+		else if (type_s == "float")
+		{
+			type = INSPECTOR_FLOAT;
 			value = (float)var.value().at("value");
 		}
 		else if (type_s == "float2")
@@ -597,7 +593,7 @@ void C_Script::LoadInspectorVariables(Json &json)
 		else if (type_s == "gameObject")
 		{
 			type = INSPECTOR_GAMEOBJECT;
-			float uid = (float)var.value().at("value");
+			uint uid = (uint)var.value().at("value");
 			value = uid;
 		}
 
