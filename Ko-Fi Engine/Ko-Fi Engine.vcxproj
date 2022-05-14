@@ -579,10 +579,8 @@
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Decoy.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Zhib.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Dialogues\Dialogues.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueTrigger.lua" />
     <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer.lua" />
@@ -615,7 +613,6 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Skill.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_SkillSet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />

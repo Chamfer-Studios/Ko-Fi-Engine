@@ -1,8 +1,4 @@
 id = 1
-local idIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-idIV = InspectorVariable.new("id", idIVT, id)
-NewVariable(idIV)
-
 local src = " "
 local char = " "
 local line1 = " "
@@ -12,29 +8,61 @@ local targetID = -1
 local path = "Assets/Dialogues/dialogues.json"
 local prefabPath= "Dialogue"
 
-local initialize = false
+openDialogue = false
 
+------------ Dialogue Manager ------------
 function Start()
 	LoadJsonFile(path)
-	InstantiatePrefab(prefabPath) -- Create Dialogue Prefab
 end
 
 function Update(dt)
+	-- TODO: SET THE ID FROM EVENT AND SET OPENDIALOGUE TO TRUE
+	--DispatchEvent(pathfinderUpdateKey, { patrolWaypoints, pingpong, componentTransform:GetPosition() })
 
-	-- This is done this way because prefab is not loaded on Start
-	if(Find("DialogueAvatar") ~= nil and initialize == false) then
-		SetDialogueValues()
-		initialize = true
+	if(openDialogue == true) then
+		if(Find("DialogueSkipButton")) then
+			OpenDialogue()
+		end
 	end
 
 	CheckIfSkipped()
 
+end
 
+function EventHandler(key, fields)
+    if (key == "DialogueTriggered") then -- fields[1] -> go;
+		id = fields[1]
+		InstantiatePrefab(prefabPath) -- Create Dialogue Prefab
+		openDialogue = true
+    end
+end
+------------ END Dialogue Manager ------------
+
+
+------------ Dialogue ------------
+
+function OpenDialogue()
+	--print("open dialogue")
+	SetDialogueValues()
+	openDialogue = false
+	
+end
+
+function CloseDialogue()
+	
+	DeleteGameObjectByUID(Find("Dialogue1"):GetUID())
+	src = ""
+	char = ""
+	line1 = ""
+	line2 = ""
+	targetID = -1
+	id = -1
+	
 end
 
 function SetDialogueValues()
-
    -- Get Dialogue Values From JSON
+  -- print("setting Values")
 	src = GetDialogueString("src", id)
 	char = GetDialogueString("char",id)
 	line1 = GetDialogueString("line1", id)
@@ -57,14 +85,15 @@ function CheckIfSkipped()
 		skipButton = Find("DialogueSkipButton"):GetButton():IsPressed()
 		if (skipButton == true) then
 
-			if(targetID ~= -1) then
+			if(targetID ~= -1) then -- Next Dialogue
 				id = targetID
 				SetDialogueValues()	
 			else
-			DeleteGameObjectByUID(Find("Dialogue1"):GetUID())
+				CloseDialogue() -- Close Dialogue
 			end
 		end
 	end
 end
 
-print("Dialogue Script Load Success")
+------------ END Dialogue ------------
+--print("Dialogue Script Load Success")

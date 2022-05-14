@@ -122,9 +122,6 @@
     <Filter Include="Source\Importers">
       <UniqueIdentifier>{ee1284b8-c1db-419a-81c1-6673056d8283}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\Dialogue">
-      <UniqueIdentifier>{d8aab11d-2215-4e32-83a2-dcd4ccc3d9ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\Enemies">
       <UniqueIdentifier>{eaea32bb-f20e-4cce-a1a5-b570cd06a4a1}</UniqueIdentifier>
     </Filter>
@@ -1420,18 +1417,6 @@
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua">
-      <Filter>Scripts\Dialogue</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua">
-      <Filter>Scripts\Dialogue</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua">
-      <Filter>Scripts\Dialogue</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
       <Filter>Scripts\Enemies</Filter>
     </None>
@@ -1595,6 +1580,9 @@
       <Filter>Scripts\Characters\Raban</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\Dialogues\Dialogues.lua">
+      <Filter>Scripts\Dialogues</Filter>
+    </None>
+    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueTrigger.lua">
       <Filter>Scripts\Dialogues</Filter>
     </None>
   </ItemGroup>

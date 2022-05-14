@@ -138,7 +138,8 @@ public:
 					 "PLAYER", Tag::TAG_PLAYER,
 					 "ENEMY", Tag::TAG_ENEMY,
 					 "WALL", Tag::TAG_WALL,
-					 "PROJECTILE", Tag::TAG_PROJECTILE);
+					"PROJECTILE", Tag::TAG_PROJECTILE,
+					"DIALOGUE", Tag::TAG_DIALOGUE);
 
 		/// Classes:
 		// float3 structure
@@ -356,8 +357,6 @@ public:
 		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
-
-
 
 	}
 
