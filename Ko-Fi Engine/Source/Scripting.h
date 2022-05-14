@@ -372,18 +372,18 @@ public:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
 			}
-			case 5:
+			/*case 5:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H);
-			}
+			}*/
 			case 6:
 			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_K);
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Z);
 			}
-			case 7:
+			/*case 7:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_G);
-			}
+			}*/
 			case 8:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X);
@@ -396,13 +396,13 @@ public:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_R);
 			}
-			case 11:
+			/*case 11:
 			{
 				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_B);
-			}
+			}*/
 			case 12:
 			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
+				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_LSHIFT);
 			}
 			case 13:
 			{

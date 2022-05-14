@@ -110,6 +110,7 @@ bool M_Physics::SaveConfiguration(Json& configModule) const
 {
 	configModule["Gravity"] = { world->getGravity().x, world->getGravity().y,world->getGravity().z };
 	configModule["Filters"] = filters;
+	configModule["debugPhysics"] = debugPhysics;
 	//Save filter matrix
 	configModule["Filter_Matrix"];
 	for (int i = 0; i < filters.size(); ++i)
@@ -131,6 +132,10 @@ bool M_Physics::LoadConfiguration(Json& configModule)
 	if (configModule.contains("Filters"))
 	{
 		filters = configModule.at("Filters").get<std::map<unsigned int, std::string>>();
+	}
+	if (configModule.contains("debugPhysics"))
+	{
+		debugPhysics = configModule.at("debugPhysics");
 	}
 	if (configModule.contains("Filter_Matrix"))
 	{
