@@ -314,6 +314,11 @@ public:
 											"UpdateFilter", &C_BoxCollider::UpdateFilter,
 											"UpdateIsTrigger", &C_BoxCollider::UpdateIsTrigger);
 
+		lua.new_usertype<C_LightSource>("C_LightSource",
+			sol::constructors<void(GameObject*)>(),
+			"SetDirection", &C_LightSource::SetDirection,
+			"SetRange", &C_LightSource::SetRange);
+
 		lua.new_usertype<M_Navigation>("M_Navigation",
 									 sol::constructors<void(KoFiEngine *)>(),
 									 "FindPath", &M_Navigation::FindPath);

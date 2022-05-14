@@ -102,6 +102,7 @@ struct FocalLight {
     vec3 position;
     vec3 direction;
     float cutOffAngle; //cosine of the actual angle
+    float range; //range of the light
     
     float ambient;
     float diffuse;
@@ -163,12 +164,13 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
 {
     //calculate vector between position of light source and fragment
     vec3 lightDir = normalize(light.position - fragPos);
+    float distance = length(light.position - fragPos);
 
     //cosinus of the angle between the previous vector and 
         //the direction of the focal light cone
     float theta = dot(lightDir, normalize(light.direction));
 
-    if (theta > light.cutOffAngle)
+    if (theta > light.cutOffAngle && distance < light.range)
     {
         // -- diffuse shading -- 
         float diff = max(dot(normal, lightDir), 0.0);
@@ -179,12 +181,15 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
 
         // -- attenuation -- 
         float distance    = length(light.position - fragPos);
-        float attenuation = 1.0 / (light.constant + light.linear * distance + 
-  			     light.quadratic * (distance * distance));    
+        float denom = (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
+        float attenuation = 1.0 / denom;
+        if (denom == 0.0) {
+            attenuation = 1.0;
+        }
 
         // -- combine results --
         vec3 ambient  = light.ambient  * light.color;
-        vec3 diffuse  = light.diffuse  * diff * light.color;
+        vec3 diffuse  = light.diffuse  * 1.0 * light.color;
         //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
         diffuse  *= attenuation;
         //specular *= attenuation;
