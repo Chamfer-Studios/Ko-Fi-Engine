@@ -297,9 +297,9 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			}
 
 			float cutOffValue = (acos(currentLight->cutOffAngle)) * RADTODEG;
-			if (ImGui::DragFloat("Light Cone Angle", &diffuseValue, 0.1f, 0.0f, 1.0f, "%.1f"))
+			if (ImGui::DragFloat("Light Cone Angle", &cutOffValue, 0.1f, 0.0f, 179.0f, "%.1f"))
 			{
-				currentLight->cutOffAngle = (cutOffValue);
+				currentLight->cutOffAngle = cos(cutOffValue * DEGTORAD);
 			}
 			float direction[3] = { currentLight->lightDirection.x, currentLight->lightDirection.y, currentLight->lightDirection.z };
 			if (ImGui::DragFloat3("Light Cone Direction", direction, 0.1f, -10000.0f, 10000.0f, "%.1f"))

@@ -367,6 +367,8 @@ end
 oldSourcePos = nil
 
 function Update(dt)
+    DrawCone(componentTransform:GetPosition(), componentTransform:GetFront(), componentTransform:GetUp(), visionConeAngle, visionConeRadius)
+
     if awareness_green == nil then
         ConfigAwarenessBars()
     else

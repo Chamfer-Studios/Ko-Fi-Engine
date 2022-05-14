@@ -33,6 +33,7 @@
 #include "C_Script.h"
 #include "C_RigidBody.h"
 #include "C_BoxCollider.h"
+#include "C_LightSource.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -351,6 +352,7 @@ public:
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
+		lua.set_function("DrawCone", &Scripting::DrawCone, this);
 
 	}
 
