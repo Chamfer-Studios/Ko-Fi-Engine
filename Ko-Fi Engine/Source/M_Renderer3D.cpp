@@ -714,6 +714,13 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
 				glUniform1i(isAnimated, mesh->IsAnimated());
 			}
+			else
+			{
+				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+				glUniformMatrix4fv(finalBonesMatrices, mesh->GetLastBoneTransforms().size(), GL_FALSE, mesh->GetLastBoneTransforms().begin()->ptr());
+				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+				glUniform1i(isAnimated, mesh->IsAnimated());
+			}
 		}
 	}
 }

@@ -105,7 +105,7 @@ bool SceneIntro::PreUpdate(float dt)
 	{
 		std::string path = "Assets/Prefabs/" + (*mapIt).second + "_prefab.json";
 		if (!std::filesystem::exists(path))
-			return true;
+			continue;
 		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 		go->LoadPrefabJson(path.c_str(), false);
 		go->SetName(((*mapIt).first).c_str(), (*mapIt).first == (*mapIt).second);

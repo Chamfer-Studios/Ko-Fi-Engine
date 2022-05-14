@@ -96,6 +96,8 @@ public:
 	void OnTick();
 	void OnClick(SDL_Event event);
 
+	void ResetTimer();
+
 	// Guizmo
 	ImGuizmo::OPERATION GetGizmoOperation() { return currentGizmoOperation; }
 	void SetGizmoOperation(ImGuizmo::OPERATION operation) { currentGizmoOperation = operation; }
