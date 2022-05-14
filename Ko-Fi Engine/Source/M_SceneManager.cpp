@@ -468,6 +468,10 @@ void M_SceneManager::OnStop()
 	{
 		go->OnStop();
 	}
+
+	engine->GetRenderer()->gameObejctsToRenderDistanceSphere.clear();
+	engine->GetRenderer()->gameObejctsToRenderDistance.clear();
+	engine->GetRenderer()->gameObejctsToRenderDistanceOrdered.clear();
 }
 
 void M_SceneManager::OnResume()

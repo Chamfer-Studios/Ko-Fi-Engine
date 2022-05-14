@@ -109,8 +109,8 @@ private:
 	Frustum cameraFrustum;
 
 public:
-	bool isSphereCullingActive = false;
-	bool isFrustumCullingActive = false;
+	bool isSphereCullingActive = true;
+	bool isFrustumCullingActive = true;
 
 private:
 	bool isMainCamera = false;

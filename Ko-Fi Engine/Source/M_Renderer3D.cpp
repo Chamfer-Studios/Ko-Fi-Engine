@@ -155,7 +155,7 @@ bool M_Renderer3D::PostUpdate(float dt)
 
 	if (enableOcclusionCulling)
 	{
-		QueryScene2(engine->GetCamera3D()->gameCamera);
+		QueryScene2(engine->GetCamera3D()->currentCamera);
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	RenderScene(engine->GetCamera3D()->currentCamera);
@@ -381,9 +381,8 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 	OPTICK_EVENT();
 
 	RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
-#pragma omp parallel for
-	for (GameObject* go : gameObejctsToRenderDistanceOrdered)
-	{
+
+	auto renderGo = [this, camera](GameObject* go) {
 		if (go->active && go->GetRenderGameObject())
 		{
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
@@ -397,6 +396,21 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			if (go->GetComponent<C_RigidBody>())
 				engine->GetPhysics()->RenderPhysics();
 
+		}
+	};
+
+	if (enableOcclusionCulling) {
+#pragma omp parallel for
+		for (GameObject* go : gameObejctsToRenderDistanceOrdered)
+		{
+			renderGo(go);
+		}
+	}
+	else {
+#pragma omp parallel for
+		for (GameObject* go : gameObejctsToRenderDistance)
+		{
+			renderGo(go);
 		}
 	}
 	RenderAllParticles();

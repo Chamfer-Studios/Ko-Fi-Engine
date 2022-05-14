@@ -85,8 +85,25 @@ bool C_Camera::Update(float dt)
 		//Apply rotation
 		if (isSphereCullingActive)
 			SphereCulling();
+		else {
+			std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+			for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+			{
+				GameObject* gameObject = (*go);
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
+			}
+		}
 		if (isFrustumCullingActive)
 			FrustumCulling();
+		else {
+			std::unordered_set<GameObject*>::iterator it;
+
+			for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
+			{
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(*it);
+			}
+		}
 
 
 		// Camera Frustum Updates Transform
