@@ -93,6 +93,7 @@ public:
 	void SetColor(float3 color) { this->lightSource->color = color; }
 	void SetDirection(float3 direction);
 	void SetRange(float range);
+	void SetAngle(float angle);
 	void SetPosition(float3 position) { this->lightSource->position = position; }
 	//set Ambient, Diffuse and Specular parameters from 0 to 1 in a float3
 	void SetADS(float3 ADS) { lightSource->ambient = ADS.x, lightSource->diffuse = ADS.y, lightSource->specular = ADS.z; }

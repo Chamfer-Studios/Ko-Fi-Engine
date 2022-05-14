@@ -183,6 +183,7 @@ public:
 									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
+									 "GetLight", &GameObject::GetComponent<C_LightSource>,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
 									 "GetBoxCollider", &GameObject::GetComponent<C_BoxCollider>,
@@ -317,6 +318,7 @@ public:
 		lua.new_usertype<C_LightSource>("C_LightSource",
 			sol::constructors<void(GameObject*)>(),
 			"SetDirection", &C_LightSource::SetDirection,
+			"SetAngle", &C_LightSource::SetAngle,
 			"SetRange", &C_LightSource::SetRange);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",

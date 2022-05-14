@@ -422,6 +422,17 @@ void C_LightSource::SetRange(float range)
 	}
 }
 
+void C_LightSource::SetAngle(float angle)
+{
+	try {
+		FocalLight* f = (FocalLight*)lightSource;
+		f->cutOffAngle = cos(angle * DEGTORAD);;
+	}
+	catch (...) {
+
+	}
+}
+
 LightSource::LightSource()
 {
 	position = float3::zero;
