@@ -85,7 +85,7 @@ bool M_Renderer3D::Awake(Json configModule)
 	query = new OcclusionQuery();
 	enableOcclusionCulling = false;
 	occlusionMat = new R_Material();
-	occlusionMat->SetShaderPath("EngineConfig/Shaders/BasicShader.glsl");
+	occlusionMat->SetAssetPath("EngineConfig/Shaders/BasicShader.glsl");
 	Importer::GetInstance()->materialImporter->LoadAndCreateShader("EngineConfig/Shaders/BasicShader.glsl", occlusionMat);
 
 	ret = LoadConfiguration(configModule);

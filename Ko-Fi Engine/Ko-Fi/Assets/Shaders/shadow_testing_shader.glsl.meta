@@ -2,9 +2,9 @@
     "asset_file": "shadow_testing_shader.glsl",
     "asset_path": "Assets/Shaders/shadow_testing_shader.glsl",
     "contained_resources": null,
+    "hash": "fc9a85216bc919cc2cee7f28de49cd7e",
     "library_file": "2130826539.glsl",
     "library_path": "Library/Shaders/2130826539.glsl",
-    "mod_time": 411756548,
     "type": 4,
     "uid": 2130826539
 }

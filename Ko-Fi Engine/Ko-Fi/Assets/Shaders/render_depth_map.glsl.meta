@@ -2,9 +2,9 @@
     "asset_file": "render_depth_map.glsl",
     "asset_path": "Assets/Shaders/render_depth_map.glsl",
     "contained_resources": null,
+    "hash": "5fd3ef5d7c6a5ac2531c6faf71982ee0",
     "library_file": "1152289251.glsl",
     "library_path": "Library/Shaders/1152289251.glsl",
-    "mod_time": 411756549,
     "type": 4,
     "uid": 1152289251
 }

@@ -534,9 +534,9 @@ void C_LightSource::CastShadows()
 	//make the material to have the depth shader. This will allow accessing it from the renderer.
 	std::string shaderPath = ASSETS_SHADERS_DIR;
 	shaderPath = shaderPath + "simple_depth_shader" + SHADER_EXTENSION;
-	rMat->SetShaderPath(shaderPath.c_str());
+	rMat->SetAssetPath(shaderPath.c_str());
 	
-	Importer::GetInstance()->materialImporter->LoadAndCreateShader(rMat->GetShaderPath(), rMat);
+	Importer::GetInstance()->materialImporter->LoadAndCreateShader(rMat->GetAssetPath(), rMat);
 	cMat->SetMaterial(rMat);
 
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->SetShadowCaster(owner);

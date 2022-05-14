@@ -76,7 +76,7 @@ bool C_Camera::Update(float dt)
 	//Transform Update Camera Frustum
 	//Camera Position Rotation of the camera
 
-	if (/*!isEngineCamera && */owner->GetEngine()->GetCamera3D()->currentCamera == this)
+	if (!isEngineCamera && owner->GetEngine()->GetCamera3D()->currentCamera == this)
 	{
 		// SET CAMERA FRUSTUM, OBJECT TRANSFORM
 		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
