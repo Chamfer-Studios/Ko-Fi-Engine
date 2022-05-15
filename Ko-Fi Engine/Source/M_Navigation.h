@@ -59,6 +59,7 @@ public:
 	void ComputeNavmesh();
 	void PrepareDetour();
 	void CollectWalkableObjects(GameObject* go, std::vector<GameObject*>& res, bool force);
+	bool DrawNavmesh();
 
 	std::tuple<std::vector<float3>> FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength);
 

@@ -1,5 +1,4 @@
-#ifndef __C_CAMERA_H__
-#define __C_CAMERA_H__
+#pragma once
 
 #include "Component.h"
 
@@ -27,7 +26,9 @@ public:
 
 	// Game Loop
 	bool Start() override;
+	bool PreUpdate() override;
 	bool Update(float dt) override;
+	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
 	bool InspectorDraw(PanelChooser* chooser); // (OnGui)
 
@@ -62,6 +63,7 @@ public:
 	inline float GetNearPlaneDistance() const { return cameraFrustum.NearPlaneDistance(); }
 	inline float GetFarPlaneDistance() const { return cameraFrustum.FarPlaneDistance(); }
 	inline bool GetIsFrustumActive() const { return isFrustumCullingActive; }
+	inline bool GetIsSphereCullingActive() const { return isSphereCullingActive; }
 
 	float4x4 GetViewMatrix() const;
 	float4x4 GetWorldMatrix() const;
@@ -85,25 +87,29 @@ public:
 	inline void SetViewPlaneDistances(float nearPlaneDistance,float farPlaneDistance) { this->cameraFrustum.SetViewPlaneDistances(nearPlaneDistance,farPlaneDistance);}
 
 	inline void SetIsFrustumActive(bool value) { isFrustumCullingActive = value; }
+	inline void SetIsSphereCullingActive(bool value) { isSphereCullingActive = value; }
 	// Camera Functions
 	void LookAt(const float3 point);
 	void LookAt2(float3 front, float3 up);
 
 	void SetProjectionType(const CameraType &type);
-
+private:
 	// Frustum Culling
+	void SphereCulling();
 	void FrustumCulling();
-	void ResetFrustumCulling();
+public:
+	void DrawSphereCulling() const;
 	void DrawFrustum() const;
-	
+	void ApplyCullings(bool applySphereCulling, bool applyFrustumCulling);
 	bool ClipsWithBBox(const AABB& refBox) const;
-
+	void SetSCullingRadius(float radius);
 private:
 	// Properties
 	float3 reference;
 	Frustum cameraFrustum;
 
-	// Debug bools
+private:
+	bool isSphereCullingActive = false;
 	bool isFrustumCullingActive = false;
 
 	bool isMainCamera = false;
@@ -113,7 +119,7 @@ private:
 
 	// DON'T USE, USE GETFOV INSTEAD
 	float hFov, vFov = 0.0f;
+	float orthoSize = 0.1f;
+	int sCullingRadius = 500.0f;
 	
 };
-
-#endif // !__C_CAMERA_H__

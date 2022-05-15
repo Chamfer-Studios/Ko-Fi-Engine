@@ -30,7 +30,6 @@
 #include "R_Material.h"
 #include "R_Animation.h"
 
-#include "glew.h"
 #include <gl/GL.h>
 
 #include <MathGeoLib/Math/float2.h>
@@ -72,6 +71,7 @@ bool C_Mesh::PostUpdate(float dt) //AKA the real render
 
 bool C_Mesh::CleanUp()
 {
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Erase(owner);
 	std::string temp(owner->GetName());
 	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
@@ -244,13 +244,14 @@ void C_Mesh::GenerateGlobalBoundingBox()
 	// Generate global OBB
 	obb.SetFrom(GetLocalAABB());
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
-
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Erase(owner);
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Insert(owner);
 	// Generate global AABB
 	aabb.SetNegativeInfinity();
 	aabb.Enclose(obb);
 }
 
-void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
+void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb, GLenum renderType)
 {
 	if (drawAABB)
 	{
@@ -260,7 +261,7 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 		glLineWidth(2.0f);
 		glColor3f(rgb.x, rgb.y, rgb.z);
 
-		glBegin(GL_LINES);
+		glBegin(renderType);
 
 		// Bottom 1
 		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());

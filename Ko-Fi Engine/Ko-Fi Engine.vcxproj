@@ -304,7 +304,7 @@
     <ClCompile Include="Source\R_ParticleResource.cpp" />
     <ClCompile Include="Source\M_Physics.cpp" />
     <ClCompile Include="Source\PieShape.cpp" />
-    <ClCompile Include="Source\QuadTree3D.cpp" />
+    <ClCompile Include="Source\Quadtree.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ResourceBase.cpp" />
     <ClCompile Include="Source\M_ResourceManager.cpp" />
@@ -312,6 +312,7 @@
     <ClCompile Include="Source\R_Track.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\M_SceneManager.cpp" />
+    <ClCompile Include="Source\Scripting.cpp" />
     <ClCompile Include="Source\SkyBox.cpp" />
     <ClCompile Include="Source\TextEditor.cpp" />
     <ClCompile Include="Source\R_Texture.cpp" />
@@ -540,7 +541,7 @@
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleModule.h" />
     <ClInclude Include="Source\M_Physics.h" />
-    <ClInclude Include="Source\QuadTree3D.h" />
+    <ClInclude Include="Source\Quadtree.h" />
     <ClInclude Include="Source\M_ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\M_SceneManager.h" />
@@ -578,9 +579,8 @@
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Decoy.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Zhib.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueManager.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueTrigger.lua" />
     <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer.lua" />
@@ -605,6 +605,7 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Mission.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OoSpicy.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenExitPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenQuestsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenSkillsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua" />
@@ -613,7 +614,6 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Skill.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_SkillSet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />

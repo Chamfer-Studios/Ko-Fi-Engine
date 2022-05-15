@@ -1,0 +1,23 @@
+{
+    "asset_file": "awareness.fbx",
+    "asset_path": "Assets/Models/Environments/Test/awareness.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/240322238.sugar",
+            "type": 0,
+            "uid": 240322238
+        },
+        {
+            "asset_file": "Cube.sugar",
+            "library_path": "Library/Meshes/637126507.sugar",
+            "type": 0,
+            "uid": 637126507
+        }
+    ],
+    "hash": "f7e3f4367adde97205001ee82b9f7cfc",
+    "library_file": "1754609896.tea",
+    "library_path": "Library/Models/1754609896.tea",
+    "type": 3,
+    "uid": 1754609896
+}

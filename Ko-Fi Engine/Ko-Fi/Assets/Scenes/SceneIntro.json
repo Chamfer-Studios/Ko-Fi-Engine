@@ -1,10 +1,54 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 5,
+        "game_objects_amount": 16,
         "game_objects_list": [
             {
-                "UID": 1966060652,
+                "UID": 825193742,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            -10.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": true,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.30000001192092896,
+                        "type": 4,
+                        "vertical_fov": 0.44688403606414795
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Main Camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 300194929,
                 "active": true,
                 "components": [
                     {
@@ -30,25 +74,272 @@
                             1.0
                         ],
                         "type": 21
-                    },
-                    {
-                        "active": true,
-                        "far_plane_distance": 500.0,
-                        "frustum_culling": false,
-                        "isMainCamera": true,
-                        "near_plane_distance": 0.009999999776482582,
-                        "type": 4,
-                        "vertical_fov": 0.3839724361896515
                     }
                 ],
                 "is3D": true,
                 "isPrefab": false,
-                "name": "Main Camera",
+                "name": "Player",
                 "parent_UID": 0,
                 "tag": 0
             },
             {
-                "UID": 648476759,
+                "UID": 560299305,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071068286895752,
+                            0.0,
+                            0.0,
+                            0.7071067094802856
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999992251396179,
+                            0.9999992251396179
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Characters/Nerala/nerala_mosquito.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": false,
+                            "shape_type": 0,
+                            "uid": 298188909
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png"
+                        },
+                        "type": 2
+                    },
+                    {
+                        "active": true,
+                        "body_type": "Dynamic",
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "mass": 1.0,
+                        "type": 6,
+                        "use_gravity": true
+                    },
+                    {
+                        "active": true,
+                        "center": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "filter": "player",
+                        "is_trigger": false,
+                        "scale_factor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 7
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_mosquito1",
+                "parent_UID": 300194929,
+                "tag": 1
+            },
+            {
+                "UID": 1001081037,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            -2.7264251708984375,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            23.680805206298828,
+                            1.3557997941970825,
+                            33.78678512573242
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "DialogeTrigger",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1828597239,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071066498756409,
+                            0.0,
+                            0.0,
+                            0.70710688829422
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999995827674866,
+                            0.9999995827674866
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Box001.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": false,
+                            "shape_type": 0,
+                            "uid": 1446826782
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
+                        },
+                        "texture": {
+                            "asset_path": ""
+                        },
+                        "type": 2
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                        "id": 999959870,
+                        "inspector_variables": [
+                            {
+                                "name": "id",
+                                "type": "int",
+                                "value": 1
+                            }
+                        ],
+                        "type": 5
+                    },
+                    {
+                        "active": true,
+                        "body_type": "Static",
+                        "freeze_position_x": false,
+                        "freeze_position_y": false,
+                        "freeze_position_z": false,
+                        "freeze_rotation_x": false,
+                        "freeze_rotation_y": false,
+                        "freeze_rotation_z": false,
+                        "mass": 1.0,
+                        "type": 6,
+                        "use_gravity": true
+                    },
+                    {
+                        "active": true,
+                        "center": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "filter": "Interactuable",
+                        "is_trigger": true,
+                        "scale_factor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 7
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Box001",
+                "parent_UID": 1001081037,
+                "tag": 0
+            },
+            {
+                "UID": 412719475,
                 "active": true,
                 "components": [
                     {
@@ -97,21 +388,166 @@
                         "sourceType": 0,
                         "specularValue": 0.0,
                         "type": 19
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": false,
+                        "isMainCamera": false,
+                        "near_plane_distance": 0.30000001192092896,
+                        "type": 4,
+                        "vertical_fov": 681.0
                     }
                 ],
                 "is3D": true,
                 "isPrefab": false,
-                "name": "Direct Light",
+                "name": "Directional Light",
                 "parent_UID": 0,
                 "tag": 0
             },
             {
-                "UID": 1246909346,
+                "UID": 1630682463,
                 "active": true,
                 "components": [
                     {
                         "active": true,
                         "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -31.505878448486328,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Dialogues/DialogueManager.lua",
+                        "id": 815010024,
+                        "type": 5
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "DialogueManger",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 873274221,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            -0.7071066498756409,
+                            0.0,
+                            0.0,
+                            0.70710688829422
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998211860657,
+                            0.9999998211860657
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Box001.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": false,
+                            "shape_type": 0,
+                            "uid": 1446826782
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
+                        },
+                        "texture": {
+                            "asset_path": ""
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Box0011",
+                "parent_UID": 1630682463,
+                "tag": 0
+            },
+            {
+                "UID": 2122850664,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
                     },
                     {
                         "active": true,
@@ -141,13 +577,13 @@
                     }
                 ],
                 "is3D": false,
-                "isPrefab": false,
-                "name": "Canvas",
+                "isPrefab": true,
+                "name": "Dialogue",
                 "parent_UID": 0,
                 "tag": 0
             },
             {
-                "UID": 1196631538,
+                "UID": 866524510,
                 "active": true,
                 "components": [
                     {
@@ -156,14 +592,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 4,
+                        "anchor": 7,
                         "pivot": [
                             0.5,
                             0.5
                         ],
                         "position": [
-                            0.0,
-                            0.0
+                            -289.0,
+                            172.0
                         ],
                         "rotation": [
                             0.0,
@@ -171,27 +607,25 @@
                             0.0
                         ],
                         "size": [
-                            795.0,
-                            200.0
+                            3616.0,
+                            361.0
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/Textures/awareness/red.png",
-                        "idleTexture": "Assets/Textures/awareness/green.png",
-                        "pressedTexture": "Assets/Textures/awareness/yellow.png",
-                        "type": 15
+                        "texture": "Assets/UI/HUD/Dialog Window/dialog_window_v1.0.png",
+                        "type": 14
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Button",
-                "parent_UID": 1246909346,
+                "name": "DialogueFrame",
+                "parent_UID": 2122850664,
                 "tag": 0
             },
             {
-                "UID": 1728566331,
+                "UID": 228737368,
                 "active": true,
                 "components": [
                     {
@@ -200,14 +634,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 4,
+                        "anchor": 6,
                         "pivot": [
-                            0.5,
-                            0.5
+                            0.4099999964237213,
+                            0.5350000262260437
                         ],
                         "position": [
-                            0.0,
-                            0.0
+                            186.0,
+                            142.0
                         ],
                         "rotation": [
                             0.0,
@@ -215,27 +649,257 @@
                             0.0
                         ],
                         "size": [
-                            612.0,
-                            75.0
+                            400.0,
+                            400.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/UI/HUD/Hud Portraits/hud_portrait_nebala_v1.1.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "DialogueAvatar",
+                "parent_UID": 2122850664,
+                "tag": 0
+            },
+            {
+                "UID": 822983884,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -272.0,
+                            218.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            533.0,
+                            52.0
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
                         "color": [
-                            248,
-                            0,
-                            255,
+                            189,
+                            189,
+                            189,
                             255
                         ],
                         "type": 16,
-                        "value": "Hello world!"
+                        "value": "SampleName"
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Text",
-                "parent_UID": 1196631538,
+                "name": "DialogueName",
+                "parent_UID": 2122850664,
+                "tag": 0
+            },
+            {
+                "UID": 2097286004,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            95.0,
+                            156.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1316.0,
+                            51.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "type": 16,
+                        "value": "Hello world!blablablablabalbalbalba"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "DialogueLine1",
+                "parent_UID": 2122850664,
+                "tag": 0
+            },
+            {
+                "UID": 1293274013,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            95.0,
+                            96.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1316.0,
+                            51.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "type": 16,
+                        "value": "Hello world!babababababababababbabbababababa"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "DialogueLine2",
+                "parent_UID": 2122850664,
+                "tag": 0
+            },
+            {
+                "UID": 1483191304,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -167.0,
+                            229.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            171.0,
+                            56.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "",
+                        "idleTexture": "Assets/Textures/awareness/red.png",
+                        "pressedTexture": "",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "DialogueSkipButton",
+                "parent_UID": 2122850664,
+                "tag": 0
+            },
+            {
+                "UID": 1076929585,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -170.0,
+                            231.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            119.0,
+                            54.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0,
+                            0,
+                            0,
+                            255
+                        ],
+                        "type": 16,
+                        "value": "Skip"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "DialgoueSkipText",
+                "parent_UID": 2122850664,
                 "tag": 0
             }
         ],

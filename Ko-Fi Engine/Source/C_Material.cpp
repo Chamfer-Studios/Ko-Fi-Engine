@@ -210,7 +210,14 @@ void C_Material::Load(Json& json)
 			}
 		}
 
-		std::string textureAssetPath = json.at("texture").at("asset_path").get<std::string>();
+		std::string textureAssetPath;
+		if (json.find("texture") != json.end() && json.at("texture").find("asset_path") != json.at("texture").end()) {
+			textureAssetPath = json.at("texture").at("asset_path").get<std::string>();
+		}
+		else {
+			textureAssetPath = "";
+		}
+
 		if (textureAssetPath != "")
 		{
 			texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(textureAssetPath.c_str());

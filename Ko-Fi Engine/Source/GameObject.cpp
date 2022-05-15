@@ -8,6 +8,7 @@
 #include "M_Editor.h"
 #include "M_SceneManager.h"
 #include "M_Input.h"
+#include "M_Camera3D.h"
 
 // Components
 #include "C_Mesh.h"
@@ -93,6 +94,21 @@ bool GameObject::Start()
 bool GameObject::PreUpdate()
 {
 	bool ret = true;
+
+	for (Component* component : componentsToBeDeleted)
+	{
+		auto componentIt = std::find(components.begin(), components.end(), component);
+		if (componentIt != components.end())
+		{
+			//(*componentIt)->CleanUp();
+			RELEASE(*componentIt);
+			components.erase(componentIt);
+			components.shrink_to_fit();
+		}
+	}
+
+	componentsToBeDeleted.clear();
+
 	for (Component* component : components)
 		ret = component->PreUpdate();
 
@@ -101,6 +117,8 @@ bool GameObject::PreUpdate()
 
 bool GameObject::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	bool ret = true;
 	for (Component* component : components)
 	{
@@ -220,14 +238,7 @@ void GameObject::Disable()
 
 void GameObject::DeleteComponent(Component* component)
 {
-	auto componentIt = std::find(components.begin(), components.end(), component);
-	if (componentIt != components.end())
-	{
-		//(*componentIt)->CleanUp();
-		RELEASE(*componentIt);
-		components.erase(componentIt);
-		components.shrink_to_fit();
-	}
+	componentsToBeDeleted.push_back(component);
 }
 
 Component* GameObject::AddComponentByType(ComponentType componentType)
@@ -719,7 +730,8 @@ bool GameObject::LoadPrefabJson(const char* path, bool exists)
 
 bool GameObject::LoadPrefab(Json& jsonFile)
 {
-	name = jsonFile.at("name");
+	
+	SetName(std::string(jsonFile.at("name")).c_str());
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
@@ -804,9 +816,8 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 	for (const auto& chdIt : jsonChd.items())
 	{
 		Json jsonChd = chdIt.value();
-		std::string name = jsonChd.at("name");
 		bool is3D = jsonChd.at("is3D");
-		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(name.c_str(), this, is3D);
+		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, this, is3D);
 		go->LoadPrefab(jsonChd);
 		this->AttachChild(go);
 	}
@@ -815,7 +826,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 
 bool GameObject::UpdatePrefab(Json& jsonFile)
 {
-	name = jsonFile.at("name");
+	SetName(std::string(jsonFile.at("name")).c_str());
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))

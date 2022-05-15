@@ -1,0 +1,390 @@
+{
+    "UID": 40772345,
+    "active": true,
+    "children": [
+        {
+            "UID": 1785533558,
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 7,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        -289.0,
+                        172.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        3616.0,
+                        361.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "texture": "Assets/UI/HUD/Dialog Window/dialog_window_v1.0.png",
+                    "type": 14
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "DialogueFrame",
+            "parent_UID": 40772345,
+            "tag": 0
+        },
+        {
+            "UID": 897533171,
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 6,
+                    "pivot": [
+                        0.4099999964237213,
+                        0.5350000262260437
+                    ],
+                    "position": [
+                        186.0,
+                        142.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        400.0,
+                        400.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "texture": "Assets/UI/HUD/Hud Portraits/hud_portrait_nebala_v1.1.png",
+                    "type": 14
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "DialogueAvatar",
+            "parent_UID": 40772345,
+            "tag": 0
+        },
+        {
+            "UID": 691473341,
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 7,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        -272.0,
+                        218.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        533.0,
+                        52.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "color": [
+                        189,
+                        189,
+                        189,
+                        255
+                    ],
+                    "type": 16,
+                    "value": "SampleName"
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "DialogueName",
+            "parent_UID": 40772345,
+            "tag": 0
+        },
+        {
+            "UID": 1264652203,
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 7,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        95.0,
+                        156.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1316.0,
+                        51.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "color": [
+                        255,
+                        255,
+                        255,
+                        255
+                    ],
+                    "type": 16,
+                    "value": "Hello world!blablablablabalbalbalba"
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "DialogueLine1",
+            "parent_UID": 40772345,
+            "tag": 0
+        },
+        {
+            "UID": 1668981710,
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 7,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        95.0,
+                        96.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1316.0,
+                        51.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "color": [
+                        255,
+                        255,
+                        255,
+                        255
+                    ],
+                    "type": 16,
+                    "value": "Hello world!babababababababababbabbababababa"
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "DialogueLine2",
+            "parent_UID": 40772345,
+            "tag": 0
+        },
+        {
+            "UID": 108262397,
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 8,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        -167.0,
+                        229.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        171.0,
+                        56.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "hoverTexture": "",
+                    "idleTexture": "Assets/Textures/awareness/red.png",
+                    "pressedTexture": "",
+                    "type": 15
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "DialogueSkipButton",
+            "parent_UID": 40772345,
+            "tag": 0
+        },
+        {
+            "UID": 1080404949,
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 8,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        -170.0,
+                        231.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        119.0,
+                        54.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "type": 16,
+                    "value": "Skip"
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "DialgoueSkipText",
+            "parent_UID": 40772345,
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "anchor": 4,
+            "logicalSize": [
+                1920.0,
+                1080.0
+            ],
+            "pivot": [
+                0.5,
+                0.5
+            ],
+            "position": [
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "size": [
+                200.0,
+                200.0
+            ],
+            "type": 13
+        }
+    ],
+    "is3D": false,
+    "isPrefab": true,
+    "name": "Dialogue",
+    "parent_UID": 0,
+    "tag": 0
+}

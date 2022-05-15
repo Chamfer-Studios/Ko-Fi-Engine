@@ -509,3 +509,7 @@ function Update(dt)
     end
     DispatchEvent(pathfinderFollowKey, {speed, dt, _loop})
 end
+
+function PostUpdate(dt)
+    DrawCone(componentTransform:GetPosition(), componentTransform:GetFront(), componentTransform:GetUp(), visionConeAngle, visionConeRadius)
+end

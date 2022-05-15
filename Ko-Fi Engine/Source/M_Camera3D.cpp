@@ -44,10 +44,12 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetIsEngineCamera(true);
 	
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-	engineCamera->SetFarPlaneDistance(10000.0f);
+	engineCamera->SetViewPlaneDistances(.3f,20000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
-
+	engineCamera->SetIsSphereCullingActive(true);
+	engineCamera->SetIsFrustumActive(true);
 	currentCamera = engineCamera;
+	engineCamera->SetSCullingRadius(20000.0f / 2);
 }
 
 M_Camera3D::~M_Camera3D()
@@ -98,7 +100,7 @@ bool M_Camera3D::Update(float dt)
 		isMoving = false;
 		cameraSpeed = baseCameraSpeed;
 	}
-
+	engineCamera->ApplyCullings(engineCamera->GetIsSphereCullingActive(), engineCamera->GetIsFrustumActive());
 	return true;
 }
 
@@ -265,22 +267,35 @@ bool M_Camera3D::LoadConfiguration(Json& configModule)
 
 bool M_Camera3D::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("Engine Camera##"))
-	{
-		int newSpeedMultiplier = speedMultiplier;
-		if (ImGui::SliderInt("Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
-		{
-			ChangeSpeed(newSpeedMultiplier);
-		}
+	//if (ImGui::CollapsingHeader("Engine Camera##"))
+	//{
+	//	int newSpeedMultiplier = speedMultiplier;
+	//	if (ImGui::SliderInt("Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
+	//	{
+	//		ChangeSpeed(newSpeedMultiplier);
+	//	}
 
-		//	Frustum Active
-		bool frustumActive = engineCamera->GetIsFrustumActive();
-		if (ImGui::Checkbox("Frustum culling", &frustumActive))
-		{
-			engineCamera->SetIsFrustumActive(frustumActive);
-		}
+	//	//	Frustum Active
+	//	bool frustumActive = engineCamera->GetIsFrustumActive();
+	//	if (ImGui::Checkbox("Frustum culling", &frustumActive))
+	//	{
+	//		engineCamera->SetIsFrustumActive(frustumActive);
+	//	}
 
-	}
+	//	static const char* types[]{ "Perspective", "Orthographic" };
+	//	static int selectedItem = 0;
+	//	if (ImGui::Combo("Combo", &selectedItem, types, IM_ARRAYSIZE(types)))
+	//	{
+	//		if (selectedItem == 0)
+	//			engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_PERSPECTIVE);
+	//		if (selectedItem == 1)
+	//			engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
+
+
+	//	}
+
+	//}
+	engineCamera->InspectorDraw(nullptr);
 	return true;
 }
 
