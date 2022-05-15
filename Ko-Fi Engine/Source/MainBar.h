@@ -23,6 +23,9 @@ public:
 
 	void CreatePrimitive(Shape shape);
 
+	
+	bool CloseAppPopup();
+
 private:
 	M_Editor* editor;
 	bool loadingModel = false;

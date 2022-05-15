@@ -1588,5 +1588,8 @@
     <None Include="Ko-Fi\Assets\Scripts\Characters\Raban\Projectile.lua">
       <Filter>Scripts\Characters\Raban</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenExitPopUp.lua">
+      <Filter>Scripts\UI</Filter>
+    </None>
   </ItemGroup>
 </Project>

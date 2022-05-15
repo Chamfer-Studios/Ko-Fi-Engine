@@ -377,54 +377,55 @@ public:
 
 		switch (button)
 		{
-			case 4:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
-			}
-			/*case 5:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H);
-			}*/
-			case 6:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Z);
-			}
-			/*case 7:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_G);
-			}*/
-			case 8:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X);
-			}
-			case 9:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_C);
-			}
-			case 10:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_R);
-			}
-			/*case 11:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_B);
-			}*/
-			case 12:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_LSHIFT);
-			}
-			case 13:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
-			}
-			case 14:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Q);
-			}
-			case 15:
-			{
-				return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
-			}
+		case 4:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
+		}
+		/*case 5:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H);
+		}*/
+		case 6:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Z);
+		}
+		/*case 7:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_G);
+		}*/
+		case 8:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_X);
+		}
+		case 9:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_C);
+		}
+		case 10:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_R);
+		}
+		/*case 11:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_B);
+		}*/
+		case 12:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_LSHIFT);
+		}
+		case 13:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_T);
+		}
+		case 14:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_Q);
+		}
+		case 15:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
+		}
+
 
 		case 21:
 		{
@@ -441,6 +442,10 @@ public:
 		case 24:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4);
+		}
+		case 25:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_ESCAPE);
 		}
 		}
 	}

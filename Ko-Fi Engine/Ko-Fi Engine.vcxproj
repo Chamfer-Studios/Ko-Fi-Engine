@@ -605,6 +605,7 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Mission.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OoSpicy.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenExitPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenQuestsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenSkillsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua" />

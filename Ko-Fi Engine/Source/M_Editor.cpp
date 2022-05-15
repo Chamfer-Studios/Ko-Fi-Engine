@@ -222,6 +222,12 @@ bool M_Editor::PreUpdate(float dt)
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
 
+	if ((engine->GetInput()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
+	{
+		if(engine->GetSceneManager()->GetGameState() != GameState::PLAYING)
+		toggleCloseAppPopUpPanel = !toggleCloseAppPopUpPanel;
+	}
+
 	// Panels PreUpdate
 	if (ret == true)
 	{
