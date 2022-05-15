@@ -36,6 +36,8 @@
 #include "C_LightSource.h"
 #include "RNG.h"
 
+
+
 enum INSPECTOR_VARIABLE_TYPE
 {
 	INSPECTOR_NO_TYPE,
@@ -343,6 +345,7 @@ public:
 		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("InstantiateNamedPrefab", &Scripting::LuaInstantiateNamedPrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
+		lua.set_function("DeleteGameObjectByUID", &Scripting::DeleteGameObjectByUID, this);
 		lua.set_function("Find", &Scripting::LuaFind, this);
 		lua.set_function("GetObjectsByTag", &Scripting::LuaGetObjectsByTag, this);
 		lua.set_function("GetVariable", &Scripting::LuaGetVariable, this);
@@ -361,6 +364,9 @@ public:
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
+		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
+		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
+		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
 		lua.set_function("DrawLine", &Scripting::DrawLine, this);
 		lua.set_function("RNG", &Scripting::RNG, this);
@@ -493,7 +499,12 @@ public:
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToDelete.push_back(gameObject);
 	}
 
-	GameObject* LuaFind(std::string name)
+	void DeleteGameObjectByUID(UID uid)
+	{
+		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToDelete.push_back(gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(uid));
+	}
+
+	GameObject *LuaFind(std::string name)
 	{
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
@@ -753,11 +764,19 @@ public:
 		gameObject->GetEngine()->GetRenderer()->DrawCircle(position, range);
 	}
 
+	bool LoadJsonFile(const char* path);
+
+	std::string GetDialogueString(const char* key, int id);
+
+	int GetDialogueTargetID(const char* key, int id);
+
 public:
 	sol::state lua;
 	GameObject* gameObject = nullptr;
 	C_Transform* componentTransform = nullptr;
 	C_Script* script = nullptr;
+
+	std::map<std::string, Json> files;
 };
 
 #endif // !__SCRIPTING_H__
