@@ -26,7 +26,6 @@ class C_Text;
 class C_Image;
 class C_Button;
 
-
 enum class GameState
 {
 	PLAYING,
@@ -41,8 +40,8 @@ public:
 	M_SceneManager(KoFiEngine* engine);
 	~M_SceneManager();
 
-	bool Awake(Json configModule);
 	// Called before render is available
+	bool Awake(Json configModule);
 
 	// Called before the first frame
 	virtual bool Start();
@@ -62,7 +61,7 @@ public:
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
-		// Engine config serialization --------------------------------------
+	// Engine config serialization --------------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	// ------------------------------------------------------------------
@@ -96,18 +95,17 @@ public:
 	void OnTick();
 	void OnClick(SDL_Event event);
 
-	//GUIZMO
+	// Guizmo
 	ImGuizmo::OPERATION GetGizmoOperation() { return currentGizmoOperation; }
 	void SetGizmoOperation(ImGuizmo::OPERATION operation) { currentGizmoOperation = operation; }
 	void GuizmoTransformation();
 	void UpdateGuizmo();
-	//
 
 public:
 	bool active;
 
 private:
-	// Modules
+	// Pointer to the whole engine
 	KoFiEngine* engine = nullptr;
 
 	// Scenes
@@ -115,32 +113,33 @@ private:
 	Scene* currentScene = nullptr;
 	SceneIntro* sceneIntro = nullptr;
 	std::string defaultScene = "";
+
 	// Guizmo
 	ImGuizmo::OPERATION currentGizmoOperation;
 	ImGuizmo::MODE currentGizmoMode;
 
 	ImGuiWindow* window = nullptr;
 	float2 cornerPos;
-	// TIME MANAGEMENT
-	// --------------------------------------------------
+
+	GameState runtimeState = GameState::STOPPED;
+
+	// GAME TIME MANAGEMENT
+	// ----------------------------------------------------------------------------------------------------
 	// Frame Count: app graphics frames since game start
 	uint frameCount = 0;
 	// Time: second since game start (Game Clock)
 	float time = 0.0f; // To keep the seconds when we pause the simulation
 	// Time Scale: scale at which time is passing (Game Clock)
 	// Modify this variable to change the speed of our game in runtime.
-	float timeScale = 1.0f; // 1 --> Real Time / < 1 --> Slower / > 1 Faster, 0 Pause or Stop
-	// Delta Time: last frame time expressed in seconds (Game Clock)
+	float timeScale = 1.0f; // 1 --> Real Time / < 1 --> Slower / > 1 --> Faster, 0 --> Pause or Stop
+	// Game Delta Time: last frame time expressed in seconds (Game Clock)
 	Timer timer; // Used for gameDt (resets each frame)
 	float gameDt = 0.0f;
 	float gameClockSpeed = 0.0f; // != 0 (timeScale) --> Playing / == 0 --> Pause or Stop
+	float gameTime = 0.0f; // Total game time
 	// Real Time Since Startup: seconds since game start (Real Time Clock) --> Engine.cpp
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
-	// --------------------------------------------------
-
-	float gameTime = 0.0f;
-	
-	GameState runtimeState = GameState::STOPPED;
+	// ----------------------------------------------------------------------------------------------------
 };
 
 #endif // !__M_SCENE_MANAGER_H__

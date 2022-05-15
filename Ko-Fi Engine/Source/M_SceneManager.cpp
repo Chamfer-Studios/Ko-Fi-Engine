@@ -133,6 +133,7 @@ bool M_SceneManager::PostUpdate(float dt)
 
 	FinishUpdate();
 	GuizmoTransformation();
+
 	return ret;
 }
 
@@ -176,6 +177,7 @@ bool M_SceneManager::InspectorDraw()
 	{
 		ImGui::InputText("Default Scene: ", &defaultScene);
 	}
+
 	return true;
 }
 
@@ -353,6 +355,53 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		it.second->GetComponent<C_Transform>()->SetDirty(true);
 	}
 
+	// Adding the animator component to the proper game objects.
+	bool hasAnimatedMeshes = false;
+	for (GameObject* go : modelRoot->GetChildren())
+	{
+		C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+		if (cMesh != nullptr)
+		{
+			if (cMesh->GetMesh()->IsAnimated())
+			{
+				hasAnimatedMeshes = true;
+				break;
+			}
+		}
+	}
+	if (hasAnimatedMeshes) // If the game object contains other game objects with animated meshes...
+	{
+		// Animation
+		if (model->animation != 0 && model->animationName != "")
+		{
+			C_Animator* animator = (C_Animator*)modelRoot->AddComponentByType(ComponentType::ANIMATOR);
+			RELEASE(animator->animation);
+
+			R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
+			if (animator != nullptr && rAnimation != nullptr)
+			{
+				for (GameObject* go : modelRoot->GetChildren())
+				{
+					C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+					if (cMesh != nullptr)
+					{
+						R_Mesh* rMesh = cMesh->GetMesh();
+						if (rMesh->IsAnimated())
+							rMesh->SetAnimation(rAnimation);
+					}
+				}
+				animator->SetAnimation(rAnimation);
+
+				// Updating default clip with all the keyframes of the animation.
+				AnimatorClip* animClip = animator->GetSelectedClip();
+				animClip->SetStartFrame(0);
+				animClip->SetEndFrame(rAnimation->duration);
+				animClip->SetDuration(((float)(animClip->GetEndFrame() - animClip->GetStartFrame())) / 1.0f);
+				animClip->SetDurationInSeconds(animClip->GetDuration() / rAnimation->GetTicksPerSecond());
+			}
+		}
+	}
+
 	engine->GetResourceManager()->FreeResource(model->GetUID());
 
 	return true;
@@ -375,30 +424,6 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 		{
 			mesh->SetMesh(rMesh);
 			rMesh->SetRootNode(gameobject->GetParent());
-		}
-
-		if (rMesh->IsAnimated())
-		{
-			// Animation
-			if (model->animation != 0 && model->animationName != "")
-			{
-				C_Animator* animator = (C_Animator*)gameobject->AddComponentByType(ComponentType::ANIMATOR);
-				RELEASE(animator->animation);
-
-				R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
-				if (animator != nullptr && rAnimation != nullptr)
-				{
-					rMesh->SetAnimation(rAnimation);
-					animator->SetAnim(rAnimation);
-
-					// Updating default clip with all the keyframes of the animation.
-					AnimatorClip* animClip = animator->GetSelectedClip();
-					animClip->SetStartFrame(0);
-					animClip->SetEndFrame(rAnimation->duration);
-					animClip->SetDuration(((float)(animClip->GetEndFrame() - animClip->GetStartFrame())) / 1.0f);
-					animClip->SetDurationInSeconds(animClip->GetDuration() / rAnimation->GetTicksPerSecond());
-				}
-			}
 		}
 
 		// Material & Shader
@@ -430,8 +455,10 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 void M_SceneManager::OnPlay()
 {
 	runtimeState = GameState::PLAYING;
+	frameCount = 0;
+	time = 0.0f;
+	timer.Start();
 	gameClockSpeed = timeScale;
-
 	gameTime = 0.0f;
 
 	// Serialize scene and save it as a .json
@@ -441,11 +468,12 @@ void M_SceneManager::OnPlay()
 	{
 		go->OnPlay();
 	}
+
+	engine->GetRenderer()->ResetFrustumCulling();
 }
 
 void M_SceneManager::OnSceneSwitch()
 {
-
 	for (GameObject* go : currentScene->gameObjectList)
 	{
 		go->OnSceneSwitch();
@@ -466,9 +494,9 @@ void M_SceneManager::OnPause()
 void M_SceneManager::OnStop()
 {
 	runtimeState = GameState::STOPPED;
-	gameClockSpeed = 0.0f;
 	frameCount = 0;
 	time = 0.0f;
+	gameClockSpeed = 0.0f;
 	gameTime = 0.0f;
 
 	Importer::GetInstance()->sceneImporter->LoadScene(currentScene,currentScene->name.c_str());
@@ -478,11 +506,14 @@ void M_SceneManager::OnStop()
 	{
 		go->OnStop();
 	}
+
+	engine->GetRenderer()->ResetFrustumCulling();
 }
 
 void M_SceneManager::OnResume()
 {
 	runtimeState = GameState::PLAYING;
+	timer.Start();
 	gameClockSpeed = timeScale;
 
 	for (GameObject* go : currentScene->gameObjectList)
@@ -494,6 +525,7 @@ void M_SceneManager::OnResume()
 void M_SceneManager::OnTick()
 {
 	runtimeState = GameState::TICK;
+	timer.Start();
 	gameClockSpeed = timeScale;
 
 	for (GameObject* go : currentScene->gameObjectList)
@@ -504,6 +536,7 @@ void M_SceneManager::OnTick()
 
 void M_SceneManager::OnClick(SDL_Event event)
 {
+
 }
 
 void M_SceneManager::GuizmoTransformation()
@@ -525,6 +558,7 @@ void M_SceneManager::GuizmoTransformation()
 	viewMatrix.Transpose();
 
 	float4x4 projectionMatrix = engine->GetCamera3D()->currentCamera->GetCameraFrustum().ProjectionMatrix().Transposed();
+	ImGuizmo::SetGizmoSizeClipSpace(0.3f);
 
 	std::vector<float4x4> modelProjection;
 	for (int i = 0; i < selectedGameObjects.size(); i++)
@@ -567,8 +601,6 @@ void M_SceneManager::GuizmoTransformation()
 
 	}
 #endif // KOFI_GAME
-
-	
 }
 
 void M_SceneManager::UpdateGuizmo()
@@ -611,6 +643,4 @@ void M_SceneManager::UpdateGuizmo()
 		}
 	}
 #endif // KOFI_GAME
-
-	
 }

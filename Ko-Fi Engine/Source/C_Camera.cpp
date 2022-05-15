@@ -5,6 +5,7 @@
 #include "M_SceneManager.h"
 #include "M_Camera3D.h"
 #include "M_Editor.h"
+#include "M_Renderer3D.h"
 
 // GameObject
 #include "GameObject.h"
@@ -37,10 +38,13 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 
 	//Set Default Values for the frusum
 	cameraFrustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumRightHanded);
-	cameraFrustum.SetPerspective(DegToRad(60.0f), DegToRad(22.0f));
-	cameraFrustum.SetViewPlaneDistances(0.01f, 500.0f);
+	cameraFrustum.SetPerspective(DegToRad(44.0f), DegToRad(72.57f));
+	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(44.0f), 1.778);
+	cameraFrustum.SetViewPlaneDistances(0.3f, 1000.0f);
 	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
+	SetIsSphereCullingActive(true);
+	SetIsFrustumActive(true);
 
 }
 
@@ -60,24 +64,47 @@ bool C_Camera::Start()
 	return ret;
 }
 
+bool C_Camera::PreUpdate()
+{
+	return true;
+}
+
 bool C_Camera::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	//Transform Update Camera Frustum
 	//Camera Position Rotation of the camera
-	if (!isEngineCamera)
+
+	if (!isEngineCamera && owner->GetEngine()->GetCamera3D()->currentCamera == this)
 	{
+		// SET CAMERA FRUSTUM, OBJECT TRANSFORM
+		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
+		//Transform Update Camera Frustum
+		//Camera Position Rotation of the camera
+
+		ApplyCullings(isSphereCullingActive, isFrustumCullingActive);
+
+
+		// Camera Frustum Updates Transform
 		C_Transform* transform = owner->GetTransform();
 
-		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
-
-		//Apply rotation
-		if (isFrustumCullingActive)
-			FrustumCulling();
-	
-		// Camera Frustum Updates Transform
-		owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 	}
+	else {
+		std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
+		for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+		{
+			GameObject* gameObject = (*go);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
+		}
+	}
+	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
+	return true;
+}
+
+bool C_Camera::PostUpdate(float dt)
+{
 	return true;
 }
 
@@ -104,9 +131,14 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		//owner->GetEngine()->GetSceneManager()->GetCurrentScene()->skybox.InspectorDraw();
 
 		// FRUSTUM CULLING
+		if (ImGui::Checkbox("Sphere culling", &isSphereCullingActive)) {
+			owner->GetEngine()->GetRenderer()->ResetFrustumCulling();
+		}
+		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
 		{
-			ResetFrustumCulling();
+			owner->GetEngine()->GetRenderer()->ResetFrustumCulling();
+
 		}
 
 		// TODO: SET MAIN CAMERA TO TAG!
@@ -133,11 +165,15 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		{
 			// FOV 
 			float fov = GetHorizontalFov();
-			if (ImGui::DragFloat("Fov", &fov, 1.0f, 0.0f, 180.f))
+			if (ImGui::DragFloat("Fov", &fov, 1.0f, 1.0f, 180.f))
 			{
 				SetHorizontalFov(fov);
 			}
 
+			break;
+		}
+		case C_Camera::KOFI_ORTHOGRAPHIC:
+		{
 
 			break;
 		}
@@ -148,6 +184,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
 		{
 			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
+			sCullingRadius = planeDistances.y / 2.0f;
 		}
 	}
 	else
@@ -194,7 +231,8 @@ float4x4 C_Camera::GetProjectionMatrix() const
 
 void C_Camera::SetAspectRatio(const float& aspectRatio)
 {
-	cameraFrustum.SetHorizontalFovAndAspectRatio(cameraFrustum.HorizontalFov(), aspectRatio);
+	if(cameraType == CameraType::KOFI_PERSPECTIVE)
+		cameraFrustum.SetHorizontalFovAndAspectRatio(cameraFrustum.HorizontalFov(), aspectRatio);
 }
 
 void C_Camera::SetPosition(float3 newPos)
@@ -244,7 +282,10 @@ void C_Camera::SetProjectionType(const CameraType& type)
 	{
 		hFov = cameraFrustum.HorizontalFov();
 		vFov = cameraFrustum.VerticalFov();
-		cameraFrustum.SetOrthographic(owner->GetEngine()->GetEditor()->viewportSize.x, owner->GetEngine()->GetEditor()->viewportSize.y);
+		float w = owner->GetEngine()->GetEditor()->lastViewportSize.x;
+		float h = owner->GetEngine()->GetEditor()->lastViewportSize.y;
+		cameraFrustum.SetOrthographic(w, h);
+		
 	}
 	else if (type == CameraType::KOFI_PERSPECTIVE)
 	{
@@ -253,39 +294,81 @@ void C_Camera::SetProjectionType(const CameraType& type)
 	}
 }
 
-void C_Camera::FrustumCulling()
+void C_Camera::SphereCulling()
 {
+	OPTICK_EVENT();
+	//1st culling iteration where we check the distance of the game object to a middle point between the near and far plane,
+	//If object is further from the sphere radius, we discard them.
 	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
 	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 	{
 		GameObject* gameObject = (*go);
-		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
-
-		if (componentMesh == nullptr || gameObject == owner)
+		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
+		if (!cMesh || gameObject == owner)
 			continue;
-
-		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
+		float3 middlePoint = this->cameraFrustum.CenterPoint(); //no need to recalculate
+		float3 closest = cMesh->GetGlobalAABB().ClosestPoint(middlePoint);
+		float distance = middlePoint.DistanceSq(closest);
+		if (distance > (sCullingRadius* sCullingRadius))
+		{
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.erase(gameObject);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(gameObject);
 			gameObject->SetRenderGameObject(false);
-		else
+		}
+		else {
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
 			gameObject->SetRenderGameObject(true);
+		}
+
 	}
 }
 
-void C_Camera::ResetFrustumCulling()
+void C_Camera::DrawSphereCulling() const
 {
-	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+	glPushMatrix();
+	float4x4 wM = float4x4::identity;
+	wM.SetFloat3x4Part(this->cameraFrustum.WorldMatrix());
+	glMultMatrixf(wM.Transposed().ptr());
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	gluSphere(gluNewQuadric(), sCullingRadius, 20, 20);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPopMatrix();
+}
 
-	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+void C_Camera::FrustumCulling()
+{
+	OPTICK_EVENT();
+
+	std::unordered_set<GameObject*>::iterator it;
+
+	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
 	{
-		GameObject* gameObject = (*go);
-		C_Mesh* componentMesh = gameObject->GetComponent<C_Mesh>();
+		GameObject* go = (*it);
+	/*	if (!gameObject->GetRenderGameObject())
+			continue;*/
+		C_Mesh* componentMesh = go->GetComponent<C_Mesh>();
 
-		if (componentMesh == nullptr || gameObject == owner)
+		if (componentMesh == nullptr || go == owner)
 			continue;
 
 		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
-			gameObject->SetRenderGameObject(true);
+		{
+			if (owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.contains(*it)) {
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(*it);
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(*it);
+				go->SetRenderGameObject(false);
+			}
+		}
+		else
+		{
+			if (!owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.contains(go)) {
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(go);
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(go);
+				go->SetRenderGameObject(true);
+			}
+		}
 	}
 }
 
@@ -297,46 +380,43 @@ void C_Camera::DrawFrustum() const
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.5f);
 	glBegin(GL_LINES);
-	//Near plane BL-BR
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z);//Near BL
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);//Near BR
-	//Near plane BL-TL
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z); //Near BL
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z); //Near TL
-	//Near plane TL - TR
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z);//Near TL
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);//Near TR
-	//Near plane BR - TR
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z);//Near BR
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z);//Near TR
-	//Near plane BL - Far plane BL
-	glVertex3f(cornerPoints[0].x, cornerPoints[0].y, cornerPoints[0].z); //Near BL
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z); //Far BL
-	//Far BL - BR
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z);//Far BL
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z);//Far BR
-	//Far BR - Near BR
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z); //Far BR
-	glVertex3f(cornerPoints[1].x, cornerPoints[1].y, cornerPoints[1].z); //Near BR
-	//Far BR - TR
-	glVertex3f(cornerPoints[5].x, cornerPoints[5].y, cornerPoints[5].z); //Far BR
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
-	//Far TR - TL
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); //Far TL
-	//Far TL - Near TL
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); //Far TL
-	glVertex3f(cornerPoints[2].x, cornerPoints[2].y, cornerPoints[2].z); //Near TL
-	//Far TL - BL
-	glVertex3f(cornerPoints[6].x, cornerPoints[6].y, cornerPoints[6].z); // Far TL
-	glVertex3f(cornerPoints[4].x, cornerPoints[4].y, cornerPoints[4].z); //Far BL
-	//Far TR - Near TR
-	glVertex3f(cornerPoints[7].x, cornerPoints[7].y, cornerPoints[7].z); //Far TR
-	glVertex3f(cornerPoints[3].x, cornerPoints[3].y, cornerPoints[3].z); //Near TR
+
+	for (uint i = 0; i < 12; i++)
+	{
+		glVertex3f(cameraFrustum.Edge(i).a.x, cameraFrustum.Edge(i).a.y, cameraFrustum.Edge(i).a.z);
+		glVertex3f(cameraFrustum.Edge(i).b.x, cameraFrustum.Edge(i).b.y, cameraFrustum.Edge(i).b.z);
+	}
+
 	glEnd();
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glLineWidth(1.0f);
 
+}
+
+void C_Camera::ApplyCullings(bool applySphereCulling, bool applyFrustumCulling)
+{
+	//Apply rotation
+	if (applySphereCulling)
+		SphereCulling();
+	else {
+		std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+		for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+		{
+			GameObject* gameObject = (*go);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
+		}
+	}
+	if (applyFrustumCulling)
+		FrustumCulling();
+	else {
+		std::unordered_set<GameObject*>::iterator it;
+
+		for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
+		{
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(*it);
+		}
+	}
 }
 
 bool C_Camera::ClipsWithBBox(const AABB& refBox) const
@@ -357,5 +437,10 @@ bool C_Camera::ClipsWithBBox(const AABB& refBox) const
 
 		if (cornersOutside == 0) return false;
 	}
+}
+
+void C_Camera::SetSCullingRadius(float radius)
+{
+	this->sCullingRadius = radius;
 }
 

@@ -220,6 +220,12 @@ public:
 		@see SetKind(), SetViewPlaneDistances(), SetFrame(), SetPos(), SetFront(), SetUp(), SetOrthographic(), OrthographicWidth(), OrthographicHeight(). */
 	void SetOrthographic(float orthographicWidth, float orthographicHeight);
 
+	void SetOrthographicSize(float newOrthographicWidth);
+
+	void SetOrthographicWidth(float nWidth);
+
+	void SetOrthographicHeight(float nHeight);
+
 	/// Returns the handedness of the projection formula used by this Frustum.
 	/** @see SetKind(), FrustumHandedness. */
 	FrustumHandedness Handedness() const { return handedness; }

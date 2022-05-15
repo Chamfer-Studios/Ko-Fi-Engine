@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Importer.h"
 #include "M_ResourceManager.h"
+#include "M_SceneManager.h"
 
 // GameObject
 #include "GameObject.h"
@@ -58,7 +59,25 @@ bool C_Animator::Start()
 	return ret;
 }
 
+bool C_Animator::PreUpdate()
+{
+	bool ret = true;
+
+	M_SceneManager* sceneManager = owner->GetEngine()->GetSceneManager();
+	GameState gameState = sceneManager->GetGameState();
+	if ( gameState == GameState::PLAYING ||
+		gameState == GameState::TICK)
+		animTime += sceneManager->GetGameDt();
+
+	return ret;
+}
+
 bool C_Animator::Update(float dt)
+{
+	return true;
+}
+
+bool C_Animator::PostUpdate()
 {
 	return true;
 }
@@ -150,6 +169,8 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 				{
 					selectedClip = &clip->second;
 
+					ResetAnimation();
+
 					/*strcpy(editedName, selectedClip->GetName());
 					editedStart = (int)selectedClip->GetStart();
 					editedEnd = (int)selectedClip->GetEnd();
@@ -202,15 +223,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		}
 
 		ImGui::Text("Clip Options: ");
-		if (ImGui::Checkbox("Loop", &selectedClip->GetLoopBool()))
-		{
-			for (const auto& it : owner->GetParent()->children)
-			{
-				C_Animator* cAnim = it->GetComponent<C_Animator>();
-				if(cAnim != nullptr)
-					cAnim->selectedClip->SetLoopBool(selectedClip->GetLoopBool());
-			}
-		}
+		if (ImGui::Checkbox("Loop ##", &selectedClip->GetLoopBool())) {}
 
 		/*ImGui::SameLine();
 		if (ImGui::Button("Restart", ImVec2(70, 18)))
@@ -265,9 +278,17 @@ void C_Animator::Load(Json& json)
 			KOFI_ERROR(" Component Animation: could not load resource from library.");
 		else
 		{
-			C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
-			if (cMesh != nullptr && cMesh->GetMesh()->IsAnimated())
-				owner->GetComponent<C_Mesh>()->GetMesh()->SetAnimation(animation);
+			// Setting the animation resource to all the animated meshes of the owner's children.
+			//for (GameObject* go : owner->GetChildren())
+			//{
+			//	C_Mesh* cMesh = go->GetComponent<C_Mesh>();
+			//	if (cMesh != nullptr)
+			//	{
+			//		R_Mesh* rMesh = cMesh->GetMesh();
+			//		if (rMesh->IsAnimated())
+			//			rMesh->SetAnimation(animation);
+			//	}
+			//}
 
 			for (const auto& clip : json.at("clips").items())
 			{
@@ -309,7 +330,7 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 	clips.emplace(clip.GetName(), clip);
 }
 
-void C_Animator::SetAnim(R_Animation* anim)
+void C_Animator::SetAnimation(R_Animation* anim)
 {
 	if (this->animation != nullptr)
 	{
@@ -345,4 +366,12 @@ void C_Animator::SetSelectedClip(std::string name)
 			break;
 		}
 	}
+
+	ResetAnimation();
+}
+
+void C_Animator::ResetAnimation()
+{
+	selectedClip->SetFinishedBool(false);
+	animTime = 0.0f;
 }

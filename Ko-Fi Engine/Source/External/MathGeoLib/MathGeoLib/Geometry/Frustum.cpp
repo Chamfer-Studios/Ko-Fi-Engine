@@ -151,6 +151,25 @@ void Frustum::SetOrthographic(float w, float h)
 	ProjectionMatrixChanged();
 }
 
+void Frustum::SetOrthographicSize(float newOrthographicWidth)
+{
+	orthographicWidth = newOrthographicWidth / AspectRatio();
+	orthographicHeight = newOrthographicWidth * 2.f;
+	ProjectionMatrixChanged();
+}
+
+void Frustum::SetOrthographicWidth(float nWidth)
+{
+	orthographicWidth = nWidth;
+	ProjectionMatrixChanged();
+}
+
+void Frustum::SetOrthographicHeight(float nHeight)
+{
+	orthographicHeight = nHeight;
+	ProjectionMatrixChanged();
+}
+
 void Frustum::WorldMatrixChanged()
 {
 	worldMatrix = ComputeWorldMatrix();
