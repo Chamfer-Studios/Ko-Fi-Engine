@@ -22,8 +22,6 @@ private:
 	bool debugOptions = false;
 	bool drawVertexNormals = false;
 	bool drawFacesNormals = false;
-
-
 };
 
 #endif // !__PANEL_INSPECTOR_H__

@@ -1,0 +1,284 @@
+{
+    "cuatrecasas": {
+        "active": true,
+        "game_objects_amount": 5,
+        "game_objects_list": [
+            {
+                "UID": 25674626,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            2395.188720703125,
+                            -1607.3148193359375
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.9098567962646484,
+                            0.41492244601249695,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998211860657,
+                            0.9999998211860657
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 5627.0,
+                        "frustum_culling": true,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.30000001192092896,
+                        "type": 4,
+                        "vertical_fov": 1.1974533796310425
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Main Camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 235793468,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "awareness",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 429438021,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            200.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            13.835017204284668,
+                            2.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Environments/Test/Cube.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": false,
+                            "shape_type": 0,
+                            "uid": 637126507
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": ""
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Cube",
+                "parent_UID": 235793468,
+                "tag": 0
+            },
+            {
+                "UID": 812037960,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            50.0,
+                            50.0,
+                            50.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "asset_path": "Assets/Models/Environments/Test/Plane.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": false,
+                            "shape_type": 0,
+                            "uid": 240322238
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": ""
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Plane",
+                "parent_UID": 235793468,
+                "tag": 0
+            },
+            {
+                "UID": 453395261,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "ambientValue": 0.5,
+                        "diffuseValue": 0.800000011920929,
+                        "lightColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "lightDirection": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "lightPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "sourceType": 0,
+                        "specularValue": 0.0,
+                        "type": 19
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": false,
+                        "isMainCamera": false,
+                        "near_plane_distance": 0.30000001192092896,
+                        "type": 4,
+                        "vertical_fov": 686.0
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Directional Light",
+                "parent_UID": 0,
+                "tag": 0
+            }
+        ],
+        "name": "cuatrecasas",
+        "navmesh": {}
+    }
+}

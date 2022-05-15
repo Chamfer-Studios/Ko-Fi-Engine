@@ -65,8 +65,14 @@ function FollowPath(speed, dt, loop)
         direction = Float3NormalizedDifference(currentPosition, currentTarget)
         DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
         delta = { x = direction.x * speed * _dt, y = direction.y * speed * _dt, z = direction.z * speed * _dt }
-        nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
-        componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
+        --nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
+        --componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
+        if (componentRigidBody ~= nil) then
+			componentRigidBody:SetLinearVelocity(float3.new(delta.x, delta.y, delta.z))
+        else
+            nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
+            componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
+		end
     elseif currentPathIndex < #_G.finalPath then
         currentPathIndex = currentPathIndex + 1
     else
@@ -142,6 +148,10 @@ function EventHandler(key, fields)
 end
 
 _dt = 0.016
+
+function Start()
+    componentRigidBody = gameObject:GetRigidBody()
+end
 
 function Update(dt)
     _dt = dt

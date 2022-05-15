@@ -28,8 +28,8 @@
 // Resources
 #include "Importer.h"
 #include "R_Material.h"
+#include "R_Animation.h"
 
-#include "glew.h"
 #include <gl/GL.h>
 
 #include <MathGeoLib/Math/float2.h>
@@ -71,12 +71,19 @@ bool C_Mesh::PostUpdate(float dt) //AKA the real render
 
 bool C_Mesh::CleanUp()
 {
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Erase(owner);
 	std::string temp(owner->GetName());
 	if (temp.find("Knife") != std::string::npos || temp.find("Decoy") != std::string::npos || temp.find("Mosquito") != std::string::npos)  // Dirty Fix before resource manager works
 		return true;
 
 	if (mesh != nullptr)
+	{
+		if (mesh->GetAnimation() != nullptr)
+			owner->GetEngine()->GetResourceManager()->FreeResource(mesh->GetAnimation()->GetUID());
+
 		owner->GetEngine()->GetResourceManager()->FreeResource(mesh->GetUID());
+	}
+
 	mesh = nullptr;
 
 	return true;
@@ -96,7 +103,11 @@ void C_Mesh::Save(Json& json) const
 		json["mesh"]["is_animated"] = mesh->IsAnimated();
 
 		if (mesh->IsAnimated())
+		{
 			json["mesh"]["root_node_UID"] = mesh->GetRootNode()->GetUID();
+			json["mesh"]["anim_uid"] = mesh->GetAnimation()->GetUID();
+			json["mesh"]["anim_path"] = mesh->GetAnimation()->GetAssetPath();
+		}
 	}
 }
 
@@ -123,7 +134,13 @@ void C_Mesh::Load(Json& json)
 			mesh->SetIsAnimated(jsonMesh.at("is_animated"));
 
 			if (mesh->IsAnimated())
+			{
+				// Setting the animation root node for the bones management.
 				mesh->SetRootNode(owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(jsonMesh.at("root_node_UID")));
+				// Setting the animation...
+				owner->GetEngine()->GetResourceManager()->LoadResource(jsonMesh.at("anim_uid"), jsonMesh.at("anim_path").get<std::string>().c_str());
+				mesh->SetAnimation((R_Animation*)owner->GetEngine()->GetResourceManager()->RequestResource(jsonMesh.at("anim_uid")));
+			}
 		}
 	}
 }
@@ -139,14 +156,6 @@ void C_Mesh::SetMesh(R_Mesh* mesh)
 	GenerateLocalBoundingBox();
 }
 
-void C_Mesh::SetPath(const char* path)
-{
-	if (mesh != nullptr)
-		mesh->SetAssetPath(path);
-	else
-		KOFI_ERROR(" Mesh: Could not set path, mesh was nullptr.");
-}
-
 void C_Mesh::SetVertexNormals(bool vertexNormals)
 {
 	if (this->mesh != nullptr)
@@ -157,15 +166,6 @@ void C_Mesh::SetFaceNormals(bool facesNormals)
 {
 	if (this->mesh != nullptr)
 		this->mesh->SetFaceNormals(facesNormals);
-}
-
-const char* C_Mesh::GetMeshPath() const
-{
-	if (mesh != nullptr)
-		return mesh->GetAssetPath();
-	else
-		KOFI_ERROR(" Mesh: Could not get assets path, mesh was nullptr.");
-	return nullptr;
 }
 
 float3 C_Mesh::GetCenterPoint() const
@@ -244,13 +244,14 @@ void C_Mesh::GenerateGlobalBoundingBox()
 	// Generate global OBB
 	obb.SetFrom(GetLocalAABB());
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
-
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Erase(owner);
+	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Insert(owner);
 	// Generate global AABB
 	aabb.SetNegativeInfinity();
 	aabb.Enclose(obb);
 }
 
-void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
+void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb, GLenum renderType)
 {
 	if (drawAABB)
 	{
@@ -260,7 +261,7 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb)
 		glLineWidth(2.0f);
 		glColor3f(rgb.x, rgb.y, rgb.z);
 
-		glBegin(GL_LINES);
+		glBegin(renderType);
 
 		// Bottom 1
 		glVertex3f(aabb.MinX(), aabb.MinY(), aabb.MinZ());
@@ -349,8 +350,8 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Draw AABB##", &drawAABB))
 			GetDrawAABB(drawAABB);
 	}
-	//else
-	//	DrawDeleteButton(owner, this);
+	/*else
+		DrawDeleteButton(owner, this);*/
 
 	return ret;
 }

@@ -110,7 +110,7 @@ void PanelTextEditor::SaveFile(std::string path)
 			if (material->shaderProgramID != 0)
 				glDeleteProgram(material->shaderProgramID);
 
-			Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetShaderPath(), material);
+			Importer::GetInstance()->materialImporter->LoadAndCreateShader(material->GetAssetPath(), material);
 		}
 	}
 }

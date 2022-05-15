@@ -84,7 +84,8 @@ bool C_Transform::CleanUp()
 bool C_Transform::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true;
-	if (ImGui::CollapsingHeader("Transform"), ImGuiTreeNodeFlags_DefaultOpen)
+	ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
+	if (ImGui::CollapsingHeader("Transform"))
 	{
 
 		// Position ImGui
@@ -188,7 +189,8 @@ void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
 
 	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
 	//transformMatrix = globalTransform;
-	isDirty = true;
+	RecomputeGlobalMatrix();
+	owner->PropagateTransform();
 }
 
 void C_Transform::SetDirty(bool isDirty)

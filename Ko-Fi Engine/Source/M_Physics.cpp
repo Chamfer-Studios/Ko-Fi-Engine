@@ -110,6 +110,7 @@ bool M_Physics::SaveConfiguration(Json& configModule) const
 {
 	configModule["Gravity"] = { world->getGravity().x, world->getGravity().y,world->getGravity().z };
 	configModule["Filters"] = filters;
+	configModule["debugPhysics"] = debugPhysics;
 	//Save filter matrix
 	configModule["Filter_Matrix"];
 	for (int i = 0; i < filters.size(); ++i)
@@ -131,6 +132,10 @@ bool M_Physics::LoadConfiguration(Json& configModule)
 	if (configModule.contains("Filters"))
 	{
 		filters = configModule.at("Filters").get<std::map<unsigned int, std::string>>();
+	}
+	if (configModule.contains("debugPhysics"))
+	{
+		debugPhysics = configModule.at("debugPhysics");
 	}
 	if (configModule.contains("Filter_Matrix"))
 	{
@@ -361,7 +366,7 @@ void M_Physics::DeleteBodyFromObjectMap(GameObject* go)
 	}
 }
 
-void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
+void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, std::string uid, sol::function* callback)
 {
 	// Create the ray 
 	reactphysics3d::Vector3 sPoint(startPoint.x, startPoint.y, startPoint.z);
@@ -369,7 +374,7 @@ void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filt
 	reactphysics3d::Ray ray(sPoint, ePoint);
 
 	// Create an instance of your callback class 
-	CustomRayCastCallback callbackObject(senderGo);
+	CustomRayCastCallback callbackObject(senderGo, uid, callback);
 	unsigned int mask = 0;
 	for (auto filter : filters)
 	{
@@ -743,9 +748,11 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 
 }
 
-CustomRayCastCallback::CustomRayCastCallback(GameObject* raycastSender)
+CustomRayCastCallback::CustomRayCastCallback(GameObject* raycastSender, std::string _uid, sol::function* _callback)
 {
 	this->raycastSender = raycastSender;
+	this->callback = _callback;
+	this->uid = _uid;
 }
 
 reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysics3d::RaycastInfo& info)
@@ -760,6 +767,8 @@ reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysi
 		if (!script->s->path.empty())
 		script->s->handler->lua["OnRayCastHit"]();
 	}
+
+	if (this->callback != nullptr) this->callback->call(uid);
 
 	// Return a fraction of 1.0 to gather all hits 
 	return reactphysics3d::decimal(1.0);

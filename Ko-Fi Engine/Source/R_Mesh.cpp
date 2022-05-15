@@ -165,7 +165,7 @@ void R_Mesh::Draw()
 
 	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
 
-	DebugDraw();
+	//DebugDraw();
 
 	glBindVertexArray(0);
 
@@ -463,7 +463,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	float timeInTicks = timeInSeconds * ticksPerSecond;
 
 	float startFrame, endFrame, animDur;
-	AnimatorClip* selectedClip = gameObject->GetComponent<C_Animator>()->GetSelectedClip();
+	AnimatorClip* selectedClip = gameObject->GetParent()->GetComponent<C_Animator>()->GetSelectedClip();
 	if (selectedClip != nullptr)
 	{
 		startFrame = selectedClip->GetStartFrame();
@@ -485,7 +485,10 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 	if ((selectedClip->GetDurationInSeconds() - animationSeconds) <= 0.1f && timeInSeconds != 0.0f)
 	{
 		if (!selectedClip->GetLoopBool())
+		{
 			selectedClip->SetFinishedBool(true);
+			return;
+		}
 	}
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.

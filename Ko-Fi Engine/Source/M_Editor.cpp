@@ -151,6 +151,7 @@ bool M_Editor::Awake(Json configModule)
 	//input->gameObjects = &gameObjects;
 	ImGuizmo::Enable(true);
 	ImGuizmo::AllowAxisFlip(false);
+	
 
 	ret = LoadConfiguration(configModule);
 #ifndef  KOFI_GAME
@@ -220,6 +221,12 @@ bool M_Editor::PreUpdate(float dt)
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
+
+	if ((engine->GetInput()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
+	{
+		if(engine->GetSceneManager()->GetGameState() != GameState::PLAYING)
+		toggleCloseAppPopUpPanel = !toggleCloseAppPopUpPanel;
+	}
 
 	// Panels PreUpdate
 	if (ret == true)

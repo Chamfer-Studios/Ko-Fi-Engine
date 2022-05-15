@@ -6,6 +6,8 @@
 #include <map>
 #include <string>
 #include "MathGeoLib/Math/float3.h"
+#include "sol.hpp"
+
 class GameObject;
 class M_Physics;
 class PhysicsEventListener : public reactphysics3d::EventListener
@@ -23,12 +25,13 @@ private:
 class CustomRayCastCallback : public reactphysics3d::RaycastCallback {
 
 public:
-	CustomRayCastCallback(GameObject* raycastSender);
+	CustomRayCastCallback(GameObject* raycastSender, std::string _uid = "", sol::function* _callback = nullptr);
 	virtual reactphysics3d::decimal notifyRaycastHit(const reactphysics3d::RaycastInfo& info);
 public:
 	GameObject* raycastSender = nullptr;
+	sol::function* callback = nullptr;
+	std::string uid = "";
 };
-
 
 class M_Physics : public Module
 {
@@ -78,7 +81,7 @@ public:
 	void DeleteBodyFromObjectMap(GameObject* go);
 
 	//RayCast
-	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo);
+	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, std::string uid = "", sol::function * callback = nullptr);
 
 	inline bool IsDebugPhysics() const { return debugPhysics; };
 	inline void DebugPhysics(const bool newDebugPhysics) { debugPhysics = newDebugPhysics; }

@@ -1391,7 +1391,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 
 	C_Animator* cAnim = (C_Animator*)gameObj->AddComponentByType(ComponentType::ANIMATOR);
 	if (cAnim != nullptr)
-		cAnim->SetAnim(anim);
+		cAnim->SetAnimation(anim);
 	else
 	{
 		KOFI_ERROR(" Component Animator is nullptr.");
