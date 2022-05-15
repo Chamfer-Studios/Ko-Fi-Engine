@@ -1,0 +1,153 @@
+{
+    "Blood": {
+        "emitters": [
+            {
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 1.5,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.75,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 2,
+                        "type": 5
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 0.5
+                            }
+                        ],
+                        "type": 3
+                    },
+                    {
+                        "followForward": true,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "maxPosition": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "maxVelocity": 5.0,
+                        "minAcceleration": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minDirection": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "minPosition": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "minVelocity": 0.0,
+                        "randAcceleration": false,
+                        "randDirection": false,
+                        "randPosition": true,
+                        "randVelocity": false,
+                        "type": 2
+                    }
+                ],
+                "name": "Blood Splatters",
+                "texture_path": "Assets/Textures/Particles/blood.png"
+            },
+            {
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 3.5,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 1.0,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 2,
+                        "type": 5
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 0.5
+                            }
+                        ],
+                        "type": 3
+                    },
+                    {
+                        "followForward": true,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "maxPosition": [
+                            0.5,
+                            0.5,
+                            0.5
+                        ],
+                        "maxVelocity": 5.0,
+                        "minAcceleration": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minDirection": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "minPosition": [
+                            -0.5,
+                            -0.5,
+                            -0.5
+                        ],
+                        "minVelocity": 0.0,
+                        "randAcceleration": false,
+                        "randDirection": false,
+                        "randPosition": true,
+                        "randVelocity": false,
+                        "type": 2
+                    }
+                ],
+                "name": "Blood Pools",
+                "texture_path": "Assets/Textures/Particles/blood_huge.png"
+            }
+        ],
+        "name": "Blood"
+    }
+}

@@ -13,6 +13,7 @@
                         "type": 1
                     },
                     {
+                        "followForward": true,
                         "maxAcceleration": [
                             0.25,
                             0.25,
@@ -40,14 +41,13 @@
                             1.0
                         ],
                         "minPosition": [
-                            5.0,
                             0.0,
-                            0.0
+                            0.0,
+                            -4.0
                         ],
                         "minVelocity": -0.5,
                         "randAcceleration": false,
                         "randDirection": true,
-                        "followForward": true,
                         "randPosition": false,
                         "randVelocity": true,
                         "type": 2
@@ -84,7 +84,7 @@
                         "type": 3
                     },
                     {
-                        "billboardingType": 1,
+                        "billboardingType": 6,
                         "type": 5
                     }
                 ],

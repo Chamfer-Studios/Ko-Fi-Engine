@@ -1,0 +1,126 @@
+{
+    "Click Feedback": {
+        "emitters": [
+            {
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 0.800000011920929,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.7749999761581421,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 2,
+                        "type": 5
+                    },
+                    {
+                        "followForward": false,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "maxPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "maxVelocity": 5.0,
+                        "minAcceleration": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minDirection": [
+                            0.0,
+                            -1.0,
+                            0.0
+                        ],
+                        "minPosition": [
+                            0.0,
+                            2.0,
+                            0.0
+                        ],
+                        "minVelocity": 2.0,
+                        "randAcceleration": false,
+                        "randDirection": false,
+                        "randPosition": false,
+                        "randVelocity": false,
+                        "type": 2
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 0.5
+                            }
+                        ],
+                        "type": 3
+                    }
+                ],
+                "name": "Arrow",
+                "texture_path": "Assets/Textures/Particles/arrow.png"
+            },
+            {
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 0.800000011920929,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.7749999761581421,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 6,
+                        "type": 5
+                    },
+                    {
+                        "minFinalSize": [
+                            1.5,
+                            1.5,
+                            1.5
+                        ],
+                        "minInitialSize": [
+                            3.0,
+                            3.0,
+                            3.0
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 0.5
+                            }
+                        ],
+                        "type": 3
+                    }
+                ],
+                "name": "Circle",
+                "texture_path": "Assets/Textures/Particles/wave.png"
+            }
+        ],
+        "name": "Click Feedback"
+    }
+}

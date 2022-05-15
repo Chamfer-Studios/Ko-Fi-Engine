@@ -1,0 +1,40 @@
+{
+    "Green Light": {
+        "emitters": [
+            {
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 0.20000000298023224,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.10000000149011612,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 2,
+                        "type": 5
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    0.0,
+                                    1.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 0.5
+                            }
+                        ],
+                        "type": 3
+                    }
+                ],
+                "name": "Light",
+                "texture_path": "Assets/Textures/Particles/light.png"
+            }
+        ],
+        "name": "Green Light"
+    }
+}

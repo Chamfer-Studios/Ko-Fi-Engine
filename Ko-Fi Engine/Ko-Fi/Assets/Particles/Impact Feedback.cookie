@@ -1,5 +1,5 @@
 {
-    "New Particle Effect": {
+    "Impact Feedback": {
         "emitters": [
             {
                 "maxParticles": 500,
@@ -7,12 +7,17 @@
                     {
                         "maxParticleLife": 3.0,
                         "minParticleLife": 1.0,
-                        "particlesPerSpawn": 1,
+                        "particlesPerSpawn": 10,
                         "randomParticleLife": false,
                         "spawnTime": 0.5,
                         "type": 1
                     },
                     {
+                        "billboardingType": 6,
+                        "type": 5
+                    },
+                    {
+                        "followForward": false,
                         "maxAcceleration": [
                             0.25,
                             0.25,
@@ -30,9 +35,9 @@
                         ],
                         "maxVelocity": 5.0,
                         "minAcceleration": [
-                            -0.25,
                             0.0,
-                            -0.25
+                            0.0,
+                            0.0
                         ],
                         "minDirection": [
                             1.0,
@@ -44,25 +49,12 @@
                             0.0,
                             0.0
                         ],
-                        "minVelocity": 3.0,
+                        "minVelocity": 0.5,
                         "randAcceleration": false,
-                        "randDirection": false,
-                        "followForward": true,
+                        "randDirection": true,
                         "randPosition": false,
                         "randVelocity": false,
                         "type": 2
-                    },
-                    {
-                        "minInitialSize": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 4
-                    },
-                    {
-                        "billboardingType": 2,
-                        "type": 5
                     },
                     {
                         "colors": [
@@ -73,16 +65,25 @@
                                     1.0,
                                     1.0
                                 ],
-                                "position": 0.5
+                                "position": 0.0
+                            },
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    0.0
+                                ],
+                                "position": 1.0
                             }
                         ],
                         "type": 3
                     }
                 ],
-                "name": "Emitter",
-                "texture_path": "Assets/Textures/Particles/light.png"
+                "name": "Sparks",
+                "texture_path": "Assets/Textures/Particles/dash_projectile.png"
             }
         ],
-        "name": "New Particle Effect"
+        "name": "Impact Feedback"
     }
 }

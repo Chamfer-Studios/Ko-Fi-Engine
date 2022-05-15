@@ -13,7 +13,7 @@
                         "type": 1
                     },
                     {
-                        "billboardingType": 2,
+                        "billboardingType": 6,
                         "type": 5
                     },
                     {
@@ -57,11 +57,6 @@
                         "type": 2
                     },
                     {
-                        "minFinalSize": [
-                            0.5,
-                            0.5,
-                            0.5
-                        ],
                         "minInitialSize": [
                             5.0,
                             5.0,

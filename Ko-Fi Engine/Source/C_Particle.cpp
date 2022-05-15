@@ -281,7 +281,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								ImGui::Text(spawnTimerName.c_str());
 
 								float spawnTime = e->spawnTime;
-								if (ImGui::DragFloat("SpawnTime", &spawnTime,0.001f, 0.0f, 25.0f,"%.3f"))
+								if (ImGui::DragFloat("SpawnTime", &spawnTime,0.005f, 0.0f, 25.0f,"%.3f"))
 									e->spawnTime = spawnTime;
 
 								bool randomParticleLife = e->randomParticleLife;
@@ -291,7 +291,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (randomParticleLife)
 								{
 									float particleLife[2] = { e->minParticleLife,e->maxParticleLife };
-									if (ImGui::DragFloat2("ParticleLife", particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
+									if (ImGui::DragFloat2("ParticleLife", particleLife, 0.005f, 0.0f, 1000.0f, "%.3f"))
 									{
 										e->minParticleLife = particleLife[0];
 										e->maxParticleLife = particleLife[1];
@@ -300,7 +300,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								else
 								{
 									float particleLife = e->minParticleLife;
-									if (ImGui::DragFloat("ParticleLife", &particleLife, 0.1f, 0.0f, 1000.0f, "%.1f"))
+									if (ImGui::DragFloat("ParticleLife", &particleLife, 0.005f, 0.0f, 1000.0f, "%.3f"))
 										e->minParticleLife = particleLife;
 								}
 
@@ -453,6 +453,8 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									if (ImGui::DragFloat("Position", &p, 0.005f, 0.0f, 1.0f, "%.3f"))
 										currentColor.pos = p;
 
+									(*color) = currentColor;
+
 									if (ImGui::Button("Delete Color"))
 									{
 										e->colorOverTime.erase(color);
@@ -503,7 +505,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								if (constantSize)
 								{
 									float size[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
-									if (ImGui::DragFloat3("Size", size, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+									if (ImGui::DragFloat3("Size", size, 0.005f, 0.0f, 10000.0f, "%.3f"))
 										e->minInitialSize = { size[0],size[1],size[2] };
 								}
 								else
@@ -511,34 +513,34 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									if (randomInitialSize)
 									{
 										float minInitialSize[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
-										if (ImGui::DragFloat3("Min Initial Size", minInitialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Min Initial Size", minInitialSize, 0.005f, 0.0f, 10000.0f, "%.3f"))
 											e->minInitialSize = { minInitialSize[0],minInitialSize[1],minInitialSize[2] };
 
 										float maxInitialSize[3] = { e->maxInitialSize.x,e->maxInitialSize.y,e->maxInitialSize.z };
-										if (ImGui::DragFloat3("Max Initial Size", maxInitialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Max Initial Size", maxInitialSize, 0.005f, 0.0f, 10000.0f, "%.3f"))
 											e->maxInitialSize = { maxInitialSize[0],maxInitialSize[1],maxInitialSize[2] };
 									}
 									else
 									{
 										float initialSize[3] = { e->minInitialSize.x,e->minInitialSize.y,e->minInitialSize.z };
-										if (ImGui::DragFloat3("Initial Size", initialSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Initial Size", initialSize, 0.005f, 0.0f, 10000.0f, "%.3f"))
 											e->minInitialSize = { initialSize[0],initialSize[1],initialSize[2] };
 									}
 
 									if (randomFinalSize)
 									{
 										float minFinalSize[3] = { e->minFinalSize.x,e->minFinalSize.y,e->minFinalSize.z };
-										if (ImGui::DragFloat3("Min Final Size", minFinalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Min Final Size", minFinalSize, 0.005f, 0.0f, 10000.0f, "%.3f"))
 											e->minFinalSize = { minFinalSize[0],minFinalSize[1],minFinalSize[2] };
 
 										float maxFinalSize[3] = { e->maxFinalSize.x,e->maxFinalSize.y,e->maxFinalSize.z };
-										if (ImGui::DragFloat3("Max Final Size", maxFinalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Max Final Size", maxFinalSize, 0.005f, 0.0f, 10000.0f, "%.3f"))
 											e->maxFinalSize = { maxFinalSize[0],maxFinalSize[1],maxFinalSize[2] };
 									}
 									else
 									{
 										float finalSize[3] = { e->minFinalSize.x,e->minFinalSize.y,e->minFinalSize.z };
-										if (ImGui::DragFloat3("Final Size", finalSize, 0.1f, -10000.0f, 10000.0f, "%.1f"))
+										if (ImGui::DragFloat3("Final Size", finalSize, 0.005f, 0.0f, 10000.0f, "%.3f"))
 											e->minFinalSize = { finalSize[0],finalSize[1],finalSize[2] };
 									}
 								}

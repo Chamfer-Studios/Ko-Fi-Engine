@@ -1,0 +1,26 @@
+{
+    "Debuff Indicator": {
+        "emitters": [
+            {
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 0.20000000298023224,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.17499999701976776,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 2,
+                        "type": 5
+                    }
+                ],
+                "name": "Debuff",
+                "texture_path": "Assets/Textures/Particles/arrow.png"
+            }
+        ],
+        "name": "Debuff Indicator"
+    }
+}
