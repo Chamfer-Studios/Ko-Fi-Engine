@@ -10,6 +10,7 @@
 
 #include <vector>
 #include "M_Physics.h"
+#include "M_Renderer3D.h"
 #include "C_RigidBody.h"
 
 GameObject* Scene::GetGameObject(int uid)
@@ -113,6 +114,8 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 		}
 		RELEASE(gameObject);
 	}
+
+	engine->GetRenderer()->ResetFrustumCulling();
 }
 
 void Scene::RemoveGameObjectIterator(std::vector<GameObject*>::iterator go)

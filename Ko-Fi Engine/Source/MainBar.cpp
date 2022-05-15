@@ -6,6 +6,7 @@
 #include "M_FileSystem.h"
 #include "M_SceneManager.h"
 #include "M_ResourceManager.h"
+#include "M_Renderer3D.h"
 
 // GameObject
 #include "GameObject.h"
@@ -82,6 +83,7 @@ bool MainBar::Update()
 			}
 			if (ImGui::MenuItem("Clean Models"))
 			{
+				editor->engine->GetRenderer()->ResetFrustumCulling();
 				editor->engine->GetSceneManager()->GetCurrentScene()->DeleteCurrentScene();
 
 			}
