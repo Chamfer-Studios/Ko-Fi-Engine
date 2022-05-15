@@ -487,7 +487,6 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 		if (!selectedClip->GetLoopBool())
 		{
 			selectedClip->SetFinishedBool(true);
-			return;
 		}
 	}
 
