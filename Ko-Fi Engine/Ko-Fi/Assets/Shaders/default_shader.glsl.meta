@@ -2,7 +2,7 @@
     "asset_file": "default_shader.glsl",
     "asset_path": "Assets/Shaders/default_shader.glsl",
     "contained_resources": null,
-    "hash": "b29a40db8f9675504355e0925ca88a3b",
+    "hash": "02aca7008deb0172738fc3c0a7fbe588",
     "library_file": "43389632.glsl",
     "library_path": "Library/Shaders/43389632.glsl",
     "type": 4,
