@@ -167,7 +167,7 @@ public:
 
 		// Quaternion structure
 		lua.new_usertype<Quat>("Quat",
-			sol::constructors<void(float, float, float, float)>(),
+			sol::constructors<void(float, float, float, float),void(float3,float)>(),
 			"x", &Quat::x,
 			"y", &Quat::y,
 			"z", &Quat::z,
