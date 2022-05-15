@@ -20,6 +20,7 @@
 #include "M_FileSystem.h"
 #include "R_Texture.h"
 #include "M_UI.h"
+#include "M_Navigation.h"
 
 #include <imgui.h>
 #include "imgui_impl_opengl3.h"
@@ -159,6 +160,8 @@ bool M_Renderer3D::PostUpdate(float dt)
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	RenderScene(engine->GetCamera3D()->currentCamera);
+
+	engine->GetNavigation()->DrawNavmesh();
 
 	isFirstPass = false;
 
