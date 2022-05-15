@@ -33,7 +33,7 @@ std::string Scripting::GetDialogueString(const char* key, int id)
 	{
 		if ((*file).first == path)
 		{
-			KOFI_DEBUG("File Found: %s", (*file).first);
+			//KOFI_DEBUG("File Found: %s", (*file).first);
 			Json dialogues = (*file).second.at("dialogues");
 			for (const auto& node : dialogues.items())
 			{
@@ -57,7 +57,7 @@ int Scripting::GetDialogueTargetID(const char* key, int id)
 	{
 		if ((*file).first == path)
 		{
-			KOFI_DEBUG("File Found: %s", (*file).first);
+			//KOFI_DEBUG("File Found: %s", (*file).first);
 			Json dialogues = (*file).second.at("dialogues");
 			for (const auto& node : dialogues.items())
 			{
