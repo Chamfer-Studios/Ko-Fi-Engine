@@ -76,11 +76,10 @@ bool C_Camera::Update(float dt)
 	//Transform Update Camera Frustum
 	//Camera Position Rotation of the camera
 
+	// SET CAMERA FRUSTUM, OBJECT TRANSFORM
+	cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
 	if (!isEngineCamera && owner->GetEngine()->GetCamera3D()->currentCamera == this)
 	{
-		// SET CAMERA FRUSTUM, OBJECT TRANSFORM
-		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
-		//Transform Update Camera Frustum
 		//Camera Position Rotation of the camera
 
 		ApplyCullings(isSphereCullingActive, isFrustumCullingActive);
