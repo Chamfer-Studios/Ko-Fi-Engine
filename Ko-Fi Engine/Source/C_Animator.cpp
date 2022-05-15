@@ -59,7 +59,25 @@ bool C_Animator::Start()
 	return ret;
 }
 
+bool C_Animator::PreUpdate()
+{
+	bool ret = true;
+
+	M_SceneManager* sceneManager = owner->GetEngine()->GetSceneManager();
+	GameState gameState = sceneManager->GetGameState();
+	if ( gameState == GameState::PLAYING ||
+		gameState == GameState::TICK)
+		animTime += sceneManager->GetGameDt();
+
+	return ret;
+}
+
 bool C_Animator::Update(float dt)
+{
+	return true;
+}
+
+bool C_Animator::PostUpdate()
 {
 	return true;
 }
@@ -150,6 +168,8 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == selectedClip), ImGuiSelectableFlags_None))
 				{
 					selectedClip = &clip->second;
+
+					ResetAnimation();
 
 					/*strcpy(editedName, selectedClip->GetName());
 					editedStart = (int)selectedClip->GetStart();
@@ -346,6 +366,12 @@ void C_Animator::SetSelectedClip(std::string name)
 			break;
 		}
 	}
+
+	ResetAnimation();
+}
+
+void C_Animator::ResetAnimation()
+{
 	selectedClip->SetFinishedBool(false);
-	owner->GetEngine()->GetSceneManager()->ResetTimer();
+	animTime = 0.0f;
 }

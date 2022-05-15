@@ -26,7 +26,6 @@ class C_Text;
 class C_Image;
 class C_Button;
 
-
 enum class GameState
 {
 	PLAYING,
@@ -41,8 +40,8 @@ public:
 	M_SceneManager(KoFiEngine* engine);
 	~M_SceneManager();
 
-	bool Awake(Json configModule);
 	// Called before render is available
+	bool Awake(Json configModule);
 
 	// Called before the first frame
 	virtual bool Start();
@@ -62,7 +61,7 @@ public:
 	// Method to receive and manage events
 	void OnNotify(const Event& event);
 
-		// Engine config serialization --------------------------------------
+	// Engine config serialization --------------------------------------
 	bool SaveConfiguration(Json& configModule) const override;
 	bool LoadConfiguration(Json& configModule) override;
 	// ------------------------------------------------------------------
@@ -96,8 +95,6 @@ public:
 	void OnTick();
 	void OnClick(SDL_Event event);
 
-	void ResetTimer();
-
 	// Guizmo
 	ImGuizmo::OPERATION GetGizmoOperation() { return currentGizmoOperation; }
 	void SetGizmoOperation(ImGuizmo::OPERATION operation) { currentGizmoOperation = operation; }
@@ -126,8 +123,8 @@ private:
 
 	GameState runtimeState = GameState::STOPPED;
 
-	// TIME MANAGEMENT
-	// --------------------------------------------------
+	// GAME TIME MANAGEMENT
+	// ----------------------------------------------------------------------------------------------------
 	// Frame Count: app graphics frames since game start
 	uint frameCount = 0;
 	// Time: second since game start (Game Clock)
@@ -142,7 +139,7 @@ private:
 	float gameTime = 0.0f; // Total game time
 	// Real Time Since Startup: seconds since game start (Real Time Clock) --> Engine.cpp
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
-	// --------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------
 };
 
 #endif // !__M_SCENE_MANAGER_H__

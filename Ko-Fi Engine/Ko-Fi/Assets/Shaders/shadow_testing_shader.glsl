@@ -52,7 +52,6 @@ void main() {
     //normals affected by model movement
     normal = normalize(model_matrix * vec4(normals, 0.0));
     fragPosLightSpace = lightSpaceMatrix * vec4(fragPos, 1.0);
-
 }
 
 #shader fragment
@@ -108,7 +107,6 @@ struct FocalLight {
     vec3 position;
     vec3 direction;
     float cutOffAngle; //cosine of the actual angle
-    float range; //range of the light
     
     float ambient;
     float diffuse;
@@ -120,7 +118,7 @@ struct FocalLight {
       
 }; uniform FocalLight focalLights[MAX_FOCAL_LIGHTS];
 
-float ShadowCalculation(vec4 fragPosLightSpace, DirLight light)
+float ShadowCalculation(vec4 fragPosLightSpace)
 {
     // perform perspective divide
     //When using an orthographic projection matrix the w component of a 
@@ -132,12 +130,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, DirLight light)
     projCoords = projCoords * 0.5 + 0.5; 
     float closestDepth = texture(depthMap, projCoords.xy).r;   
     float currentDepth = projCoords.z; 
-
-    vec3 lightDir = normalize(-light.direction);
-    //the bias is to reduce artifacts when looking at shadows from an angle.
-    //simply offsets the depth of the shadow map a little
-    float bias = 0.01; 
-    float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;  
+    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;  
 
     return (1.0 - shadow);
 }
@@ -155,11 +148,20 @@ vec3 CalcDirLight(DirLight light, vec3 normal, float shadow)
     //vec3 reflectDir = reflect(-lightDir, normal);
     //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
    
+    // DEBUG: green color for fragments with fragpos smaller than the depth value
+    if(shadow == 1)
+    {
+        light.color = vec3(0.0, .0, 1.0);
+    }
+    else// DEBUG: red color for fragments with fragpos bigger than the depth value
+    {
+        light.color = vec3(1.0, 0.0, 0.0);
+    }
     // combine results
     vec3 ambient  = light.ambient * light.color;
     vec3 diffuse  = light.diffuse * diff * light.color;
     //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
-    ret = (ambient + diffuse) * shadow; //+ specular
+    ret = ambient + diffuse; //+ specular
 
     return ret;
 }
@@ -192,13 +194,12 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
 {
     //calculate vector between position of light source and fragment
     vec3 lightDir = normalize(light.position - fragPos);
-    float distance = length(light.position - fragPos);
 
     //cosinus of the angle between the previous vector and 
         //the direction of the focal light cone
     float theta = dot(lightDir, normalize(light.direction));
 
-    if (theta > light.cutOffAngle && distance < light.range)
+    if (theta > light.cutOffAngle)
     {
         // -- diffuse shading -- 
         float diff = max(dot(normal, lightDir), 0.0);
@@ -209,15 +210,12 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
 
         // -- attenuation -- 
         float distance    = length(light.position - fragPos);
-        float denom = (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
-        float attenuation = 1.0 / denom;
-        if (denom == 0.0) {
-            attenuation = 1.0;
-        }
+        float attenuation = 1.0 / (light.constant + light.linear * distance + 
+  			     light.quadratic * (distance * distance));    
 
         // -- combine results --
         vec3 ambient  = light.ambient  * light.color;
-        vec3 diffuse  = light.diffuse  * 1.0 * light.color;
+        vec3 diffuse  = light.diffuse  * diff * light.color;
         //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
         diffuse  *= attenuation;
         //specular *= attenuation;
@@ -235,37 +233,20 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
     }
 } 
 
+
 void main() {
 
     //output color value 
     vec3 outputColor = vec3(0.0);
 
+     // --- Calculate shadow ---
+    float shadow = ShadowCalculation(fragPosLightSpace);       
+    
     // --- Add the directional light's contribution to the output color ---
     //loop dirLights
     for(int i = 0; i < numOfDirectionalLights; i++)
     {
-       // Calculate shadow (temporarily only on light 0)
-       float shadow = 1;
-       
-       if(i == 0)
-       {
-           shadow = ShadowCalculation(fragPosLightSpace, dirLights[i]);
-       }
-
         outputColor += CalcDirLight(dirLights[i], vec3(normal), shadow); 
-    }
-
-    // --- Add the point light's contribution to the output color ---
-    //loop dirLights
-    for(int i = 0; i < numOfPointLights; i++)
-    {
-        outputColor += CalcPointLight(pointLights[i], vec3(normal), fragPos); 
-    }
-
-    // --- Add the focal light's contribution to the output color ---
-    for(int i = 0; i < numOfFocalLights; i++)
-    {
-        outputColor += CalcFocalLight(focalLights[i], vec3(normal), fragPos); 
     }
 
     //---- Apply output to the texture ----//
@@ -273,6 +254,6 @@ void main() {
     vec4 textureColor = texture(ourTexture, TexCoord);
 
     //color + lighting
-    color = textureColor * vec4(outputColor, 1.0);
+    color = textureColor * vec4(outputColor, 1.0) * shadow;
 
 }

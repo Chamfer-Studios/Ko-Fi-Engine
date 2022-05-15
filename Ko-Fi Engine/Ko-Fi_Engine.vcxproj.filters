@@ -322,7 +322,7 @@
     <ClCompile Include="Source\ParticleModule.cpp">
       <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QuadTree3D.cpp">
+    <ClCompile Include="Source\Quadtree.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\M_SceneManager.cpp">
@@ -906,7 +906,7 @@
     <ClInclude Include="Source\Iterable.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QuadTree3D.h">
+    <ClInclude Include="Source\Quadtree.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\M_SceneManager.h">

@@ -165,7 +165,7 @@ void R_Mesh::Draw()
 
 	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
 
-	DebugDraw();
+	//DebugDraw();
 
 	glBindVertexArray(0);
 

@@ -415,7 +415,18 @@ end
 
 oldSourcePos = nil
 
+coneLight = gameObject:GetLight()
+
 function Update(dt)
+    if coneLight == nil then
+        coneLight = gameObject:GetLight()
+    end
+
+    if coneLight ~= nil then
+        coneLight:SetDirection(float3.new(-componentTransform:GetFront().x, -componentTransform:GetFront().y, -componentTransform:GetFront().z))
+        coneLight:SetRange(visionConeRadius)
+        coneLight:SetAngle(visionConeAngle / 2)
+    end
 
     -- Death Mark (Weirding way)
     if (deathMarkTimer ~= nil) then
