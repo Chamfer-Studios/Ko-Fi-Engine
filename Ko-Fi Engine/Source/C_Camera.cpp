@@ -59,6 +59,8 @@ bool C_Camera::Start()
 
 	owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
 
+	cameraFrustum.SetViewPlaneDistances(GetNearPlaneDistance(), GetFarPlaneDistance());
+
 	bool ret = true;
 
 	return ret;

@@ -34,6 +34,7 @@
 #include "C_RigidBody.h"
 #include "C_BoxCollider.h"
 #include "C_LightSource.h"
+#include "RNG.h"
 
 enum INSPECTOR_VARIABLE_TYPE
 {
@@ -362,6 +363,7 @@ public:
 		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
 		lua.set_function("DrawLine", &Scripting::DrawLine, this);
+		lua.set_function("RNG", &Scripting::RNG, this);
 	}
 
 	bool CleanUp()
@@ -453,12 +455,12 @@ public:
 
 	void RayCast(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
 	{
-		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, nullptr);
+		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, "", nullptr);
 	}
 
-	void RayCastLambda(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, sol::function callback)
+	void RayCastLambda(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, std::string uid, sol::function callback)
 	{
-		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, &callback);
+		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, uid, &callback);
 	}
 
 	M_Navigation* GetNavigation()
@@ -716,7 +718,11 @@ public:
 
 	void DrawLine(float3 a, float3 b) {
 		gameObject->GetEngine()->GetRenderer()->DrawLine(a, b);
-	} 
+	}
+
+	uint32 RNG() {
+		return RNG::GetRandomUint();
+	}
 
 	float3 LuaMulQuat(Quat quat, float3 vector)
 	{
