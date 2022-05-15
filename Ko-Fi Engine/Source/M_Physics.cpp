@@ -366,7 +366,7 @@ void M_Physics::DeleteBodyFromObjectMap(GameObject* go)
 	}
 }
 
-void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
+void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, sol::function* callback)
 {
 	// Create the ray 
 	reactphysics3d::Vector3 sPoint(startPoint.x, startPoint.y, startPoint.z);
@@ -374,7 +374,7 @@ void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filt
 	reactphysics3d::Ray ray(sPoint, ePoint);
 
 	// Create an instance of your callback class 
-	CustomRayCastCallback callbackObject(senderGo);
+	CustomRayCastCallback callbackObject(senderGo, callback);
 	unsigned int mask = 0;
 	for (auto filter : filters)
 	{
@@ -748,9 +748,10 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 
 }
 
-CustomRayCastCallback::CustomRayCastCallback(GameObject* raycastSender)
+CustomRayCastCallback::CustomRayCastCallback(GameObject* raycastSender, sol::function* _callback)
 {
 	this->raycastSender = raycastSender;
+	this->callback = _callback;
 }
 
 reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysics3d::RaycastInfo& info)
@@ -765,6 +766,8 @@ reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysi
 		if (!script->s->path.empty())
 		script->s->handler->lua["OnRayCastHit"]();
 	}
+
+	this->callback->call();
 
 	// Return a fraction of 1.0 to gather all hits 
 	return reactphysics3d::decimal(1.0);

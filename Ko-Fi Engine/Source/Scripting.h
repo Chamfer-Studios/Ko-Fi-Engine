@@ -360,7 +360,7 @@ public:
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
-
+		lua.set_function("DrawLine", &Scripting::DrawLine, this);
 	}
 
 	bool CleanUp()
@@ -445,9 +445,9 @@ public:
 		}
 	}
 
-	void RayCast(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
+	void RayCast(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, sol::function callback)
 	{
-		return  gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo);
+		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, &callback);
 	}
 
 	M_Navigation* GetNavigation()
@@ -703,6 +703,9 @@ public:
 		gameObject->GetEngine()->GetRenderer()->DrawCone(position, forward, up, angle, length);
 	}
 
+	void DrawLine(float3 a, float3 b) {
+		gameObject->GetEngine()->GetRenderer()->DrawLine(a, b);
+	} 
 
 	float3 LuaMulQuat(Quat quat, float3 vector)
 	{

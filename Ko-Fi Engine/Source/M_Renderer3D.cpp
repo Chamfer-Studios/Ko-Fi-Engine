@@ -1043,6 +1043,20 @@ void M_Renderer3D::DrawCircle(float3 position, float radius)
 	//}
 }
 
+void M_Renderer3D::DrawLine(float3 a, float3 b)
+{
+	glColor3f(0.0f, 1.0f, 1.0f);
+	glLineWidth(3.0f);
+
+	glBegin(GL_LINES);
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+	glEnd();
+
+	glLineWidth(1.0f);
+	glColor3f(1.0f, 1.0f, 1.0f);
+}
+
 // Debug ray for mouse picking
 void M_Renderer3D::DrawRay()
 {
