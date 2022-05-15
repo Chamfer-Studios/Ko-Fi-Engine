@@ -141,6 +141,9 @@ public:
 private:
 	std::string name;
 	std::vector<Component*> components;
+
+	std::vector<Component*> componentsToBeDeleted;
+
 	GameObject* parent = nullptr;
 	UID uid;
 	UID parentUid;

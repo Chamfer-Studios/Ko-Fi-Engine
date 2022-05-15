@@ -94,6 +94,21 @@ bool GameObject::Start()
 bool GameObject::PreUpdate()
 {
 	bool ret = true;
+
+	for (Component* component : componentsToBeDeleted)
+	{
+		auto componentIt = std::find(components.begin(), components.end(), component);
+		if (componentIt != components.end())
+		{
+			//(*componentIt)->CleanUp();
+			RELEASE(*componentIt);
+			components.erase(componentIt);
+			components.shrink_to_fit();
+		}
+	}
+
+	componentsToBeDeleted.clear();
+
 	for (Component* component : components)
 		ret = component->PreUpdate();
 
@@ -223,14 +238,7 @@ void GameObject::Disable()
 
 void GameObject::DeleteComponent(Component* component)
 {
-	auto componentIt = std::find(components.begin(), components.end(), component);
-	if (componentIt != components.end())
-	{
-		//(*componentIt)->CleanUp();
-		RELEASE(*componentIt);
-		components.erase(componentIt);
-		components.shrink_to_fit();
-	}
+	componentsToBeDeleted.push_back(component);
 }
 
 Component* GameObject::AddComponentByType(ComponentType componentType)
