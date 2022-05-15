@@ -208,7 +208,6 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
         //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
         // -- attenuation -- 
-        float distance    = length(light.position - fragPos);
         float denom = (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
         float attenuation = 1.0 / denom;
         if (denom == 0.0) {

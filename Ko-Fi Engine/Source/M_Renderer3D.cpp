@@ -678,9 +678,12 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
 				if (light)
 				{
-					DirectionalLight* dirLight = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
-					GLint lightSpaceMatrix = glGetUniformLocation(shader, "lightSpaceMatrix");
-					glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, dirLight->lightSpaceMatrix.Transposed().ptr());
+					C_LightSource* lightSource = light->GetComponent<C_LightSource>();
+					if (lightSource != nullptr) {
+						DirectionalLight* dirLight = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+						GLint lightSpaceMatrix = glGetUniformLocation(shader, "lightSpaceMatrix");
+						glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, dirLight->lightSpaceMatrix.Transposed().ptr());
+					}
 				}
 
 				GLint ourTexture = glGetUniformLocation(shader, "ourTexture");

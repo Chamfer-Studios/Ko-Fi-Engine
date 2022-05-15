@@ -1,10 +1,10 @@
 {
     "cuatrecasas": {
         "active": true,
-        "game_objects_amount": 48,
+        "game_objects_amount": 5,
         "game_objects_list": [
             {
-                "UID": 25674626,
+                "UID": 437416215,
                 "active": true,
                 "components": [
                     {
@@ -14,31 +14,31 @@
                     {
                         "active": true,
                         "position": [
-                            -5.592155456542969,
-                            243.67881774902344,
-                            -297.6453857421875
+                            0.0,
+                            353.3199768066406,
+                            -444.710205078125
                         ],
                         "rotation": [
                             0.0,
-                            0.9098567962646484,
-                            0.41492244601249695,
+                            0.9368196129798889,
+                            0.34981289505958557,
                             0.0
                         ],
                         "scale": [
                             1.0,
-                            0.9999998211860657,
-                            0.9999998211860657
+                            1.0000001192092896,
+                            1.0000004768371582
                         ],
                         "type": 21
                     },
                     {
                         "active": true,
-                        "far_plane_distance": 507.0,
+                        "far_plane_distance": 1000.0,
                         "frustum_culling": true,
                         "isMainCamera": true,
                         "near_plane_distance": 0.30000001192092896,
                         "type": 4,
-                        "vertical_fov": 1.1974533796310425
+                        "vertical_fov": 0.44688403606414795
                     }
                 ],
                 "is3D": true,
@@ -97,7 +97,7 @@
                     {
                         "active": true,
                         "position": [
-                            7.450580596923828e-09,
+                            0.0,
                             4.0,
                             0.0
                         ],
@@ -108,8 +108,8 @@
                             1.0
                         ],
                         "scale": [
-                            1.8685498237609863,
-                            0.2199999988079071,
+                            0.8600000143051147,
+                            0.20000000298023224,
                             0.019999999552965164
                         ],
                         "type": 21
@@ -139,7 +139,7 @@
                             "uniforms": null
                         },
                         "texture": {
-                            "asset_path": "Assets/Textures/awareness/red.png"
+                            "asset_path": ""
                         },
                         "type": 2
                     }
@@ -172,9 +172,9 @@
                             1.0
                         ],
                         "scale": [
-                            3.8668081760406494,
+                            1.5,
                             0.5,
-                            1.3744032382965088
+                            0.5
                         ],
                         "type": 21
                     },
@@ -203,7 +203,7 @@
                             "uniforms": null
                         },
                         "texture": {
-                            "asset_path": "Assets/Textures/Environments/Level 1/lvl_1_floor_texture_base_color.png"
+                            "asset_path": ""
                         },
                         "type": 2
                     }
@@ -215,7 +215,7 @@
                 "tag": 0
             },
             {
-                "UID": 47590850,
+                "UID": 287535418,
                 "active": true,
                 "components": [
                     {
@@ -226,7 +226,7 @@
                         "active": true,
                         "position": [
                             0.0,
-                            0.0,
+                            75.19597625732422,
                             0.0
                         ],
                         "rotation": [
@@ -244,1678 +244,7 @@
                     },
                     {
                         "active": true,
-                        "animation": {
-                            "asset_path": "Assets/Models/Enemies/harkonnen_armature|harkonnen_reel.cake",
-                            "uid": 27384207
-                        },
-                        "clips": [
-                            {
-                                "clipDuration": 289.0,
-                                "clipDurationInSeconds": 12.041666984558105,
-                                "clipEndFrame": 289.0,
-                                "clipFinished": false,
-                                "clipLoop": true,
-                                "clipName": "Default clip",
-                                "clipStartFrame": 0.0,
-                                "mapString": "Default clip"
-                            }
-                        ],
-                        "selectedClip": "Default clip",
-                        "type": 12
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 51357440,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            41.44794845581055,
-                            70.31926727294922,
-                            -0.5437217950820923
-                        ],
-                        "rotation": [
-                            0.6291375756263733,
-                            0.47741931676864624,
-                            -0.4831721782684326,
-                            0.3778906762599945
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_shoulder",
-                "parent_UID": 1427870210,
-                "tag": 0
-            },
-            {
-                "UID": 78844803,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.7915462851524353e-05,
-                            100.8884048461914,
-                            -7.569789886474609e-06
-                        ],
-                        "rotation": [
-                            0.28675752878189087,
-                            -0.005303350742906332,
-                            0.0015650937566533685,
-                            0.9579872488975525
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_toe_base",
-                "parent_UID": 418726668,
-                "tag": 0
-            },
-            {
-                "UID": 132295178,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -7.62939453125e-05,
-                            116.7104263305664,
-                            0.000102996826171875
-                        ],
-                        "rotation": [
-                            0.3843253552913666,
-                            -0.6984536051750183,
-                            0.08077220618724823,
-                            0.5982745885848999
-                        ],
-                        "scale": [
-                            0.9999998807907104,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index",
-                "parent_UID": 430880501,
-                "tag": 0
-            },
-            {
-                "UID": 142613955,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -9.5367431640625e-07,
-                            110.66747283935547,
-                            30.73345184326172
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_head_top_end",
-                "parent_UID": 1194457123,
-                "tag": 0
-            },
-            {
-                "UID": 223928660,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -22.827926635742188,
-                            31.673465728759766,
-                            11.798835754394531
-                        ],
-                        "rotation": [
-                            -0.5681074261665344,
-                            0.36904677748680115,
-                            -0.41338589787483215,
-                            0.6084164381027222
-                        ],
-                        "scale": [
-                            1.0000001192092896,
-                            1.0000001192092896,
-                            1.000000238418579
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_weapon",
-                "parent_UID": 796238381,
-                "tag": 0
-            },
-            {
-                "UID": 277593383,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -58.86287307739258,
-                            -29.263938903808594,
-                            -6.186537742614746
-                        ],
-                        "rotation": [
-                            -0.14534510672092438,
-                            0.1855161339044571,
-                            0.9641982913017273,
-                            0.1215740516781807
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999998807907104,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_up_leg",
-                "parent_UID": 1913384807,
-                "tag": 0
-            },
-            {
-                "UID": 285308642,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -41.4479866027832,
-                            70.30764770507813,
-                            -0.30917876958847046
-                        ],
-                        "rotation": [
-                            0.6195945739746094,
-                            -0.4768965542316437,
-                            0.47797998785972595,
-                            0.4002591669559479
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_shoulder",
-                "parent_UID": 1427870210,
-                "tag": 0
-            },
-            {
-                "UID": 285693557,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            39.626670837402344,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_toe_end_end",
-                "parent_UID": 865524437,
-                "tag": 0
-            },
-            {
-                "UID": 285827931,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.9007438570261e-05,
-                            38.8816032409668,
-                            -1.952052116394043e-06
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_toe_end",
-                "parent_UID": 78844803,
-                "tag": 0
-            },
-            {
-                "UID": 300411687,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            5.343269348144531,
-                            15.800765991210938,
-                            -12.91461181640625
-                        ],
-                        "rotation": [
-                            0.1360725611448288,
-                            0.02842431142926216,
-                            -0.07115160673856735,
-                            0.9877316355705261
-                        ],
-                        "scale": [
-                            0.9999998211860657,
-                            0.9999993443489075,
-                            0.9999994039535522
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_4",
-                "parent_UID": 1504917770,
-                "tag": 0
-            },
-            {
-                "UID": 389063752,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            131.30679321289063,
-                            -4.1961669921875e-05
-                        ],
-                        "rotation": [
-                            0.02303352765738964,
-                            0.0048686545342206955,
-                            -0.12314359098672867,
-                            0.9921095967292786
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_fore_arm",
-                "parent_UID": 1396713579,
-                "tag": 0
-            },
-            {
-                "UID": 402604593,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.604912519454956,
-                            176.8376922607422,
-                            -0.9601974487304688
-                        ],
-                        "rotation": [
-                            0.6304828524589539,
-                            0.03624619171023369,
-                            -0.02569691091775894,
-                            0.774930477142334
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.999999463558197
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_foot",
-                "parent_UID": 912133430,
-                "tag": 0
-            },
-            {
-                "UID": 418726668,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.314018249511719e-05,
-                            173.62933349609375,
-                            -3.7670135498046875e-05
-                        ],
-                        "rotation": [
-                            0.6285743117332458,
-                            0.04549015313386917,
-                            0.036282625049352646,
-                            0.7755698561668396
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999999403953552
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_foot",
-                "parent_UID": 1123578490,
-                "tag": 0
-            },
-            {
-                "UID": 430880501,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.9591064453125e-05,
-                            139.0620574951172,
-                            -2.288818359375e-05
-                        ],
-                        "rotation": [
-                            0.026498207822442055,
-                            -0.004923547618091106,
-                            0.18910609185695648,
-                            0.981586754322052
-                        ],
-                        "scale": [
-                            0.9999998807907104,
-                            0.9999995827674866,
-                            0.9999982118606567
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_fore_arm",
-                "parent_UID": 2143541632,
-                "tag": 0
-            },
-            {
-                "UID": 586387133,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1.3113021850585938e-06,
-                            79.25660705566406,
-                            -9.873416274785995e-05
-                        ],
-                        "rotation": [
-                            0.0508393719792366,
-                            0.0008946731104515493,
-                            0.006067972630262375,
-                            0.9986880421638489
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_neck",
-                "parent_UID": 1427870210,
-                "tag": 0
-            },
-            {
-                "UID": 618822494,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            21.094614028930664,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_4_end",
-                "parent_UID": 300411687,
-                "tag": 0
-            },
-            {
-                "UID": 743561944,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            25.129833221435547,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_4_end",
-                "parent_UID": 2015229495,
-                "tag": 0
-            },
-            {
-                "UID": 773275013,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            58.862884521484375,
-                            -29.26355743408203,
-                            -4.967061996459961
-                        ],
-                        "rotation": [
-                            0.11832106113433838,
-                            0.17459939420223236,
-                            0.9664143323898315,
-                            -0.14682815968990326
-                        ],
-                        "scale": [
-                            1.0000029802322388,
-                            1.0000026226043701,
-                            0.9999996423721313
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_up_leg",
-                "parent_UID": 1913384807,
-                "tag": 0
-            },
-            {
-                "UID": 777808609,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.762411117553711e-05,
-                            100.0634765625,
-                            -9.5367431640625e-06
-                        ],
-                        "rotation": [
-                            0.29062649607658386,
-                            0.007174232043325901,
-                            -0.0021355615463107824,
-                            0.9568073153495789
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_toe_base",
-                "parent_UID": 402604593,
-                "tag": 0
-            },
-            {
-                "UID": 796238381,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1.33514404296875e-05,
-                            116.7431411743164,
-                            -5.7220458984375e-05
-                        ],
-                        "rotation": [
-                            0.1362011581659317,
-                            0.02735867351293564,
-                            -0.0987071841955185,
-                            0.9853718280792236
-                        ],
-                        "scale": [
-                            0.9999991655349731,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand",
-                "parent_UID": 389063752,
-                "tag": 0
-            },
-            {
-                "UID": 865524437,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -7.64802098274231e-05,
-                            39.62664031982422,
-                            -4.76837158203125e-07
-                        ],
-                        "rotation": [
-                            0.12347322702407837,
-                            0.04740123450756073,
-                            0.036640916019678116,
-                            0.990537703037262
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999997019767761,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_toe_end",
-                "parent_UID": 777808609,
-                "tag": 0
-            },
-            {
-                "UID": 872851189,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.0046870708465576e-08,
-                            62.080989837646484,
-                            1.7178390407934785e-06
-                        ],
-                        "rotation": [
-                            0.07194799929857254,
-                            0.0013095231261104345,
-                            0.00021554576233029366,
-                            0.9974075555801392
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999995827674866,
-                            0.9999997019767761
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_spine_1",
-                "parent_UID": 1205541090,
-                "tag": 0
-            },
-            {
-                "UID": 912133430,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.298337936401367,
-                            204.8344268798828,
-                            35.24272918701172
-                        ],
-                        "rotation": [
-                            -0.3732568919658661,
-                            0.05780286341905594,
-                            -0.09098167717456818,
-                            0.9214447736740112
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999998807907104,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_leg",
-                "parent_UID": 773275013,
-                "tag": 0
-            },
-            {
-                "UID": 1042911049,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            38.88182067871094,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_toe_end_end",
-                "parent_UID": 285827931,
-                "tag": 0
-            },
-            {
-                "UID": 1109260974,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            114.85552978515625,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_head_top_end_end",
-                "parent_UID": 142613955,
-                "tag": 0
-            },
-            {
-                "UID": 1123578490,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1.52587890625e-05,
-                            196.9711151123047,
-                            -1.52587890625e-05
-                        ],
-                        "rotation": [
-                            -0.3805880546569824,
-                            -0.07127555459737778,
-                            0.026380052790045738,
-                            0.9216163158416748
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999998807907104
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_leg",
-                "parent_UID": 277593383,
-                "tag": 0
-            },
-            {
-                "UID": 1194457123,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.592802047729492e-06,
-                            18.962738037109375,
-                            5.265877723693848
-                        ],
-                        "rotation": [
-                            -0.14823201298713684,
-                            0.00047171415644697845,
-                            -0.00544732017442584,
-                            0.988937497138977
-                        ],
-                        "scale": [
-                            1.0,
-                            0.999999463558197,
-                            0.9999997615814209
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_head",
-                "parent_UID": 586387133,
-                "tag": 0
-            },
-            {
-                "UID": 1205541090,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -2.60770320892334e-08,
-                            52.778255462646484,
-                            -2.516310691833496
-                        ],
-                        "rotation": [
-                            0.04846794530749321,
-                            0.0009570737020112574,
-                            0.0006710505695082247,
-                            0.9988240599632263
-                        ],
-                        "scale": [
-                            0.9999982118606567,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_spine",
-                "parent_UID": 1913384807,
-                "tag": 0
-            },
-            {
-                "UID": 1329918471,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            21.882091522216797,
-                            2.288818359375e-05
-                        ],
-                        "rotation": [
-                            0.1400732547044754,
-                            0.16929937899112701,
-                            0.5064479112625122,
-                            0.8338031768798828
-                        ],
-                        "scale": [
-                            0.9999997019767761,
-                            1.0000001192092896,
-                            0.9999998807907104
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_2",
-                "parent_UID": 2112709202,
-                "tag": 0
-            },
-            {
-                "UID": 1396713579,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -2.09808349609375e-05,
-                            85.53253173828125,
-                            -2.6702880859375e-05
-                        ],
-                        "rotation": [
-                            0.3598713278770447,
-                            0.05748043209314346,
-                            -0.25803014636039734,
-                            0.8947676420211792
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_arm",
-                "parent_UID": 285308642,
-                "tag": 0
-            },
-            {
-                "UID": 1427870210,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.0954757928848267e-08,
-                            70.94879150390625,
-                            2.0641833543777466e-05
-                        ],
-                        "rotation": [
-                            0.07194699347019196,
-                            0.0013705258024856448,
-                            0.00016356713604182005,
-                            0.9974074959754944
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999998807907104,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_spine_2",
-                "parent_UID": 872851189,
-                "tag": 0
-            },
-            {
-                "UID": 1496429086,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -8.340450286865234,
-                            25.495529174804688,
-                            -16.795997619628906
-                        ],
-                        "rotation": [
-                            -0.10174952447414398,
-                            0.045592281967401505,
-                            0.15205636620521545,
-                            0.9820627570152283
-                        ],
-                        "scale": [
-                            0.9999994039535522,
-                            0.9999995827674866,
-                            0.9999997019767761
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_3",
-                "parent_UID": 1329918471,
-                "tag": 0
-            },
-            {
-                "UID": 1504917770,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            9.740842819213867,
-                            22.70288848876953,
-                            -19.856081008911133
-                        ],
-                        "rotation": [
-                            -0.045167483389377594,
-                            -0.13931682705879211,
-                            -0.18524771928787231,
-                            0.9717170596122742
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_3",
-                "parent_UID": 2010952928,
-                "tag": 0
-            },
-            {
-                "UID": 1553444287,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            35.98974609375,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_weapon_end",
-                "parent_UID": 223928660,
-                "tag": 0
-            },
-            {
-                "UID": 1902784176,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_armature",
-                "parent_UID": 47590850,
-                "tag": 0
-            },
-            {
-                "UID": 1913384807,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -0.18123507499694824,
-                            419.1922607421875,
-                            6.491641521453857
-                        ],
-                        "rotation": [
-                            -0.015613056719303131,
-                            0.004085394088178873,
-                            -0.0010132018942385912,
-                            0.9998692870140076
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999982118606567,
-                            0.9999995827674866
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_hips",
-                "parent_UID": 1902784176,
-                "tag": 0
-            },
-            {
-                "UID": 1916943590,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -5.340576171875e-05,
-                            31.114036560058594,
-                            -2.288818359375e-05
-                        ],
-                        "rotation": [
-                            0.42593270540237427,
-                            -0.608829140663147,
-                            -0.4204503297805786,
-                            0.5207014083862305
-                        ],
-                        "scale": [
-                            1.0000007152557373,
-                            1.0000001192092896,
-                            1.0000008344650269
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_1",
-                "parent_UID": 796238381,
-                "tag": 0
-            },
-            {
-                "UID": 2010952928,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -0.0001010894775390625,
-                            21.038646697998047,
-                            -1.1444091796875e-05
-                        ],
-                        "rotation": [
-                            0.1688387244939804,
-                            -0.26812052726745605,
-                            -0.6517153382301331,
-                            0.6891095638275146
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_2",
-                "parent_UID": 1916943590,
-                "tag": 0
-            },
-            {
-                "UID": 2015229495,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -9.354729652404785,
-                            21.176822662353516,
-                            -9.77444076538086
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_4",
-                "parent_UID": 1496429086,
-                "tag": 0
-            },
-            {
-                "UID": 2088037359,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            -0.21617889404296875,
-                            -51.15702819824219
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            0.019999999552965164,
-                            0.020000005140900612,
-                            0.020000005140900612
-                        ],
-                        "type": 21
-                    },
-                    {
-                        "active": true,
-                        "mesh": {
-                            "anim_path": "Assets/Models/Enemies/harkonnen_armature|harkonnen_reel.cake",
-                            "anim_uid": 27384207,
-                            "asset_path": "Assets/Models/Enemies/harkonnen.sugar",
-                            "draw_face_normals": false,
-                            "draw_vertex_normals": false,
-                            "is_animated": true,
-                            "root_node_UID": 0,
-                            "shape_type": 0,
-                            "uid": 891955186
-                        },
-                        "type": 1
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "shader": {
-                            "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
-                        },
-                        "texture": {
-                            "asset_path": "Assets/Textures/Characters/Enemies/Harkonnen/harkonnen_base_color.png"
-                        },
-                        "type": 2
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Pathfinder.lua",
-                        "id": 716083907,
-                        "inspector_variables": [
-                            {
-                                "name": "minRetargetingDistance",
-                                "type": "int",
-                                "value": 10
-                            }
-                        ],
-                        "type": 5
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Enemies/EnemyController.lua",
-                        "id": 644824142,
-                        "inspector_variables": [
-                            {
-                                "name": "static",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
-                                "name": "speed",
-                                "type": "int",
-                                "value": 20
-                            },
-                            {
-                                "name": "visionConeAngle",
-                                "type": "int",
-                                "value": 90
-                            },
-                            {
-                                "name": "visionConeRadius",
-                                "type": "int",
-                                "value": 443
-                            },
-                            {
-                                "name": "hearingRange",
-                                "type": "int",
-                                "value": 30
-                            },
-                            {
-                                "name": "awarenessOffset",
-                                "type": "float3",
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 900.0,
-                                    "z": 0.0
-                                }
-                            },
-                            {
-                                "name": "awarenessSize",
-                                "type": "float3",
-                                "value": {
-                                    "x": 0.15000000596046448,
-                                    "y": 0.30000001192092896,
-                                    "z": 0.15000000596046448
-                                }
-                            },
-                            {
-                                "name": "pingpong",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
-                                "name": "loop",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
-                                "name": "patrolWaypoints",
-                                "type": "float3_array",
-                                "value": [
-                                    0.0,
-                                    0.0,
-                                    -17.5,
-                                    0.0,
-                                    0.0,
-                                    17.5
-                                ]
-                            }
-                        ],
-                        "type": 5
-                    },
-                    {
-                        "active": true,
-                        "ambientValue": 0.0,
-                        "constantAttenuationValue": 0.0,
-                        "cutOffAngle": -0.013962216675281525,
-                        "diffuseValue": 21.700000762939453,
-                        "lightColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "lightDirection": [
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "lightPosition": [
-                            0.0,
-                            -0.21617889404296875,
-                            -51.15702819824219
-                        ],
-                        "linearAttenuationValue": 0.0,
-                        "quadraticAttenuationValue": 0.0,
-                        "sourceType": 2,
-                        "specularValue": 0.0,
-                        "type": 19
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen1",
-                "parent_UID": 47590850,
-                "tag": 0
-            },
-            {
-                "UID": 2112709202,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.000102996826171875,
-                            26.70413589477539,
-                            8.392333984375e-05
-                        ],
-                        "rotation": [
-                            0.47263413667678833,
-                            0.8776786923408508,
-                            -0.015387660823762417,
-                            -0.07784818112850189
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_1",
-                "parent_UID": 132295178,
-                "tag": 0
-            },
-            {
-                "UID": 2143541632,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -7.486343383789063e-05,
-                            84.87823486328125,
-                            6.4849853515625e-05
-                        ],
-                        "rotation": [
-                            0.2728959321975708,
-                            0.0368410162627697,
-                            0.2887978255748749,
-                            0.9169331789016724
-                        ],
-                        "scale": [
-                            0.9999998211860657,
-                            1.0000001192092896,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_arm",
-                "parent_UID": 51357440,
-                "tag": 0
-            },
-            {
-                "UID": 1446092725,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    },
-                    {
-                        "active": true,
-                        "ambientValue": 0.800000011920929,
+                        "ambientValue": 0.30000001192092896,
                         "diffuseValue": 0.800000011920929,
                         "lightColor": [
                             1.0,
@@ -1924,12 +253,12 @@
                         ],
                         "lightDirection": [
                             1.0,
-                            1.0,
-                            0.0
+                            -1.0,
+                            1.0
                         ],
                         "lightPosition": [
                             0.0,
-                            0.0,
+                            75.19597625732422,
                             0.0
                         ],
                         "sourceType": 0,
@@ -1944,6 +273,23 @@
                         "near_plane_distance": 0.30000001192092896,
                         "type": 4,
                         "vertical_fov": 686.0
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/simple_depth_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": ""
+                        },
+                        "type": 2
                     }
                 ],
                 "is3D": true,
@@ -1976,27 +322,21 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
                     0
                 ],
                 "bmax": [
-                    386.6808166503906,
-                    38.0,
-                    137.44032287597656
+                    150.0,
+                    30.0,
+                    50.0
                 ],
                 "bmin": [
-                    -386.6808166503906,
-                    -18.0,
-                    -137.44032287597656
+                    -150.0,
+                    -16.0,
+                    -50.0
                 ],
                 "borderSize": 0,
-                "ch": 6.0,
-                "cs": 6.0,
+                "ch": 3.0,
+                "cs": 3.0,
                 "flags": [
                     1,
                     1,
@@ -2008,41 +348,23 @@
                     1,
                     1,
                     1,
+                    3,
+                    0,
+                    2296,
+                    1253,
+                    42496,
+                    35841,
+                    34464,
                     1,
-                    1,
-                    65021,
-                    65021,
-                    0,
-                    0,
-                    4668,
-                    6838,
-                    50688,
-                    32768,
-                    0,
-                    0,
-                    0,
-                    0,
                     0,
                     0
                 ],
                 "maxEdgeError": 2.0,
-                "maxpolys": 26,
-                "npolys": 12,
-                "nverts": 26,
+                "maxpolys": 20,
+                "npolys": 10,
+                "nverts": 20,
                 "nvp": 6,
                 "polys": [
-                    0,
-                    1,
-                    2,
-                    10,
-                    65535,
-                    65535,
-                    10,
-                    65535,
-                    2,
-                    65535,
-                    65535,
-                    65535,
                     3,
                     4,
                     5,
@@ -2055,172 +377,112 @@
                     2,
                     65535,
                     65535,
-                    10,
+                    0,
+                    1,
+                    2,
+                    7,
+                    65535,
+                    65535,
+                    9,
+                    65535,
+                    2,
+                    65535,
+                    65535,
+                    65535,
                     2,
                     3,
                     6,
                     7,
-                    8,
+                    65535,
+                    65535,
+                    65535,
                     0,
                     65535,
                     1,
                     65535,
                     65535,
-                    3,
-                    8,
                     9,
                     10,
+                    11,
+                    8,
+                    65535,
+                    65535,
+                    5,
+                    65535,
+                    4,
                     65535,
                     65535,
                     65535,
-                    65535,
-                    65535,
-                    2,
-                    65535,
-                    65535,
-                    65535,
-                    14,
+                    11,
                     5,
                     4,
-                    11,
+                    8,
                     65535,
                     65535,
                     65535,
-                    1,
+                    0,
                     65535,
-                    5,
+                    3,
                     65535,
                     65535,
+                    10,
+                    9,
                     12,
-                    13,
-                    14,
-                    11,
+                    17,
                     65535,
+                    65535,
+                    3,
                     65535,
                     7,
                     65535,
-                    4,
+                    65535,
+                    65535,
+                    13,
+                    14,
+                    15,
+                    16,
                     65535,
                     65535,
                     65535,
+                    8,
+                    65535,
+                    7,
+                    65535,
+                    65535,
+                    13,
                     16,
                     17,
+                    12,
+                    65535,
+                    65535,
+                    6,
+                    65535,
+                    5,
+                    65535,
+                    65535,
+                    65535,
                     18,
+                    15,
+                    14,
                     19,
                     65535,
                     65535,
                     65535,
-                    11,
-                    65535,
-                    8,
-                    65535,
-                    65535,
-                    13,
-                    12,
-                    15,
-                    23,
-                    65535,
-                    65535,
-                    5,
-                    65535,
-                    8,
-                    65535,
-                    65535,
-                    65535,
-                    15,
-                    16,
-                    19,
-                    20,
-                    21,
-                    23,
-                    65535,
                     6,
                     65535,
-                    65535,
                     9,
-                    7,
-                    21,
-                    22,
-                    23,
                     65535,
                     65535,
-                    65535,
-                    65535,
-                    65535,
-                    8,
+                    19,
+                    1,
+                    0,
+                    18,
                     65535,
                     65535,
                     65535,
                     1,
-                    0,
-                    24,
-                    25,
                     65535,
-                    65535,
-                    0,
-                    65535,
-                    11,
-                    65535,
-                    65535,
-                    65535,
-                    24,
-                    18,
-                    17,
-                    25,
-                    65535,
-                    65535,
-                    65535,
-                    6,
-                    65535,
-                    10,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
-                    65535,
+                    8,
                     65535,
                     65535,
                     65535,
@@ -2348,19 +610,13 @@
                     1,
                     1,
                     1,
-                    1,
                     3,
                     3,
                     2,
                     2,
                     2,
-                    2,
                     4,
                     4,
-                    0,
-                    0,
-                    0,
-                    0,
                     0,
                     0,
                     0,
@@ -2373,84 +629,66 @@
                     0
                 ],
                 "verts": [
-                    37,
-                    4,
-                    43,
-                    38,
-                    4,
+                    28,
+                    6,
+                    30,
+                    28,
+                    6,
+                    20,
+                    19,
+                    6,
+                    19,
+                    20,
+                    6,
+                    14,
                     26,
-                    32,
-                    4,
-                    26,
-                    31,
-                    4,
-                    21,
-                    38,
-                    4,
+                    6,
+                    14,
+                    25,
+                    6,
+                    3,
+                    3,
+                    6,
+                    3,
+                    3,
+                    6,
+                    30,
+                    50,
+                    6,
+                    14,
+                    74,
+                    6,
+                    14,
+                    75,
+                    6,
+                    3,
+                    50,
+                    6,
+                    3,
+                    80,
+                    6,
+                    14,
+                    81,
+                    6,
+                    19,
+                    72,
+                    6,
                     20,
-                    37,
-                    4,
-                    3,
-                    20,
-                    4,
-                    3,
-                    3,
-                    4,
-                    3,
-                    3,
-                    4,
-                    23,
-                    3,
-                    4,
-                    43,
-                    20,
-                    4,
-                    43,
-                    64,
-                    4,
-                    20,
-                    91,
-                    4,
-                    20,
-                    92,
-                    4,
-                    3,
-                    64,
-                    4,
-                    3,
-                    98,
-                    4,
-                    21,
+                    72,
+                    6,
+                    30,
                     97,
-                    4,
-                    26,
-                    91,
-                    4,
-                    26,
-                    92,
-                    4,
-                    43,
-                    109,
-                    4,
-                    43,
-                    126,
-                    4,
-                    43,
-                    126,
-                    4,
-                    23,
-                    126,
-                    4,
+                    6,
+                    30,
+                    97,
+                    6,
                     3,
-                    109,
-                    4,
-                    3,
-                    64,
-                    4,
-                    43,
-                    64,
-                    4,
-                    26
+                    50,
+                    6,
+                    30,
+                    50,
+                    6,
+                    20
                 ]
             },
             "detail": {
@@ -2464,49 +702,41 @@
                     2,
                     2,
                     8,
-                    6,
                     4,
+                    4,
+                    2,
+                    12,
+                    4,
+                    6,
+                    2,
+                    16,
+                    4,
+                    8,
+                    2,
+                    20,
+                    4,
+                    10,
+                    2,
+                    24,
+                    4,
+                    12,
+                    2,
+                    28,
                     4,
                     14,
-                    3,
-                    8,
-                    1,
-                    17,
-                    4,
-                    9,
                     2,
-                    21,
+                    32,
                     4,
-                    11,
+                    16,
                     2,
-                    25,
+                    36,
                     4,
-                    13,
-                    2,
-                    29,
-                    4,
-                    15,
-                    2,
-                    33,
-                    6,
-                    17,
-                    4,
-                    39,
-                    3,
-                    21,
-                    1,
-                    42,
-                    4,
-                    22,
-                    2,
-                    46,
-                    4,
-                    24,
+                    18,
                     2
                 ],
-                "nmeshes": 12,
-                "ntris": 26,
-                "nverts": 50,
+                "nmeshes": 10,
+                "ntris": 20,
+                "nverts": 40,
                 "tris": [
                     3,
                     0,
@@ -2524,26 +754,6 @@
                     1,
                     2,
                     5,
-                    5,
-                    0,
-                    4,
-                    17,
-                    0,
-                    3,
-                    4,
-                    4,
-                    0,
-                    2,
-                    3,
-                    4,
-                    0,
-                    1,
-                    2,
-                    5,
-                    2,
-                    0,
-                    1,
-                    21,
                     3,
                     0,
                     2,
@@ -2576,26 +786,22 @@
                     1,
                     2,
                     5,
-                    5,
+                    3,
                     0,
-                    4,
+                    2,
                     17,
                     0,
                     1,
-                    4,
-                    1,
-                    1,
                     2,
-                    4,
-                    1,
-                    2,
-                    3,
-                    4,
                     5,
+                    3,
+                    0,
                     2,
+                    17,
                     0,
                     1,
-                    21,
+                    2,
+                    5,
                     3,
                     0,
                     2,
@@ -2614,156 +820,126 @@
                     5
                 ],
                 "verts": [
-                    -164.68081665039063,
-                    12.0,
-                    120.55967712402344,
-                    -158.68081665039063,
-                    12.0,
-                    18.559677124023438,
-                    -194.68081665039063,
-                    12.0,
-                    18.559677124023438,
-                    -266.6808166503906,
-                    12.0,
-                    120.55967712402344,
-                    -200.68081665039063,
-                    12.0,
-                    -11.440322875976563,
-                    -158.68081665039063,
-                    12.0,
-                    -17.440322875976563,
-                    -164.68081665039063,
-                    12.0,
-                    -119.44032287597656,
-                    -266.6808166503906,
-                    12.0,
-                    -119.44032287597656,
-                    -266.6808166503906,
-                    12.0,
-                    120.55967712402344,
-                    -194.68081665039063,
-                    12.0,
-                    18.559677124023438,
-                    -200.68081665039063,
-                    12.0,
-                    -11.440322875976563,
-                    -266.6808166503906,
-                    12.0,
-                    -119.44032287597656,
-                    -368.6808166503906,
-                    12.0,
-                    -119.44032287597656,
-                    -368.6808166503906,
-                    12.0,
-                    0.5596771240234375,
-                    -368.6808166503906,
-                    12.0,
-                    0.5596771240234375,
-                    -368.6808166503906,
-                    12.0,
-                    120.55967712402344,
-                    -266.6808166503906,
-                    12.0,
-                    120.55967712402344,
-                    -2.680816650390625,
-                    12.0,
-                    -119.44032287597656,
-                    -164.68081665039063,
-                    12.0,
-                    -119.44032287597656,
-                    -158.68081665039063,
-                    12.0,
-                    -17.440322875976563,
-                    -2.680816650390625,
-                    12.0,
-                    -17.440322875976563,
-                    159.31918334960938,
-                    12.0,
-                    -17.440322875976563,
-                    165.31918334960938,
-                    12.0,
-                    -119.44032287597656,
-                    -2.680816650390625,
-                    12.0,
-                    -119.44032287597656,
-                    -2.680816650390625,
-                    12.0,
-                    -17.440322875976563,
-                    195.31918334960938,
-                    12.0,
-                    18.559677124023438,
-                    159.31918334960938,
-                    12.0,
-                    18.559677124023438,
-                    165.31918334960938,
-                    12.0,
-                    120.55967712402344,
-                    267.3191833496094,
-                    12.0,
-                    120.55967712402344,
-                    165.31918334960938,
-                    12.0,
-                    -119.44032287597656,
-                    159.31918334960938,
-                    12.0,
-                    -17.440322875976563,
-                    201.31918334960938,
-                    12.0,
-                    -11.440322875976563,
-                    267.3191833496094,
-                    12.0,
-                    -119.44032287597656,
-                    201.31918334960938,
-                    12.0,
-                    -11.440322875976563,
-                    195.31918334960938,
-                    12.0,
-                    18.559677124023438,
-                    267.3191833496094,
-                    12.0,
-                    120.55967712402344,
-                    369.3191833496094,
-                    12.0,
-                    120.55967712402344,
-                    369.3191833496094,
-                    12.0,
-                    0.5596771240234375,
-                    267.3191833496094,
-                    12.0,
-                    -119.44032287597656,
-                    369.3191833496094,
-                    12.0,
-                    0.5596771240234375,
-                    369.3191833496094,
-                    12.0,
-                    -119.44032287597656,
-                    267.3191833496094,
-                    12.0,
-                    -119.44032287597656,
-                    -158.68081665039063,
-                    12.0,
-                    18.559677124023438,
-                    -164.68081665039063,
-                    12.0,
-                    120.55967712402344,
-                    -2.680816650390625,
-                    12.0,
-                    120.55967712402344,
-                    -2.680816650390625,
-                    12.0,
-                    18.559677124023438,
-                    -2.680816650390625,
-                    12.0,
-                    120.55967712402344,
-                    165.31918334960938,
-                    12.0,
-                    120.55967712402344,
-                    159.31918334960938,
-                    12.0,
-                    18.559677124023438,
-                    -2.680816650390625,
-                    12.0,
-                    18.559677124023438
+                    -90.0,
+                    5.0,
+                    -8.0,
+                    -72.0,
+                    5.0,
+                    -8.0,
+                    -75.0,
+                    5.0,
+                    -41.0,
+                    -141.0,
+                    5.0,
+                    -41.0,
+                    -66.0,
+                    5.0,
+                    40.0,
+                    -66.0,
+                    5.0,
+                    10.0,
+                    -93.0,
+                    5.0,
+                    7.0,
+                    -141.0,
+                    5.0,
+                    40.0,
+                    -93.0,
+                    5.0,
+                    7.0,
+                    -90.0,
+                    5.0,
+                    -8.0,
+                    -141.0,
+                    5.0,
+                    -41.0,
+                    -141.0,
+                    5.0,
+                    40.0,
+                    72.0,
+                    5.0,
+                    -8.0,
+                    75.0,
+                    5.0,
+                    -41.0,
+                    0.0,
+                    5.0,
+                    -41.0,
+                    0.0,
+                    5.0,
+                    -8.0,
+                    0.0,
+                    5.0,
+                    -41.0,
+                    -75.0,
+                    5.0,
+                    -41.0,
+                    -72.0,
+                    5.0,
+                    -8.0,
+                    0.0,
+                    5.0,
+                    -8.0,
+                    75.0,
+                    5.0,
+                    -41.0,
+                    72.0,
+                    5.0,
+                    -8.0,
+                    90.0,
+                    5.0,
+                    -8.0,
+                    141.0,
+                    5.0,
+                    -41.0,
+                    93.0,
+                    5.0,
+                    7.0,
+                    66.0,
+                    5.0,
+                    10.0,
+                    66.0,
+                    5.0,
+                    40.0,
+                    141.0,
+                    5.0,
+                    40.0,
+                    93.0,
+                    5.0,
+                    7.0,
+                    141.0,
+                    5.0,
+                    40.0,
+                    141.0,
+                    5.0,
+                    -41.0,
+                    90.0,
+                    5.0,
+                    -8.0,
+                    0.0,
+                    5.0,
+                    40.0,
+                    66.0,
+                    5.0,
+                    40.0,
+                    66.0,
+                    5.0,
+                    10.0,
+                    0.0,
+                    5.0,
+                    10.0,
+                    0.0,
+                    5.0,
+                    10.0,
+                    -66.0,
+                    5.0,
+                    10.0,
+                    -66.0,
+                    5.0,
+                    40.0,
+                    0.0,
+                    5.0,
+                    40.0
                 ]
             }
         }
