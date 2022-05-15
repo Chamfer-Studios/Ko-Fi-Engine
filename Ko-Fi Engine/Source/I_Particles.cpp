@@ -274,6 +274,8 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 
 						if (!mSize->randomInitialSize && !mSize->randomFinalSize)
 							mSize->constantSize = true;
+						else
+							mSize->constantSize = false;
 
 						values.shrink_to_fit();
 						m = mSize;
