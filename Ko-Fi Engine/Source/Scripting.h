@@ -359,6 +359,7 @@ public:
 		lua.set_function("DispatchEvent", &Scripting::DispatchEvent, this);
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
+		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
 		lua.set_function("DrawLine", &Scripting::DrawLine, this);
 	}
@@ -450,7 +451,12 @@ public:
 		}
 	}
 
-	void RayCast(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, sol::function callback)
+	void RayCast(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo)
+	{
+		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, nullptr);
+	}
+
+	void RayCastLambda(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, sol::function callback)
 	{
 		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, &callback);
 	}

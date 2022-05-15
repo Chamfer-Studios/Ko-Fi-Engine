@@ -767,7 +767,7 @@ reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysi
 		script->s->handler->lua["OnRayCastHit"]();
 	}
 
-	this->callback->call();
+	if (this->callback != nullptr) this->callback->call();
 
 	// Return a fraction of 1.0 to gather all hits 
 	return reactphysics3d::decimal(1.0);

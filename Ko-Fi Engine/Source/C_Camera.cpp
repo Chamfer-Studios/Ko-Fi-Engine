@@ -76,10 +76,10 @@ bool C_Camera::Update(float dt)
 	//Transform Update Camera Frustum
 	//Camera Position Rotation of the camera
 
+	cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
 	if (!isEngineCamera && owner->GetEngine()->GetCamera3D()->currentCamera == this)
 	{
 		// SET CAMERA FRUSTUM, OBJECT TRANSFORM
-		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
 		//Transform Update Camera Frustum
 		//Camera Position Rotation of the camera
 
@@ -99,6 +99,7 @@ bool C_Camera::Update(float dt)
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
 		}
 	}
+	
 	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 	return true;
 }
