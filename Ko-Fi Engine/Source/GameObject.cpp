@@ -722,7 +722,8 @@ bool GameObject::LoadPrefabJson(const char* path, bool exists)
 
 bool GameObject::LoadPrefab(Json& jsonFile)
 {
-	name = jsonFile.at("name");
+	
+	SetName(std::string(jsonFile.at("name")).c_str());
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
@@ -807,9 +808,8 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 	for (const auto& chdIt : jsonChd.items())
 	{
 		Json jsonChd = chdIt.value();
-		std::string name = jsonChd.at("name");
 		bool is3D = jsonChd.at("is3D");
-		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(name.c_str(), this, is3D);
+		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, this, is3D);
 		go->LoadPrefab(jsonChd);
 		this->AttachChild(go);
 	}
@@ -818,7 +818,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 
 bool GameObject::UpdatePrefab(Json& jsonFile)
 {
-	name = jsonFile.at("name");
+	SetName(std::string(jsonFile.at("name")).c_str());
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))

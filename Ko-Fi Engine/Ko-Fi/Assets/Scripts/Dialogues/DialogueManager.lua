@@ -13,12 +13,12 @@ openDialogue = false
 ------------ Dialogue Manager ------------
 function Start()
 	LoadJsonFile(path)
+	
 end
 
 function Update(dt)
 	-- TODO: SET THE ID FROM EVENT AND SET OPENDIALOGUE TO TRUE
 	--DispatchEvent(pathfinderUpdateKey, { patrolWaypoints, pingpong, componentTransform:GetPosition() })
-
 	if(openDialogue == true) then
 		if(Find("DialogueSkipButton")) then
 			OpenDialogue()
@@ -50,7 +50,7 @@ end
 
 function CloseDialogue()
 	
-	DeleteGameObjectByUID(Find("Dialogue1"):GetUID())
+	DeleteGameObjectByUID(Find("Dialogue"):GetUID())
 	src = ""
 	char = ""
 	line1 = ""
@@ -96,4 +96,4 @@ function CheckIfSkipped()
 end
 
 ------------ END Dialogue ------------
---print("Dialogue Script Load Success")
+print("Dialogue Script Load Success")

@@ -579,7 +579,7 @@
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Decoy.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Zhib.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Dialogues\Dialogues.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueTrigger.lua" />
     <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
