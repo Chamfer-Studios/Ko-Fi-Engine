@@ -98,7 +98,7 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 		}
 
 		if (ImGui::Button("Set Font")) {
-			panelChooser->OpenPanel("AddFont", "ttf", { "ttf" });
+			panelChooser->OpenPanel("AddFont", "ttf", { "ttf","otf"});
 		}
 
 		SDL_Color tmpcol = GetColor();
