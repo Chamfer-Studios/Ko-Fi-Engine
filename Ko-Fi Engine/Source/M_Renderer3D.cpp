@@ -858,6 +858,10 @@ void M_Renderer3D::LightUniforms(uint shader)
 				//float cutOffAngle
 				GLint cutOffValue = glGetUniformLocation(shader, ("focalLights[" + number + "].cutOffAngle").c_str());
 				glUniform1f(cutOffValue, lightSource->cutOffAngle);
+
+				GLint range = glGetUniformLocation(shader, ("focalLights[" + number + "].range").c_str());
+				glUniform1f(range, lightSource->range);
+
 				//float3 lightDirection
 				GLint lightDirection = glGetUniformLocation(shader, ("focalLights[" + number + "].direction").c_str());
 				glUniform3f(lightDirection, lightSource->lightDirection.x, lightSource->lightDirection.y, lightSource->lightDirection.z);
