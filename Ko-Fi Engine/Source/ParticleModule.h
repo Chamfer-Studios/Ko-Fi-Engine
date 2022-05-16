@@ -138,6 +138,11 @@ public:
 
 	BillboardingType billboardingType = BillboardingType::WORLD_ALIGNED;
 	bool hideBillboarding = false;
+
+	int degrees = 0;
+	bool frontAxis = true;
+	bool topAxis = false;
+	bool sideAxis = false;
 };
 
 #endif // !__PARTICLE_MODULE_H__

@@ -554,7 +554,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 							{
 								ParticleBillboarding* particleBillboarding = (ParticleBillboarding*)module;
 
-								if (ImGui::BeginCombo("Billboarding##", "Change Type"))
+								if (ImGui::BeginCombo("Billboarding##", particleBillboarding->BillboardTypeToString((ParticleBillboarding::BillboardingType)particleBillboarding->billboardingType)))
 								{
 									for (int i = (int)ParticleBillboarding::BillboardingType::NONE + 1; i != (int)ParticleBillboarding::BillboardingType::END; ++i)
 									{
@@ -564,6 +564,22 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									}
 									ImGui::EndCombo();
 								}
+
+								int degrees = particleBillboarding->degrees;
+								if (ImGui::DragInt("Degrees", &degrees, 1, 0, 360))
+									particleBillboarding->degrees = degrees;
+
+								bool frontAxis = particleBillboarding->frontAxis;
+								if (ImGui::Checkbox("FrontAxis", &frontAxis))
+									particleBillboarding->frontAxis = frontAxis;
+
+								bool topAxis = particleBillboarding->topAxis;
+								if (ImGui::Checkbox("TopAxis", &topAxis))
+									particleBillboarding->topAxis = topAxis;
+
+								bool sideAxis = particleBillboarding->sideAxis;
+								if (ImGui::Checkbox("SideAxis", &sideAxis))
+									particleBillboarding->sideAxis = sideAxis;
 
 								bool hideModule = particleBillboarding->hideBillboarding;
 								if (ImGui::Checkbox("Hide Billboarding", &hideModule))

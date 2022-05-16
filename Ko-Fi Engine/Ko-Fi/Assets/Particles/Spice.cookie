@@ -14,6 +14,10 @@
                     },
                     {
                         "billboardingType": 1,
+                        "degrees": 0,
+                        "frontAxis": true,
+                        "sideAxis": false,
+                        "topAxis": false,
                         "type": 5
                     },
                     {

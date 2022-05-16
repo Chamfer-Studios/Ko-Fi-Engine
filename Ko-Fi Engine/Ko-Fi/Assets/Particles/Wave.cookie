@@ -14,14 +14,13 @@
                     },
                     {
                         "billboardingType": 6,
+                        "degrees": 0,
+                        "frontAxis": true,
+                        "sideAxis": false,
+                        "topAxis": false,
                         "type": 5
                     },
                     {
-                        "minFinalSize": [
-                            3.0,
-                            3.0,
-                            3.0
-                        ],
                         "minInitialSize": [
                             0.5,
                             0.5,

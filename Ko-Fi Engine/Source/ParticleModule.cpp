@@ -372,9 +372,15 @@ Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, EmitterI
 	float3x3 result = float3x3(R, U, N);
 	
 	if (billboardingType == BillboardingType::XZ_AXIS_LOCKED)
-	{
 		result = emitter->component->owner->GetTransform()->GetLocalTransform().RotatePart() * result;
-	}
+
+	Quat rot;
+	if(frontAxis)
+		result = rot.FromEulerXYZ(DegToRad(0), DegToRad(0), DegToRad(degrees)) * result;
+	if(topAxis)
+		result = rot.FromEulerXYZ(DegToRad(0), DegToRad(degrees), DegToRad(0)) * result;
+	if(sideAxis)
+		result = rot.FromEulerXYZ(DegToRad(degrees), DegToRad(0), DegToRad(0)) * result;
 
 	return result.ToQuat();
 }
