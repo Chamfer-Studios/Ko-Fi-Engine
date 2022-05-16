@@ -17,8 +17,9 @@ C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::TEXT;
 	size = 1;
+	fontPath = "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf";
+	SetFont(fontPath);
 	SetTextValue("Hello world!");
-	fontPath = "Assets/Fonts/Inter/Inter-Light.otf";
 }
 
 C_Text::~C_Text()
@@ -122,9 +123,6 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 	}
 	else
 		DrawDeleteButton(owner, this);
-
-	
-	
 
 	return true;
 }

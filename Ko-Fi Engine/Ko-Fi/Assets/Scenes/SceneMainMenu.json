@@ -20,9 +20,9 @@
                         ],
                         "rotation": [
                             0.0,
+                            1.0,
                             0.0,
-                            0.0,
-                            1.0
+                            0.0
                         ],
                         "scale": [
                             1.0,
@@ -37,6 +37,8 @@
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.009999999776482582,
+                        "sCullingRadius": 500,
+                        "sphere_culling": true,
                         "type": 4,
                         "vertical_fov": 0.3839724361896515
                     }
@@ -63,15 +65,15 @@
                             0.0
                         ],
                         "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
+                            0.27059805393218994,
+                            -0.6532815098762512,
+                            0.27059805393218994,
+                            0.6532815098762512
                         ],
                         "scale": [
                             1.0,
-                            1.0,
-                            1.0
+                            0.9999999403953552,
+                            0.9999999403953552
                         ],
                         "type": 21
                     },
@@ -97,6 +99,17 @@
                         "sourceType": 0,
                         "specularValue": 0.0,
                         "type": 19
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": false,
+                        "isMainCamera": false,
+                        "near_plane_distance": 0.30000001192092896,
+                        "sCullingRadius": 500,
+                        "sphere_culling": false,
+                        "type": 4,
+                        "vertical_fov": 694.0
                     }
                 ],
                 "is3D": true,
@@ -275,6 +288,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "ARE YOU SURE YOU WANT TO PROCEED?"
                     }
@@ -367,6 +381,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "YES"
                     }
@@ -415,6 +430,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "NO"
                     }
@@ -591,6 +607,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "PLAY"
                     }
@@ -1023,6 +1040,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "PLAY"
                     }
@@ -1071,6 +1089,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "SETTINGS"
                     }
@@ -1119,6 +1138,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "CREDITS"
                     }
@@ -1167,6 +1187,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "QUIT"
                     }
@@ -1215,6 +1236,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "THIS ACTION CANNOT BE UNDONE"
                     }
@@ -1305,6 +1327,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "CONTINUE"
                     }
@@ -1397,6 +1420,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "PLAYER 1"
                     }
@@ -1445,6 +1469,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "TIME PLAYED: "
                     }
@@ -1537,6 +1562,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "EMPTY"
                     }
@@ -1585,6 +1611,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "TIME PLAYED: "
                     }
@@ -1677,6 +1704,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "EMPTY"
                     }
@@ -1725,6 +1753,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "TIME PLAYED: "
                     }
@@ -1817,6 +1846,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "X"
                     }
@@ -1865,6 +1895,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2001,6 +2032,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2093,6 +2125,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "BACK"
                     }
@@ -2183,6 +2216,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "NEW GAME"
                     }
@@ -2275,6 +2309,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "PLAYER 1"
                     }
@@ -2323,6 +2358,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "TIME PLAYED:"
                     }
@@ -2415,6 +2451,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "EMPTY"
                     }
@@ -2463,6 +2500,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "TIME PLAYED:"
                     }
@@ -2555,6 +2593,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "EMPTY"
                     }
@@ -2603,6 +2642,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "TIME PLAYED:"
                     }
@@ -2695,6 +2735,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2787,6 +2828,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2879,6 +2921,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2971,6 +3014,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "BACK"
                     }
@@ -3103,6 +3147,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "SETTINGS"
                     }
@@ -3195,6 +3240,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "AUDIO"
                     }
@@ -3287,6 +3333,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "CONTROLS"
                     }
@@ -3379,6 +3426,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "INSTRUCTONS"
                     }
@@ -3471,6 +3519,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "BACK"
                     }
@@ -3617,6 +3666,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "<-"
                     }
@@ -3715,6 +3765,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "->"
                     }
@@ -3864,6 +3915,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "BACK"
                     }
@@ -3912,6 +3964,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
                         "type": 16,
                         "value": "CREDITS"
                     }
