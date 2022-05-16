@@ -391,10 +391,10 @@ public:
 
 		switch (button)
 		{
-		//case 4:
-		//{
-		//	return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
-		//}
+		case 4:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
+		}
 		/*case 5:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H);
