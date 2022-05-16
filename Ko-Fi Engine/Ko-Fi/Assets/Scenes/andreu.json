@@ -1,5 +1,5 @@
 {
-    "Root": {
+    "andreu": {
         "active": true,
         "game_objects_amount": 2,
         "game_objects_list": [
@@ -127,7 +127,7 @@
                 "tag": 0
             }
         ],
-        "name": "Root",
+        "name": "andreu",
         "navmesh": {}
     }
 }

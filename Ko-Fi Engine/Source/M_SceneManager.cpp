@@ -570,6 +570,12 @@ void M_SceneManager::GuizmoTransformation()
 
 	modelProjection.push_back(selectedGameObjects[0]->GetComponent<C_Transform>()->GetGlobalTransform().Transposed());
 
+	/*appLog->AddLog("Model Projection! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n",
+		modelProjection[0][0][0], modelProjection[0][0][1], modelProjection[0][0][2], modelProjection[0][0][3],
+		modelProjection[0][1][0], modelProjection[0][1][1], modelProjection[0][1][2], modelProjection[0][1][3],
+		modelProjection[0][2][0], modelProjection[0][2][1], modelProjection[0][2][2], modelProjection[0][2][3],
+		modelProjection[0][3][0], modelProjection[0][3][1], modelProjection[0][3][2], modelProjection[0][3][3]);*/
+
 
 	window = ImGui::FindWindowByName("Scene");
 

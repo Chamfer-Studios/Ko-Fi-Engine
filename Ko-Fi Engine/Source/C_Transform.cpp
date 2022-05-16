@@ -40,7 +40,14 @@ bool C_Transform::Update(float dt)
 	
 	if (isDirty) // When Object is Modified
 	{
-		RecomputeGlobalMatrix();
+		/*if (owner->isPrefab)
+		{
+			appLog->AddLog("%s POSITION PROJECTION! \n, FIRST ROW: %f, %f, %f, %f,\n SECOND ROW: %f, %f, %f, %f, \n THIRD ROW: %f,%f,%f,%f,\n FOURTH ROW: %f,%f,%f,%f \n", owner->GetName(),
+				owner->GetTransform()->transformMatrix[0][0], owner->GetTransform()->transformMatrix[0][1], owner->GetTransform()->transformMatrix[0][2], owner->GetTransform()->transformMatrix[0][3],
+				owner->GetTransform()->transformMatrix[1][0], owner->GetTransform()->transformMatrix[1][1], owner->GetTransform()->transformMatrix[1][2], owner->GetTransform()->transformMatrix[1][3],
+				owner->GetTransform()->transformMatrix[2][0], owner->GetTransform()->transformMatrix[2][1], owner->GetTransform()->transformMatrix[2][2], owner->GetTransform()->transformMatrix[2][3],
+		}*/
+
 		owner->PropagateTransform();
 
 		if (owner->GetComponent<C_Mesh>())
@@ -58,6 +65,7 @@ bool C_Transform::Update(float dt)
 
 			isDirty = false;
 		}
+		isDirty = false;
 	}
 
 	return true;
@@ -266,7 +274,6 @@ const float3 C_Transform::GlobalFront() const
 
 void C_Transform::RecomputeGlobalMatrix()
 {
-
 	if (owner->GetParent() != nullptr && owner->GetParent()->GetComponent<C_Transform>())
 	{
 		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
