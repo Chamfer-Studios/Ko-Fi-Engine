@@ -213,7 +213,7 @@ void C_LightSource::Load(Json& json)
 		break;
 	}
 	}
-	
+	sType = (int)sourceType;
 }
 
 bool C_LightSource::InspectorDraw(PanelChooser* chooser)
@@ -225,6 +225,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 		if (DrawDeleteButton(owner, this))
 			return true;
 
+		
 		ImGui::Combo("###combo", &sType, "Directional Light Source\0Point Light Source\0Focal Light Source");
 
 		ImGui::SameLine();
@@ -237,6 +238,7 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 			case (int)SourceType::POINT: ChangeSourceType((SourceType)sType); break;
 			case (int)SourceType::FOCAL: ChangeSourceType((SourceType)sType); break;
 			}
+			sType = (int)sourceType;
 		}
 
 		switch (sourceType)
