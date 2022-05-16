@@ -5,18 +5,21 @@ path2 =  "Assets/UI/HUD/Hud Portraits/hud_portrait_nebala_v1.1.png"
 path3 =  "Assets/UI/HUD/Hud Portraits/hud_portrait_omozra_v1.1.png"
 pathBlank = "Assets/UI/HUD/blank_asset_v1.0.png"
 
--- local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
--- characterIDIV = InspectorVariable.new("lives", characterIDIVT, characterID)NewVariable(characterIDIV)
+--local characterIDIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+--characterIDIV = InspectorVariable.new("lives", characterIDIVT, characterID)
+--NewVariable(characterIDIV)
 
--- local path1IVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_STRING
--- path1IV = InspectorVariable.new("path1", path1IVT, path1) NewVariable(path1IV)
+local path1IVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_STRING
+path1IV = InspectorVariable.new("path1", path1IVT, path1)
+NewVariable(path1IV)
 
--- local path2IVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_STRING path2IV = InspectorVariable.new("path2", path2IVT, path2)
--- NewVariable(path2IV)
+local path2IVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_STRING
+path2IV = InspectorVariable.new("path2", path2IVT, path2)
+NewVariable(path2IV)
 
--- local path3IVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_STRING
--- path3IV = InspectorVariable.new("path3", path3IVT, path3)
--- NewVariable(path3IV)
+local path3IVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_STRING
+path3IV = InspectorVariable.new("path3", path3IVT, path3)
+NewVariable(path3IV)
 
 -- Called each loop iteration
 function Update(dt)
@@ -32,4 +35,4 @@ function Update(dt)
 	end
 end
 
-print("UI_CharacterAssetsChange.lua compiled succesfully")
+print("UI_Lives.lua compiled succesfully")

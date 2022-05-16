@@ -142,7 +142,8 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 			owner->GetEngine()->GetRenderer()->ResetFrustumCulling();
 
 		}
-
+		// SPHERE CULLING RADIUS
+		ImGui::DragInt("SphereCulling Radius", &sCullingRadius, 1.0f, 1.0f, 180.f);
 		// TODO: SET MAIN CAMERA TO TAG!
 		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
 		{
@@ -186,7 +187,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
 		{
 			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
-			sCullingRadius = planeDistances.y / 2.0f;
+			sCullingRadius = (planeDistances.y-planeDistances.x) / 2.0f;
 		}
 	}
 	else
