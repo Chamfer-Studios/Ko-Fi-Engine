@@ -189,8 +189,7 @@ void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
 
 	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
 	//transformMatrix = globalTransform;
-	RecomputeGlobalMatrix();
-	owner->PropagateTransform();
+	isDirty = true;
 }
 
 void C_Transform::SetDirty(bool isDirty)
