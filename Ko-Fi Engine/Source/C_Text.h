@@ -57,6 +57,7 @@ private:
 
 	TTF_Font* selectedFont = nullptr;
 	SDL_Color col = { 255, 255, 255, 255 };
+	std::string fontPath = "";
 	int size = 0;
 };
 

@@ -18,6 +18,7 @@ C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 	type = ComponentType::TEXT;
 	size = 1;
 	SetTextValue("Hello world!");
+	fontPath = "Assets/Fonts/Inter/Inter-Light.otf";
 }
 
 C_Text::~C_Text()
@@ -43,6 +44,7 @@ void C_Text::Save(Json& json) const
 	json["type"] = (int)type;
 	json["value"] = textValue;
 	json["color"] = color;
+	json["fontPath"] = fontPath;
 }
 
 void C_Text::Load(Json& json)
@@ -62,7 +64,11 @@ void C_Text::Load(Json& json)
 		col.b = 255;
 		col.a = 255;
 	}
-
+	if (json.contains("fontPath"))
+	{
+		fontPath = json.at("fontPath").get<std::string>();
+		SetFont(fontPath);
+	}
 	std::string value = json["value"].get<std::string>();
 	SetTextValue(value);
 }
