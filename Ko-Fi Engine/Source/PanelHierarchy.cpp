@@ -10,6 +10,8 @@
 #include "PanelChooser.h"
 #include "Log.h"
 
+#include "C_Transform.h"
+
 // Helper to display a little (?) mark which shows a tooltip when hovered.
 // In your own code you may want to display an actual icon if you are using a merged icon fonts (see docs/FONTS.md)
 static void HelpMarker(const char* desc)
@@ -169,6 +171,10 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 			editor->panelGameObjectInfo.selectedGameObjects.clear();
 			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
+
+			editor->engine->GetSceneManager()->guizmoOffsets.clear();
+			editor->engine->GetSceneManager()->guizmoOffsets.shrink_to_fit();
+			editor->engine->GetSceneManager()->guizmoOffsets.push_back(go->GetTransform()->GetGlobalTransform());
 			//editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
 			CONSOLE_LOG("%s || %d", go->GetName(), go->GetUID());
 			appLog->AddLog("Left Clicked");
@@ -178,6 +184,10 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 			editor->panelGameObjectInfo.selectedGameObjects.clear();
 			editor->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
+
+			editor->engine->GetSceneManager()->guizmoOffsets.clear();
+			editor->engine->GetSceneManager()->guizmoOffsets.shrink_to_fit();
+			editor->engine->GetSceneManager()->guizmoOffsets.push_back(go->GetTransform()->GetGlobalTransform());
 		}
 		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(1))
 		{
