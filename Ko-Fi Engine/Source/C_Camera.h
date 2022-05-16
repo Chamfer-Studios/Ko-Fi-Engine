@@ -107,7 +107,7 @@ private:
 	// Properties
 	float3 reference;
 	Frustum cameraFrustum;
-
+	float4x4 tempTransform;//Don't use this, only for updating transform internally on camera.
 private:
 	bool isSphereCullingActive = false;
 	bool isFrustumCullingActive = false;
