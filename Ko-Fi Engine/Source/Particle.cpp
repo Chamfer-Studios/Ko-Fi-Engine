@@ -10,6 +10,7 @@ Particle::Particle()
 	active = false;
 	position = float3::zero;
 	rotation = Quat(0.0f, 0.0f, 0.0f, 0.0f);
+	degrees = 0;
 	scale = float3(1.0f, 1.0f, 1.0f);
 	velocity = float3::zero;
 	acceleration = float3::zero;

@@ -130,16 +130,17 @@ public:
 
 	ParticleBillboarding(BillboardingType typeB = BillboardingType::WORLD_ALIGNED);
 
-	void Spawn(EmitterInstance* emitter, Particle* particle);
+	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);
 
-	Quat GetAlignmentRotation(const float3& position, EmitterInstance* emitter, const float4x4& cameraTransform);
+	Quat GetAlignmentRotation(const float3& position, const int degrees, EmitterInstance* emitter, const float4x4& cameraTransform);
 	const char* BillboardTypeToString(ParticleBillboarding::BillboardingType e);
 
 	BillboardingType billboardingType = BillboardingType::WORLD_ALIGNED;
 	bool hideBillboarding = false;
-
-	int degrees = 0;
+	bool rangeDegrees = false;
+	int minDegrees = 0;
+	int maxDegrees = 360;
 	bool frontAxis = true;
 	bool topAxis = false;
 	bool sideAxis = false;

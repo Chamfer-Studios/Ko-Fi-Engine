@@ -565,9 +565,25 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 									ImGui::EndCombo();
 								}
 
-								int degrees = particleBillboarding->degrees;
-								if (ImGui::DragInt("Degrees", &degrees, 1, 0, 360))
-									particleBillboarding->degrees = degrees;
+								bool rangeDegrees = particleBillboarding->rangeDegrees;
+								if (ImGui::Checkbox("Range Degrees", &rangeDegrees))
+									particleBillboarding->rangeDegrees = rangeDegrees;
+
+								if (particleBillboarding->rangeDegrees)
+								{
+									int degrees[2] = { particleBillboarding->minDegrees,particleBillboarding->maxDegrees };
+									if (ImGui::DragInt2("Degree Range", degrees, 1, 0, 360))
+									{
+										particleBillboarding->minDegrees = degrees[0];
+										particleBillboarding->maxDegrees = degrees[1];
+									}
+								}
+								else
+								{
+									int degrees = particleBillboarding->minDegrees;
+									if (ImGui::DragInt("Degrees", &degrees, 1, 0, 360))
+										particleBillboarding->minDegrees = degrees;
+								}
 
 								bool frontAxis = particleBillboarding->frontAxis;
 								if (ImGui::Checkbox("FrontAxis", &frontAxis))

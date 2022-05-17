@@ -106,7 +106,8 @@ bool I_Particle::Create(R_Particle* particle)
 				ParticleBillboarding* mBillboarding = (ParticleBillboarding*)(*m);
 				jsonModule["type"] = (int)mBillboarding->type;
 				jsonModule["billboardingType"] = (int)mBillboarding->billboardingType;
-				jsonModule["degrees"] = mBillboarding->degrees;
+				jsonModule["minDegrees"] = mBillboarding->minDegrees;
+				jsonModule["maxDegrees"] = mBillboarding->maxDegrees;
 				jsonModule["frontAxis"] = mBillboarding->frontAxis;
 				jsonModule["topAxis"] = mBillboarding->topAxis;
 				jsonModule["sideAxis"] = mBillboarding->sideAxis;
@@ -290,7 +291,8 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 						int typeB = pModule.value().at("billboardingType");
 						ParticleBillboarding* mBillboarding = new ParticleBillboarding((ParticleBillboarding::BillboardingType)typeB);
 						
-						mBillboarding->degrees = pModule.value().at("degrees");
+						mBillboarding->minDegrees = pModule.value().at("minDegrees");
+						mBillboarding->maxDegrees = pModule.value().at("maxDegrees");
 						mBillboarding->frontAxis = pModule.value().at("frontAxis");
 						mBillboarding->topAxis = pModule.value().at("topAxis");
 						mBillboarding->sideAxis = pModule.value().at("sideAxis");

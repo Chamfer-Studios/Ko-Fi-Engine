@@ -210,8 +210,10 @@ bool M_Renderer3D::InitOpenGL()
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 
 		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
-		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
+		lights[0].ambient.Set(1, 1, 1, 1);
+		lights[0].diffuse.Set(1, 1, 1, 1);
+		//lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
+		//lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
 		lights[0].SetPos(0.0f, 0.0f, 2.5f);
 		lights[0].Init();
 
@@ -989,11 +991,13 @@ void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 trans
 
 void M_Renderer3D::RenderAllParticles()
 {
+
 	CONSOLE_LOG("particles: %d", particles.size());
 	for (std::map<float,ParticleRenderer>::reverse_iterator particle = particles.rbegin();particle != particles.rend();++particle)
 	{
 		RenderParticle(&particle->second);
 	}
+	
 
 	particles.clear();
 }
@@ -1008,6 +1012,10 @@ ParticleRenderer::ParticleRenderer(R_Texture& tex, Color color, const float4x4 t
 
 void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 {
+	GLint saveProgram;
+
+	glGetIntegerv(GL_CURRENT_PROGRAM, &saveProgram);
+	glUseProgram(0);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_TEXTURE_2D);
@@ -1046,4 +1054,5 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glDisable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_BLEND);
+	glUseProgram(saveProgram);
 }

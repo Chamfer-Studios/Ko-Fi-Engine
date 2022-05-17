@@ -298,9 +298,14 @@ ParticleBillboarding::ParticleBillboarding(BillboardingType typeB)
 	billboardingType = typeB;
 }
 
-void ParticleBillboarding::Spawn(EmitterInstance* emitter, Particle* particle)
+void ParticleBillboarding::Spawn(Particle* particle, EmitterInstance* emitter)
 {
-	particle->rotation = GetAlignmentRotation(particle->position, emitter, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
+	LCG random;
+	if (rangeDegrees)
+		particle->degrees = (int)Lerp(minDegrees, maxDegrees, random.Float());
+	else
+		particle->degrees = minDegrees;
+	particle->rotation = GetAlignmentRotation(particle->position, 0, emitter, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
 }
 
 bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
@@ -314,11 +319,11 @@ bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
 		Particle* particle = &emitter->particles[particleIndex];
 
 		if(particle->active)
-			particle->rotation = GetAlignmentRotation(particle->position, emitter, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
+			particle->rotation = GetAlignmentRotation(particle->position, particle->degrees, emitter, emitter->component->owner->GetEngine()->GetCamera3D()->currentCamera->GetCameraFrustum().WorldMatrix());
 	}
 }
 
-Quat ParticleBillboarding::GetAlignmentRotation(const float3& position, EmitterInstance* emitter, const float4x4& cameraTransform)
+Quat ParticleBillboarding::GetAlignmentRotation(const float3& position,const int degrees, EmitterInstance* emitter, const float4x4& cameraTransform)
 {
 	float3 N, U, _U, R;
 	float3 direction = float3(cameraTransform.TranslatePart() - position).Normalized(); //normalized vector between the camera and gameobject position

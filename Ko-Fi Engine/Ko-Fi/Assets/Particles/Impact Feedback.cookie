@@ -14,10 +14,11 @@
                     },
                     {
                         "billboardingType": 6,
-                        "degrees": 0,
-                        "frontAxis": true,
+                        "frontAxis": false,
+                        "maxDegrees": 180,
+                        "minDegrees": 0,
                         "sideAxis": false,
-                        "topAxis": false,
+                        "topAxis": true,
                         "type": 5
                     },
                     {
@@ -28,9 +29,9 @@
                             0.25
                         ],
                         "maxDirection": [
-                            -1.0,
-                            -1.0,
-                            -1.0
+                            0.0,
+                            0.0,
+                            0.0
                         ],
                         "maxPosition": [
                             0.0,
@@ -53,7 +54,7 @@
                             0.0,
                             0.0
                         ],
-                        "minVelocity": 0.5,
+                        "minVelocity": 0.0,
                         "randAcceleration": false,
                         "randDirection": true,
                         "randPosition": false,

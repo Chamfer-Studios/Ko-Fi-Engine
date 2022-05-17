@@ -14,8 +14,9 @@
                     },
                     {
                         "billboardingType": 2,
-                        "degrees": 0,
                         "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
                         "sideAxis": false,
                         "topAxis": false,
                         "type": 5
@@ -91,8 +92,9 @@
                     },
                     {
                         "billboardingType": 2,
-                        "degrees": 0,
                         "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
                         "sideAxis": false,
                         "topAxis": false,
                         "type": 5

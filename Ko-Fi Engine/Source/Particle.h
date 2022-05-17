@@ -22,6 +22,7 @@ public:
 	//float4x4 transformMatrixLocal;
 	float3 position;
 	Quat rotation;
+	int degrees;
 	//float3 rotationEuler;
 	float3 scale;
 	float3 initialScale;
