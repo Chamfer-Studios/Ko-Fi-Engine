@@ -177,6 +177,20 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		case C_Camera::KOFI_ORTHOGRAPHIC:
 		{
 
+			float orthoWidth = GetOrthoWidth();
+			if (ImGui::DragFloat("orthoWidth", &orthoWidth, 1.0f, 1.0f, 10000.0f))
+			{
+				SetOrthoWidth(orthoWidth);
+			}
+			float orthoHeight = GetOrthoHeight();
+			if (ImGui::DragFloat("orthoHeight", &orthoHeight, 1.0f, 1.0f, 10000.0f))
+			{
+				SetOrthoHeight(orthoHeight);
+			}
+			if ((ImGui::Button("Apply Size Changes")))
+			{
+				ApplyOrthoWidthAndHeight();
+			}
 			break;
 		}
 		}
@@ -294,6 +308,11 @@ void C_Camera::SetProjectionType(const CameraType& type)
 		cameraFrustum.SetPerspective(hFov, vFov);
 		hFov = vFov = 0.0f;
 	}
+}
+
+void C_Camera::ApplyOrthoWidthAndHeight()
+{
+	cameraFrustum.SetOrthographic(orthoWidth, orthoHeight);
 }
 
 void C_Camera::SphereCulling()

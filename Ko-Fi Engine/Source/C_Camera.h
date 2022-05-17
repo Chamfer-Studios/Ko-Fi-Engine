@@ -65,6 +65,9 @@ public:
 	inline bool GetIsFrustumActive() const { return isFrustumCullingActive; }
 	inline bool GetIsSphereCullingActive() const { return isSphereCullingActive; }
 
+	inline float GetOrthoWidth() const { return orthoWidth; }
+	inline float GetOrthoHeight() const { return orthoHeight; }
+
 	float4x4 GetViewMatrix() const;
 	float4x4 GetWorldMatrix() const;
 	float4x4 GetProjectionMatrix() const;
@@ -93,10 +96,16 @@ public:
 	void LookAt2(float3 front, float3 up);
 
 	void SetProjectionType(const CameraType &type);
+	//only call when projection type is ortho
+	inline void SetOrthoWidth(float width) { orthoWidth = width; }
+	inline void SetOrthoHeight(float height) { orthoHeight = height; }
+
+	void ApplyOrthoWidthAndHeight();
 private:
 	// Frustum Culling
 	void SphereCulling();
 	void FrustumCulling();
+
 public:
 	void DrawSphereCulling() const;
 	void DrawFrustum() const;
@@ -119,7 +128,7 @@ private:
 
 	// DON'T USE, USE GETFOV INSTEAD
 	float hFov, vFov = 0.0f;
-	float orthoSize = 0.1f;
+	float orthoWidth, orthoHeight = 1.0f;
 	int sCullingRadius = 500.0f;
 	
 };

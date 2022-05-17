@@ -190,7 +190,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos)
 
 vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
 {
-    //calculate vector between position of light source and fragment
+//calculate vector between position of light source and fragment
     vec3 lightDir = normalize(light.position - fragPos);
     float distance = length(light.position - fragPos);
 
@@ -209,9 +209,10 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
 
         // -- attenuation -- 
         float denom = (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
-        float attenuation = 1.0 / denom;
+        float attenuation = 1.0;
         if (denom == 0.0) {
             attenuation = 1.0;
+        attenuation = 1.0 / denom;
         }
 
         // -- combine results --
@@ -225,14 +226,15 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
         //float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
         //diffuse *= intensity;
 
-        return (ambient + diffuse);
+        return (ambient + diffuse); //vec3(1.0, 0.0, 0.0);
     }
     else //in case the fragment is outside the light cone, apply just the ambient 
     {
-        vec3 ambient  = light.ambient  * light.color;
+        vec3 ambient = light.ambient  * light.color; //vec3(0.0, .0, 1.0);
         return ambient;
     }
 } 
+
 
 void main() {
 

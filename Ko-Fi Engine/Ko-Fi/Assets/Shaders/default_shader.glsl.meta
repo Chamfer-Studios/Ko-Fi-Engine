@@ -2,9 +2,9 @@
     "asset_file": "default_shader.glsl",
     "asset_path": "Assets/Shaders/default_shader.glsl",
     "contained_resources": null,
-    "hash": "b29a40db8f9675504355e0925ca88a3b",
-    "library_file": "43389632.glsl",
-    "library_path": "Library/Shaders/43389632.glsl",
+    "hash": "758e429f953001e58c05650145795363",
+    "library_file": "765155620.glsl",
+    "library_path": "Library/Shaders/765155620.glsl",
     "type": 4,
-    "uid": 43389632
+    "uid": 765155620
 }

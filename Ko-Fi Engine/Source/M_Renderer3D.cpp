@@ -858,6 +858,9 @@ void M_Renderer3D::LightUniforms(uint shader)
 				//float cutOffAngle
 				GLint cutOffValue = glGetUniformLocation(shader, ("focalLights[" + number + "].cutOffAngle").c_str());
 				glUniform1f(cutOffValue, lightSource->cutOffAngle);
+				//float cutOffAngle
+				GLint range = glGetUniformLocation(shader, ("focalLights[" + number + "].range").c_str());
+				glUniform1f(range, lightSource->range);
 				//float3 lightDirection
 				GLint lightDirection = glGetUniformLocation(shader, ("focalLights[" + number + "].direction").c_str());
 				glUniform3f(lightDirection, lightSource->lightDirection.x, lightSource->lightDirection.y, lightSource->lightDirection.z);
@@ -1247,8 +1250,8 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
 	//once the texture is created, attach it to the framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
