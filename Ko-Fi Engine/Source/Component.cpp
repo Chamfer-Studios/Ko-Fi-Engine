@@ -47,6 +47,8 @@ const char* Component::GetNameByComponentType(ComponentType type)
 		return "INFO";
 	case ComponentType::ANIMATOR:
 		return "ANIMATOR";
+	case ComponentType::FOW:
+		return "FOW";
 	default:
 		return "[ERROR] Component: Unable to return name.";
 	}
@@ -129,6 +131,7 @@ const char* componentTypeUtils::ComponentTypeToString(ComponentType e)
 			{ ComponentType::LIGHT_SOURCE, "LIGHT_SOURCE" },
 			{ ComponentType::TRANSFORM, "TRANSFORM" },
 			{ ComponentType::TRANSFORM2D, "TRANSFORM2D" },
+			{ ComponentType::FOW, "FOW" },
 			{ ComponentType::INFO, "INFO" },
 		};
 		auto   it = componentTypeStrings.find(e);

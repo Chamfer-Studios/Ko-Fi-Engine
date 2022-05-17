@@ -16,6 +16,7 @@
 
 #include "C_Mesh.h"
 #include "C_Transform2D.h"
+#include "C_Transform.h"
 #include "C_Camera.h"
 
 #include "SDL.h"
@@ -112,6 +113,47 @@ void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 	glPushMatrix();
 	glMultMatrixf(transform.Transposed().ptr());
 	glColor3f(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f);
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
+	glPopMatrix();
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	if (texture != 0) {
+		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void MyPlane::DrawPlane3D(unsigned int texture)
+{
+	OPTICK_EVENT();
+
+	C_Transform* cTransform = owner->GetComponent<C_Transform>();
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	if (texture != 0) {
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	if (texture != 0)
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
+
+	glPushMatrix();
+	glMultMatrixf(cTransform->GetGlobalTransform().Transposed().ptr());
+	glColor3f(255.0f, 255.0f, 255.0f);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
 	glPopMatrix();
 

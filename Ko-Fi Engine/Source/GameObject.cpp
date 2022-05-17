@@ -33,6 +33,7 @@
 #include "C_Walkable.h"
 #include "C_FollowPath.h"
 #include "C_LightSource.h"
+#include "C_FOW.h"
 
 // Resources
 #include "R_Material.h"
@@ -377,6 +378,11 @@ Component* GameObject::AddComponentByType(ComponentType componentType)
 	{
 		c = this->CreateComponent<C_LightSource>();
 		engine->GetSceneManager()->GetCurrentScene()->AddLight(this);
+		break;
+	}
+	case ComponentType::FOW:
+	{
+		c = this->CreateComponent<C_FOW>();
 		break;
 	}
 	}

@@ -589,6 +589,9 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 		//Check textures
 		if (cMat)
 		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 			if (!cMat->active)
 			{
 				glDisable(GL_TEXTURE_2D);
@@ -696,6 +699,8 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				mesh->Draw();
 				glUseProgram(0);
 			}
+
+			glDisable(GL_BLEND);
 		}
 	}
 }

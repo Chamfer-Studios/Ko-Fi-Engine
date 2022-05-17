@@ -1,0 +1,17 @@
+{
+    "asset_file": "fow_plane.fbx",
+    "asset_path": "Assets/Models/FOW/fow_plane.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane.sugar",
+            "library_path": "Library/Meshes/1717151494.sugar",
+            "type": 0,
+            "uid": 1717151494
+        }
+    ],
+    "hash": "0f72816b4359f51b173e08800d8482c9",
+    "library_file": "1665119532.tea",
+    "library_path": "Library/Models/1665119532.tea",
+    "type": 3,
+    "uid": 1665119532
+}

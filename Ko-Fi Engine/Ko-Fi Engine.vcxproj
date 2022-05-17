@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\C_FOW.cpp" />
     <ClCompile Include="Source\C_Image.cpp" />
     <ClCompile Include="Source\C_Material.cpp" />
     <ClCompile Include="Source\C_SoundTriggerCreator.cpp" />
@@ -334,6 +335,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\C_FOW.h" />
     <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\C_BoxCollider.h" />
     <ClInclude Include="Source\C_CapsuleCollider.h" />

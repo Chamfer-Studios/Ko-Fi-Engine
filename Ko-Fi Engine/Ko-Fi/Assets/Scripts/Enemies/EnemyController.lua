@@ -408,14 +408,24 @@ end
 function Start()
     CheckAndRecalculatePath(true)
 
-    InstantiateNamedPrefab("awareness_green", awareness_green_name)
-    InstantiateNamedPrefab("awareness_yellow", awareness_yellow_name)
-    InstantiateNamedPrefab("awareness_red", awareness_red_name)
+    --InstantiateNamedPrefab("awareness_green", awareness_green_name)
+    --InstantiateNamedPrefab("awareness_yellow", awareness_yellow_name)
+    --InstantiateNamedPrefab("awareness_red", awareness_red_name)
 end
 
 oldSourcePos = nil
 
+oldPos = nil
+
 function Update(dt)
+
+    if oldPos == nil or Float3Distance(oldPos, componentTransform:GetPosition()) > 10 then
+        oldPos = componentTransform:GetPosition()
+
+        DispatchGlobalEvent("FOW_WriteCircle", { componentTransform:GetPosition(), visionConeRadius, 128 })
+        DispatchGlobalEvent("FOW_WriteCircle", { componentTransform:GetPosition(), visionConeRadius, 0 })
+    end
+
 
     -- Death Mark (Weirding way)
     if (deathMarkTimer ~= nil) then

@@ -22,6 +22,7 @@ public:
 	~MyPlane();
 	void DrawPlane2D(R_Texture* texture, SDL_Color color);
 	void DrawPlane2D(unsigned int texture, SDL_Color color);
+	void DrawPlane3D(unsigned int texture);
 public:
 	unsigned int vertexBufferId = 0;
 	unsigned int textureBufferId = 0;

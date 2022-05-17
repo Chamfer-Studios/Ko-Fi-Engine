@@ -34,6 +34,7 @@
 #include "C_RigidBody.h"
 #include "C_BoxCollider.h"
 #include "C_LightSource.h"
+#include "C_FOW.h"
 #include "RNG.h"
 
 
@@ -186,6 +187,7 @@ public:
 									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
+									 "GetFOW", &GameObject::GetComponent<C_FOW>,
 									 "GetLight", &GameObject::GetComponent<C_LightSource>,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
@@ -241,6 +243,11 @@ public:
 			"right", &C_Camera::GetRight,
 			"GetFront", &C_Camera::GetFront,
 			"up", &C_Camera::GetUp
+			);
+
+		lua.new_usertype<C_FOW>("C_FOW",
+			sol::constructors<void(GameObject*)>(),
+			"WriteCircle", &C_FOW::WriteCircle
 			);
 
 		// Component Mesh

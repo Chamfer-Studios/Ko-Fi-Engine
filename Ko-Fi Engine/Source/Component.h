@@ -29,6 +29,7 @@ enum class ComponentType
 	TEXT,
 	WALKABLE,
 	FOLLOW_PATH,
+	FOW,
 	LIGHT_SOURCE,
 	END, //Put all the component types that you dont want the add combo to show after the END and map it in the component type to string function below this enum
 	TRANSFORM,
