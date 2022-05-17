@@ -239,6 +239,7 @@ public:
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
 			"right", &C_Camera::GetRight,
+			"GetFront", &C_Camera::GetFront,
 			"up", &C_Camera::GetUp
 			);
 
@@ -341,6 +342,7 @@ public:
 		lua["componentTransform"] = componentTransform;
 
 		/// Functions
+		lua.set_function("GetMouseZ", &Scripting::LuaGetMouseZ, this);
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
 		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("InstantiateNamedPrefab", &Scripting::LuaInstantiateNamedPrefab, this);
@@ -378,10 +380,13 @@ public:
 		appLog->AddLog("Quitting scripting system\n");
 		return true;
 	}
+	int LuaGetMouseZ() {
+		return gameObject->GetEngine()->GetInput()->GetMouseZ();
+	}
 
 	KEY_STATE LuaGetInput(int button)
 	{
-		if (button < 4 && button > 0)
+		if (button < 6 && button > 0)
 			return gameObject->GetEngine()->GetInput()->GetMouseButton(button);
 
 		switch (button)

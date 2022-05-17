@@ -11,7 +11,7 @@
 #include "glew.h"
 
 #include "Globals.h"
-#include <string.h>
+#include <string>
 #include <vector>
 
 #include "MathGeoLib/Math/float4x4.h"
@@ -57,6 +57,7 @@ private:
 
 	TTF_Font* selectedFont = nullptr;
 	SDL_Color col = { 255, 255, 255, 255 };
+	std::string fontPath = "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf";
 	int size = 0;
 };
 

@@ -12,6 +12,7 @@
 #include "M_FileSystem.h"
 #include "M_Navigation.h"
 #include "M_ResourceManager.h"
+#include "M_Renderer3D.h"
 
 #include "GameObject.h"
 #include "C_Transform.h"
@@ -485,6 +486,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 			}
 		}
 		ret = true;
+		engine->GetRenderer()->ResetFrustumCulling();
 	}
 	else
 		ret = false;

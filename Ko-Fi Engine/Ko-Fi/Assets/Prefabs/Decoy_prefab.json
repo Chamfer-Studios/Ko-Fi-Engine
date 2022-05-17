@@ -1,0 +1,69 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                10.0,
+                10.0,
+                10.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "mesh": {
+                "asset_path": "Assets/Models/Characters/Zhib/zhib_trap.sugar",
+                "draw_face_normals": false,
+                "draw_vertex_normals": false,
+                "is_animated": false,
+                "shape_type": 0,
+                "uid": 1492444383
+            },
+            "type": 1
+        },
+        {
+            "active": true,
+            "color": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "shader": {
+                "asset_path": "Assets/Shaders/default_shader.glsl",
+                "uniforms": null
+            },
+            "texture": {
+                "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
+            },
+            "type": 2
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Characters/Zhib/Decoy.lua",
+            "id": 760591411,
+            "type": 5
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "Decoy",
+    "tag": 4
+}

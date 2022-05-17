@@ -60,6 +60,7 @@ bool C_Camera::Start()
 	owner->GetTransform()->SetGlobalTransform(cameraFrustum.WorldMatrix());
 
 	cameraFrustum.SetViewPlaneDistances(GetNearPlaneDistance(), GetFarPlaneDistance());
+	tempTransform = owner->GetTransform()->GetGlobalTransform();
 
 	bool ret = true;
 
@@ -79,7 +80,11 @@ bool C_Camera::Update(float dt)
 	//Camera Position Rotation of the camera
 
 	// SET CAMERA FRUSTUM, OBJECT TRANSFORM
-	cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
+	if (!tempTransform.Equals(owner->GetTransform()->GetGlobalTransform()))
+	{
+		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
+		tempTransform = owner->GetTransform()->GetGlobalTransform();
+	}
 	if (!isEngineCamera && owner->GetEngine()->GetCamera3D()->currentCamera == this)
 	{
 		//Camera Position Rotation of the camera
@@ -142,7 +147,8 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 			owner->GetEngine()->GetRenderer()->ResetFrustumCulling();
 
 		}
-
+		// SPHERE CULLING RADIUS
+		ImGui::DragInt("SphereCulling Radius", &sCullingRadius, 1.0f, 1.0f, 180.f);
 		// TODO: SET MAIN CAMERA TO TAG!
 		if (ImGui::Checkbox("Set As Main Camera", &isMainCamera))
 		{
@@ -200,7 +206,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
 		{
 			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
-			sCullingRadius = planeDistances.y / 2.0f;
+			sCullingRadius = (planeDistances.y-planeDistances.x) / 2.0f;
 		}
 	}
 	else
@@ -216,7 +222,9 @@ void C_Camera::Save(Json& json) const
 	json["vertical_fov"] = cameraFrustum.VerticalFov();
 	json["near_plane_distance"] = cameraFrustum.NearPlaneDistance();
 	json["far_plane_distance"] = cameraFrustum.FarPlaneDistance();
+	json["sphere_culling"] = isSphereCullingActive;
 	json["frustum_culling"] = isFrustumCullingActive;
+	json["sCullingRadius"] = sCullingRadius;
 	json["isMainCamera"] = isMainCamera;
 }
 
@@ -224,6 +232,14 @@ void C_Camera::Load(Json& json)
 {
 	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"), 1.778f);
 	cameraFrustum.SetViewPlaneDistances(json.at("near_plane_distance"), json.at("far_plane_distance"));
+	if (json.contains("sphere_culling"))
+	{
+		isSphereCullingActive = json.at("sphere_culling").get<bool>();
+	}
+	if (json.contains("sCullingRadius"))
+	{
+		sCullingRadius = json.at("sCullingRadius").get<int>();
+	}
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
 	if (isMainCamera)

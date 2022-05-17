@@ -109,6 +109,8 @@ bool SceneIntro::PreUpdate(float dt)
 			continue;
 		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 		go->LoadPrefabJson(path.c_str(), false);
+		if (std::string(go->GetName()) != (*mapIt).first)
+			go->SetName(((*mapIt).first).c_str(), (*mapIt).first == (*mapIt).second);
 		for (Component* component : go->GetComponents()) // This method used because there could be multiple scripts in one go
 		{
 			if (component->GetType() != ComponentType::SCRIPT)

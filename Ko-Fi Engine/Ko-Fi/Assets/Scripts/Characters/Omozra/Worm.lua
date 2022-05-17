@@ -18,8 +18,11 @@ function Start()
 	omozra = GetVariable("Omozra.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
 	componentTransform:SetPosition(float3.new(omozra:GetTransform():GetPosition().x, -20, omozra:GetTransform():GetPosition().z))
 
-    particles = gameObject:GetComponentParticle()
-    particles:StopParticleSpawn()
+	if(particles ~= null) then
+		particles = gameObject:GetComponentParticle()
+    	particles:StopParticleSpawn()
+	end
+    
 
     componentAnimator = gameObject:GetComponentAnimator()
     if (componentAnimator ~= nil) then
