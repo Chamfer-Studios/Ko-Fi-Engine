@@ -56,8 +56,9 @@ bool C_Transform::Update(float dt)
 			if (owner->GetComponent<C_CapsuleCollider>())
 				owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
 
-			isDirty = false;
 		}
+
+		isDirty = false;
 	}
 
 	return true;
@@ -265,7 +266,6 @@ const float3 C_Transform::GlobalFront() const
 
 void C_Transform::RecomputeGlobalMatrix()
 {
-
 	if (owner->GetParent() != nullptr && owner->GetParent()->GetComponent<C_Transform>())
 	{
 		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
@@ -274,6 +274,7 @@ void C_Transform::RecomputeGlobalMatrix()
 	{
 		transformMatrix = transformMatrixLocal;
 	}
+
 }
 
 void C_Transform::Save(Json &json) const
@@ -307,5 +308,5 @@ void C_Transform::Load(Json &json)
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), GetRotationQuat(), GetScale());
 
 	RecomputeGlobalMatrix();
-	owner->PropagateTransform();
+	
 }

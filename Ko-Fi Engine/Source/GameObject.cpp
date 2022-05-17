@@ -403,10 +403,27 @@ void GameObject::RemoveChild(GameObject* child)
 
 void GameObject::PropagateTransform()
 {
+	if (children.empty())
+		return;
+
+	int count = 0;
+
+	appLog->AddLog("Parent %s: \n", this->GetName());
 	for (GameObject* go : children)
 	{
 		if (go->transform != nullptr)
-			go->transform->RecomputeGlobalMatrix();
+		{
+			count++;
+			this->transform->SetDirty(true);
+			go->PropagateTransform();
+			
+			/*if (count == 1)
+			{
+				continue;
+			}*/
+			appLog->AddLog("Childs %s, Position: %d \n", go->GetName(), count);
+			
+		}
 	}
 }
 
