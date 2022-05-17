@@ -420,10 +420,9 @@ oldPos = nil
 function Update(dt)
 
     if oldPos == nil or Float3Distance(oldPos, componentTransform:GetPosition()) > 10 then
-        oldPos = componentTransform:GetPosition()
-
-        DispatchGlobalEvent("FOW_WriteCircle", { componentTransform:GetPosition(), visionConeRadius, 128 })
+        DispatchGlobalEvent("FOW_WriteCircle", { oldPos, visionConeRadius, 128 })
         DispatchGlobalEvent("FOW_WriteCircle", { componentTransform:GetPosition(), visionConeRadius, 0 })
+        oldPos = componentTransform:GetPosition()
     end
 
 
