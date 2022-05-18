@@ -33,31 +33,10 @@ C_Transform::~C_Transform()
 
 bool C_Transform::Update(float dt)
 {
-
-	if (std::string(owner->GetName()) == std::string("harkonnen")) {
-		int a = 0;
-	}
-	
 	if (isDirty) // When Object is Modified
 	{
 		RecomputeGlobalMatrix();
-		owner->PropagateTransform();
-
-		if (owner->GetComponent<C_Mesh>())
-		{
-			if (owner->GetComponent<C_Mesh>()->GetMesh())
-				owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
-
-			// Update colliders
-			if (owner->GetComponent<C_BoxCollider>())
-				owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
-			if (owner->GetComponent<C_SphereCollider>())
-				owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
-			if (owner->GetComponent<C_CapsuleCollider>())
-				owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
-
-		}
-
+	
 		isDirty = false;
 	}
 
@@ -275,6 +254,31 @@ void C_Transform::RecomputeGlobalMatrix()
 		transformMatrix = transformMatrixLocal;
 	}
 
+	if (owner->GetComponent<C_Mesh>())
+	{
+		if (owner->GetComponent<C_Mesh>()->GetMesh())
+			owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
+
+		// Update colliders
+		if (owner->GetComponent<C_BoxCollider>())
+			owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
+		if (owner->GetComponent<C_SphereCollider>())
+			owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
+		if (owner->GetComponent<C_CapsuleCollider>())
+			owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
+
+	}
+
+	for (GameObject* go : owner->GetChildren())
+	{
+		if (go->GetTransform() != nullptr)
+		{
+			//count++;
+			//appLog->AddLog("Childs %s, Position: %d \n", go->GetName(), count);
+
+			go->GetTransform()->RecomputeGlobalMatrix();
+		}
+	}
 }
 
 void C_Transform::Save(Json &json) const
