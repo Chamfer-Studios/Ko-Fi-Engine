@@ -1,0 +1,17 @@
+{
+    "asset_file": "mentat.fbx",
+    "asset_path": "Assets/Models/Enemies/mentat.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Base Mesh For Editiing.003.sugar",
+            "library_path": "Library/Meshes/2054929868.sugar",
+            "type": 0,
+            "uid": 2054929868
+        }
+    ],
+    "hash": "a612710ea382ac30d530f5faf28c0278",
+    "library_file": "860609654.tea",
+    "library_path": "Library/Models/860609654.tea",
+    "type": 3,
+    "uid": 860609654
+}
