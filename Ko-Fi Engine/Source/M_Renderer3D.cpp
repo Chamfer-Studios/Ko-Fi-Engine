@@ -570,7 +570,7 @@ void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 		if (selectedId == cMesh->owner->GetUID())
 		{
 			if (cMesh->GetMesh() != nullptr)
-				cMesh->DrawBoundingBox(cMesh->GetLocalAABB(), float3(0.0f, 1.0f, 0.0f));
+				cMesh->DrawBoundingBox(cMesh->GetGlobalAABB(), float3(0.0f, 1.0f, 0.0f));
 			else
 				KOFI_ERROR(" Renderer: Could not draw local AABB, mesh was nullptr.");
 		}

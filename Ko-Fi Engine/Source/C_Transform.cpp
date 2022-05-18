@@ -43,20 +43,7 @@ bool C_Transform::Update(float dt)
 		RecomputeGlobalMatrix();
 		owner->PropagateTransform();
 
-		if (owner->GetComponent<C_Mesh>())
-		{
-			if (owner->GetComponent<C_Mesh>()->GetMesh())
-				owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
-
-			// Update colliders
-			if (owner->GetComponent<C_BoxCollider>())
-				owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
-			if (owner->GetComponent<C_SphereCollider>())
-				owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
-			if (owner->GetComponent<C_CapsuleCollider>())
-				owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
-
-		}
+		
 
 		isDirty = false;
 	}
@@ -266,14 +253,29 @@ const float3 C_Transform::GlobalFront() const
 
 void C_Transform::RecomputeGlobalMatrix()
 {
+		transformMatrix = transformMatrixLocal;
 	if (owner->GetParent() != nullptr && owner->GetParent()->GetComponent<C_Transform>())
 	{
 		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
+
+		//if (owner->GetComponent<C_Mesh>())
+		//{
+		//	if (owner->GetComponent<C_Mesh>()->GetMesh())
+		//		owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
+
+		//	// Update colliders
+		//	if (owner->GetComponent<C_BoxCollider>())
+		//		owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
+		//	if (owner->GetComponent<C_SphereCollider>())
+		//		owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
+		//	if (owner->GetComponent<C_CapsuleCollider>())
+		//		owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
+
+		//}
 	}
-	else
-	{
-		transformMatrix = transformMatrixLocal;
-	}
+
+	
+
 
 }
 
