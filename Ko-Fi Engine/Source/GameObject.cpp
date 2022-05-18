@@ -409,7 +409,22 @@ void GameObject::PropagateTransform()
 	int count = 0;
 
 	appLog->AddLog("Parent %s: \n", this->GetName());
-	
+	for (GameObject* go : children)
+	{
+		if (go->transform != nullptr)
+		{
+			count++;
+			this->transform->SetDirty(true);
+			go->PropagateTransform();
+			
+			/*if (count == 1)
+			{
+				continue;
+			}*/
+			appLog->AddLog("Childs %s, Position: %d \n", go->GetName(), count);
+			
+		}
+	}
 }
 
 void GameObject::SetName(const char* name, bool numbered)

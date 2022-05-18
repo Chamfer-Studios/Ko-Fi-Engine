@@ -242,7 +242,7 @@ void C_Mesh::GenerateLocalBoundingBox()
 void C_Mesh::GenerateGlobalBoundingBox()
 {
 	// Generate global OBB
-	obb.SetFrom(GetLocalAABB()); 
+	obb.SetFrom(GetLocalAABB());
 	obb.Transform(owner->GetTransform()->GetGlobalTransform());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Erase(owner);
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTree.Insert(owner);
