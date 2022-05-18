@@ -29,7 +29,6 @@ public:
 	void SetRotationQuat(const Quat &newRotation);
 	void LookAt(float3 &front, float3& up);
 	void SetGlobalTransform(const float4x4 &globalTransform);
-	void SetDirty(bool isDirty);
 
 	// Getters
 	float3 GetPosition() const;
@@ -44,7 +43,6 @@ public:
 	const float3 GlobalFront() const;
 	inline float4x4 GetGlobalTransform() const { return transformMatrix; }
 	inline float4x4 GetLocalTransform() const { return transformMatrixLocal; }
-	inline bool GetDirty() const { return isDirty; }
 
 	// Transform Functions
 	void RecomputeGlobalMatrix();
@@ -57,7 +55,7 @@ private:
 	// Transfrom Properties
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;
-	bool isDirty = true;
+
 };
 
 #endif // !__C_TRANSFORM_H__

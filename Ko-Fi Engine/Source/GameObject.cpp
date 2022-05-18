@@ -390,8 +390,10 @@ void GameObject::AttachChild(GameObject* child)
 		child->parent->RemoveChild(child);
 	child->parentUid = this->uid;
 	child->parent = this;
+	if(child->GetTransform() != nullptr)
+		child->GetTransform()->RecomputeGlobalMatrix();
+
 	children.push_back(child);
-	// child->PropagateTransform();
 }
 
 void GameObject::RemoveChild(GameObject* child)
@@ -408,14 +410,13 @@ void GameObject::PropagateTransform()
 
 	int count = 0;
 
-	appLog->AddLog("Parent %s: \n", this->GetName());
+	//appLog->AddLog("Parent %s: \n", this->GetName());
 	for (GameObject* go : children)
 	{
 		if (go->transform != nullptr)
 		{
 			count++;
-			this->transform->SetDirty(true);
-			go->PropagateTransform();
+			go->transform->RecomputeGlobalMatrix();
 			
 			/*if (count == 1)
 			{

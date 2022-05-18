@@ -24,7 +24,7 @@ C_Transform::C_Transform(GameObject *parent) : Component(parent)
 
 	transformMatrixLocal.SetIdentity();
 	transformMatrix = float4x4::FromTRS(float3::zero, Quat::identity, float3::one);
-	isDirty = true;
+	RecomputeGlobalMatrix();
 }
 
 C_Transform::~C_Transform()
@@ -38,28 +38,28 @@ bool C_Transform::Update(float dt)
 		int a = 0;
 	}
 	
-	if (isDirty) // When Object is Modified
-	{
-		RecomputeGlobalMatrix();
-		owner->PropagateTransform();
+	//if (isDirty) // When Object is Modified
+	//{
+	//	RecomputeGlobalMatrix();
+	//	
 
-		if (owner->GetComponent<C_Mesh>())
-		{
-			if (owner->GetComponent<C_Mesh>()->GetMesh())
-				owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
+	//	if (owner->GetComponent<C_Mesh>())
+	//	{
+	//		if (owner->GetComponent<C_Mesh>()->GetMesh())
+	//			owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
 
-			// Update colliders
-			if (owner->GetComponent<C_BoxCollider>())
-				owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
-			if (owner->GetComponent<C_SphereCollider>())
-				owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
-			if (owner->GetComponent<C_CapsuleCollider>())
-				owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
+	//		// Update colliders
+	//		if (owner->GetComponent<C_BoxCollider>())
+	//			owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
+	//		if (owner->GetComponent<C_SphereCollider>())
+	//			owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
+	//		if (owner->GetComponent<C_CapsuleCollider>())
+	//			owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
 
-		}
+	//	}
 
-		isDirty = false;
-	}
+	//	isDirty = false;
+	//}
 
 	return true;
 }
@@ -120,7 +120,8 @@ void C_Transform::SetPosition(const float3 &newPosition)
 {
 	transformMatrixLocal = float4x4::FromTRS(newPosition, GetRotationQuat(), GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
-	isDirty = true;
+	RecomputeGlobalMatrix();
+
 }
 
 void C_Transform::SetScale(const float3 &newScale)
@@ -137,7 +138,8 @@ void C_Transform::SetScale(const float3 &newScale)
 
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), GetRotationQuat(), fixedScale);
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
-	isDirty = true;
+	RecomputeGlobalMatrix();
+
 }
 
 void C_Transform::SetRotationEuler(const float3 &newRotation)
@@ -145,14 +147,16 @@ void C_Transform::SetRotationEuler(const float3 &newRotation)
 	Quat rotation = Quat::FromEulerXYZ(newRotation.x, newRotation.y, newRotation.z);
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), rotation, GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
-	isDirty = true;
+	RecomputeGlobalMatrix();
+
 }
 
 void C_Transform::SetRotationQuat(const Quat &newRotation)
 {
 	transformMatrixLocal = float4x4::FromTRS(GetPosition(), newRotation, GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
-	isDirty = true;
+	RecomputeGlobalMatrix();
+
 }
 
 void C_Transform::LookAt(float3 &_front, float3 &_up)
@@ -177,11 +181,10 @@ void C_Transform::LookAt(float3 &_front, float3 &_up)
 
 	r = r.RotateAxisAngle(_up, diff);
 
-	SetRotationQuat(r);
+	SetRotationQuat(r); // This is Recomputing The Global Matrix
 
 	//transformMatrixLocal = float4x4::LookAt(GetPosition(), GetPosition() + _front, Front(), Up(), float3(0, 1, 0));
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
-	isDirty = true;
 }
 
 void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
@@ -189,22 +192,18 @@ void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
 	if (owner->GetParent() == nullptr) return;
 
 	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
-	//transformMatrix = globalTransform;
-	isDirty = true;
-}
+	RecomputeGlobalMatrix();
 
-void C_Transform::SetDirty(bool isDirty)
-{
-	this->isDirty = isDirty;
 }
 
 float3 C_Transform::GetPosition() const
 {
-	float3 position = float3::zero;
-	float3 scale = float3::zero;
-	Quat rotation = Quat::identity;
-	transformMatrixLocal.Decompose(position, rotation, scale);
-	return position;
+
+	if (transformMatrixLocal.TranslatePart().IsFinite())
+		return transformMatrixLocal.TranslatePart();
+	
+	KOFI_ERROR("%s Transform Position is infinite", owner->GetName());
+	return float3(0.f, 0.f, 0.f);
 }
 
 float3 C_Transform::GetScale() const
@@ -274,6 +273,7 @@ void C_Transform::RecomputeGlobalMatrix()
 	{
 		transformMatrix = transformMatrixLocal;
 	}
+	owner->PropagateTransform();
 
 }
 

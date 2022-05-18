@@ -352,7 +352,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 				parent->second->AttachChild(it.second);
 			}
 		}
-		it.second->GetComponent<C_Transform>()->SetDirty(true);
+		
 	}
 
 	// Adding the animator component to the proper game objects.
