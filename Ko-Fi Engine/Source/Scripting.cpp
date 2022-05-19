@@ -72,3 +72,31 @@ int Scripting::GetDialogueTargetID(const char* key, int id)
 		}
 	}
 }
+
+bool Scripting::LoadGameState()
+{
+	JsonHandler jsonHandler;
+
+	bool ret = jsonHandler.LoadJson(gameJson, "gamestate.json");
+
+	if (!ret)
+	{
+		KOFI_ERROR("Fatal error on LoadJSON(),scripting.h FILE DOES NOT EXIST");
+		return ret;
+	}
+
+	CONSOLE_LOG("gamestate.json loaded");
+
+	return ret;
+}
+
+bool Scripting::SaveGameState()
+{
+	JsonHandler jsonHandler;
+
+	bool ret = jsonHandler.SaveJson(gameJson, "gamestate.json");
+
+	CONSOLE_LOG("gamestate.json saved");
+
+	return ret;
+}

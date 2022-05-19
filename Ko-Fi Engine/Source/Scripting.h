@@ -372,6 +372,8 @@ public:
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
 		lua.set_function("DrawLine", &Scripting::DrawLine, this);
 		lua.set_function("RNG", &Scripting::RNG, this);
+		lua.set_function("SaveGameState", &Scripting::SaveGameState, this);
+		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 	}
 
 	bool CleanUp()
@@ -775,11 +777,19 @@ public:
 
 	int GetDialogueTargetID(const char* key, int id);
 
+	bool LoadGameState();
+	bool SaveGameState();
+
+	int GetInt(const char* key) { return gameJson.at(key); }
+	int SetInt(const char* key, int value) { return gameJson[key] = value; }
+
 public:
 	sol::state lua;
 	GameObject* gameObject = nullptr;
 	C_Transform* componentTransform = nullptr;
 	C_Script* script = nullptr;
+
+	Json gameJson;
 
 	std::map<std::string, Json> files;
 };
