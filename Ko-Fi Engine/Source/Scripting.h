@@ -374,6 +374,8 @@ public:
 		lua.set_function("RNG", &Scripting::RNG, this);
 		lua.set_function("SaveGameState", &Scripting::SaveGameState, this);
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
+		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
+		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
 	}
 
 	bool CleanUp()
@@ -780,8 +782,8 @@ public:
 	bool LoadGameState();
 	bool SaveGameState();
 
-	int GetInt(const char* key) { return gameJson.at(key); }
-	int SetInt(const char* key, int value) { return gameJson[key] = value; }
+	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
+	int SetGameJsonInt(const char* key, int value) { return gameJson[key] = value; }
 
 public:
 	sol::state lua;
