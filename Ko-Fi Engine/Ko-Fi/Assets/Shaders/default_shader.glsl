@@ -13,10 +13,12 @@ out vec4 ourColor;
 out vec2 TexCoord;
 out vec4 normal;
 out vec3 fragPos;
+out vec4 fragPosLightSpace;
 
 uniform mat4 model_matrix;
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat4 lightSpaceMatrix;
 
 uniform mat4 finalBonesMatrices[MAX_BONES];
 uniform bool isAnimated;
@@ -40,7 +42,7 @@ void main() {
     }
     if(isAnimated == false) {
         totalPosition = vec4(position, 1.0f);
-    }
+    } 
 
     mat4 viewModel = view * model_matrix;
     gl_Position = projection * viewModel * totalPosition;
@@ -49,6 +51,8 @@ void main() {
     TexCoord = texCoord;
     //normals affected by model movement
     normal = normalize(model_matrix * vec4(normals, 0.0));
+    fragPosLightSpace = lightSpaceMatrix * vec4(fragPos, 1.0);
+
 }
 
 #shader fragment
@@ -62,10 +66,12 @@ in vec4 ourColor;
 in vec2 TexCoord;
 in vec4 normal;
 in vec3 fragPos;
+in vec4 fragPosLightSpace;
 
 out vec4 color;
 
 uniform sampler2D ourTexture;
+uniform sampler2D depthMap;
 
 uniform int numOfDirectionalLights;
 uniform int numOfPointLights;
@@ -114,7 +120,29 @@ struct FocalLight {
       
 }; uniform FocalLight focalLights[MAX_FOCAL_LIGHTS];
 
-vec3 CalcDirLight(DirLight light, vec3 normal)
+float ShadowCalculation(vec4 fragPosLightSpace, DirLight light)
+{
+    // perform perspective divide
+    //When using an orthographic projection matrix the w component of a 
+    //vertex remains untouched so this step is actually quite meaningless.
+    //However, it is necessary when using perspective projection so 
+    //keeping this line ensures it works with both projection matrices.
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    
+    projCoords = projCoords * 0.5 + 0.5; 
+    float closestDepth = texture(depthMap, projCoords.xy).r;   
+    float currentDepth = projCoords.z; 
+
+    vec3 lightDir = normalize(-light.direction);
+    //the bias is to reduce artifacts when looking at shadows from an angle.
+    //simply offsets the depth of the shadow map a little
+    float bias = 0.01; 
+    float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;  
+
+    return (1.0 - shadow);
+}
+
+vec3 CalcDirLight(DirLight light, vec3 normal, float shadow)
 {
     vec3 ret = vec3(0.0);
 
@@ -131,7 +159,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal)
     vec3 ambient  = light.ambient * light.color;
     vec3 diffuse  = light.diffuse * diff * light.color;
     //vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
-    ret = ambient + diffuse; //+ specular
+    ret = (ambient + diffuse) * shadow; //+ specular
 
     return ret;
 }
@@ -180,7 +208,6 @@ vec3 CalcFocalLight(FocalLight light, vec3 normal, vec3 fragPos)
         //float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
         // -- attenuation -- 
-        float distance    = length(light.position - fragPos);
         float denom = (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
         float attenuation = 1.0;
         if (denom == 0.0) {
@@ -218,7 +245,15 @@ void main() {
     //loop dirLights
     for(int i = 0; i < numOfDirectionalLights; i++)
     {
-        outputColor += CalcDirLight(dirLights[i], vec3(normal)); 
+       // Calculate shadow (temporarily only on light 0)
+       float shadow = 1;
+       
+       if(i == 0)
+       {
+           shadow = ShadowCalculation(fragPosLightSpace, dirLights[i]);
+       }
+
+        outputColor += CalcDirLight(dirLights[i], vec3(normal), shadow); 
     }
 
     // --- Add the point light's contribution to the output color ---
