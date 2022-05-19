@@ -53,14 +53,6 @@ enum INSPECTOR_VARIABLE_TYPE
 	INSPECTOR_GAMEOBJECT,
 };
 
-enum ItemType
-{
-	ITEM_NO_TYPE,
-	ITEM_HAND,
-	ITEM_KNIFE,
-	ITEM_GUN
-};
-
 class InspectorVariable
 {
 public:
