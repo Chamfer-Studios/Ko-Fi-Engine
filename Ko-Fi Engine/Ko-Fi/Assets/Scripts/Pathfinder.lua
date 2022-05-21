@@ -150,12 +150,6 @@ function UpdatePath(wp, pingpong, currentPos)
         end
     end
 
-    -- currentPosition = componentTransform:GetPosition()
-    -- Log(tostring(Float3Distance(currentPosition, _G.finalPath[closestIndex]) < minRetargetingDistance) .. "\n")
-    -- while Float3Distance(currentPosition, _G.finalPath[closestIndex]) < minRetargetingDistance do
-    --    closestIndex = closestIndex + 1
-    -- end
-
     if (#_finalPath == 0) then
         DispatchEvent("Stop_Movement", {})
     end

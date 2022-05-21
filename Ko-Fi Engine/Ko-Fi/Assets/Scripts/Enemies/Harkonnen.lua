@@ -6,6 +6,7 @@ STATE = { -- Importat to add changes to the state enum in EnemyController.lua an
     DEAD = 5,
     VICTORY = 6
 }
+
 ATTACK_FASE = {
     IDLE = 1,
     BEGIN_ATTACK = 2,
@@ -15,10 +16,14 @@ ATTACK_FASE = {
 meleeRange = 25.0
 attackTime = 1.5
 
+knifeHitChance = 100
+dartHitChance = 100
+
 function Start()
     currentState = STATE.UNAWARE
     currentAttack = nil
     target = nil
+    componentAnimator = gameObject:GetParent():GetComponentAnimator()
 end
 
 function Update(dt)
@@ -28,7 +33,7 @@ function Update(dt)
     end
 
     if (currentState == STATE.UNAWARE) then
-
+        componentAnimator:SetSelectedClip("Idle")
     elseif (currentState == STATE.AWARE) then
 
     elseif (currentState == STATE.SUS) then
@@ -67,7 +72,7 @@ function ManageTimers(dt)
             else
                 if (currentAttack == ATTACK_FASE.BEGIN_ATTACK) then
                     DoAttack()
-                elseif (currentState ~= State.DEAD) then
+                elseif (currentState ~= STATE.DEAD) then
                     componentAnimator:SetSelectedClip("Idle") -- Comment this line to test animations in-game
                     currentAttack = nil
                 end
@@ -76,7 +81,7 @@ function ManageTimers(dt)
     end
 
     -- If he's dead he can't do anything
-    if (currentState == State.DEAD) then
+    if (currentState == STATE.DEAD) then
         ret = false
     end
 
@@ -127,7 +132,101 @@ function EventHandler(key, fields)
         currentState = fields[2]
     elseif key == "Target_Update" then
         target = fields[1] -- fields[1] -> new Target;
+    elseif key == "Die" then
+        if (fields[1] == gameObject) then
+            Die()
+        end
+    elseif key == "Knife_Hit" then
+        if (fields[1] == gameObject) then
+            if (currentState == STATE.UNAWARE or currentState == STATE.AWARE) then
+                knifeHitChance =
+                    GetVariable("Zhib.lua", "unawareChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= knifeHitChance) then
+                    Log("Knife's D100 roll has been " .. rng .. " so the UNAWARE enemy is dead! \n")
+                    Die()
+                else
+                    Log("Knife's D100 roll has been " .. rng .. " so the UNAWARE enemy has dodged the knife :( \n")
+                end
+            elseif (currentState == STATE.SUS) then
+                knifeHitChance = GetVariable("Zhib.lua", "awareChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= knifeHitChance) then
+                    Log("Knife's D100 roll has been " .. rng .. " so the AWARE enemy is dead! \n")
+                    Die()
+                else
+                    Log("Knife's D100 roll has been " .. rng .. " so the AWARE enemy has dodged the knife :( \n")
+                end
+            elseif (currentState == STATE.AGGRO) then
+                knifeHitChance = GetVariable("Zhib.lua", "aggroChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= knifeHitChance) then
+                    Log("Knife's D100 roll has been " .. rng .. " so the AGGRO enemy is dead! \n")
+                    Die()
+                else
+                    Log("Knife's D100 roll has been " .. rng .. " so the AGGRO enemy has dodged the knife :( \n")
+                end
+            end
+        end
+    elseif key == "Dart_Hit" then
+        if (fields[1] == gameObject) then
+            if (currentState == STATE.UNAWARE or currentState == STATE.AWARE) then
+                dartHitChance =
+                    GetVariable("Nerala.lua", "unawareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= dartHitChance) then
+                    Log("Dart's D100 roll has been " .. rng .. " so the UNAWARE enemy is stunned! \n")
+                    -- TODO: STUN NOT DIE
+                    Die()
+                else
+                    Log("Dart's D100 roll has been " .. rng .. " so the UNAWARE enemy has dodged the dart :( \n")
+                end
+            elseif (currentState == STATE.SUS) then
+                dartHitChance = GetVariable("Nerala.lua", "awareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= dartHitChance) then
+                    Log("Dart's D100 roll has been " .. rng .. " so the AWARE enemy is stunned! \n")
+                    -- TODO: STUN NOT DIE
+                    Die()
+                else
+                    Log("Dart's D100 roll has been " .. rng .. " so the AWARE enemy has dodged the dart :( \n")
+                end
+            elseif (currentState == STATE.AGGRO) then
+                dartHitChance = GetVariable("Nerala.lua", "aggroChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= dartHitChance) then
+                    Log("Dart's D100 roll has been " .. rng .. " so the AGGRO enemy is stunned! \n")
+                    -- TODO: STUN NOT DIE
+                    Die()
+                else
+                    Log("Dart's D100 roll has been " .. rng .. " so the AGGRO enemy has dodged the dart :( \n")
+                end
+            end
+        end
     end
+end
+
+function Die()
+
+    -- Chance to spawn, if spawn dispatch event
+    math.randomseed(os.time())
+    rng = math.random(100)
+    if (rng >= 50) then
+        InstantiatePrefab("SpiceLoot")
+        str = "Harkonnen"
+        DispatchGlobalEvent("Spice_Spawn", {componentTransform:GetPosition(), str})
+        Log("Enemy has dropped a spice loot :) " .. rng .. "\n")
+    else
+        Log("The drop rate has not been good :( " .. rng .. "\n")
+    end
+
+    DeleteGameObject()
 end
 
 -- Math
