@@ -91,19 +91,24 @@ public:
 			"NONE", ComponentType::NONE,
 			"MESH", ComponentType::MESH,
 			"MATERIAL", ComponentType::MATERIAL,
+			"PARTICLE", ComponentType::PARTICLE,
 			"CAMERA", ComponentType::CAMERA,
-			"BOX_COLLIDER", ComponentType::BOX_COLLIDER,
-			"SPHERE_COLLIDER", ComponentType::SPHERE_COLLIDER,
-			"CAPSULE_COLLIDER", ComponentType::CAPSULE_COLLIDER,
-			"RIGID_BODY", ComponentType::RIGID_BODY,
 			"SCRIPT", ComponentType::SCRIPT,
-			"TRANSFORM", ComponentType::TRANSFORM,
-			"INFO", ComponentType::INFO,
-			"TRANSFORM2D", ComponentType::TRANSFORM2D,
+			"RIGID_BODY", ComponentType::RIGID_BODY,
+			"BOX_COLLIDER", ComponentType::BOX_COLLIDER,
+			"CAPSULE_COLLIDER", ComponentType::CAPSULE_COLLIDER,
+			"SPHERE_COLLIDER", ComponentType::SPHERE_COLLIDER,
+			"AUDIO_SOURCE", ComponentType::AUDIO_SOURCE,
+			"AUDIO_SWITCH", ComponentType::AUDIO_SWITCH,
+			"ANIMATOR", ComponentType::ANIMATOR,
 			"CANVAS", ComponentType::CANVAS,
 			"IMAGE", ComponentType::IMAGE,
 			"BUTTON", ComponentType::BUTTON,
-			"TEXT", ComponentType::TEXT);
+			"TEXT", ComponentType::TEXT,
+			"WALKABLE", ComponentType::WALKABLE,
+			"FOLLOW_PATH", ComponentType::FOLLOW_PATH,
+			"LIGHT_SOURCE", ComponentType::LIGHT_SOURCE
+		);
 
 		// INSPECTOR_VARIABLE_TYPE
 		lua.new_enum("INSPECTOR_VARIABLE_TYPE",
@@ -194,7 +199,10 @@ public:
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "Active", &GameObject::Active,
 									 "Quit", &GameObject::Quit,
-									 "ChangeScene", &GameObject::SetChangeScene
+									 "ChangeScene", &GameObject::SetChangeScene,
+									 "GetChildren", &GameObject::GetChildren,
+									 "AddComponentByType", &GameObject::AddComponentByType,
+									 "DeleteComponent", &GameObject::DeleteComponent
 
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
 			);
