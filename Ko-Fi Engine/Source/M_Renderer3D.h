@@ -139,7 +139,7 @@ public:
 	void InitDepthMapFramebufferAndTexture();
 	void LightUniforms(uint shader);
 	void ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light);
-	void FillShadowMap(C_Camera* camera);
+	void FillShadowMap();
 	void InsertGameObjectToRender(GameObject* go);
 	void EraseGameObjectToRender(GameObject* go);
 	bool renderShadowMap;
