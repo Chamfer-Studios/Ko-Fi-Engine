@@ -380,59 +380,12 @@ Quat ParticleBillboarding::GetAlignmentRotation(const float3& position,const int
 		result = emitter->component->owner->GetTransform()->GetLocalTransform().RotatePart() * result;
 
 	Quat rot;
-	switch (billboardingType)
-	{
-	case ParticleBillboarding::BillboardingType::SCREEN_ALIGNED:
-		if (frontAxis)
-			result = rot.RotateZ(DegToRad(degrees)).Normalized() * result;
-		if (topAxis)
-			result = rot.RotateY(DegToRad(degrees)).Normalized() * result;
-		if (sideAxis)
-			result = rot.RotateX(DegToRad(degrees)).Normalized() * result;
-		break;
-	case ParticleBillboarding::BillboardingType::WORLD_ALIGNED:
-		if (frontAxis)
-			result = rot.RotateZ(DegToRad(degrees)).Normalized() * result;
-		if (topAxis)
-			result = rot.RotateY(DegToRad(degrees)).Normalized() * result;
-		if (sideAxis)
-			result = rot.RotateX(DegToRad(degrees)).Normalized() * result;
-		break;
-	case ParticleBillboarding::BillboardingType::X_AXIS_ALIGNED:
-		if (frontAxis)
-			result = rot.RotateZ(DegToRad(degrees)).Normalized() * result;
-		if (topAxis)
-			result = rot.RotateY(DegToRad(degrees)).Normalized() * result;
-		if (sideAxis)
-			result = rot.RotateX(DegToRad(degrees)).Normalized() * result;
-		break;
-	case ParticleBillboarding::BillboardingType::Y_AXIS_ALIGNED:
-		if (frontAxis)
-			result = rot.RotateZ(DegToRad(degrees)).Normalized() * result;
-		if (topAxis)
-			result = rot.RotateY(DegToRad(degrees)).Normalized() * result;
-		if (sideAxis)
-			result = rot.RotateX(DegToRad(degrees)).Normalized() * result;
-		break;
-	case ParticleBillboarding::BillboardingType::Z_AXIS_ALIGNED:
-		if (frontAxis)
-			result = rot.RotateZ(DegToRad(degrees)).Normalized() * result;
-		if (topAxis)
-			result = rot.RotateY(DegToRad(degrees)).Normalized() * result;
-		if (sideAxis)
-			result = rot.RotateX(DegToRad(degrees)).Normalized() * result;
-		break;
-	case ParticleBillboarding::BillboardingType::XZ_AXIS_LOCKED:
-		if (frontAxis)
-			result = rot.RotateZ(DegToRad(degrees)).Normalized() * result;
-		if (topAxis)
-			result = rot.RotateY(DegToRad(degrees)).Normalized() * result;
-		if (sideAxis)
-			result = rot.RotateX(DegToRad(degrees)).Normalized() * result;
-		break;
-	default:
-		break;
-	}
+	if (frontAxis)
+		result = rot.RotateZ(DegToRad(degrees)).Normalized() * result;
+	if (topAxis)
+		result = rot.RotateY(DegToRad(degrees)).Normalized() * result;
+	if (sideAxis)
+		result = rot.RotateX(DegToRad(degrees)).Normalized() * result;
 
 	return result.ToQuat();
 }
