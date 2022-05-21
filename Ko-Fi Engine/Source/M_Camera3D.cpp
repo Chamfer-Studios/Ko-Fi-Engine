@@ -84,8 +84,8 @@ bool M_Camera3D::Update(float dt)
 
 	FocusTarget();
 
-	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
-		return true;
+	//if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
+	//	return true;
 
 	if (currentCamera->IsEngineCamera() && engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -100,7 +100,10 @@ bool M_Camera3D::Update(float dt)
 		isMoving = false;
 		cameraSpeed = baseCameraSpeed;
 	}
-	engineCamera->ApplyCullings(engineCamera->GetIsSphereCullingActive(), engineCamera->GetIsFrustumActive());
+	
+	if (currentCamera == engineCamera) {
+		engineCamera->ApplyCullings(engineCamera->GetIsSphereCullingActive(), engineCamera->GetIsFrustumActive());
+	}
 	return true;
 }
 

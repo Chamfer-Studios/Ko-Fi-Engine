@@ -227,7 +227,7 @@ public:
 			);
 
 		// Component Camera
-		lua.new_usertype<C_Camera>("C_Transform",
+		lua.new_usertype<C_Camera>("C_Camera",
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
 			"right", &C_Camera::GetRight,

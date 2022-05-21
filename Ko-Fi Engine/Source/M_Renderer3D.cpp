@@ -158,6 +158,12 @@ bool M_Renderer3D::PostUpdate(float dt)
 	{
 		QueryScene2(engine->GetCamera3D()->currentCamera);
 	}
+	else {
+		for (auto go : gameObejctsToRenderDistance) {
+			go->SetRenderGameObject(true);
+		}
+	}
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	RenderScene(engine->GetCamera3D()->currentCamera);
 
@@ -218,12 +224,12 @@ bool M_Renderer3D::InspectorDraw()
 			engine->SaveConfiguration();
 		}
 		if (ImGui::Checkbox("Enable Occlusion Culling", &enableOcclusionCulling)) {
-			engine->GetRenderer()->gameObejctsToRenderDistanceSphere.clear();
-			engine->GetRenderer()->gameObejctsToRenderDistance.clear();
-			engine->GetRenderer()->gameObejctsToRenderDistanceOrdered.clear();
+			ResetFrustumCulling();
 		}
 
-		ImGui::Text("Rendering %d objects", gameObejctsToRenderDistanceOrdered.size());
+		ImGui::Text("Objects in sphere %d", gameObejctsToRenderDistanceSphere.size());
+		ImGui::Text("Objects in frustrum %d", gameObejctsToRenderDistance.size());
+		ImGui::Text("Objects in frustrum sorted %d", gameObejctsToRenderDistanceOrdered.size());
 	}
 
 	return true;
@@ -560,8 +566,12 @@ void M_Renderer3D::ResetFrustumCulling()
 	gameObejctsToRenderDistanceSphere.clear();
 	gameObejctsToRenderDistance.clear();
 	gameObejctsToRenderDistanceOrdered.clear();
-}
 
+	for (auto go : gameObejctsToRenderDistance) {
+		go->SetRenderGameObject(false);
+	}
+	
+}
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	OPTICK_EVENT();
@@ -1326,17 +1336,6 @@ void M_Renderer3D::FillShadowMap(C_Camera* camera)
 	}
 }
 
-void M_Renderer3D::InsertGameObjectToRender(GameObject* go)
-{
-	this->gameObejctsToRenderDistanceOrdered.insert(go);
-}
-
-void M_Renderer3D::EraseGameObjectToRender(GameObject* go)
-{
-	this->gameObejctsToRenderDistanceOrdered.erase(go);
-
-}
-
 void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light)
 {
 	DirectionalLight* dirLight = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
@@ -1440,7 +1439,7 @@ bool OcclusionQuery::AnySamplesPassed() const
 	return samplesPassed > 0;
 }
 
-inline bool M_Renderer3D::GOComp::operator()(const GameObject* lhs, const GameObject* rhs) const
+bool M_Renderer3D::GOComp::operator()(const GameObject* lhs, const GameObject* rhs) const
 {
 	float3 cameraPosition = lhs->GetEngine()->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
 	return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition());
