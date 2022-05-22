@@ -171,7 +171,6 @@ void PanelHierarchy::DisplayTree(GameObject* go, int flags, int& id)
 			editor->panelGameObjectInfo.selectedGameObjects.push_back(go->GetUID());
 			//editor->panelGameObjectInfo.selectedGameObjectID = go->GetUID();
 			CONSOLE_LOG("%s || %d", go->GetName(), go->GetUID());
-			appLog->AddLog("Left Clicked");
 		}
 		if ((ImGui::IsItemDeactivated() && ImGui::IsItemHovered()) ||  ImGui::IsItemClicked(1))
 		{
