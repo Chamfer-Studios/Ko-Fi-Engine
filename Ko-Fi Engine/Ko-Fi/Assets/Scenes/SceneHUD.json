@@ -1,10 +1,10 @@
 {
     "SceneHUD": {
         "active": true,
-        "game_objects_amount": 26,
+        "game_objects_amount": 48,
         "game_objects_list": [
             {
-                "UID": 357281497,
+                "UID": 1475716659,
                 "active": true,
                 "components": [
                     {
@@ -19,59 +19,15 @@
                             0.0
                         ],
                         "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
+                            0.27059805393218994,
+                            -0.6532815098762512,
+                            0.27059805393218994,
+                            0.6532815098762512
                         ],
                         "scale": [
                             1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    },
-                    {
-                        "active": true,
-                        "far_plane_distance": 500.0,
-                        "frustum_culling": false,
-                        "isMainCamera": true,
-                        "near_plane_distance": 0.009999999776482582,
-                        "type": 4,
-                        "vertical_fov": 0.3839724361896515
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "Main Camera",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 2139503083,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
+                            0.9999999403953552,
+                            0.9999999403953552
                         ],
                         "type": 21
                     },
@@ -97,16 +53,119 @@
                         "sourceType": 0,
                         "specularValue": 0.0,
                         "type": 19
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": false,
+                        "isMainCamera": false,
+                        "near_plane_distance": 0.30000001192092896,
+                        "sCullingRadius": 499,
+                        "sphere_culling": false,
+                        "type": 4,
+                        "vertical_fov": 585.0
                     }
                 ],
                 "is3D": true,
                 "isPrefab": false,
-                "name": "Direct Light",
+                "name": "Directional Light",
                 "parent_UID": 0,
                 "tag": 0
             },
             {
-                "UID": 1934588784,
+                "UID": 956876465,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": true,
+                        "isMainCamera": false,
+                        "near_plane_distance": 0.30000001192092896,
+                        "sCullingRadius": 499,
+                        "sphere_culling": true,
+                        "type": 4,
+                        "vertical_fov": 0.44688403606414795
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 421586441,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": true,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.30000001192092896,
+                        "sCullingRadius": 499,
+                        "sphere_culling": true,
+                        "type": 4,
+                        "vertical_fov": 0.44688403606414795
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Main Camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 833363227,
                 "active": true,
                 "components": [
                     {
@@ -147,91 +206,7 @@
                 "tag": 0
             },
             {
-                "UID": 669215006,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 8,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -200.0,
-                            200.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            400.0,
-                            400.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Radar/radar_v1.4.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Radar",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 380878676,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 8,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -200.0,
-                            200.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            400.0,
-                            400.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Radar/radar_menu_thermo_extended_v1.3.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Radar2",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 805759997,
+                "UID": 1595518592,
                 "active": true,
                 "components": [
                     {
@@ -246,8 +221,8 @@
                             0.5
                         ],
                         "position": [
-                            229.0,
-                            507.0
+                            245.0,
+                            173.0
                         ],
                         "rotation": [
                             0.0,
@@ -255,25 +230,25 @@
                             0.0
                         ],
                         "size": [
-                            457.0,
-                            1020.0
+                            156.0,
+                            156.0
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "texture": "Assets/UI/HUD/Character Abilities/character_abilities_v1.3.png",
+                        "texture": "Assets/New UI/Zhib_Image.png",
                         "type": 14
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "CharacterAbilities",
-                "parent_UID": 1934588784,
+                "name": "Zhib Image",
+                "parent_UID": 833363227,
                 "tag": 0
             },
             {
-                "UID": 1885439634,
+                "UID": 2061113575,
                 "active": true,
                 "components": [
                     {
@@ -288,8 +263,8 @@
                             0.5
                         ],
                         "position": [
-                            200.0,
-                            43.0
+                            82.0,
+                            132.0
                         ],
                         "rotation": [
                             0.0,
@@ -297,71 +272,25 @@
                             0.0
                         ],
                         "size": [
-                            100.0,
-                            100.0
+                            76.0,
+                            76.0
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/HUD/Character Buttons/character_nerala_hover_v1.5.png",
-                        "idleTexture": "Assets/UI/HUD/Character Buttons/character_nerala_normal_v1.5.png",
-                        "pressedTexture": "Assets/UI/HUD/Character Buttons/character_nerala_click_v1.5.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_click.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_hover.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": 11
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_CharacterSelected.lua",
-                        "id": 464575809,
-                        "inspector_variables": [
-                            {
-                                "name": "characterID",
-                                "type": "int",
-                                "value": 2
-                            }
-                        ],
-                        "type": 5
+                        "texture": "Assets/New UI/Nerala_Image.png",
+                        "type": 14
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "NeralaButton",
-                "parent_UID": 1934588784,
+                "name": "Nerala Image",
+                "parent_UID": 833363227,
                 "tag": 0
             },
             {
-                "UID": 1211718390,
+                "UID": 1732780682,
                 "active": true,
                 "components": [
                     {
@@ -376,7 +305,91 @@
                             0.5
                         ],
                         "position": [
-                            300.0,
+                            399.0,
+                            132.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            76.0,
+                            76.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/Omozra_Image.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Omozra Image",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 1557959980,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 6,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            144.0,
+                            39.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            57.0,
+                            22.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/hp_diamond_filled.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "HP Fill 1",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 1123489194,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 6,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            210.0,
                             40.0
                         ],
                         "rotation": [
@@ -385,71 +398,25 @@
                             0.0
                         ],
                         "size": [
-                            87.0,
-                            100.0
+                            57.86000061035156,
+                            22.860000610351563
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/HUD/Character Buttons/character_omozra_hover_v1.5.png",
-                        "idleTexture": "Assets/UI/HUD/Character Buttons/character_omozra_normal_v1.5.png",
-                        "pressedTexture": "Assets/UI/HUD/Character Buttons/character_omozra_click_v1.5.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_click.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_hover.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": 11
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_CharacterSelected.lua",
-                        "id": 981190922,
-                        "inspector_variables": [
-                            {
-                                "name": "characterID",
-                                "type": "int",
-                                "value": 3
-                            }
-                        ],
-                        "type": 5
+                        "texture": "Assets/New UI/hp_diamond_filled.png",
+                        "type": 14
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "OmozraButton",
-                "parent_UID": 1934588784,
+                "name": "HP Fill 2",
+                "parent_UID": 833363227,
                 "tag": 0
             },
             {
-                "UID": 441135759,
+                "UID": 227090917,
                 "active": true,
                 "components": [
                     {
@@ -464,8 +431,8 @@
                             0.5
                         ],
                         "position": [
-                            100.0,
-                            42.0
+                            274.0,
+                            39.0
                         ],
                         "rotation": [
                             0.0,
@@ -473,515 +440,25 @@
                             0.0
                         ],
                         "size": [
-                            56.0,
-                            84.0
+                            57.86000061035156,
+                            22.860000610351563
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/HUD/Character Buttons/character_zhib_focus_v1.5.png",
-                        "idleTexture": "Assets/UI/HUD/Character Buttons/character_zhib_normal_v1.5.png",
-                        "pressedTexture": "Assets/UI/HUD/Character Buttons/character_zhib_click_v1.5.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_click.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_hover.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": 11
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_CharacterSelected.lua",
-                        "id": 1022992484,
-                        "inspector_variables": [
-                            {
-                                "name": "characterID",
-                                "type": "int",
-                                "value": 1
-                            }
-                        ],
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "ZhibButton",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 2054451854,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            60.0,
-                            340.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            100.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/throwable_knife_normal_v1.0.png",
-                        "type": 14
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_AbilitySlot_1.lua",
-                        "id": 146751535,
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Ability1",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 879235978,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            60.0,
-                            20.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            100.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/zhib_ultimate_normal_v1.0.png",
-                        "type": 14
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_AbilitySlot_3.lua",
-                        "id": 372243711,
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Ability3",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 1000498887,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            60.0,
-                            180.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            100.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/decoy_normal_v1.0.png",
-                        "type": 14
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_AbilitySlot_2.lua",
-                        "id": 1222175804,
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Ability2",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 962459061,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            60.0,
-                            270.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            100.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/ability_slot_text_v1.1.png",
+                        "texture": "Assets/New UI/hp_diamond_filled.png",
                         "type": 14
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "TextAbility1",
-                "parent_UID": 1934588784,
+                "name": "HP Fill 3",
+                "parent_UID": 833363227,
                 "tag": 0
             },
             {
-                "UID": 612232606,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            60.0,
-                            110.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            100.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/ability_slot_text_v1.1.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "TextAbility2",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 241621862,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            60.0,
-                            -50.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            100.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/ability_slot_text_v1.1.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "TextAbility3",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 761049333,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Spice Icon/spice_icon_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SpiceIcon",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 511937616,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.0,
-                            0.0
-                        ],
-                        "position": [
-                            19.0,
-                            215.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            70.0,
-                            120.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Slider Segments/slider_segments_hp3_v1.0.png",
-                        "type": 14
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_Lives.lua",
-                        "id": 1002112784,
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "HealthBar",
-                "parent_UID": 805759997,
-                "tag": 0
-            },
-            {
-                "UID": 289325620,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 2,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            35.0,
-                            -4.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            70.0,
-                            120.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Slider Segments/slider_segments_none_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "HealthBar_1",
-                "parent_UID": 511937616,
-                "tag": 0
-            },
-            {
-                "UID": 102160104,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 2,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            37.0,
-                            -3.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            70.0,
-                            120.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Slider Segments/slider_segments_none_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "HealthBar_2",
-                "parent_UID": 289325620,
-                "tag": 0
-            },
-            {
-                "UID": 1998260281,
+                "UID": 286608134,
                 "active": true,
                 "components": [
                     {
@@ -996,8 +473,8 @@
                             0.5
                         ],
                         "position": [
-                            197.0,
-                            194.0
+                            144.0,
+                            39.0
                         ],
                         "rotation": [
                             0.0,
@@ -1005,31 +482,25 @@
                             0.0
                         ],
                         "size": [
-                            400.0,
-                            400.0
+                            57.86000061035156,
+                            22.860000610351563
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "texture": "Assets/UI/HUD/Hud Portraits/hud_portrait_zhib_v1.2.png",
+                        "texture": "Assets/New UI/hp_diamond.png",
                         "type": 14
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_CharacterAssetsChange.lua",
-                        "id": 803254828,
-                        "type": 5
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "CharacterPortrait",
-                "parent_UID": 1934588784,
+                "name": "HP Marquee 1",
+                "parent_UID": 833363227,
                 "tag": 0
             },
             {
-                "UID": 1644600278,
+                "UID": 1887731633,
                 "active": true,
                 "components": [
                     {
@@ -1058,19 +529,34 @@
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/GameState.lua",
-                        "id": 1330347539,
-                        "type": 5
+                        "animation": {
+                            "asset_path": "Assets/Models/Enemies/harkonnen_armature|harkonnen_armature|harkonnen_armature|harkonnen_reel.cake",
+                            "uid": 316919178
+                        },
+                        "clips": [
+                            {
+                                "clipDuration": 312.0,
+                                "clipDurationInSeconds": 13.0,
+                                "clipEndFrame": 312.0,
+                                "clipFinished": false,
+                                "clipLoop": true,
+                                "clipName": "Default clip",
+                                "clipStartFrame": 0.0,
+                                "mapString": "Default clip"
+                            }
+                        ],
+                        "selectedClip": "Default clip",
+                        "type": 12
                     }
                 ],
                 "is3D": true,
-                "isPrefab": false,
-                "name": "GameState",
+                "isPrefab": true,
+                "name": "Harkonnen",
                 "parent_UID": 0,
                 "tag": 0
             },
             {
-                "UID": 1303801256,
+                "UID": 1271805213,
                 "active": true,
                 "components": [
                     {
@@ -1096,224 +582,1416 @@
                             1.0
                         ],
                         "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_armature",
+                "parent_UID": 1887731633,
+                "tag": 0
+            },
+            {
+                "UID": 1452484816,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
                     },
                     {
                         "active": true,
-                        "body_type": "Dynamic",
+                        "position": [
+                            0.1365346908569336,
+                            419.8089599609375,
+                            6.885972499847412
+                        ],
+                        "rotation": [
+                            -0.01575528457760811,
+                            0.003195258090272546,
+                            -0.001295381342060864,
+                            0.9998699426651001
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999999403953552,
+                            0.9999991655349731
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_hips",
+                "parent_UID": 1271805213,
+                "tag": 0
+            },
+            {
+                "UID": 587921153,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.0617077350616455e-07,
+                            52.77827072143555,
+                            -2.516310214996338
+                        ],
+                        "rotation": [
+                            0.04831729084253311,
+                            0.000900590093806386,
+                            0.0006661270163021982,
+                            0.9988314509391785
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999991655349731,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_spine",
+                "parent_UID": 1452484816,
+                "tag": 0
+            },
+            {
+                "UID": 620281193,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.60770320892334e-08,
+                            62.08100128173828,
+                            7.264316082000732e-08
+                        ],
+                        "rotation": [
+                            0.07165798544883728,
+                            0.0011919380631297827,
+                            0.0001894359738798812,
+                            0.9974285364151001
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_spine_1",
+                "parent_UID": 587921153,
+                "tag": 0
+            },
+            {
+                "UID": 848280330,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            8.270144462585449e-07,
+                            70.94877624511719,
+                            1.9532162696123123e-05
+                        ],
+                        "rotation": [
+                            0.07165753841400146,
+                            0.0012524350313469768,
+                            0.00013745891919825226,
+                            0.9974285364151001
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999997615814209,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_spine_2",
+                "parent_UID": 620281193,
+                "tag": 0
+            },
+            {
+                "UID": 177078783,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.1622905731201172e-06,
+                            79.25666046142578,
+                            -0.000128244049847126
+                        ],
+                        "rotation": [
+                            0.051252808421850204,
+                            0.001059721689671278,
+                            0.005961313843727112,
+                            0.9986673593521118
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_neck",
+                "parent_UID": 848280330,
+                "tag": 0
+            },
+            {
+                "UID": 1845817463,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.76837158203125e-07,
+                            18.962810516357422,
+                            5.265936374664307
+                        ],
+                        "rotation": [
+                            -0.14782877266407013,
+                            0.0012365939328446984,
+                            -0.005918181035667658,
+                            0.9889944791793823
+                        ],
+                        "scale": [
+                            0.9999992251396179,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_head",
+                "parent_UID": 177078783,
+                "tag": 0
+            },
+            {
+                "UID": 88671396,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.7881393432617188e-07,
+                            110.66754913330078,
+                            30.733469009399414
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_head_top_end",
+                "parent_UID": 1845817463,
+                "tag": 0
+            },
+            {
+                "UID": 1523259438,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            41.44794464111328,
+                            70.31936645507813,
+                            -0.5437607169151306
+                        ],
+                        "rotation": [
+                            0.6292574405670166,
+                            0.47750282287597656,
+                            -0.48295414447784424,
+                            0.37786439061164856
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0000009536743164,
+                            1.000000238418579
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_shoulder",
+                "parent_UID": 848280330,
+                "tag": 0
+            },
+            {
+                "UID": 1660393197,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.765655517578125e-05,
+                            84.87822723388672,
+                            -5.340576171875e-05
+                        ],
+                        "rotation": [
+                            0.27178052067756653,
+                            0.03653246536850929,
+                            0.2899012267589569,
+                            0.9169285893440247
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_arm",
+                "parent_UID": 1523259438,
+                "tag": 0
+            },
+            {
+                "UID": 1337533974,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.814697265625e-06,
+                            139.0620574951172,
+                            -5.340576171875e-05
+                        ],
+                        "rotation": [
+                            0.026456058025360107,
+                            -0.004907520022243261,
+                            0.1881696581840515,
+                            0.9817678928375244
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999992251396179
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_fore_arm",
+                "parent_UID": 1660393197,
+                "tag": 0
+            },
+            {
+                "UID": 1266902640,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -9.5367431640625e-05,
+                            116.71035766601563,
+                            0.00018310546875
+                        ],
+                        "rotation": [
+                            0.3864656686782837,
+                            -0.6973013281822205,
+                            0.08105496317148209,
+                            0.5982016921043396
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_hand_index",
+                "parent_UID": 1337533974,
+                "tag": 0
+            },
+            {
+                "UID": 1580349856,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.9591064453125e-05,
+                            26.704208374023438,
+                            8.392333984375e-05
+                        ],
+                        "rotation": [
+                            0.47031158208847046,
+                            0.8789629936218262,
+                            -0.01767565868794918,
+                            -0.07693300396203995
+                        ],
+                        "scale": [
+                            1.0000022649765015,
+                            1.0,
+                            1.0000026226043701
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_hand_index_1",
+                "parent_UID": 1266902640,
+                "tag": 0
+            },
+            {
+                "UID": 1360154178,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.5367431640625e-06,
+                            21.882030487060547,
+                            0.0001068115234375
+                        ],
+                        "rotation": [
+                            0.1381530612707138,
+                            0.1707160323858261,
+                            0.5122342705726624,
+                            0.8302926421165466
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_hand_index_2",
+                "parent_UID": 1580349856,
+                "tag": 0
+            },
+            {
+                "UID": 2002612073,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.340449333190918,
+                            25.495540618896484,
+                            -16.7960205078125
+                        ],
+                        "rotation": [
+                            -0.10175937414169312,
+                            0.045325055718421936,
+                            0.15154823660850525,
+                            0.9821526408195496
+                        ],
+                        "scale": [
+                            0.9999994039535522,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_hand_index_3",
+                "parent_UID": 1360154178,
+                "tag": 0
+            },
+            {
+                "UID": 626836505,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -9.354697227478027,
+                            21.17682456970215,
+                            -9.774395942687988
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_hand_index_4",
+                "parent_UID": 2002612073,
+                "tag": 0
+            },
+            {
+                "UID": 1969123918,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -41.44797897338867,
+                            70.30763244628906,
+                            -0.30917617678642273
+                        ],
+                        "rotation": [
+                            0.6194109916687012,
+                            -0.47688350081443787,
+                            0.4781622886657715,
+                            0.4003411531448364
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_shoulder",
+                "parent_UID": 848280330,
+                "tag": 0
+            },
+            {
+                "UID": 1315237892,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.0517578125e-05,
+                            85.53253173828125,
+                            -0.0001068115234375
+                        ],
+                        "rotation": [
+                            0.36029064655303955,
+                            0.0572892464697361,
+                            -0.2579565942287445,
+                            0.8946323394775391
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_arm",
+                "parent_UID": 1969123918,
+                "tag": 0
+            },
+            {
+                "UID": 1622054499,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.1444091796875e-05,
+                            131.30685424804688,
+                            1.1444091796875e-05
+                        ],
+                        "rotation": [
+                            0.023023078218102455,
+                            0.004858060739934444,
+                            -0.12259994447231293,
+                            0.9921771883964539
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_fore_arm",
+                "parent_UID": 1315237892,
+                "tag": 0
+            },
+            {
+                "UID": 1481213737,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.811981201171875e-05,
+                            116.74325561523438,
+                            -3.4332275390625e-05
+                        ],
+                        "rotation": [
+                            0.1375599354505539,
+                            0.025434302166104317,
+                            -0.09818118810653687,
+                            0.9852871894836426
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_hand",
+                "parent_UID": 1622054499,
+                "tag": 0
+            },
+            {
+                "UID": 1416854737,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -22.827964782714844,
+                            31.67354965209961,
+                            11.798835754394531
+                        ],
+                        "rotation": [
+                            -0.5681074261665344,
+                            0.36904680728912354,
+                            -0.4133858382701874,
+                            0.6084164381027222
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_weapon",
+                "parent_UID": 1481213737,
+                "tag": 0
+            },
+            {
+                "UID": 329803379,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -6.103515625e-05,
+                            31.114103317260742,
+                            -5.340576171875e-05
+                        ],
+                        "rotation": [
+                            0.42429718375205994,
+                            -0.6137477159500122,
+                            -0.41508811712265015,
+                            0.520564615726471
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0000001192092896,
+                            1.0000001192092896
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_hand_index_1",
+                "parent_UID": 1481213737,
+                "tag": 0
+            },
+            {
+                "UID": 345895635,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.0108642578125e-05,
+                            21.038619995117188,
+                            -7.62939453125e-06
+                        ],
+                        "rotation": [
+                            0.16603614389896393,
+                            -0.2699377238750458,
+                            -0.6580888628959656,
+                            0.6829968690872192
+                        ],
+                        "scale": [
+                            1.0000001192092896,
+                            1.0000001192092896,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_hand_index_2",
+                "parent_UID": 329803379,
+                "tag": 0
+            },
+            {
+                "UID": 1865870524,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.740890502929688,
+                            22.702882766723633,
+                            -19.856128692626953
+                        ],
+                        "rotation": [
+                            -0.044933661818504333,
+                            -0.13833056390285492,
+                            -0.1839749664068222,
+                            0.9721105098724365
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_hand_index_3",
+                "parent_UID": 345895635,
+                "tag": 0
+            },
+            {
+                "UID": 338460727,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.343292236328125,
+                            15.800716400146484,
+                            -12.914623260498047
+                        ],
+                        "rotation": [
+                            0.13607215881347656,
+                            0.028423992916941643,
+                            -0.07115140557289124,
+                            0.9877316951751709
+                        ],
+                        "scale": [
+                            0.9999998807907104,
+                            0.9999993443489075,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_hand_index_4",
+                "parent_UID": 1865870524,
+                "tag": 0
+            },
+            {
+                "UID": 1783699583,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            58.86288833618164,
+                            -29.263517379760742,
+                            -4.967066287994385
+                        ],
+                        "rotation": [
+                            0.1177930161356926,
+                            0.1724713146686554,
+                            0.9670026898384094,
+                            -0.14589142799377441
+                        ],
+                        "scale": [
+                            1.0000015497207642,
+                            1.0000011920928955,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_up_leg",
+                "parent_UID": 1452484816,
+                "tag": 0
+            },
+            {
+                "UID": 411812974,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.280023574829102,
+                            204.83453369140625,
+                            35.27265548706055
+                        ],
+                        "rotation": [
+                            -0.37118932604789734,
+                            0.05843478813767433,
+                            -0.09090195596218109,
+                            0.9222476482391357
+                        ],
+                        "scale": [
+                            0.9999997019767761,
+                            0.9999999403953552,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_leg",
+                "parent_UID": 1783699583,
+                "tag": 0
+            },
+            {
+                "UID": 1924375404,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.6049363613128662,
+                            176.83763122558594,
+                            -0.960205078125
+                        ],
+                        "rotation": [
+                            0.629880428314209,
+                            0.03398305922746658,
+                            -0.02456909976899624,
+                            0.7755592465400696
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_foot",
+                "parent_UID": 411812974,
+                "tag": 0
+            },
+            {
+                "UID": 1877716495,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.6910176277160645e-05,
+                            100.06326293945313,
+                            -1.2636184692382813e-05
+                        ],
+                        "rotation": [
+                            0.29067862033843994,
+                            0.007193753030151129,
+                            -0.002143017714843154,
+                            0.956791341304779
+                        ],
+                        "scale": [
+                            0.9999992251396179,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_toe_base",
+                "parent_UID": 1924375404,
+                "tag": 0
+            },
+            {
+                "UID": 433087270,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -7.916241884231567e-05,
+                            39.626487731933594,
+                            -1.1920928955078125e-07
+                        ],
+                        "rotation": [
+                            0.12347393482923508,
+                            0.047402430325746536,
+                            0.03664005920290947,
+                            0.9905375838279724
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998807907104,
+                            0.9999997019767761
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_left_toe_end",
+                "parent_UID": 1877716495,
+                "tag": 0
+            },
+            {
+                "UID": 1298420790,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -58.86287307739258,
+                            -29.26395034790039,
+                            -6.186532497406006
+                        ],
+                        "rotation": [
+                            -0.14549340307712555,
+                            0.1836516559123993,
+                            0.96458899974823,
+                            0.12112721800804138
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_up_leg",
+                "parent_UID": 1452484816,
+                "tag": 0
+            },
+            {
+                "UID": 1177183772,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.0517578125e-05,
+                            196.9711456298828,
+                            -3.814697265625e-05
+                        ],
+                        "rotation": [
+                            -0.3774004280567169,
+                            -0.07194191217422485,
+                            0.025360530242323875,
+                            0.9229031205177307
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0000001192092896,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_leg",
+                "parent_UID": 1298420790,
+                "tag": 0
+            },
+            {
+                "UID": 145486304,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.553794860839844e-05,
+                            173.62925720214844,
+                            -5.054473876953125e-05
+                        ],
+                        "rotation": [
+                            0.6273834705352783,
+                            0.04588219150900841,
+                            0.03711056709289551,
+                            0.7764712572097778
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_foot",
+                "parent_UID": 1177183772,
+                "tag": 0
+            },
+            {
+                "UID": 1369091532,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.1441450119018555e-06,
+                            100.88780212402344,
+                            -4.470348358154297e-06
+                        ],
+                        "rotation": [
+                            0.2869023382663727,
+                            -0.005299449898302555,
+                            0.0015654298476874828,
+                            0.9579439163208008
+                        ],
+                        "scale": [
+                            0.9999991655349731,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_toe_base",
+                "parent_UID": 145486304,
+                "tag": 0
+            },
+            {
+                "UID": 1459877277,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.749171108007431e-05,
+                            38.88125991821289,
+                            -1.5720725059509277e-06
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "harkonnen_right_toe_end",
+                "parent_UID": 1369091532,
+                "tag": 0
+            },
+            {
+                "UID": 2009856801,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1439.35302734375,
+                            0.0,
+                            510.9050598144531
+                        ],
+                        "rotation": [
+                            4.214682292058569e-08,
+                            5.329068400618383e-15,
+                            2.2460329048772503e-22,
+                            1.0
+                        ],
+                        "scale": [
+                            0.03000001609325409,
+                            0.030000006780028343,
+                            0.029999999329447746
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "anim_path": "Assets/Models/Enemies/harkonnen_armature|harkonnen_armature|harkonnen_armature|harkonnen_reel.cake",
+                            "anim_uid": 316919178,
+                            "asset_path": "Assets/Models/Enemies/harkonnen.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 821724498
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/Enemies/Harkonnen/harkonnen_base_color.png"
+                        },
+                        "type": 2
+                    },
+                    {
+                        "active": true,
+                        "ambientValue": 0.0,
+                        "constantAttenuationValue": 1.0,
+                        "cutOffAngle": 0.9649999737739563,
+                        "diffuseValue": 0.800000011920929,
+                        "lightColor": [
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "lightDirection": [
+                            -1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "lightPosition": [
+                            -1439.35302734375,
+                            0.0,
+                            510.9050598144531
+                        ],
+                        "linearAttenuationValue": 0.0,
+                        "quadraticAttenuationValue": 0.0,
+                        "sourceType": 2,
+                        "specularValue": 0.0,
+                        "type": 19
+                    },
+                    {
+                        "active": true,
+                        "body_type": "Static",
                         "freeze_position_x": false,
-                        "freeze_position_y": true,
+                        "freeze_position_y": false,
                         "freeze_position_z": false,
                         "freeze_rotation_x": false,
                         "freeze_rotation_y": false,
                         "freeze_rotation_z": false,
                         "mass": 1.0,
                         "type": 6,
-                        "use_gravity": false
+                        "use_gravity": true
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Characters/Zhib/Zhib.lua",
-                        "id": 2108452580,
+                        "center": [
+                            0.0,
+                            13.399999618530273,
+                            0.0
+                        ],
+                        "filter": "enemy",
+                        "is_trigger": false,
+                        "scale_factor": [
+                            0.5,
+                            1.0,
+                            0.5
+                        ],
+                        "type": 7
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/Pathfinder.lua",
+                        "id": 55343540,
                         "inspector_variables": [
                             {
-                                "name": "maxHP",
+                                "name": "minRetargetingDistance",
                                 "type": "int",
-                                "value": 3
-                            },
-                            {
-                                "name": "currentHP",
-                                "type": "int",
-                                "value": 3
+                                "value": 10
                             }
                         ],
                         "type": 5
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "tempzhib",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 1332381495,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
                     },
                     {
                         "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
+                        "file_name": "Assets/Scripts/Enemies/EnemyController.lua",
+                        "id": 486935622,
+                        "inspector_variables": [
+                            {
+                                "name": "static",
+                                "type": "bool",
+                                "value": false
+                            },
+                            {
+                                "name": "speed",
+                                "type": "int",
+                                "value": 20
+                            },
+                            {
+                                "name": "chaseSpeed",
+                                "type": "int",
+                                "value": 30
+                            },
+                            {
+                                "name": "visionConeAngle",
+                                "type": "int",
+                                "value": 200
+                            },
+                            {
+                                "name": "visionConeRadius",
+                                "type": "int",
+                                "value": 200
+                            },
+                            {
+                                "name": "hearingRange",
+                                "type": "int",
+                                "value": 30
+                            },
+                            {
+                                "name": "awarenessOffset",
+                                "type": "float3",
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 30.0,
+                                    "z": 0.0
+                                }
+                            },
+                            {
+                                "name": "awarenessSize",
+                                "type": "float3",
+                                "value": {
+                                    "x": 0.15000000596046448,
+                                    "y": 0.30000001192092896,
+                                    "z": 0.15000000596046448
+                                }
+                            },
+                            {
+                                "name": "pingpong",
+                                "type": "bool",
+                                "value": true
+                            },
+                            {
+                                "name": "loop",
+                                "type": "bool",
+                                "value": true
+                            },
+                            {
+                                "name": "patrolWaypoints",
+                                "type": "float3_array",
+                                "value": []
+                            }
                         ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
+                        "type": 5
                     },
                     {
                         "active": true,
-                        "body_type": "Dynamic",
-                        "freeze_position_x": false,
-                        "freeze_position_y": true,
-                        "freeze_position_z": false,
-                        "freeze_rotation_x": false,
-                        "freeze_rotation_y": false,
-                        "freeze_rotation_z": false,
-                        "mass": 1.0,
-                        "type": 6,
-                        "use_gravity": false
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Characters/Nerala/Nerala.lua",
-                        "id": 1175931230,
+                        "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
+                        "id": 768087720,
                         "type": 5
                     }
                 ],
                 "is3D": true,
                 "isPrefab": false,
-                "name": "tempnerala",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 1137951444,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            120.0,
-                            340.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            30.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/abilitiy_level_meter_extended_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Ability1Level",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 303255916,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            120.0,
-                            180.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            30.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/abilitiy_level_meter_extended_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Ability2Level",
-                "parent_UID": 1934588784,
-                "tag": 0
-            },
-            {
-                "UID": 280055020,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            120.0,
-                            20.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            30.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Abilities/abilitiy_level_meter_extended_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Ablity3Level",
-                "parent_UID": 1934588784,
-                "tag": 0
+                "name": "HarkonnenMesh",
+                "parent_UID": 1887731633,
+                "tag": 2
             }
         ],
         "name": "SceneHUD",

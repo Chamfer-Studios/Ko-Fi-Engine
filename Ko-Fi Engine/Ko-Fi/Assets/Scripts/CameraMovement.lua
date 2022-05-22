@@ -4,7 +4,7 @@ remainingAngle = 0.0
 offset = float3.new(0, 240, -270)
 scrollspeed = 15.0
 targetAngle = 0.0
-newZoomedPos = float3.new(0,0,0)
+newZoomedPos = float3.new(0, 0, 0)
 zoomSpeed = 50
 function Update(dt)
     id = GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -19,13 +19,13 @@ function Update(dt)
     end
 
     if (GetMouseZ() > 0) then
-        newZoomedPos.x = newZoomedPos.x + gameObject:GetCamera():GetFront().x*zoomSpeed
-        newZoomedPos.y = newZoomedPos.y + gameObject:GetCamera():GetFront().y*zoomSpeed
-        newZoomedPos.z = newZoomedPos.z + gameObject:GetCamera():GetFront().z*zoomSpeed
+        newZoomedPos.x = newZoomedPos.x + gameObject:GetCamera():GetFront().x * zoomSpeed
+        newZoomedPos.y = newZoomedPos.y + gameObject:GetCamera():GetFront().y * zoomSpeed
+        newZoomedPos.z = newZoomedPos.z + gameObject:GetCamera():GetFront().z * zoomSpeed
     elseif (GetMouseZ() < 0) then
-        newZoomedPos.x = newZoomedPos.x - gameObject:GetCamera():GetFront().x*zoomSpeed
-        newZoomedPos.y = newZoomedPos.y - gameObject:GetCamera():GetFront().y*zoomSpeed
-        newZoomedPos.z = newZoomedPos.z - gameObject:GetCamera():GetFront().z*zoomSpeed
+        newZoomedPos.x = newZoomedPos.x - gameObject:GetCamera():GetFront().x * zoomSpeed
+        newZoomedPos.y = newZoomedPos.y - gameObject:GetCamera():GetFront().y * zoomSpeed
+        newZoomedPos.z = newZoomedPos.z - gameObject:GetCamera():GetFront().z * zoomSpeed
     end
 
     if (GetInput(14) == KEY_STATE.KEY_DOWN) then -- Q
@@ -36,10 +36,8 @@ function Update(dt)
     end
 
     local newRemainingAngle = MoveTowards(remainingAngle, 0, rotSpeed * dt)
-    --Log("remaining Angle " .. tostring(remainingAngle) .. "\n")
     local delta = remainingAngle - newRemainingAngle
     remainingAngle = newRemainingAngle
-    --Log("delta" .. tostring(delta) .. "\n")
     local newQuat = Quat.new(float3.new(0, 1, 0), delta * 0.0174533)
     offset = MulQuat(newQuat, offset)
     local newPos = float3.new(0, 0, 0)
@@ -47,15 +45,15 @@ function Update(dt)
     newPos.y = target.y + offset.y
     newPos.z = target.z + offset.z
     if delta == 0 then
-        local finalPos = float3.new(0,0,0)
+        local finalPos = float3.new(0, 0, 0)
         finalPos.x = newPos.x + newZoomedPos.x
         finalPos.y = newPos.y + newZoomedPos.y
         finalPos.z = newPos.z + newZoomedPos.z
-        componentTransform:SetPosition(finalPos)  
+        componentTransform:SetPosition(finalPos)
     else
-        componentTransform:SetPosition(newPos)     
+        componentTransform:SetPosition(newPos)
     end
-    
+
     gameObject:GetCamera():LookAt(target)
 end
 

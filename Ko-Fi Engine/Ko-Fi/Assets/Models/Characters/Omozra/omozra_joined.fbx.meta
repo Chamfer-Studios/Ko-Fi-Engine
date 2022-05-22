@@ -1,0 +1,30 @@
+{
+    "asset_file": "omozra_joined.fbx",
+    "asset_path": "Assets/Models/Characters/Omozra/omozra_joined.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "omozra.sugar",
+            "library_path": "Library/Meshes/663348041.sugar",
+            "type": 0,
+            "uid": 663348041
+        },
+        {
+            "asset_file": "omozra_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Omozra/omozra_base_color.png",
+            "library_path": "Library/Textures/1894755667.cacao",
+            "type": 1,
+            "uid": 1894755667
+        },
+        {
+            "asset_file": "omozra_armature|omozra_armature|omozra_armature|omozra_reel.cake",
+            "library_path": "Library/Animations/1318133726.cake",
+            "type": 5,
+            "uid": 1318133726
+        }
+    ],
+    "hash": "fa405719e26ae60a3ba4049b6d3800e0",
+    "library_file": "1588374342.tea",
+    "library_path": "Library/Models/1588374342.tea",
+    "type": 3,
+    "uid": 1588374342
+}

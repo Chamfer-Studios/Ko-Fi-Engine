@@ -14,11 +14,11 @@ function Update(dt)
         isActive = isActive + 1
         isStarting = true
     end
-    if (GetInput(6) == KEY_STATE.KEY_DOWN) then -- K
+    if (GetInput(44) == KEY_STATE.KEY_DOWN) then -- ENTER
         isActive = 10
         change = true
     end
-    if (GetInput(4) == KEY_STATE.KEY_DOWN) then -- SPACE
+    if (GetInput(43) == KEY_STATE.KEY_DOWN) then -- SPACE
         isActive = isActive + 1
         isStarting = true
     end

@@ -5,13 +5,16 @@ lifeTime = 10.0 -- secs --iv required
 lifeTimer = 0
 effectRadius = 250.0
 effectFlag = true
+isGrabbable = false
+--------------------------------------------------
 
 -------------------- Methods ---------------------
-
 function Start()
     destination = GetVariable("Zhib.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
     destination.y = 0.0
     player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+    componentSwitch = gameObject:GetAudioSwitch()
+    currentTrackID = -1
     local playerPos = player:GetTransform():GetPosition()
     local targetPos2D = {destination.x, destination.z}
     local pos2D = {playerPos.x, playerPos.z}
@@ -31,16 +34,24 @@ function Update(dt)
         lifeTimer = lifeTimer + dt
 
         if (effectFlag) then
+             if (currentTrackID ~= -1) then
+                componentSwitch:StopTrack(currentTrackID)
+            end
+            currentTrackID = 0
+            componentSwitch:PlayTrack(currentTrackID)
             DispatchGlobalEvent("Auditory_Trigger",
                 {componentTransform:GetPosition(), effectRadius, "single", gameObject})
             effectFlag = false
         end
     else
-        DeleteGameObject()
+            if (currentTrackID ~= -1) then
+                componentSwitch:StopTrack(currentTrackID)
+            end
+        --Log("Decoy is grabbable! \n")
+        isGrabbable = true
     end
 end
 
--- Move to destination
 function MoveToDestination(dt)
     local pos = componentTransform:GetPosition()
     local d = Distance3D(destination, pos)
@@ -59,6 +70,16 @@ function MoveToDestination(dt)
     end
 end
 
+function OnTriggerEnter(go)
+
+    if (go.tag == Tag.PLAYER and isGrabbable == true) then
+        DispatchGlobalEvent("Decoy_Grabbed", {})
+        DeleteGameObject()
+    end
+end
+--------------------------------------------------
+
+----------------- Math Functions -----------------
 function Distance3D(a, b)
 
     diff = {
@@ -83,7 +104,7 @@ function Distance(a, b)
     return math.sqrt(dx * dx + dy * dy)
 
 end
-
 --------------------------------------------------
 
 print("Decoy.lua compiled succesfully")
+Log("Decoy.lua compiled succesfully")

@@ -1,0 +1,30 @@
+{
+    "asset_file": "worm_joined.fbx",
+    "asset_path": "Assets/Models/Characters/Worm/worm_joined.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Worm.002.sugar",
+            "library_path": "Library/Meshes/1026652156.sugar",
+            "type": 0,
+            "uid": 1026652156
+        },
+        {
+            "asset_file": "worm_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Worm/worm_base_color.png",
+            "library_path": "Library/Textures/754329502.cacao",
+            "type": 1,
+            "uid": 754329502
+        },
+        {
+            "asset_file": "worm_armature|worm_armature|worm_armature|worm_reel.cake",
+            "library_path": "Library/Animations/1851529775.cake",
+            "type": 5,
+            "uid": 1851529775
+        }
+    ],
+    "hash": "ab43c0dcdc90ef6df2a1b731e9baa89c",
+    "library_file": "1599122799.tea",
+    "library_path": "Library/Models/1599122799.tea",
+    "type": 3,
+    "uid": 1599122799
+}
