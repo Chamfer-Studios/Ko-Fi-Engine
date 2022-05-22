@@ -28,6 +28,7 @@ void EmitterInstance::Init()
 
 bool EmitterInstance::Update(float dt)
 {
+	KillDeadParticles();
 
 	//update modules
 	for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
@@ -35,26 +36,15 @@ bool EmitterInstance::Update(float dt)
 		(*it)->Update(dt, this);
 	}
 
-	KillDeadParticles();
 	//add particle to render list
 	//it is done at the component particle
 	return true;
 }
 
-void EmitterInstance::DrawParticles()
-{
-	for (std::vector<Particle>::iterator it = particles.begin(); it < particles.end(); ++it)
-	{
-		it->Draw(0, 0);
-	}
-}
-
 void EmitterInstance::SpawnParticle(int burst)
 {
 	if (deactivateParticleEmission || activeParticles == emitter->maxParticles)
-	{
 		return;
-	}
 
 	//burst to generate more than particle at once
 	for (int j = 0; j < burst; j++)
@@ -95,6 +85,17 @@ void EmitterInstance::KillDeadParticles()
 			particle->active = false;
 
 			--activeParticles;
+			if (!loop)
+			{
+				for (auto m : emitter->modules)
+				{
+					if (m->type == ParticleModuleType::DEFAULT)
+					{
+						EmitterDefault* mDef = (EmitterDefault*)m;
+						mDef->looping = false;
+					}
+				}
+			}
 		}
 	}
 }

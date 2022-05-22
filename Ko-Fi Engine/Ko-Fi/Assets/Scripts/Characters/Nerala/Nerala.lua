@@ -386,11 +386,6 @@ function ManageTimers(dt)
         end
     end
 
-    -- Click particles logic
-    if (mouseParticles ~= nil) then
-        mouseParticles:GetComponentParticle():StopParticleSpawn()
-    end
-
     -- Invencibility timer
     if (iFramesTimer ~= nil) then
         iFramesTimer = iFramesTimer + dt

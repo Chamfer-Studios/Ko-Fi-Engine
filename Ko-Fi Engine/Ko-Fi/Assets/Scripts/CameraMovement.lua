@@ -36,10 +36,10 @@ function Update(dt)
     end
 
     local newRemainingAngle = MoveTowards(remainingAngle, 0, rotSpeed * dt)
-    Log("remaining Angle " .. tostring(remainingAngle) .. "\n")
+    --Log("remaining Angle " .. tostring(remainingAngle) .. "\n")
     local delta = remainingAngle - newRemainingAngle
     remainingAngle = newRemainingAngle
-    Log("delta" .. tostring(delta) .. "\n")
+    --Log("delta" .. tostring(delta) .. "\n")
     local newQuat = Quat.new(float3.new(0, 1, 0), delta * 0.0174533)
     offset = MulQuat(newQuat, offset)
     local newPos = float3.new(0, 0, 0)

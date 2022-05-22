@@ -82,6 +82,7 @@ bool I_Particle::Create(R_Particle* particle)
 					jsonColor["color"] = { c.color.r,c.color.g,c.color.b,c.color.a };
 					jsonColor["position"] = c.pos;
 					jsonModule["colors"].push_back(jsonColor);
+					jsonColor.clear();
 				}
 				break;
 			}
@@ -162,158 +163,159 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 		particle->emitters.shrink_to_fit();
 		particle->name = jsonFile.at(name).at("name").get<std::string>();
 
-			for (const auto& emitter : jsonFile.at(name).at("emitters").items())
+		for (const auto& emitter : jsonFile.at(name).at("emitters").items())
+		{
+			Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
+			e->maxParticles = emitter.value().at("maxParticles");
+			e->texture = new R_Texture();
+			if (emitter.value().contains("texture_path"))
+				e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
+			if (e->texture->GetAssetPath() != "")
+				Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
+
+			e->modules.clear();
+			e->modules.shrink_to_fit();
+			for (const auto& pModule : emitter.value().at("modules").items())
 			{
-				Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
-				e->maxParticles = emitter.value().at("maxParticles");
-				e->texture = new R_Texture();
-				if (emitter.value().contains("texture_path"))
-					e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
-				if (e->texture->GetAssetPath() != "")
-					Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
-
-				e->modules.clear();
-				e->modules.shrink_to_fit();
-				for (const auto& pModule : emitter.value().at("modules").items())
+				ParticleModule* m = nullptr;
+				int type = pModule.value().at("type");
+				switch (type)
 				{
-					ParticleModule* m = nullptr;
-					int type = pModule.value().at("type");
-					switch (type)
-					{
-					case 1:
-					{
-						EmitterDefault* mDefault = new EmitterDefault();
-						mDefault->spawnTime = pModule.value().at("spawnTime");
-						mDefault->spawnTimer = 0.0f;
-						mDefault->randomParticleLife = pModule.value().at("randomParticleLife");
-						mDefault->minParticleLife = pModule.value().at("minParticleLife");
-						mDefault->maxParticleLife = pModule.value().at("maxParticleLife");
-						mDefault->particlesPerSpawn = pModule.value().at("particlesPerSpawn");
-						m = mDefault;
-						break;
-					}
-					case 2:
-					{
-						EmitterMovement* mMovement = new EmitterMovement();
-						mMovement->randomPosition = pModule.value().at("randPosition");
-						std::vector<float> values = pModule.value().at("minPosition").get<std::vector<float>>();
-						mMovement->minPosition = { values[0],values[1],values[2] };
-						values.clear();
-
-						values = pModule.value().at("maxPosition").get<std::vector<float>>();
-						mMovement->maxPosition = { values[0],values[1],values[2] };
-						values.clear();
-
-						mMovement->followForward = pModule.value().at("followForward");
-
-						mMovement->randomDirection = pModule.value().at("randDirection");
-						values = pModule.value().at("minDirection").get<std::vector<float>>();
-						mMovement->minDirection = { values[0],values[1],values[2] };
-						values.clear();
-
-						values = pModule.value().at("maxDirection").get<std::vector<float>>();
-						mMovement->maxDirection = { values[0],values[1],values[2] };
-						values.clear();
-
-						mMovement->randomVelocity = pModule.value().at("randVelocity");
-						mMovement->minVelocity = pModule.value().at("minVelocity");
-						mMovement->maxVelocity = pModule.value().at("maxVelocity");
-
-						mMovement->randomAcceleration = pModule.value().at("randAcceleration");
-						values = pModule.value().at("minAcceleration").get<std::vector<float>>();
-						mMovement->minAcceleration = { values[0],values[1],values[2] };
-						values.clear();
-
-						values = pModule.value().at("maxAcceleration").get<std::vector<float>>();
-						mMovement->maxAcceleration = { values[0],values[1],values[2] };
-						values.clear();
-						values.shrink_to_fit();
-
-						m = mMovement;
-						break;
-					}
-					case 3:
-					{
-						EmitterColor* mColor = new EmitterColor();
-						mColor->colorOverTime.clear();
-						mColor->colorOverTime.shrink_to_fit();
-						for (const auto& c : pModule.value().at("colors").items())
-						{
-							FadeColor fc = FadeColor();
-							std::vector<float> values = c.value().at("color").get<std::vector<float>>();
-							fc.color = Color(values[0], values[1], values[2], values[3]);
-							values.clear();
-							values.shrink_to_fit();
-							fc.pos = c.value().at("position");
-							mColor->colorOverTime.push_back(fc);
-						}
-						m = mColor;
-						break;
-					}
-					case 4:
-					{
-						EmitterSize* mSize = new EmitterSize();
-						std::vector<float> values = pModule.value().at("minInitialSize").get<std::vector<float>>();
-						mSize->minInitialSize = { values[0],values[1],values[2] };
-						values.clear();
-						if (pModule.value().contains("maxInitialSize"))
-						{
-							mSize->randomInitialSize = true;
-							values = pModule.value().at("maxInitialSize").get<std::vector<float>>();
-							mSize->maxInitialSize = { values[0],values[1],values[2] };
-							values.clear();
-						}
-						if (pModule.value().contains("minFinalSize"))
-						{
-							values = pModule.value().at("minFinalSize").get<std::vector<float>>();
-							mSize->minFinalSize = { values[0],values[1],values[2] };
-							values.clear();
-						}
-						if (pModule.value().contains("maxFinalSize"))
-						{
-							mSize->randomFinalSize = true;
-							values = pModule.value().at("maxFinalSize").get<std::vector<float>>();
-							mSize->maxFinalSize = { values[0],values[1],values[2] };
-							values.clear();
-						}
-
-						if (!mSize->randomInitialSize && !mSize->randomFinalSize)
-							mSize->constantSize = true;
-						else
-							mSize->constantSize = false;
-
-						values.shrink_to_fit();
-						m = mSize;
-						break;
-					}
-					case 5:
-					{
-						int typeB = pModule.value().at("billboardingType");
-						ParticleBillboarding* mBillboarding = new ParticleBillboarding((ParticleBillboarding::BillboardingType)typeB);
-						
-						mBillboarding->minDegrees = pModule.value().at("minDegrees");
-						mBillboarding->maxDegrees = pModule.value().at("maxDegrees");
-						mBillboarding->frontAxis = pModule.value().at("frontAxis");
-						mBillboarding->topAxis = pModule.value().at("topAxis");
-						mBillboarding->sideAxis = pModule.value().at("sideAxis");
-
-						m = mBillboarding;
-						break;
-					}
-					default:
-						break;
-					}
-					if (m != nullptr)
-						e->modules.push_back(m);
+				case 1:
+				{
+					EmitterDefault* mDefault = new EmitterDefault();
+					mDefault->spawnTime = pModule.value().at("spawnTime");
+					mDefault->spawnTimer = 0.0f;
+					mDefault->randomParticleLife = pModule.value().at("randomParticleLife");
+					mDefault->minParticleLife = pModule.value().at("minParticleLife");
+					mDefault->maxParticleLife = pModule.value().at("maxParticleLife");
+					mDefault->particlesPerSpawn = pModule.value().at("particlesPerSpawn");
+					m = mDefault;
+					break;
 				}
-				if (!e->GetModule<ParticleBillboarding>())
-					e->AddModuleByType(ParticleModuleType::BILLBOARDING);
+				case 2:
+				{
+					EmitterMovement* mMovement = new EmitterMovement();
+					mMovement->randomPosition = pModule.value().at("randPosition");
+					std::vector<float> values = pModule.value().at("minPosition").get<std::vector<float>>();
+					mMovement->minPosition = { values[0],values[1],values[2] };
+					values.clear();
 
-				if (!e->GetModule<EmitterDefault>())
-					e->AddModuleByType(ParticleModuleType::DEFAULT);
+					values = pModule.value().at("maxPosition").get<std::vector<float>>();
+					mMovement->maxPosition = { values[0],values[1],values[2] };
+					values.clear();
 
-				particle->emitters.push_back(e);
+					mMovement->followForward = pModule.value().at("followForward");
+
+					mMovement->randomDirection = pModule.value().at("randDirection");
+					values = pModule.value().at("minDirection").get<std::vector<float>>();
+					mMovement->minDirection = { values[0],values[1],values[2] };
+					values.clear();
+
+					values = pModule.value().at("maxDirection").get<std::vector<float>>();
+					mMovement->maxDirection = { values[0],values[1],values[2] };
+					values.clear();
+
+					mMovement->randomVelocity = pModule.value().at("randVelocity");
+					mMovement->minVelocity = pModule.value().at("minVelocity");
+					mMovement->maxVelocity = pModule.value().at("maxVelocity");
+
+					mMovement->randomAcceleration = pModule.value().at("randAcceleration");
+					values = pModule.value().at("minAcceleration").get<std::vector<float>>();
+					mMovement->minAcceleration = { values[0],values[1],values[2] };
+					values.clear();
+
+					values = pModule.value().at("maxAcceleration").get<std::vector<float>>();
+					mMovement->maxAcceleration = { values[0],values[1],values[2] };
+					values.clear();
+					values.shrink_to_fit();
+
+					m = mMovement;
+					break;
+				}
+				case 3:
+				{
+					EmitterColor* mColor = new EmitterColor();
+					mColor->colorOverTime.clear();
+					mColor->colorOverTime.shrink_to_fit();
+					for (const auto& c : pModule.value().at("colors").items())
+					{
+						FadeColor fc = FadeColor();
+						std::vector<float> values = c.value().at("color").get<std::vector<float>>();
+						fc.color = Color(values[0], values[1], values[2], values[3]);
+						values.clear();
+						values.shrink_to_fit();
+						fc.pos = c.value().at("position");
+						mColor->colorOverTime.push_back(fc);
+					}
+					m = mColor;
+					break;
+				}
+				case 4:
+				{
+					EmitterSize* mSize = new EmitterSize();
+					bool notConstant = false;
+					std::vector<float> values = pModule.value().at("minInitialSize").get<std::vector<float>>();
+					mSize->minInitialSize = { values[0],values[1],values[2] };
+					values.clear();
+					if (pModule.value().contains("maxInitialSize"))
+					{
+						notConstant = true;
+						mSize->randomInitialSize = true;
+						values = pModule.value().at("maxInitialSize").get<std::vector<float>>();
+						mSize->maxInitialSize = { values[0],values[1],values[2] };
+						values.clear();
+					}
+					if (pModule.value().contains("minFinalSize"))
+					{
+						notConstant = true;
+						values = pModule.value().at("minFinalSize").get<std::vector<float>>();
+						mSize->minFinalSize = { values[0],values[1],values[2] };
+						values.clear();
+					}
+					if (pModule.value().contains("maxFinalSize"))
+					{
+						notConstant = true;
+						mSize->randomFinalSize = true;
+						values = pModule.value().at("maxFinalSize").get<std::vector<float>>();
+						mSize->maxFinalSize = { values[0],values[1],values[2] };
+						values.clear();
+					}
+
+					mSize->constantSize = !notConstant;
+
+					values.shrink_to_fit();
+					m = mSize;
+					break;
+				}
+				case 5:
+				{
+					int typeB = pModule.value().at("billboardingType");
+					ParticleBillboarding* mBillboarding = new ParticleBillboarding((ParticleBillboarding::BillboardingType)typeB);
+
+					mBillboarding->minDegrees = pModule.value().at("minDegrees");
+					mBillboarding->maxDegrees = pModule.value().at("maxDegrees");
+					mBillboarding->frontAxis = pModule.value().at("frontAxis");
+					mBillboarding->topAxis = pModule.value().at("topAxis");
+					mBillboarding->sideAxis = pModule.value().at("sideAxis");
+
+					m = mBillboarding;
+					break;
+				}
+				default:
+					break;
+				}
+				if (m != nullptr)
+					e->modules.push_back(m);
 			}
+			if (!e->GetModule<ParticleBillboarding>())
+				e->AddModuleByType(ParticleModuleType::BILLBOARDING);
+
+			if (!e->GetModule<EmitterDefault>())
+				e->AddModuleByType(ParticleModuleType::DEFAULT);
+
+			particle->emitters.push_back(e);
+		}
 	}
 
 	return false;

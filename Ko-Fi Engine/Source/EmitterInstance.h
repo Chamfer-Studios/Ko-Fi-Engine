@@ -20,8 +20,6 @@ public:
 	void Init();
 	bool Update(float dt);
 
-	void DrawParticles();
-
 	//change burst to generate more than particle at once
 	void SpawnParticle(int burst = 1);
 
@@ -36,6 +34,7 @@ public:
 	unsigned int* particleIndices = nullptr;
 
 	float emitterLife = 0.0f;
+	bool loop = true;
 
 	Emitter* emitter = nullptr;
 	C_Particle* component = nullptr;

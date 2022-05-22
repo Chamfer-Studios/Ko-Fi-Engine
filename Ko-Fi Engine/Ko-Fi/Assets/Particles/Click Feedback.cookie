@@ -9,7 +9,7 @@
                         "minParticleLife": 0.800000011920929,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 0.7749999761581421,
+                        "spawnTime": 0.8500000238418579,
                         "type": 1
                     },
                     {
@@ -51,10 +51,10 @@
                         ],
                         "minPosition": [
                             0.0,
-                            2.0,
+                            15.0,
                             0.0
                         ],
-                        "minVelocity": 2.0,
+                        "minVelocity": 20.0,
                         "randAcceleration": false,
                         "randDirection": false,
                         "randPosition": false,
@@ -74,6 +74,14 @@
                             }
                         ],
                         "type": 3
+                    },
+                    {
+                        "minInitialSize": [
+                            10.0,
+                            10.0,
+                            10.0
+                        ],
+                        "type": 4
                     }
                 ],
                 "name": "Arrow",
@@ -87,7 +95,7 @@
                         "minParticleLife": 0.800000011920929,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 0.7749999761581421,
+                        "spawnTime": 0.8500000238418579,
                         "type": 1
                     },
                     {
@@ -100,10 +108,15 @@
                         "type": 5
                     },
                     {
+                        "minFinalSize": [
+                            15.0,
+                            15.0,
+                            15.0
+                        ],
                         "minInitialSize": [
-                            3.0,
-                            3.0,
-                            3.0
+                            25.0,
+                            25.0,
+                            25.0
                         ],
                         "type": 4
                     },
@@ -120,6 +133,46 @@
                             }
                         ],
                         "type": 3
+                    },
+                    {
+                        "followForward": true,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "maxPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "maxVelocity": 5.0,
+                        "minAcceleration": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minDirection": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "minPosition": [
+                            0.0,
+                            5.0,
+                            0.0
+                        ],
+                        "minVelocity": 0.0,
+                        "randAcceleration": false,
+                        "randDirection": false,
+                        "randPosition": false,
+                        "randVelocity": false,
+                        "type": 2
                     }
                 ],
                 "name": "Circle",

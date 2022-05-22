@@ -33,6 +33,8 @@ public:
 	void ClearParticles();
 	void StopParticleSpawn();
 	void ResumeParticleSpawn();
+	void ResetTimers();
+	void SetLooping(bool v);
 	void DeleteModule(Emitter* e,ParticleModuleType t);
 
 private:

@@ -278,7 +278,9 @@ function Update(dt)
                             isDoubleClicking = true
                         end
                         if (mouseParticles ~= nil) then
+                            mouseParticles:GetComponentParticle():SetLooping(true)
                             mouseParticles:GetComponentParticle():ResumeParticleSpawn()
+                            mouseParticles:GetComponentParticle():ResetTimers()
                             mouseParticles:GetTransform():SetPosition(destination)
                         end
                     end
@@ -358,8 +360,6 @@ function Update(dt)
         if (GetInput(10) == KEY_STATE.KEY_DOWN) then
             ReloadKnives()
         end
-    else
-        Log("[FAIL] You have to select a character first!\n")
     end
 end
 --------------------------------------------------
@@ -404,11 +404,6 @@ function ManageTimers(dt)
             isDoubleClicking = false
             doubleClickTimer = 0.0
         end
-    end
-
-    -- Click particles logic
-    if (mouseParticles ~= nil) then
-        mouseParticles:GetComponentParticle():StopParticleSpawn()
     end
 
     -- Invencibility timer

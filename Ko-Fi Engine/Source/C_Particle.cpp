@@ -69,7 +69,7 @@ bool C_Particle::Update(float dt)
 	for (auto it : emitterInstances)
 	{
 		it->Update(dt); //kill inactive and update emitter instances
-		CONSOLE_LOG("active particles: %d", it->activeParticles);
+		//CONSOLE_LOG("active particles: %d", it->activeParticles);
 
 		for (unsigned int i = 0; i < it->activeParticles; i++)
 		{
@@ -131,6 +131,13 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 
 			if (ImGui::Button("Kill All Particles"))
 				ClearParticles();
+
+			bool loop = emitterInstances.front()->loop;
+			if (ImGui::Checkbox("Loop", &loop))
+			{
+				for (auto ei : emitterInstances)
+					ei->loop = loop;
+			}
 
 			ImGui::Text("Emitter Instances: %d", emitterInstances.size());
 			ImGui::Text("Emitters: %d", resource->emitters.size());
@@ -672,6 +679,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					{
 						if (ImGui::Selectable(resourcesList.at(i).c_str()))
 						{
+							emitterInstances.clear();
 							if (resource == nullptr)
 								resource = new R_Particle();
 							Importer::GetInstance()->particleImporter->Load(resource, resourcesList.at(i).c_str());
@@ -724,6 +732,38 @@ void C_Particle::ResumeParticleSpawn()
 		(*it)->SetParticleEmission(true);
 }
 
+void C_Particle::ResetTimers()
+{
+	for (auto emitter : resource->emitters)
+	{
+		for (auto m : emitter->modules)
+		{
+			if (m->type == ParticleModuleType::DEFAULT)
+			{
+				EmitterDefault* mDef = (EmitterDefault*)m;
+				mDef->spawnTimer = mDef->spawnTime;
+				break;
+			}
+		}
+	}
+}
+
+void C_Particle::SetLooping(bool v)
+{
+	for (auto emitter : resource->emitters)
+	{
+		for (auto m : emitter->modules)
+		{
+			if (m->type == ParticleModuleType::DEFAULT)
+			{
+				EmitterDefault* mDef = (EmitterDefault*)m;
+				mDef->looping = v;
+				break;
+			}
+		}
+	}
+}
+
 void C_Particle::NewEmitterName(std::string& name, int n)
 {
 	for (auto emitter : resource->emitters)
@@ -748,8 +788,8 @@ void C_Particle::Save(Json& json) const
 		Json jsonEmitter;
 		for (auto e : resource->emitters)
 		{
-			jsonEmitter["maxParticles"] = e->maxParticles;
 			jsonEmitter["name"] = e->name;
+			jsonEmitter["maxParticles"] = e->maxParticles;
 
 			if (e->texture != nullptr)
 				jsonEmitter["texture_path"] = e->texture->GetAssetPath();
@@ -767,6 +807,7 @@ void C_Particle::Save(Json& json) const
 					jsonModule["randomParticleLife"] = mDefault->randomParticleLife;
 					jsonModule["minParticleLife"] = mDefault->minParticleLife;
 					jsonModule["maxParticleLife"] = mDefault->maxParticleLife;
+					jsonModule["particlesPerSpawn"] = mDefault->particlesPerSpawn;
 					break;
 				}
 				case ParticleModuleType::MOVEMENT:
@@ -779,6 +820,7 @@ void C_Particle::Save(Json& json) const
 					jsonModule["randVelocity"] = mMovement->randomVelocity;
 					jsonModule["minVelocity"] = mMovement->minVelocity;
 					jsonModule["maxVelocity"] = mMovement->maxVelocity;
+					jsonModule["followForward"] = mMovement->followForward;
 					jsonModule["randDirection"] = mMovement->randomDirection;
 					jsonModule["minDirection"] = { mMovement->minDirection.x,mMovement->minDirection.y,mMovement->minDirection.z };
 					jsonModule["maxDirection"] = { mMovement->maxDirection.x,mMovement->maxDirection.y,mMovement->maxDirection.z };
@@ -797,6 +839,7 @@ void C_Particle::Save(Json& json) const
 						jsonColor["color"] = { c.color.r,c.color.g,c.color.b,c.color.a };
 						jsonColor["position"] = c.pos;
 						jsonModule["colors"].push_back(jsonColor);
+						jsonColor.clear();
 					}
 					break;
 				}
@@ -821,6 +864,11 @@ void C_Particle::Save(Json& json) const
 					ParticleBillboarding* mBillboarding = (ParticleBillboarding*)m;
 					jsonModule["type"] = (int)mBillboarding->type;
 					jsonModule["billboardingType"] = (int)mBillboarding->billboardingType;
+					jsonModule["minDegrees"] = mBillboarding->minDegrees;
+					jsonModule["maxDegrees"] = mBillboarding->maxDegrees;
+					jsonModule["frontAxis"] = mBillboarding->frontAxis;
+					jsonModule["topAxis"] = mBillboarding->topAxis;
+					jsonModule["sideAxis"] = mBillboarding->sideAxis;
 					break;
 				}
 				default:
@@ -830,6 +878,7 @@ void C_Particle::Save(Json& json) const
 				jsonModule.clear();
 			}
 			jsonResource["emitters"].push_back(jsonEmitter);
+			jsonEmitter.clear();
 		}
 		json["resource"].push_back(jsonResource);
 	}
@@ -844,21 +893,21 @@ void C_Particle::Load(Json& json)
 
 		resource->emitters.clear();
 		resource->emitters.shrink_to_fit();
+		emitterInstances.clear();
+		emitterInstances.shrink_to_fit();
 		for (const auto& r : json.at("resource").items())
 		{
 			resource->name = r.value().at("name").get<std::string>();
 
 			for (const auto& emitter : r.value().at("emitters").items())
 			{
-				emitterInstances.clear();
-				emitterInstances.shrink_to_fit();
 				Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
 				EmitterInstance* ei = new EmitterInstance(e, this);
 				emitterInstances.push_back(ei);
 				ei->Init();
 				e->maxParticles = emitter.value().at("maxParticles");
 				e->texture = new R_Texture();
-				if(emitter.value().contains("texture_path"))
+				if (emitter.value().contains("texture_path"))
 					e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
 				if (e->texture->GetAssetPath() != "")
 					Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
@@ -879,6 +928,7 @@ void C_Particle::Load(Json& json)
 						mDefault->randomParticleLife = pModule.value().at("randomParticleLife");
 						mDefault->minParticleLife = pModule.value().at("minParticleLife");
 						mDefault->maxParticleLife = pModule.value().at("maxParticleLife");
+						mDefault->particlesPerSpawn = pModule.value().at("particlesPerSpawn");
 						m = mDefault;
 						break;
 					}
@@ -906,6 +956,8 @@ void C_Particle::Load(Json& json)
 						mMovement->randomVelocity = pModule.value().at("randVelocity");
 						mMovement->minVelocity = pModule.value().at("minVelocity");
 						mMovement->maxVelocity = pModule.value().at("maxVelocity");
+
+						mMovement->followForward = pModule.value().at("followForward");
 
 						mMovement->randomAcceleration = pModule.value().at("randAcceleration");
 						values = pModule.value().at("minAcceleration").get<std::vector<float>>();
@@ -941,11 +993,13 @@ void C_Particle::Load(Json& json)
 					case 4:
 					{
 						EmitterSize* mSize = new EmitterSize();
+						bool notConstant = false;
 						std::vector<float> values = pModule.value().at("minInitialSize").get<std::vector<float>>();
 						mSize->minInitialSize = { values[0],values[1],values[2] };
 						values.clear();
 						if (pModule.value().contains("maxInitialSize"))
 						{
+							notConstant = true;
 							mSize->randomInitialSize = true;
 							values = pModule.value().at("maxInitialSize").get<std::vector<float>>();
 							mSize->maxInitialSize = { values[0],values[1],values[2] };
@@ -953,20 +1007,21 @@ void C_Particle::Load(Json& json)
 						}
 						if (pModule.value().contains("minFinalSize"))
 						{
+							notConstant = true;
 							values = pModule.value().at("minFinalSize").get<std::vector<float>>();
 							mSize->minFinalSize = { values[0],values[1],values[2] };
 							values.clear();
 						}
 						if (pModule.value().contains("maxFinalSize"))
 						{
+							notConstant = true;
 							mSize->randomFinalSize = true;
 							values = pModule.value().at("maxFinalSize").get<std::vector<float>>();
 							mSize->maxFinalSize = { values[0],values[1],values[2] };
 							values.clear();
 						}
 
-						if (!mSize->randomInitialSize && !mSize->randomFinalSize)
-							mSize->constantSize = true;
+						mSize->constantSize = !notConstant;
 
 						values.shrink_to_fit();
 						m = mSize;
@@ -976,6 +1031,11 @@ void C_Particle::Load(Json& json)
 					{
 						int typeB = pModule.value().at("billboardingType");
 						ParticleBillboarding* mBillboarding = new ParticleBillboarding((ParticleBillboarding::BillboardingType)typeB);
+						mBillboarding->minDegrees = pModule.value().at("minDegrees");
+						mBillboarding->maxDegrees = pModule.value().at("maxDegrees");
+						mBillboarding->frontAxis = pModule.value().at("frontAxis");
+						mBillboarding->topAxis = pModule.value().at("topAxis");
+						mBillboarding->sideAxis = pModule.value().at("sideAxis");
 						m = mBillboarding;
 						break;
 					}

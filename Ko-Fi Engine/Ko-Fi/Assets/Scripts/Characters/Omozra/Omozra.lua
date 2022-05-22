@@ -321,8 +321,6 @@ function Update(dt)
                 currentMovement = Movement.CROUCH
             end
         end
-    else
-        Log("[FAIL] You have to select a character first!\n")
     end
 end
 
@@ -368,11 +366,6 @@ function ManageTimers(dt)
             isDoubleClicking = false
             doubleClickTimer = 0.0
         end
-    end
-
-    -- Click particles logic
-    if (mouseParticles ~= nil) then
-        mouseParticles:GetComponentParticle():StopParticleSpawn()
     end
 
     -- Invencibility timer

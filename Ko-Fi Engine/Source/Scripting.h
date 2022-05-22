@@ -280,7 +280,9 @@ public:
 		lua.new_usertype<C_Particle>("C_Particle",
 			sol::constructors<void(GameObject*)>(),
 			"StopParticleSpawn", &C_Particle::StopParticleSpawn,
-			"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn);
+			"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn,
+			"ResetTimers", &C_Particle::ResetTimers,
+			"SetLooping",&C_Particle::SetLooping);
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",

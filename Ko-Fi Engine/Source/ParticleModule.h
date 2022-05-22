@@ -45,6 +45,7 @@ public:
 	bool Update(float dt, EmitterInstance* emitter);
 
 public:
+	bool looping = true;
 	float spawnTimer = 0.0f;
 	float spawnTime = 0.5f;
 	bool randomParticleLife = false;
