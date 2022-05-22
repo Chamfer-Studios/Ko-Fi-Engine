@@ -111,7 +111,7 @@ function Start()
     end
 
     mouseParticles = Find("Mouse Particles")
-    --ChoosingTargetParticle = Find("Choosing Target")
+    choosingTargetParticle = Find("Choosing Target")
 
     if (mouseParticles ~= nil) then
         mouseParticles:GetComponentParticle():StopParticleSpawn()
@@ -136,6 +136,7 @@ end
 -- Called each loop iteration
 function Update(dt)
     DrawActiveAbilities()
+    DrawHoverParticle()
 
     if (knifeCount == 1) then
 
@@ -176,6 +177,7 @@ function Update(dt)
                 if (knifeCount <= 0) then
                     Log("[FAIL] Ability Primary: You don't have enough knives!\n")
                 else
+                    target = GetGameObjectHovered()
                     if (target.tag ~= Tag.ENEMY) then
                         Log("[FAIL] Ability Primary: You have to select an enemy first!\n")
                     else
@@ -372,6 +374,16 @@ function CancelAbilities()
     drawPrimary = false
     drawSecondary = false
     drawUltimate = false
+end
+
+function DrawHoverParticle()
+    if (IsSelected() and
+        (currentState == State.AIM_PRIMARY or currentState == State.AIM_SECONDARY or currentState == State.AIM_ULTIMATE)) then
+        drawingTarget = GetGameObjectHovered
+        if (drawingTarget.tag == Tag.ENEMY) then
+            choosingTargetParticle:GetTransform():SetPosition(float3.new(playerPos.x, playerPos.y + 1, playerPos.z))
+        end
+    end
 end
 
 function DrawActiveAbilities()
