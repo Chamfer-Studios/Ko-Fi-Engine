@@ -1,0 +1,105 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                -1545.294677734375,
+                0.0,
+                716.1734619140625
+            ],
+            "rotation": [
+                -0.7071068286895752,
+                0.0,
+                0.0,
+                0.7071067094802856
+            ],
+            "scale": [
+                5.997870445251465,
+                4.894476413726807,
+                7.520113945007324
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "mesh": {
+                "asset_path": "Assets/Models/Environments/Spice Sacks/Cylinder.001.sugar",
+                "draw_face_normals": false,
+                "draw_vertex_normals": false,
+                "is_animated": false,
+                "shape_type": 0,
+                "uid": 1235460633
+            },
+            "type": 1
+        },
+        {
+            "active": true,
+            "color": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "shader": {
+                "asset_path": "Assets/Shaders/default_shader.glsl",
+                "uniforms": null
+            },
+            "texture": {
+                "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+            },
+            "type": 2
+        },
+        {
+            "active": true,
+            "body_type": "Static",
+            "freeze_position_x": false,
+            "freeze_position_y": false,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": 6,
+            "use_gravity": true
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                0.0,
+                8.5
+            ],
+            "filter": "Interactuable",
+            "is_trigger": true,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 7
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/SpiceLoot.lua",
+            "id": 1765565542,
+            "inspector_variables": [
+                {
+                    "name": "spiceLoot",
+                    "type": "int",
+                    "value": 100
+                }
+            ],
+            "type": 5
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "SpiceLoot",
+    "tag": 0
+}

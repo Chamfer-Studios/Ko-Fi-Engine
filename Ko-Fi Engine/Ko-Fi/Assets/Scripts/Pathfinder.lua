@@ -51,13 +51,15 @@ function Float3Angle(a, b)
     return math.acos(Float3Dot(a, b) / (lenA * lenB))
 end
 
-function FollowPath(speed, dt, loop)
+function FollowPath(speed, dt, loop, useRB)
     if #_G.finalPath == 0 or currentPathIndex > #_G.finalPath then
         do
             if (componentRigidBody ~= nil) then
                 componentRigidBody:SetLinearVelocity(float3.new(0.0, 0.0, 0.0))
             end
-            return
+            do
+                return
+            end
         end
     end
 
@@ -83,7 +85,7 @@ function FollowPath(speed, dt, loop)
             y = direction.y * speed * _dt,
             z = direction.z * speed * _dt
         }
-        if (componentRigidBody ~= nil) then
+        if (componentRigidBody ~= nil and useRB == true) then
             componentRigidBody:SetLinearVelocity(float3.new(delta.x, delta.y, delta.z))
         else
             nextPosition = {
@@ -160,7 +162,11 @@ function EventHandler(key, fields)
     if key == "Pathfinder_UpdatePath" then -- fields[1] -> waypoints; fields[2] -> pingpong; fields[3] -> currentPos
         UpdatePath(fields[1], fields[2], fields[3])
     elseif key == "Pathfinder_FollowPath" then -- fields[1] -> speed; fields[2] -> dt; fields[3] -> loop;
-        FollowPath(fields[1], fields[2], fields[3])
+        useRB = true
+        if #fields == 4 then
+            useRB = fields[4]
+        end
+        FollowPath(fields[1], fields[2], fields[3], useRB)
     end
 end
 

@@ -40,9 +40,9 @@ NewVariable(awarenessSizeIV)
 
 awarenessSpeed = 0.4
 awarenessVisualSpeed = 0.7
---local awarenessSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
---awarenessSpeedIV = InspectorVariable.new("awarenessSpeed", awarenessSpeedIVT, awarenessSpeed)
---NewVariable(awarenessSpeedIV)
+-- local awarenessSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
+-- awarenessSpeedIV = InspectorVariable.new("awarenessSpeed", awarenessSpeedIVT, awarenessSpeed)
+-- NewVariable(awarenessSpeedIV)
 
 pingpong = false
 local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
@@ -176,8 +176,6 @@ function CheckIfPointInCone(position)
     angle = Float3Angle(diff, componentTransform:GetFront())
 
     angle = math.abs(math.deg(angle))
-    
-    Log(tostring(diff) .. " " .. tostring(componentTransform:GetFront()) .. " " .. tostring(angle) .. "\n")
 
     if angle < visionConeAngle / 2 then
         do
@@ -193,8 +191,6 @@ end
 function ProcessVisualTrigger(position, gameObject)
     if not CheckIfPointInCone(position) then
         if isSeeingPlayer then
-            seeingPosition = nil
-            seeingSource = nil
             isSeeingPlayer = false
             SetTargetStateToUNAWARE()
         end
@@ -251,7 +247,7 @@ auditoryTriggerIsRepeating = false
 
 function ProcessRepeatedAuditoryTrigger(position, source)
     hadRepeatedAuditoryTriggerLastFrame = true
-    if state == state.UNAWARE then
+    if state == STATE.UNAWARE then
         SetTargetStateToSUS()
     elseif state == STATE.SUS then
         SetTargetStateToAGGRO()
@@ -336,14 +332,24 @@ function SetStateToSUS(position)
     awareness = 1
     targetAwareness = 0
     DispatchEvent("Change_State", {oldState, state}) -- fields[1] -> fromState; fields[2] -> toState;
+
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("Walk")
+    end
 end
 
 function SetStateToAGGRO(source)
+
     local oldState = state
     state = STATE.AGGRO
     awareness = 2
     targetAwareness = 2
+    isSeeingPlayer = true
     DispatchEvent("Change_State", {oldState, state}) -- fields[1] -> fromState; fields[2] -> toState;
+    if (componentAnimator ~= nil) then
+        Log("Change to run\n")
+        componentAnimator:SetSelectedClip("Walk")
+    end
 end
 
 function SetStateToWORM()
@@ -437,6 +443,10 @@ function Start()
     InstantiateNamedPrefab("awareness_red", awareness_red_name)
 
     componentRigidbody = gameObject:GetRigidBody()
+    componentAnimator = gameObject:GetParent():GetComponentAnimator()
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("Walk")
+    end
 end
 
 oldSourcePos = nil
@@ -444,12 +454,14 @@ oldSourcePos = nil
 coneLight = gameObject:GetLight()
 
 function Update(dt)
+
     if coneLight == nil then
         coneLight = gameObject:GetLight()
     end
 
     if coneLight ~= nil then
-        coneLight:SetDirection(float3.new(-componentTransform:GetFront().x, -componentTransform:GetFront().y, -componentTransform:GetFront().z))
+        coneLight:SetDirection(float3.new(-componentTransform:GetFront().x, -componentTransform:GetFront().y,
+            -componentTransform:GetFront().z))
         coneLight:SetRange(visionConeRadius)
         coneLight:SetAngle(visionConeAngle / 2)
     end
@@ -470,9 +482,6 @@ function Update(dt)
         UpdateAwarenessBars()
     end
 
-    --Log(tostring(componentTransform:GetFront()) .. "\n")
-    --Log(tostring(awareness) .. " " .. tostring(targetAwareness) .. " " .. tostring(isSeeingPlayer) .. "\n")
-
     if awareness < targetAwareness and isSeeingPlayer == true then
         awareness = awareness + awarenessVisualSpeed * dt
     elseif awareness < targetAwareness and isSeeingPlayer == false then
@@ -480,6 +489,8 @@ function Update(dt)
     elseif awareness > targetAwareness then
         awareness = awareness - awarenessSpeed * dt
     end
+
+    -- Log(tostring(awareness) .. "\n")
 
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
         if seeingSource ~= nil then
@@ -541,23 +552,20 @@ function Update(dt)
     end
     if (state ~= STATE.WORM) then
         if (state ~= STATE.AGGRO) then
-            DispatchEvent(pathfinderFollowKey, {speed, dt, _loop})
+            DispatchEvent(pathfinderFollowKey, {speed, dt, _loop, false})
         else
-            DispatchEvent(pathfinderFollowKey, {chaseSpeed, dt, _loop})
+            DispatchEvent(pathfinderFollowKey, {chaseSpeed, dt, _loop, false})
         end
     end
 end
 
 ------------------- Functions --------------------
+
 function Die()
 
     DispatchEvent("Die", {gameObject})
 
-    -- currentState = STATE.DEAD
-
-    if (componentAnimator ~= nil) then
-        componentAnimator:SetSelectedClip("Death")
-    end
+    currentState = STATE.DEAD
 
 end
 

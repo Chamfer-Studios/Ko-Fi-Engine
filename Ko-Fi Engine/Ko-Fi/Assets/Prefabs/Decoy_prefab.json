@@ -48,7 +48,18 @@
             ],
             "shader": {
                 "asset_path": "Assets/Shaders/default_shader.glsl",
-                "uniforms": null
+                "uniforms": [
+                    {
+                        "name": "albedoTint",
+                        "type": 35666,
+                        "value": {
+                            "w": 1.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ]
             },
             "texture": {
                 "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
@@ -60,6 +71,55 @@
             "file_name": "Assets/Scripts/Characters/Zhib/Decoy.lua",
             "id": 760591411,
             "type": 5
+        },
+        {
+            "active": true,
+            "body_type": "Static",
+            "freeze_position_x": false,
+            "freeze_position_y": false,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": 6,
+            "use_gravity": true
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                0.699999988079071,
+                0.0
+            ],
+            "filter": "Interactuable",
+            "is_trigger": true,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 7
+        },
+        {
+            "active": true,
+            "fade_time": 2.0,
+            "offset_sync": false,
+            "total_tracks": 1,
+            "tracks": [
+                {
+                    "bypass": false,
+                    "loop": true,
+                    "mute": false,
+                    "offset": 0.0,
+                    "pan": 0.0,
+                    "play_on_start": false,
+                    "track_path": "Assets/Audio/SFX/Zhib/zhib_decoy_active_fx.wav",
+                    "transpose": 0.0,
+                    "volume": 100.0
+                }
+            ],
+            "type": 11
         }
     ],
     "is3D": true,

@@ -97,15 +97,6 @@
                         "sourceType": 0,
                         "specularValue": 0.0,
                         "type": 19
-                    },
-                    {
-                        "active": true,
-                        "far_plane_distance": 1000.0,
-                        "frustum_culling": false,
-                        "isMainCamera": false,
-                        "near_plane_distance": 0.30000001192092896,
-                        "type": 4,
-                        "vertical_fov": 686.0
                     }
                 ],
                 "is3D": true,
