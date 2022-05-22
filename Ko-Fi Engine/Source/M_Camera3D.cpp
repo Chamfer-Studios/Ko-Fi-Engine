@@ -44,11 +44,12 @@ M_Camera3D::M_Camera3D(KoFiEngine* engine) : Module()
 	engineCamera->SetIsEngineCamera(true);
 	
 	engineCamera->SetReference(float3(0.0f, 0.0f, 0.0f));
-	engineCamera->SetFarPlaneDistance(10000.0f);
+	engineCamera->SetViewPlaneDistances(.3f,20000.0f);
 	engineCamera->LookAt(engineCamera->GetFront());
+	engineCamera->SetIsSphereCullingActive(true);
 	engineCamera->SetIsFrustumActive(true);
-
 	currentCamera = engineCamera;
+	engineCamera->SetSCullingRadius(20000.0f / 2);
 }
 
 M_Camera3D::~M_Camera3D()
@@ -82,11 +83,9 @@ bool M_Camera3D::Update(float dt)
 	OPTICK_EVENT();
 
 	FocusTarget();
-	if (engineCamera->GetIsFrustumActive())
-		engineCamera->FrustumCulling();
 
-	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
-		return true;
+	//if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
+	//	return true;
 
 	if (currentCamera->IsEngineCamera() && engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -101,7 +100,10 @@ bool M_Camera3D::Update(float dt)
 		isMoving = false;
 		cameraSpeed = baseCameraSpeed;
 	}
-
+	
+	if (currentCamera == engineCamera) {
+		engineCamera->ApplyCullings(engineCamera->GetIsSphereCullingActive(), engineCamera->GetIsFrustumActive());
+	}
 	return true;
 }
 
@@ -181,8 +183,8 @@ void M_Camera3D::MouseZoom(float dt)
 // A function that takes the delta mouse motion as x and y inputs, creates a quaternion representing a rotation based on the mouse motion, and applies that rotation to the camera's orientation.
 void M_Camera3D::MouseRotation(float dt)
 {
-	int xMotion = engine->GetInput()->GetMouseXMotion();
-	int yMotion = engine->GetInput()->GetMouseYMotion();
+	int xMotion = -engine->GetInput()->GetMouseXMotion(); // (-) Because is a Right Handed Camera
+	int yMotion = -engine->GetInput()->GetMouseYMotion(); // (-) Because is a Right Handed Camera
 	if (xMotion != 0) {
 		const float newDeltaX = (float)xMotion * cameraSensitivity;
 		float deltaX = newDeltaX + 0.95f * (lastDeltaX - newDeltaX);
@@ -268,22 +270,35 @@ bool M_Camera3D::LoadConfiguration(Json& configModule)
 
 bool M_Camera3D::InspectorDraw()
 {
-	if (ImGui::CollapsingHeader("Engine Camera##"))
-	{
-		int newSpeedMultiplier = speedMultiplier;
-		if (ImGui::SliderInt("Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
-		{
-			ChangeSpeed(newSpeedMultiplier);
-		}
+	//if (ImGui::CollapsingHeader("Engine Camera##"))
+	//{
+	//	int newSpeedMultiplier = speedMultiplier;
+	//	if (ImGui::SliderInt("Camera Speed", &newSpeedMultiplier, 1.0f, 5.0f))
+	//	{
+	//		ChangeSpeed(newSpeedMultiplier);
+	//	}
 
-		//	Frustum Active
-		bool frustumActive = engineCamera->GetIsFrustumActive();
-		if (ImGui::Checkbox("Frustum culling", &frustumActive))
-		{
-			engineCamera->SetIsFrustumActive(frustumActive);
-		}
+	//	//	Frustum Active
+	//	bool frustumActive = engineCamera->GetIsFrustumActive();
+	//	if (ImGui::Checkbox("Frustum culling", &frustumActive))
+	//	{
+	//		engineCamera->SetIsFrustumActive(frustumActive);
+	//	}
 
-	}
+	//	static const char* types[]{ "Perspective", "Orthographic" };
+	//	static int selectedItem = 0;
+	//	if (ImGui::Combo("Combo", &selectedItem, types, IM_ARRAYSIZE(types)))
+	//	{
+	//		if (selectedItem == 0)
+	//			engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_PERSPECTIVE);
+	//		if (selectedItem == 1)
+	//			engineCamera->SetProjectionType(C_Camera::CameraType::KOFI_ORTHOGRAPHIC);
+
+
+	//	}
+
+	//}
+	engineCamera->InspectorDraw(nullptr);
 	return true;
 }
 

@@ -27,7 +27,7 @@ bool I_Material::Load(const char* assetsPath, R_Material* material)
 
 	if (material == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: R_Material* was nullptr.");
+		KOFI_ERROR(" Importer: Could not Import Material! Error: R_Material* was nullptr.");
 		return false;
 	}
 
@@ -42,12 +42,12 @@ bool I_Material::Import(const aiMaterial* aiMaterial, R_Material* material)
 
 	if (material == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: R_Material* was nullptr.");
+		KOFI_ERROR(" Importer: Could not Import Material! Error: R_Material* was nullptr.");
 		return false;
 	}
 	if (aiMaterial == nullptr)
 	{
-		CONSOLE_LOG("[ERROR] Importer: Could not Import Material! Error: aiMaterial* was nullptr.");
+		KOFI_ERROR(" Importer: Could not Import Material! Error: aiMaterial* was nullptr.");
 		return false;
 	}
 
@@ -70,7 +70,7 @@ bool I_Material::Save(const R_Material* material, const char* path)
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Shader Save: directory %s couldn't be accessed.", SHADERS_DIR);
+		KOFI_ERROR(" Shader Save: directory %s couldn't be accessed.", SHADERS_DIR);
 		return false;
 	}
 }
@@ -144,7 +144,7 @@ bool I_Material::LoadAndCreateShader(const char* shaderPath, R_Material* materia
 	}
 	else
 	{
-		CONSOLE_LOG("[ERROR] Vertex shader: %d or Fragment shader: %d are not correctly compiled.", vertexSource, fragmentSource);
+		KOFI_ERROR(" Vertex shader: %d or Fragment shader: %d are not correctly compiled.", vertexSource, fragmentSource);
 		ret = false;
 	}
 	

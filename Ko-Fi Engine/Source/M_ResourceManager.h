@@ -33,6 +33,8 @@ public:
 	// Engine config inspector draw -------------------------------------
 	bool InspectorDraw() override;
 
+	void RefreshDirectoryFiles(const char* directory);
+
 	std::string GetValidPath(const char* path) const;
 
 	// Import method
@@ -65,7 +67,6 @@ public:
 	bool ImportTexture(const char* assetPath, R_Texture* texture);
 
 private:
-	void RefreshDirectoryFiles(const char* directory);
 	void FindFilesToImport(std::vector<std::string>& assetsFiles, std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toImport);
 	void FindFilesToUpdate(std::map<std::string, std::string>& filePairs, std::vector<std::string>& toUpdate);
 	void FindFilesToDelete(std::vector<std::string>& metaFiles, std::map<std::string, std::string>& filePairs, std::vector<std::string>& toDelete);
@@ -86,7 +87,7 @@ private:
 
 	bool LoadMetaLibraryPairsIntoLibrary(const char* assetPath);
 	bool GetLibraryPairs(const char* assetPath, std::map<UID, ResourceBase>& pairs);
-	int GetModTimeFromMeta(const char* assetPath);
+	std::string GetHashFromMeta(const char* assetPath);
 
 	UID ImportFromAssets(const char* assetPath);
 

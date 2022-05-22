@@ -66,25 +66,26 @@
             0.0,
             -9.8100004196167,
             0.0
-        ]
+        ],
+        "debugPhysics": false
     },
     "Renderer3D": {
         "Vsync": true
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": ""
+        "DefaultScene": "SceneTutorial"
     },
     "UI": null,
     "Window": {
         "Borderless": false,
         "Fullscreen": false,
         "FullscreenDesktop": false,
-        "Height": 1080,
+        "Height": 1009,
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine",
+        "Title": "Ko-Fi Engine - SceneTutorial",
         "Width": 1920
     }
 }

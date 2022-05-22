@@ -17,6 +17,8 @@ C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::TEXT;
 	size = 1;
+	fontPath = "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf";
+	SetFont(fontPath);
 	SetTextValue("Hello world!");
 }
 
@@ -43,6 +45,7 @@ void C_Text::Save(Json& json) const
 	json["type"] = (int)type;
 	json["value"] = textValue;
 	json["color"] = color;
+	json["fontPath"] = fontPath;
 }
 
 void C_Text::Load(Json& json)
@@ -62,7 +65,11 @@ void C_Text::Load(Json& json)
 		col.b = 255;
 		col.a = 255;
 	}
-
+	if (json.contains("fontPath"))
+	{
+		fontPath = json.at("fontPath").get<std::string>();
+		SetFont(fontPath);
+	}
 	std::string value = json["value"].get<std::string>();
 	SetTextValue(value);
 }
@@ -92,13 +99,14 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 		if (panelChooser->IsReadyToClose("AddFont")) {
 			if (!panelChooser->OnChooserClosed().empty()) {
 				std::string path = panelChooser->OnChooserClosed();
+				fontPath = path;
 				SetFont(path.c_str());
 				SetTextValue(textValue);
 			}
 		}
 
 		if (ImGui::Button("Set Font")) {
-			panelChooser->OpenPanel("AddFont", "ttf", { "ttf" });
+			panelChooser->OpenPanel("AddFont", "ttf", { "ttf","otf"});
 		}
 
 		SDL_Color tmpcol = GetColor();
@@ -116,9 +124,6 @@ bool C_Text::InspectorDraw(PanelChooser* panelChooser)
 	}
 	else
 		DrawDeleteButton(owner, this);
-
-	
-	
 
 	return true;
 }

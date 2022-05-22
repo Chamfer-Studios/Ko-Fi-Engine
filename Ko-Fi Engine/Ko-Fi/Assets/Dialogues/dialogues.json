@@ -1,0 +1,20 @@
+{
+  "dialogues": [
+    {
+      "id": 1,
+      "targetID":  2,
+      "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_zhib_v1.2.png",
+      "char": "Zhib",
+      "line1": "Hello, I'm Zhib.",
+      "line2": "loreipsumloreipsum"
+    },
+    {
+      "id": 2,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_nebala_v1.1.png",
+      "char": "Nerala",
+      "line1": "Hi! I am Nerala, the best....",
+      "line2": "loreipsumloreipsumloreipsumloreipsumloreipsumloreipsumloreipsumloreipsum"
+    }
+  ]
+}

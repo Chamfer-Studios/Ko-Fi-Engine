@@ -32,9 +32,6 @@ public:
 	Uniform* FindUniform(std::string name);
 	void AddUniform(Uniform* uniform);
 
-	inline const char* GetShaderPath() const { return GetAssetPath(); }
-	inline void SetShaderPath(const char* name) { SetAssetPath(name); }
-
 public:
 	uint shaderProgramID = SHADERID_DEFAULT;
 	std::vector<Uniform*> uniforms;

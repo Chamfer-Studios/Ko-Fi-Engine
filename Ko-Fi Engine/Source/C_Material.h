@@ -1,5 +1,4 @@
-#ifndef __C_MATERIAL_H__
-#define __C_MATERIAL_H__
+#pragma once
 
 #include "Component.h"
 
@@ -36,7 +35,6 @@ public:
 
 public:
 	R_Texture* texture = nullptr;
-	//std::vector<R_Texture> textures;
 
 	bool checkerTexture = false;
 
@@ -45,5 +43,3 @@ private:
 
 	int currentTextureId = 0;
 };
-
-#endif // !__C_MATERIAL_H__

@@ -6,6 +6,7 @@
 #include "MathGeoLib/Geometry/AABB.h"
 #include "MathGeoLib/Geometry/Sphere.h"
 #include "R_Mesh.h"
+#include "glew.h"
 
 class C_Transform;
 class C_Material;
@@ -31,13 +32,11 @@ public:
 
 	// SetMesh
 	void SetMesh(R_Mesh* mesh);
-	void SetPath(const char* path);
 	void SetVertexNormals(bool vertexNormals);
 	void SetFaceNormals(bool facesNormals);
 	
 	// Getters
 	inline R_Mesh* GetMesh() const { return mesh; }
-	const char* GetMeshPath() const;
 	inline float GetSphereRadius() const { return radius; }
 	float3 GetCenterPoint() const;
 	float3 GetCenterPointInWorldCoords() const;
@@ -50,7 +49,7 @@ public:
 	// Mesh Functions
 	void GenerateLocalBoundingBox();
 	void GenerateGlobalBoundingBox();
-	void DrawBoundingBox(const AABB& aabb, const float3& rgb);
+	void DrawBoundingBox(const AABB& aabb, const float3& rgb, GLenum renderType = GL_LINES);
 	bool InspectorDraw(PanelChooser* chooser);
 
 	inline bool SetDrawAABB() const { return drawAABB; }

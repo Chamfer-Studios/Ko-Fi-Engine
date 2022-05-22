@@ -1,0 +1,17 @@
+{
+    "asset_file": "zhib_karambit.fbx",
+    "asset_path": "Assets/Models/Characters/Zhib/zhib_karambit.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Karambit_low.sugar",
+            "library_path": "Library/Meshes/633504867.sugar",
+            "type": 0,
+            "uid": 633504867
+        }
+    ],
+    "hash": "001f4b94c2b57c985fcae3d0606f88ff",
+    "library_file": "691828025.tea",
+    "library_path": "Library/Models/691828025.tea",
+    "type": 3,
+    "uid": 691828025
+}

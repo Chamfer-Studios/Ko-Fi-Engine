@@ -93,7 +93,11 @@ bool PanelHierarchy::Update()
 			if (!editor->GetPanelChooser()->OnChooserClosed().empty()) {
 				std::string path = editor->GetPanelChooser()->OnChooserClosed();
 				//Importer::GetInstance()->sceneImporter->Import(path.c_str(), true);
-				GameObject* go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+				GameObject* go;
+				if (path.find("Canvas") != std::string::npos)
+					go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject("Canvas", nullptr, false);
+				else
+					go = editor->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 				go->LoadPrefabJson(path.c_str(), false);
 			}
 		}

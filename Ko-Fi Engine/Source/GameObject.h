@@ -21,7 +21,8 @@ enum class Tag
 	TAG_PLAYER,
 	TAG_ENEMY,
 	TAG_WALL,
-	TAG_PROJECTILE
+	TAG_PROJECTILE,
+	TAG_DIALOGUE,
 };
 
 class GameObject
@@ -39,6 +40,7 @@ public:
 	bool CleanUp();
 
 	bool OnPlay();
+	bool OnSceneSwitch();
 	bool OnPause();
 	bool OnStop();
 	bool OnResume();
@@ -140,6 +142,9 @@ public:
 private:
 	std::string name;
 	std::vector<Component*> components;
+
+	std::vector<Component*> componentsToBeDeleted;
+
 	GameObject* parent = nullptr;
 	UID uid;
 	UID parentUid;

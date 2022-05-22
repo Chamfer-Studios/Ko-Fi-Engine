@@ -9,7 +9,7 @@ NewVariable(nameIV)
 -- Called each loop iteration
 function Update(dt)
 	if (isStarting == true) then
-		child = gameObject:GetParent():GetChild(name)
+		child = gameObject:GetParent():GetParent():GetChild(name)
 		child:Active(false)
 		isStarting = false
 	end

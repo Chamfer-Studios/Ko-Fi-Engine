@@ -63,53 +63,6 @@ bool M_Navigation::Update(float dt)
 
 bool M_Navigation::PostUpdate(float dt)
 {
-	if (!drawNavmesh) return true;
-
-	OPTICK_EVENT();
-
-	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
-
-	if (navMeshDetail == nullptr) return true;
-
-	glBegin(GL_LINES);
-	glLineWidth(2.0f);
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glDisable(GL_LIGHTING);
-
-	for (int i = 0; i < navMeshDetail->nmeshes; ++i)
-	{
-		const unsigned int* meshDef = &navMeshDetail->meshes[i * 4];
-		const unsigned int baseVerts = meshDef[0];
-		const unsigned int baseTri = meshDef[2];
-		const int ntris = (int)meshDef[3];
-
-		const float* verts = &navMeshDetail->verts[baseVerts * 3];
-		const unsigned char* tris = &navMeshDetail->tris[baseTri * 4];
-		// Iterate the sub-mesh's triangles.
-		for (int j = 0; j < ntris; ++j)
-		{
-			const float x1 = verts[tris[j * 4 + 0] * 3 + 0];
-			const float y1 = verts[tris[j * 4 + 0] * 3 + 1];
-			const float z1 = verts[tris[j * 4 + 0] * 3 + 2];
-			const float x2 = verts[tris[j * 4 + 1] * 3 + 0];
-			const float y2 = verts[tris[j * 4 + 1] * 3 + 1];
-			const float z2 = verts[tris[j * 4 + 1] * 3 + 2];
-			const float x3 = verts[tris[j * 4 + 2] * 3 + 0];
-			const float y3 = verts[tris[j * 4 + 2] * 3 + 1];
-			const float z3 = verts[tris[j * 4 + 2] * 3 + 2];
-
-			glVertex3f(x1, y1, z1);
-			glVertex3f(x2, y2, z2);
-			glVertex3f(x2, y2, z2);
-			glVertex3f(x3, y3, z3);
-			glVertex3f(x3, y3, z3);
-			glVertex3f(x1, y1, z1);
-		}
-	}
-
-	glEnable(GL_LIGHTING);
-	glEnd();
-
 	return true;
 }
 
@@ -333,6 +286,58 @@ void M_Navigation::CollectWalkableObjects(GameObject* go, std::vector<GameObject
 			CollectWalkableObjects(c, res, false);
 		}
 	}
+}
+
+bool M_Navigation::DrawNavmesh()
+{
+	if (!drawNavmesh) return true;
+
+	OPTICK_EVENT();
+
+	// http://www.stevefsp.org/projects/rcndoc/prod/structrcPolyMeshDetail.html
+
+	if (navMeshDetail == nullptr) return true;
+
+	glBegin(GL_LINES);
+	glLineWidth(2.0f);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glDisable(GL_LIGHTING);
+
+	for (int i = 0; i < navMeshDetail->nmeshes; ++i)
+	{
+		const unsigned int* meshDef = &navMeshDetail->meshes[i * 4];
+		const unsigned int baseVerts = meshDef[0];
+		const unsigned int baseTri = meshDef[2];
+		const int ntris = (int)meshDef[3];
+
+		const float* verts = &navMeshDetail->verts[baseVerts * 3];
+		const unsigned char* tris = &navMeshDetail->tris[baseTri * 4];
+		// Iterate the sub-mesh's triangles.
+		for (int j = 0; j < ntris; ++j)
+		{
+			const float x1 = verts[tris[j * 4 + 0] * 3 + 0];
+			const float y1 = verts[tris[j * 4 + 0] * 3 + 1];
+			const float z1 = verts[tris[j * 4 + 0] * 3 + 2];
+			const float x2 = verts[tris[j * 4 + 1] * 3 + 0];
+			const float y2 = verts[tris[j * 4 + 1] * 3 + 1];
+			const float z2 = verts[tris[j * 4 + 1] * 3 + 2];
+			const float x3 = verts[tris[j * 4 + 2] * 3 + 0];
+			const float y3 = verts[tris[j * 4 + 2] * 3 + 1];
+			const float z3 = verts[tris[j * 4 + 2] * 3 + 2];
+
+			glVertex3f(x1, y1, z1);
+			glVertex3f(x2, y2, z2);
+			glVertex3f(x2, y2, z2);
+			glVertex3f(x3, y3, z3);
+			glVertex3f(x3, y3, z3);
+			glVertex3f(x1, y1, z1);
+		}
+	}
+
+	glEnable(GL_LIGHTING);
+	glEnd();
+
+	return true;
 }
 
 std::tuple<std::vector<float3>> M_Navigation::FindPath(float3 origin, float3 destination, int maxPolyLength, int maxVectorLength)

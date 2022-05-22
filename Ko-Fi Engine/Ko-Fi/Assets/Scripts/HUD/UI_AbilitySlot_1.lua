@@ -4,16 +4,16 @@ isActive3 = false
 zhib = 1
 nerala = 1
 omozra = 1
-path1 =  "Assets/HUD/throwable_knife_normal_v1.0.png"
-path12 =  "Assets/HUD/throwable_knife_active_v1.0.png"
-path13 =  "Assets/HUD/throwable_knife_cooldown_v1.0.png"
-path2 =  "Assets/HUD/sleeping_dart_normal_v1.0.png"
-path22 =  "Assets/HUD/sleeping_dart_active_v1.0.png"
-path23 =  "Assets/HUD/sleeping_dart_cooldown_v1.0.png"
-path3 =  "Assets/HUD/radar_worm_normal_v1.0.png"
-path32 =  "Assets/HUD/radar_worm_active_v1.0.png"
-path33 =  "Assets/HUD/radar_worm_cooldown_v1.0.png"
-pathBlank = "Assets/HUD/blank_asset_v1.0.png"
+path1 =  "Assets/UI/HUD/Abilities/throwable_knife_normal_v1.0.png"
+path12 =  "Assets/UI/HUD/Abilities/throwable_knife_active_v1.0.png"
+path13 =  "Assets/UI/HUD/Abilities/throwable_knife_cooldown_v1.0.png"
+path2 =  "Assets/UI/HUD/Abilities/sleeping_dart_normal_v1.0.png"
+path22 =  "Assets/UI/HUD/Abilities/sleeping_dart_active_v1.0.png"
+path23 =  "Assets/UI/HUD/Abilities/sleeping_dart_cooldown_v1.0.png"
+path3 =  "Assets/UI/HUD/Abilities/radar_worm_normal_v1.0.png"
+path32 =  "Assets/UI/HUD/Abilities/radar_worm_active_v1.0.png"
+path33 =  "Assets/UI/HUD/Abilities/radar_worm_cooldown_v1.0.png"
+pathBlank = "Assets/UI/HUD/blank_asset_v1.0.png"
 
 -- Called each loop iteration
 function Update(dt)

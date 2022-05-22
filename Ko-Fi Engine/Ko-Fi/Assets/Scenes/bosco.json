@@ -1,0 +1,3790 @@
+{
+    "bosco": {
+        "active": true,
+        "game_objects_amount": 99,
+        "game_objects_list": [
+            {
+                "UID": 490455606,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            36.51834487915039,
+                            103.33802795410156,
+                            -384.265380859375
+                        ],
+                        "rotation": [
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 500.0,
+                        "frustum_culling": false,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.009999999776482582,
+                        "type": 4,
+                        "vertical_fov": 0.3839724361896515
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Main Camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1019758026,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -455.4765930175781,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "ambientValue": 0.5,
+                        "diffuseValue": 0.800000011920929,
+                        "lightColor": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "lightDirection": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "lightPosition": [
+                            -455.4765930175781,
+                            0.0,
+                            0.0
+                        ],
+                        "sourceType": 0,
+                        "specularValue": 0.0,
+                        "type": 19
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": false,
+                        "isMainCamera": false,
+                        "near_plane_distance": 0.30000001192092896,
+                        "type": 4,
+                        "vertical_fov": 445.0
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Direct Light",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 26610428,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.71661376953125e-05,
+                            306.7502136230469,
+                            -9.715557098388672e-05
+                        ],
+                        "rotation": [
+                            0.1000538170337677,
+                            0.014499291777610779,
+                            0.06790126115083694,
+                            0.9925565123558044
+                        ],
+                        "scale": [
+                            1.0,
+                            0.999998927116394,
+                            0.9999985098838806
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand",
+                "parent_UID": 872738526,
+                "tag": 0
+            },
+            {
+                "UID": 31027469,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.574920654296875e-05,
+                            469.674072265625,
+                            9.5367431640625e-07
+                        ],
+                        "rotation": [
+                            0.56634521484375,
+                            -0.012088995426893234,
+                            -0.05677792429924011,
+                            0.8221212029457092
+                        ],
+                        "scale": [
+                            0.999998152256012,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_foot",
+                "parent_UID": 1004232288,
+                "tag": 0
+            },
+            {
+                "UID": 54001857,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.33514404296875e-05,
+                            70.73507690429688,
+                            -0.0001232624053955078
+                        ],
+                        "rotation": [
+                            0.09085656702518463,
+                            -0.003963283263146877,
+                            -0.026429764926433563,
+                            0.9955053329467773
+                        ],
+                        "scale": [
+                            0.9999992251396179,
+                            0.9999983310699463,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand_index_1",
+                "parent_UID": 1415547201,
+                "tag": 0
+            },
+            {
+                "UID": 96673968,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.4332275390625e-05,
+                            469.6479187011719,
+                            4.482269287109375e-05
+                        ],
+                        "rotation": [
+                            0.5224605798721313,
+                            -0.09223759919404984,
+                            -0.08021337538957596,
+                            0.8438560366630554
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_foot",
+                "parent_UID": 1002444201,
+                "tag": 0
+            },
+            {
+                "UID": 207576038,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            17.085311889648438,
+                            36.254249572753906,
+                            0.00012063980102539063
+                        ],
+                        "rotation": [
+                            0.03796814754605293,
+                            0.012174748815596104,
+                            -0.230448380112648,
+                            0.9722673296928406
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand_thumb_3",
+                "parent_UID": 2126326723,
+                "tag": 0
+            },
+            {
+                "UID": 219397439,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -10.274040222167969,
+                            36.998016357421875,
+                            0.0001583099365234375
+                        ],
+                        "rotation": [
+                            0.038921408355236053,
+                            -0.013037762604653835,
+                            0.10286573320627213,
+                            0.9938480257987976
+                        ],
+                        "scale": [
+                            0.9999995231628418,
+                            1.0,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand_thumb_3",
+                "parent_UID": 1481165692,
+                "tag": 0
+            },
+            {
+                "UID": 239845730,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.1814095377922058,
+                            46.37023162841797,
+                            -0.00021791458129882813
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand_index_4",
+                "parent_UID": 2028979283,
+                "tag": 0
+            },
+            {
+                "UID": 324576430,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -9.310245513916016e-05,
+                            178.30899047851563,
+                            8.153915405273438e-05
+                        ],
+                        "rotation": [
+                            0.30410996079444885,
+                            0.007426219992339611,
+                            -0.00234813941642642,
+                            0.952605128288269
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_toe_base",
+                "parent_UID": 96673968,
+                "tag": 0
+            },
+            {
+                "UID": 383728341,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.33514404296875e-05,
+                            71.39830017089844,
+                            7.987022399902344e-05
+                        ],
+                        "rotation": [
+                            0.08989869058132172,
+                            0.0074119591154158115,
+                            0.024989791214466095,
+                            0.9956097602844238
+                        ],
+                        "scale": [
+                            0.9999947547912598,
+                            0.9999982714653015,
+                            0.999998152256012
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand_index_1",
+                "parent_UID": 26610428,
+                "tag": 0
+            },
+            {
+                "UID": 443054842,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            159.35610961914063,
+                            17.15229606628418,
+                            -155.73634338378906
+                        ],
+                        "rotation": [
+                            0.000188819773029536,
+                            0.4394487738609314,
+                            0.0025266008451581,
+                            0.8982641100883484
+                        ],
+                        "scale": [
+                            0.9999998807907104,
+                            0.9999999403953552,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "crossbow_end",
+                "parent_UID": 1503315861,
+                "tag": 0
+            },
+            {
+                "UID": 706349877,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.52587890625e-05,
+                            100.0088119506836,
+                            0.00024509429931640625
+                        ],
+                        "rotation": [
+                            0.5463603138923645,
+                            0.0036658935714513063,
+                            -0.046167414635419846,
+                            0.8362688422203064
+                        ],
+                        "scale": [
+                            0.999994695186615,
+                            0.9999995827674866,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_arm",
+                "parent_UID": 1178363951,
+                "tag": 0
+            },
+            {
+                "UID": 733118200,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.1473894119262695e-05,
+                            265.1911926269531,
+                            -22.29360008239746
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_head_top_end",
+                "parent_UID": 828732369,
+                "tag": 0
+            },
+            {
+                "UID": 782228654,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.2527904510498047,
+                            45.00371170043945,
+                            0.00013303756713867188
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand_index_4",
+                "parent_UID": 1545393781,
+                "tag": 0
+            },
+            {
+                "UID": 792928366,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            8.982062339782715,
+                            1128.8394775390625,
+                            7.977428436279297
+                        ],
+                        "rotation": [
+                            -0.006220347713679075,
+                            -0.009871180169284344,
+                            -0.046108849346637726,
+                            0.9988682866096497
+                        ],
+                        "scale": [
+                            0.9999951124191284,
+                            0.9999997615814209,
+                            0.9999943971633911
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_hips",
+                "parent_UID": 1205447406,
+                "tag": 0
+            },
+            {
+                "UID": 828732369,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.8909573554992676e-05,
+                            123.92588806152344,
+                            -10.417947769165039
+                        ],
+                        "rotation": [
+                            0.013511767610907555,
+                            0.005482664331793785,
+                            -0.07067203521728516,
+                            0.997393012046814
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999999403953552,
+                            0.9999943971633911
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_head",
+                "parent_UID": 1531113055,
+                "tag": 0
+            },
+            {
+                "UID": 854260081,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.645958423614502,
+                            58.073795318603516,
+                            -4.0531158447265625e-05
+                        ],
+                        "rotation": [
+                            0.19672712683677673,
+                            0.0012668443378061056,
+                            0.011377560906112194,
+                            0.9803914427757263
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999995827674866,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand_index_2",
+                "parent_UID": 383728341,
+                "tag": 0
+            },
+            {
+                "UID": 872738526,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.5033950805664063e-05,
+                            247.92916870117188,
+                            -8.189678192138672e-05
+                        ],
+                        "rotation": [
+                            0.0013165102573111653,
+                            0.023670295253396034,
+                            -0.15354730188846588,
+                            0.987856924533844
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            0.9999964833259583
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_fore_arm",
+                "parent_UID": 912880471,
+                "tag": 0
+            },
+            {
+                "UID": 892154289,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -110.12201690673828,
+                            -53.76408004760742,
+                            -3.2959108352661133
+                        ],
+                        "rotation": [
+                            -0.03903210535645485,
+                            0.006358195096254349,
+                            0.9932174682617188,
+                            -0.10933976620435715
+                        ],
+                        "scale": [
+                            1.0000056028366089,
+                            1.0000014305114746,
+                            0.999996542930603
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_up_leg",
+                "parent_UID": 792928366,
+                "tag": 0
+            },
+            {
+                "UID": 912880471,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.8133392333984375e-05,
+                            100.00855255126953,
+                            0.00011169910430908203
+                        ],
+                        "rotation": [
+                            0.4241546392440796,
+                            0.004014380741864443,
+                            -0.01114197913557291,
+                            0.9055123329162598
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_arm",
+                "parent_UID": 1613533021,
+                "tag": 0
+            },
+            {
+                "UID": 962762170,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "animation": {
+                            "asset_path": "Assets/Models/Characters/Nerala/nerala_armature|nerala_armature|nerala_armature|nerala_reel.cake",
+                            "uid": 409489937
+                        },
+                        "clips": [
+                            {
+                                "clipDuration": 742.0,
+                                "clipDurationInSeconds": 30.91666603088379,
+                                "clipEndFrame": 742.0,
+                                "clipFinished": false,
+                                "clipLoop": false,
+                                "clipName": "Default clip",
+                                "clipStartFrame": 0.0,
+                                "mapString": "Default clip"
+                            },
+                            {
+                                "clipDuration": 100.0,
+                                "clipDurationInSeconds": 4.166666507720947,
+                                "clipEndFrame": 500.0,
+                                "clipFinished": false,
+                                "clipLoop": false,
+                                "clipName": "yay",
+                                "clipStartFrame": 400.0,
+                                "mapString": "yay"
+                            }
+                        ],
+                        "selectedClip": "yay",
+                        "type": 12
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1002444201,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            7.62939453125e-06,
+                            533.1990356445313,
+                            1.52587890625e-05
+                        ],
+                        "rotation": [
+                            -0.2519873082637787,
+                            -0.07618357241153717,
+                            0.06849752366542816,
+                            0.9622923731803894
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_leg",
+                "parent_UID": 1614212905,
+                "tag": 0
+            },
+            {
+                "UID": 1004232288,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.9073486328125e-06,
+                            533.0411376953125,
+                            -9.5367431640625e-07
+                        ],
+                        "rotation": [
+                            -0.12659543752670288,
+                            0.04811976104974747,
+                            -0.007612509652972221,
+                            0.9907573461532593
+                        ],
+                        "scale": [
+                            0.9999966621398926,
+                            0.9999990463256836,
+                            0.9999991655349731
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_leg",
+                "parent_UID": 892154289,
+                "tag": 0
+            },
+            {
+                "UID": 1178363951,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            48.71870803833008,
+                            133.97691345214844,
+                            -0.3171837329864502
+                        ],
+                        "rotation": [
+                            0.6458557844161987,
+                            0.3834456205368042,
+                            -0.4868398606777191,
+                            0.44589993357658386
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0000001192092896,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_shoulder",
+                "parent_UID": 1795930416,
+                "tag": 0
+            },
+            {
+                "UID": 1205447406,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_armature",
+                "parent_UID": 962762170,
+                "tag": 0
+            },
+            {
+                "UID": 1233880935,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.897956848144531,
+                            36.2315673828125,
+                            -3.814697265625e-05
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand_thumb_4",
+                "parent_UID": 207576038,
+                "tag": 0
+            },
+            {
+                "UID": 1251139504,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -6.543099880218506e-05,
+                            96.93578338623047,
+                            -0.40213778614997864
+                        ],
+                        "rotation": [
+                            0.008987868204712868,
+                            -0.010790064930915833,
+                            0.025121424347162247,
+                            0.9995858073234558
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_spine",
+                "parent_UID": 792928366,
+                "tag": 0
+            },
+            {
+                "UID": 1313667898,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            75.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            0.07999999821186066,
+                            0.07999999821186066,
+                            0.07999999821186066
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "anim_path": "Assets/Models/Characters/Nerala/nerala_armature|nerala_armature|nerala_armature|nerala_reel.cake",
+                            "anim_uid": 409489937,
+                            "asset_path": "Assets/Models/Characters/Nerala/crossbow.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 824902898
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "crossbow",
+                "parent_UID": 962762170,
+                "tag": 0
+            },
+            {
+                "UID": 1415547201,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.288818359375e-05,
+                            306.9721374511719,
+                            -2.2411346435546875e-05
+                        ],
+                        "rotation": [
+                            0.08834511041641235,
+                            -0.14093486964702606,
+                            -0.021358877420425415,
+                            0.9858378767967224
+                        ],
+                        "scale": [
+                            0.9999992251396179,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand",
+                "parent_UID": 1556753964,
+                "tag": 0
+            },
+            {
+                "UID": 1481165692,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            4.383079528808594,
+                            32.29352951049805,
+                            -7.05718994140625e-05
+                        ],
+                        "rotation": [
+                            0.09414637833833694,
+                            -0.1218101754784584,
+                            -0.46538200974464417,
+                            0.8716182112693787
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999996423721313,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand_thumb_2",
+                "parent_UID": 1639636344,
+                "tag": 0
+            },
+            {
+                "UID": 1499202017,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.205371856689453e-06,
+                            113.09246826171875,
+                            1.7881393432617188e-07
+                        ],
+                        "rotation": [
+                            0.006465965881943703,
+                            0.001755226869136095,
+                            0.05186917260289192,
+                            0.9986314177513123
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_spine_1",
+                "parent_UID": 1251139504,
+                "tag": 0
+            },
+            {
+                "UID": 1503315861,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -2.412466049194336,
+                            71.78760528564453,
+                            -67.84392547607422
+                        ],
+                        "rotation": [
+                            -0.22842632234096527,
+                            -0.6535142064094543,
+                            0.6550359129905701,
+                            0.3027682304382324
+                        ],
+                        "scale": [
+                            1.0000001192092896,
+                            1.0000001192092896,
+                            1.0000001192092896
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "crossbow_base",
+                "parent_UID": 1556753964,
+                "tag": 0
+            },
+            {
+                "UID": 1512699296,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            7.291138172149658e-05,
+                            73.90235900878906,
+                            -1.9073486328125e-06
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_toe_end",
+                "parent_UID": 324576430,
+                "tag": 0
+            },
+            {
+                "UID": 1513704074,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            23.710479736328125,
+                            33.13604736328125,
+                            4.100799560546875e-05
+                        ],
+                        "rotation": [
+                            0.16061125695705414,
+                            -0.23070524632930756,
+                            -0.3408287763595581,
+                            0.8971147537231445
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand_thumb_1",
+                "parent_UID": 26610428,
+                "tag": 0
+            },
+            {
+                "UID": 1531113055,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.00011095404624938965,
+                            145.4039306640625,
+                            9.79006290435791e-06
+                        ],
+                        "rotation": [
+                            0.011170526966452599,
+                            -0.0024722337257117033,
+                            -0.01894892379641533,
+                            0.9997550845146179
+                        ],
+                        "scale": [
+                            0.9999992847442627,
+                            0.9999995231628418,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_neck",
+                "parent_UID": 1795930416,
+                "tag": 0
+            },
+            {
+                "UID": 1545393781,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.3911857604980469,
+                            47.86405944824219,
+                            6.866455078125e-05
+                        ],
+                        "rotation": [
+                            0.10543346405029297,
+                            -0.00015997882292140275,
+                            0.015371033921837807,
+                            0.9943075180053711
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand_index_3",
+                "parent_UID": 1566903947,
+                "tag": 0
+            },
+            {
+                "UID": 1556753964,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -3.135204315185547e-05,
+                            247.90245056152344,
+                            3.9637088775634766e-06
+                        ],
+                        "rotation": [
+                            0.0014886371791362762,
+                            -0.02150212787091732,
+                            0.12583516538143158,
+                            0.9918169975280762
+                        ],
+                        "scale": [
+                            0.9999990463256836,
+                            0.9999990463256836,
+                            0.9999994039535522
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_fore_arm",
+                "parent_UID": 706349877,
+                "tag": 0
+            },
+            {
+                "UID": 1566903947,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.13837909698486328,
+                            57.1535530090332,
+                            0.0001289844512939453
+                        ],
+                        "rotation": [
+                            0.19665250182151794,
+                            -0.0007171356119215488,
+                            0.0005246090004220605,
+                            0.9804728627204895
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand_index_2",
+                "parent_UID": 54001857,
+                "tag": 0
+            },
+            {
+                "UID": 1583557104,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            9.24617052078247e-06,
+                            74.23487854003906,
+                            -1.8477439880371094e-06
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_toe_end",
+                "parent_UID": 1942354014,
+                "tag": 0
+            },
+            {
+                "UID": 1613533021,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -48.71879196166992,
+                            133.9743194580078,
+                            0.2223646640777588
+                        ],
+                        "rotation": [
+                            0.6042181253433228,
+                            -0.42617541551589966,
+                            0.5360640287399292,
+                            0.4073455035686493
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_shoulder",
+                "parent_UID": 1795930416,
+                "tag": 0
+            },
+            {
+                "UID": 1614212905,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            110.1219253540039,
+                            -53.76341247558594,
+                            -5.769349098205566
+                        ],
+                        "rotation": [
+                            0.11244187504053116,
+                            0.16135148704051971,
+                            0.9747779965400696,
+                            -0.10550076514482498
+                        ],
+                        "scale": [
+                            1.0000032186508179,
+                            1.0000032186508179,
+                            0.9999995827674866
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_up_leg",
+                "parent_UID": 792928366,
+                "tag": 0
+            },
+            {
+                "UID": 1639636344,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -26.853721618652344,
+                            30.633256912231445,
+                            0.0002117156982421875
+                        ],
+                        "rotation": [
+                            0.138951376080513,
+                            0.24671654403209686,
+                            0.29125791788101196,
+                            0.9137791395187378
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand_thumb_1",
+                "parent_UID": 1415547201,
+                "tag": 0
+            },
+            {
+                "UID": 1750235296,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            75.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            0.07999999821186066,
+                            0.07999999821186066,
+                            0.07999999821186066
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "anim_path": "Assets/Models/Characters/Nerala/nerala_armature|nerala_armature|nerala_armature|nerala_reel.cake",
+                            "anim_uid": 409489937,
+                            "asset_path": "Assets/Models/Characters/Nerala/nerala_low.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 339105419
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_low",
+                "parent_UID": 962762170,
+                "tag": 0
+            },
+            {
+                "UID": 1765403155,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.890727996826172,
+                            35.072242736816406,
+                            0.0003337860107421875
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_left_hand_thumb_4",
+                "parent_UID": 219397439,
+                "tag": 0
+            },
+            {
+                "UID": 1795930416,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.7881393432617188e-07,
+                            129.2454071044922,
+                            1.0132789611816406e-06
+                        ],
+                        "rotation": [
+                            0.00653801579028368,
+                            0.006282859016209841,
+                            0.05110703036189079,
+                            0.9986520409584045
+                        ],
+                        "scale": [
+                            0.9999990463256836,
+                            0.9999967813491821,
+                            0.9999943971633911
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_spine_2",
+                "parent_UID": 1499202017,
+                "tag": 0
+            },
+            {
+                "UID": 1942354014,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.2267380952835083e-05,
+                            180.3291473388672,
+                            -6.905198097229004e-05
+                        ],
+                        "rotation": [
+                            0.3012606203556061,
+                            -0.007048683241009712,
+                            0.002199111972004175,
+                            0.9535132646560669
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_toe_base",
+                "parent_UID": 31027469,
+                "tag": 0
+            },
+            {
+                "UID": 2028979283,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.464510440826416,
+                            47.66683578491211,
+                            0.00016450881958007813
+                        ],
+                        "rotation": [
+                            0.13653656840324402,
+                            0.0009764896240085363,
+                            -0.01724560745060444,
+                            0.9904844164848328
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999991655349731
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand_index_3",
+                "parent_UID": 854260081,
+                "tag": 0
+            },
+            {
+                "UID": 2126326723,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.187332153320313,
+                            31.55158233642578,
+                            -0.0001220703125
+                        ],
+                        "rotation": [
+                            0.08456277847290039,
+                            0.12399705499410629,
+                            0.5891284346580505,
+                            0.7939783334732056
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "nerala_right_hand_thumb_2",
+                "parent_UID": 1513704074,
+                "tag": 0
+            },
+            {
+                "UID": 77462457,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -108.89474487304688,
+                            145.5623779296875,
+                            -0.47566890716552734
+                        ],
+                        "rotation": [
+                            0.6148945689201355,
+                            -0.3867247700691223,
+                            0.5503823161125183,
+                            0.4116162657737732
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_shoulder",
+                "parent_UID": 526821051,
+                "tag": 0
+            },
+            {
+                "UID": 244331790,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.288818359375e-05,
+                            104.93074035644531,
+                            -0.0008716583251953125
+                        ],
+                        "rotation": [
+                            0.14897333085536957,
+                            0.00812804140150547,
+                            -0.007138020358979702,
+                            0.9887820482254028
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            0.9999997615814209,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_hand_index_1",
+                "parent_UID": 1500290163,
+                "tag": 0
+            },
+            {
+                "UID": 295758756,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -8.058547973632813e-05,
+                            181.5094757080078,
+                            -45.380638122558594
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_head_top_end",
+                "parent_UID": 1074902772,
+                "tag": 0
+            },
+            {
+                "UID": 368657332,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -5.53131103515625e-05,
+                            597.9971923828125,
+                            7.82012939453125e-05
+                        ],
+                        "rotation": [
+                            0.5916717052459717,
+                            0.14412271976470947,
+                            -0.02804752066731453,
+                            0.7926957607269287
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_foot",
+                "parent_UID": 602939221,
+                "tag": 0
+            },
+            {
+                "UID": 405583703,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            41.97713851928711,
+                            -1.33514404296875e-05
+                        ],
+                        "rotation": [
+                            0.2316487729549408,
+                            -0.042871005833148956,
+                            0.16016079485416412,
+                            0.9585663676261902
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998807907104,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_hand_index_2",
+                "parent_UID": 244331790,
+                "tag": 0
+            },
+            {
+                "UID": 432089448,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -5.447864532470703e-05,
+                            251.98866271972656,
+                            0.00016307830810546875
+                        ],
+                        "rotation": [
+                            0.25561949610710144,
+                            -0.037091098725795746,
+                            0.009653269313275814,
+                            0.966017484664917
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_toe_base",
+                "parent_UID": 885853621,
+                "tag": 0
+            },
+            {
+                "UID": 467628885,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            0.07999999821186066,
+                            0.07999999821186066,
+                            0.07999999821186066
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "anim_path": "Assets/Models/Characters/Zhib/zhib_armature|zhib_reel.cake",
+                            "anim_uid": 722841882,
+                            "asset_path": "Assets/Models/Characters/Zhib/zhib_low.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 1842325471
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_low",
+                "parent_UID": 736947715,
+                "tag": 0
+            },
+            {
+                "UID": 482344058,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            108.894775390625,
+                            145.57371520996094,
+                            -1.0300312042236328
+                        ],
+                        "rotation": [
+                            -0.5556991100311279,
+                            -0.4171659052371979,
+                            0.6119045615196228,
+                            -0.37781471014022827
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_shoulder",
+                "parent_UID": 526821051,
+                "tag": 0
+            },
+            {
+                "UID": 488739838,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            17.204559326171875,
+                            48.053260803222656,
+                            6.344520568847656
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_hand_index_4",
+                "parent_UID": 2027995807,
+                "tag": 0
+            },
+            {
+                "UID": 526821051,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.53131103515625e-05,
+                            163.4960479736328,
+                            1.0848045349121094e-05
+                        ],
+                        "rotation": [
+                            0.01454367395490408,
+                            -0.026044243946671486,
+                            0.0029035380575805902,
+                            0.9995508193969727
+                        ],
+                        "scale": [
+                            0.9999948740005493,
+                            0.9999997019767761,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_spine_2",
+                "parent_UID": 753991139,
+                "tag": 0
+            },
+            {
+                "UID": 548532032,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.0001029670238494873,
+                            100.8743667602539,
+                            1.9073486328125e-06
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_toe_end",
+                "parent_UID": 432089448,
+                "tag": 0
+            },
+            {
+                "UID": 602939221,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -4.1961669921875e-05,
+                            611.6710205078125,
+                            5.340576171875e-05
+                        ],
+                        "rotation": [
+                            -0.25821393728256226,
+                            0.028258029371500015,
+                            -0.04399171099066734,
+                            0.9646718502044678
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999997615814209
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_leg",
+                "parent_UID": 2082686241,
+                "tag": 0
+            },
+            {
+                "UID": 621296863,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -15.364128112792969,
+                            49.35009765625,
+                            -28.897056579589844
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_hand_index_4",
+                "parent_UID": 2046597453,
+                "tag": 0
+            },
+            {
+                "UID": 646905271,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            100.87495422363281,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_toe_end_end",
+                "parent_UID": 548532032,
+                "tag": 0
+            },
+            {
+                "UID": 682281180,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.86102294921875e-05,
+                            224.89767456054688,
+                            0.00011259317398071289
+                        ],
+                        "rotation": [
+                            0.41135382652282715,
+                            -0.1682434380054474,
+                            -0.11594096571207047,
+                            0.888279139995575
+                        ],
+                        "scale": [
+                            0.9999998807907104,
+                            1.0000001192092896,
+                            1.0000001192092896
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_arm",
+                "parent_UID": 77462457,
+                "tag": 0
+            },
+            {
+                "UID": 693281049,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            59.215843200683594,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_hand_index_4_end",
+                "parent_UID": 621296863,
+                "tag": 0
+            },
+            {
+                "UID": 712939250,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            7.897615432739258e-06,
+                            122.59838104248047,
+                            -2.405812978744507
+                        ],
+                        "rotation": [
+                            0.0019189737504348159,
+                            -0.002420384669676423,
+                            0.002283656969666481,
+                            0.9999926090240479
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999949336051941,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_spine",
+                "parent_UID": 1302023027,
+                "tag": 0
+            },
+            {
+                "UID": 736947715,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "animation": {
+                            "asset_path": "Assets/Models/Characters/Zhib/zhib_armature|zhib_reel.cake",
+                            "uid": 722841882
+                        },
+                        "clips": [
+                            {
+                                "clipDuration": 591.0,
+                                "clipDurationInSeconds": 24.625,
+                                "clipEndFrame": 591.0,
+                                "clipFinished": false,
+                                "clipLoop": false,
+                                "clipName": "Default clip",
+                                "clipStartFrame": 0.0,
+                                "mapString": "Default clip"
+                            },
+                            {
+                                "clipDuration": 100.0,
+                                "clipDurationInSeconds": 4.166666507720947,
+                                "clipEndFrame": 500.0,
+                                "clipFinished": false,
+                                "clipLoop": false,
+                                "clipName": "yay",
+                                "clipStartFrame": 400.0,
+                                "mapString": "yay"
+                            },
+                            {
+                                "clipDuration": 100.0,
+                                "clipDurationInSeconds": 4.166666507720947,
+                                "clipEndFrame": 500.0,
+                                "clipFinished": false,
+                                "clipLoop": false,
+                                "clipName": "yay2",
+                                "clipStartFrame": 400.0,
+                                "mapString": "yay2"
+                            },
+                            {
+                                "clipDuration": 99.0,
+                                "clipDurationInSeconds": 4.125,
+                                "clipEndFrame": 500.0,
+                                "clipFinished": false,
+                                "clipLoop": false,
+                                "clipName": "yay3",
+                                "clipStartFrame": 401.0,
+                                "mapString": "yay3"
+                            }
+                        ],
+                        "selectedClip": "yay",
+                        "type": 12
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 753991139,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.7881393432617188e-06,
+                            147.31076049804688,
+                            -8.881092071533203e-06
+                        ],
+                        "rotation": [
+                            0.014676730148494244,
+                            -0.026115210726857185,
+                            0.002216821536421776,
+                            0.9995487332344055
+                        ],
+                        "scale": [
+                            0.9999991655349731,
+                            0.9999949336051941,
+                            0.9999993443489075
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_spine_1",
+                "parent_UID": 712939250,
+                "tag": 0
+            },
+            {
+                "UID": 850943210,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.384185791015625e-05,
+                            612.2066650390625,
+                            -1.33514404296875e-05
+                        ],
+                        "rotation": [
+                            -0.2851877212524414,
+                            -0.07848924398422241,
+                            0.050110578536987305,
+                            0.953937292098999
+                        ],
+                        "scale": [
+                            0.9999998211860657,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_leg",
+                "parent_UID": 1279723826,
+                "tag": 0
+            },
+            {
+                "UID": 885853621,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.621246337890625e-05,
+                            597.9551391601563,
+                            2.6702880859375e-05
+                        ],
+                        "rotation": [
+                            0.6123663187026978,
+                            -0.15974579751491547,
+                            0.04169828072190285,
+                            0.77314293384552
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998807907104,
+                            0.9999992847442627
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_foot",
+                "parent_UID": 850943210,
+                "tag": 0
+            },
+            {
+                "UID": 907244787,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            1.9073486328125e-05,
+                            276.7569885253906,
+                            2.288818359375e-05
+                        ],
+                        "rotation": [
+                            0.01492101326584816,
+                            0.006744449492543936,
+                            -0.26259997487068176,
+                            0.9647658467292786
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999999403953552,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_forearm",
+                "parent_UID": 682281180,
+                "tag": 0
+            },
+            {
+                "UID": 935184558,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -7.3909759521484375e-06,
+                            183.93373107910156,
+                            5.0067901611328125e-06
+                        ],
+                        "rotation": [
+                            0.01345463003963232,
+                            0.015270023606717587,
+                            -0.010028788819909096,
+                            0.9997425675392151
+                        ],
+                        "scale": [
+                            0.9999988079071045,
+                            0.9999949336051941,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_neck",
+                "parent_UID": 526821051,
+                "tag": 0
+            },
+            {
+                "UID": 947144040,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            187.097412109375,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_head_top_end_end",
+                "parent_UID": 295758756,
+                "tag": 0
+            },
+            {
+                "UID": 950275743,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            0.07999999821186066,
+                            0.07999999821186066,
+                            0.07999999821186066
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "anim_path": "Assets/Models/Characters/Zhib/zhib_armature|zhib_reel.cake",
+                            "anim_uid": 722841882,
+                            "asset_path": "Assets/Models/Characters/Zhib/zhib_khopesh_back001.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 2117815159
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_khopesh_back001",
+                "parent_UID": 736947715,
+                "tag": 0
+            },
+            {
+                "UID": 970606528,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            5.364418029785156e-05,
+                            99.30195617675781,
+                            -9.5367431640625e-07
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_toe_end",
+                "parent_UID": 1715045875,
+                "tag": 0
+            },
+            {
+                "UID": 1023941086,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            439.5908203125,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_karambit_end",
+                "parent_UID": 1164827407,
+                "tag": 0
+            },
+            {
+                "UID": 1040504517,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            6.4849853515625e-05,
+                            47.32707977294922,
+                            0.00017547607421875
+                        ],
+                        "rotation": [
+                            0.2631271481513977,
+                            0.07652915269136429,
+                            0.1692734807729721,
+                            0.9467068910598755
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_hand_index_2",
+                "parent_UID": 2091051614,
+                "tag": 0
+            },
+            {
+                "UID": 1073873879,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.7642974853515625e-05,
+                            224.2660369873047,
+                            -8.344650268554688e-07
+                        ],
+                        "rotation": [
+                            0.41668975353240967,
+                            0.20686358213424683,
+                            0.10556550323963165,
+                            0.8788816928863525
+                        ],
+                        "scale": [
+                            0.9999997019767761,
+                            0.9999998211860657,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_arm",
+                "parent_UID": 482344058,
+                "tag": 0
+            },
+            {
+                "UID": 1074902772,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            8.106231689453125e-06,
+                            109.42829132080078,
+                            -27.359066009521484
+                        ],
+                        "rotation": [
+                            0.045994099229574203,
+                            0.000677748816087842,
+                            0.03394594043493271,
+                            0.9983645677566528
+                        ],
+                        "scale": [
+                            0.9999968409538269,
+                            1.0,
+                            0.9999995827674866
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_head",
+                "parent_UID": 935184558,
+                "tag": 0
+            },
+            {
+                "UID": 1164827407,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -45.401588439941406,
+                            58.068389892578125,
+                            -59.859764099121094
+                        ],
+                        "rotation": [
+                            0.04280916228890419,
+                            0.12192530184984207,
+                            0.9911289215087891,
+                            0.03106614202260971
+                        ],
+                        "scale": [
+                            0.9999999403953552,
+                            1.0,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_karambit",
+                "parent_UID": 1279723826,
+                "tag": 0
+            },
+            {
+                "UID": 1279723826,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            165.72605895996094,
+                            -68.20994567871094,
+                            12.830408096313477
+                        ],
+                        "rotation": [
+                            0.03868541866540909,
+                            0.09233029931783676,
+                            0.9946195483207703,
+                            -0.02665620669722557
+                        ],
+                        "scale": [
+                            1.0000102519989014,
+                            1.0000056028366089,
+                            0.9999985098838806
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_up_leg",
+                "parent_UID": 1302023027,
+                "tag": 0
+            },
+            {
+                "UID": 1301819226,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            0.07999999821186066,
+                            0.07999999821186066,
+                            0.07999999821186066
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "anim_path": "Assets/Models/Characters/Zhib/zhib_armature|zhib_reel.cake",
+                            "anim_uid": 722841882,
+                            "asset_path": "Assets/Models/Characters/Zhib/zhib_khopesh.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 213913882
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_khopesh",
+                "parent_UID": 736947715,
+                "tag": 0
+            },
+            {
+                "UID": 1302023027,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -0.23211669921875,
+                            1363.247802734375,
+                            -8.304630279541016
+                        ],
+                        "rotation": [
+                            -0.026441484689712524,
+                            -0.011799068190157413,
+                            -0.013387391343712807,
+                            0.9994910955429077
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999948740005493
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_hips",
+                "parent_UID": 1505055538,
+                "tag": 0
+            },
+            {
+                "UID": 1500290163,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.000152587890625,
+                            272.7555236816406,
+                            -5.340576171875e-05
+                        ],
+                        "rotation": [
+                            -0.017887648195028305,
+                            0.03852640837430954,
+                            0.17569246888160706,
+                            0.9835283160209656
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            0.9999996423721313
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_hand",
+                "parent_UID": 907244787,
+                "tag": 0
+            },
+            {
+                "UID": 1505055538,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_armature",
+                "parent_UID": 736947715,
+                "tag": 0
+            },
+            {
+                "UID": 1632514411,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -10.300514221191406,
+                            136.08999633789063,
+                            55.83936309814453
+                        ],
+                        "rotation": [
+                            0.8017290234565735,
+                            -0.04553160071372986,
+                            0.5770320892333984,
+                            -0.14896780252456665
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_khopesh_hand",
+                "parent_UID": 1500290163,
+                "tag": 0
+            },
+            {
+                "UID": 1634796156,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -5.866411209106445,
+                            -51.06793975830078,
+                            -212.8090362548828
+                        ],
+                        "rotation": [
+                            0.009827962145209312,
+                            0.0384918637573719,
+                            0.011558693833649158,
+                            0.9991437196731567
+                        ],
+                        "scale": [
+                            0.9999995231628418,
+                            1.0,
+                            0.9999992251396179
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_khopesh_back",
+                "parent_UID": 753991139,
+                "tag": 0
+            },
+            {
+                "UID": 1657369523,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            260.0516357421875,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_khopesh_back_end",
+                "parent_UID": 1634796156,
+                "tag": 0
+            },
+            {
+                "UID": 1677643201,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            2.777576446533203e-05,
+                            276.78387451171875,
+                            -1.1920928955078125e-06
+                        ],
+                        "rotation": [
+                            0.015569185838103294,
+                            -0.006469905376434326,
+                            0.2655438482761383,
+                            0.9639513492584229
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_forearm",
+                "parent_UID": 1073873879,
+                "tag": 0
+            },
+            {
+                "UID": 1713790756,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            390.0411376953125,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_khopesh_hand_end",
+                "parent_UID": 1632514411,
+                "tag": 0
+            },
+            {
+                "UID": 1715045875,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -1.7881393432617188e-06,
+                            249.2972869873047,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.2533212900161743,
+                            0.03650025278329849,
+                            -0.009565507061779499,
+                            0.9666460752487183
+                        ],
+                        "scale": [
+                            0.9999948740005493,
+                            0.9999999403953552,
+                            0.9999999403953552
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_toe_base",
+                "parent_UID": 368657332,
+                "tag": 0
+            },
+            {
+                "UID": 1825358330,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            51.43336868286133,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_hand_index_4_end",
+                "parent_UID": 488739838,
+                "tag": 0
+            },
+            {
+                "UID": 1856703785,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -7.62939453125e-06,
+                            272.7923583984375,
+                            -3.814697265625e-06
+                        ],
+                        "rotation": [
+                            0.0888354703783989,
+                            0.007328598294407129,
+                            -0.22050149738788605,
+                            0.9713051319122314
+                        ],
+                        "scale": [
+                            1.0,
+                            0.9999998807907104,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_hand",
+                "parent_UID": 1677643201,
+                "tag": 0
+            },
+            {
+                "UID": 1876649386,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            99.30243682861328,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_toe_end_end",
+                "parent_UID": 970606528,
+                "tag": 0
+            },
+            {
+                "UID": 2027995807,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            17.188735961914063,
+                            72.07691955566406,
+                            14.651325225830078
+                        ],
+                        "rotation": [
+                            0.0996822863817215,
+                            -0.04009270668029785,
+                            0.06203881651163101,
+                            0.99227374792099
+                        ],
+                        "scale": [
+                            0.9999982714653015,
+                            0.9999995827674866,
+                            0.9999986886978149
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_hand_index_3",
+                "parent_UID": 405583703,
+                "tag": 0
+            },
+            {
+                "UID": 2046597453,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -22.47492218017578,
+                            70.22335815429688,
+                            -33.4071044921875
+                        ],
+                        "rotation": [
+                            0.05140799283981323,
+                            0.0644584521651268,
+                            0.09107015281915665,
+                            0.9924256205558777
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_hand_index_3",
+                "parent_UID": 1040504517,
+                "tag": 0
+            },
+            {
+                "UID": 2082686241,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            -165.72604370117188,
+                            -68.2099609375,
+                            16.401201248168945
+                        ],
+                        "rotation": [
+                            -0.09195732325315475,
+                            0.09134133160114288,
+                            0.9911372661590576,
+                            0.02911311760544777
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0000077486038208,
+                            0.9999991059303284
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_right_up_leg",
+                "parent_UID": 1302023027,
+                "tag": 0
+            },
+            {
+                "UID": 2091051614,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            3.0517578125e-05,
+                            107.46885681152344,
+                            2.6702880859375e-05
+                        ],
+                        "rotation": [
+                            -0.24348163604736328,
+                            0.05587902292609215,
+                            0.15345580875873566,
+                            0.9560573101043701
+                        ],
+                        "scale": [
+                            0.999999463558197,
+                            0.9999997615814209,
+                            0.9999998807907104
+                        ],
+                        "type": 21
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_left_hand_index_1",
+                "parent_UID": 1856703785,
+                "tag": 0
+            },
+            {
+                "UID": 2135140472,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            0.07999999821186066,
+                            0.07999999821186066,
+                            0.07999999821186066
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "mesh": {
+                            "anim_path": "Assets/Models/Characters/Zhib/zhib_armature|zhib_reel.cake",
+                            "anim_uid": 722841882,
+                            "asset_path": "Assets/Models/Characters/Zhib/zhib_karambit001.sugar",
+                            "draw_face_normals": false,
+                            "draw_vertex_normals": false,
+                            "is_animated": true,
+                            "root_node_UID": 0,
+                            "shape_type": 0,
+                            "uid": 435412679
+                        },
+                        "type": 1
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shader": {
+                            "asset_path": "Assets/Shaders/default_shader.glsl",
+                            "uniforms": null
+                        },
+                        "texture": {
+                            "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
+                        },
+                        "type": 2
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "zhib_karambit001",
+                "parent_UID": 736947715,
+                "tag": 0
+            }
+        ],
+        "name": "bosco",
+        "navmesh": {}
+    }
+}

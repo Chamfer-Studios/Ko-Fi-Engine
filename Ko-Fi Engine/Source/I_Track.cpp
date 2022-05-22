@@ -65,7 +65,7 @@ bool I_Track::LoadMP3(const char* path, R_Track* track)
 
     if (pSampleData == NULL)
     {
-        CONSOLE_LOG("[ERROR]: Failed to load audio file.");
+        KOFI_ERROR(": Failed to load audio file.");
         return false;
     }
 
@@ -73,7 +73,7 @@ bool I_Track::LoadMP3(const char* path, R_Track* track)
 
     if (track->GetTotalSamples() > drmp3_uint64(std::numeric_limits<size_t>::max()))
     {
-        CONSOLE_LOG("[ERROR]: Too much data in file for 32bit addressed vector.");
+        KOFI_ERROR(": Too much data in file for 32bit addressed vector.");
         return false;
     }
 
@@ -105,7 +105,7 @@ bool I_Track::LoadWav(const char* path, R_Track* track)
 
     if (pSampleData == NULL)
     {
-        CONSOLE_LOG("[ERROR]: Failed to load audio file.");
+        KOFI_ERROR(": Failed to load audio file.");
         return false;
     }
 
@@ -113,7 +113,7 @@ bool I_Track::LoadWav(const char* path, R_Track* track)
 
     if (track->GetTotalSamples() > drwav_uint64(std::numeric_limits<size_t>::max()))
     {
-        CONSOLE_LOG("[ERROR]: Too much data in file for 32bit addressed vector.");
+        KOFI_ERROR(": Too much data in file for 32bit addressed vector.");
         return false;
     }
 
@@ -145,7 +145,7 @@ bool I_Track::LoadFlac(const char* path, R_Track* track)
 
     if (pSampleData == NULL)
     {
-        CONSOLE_LOG("[ERROR]: Failed to load audio file.");
+        KOFI_ERROR(": Failed to load audio file.");
         return false;
     }
 
@@ -153,7 +153,7 @@ bool I_Track::LoadFlac(const char* path, R_Track* track)
 
     if (track->GetTotalSamples() > drflac_uint64(std::numeric_limits<size_t>::max()))
     {
-        CONSOLE_LOG("[ERROR]: Too much data in file for 32bit addressed vector.");
+        KOFI_ERROR(": Too much data in file for 32bit addressed vector.");
         return false;
     }
 

@@ -154,7 +154,7 @@ void C_Material::Load(Json& json)
 		material = (R_Material*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(materialAssetPath.c_str());
 
 		if (material == nullptr)
-			CONSOLE_LOG("[ERROR] Component Material: could not load resource from library.");
+			KOFI_ERROR(" Component Material: could not load resource from library.");
 		else
 		{
 			std::vector<float> values = json.at("color").get<std::vector<float>>();
@@ -210,7 +210,14 @@ void C_Material::Load(Json& json)
 			}
 		}
 
-		std::string textureAssetPath = json.at("texture").at("asset_path").get<std::string>();
+		std::string textureAssetPath;
+		if (json.find("texture") != json.end() && json.at("texture").find("asset_path") != json.at("texture").end()) {
+			textureAssetPath = json.at("texture").at("asset_path").get<std::string>();
+		}
+		else {
+			textureAssetPath = "";
+		}
+
 		if (textureAssetPath != "")
 		{
 			texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(textureAssetPath.c_str());
@@ -218,7 +225,7 @@ void C_Material::Load(Json& json)
 
 			if (texture == nullptr)
 			{
-				CONSOLE_LOG("[ERROR] Component Material: texture couldn't be loaded from library.");
+				KOFI_ERROR(" Component Material: texture couldn't be loaded from library.");
 				checkerTexture = true;
 				texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 			}
@@ -329,7 +336,7 @@ bool C_Material::LoadDefaultMaterial()
 
 bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 {
-	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_AllowItemOverlap))
+	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		/*if (DrawDeleteButton(owner, this))
 			return true;*/
@@ -351,15 +358,6 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			if (!panelChooser->OnChooserClosed().empty())
 			{
 				std::string path = panelChooser->OnChooserClosed();
-				//for (R_Texture& tex : textures)
-				//{
-				//	if (tex.textureID == currentTextureId)
-				//	{
-				//		R_Texture tex;
-				//		Importer::GetInstance()->textureImporter->Import(path.c_str(), &tex);
-				//		textures.push_back(texture);
-				//	}
-				//}
 				if (!path.empty() || path != "")
 				{
 					if (texture != nullptr)
@@ -400,11 +398,6 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 			}
 		}
 
-		//ImGui::Text("Material Name:");
-		//ImGui::SameLine();
-		//ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), material->materialName.c_str());
-		//ImGui::Text("Material Texture:");
-		//for (R_Texture& tex : textures)
 		if (texture != nullptr)
 		{
 			if (texture->GetTextureId() != TEXTUREID_DEFAULT)
@@ -443,7 +436,6 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				{
 					if (ImGui::Button("Delete Texture"))
 					{
-						//material.textures.erase(std::remove(material.textures.begin(), material.textures.end(), tex));
 						if (texture != nullptr && texture->textureID != TEXTUREID_DEFAULT)
 						{
 							owner->GetEngine()->GetResourceManager()->FreeResource(texture->GetUID());
@@ -456,14 +448,6 @@ bool C_Material::InspectorDraw(PanelChooser* panelChooser)
 				ImGui::EndGroup();
 			}
 		}
-		//else
-		//{
-		//	if (ImGui::Button("Add Texture"))
-		//	{
-		//		panelChooser->OpenPanel("ChangeTexture", "png", { "png" });
-		//		currentTextureId = texture->GetTextureId();
-		//	}
-		//}
 
 		ImGui::Separator();
 

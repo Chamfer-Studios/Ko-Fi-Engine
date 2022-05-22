@@ -37,7 +37,6 @@ bool PanelChooser::Update()
 	{
 			DrawOpenPanel(currentExtension);
 
-
 	}
 
 	return true;

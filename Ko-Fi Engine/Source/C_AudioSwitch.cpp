@@ -202,7 +202,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                 R_Track* index = tracks[i];
                 if (index == nullptr)
                 {
-                    CONSOLE_LOG("[ERROR] Fatal Error iterating tracks. Equals nullptr.");
+                    KOFI_ERROR(" Fatal Error iterating tracks. Equals nullptr.");
                     return ret;
                 }
 

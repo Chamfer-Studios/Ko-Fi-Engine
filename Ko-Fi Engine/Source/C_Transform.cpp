@@ -84,6 +84,7 @@ bool C_Transform::CleanUp()
 bool C_Transform::InspectorDraw(PanelChooser *chooser)
 {
 	bool ret = true;
+	ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Transform"))
 	{
 

@@ -8,6 +8,7 @@
 #include "M_Editor.h"
 #include "M_SceneManager.h"
 #include "M_Input.h"
+#include "M_Camera3D.h"
 
 // Components
 #include "C_Mesh.h"
@@ -93,6 +94,21 @@ bool GameObject::Start()
 bool GameObject::PreUpdate()
 {
 	bool ret = true;
+
+	for (Component* component : componentsToBeDeleted)
+	{
+		auto componentIt = std::find(components.begin(), components.end(), component);
+		if (componentIt != components.end())
+		{
+			//(*componentIt)->CleanUp();
+			RELEASE(*componentIt);
+			components.erase(componentIt);
+			components.shrink_to_fit();
+		}
+	}
+
+	componentsToBeDeleted.clear();
+
 	for (Component* component : components)
 		ret = component->PreUpdate();
 
@@ -101,6 +117,8 @@ bool GameObject::PreUpdate()
 
 bool GameObject::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	bool ret = true;
 	for (Component* component : components)
 	{
@@ -159,6 +177,15 @@ bool GameObject::OnPlay()
 	return ret;
 }
 
+bool GameObject::OnSceneSwitch()
+{
+	bool ret = true;
+	for (Component* component : components)
+		ret = component->OnSceneSwitch();
+
+	return ret;
+}
+
 bool GameObject::OnPause()
 {
 	bool ret = true;
@@ -211,14 +238,7 @@ void GameObject::Disable()
 
 void GameObject::DeleteComponent(Component* component)
 {
-	auto componentIt = std::find(components.begin(), components.end(), component);
-	if (componentIt != components.end())
-	{
-		//(*componentIt)->CleanUp();
-		RELEASE(*componentIt);
-		components.erase(componentIt);
-		components.shrink_to_fit();
-	}
+	componentsToBeDeleted.push_back(component);
 }
 
 Component* GameObject::AddComponentByType(ComponentType componentType)
@@ -368,7 +388,7 @@ void GameObject::AttachChild(GameObject* child)
 {
 	if (child->parent != nullptr)
 		child->parent->RemoveChild(child);
-
+	child->parentUid = this->uid;
 	child->parent = this;
 	children.push_back(child);
 	// child->PropagateTransform();
@@ -508,15 +528,15 @@ bool GameObject::PrefabSave(Json& jsonFile)
 {
 	jsonFile["name"] = name;
 	jsonFile["active"] = active;
-	jsonFile["UID"] = uid;
+	//jsonFile["UID"] = uid;
 	jsonFile["is3D"] = is3D;
 	jsonFile["isPrefab"] = isPrefab;
 	jsonFile["tag"] = (uint)tag;
 
-	if (GetParent())
+	/*if (GetParent())
 		jsonFile["parent_UID"] = GetParent()->GetUID();
 	else
-		jsonFile["parent_UID"] = uid;
+		jsonFile["parent_UID"] = uid;*/
 
 	std::vector<Component*> componentsList = this->GetComponents();
 	jsonFile["components"] = Json::array();
@@ -710,17 +730,21 @@ bool GameObject::LoadPrefabJson(const char* path, bool exists)
 
 bool GameObject::LoadPrefab(Json& jsonFile)
 {
-	name = jsonFile.at("name");
+	
+	SetName(std::string(jsonFile.at("name")).c_str());
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
 		tag = (Tag)jsonFile["tag"];
 	if (jsonFile.contains("is3D"))
 		is3D = jsonFile.at("is3D");
-	if (jsonFile.contains("parent_UID"))
-		parentUid = jsonFile.at("parent_UID");
-	if (jsonFile.contains("UID"))
-		uid = jsonFile.at("UID");
+	//if (jsonFile.contains("parent_UID"))
+		//parentUid = jsonFile.at("parent_UID");
+	//if (jsonFile.contains("UID"))
+		//uid = jsonFile.at("UID");
+
+	if (GetParent())
+		parentUid = GetParent()->GetUID();
 
 	Json jsonCmp = jsonFile.at("components");
 	for (const auto& cmpIt : jsonCmp.items())
@@ -771,7 +795,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			}
 			case ComponentType::NONE:
 			{
-				CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
+				KOFI_ERROR(" Importer: Component type is none, something went wrong!");
 				return false;
 				break;
 			}
@@ -792,7 +816,8 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 	for (const auto& chdIt : jsonChd.items())
 	{
 		Json jsonChd = chdIt.value();
-		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
+		bool is3D = jsonChd.at("is3D");
+		GameObject* go = this->engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject(nullptr, this, is3D);
 		go->LoadPrefab(jsonChd);
 		this->AttachChild(go);
 	}
@@ -801,7 +826,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 
 bool GameObject::UpdatePrefab(Json& jsonFile)
 {
-	name = jsonFile.at("name");
+	SetName(std::string(jsonFile.at("name")).c_str());
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
@@ -862,7 +887,7 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 			}
 			case ComponentType::NONE:
 			{
-				CONSOLE_LOG("[ERROR] Importer: Component type is none, something went wrong!");
+				KOFI_ERROR(" Importer: Component type is none, something went wrong!");
 				return false;
 				break;
 			}

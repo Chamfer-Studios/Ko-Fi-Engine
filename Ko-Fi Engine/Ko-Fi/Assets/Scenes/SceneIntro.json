@@ -1,10 +1,10 @@
 {
     "SceneIntro": {
         "active": true,
-        "game_objects_amount": 3,
+        "game_objects_amount": 1,
         "game_objects_list": [
             {
-                "UID": 1590710136,
+                "UID": 1867536234,
                 "active": true,
                 "components": [
                     {
@@ -20,9 +20,9 @@
                         ],
                         "rotation": [
                             0.0,
+                            1.0,
                             0.0,
-                            0.0,
-                            1.0
+                            0.0
                         ],
                         "scale": [
                             1.0,
@@ -44,181 +44,6 @@
                 "is3D": true,
                 "isPrefab": false,
                 "name": "Main Camera",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 1098702666,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    },
-                    {
-                        "active": true,
-                        "ambientValue": 0.5,
-                        "diffuseValue": 0.800000011920929,
-                        "lightColor": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "lightDirection": [
-                            1.0,
-                            1.0,
-                            0.0
-                        ],
-                        "lightPosition": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "sourceType": 0,
-                        "specularValue": 0.0,
-                        "type": 19
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "Direct Light",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 850706681,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    },
-                    {
-                        "active": true,
-                        "resource": [
-                            {
-                                "emitters": [
-                                    {
-                                        "maxParticles": 500,
-                                        "modules": [
-                                            {
-                                                "maxParticleLife": 3.0,
-                                                "minParticleLife": 1.0,
-                                                "randomParticleLife": false,
-                                                "spawnTime": 0.5,
-                                                "spawnTimer": 0.10000000894069672,
-                                                "type": 1
-                                            },
-                                            {
-                                                "maxAcceleration": [
-                                                    1.0,
-                                                    1.0,
-                                                    1.0
-                                                ],
-                                                "maxDirection": [
-                                                    -1.0,
-                                                    -1.0,
-                                                    -1.0
-                                                ],
-                                                "maxPosition": [
-                                                    0.0,
-                                                    0.0,
-                                                    0.0
-                                                ],
-                                                "maxVelocity": 3.0,
-                                                "minAcceleration": [
-                                                    -1.0,
-                                                    0.0,
-                                                    -1.0
-                                                ],
-                                                "minDirection": [
-                                                    1.0,
-                                                    1.0,
-                                                    1.0
-                                                ],
-                                                "minPosition": [
-                                                    0.0,
-                                                    0.0,
-                                                    0.0
-                                                ],
-                                                "minVelocity": 1.0,
-                                                "randAcceleration": false,
-                                                "randDirection": false,
-                                                "randPosition": false,
-                                                "randVelocity": false,
-                                                "type": 2
-                                            },
-                                            {
-                                                "maxSize": [
-                                                    1.5,
-                                                    1.5,
-                                                    1.5
-                                                ],
-                                                "minSize": [
-                                                    1.0,
-                                                    1.0,
-                                                    1.0
-                                                ],
-                                                "type": 4
-                                            },
-                                            {
-                                                "billboardingType": 2,
-                                                "type": 5
-                                            }
-                                        ],
-                                        "name": "Emitter",
-                                        "texture_path": "Assets/Textures/firework_projectile.png"
-                                    }
-                                ],
-                                "name": "New Particle Effect"
-                            }
-                        ],
-                        "type": 3
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "GameObject 850706681",
                 "parent_UID": 0,
                 "tag": 0
             }

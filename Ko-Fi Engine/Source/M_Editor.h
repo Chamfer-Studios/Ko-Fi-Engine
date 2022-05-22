@@ -74,6 +74,7 @@ public:
 	void RemovePanel(Panel* panel);
 	PanelChooser* GetPanelChooser();
 	PanelHierarchy* GetPanelHierarchy() { return panelHierarchy; };
+	PanelAssets* GetPanelAssets() { return panelAssets; }
 	void Markdown(const std::string& markdown_);
 	void MarkdownExample();
 	void UpdatePanelsState();
@@ -110,6 +111,7 @@ public:
 	bool toggleSettingsPanel = false;
 	bool toggleCameraViewportPanel = false;
 	bool toggleResourcesPanel = false;
+	bool toggleCloseAppPopUpPanel = false;														// Enable/Disable the Close App popup.
 	bool buttonPressed = false;
 	PanelGameObjectInfo panelGameObjectInfo = {};
 	PanelInspector* panelGameObject = nullptr;

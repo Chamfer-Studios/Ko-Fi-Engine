@@ -1,6 +1,7 @@
 minRetargetingDistance = 10
 local minRetargetingDistanceIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT, minRetargetingDistance)
+minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRetargetingDistanceIVT,
+    minRetargetingDistance)
 NewVariable(minRetargetingDistanceIV)
 
 navigation = GetNavigation()
@@ -14,11 +15,19 @@ end
 
 function Float3Normalized(v)
     len = Float3Length(v)
-    return { x = v.x / len, y = v.y / len, z = v.z / len }
+    return {
+        x = v.x / len,
+        y = v.y / len,
+        z = v.z / len
+    }
 end
 
 function Float3Difference(a, b)
-    return { x = b.x - a.x, y = b.y - a.y, z = b.z - a.z }
+    return {
+        x = b.x - a.x,
+        y = b.y - a.y,
+        z = b.z - a.z
+    }
 end
 
 function Float3Distance(a, b)
@@ -44,12 +53,17 @@ end
 
 function FollowPath(speed, dt, loop)
     if #_G.finalPath == 0 or currentPathIndex > #_G.finalPath then
-        do return end
+        do
+            if (componentRigidBody ~= nil) then
+                componentRigidBody:SetLinearVelocity(float3.new(0.0, 0.0, 0.0))
+            end
+            return
+        end
     end
 
     currentTarget = _G.finalPath[currentPathIndex]
     currentPosition = componentTransform:GetPosition()
-    while Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance do
+    if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
         currentPathIndex = currentPathIndex + 1
         if currentPathIndex > #_G.finalPath and loop then
             currentPathIndex = 2
@@ -63,12 +77,26 @@ function FollowPath(speed, dt, loop)
     end
     if Float3Distance(currentTarget, currentPosition) >= minRetargetingDistance then
         direction = Float3NormalizedDifference(currentPosition, currentTarget)
-        DispatchEvent("Walking_Direction", { float3.new(direction.x, direction.y, direction.z) })
-        delta = { x = direction.x * speed * _dt, y = direction.y * speed * _dt, z = direction.z * speed * _dt }
-        nextPosition = { x = currentPosition.x + delta.x, y = currentPosition.y + delta.y, z = currentPosition.z + delta.z }
-        componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
+        DispatchEvent("Walking_Direction", {float3.new(direction.x, direction.y, direction.z)})
+        delta = {
+            x = direction.x * speed * _dt,
+            y = direction.y * speed * _dt,
+            z = direction.z * speed * _dt
+        }
+        if (componentRigidBody ~= nil) then
+            componentRigidBody:SetLinearVelocity(float3.new(delta.x, delta.y, delta.z))
+        else
+            nextPosition = {
+                x = currentPosition.x + delta.x,
+                y = currentPosition.y + delta.y,
+                z = currentPosition.z + delta.z
+            }
+            componentTransform:SetPosition(float3.new(nextPosition.x, nextPosition.y, nextPosition.z))
+        end
     elseif currentPathIndex < #_G.finalPath then
         currentPathIndex = currentPathIndex + 1
+    else
+        currentPathIndex = 2
     end
 end
 
@@ -78,28 +106,28 @@ function UpdatePath(wp, pingpong, currentPos)
 
     if #wp > 0 then
         result = navigation:FindPath(currentPos, wp[1], 1000, 1000)
-        for j=1,#result do
+        for j = 1, #result do
             _finalPath[n] = result[j]
             n = n + 1
         end
     end
 
-    for i=1,#wp - 1 do
+    for i = 1, #wp - 1 do
         current = wp[i]
         next = wp[i + 1]
         result = navigation:FindPath(current, next, 1000, 1000)
-        for j=1,#result do
+        for j = 1, #result do
             _finalPath[n] = result[j]
             n = n + 1
         end
     end
 
     if pingpong == true then
-        for i=#wp,2,-1 do
+        for i = #wp, 2, -1 do
             current = wp[i]
             next = wp[i - 1]
             result = navigation:FindPath(current, next, 1000, 1000)
-            for j=1,#result do
+            for j = 1, #result do
                 _finalPath[n] = result[j]
                 n = n + 1
             end
@@ -107,14 +135,14 @@ function UpdatePath(wp, pingpong, currentPos)
     end
 
     _G.finalPath = {}
-    
-    for i=1,#_finalPath do
+
+    for i = 1, #_finalPath do
         _G.finalPath[i] = float3.new(_finalPath[i].x, _finalPath[i].y, _finalPath[i].z)
     end
 
     closestIndex = 1
 
-    for i=1,#_G.finalPath do
+    for i = 1, #_G.finalPath do
         p = _G.finalPath[i]
 
         if (Float3Distance(currentPos, p) < Float3Distance(currentPos, _G.finalPath[closestIndex])) then
@@ -122,12 +150,9 @@ function UpdatePath(wp, pingpong, currentPos)
         end
     end
 
-    --currentPosition = componentTransform:GetPosition()
-    --Log(tostring(Float3Distance(currentPosition, _G.finalPath[closestIndex]) < minRetargetingDistance) .. "\n")
-    --while Float3Distance(currentPosition, _G.finalPath[closestIndex]) < minRetargetingDistance do
-    --    closestIndex = closestIndex + 1
-    --end
-    
+    if (#_finalPath == 0) then
+        DispatchEvent("Stop_Movement", {})
+    end
     currentPathIndex = closestIndex
 end
 
@@ -140,6 +165,10 @@ function EventHandler(key, fields)
 end
 
 _dt = 0.016
+
+function Start()
+    componentRigidBody = gameObject:GetRigidBody()
+end
 
 function Update(dt)
     _dt = dt

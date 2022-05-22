@@ -151,10 +151,13 @@ bool M_Editor::Awake(Json configModule)
 	//input->gameObjects = &gameObjects;
 	ImGuizmo::Enable(true);
 	ImGuizmo::AllowAxisFlip(false);
+	
 
 	ret = LoadConfiguration(configModule);
-
+#ifndef  KOFI_GAME
 	panelResources->SetResourceManager(engine->GetResourceManager());
+#endif // ! KOFI_GAME
+
 
 	return ret;
 }
@@ -190,7 +193,7 @@ bool M_Editor::Start()
 
 	LoadFontsEditor(16);
 #ifndef KOFI_GAME
-	iniToLoad = "EngineConfig/Layouts/defaultEngineLayout.ini";
+	iniToLoad = "Assets/Layouts/defaultEngineLayout.ini";
 #endif // KOFI_ENGINE
 
 	return ret;
@@ -218,6 +221,12 @@ bool M_Editor::PreUpdate(float dt)
 	ImGui_ImplSDL2_NewFrame(engine->GetWindow()->window);
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
+
+	if ((engine->GetInput()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
+	{
+		if(engine->GetSceneManager()->GetGameState() != GameState::PLAYING)
+		toggleCloseAppPopUpPanel = !toggleCloseAppPopUpPanel;
+	}
 
 	// Panels PreUpdate
 	if (ret == true)

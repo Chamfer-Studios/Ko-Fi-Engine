@@ -163,6 +163,10 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					if (!chooser->OnChooserClosed().empty())
 					{
 						std::string path = chooser->OnChooserClosed();
+						if (emitter->texture.GetTextureId() == currentTextureId)
+						{
+							emitter->texture.SetTextureId(TEXTUREID_DEFAULT);
+							emitter->texture.SetAssetPath(nullptr);
 
 						if (!path.empty() || path != "")
 						{

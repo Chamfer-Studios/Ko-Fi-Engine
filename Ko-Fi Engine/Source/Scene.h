@@ -13,11 +13,11 @@
 #include <gl/GLU.h>
 
 #include "SkyBox.h"
+#include "Quadtree.h"
 
 class GameObject;
 class KoFiEngine;
 class C_LightSource;
-class QuadTree3D;
 enum class SourceType;
 
 class Scene : public Resource
@@ -100,6 +100,8 @@ public:
 
 	std::vector<GameObject*> GetLights(SourceType type);
 
+	void SetShadowCaster(GameObject* shadowCaster);
+	GameObject* GetShadowCaster();
 
 public:
 	std::string name = "";
@@ -119,13 +121,14 @@ public:
 	// Space Partitioning
 	bool sceneTreeIsDirty = true;
 	bool drawSceneTree = false;
-	QuadTree3D* sceneTree = nullptr;
+	Quadtree sceneTree;
 
 	std::vector<const char*> tags; // TODO: needs to be implemented!
 
 	std::vector<GameObject*> lights;
 	LineSegment ray;
 
+	GameObject* shadowCaster = nullptr; //current light that casts shadows
 	SkyBox skybox;
 
 };

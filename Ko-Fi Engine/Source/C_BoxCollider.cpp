@@ -21,12 +21,12 @@ bool C_BoxCollider::Start()
 	if (owner->GetComponent<C_Mesh>())
 	{
 		float3 boundingBoxSize = owner->BoundingAABB().maxPoint - owner->BoundingAABB().minPoint;
-		if (boundingBoxSize.y == 0)
-			boundingBoxSize.y = 0.01;
-		else if (boundingBoxSize.x == 0)
-			boundingBoxSize.x = 0.01;
-		else if (boundingBoxSize.z == 0)
-			boundingBoxSize.z = 0.01;
+		if (boundingBoxSize.x <= 1)
+			boundingBoxSize.x = 1;
+		if (boundingBoxSize.y <= 1)
+			boundingBoxSize.y = 1;
+		if (boundingBoxSize.z <= 1)
+			boundingBoxSize.z = 1;
 		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3(boundingBoxSize.x / 2, boundingBoxSize.y / 2, boundingBoxSize.z / 2));
 		reactphysics3d::Transform transform = reactphysics3d::Transform::identity();
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, transform);
@@ -179,8 +179,12 @@ void C_BoxCollider::UpdateScaleFactor()
 		reactphysics3d::Transform oldTransform = collider->getLocalToBodyTransform();
 		owner->GetComponent<C_RigidBody>()->GetBody()->removeCollider(collider);
 		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyBoxShape(boxShape);
-		if (boundingBoxSize.y == 0)
-			boundingBoxSize.y = 0.001;
+		if (boundingBoxSize.y <= 1)
+			boundingBoxSize.y = 1;
+		if (boundingBoxSize.x <= 1)
+			boundingBoxSize.x = 1;
+		if (boundingBoxSize.z <= 1)
+			boundingBoxSize.z = 1;
 		boxShape = owner->GetEngine()->GetPhysics()->GetPhysicsCommon().createBoxShape(reactphysics3d::Vector3((boundingBoxSize.x / 2) * scaleFactor.x, (boundingBoxSize.y / 2) * scaleFactor.y, (boundingBoxSize.z / 2) * scaleFactor.z));
 		collider = owner->GetComponent<C_RigidBody>()->GetBody()->addCollider(boxShape, oldTransform);
 	}

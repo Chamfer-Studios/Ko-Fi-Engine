@@ -26,7 +26,7 @@
 #include "R_Material.h"
 #include "Log.h"
 #include "node_editor.h"
-#include "QuadTree3D.h"
+#include "Quadtree.h"
 
 #include "SDL_assert.h"
 
@@ -86,15 +86,16 @@ bool SceneIntro::Start()
 
 	if (this->GetLights(SourceType::DIRECTIONAL).size() == 0)
 	{
-		GameObject* go = CreateEmptyGameObject("Direct Light");
-		go->AddComponentByType(ComponentType::LIGHT_SOURCE);
+		//create dir light?
 	}
 	CONSOLE_LOG("Loading Intro assets");
 	appLog->AddLog("Loading Intro assets\n");
 
 	example::NodeEditorInitialize();
 
-	ComputeQuadTree();
+	//ComputeQuadTree();
+	sceneTree.SetBoundaries(AABB(float3(-500, 0, -500), float3(500, 30, 500)));
+
 
 	return ret;
 }
@@ -105,16 +106,34 @@ bool SceneIntro::PreUpdate(float dt)
 	{
 		std::string path = "Assets/Prefabs/" + (*mapIt).second + "_prefab.json";
 		if (!std::filesystem::exists(path))
-			return true;
+			continue;
 		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->CreateEmptyGameObject();
 		go->LoadPrefabJson(path.c_str(), false);
-		go->SetName(((*mapIt).first).c_str(), (*mapIt).first == (*mapIt).second);
+		if (std::string(go->GetName()) != (*mapIt).first)
+			go->SetName(((*mapIt).first).c_str(), (*mapIt).first == (*mapIt).second);
 		for (Component* component : go->GetComponents()) // This method used because there could be multiple scripts in one go
 		{
 			if (component->GetType() != ComponentType::SCRIPT)
 				continue;
+
 			C_Script* script = (C_Script*)component;
-			script->s->handler->lua["Start"]();
+
+			auto start = sol::protected_function(script->s->handler->lua["Start"]);
+			if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING && script->s->isScriptLoaded)
+			{
+				if (start.valid()) {
+					sol::protected_function_result result = start();
+					if (result.valid()) {
+						// Call succeeded
+					}
+					else {
+						// Call failed
+						sol::error err = result;
+						std::string what = err.what();
+						appLog->AddLog("%s\n", what.c_str());
+					}
+				}
+			}
 		}
 	}
 	gameObjectListToCreate.clear();
@@ -130,6 +149,7 @@ bool SceneIntro::PreUpdate(float dt)
 // Update
 bool SceneIntro::Update(float dt)
 {
+	OPTICK_EVENT();
 	for (GameObject* go : this->gameObjectList)
 	{
 		go->Update(dt);
@@ -175,6 +195,7 @@ bool SceneIntro::PostUpdate(float dt)
 	{
 		switchScene = false;
 		Importer::GetInstance()->sceneImporter->LoadScene(this, sceneNameGO.c_str());
+		engine->GetSceneManager()->OnSceneSwitch();
 	}
 
 	if (quitPlease)
