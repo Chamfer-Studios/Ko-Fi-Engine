@@ -395,9 +395,13 @@ public:
 
 		switch (button)
 		{
-		case 4:
+		case 43:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
+		}
+		case 44:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RETURN);
 		}
 		/*case 5:
 		{
