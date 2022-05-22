@@ -225,6 +225,7 @@ bool M_Renderer3D::InspectorDraw()
 		}
 		if (ImGui::Checkbox("Enable Occlusion Culling", &enableOcclusionCulling)) {
 			ResetFrustumCulling();
+			engine->GetCamera3D()->currentCamera->ApplyCullings();
 		}
 
 		ImGui::Text("Objects in sphere %d", gameObejctsToRenderDistanceSphere.size());

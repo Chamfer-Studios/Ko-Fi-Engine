@@ -89,7 +89,7 @@ bool C_Camera::Update(float dt)
 	
 	if (!isEngineCamera && owner->GetEngine()->GetCamera3D()->currentCamera == this)
 	{
-		ApplyCullings(isSphereCullingActive, isFrustumCullingActive);
+		ApplyCullings();
 	}
 	
 	return true;
@@ -125,11 +125,13 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Sphere culling", &isSphereCullingActive)) {
 			owner->GetEngine()->GetRenderer()->ResetFrustumCulling();
+			ApplyCullings();
 		}
 		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
 		{
 			owner->GetEngine()->GetRenderer()->ResetFrustumCulling();
+			ApplyCullings();
 
 		}
 		// SPHERE CULLING RADIUS
@@ -393,10 +395,10 @@ void C_Camera::DrawFrustum() const
 
 }
 
-void C_Camera::ApplyCullings(bool applySphereCulling, bool applyFrustumCulling)
+void C_Camera::ApplyCullings()
 {
 	//Apply rotation
-	if (applySphereCulling)
+	if (isSphereCullingActive)
 		SphereCulling();
 	else {
 		std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
@@ -407,7 +409,7 @@ void C_Camera::ApplyCullings(bool applySphereCulling, bool applyFrustumCulling)
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
 		}
 	}
-	if (applyFrustumCulling)
+	if (isFrustumCullingActive)
 		FrustumCulling();
 	else {
 		std::unordered_set<GameObject*>::iterator it;

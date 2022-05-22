@@ -11,6 +11,8 @@
 #include <vector>
 #include "M_Physics.h"
 #include "M_Renderer3D.h"
+#include "M_Camera3D.h" 
+#include "C_Camera.h"
 #include "C_RigidBody.h"
 
 GameObject* Scene::GetGameObject(int uid)
@@ -116,6 +118,7 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 	}
 
 	engine->GetRenderer()->ResetFrustumCulling();
+	engine->GetCamera3D()->currentCamera->ApplyCullings();
 }
 
 void Scene::RemoveGameObjectIterator(std::vector<GameObject*>::iterator go)

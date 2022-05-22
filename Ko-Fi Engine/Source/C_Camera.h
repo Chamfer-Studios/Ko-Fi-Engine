@@ -100,7 +100,7 @@ private:
 public:
 	void DrawSphereCulling() const;
 	void DrawFrustum() const;
-	void ApplyCullings(bool applySphereCulling, bool applyFrustumCulling);
+	void ApplyCullings();
 	bool ClipsWithBBox(const AABB& refBox) const;
 	void SetSCullingRadius(float radius);
 private:

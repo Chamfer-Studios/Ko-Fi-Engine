@@ -102,7 +102,7 @@ bool M_Camera3D::Update(float dt)
 	}
 	
 	if (currentCamera == engineCamera) {
-		engineCamera->ApplyCullings(engineCamera->GetIsSphereCullingActive(), engineCamera->GetIsFrustumActive());
+		engineCamera->ApplyCullings();
 	}
 	return true;
 }
