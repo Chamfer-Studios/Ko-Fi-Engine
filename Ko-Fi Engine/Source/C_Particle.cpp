@@ -163,11 +163,11 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					if (!chooser->OnChooserClosed().empty())
 					{
 						std::string path = chooser->OnChooserClosed();
-						if (emitter->texture.GetTextureId() == currentTextureId)
+						if (emitter->texture->GetTextureId() == currentTextureId)
 						{
-							emitter->texture.SetTextureId(TEXTUREID_DEFAULT);
-							emitter->texture.SetAssetPath(nullptr);
-
+							emitter->texture->SetTextureId(TEXTUREID_DEFAULT);
+							emitter->texture->SetAssetPath(nullptr);
+						}
 						if (!path.empty() || path != "")
 						{
 							if (emitter->texture != nullptr)
@@ -246,7 +246,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 				}
 
 				if (ImGui::Button("Kill All Emitter Particles"))
-						ei->KillAllParticles();
+					ei->KillAllParticles();
 
 				bool stopParticleEmission = ei->GetParticleEmission();
 				if (ImGui::Checkbox("Stop Particles Emission", &stopParticleEmission))
@@ -285,7 +285,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 								ImGui::Text(spawnTimerName.c_str());
 
 								float spawnTime = e->spawnTime;
-								if (ImGui::DragFloat("SpawnTime", &spawnTime,0.005f, 0.0f, 25.0f,"%.3f"))
+								if (ImGui::DragFloat("SpawnTime", &spawnTime, 0.005f, 0.0f, 25.0f, "%.3f"))
 									e->spawnTime = spawnTime;
 
 								bool randomParticleLife = e->randomParticleLife;
@@ -752,7 +752,7 @@ void C_Particle::Save(Json& json) const
 			jsonEmitter["name"] = e->name;
 
 			if (e->texture != nullptr)
-				jsonEmitter["texture_path"] = e->texture->GetTexturePath();
+				jsonEmitter["texture_path"] = e->texture->GetAssetPath();
 
 			Json jsonModule;
 			for (auto m : e->modules)
@@ -859,9 +859,9 @@ void C_Particle::Load(Json& json)
 				e->maxParticles = emitter.value().at("maxParticles");
 				e->texture = new R_Texture();
 				if(emitter.value().contains("texture_path"))
-					e->texture->SetTexturePath(emitter.value().at("texture_path").get<std::string>().c_str());
-				if (e->texture->GetTexturePath() != "")
-					Importer::GetInstance()->textureImporter->Import(e->texture->GetTexturePath(), e->texture);
+					e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
+				if (e->texture->GetAssetPath() != "")
+					Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
 
 				e->modules.clear();
 				e->modules.shrink_to_fit();

@@ -6,8 +6,8 @@ Emitter::Emitter(const char* newName)
 	name = newName;
 	maxParticles = MAX_PARTICLES;
 	texture = new R_Texture();
-	texture->SetTexturePath("Assets/Textures/Particles/light.png");
-	Importer::GetInstance()->textureImporter->Import(texture->GetTexturePath(), texture);
+	texture->SetAssetPath("Assets/Textures/Particles/light.png");
+	Importer::GetInstance()->textureImporter->Import(texture->GetAssetPath(), texture);
 	modules.push_back(CreateModule<EmitterDefault>());
 	//modules.push_back(CreateModule<EmitterMovement>());
 	//modules.push_back(CreateModule<EmitterSize>());

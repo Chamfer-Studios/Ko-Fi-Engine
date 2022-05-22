@@ -35,7 +35,7 @@ bool I_Particle::Create(R_Particle* particle)
 
 		jsonEmitter["name"] = (*e)->name;
 		jsonEmitter["maxParticles"] = (*e)->maxParticles;
-		jsonEmitter["texture_path"] = (*e)->texture->GetTexturePath();
+		jsonEmitter["texture_path"] = (*e)->texture->GetAssetPath();
 		std::vector<ParticleModule*> modules;
 		for (std::vector<ParticleModule*>::iterator m = (*e)->modules.begin(); m != (*e)->modules.end(); ++m)
 		{
@@ -168,9 +168,9 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 				e->maxParticles = emitter.value().at("maxParticles");
 				e->texture = new R_Texture();
 				if (emitter.value().contains("texture_path"))
-					e->texture->SetTexturePath(emitter.value().at("texture_path").get<std::string>().c_str());
-				if (e->texture->GetTexturePath() != "")
-					Importer::GetInstance()->textureImporter->Import(e->texture->GetTexturePath(), e->texture);
+					e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
+				if (e->texture->GetAssetPath() != "")
+					Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
 
 				e->modules.clear();
 				e->modules.shrink_to_fit();
