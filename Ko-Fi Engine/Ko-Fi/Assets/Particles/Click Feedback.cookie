@@ -2,6 +2,7 @@
     "Click Feedback": {
         "emitters": [
             {
+                "loop": false,
                 "maxParticles": 500,
                 "modules": [
                     {
@@ -88,6 +89,7 @@
                 "texture_path": "Assets/Textures/Particles/arrow.png"
             },
             {
+                "loop": false,
                 "maxParticles": 500,
                 "modules": [
                     {

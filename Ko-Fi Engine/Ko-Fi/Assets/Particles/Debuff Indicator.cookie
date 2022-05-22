@@ -2,6 +2,7 @@
     "Debuff Indicator": {
         "emitters": [
             {
+                "loop": true,
                 "maxParticles": 500,
                 "modules": [
                     {

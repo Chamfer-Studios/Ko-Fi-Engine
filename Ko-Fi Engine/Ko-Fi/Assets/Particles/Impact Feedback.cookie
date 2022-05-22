@@ -2,6 +2,7 @@
     "Impact Feedback": {
         "emitters": [
             {
+                "loop": false,
                 "maxParticles": 500,
                 "modules": [
                     {
@@ -9,7 +10,7 @@
                         "minParticleLife": 0.20000000298023224,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 1.5,
+                        "spawnTime": 0.550000011920929,
                         "type": 1
                     },
                     {

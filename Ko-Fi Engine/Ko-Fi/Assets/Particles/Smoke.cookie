@@ -2,6 +2,7 @@
     "Smoke": {
         "emitters": [
             {
+                "loop": false,
                 "maxParticles": 500,
                 "modules": [
                     {

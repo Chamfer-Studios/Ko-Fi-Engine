@@ -2,14 +2,15 @@
     "Selected Character": {
         "emitters": [
             {
+                "loop": true,
                 "maxParticles": 500,
                 "modules": [
                     {
                         "maxParticleLife": 3.0,
-                        "minParticleLife": 0.5,
+                        "minParticleLife": 0.004999999888241291,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 0.4749999940395355,
+                        "spawnTime": 0.0,
                         "type": 1
                     },
                     {
@@ -30,16 +31,16 @@
                                     1.0,
                                     1.0
                                 ],
-                                "position": 0.5
+                                "position": 0.0
                             }
                         ],
                         "type": 3
                     },
                     {
                         "minInitialSize": [
-                            2.0,
-                            2.0,
-                            2.0
+                            20.0,
+                            20.0,
+                            20.0
                         ],
                         "type": 4
                     }

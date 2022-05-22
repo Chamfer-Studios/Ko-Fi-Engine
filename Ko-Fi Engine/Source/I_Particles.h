@@ -11,9 +11,9 @@ public:
 	I_Particle(KoFiEngine* engine);
 	~I_Particle();
 
-	bool Create(R_Particle* particle);
+	bool Create(R_Particle* particle, bool loop);
 	bool Save(const R_Particle* particle, const char* path);
-	bool Load(R_Particle* particle, const char* name);
+	bool Load(R_Particle* particle, const char* name, int loop);
 
 private:
 	KoFiEngine* engine = nullptr;

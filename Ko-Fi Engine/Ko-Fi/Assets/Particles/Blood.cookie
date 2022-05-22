@@ -2,6 +2,7 @@
     "Blood": {
         "emitters": [
             {
+                "loop": true,
                 "maxParticles": 500,
                 "modules": [
                     {
@@ -80,6 +81,7 @@
                 "texture_path": "Assets/Textures/Particles/blood.png"
             },
             {
+                "loop": true,
                 "maxParticles": 500,
                 "modules": [
                     {

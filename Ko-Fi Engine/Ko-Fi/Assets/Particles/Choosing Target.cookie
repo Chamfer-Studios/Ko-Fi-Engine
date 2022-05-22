@@ -2,6 +2,7 @@
     "Choosing Target": {
         "emitters": [
             {
+                "loop": true,
                 "maxParticles": 500,
                 "modules": [
                     {
@@ -55,9 +56,9 @@
                     },
                     {
                         "minInitialSize": [
-                            2.0,
-                            2.0,
-                            2.0
+                            20.0,
+                            20.0,
+                            20.0
                         ],
                         "type": 4
                     }

@@ -111,6 +111,8 @@ function Start()
     end
 
     mouseParticles = Find("Mouse Particles")
+    --ChoosingTargetParticle = Find("Choosing Target")
+
     if (mouseParticles ~= nil) then
         mouseParticles:GetComponentParticle():StopParticleSpawn()
     end
@@ -278,9 +280,8 @@ function Update(dt)
                             isDoubleClicking = true
                         end
                         if (mouseParticles ~= nil) then
-                            mouseParticles:GetComponentParticle():SetLooping(true)
+                            mouseParticles:GetComponentParticle():SetLoop(true)
                             mouseParticles:GetComponentParticle():ResumeParticleSpawn()
-                            mouseParticles:GetComponentParticle():ResetTimers()
                             mouseParticles:GetTransform():SetPosition(destination)
                         end
                     end

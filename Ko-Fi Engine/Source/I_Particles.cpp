@@ -17,7 +17,7 @@ I_Particle::~I_Particle()
 {
 }
 
-bool I_Particle::Create(R_Particle* particle)
+bool I_Particle::Create(R_Particle* particle, bool loop)
 {
 	bool ret = false;
 
@@ -33,6 +33,7 @@ bool I_Particle::Create(R_Particle* particle)
 	{
 		Json jsonEmitter;
 
+		jsonEmitter["loop"] = loop;
 		jsonEmitter["name"] = (*e)->name;
 		jsonEmitter["maxParticles"] = (*e)->maxParticles;
 		jsonEmitter["texture_path"] = (*e)->texture->GetAssetPath();
@@ -146,7 +147,7 @@ bool I_Particle::Save(const R_Particle* particle, const char* path)
 	}
 }
 
-bool I_Particle::Load(R_Particle* particle, const char* name)
+bool I_Particle::Load(R_Particle* particle, const char* name, int loop)
 {
 	bool ret = true;
 
@@ -167,6 +168,7 @@ bool I_Particle::Load(R_Particle* particle, const char* name)
 		{
 			Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
 			e->maxParticles = emitter.value().at("maxParticles");
+			loop = (int)emitter.value().at("loop");
 			e->texture = new R_Texture();
 			if (emitter.value().contains("texture_path"))
 				e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());

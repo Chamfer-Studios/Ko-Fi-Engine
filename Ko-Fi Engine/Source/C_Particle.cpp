@@ -127,7 +127,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 			ImGui::SameLine();
 
 			if ((ImGui::Button("Save Resource")))
-				Importer::GetInstance()->particleImporter->Create(resource);
+				Importer::GetInstance()->particleImporter->Create(resource, emitterInstances[0]->loop);
 
 			if (ImGui::Button("Kill All Particles"))
 				ClearParticles();
@@ -682,12 +682,14 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 							emitterInstances.clear();
 							if (resource == nullptr)
 								resource = new R_Particle();
-							Importer::GetInstance()->particleImporter->Load(resource, resourcesList.at(i).c_str());
+							int loop = 1;
+							Importer::GetInstance()->particleImporter->Load(resource, resourcesList.at(i).c_str(),loop);
 							for (const auto& emitter : resource->emitters)
 							{
 								EmitterInstance* ei = new EmitterInstance(emitter, this);
 								emitterInstances.push_back(ei);
 								ei->Init();
+								ei->loop = loop;
 							}
 						}
 					}
@@ -730,6 +732,7 @@ void C_Particle::ResumeParticleSpawn()
 {
 	for (std::vector<EmitterInstance*>::iterator it = emitterInstances.begin(); it < emitterInstances.end(); ++it)
 		(*it)->SetParticleEmission(true);
+	ResetTimers();
 }
 
 void C_Particle::ResetTimers()
@@ -748,7 +751,7 @@ void C_Particle::ResetTimers()
 	}
 }
 
-void C_Particle::SetLooping(bool v)
+void C_Particle::SetLoop(bool v)
 {
 	for (auto emitter : resource->emitters)
 	{
@@ -790,6 +793,14 @@ void C_Particle::Save(Json& json) const
 		{
 			jsonEmitter["name"] = e->name;
 			jsonEmitter["maxParticles"] = e->maxParticles;
+			for (auto ei : emitterInstances)
+			{
+				if (ei->emitter == e)
+				{
+					jsonEmitter["loop"] = ei->loop;
+					break;
+				}
+			}
 
 			if (e->texture != nullptr)
 				jsonEmitter["texture_path"] = e->texture->GetAssetPath();
@@ -905,6 +916,7 @@ void C_Particle::Load(Json& json)
 				EmitterInstance* ei = new EmitterInstance(e, this);
 				emitterInstances.push_back(ei);
 				ei->Init();
+				ei->loop = emitter.value().at("loop");
 				e->maxParticles = emitter.value().at("maxParticles");
 				e->texture = new R_Texture();
 				if (emitter.value().contains("texture_path"))
