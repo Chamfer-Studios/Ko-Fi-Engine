@@ -141,14 +141,17 @@ bool M_Renderer3D::PostUpdate(float dt)
 	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
 	if (light)
 	{
-		//glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);	//configure viewport
+		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);	//configure viewport
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
 		glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
-		FillShadowMap(engine->GetCamera3D()->gameCamera);
+		//glCullFace(GL_FRONT);
+		FillShadowMap();
+		//glCullFace(GL_BACK);
+		glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
 		UnbindFrameBuffers();
-		//glViewport(0, 0, engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight());
+
 	}
-	
+
 	PrepareFrameBuffers();
 
 	PassProjectionAndViewToRenderer();
@@ -163,7 +166,6 @@ bool M_Renderer3D::PostUpdate(float dt)
 	engine->GetNavigation()->DrawNavmesh();
 
 	isFirstPass = false;
-
 
 	UnbindFrameBuffers();
 
@@ -686,10 +688,10 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				}
 
 				GLint ourTexture = glGetUniformLocation(shader, "ourTexture");
-				glUniform1i(ourTexture, 0);
+				glUniform1i(ourTexture, 1);
 
 				GLint depthMap = glGetUniformLocation(shader, "depthMap");
-				glUniform1i(depthMap, 1);
+				glUniform1i(depthMap, 2);
 
 				//Draw Mesh
 				mesh->Draw();
@@ -1244,6 +1246,8 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 	glGenTextures(1, &depthMapTexture);
 	glBindTexture(GL_TEXTURE_2D, depthMapTexture);
 	//we are only interested in storing the depth component inside the texture
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+		//engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight(), 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
 		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 

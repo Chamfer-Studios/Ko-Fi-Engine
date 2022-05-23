@@ -105,7 +105,10 @@ void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	if (texture != 0)
+	{
+		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, texture);
+	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
 
