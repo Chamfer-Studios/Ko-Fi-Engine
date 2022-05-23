@@ -1,5 +1,4 @@
-#ifndef __C_MATERIAL_H__
-#define __C_MATERIAL_H__
+#pragma once
 
 #include "Component.h"
 
@@ -44,5 +43,3 @@ private:
 
 	int currentTextureId = 0;
 };
-
-#endif // !__C_MATERIAL_H__

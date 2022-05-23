@@ -160,6 +160,12 @@ bool M_Renderer3D::PostUpdate(float dt)
 	{
 		QueryScene2(engine->GetCamera3D()->currentCamera);
 	}
+	else {
+		for (auto go : gameObejctsToRenderDistance) {
+			go->SetRenderGameObject(true);
+		}
+	}
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	RenderScene(engine->GetCamera3D()->currentCamera);
 
@@ -219,12 +225,13 @@ bool M_Renderer3D::InspectorDraw()
 			engine->SaveConfiguration();
 		}
 		if (ImGui::Checkbox("Enable Occlusion Culling", &enableOcclusionCulling)) {
-			engine->GetRenderer()->gameObejctsToRenderDistanceSphere.clear();
-			engine->GetRenderer()->gameObejctsToRenderDistance.clear();
-			engine->GetRenderer()->gameObejctsToRenderDistanceOrdered.clear();
+			ResetFrustumCulling();
+			engine->GetCamera3D()->currentCamera->ApplyCullings();
 		}
 
-		ImGui::Text("Rendering %d objects", gameObejctsToRenderDistanceOrdered.size());
+		ImGui::Text("Objects in sphere %d", gameObejctsToRenderDistanceSphere.size());
+		ImGui::Text("Objects in frustrum %d", gameObejctsToRenderDistance.size());
+		ImGui::Text("Objects in frustrum sorted %d", gameObejctsToRenderDistanceOrdered.size());
 	}
 
 	return true;
@@ -268,8 +275,10 @@ bool M_Renderer3D::InitOpenGL()
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 
 		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
-		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
+		lights[0].ambient.Set(1, 1, 1, 1);
+		lights[0].diffuse.Set(1, 1, 1, 1);
+		//lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
+		//lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
 		lights[0].SetPos(0.0f, 0.0f, 2.5f);
 		lights[0].Init();
 
@@ -561,8 +570,12 @@ void M_Renderer3D::ResetFrustumCulling()
 	gameObejctsToRenderDistanceSphere.clear();
 	gameObejctsToRenderDistance.clear();
 	gameObejctsToRenderDistanceOrdered.clear();
-}
 
+	for (auto go : gameObejctsToRenderDistance) {
+		go->SetRenderGameObject(false);
+	}
+	
+}
 void M_Renderer3D::RenderBoundingBox(C_Mesh* cMesh)
 {
 	OPTICK_EVENT();
@@ -1230,10 +1243,13 @@ void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 trans
 
 void M_Renderer3D::RenderAllParticles()
 {
-	for (auto particle : particles)
+
+	CONSOLE_LOG("particles: %d\n", particles.size());
+	for (std::map<float,ParticleRenderer>::reverse_iterator particle = particles.rbegin();particle != particles.rend();++particle)
 	{
-		RenderParticle(&particle.second);
+		RenderParticle(&particle->second);
 	}
+	
 
 	particles.clear();
 }
@@ -1306,17 +1322,6 @@ void M_Renderer3D::FillShadowMap()
 	}
 }
 
-void M_Renderer3D::InsertGameObjectToRender(GameObject* go)
-{
-	this->gameObejctsToRenderDistanceOrdered.insert(go);
-}
-
-void M_Renderer3D::EraseGameObjectToRender(GameObject* go)
-{
-	this->gameObejctsToRenderDistanceOrdered.erase(go);
-
-}
-
 void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light)
 {
 	DirectionalLight* dirLight = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
@@ -1339,20 +1344,25 @@ transform(transform)
 
 void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 {
+	GLint saveProgram;
+
+	glGetIntegerv(GL_CURRENT_PROGRAM, &saveProgram);
+	glUseProgram(0);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_TEXTURE_2D);
-	glPushMatrix();
-	glMultMatrixf(particle->transform.Transposed().ptr());	// model
-	glColor3f(1.0f, 1.0f, 1.0f);
+	//glColor3f(1.0f, 1.0f, 1.0f);
+
 	if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
 	{
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, particle->tex.GetTextureId());
 	}
-
+	
 	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);
 
+	glPushMatrix();
+	glMultMatrixf(particle->transform.Transposed().ptr());	// model
 	//Drawing to tris in direct mode
 	glBegin(GL_TRIANGLES);
 
@@ -1376,6 +1386,7 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glDisable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_BLEND);
+	glUseProgram(saveProgram);
 }
 
 OcclusionQuery::OcclusionQuery()
@@ -1420,7 +1431,7 @@ bool OcclusionQuery::AnySamplesPassed() const
 	return samplesPassed > 0;
 }
 
-inline bool M_Renderer3D::GOComp::operator()(const GameObject* lhs, const GameObject* rhs) const
+bool M_Renderer3D::GOComp::operator()(const GameObject* lhs, const GameObject* rhs) const
 {
 	float3 cameraPosition = lhs->GetEngine()->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
 	return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition());

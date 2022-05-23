@@ -1,0 +1,103 @@
+{
+    "Afterburner": {
+        "emitters": [
+            {
+                "loop": true,
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 1.0,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.5,
+                        "type": 1
+                    },
+                    {
+                        "followForward": true,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "maxPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "maxVelocity": 0.5,
+                        "minAcceleration": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minDirection": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "minPosition": [
+                            0.0,
+                            0.0,
+                            -4.0
+                        ],
+                        "minVelocity": -0.5,
+                        "randAcceleration": false,
+                        "randDirection": true,
+                        "randPosition": false,
+                        "randVelocity": true,
+                        "type": 2
+                    },
+                    {
+                        "minInitialSize": [
+                            10.0,
+                            10.0,
+                            10.0
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    0.0691264271736145,
+                                    0.5531777739524841,
+                                    0.7978339195251465,
+                                    1.0
+                                ],
+                                "position": 0.0
+                            },
+                            {
+                                "color": [
+                                    0.08573030680418015,
+                                    0.27695098519325256,
+                                    0.9133573770523071,
+                                    1.0
+                                ],
+                                "position": 1.0
+                            }
+                        ],
+                        "type": 3
+                    },
+                    {
+                        "billboardingType": 6,
+                        "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
+                        "sideAxis": false,
+                        "topAxis": false,
+                        "type": 5
+                    }
+                ],
+                "name": "Emitter",
+                "texture_path": "Assets/Textures/Particles/afterburner.png"
+            }
+        ],
+        "name": "Afterburner"
+    }
+}

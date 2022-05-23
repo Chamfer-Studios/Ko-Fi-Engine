@@ -15,6 +15,12 @@ function Start()
 	componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
 	destination = GetVariable("Nerala.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
 	player = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT) -- player = Find("Nerala")
+	componentSwitch = gameObject:GetAudioSwitch()
+    currentTrackID = -1
+	if (componentSwitch ~= nil) then
+		currentTrackID = 0
+		componentSwitch:PlayTrack(currentTrackID)
+	end
 	local playerPos = player:GetTransform():GetPosition()
 	local targetPos2D = { destination.x, destination.z }
 	local pos2D = { playerPos.x, playerPos.z }
@@ -29,6 +35,14 @@ end
 -- Called each loop iteration
 function Update(dt)
 	
+	if (componentSwitch ~= nil) then
+        if (currentTrackID ~= 1) then
+            componentSwitch:StopTrack(currentTrackID)
+			currentTrackID = 1
+			componentSwitch:PlayTrack(currentTrackID)
+        end
+    end
+
 	if (lifeTimer >= lifeTime) then
 		DeleteGameObject()
 		DispatchGlobalEvent("Mosquito_Death", {})

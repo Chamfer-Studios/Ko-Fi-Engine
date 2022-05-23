@@ -84,8 +84,8 @@ bool M_Camera3D::Update(float dt)
 
 	FocusTarget();
 
-	if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
-		return true;
+	//if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused() && isMoving == false)
+	//	return true;
 
 	if (currentCamera->IsEngineCamera() && engine->GetInput()->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -100,7 +100,10 @@ bool M_Camera3D::Update(float dt)
 		isMoving = false;
 		cameraSpeed = baseCameraSpeed;
 	}
-	engineCamera->ApplyCullings(engineCamera->GetIsSphereCullingActive(), engineCamera->GetIsFrustumActive());
+	
+	if (currentCamera == engineCamera) {
+		engineCamera->ApplyCullings();
+	}
 	return true;
 }
 
@@ -153,8 +156,8 @@ void M_Camera3D::CheckInput(float dt)
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 2.0f;
 
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
-	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= speed;
+	if (engine->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += speed;
 
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += engineCamera->GetFront() * speed;
 	if (engine->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= engineCamera->GetFront() * speed ;

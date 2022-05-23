@@ -115,8 +115,25 @@ bool SceneIntro::PreUpdate(float dt)
 		{
 			if (component->GetType() != ComponentType::SCRIPT)
 				continue;
+
 			C_Script* script = (C_Script*)component;
-			script->s->handler->lua["Start"]();
+
+			auto start = sol::protected_function(script->s->handler->lua["Start"]);
+			if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING && script->s->isScriptLoaded)
+			{
+				if (start.valid()) {
+					sol::protected_function_result result = start();
+					if (result.valid()) {
+						// Call succeeded
+					}
+					else {
+						// Call failed
+						sol::error err = result;
+						std::string what = err.what();
+						appLog->AddLog("%s\n", what.c_str());
+					}
+				}
+			}
 		}
 	}
 	gameObjectListToCreate.clear();

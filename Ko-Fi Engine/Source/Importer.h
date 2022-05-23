@@ -7,6 +7,7 @@
 #include "I_Texture.h"
 #include "I_Track.h"
 #include "I_Animations.h"
+#include "I_Particles.h"
 
 class KofiEngine;
 
@@ -27,6 +28,7 @@ public:
 	I_Texture* textureImporter = nullptr;
 	I_Track* trackImporter = nullptr;
 	I_Animations* animationImporter = nullptr;
+	I_Particle* particleImporter = nullptr;
 
 private:
 	KoFiEngine* engine = nullptr;

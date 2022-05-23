@@ -3,15 +3,22 @@
     "asset_path": "Assets/Models/Characters/Zhib/zhib_karambit.fbx",
     "contained_resources": [
         {
-            "asset_file": "Karambit_low.sugar",
-            "library_path": "Library/Meshes/633504867.sugar",
+            "asset_file": "zhib_karambit.sugar",
+            "library_path": "Library/Meshes/216069290.sugar",
             "type": 0,
-            "uid": 633504867
+            "uid": 216069290
+        },
+        {
+            "asset_file": "zhib_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png",
+            "library_path": "Library/Textures/1431981454.cacao",
+            "type": 1,
+            "uid": 1431981454
         }
     ],
-    "hash": "001f4b94c2b57c985fcae3d0606f88ff",
-    "library_file": "691828025.tea",
-    "library_path": "Library/Models/691828025.tea",
+    "hash": "2d1526567c3ed34776116f08e24c36b7",
+    "library_file": "1448672747.tea",
+    "library_path": "Library/Models/1448672747.tea",
     "type": 3,
-    "uid": 691828025
+    "uid": 1448672747
 }

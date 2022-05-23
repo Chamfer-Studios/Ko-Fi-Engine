@@ -1,6 +1,7 @@
 #include "EmitterInstance.h"
 #include "ParticleModule.h"
 #include "R_Texture.h"
+#include "Log.h"
 
 EmitterInstance::EmitterInstance(Emitter* e, C_Particle* cp) : emitter(e),component(cp)
 {
@@ -40,30 +41,28 @@ bool EmitterInstance::Update(float dt)
 	return true;
 }
 
-void EmitterInstance::DrawParticles()
-{
-	for (std::vector<Particle>::iterator it = particles.begin(); it < particles.end(); ++it)
-	{
-		it->Draw(0, 0);
-	}
-}
-
-void EmitterInstance::SpawnParticle()
+void EmitterInstance::SpawnParticle(int burst)
 {
 	if (deactivateParticleEmission || activeParticles == emitter->maxParticles)
-	{
 		return;
-	}
 
-	unsigned int particleIndex = particleIndices[activeParticles];
-	Particle* particle = &particles[particleIndex];
-
-	for (unsigned int i = 0; i < emitter->modules.size(); i++)
+	//burst to generate more than particle at once
+	for (int j = 0; j < burst; j++)
 	{
-		emitter->modules[i]->Spawn(particle, this);
-	}
+		unsigned int particleIndex = particleIndices[activeParticles];
+		Particle* particle = &particles[particleIndex];
+		if (particle->active)
+			CONSOLE_LOG("EHHHHHH!");
 
-	++activeParticles;
+		particle->active = true;
+
+		for (unsigned int i = 0; i < emitter->modules.size(); i++)
+		{
+			emitter->modules[i]->Spawn(particle, this);
+		}
+	
+		++activeParticles;
+	}
 }
 
 void EmitterInstance::KillDeadParticles()
@@ -82,21 +81,38 @@ void EmitterInstance::KillDeadParticles()
 				particleIndices[i] = particleIndices[activeParticles - 1];
 				particleIndices[activeParticles - 1] = particleIndex;
 			}
+			particle->lifeTime = particle->maxLifetime;
+			particle->active = false;
 
 			--activeParticles;
+			if (!loop)
+			{
+				for (auto m : emitter->modules)
+				{
+					if (m->type == ParticleModuleType::DEFAULT)
+					{
+						EmitterDefault* mDef = (EmitterDefault*)m;
+						mDef->looping = false;
+					}
+				}
+			}
 		}
 	}
 }
 
-void EmitterInstance::KillParticles()
+void EmitterInstance::KillAllParticles()
 {
 	for (auto it : particles)
-	{
 		it.active = false;
-	}
+	activeParticles = 0;
 }
 
 void EmitterInstance::SetParticleEmission(bool set)
 {
 	deactivateParticleEmission = !set;
+}
+
+bool EmitterInstance::GetParticleEmission()
+{
+	return !deactivateParticleEmission;
 }

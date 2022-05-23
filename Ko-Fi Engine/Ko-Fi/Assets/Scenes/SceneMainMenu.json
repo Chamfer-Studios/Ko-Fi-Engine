@@ -1,10 +1,10 @@
 {
     "SceneMainMenu": {
         "active": true,
-        "game_objects_amount": 84,
+        "game_objects_amount": 18,
         "game_objects_list": [
             {
-                "UID": 1588352491,
+                "UID": 1475716659,
                 "active": true,
                 "components": [
                     {
@@ -19,61 +19,15 @@
                             0.0
                         ],
                         "rotation": [
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0
+                            0.2705981135368347,
+                            -0.653281569480896,
+                            0.2705981135368347,
+                            0.6532813310623169
                         ],
                         "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    },
-                    {
-                        "active": true,
-                        "far_plane_distance": 500.0,
-                        "frustum_culling": false,
-                        "isMainCamera": true,
-                        "near_plane_distance": 0.009999999776482582,
-                        "sCullingRadius": 500,
-                        "sphere_culling": true,
-                        "type": 4,
-                        "vertical_fov": 0.3839724361896515
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "Main Camera",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 165857293,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.27059805393218994,
-                            -0.6532815098762512,
-                            0.27059805393218994,
-                            0.6532815098762512
-                        ],
-                        "scale": [
-                            1.0,
+                            1.0000001192092896,
                             0.9999999403953552,
-                            0.9999999403953552
+                            1.0
                         ],
                         "type": 21
                     },
@@ -106,20 +60,66 @@
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
-                        "sCullingRadius": 500,
+                        "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
-                        "vertical_fov": 694.0
+                        "vertical_fov": 585.0
                     }
                 ],
                 "is3D": true,
                 "isPrefab": false,
-                "name": "Direct Light",
+                "name": "Directional Light",
                 "parent_UID": 0,
                 "tag": 0
             },
             {
-                "UID": 2006424621,
+                "UID": 956876465,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": true,
+                        "isMainCamera": false,
+                        "near_plane_distance": 0.30000001192092896,
+                        "sCullingRadius": 499,
+                        "sphere_culling": true,
+                        "type": 4,
+                        "vertical_fov": 0.44688403606414795
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1606156178,
                 "active": true,
                 "components": [
                     {
@@ -151,11 +151,6 @@
                             200.0
                         ],
                         "type": 13
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/main_menu.png",
-                        "type": 14
                     }
                 ],
                 "is3D": false,
@@ -165,326 +160,7 @@
                 "tag": 0
             },
             {
-                "UID": 776828730,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            700.0,
-                            350.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/Information Window/infomation_window_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Confirm",
-                "parent_UID": 2006424621,
-                "tag": 0
-            },
-            {
-                "UID": 1376590493,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 6,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            100.0,
-                            75.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            150.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button7",
-                "parent_UID": 776828730,
-                "tag": 0
-            },
-            {
-                "UID": 1468409100,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -75.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            650.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "ARE YOU SURE YOU WANT TO PROCEED?"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text6",
-                "parent_UID": 776828730,
-                "tag": 0
-            },
-            {
-                "UID": 1959571595,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 8,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -100.0,
-                            75.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            150.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button8",
-                "parent_UID": 776828730,
-                "tag": 0
-            },
-            {
-                "UID": 178616963,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "YES"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text7",
-                "parent_UID": 1376590493,
-                "tag": 0
-            },
-            {
-                "UID": 210905963,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "NO"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text8",
-                "parent_UID": 1959571595,
-                "tag": 0
-            },
-            {
-                "UID": 2146069269,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -350.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            2300.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/semi-transparent_black_screen.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Play",
-                "parent_UID": 2006424621,
-                "tag": 0
-            },
-            {
-                "UID": 623588820,
+                "UID": 578285601,
                 "active": true,
                 "components": [
                     {
@@ -499,7 +175,7 @@
                             0.5
                         ],
                         "position": [
-                            591.0,
+                            0.0,
                             0.0
                         ],
                         "rotation": [
@@ -508,118 +184,25 @@
                             0.0
                         ],
                         "size": [
-                            741.0,
-                            1080.0
+                            1920.0,
+                            1089.0
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "texture": "Assets/UI/Menu UI/menuMainBackgroundRight.png",
+                        "texture": "Assets/UI/Menu UI/main_menu.png",
                         "type": 14
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Main",
-                "parent_UID": 2006424621,
+                "name": "Background",
+                "parent_UID": 1606156178,
                 "tag": 0
             },
             {
-                "UID": 1057022286,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            500.0,
-                            125.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button9",
-                "parent_UID": 2146069269,
-                "tag": 0
-            },
-            {
-                "UID": 1426987224,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            204.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "PLAY"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text9",
-                "parent_UID": 1057022286,
-                "tag": 0
-            },
-            {
-                "UID": 197409275,
+                "UID": 1900776732,
                 "active": true,
                 "components": [
                     {
@@ -628,14 +211,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 1,
+                        "anchor": 5,
                         "pivot": [
-                            0.5,
+                            1.0,
                             0.5
                         ],
                         "position": [
-                            140.0,
-                            -537.0
+                            0.0,
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -644,21 +227,286 @@
                         ],
                         "size": [
                             350.0,
-                            100.0
+                            1080.0
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
+                        "texture": "Assets/New UI/MainMenuRightBar.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Right Bar",
+                "parent_UID": 1606156178,
+                "tag": 0
+            },
+            {
+                "UID": 637474486,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 5,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -175.0,
+                            191.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            268.2099914550781,
+                            70.70999908447266
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/button_a_hover.png",
+                        "idleTexture": "Assets/New UI/button_a_default.png",
+                        "pressedTexture": "Assets/New UI/button_a_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Continue Button",
+                "parent_UID": 1606156178,
+                "tag": 0
+            },
+            {
+                "UID": 1714914463,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 2,
+                        "pivot": [
+                            1.0,
+                            0.5
+                        ],
+                        "position": [
+                            -82.0,
+                            -115.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            190.39999389648438,
+                            179.69000244140625
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/title_logo_white.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Logo",
+                "parent_UID": 1606156178,
+                "tag": 0
+            },
+            {
+                "UID": 128510617,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 2,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -173.0,
+                            -238.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            280.20001220703125,
+                            25.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/decorative_vector.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Decorative Vector",
+                "parent_UID": 1606156178,
+                "tag": 0
+            },
+            {
+                "UID": 552840765,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            2.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            150.0,
+                            40.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Inter/Inter-SemiBold.otf",
+                        "type": 16,
+                        "value": "Continue"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text",
+                "parent_UID": 637474486,
+                "tag": 0
+            },
+            {
+                "UID": 421586441,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": true,
+                        "isMainCamera": true,
+                        "near_plane_distance": 0.30000001192092896,
+                        "sCullingRadius": 499,
+                        "sphere_culling": true,
+                        "type": 4,
+                        "vertical_fov": 0.44688403606414795
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Main Camera",
+                "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 1731811811,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 5,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -175.0,
+                            89.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            268.2099914550781,
+                            70.70999908447266
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/button_a_hover.png",
+                        "idleTexture": "Assets/New UI/button_a_default.png",
+                        "pressedTexture": "Assets/New UI/button_a_pressed.png",
                         "type": 15
                     },
                     {
                         "active": true,
                         "file_name": "Assets/Scripts/HUD/UI_ChangeScenes.lua",
-                        "id": 1119126052,
+                        "id": 1348187397,
                         "inspector_variables": [
                             {
                                 "name": "name",
@@ -667,343 +515,16 @@
                             }
                         ],
                         "type": 5
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_click.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_hover.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": 11
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_SFXMMS.lua",
-                        "id": 1030363416,
-                        "inspector_variables": [
-                            {
-                                "name": "isCredits",
-                                "type": "bool",
-                                "value": false
-                            }
-                        ],
-                        "type": 5
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "PlayButton",
-                "parent_UID": 623588820,
+                "name": "New Game Button",
+                "parent_UID": 1606156178,
                 "tag": 0
             },
             {
-                "UID": 45568524,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            140.0,
-                            -660.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            350.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_click.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_hover.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": 11
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_SFXMMS.lua",
-                        "id": 387640948,
-                        "inspector_variables": [
-                            {
-                                "name": "isCredits",
-                                "type": "bool",
-                                "value": false
-                            }
-                        ],
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SettingsButton",
-                "parent_UID": 623588820,
-                "tag": 0
-            },
-            {
-                "UID": 595836859,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            140.0,
-                            -794.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            350.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_OpenCreditsPopUp.lua",
-                        "id": 491632036,
-                        "inspector_variables": [
-                            {
-                                "name": "name",
-                                "type": "string",
-                                "value": "Credits"
-                            }
-                        ],
-                        "type": 5
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_click.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_hover.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": 11
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_SFXMMS.lua",
-                        "id": 523448859,
-                        "inspector_variables": [
-                            {
-                                "name": "isCredits",
-                                "type": "bool",
-                                "value": false
-                            }
-                        ],
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "CreditsButton",
-                "parent_UID": 623588820,
-                "tag": 0
-            },
-            {
-                "UID": 1335979195,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            140.0,
-                            -925.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            350.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_Quit.lua",
-                        "id": 1285458090,
-                        "type": 5
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_click.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_hover.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": 11
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_SFXMMS.lua",
-                        "id": 235522849,
-                        "inspector_variables": [
-                            {
-                                "name": "isCredits",
-                                "type": "bool",
-                                "value": false
-                            }
-                        ],
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "QuitButton",
-                "parent_UID": 623588820,
-                "tag": 0
-            },
-            {
-                "UID": 1621378687,
+                "UID": 1010964977,
                 "active": true,
                 "components": [
                     {
@@ -1019,7 +540,7 @@
                         ],
                         "position": [
                             0.0,
-                            0.0
+                            3.0
                         ],
                         "rotation": [
                             0.0,
@@ -1027,436 +548,7 @@
                             0.0
                         ],
                         "size": [
-                            139.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "PLAY"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text10",
-                "parent_UID": 197409275,
-                "tag": 0
-            },
-            {
-                "UID": 53893934,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "SETTINGS"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SettingsText",
-                "parent_UID": 45568524,
-                "tag": 0
-            },
-            {
-                "UID": 552516150,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "CREDITS"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "CreditsText",
-                "parent_UID": 595836859,
-                "tag": 0
-            },
-            {
-                "UID": 273029493,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            130.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "QUIT"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "QuitText",
-                "parent_UID": 1335979195,
-                "tag": 0
-            },
-            {
-                "UID": 726225609,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -125.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            550.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "THIS ACTION CANNOT BE UNDONE"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text",
-                "parent_UID": 776828730,
-                "tag": 0
-            },
-            {
-                "UID": 851276551,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            375.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            750.0,
-                            1080.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/menuMainBackgroundLeft.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Continue",
-                "parent_UID": 2006424621,
-                "tag": 0
-            },
-            {
-                "UID": 1149339762,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -100.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            408.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "CONTINUE"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Continue Title",
-                "parent_UID": 851276551,
-                "tag": 0
-            },
-            {
-                "UID": 795399335,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -50.0,
-                            150.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            550.0,
-                            150.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Player 1",
-                "parent_UID": 851276551,
-                "tag": 0
-            },
-            {
-                "UID": 382589060,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -55.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            300.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "PLAYER 1"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text2",
-                "parent_UID": 795399335,
-                "tag": 0
-            },
-            {
-                "UID": 1495879129,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            50.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            235.0,
+                            160.0,
                             40.0
                         ],
                         "type": 22
@@ -1469,1698 +561,20 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-SemiBold.otf",
                         "type": 16,
-                        "value": "TIME PLAYED: "
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text3",
-                "parent_UID": 795399335,
-                "tag": 0
-            },
-            {
-                "UID": 548292526,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -50.0,
-                            -60.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            550.0,
-                            150.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Player 2",
-                "parent_UID": 851276551,
-                "tag": 0
-            },
-            {
-                "UID": 1080488190,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -55.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            255.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "EMPTY"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text4",
-                "parent_UID": 548292526,
-                "tag": 0
-            },
-            {
-                "UID": 1821729950,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            50.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            235.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "TIME PLAYED: "
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text5",
-                "parent_UID": 548292526,
-                "tag": 0
-            },
-            {
-                "UID": 1928152662,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -50.0,
-                            -275.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            550.0,
-                            150.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Player 3",
-                "parent_UID": 851276551,
-                "tag": 0
-            },
-            {
-                "UID": 223263817,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -55.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            255.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "EMPTY"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text15",
-                "parent_UID": 1928152662,
-                "tag": 0
-            },
-            {
-                "UID": 1639863254,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            50.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            235.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "TIME PLAYED: "
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text16",
-                "parent_UID": 1928152662,
-                "tag": 0
-            },
-            {
-                "UID": 394535737,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 5,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -75.0,
-                            150.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "X1",
-                "parent_UID": 851276551,
-                "tag": 0
-            },
-            {
-                "UID": 962387700,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            51.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "X"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text17",
-                "parent_UID": 394535737,
-                "tag": 0
-            },
-            {
-                "UID": 121076088,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            51.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "X"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text18",
-                "parent_UID": 744466518,
-                "tag": 0
-            },
-            {
-                "UID": 744466518,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 5,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -75.0,
-                            -60.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "X2",
-                "parent_UID": 851276551,
-                "tag": 0
-            },
-            {
-                "UID": 1365275337,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 5,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -75.0,
-                            -275.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "X3",
-                "parent_UID": 851276551,
-                "tag": 0
-            },
-            {
-                "UID": 149680746,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            51.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "X"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text19",
-                "parent_UID": 1365275337,
-                "tag": 0
-            },
-            {
-                "UID": 278170853,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 8,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -135.0,
-                            75.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            225.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Back",
-                "parent_UID": 851276551,
-                "tag": 0
-            },
-            {
-                "UID": 46953526,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            130.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "BACK"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text20",
-                "parent_UID": 278170853,
-                "tag": 0
-            },
-            {
-                "UID": 502504416,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            375.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            750.0,
-                            1080.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/menuMainBackgroundLeft.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "New Game",
-                "parent_UID": 2006424621,
-                "tag": 0
-            },
-            {
-                "UID": 110338433,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -100.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            408.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "NEW GAME"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text21",
-                "parent_UID": 502504416,
-                "tag": 0
-            },
-            {
-                "UID": 323038574,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -50.0,
-                            150.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            550.0,
-                            150.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button15",
-                "parent_UID": 502504416,
-                "tag": 0
-            },
-            {
-                "UID": 1094305137,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -55.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            300.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "PLAYER 1"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text22",
-                "parent_UID": 323038574,
-                "tag": 0
-            },
-            {
-                "UID": 1845901695,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            50.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            235.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "TIME PLAYED:"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text23",
-                "parent_UID": 323038574,
-                "tag": 0
-            },
-            {
-                "UID": 718482261,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -50.0,
-                            -60.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            550.0,
-                            150.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button16",
-                "parent_UID": 502504416,
-                "tag": 0
-            },
-            {
-                "UID": 1168651455,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -55.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            255.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "EMPTY"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text24",
-                "parent_UID": 718482261,
-                "tag": 0
-            },
-            {
-                "UID": 377772075,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            50.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            235.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "TIME PLAYED:"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text25",
-                "parent_UID": 718482261,
-                "tag": 0
-            },
-            {
-                "UID": 1424745261,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -50.0,
-                            -275.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            550.0,
-                            150.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button17",
-                "parent_UID": 502504416,
-                "tag": 0
-            },
-            {
-                "UID": 284028736,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -55.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            255.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "EMPTY"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text26",
-                "parent_UID": 1424745261,
-                "tag": 0
-            },
-            {
-                "UID": 964636956,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 7,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            50.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            235.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "TIME PLAYED:"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text27",
-                "parent_UID": 1424745261,
-                "tag": 0
-            },
-            {
-                "UID": 583812554,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 5,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -75.0,
-                            150.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button18",
-                "parent_UID": 502504416,
-                "tag": 0
-            },
-            {
-                "UID": 221342555,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            51.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "X"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text28",
-                "parent_UID": 583812554,
-                "tag": 0
-            },
-            {
-                "UID": 34364659,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 5,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -75.0,
-                            -60.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button19",
-                "parent_UID": 502504416,
-                "tag": 0
-            },
-            {
-                "UID": 2126456503,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            51.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "X"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text29",
-                "parent_UID": 34364659,
-                "tag": 0
-            },
-            {
-                "UID": 1245395547,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 5,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -75.0,
-                            -275.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button20",
-                "parent_UID": 502504416,
-                "tag": 0
-            },
-            {
-                "UID": 22600690,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            51.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "X"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text30",
-                "parent_UID": 1245395547,
-                "tag": 0
-            },
-            {
-                "UID": 350159611,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 8,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -135.0,
-                            75.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            225.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Back2",
-                "parent_UID": 502504416,
-                "tag": 0
-            },
-            {
-                "UID": 883121553,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            225.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "BACK"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text31",
-                "parent_UID": 350159611,
-                "tag": 0
-            },
-            {
-                "UID": 2024797330,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            140.0,
-                            302.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            400.0,
-                            400.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Logo/title_logo_color.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Logo",
-                "parent_UID": 623588820,
-                "tag": 0
-            },
-            {
-                "UID": 2025657733,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            375.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            750.0,
-                            1080.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/menuMainBackgroundLeft.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Settings",
-                "parent_UID": 2006424621,
-                "tag": 0
-            },
-            {
-                "UID": 1876896351,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -100.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            408.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "SETTINGS"
+                        "value": "New Game"
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text1",
-                "parent_UID": 2025657733,
+                "parent_UID": 1731811811,
                 "tag": 0
             },
             {
-                "UID": 1315900315,
-                "active": false,
+                "UID": 405664832,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -3168,13 +582,13 @@
                     },
                     {
                         "active": true,
-                        "anchor": 4,
+                        "anchor": 5,
                         "pivot": [
                             0.5,
                             0.5
                         ],
                         "position": [
-                            0.0,
+                            -175.0,
                             0.0
                         ],
                         "rotation": [
@@ -3183,28 +597,28 @@
                             0.0
                         ],
                         "size": [
-                            500.0,
-                            100.0
+                            268.2099914550781,
+                            70.70999908447266
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
+                        "hoverTexture": "Assets/New UI/button_a_hover.png",
+                        "idleTexture": "Assets/New UI/button_a_default.png",
+                        "pressedTexture": "Assets/New UI/button_a_pressed.png",
                         "type": 15
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Button",
-                "parent_UID": 2025657733,
+                "name": "Settings Button",
+                "parent_UID": 1606156178,
                 "tag": 0
             },
             {
-                "UID": 457979683,
-                "active": false,
+                "UID": 1008564102,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -3227,8 +641,8 @@
                             0.0
                         ],
                         "size": [
-                            225.0,
-                            50.0
+                            137.0,
+                            47.0
                         ],
                         "type": 22
                     },
@@ -3240,20 +654,20 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-SemiBold.otf",
                         "type": 16,
-                        "value": "AUDIO"
+                        "value": "Settings"
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Text32",
-                "parent_UID": 1315900315,
+                "name": "Text2",
+                "parent_UID": 405664832,
                 "tag": 0
             },
             {
-                "UID": 1313803134,
-                "active": false,
+                "UID": 968539383,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -3261,14 +675,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 4,
+                        "anchor": 5,
                         "pivot": [
                             0.5,
                             0.5
                         ],
                         "position": [
-                            0.0,
-                            -125.0
+                            -175.0,
+                            -372.0
                         ],
                         "rotation": [
                             0.0,
@@ -3276,28 +690,28 @@
                             0.0
                         ],
                         "size": [
-                            500.0,
-                            100.0
+                            217.60000610351563,
+                            57.369998931884766
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
+                        "hoverTexture": "Assets/New UI/button_a_hover.png",
+                        "idleTexture": "Assets/New UI/button_a_default.png",
+                        "pressedTexture": "Assets/New UI/button_a_pressed.png",
                         "type": 15
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Button1",
-                "parent_UID": 2025657733,
+                "name": "Credits Button",
+                "parent_UID": 1606156178,
                 "tag": 0
             },
             {
-                "UID": 2074790362,
-                "active": false,
+                "UID": 1832608110,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -3312,7 +726,7 @@
                         ],
                         "position": [
                             0.0,
-                            0.0
+                            1.0
                         ],
                         "rotation": [
                             0.0,
@@ -3320,8 +734,8 @@
                             0.0
                         ],
                         "size": [
-                            300.0,
-                            50.0
+                            110.0,
+                            40.0
                         ],
                         "type": 22
                     },
@@ -3333,254 +747,20 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-SemiBold.otf",
                         "type": 16,
-                        "value": "CONTROLS"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text33",
-                "parent_UID": 1313803134,
-                "tag": 0
-            },
-            {
-                "UID": 639760994,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -250.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            500.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button2",
-                "parent_UID": 2025657733,
-                "tag": 0
-            },
-            {
-                "UID": 297479280,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            300.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "INSTRUCTONS"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text34",
-                "parent_UID": 639760994,
-                "tag": 0
-            },
-            {
-                "UID": 472661212,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 8,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -135.0,
-                            75.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            225.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button3",
-                "parent_UID": 2025657733,
-                "tag": 0
-            },
-            {
-                "UID": 408092562,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            130.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "BACK"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text35",
-                "parent_UID": 472661212,
-                "tag": 0
-            },
-            {
-                "UID": 603609192,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 3,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            375.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            750.0,
-                            1080.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/menuMainBackgroundLeft.png",
-                        "type": 14
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_Skip.lua",
-                        "id": 1467384083,
-                        "type": 5
+                        "value": "Credits"
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Credits",
-                "parent_UID": 2006424621,
+                "parent_UID": 968539383,
                 "tag": 0
             },
             {
-                "UID": 1745449709,
-                "active": false,
+                "UID": 1710790746,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -3588,14 +768,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 4,
+                        "anchor": 5,
                         "pivot": [
                             0.5,
                             0.5
                         ],
                         "position": [
-                            -50.0,
-                            -400.0
+                            -175.0,
+                            -441.0
                         ],
                         "rotation": [
                             0.0,
@@ -3603,34 +783,28 @@
                             0.0
                         ],
                         "size": [
-                            75.0,
-                            75.0
+                            217.60000610351563,
+                            57.369998931884766
                         ],
                         "type": 22
                     },
                     {
                         "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
+                        "hoverTexture": "Assets/New UI/button_a_hover.png",
+                        "idleTexture": "Assets/New UI/button_a_default.png",
+                        "pressedTexture": "Assets/New UI/button_a_pressed.png",
                         "type": 15
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_SkipBackwards.lua",
-                        "id": 86295502,
-                        "type": 5
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Button4",
-                "parent_UID": 603609192,
+                "name": "Quit Button",
+                "parent_UID": 1606156178,
                 "tag": 0
             },
             {
-                "UID": 1787422293,
-                "active": false,
+                "UID": 912497002,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -3644,7 +818,7 @@
                             0.5
                         ],
                         "position": [
-                            0.0,
+                            -4.0,
                             0.0
                         ],
                         "rotation": [
@@ -3653,8 +827,8 @@
                             0.0
                         ],
                         "size": [
-                            50.0,
-                            50.0
+                            71.0,
+                            38.0
                         ],
                         "type": 22
                     },
@@ -3666,523 +840,15 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-SemiBold.otf",
                         "type": 16,
-                        "value": "<-"
+                        "value": "Quit"
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Text36",
-                "parent_UID": 1745449709,
-                "tag": 0
-            },
-            {
-                "UID": 1892568244,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            50.0,
-                            -400.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            75.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_SkipForward.lua",
-                        "id": 348765970,
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Button5",
-                "parent_UID": 603609192,
-                "tag": 0
-            },
-            {
-                "UID": 2042635095,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            50.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "->"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text37",
-                "parent_UID": 1892568244,
-                "tag": 0
-            },
-            {
-                "UID": 1783361008,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 8,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -135.0,
-                            75.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            225.0,
-                            100.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_ClosePopUp.lua",
-                        "id": 1319612470,
-                        "inspector_variables": [
-                            {
-                                "name": "name",
-                                "type": "string",
-                                "value": "UI_OpenCreditsPopUp.lua"
-                            }
-                        ],
-                        "type": 5
-                    },
-                    {
-                        "active": true,
-                        "fade_time": 2.0,
-                        "offset_sync": false,
-                        "total_tracks": 2,
-                        "tracks": [
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_click.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            },
-                            {
-                                "bypass": false,
-                                "loop": false,
-                                "mute": false,
-                                "offset": 0.0,
-                                "pan": 0.0,
-                                "play_on_start": false,
-                                "track_path": "Assets/Audio/SFX/UI/sfx_ui_hover.wav",
-                                "transpose": 0.0,
-                                "volume": 100.0
-                            }
-                        ],
-                        "type": 11
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_SFXMMS.lua",
-                        "id": 1145745308,
-                        "inspector_variables": [
-                            {
-                                "name": "isCredits",
-                                "type": "bool",
-                                "value": true
-                            }
-                        ],
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Back1",
-                "parent_UID": 603609192,
-                "tag": 0
-            },
-            {
-                "UID": 764274422,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            130.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "BACK"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text38",
-                "parent_UID": 1783361008,
-                "tag": 0
-            },
-            {
-                "UID": 774765631,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 1,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -100.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            357.0,
-                            75.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Light.otf",
-                        "type": 16,
-                        "value": "CREDITS"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text40",
-                "parent_UID": 603609192,
-                "tag": 0
-            },
-            {
-                "UID": 1611234152,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            650.0,
-                            650.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/Credits/menuMain_credits1.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Image2",
-                "parent_UID": 603609192,
-                "tag": 0
-            },
-            {
-                "UID": 10498922,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            650.0,
-                            650.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/Credits/menuMain_credits2.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Image3",
-                "parent_UID": 603609192,
-                "tag": 0
-            },
-            {
-                "UID": 1163142126,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            650.0,
-                            650.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/Credits/menuMain_credits3.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Image4",
-                "parent_UID": 603609192,
-                "tag": 0
-            },
-            {
-                "UID": 1197804482,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            650.0,
-                            650.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/Credits/menuMain_credits4.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Image5",
-                "parent_UID": 603609192,
-                "tag": 0
-            },
-            {
-                "UID": 1863379406,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            650.0,
-                            650.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Menu UI/Credits/menuMain_credits5.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Image6",
-                "parent_UID": 603609192,
+                "name": "Text3",
+                "parent_UID": 1710790746,
                 "tag": 0
             }
         ],

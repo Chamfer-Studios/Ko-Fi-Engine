@@ -43,9 +43,8 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum.SetViewPlaneDistances(0.3f, 1000.0f);
 	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
-	SetIsSphereCullingActive(true);
-	SetIsFrustumActive(true);
-
+	SetIsSphereCullingActive(false);
+	SetIsFrustumActive(false);
 }
 
 C_Camera::~C_Camera()
@@ -80,33 +79,19 @@ bool C_Camera::Update(float dt)
 	//Camera Position Rotation of the camera
 
 	// SET CAMERA FRUSTUM, OBJECT TRANSFORM
+	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 	if (!tempTransform.Equals(owner->GetTransform()->GetGlobalTransform()))
 	{
 		cameraFrustum.SetWorldMatrix(owner->GetTransform()->GetGlobalTransform().Float3x4Part());
 		tempTransform = owner->GetTransform()->GetGlobalTransform();
 	}
+
+	
 	if (!isEngineCamera && owner->GetEngine()->GetCamera3D()->currentCamera == this)
 	{
-		//Camera Position Rotation of the camera
-
-		ApplyCullings(isSphereCullingActive, isFrustumCullingActive);
-
-
-		// Camera Frustum Updates Transform
-		C_Transform* transform = owner->GetTransform();
-
-	}
-	else {
-		std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
-
-		for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
-		{
-			GameObject* gameObject = (*go);
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
-		}
+		ApplyCullings();
 	}
 	
-	owner->GetTransform()->SetGlobalTransform(GetWorldMatrix());
 	return true;
 }
 
@@ -140,11 +125,13 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Sphere culling", &isSphereCullingActive)) {
 			owner->GetEngine()->GetRenderer()->ResetFrustumCulling();
+			ApplyCullings();
 		}
 		// FRUSTUM CULLING
 		if (ImGui::Checkbox("Frustum culling", &isFrustumCullingActive))
 		{
 			owner->GetEngine()->GetRenderer()->ResetFrustumCulling();
+			ApplyCullings();
 
 		}
 		// SPHERE CULLING RADIUS
@@ -206,7 +193,7 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::DragFloat2("Near & Far plane distances", &(planeDistances[0])))
 		{
 			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
-			sCullingRadius = (planeDistances.y-planeDistances.x) / 2.0f;
+			sCullingRadius = (planeDistances.y - planeDistances.x) / 2.0f;
 		}
 	}
 	else
@@ -232,13 +219,10 @@ void C_Camera::Load(Json& json)
 {
 	cameraFrustum.SetVerticalFovAndAspectRatio(json.at("vertical_fov"), 1.778f);
 	cameraFrustum.SetViewPlaneDistances(json.at("near_plane_distance"), json.at("far_plane_distance"));
+	sCullingRadius = (GetFarPlaneDistance() - GetNearPlaneDistance()) / 2.0f;
 	if (json.contains("sphere_culling"))
 	{
 		isSphereCullingActive = json.at("sphere_culling").get<bool>();
-	}
-	if (json.contains("sCullingRadius"))
-	{
-		sCullingRadius = json.at("sCullingRadius").get<int>();
 	}
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
@@ -347,16 +331,14 @@ void C_Camera::SphereCulling()
 		float3 middlePoint = this->cameraFrustum.CenterPoint(); //no need to recalculate
 		float3 closest = cMesh->GetGlobalAABB().ClosestPoint(middlePoint);
 		float distance = middlePoint.DistanceSq(closest);
-		if (distance > (sCullingRadius* sCullingRadius))
+		if (distance > (sCullingRadius * sCullingRadius))
 		{
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.erase(gameObject);
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(gameObject);
-			gameObject->SetRenderGameObject(false);
+			//owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(gameObject);
 		}
 		else {
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
-			gameObject->SetRenderGameObject(true);
+			//owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
 		}
 
 	}
@@ -390,20 +372,22 @@ void C_Camera::FrustumCulling()
 		if (componentMesh == nullptr || go == owner)
 			continue;
 
-		if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
-		{
-			if (owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.contains(*it)) {
-				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(*it);
-				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(*it);
-				go->SetRenderGameObject(false);
+		if (owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.contains(go)) {
+			if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
+			{
+				if (owner->GetEngine()->GetRenderer()->enableOcclusionCulling) {
+					owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(go);
+				}
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(go);
 			}
 		}
-		else
-		{
-			if (!owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.contains(go)) {
+		else {
+			if (ClipsWithBBox(componentMesh->GetGlobalAABB()))
+			{
+				if (owner->GetEngine()->GetRenderer()->enableOcclusionCulling) {
+					owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(go);
+				}
 				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(go);
-				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(go);
-				go->SetRenderGameObject(true);
 			}
 		}
 	}
@@ -430,10 +414,10 @@ void C_Camera::DrawFrustum() const
 
 }
 
-void C_Camera::ApplyCullings(bool applySphereCulling, bool applyFrustumCulling)
+void C_Camera::ApplyCullings()
 {
 	//Apply rotation
-	if (applySphereCulling)
+	if (isSphereCullingActive)
 		SphereCulling();
 	else {
 		std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
@@ -444,7 +428,7 @@ void C_Camera::ApplyCullings(bool applySphereCulling, bool applyFrustumCulling)
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
 		}
 	}
-	if (applyFrustumCulling)
+	if (isFrustumCullingActive)
 		FrustumCulling();
 	else {
 		std::unordered_set<GameObject*>::iterator it;
@@ -452,6 +436,9 @@ void C_Camera::ApplyCullings(bool applySphereCulling, bool applyFrustumCulling)
 		for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
 		{
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(*it);
+			if (owner->GetEngine()->GetRenderer()->enableOcclusionCulling) {
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(*it);
+			}
 		}
 	}
 }

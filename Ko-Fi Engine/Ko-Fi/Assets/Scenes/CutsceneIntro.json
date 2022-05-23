@@ -20,9 +20,9 @@
                         ],
                         "rotation": [
                             0.0,
+                            1.0,
                             0.0,
-                            0.0,
-                            1.0
+                            0.0
                         ],
                         "scale": [
                             1.0,
@@ -37,6 +37,8 @@
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.009999999776482582,
+                        "sCullingRadius": 249,
+                        "sphere_culling": false,
                         "type": 4,
                         "vertical_fov": 0.3839724361896515
                     }
@@ -63,15 +65,15 @@
                             0.0
                         ],
                         "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
+                            0.27059805393218994,
+                            -0.6532815098762512,
+                            0.27059805393218994,
+                            0.6532815098762512
                         ],
                         "scale": [
                             1.0,
-                            1.0,
-                            1.0
+                            0.9999999403953552,
+                            0.9999999403953552
                         ],
                         "type": 21
                     },
@@ -104,8 +106,10 @@
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
+                        "sCullingRadius": 499,
+                        "sphere_culling": false,
                         "type": 4,
-                        "vertical_fov": 686.0
+                        "vertical_fov": 378.0
                     }
                 ],
                 "is3D": true,
@@ -241,8 +245,9 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Press k to skip"
+                        "value": "Press enter to skip"
                     }
                 ],
                 "is3D": false,
@@ -289,6 +294,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Arrakis, The Source of the Spice on the known universe,"
                     }
@@ -379,6 +385,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "the material that allows the user to travel. "
                     }
@@ -427,6 +434,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Situation: War between the Harkonnen, after they defeated"
                     }
@@ -475,6 +483,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "the Atreides and are on the move to conquer the planet. "
                     }
@@ -565,6 +574,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "News of a possible location of Sannara, the legendary moving city"
                     }
@@ -613,6 +623,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "in the deep desert, arose in Arrakeen. These rumors reached"
                     }
@@ -661,6 +672,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "The stories around Sannara were enough to divert a part of the harkonnen’s"
                     }
@@ -709,6 +721,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "military assets in order to suppress a potential enemy while establishing"
                     }
@@ -757,6 +770,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": " In Sannara, Zhib, Naib of Sietch Sannara, the legendary"
                     }
@@ -805,6 +819,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "moving city in the deep desert, received a message from one of the"
                     }
@@ -853,6 +868,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Sietch's scouts that his home had been discovered by the enemy..."
                     }
@@ -985,6 +1001,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Glossu Rabaan Harkonnen’s ears, who planned an attack on the region right away."
                     }
@@ -1159,6 +1176,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "a settlement of their own to fight back Muad’dib’s troops."
                     }
@@ -1333,6 +1351,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "And by none other than the tyrant that had occupied the planet,"
                     }
@@ -1381,6 +1400,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Glossu Rabaan harkonnen. The information about the Sietch had arrived"
                     }
@@ -1429,6 +1449,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "straight to the ruler's doorstep and entered rampant like a sandworm."
                     }
@@ -1477,6 +1498,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "He had established a perimeter around the rock formation where Sannara"
                     }
@@ -1525,6 +1547,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "was established and had complete vision of the mirages that hid the Sietch."
                     }
@@ -1699,6 +1722,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "The only ones capable of stopping this threat were the group of warriors that"
                     }
@@ -1747,6 +1771,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "form the spearhead from Sannara, the ones in charge of maintaining the secret"
                     }
@@ -1795,6 +1820,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "of their Sietch and that have made the oath to protect their home or die trying:"
                     }
@@ -1843,6 +1869,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Nerala, the Black Hawk, fiercest hunter in the Arrakis, and Omozrra, master of worms,"
                     }
@@ -1891,6 +1918,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "shadow of the desert, and their head, Zhib, son of Zhiffat, blade of the desert."
                     }

@@ -9,6 +9,7 @@ STATE = { -- Importat to add changes to the state enum in EnemyController.lua an
 
 meleeRange = 25.0
 rangedAttackRange = 100.0
+knifeHitChance = 100
 
 function Start()
     currentState = STATE.UNAWARE
@@ -63,7 +64,101 @@ function EventHandler(key, fields)
         currentState = fields[2]
     elseif key == "Target_Update" then
         target = fields[1] -- fields[1] -> new Target;
+    elseif key == "Die" then
+        if (fields[1] == gameObject) then
+            Die()
+        end
+    elseif key == "Knife_Hit" then
+        if (fields[1] == gameObject) then
+            if (currentState == STATE.UNAWARE or currentState == STATE.AWARE) then
+                knifeHitChance =
+                    GetVariable("Zhib.lua", "unawareChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= knifeHitChance) then
+                    Log("Knife's D100 roll has been " .. rng .. " so the UNAWARE enemy is dead! \n")
+                    Die()
+                else
+                    Log("Knife's D100 roll has been " .. rng .. " so the UNAWARE enemy has dodged the knife :( \n")
+                end
+            elseif (currentState == STATE.SUS) then
+                knifeHitChance = GetVariable("Zhib.lua", "awareChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= knifeHitChance) then
+                    Log("Knife's D100 roll has been " .. rng .. " so the AWARE enemy is dead! \n")
+                    Die()
+                else
+                    Log("Knife's D100 roll has been " .. rng .. " so the AWARE enemy has dodged the knife :( \n")
+                end
+            elseif (currentState == STATE.AGGRO) then
+                knifeHitChance = GetVariable("Zhib.lua", "aggroChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= knifeHitChance) then
+                    Log("Knife's D100 roll has been " .. rng .. " so the AGGRO enemy is dead! \n")
+                    Die()
+                else
+                    Log("Knife's D100 roll has been " .. rng .. " so the AGGRO enemy has dodged the knife :( \n")
+                end
+            end
+        end
+    elseif key == "Dart_Hit" then
+        if (fields[1] == gameObject) then
+            if (currentState == STATE.UNAWARE or currentState == STATE.AWARE) then
+                dartHitChance =
+                    GetVariable("Nerala.lua", "unawareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= dartHitChance) then
+                    Log("Dart's D100 roll has been " .. rng .. " so the UNAWARE enemy is stunned! \n")
+                    -- TODO: STUN NOT DIE
+                    Die()
+                else
+                    Log("Dart's D100 roll has been " .. rng .. " so the UNAWARE enemy has dodged the dart :( \n")
+                end
+            elseif (currentState == STATE.SUS) then
+                dartHitChance = GetVariable("Nerala.lua", "awareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= dartHitChance) then
+                    Log("Dart's D100 roll has been " .. rng .. " so the AWARE enemy is stunned! \n")
+                    -- TODO: STUN NOT DIE
+                    Die()
+                else
+                    Log("Dart's D100 roll has been " .. rng .. " so the AWARE enemy has dodged the dart :( \n")
+                end
+            elseif (currentState == STATE.AGGRO) then
+                dartHitChance = GetVariable("Nerala.lua", "aggroChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+                math.randomseed(os.time())
+                rng = math.random(100)
+                if (rng <= dartHitChance) then
+                    Log("Dart's D100 roll has been " .. rng .. " so the AGGRO enemy is stunned! \n")
+                    -- TODO: STUN NOT DIE
+                    Die()
+                else
+                    Log("Dart's D100 roll has been " .. rng .. " so the AGGRO enemy has dodged the dart :( \n")
+                end
+            end
+        end
     end
+end
+
+function Die()
+
+    -- Chance to spawn, if spawn dispatch event
+    math.randomseed(os.time())
+    rng = math.random(100)
+    if (rng >= 50) then
+        InstantiatePrefab("SpiceLoot")
+        str = "Harkonnen"
+        DispatchGlobalEvent("Spice_Spawn", {componentTransform:GetPosition(), str})
+        Log("Enemy has dropped a spice loot :) " .. rng .. "\n")
+    else
+        Log("The drop rate has not been good :( " .. rng .. "\n")
+    end
+
+    DeleteGameObject()
 end
 
 -- Math

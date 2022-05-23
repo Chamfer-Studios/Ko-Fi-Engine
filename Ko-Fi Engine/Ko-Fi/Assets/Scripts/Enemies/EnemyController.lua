@@ -3,10 +3,15 @@ local staticIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
 staticIV = InspectorVariable.new("static", staticIVT, static)
 NewVariable(staticIV)
 
-speed = 20
+speed = 2000
 local speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 speedIV = InspectorVariable.new("speed", speedIVT, speed)
 NewVariable(speedIV)
+
+chaseSpeed = 3000
+local chaseSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+chaseSpeedIV = InspectorVariable.new("chaseSpeed", chaseSpeedIVT, chaseSpeed)
+NewVariable(chaseSpeedIV)
 
 visionConeAngle = 90
 local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
@@ -23,7 +28,7 @@ local hearingRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 hearingRangeIV = InspectorVariable.new("hearingRange", hearingRangeIVT, hearingRange)
 NewVariable(hearingRangeIV)
 
-awarenessOffset = float3.new(0, 900, 0)
+awarenessOffset = float3.new(0, 50, 0)
 local awarenessOffsetIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3
 awarenessOffsetIV = InspectorVariable.new("awarenessOffset", awarenessOffsetIVT, awarenessOffset)
 NewVariable(awarenessOffsetIV)
@@ -33,7 +38,8 @@ local awarenessSizeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3
 awarenessSizeIV = InspectorVariable.new("awarenessSize", awarenessSizeIVT, awarenessSize)
 NewVariable(awarenessSizeIV)
 
-awarenessSpeed = 0.4
+awarenessSpeed = 0.1
+awarenessVisualSpeed = 0.7
 -- local awarenessSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT
 -- awarenessSpeedIV = InspectorVariable.new("awarenessSpeed", awarenessSpeedIVT, awarenessSpeed)
 -- NewVariable(awarenessSpeedIV)
@@ -133,8 +139,9 @@ STATE = {
     AWARE = 2,
     SUS = 3,
     AGGRO = 4,
-    DEAD = 5,
-    VICTORY = 6
+    WORM = 5,
+    DEAD = 6,
+    VICTORY = 7
 }
 
 state = STATE.UNAWARE
@@ -162,9 +169,11 @@ function CheckIfPointInCone(position)
         end
     end
 
-    Log(tostring(componentTransform:GetFront()) .. "\n")
+    diff = Float3Difference(componentTransform:GetPosition(), position)
 
-    angle = Float3Angle(Float3Difference(componentTransform:GetPosition(), position), componentTransform:GetFront())
+    diff.y = 0
+
+    angle = Float3Angle(diff, componentTransform:GetFront())
 
     angle = math.abs(math.deg(angle))
 
@@ -179,32 +188,34 @@ function CheckIfPointInCone(position)
     end
 end
 
-function ProcessVisualTrigger(position, gameObject)
-    if state == STATE.AGGRO then
-        do
-            return
-        end
-    end
+isAnyPlayerInConeThisFrame = false
 
-    if not CheckIfPointInCone(position) then
+function ProcessVisualTrigger(position, gameObject)
+    if not CheckIfPointInCone(position) and not isAnyPlayerInConeThisFrame then
         if isSeeingPlayer then
-            seeingPosition = nil
-            seeingSource = nil
+            isSeeingPlayer = false
             SetTargetStateToUNAWARE()
         end
         do
             return
         end
     end
+    
+    if not isAnyPlayerInConeThisFrame then
+        isAnyPlayerInConeThisFrame = true
 
-    isSeeingPlayer = true
+        isSeeingPlayer = true
 
-    seeingPosition = position
-    seeingSource = gameObject
-    if state == STATE.UNAWARE then
-        SetTargetStateToSUS()
-    elseif state == STATE.SUS then
-        SetTargetStateToAGGRO()
+        seeingPosition = position
+        seeingSource = gameObject
+
+        if state == STATE.UNAWARE then
+            SetTargetStateToSUS()
+        elseif state == STATE.SUS then
+            SetTargetStateToAGGRO()
+        elseif state == STATE.AGGRO then
+            SetStateToAGGRO(gameObject)
+        end
     end
 end
 
@@ -244,12 +255,6 @@ hadRepeatedAuditoryTriggerLastFrame = false
 auditoryTriggerIsRepeating = false
 
 function ProcessRepeatedAuditoryTrigger(position, source)
-    if state == STATE.AGGRO then
-        do
-            return
-        end
-    end
-
     hadRepeatedAuditoryTriggerLastFrame = true
     if state == STATE.UNAWARE then
         SetTargetStateToSUS()
@@ -279,22 +284,10 @@ function ProcessAuditoryTrigger(position, range, type, source)
 end
 
 function SetTargetStateToUNAWARE()
-    if state == STATE.AGGRO then
-        do
-            return
-        end
-    end
-
     targetAwareness = 0
 end
 
 function SetTargetStateToSUS()
-    if state == STATE.AGGRO then
-        do
-            return
-        end
-    end
-
     targetAwareness = 1
 end
 
@@ -303,27 +296,23 @@ function SetTargetStateToAGGRO()
 end
 
 function SetStateToUNAWARE()
-    if state == STATE.AGGRO then
-        do
-            return
-        end
-    end
-
     CheckAndRecalculatePath(true)
     local oldState = state
     state = STATE.UNAWARE
     awareness = 0
     targetAwareness = 0
+
+    awarenessSource = nil
+    awarenessPosition = nil
+
+    isSeeingPlayer = false
+    seeingPosition = nil
+    seeingSource = nil
+
     DispatchEvent("Change_State", {oldState, state}) -- fields[1] -> fromState; fields[2] -> toState;
 end
 
 function SetStateToSUS(position)
-    if state == STATE.AGGRO then
-        do
-            return
-        end
-    end
-
     if static == true then
         DispatchEvent(pathfinderUpdateKey, {{}, false, componentTransform:GetPosition()})
         LookAtDirection(Float3Difference(componentTransform:GetPosition(), position))
@@ -336,6 +325,10 @@ function SetStateToSUS(position)
     awareness = 1
     targetAwareness = 0
     DispatchEvent("Change_State", {oldState, state}) -- fields[1] -> fromState; fields[2] -> toState;
+
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("Walk")
+    end
 end
 
 function SetStateToAGGRO(source)
@@ -343,11 +336,22 @@ function SetStateToAGGRO(source)
     state = STATE.AGGRO
     awareness = 2
     targetAwareness = 2
+    isSeeingPlayer = true
+    DispatchEvent("Change_State", {oldState, state}) -- fields[1] -> fromState; fields[2] -> toState;
+    if (componentAnimator ~= nil) then
+        Log("Change to run\n")
+        componentAnimator:SetSelectedClip("Walk")
+    end
+end
+
+function SetStateToWORM()
+    local oldState = state
+    state = STATE.WORM
     DispatchEvent("Change_State", {oldState, state}) -- fields[1] -> fromState; fields[2] -> toState;
 end
 
 function EventHandler(key, fields)
-    if key == "Auditory_Trigger" then -- fields[1] -> position; fields[2] -> range; fields[3] -> type ("single", "repeated"); fields[4] -> source ("GameObject");
+   if key == "Auditory_Trigger" then -- fields[1] -> position; fields[2] -> range; fields[3] -> type ("single", "repeated"); fields[4] -> source ("GameObject");
         ProcessAuditoryTrigger(fields[1], fields[2], fields[3], fields[4])
     elseif key == "State_Suspicious" then
         SetStateToSUS(fields[1])
@@ -359,14 +363,33 @@ function EventHandler(key, fields)
         ProcessVisualTrigger(fields[1], fields[2])
     elseif key == "Player_Attack" then
         if (fields[1] == gameObject) then
-            DeleteGameObject()
+            Die()
         end
     elseif key == "Death_Mark" then
         if (fields[1] == gameObject) then
             deathMarkTime = fields[2]
             deathMarkTimer = 0.0
         end
+    elseif key == "Knife_Hit" then
+        if (fields[1] == gameObject) then
+            Die()
+        end
+    elseif key == "Sadiq_Update_Target" then -- fields[1] -> target; targeted for (1 -> warning; 2 -> eat; 3 -> spit)
+        if (fields[1] == gameObject) then
+            if (fields[2] == 1) then
+                StopMovement()
+            elseif (fields[2] == 2) then
+                Die()
+            end
+        end
     end
+end
+
+function StopMovement()
+    if (componentRigidbody ~= nil) then
+        componentRigidbody:SetLinearVelocity(float3.new(0, 0, 0))
+    end
+    SetStateToWORM()
 end
 
 function ConfigAwarenessBars()
@@ -407,21 +430,42 @@ end
 
 function Start()
     CheckAndRecalculatePath(true)
-
     InstantiateNamedPrefab("awareness_green", awareness_green_name)
     InstantiateNamedPrefab("awareness_yellow", awareness_yellow_name)
     InstantiateNamedPrefab("awareness_red", awareness_red_name)
+
+    componentRigidbody = gameObject:GetRigidBody()
+    componentAnimator = gameObject:GetParent():GetComponentAnimator()
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("Walk")
+    end
 end
 
 oldSourcePos = nil
 
+coneLight = gameObject:GetLight()
+
 function Update(dt)
+
+    isAnyPlayerInConeThisFrame = false
+
+    if coneLight == nil then
+        coneLight = gameObject:GetLight()
+    end
+
+    if coneLight ~= nil then
+        coneLight:SetDirection(float3.new(-componentTransform:GetFront().x, -componentTransform:GetFront().y,
+            -componentTransform:GetFront().z))
+        coneLight:SetRange(visionConeRadius)
+        coneLight:SetAngle(visionConeAngle / 2)
+    end
 
     -- Death Mark (Weirding way)
     if (deathMarkTimer ~= nil) then
         deathMarkTimer = deathMarkTimer + dt
         if (deathMarkTimer >= deathMarkTime) then
-            DeleteGameObject()
+            -- Audio here
+            Die()
             return
         end
     end
@@ -432,17 +476,27 @@ function Update(dt)
         UpdateAwarenessBars()
     end
 
-    if awareness < targetAwareness then
+    if awareness < targetAwareness and isSeeingPlayer == true then
+        awareness = awareness + awarenessVisualSpeed * dt
+    elseif awareness < targetAwareness and isSeeingPlayer == false then
         awareness = awareness + awarenessSpeed * dt
     elseif awareness > targetAwareness then
         awareness = awareness - awarenessSpeed * dt
     end
 
     if awareness < 1.1 and awareness > 0.9 and state ~= STATE.SUS then
-        if seeingSource ~= nil then
+        if seeingPosition ~= nil then
             DispatchEvent("State_Suspicious", {seeingPosition})
         else
             DispatchEvent("State_Suspicious", {awarenessPosition})
+        end
+    end
+
+    if state == STATE.SUS then
+        if seeingPosition ~= nil then
+            DispatchEvent(pathfinderUpdateKey, {{seeingPosition}, false, componentTransform:GetPosition()})
+        else
+            DispatchEvent(pathfinderUpdateKey, {{awarenessPosition}, false, componentTransform:GetPosition()})
         end
     end
 
@@ -478,7 +532,8 @@ function Update(dt)
             s = awarenessSource
         end
 
-        if s ~= nil and (oldSourcePos == nil or Float3Distance(oldSourcePos, s:GetTransform():GetPosition()) > 10) then
+        --if s ~= nil and (oldSourcePos == nil or Float3Distance(oldSourcePos, s:GetTransform():GetPosition()) > 10) then
+        if s ~= nil then
             if static == true then
                 DispatchEvent(pathfinderUpdateKey, {{}, false, componentTransform:GetPosition()})
                 LookAtDirection(Float3Difference(componentTransform:GetPosition(), s:GetTransform():GetPosition()))
@@ -487,14 +542,34 @@ function Update(dt)
                     {{s:GetTransform():GetPosition()}, false, componentTransform:GetPosition()})
             end
             DispatchEvent("Target_Update", {s})
+            --oldSourcePos = s:GetTransform():GetPosition()
         end
 
-        oldSourcePos = s:GetTransform():GetPosition()
     end
 
     _loop = loop
     if state == STATE.SUS or state == STATE.AGGRO then
         _loop = false
     end
-    DispatchEvent(pathfinderFollowKey, {speed, dt, _loop})
+    if (state ~= STATE.WORM) then
+        if (state ~= STATE.AGGRO) then
+            DispatchEvent(pathfinderFollowKey, {speed, dt, _loop, false})
+        else
+            DispatchEvent(pathfinderFollowKey, {chaseSpeed, dt, _loop, false})
+        end
+    end
 end
+
+------------------- Functions --------------------
+
+function Die()
+
+    DispatchEvent("Die", {gameObject})
+
+    currentState = STATE.DEAD
+
+end
+
+--------------------------------------------------
+
+print("EnemyController.lua compiled successfully!")

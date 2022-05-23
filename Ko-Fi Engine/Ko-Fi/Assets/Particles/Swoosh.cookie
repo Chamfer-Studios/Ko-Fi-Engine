@@ -1,0 +1,80 @@
+{
+    "Swoosh": {
+        "emitters": [
+            {
+                "loop": true,
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 0.20000000298023224,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.5,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 6,
+                        "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
+                        "sideAxis": false,
+                        "topAxis": false,
+                        "type": 5
+                    },
+                    {
+                        "followForward": true,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "maxPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "maxVelocity": 5.0,
+                        "minAcceleration": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minDirection": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "minPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minVelocity": 40.0,
+                        "randAcceleration": false,
+                        "randDirection": false,
+                        "randPosition": false,
+                        "randVelocity": false,
+                        "type": 2
+                    },
+                    {
+                        "minInitialSize": [
+                            5.0,
+                            5.0,
+                            5.0
+                        ],
+                        "type": 4
+                    }
+                ],
+                "name": "Emitter",
+                "texture_path": "Assets/Textures/Particles/dash_projectile.png"
+            }
+        ],
+        "name": "Swoosh"
+    }
+}
