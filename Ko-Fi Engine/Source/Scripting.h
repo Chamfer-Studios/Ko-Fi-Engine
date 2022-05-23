@@ -244,7 +244,9 @@ public:
 			"GetSize", &C_Transform2D::GetSize,
 			"SetSize", &C_Transform2D::SetSize,
 			"GetPivot", &C_Transform2D::GetPivot,
-			"SetPivot", &C_Transform2D::SetPivot
+			"SetPivot", &C_Transform2D::SetPivot,
+			"GetMask", &C_Transform2D::GetMask,
+			"SetMask", &C_Transform2D::SetMask
 			
 			);
 
