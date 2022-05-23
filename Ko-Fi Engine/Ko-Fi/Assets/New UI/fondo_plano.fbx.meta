@@ -1,0 +1,17 @@
+{
+    "asset_file": "fondo_plano.fbx",
+    "asset_path": "Assets/New UI/fondo_plano.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Plane001.sugar",
+            "library_path": "Library/Meshes/835691712.sugar",
+            "type": 0,
+            "uid": 835691712
+        }
+    ],
+    "hash": "bc74951459d85012a0d52b0540ff4edb",
+    "library_file": "1825488873.tea",
+    "library_path": "Library/Models/1825488873.tea",
+    "type": 3,
+    "uid": 1825488873
+}

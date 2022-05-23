@@ -211,6 +211,7 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Math\TransformOps.cpp" />
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
+    <ClCompile Include="Source\I_Particles.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
     <ClCompile Include="Source\PanelResources.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
@@ -303,7 +304,7 @@
     <ClCompile Include="Source\C_Particle.cpp" />
     <ClCompile Include="Source\ParticleModule.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
-    <ClCompile Include="Source\R_ParticleResource.cpp" />
+    <ClCompile Include="Source\R_Particle.cpp" />
     <ClCompile Include="Source\M_Physics.cpp" />
     <ClCompile Include="Source\PieShape.cpp" />
     <ClCompile Include="Source\Quadtree.cpp" />
@@ -341,6 +342,7 @@
     <ClInclude Include="Source\C_CapsuleCollider.h" />
     <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\C_SphereCollider.h" />
+    <ClInclude Include="Source\I_Particles.h" />
     <ClInclude Include="Source\External\hash_library\hash.h" />
     <ClInclude Include="Source\External\hash_library\md5.h" />
     <ClInclude Include="Source\External\hash_library\sha1.h" />
@@ -530,7 +532,7 @@
     <ClInclude Include="Source\PanelNavigation.h" />
     <ClInclude Include="Source\PanelSettings.h" />
     <ClInclude Include="Source\Scripting.h" />
-    <ClInclude Include="Source\R_ParticleResource.h" />
+    <ClInclude Include="Source\R_Particle.h" />
     <ClInclude Include="Source\ResourceBase.h" />
     <ClInclude Include="Source\M_UI.h" />
     <ClInclude Include="Source\Node.h" />
@@ -570,8 +572,6 @@
     <ClInclude Include="Source\M_Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Dart.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\HunterSeeker.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Nerala.lua" />
@@ -582,9 +582,6 @@
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Decoy.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Zhib.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueManager.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueTrigger.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer2.lua" />
@@ -608,7 +605,6 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Mission.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OoSpicy.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenExitPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenQuestsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenSkillsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua" />
@@ -617,10 +613,6 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Skill.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_SkillSet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua" />

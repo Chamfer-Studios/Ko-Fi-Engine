@@ -1,0 +1,72 @@
+{
+    "Choosing Target": {
+        "emitters": [
+            {
+                "loop": true,
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 0.5,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.4749999940395355,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 6,
+                        "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
+                        "sideAxis": false,
+                        "topAxis": false,
+                        "type": 5
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    0.5882353186607361,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 0.0
+                            },
+                            {
+                                "color": [
+                                    1.0,
+                                    0.29411765933036804,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 0.5
+                            },
+                            {
+                                "color": [
+                                    1.0,
+                                    0.5882353186607361,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 1.0
+                            }
+                        ],
+                        "type": 3
+                    },
+                    {
+                        "minInitialSize": [
+                            20.0,
+                            20.0,
+                            20.0
+                        ],
+                        "type": 4
+                    }
+                ],
+                "name": "Emitter",
+                "texture_path": "Assets/Textures/Particles/mouse_target.png"
+            }
+        ],
+        "name": "Choosing Target"
+    }
+}

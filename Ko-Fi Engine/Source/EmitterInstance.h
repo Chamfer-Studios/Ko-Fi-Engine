@@ -20,13 +20,13 @@ public:
 	void Init();
 	bool Update(float dt);
 
-	void DrawParticles();
-
-	void SpawnParticle();
+	//change burst to generate more than particle at once
+	void SpawnParticle(int burst = 1);
 
 	void KillDeadParticles();
-	void KillParticles();
+	void KillAllParticles();
 	void SetParticleEmission(bool set);
+	bool GetParticleEmission();
 
 public:
 	uint activeParticles = 0;
@@ -34,6 +34,7 @@ public:
 	unsigned int* particleIndices = nullptr;
 
 	float emitterLife = 0.0f;
+	bool loop = true;
 
 	Emitter* emitter = nullptr;
 	C_Particle* component = nullptr;

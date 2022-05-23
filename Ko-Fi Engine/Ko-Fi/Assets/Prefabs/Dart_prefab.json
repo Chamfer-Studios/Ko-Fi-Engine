@@ -1,0 +1,129 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                16.97907257080078,
+                849.4598999023438
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "mesh": {
+                "asset_path": "Assets/Models/Characters/Zhib/zhib_karambit.sugar",
+                "draw_face_normals": false,
+                "draw_vertex_normals": false,
+                "is_animated": false,
+                "shape_type": 0,
+                "uid": 216069290
+            },
+            "type": 1
+        },
+        {
+            "active": true,
+            "color": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "shader": {
+                "asset_path": "Assets/Shaders/default_shader.glsl",
+                "uniforms": [
+                    {
+                        "name": "albedoTint",
+                        "type": 35666,
+                        "value": {
+                            "w": 1.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ]
+            },
+            "texture": {
+                "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
+            },
+            "type": 2
+        },
+        {
+            "active": true,
+            "body_type": "Dynamic",
+            "freeze_position_x": false,
+            "freeze_position_y": true,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": 6,
+            "use_gravity": false
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                -0.4000000059604645,
+                -0.4000000059604645
+            ],
+            "filter": "projectile",
+            "is_trigger": true,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 7
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Characters/Nerala/Dart.lua",
+            "id": 1042231396,
+            "type": 5
+        },
+        {
+            "active": true,
+            "fade_time": 2.0,
+            "offset_sync": false,
+            "total_tracks": 1,
+            "tracks": [
+                {
+                    "bypass": false,
+                    "loop": false,
+                    "mute": false,
+                    "offset": 0.0,
+                    "pan": 0.0,
+                    "play_on_start": false,
+                    "track_path": "Assets/Audio/SFX/Nerala/nerala_poison_hit_1_fx.wav",
+                    "transpose": 0.0,
+                    "volume": 100.0
+                }
+            ],
+            "type": 11
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "Dart",
+    "tag": 4
+}

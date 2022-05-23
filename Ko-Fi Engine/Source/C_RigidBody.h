@@ -36,9 +36,9 @@ public:
 	inline bool IsStatic() { return bodyType == "Static"; };
 	inline bool IsKinematic() { return bodyType == "Kinematic"; };
 	inline void SetBodyType(const std::string newBodyType) { bodyType = newBodyType; };
-	inline void SetBodyDynamic()	{ bodyType = "Dynamic"; };
-	inline void SetBodyStatic()		{ bodyType = "Static"; };
-	inline void SetBodyKinematic()	{ bodyType = "Kinematic"; };
+	inline void SetBodyDynamic()	{ bodyType = "Dynamic"; UpdateBodyType(); };
+	inline void SetBodyStatic()		{ bodyType = "Static"; UpdateBodyType(); };
+	inline void SetBodyKinematic()	{ bodyType = "Kinematic"; UpdateBodyType(); };
 
 	inline bool GetUseGravity() const { return useGravity; };
 	inline void SetUseGravity(const bool newUseGravity) { useGravity = newUseGravity; };

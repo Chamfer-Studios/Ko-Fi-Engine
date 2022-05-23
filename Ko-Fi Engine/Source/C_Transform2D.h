@@ -38,6 +38,7 @@ public:
 	void SetRotation(const float3& newRotation);
 	void SetSize(const float2& newSize);
 	void SetAnchor(const Anchor& newAnchor);
+	void SetMask(const float2& newMask);
 
 	// Getters
 	inline float2 GetPosition() const { return position; };
@@ -45,6 +46,7 @@ public:
 	inline float3 GetRotation() const { return rotation; };
 	inline float2 GetSize() const { return size; };
 	inline Anchor GetAnchor() const { return anchor; };
+	inline float2 GetMask() { return mask; };
 
 	virtual float2 GetNormalizedPosition();
 	virtual float2 GetNormalizedSize();

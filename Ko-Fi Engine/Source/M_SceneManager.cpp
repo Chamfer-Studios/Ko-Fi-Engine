@@ -470,6 +470,7 @@ void M_SceneManager::OnPlay()
 	}
 
 	engine->GetRenderer()->ResetFrustumCulling();
+	engine->GetCamera3D()->currentCamera->ApplyCullings();
 }
 
 void M_SceneManager::OnSceneSwitch()

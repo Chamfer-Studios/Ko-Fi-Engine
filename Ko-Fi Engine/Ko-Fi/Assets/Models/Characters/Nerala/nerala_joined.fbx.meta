@@ -1,0 +1,30 @@
+{
+    "asset_file": "nerala_joined.fbx",
+    "asset_path": "Assets/Models/Characters/Nerala/nerala_joined.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "nerala_low.sugar",
+            "library_path": "Library/Meshes/273555772.sugar",
+            "type": 0,
+            "uid": 273555772
+        },
+        {
+            "asset_file": "nerala_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png",
+            "library_path": "Library/Textures/1203275279.cacao",
+            "type": 1,
+            "uid": 1203275279
+        },
+        {
+            "asset_file": "nerala_armature|nerala_armature|nerala_armature|nerala_reel.cake",
+            "library_path": "Library/Animations/1341420816.cake",
+            "type": 5,
+            "uid": 1341420816
+        }
+    ],
+    "hash": "13a624309c6d149a4175f0168c52ee2f",
+    "library_file": "1934817964.tea",
+    "library_path": "Library/Models/1934817964.tea",
+    "type": 3,
+    "uid": 1934817964
+}

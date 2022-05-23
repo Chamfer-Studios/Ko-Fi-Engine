@@ -52,8 +52,9 @@ bool C_Animator::Start()
 	if (!selectedClip)
 	{
 		// Creating a default clip with 10 keyframes.
-		ret = CreateClip(AnimatorClip(animation, "Default clip", 0, 10, 1.0f, true));
+		ret = CreateClip(AnimatorClip(animation, "Default clip", 0, 10, 1.0f, false));
 		SetSelectedClip("Default clip");
+		selectedClip->SetFinishedBool(true);
 	}
 	
 	return ret;
@@ -150,7 +151,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		{
 			if (animation->endFrame > animation->startFrame)
 			{
-				CreateClip(AnimatorClip(animation, clipName, animation->startFrame, animation->endFrame, 1.0f, true));
+				CreateClip(AnimatorClip(animation, clipName, animation->startFrame, animation->endFrame, 1.0f, false));
 				createClipErrorMessage = false;
 			}
 			else
@@ -305,6 +306,7 @@ void C_Animator::Load(Json& json)
 				clips[key] = c;
 			}
 			SetSelectedClip(json.at("selectedClip"));
+			selectedClip->SetFinishedBool(true);
 		}
 	}
 }

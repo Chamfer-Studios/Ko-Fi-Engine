@@ -37,8 +37,6 @@
 #include "C_FOW.h"
 #include "RNG.h"
 
-
-
 enum INSPECTOR_VARIABLE_TYPE
 {
 	INSPECTOR_NO_TYPE,
@@ -52,14 +50,6 @@ enum INSPECTOR_VARIABLE_TYPE
 	INSPECTOR_TEXTAREA,
 	INSPECTOR_FLOAT3_ARRAY,
 	INSPECTOR_GAMEOBJECT,
-};
-
-enum ItemType
-{
-	ITEM_NO_TYPE,
-	ITEM_HAND,
-	ITEM_KNIFE,
-	ITEM_GUN
 };
 
 class InspectorVariable
@@ -100,19 +90,24 @@ public:
 			"NONE", ComponentType::NONE,
 			"MESH", ComponentType::MESH,
 			"MATERIAL", ComponentType::MATERIAL,
+			"PARTICLE", ComponentType::PARTICLE,
 			"CAMERA", ComponentType::CAMERA,
-			"BOX_COLLIDER", ComponentType::BOX_COLLIDER,
-			"SPHERE_COLLIDER", ComponentType::SPHERE_COLLIDER,
-			"CAPSULE_COLLIDER", ComponentType::CAPSULE_COLLIDER,
-			"RIGID_BODY", ComponentType::RIGID_BODY,
 			"SCRIPT", ComponentType::SCRIPT,
-			"TRANSFORM", ComponentType::TRANSFORM,
-			"INFO", ComponentType::INFO,
-			"TRANSFORM2D", ComponentType::TRANSFORM2D,
+			"RIGID_BODY", ComponentType::RIGID_BODY,
+			"BOX_COLLIDER", ComponentType::BOX_COLLIDER,
+			"CAPSULE_COLLIDER", ComponentType::CAPSULE_COLLIDER,
+			"SPHERE_COLLIDER", ComponentType::SPHERE_COLLIDER,
+			"AUDIO_SOURCE", ComponentType::AUDIO_SOURCE,
+			"AUDIO_SWITCH", ComponentType::AUDIO_SWITCH,
+			"ANIMATOR", ComponentType::ANIMATOR,
 			"CANVAS", ComponentType::CANVAS,
 			"IMAGE", ComponentType::IMAGE,
 			"BUTTON", ComponentType::BUTTON,
-			"TEXT", ComponentType::TEXT);
+			"TEXT", ComponentType::TEXT,
+			"WALKABLE", ComponentType::WALKABLE,
+			"FOLLOW_PATH", ComponentType::FOLLOW_PATH,
+			"LIGHT_SOURCE", ComponentType::LIGHT_SOURCE
+		);
 
 		// INSPECTOR_VARIABLE_TYPE
 		lua.new_enum("INSPECTOR_VARIABLE_TYPE",
@@ -157,6 +152,7 @@ public:
 			sol::constructors<void(), void(float, float)>(),
 			"x", &float2::x,
 			"y", &float2::y);
+
 		// float4 structure
 		lua.new_usertype<float4>("float4",
 			sol::constructors<void(), void(float, float, float, float)>(),
@@ -179,6 +175,7 @@ public:
 		lua.new_usertype<GameObject>("GameObject",
 									 sol::constructors<void()>(),
 									 "active", &GameObject::active,
+									 "SetIsActiveToChildren", &GameObject::SetIsActiveToChildren,
 									 "GetName", &GameObject::GetName,
 									 "SetName", &GameObject::SetName,
 									 "GetUID", &GameObject::GetUID,
@@ -188,6 +185,7 @@ public:
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
 									 "GetFOW", &GameObject::GetComponent<C_FOW>,
+									 "GetTransform2D", &GameObject::GetComponent<C_Transform2D>,
 									 "GetLight", &GameObject::GetComponent<C_LightSource>,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
@@ -204,7 +202,10 @@ public:
 									 "LoadScene", &GameObject::LoadSceneFromName,
 									 "Active", &GameObject::Active,
 									 "Quit", &GameObject::Quit,
-									 "ChangeScene", &GameObject::SetChangeScene
+									 "ChangeScene", &GameObject::SetChangeScene,
+									 "GetChildren", &GameObject::GetChildren,
+									 "AddComponentByType", &GameObject::AddComponentByType,
+									 "DeleteComponent", &GameObject::DeleteComponent
 
 			/*,"GetComponent", &GameObject::GetComponent<Component>*/ // Further documentation needed to get this as a dynamic cast
 			);
@@ -236,8 +237,22 @@ public:
 			"LookAt", &C_Transform::LookAt
 			);
 
+		// Transform2D structure
+		lua.new_usertype<C_Transform2D>("C_Transform2D",
+			sol::constructors<void(GameObject*)>(),
+			"GetPosition", &C_Transform2D::GetPosition,
+			"SetPosition", &C_Transform2D::SetPosition,
+			"GetSize", &C_Transform2D::GetSize,
+			"SetSize", &C_Transform2D::SetSize,
+			"GetPivot", &C_Transform2D::GetPivot,
+			"SetPivot", &C_Transform2D::SetPivot,
+			"GetMask", &C_Transform2D::GetMask,
+			"SetMask", &C_Transform2D::SetMask
+			
+			);
+
 		// Component Camera
-		lua.new_usertype<C_Camera>("C_Transform",
+		lua.new_usertype<C_Camera>("C_Camera",
 			sol::constructors<void(GameObject*)>(),
 			"LookAt", &C_Camera::LookAt,
 			"right", &C_Camera::GetRight,
@@ -287,7 +302,10 @@ public:
 		lua.new_usertype<C_Particle>("C_Particle",
 			sol::constructors<void(GameObject*)>(),
 			"StopParticleSpawn", &C_Particle::StopParticleSpawn,
-			"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn);
+			"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn,
+			"ResetTimers", &C_Particle::ResetTimers,
+			"SetLoop",&C_Particle::SetLoop,
+			"SetColor",&C_Particle::SetColor);
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
@@ -379,6 +397,10 @@ public:
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
 		lua.set_function("DrawLine", &Scripting::DrawLine, this);
 		lua.set_function("RNG", &Scripting::RNG, this);
+		lua.set_function("SaveGameState", &Scripting::SaveGameState, this);
+		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
+		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
+		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
 	}
 
 	bool CleanUp()
@@ -398,9 +420,17 @@ public:
 
 		switch (button)
 		{
-		case 4:
+		case 43:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_SPACE);
+		}
+		case 44:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RETURN);
+		}
+		case 42:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F3);
 		}
 		/*case 5:
 		{
@@ -463,6 +493,30 @@ public:
 		case 24:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4);
+		}
+		case 45:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_5);
+		}
+		case 46:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_6);
+		}
+		case 47:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_7);
+		}
+		case 48:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_8);
+		}
+		case 49:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_9);
+		}
+		case 50:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_0);
 		}
 		case 25:
 		{
@@ -782,11 +836,19 @@ public:
 
 	int GetDialogueTargetID(const char* key, int id);
 
+	bool LoadGameState();
+	bool SaveGameState();
+
+	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
+	void SetGameJsonInt(const char* key, int value) { gameJson[key] = value; }
+
 public:
 	sol::state lua;
 	GameObject* gameObject = nullptr;
 	C_Transform* componentTransform = nullptr;
 	C_Script* script = nullptr;
+
+	Json gameJson;
 
 	std::map<std::string, Json> files;
 };

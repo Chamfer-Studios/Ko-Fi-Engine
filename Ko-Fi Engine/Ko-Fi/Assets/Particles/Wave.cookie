@@ -1,0 +1,63 @@
+{
+    "Wave": {
+        "emitters": [
+            {
+                "loop": true,
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 4.0,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 1.0,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 6,
+                        "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
+                        "sideAxis": false,
+                        "topAxis": false,
+                        "type": 5
+                    },
+                    {
+                        "minInitialSize": [
+                            0.5,
+                            0.5,
+                            0.5
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "position": 0.0
+                            },
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    0.0
+                                ],
+                                "position": 1.0
+                            }
+                        ],
+                        "type": 3
+                    }
+                ],
+                "name": "Wave Emitter",
+                "texture_path": "Assets/Textures/Particles/wave.png"
+            }
+        ],
+        "name": "Wave"
+    }
+}

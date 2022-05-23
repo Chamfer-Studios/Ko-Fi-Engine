@@ -14,7 +14,8 @@ class EmitterInstance;
 		MOVEMENT,
 		COLOR,
 		SIZE,
-		BILLBOARDING
+		BILLBOARDING,
+		END
 	};
 
 class ParticleModule
@@ -44,11 +45,14 @@ public:
 	bool Update(float dt, EmitterInstance* emitter);
 
 public:
+	bool looping = true;
 	float spawnTimer = 0.0f;
 	float spawnTime = 0.5f;
 	bool randomParticleLife = false;
 	float minParticleLife = 1.0f;
 	float maxParticleLife = 3.0f;
+	uint particlesPerSpawn = 1;
+	EmitterInstance* instance = nullptr;
 };
 
 class EmitterMovement : public ParticleModule
@@ -60,6 +64,7 @@ public:
 	bool Update(float dt, EmitterInstance* emitter);
 
 public:
+	bool followForward = true;
 	bool randomDirection = false;
 	float3 minDirection = float3(1.0f, 1.0f, 1.0f);
 	float3 maxDirection = float3(-1.0f, -1.0f, -1.0f);
@@ -69,12 +74,12 @@ public:
 	float3 maxPosition = float3::zero;
 
 	bool randomVelocity = false;
-	float minVelocity = 1.0f;
-	float maxVelocity = 3.0f;
+	float minVelocity = 3.0f;
+	float maxVelocity = 5.0f;
 
 	bool randomAcceleration = false;
-	float3 minAcceleration = float3(-1.0f, 0.0f, -1.0f);
-	float3 maxAcceleration = float3(1.0f, 1.0f, 1.0f);
+	float3 minAcceleration = float3(-0.25f, 0.0f, -0.25f);
+	float3 maxAcceleration = float3(0.25f, 0.25f, 0.25f);
 };
 
 class EmitterColor : public ParticleModule
@@ -100,8 +105,13 @@ public:
 	bool Update(float dt, EmitterInstance* emitter);
 
 public:
-	float3 minSize = float3(1.0f, 1.0f, 1.0f);
-	float3 maxSize = float3(1.5f, 1.5f, 1.5f);
+	bool constantSize = true;
+	bool randomInitialSize = false;
+	bool randomFinalSize = false;
+	float3 minInitialSize = float3(1.0f, 1.0f, 1.0f);
+	float3 maxInitialSize = float3(1.5f, 1.5f, 1.5f);
+	float3 minFinalSize = float3(0.5f, 0.5f, 0.5f);
+	float3 maxFinalSize = float3(0.75f, 0.75f, 0.75f);
 };
 
 class ParticleBillboarding : public ParticleModule
@@ -109,24 +119,32 @@ class ParticleBillboarding : public ParticleModule
 public:
 	enum class BillboardingType
 	{
-		ScreenAligned,
-		WorldAligned,
-		XAxisAligned,
-		YAxisAligned,
-		ZAxisAligned,
-
-		None,
+		NONE,
+		SCREEN_ALIGNED,
+		WORLD_ALIGNED,
+		X_AXIS_ALIGNED,
+		Y_AXIS_ALIGNED,
+		Z_AXIS_ALIGNED,
+		XZ_AXIS_LOCKED,
+		END
 	};
 
-	ParticleBillboarding(BillboardingType typeB = BillboardingType::WorldAligned);
+	ParticleBillboarding(BillboardingType typeB = BillboardingType::WORLD_ALIGNED);
 
-	void Spawn(EmitterInstance* emitter, Particle* particle);
+	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);
 
-	Quat GetAlignmentRotation(const float3& position, const float4x4& cameraTransform);
+	Quat GetAlignmentRotation(const float3& position, const int degrees, EmitterInstance* emitter, const float4x4& cameraTransform);
+	const char* BillboardTypeToString(ParticleBillboarding::BillboardingType e);
 
-	BillboardingType billboardingType = BillboardingType::WorldAligned;
+	BillboardingType billboardingType = BillboardingType::WORLD_ALIGNED;
 	bool hideBillboarding = false;
+	bool rangeDegrees = false;
+	int minDegrees = 0;
+	int maxDegrees = 360;
+	bool frontAxis = true;
+	bool topAxis = false;
+	bool sideAxis = false;
 };
 
 #endif // !__PARTICLE_MODULE_H__

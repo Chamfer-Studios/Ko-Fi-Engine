@@ -12,6 +12,7 @@ Importer::Importer(KoFiEngine* e)
 	textureImporter = new I_Texture(e);
 	trackImporter = new I_Track(e);
 	animationImporter = new I_Animations(e);
+	particleImporter = new I_Particle(e);
 }
 
 Importer::~Importer()

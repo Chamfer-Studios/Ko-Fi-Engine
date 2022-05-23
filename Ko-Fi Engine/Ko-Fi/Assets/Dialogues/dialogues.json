@@ -1,20 +1,236 @@
 {
   "dialogues": [
     {
+      "id": 11,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "You can move by right clicking where you want to go.",
+      "line2": "To take a better look around with Q and E."
+    },
+    {
       "id": 1,
-      "targetID":  2,
-      "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_zhib_v1.2.png",
-      "char": "Zhib",
-      "line1": "Hello, I'm Zhib.",
-      "line2": "loreipsumloreipsum"
+      "targetID": 11,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "I hope it is not too late. I need to find Nerala as soon as possible,",
+      "line2": "I don't want to waste any time on this excuse of a camp.             "
     },
     {
       "id": 2,
+      "targetID": 3,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "An enemy! You can attack by right clicking on them",
+      "line2": "be careful though, if they detect you, they will strike back!"
+    },
+    {
+      "id": 3,
       "targetID": -1,
-      "src": "Assets/UI/HUD/Hud Portraits/hud_portrait_nebala_v1.1.png",
-      "char": "Nerala",
-      "line1": "Hi! I am Nerala, the best....",
-      "line2": "loreipsumloreipsumloreipsumloreipsumloreipsumloreipsumloreipsumloreipsum"
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "To better avoid being detected, you can enter stealth ",
+      "line2": "by pressing shift.                                    "
+    },
+    {
+      "id": 4,
+      "targetID": 5,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "To deal with this encounter you will have to use your knife,",
+      "line2": "Press 1 then left click on the enemy to use it."
+    },
+    {
+      "id": 5,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "You have three skills that can be use with the numbers 1, 2 and 3.",
+      "line2": "Your ultimate (ability 3) consumes spice to cast. So think before using it"
+    },
+    {
+      "id": 6,
+      "targetID": 12,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "You have access to a new character.                             ",
+      "line2": "Press Z to select Zhib and X to select Nerala.                  "
+    },
+    {
+      "id": 12,
+      "targetID": 13,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "Her Abilities focus on infiltration (Ability 1, Sleeping Dart) and",
+      "line2": "stealth (ability 2, Smoke Bomb), her ultimate allows a long distance kill"
+    },
+    {
+      "id": 13,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "Sleeping Dart Snoozes its target, making it easy to get around them.",
+      "line2": "Smoke bomb creates an area that makes it much more difficult to be detected."
+    },
+    {
+      "id": 7,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "Enemies drop spice when defeated. Pick it up by right clicking on it",
+      "line2": "Spice will be directly added to your inventory               "
+    },
+    {
+      "id": 8,
+      "targetID": 9,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "I see we require a different type of movement here,",
+      "line2": "go ahead and do your thing.                        "
+    },
+    {
+      "id": 9,
+      "targetID": 10,
+      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
+      "char": " ",
+      "line1": "(Nods in agreement).                               ",
+      "line2": " "
+    },
+    {
+      "id": 10,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "These types of walls can be climbed by Nerala",
+      "line2": "simply click on the wall and she will climb to the top."
+    },
+    {
+      "id": 14,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "Probably Shouldn't engage these enemies head on without some backup.",
+      "line2": " "
+    },
+    {
+      "id": 15,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "There are sounds of a struggle going on coming from there, I think",
+      "line2": "Nerala finally got angry with her captors, better go find her quickly."
+    },
+    {
+      "id": 16,
+      "targetID": 17,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": " *Nerala Appears from behind Zhib, aiming at him with her crossbow* ",
+      "line2": "To be on this side of the fight is as scary as always."
+    },
+    {
+      "id": 17,
+      "targetID": 18,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "What happened here? We have to liberate these men,",
+      "line2": "we cannot leave them here.                        "
+    },
+    {
+      "id": 18,
+      "targetID": 19,
+      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
+      "char": " ",
+      "line1": "(Through the speaking device) It's too late, when I arrived they",
+      "line2": "were already dead. We need to move, Rabaan is still in the camp."
+    },
+    {
+      "id": 19,
+      "targetID": 20,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "This is unacceptable, two of our men are dead because of some outburst",
+      "line2": "of bravery. This can not be overlooked Nerala, not at a time like this."
+    },
+    {
+      "id": 20,
+      "targetID": 21,
+      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
+      "char": " ",
+      "line1": "There are necessary sacrifices in a war. I will take full responsibility",
+      "line2": "for my actions.                                                         "
+    },
+    {
+      "id": 21,
+      "targetID": 22,
+      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
+      "char": " ",
+      "line1": "But I will finish what I came to do, I wont let the death of these men ",
+      "line2": "be in vain."
+    },
+    {
+      "id": 22,
+      "targetID": 22,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "We will finish what you started. Give me all the intel.            ",
+      "line2": " "
+    },
+    {
+      "id": 23,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "Putting it simply, Rabban was sighted nearby supervising the reconnaissance",
+      "line2": "mission himself, they are too close to our home, now is the time to end this."
+    },
+    {
+      "id": 24,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "Hmm,  don't think we can face these enemies head on, follow me,    ",
+      "line2": "I saw something from the thopter, I think I know a way around them."
+    },
+    {
+      "id": 26,
+      "targetID": 27,
+      "src": "Assets/UI/HUD/Portraits/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "I thought that after all those attacks, your kind you would be a force",
+      "line2": "to be reckoned. But you are nothing more than insects. Rats trying to steal"
+    },
+    {
+      "id": 27,
+      "targetID": 28,
+      "src": "Assets/UI/HUD/Portraits/blank_asset_v1.0.png",
+      "char": " ",
+      "line1": "the food from us, the great harkonnen. I will enjoy killing every single",
+      "line2": "ant in that filthy burrow of yours.                                     "
+    },
+    {
+      "id": 28,
+      "targetID": 29,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "No... It's a trap! Make haste! we are in serious problems. We should have ",
+      "line2": "thought about this, now due to our own stupidity we led them straight to our home."
+    },
+    {
+      "id": 29,
+      "targetID": 30,
+      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
+      "char": " ",
+      "line1": "That is not possible, they would have to follow us to find Sannara, or ",
+      "line2": "get the information from the source... oh no, our man.                 "
+    },
+    {
+      "id": 30,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": " ",
+      "line1": "They just needed directions and few indications. They tortured our brothers,",
+      "line2": "and they plan to do the same thing to our families. To the thopter, now!  "
     }
   ]
 }

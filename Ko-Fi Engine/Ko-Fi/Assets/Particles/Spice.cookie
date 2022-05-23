@@ -1,0 +1,113 @@
+{
+    "Spice": {
+        "emitters": [
+            {
+                "loop": true,
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 2.5,
+                        "particlesPerSpawn": 5,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.30000001192092896,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 1,
+                        "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
+                        "sideAxis": false,
+                        "topAxis": false,
+                        "type": 5
+                    },
+                    {
+                        "maxFinalSize": [
+                            0.5,
+                            0.5,
+                            0.5
+                        ],
+                        "minFinalSize": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "minInitialSize": [
+                            0.5,
+                            0.5,
+                            0.5
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "followForward": false,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            0.10000000149011612,
+                            1.0,
+                            0.10000000149011612
+                        ],
+                        "maxPosition": [
+                            2.0,
+                            2.0,
+                            2.0
+                        ],
+                        "maxVelocity": 5.0,
+                        "minAcceleration": [
+                            0.0,
+                            -0.03500000014901161,
+                            0.0
+                        ],
+                        "minDirection": [
+                            -0.10000000149011612,
+                            1.0,
+                            -0.10000000149011612
+                        ],
+                        "minPosition": [
+                            -2.0,
+                            -2.0,
+                            -2.0
+                        ],
+                        "minVelocity": 4.0,
+                        "randAcceleration": false,
+                        "randDirection": true,
+                        "randPosition": true,
+                        "randVelocity": true,
+                        "type": 2
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    0.5882353186607361,
+                                    0.0,
+                                    1.0
+                                ],
+                                "position": 0.0
+                            },
+                            {
+                                "color": [
+                                    1.0,
+                                    0.5882353186607361,
+                                    0.0,
+                                    0.0
+                                ],
+                                "position": 1.0
+                            }
+                        ],
+                        "type": 3
+                    }
+                ],
+                "name": "Spark",
+                "texture_path": "Assets/Textures/Particles/dust_1.png"
+            }
+        ],
+        "name": "Spice"
+    }
+}
