@@ -43,7 +43,7 @@ private:
 	float				frame;
 	uint				tick;
 
-	bool				loop = true;
+	bool				loop = false;
 	bool				interruptible;
 	const R_Animation*	clipAnim;
 

@@ -932,9 +932,9 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 
 			if (!animatorClip->GetFinishedBool())
 			{
-				float currentTimeMillis = cAnimator->GetAnimTime();
+				float animationTimeSec = cAnimator->GetAnimTime();
 				std::vector<float4x4> transformsAnim;
-				mesh->GetBoneTransforms(currentTimeMillis, transformsAnim, go);
+				mesh->GetBoneTransforms(animationTimeSec, transformsAnim, go);
 
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
@@ -943,8 +943,15 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 			}
 			else
 			{
+				std::vector<float4x4> transformsAnim;
+
+				if (mesh->GetLastBoneTransforms().size() == 0)
+					mesh->GetBoneTransforms(0, transformsAnim, go);
+
+				transformsAnim = mesh->GetLastBoneTransforms();
+
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
-				glUniformMatrix4fv(finalBonesMatrices, mesh->GetLastBoneTransforms().size(), GL_FALSE, mesh->GetLastBoneTransforms().begin()->ptr());
+				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
 				glUniform1i(isAnimated, mesh->IsAnimated());
 			}
