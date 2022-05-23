@@ -509,7 +509,6 @@ void M_SceneManager::OnStop()
 	}
 
 	engine->GetRenderer()->ResetFrustumCulling();
-	engine->GetCamera3D()->currentCamera->ApplyCullings();
 }
 
 void M_SceneManager::OnResume()

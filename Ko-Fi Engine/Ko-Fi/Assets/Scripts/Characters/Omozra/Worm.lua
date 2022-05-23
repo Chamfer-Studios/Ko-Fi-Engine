@@ -1,73 +1,179 @@
 State = {
-	IDLE = 1,
-	EAT = 2,
-	AWAIT = 3,
-	SPIT = 4,
-	DEVOUR = 5,
+    IDLE = 1,
+    EAT = 2,
+    AWAIT = 3,
+    SPIT = 4,
+    DEVOUR = 5
 }
 
 ------------------- Variables --------------------
 
 target = nil
 currentState = State.IDLE
+startCalled = false
 
 -------------------- Methods ---------------------
 
 function Start()
+    omozra = GetVariable("Omozra.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+    componentTransform:SetPosition(float3.new(omozra:GetTransform():GetPosition().x, -50,
+        omozra:GetTransform():GetPosition().z))
 
-	omozra = GetVariable("Omozra.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
-	componentTransform:SetPosition(float3.new(omozra:GetTransform():GetPosition().x, -20, omozra:GetTransform():GetPosition().z))
+    if (particles ~= null) then
+        particles = gameObject:GetComponentParticle()
+        particles:StopParticleSpawn()
+    end
 
-	if(particles ~= null) then
-		particles = gameObject:GetComponentParticle()
-    	particles:StopParticleSpawn()
-	end
-    
+    componentSwitch = gameObject:GetAudioSwitch()
+    currentTrackID = -1
 
-    componentAnimator = gameObject:GetComponentAnimator()
+    componentAnimator = gameObject:GetParent():GetComponentAnimator()
     if (componentAnimator ~= nil) then
-		componentAnimator:SetSelectedClip("Idle")
-	end
+        componentAnimator:SetSelectedClip("Idle") -- Doesn't exists but I need it to be different
+    end
 end
 
 -- Called each loop iteration
 function Update(dt)
-	
-	-- Animation timer
-	if (componentAnimator ~= nil) then
-		if (componentAnimator:IsCurrentClipLooping() == false) then
-			if (componentAnimator:IsCurrentClipPlaying() == false) then
-                if (currentState == State.EAT) then
-                    currentState = State.AWAIT
-				elseif (currentState == State.SPIT) then
-					DeleteGameObject()
+    if (startCalled == false) then
+        Start()
+        startCalled = true
+    end
+    -- Animation timer
+    if (componentAnimator ~= nil) then
+        if (componentAnimator:IsCurrentClipLooping() == false) then
+            if (componentAnimator:IsCurrentClipPlaying() == false) then
+                if (currentState == State.DEVOUR) then
+                    DoDevour()
+                elseif (currentState == State.EAT) then
+                    DoUltimate()
+                elseif (currentState == State.SPIT) then
+                    DoSpit()
+                else
+                    componentTransform:SetPosition(float3.new(0, -50, 0))
                 end
-			end
-		end
-	end
+            end
+        end
+    end
+end
+
+-- Devour/Eat
+function CastDevour(castedOn)
+
+    target = castedOn
+
+    local targetPos = target:GetTransform():GetPosition()
+    componentTransform:SetPosition(float3.new(targetPos.x, 0, targetPos.z))
+
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("Devour")
+    end
+
+    currentState = State.DEVOUR
+end
+
+function DoDevour()
+
+    DispatchGlobalEvent("Sadiq_Update_Target", {target, 2}) -- fields[1] -> target; targeted for (1 -> warning; 2 -> eat; 3 -> spit)
+
+    componentAnimator:SetSelectedClip("DevourToIdle")
+
+    -- TODO: Add particles, audio, etc.
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = 2
+        componentSwitch:PlayTrack(currentTrackID)
+    end
+
+    currentState = State.IDLE
+end
+
+-- Ultimate
+function CastUltimate(castedOn)
+
+    target = castedOn
+
+    local targetPos = target:GetTransform():GetPosition()
+    componentTransform:SetPosition(float3.new(targetPos.x, 0, targetPos.z))
+
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("Devour")
+    end
+
+    currentState = State.EAT
+end
+
+function DoUltimate()
+
+    DispatchGlobalEvent("Sadiq_Update_Target", {target, 2}) -- fields[1] -> target; fields[2] -> step of devour ability (1 -> warning; 2 -> eat; 3 -> spit)
+
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("DevourToIdle")
+    end
+
+    -- TODO: Add particles, audio, etc.
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = 3
+        componentSwitch:PlayTrack(currentTrackID)
+    end
+
+    currentState = State.IDLE
+end
+
+-- Spit
+function CastSpit(position)
+
+    target = position
+    componentTransform:SetPosition(position)
+
+    -- This is just to stop the movement
+    DispatchGlobalEvent("Sadiq_Update_Target", {target, 1}) -- fields[1] -> target; fields[2] -> step of devour ability (1 -> warning; 2 -> eat; 3 -> spit)
+
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("Spit")
+    end
+
+    currentState = State.SPIT
+end
+
+function DoSpit()
+
+    DispatchGlobalEvent("Sadiq_Update_Target", {target}) -- fields[1] -> target; fields[2] -> step of devour ability (1 -> warning; 2 -> eat; 3 -> spit) -- No need for fields[2] cause we will check for state.work
+
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("SpitToIdle")
+    end
+
+    -- TODO: Add particles, audio, etc.
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = 4
+        componentSwitch:PlayTrack(currentTrackID)
+    end
+
+    currentState = State.IDLE
 end
 
 -------------------- Events ----------------------
 function EventHandler(key, fields)
-	
-	if (key == "Worm_State") then -- fields[1] -> state, fields[2] -> target;
 
-		if (fields[1] == State.DEVOUR) then
-			currentState = State.DEVOUR
-			target = fields[2]
-			componentTransform:SetPosition(float3.new(target:GetTransform():GetPosition().x, -20, target:GetTransform():GetPosition().z))
-			if (componentAnimator ~= nil) then
-				componentAnimator:SetSelectedClip("Devour")
-			end
-			if (particles ~= nil)then
-				particles:ResumeParticleSpawn()
-			end
-		end
-	elseif (key == "Omozra_Ultimate_Recast") then -- fields[1] -> go;
-		
-        componentTransform:SetPosition(fields[1])
-        currentState = State.SPIT
-        componentAnimator:SetSelectedClip("Spit")
+    if (key == "Sadiq_Update_Target" and currentState ~= State.SPIT) then -- fields[1] -> target; targeted for (1 -> warning; 2 -> eat; 3 -> spit)
+        if (fields[2] == 1) then
+            if (fields[1].tag == Tag.ENEMY) then
+                CastDevour(fields[1])
+            elseif (fields[1].tag == Tag.PLAYER) then
+                CastUltimate(fields[1])
+            end
+        elseif (fields[2] == 3) then
+            CastSpit(fields[1])
+        end
     end
 end
 --------------------------------------------------
