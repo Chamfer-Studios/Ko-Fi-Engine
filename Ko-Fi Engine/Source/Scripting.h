@@ -175,6 +175,7 @@ public:
 		lua.new_usertype<GameObject>("GameObject",
 									 sol::constructors<void()>(),
 									 "active", &GameObject::active,
+									 "SetIsActiveToChildren", &GameObject::SetIsActiveToChildren,
 									 "GetName", &GameObject::GetName,
 									 "SetName", &GameObject::SetName,
 									 "GetUID", &GameObject::GetUID,
