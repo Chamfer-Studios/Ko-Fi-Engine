@@ -35,7 +35,7 @@ public:
 	void ResumeParticleSpawn();
 	void ResetTimers();
 	void SetLoop(bool v);
-	void SetColor(Quat c);
+	void SetColor(float r, float g, float b, float a);
 	void DeleteModule(Emitter* e,ParticleModuleType t);
 
 private:

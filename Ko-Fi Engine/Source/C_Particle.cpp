@@ -767,7 +767,7 @@ void C_Particle::SetLoop(bool v)
 	}
 }
 
-void C_Particle::SetColor(Quat c)
+void C_Particle::SetColor(float r, float g, float b, float a)
 {
 	for (auto e : resource->emitters)
 	{
@@ -776,7 +776,7 @@ void C_Particle::SetColor(Quat c)
 			if (m->type == ParticleModuleType::COLOR)
 			{
 				EmitterColor* eColor = (EmitterColor*)m;
-				eColor->colorOverTime[0].color = Color(c.x, c.y, c.z, c.w);
+				eColor->colorOverTime[0].color = Color(r, g, b, a);
 			}
 		}
 	}
