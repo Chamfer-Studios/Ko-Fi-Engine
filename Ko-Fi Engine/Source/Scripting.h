@@ -296,7 +296,8 @@ public:
 			"StopParticleSpawn", &C_Particle::StopParticleSpawn,
 			"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn,
 			"ResetTimers", &C_Particle::ResetTimers,
-			"SetLoop",&C_Particle::SetLoop);
+			"SetLoop",&C_Particle::SetLoop,
+			"SetColor",&C_Particle::SetColor);
 
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
