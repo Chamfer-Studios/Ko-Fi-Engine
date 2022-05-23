@@ -596,13 +596,13 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			}
 			else
 			{
-				glActiveTexture(GL_TEXTURE0);
+				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
 			}
 
 			if (engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster())
 			{
-				glActiveTexture(GL_TEXTURE1);
+				glActiveTexture(GL_TEXTURE7);
 				glBindTexture(GL_TEXTURE_2D, depthMapTexture);
 			}
 
@@ -691,7 +691,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				glUniform1i(ourTexture, 1);
 
 				GLint depthMap = glGetUniformLocation(shader, "depthMap");
-				glUniform1i(depthMap, 2);
+				glUniform1i(depthMap, 7);
 
 				//Draw Mesh
 				mesh->Draw();

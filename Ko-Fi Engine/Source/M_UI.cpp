@@ -106,7 +106,7 @@ void MyPlane::DrawPlane2D(unsigned int texture, SDL_Color color) {
 
 	if (texture != 0)
 	{
-		glActiveTexture(GL_TEXTURE2);
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
 	}
 
