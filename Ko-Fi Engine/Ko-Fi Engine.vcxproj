@@ -570,8 +570,6 @@
     <ClInclude Include="Source\M_Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Dart.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\HunterSeeker.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Nerala\Nerala.lua" />
@@ -582,10 +580,6 @@
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Decoy.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Characters\Zhib\Zhib.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueManager.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Dialogues\DialogueTrigger.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Enemies\EnemyController.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Enemies\Sardaukar.lua" />
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer2.lua" />
@@ -609,7 +603,6 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Lives_3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Mission.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OoSpicy.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenExitPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenQuestsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_OpenSkillsPopUp.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua" />
@@ -618,10 +611,6 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Skill.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_SkillSet.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua" />

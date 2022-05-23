@@ -36,8 +36,6 @@
 #include "C_LightSource.h"
 #include "RNG.h"
 
-
-
 enum INSPECTOR_VARIABLE_TYPE
 {
 	INSPECTOR_NO_TYPE,
@@ -153,6 +151,7 @@ public:
 			sol::constructors<void(), void(float, float)>(),
 			"x", &float2::x,
 			"y", &float2::y);
+
 		// float4 structure
 		lua.new_usertype<float4>("float4",
 			sol::constructors<void(), void(float, float, float, float)>(),

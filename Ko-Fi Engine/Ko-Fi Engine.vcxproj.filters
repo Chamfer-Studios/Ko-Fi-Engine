@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source">
@@ -175,9 +175,6 @@
     <ClCompile Include="Source\M_Window.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Log.cpp">
-      <Filter>Source\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Source\M_Renderer3D.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -225,9 +222,6 @@
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_widgets.cpp">
       <Filter>Libs\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\JsonHandler.cpp">
-      <Filter>Source\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\EditorStyleHandler.cpp">
       <Filter>Source\Editor\Style</Filter>
@@ -322,9 +316,6 @@
     <ClCompile Include="Source\ParticleModule.cpp">
       <Filter>Source\Helpers\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QuadTree3D.cpp">
-      <Filter>Source\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Source\M_SceneManager.cpp">
       <Filter>Source\Modules</Filter>
     </ClCompile>
@@ -339,9 +330,6 @@
     </ClCompile>
     <ClCompile Include="Source\R_Texture.cpp">
       <Filter>Source\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\RNG.cpp">
-      <Filter>Source\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\I_Material.cpp">
       <Filter>Source\Importers</Filter>
@@ -399,9 +387,6 @@
     </ClCompile>
     <ClCompile Include="Source\External\SDL_ttf\include\SDL_ttf.c">
       <Filter>Libs\SDL_ttf</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\R_ParticleResource.cpp">
-      <Filter>Source\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\M_Audio.cpp">
       <Filter>Source\Modules</Filter>
@@ -691,19 +676,31 @@
     <ClCompile Include="Source\External\hash_library\sha256.cpp">
       <Filter>Libs\hash_library</Filter>
     </ClCompile>
+    <ClCompile Include="Source\I_Particles.cpp">
+      <Filter>Source\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\R_Particle.cpp">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RNG.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\JsonHandler.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Quadtree.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scripting.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Log.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.h">
       <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Log.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PerfTimer.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Timer.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Module.h">
       <Filter>Source\Modules</Filter>
@@ -770,12 +767,6 @@
     </ClInclude>
     <ClInclude Include="Source\External\JsonParser\json.hpp">
       <Filter>Libs\JsonParser</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\RNG.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\JsonHandler.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\EditorStyleHandler.h">
       <Filter>Source\Editor\Style</Filter>
@@ -906,9 +897,6 @@
     <ClInclude Include="Source\Iterable.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QuadTree3D.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\M_SceneManager.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
@@ -966,9 +954,6 @@
     <ClInclude Include="Source\C_RenderedUI.h">
       <Filter>Source\GameObject\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\R_ParticleResource.h">
-      <Filter>Source\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="Source\M_Audio.h">
       <Filter>Source\Modules</Filter>
     </ClInclude>
@@ -1022,9 +1007,6 @@
     </ClInclude>
     <ClInclude Include="Source\Effects.h">
       <Filter>Source\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Event.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\stb_image\stb_image.h">
       <Filter>Libs\stb_image</Filter>
@@ -1335,6 +1317,42 @@
     <ClInclude Include="Source\External\hash_library\sha256.h">
       <Filter>Libs\hash_library</Filter>
     </ClInclude>
+    <ClInclude Include="Source\I_Particles.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\R_Particle.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Quadtree.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Assimp.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RNG.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FSDefs.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PerfTimer.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\JsonHandler.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MathGeoTransform.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Log.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\M_ResourceManager.h">
@@ -1348,9 +1366,6 @@
     </ClInclude>
     <ClInclude Include="Source\R_Texture.h">
       <Filter>Source\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\FSDefs.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\I_Material.h">
       <Filter>Source\Importers</Filter>
@@ -1369,12 +1384,6 @@
     </ClInclude>
     <ClInclude Include="Source\Importer.h">
       <Filter>Source\Importers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MathGeoTransform.h">
-      <Filter>Source\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Assimp.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\M_UI.h">
       <Filter>Source\Modules</Filter>
@@ -1414,23 +1423,9 @@
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\DialogueManager.lua">
-      <Filter>Scripts\Dialogue</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\Dialogue.lua">
-      <Filter>Scripts\Dialogue</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\DialogueTrigger.lua">
-      <Filter>Scripts\Dialogue</Filter>
-    </None>
-    <None Include="Ko-Fi\Assets\Scripts\LuaClassTemplate.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua">
       <Filter>Scripts\Enemies</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\Bullet.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\Player.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\TemporaryPlayer.lua">
       <Filter>Scripts\UI</Filter>
     </None>
@@ -1485,19 +1480,12 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_AbilitySlot_1.lua">
       <Filter>Scripts\UI</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer2.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\TemporaryPlayer3.lua" />
-    <None Include="Ko-Fi\Assets\Scripts\EnemyController.lua">
-      <Filter>Scripts\Enemies</Filter>
-    </None>
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Quit.lua">
       <Filter>Scripts\UI</Filter>
     </None>
     <None Include="Ko-Fi\Assets\Scripts\GameState.lua">
       <Filter>Scripts</Filter>
     </None>
-    <None Include="Ko-Fi\Assets\Scripts\CameraManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_ClosePopUp.lua">
       <Filter>Scripts\UI</Filter>
     </None>

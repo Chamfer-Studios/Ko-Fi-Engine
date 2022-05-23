@@ -23,7 +23,6 @@ bool Scripting::LoadJsonFile(const char* path)
 	CONSOLE_LOG("%s json loaded", path);
 
 	return true;
-
 }
 
 std::string Scripting::GetDialogueString(const char* key, int id)
@@ -43,8 +42,6 @@ std::string Scripting::GetDialogueString(const char* key, int id)
 					return a;
 				}
 			}
-
-
 		}
 	}
 	return "no value";
@@ -67,8 +64,6 @@ int Scripting::GetDialogueTargetID(const char* key, int id)
 					return targetID;
 				}
 			}
-
-
 		}
 	}
 }
