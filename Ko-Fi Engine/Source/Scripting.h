@@ -183,6 +183,7 @@ public:
 									 "GetChild", &GameObject::GetChildWithName,
 									 "GetComponents", &GameObject::GetComponents, // Kinda works... not very useful tho
 									 "GetTransform", &GameObject::GetTransform,
+									 "GetTransform2D", &GameObject::GetComponent<C_Transform2D>,
 									 "GetLight", &GameObject::GetComponent<C_LightSource>,
 									 "GetC_Mesh", &GameObject::GetComponent<C_Mesh>,
 									 "GetRigidBody", &GameObject::GetComponent<C_RigidBody>,
@@ -232,6 +233,18 @@ public:
 			"GetRight", &C_Transform::Right,
 			"GetUp", &C_Transform::Up,
 			"LookAt", &C_Transform::LookAt
+			);
+
+		// Transform2D structure
+		lua.new_usertype<C_Transform2D>("C_Transform2D",
+			sol::constructors<void(GameObject*)>(),
+			"GetPosition", &C_Transform2D::GetPosition,
+			"SetPosition", &C_Transform2D::SetPosition,
+			"GetSize", &C_Transform2D::GetSize,
+			"SetSize", &C_Transform2D::SetSize,
+			"GetPivot", &C_Transform2D::GetPivot,
+			"SetPivot", &C_Transform2D::SetPivot
+			
 			);
 
 		// Component Camera
