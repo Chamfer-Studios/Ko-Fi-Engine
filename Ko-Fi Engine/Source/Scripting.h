@@ -802,7 +802,7 @@ public:
 	bool SaveGameState();
 
 	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
-	int SetGameJsonInt(const char* key, int value) { return gameJson[key] = value; }
+	void SetGameJsonInt(const char* key, int value) { gameJson[key] = value; }
 
 public:
 	sol::state lua;
