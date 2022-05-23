@@ -29,6 +29,7 @@ public:
 	void SetRotationQuat(const Quat &newRotation);
 	void LookAt(float3 &front, float3& up);
 	void SetGlobalTransform(const float4x4 &globalTransform);
+	void SetLocalTransform(const float4x4 &localTransform);
 	void SetDirty(bool isDirty);
 
 	// Getters

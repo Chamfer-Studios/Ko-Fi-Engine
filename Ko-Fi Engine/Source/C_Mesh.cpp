@@ -64,6 +64,11 @@ bool C_Mesh::Update(float dt)
 
 bool C_Mesh::PostUpdate(float dt) //AKA the real render
 {
+	if (mesh != nullptr)
+	{
+		GenerateGlobalBoundingBox();
+	}
+
 	bool ret = true;
 
 	return ret;
@@ -256,7 +261,7 @@ void C_Mesh::DrawBoundingBox(const AABB& aabb, const float3& rgb, GLenum renderT
 	if (drawAABB)
 	{
 		glPushMatrix();
-		glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
+		//glMultMatrixf(this->owner->GetTransform()->GetGlobalTransform().Transposed().ptr());
 
 		glLineWidth(2.0f);
 		glColor3f(rgb.x, rgb.y, rgb.z);

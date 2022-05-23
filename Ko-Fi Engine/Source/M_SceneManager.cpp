@@ -592,11 +592,12 @@ void M_SceneManager::GuizmoTransformation()
 	{
 		for (int i = 0; i < selectedGameObjects.size(); i++)
 		{
+			appLog->AddLog("Selected GO: %s:", selectedGameObjects[i]->GetName());
 			float4x4 newTransform;
 			newTransform.Set(tempTransform[i]);
 			modelProjection[i] = newTransform.Transposed();
 
-			selectedGameObjects[i]->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection[i]);
+			selectedGameObjects[i]->GetComponent<C_Transform>()->SetLocalTransform(modelProjection[i]);
 		}
 
 	}

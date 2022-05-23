@@ -42,6 +42,11 @@ bool C_SphereCollider::Update(float dt)
 	{
 		owner->DeleteComponent(this);
 	}
+
+	if (collider != nullptr)
+		UpdateScaleFactor();
+
+
 	return true;
 }
 

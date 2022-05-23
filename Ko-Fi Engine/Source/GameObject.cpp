@@ -408,20 +408,15 @@ void GameObject::PropagateTransform()
 
 	int count = 0;
 
-	appLog->AddLog("Parent %s: \n", this->GetName());
+	//appLog->AddLog("Parent %s: \n", this->GetName());
 	for (GameObject* go : children)
 	{
 		if (go->transform != nullptr)
 		{
 			count++;
-			this->transform->SetDirty(true);
-			go->PropagateTransform();
-			
-			/*if (count == 1)
-			{
-				continue;
-			}*/
-			appLog->AddLog("Childs %s, Position: %d \n", go->GetName(), count);
+			//this->GetTransform()->SetDirty(true);
+			go->GetTransform()->RecomputeGlobalMatrix();
+			//appLog->AddLog("Childs %s, Position: %d \n", go->GetName(), count);
 			
 		}
 	}

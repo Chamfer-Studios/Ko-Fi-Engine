@@ -40,11 +40,9 @@ bool C_Transform::Update(float dt)
 	
 	if (isDirty) // When Object is Modified
 	{
+		//syncing local with global
 		RecomputeGlobalMatrix();
-		owner->PropagateTransform();
-
 		
-
 		isDirty = false;
 	}
 
@@ -175,10 +173,21 @@ void C_Transform::SetGlobalTransform(const float4x4 &globalTransform)
 {
 	if (owner->GetParent() == nullptr) return;
 
-	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
-	//transformMatrix = globalTransform;
+	//transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * globalTransform;
+	transformMatrix = globalTransform;
+
 	isDirty = true;
 }
+
+void C_Transform::SetLocalTransform(const float4x4& localTransform)
+{
+	if (owner->GetParent() == nullptr) return;
+
+	transformMatrixLocal = owner->GetParent()->GetTransform()->GetGlobalTransform().Inverted() * localTransform;
+
+	isDirty = true;
+}
+
 
 void C_Transform::SetDirty(bool isDirty)
 {
@@ -253,29 +262,23 @@ const float3 C_Transform::GlobalFront() const
 
 void C_Transform::RecomputeGlobalMatrix()
 {
-		transformMatrix = transformMatrixLocal;
+	appLog->AddLog("Global Matrix: %s \n %f %f %f %f \n, %f %f %f %f \n, %f %f %f %f \n, %f %f %f %f \n", owner->GetName(),
+		transformMatrix[0][0], transformMatrix[1][0], transformMatrix[2][0], transformMatrix[3][0],
+		transformMatrix[0][1], transformMatrix[1][1], transformMatrix[2][1], transformMatrix[3][1],
+		transformMatrix[0][2], transformMatrix[1][2], transformMatrix[2][2], transformMatrix[3][2],
+		transformMatrix[0][3], transformMatrix[1][3], transformMatrix[2][3], transformMatrix[3][3]);
+	//appLog->AddLog("Recomputing: %s \n", owner->GetName());
+
 	if (owner->GetParent() != nullptr && owner->GetParent()->GetComponent<C_Transform>())
 	{
 		transformMatrix = owner->GetParent()->GetTransform()->transformMatrix.Mul(transformMatrixLocal);
-
-		//if (owner->GetComponent<C_Mesh>())
-		//{
-		//	if (owner->GetComponent<C_Mesh>()->GetMesh())
-		//		owner->GetComponent<C_Mesh>()->GenerateGlobalBoundingBox();
-
-		//	// Update colliders
-		//	if (owner->GetComponent<C_BoxCollider>())
-		//		owner->GetComponent<C_BoxCollider>()->UpdateScaleFactor();
-		//	if (owner->GetComponent<C_SphereCollider>())
-		//		owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
-		//	if (owner->GetComponent<C_CapsuleCollider>())
-		//		owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
-
-		//}
 	}
-
+	else 
+	{
+		transformMatrix = transformMatrixLocal;
+	}
 	
-
+	owner->PropagateTransform();
 
 }
 

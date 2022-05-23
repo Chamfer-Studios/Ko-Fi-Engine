@@ -48,6 +48,11 @@ bool C_BoxCollider::Update(float dt)
 	{
 		owner->DeleteComponent(this);
 	}
+
+	if (collider != nullptr)
+		UpdateScaleFactor();
+	
+
 	return true;
 }
 
