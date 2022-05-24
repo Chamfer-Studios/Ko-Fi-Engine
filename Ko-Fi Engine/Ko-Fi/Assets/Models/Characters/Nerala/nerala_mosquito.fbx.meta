@@ -4,9 +4,9 @@
     "contained_resources": [
         {
             "asset_file": "nerala_mosquito.sugar",
-            "library_path": "Library/Meshes/1178956951.sugar",
+            "library_path": "Library/Meshes/1154121049.sugar",
             "type": 0,
-            "uid": 1178956951
+            "uid": 1154121049
         },
         {
             "asset_file": "nerala_base_color.png",
@@ -16,9 +16,9 @@
             "uid": 1203275279
         }
     ],
-    "hash": "6262154fb3bb0fb74bcdb4ad45827b9f",
-    "library_file": "1392357370.tea",
-    "library_path": "Library/Models/1392357370.tea",
+    "hash": "37a92f1704f2e91204133495dfe334de",
+    "library_file": "1749121705.tea",
+    "library_path": "Library/Models/1749121705.tea",
     "type": 3,
-    "uid": 1392357370
+    "uid": 1749121705
 }

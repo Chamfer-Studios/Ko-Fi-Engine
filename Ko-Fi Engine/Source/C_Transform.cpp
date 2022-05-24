@@ -55,9 +55,9 @@ bool C_Transform::Update(float dt)
 				owner->GetComponent<C_SphereCollider>()->UpdateScaleFactor();
 			if (owner->GetComponent<C_CapsuleCollider>())
 				owner->GetComponent<C_CapsuleCollider>()->UpdateScaleFactor();
-
-			isDirty = false;
 		}
+
+		isDirty = false;
 	}
 
 	return true;

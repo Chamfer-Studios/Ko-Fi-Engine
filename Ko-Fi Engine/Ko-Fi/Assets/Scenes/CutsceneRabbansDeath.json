@@ -110,6 +110,19 @@
                         "sphere_culling": false,
                         "type": 4,
                         "vertical_fov": 378.0
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
+                        "id": 679004013,
+                        "inspector_variables": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "value": "CutsceneRabbansDeath"
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": true,

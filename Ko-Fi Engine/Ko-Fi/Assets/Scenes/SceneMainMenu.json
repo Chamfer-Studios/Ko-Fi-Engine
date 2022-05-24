@@ -1,7 +1,7 @@
 {
     "SceneMainMenu": {
         "active": true,
-        "game_objects_amount": 18,
+        "game_objects_amount": 19,
         "game_objects_list": [
             {
                 "UID": 1475716659,
@@ -701,6 +701,19 @@
                         "idleTexture": "Assets/New UI/button_a_default.png",
                         "pressedTexture": "Assets/New UI/button_a_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_ChangeScenes.lua",
+                        "id": 675509914,
+                        "inspector_variables": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "value": "SceneCredits"
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -794,6 +807,12 @@
                         "idleTexture": "Assets/New UI/button_a_default.png",
                         "pressedTexture": "Assets/New UI/button_a_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_Quit.lua",
+                        "id": 1031594,
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -849,6 +868,55 @@
                 "isPrefab": false,
                 "name": "Text3",
                 "parent_UID": 1710790746,
+                "tag": 0
+            },
+            {
+                "UID": 653434871,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "type": 21
+                    },
+                    {
+                        "active": true,
+                        "bypass": false,
+                        "loop": true,
+                        "mute": false,
+                        "offset": 0.0,
+                        "pan": 0.0,
+                        "play_on_start": true,
+                        "state": true,
+                        "track_path": "Assets/Audio/Music/Main Theme (Main Menu).mp3",
+                        "transpose": 0.0,
+                        "type": 10,
+                        "volume": 100.0
+                    }
+                ],
+                "is3D": true,
+                "isPrefab": false,
+                "name": "Music",
+                "parent_UID": 0,
                 "tag": 0
             }
         ],

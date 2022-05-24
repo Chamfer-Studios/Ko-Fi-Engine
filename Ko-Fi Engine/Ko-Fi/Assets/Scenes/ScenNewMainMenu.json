@@ -37,7 +37,7 @@
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.009999999776482582,
-                        "sCullingRadius": 500,
+                        "sCullingRadius": 249,
                         "sphere_culling": true,
                         "type": 4,
                         "vertical_fov": 0.3839724361896515
@@ -106,10 +106,23 @@
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
-                        "sCullingRadius": 500,
+                        "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
                         "vertical_fov": 585.0
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
+                        "id": 2090319999,
+                        "inspector_variables": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "value": "SceneNewMainMenu"
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": true,
@@ -288,6 +301,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "ARE YOU SURE YOU WANT TO PROCEED?"
                     }
@@ -380,6 +394,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "YES"
                     }
@@ -428,6 +443,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "NO"
                     }
@@ -604,6 +620,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "PLAY"
                     }
@@ -1036,6 +1053,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "PLAY"
                     }
@@ -1084,6 +1102,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "SETTINGS"
                     }
@@ -1132,6 +1151,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "CREDITS"
                     }
@@ -1180,6 +1200,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "QUIT"
                     }
@@ -1228,6 +1249,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "THIS ACTION CANNOT BE UNDONE"
                     }
@@ -1318,6 +1340,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "CONTINUE"
                     }
@@ -1410,6 +1433,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "PLAYER 1"
                     }
@@ -1458,6 +1482,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "TIME PLAYED: "
                     }
@@ -1550,6 +1575,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "EMPTY"
                     }
@@ -1598,6 +1624,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "TIME PLAYED: "
                     }
@@ -1690,6 +1717,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "EMPTY"
                     }
@@ -1738,6 +1766,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "TIME PLAYED: "
                     }
@@ -1830,6 +1859,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "X"
                     }
@@ -1878,6 +1908,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2014,6 +2045,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2106,6 +2138,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "BACK"
                     }
@@ -2196,6 +2229,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "NEW GAME"
                     }
@@ -2288,6 +2322,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "PLAYER 1"
                     }
@@ -2336,6 +2371,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "TIME PLAYED:"
                     }
@@ -2428,6 +2464,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "EMPTY"
                     }
@@ -2476,6 +2513,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "TIME PLAYED:"
                     }
@@ -2568,6 +2606,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "EMPTY"
                     }
@@ -2616,6 +2655,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "TIME PLAYED:"
                     }
@@ -2708,6 +2748,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2800,6 +2841,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2892,6 +2934,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "X"
                     }
@@ -2984,6 +3027,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "BACK"
                     }
@@ -3116,6 +3160,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "SETTINGS"
                     }
@@ -3208,6 +3253,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "AUDIO"
                     }
@@ -3300,6 +3346,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "CONTROLS"
                     }
@@ -3392,6 +3439,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "INSTRUCTONS"
                     }
@@ -3484,6 +3532,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "BACK"
                     }
@@ -3630,6 +3679,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "<-"
                     }
@@ -3728,6 +3778,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "->"
                     }
@@ -3877,6 +3928,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "BACK"
                     }
@@ -3925,6 +3977,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "CREDITS"
                     }

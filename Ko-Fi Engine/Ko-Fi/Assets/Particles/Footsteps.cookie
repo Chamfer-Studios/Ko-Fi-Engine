@@ -1,0 +1,54 @@
+{
+    "Footsteps": {
+        "emitters": [
+            {
+                "loop": true,
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 1.5,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.5,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 2,
+                        "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
+                        "sideAxis": false,
+                        "topAxis": false,
+                        "type": 5
+                    },
+                    {
+                        "minInitialSize": [
+                            10.0,
+                            10.0,
+                            10.0
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    0.29411765933036804
+                                ],
+                                "position": 0.0
+                            }
+                        ],
+                        "type": 3
+                    }
+                ],
+                "name": "Emitter",
+                "texture_path": "Assets/Textures/Particles/simple.png"
+            }
+        ],
+        "name": "Footsteps"
+    }
+}

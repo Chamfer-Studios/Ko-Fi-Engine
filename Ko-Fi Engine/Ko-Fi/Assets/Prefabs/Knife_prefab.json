@@ -114,8 +114,8 @@
                     "offset": 0.0,
                     "pan": 0.0,
                     "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_hit_fx.wav",
-                    "transpose": 0.0,
+                    "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_hit_1_fx.wav",
+                    "transpose": 1.0,
                     "volume": 100.0
                 }
             ],

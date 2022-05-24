@@ -454,8 +454,7 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 		return;
 	}
 
-	transforms.resize(boneInfo.size());
-	transformsAnim.resize(boneInfo.size());
+	rootNode = gameObject->GetParent();
 
 	float4x4 identity = float4x4::identity;
 
@@ -481,13 +480,10 @@ void R_Mesh::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& trans
 
 	// Checking if the animation has finished (the animation time ticks is equal to the duration time ticks).
 	float animationSeconds = fmod(timeInSeconds, (float)selectedClip->GetDurationInSeconds());
-	//CONSOLE_LOG("%f", animationSeconds);
 	if ((selectedClip->GetDurationInSeconds() - animationSeconds) <= 0.1f && timeInSeconds != 0.0f)
 	{
 		if (!selectedClip->GetLoopBool())
-		{
 			selectedClip->SetFinishedBool(true);
-		}
 	}
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
@@ -507,7 +503,7 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 
 	std::string nodeName(pNode->GetName());
 
-	float4x4 nodeTransformation(pNode->GetTransform()->GetGlobalTransform());
+	float4x4 nodeTransformation(pNode->GetTransform()->GetLocalTransform());
 
 	const Channel* pNodeAnim = FindNodeAnim(nodeName);
 
@@ -537,8 +533,8 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 	if (boneNameToIndexMap.contains(nodeName))
 	{
 		uint boneIndex = boneNameToIndexMap[nodeName];
-		float4x4 rootTransform = rootNode->GetTransform()->GetGlobalTransform().InverseTransposed();
-		float4x4 delta = rootTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
+		float4x4 globalInversedTransform = rootNode->GetTransform()->GetGlobalTransform().Inverted();
+		float4x4 delta = globalInversedTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
 		boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 

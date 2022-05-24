@@ -1,9 +1,7 @@
 {
-    "UID": 40772345,
     "active": true,
     "children": [
         {
-            "UID": 1785533558,
             "active": true,
             "children": [],
             "components": [
@@ -42,11 +40,9 @@
             "is3D": false,
             "isPrefab": false,
             "name": "DialogueFrame",
-            "parent_UID": 40772345,
             "tag": 0
         },
         {
-            "UID": 897533171,
             "active": true,
             "children": [],
             "components": [
@@ -85,11 +81,9 @@
             "is3D": false,
             "isPrefab": false,
             "name": "DialogueAvatar",
-            "parent_UID": 40772345,
             "tag": 0
         },
         {
-            "UID": 691473341,
             "active": true,
             "children": [],
             "components": [
@@ -127,6 +121,7 @@
                         189,
                         255
                     ],
+                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                     "type": 16,
                     "value": "SampleName"
                 }
@@ -134,11 +129,9 @@
             "is3D": false,
             "isPrefab": false,
             "name": "DialogueName",
-            "parent_UID": 40772345,
             "tag": 0
         },
         {
-            "UID": 1264652203,
             "active": true,
             "children": [],
             "components": [
@@ -176,6 +169,7 @@
                         255,
                         255
                     ],
+                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                     "type": 16,
                     "value": "Hello world!blablablablabalbalbalba"
                 }
@@ -183,11 +177,9 @@
             "is3D": false,
             "isPrefab": false,
             "name": "DialogueLine1",
-            "parent_UID": 40772345,
             "tag": 0
         },
         {
-            "UID": 1668981710,
             "active": true,
             "children": [],
             "components": [
@@ -225,6 +217,7 @@
                         255,
                         255
                     ],
+                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                     "type": 16,
                     "value": "Hello world!babababababababababbabbababababa"
                 }
@@ -232,11 +225,9 @@
             "is3D": false,
             "isPrefab": false,
             "name": "DialogueLine2",
-            "parent_UID": 40772345,
             "tag": 0
         },
         {
-            "UID": 108262397,
             "active": true,
             "children": [],
             "components": [
@@ -261,7 +252,7 @@
                         0.0
                     ],
                     "size": [
-                        171.0,
+                        216.0,
                         56.0
                     ],
                     "type": 22
@@ -277,11 +268,9 @@
             "is3D": false,
             "isPrefab": false,
             "name": "DialogueSkipButton",
-            "parent_UID": 40772345,
             "tag": 0
         },
         {
-            "UID": 1080404949,
             "active": true,
             "children": [],
             "components": [
@@ -297,8 +286,8 @@
                         0.5
                     ],
                     "position": [
-                        -170.0,
-                        231.0
+                        -168.0,
+                        227.0
                     ],
                     "rotation": [
                         0.0,
@@ -306,7 +295,7 @@
                         0.0
                     ],
                     "size": [
-                        119.0,
+                        193.0,
                         54.0
                     ],
                     "type": 22
@@ -319,14 +308,14 @@
                         0,
                         255
                     ],
+                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                     "type": 16,
-                    "value": "Skip"
+                    "value": "Continue"
                 }
             ],
             "is3D": false,
             "isPrefab": false,
             "name": "DialgoueSkipText",
-            "parent_UID": 40772345,
             "tag": 0
         }
     ],
@@ -385,6 +374,5 @@
     "is3D": false,
     "isPrefab": true,
     "name": "Dialogue",
-    "parent_UID": 0,
     "tag": 0
 }

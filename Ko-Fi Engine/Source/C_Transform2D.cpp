@@ -174,6 +174,11 @@ void C_Transform2D::SetAnchor(const Anchor& newAnchor)
 	anchor = newAnchor;
 }
 
+void C_Transform2D::SetMask(const float2& newMask)
+{
+	this->mask = newMask;
+}
+
 float2 C_Transform2D::GetNormalizedPosition()
 {
 	C_Transform2D* parentTransform = owner->GetParent()->GetComponent<C_Transform2D>();

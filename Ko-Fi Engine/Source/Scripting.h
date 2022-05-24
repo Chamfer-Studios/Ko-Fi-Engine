@@ -36,8 +36,6 @@
 #include "C_LightSource.h"
 #include "RNG.h"
 
-
-
 enum INSPECTOR_VARIABLE_TYPE
 {
 	INSPECTOR_NO_TYPE,
@@ -153,6 +151,7 @@ public:
 			sol::constructors<void(), void(float, float)>(),
 			"x", &float2::x,
 			"y", &float2::y);
+
 		// float4 structure
 		lua.new_usertype<float4>("float4",
 			sol::constructors<void(), void(float, float, float, float)>(),
@@ -244,7 +243,9 @@ public:
 			"GetSize", &C_Transform2D::GetSize,
 			"SetSize", &C_Transform2D::SetSize,
 			"GetPivot", &C_Transform2D::GetPivot,
-			"SetPivot", &C_Transform2D::SetPivot
+			"SetPivot", &C_Transform2D::SetPivot,
+			"GetMask", &C_Transform2D::GetMask,
+			"SetMask", &C_Transform2D::SetMask
 			
 			);
 
@@ -420,6 +421,10 @@ public:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_RETURN);
 		}
+		case 42:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F3);
+		}
 		/*case 5:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H);
@@ -481,6 +486,30 @@ public:
 		case 24:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_4);
+		}
+		case 45:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_5);
+		}
+		case 46:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_6);
+		}
+		case 47:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_7);
+		}
+		case 48:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_8);
+		}
+		case 49:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_9);
+		}
+		case 50:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_0);
 		}
 		case 25:
 		{

@@ -7,10 +7,10 @@
                 "modules": [
                     {
                         "maxParticleLife": 3.0,
-                        "minParticleLife": 0.5,
+                        "minParticleLife": 0.004999999888241291,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 0.4749999940395355,
+                        "spawnTime": 0.0,
                         "type": 1
                     },
                     {
@@ -32,33 +32,15 @@
                                     1.0
                                 ],
                                 "position": 0.0
-                            },
-                            {
-                                "color": [
-                                    1.0,
-                                    0.29411765933036804,
-                                    0.0,
-                                    1.0
-                                ],
-                                "position": 0.5
-                            },
-                            {
-                                "color": [
-                                    1.0,
-                                    0.5882353186607361,
-                                    0.0,
-                                    1.0
-                                ],
-                                "position": 1.0
                             }
                         ],
                         "type": 3
                     },
                     {
                         "minInitialSize": [
-                            20.0,
-                            20.0,
-                            20.0
+                            50.0,
+                            50.0,
+                            50.0
                         ],
                         "type": 4
                     }
