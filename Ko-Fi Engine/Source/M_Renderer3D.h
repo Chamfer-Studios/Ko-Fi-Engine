@@ -155,6 +155,7 @@ public:
 	// Lights
 	unsigned int depthMapFBO;
 	unsigned int depthMapTexture;
+	unsigned int depthMapResolution;
 
 private:
 	bool vsync = false;
@@ -178,6 +179,8 @@ private:
 	// Occlusion Culling things
 	OcclusionQuery *query = nullptr;
 	R_Material *occlusionMat = nullptr;
+
+	bool stopRenderingShadows = false;
 
 public:
 	struct GOComp

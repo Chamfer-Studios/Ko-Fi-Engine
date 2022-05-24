@@ -102,7 +102,7 @@ void SkyBox::InitSkyBox()
 void SkyBox::DrawSkyBox()
 {
 	glBindVertexArray(VAO);
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
 	glDrawArrays(GL_TRIANGLES, 0, 36);

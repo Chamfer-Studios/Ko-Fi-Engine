@@ -71,7 +71,7 @@ in vec4 fragPosLightSpace;
 out vec4 color;
 
 uniform sampler2D ourTexture;
-uniform sampler2D depthMap;
+uniform sampler2D shadowMap;
 
 uniform int numOfDirectionalLights;
 uniform int numOfPointLights;
@@ -120,7 +120,7 @@ struct FocalLight {
       
 }; uniform FocalLight focalLights[MAX_FOCAL_LIGHTS];
 
-float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, DirLight light)
+float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, DirLight light, sampler2D shadowMap)
 {
     // perform perspective divide
     //When using an orthographic projection matrix the w component of a 
@@ -130,29 +130,31 @@ float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, DirLight light)
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     
     projCoords = projCoords * 0.5 + 0.5; 
-    float closestDepth = texture(depthMap, projCoords.xy).r;   
+    float closestDepth = texture(shadowMap, projCoords.xy).r;   
     float currentDepth = projCoords.z; 
 
     vec3 lightDir = normalize(-light.direction);
     //the bias is to reduce artifacts when looking at shadows from an angle.
     //simply offsets the depth of the shadow map a little
     float bias = 0.01;
-    float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;  //old way
+    //old way
+    //float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;  
 
     //float bias = max(0.05 * (1.0 - dot(normal, light.direction)), 0.005); 
-    //
+    
     //loop 9 times and grab the surrounding texels to average the shadows and make them smoother
-    //float shadow = 0.0;
-    //vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
-    //for(int x = -1; x <= 1; ++x)
-    //{
-    //    for(int y = -1; y <= 1; ++y)
-    //    {
-    //        float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
-    //        shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;        
-    //    }    
-    //}
-    //shadow /= 9.0;
+    float shadow = 0.0;
+    //grab the size of one sigle texel to use it to grab the ones near it
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for(int x = -1; x <= 1; ++x)
+    {
+         for(int y = -1; y <= 1; ++y)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;        
+        }    
+    }
+    shadow /= 9.0;
 
     return (1.0 - shadow);
 }
@@ -265,7 +267,7 @@ void main() {
        
        if(i == 0)
        {
-           shadow = ShadowCalculation(fragPosLightSpace, vec3(normal), dirLights[i]);
+           shadow = ShadowCalculation(fragPosLightSpace, vec3(normal), dirLights[i], shadowMap);
        }
 
         outputColor += CalcDirLight(dirLights[i], vec3(normal), shadow); 

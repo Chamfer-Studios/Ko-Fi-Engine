@@ -280,6 +280,16 @@ bool C_LightSource::InspectorDraw(PanelChooser* chooser)
 				owner->GetEngine()->GetSceneManager()->GetCurrentScene()->SetShadowCaster(owner);
 			}
 
+			//depth map resolution levels default 4096px x 4096px
+			//if (owner == owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetShadowCaster())
+			//{
+			//	float depthMapResolution = owner->GetEngine()->GetRenderer()->depthMapResolution;
+			//	if (ImGui::DragFloat("Depth Map Resolution", &depthMapResolution, 0.1f, 0.0f, 1.0f, "%.1f"))
+			//	{
+			//		owner->GetEngine()->GetRenderer()->depthMapResolution = depthMapResolution;
+			//	}
+			//}
+
 			break;
 		}
 		case SourceType::POINT:

@@ -80,6 +80,7 @@ bool M_Renderer3D::Awake(Json configModule)
 	OnResize();
 	SetVsync(configModule["Vsync"].get<bool>());
 
+	depthMapResolution = 4096; //quite high but the engine seems to handle it pretty well (2 or 3 fps below the normal shadows)
 	InitDepthMapFramebufferAndTexture();
 	InitFrameBuffers();
 
@@ -141,7 +142,7 @@ bool M_Renderer3D::PostUpdate(float dt)
 	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
 	if (light)
 	{
-		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);	//configure viewport
+		glViewport(0, 0, depthMapResolution, depthMapResolution);		//configure viewport
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
 		glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
 		//glCullFace(GL_FRONT);
@@ -149,7 +150,6 @@ bool M_Renderer3D::PostUpdate(float dt)
 		//glCullFace(GL_BACK);
 		glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
 		UnbindFrameBuffers();
-
 	}
 
 	PrepareFrameBuffers();
@@ -440,7 +440,9 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 			if (cRenderedUI)
 			{
+				stopRenderingShadows = true;
 				RenderUI(go);
+				stopRenderingShadows = false;
 			}
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
@@ -613,9 +615,9 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
 			}
 
-			if (engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster())
+			if (engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster() && !stopRenderingShadows)
 			{
-				glActiveTexture(GL_TEXTURE7);
+				glActiveTexture(GL_TEXTURE3);
 				glBindTexture(GL_TEXTURE_2D, depthMapTexture);
 			}
 
@@ -701,14 +703,19 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				}
 
 				GLint ourTexture = glGetUniformLocation(shader, "ourTexture");
-				glUniform1i(ourTexture, 1);
+				glUniform1i(ourTexture, 1); 
 
-				GLint depthMap = glGetUniformLocation(shader, "depthMap");
-				glUniform1i(depthMap, 7);
+				GLint depthMap = glGetUniformLocation(shader, "shadowMap");
+				glUniform1i(depthMap, 3);
 
 				//Draw Mesh
 				mesh->Draw();
 				glUseProgram(0);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, 0);
+				glActiveTexture(GL_TEXTURE3);
+				glBindTexture(GL_TEXTURE_2D, 0);
 			}
 		}
 	}
@@ -1265,7 +1272,7 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
 		//engine->GetWindow()->GetWidth(), engine->GetWindow()->GetHeight(), 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		depthMapResolution, depthMapResolution, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
