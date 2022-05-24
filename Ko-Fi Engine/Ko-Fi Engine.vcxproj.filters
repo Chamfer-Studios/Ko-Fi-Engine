@@ -164,6 +164,9 @@
     <Filter Include="Scripts\Characters\Raban">
       <UniqueIdentifier>{c6de36aa-faa1-4ca4-89c0-08d81df7dec3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Components\PostProcessing">
+      <UniqueIdentifier>{31987171-dcdc-44a8-8d04-349ca31de3a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -696,6 +699,9 @@
     </ClCompile>
     <ClCompile Include="Source\Log.cpp">
       <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_SSAO.cpp">
+      <Filter>Source\GameObject\Components\PostProcessing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1352,6 +1358,9 @@
     </ClInclude>
     <ClInclude Include="Source\Log.h">
       <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\C_SSAO.h">
+      <Filter>Source\GameObject\Components\PostProcessing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

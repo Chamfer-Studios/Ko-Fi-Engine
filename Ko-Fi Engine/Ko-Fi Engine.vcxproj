@@ -164,6 +164,7 @@
     <ClCompile Include="Source\C_CapsuleCollider.cpp" />
     <ClCompile Include="Source\C_RigidBody.cpp" />
     <ClCompile Include="Source\C_SphereCollider.cpp" />
+    <ClCompile Include="Source\C_SSAO.cpp" />
     <ClCompile Include="Source\External\hash_library\md5.cpp" />
     <ClCompile Include="Source\External\hash_library\sha1.cpp" />
     <ClCompile Include="Source\External\hash_library\sha256.cpp" />
@@ -335,6 +336,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\C_SSAO.h" />
     <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\C_BoxCollider.h" />
     <ClInclude Include="Source\C_CapsuleCollider.h" />
