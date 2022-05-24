@@ -98,6 +98,7 @@ public:
 	void RenderMeshesQuery(C_Camera *camera, GameObject *go, int queryPosition);
 	void RenderSkyBox(C_Camera *camera, SkyBox &skybox);
 	void RenderUI(GameObject *go);
+	void RenderSSAO();
 
 	// Method to update the animated meshes bones and notify the shader about it.
 	void StepAnimatedMesh(GameObject *go, R_Mesh *mesh, uint shader);
@@ -141,6 +142,9 @@ public:
 	void FillShadowMap(C_Camera *camera);
 	bool renderShadowMap;
 
+	void GenerateSSAOKernel(int kernelSize);
+	void GenerateSSAOTexture(int noiseSize);
+
 public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
@@ -153,6 +157,9 @@ public:
 	// Lights
 	unsigned int depthMapFBO;
 	unsigned int depthMapTexture;
+
+	unsigned int gPosition = 0;
+	unsigned int noiseTexture = 0;
 
 private:
 	bool vsync = false;
@@ -176,6 +183,16 @@ private:
 	// Occlusion Culling things
 	OcclusionQuery *query = nullptr;
 	R_Material *occlusionMat = nullptr;
+
+	std::vector<float3> ssaoKernel;
+	std::vector<float3> ssaoTexture;
+
+
+
+	float naive_lerp(float a, float b, float t)
+	{
+		return a + t * (b - a);
+	}
 
 public:
 	struct GOComp

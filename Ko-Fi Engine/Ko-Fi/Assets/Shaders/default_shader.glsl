@@ -54,6 +54,10 @@ void main() {
 #shader fragment
 #version 330 core
 
+layout (location = 0) out vec4 gPosition;
+layout (location = 1) out vec3 gNormal;
+layout (location = 2) out vec4 gAlbedoSpec;
+
 const int MAX_DIR_LIGHTS = 5;
 const int MAX_POINT_LIGHTS = 5;
 const int MAX_FOCAL_LIGHTS = 5; 
@@ -232,11 +236,13 @@ void main() {
         outputColor += CalcFocalLight(focalLights[i], vec3(normal), fragPos); 
     }
 
+    gPosition = FragPos;
+    // also store the per-fragment normals into the gbuffer
+    gNormal = normalize(Normal);
     //---- Apply output to the texture ----//
-    //texture
     vec4 textureColor = texture(ourTexture, TexCoord);
+    // and the diffuse per-fragment color, ignore specular
+    gAlbedoSpec.rgba = textureColor * vec4(outputColor, 1.0);
 
-    //color + lighting
-    color = textureColor * vec4(outputColor, 1.0);
-
+    color = textureColor * vec4(outputColor, 1.0); 
 }

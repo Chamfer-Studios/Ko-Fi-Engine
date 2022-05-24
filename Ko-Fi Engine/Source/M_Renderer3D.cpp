@@ -36,6 +36,7 @@
 #include "C_LightSource.h"
 #include "C_Animator.h"
 #include "C_RigidBody.h"
+#include "C_SSAO.h"
 
 #include "R_Material.h"
 #include "PieShape.h"
@@ -64,6 +65,25 @@ M_Renderer3D::M_Renderer3D(KoFiEngine* engine) : Module()
 	};*/
 
 	//gameObejctsToRenderDistanceOrdered = std::set<GameObject*, decltype(compGO)>(compGO);
+
+	GenerateSSAOKernel(256);
+	GenerateSSAOTexture(256);
+
+	glGenTextures(1, &gPosition);
+	glBindTexture(GL_TEXTURE_2D, gPosition);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 1920, 1080, 0, GL_RGBA, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	glGenTextures(1, &noiseTexture);
+	glBindTexture(GL_TEXTURE_2D, noiseTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 4, 4, 0, GL_RGB, GL_FLOAT, &ssaoTexture[0]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 }
 
 // Destructor
@@ -430,7 +450,11 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			renderGo(go);
 		}
 	}
+
+	RenderSSAO();
+
 	RenderAllParticles();
+
 #pragma omp parallel for
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
@@ -917,6 +941,37 @@ void M_Renderer3D::RenderUI(GameObject* go)
 {
 	C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 	cRenderedUI->Draw();
+}
+
+void M_Renderer3D::RenderSSAO()
+{
+	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+	{
+		if (go->GetComponent<C_SSAO>()) {
+
+			auto ssao = go->GetComponent<C_SSAO>();
+
+			glBindFramebuffer(GL_FRAMEBUFFER, ssao->ssaoFBO);
+			glClear(GL_COLOR_BUFFER_BIT);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, gPosition);
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, noiseTexture);
+			shaderSSAO.use();
+			SendKernelSamplesToShader();
+			shaderSSAO.setMat4("projection", projection);
+			RenderQuad();
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+			// lighting pass: render scene lighting
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			shaderLightingPass.use();
+			[...]
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, ssaoColorBuffer);
+			[...]
+		}
+	}
 }
 
 void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
@@ -1462,4 +1517,30 @@ bool M_Renderer3D::GOComp::operator()(const GameObject* lhs, const GameObject* r
 {
 	float3 cameraPosition = lhs->GetEngine()->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
 	return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition());
+}
+
+void M_Renderer3D::GenerateSSAOKernel(int kernelSize)
+{
+	for (int i = 0; i < kernelSize; ++i) {
+		ssaoKernel.push_back(float3(RNG::GetBoundedRandomFloat(-1.0f, 1.0f), RNG::GetBoundedRandomFloat(-1.0f, 1.0f), RNG::GetBoundedRandomFloat(0.0f, 1.0f)));
+		ssaoKernel[i].Normalize();
+
+		ssaoKernel[i] *= RNG::GetBoundedRandomFloat(0.0f, 1.0f);
+
+		float scale = float(i) / float(kernelSize);
+		scale = naive_lerp(0.1f, 1.0f, scale * scale);
+		ssaoKernel[i] *= scale;
+	}
+}
+
+void M_Renderer3D::GenerateSSAOTexture(int noiseSize)
+{
+	for (int i = 0; i < noiseSize; ++i) {
+		ssaoTexture.push_back(float3(
+			RNG::GetBoundedRandomFloat(-1.0f, 1.0f),
+			RNG::GetBoundedRandomFloat(-1.0f, 1.0f),
+			0.0f
+		));
+		ssaoTexture[i].Normalize();
+	}
 }
