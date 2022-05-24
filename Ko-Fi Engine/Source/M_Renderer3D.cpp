@@ -1338,7 +1338,14 @@ void M_Renderer3D::FillShadowMap()
 
 void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* light)
 {
-	DirectionalLight* dirLight = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+	C_LightSource* lightSource = light->GetComponent<C_LightSource>();
+	if (!lightSource)
+		return;
+
+	DirectionalLight* dirLight = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource(); 
+	if (!dirLight)
+		return;
+
 	int i = 0;
 	// Passing Shader Uniforms
 	GLint model_matrix = glGetUniformLocation(shader, "model_matrix");

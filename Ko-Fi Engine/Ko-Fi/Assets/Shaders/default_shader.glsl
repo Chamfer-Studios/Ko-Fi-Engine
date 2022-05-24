@@ -156,6 +156,9 @@ float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, DirLight light, sam
     }
     shadow /= 9.0;
 
+    if(projCoords.z > 1.0)
+        shadow = 0.0;
+            
     return (1.0 - shadow);
 }
 
