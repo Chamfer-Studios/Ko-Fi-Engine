@@ -49,21 +49,21 @@ end
 function EventHandler(key, fields)
     if key == "Player_Ability" then -- fields[1] -> characterID; fields[2] -> ability n; fields[3] -> ability state
         if (fields[1] == 1) then -- Zhib
-            if (fields[2] == 0) then
-                if (fields[3] == 0) then
+            if (fields[2] == 0) then 
+                if (fields[3] == 0) then 
                     if (isActive1 == true) then
                         zhib = 1
                         isActive1 = false
                     end
                 end
             end
-            if (fields[2] == 1) then
+            if (fields[2] == 1) then 
                 if (fields[3] == 0) then
                     zhib = 1
-                elseif (fields[3] == 1) then
+                elseif (fields[3] == 1) then 
                     zhib = 2
                     isActive1 = true
-                elseif (fields[3] == 2) then
+                elseif (fields[3] == 2) then 
                     zhib = 3
                     isActive1 = false
                 end

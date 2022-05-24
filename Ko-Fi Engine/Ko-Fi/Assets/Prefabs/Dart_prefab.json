@@ -115,7 +115,7 @@
                     "pan": 0.0,
                     "play_on_start": false,
                     "track_path": "Assets/Audio/SFX/Nerala/nerala_poison_hit_1_fx.wav",
-                    "transpose": 0.0,
+                    "transpose": 1.0,
                     "volume": 100.0
                 }
             ],

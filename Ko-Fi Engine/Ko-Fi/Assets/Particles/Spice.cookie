@@ -14,7 +14,7 @@
                         "type": 1
                     },
                     {
-                        "billboardingType": 1,
+                        "billboardingType": 2,
                         "frontAxis": true,
                         "maxDegrees": 360,
                         "minDegrees": 0,
@@ -24,19 +24,19 @@
                     },
                     {
                         "maxFinalSize": [
-                            0.5,
-                            0.5,
-                            0.5
+                            5.0,
+                            5.0,
+                            5.0
                         ],
                         "minFinalSize": [
-                            0.25,
-                            0.25,
-                            0.25
+                            2.5,
+                            2.5,
+                            2.5
                         ],
                         "minInitialSize": [
-                            0.5,
-                            0.5,
-                            0.5
+                            5.0,
+                            5.0,
+                            5.0
                         ],
                         "type": 4
                     },
@@ -53,9 +53,9 @@
                             0.10000000149011612
                         ],
                         "maxPosition": [
-                            2.0,
-                            2.0,
-                            2.0
+                            20.0,
+                            20.0,
+                            20.0
                         ],
                         "maxVelocity": 5.0,
                         "minAcceleration": [
@@ -69,9 +69,9 @@
                             -0.10000000149011612
                         ],
                         "minPosition": [
-                            -2.0,
-                            -2.0,
-                            -2.0
+                            -20.0,
+                            -20.0,
+                            -20.0
                         ],
                         "minVelocity": 4.0,
                         "randAcceleration": false,

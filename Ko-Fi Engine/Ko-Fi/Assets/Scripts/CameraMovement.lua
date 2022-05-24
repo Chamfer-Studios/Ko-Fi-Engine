@@ -1,7 +1,7 @@
 rotSpeed = 150.0
 angle = 45.0
 remainingAngle = 0.0
-offset = float3.new(0, 240, -270)
+offset = float3.new(0, 240, 270)
 scrollspeed = 15.0
 targetAngle = 0.0
 newZoomedPos = float3.new(0, 0, 0)
@@ -10,12 +10,21 @@ function Update(dt)
     id = GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
     if (id == 1) then
         target = Find("Zhib"):GetTransform():GetPosition()
+        lastTarget = id
     elseif (id == 2) then
         target = Find("Nerala"):GetTransform():GetPosition()
+        lastTarget = id
     elseif (id == 3) then
         target = Find("Omozra"):GetTransform():GetPosition()
+        lastTarget = id
     else
-        target = 0
+        if (lastTarget == 1) then
+            target = Find("Zhib"):GetTransform():GetPosition()
+        elseif (lastTarget == 2) then
+            target = Find("Nerala"):GetTransform():GetPosition()
+        elseif (lastTarget == 3) then
+            target = Find("Omozra"):GetTransform():GetPosition()
+        end
     end
 
     if (GetMouseZ() > 0) then

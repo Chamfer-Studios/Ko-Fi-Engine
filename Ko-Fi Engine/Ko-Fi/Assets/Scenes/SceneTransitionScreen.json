@@ -1,7 +1,7 @@
 {
     "SceneTransitionScreen": {
         "active": true,
-        "game_objects_amount": 146,
+        "game_objects_amount": 144,
         "game_objects_list": [
             {
                 "UID": 357281497,
@@ -20,9 +20,9 @@
                         ],
                         "rotation": [
                             0.0,
+                            1.0,
                             0.0,
-                            0.0,
-                            1.0
+                            0.0
                         ],
                         "scale": [
                             1.0,
@@ -37,6 +37,8 @@
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.009999999776482582,
+                        "sCullingRadius": 249,
+                        "sphere_culling": false,
                         "type": 4,
                         "vertical_fov": 0.3839724361896515
                     }
@@ -63,15 +65,15 @@
                             0.0
                         ],
                         "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
+                            0.27059805393218994,
+                            -0.6532815098762512,
+                            0.27059805393218994,
+                            0.6532815098762512
                         ],
                         "scale": [
                             1.0,
-                            1.0,
-                            1.0
+                            0.9999999403953552,
+                            0.9999999403953552
                         ],
                         "type": 21
                     },
@@ -97,6 +99,30 @@
                         "sourceType": 0,
                         "specularValue": 0.0,
                         "type": 19
+                    },
+                    {
+                        "active": true,
+                        "far_plane_distance": 1000.0,
+                        "frustum_culling": false,
+                        "isMainCamera": false,
+                        "near_plane_distance": 0.30000001192092896,
+                        "sCullingRadius": 499,
+                        "sphere_culling": false,
+                        "type": 4,
+                        "vertical_fov": 675.0
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
+                        "id": 310974084,
+                        "inspector_variables": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "value": "SceneTransitionScreen"
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": true,
@@ -384,6 +410,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Next Mission"
                     }
@@ -432,6 +459,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Main Menu"
                     }
@@ -480,6 +508,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Settings"
                     }
@@ -578,6 +607,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Skills"
                     }
@@ -676,6 +706,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Quests"
                     }
@@ -720,6 +751,12 @@
                         "active": true,
                         "texture": "Assets/UI/Transition Screen/Popup Window/popup_window_v1.0.png",
                         "type": 14
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_GameState.lua",
+                        "id": 925691866,
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -1036,6 +1073,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Close"
                     }
@@ -1176,6 +1214,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Mission information goes here"
                     }
@@ -1224,6 +1263,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Mission 1"
                     }
@@ -1322,6 +1362,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Mission 2"
                     }
@@ -1380,14 +1421,19 @@
                                 "value": "ShadyZ3"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 800
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -1460,14 +1506,19 @@
                                 "value": "ShadyN3"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 800
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -1540,14 +1591,19 @@
                                 "value": "ShadyZ2"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 400
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -1620,14 +1676,19 @@
                                 "value": "ShadyN2"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 400
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -1700,14 +1761,19 @@
                                 "value": "ShadyZ1"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -1780,14 +1846,19 @@
                                 "value": "ShadyN1"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -1860,14 +1931,19 @@
                                 "value": "ShadyO1"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -1940,14 +2016,19 @@
                                 "value": "ShadyO2"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 400
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -2020,14 +2101,19 @@
                                 "value": "ShadyO3"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 800
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_primary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -2132,6 +2218,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Description"
                     }
@@ -2180,6 +2267,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "blablabla"
                     }
@@ -2285,6 +2373,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Close"
                     }
@@ -2343,14 +2432,19 @@
                                 "value": "ShadyZ4"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -2423,14 +2517,19 @@
                                 "value": "ShadyZ5"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 400
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -2503,14 +2602,19 @@
                                 "value": "ShadyZ6"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 800
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -2573,6 +2677,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Decoy"
                     }
@@ -2621,6 +2726,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Decoy"
                     }
@@ -2669,6 +2775,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Decoy"
                     }
@@ -2853,14 +2960,19 @@
                                 "value": "ShadyZ7"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 300
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -2933,14 +3045,19 @@
                                 "value": "ShadyZ8"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 600
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -3003,6 +3120,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Weirding Way"
                     }
@@ -3051,6 +3169,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Weirding Way"
                     }
@@ -3109,14 +3228,19 @@
                                 "value": "ShadyZ9"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 1200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "zhib_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -3179,6 +3303,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Weirding Way"
                     }
@@ -3237,14 +3362,19 @@
                                 "value": "ShadyN4"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -3317,14 +3447,19 @@
                                 "value": "ShadyN5"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 400
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -3397,14 +3532,19 @@
                                 "value": "ShadyN6"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 800
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -3477,14 +3617,19 @@
                                 "value": "ShadyN7"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 300
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -3557,14 +3702,19 @@
                                 "value": "ShadyN8"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 600
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -3637,14 +3787,19 @@
                                 "value": "ShadyN9"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 1200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "nerala_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -3707,6 +3862,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Sleeping Dart"
                     }
@@ -3755,6 +3911,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Sleeping Dart"
                     }
@@ -3803,6 +3960,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Sleeping Dart"
                     }
@@ -3851,6 +4009,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Hunter-Seeker"
                     }
@@ -3899,6 +4058,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Hunter-Seeker"
                     }
@@ -3947,6 +4107,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Hunter-Seeker"
                     }
@@ -4005,14 +4166,19 @@
                                 "value": "ShadyO4"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -4085,14 +4251,19 @@
                                 "value": "ShadyO5"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 400
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -4165,14 +4336,19 @@
                                 "value": "ShadyO7"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 5
+                                "value": 300
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 1
                             }
                         ],
                         "type": 5
@@ -4245,14 +4421,19 @@
                                 "value": "ShadyO6"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 800
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_secondary_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -4325,14 +4506,19 @@
                                 "value": "ShadyO8"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 10
+                                "value": 600
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 2
                             }
                         ],
                         "type": 5
@@ -4405,14 +4591,19 @@
                                 "value": "ShadyO9"
                             },
                             {
-                                "name": "starts",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
                                 "name": "price",
                                 "type": "int",
-                                "value": 20
+                                "value": 1200
+                            },
+                            {
+                                "name": "skillName",
+                                "type": "string",
+                                "value": "omozra_ultimate_level"
+                            },
+                            {
+                                "name": "lvlNumber",
+                                "type": "int",
+                                "value": 3
                             }
                         ],
                         "type": 5
@@ -4475,6 +4666,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Ñam Ñam"
                     }
@@ -4523,6 +4715,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Ñam Ñam"
                     }
@@ -4571,6 +4764,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Let's go"
                     }
@@ -4619,6 +4813,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Ñam Ñam"
                     }
@@ -4667,6 +4862,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Let's go"
                     }
@@ -4715,6 +4911,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Let's go"
                     }
@@ -4763,6 +4960,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Seek Them"
                     }
@@ -4811,6 +5009,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Seek Them"
                     }
@@ -4859,6 +5058,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Seek Them"
                     }
@@ -4907,6 +5107,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Smoke Bomb"
                     }
@@ -4955,6 +5156,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Smoke Bomb"
                     }
@@ -5003,6 +5205,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Smoke Bomb"
                     }
@@ -5051,6 +5254,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Throwable Knife"
                     }
@@ -5099,6 +5303,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Throwable Knife"
                     }
@@ -5147,6 +5352,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Throwable Knife"
                     }
@@ -5155,104 +5361,6 @@
                 "isPrefab": false,
                 "name": "Text15",
                 "parent_UID": 769627439,
-                "tag": 0
-            },
-            {
-                "UID": 469090363,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            440.0,
-                            -430.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            270.0,
-                            80.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/Menu UI/Buttons/button_hover_v1.0.png",
-                        "idleTexture": "Assets/UI/Menu UI/Buttons/button_normal_v1.0.png",
-                        "pressedTexture": "Assets/UI/Menu UI/Buttons/button_select_v1.0.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/HUD/UI_RestartButton.lua",
-                        "id": 2072385719,
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "ResetSkills",
-                "parent_UID": 745654445,
-                "tag": 0
-            },
-            {
-                "UID": 15897516,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            140.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "type": 16,
-                        "value": "Reset"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text38",
-                "parent_UID": 469090363,
                 "tag": 0
             },
             {
@@ -6007,6 +6115,7 @@
                             255,
                             255
                         ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Spice"
                     },

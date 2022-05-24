@@ -1,7 +1,7 @@
 {
     "SceneHUD": {
         "active": true,
-        "game_objects_amount": 48,
+        "game_objects_amount": 43,
         "game_objects_list": [
             {
                 "UID": 1475716659,
@@ -197,10 +197,16 @@
                             200.0
                         ],
                         "type": 13
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/New HUD Scripts/hud_selected_character.lua",
+                        "id": 187694343,
+                        "type": 5
                     }
                 ],
                 "is3D": false,
-                "isPrefab": false,
+                "isPrefab": true,
                 "name": "Canvas",
                 "parent_UID": 0,
                 "tag": 0
@@ -221,8 +227,8 @@
                             0.5
                         ],
                         "position": [
-                            245.0,
-                            173.0
+                            210.0,
+                            158.0
                         ],
                         "rotation": [
                             0.0,
@@ -230,8 +236,8 @@
                             0.0
                         ],
                         "size": [
-                            156.0,
-                            156.0
+                            156.25,
+                            156.25
                         ],
                         "type": 22
                     },
@@ -263,8 +269,8 @@
                             0.5
                         ],
                         "position": [
-                            82.0,
-                            132.0
+                            70.0,
+                            120.0
                         ],
                         "rotation": [
                             0.0,
@@ -272,8 +278,8 @@
                             0.0
                         ],
                         "size": [
-                            76.0,
-                            76.0
+                            76.25,
+                            76.25
                         ],
                         "type": 22
                     },
@@ -305,8 +311,8 @@
                             0.5
                         ],
                         "position": [
-                            399.0,
-                            132.0
+                            350.0,
+                            120.0
                         ],
                         "rotation": [
                             0.0,
@@ -314,8 +320,8 @@
                             0.0
                         ],
                         "size": [
-                            76.0,
-                            76.0
+                            76.25,
+                            76.25
                         ],
                         "type": 22
                     },
@@ -332,7 +338,956 @@
                 "tag": 0
             },
             {
-                "UID": 1557959980,
+                "UID": 827924527,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            50.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            491.6000061035156,
+                            35.93000030517578
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/spice_bar_fill.png",
+                        "type": 14
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/New HUD Scripts/spice_bar.lua",
+                        "id": 2040907340,
+                        "type": 5
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Spice bar fill",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 20434442,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            50.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            551.7100219726563,
+                            37.7599983215332
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/spice_bar.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Spice Bar Frame",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 610741323,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_nerala1.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Nerala Q",
+                "parent_UID": 423283764,
+                "tag": 0
+            },
+            {
+                "UID": 622058684,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_nerala2.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Nerala W",
+                "parent_UID": 423283764,
+                "tag": 0
+            },
+            {
+                "UID": 1315497983,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_nerala3.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Neala E",
+                "parent_UID": 423283764,
+                "tag": 0
+            },
+            {
+                "UID": 1890030071,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_zhib1.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Zhib Q",
+                "parent_UID": 1668329310,
+                "tag": 0
+            },
+            {
+                "UID": 546054945,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_zhib2.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Zhib W",
+                "parent_UID": 1668329310,
+                "tag": 0
+            },
+            {
+                "UID": 1087783248,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_zhib3.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Zhib E",
+                "parent_UID": 1668329310,
+                "tag": 0
+            },
+            {
+                "UID": 1357825892,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_omozra1.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Omozra Q",
+                "parent_UID": 1954359868,
+                "tag": 0
+            },
+            {
+                "UID": 1724323110,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_omozra2.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Omozra W",
+                "parent_UID": 1954359868,
+                "tag": 0
+            },
+            {
+                "UID": 1404794941,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/omozra_ability3.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Omozra E",
+                "parent_UID": 1954359868,
+                "tag": 0
+            },
+            {
+                "UID": 319287331,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_cd_mask.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Mask CD Q",
+                "parent_UID": 2071979755,
+                "tag": 0
+            },
+            {
+                "UID": 528667417,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_cd_mask.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Mask CD W",
+                "parent_UID": 2071979755,
+                "tag": 0
+            },
+            {
+                "UID": 1586300521,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_cd_mask.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Mask CD E",
+                "parent_UID": 2071979755,
+                "tag": 0
+            },
+            {
+                "UID": 423283764,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 13
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Nerala Skills",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 1668329310,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 13
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Zhib Skills",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 1954359868,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 13
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Omozra Skills",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 2071979755,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 13
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Masks CD",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 383502924,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 13
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Frames",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 192888653,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -150.0,
+                            129.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            74.0,
+                            96.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/ability_hover.png",
+                        "idleTexture": "Assets/New UI/ability_default.png",
+                        "pressedTexture": "Assets/New UI/ability_pressed.png",
+                        "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/New HUD Scripts/primary_skill_button.lua",
+                        "id": 29862008,
+                        "type": 5
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Frame Q",
+                "parent_UID": 383502924,
+                "tag": 0
+            },
+            {
+                "UID": 503626130,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            129.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            74.0,
+                            96.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/ability_hover.png",
+                        "idleTexture": "Assets/New UI/ability_default.png",
+                        "pressedTexture": "Assets/New UI/ability_pressed.png",
+                        "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/New HUD Scripts/secondary_skill_button.lua",
+                        "id": 258688672,
+                        "type": 5
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Frame W",
+                "parent_UID": 383502924,
+                "tag": 0
+            },
+            {
+                "UID": 1784795623,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            150.0,
+                            130.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            74.0,
+                            96.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/ability_hover.png",
+                        "idleTexture": "Assets/New UI/ability_default.png",
+                        "pressedTexture": "Assets/New UI/ability_pressed.png",
+                        "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/New HUD Scripts/ultimate_skill_button.lua",
+                        "id": 1366169570,
+                        "type": 5
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Frame E",
+                "parent_UID": 383502924,
+                "tag": 0
+            },
+            {
+                "UID": 1566032353,
                 "active": true,
                 "components": [
                     {
@@ -347,8 +1302,8 @@
                             0.5
                         ],
                         "position": [
-                            144.0,
-                            39.0
+                            212.0,
+                            158.0
                         ],
                         "rotation": [
                             0.0,
@@ -356,8 +1311,301 @@
                             0.0
                         ],
                         "size": [
-                            57.0,
-                            22.0
+                            201.85000610351563,
+                            199.44000244140625
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/square_frame_a.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Selected Character Frame",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 507403178,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 6,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            70.0,
+                            120.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            76.25,
+                            76.25
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/square_frame_c.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Left Character Frame",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 1528223881,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 6,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            350.0,
+                            120.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            76.25,
+                            76.25
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/square_frame_c.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Right Character Frame",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 1059564891,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_active_mask.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Mask Active Q",
+                "parent_UID": 322347774,
+                "tag": 0
+            },
+            {
+                "UID": 322347774,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 13
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Masks Active",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 970262504,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_active_mask.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Mask Active W",
+                "parent_UID": 322347774,
+                "tag": 0
+            },
+            {
+                "UID": 661268754,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 7,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            150.0,
+                            119.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.1500015258789,
+                            70.1500015258789
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/ability_active_mask.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Skill Mask Active E",
+                "parent_UID": 322347774,
+                "tag": 0
+            },
+            {
+                "UID": 636280292,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            57.86000061035156,
+                            22.860000610351563
                         ],
                         "type": 22
                     },
@@ -370,11 +1618,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "HP Fill 1",
-                "parent_UID": 833363227,
+                "parent_UID": 1675666166,
                 "tag": 0
             },
             {
-                "UID": 1123489194,
+                "UID": 1675444451,
                 "active": true,
                 "components": [
                     {
@@ -383,14 +1631,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 6,
+                        "anchor": 4,
                         "pivot": [
                             0.5,
                             0.5
                         ],
                         "position": [
-                            210.0,
-                            40.0
+                            0.0,
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -412,11 +1660,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "HP Fill 2",
-                "parent_UID": 833363227,
+                "parent_UID": 1801828687,
                 "tag": 0
             },
             {
-                "UID": 227090917,
+                "UID": 188799876,
                 "active": true,
                 "components": [
                     {
@@ -425,14 +1673,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 6,
+                        "anchor": 4,
                         "pivot": [
                             0.5,
                             0.5
                         ],
                         "position": [
-                            274.0,
-                            39.0
+                            0.0,
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -454,11 +1702,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "HP Fill 3",
-                "parent_UID": 833363227,
+                "parent_UID": 417728079,
                 "tag": 0
             },
             {
-                "UID": 286608134,
+                "UID": 1675666166,
                 "active": true,
                 "components": [
                     {
@@ -473,8 +1721,50 @@
                             0.5
                         ],
                         "position": [
-                            144.0,
-                            39.0
+                            130.0,
+                            42.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            57.86000061035156,
+                            25.860000610351563
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/hp_diamond.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "HP Frame 1",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 1801828687,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 6,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            210.0,
+                            42.0
                         ],
                         "rotation": [
                             0.0,
@@ -495,12 +1785,12 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "HP Marquee 1",
+                "name": "HP Frame 2",
                 "parent_UID": 833363227,
                 "tag": 0
             },
             {
-                "UID": 1887731633,
+                "UID": 417728079,
                 "active": true,
                 "components": [
                     {
@@ -509,1489 +1799,87 @@
                     },
                     {
                         "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    },
-                    {
-                        "active": true,
-                        "animation": {
-                            "asset_path": "Assets/Models/Enemies/harkonnen_armature|harkonnen_armature|harkonnen_armature|harkonnen_reel.cake",
-                            "uid": 316919178
-                        },
-                        "clips": [
-                            {
-                                "clipDuration": 312.0,
-                                "clipDurationInSeconds": 13.0,
-                                "clipEndFrame": 312.0,
-                                "clipFinished": false,
-                                "clipLoop": true,
-                                "clipName": "Default clip",
-                                "clipStartFrame": 0.0,
-                                "mapString": "Default clip"
-                            }
-                        ],
-                        "selectedClip": "Default clip",
-                        "type": 12
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": true,
-                "name": "Harkonnen",
-                "parent_UID": 0,
-                "tag": 0
-            },
-            {
-                "UID": 1271805213,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_armature",
-                "parent_UID": 1887731633,
-                "tag": 0
-            },
-            {
-                "UID": 1452484816,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.1365346908569336,
-                            419.8089599609375,
-                            6.885972499847412
-                        ],
-                        "rotation": [
-                            -0.01575528457760811,
-                            0.003195258090272546,
-                            -0.001295381342060864,
-                            0.9998699426651001
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            0.9999991655349731
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_hips",
-                "parent_UID": 1271805213,
-                "tag": 0
-            },
-            {
-                "UID": 587921153,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1.0617077350616455e-07,
-                            52.77827072143555,
-                            -2.516310214996338
-                        ],
-                        "rotation": [
-                            0.04831729084253311,
-                            0.000900590093806386,
-                            0.0006661270163021982,
-                            0.9988314509391785
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999991655349731,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_spine",
-                "parent_UID": 1452484816,
-                "tag": 0
-            },
-            {
-                "UID": 620281193,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -2.60770320892334e-08,
-                            62.08100128173828,
-                            7.264316082000732e-08
-                        ],
-                        "rotation": [
-                            0.07165798544883728,
-                            0.0011919380631297827,
-                            0.0001894359738798812,
-                            0.9974285364151001
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_spine_1",
-                "parent_UID": 587921153,
-                "tag": 0
-            },
-            {
-                "UID": 848280330,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            8.270144462585449e-07,
-                            70.94877624511719,
-                            1.9532162696123123e-05
-                        ],
-                        "rotation": [
-                            0.07165753841400146,
-                            0.0012524350313469768,
-                            0.00013745891919825226,
-                            0.9974285364151001
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999997615814209,
-                            0.9999999403953552
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_spine_2",
-                "parent_UID": 620281193,
-                "tag": 0
-            },
-            {
-                "UID": 177078783,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1.1622905731201172e-06,
-                            79.25666046142578,
-                            -0.000128244049847126
-                        ],
-                        "rotation": [
-                            0.051252808421850204,
-                            0.001059721689671278,
-                            0.005961313843727112,
-                            0.9986673593521118
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_neck",
-                "parent_UID": 848280330,
-                "tag": 0
-            },
-            {
-                "UID": 1845817463,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.76837158203125e-07,
-                            18.962810516357422,
-                            5.265936374664307
-                        ],
-                        "rotation": [
-                            -0.14782877266407013,
-                            0.0012365939328446984,
-                            -0.005918181035667658,
-                            0.9889944791793823
-                        ],
-                        "scale": [
-                            0.9999992251396179,
-                            1.0,
-                            0.9999999403953552
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_head",
-                "parent_UID": 177078783,
-                "tag": 0
-            },
-            {
-                "UID": 88671396,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1.7881393432617188e-07,
-                            110.66754913330078,
-                            30.733469009399414
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_head_top_end",
-                "parent_UID": 1845817463,
-                "tag": 0
-            },
-            {
-                "UID": 1523259438,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            41.44794464111328,
-                            70.31936645507813,
-                            -0.5437607169151306
-                        ],
-                        "rotation": [
-                            0.6292574405670166,
-                            0.47750282287597656,
-                            -0.48295414447784424,
-                            0.37786439061164856
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0000009536743164,
-                            1.000000238418579
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_shoulder",
-                "parent_UID": 848280330,
-                "tag": 0
-            },
-            {
-                "UID": 1660393197,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.765655517578125e-05,
-                            84.87822723388672,
-                            -5.340576171875e-05
-                        ],
-                        "rotation": [
-                            0.27178052067756653,
-                            0.03653246536850929,
-                            0.2899012267589569,
-                            0.9169285893440247
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_arm",
-                "parent_UID": 1523259438,
-                "tag": 0
-            },
-            {
-                "UID": 1337533974,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.814697265625e-06,
-                            139.0620574951172,
-                            -5.340576171875e-05
-                        ],
-                        "rotation": [
-                            0.026456058025360107,
-                            -0.004907520022243261,
-                            0.1881696581840515,
-                            0.9817678928375244
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999992251396179
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_fore_arm",
-                "parent_UID": 1660393197,
-                "tag": 0
-            },
-            {
-                "UID": 1266902640,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -9.5367431640625e-05,
-                            116.71035766601563,
-                            0.00018310546875
-                        ],
-                        "rotation": [
-                            0.3864656686782837,
-                            -0.6973013281822205,
-                            0.08105496317148209,
-                            0.5982016921043396
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index",
-                "parent_UID": 1337533974,
-                "tag": 0
-            },
-            {
-                "UID": 1580349856,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.9591064453125e-05,
-                            26.704208374023438,
-                            8.392333984375e-05
-                        ],
-                        "rotation": [
-                            0.47031158208847046,
-                            0.8789629936218262,
-                            -0.01767565868794918,
-                            -0.07693300396203995
-                        ],
-                        "scale": [
-                            1.0000022649765015,
-                            1.0,
-                            1.0000026226043701
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_1",
-                "parent_UID": 1266902640,
-                "tag": 0
-            },
-            {
-                "UID": 1360154178,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            9.5367431640625e-06,
-                            21.882030487060547,
-                            0.0001068115234375
-                        ],
-                        "rotation": [
-                            0.1381530612707138,
-                            0.1707160323858261,
-                            0.5122342705726624,
-                            0.8302926421165466
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_2",
-                "parent_UID": 1580349856,
-                "tag": 0
-            },
-            {
-                "UID": 2002612073,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -8.340449333190918,
-                            25.495540618896484,
-                            -16.7960205078125
-                        ],
-                        "rotation": [
-                            -0.10175937414169312,
-                            0.045325055718421936,
-                            0.15154823660850525,
-                            0.9821526408195496
-                        ],
-                        "scale": [
-                            0.9999994039535522,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_3",
-                "parent_UID": 1360154178,
-                "tag": 0
-            },
-            {
-                "UID": 626836505,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -9.354697227478027,
-                            21.17682456970215,
-                            -9.774395942687988
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_hand_index_4",
-                "parent_UID": 2002612073,
-                "tag": 0
-            },
-            {
-                "UID": 1969123918,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -41.44797897338867,
-                            70.30763244628906,
-                            -0.30917617678642273
-                        ],
-                        "rotation": [
-                            0.6194109916687012,
-                            -0.47688350081443787,
-                            0.4781622886657715,
-                            0.4003411531448364
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_shoulder",
-                "parent_UID": 848280330,
-                "tag": 0
-            },
-            {
-                "UID": 1315237892,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.0517578125e-05,
-                            85.53253173828125,
-                            -0.0001068115234375
-                        ],
-                        "rotation": [
-                            0.36029064655303955,
-                            0.0572892464697361,
-                            -0.2579565942287445,
-                            0.8946323394775391
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_arm",
-                "parent_UID": 1969123918,
-                "tag": 0
-            },
-            {
-                "UID": 1622054499,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1.1444091796875e-05,
-                            131.30685424804688,
-                            1.1444091796875e-05
-                        ],
-                        "rotation": [
-                            0.023023078218102455,
-                            0.004858060739934444,
-                            -0.12259994447231293,
-                            0.9921771883964539
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_fore_arm",
-                "parent_UID": 1315237892,
-                "tag": 0
-            },
-            {
-                "UID": 1481213737,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            1.811981201171875e-05,
-                            116.74325561523438,
-                            -3.4332275390625e-05
-                        ],
-                        "rotation": [
-                            0.1375599354505539,
-                            0.025434302166104317,
-                            -0.09818118810653687,
-                            0.9852871894836426
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand",
-                "parent_UID": 1622054499,
-                "tag": 0
-            },
-            {
-                "UID": 1416854737,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -22.827964782714844,
-                            31.67354965209961,
-                            11.798835754394531
-                        ],
-                        "rotation": [
-                            -0.5681074261665344,
-                            0.36904680728912354,
-                            -0.4133858382701874,
-                            0.6084164381027222
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_weapon",
-                "parent_UID": 1481213737,
-                "tag": 0
-            },
-            {
-                "UID": 329803379,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -6.103515625e-05,
-                            31.114103317260742,
-                            -5.340576171875e-05
-                        ],
-                        "rotation": [
-                            0.42429718375205994,
-                            -0.6137477159500122,
-                            -0.41508811712265015,
-                            0.520564615726471
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0000001192092896,
-                            1.0000001192092896
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_1",
-                "parent_UID": 1481213737,
-                "tag": 0
-            },
-            {
-                "UID": 345895635,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -8.0108642578125e-05,
-                            21.038619995117188,
-                            -7.62939453125e-06
-                        ],
-                        "rotation": [
-                            0.16603614389896393,
-                            -0.2699377238750458,
-                            -0.6580888628959656,
-                            0.6829968690872192
-                        ],
-                        "scale": [
-                            1.0000001192092896,
-                            1.0000001192092896,
-                            0.9999998807907104
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_2",
-                "parent_UID": 329803379,
-                "tag": 0
-            },
-            {
-                "UID": 1865870524,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            9.740890502929688,
-                            22.702882766723633,
-                            -19.856128692626953
-                        ],
-                        "rotation": [
-                            -0.044933661818504333,
-                            -0.13833056390285492,
-                            -0.1839749664068222,
-                            0.9721105098724365
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_3",
-                "parent_UID": 345895635,
-                "tag": 0
-            },
-            {
-                "UID": 338460727,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            5.343292236328125,
-                            15.800716400146484,
-                            -12.914623260498047
-                        ],
-                        "rotation": [
-                            0.13607215881347656,
-                            0.028423992916941643,
-                            -0.07115140557289124,
-                            0.9877316951751709
-                        ],
-                        "scale": [
-                            0.9999998807907104,
-                            0.9999993443489075,
-                            0.9999999403953552
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_hand_index_4",
-                "parent_UID": 1865870524,
-                "tag": 0
-            },
-            {
-                "UID": 1783699583,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            58.86288833618164,
-                            -29.263517379760742,
-                            -4.967066287994385
-                        ],
-                        "rotation": [
-                            0.1177930161356926,
-                            0.1724713146686554,
-                            0.9670026898384094,
-                            -0.14589142799377441
-                        ],
-                        "scale": [
-                            1.0000015497207642,
-                            1.0000011920928955,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_up_leg",
-                "parent_UID": 1452484816,
-                "tag": 0
-            },
-            {
-                "UID": 411812974,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.280023574829102,
-                            204.83453369140625,
-                            35.27265548706055
-                        ],
-                        "rotation": [
-                            -0.37118932604789734,
-                            0.05843478813767433,
-                            -0.09090195596218109,
-                            0.9222476482391357
-                        ],
-                        "scale": [
-                            0.9999997019767761,
-                            0.9999999403953552,
-                            0.9999999403953552
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_leg",
-                "parent_UID": 1783699583,
-                "tag": 0
-            },
-            {
-                "UID": 1924375404,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            0.6049363613128662,
-                            176.83763122558594,
-                            -0.960205078125
-                        ],
-                        "rotation": [
-                            0.629880428314209,
-                            0.03398305922746658,
-                            -0.02456909976899624,
-                            0.7755592465400696
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_foot",
-                "parent_UID": 411812974,
-                "tag": 0
-            },
-            {
-                "UID": 1877716495,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.6910176277160645e-05,
-                            100.06326293945313,
-                            -1.2636184692382813e-05
-                        ],
-                        "rotation": [
-                            0.29067862033843994,
-                            0.007193753030151129,
-                            -0.002143017714843154,
-                            0.956791341304779
-                        ],
-                        "scale": [
-                            0.9999992251396179,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_toe_base",
-                "parent_UID": 1924375404,
-                "tag": 0
-            },
-            {
-                "UID": 433087270,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -7.916241884231567e-05,
-                            39.626487731933594,
-                            -1.1920928955078125e-07
-                        ],
-                        "rotation": [
-                            0.12347393482923508,
-                            0.047402430325746536,
-                            0.03664005920290947,
-                            0.9905375838279724
-                        ],
-                        "scale": [
-                            1.0,
-                            0.9999998807907104,
-                            0.9999997019767761
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_left_toe_end",
-                "parent_UID": 1877716495,
-                "tag": 0
-            },
-            {
-                "UID": 1298420790,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -58.86287307739258,
-                            -29.26395034790039,
-                            -6.186532497406006
-                        ],
-                        "rotation": [
-                            -0.14549340307712555,
-                            0.1836516559123993,
-                            0.96458899974823,
-                            0.12112721800804138
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            0.9999998807907104
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_up_leg",
-                "parent_UID": 1452484816,
-                "tag": 0
-            },
-            {
-                "UID": 1177183772,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.0517578125e-05,
-                            196.9711456298828,
-                            -3.814697265625e-05
-                        ],
-                        "rotation": [
-                            -0.3774004280567169,
-                            -0.07194191217422485,
-                            0.025360530242323875,
-                            0.9229031205177307
-                        ],
-                        "scale": [
-                            0.9999999403953552,
-                            1.0000001192092896,
-                            0.9999998807907104
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_leg",
-                "parent_UID": 1298420790,
-                "tag": 0
-            },
-            {
-                "UID": 145486304,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            4.553794860839844e-05,
-                            173.62925720214844,
-                            -5.054473876953125e-05
-                        ],
-                        "rotation": [
-                            0.6273834705352783,
-                            0.04588219150900841,
-                            0.03711056709289551,
-                            0.7764712572097778
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_foot",
-                "parent_UID": 1177183772,
-                "tag": 0
-            },
-            {
-                "UID": 1369091532,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            3.1441450119018555e-06,
-                            100.88780212402344,
-                            -4.470348358154297e-06
-                        ],
-                        "rotation": [
-                            0.2869023382663727,
-                            -0.005299449898302555,
-                            0.0015654298476874828,
-                            0.9579439163208008
-                        ],
-                        "scale": [
-                            0.9999991655349731,
-                            0.9999999403953552,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_toe_base",
-                "parent_UID": 145486304,
-                "tag": 0
-            },
-            {
-                "UID": 1459877277,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            2.749171108007431e-05,
-                            38.88125991821289,
-                            -1.5720725059509277e-06
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "type": 21
-                    }
-                ],
-                "is3D": true,
-                "isPrefab": false,
-                "name": "harkonnen_right_toe_end",
-                "parent_UID": 1369091532,
-                "tag": 0
-            },
-            {
-                "UID": 2009856801,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "position": [
-                            -1439.35302734375,
-                            0.0,
-                            510.9050598144531
-                        ],
-                        "rotation": [
-                            4.214682292058569e-08,
-                            5.329068400618383e-15,
-                            2.2460329048772503e-22,
-                            1.0
-                        ],
-                        "scale": [
-                            0.03000001609325409,
-                            0.030000006780028343,
-                            0.029999999329447746
-                        ],
-                        "type": 21
-                    },
-                    {
-                        "active": true,
-                        "mesh": {
-                            "anim_path": "Assets/Models/Enemies/harkonnen_armature|harkonnen_armature|harkonnen_armature|harkonnen_reel.cake",
-                            "anim_uid": 316919178,
-                            "asset_path": "Assets/Models/Enemies/harkonnen.sugar",
-                            "draw_face_normals": false,
-                            "draw_vertex_normals": false,
-                            "is_animated": true,
-                            "root_node_UID": 0,
-                            "shape_type": 0,
-                            "uid": 821724498
-                        },
-                        "type": 1
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "shader": {
-                            "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
-                        },
-                        "texture": {
-                            "asset_path": "Assets/Textures/Characters/Enemies/Harkonnen/harkonnen_base_color.png"
-                        },
-                        "type": 2
-                    },
-                    {
-                        "active": true,
-                        "ambientValue": 0.0,
-                        "constantAttenuationValue": 1.0,
-                        "cutOffAngle": 0.9649999737739563,
-                        "diffuseValue": 0.800000011920929,
-                        "lightColor": [
-                            0.0,
-                            1.0,
-                            0.0
-                        ],
-                        "lightDirection": [
-                            -1.0,
-                            0.0,
-                            0.0
-                        ],
-                        "lightPosition": [
-                            -1439.35302734375,
-                            0.0,
-                            510.9050598144531
-                        ],
-                        "linearAttenuationValue": 0.0,
-                        "quadraticAttenuationValue": 0.0,
-                        "sourceType": 2,
-                        "specularValue": 0.0,
-                        "type": 19
-                    },
-                    {
-                        "active": true,
-                        "body_type": "Static",
-                        "freeze_position_x": false,
-                        "freeze_position_y": false,
-                        "freeze_position_z": false,
-                        "freeze_rotation_x": false,
-                        "freeze_rotation_y": false,
-                        "freeze_rotation_z": false,
-                        "mass": 1.0,
-                        "type": 6,
-                        "use_gravity": true
-                    },
-                    {
-                        "active": true,
-                        "center": [
-                            0.0,
-                            13.399999618530273,
-                            0.0
-                        ],
-                        "filter": "enemy",
-                        "is_trigger": false,
-                        "scale_factor": [
+                        "anchor": 6,
+                        "pivot": [
                             0.5,
-                            1.0,
                             0.5
                         ],
-                        "type": 7
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Pathfinder.lua",
-                        "id": 55343540,
-                        "inspector_variables": [
-                            {
-                                "name": "minRetargetingDistance",
-                                "type": "int",
-                                "value": 10
-                            }
+                        "position": [
+                            290.0,
+                            42.0
                         ],
-                        "type": 5
-                    },
-                    {
-                        "active": true,
-                        "file_name": "Assets/Scripts/Enemies/EnemyController.lua",
-                        "id": 486935622,
-                        "inspector_variables": [
-                            {
-                                "name": "static",
-                                "type": "bool",
-                                "value": false
-                            },
-                            {
-                                "name": "speed",
-                                "type": "int",
-                                "value": 20
-                            },
-                            {
-                                "name": "chaseSpeed",
-                                "type": "int",
-                                "value": 30
-                            },
-                            {
-                                "name": "visionConeAngle",
-                                "type": "int",
-                                "value": 200
-                            },
-                            {
-                                "name": "visionConeRadius",
-                                "type": "int",
-                                "value": 200
-                            },
-                            {
-                                "name": "hearingRange",
-                                "type": "int",
-                                "value": 30
-                            },
-                            {
-                                "name": "awarenessOffset",
-                                "type": "float3",
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 30.0,
-                                    "z": 0.0
-                                }
-                            },
-                            {
-                                "name": "awarenessSize",
-                                "type": "float3",
-                                "value": {
-                                    "x": 0.15000000596046448,
-                                    "y": 0.30000001192092896,
-                                    "z": 0.15000000596046448
-                                }
-                            },
-                            {
-                                "name": "pingpong",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
-                                "name": "loop",
-                                "type": "bool",
-                                "value": true
-                            },
-                            {
-                                "name": "patrolWaypoints",
-                                "type": "float3_array",
-                                "value": []
-                            }
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
                         ],
-                        "type": 5
+                        "size": [
+                            57.86000061035156,
+                            22.860000610351563
+                        ],
+                        "type": 22
                     },
                     {
                         "active": true,
-                        "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
-                        "id": 768087720,
+                        "texture": "Assets/New UI/hp_diamond.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "HP Frame 3",
+                "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 296946931,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 2,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            92.0,
+                            -363.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            401.6499938964844,
+                            584.2000122070313
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/missions_popup.png",
+                        "idleTexture": "Assets/New UI/missions_popup.png",
+                        "pressedTexture": "Assets/New UI/missions_popup.png",
+                        "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/New HUD Scripts/quest_button.lua",
+                        "id": 473691346,
                         "type": 5
                     }
                 ],
-                "is3D": true,
+                "is3D": false,
                 "isPrefab": false,
-                "name": "HarkonnenMesh",
-                "parent_UID": 1887731633,
-                "tag": 2
+                "name": "Quest Frame",
+                "parent_UID": 833363227,
+                "tag": 0
             }
         ],
         "name": "SceneHUD",

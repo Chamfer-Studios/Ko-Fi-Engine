@@ -1,10 +1,11 @@
-STATE = { -- Importat to add changes to the state enum in EnemyController.lua and add them here
+STATE = {
     UNAWARE = 1,
     AWARE = 2,
     SUS = 3,
     AGGRO = 4,
-    DEAD = 5,
-    VICTORY = 6
+    WORM = 5,
+    DEAD = 6,
+    VICTORY = 7
 }
 
 isAttacking = false
@@ -15,38 +16,14 @@ attackTime = 2.5
 knifeHitChance = 100
 dartHitChance = 100
 
-function Float3Length(v)
-    return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
-end
-
-function Float3Normalized(v)
-    len = Float3Length(v)
-    return {
-        x = v.x / len,
-        y = v.y / len,
-        z = v.z / len
-    }
-end
-
-function Float3Difference(a, b)
-    return {
-        x = b.x - a.x,
-        y = b.y - a.y,
-        z = b.z - a.z
-    }
-end
-
-function Float3Distance(a, b)
-    diff = Float3Difference(a, b)
-    return Float3Length(diff)
-end
-
 function Start()
     currentState = STATE.UNAWARE
-    currentAttack = nil
     target = nil
     componentAnimator = gameObject:GetParent():GetComponentAnimator()
     componentSwitch = gameObject:GetAudioSwitch()
+    componentBoxCollider = gameObject:GetBoxCollider()
+    componentLight = gameObject:GetLight()
+
     currentTrackID = -1
     dieSFXOnce = true;
 end
@@ -95,7 +72,7 @@ function ManageTimers(dt)
             if (componentAnimator:IsCurrentClipPlaying() == true) then
                 ret = false
             else
-                if (isAttacking == true) then
+                if (currentState == STATE.AGGRO and isAttacking == true) then
                     DoAttack()
                 elseif (currentState ~= STATE.DEAD) then
                     componentAnimator:SetSelectedClip("Idle")
@@ -149,11 +126,7 @@ function DoAttack()
 
     DispatchGlobalEvent("Enemy_Attack", {target, "Harkonnen"})
 
-    if (currentTrackID ~= -1) then
-        componentSwitch:StopTrack(currentTrackID)
-    end
-    currentTrackID = 0
-    componentSwitch:PlayTrack(currentTrackID)
+    ChangeTrack(0)
 
     LookAtTarget(target:GetTransform():GetPosition())
     attackTimer = 0.0
@@ -163,10 +136,24 @@ end
 
 function EventHandler(key, fields)
     if key == "Change_State" then -- fields[1] -> oldState; fields[2] -> newState;
-        currentState = fields[2]
+        if (fields[1] ~= STATE.DEAD and fields[1] ~= fields[2]) then
+            currentState = fields[2]
+        end
     elseif key == "Target_Update" then
         target = fields[1] -- fields[1] -> new Target;
-    elseif key == "Die" then
+    elseif key == "DeathMark_Death" then
+        Die()
+    elseif key == "Player_Attack" then
+        if (fields[1] == gameObject) then
+            Die()
+        end
+    elseif key == "Sadiq_Update_Target" then -- fields[1] -> target; targeted for (1 -> warning; 2 -> eat; 3 -> spit)
+        if (fields[1] == gameObject) then
+            if (fields[2] == 2) then
+                Die(false)
+            end
+        end
+    elseif key == "Mosquito_Hit" then
         if (fields[1] == gameObject) then
             Die()
         end
@@ -182,6 +169,7 @@ function EventHandler(key, fields)
                     Die()
                 else
                     Log("Knife's D100 roll has been " .. rng .. " so the UNAWARE enemy has dodged the knife :( \n")
+                    ChangeTrack(2)
                 end
             elseif (currentState == STATE.SUS) then
                 knifeHitChance = GetVariable("Zhib.lua", "awareChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -192,6 +180,7 @@ function EventHandler(key, fields)
                     Die()
                 else
                     Log("Knife's D100 roll has been " .. rng .. " so the AWARE enemy has dodged the knife :( \n")
+                    ChangeTrack(2)
                 end
             elseif (currentState == STATE.AGGRO) then
                 knifeHitChance = GetVariable("Zhib.lua", "aggroChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -202,6 +191,7 @@ function EventHandler(key, fields)
                     Die()
                 else
                     Log("Knife's D100 roll has been " .. rng .. " so the AGGRO enemy has dodged the knife :( \n")
+                    ChangeTrack(2)
                 end
             end
         end
@@ -218,6 +208,7 @@ function EventHandler(key, fields)
                     Die()
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the UNAWARE enemy has dodged the dart :( \n")
+                    ChangeTrack(2)
                 end
             elseif (currentState == STATE.SUS) then
                 dartHitChance = GetVariable("Nerala.lua", "awareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -229,6 +220,7 @@ function EventHandler(key, fields)
                     Die()
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the AWARE enemy has dodged the dart :( \n")
+                    ChangeTrack(2)
                 end
             elseif (currentState == STATE.AGGRO) then
                 dartHitChance = GetVariable("Nerala.lua", "aggroChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -240,16 +232,20 @@ function EventHandler(key, fields)
                     Die()
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the AGGRO enemy has dodged the dart :( \n")
+                    ChangeTrack(2)
                 end
             end
         end
     end
 end
 
-function Die()
+function Die(leaveBody)
+    if (leaveBody == nil) then
+        leaveBody = true
+    end
 
     -- Chance to spawn, if spawn dispatch event
-    if(dieSFXOnce == true) then
+    if (dieSFXOnce == true) then
         math.randomseed(os.time())
         rng = math.random(100)
         if (rng >= 50) then
@@ -261,15 +257,25 @@ function Die()
             Log("The drop rate has not been good :( " .. rng .. "\n")
         end
 
-        if (currentTrackID ~= -1) then
-            componentSwitch:StopTrack(currentTrackID)
-        end
-        currentTrackID = 1
-        componentSwitch:PlayTrack(currentTrackID)
+        ChangeTrack(1)
+
         dieSFXOnce = false;
     end
 
-    DeleteGameObject()
+    gameObject.tag = Tag.UNTAGGED
+    DispatchEvent("Die", {leaveBody})
+    currentState = STATE.DEAD
+    if (componentAnimator ~= nil) then
+        componentAnimator:SetSelectedClip("Death")
+    end
+    if (componentBoxCollider ~= nil) then
+        gameObject:DeleteComponent(componentBoxCollider)
+        componentBoxCollider = nil
+    end
+    if (componentLight ~= nil) then
+        gameObject:DeleteComponent(componentLight)
+        componentLight = nil
+    end
 end
 
 -- Math
@@ -286,6 +292,42 @@ function Distance3D(a, b)
         z = b.z - a.z
     }
     return math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z)
+end
+
+function Float3Length(v)
+    return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
+end
+
+function Float3Normalized(v)
+    len = Float3Length(v)
+    return {
+        x = v.x / len,
+        y = v.y / len,
+        z = v.z / len
+    }
+end
+
+function Float3Difference(a, b)
+    return {
+        x = b.x - a.x,
+        y = b.y - a.y,
+        z = b.z - a.z
+    }
+end
+
+function Float3Distance(a, b)
+    diff = Float3Difference(a, b)
+    return Float3Length(diff)
+end
+
+function ChangeTrack(index)
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = index
+        componentSwitch:PlayTrack(currentTrackID)
+    end
 end
 
 Log("Harkonnen.lua compiled succesfully\n")

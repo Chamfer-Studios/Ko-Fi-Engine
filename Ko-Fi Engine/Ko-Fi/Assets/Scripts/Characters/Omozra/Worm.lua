@@ -69,6 +69,8 @@ function CastDevour(castedOn)
         componentAnimator:SetSelectedClip("Devour")
     end
 
+    ChangeTrack(0)
+
     currentState = State.DEVOUR
 end
 
@@ -79,13 +81,7 @@ function DoDevour()
     componentAnimator:SetSelectedClip("DevourToIdle")
 
     -- TODO: Add particles, audio, etc.
-    if (componentSwitch ~= nil) then
-        if (currentTrackID ~= -1) then
-            componentSwitch:StopTrack(currentTrackID)
-        end
-        currentTrackID = 2
-        componentSwitch:PlayTrack(currentTrackID)
-    end
+    ChangeTrack(2)
 
     currentState = State.IDLE
 end
@@ -102,6 +98,8 @@ function CastUltimate(castedOn)
         componentAnimator:SetSelectedClip("Devour")
     end
 
+    ChangeTrack(0)
+
     currentState = State.EAT
 end
 
@@ -114,13 +112,7 @@ function DoUltimate()
     end
 
     -- TODO: Add particles, audio, etc.
-    if (componentSwitch ~= nil) then
-        if (currentTrackID ~= -1) then
-            componentSwitch:StopTrack(currentTrackID)
-        end
-        currentTrackID = 3
-        componentSwitch:PlayTrack(currentTrackID)
-    end
+    ChangeTrack(2)
 
     currentState = State.IDLE
 end
@@ -138,6 +130,8 @@ function CastSpit(position)
         componentAnimator:SetSelectedClip("Spit")
     end
 
+    ChangeTrack(0)
+
     currentState = State.SPIT
 end
 
@@ -150,13 +144,7 @@ function DoSpit()
     end
 
     -- TODO: Add particles, audio, etc.
-    if (componentSwitch ~= nil) then
-        if (currentTrackID ~= -1) then
-            componentSwitch:StopTrack(currentTrackID)
-        end
-        currentTrackID = 4
-        componentSwitch:PlayTrack(currentTrackID)
-    end
+    ChangeTrack(3)
 
     currentState = State.IDLE
 end
@@ -177,5 +165,15 @@ function EventHandler(key, fields)
     end
 end
 --------------------------------------------------
+
+function ChangeTrack(index)
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = index
+        componentSwitch:PlayTrack(currentTrackID)
+    end
+end
 
 print("Worm.lua compiled succesfully")

@@ -110,6 +110,19 @@
                         "sphere_culling": false,
                         "type": 4,
                         "vertical_fov": 401.0
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
+                        "id": 1293136323,
+                        "inspector_variables": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "value": "CutsceneNeralasDeath"
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": true,

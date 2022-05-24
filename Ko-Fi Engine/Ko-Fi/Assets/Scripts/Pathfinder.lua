@@ -54,6 +54,7 @@ end
 function FollowPath(speed, dt, loop, useRB)
     if #_G.finalPath == 0 or currentPathIndex > #_G.finalPath then
         do
+            DispatchEvent("IsWalking", {false})
             if (componentRigidBody ~= nil) then
                 componentRigidBody:SetLinearVelocity(float3.new(0.0, 0.0, 0.0))
             end
@@ -80,6 +81,7 @@ function FollowPath(speed, dt, loop, useRB)
     if Float3Distance(currentTarget, currentPosition) >= minRetargetingDistance then
         direction = Float3NormalizedDifference(currentPosition, currentTarget)
         DispatchEvent("Walking_Direction", {float3.new(direction.x, direction.y, direction.z)})
+        DispatchEvent("IsWalking", {true})
         delta = {
             x = direction.x * speed * _dt,
             y = direction.y * speed * _dt,
@@ -97,8 +99,10 @@ function FollowPath(speed, dt, loop, useRB)
         end
     elseif currentPathIndex < #_G.finalPath then
         currentPathIndex = currentPathIndex + 1
+        DispatchEvent("IsWalking", {false})
     else
         currentPathIndex = 2
+        DispatchEvent("IsWalking", {false})
     end
 end
 

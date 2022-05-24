@@ -2,6 +2,7 @@
 speed = 3000
 destination = nil
 isGrabbable = false
+once = false
 
 -------------------- Methods ---------------------
 function Start()
@@ -31,20 +32,23 @@ function Update(dt)
     if (destination ~= nil) then
         MoveToDestination(dt)
     else
-        isGrabbable = true
+        isGrabbable = true -- Has arrived to the destination
     end
 end
 
 -- Collision Handler
 function OnTriggerEnter(go)
     if (go.tag == Tag.ENEMY) then
-        DispatchGlobalEvent("Knife_Hit", {go}) -- Events better than OnTriggerEnter() for the enemies (cause more than one different type of projectile can hit an enemy)
-        DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), 100, "single", gameObject})
-        if (currentTrackID ~= -1) then
+        if (once == false) then
+            once = true
+            DispatchGlobalEvent("Knife_Hit", {go}) -- Events better than OnTriggerEnter() for the enemies (cause more than one different type of projectile can hit an enemy)
+            DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), 100, "single", gameObject})
+            if (currentTrackID ~= -1) then
                 componentSwitch:StopTrack(currentTrackID)
             end
             currentTrackID = 0
             componentSwitch:PlayTrack(currentTrackID)
+        end
     elseif (destination == nil and go.tag == Tag.PLAYER and isGrabbable == true) then -- Using direct name instead of tags so other players can't pick it up
         DispatchGlobalEvent("Knife_Grabbed", {})
         DeleteGameObject()

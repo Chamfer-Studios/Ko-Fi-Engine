@@ -21,6 +21,11 @@ function Start()
     local vec2 = {targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2]}
     vec2 = Normalize(vec2, d)
     componentTransform:SetPosition(float3.new(playerPos.x + vec2[1] * 5, playerPos.y + 10, playerPos.z + vec2[2] * 5))
+
+    smokeParticles = Find("Nerala Smoke")
+    if (smokeParticles ~= nil) then
+        smokeParticles:GetComponentParticle():StopParticleSpawn()
+    end
 end
 
 -- Called each loop iteration
@@ -30,10 +35,12 @@ function Update(dt)
         MoveToDestination(dt)
     elseif (lifeTimer <= lifeTime) then
 
-        lifeTimer = lifeTimer + dt     
+        lifeTimer = lifeTimer + dt
 
         if (effectFlag) then
             -- DispatchGlobalEvent("Auditory_Trigger", { componentTransform:GetPosition(), effectRadius, "single", gameObject })
+            smokeParticles:GetTransform():SetPosition(componentTransform:GetPosition())
+            smokeParticles:GetComponentParticle():ResumeParticleSpawn()
             effectFlag = false
         end
     else
