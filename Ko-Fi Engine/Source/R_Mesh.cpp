@@ -501,41 +501,54 @@ void R_Mesh::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode
 {
 	OPTICK_EVENT();
 
-	std::string nodeName(pNode->GetName());
+	std::vector<std::string> nodeNames;
+
+	std::function<void(const GameObject*)> addGo;
+
+	addGo = [&nodeNames, &addGo](const GameObject* go) {
+		std::string nodeName(go->GetName());
+		nodeNames.push_back(nodeName);
+		for (auto c : go->GetChildren())
+			addGo(c);
+	};
+
+	addGo(pNode);
 
 	float4x4 nodeTransformation(pNode->GetTransform()->GetLocalTransform());
-
-	const Channel* pNodeAnim = FindNodeAnim(nodeName);
-
-	if (pNodeAnim && pNodeAnim->rotationKeyframes.size() && pNodeAnim->scaleKeyframes.size() && pNodeAnim->positionKeyframes.size())
-	{
-		// Interpolate scaling and generate scaling transformation matrix
-		float3 scaling;
-		CalcInterpolatedScaling(scaling, animationTimeTicks, pNodeAnim);
-		float4x4 scalingM = InitScaleTransform(scaling.x, scaling.y, scaling.z);
-
-		// Interpolate rotation and generate rotation transformation matrix
-		Quat rotationQ;
-		CalcInterpolatedRotation(rotationQ, animationTimeTicks, pNodeAnim);
-		float4x4 rotationM = GetMatrixFromQuat(rotationQ).Transposed();
-
-		// Interpolate translation and generate translation transformation matrix
-		float3 translation;
-		CalcInterpolatedPosition(translation, animationTimeTicks, pNodeAnim);
-		float4x4 translationM = InitTranslationTransform(translation.x, translation.y, translation.z);
-
-		// Combine the above transformations
-		nodeTransformation = translationM * rotationM * scalingM;
-	}
-
 	float4x4 globalTransformation = parentTransform * nodeTransformation;
+	for (auto nodeName : nodeNames) {
 
-	if (boneNameToIndexMap.contains(nodeName))
-	{
-		uint boneIndex = boneNameToIndexMap[nodeName];
-		float4x4 globalInversedTransform = rootNode->GetTransform()->GetGlobalTransform().Inverted();
-		float4x4 delta = globalInversedTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
-		boneInfo[boneIndex].finalTransformation = delta.Transposed();
+		const Channel* pNodeAnim = FindNodeAnim(nodeName);
+
+		if (pNodeAnim && pNodeAnim->rotationKeyframes.size() && pNodeAnim->scaleKeyframes.size() && pNodeAnim->positionKeyframes.size())
+		{
+			// Interpolate scaling and generate scaling transformation matrix
+			float3 scaling;
+			CalcInterpolatedScaling(scaling, animationTimeTicks, pNodeAnim);
+			float4x4 scalingM = InitScaleTransform(scaling.x, scaling.y, scaling.z);
+
+			// Interpolate rotation and generate rotation transformation matrix
+			Quat rotationQ;
+			CalcInterpolatedRotation(rotationQ, animationTimeTicks, pNodeAnim);
+			float4x4 rotationM = GetMatrixFromQuat(rotationQ).Transposed();
+
+			// Interpolate translation and generate translation transformation matrix
+			float3 translation;
+			CalcInterpolatedPosition(translation, animationTimeTicks, pNodeAnim);
+			float4x4 translationM = InitTranslationTransform(translation.x, translation.y, translation.z);
+
+			// Combine the above transformations
+			nodeTransformation = translationM * rotationM * scalingM;
+		}
+
+
+		if (boneNameToIndexMap.contains(nodeName))
+		{
+			uint boneIndex = boneNameToIndexMap[nodeName];
+			float4x4 globalInversedTransform = rootNode->GetTransform()->GetGlobalTransform().Inverted();
+			float4x4 delta = globalInversedTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
+			boneInfo[boneIndex].finalTransformation = delta.Transposed();
+		}
 	}
 
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)

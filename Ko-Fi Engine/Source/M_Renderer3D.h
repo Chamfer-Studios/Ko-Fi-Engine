@@ -184,13 +184,13 @@ public:
 		//  using pointers, no other type info is required. we don't
 		//  actually implement this yet (we can't, we don't know what
 		//  "base" really is yet).
-		bool operator()(const GameObject *lhs, const GameObject *rhs) const;
+		bool operator()(const GameObject* lhs, const GameObject* rhs) const;
 	};
 
 public:
-	std::set<GameObject *, GOComp> gameObejctsToRenderDistanceOrdered;
-	std::unordered_set<GameObject *> gameObejctsToRenderDistance;
-	std::unordered_set<GameObject *> gameObejctsToRenderDistanceSphere;
+	std::set<GameObject*, GOComp> gameObejctsToRenderDistanceOrdered;
+	std::unordered_set<UID> gameObejctsToRenderDistance;
+	std::unordered_set<UID> gameObejctsToRenderDistanceSphere;
 };
 
 #endif // !__RENDERER_3D_H__

@@ -330,6 +330,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 			repeatedUIDs.emplace(it.first,it.second->GetUID());
 		}
 		currentScene->gameObjectList.push_back(it.second);
+		currentScene->gameObjectMap.emplace(it.second->GetUID(), it.second);
 	}
 
 	// Reparenting & update gameobjects with repeated UIDs

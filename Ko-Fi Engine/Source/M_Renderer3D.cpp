@@ -159,8 +159,8 @@ bool M_Renderer3D::PostUpdate(float dt)
 		QueryScene2(engine->GetCamera3D()->currentCamera);
 	}
 	else {
-		for (auto go : gameObejctsToRenderDistance) {
-			go->SetRenderGameObject(true);
+		for (auto go2 : gameObejctsToRenderDistance) {
+			engine->GetSceneManager()->GetCurrentScene()->gameObjectMap.at(go2)->SetRenderGameObject(true);
 		}
 	}
 	
@@ -425,8 +425,9 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 	}
 	else {
 #pragma omp parallel for
-		for (GameObject* go : gameObejctsToRenderDistance)
+		for (UID uid : gameObejctsToRenderDistance)
 		{
+			GameObject* go = engine->GetSceneManager()->GetCurrentScene()->gameObjectMap.at(uid);
 			renderGo(go);
 		}
 	}
@@ -570,7 +571,8 @@ void M_Renderer3D::ResetFrustumCulling()
 	gameObejctsToRenderDistance.clear();
 	gameObejctsToRenderDistanceOrdered.clear();
 
-	for (auto go : gameObejctsToRenderDistance) {
+	for (auto uid : gameObejctsToRenderDistance) {
+		GameObject* go = engine->GetSceneManager()->GetCurrentScene()->gameObjectMap.at(uid);
 		go->SetRenderGameObject(false);
 	}
 	

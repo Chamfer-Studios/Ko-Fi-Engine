@@ -34,6 +34,8 @@ bool C_Info::InspectorDraw(PanelChooser* chooser)
 
 	if (ImGui::CollapsingHeader("Info"))
 	{
+		ImGui::Text("UID: %d", owner->GetUID());
+
 		ImGui::Text("Name:");
 		ImGui::SameLine();
 		std::string newName = owner->GetName();

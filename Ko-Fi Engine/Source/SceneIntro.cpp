@@ -42,6 +42,7 @@ SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 	rootGo = new GameObject(0, engine, "Root");
 	rootGo->SetParentUID(rootGo->GetUID());
 	gameObjectList.push_back(rootGo);
+	gameObjectMap.emplace(rootGo->GetUID(), rootGo);
 
 	skybox = SkyBox();
 	// LCG random;

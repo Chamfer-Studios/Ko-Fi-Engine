@@ -314,12 +314,10 @@ void C_Camera::SphereCulling()
 		float distance = middlePoint.DistanceSq(closest);
 		if (distance > (sCullingRadius * sCullingRadius))
 		{
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.erase(gameObject);
-			//owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(gameObject);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.erase(gameObject->GetUID());
 		}
 		else {
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
-			//owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.emplace(gameObject->GetUID());
 		}
 
 	}
@@ -341,11 +339,16 @@ void C_Camera::FrustumCulling()
 {
 	OPTICK_EVENT();
 
-	std::unordered_set<GameObject*>::iterator it;
+	std::unordered_set<UID>::iterator it;
 
 	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
 	{
-		GameObject* go = (*it);
+		GameObject* go = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectMap.at(*it);
+
+		if (std::string(go->GetName()).rfind("HarkonnenMesh", 0) == 0) {
+			int a = 0;
+		}
+		
 	/*	if (!gameObject->GetRenderGameObject())
 			continue;*/
 		C_Mesh* componentMesh = go->GetComponent<C_Mesh>();
@@ -353,13 +356,14 @@ void C_Camera::FrustumCulling()
 		if (componentMesh == nullptr || go == owner)
 			continue;
 
-		if (owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.contains(go)) {
+		if (owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.contains(go->GetUID())) {
 			if (!ClipsWithBBox(componentMesh->GetGlobalAABB()))
 			{
 				if (owner->GetEngine()->GetRenderer()->enableOcclusionCulling) {
 					owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(go);
 				}
-				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(go);
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(go->GetUID());
+				go->SetRenderGameObject(false);
 			}
 		}
 		else {
@@ -368,7 +372,7 @@ void C_Camera::FrustumCulling()
 				if (owner->GetEngine()->GetRenderer()->enableOcclusionCulling) {
 					owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(go);
 				}
-				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(go);
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.emplace(go->GetUID());
 			}
 		}
 	}
@@ -406,19 +410,20 @@ void C_Camera::ApplyCullings()
 		for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
 		{
 			GameObject* gameObject = (*go);
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.emplace(gameObject->GetUID());
 		}
 	}
 	if (isFrustumCullingActive)
 		FrustumCulling();
 	else {
-		std::unordered_set<GameObject*>::iterator it;
+		std::unordered_set<UID>::iterator it;
 
 		for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
 		{
-			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(*it);
+			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.emplace(*it);
 			if (owner->GetEngine()->GetRenderer()->enableOcclusionCulling) {
-				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(*it);
+				GameObject* go = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectMap.at(*it);
+				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.emplace(go);
 			}
 		}
 	}
@@ -442,6 +447,8 @@ bool C_Camera::ClipsWithBBox(const AABB& refBox) const
 
 		if (cornersOutside == 0) return false;
 	}
+
+	return true;
 }
 
 void C_Camera::SetSCullingRadius(float radius)

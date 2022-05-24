@@ -138,6 +138,7 @@ public:
 	Tag tag;
 
 	std::vector<GameObject *> children;
+	bool renderGameObject = true;
 
 private:
 	std::string name;
@@ -148,7 +149,6 @@ private:
 	GameObject* parent = nullptr;
 	UID uid;
 	UID parentUid;
-	bool renderGameObject = true;
 
 	KoFiEngine *engine = nullptr;
 	C_Transform *transform = nullptr;

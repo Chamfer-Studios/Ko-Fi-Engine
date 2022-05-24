@@ -65,6 +65,9 @@ bool C_Mesh::Update(float dt)
 bool C_Mesh::PostUpdate(float dt) //AKA the real render
 {
 	bool ret = true;
+	
+	if (mesh != nullptr)
+		GenerateGlobalBoundingBox();
 
 	return ret;
 }
@@ -316,8 +319,10 @@ bool C_Mesh::InspectorDraw(PanelChooser* chooser)
 	bool ret = true;
 	if (mesh != nullptr && ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_AllowItemOverlap))
 	{
-		/*if (DrawDeleteButton(owner, this))
-			return true;*/
+		bool cp = owner->renderGameObject;
+		if (ImGui::Checkbox("Culled", &cp)) {
+			owner->SetRenderGameObject(cp);
+		}
 
 		if (mesh->GetLibraryPath() != nullptr)
 		{

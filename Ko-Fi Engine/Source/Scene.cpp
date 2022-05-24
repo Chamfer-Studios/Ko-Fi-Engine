@@ -44,6 +44,7 @@ GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, b
 {
 	GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
 	this->gameObjectList.push_back(go);
+	this->gameObjectMap.emplace(go->GetUID(), go);
  	if (parent)
 		parent->AttachChild(go);
 	else
@@ -70,6 +71,7 @@ void Scene::DeleteCurrentScene()
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 	rootGo = new GameObject(0, engine, "Root");
 	gameObjectList.push_back(rootGo);
+	gameObjectMap.emplace(rootGo->GetUID(), rootGo);
 }
 
 void Scene::DeleteGameObject(GameObject* gameObject)

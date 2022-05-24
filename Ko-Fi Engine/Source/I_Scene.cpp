@@ -470,6 +470,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 				}
 			}
 			scene->gameObjectList.push_back(go);
+			scene->gameObjectMap.emplace(go->GetUID(), go);
 		}
 
 		float endTime = (float)engine->GetEngineTime() - startTime;
@@ -984,6 +985,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 					
 			}
 				scene->gameObjectList.push_back(go);
+				scene->gameObjectMap.emplace(go->GetUID(), go);
 		}
 
 		float endTime = (float)engine->GetEngineTime();

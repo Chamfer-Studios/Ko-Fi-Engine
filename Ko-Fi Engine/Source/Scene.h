@@ -12,6 +12,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include <map>
+
 #include "SkyBox.h"
 #include "Quadtree.h"
 
@@ -109,6 +111,7 @@ public:
 
 	KoFiEngine* engine = nullptr;
 	std::vector<GameObject*> gameObjectList;
+	std::map<UID, GameObject*> gameObjectMap;
 	std::map<std::string, std::string> gameObjectListToCreate;
 	std::vector<GameObject*> gameObjectListToDelete;
 	GameObject* rootGo = nullptr;
