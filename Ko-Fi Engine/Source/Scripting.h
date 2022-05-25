@@ -363,6 +363,8 @@ public:
 		/// Functions
 		lua.set_function("GetMouseZ", &Scripting::LuaGetMouseZ, this);
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
+		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
+		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
 		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("InstantiateNamedPrefab", &Scripting::LuaInstantiateNamedPrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
@@ -403,8 +405,19 @@ public:
 		appLog->AddLog("Quitting scripting system\n");
 		return true;
 	}
+
 	int LuaGetMouseZ() {
 		return gameObject->GetEngine()->GetInput()->GetMouseZ();
+	}
+
+	bool LuaGetVsync()
+	{
+		return gameObject->GetEngine()->GetRenderer()->GetVsync();
+	}
+
+	void LuaSetVsync(bool vSync)
+	{
+		gameObject->GetEngine()->GetRenderer()->SetVsync(vSync);
 	}
 
 	KEY_STATE LuaGetInput(int button)
