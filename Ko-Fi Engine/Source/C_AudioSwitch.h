@@ -16,7 +16,12 @@ public:
 
     bool Start() override;
     bool Update(float dt) override;
+
+    bool OnSceneSwitch() override;
     bool OnPlay() override;
+    bool OnPause() override;
+    bool OnStop() override;
+    bool OnResume() override;
 
     bool InspectorDraw(PanelChooser* chooser) override;
 

@@ -65,6 +65,42 @@ bool C_AudioSwitch::Start()
     return true;
 }
 
+bool C_AudioSwitch::Update(float dt)
+{
+    bool ret = true;
+
+    if (switching)
+        SwitchFade(fadeTime);
+
+    if (switching)
+        pauseDifference = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - switchTime;
+
+    UpdatePlayState();
+
+    return ret;
+}
+
+bool C_AudioSwitch::OnSceneSwitch()
+{
+    for (R_Track* index : tracks)
+    {
+        if (index->IsTrackLoaded())
+        {
+            StopAudio(index->source);
+            if (index->GetPlayOnStart())
+            {
+                playingTrack = index;
+
+                PlayAudio(index->source, index->offset);
+            }
+        }
+    }
+    switching = false;
+    switchTime = 0.0f;
+
+    return true;
+}
+
 bool C_AudioSwitch::OnPlay()
 {
     for (R_Track* index : tracks)
@@ -82,32 +118,34 @@ bool C_AudioSwitch::OnPlay()
     }
     switching = false;
     switchTime = 0.0f;
+
     return true;
 }
 
-bool C_AudioSwitch::Update(float dt)
+bool C_AudioSwitch::OnPause()
 {
-    bool ret = true;
-
     if (switching)
-        SwitchFade(fadeTime);
+        pauseDifference = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - switchTime;
 
+    if (playingTrack != nullptr)
+        PauseAudio(playingTrack->source);
+
+    return true;
+}
+
+bool C_AudioSwitch::OnStop()
+{
+    StopAllTracks();
+    
+    return true;
+}
+
+bool C_AudioSwitch::OnResume()
+{
     for (R_Track* index : tracks)
-    {
-        if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
-        {
-            PauseAudio(index->source);
-            if (switching)
-                pauseDifference = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - switchTime;
+        ResumeAudio(index->source);
 
-            continue;
-        }
-        //ResumeAudio(index->source);
-    }
-
-    UpdatePlayState();
-
-    return ret;
+    return true;
 }
 
 bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
@@ -260,6 +298,15 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                         ImGui::SameLine();
 
                         ImGui::SliderFloat("Offset", &index->offset, 0.0f, index->duration);
+                        
+                        ImGui::Spacing();
+
+                        if (index->mute)
+                            ImGui::BeginDisabled();
+                        if (ImGui::SliderFloat("Volume", &index->volume, 0.0f, 100.0f, "%.1f"))
+                            index->SetVolume();
+                        if (index->mute)
+                            ImGui::EndDisabled();
 
                         ImGui::Spacing();
                         ImGui::Text("Options");
@@ -354,9 +401,16 @@ void C_AudioSwitch::Load(Json& json)
             track->SetPlayOnStart(index.value().at("play_on_start"));
             track->SetLoop(index.value().at("loop"));
             track->SetBypass(index.value().at("bypass"));
+
+            track->volume = index.value().at("volume");
             track->SetVolume(index.value().at("volume"));
+
+            track->pan = index.value().at("pan");
             track->SetPanning(index.value().at("pan"));
+
+            track->transpose = index.value().at("transpose");
             track->SetTranspose(index.value().at("transpose"));
+
             track->SetOffset(index.value().at("offset"));
 
             tracks.push_back(track);
@@ -399,30 +453,66 @@ void C_AudioSwitch::SwitchTrack(int newTrackIndex)
 
 void C_AudioSwitch::PlayTrack(int trackIndex)
 {
-    if (tracks[trackIndex] != nullptr)
+    try
     {
-        playingTrack = tracks[trackIndex];
+        tracks.at(trackIndex);
+    }
+    catch (std::out_of_range const& exc)
+    {
+        return;
+    }
 
-        PlayAudio(tracks[trackIndex]->source, tracks[trackIndex]->offset);
+    if (tracks.at(trackIndex) != nullptr)
+    {
+        playingTrack = tracks.at(trackIndex);
+
+        PlayAudio(tracks.at(trackIndex)->source, tracks.at(trackIndex)->offset);
     }
 }
 
 void C_AudioSwitch::ResumeTrack(int trackIndex)
 {
-    if (tracks[trackIndex] != nullptr)
-        ResumeAudio(tracks[trackIndex]->source);
+    try
+    {
+        tracks.at(trackIndex);
+    }
+    catch (std::out_of_range const& exc)
+    {
+        return;
+    }
+
+    if (tracks.at(trackIndex) != nullptr)
+        ResumeAudio(tracks.at(trackIndex)->source);
 }
 
 void C_AudioSwitch::StopTrack(int trackIndex)
 {
-    if (tracks[trackIndex] != nullptr)
-        StopAudio(tracks[trackIndex]->source);
+    try
+    {
+        tracks.at(trackIndex);
+    }
+    catch (std::out_of_range const& exc)
+    {
+        return;
+    }
+
+    if (tracks.at(trackIndex) != nullptr)
+        StopAudio(tracks.at(trackIndex)->source);
 }
 
 void C_AudioSwitch::PauseTrack(int trackIndex)
 {
-    if (tracks[trackIndex] != nullptr)
-        PauseAudio(tracks[trackIndex]->source);
+    try
+    {
+        tracks.at(trackIndex);
+    }
+    catch (std::out_of_range const& exc)
+    {
+        return;
+    }
+
+    if (tracks.at(trackIndex) != nullptr)
+        PauseAudio(tracks.at(trackIndex)->source);
 }
 
 void C_AudioSwitch::SwitchFade(float fadeSeconds)
