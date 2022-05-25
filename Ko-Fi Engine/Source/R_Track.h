@@ -97,6 +97,10 @@ public:
 
 	bool playOnStart = false, loop = false, mute = false;
 
+	bool customLoop = false;
+	float loopOffset = 0.0f;
+	float prevFrameSecOffset = 0.0f;
+
 	bool knobReminder1 = false, knobReminder2 = false;
 	float pan = 0.0f, transpose = 0.0f; 
 	bool bypass = false;

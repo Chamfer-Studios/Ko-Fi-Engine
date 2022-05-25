@@ -14,6 +14,10 @@ R_Track::R_Track() //: Resource(ResourceType::TRACK)
 	playOnStart = false;
 	mute = false;
 
+	customLoop = false;
+	loopOffset = 0.0f;
+	prevFrameSecOffset = 0.0f;
+
 	pan = 0.0f;
 	transpose = 0.0f;
 	bypass = false;

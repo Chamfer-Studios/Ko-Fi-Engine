@@ -37,6 +37,7 @@ public:
     void PauseTrack(int trackIndex);
 
     void SwitchFade(float fadeSeconds);
+    void CustomLoopLogic(R_Track* index);
 
     bool IsAnyTrackPlaying() const;
     R_Track* GetPlayingTrack() const;

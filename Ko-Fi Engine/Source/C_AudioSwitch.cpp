@@ -75,6 +75,12 @@ bool C_AudioSwitch::Update(float dt)
     if (switching)
         pauseDifference = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - switchTime;
 
+    for (R_Track* index : tracks)
+    {
+        if (index->play && index->customLoop)
+            CustomLoopLogic(index);
+    }
+
     UpdatePlayState();
 
     return ret;
@@ -322,6 +328,19 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                         if (ImGui::Checkbox("Loop", &index->loop))
                             index->SetLoop(index->loop);
 
+                        if (index->loop)
+                        {
+                            ImGui::Dummy(ImVec2{ 3, 0 });
+                            ImGui::SameLine();
+                            ImGui::Checkbox("Custom", &index->customLoop);
+                            if (index->customLoop)
+                            {
+                                ImGui::Dummy(ImVec2{ 3, 0 });
+                                ImGui::SameLine();
+                                ImGui::SliderFloat("Initial Offset", &index->loopOffset, 0.0f, index->duration, "%f seconds");
+                            }
+                        }
+
                         if (ImGui::Checkbox("Bypass SFX", &index->bypass))
                         {
                             for (uint i = 0; i < index->effects.size(); ++i)
@@ -360,6 +379,8 @@ void C_AudioSwitch::Save(Json& json) const
         jsonTrack["pan"] = track->GetPan();
         jsonTrack["transpose"] = track->GetTranspose();
         jsonTrack["offset"] = track->GetOffset();
+        jsonTrack["custom_loop"] = track->customLoop;
+        jsonTrack["loop_offset"] = track->loopOffset;
 
         json["tracks"].push_back(jsonTrack);
     }
@@ -412,6 +433,13 @@ void C_AudioSwitch::Load(Json& json)
             track->SetTranspose(index.value().at("transpose"));
 
             track->SetOffset(index.value().at("offset"));
+
+            if (index.value().contains("custom_loop") &&
+                index.value().contains("loop_offset"))
+            { 
+                track->customLoop = index.value().at("custom_loop");
+                track->loopOffset = index.value().at("loop_offset");
+            }
 
             tracks.push_back(track);
         }
@@ -560,6 +588,23 @@ void C_AudioSwitch::SwitchFade(float fadeSeconds)
         nvolume = (nvolume / 100) * (t / d);
         alSourcef(newTrack->source, AL_GAIN, nvolume);
     }
+}
+
+void C_AudioSwitch::CustomLoopLogic(R_Track* index)
+{
+    // Calculate the actual second offset
+    float samples = 0.0f;
+    alGetSourcef(index->source, AL_SAMPLE_OFFSET, &samples);
+    float seconds = samples / index->sampleRate;
+
+    if (seconds - index->prevFrameSecOffset < 0)
+    {
+        seconds = index->loopOffset;
+        alSourcef(index->source, AL_SEC_OFFSET, seconds);
+    }
+
+    // Setting the actual second offset as prev for the next iteration
+    index->prevFrameSecOffset = seconds;
 }
 
 bool C_AudioSwitch::IsAnyTrackPlaying() const
