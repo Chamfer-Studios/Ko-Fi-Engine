@@ -530,10 +530,9 @@ void M_Renderer3D::QueryScene2(C_Camera* camera)
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
-
 				if (cMesh->GetMesh() != nullptr)
 				{
-					//render the meshes
+					// Render the meshes
 					uint shader = occlusionMat->shaderProgramID;
 					if (shader != 0)
 					{
@@ -549,7 +548,7 @@ void M_Renderer3D::QueryScene2(C_Camera* camera)
 						glUniform4f(color, static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), 1.0f);
 	
 						query->BeginQuery();
-						//Draw Mesh
+						// Draw Mesh
 						cMesh->GetMesh()->Draw();
 						query->EndQuery();
 						bool active = query->AnySamplesPassed();
@@ -558,12 +557,8 @@ void M_Renderer3D::QueryScene2(C_Camera* camera)
 				
 					}
 				}
-
 			}
-
 		}
-
-
 	}
 }
 
@@ -875,7 +870,7 @@ void M_Renderer3D::LightUniforms(uint shader)
 				GLint diffuseValue = glGetUniformLocation(shader, ("focalLights[" + number + "].diffuse").c_str());
 				glUniform1f(diffuseValue, lightSource->diffuse);
 
-				// -- light cone parameters -- 
+				// -- light cone parameters --
 				//float cutOffAngle
 				GLint cutOffValue = glGetUniformLocation(shader, ("focalLights[" + number + "].cutOffAngle").c_str());
 				glUniform1f(cutOffValue, lightSource->cutOffAngle);
@@ -920,6 +915,7 @@ void M_Renderer3D::LightUniforms(uint shader)
 		glUniform1i(numFocalLights, 0);
 	}
 }
+
 void M_Renderer3D::RenderUI(GameObject* go)
 {
 	C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();

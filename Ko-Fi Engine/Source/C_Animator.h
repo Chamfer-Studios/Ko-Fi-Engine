@@ -7,6 +7,7 @@
 
 class GameObject;
 class R_Animation;
+class R_Mesh;
 class map;
 
 class C_Animator : public Component
@@ -44,7 +45,7 @@ public:
 	void ReadNodeHeirarchy(float animationTimeTicks, const GameObject* rootNode, const float4x4& parentTransform);
 
 	const Channel* FindNodeAnim(std::string nodeName);
-	inline const std::vector<float4x4> GetLastBoneTransforms() const { return transformsAnim; }
+	const std::vector<float4x4> GetLastBoneTransforms(R_Mesh* mesh) const;
 
 	uint FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim);
 	void CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
@@ -76,7 +77,7 @@ private:
 	float animTime = 0.0f; // Total animation time
 
 	// Bone transforms
-	std::vector<float4x4> transformsAnim;
+	std::map<R_Mesh*, std::vector<float4x4>> transformsAnim;
 
 	// This two variables should not be there. Manage them the proper way when possible.
 	const GameObject* rootNode = nullptr;

@@ -15,6 +15,7 @@
 
 // Resources
 #include "R_Animation.h"
+#include "R_Mesh.h"
 
 // Helpers
 #include "FSDefs.h"
@@ -371,21 +372,25 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 {
 	OPTICK_EVENT();
 
+	// REVISE!
+	// This two variables should not be there. Manage them the proper way when possible.
+	//----------------------------------------------------------------------------------------------------
+	rootNode = gameObject->GetParent();
+	mesh = gameObject->GetComponent<C_Mesh>()->GetMesh();
+	std::vector<float4x4> tmpTransformsAnim = transformsAnim.find(mesh)->second;
+	//----------------------------------------------------------------------------------------------------
+
 	if (!owner->GetEngine()->GetRenderer()->isFirstPass)
 	{
-		transforms.resize(transformsAnim.size());
+		transforms.resize(tmpTransformsAnim.size());
 
-		for (uint i = 0; i < transformsAnim.size(); i++)
+		for (uint i = 0; i < tmpTransformsAnim.size(); i++)
 		{
-			transforms[i] = transformsAnim[i];
+			transforms[i] = tmpTransformsAnim[i];
 		}
 
 		return;
 	}
-
-	// This two variables should not be there. Manage them the proper way when possible.
-	rootNode = gameObject->GetParent();
-	mesh = gameObject->GetComponent<C_Mesh>()->GetMesh();
 
 	float4x4 identity = float4x4::identity;
 
@@ -419,12 +424,12 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
 	transforms.resize(mesh->boneInfo.size());
-	transformsAnim.resize(mesh->boneInfo.size());
+	tmpTransformsAnim.resize(mesh->boneInfo.size());
 
 	for (uint i = 0; i < mesh->boneInfo.size(); i++)
 	{
 		transforms[i] = mesh->boneInfo[i].finalTransformation;
-		transformsAnim[i] = mesh->boneInfo[i].finalTransformation;
+		tmpTransformsAnim[i] = mesh->boneInfo[i].finalTransformation;
 	}
 }
 
@@ -480,6 +485,11 @@ const Channel* C_Animator::FindNodeAnim(std::string nodeName)
 	OPTICK_EVENT();
 
 	return &animation->channels[nodeName];
+}
+
+const std::vector<float4x4> C_Animator::GetLastBoneTransforms(R_Mesh* mesh) const
+{
+	return transformsAnim.find(mesh)->second;
 }
 
 uint C_Animator::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
