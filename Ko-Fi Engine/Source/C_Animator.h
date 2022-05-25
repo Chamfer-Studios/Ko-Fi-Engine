@@ -76,8 +76,11 @@ private:
 	float animTime = 0.0f; // Total animation time
 
 	// Bone transforms
-	const GameObject* rootNode = nullptr;
 	std::vector<float4x4> transformsAnim;
+
+	// This two variables should not be there. Manage them the proper way when possible.
+	const GameObject* rootNode = nullptr;
+	R_Mesh* mesh = nullptr;
 };
 
 #endif // !__C_ANIMATOR_H__

@@ -383,7 +383,9 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 		return;
 	}
 
+	// This two variables should not be there. Manage them the proper way when possible.
 	rootNode = gameObject->GetParent();
+	mesh = gameObject->GetComponent<C_Mesh>()->GetMesh();
 
 	float4x4 identity = float4x4::identity;
 
@@ -416,13 +418,13 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 	}
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
-	transforms.resize(boneInfo.size());
-	transformsAnim.resize(boneInfo.size());
+	transforms.resize(mesh->boneInfo.size());
+	transformsAnim.resize(mesh->boneInfo.size());
 
-	for (uint i = 0; i < boneInfo.size(); i++)
+	for (uint i = 0; i < mesh->boneInfo.size(); i++)
 	{
-		transforms[i] = boneInfo[i].finalTransformation;
-		transformsAnim[i] = boneInfo[i].finalTransformation;
+		transforms[i] = mesh->boneInfo[i].finalTransformation;
+		transformsAnim[i] = mesh->boneInfo[i].finalTransformation;
 	}
 }
 
@@ -459,12 +461,12 @@ void C_Animator::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* p
 
 	float4x4 globalTransformation = parentTransform * nodeTransformation;
 
-	if (boneNameToIndexMap.contains(nodeName))
+	if (mesh->boneNameToIndexMap.contains(nodeName))
 	{
-		uint boneIndex = boneNameToIndexMap[nodeName];
+		uint boneIndex = mesh->boneNameToIndexMap[nodeName];
 		float4x4 globalInversedTransform = rootNode->GetTransform()->GetGlobalTransform().Inverted();
-		float4x4 delta = globalInversedTransform * globalTransformation * boneInfo[boneIndex].offsetMatrix;
-		boneInfo[boneIndex].finalTransformation = delta.Transposed();
+		float4x4 delta = globalInversedTransform * globalTransformation * mesh->boneInfo[boneIndex].offsetMatrix;
+		mesh->boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
