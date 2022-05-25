@@ -36,9 +36,31 @@ public:
 	bool IsCurrentClipPlaying();
 	bool IsCurrentClipLooping();
 
-	void ResetAnimation();
-
 	const float inline const GetAnimTime() const { return animTime; };
+
+	// Bone transforms
+	//----------------------------------------------------------------------------------------------------
+	void GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject);
+	void ReadNodeHeirarchy(float animationTimeTicks, const GameObject* rootNode, const float4x4& parentTransform);
+
+	const Channel* FindNodeAnim(std::string nodeName);
+	inline const std::vector<float4x4> GetLastBoneTransforms() const { return transformsAnim; }
+
+	uint FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
+
+	uint FindRotation(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedRotation(Quat& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
+
+	uint FindScaling(float AnimationTimeTicks, const Channel* pNodeAnim);
+	void CalcInterpolatedScaling(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
+
+	float4x4 InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ);
+	float4x4 InitRotateTransform(const aiQuaternion& quat);
+	float4x4 InitTranslationTransform(float x, float y, float z);
+
+	float4x4 GetMatrixFromQuat(Quat quat);
+	//----------------------------------------------------------------------------------------------------
 
 public:
 	R_Animation* animation = nullptr;
@@ -51,10 +73,11 @@ private:
 	bool createClipErrorMessage = false;
 	bool deleteDefaultClipMessage = false;
 
-	// ANIMATION TIME MANAGEMENT
-	// ----------------------------------------------------------------------------------------------------
 	float animTime = 0.0f; // Total animation time
-	// ----------------------------------------------------------------------------------------------------
+
+	// Bone transforms
+	const GameObject* rootNode = nullptr;
+	std::vector<float4x4> transformsAnim;
 };
 
 #endif // !__C_ANIMATOR_H__

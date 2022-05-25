@@ -103,6 +103,7 @@ public:
 	inline const GameObject* GetRootNode() { return rootNode; }
 	inline const R_Animation* GetAnimation() const { return animation; }
 	void inline SetAnimation(R_Animation* animation) { this->animation = animation; }
+
 	const Channel* FindNodeAnim(std::string nodeName);
 	inline const std::vector<float4x4> GetLastBoneTransforms() const { return transformsAnim; }
 
@@ -118,6 +119,7 @@ public:
 	float4x4 InitScaleTransform(float ScaleX, float ScaleY, float ScaleZ);
 	float4x4 InitRotateTransform(const aiQuaternion& quat);
 	float4x4 InitTranslationTransform(float x, float y, float z);
+
 	float4x4 aiMatrix3x32Float4x4(aiMatrix3x3 assimpMatrix);
 	float* GetTransformedVertices(float4x4 transform);
 
@@ -174,9 +176,9 @@ private:
 
 	bool isAnimated = false;
 
+	// Bone transforms
 	const GameObject* rootNode = nullptr;
 	R_Animation* animation = nullptr;
-
 	std::vector<float4x4> transformsAnim;
 };
 
