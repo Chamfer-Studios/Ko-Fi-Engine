@@ -56,4 +56,6 @@ void R_Texture::SetUpTexture()
 	}
 	else
 		appLog->AddLog("Texture Image not loaded correctly.\n");
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

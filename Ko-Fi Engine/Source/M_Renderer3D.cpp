@@ -712,7 +712,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				mesh->Draw();
 				glUseProgram(0);
 
-				glActiveTexture(GL_TEXTURE0);
+				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, 0);
 				glActiveTexture(GL_TEXTURE3);
 				glBindTexture(GL_TEXTURE_2D, 0);
@@ -1293,6 +1293,7 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -1377,6 +1378,7 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
 	{
 		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, particle->tex.GetTextureId());
 	}
 	
