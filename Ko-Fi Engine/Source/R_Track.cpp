@@ -92,7 +92,7 @@ void R_Track::SetVolume()
 		return;
 	}
 
-	volume = Pow(volume, 2.5f) / 1000.0f;
+	//volume = Pow(volume, 2.5f) / 1000.0f;
 
 	if (volume > 99.0f)
 		volume = 100.0f;
@@ -107,7 +107,7 @@ void R_Track::SetVolume(float volume)
 		return;
 	}
 
-	volume = Pow(volume, 2.5f) / 1000.0f;
+	//volume = Pow(volume, 2.5f) / 1000.0f;
 
 	if (volume > 99.0f)
 		volume = 100.0f;
