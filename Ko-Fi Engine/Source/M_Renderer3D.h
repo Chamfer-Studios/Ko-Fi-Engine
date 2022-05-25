@@ -14,7 +14,7 @@
 #include <vector>
 #include <set>
 #include <unordered_set>
-#define MAX_LIGHTS 64
+#define MAX_LIGHTS 8
 
 class GameObject;
 typedef unsigned int GLenum;
