@@ -134,8 +134,9 @@ public:
 			"UNTAGGED", Tag::TAG_UNTAGGED,
 			"PLAYER", Tag::TAG_PLAYER,
 			"ENEMY", Tag::TAG_ENEMY,
-			"WALL", Tag::TAG_WALL,
-			"PROJECTILE", Tag::TAG_PROJECTILE);
+			"FLOOR", Tag::TAG_FLOOR,
+			"PICKUP", Tag::TAG_PICKUP,
+			"CORPSE", Tag::TAG_CORPSE);
 
 		/// Classes:
 		// float3 structure
