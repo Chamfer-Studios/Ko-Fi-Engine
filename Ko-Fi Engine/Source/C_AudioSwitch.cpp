@@ -217,7 +217,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
         // SWITCH BUTTON
         if (ImGui::Button("Switch To") && !switching)
         {
-            SwitchTrack(nextSwitchTrack);
+            SwitchTrack(nextSwitchTrack, 0.0f);
         }
         ImGui::SameLine();
         ImGui::DragInt("##Switch", &nextSwitchTrack, 0.1f, 0, tracks.size() - 1, "Track %d");
@@ -459,7 +459,7 @@ void C_AudioSwitch::UpdatePlayState()
     }
 }
 
-void C_AudioSwitch::SwitchTrack(int newTrackIndex)
+void C_AudioSwitch::SwitchTrack(int newTrackIndex, float secondsOffset)
 {
     if (newTrackIndex >= tracks.size())
         return;
@@ -468,6 +468,8 @@ void C_AudioSwitch::SwitchTrack(int newTrackIndex)
 
     oldTrack = GetPlayingTrack();
     newTrack = tracks[nextSwitchTrack];
+
+    oldOffset += secondsOffset;
 
     if (offsetSync && oldTrack != nullptr)
         alGetSourcef(oldTrack->source, AL_SEC_OFFSET, &oldOffset);

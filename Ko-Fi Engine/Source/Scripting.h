@@ -8,6 +8,7 @@
 #include "M_Input.h" 
 #include "M_SceneManager.h"
 #include "M_Physics.h"
+#include "M_Audio.h"
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
 #include "M_Window.h"
@@ -308,7 +309,8 @@ public:
 			"PlayTrack", &C_AudioSwitch::PlayTrack,
 			"PauseTrack", &C_AudioSwitch::PauseTrack,
 			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack);
+			"StopTrack", &C_AudioSwitch::StopTrack,
+			"SwitchTrack", &C_AudioSwitch::SwitchTrack);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
@@ -352,6 +354,11 @@ public:
 		lua.new_usertype<M_Camera3D>("M_Camera3D",
 			sol::constructors<void(KoFiEngine*)>(),
 			"WorldToScreen", &M_Camera3D::WorldToScreen);
+
+		lua.new_usertype<M_Audio>("M_Audio",
+			sol::constructors<void(KoFiEngine*)>(),
+			"SetListenerVolume", &M_Audio::SetListenerVolume,
+			"GetListenerVolume", &M_Audio::GetListenerVolume);
 
 		/*lua.new_usertype<M_Physics>("M_Physics",
 			sol::constructors<void(KoFiEngine*)>(),

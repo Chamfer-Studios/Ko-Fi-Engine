@@ -67,6 +67,7 @@ public:
 	CollisionDetector* GetCollisionDetector() const;
 	M_ResourceManager* GetResourceManager() const;
 	M_Navigation* GetNavigation() const;
+	M_Audio* GetAudio() const;
 
 	double GetEngineTime() { return ptimer.ReadMs(); };
 

@@ -30,7 +30,7 @@ public:
 
     void UpdatePlayState();
 
-    void SwitchTrack(int newTrackIndex);
+    void SwitchTrack(int newTrackIndex, float secondsOffset);
     void PlayTrack(int trackIndex);
     void ResumeTrack(int trackIndex);
     void StopTrack(int trackIndex);

@@ -467,7 +467,13 @@ M_ResourceManager* KoFiEngine::GetResourceManager() const
 {
 	return this->resourceManager;
 }
+
 M_Navigation* KoFiEngine::GetNavigation() const
 {
 	return this->navigation;
+}
+
+M_Audio* KoFiEngine::GetAudio() const
+{
+	return this->audio;
 }
