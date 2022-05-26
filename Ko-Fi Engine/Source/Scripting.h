@@ -401,6 +401,7 @@ public:
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
+		lua.set_function("DrawCircle", &Scripting::DrawCircle, this);
 		lua.set_function("DrawLine", &Scripting::DrawLine, this);
 		lua.set_function("RNG", &Scripting::RNG, this);
 		lua.set_function("SaveGameState", &Scripting::SaveGameState, this);
