@@ -1404,6 +1404,9 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	AnimatorClip animClip(anim, "Default clip", 0, anim->duration, 1.0f, true);
 	cAnim->CreateClip(animClip);
 	cAnim->SetSelectedClip(animClip.GetName());
+
+	// Adding a reference to the mesh for the component animator to be aware of it.
+	cAnim->SetMesh(mesh);
 }
 
 void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMaterial, uint materialIndex, GameObject* gameObj)

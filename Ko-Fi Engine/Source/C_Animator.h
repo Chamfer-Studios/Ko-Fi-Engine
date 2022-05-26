@@ -4,11 +4,13 @@
 #include "Component.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "AnimatorClip.h"
+#include "Assimp.h"
 
 class GameObject;
 class R_Animation;
 class R_Mesh;
 class map;
+struct Channel;
 
 class C_Animator : public Component
 {
@@ -29,6 +31,7 @@ public:
 	void Reset();
 
 	void SetAnimation(R_Animation* anim);
+	void SetMesh(R_Mesh* mesh);
 
 	bool CreateClip(const AnimatorClip& clip);
 	void SetSelectedClip(std::string name);

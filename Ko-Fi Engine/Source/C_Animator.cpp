@@ -265,6 +265,15 @@ void C_Animator::Save(Json& json) const
 			json["clips"].push_back(jsonClips);
 		}
 		json["selectedClip"] = selectedClip->GetName();
+
+		Json jsonMeshes;
+		for (auto mesh : transformsAnim)
+		{
+			jsonMeshes["uid"] = mesh.first->GetUID();
+			jsonMeshes["asset_path"] = mesh.first->GetAssetPath();
+
+			json["meshes"].push_back(jsonMeshes);
+		}
 	}
 }
 
@@ -300,6 +309,14 @@ void C_Animator::Load(Json& json)
 			}
 			SetSelectedClip(json.at("selectedClip"));
 			selectedClip->SetFinishedBool(true);
+
+			for (const auto& mesh : json.at("meshes").items())
+			{
+				UID uid = mesh.value().at("uid");
+				const char* assetPath = mesh.value().at("asset_path").get<std::string>().c_str();
+				owner->GetEngine()->GetResourceManager()->LoadResource(uid, assetPath);
+				transformsAnim.emplace((R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid), std::vector<float4x4>());
+			}
 		}
 	}
 }
@@ -337,6 +354,11 @@ void C_Animator::SetAnimation(R_Animation* anim)
 	}
 
 	this->animation = anim;
+}
+
+void C_Animator::SetMesh(R_Mesh* mesh)
+{
+	transformsAnim.emplace(mesh, std::vector<float4x4>());
 }
 
 AnimatorClip* C_Animator::GetSelectedClip()
@@ -377,16 +399,15 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 	//----------------------------------------------------------------------------------------------------
 	rootNode = gameObject->GetParent();
 	mesh = gameObject->GetComponent<C_Mesh>()->GetMesh();
-	std::vector<float4x4> tmpTransformsAnim = transformsAnim.find(mesh)->second;
 	//----------------------------------------------------------------------------------------------------
 
 	if (!owner->GetEngine()->GetRenderer()->isFirstPass)
 	{
-		transforms.resize(tmpTransformsAnim.size());
+		transforms.resize(transformsAnim.find(mesh)->second.size());
 
-		for (uint i = 0; i < tmpTransformsAnim.size(); i++)
+		for (uint i = 0; i < transformsAnim.find(mesh)->second.size(); i++)
 		{
-			transforms[i] = tmpTransformsAnim[i];
+			transforms[i] = transformsAnim.find(mesh)->second[i];
 		}
 
 		return;
@@ -424,12 +445,12 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
 	transforms.resize(mesh->boneInfo.size());
-	tmpTransformsAnim.resize(mesh->boneInfo.size());
+	transformsAnim.find(mesh)->second.resize(mesh->boneInfo.size());
 
 	for (uint i = 0; i < mesh->boneInfo.size(); i++)
 	{
 		transforms[i] = mesh->boneInfo[i].finalTransformation;
-		tmpTransformsAnim[i] = mesh->boneInfo[i].finalTransformation;
+		transformsAnim.find(mesh)->second[i] = mesh->boneInfo[i].finalTransformation;
 	}
 }
 

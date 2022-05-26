@@ -509,16 +509,11 @@ void M_Renderer3D::QueryScene1(C_Camera* camera)
 
 					}
 				}
-
 			}
-
 		}
-
-
 	}
-
-
 }
+
 void M_Renderer3D::QueryScene2(C_Camera* camera)
 {
 	OPTICK_EVENT();
@@ -937,26 +932,26 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 			{
 				float animationTimeSec = cAnimator->GetAnimTime();
 				std::vector<float4x4> transformsAnim;
-				mesh->GetBoneTransforms(animationTimeSec, transformsAnim, go);
+				cAnimator->GetBoneTransforms(animationTimeSec, transformsAnim, go);
 
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->IsAnimated());
+				glUniform1i(isAnimated, true);
 			}
 			else
 			{
 				std::vector<float4x4> transformsAnim;
 
-				if (mesh->GetLastBoneTransforms().size() == 0)
-					mesh->GetBoneTransforms(0, transformsAnim, go);
+				if (cAnimator->GetLastBoneTransforms(mesh).size() == 0)
+					cAnimator->GetBoneTransforms(0, transformsAnim, go);
 
-				transformsAnim = mesh->GetLastBoneTransforms();
+				transformsAnim = cAnimator->GetLastBoneTransforms(mesh);
 
 				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->IsAnimated());
+				glUniform1i(isAnimated, true);
 			}
 		}
 	}

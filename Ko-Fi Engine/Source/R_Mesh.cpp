@@ -6,9 +6,7 @@
 #include "Engine.h"
 #include "M_Renderer3D.h"
 
-#include "Engine.h"
-#include "M_Renderer3D.h"
-
+// GameObject
 #include "GameObject.h"
 #include "C_Material.h"
 #include "C_Transform.h"
@@ -21,6 +19,8 @@
 // Resources
 #include "R_Texture.h"
 #include "R_Animation.h"
+
+// Helpers
 #include "AnimatorClip.h"
 #include "Channel.h"
 
