@@ -852,9 +852,9 @@ public:
 		}
 	}
 
-	void DrawCircle(float range, float3 position)
+	void DrawCircle(float3 position, float range, float3 color, float stroke)
 	{
-		gameObject->GetEngine()->GetRenderer()->DrawCircle(position, range);
+		gameObject->GetEngine()->GetRenderer()->DrawCircle(position, range, color, stroke);
 	}
 
 	bool LoadJsonFile(const char* path);
