@@ -10,6 +10,7 @@
 #include "M_Physics.h"
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
+#include "M_Window.h"
 #include "ImGuiAppLog.h"
 
 #include <vector>
@@ -365,6 +366,8 @@ public:
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
 		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
 		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
+		lua.set_function("GetFullscreen", &Scripting::LuaGetFullscreen, this);
+		lua.set_function("SetFullscreen", &Scripting::LuaSetFullscreen, this);
 		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("InstantiateNamedPrefab", &Scripting::LuaInstantiateNamedPrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
@@ -418,6 +421,16 @@ public:
 	void LuaSetVsync(bool vSync)
 	{
 		gameObject->GetEngine()->GetRenderer()->SetVsync(vSync);
+	}
+
+	bool LuaGetFullscreen()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetFullscreen();
+	}
+
+	void LuaSetFullscreen(bool fullscreen)
+	{
+		gameObject->GetEngine()->GetWindow()->SetFullscreen(fullscreen);
 	}
 
 	KEY_STATE LuaGetInput(int button)
